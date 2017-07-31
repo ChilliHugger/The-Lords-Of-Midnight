@@ -1,0 +1,4719 @@
+<building id='0' >
+	<id>0</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_1</portrait>
+	<land>Imilvir</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='1' >
+	<id>1</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_2</portrait>
+	<land>Eodral</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='2' >
+	<id>2</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_3</portrait>
+	<land>Arelon</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='3' >
+	<id>3</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_4</portrait>
+	<land>Aravik</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='4' >
+	<id>4</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_5</portrait>
+	<land>Caradwin</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='5' >
+	<id>5</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_6</portrait>
+	<land>Falthrang</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='6' >
+	<id>6</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_7</portrait>
+	<land>Elinmor</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='7' >
+	<id>7</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_8</portrait>
+	<land>Tarefyr</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='8' >
+	<id>8</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_9</portrait>
+	<land>Northern</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='9' >
+	<id>9</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_10</portrait>
+	<land>Eastern</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='10' >
+	<id>10</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_11</portrait>
+	<land>Southern</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='11' >
+	<id>11</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_12</portrait>
+	<land>Western</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='12' >
+	<id>12</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_13</portrait>
+	<land>Middle</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='13' >
+	<id>13</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_14</portrait>
+	<land>Ulmor</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='14' >
+	<id>14</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_15</portrait>
+	<land>Skulls</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='15' >
+	<id>15</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_16</portrait>
+	<land>Shining</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='16' >
+	<id>16</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_17</portrait>
+	<land>Silfar</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='17' >
+	<id>17</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_18</portrait>
+	<land>Grey</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='18' >
+	<id>18</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_19</portrait>
+	<land>Eregoth</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='19' >
+	<id>19</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_20</portrait>
+	<land>Weeping</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='20' >
+	<id>20</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_21</portrait>
+	<land>Fire</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='21' >
+	<id>21</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_22</portrait>
+	<land>Galorwain</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='22' >
+	<id>22</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_23</portrait>
+	<land>Tharran</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='23' >
+	<id>23</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_24</portrait>
+	<land>Mermaids</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='24' >
+	<id>24</id>
+	<type>castle</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_25</portrait>
+	<land>Serpents</land>
+		<warrior_0>17</warrior_0>
+		<warrior_1>17</warrior_1>
+		<warrior_2>17</warrior_2>
+		<warrior_3>17</warrior_3>
+		<warrior_4>17</warrior_4>
+		<warrior_5>17</warrior_5>
+		<warrior_6>17</warrior_6>
+		<warrior_7>17</warrior_7>
+		<warrior_8>17</warrior_8>
+		<warrior_9>17</warrior_9>
+		<warrior_10>17</warrior_10>
+		<warrior_11>17</warrior_11>
+		<warrior_12>17</warrior_12>
+		<warrior_13>17</warrior_13>
+		<warrior_14>17</warrior_14>
+		<warrior_15>17</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='25' >
+	<id>25</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>47</x>
+	<y>71</y>
+	<direction>SOUTH_WEST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_26</portrait>
+	<land>Immiel</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>106</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Golden Fey</owner>
+	<land_ruler>CH_GALAHAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Glimormir</land_realm>
+	<land_owner>CH_GALAHAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='26' >
+	<id>26</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>149</x>
+	<y>52</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_27</portrait>
+	<land>Rilleon</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>100</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_ARAK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_ARAK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='27' >
+	<id>27</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_28</portrait>
+	<land>Maranor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>10016</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_TORANETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_TORANETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='28' >
+	<id>28</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>7</x>
+	<y>12</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_29</portrait>
+	<land>Corelay</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>55</warrior_15>
+	<owner>Free</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Midnight</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='29' >
+	<id>29</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>11</x>
+	<y>23</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_30</portrait>
+	<land>Jade</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>46</warrior_15>
+	<owner>Free</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Midnight</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='30' >
+	<id>30</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>14</x>
+	<y>10</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_31</portrait>
+	<land>Last</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>43</warrior_15>
+	<owner>Free</owner>
+	<land_ruler>CH_MORKIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Midnight</land_realm>
+	<land_owner>CH_MORKIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='31' >
+	<id>31</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>33</x>
+	<y>24</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_32</portrait>
+	<land>Erifel</land>
+		<warrior_0>95</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_SHARILA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_SHARILA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='32' >
+	<id>32</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>54</x>
+	<y>11</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_33</portrait>
+	<land>Sareon</land>
+		<warrior_0>46</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_TALMAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_TALMAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='33' >
+	<id>33</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>19</x>
+	<y>50</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_34</portrait>
+	<land>Eomir</land>
+		<warrior_0>51</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Kith</owner>
+	<land_ruler>CH_ORABRIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Witherlands</land_realm>
+	<land_owner>CH_ORABRIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='34' >
+	<id>34</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>62</x>
+	<y>39</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_35</portrait>
+	<land>Rilnor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>58</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_GARAMOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_GARAMOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='35' >
+	<id>35</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>105</x>
+	<y>14</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_36</portrait>
+	<land>Thumar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>59</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_EOTHOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_EOTHOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='36' >
+	<id>36</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>120</x>
+	<y>14</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_37</portrait>
+	<land>Sharvik</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>41</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_FORTHAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_FORTHAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='37' >
+	<id>37</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>129</x>
+	<y>37</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_38</portrait>
+	<land>Imildral</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>53</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_ARANOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_ARANOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='38' >
+	<id>38</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>151</x>
+	<y>15</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_39</portrait>
+	<land>Erenim</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>40</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Long Dwarf</owner>
+	<land_ruler>CH_SADLAK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Long Mountains</land_realm>
+	<land_owner>CH_SADLAK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='39' >
+	<id>39</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>147</x>
+	<y>31</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_40</portrait>
+	<land>Isilfrey</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>51</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Long Dwarf</owner>
+	<land_ruler>CH_RUGRAK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Long Mountains</land_realm>
+	<land_owner>CH_RUGRAK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='40' >
+	<id>40</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>126</x>
+	<y>71</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_41</portrait>
+	<land>Thordroth</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>51</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Long Dwarf</owner>
+	<land_ruler>CH_ALAGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Long Mountains</land_realm>
+	<land_owner>CH_ALAGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='41' >
+	<id>41</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>128</x>
+	<y>96</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_42</portrait>
+	<land>Galorbard</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>55</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_CORLANE</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_CORLANE</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='42' >
+	<id>42</id>
+	<type>castle</type>
+	<char_flags_txt value='4'>+dead</char_flags_txt>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_43</portrait>
+	<land>Corlon</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>49</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_ILDRAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_ILDRAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='43' >
+	<id>43</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>106</x>
+	<y>94</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_44</portrait>
+	<land>Farwain</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>41</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Long Dwarf</owner>
+	<land_ruler>CH_OLTHRUDA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Long Mountains</land_realm>
+	<land_owner>CH_OLTHRUDA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='44' >
+	<id>44</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>112</x>
+	<y>106</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_45</portrait>
+	<land>Maralan</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>41</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dawn Fey</owner>
+	<land_ruler>CH_ILDRAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Dawnwood</land_realm>
+	<land_owner>CH_ILDRAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='45' >
+	<id>45</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>73</x>
+	<y>115</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_46</portrait>
+	<land>Beomir</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>93</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Long Dwarf</owner>
+	<land_ruler>CH_OGLIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Long Mountains</land_realm>
+	<land_owner>CH_OGLIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='46' >
+	<id>46</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>77</x>
+	<y>93</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_47</portrait>
+	<land>Ceremelth</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>59</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_ILVAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_ILVAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='47' >
+	<id>47</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>91</x>
+	<y>121</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_48</portrait>
+	<land>Carafel</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>42</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dawn Fey</owner>
+	<land_ruler>CH_ALOROTH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Dawnwood</land_realm>
+	<land_owner>CH_ALOROTH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='48' >
+	<id>48</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>60</x>
+	<y>129</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_49</portrait>
+	<land>Saradwin</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>40</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Long Dwarf</owner>
+	<land_ruler>CH_GRUMRUD</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Long Mountains</land_realm>
+	<land_owner>CH_GRUMRUD</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='49' >
+	<id>49</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>93</x>
+	<y>137</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_50</portrait>
+	<land>Emerthen</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>45</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dawn Fey</owner>
+	<land_ruler>CH_ITAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Dawnwood</land_realm>
+	<land_owner>CH_ITAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='50' >
+	<id>50</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>74</x>
+	<y>142</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_51</portrait>
+	<land>Scaradir</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>54</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Long Dwarf</owner>
+	<land_ruler>CH_ULGRUD</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Long Mountains</land_realm>
+	<land_owner>CH_ULGRUD</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='51' >
+	<id>51</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>59</x>
+	<y>99</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_52</portrait>
+	<land>Meranor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>54</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Eldrin</owner>
+	<land_ruler>CH_SHERINAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Eldmark</land_realm>
+	<land_owner>CH_SHERINAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='52' >
+	<id>52</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>8</x>
+	<y>73</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_53</portrait>
+	<land>Arelban</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>59</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Eldrin</owner>
+	<land_ruler>CH_AREMELA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Eldmark</land_realm>
+	<land_owner>CH_AREMELA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='53' >
+	<id>53</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>21</x>
+	<y>105</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_54</portrait>
+	<land>Arunvere</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>104</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Eldrin</owner>
+	<land_ruler>CH_CARITHILA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Eldmark</land_realm>
+	<land_owner>CH_CARITHILA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='54' >
+	<id>54</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>28</x>
+	<y>123</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_55</portrait>
+	<land>Erilan</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>45</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Eldrin</owner>
+	<land_ruler>CH_AVILA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Eldmark</land_realm>
+	<land_owner>CH_AVILA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='55' >
+	<id>55</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>18</x>
+	<y>128</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_56</portrait>
+	<land>Elinvar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>43</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_ARITHEL</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_ARITHEL</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='56' >
+	<id>56</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>8</x>
+	<y>142</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_57</portrait>
+	<land>Arelmar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>47</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_MELKRITH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_MELKRITH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='57' >
+	<id>57</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>41</x>
+	<y>153</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_58</portrait>
+	<land>Shimmering</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>103</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_JARLETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_JARLETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='58' >
+	<id>58</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>19</x>
+	<y>158</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_59</portrait>
+	<land>Forgotten</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>58</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_ASHOLETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_ASHOLETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='59' >
+	<id>59</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>19</x>
+	<y>169</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_60</portrait>
+	<land>Whispering</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>46</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_ILARETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_ILARETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='60' >
+	<id>60</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>13</x>
+	<y>181</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_61</portrait>
+	<land>Forever</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>47</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_ANDREMAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_ANDREMAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='61' >
+	<id>61</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>48</x>
+	<y>175</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_62</portrait>
+	<land>Golden</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>48</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_GALDRETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_GALDRETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='62' >
+	<id>62</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>31</x>
+	<y>190</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_63</portrait>
+	<land>Finfyr</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>56</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Gelming</owner>
+	<land_ruler>CH_WYTHRAN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Gelm</land_realm>
+	<land_owner>CH_WYTHRAN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='63' >
+	<id>63</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>14</x>
+	<y>219</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_64</portrait>
+	<land>Geremiel</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>40</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Gelming</owner>
+	<land_ruler>CH_HOON</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Gelm</land_realm>
+	<land_owner>CH_HOON</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='64' >
+	<id>64</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>36</x>
+	<y>246</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_65</portrait>
+	<land>Samarand</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>92</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Gelming</owner>
+	<land_ruler>CH_AMARIN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Gelm</land_realm>
+	<land_owner>CH_AMARIN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='65' >
+	<id>65</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>7</x>
+	<y>237</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_66</portrait>
+	<land>Emergelm</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>58</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Gelming</owner>
+	<land_ruler>CH_ELESSA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Gelm</land_realm>
+	<land_owner>CH_ELESSA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='66' >
+	<id>66</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>55</x>
+	<y>220</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_67</portrait>
+	<land>Ildemar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>43</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Deeping Dwarf</owner>
+	<land_ruler>CH_BORAGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Deeping</land_realm>
+	<land_owner>CH_BORAGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='67' >
+	<id>67</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>79</x>
+	<y>241</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_68</portrait>
+	<land>Zaragorn</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>57</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Deeping Dwarf</owner>
+	<land_ruler>CH_THALGRIMA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Deeping</land_realm>
+	<land_owner>CH_THALGRIMA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='68' >
+	<id>68</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>91</x>
+	<y>244</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_69</portrait>
+	<land>Gilgrath</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>56</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Gelming</owner>
+	<land_ruler>CH_MARIK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Gelm</land_realm>
+	<land_owner>CH_MARIK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='69' >
+	<id>69</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>90</x>
+	<y>204</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_70</portrait>
+	<land>Tharn</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>50</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Deeping Dwarf</owner>
+	<land_ruler>CH_ULGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Deeping</land_realm>
+	<land_owner>CH_ULGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='70' >
+	<id>70</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>40</x>
+	<y>204</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_71</portrait>
+	<land>Sharenor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>47</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Deeping Dwarf</owner>
+	<land_ruler>CH_MOGRAK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Deeping</land_realm>
+	<land_owner>CH_MOGRAK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='71' >
+	<id>71</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>71</x>
+	<y>174</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_72</portrait>
+	<land>Ararak</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>45</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Deeping Dwarf</owner>
+	<land_ruler>CH_GOLGUD</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Deeping</land_realm>
+	<land_owner>CH_GOLGUD</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='72' >
+	<id>72</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>88</x>
+	<y>162</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_73</portrait>
+	<land>Thunder</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>96</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Deeping Dwarf</owner>
+	<land_ruler>CH_NORGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Deeping</land_realm>
+	<land_owner>CH_NORGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='73' >
+	<id>73</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>98</x>
+	<y>187</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_74</portrait>
+	<land>Dawn</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>42</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Deeping Dwarf</owner>
+	<land_ruler>CH_ALUTHRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Deeping</land_realm>
+	<land_owner>CH_ALUTHRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='74' >
+	<id>74</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>52</x>
+	<y>140</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_75</portrait>
+	<land>Merikith</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>43</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_EMEDREL</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_EMEDREL</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='75' >
+	<id>75</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>60</x>
+	<y>159</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_76</portrait>
+	<land>Aradel</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>43</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>High Fey</owner>
+	<land_ruler>CH_ALARGRITH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Wierdwood</land_realm>
+	<land_owner>CH_ALARGRITH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='76' >
+	<id>76</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>120</x>
+	<y>206</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_77</portrait>
+	<land>Valgrorn</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>59</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_SKYRDRETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_SKYRDRETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='77' >
+	<id>77</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>134</x>
+	<y>182</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_78</portrait>
+	<land>Malgor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>50</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_URSKRETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_URSKRETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='78' >
+	<id>78</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>118</x>
+	<y>188</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_79</portrait>
+	<land>Dwardor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>53</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_MIRGRATH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_MIRGRATH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='79' >
+	<id>79</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>133</x>
+	<y>199</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_80</portrait>
+	<land>Death</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>54</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_DARGRITH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_DARGRITH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='80' >
+	<id>80</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>171</x>
+	<y>190</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_81</portrait>
+	<land>Barathor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>59</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_AKRITH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_AKRITH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='81' >
+	<id>81</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>150</x>
+	<y>247</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_82</portrait>
+	<land>Burning</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>52</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_URGORETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_URGORETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='82' >
+	<id>82</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>131</x>
+	<y>234</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_83</portrait>
+	<land>Ravens</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>48</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_GRALETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_GRALETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='83' >
+	<id>83</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>174</x>
+	<y>205</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_84</portrait>
+	<land>Iron</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>45</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_MUGLUM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_MUGLUM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='84' >
+	<id>84</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>185</x>
+	<y>214</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_85</portrait>
+	<land>Tark</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>46</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_SLORUM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_SLORUM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='85' >
+	<id>85</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>190</x>
+	<y>227</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_86</portrait>
+	<land>Athruk</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>53</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_MELINISSA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_MELINISSA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='86' >
+	<id>86</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>205</x>
+	<y>227</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_87</portrait>
+	<land>Thordrin</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>48</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_MORGRISSA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_MORGRISSA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='87' >
+	<id>87</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>232</x>
+	<y>202</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_88</portrait>
+	<land>Storms</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>50</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_SNORGLUM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_SNORGLUM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='88' >
+	<id>88</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>222</x>
+	<y>201</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_89</portrait>
+	<land>Big</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>53</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_BORLUM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_BORLUM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='89' >
+	<id>89</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>208</x>
+	<y>198</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_90</portrait>
+	<land>Corth</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>41</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_OLAGRUM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_OLAGRUM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='90' >
+	<id>90</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>210</x>
+	<y>211</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_91</portrait>
+	<land>Skirol</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>105</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_BORGALUG</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_BORGALUG</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='91' >
+	<id>91</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>196</x>
+	<y>214</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_92</portrait>
+	<land>Othrym</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>52</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_OGLISSA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_OGLISSA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='92' >
+	<id>92</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>186</x>
+	<y>190</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_93</portrait>
+	<land>Grorn</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>46</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_STUBLOG</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_STUBLOG</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='93' >
+	<id>93</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>187</x>
+	<y>203</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_94</portrait>
+	<land>Gogrun</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>56</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_GOTHRUM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_GOTHRUM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='94' >
+	<id>94</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>199</x>
+	<y>187</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_95</portrait>
+	<land>Finrod</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>51</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Giant</owner>
+	<land_ruler>CH_OLOG</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Delve</land_realm>
+	<land_owner>CH_OLOG</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='95' >
+	<id>95</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>130</x>
+	<y>121</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_96</portrait>
+	<land>Songs</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>54</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dawn Fey</owner>
+	<land_ruler>CH_MELINOTH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Dawnwood</land_realm>
+	<land_owner>CH_MELINOTH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='96' >
+	<id>96</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>149</x>
+	<y>96</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_97</portrait>
+	<land>Crimson</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>45</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_ANDERLANE</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_ANDERLANE</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='97' >
+	<id>97</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>116</x>
+	<y>133</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_98</portrait>
+	<land>Elorthord</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>94</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dawn Fey</owner>
+	<land_ruler>CH_MIRANAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Dawnwood</land_realm>
+	<land_owner>CH_MIRANAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='98' >
+	<id>98</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>98</x>
+	<y>150</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_99</portrait>
+	<land>Corithel</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>56</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dawn Fey</owner>
+	<land_ruler>CH_TAROLETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Dawnwood</land_realm>
+	<land_owner>CH_TAROLETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='99' >
+	<id>99</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>164</x>
+	<y>123</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_100</portrait>
+	<land>Alathor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>56</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_ELINA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_ELINA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='100' >
+	<id>100</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>140</x>
+	<y>144</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_101</portrait>
+	<land>Elinbrand</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>50</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_DARATH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_DARATH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='101' >
+	<id>101</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>128</x>
+	<y>155</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_102</portrait>
+	<land>Gliwain</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>57</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dark Fey</owner>
+	<land_ruler>CH_YRGRETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Marish</land_realm>
+	<land_owner>CH_YRGRETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='102' >
+	<id>102</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>149</x>
+	<y>187</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_103</portrait>
+	<land>Athrudan</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>46</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_SKARAI</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_SKARAI</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='103' >
+	<id>103</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>147</x>
+	<y>157</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_104</portrait>
+	<land>Skordroth</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>53</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_HARAGLAI</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_HARAGLAI</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='104' >
+	<id>104</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>179</x>
+	<y>172</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_105</portrait>
+	<land>Erilmark</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>59</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_MOGLAI</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_MOGLAI</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='105' >
+	<id>105</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>163</x>
+	<y>132</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_106</portrait>
+	<land>Arabar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>54</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_KHALAK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_KHALAK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='106' >
+	<id>106</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>162</x>
+	<y>153</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_107</portrait>
+	<land>Theodel</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>45</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_DJALINA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_DJALINA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='107' >
+	<id>107</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>187</x>
+	<y>147</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_108</portrait>
+	<land>Cerrelm</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>58</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_THORGRAN</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_THORGRAN</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='108' >
+	<id>108</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>225</x>
+	<y>132</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_109</portrait>
+	<land>Roreon</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>91</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Uskarg</owner>
+	<land_ruler>CH_ASUNAI</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Fallows</land_realm>
+	<land_owner>CH_ASUNAI</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='109' >
+	<id>109</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>205</x>
+	<y>79</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_110</portrait>
+	<land>Caramane</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>42</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_RAINAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_RAINAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='110' >
+	<id>110</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>170</x>
+	<y>100</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_111</portrait>
+	<land>Romiel</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>43</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dawn Fey</owner>
+	<land_ruler>CH_MORGRETH</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Dawnwood</land_realm>
+	<land_owner>CH_MORGRETH</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='111' >
+	<id>111</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>171</x>
+	<y>87</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_112</portrait>
+	<land>Orcar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>43</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_ARBETHOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_ARBETHOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='112' >
+	<id>112</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>190</x>
+	<y>60</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_113</portrait>
+	<land>Ravenfrey</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>51</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_MORATHRON</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_MORATHRON</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='113' >
+	<id>113</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>160</x>
+	<y>74</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_114</portrait>
+	<land>Erefar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>45</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_KIRANDA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_KIRANDA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='114' >
+	<id>114</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>178</x>
+	<y>45</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_115</portrait>
+	<land>Elmir</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>53</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_MERITHEL</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_MERITHEL</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='115' >
+	<id>115</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>207</x>
+	<y>35</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_116</portrait>
+	<land>Melibor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>43</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_STORBOLD</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_STORBOLD</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='116' >
+	<id>116</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>174</x>
+	<y>13</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_117</portrait>
+	<land>Sharmark</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>53</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_BRUNAK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_BRUNAK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='117' >
+	<id>117</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>158</x>
+	<y>20</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_118</portrait>
+	<land>Sapphire</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>59</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_GUTHRANE</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_GUTHRANE</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='118' >
+	<id>118</id>
+	<type>castle</type>
+	<char_flags_txt value='4'>+dead</char_flags_txt>
+	<flags_txt value='0'/>
+	<x>256</x>
+	<y>0</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_119</portrait>
+	<land>Elormane</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>53</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Arakai</owner>
+	<land_ruler>CH_ILDRAR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Last Northing</land_realm>
+	<land_owner>CH_ILDRAR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='119' >
+	<id>119</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>230</x>
+	<y>40</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_120</portrait>
+	<land>Dragon</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>43</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_TORGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_TORGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='120' >
+	<id>120</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>222</x>
+	<y>45</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_121</portrait>
+	<land>Rildroth</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>44</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_MOONGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_MOONGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='121' >
+	<id>121</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>236</x>
+	<y>16</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_122</portrait>
+	<land>Angelf</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>47</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_SPARTHOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_SPARTHOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='122' >
+	<id>122</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>238</x>
+	<y>41</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_123</portrait>
+	<land>Erivik</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>45</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_KARGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_KARGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='123' >
+	<id>123</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>241</x>
+	<y>63</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_124</portrait>
+	<land>Sarnoth</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>51</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_ORAGRANE</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_ORAGRANE</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='124' >
+	<id>124</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>240</x>
+	<y>74</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_125</portrait>
+	<land>Shrygal</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>42</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_JARANOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_JARANOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='125' >
+	<id>125</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>229</x>
+	<y>81</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_126</portrait>
+	<land>Faragor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>45</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_SAGRANA</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_SAGRANA</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='126' >
+	<id>126</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>236</x>
+	<y>106</y>
+	<direction>NORTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_127</portrait>
+	<land>Ashnar</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>109</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_GALAGRIM</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_GALAGRIM</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='127' >
+	<id>127</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>219</x>
+	<y>91</y>
+	<direction>SOUTH_EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_128</portrait>
+	<land>Cormir</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>0</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>43</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Dragonlord</owner>
+	<land_ruler>CH_SCIRANE</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>Arungor</land_realm>
+	<land_owner>CH_SCIRANE</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='128' >
+	<id>128</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>94</x>
+	<y>71</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_129</portrait>
+	<land>Cerevere</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>54</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_DOROK</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_DOROK</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='129' >
+	<id>129</id>
+	<type>castle</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>116</x>
+	<y>64</y>
+	<direction>EAST</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_130</portrait>
+	<land>Melthor</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>45</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_MARATHOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_MARATHOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+<building id='130' >
+	<id>130</id>
+	<type>citadel</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>70</x>
+	<y>56</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_3</shield>
+	<portrait>head_131</portrait>
+	<land>Varorn</land>
+		<warrior_0>0</warrior_0>
+		<warrior_1>97</warrior_1>
+		<warrior_2>0</warrior_2>
+		<warrior_3>0</warrior_3>
+		<warrior_4>0</warrior_4>
+		<warrior_5>0</warrior_5>
+		<warrior_6>0</warrior_6>
+		<warrior_7>0</warrior_7>
+		<warrior_8>0</warrior_8>
+		<warrior_9>0</warrior_9>
+		<warrior_10>0</warrior_10>
+		<warrior_11>0</warrior_11>
+		<warrior_12>0</warrior_12>
+		<warrior_13>0</warrior_13>
+		<warrior_14>0</warrior_14>
+		<warrior_15>0</warrior_15>
+	<owner>Atheling</owner>
+	<land_ruler>CH_ZENETHOR</land_ruler>
+	<land_war_state>LS_AT_PEACE</land_war_state>
+	<land_realm>The Lee</land_realm>
+	<land_owner>CH_ZENETHOR</land_owner>
+	<land_enemies>0</land_enemies>
+</building>
+
+
+
+</lom3>

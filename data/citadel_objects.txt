@@ -1,0 +1,122 @@
+<object id='0'>
+	<name>the sword stormblade</name>
+	<id>0</id>
+	<type>object</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>148</x>
+	<y>125</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_1</portrait>
+	<owner>-1</owner>
+	<weapon_type>sword</weapon_type>
+	<details>0</details>
+</object>
+
+<object id='1'>
+	<name>the sword bloodbringer</name>
+	<id>1</id>
+	<type>object</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>7</x>
+	<y>14</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_2</portrait>
+	<owner>-1</owner>
+	<weapon_type>sword</weapon_type>
+	<details>0</details>
+</object>
+
+<object id='2'>
+	<name>the axe widowmaker</name>
+	<id>2</id>
+	<type>object</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>72</x>
+	<y>200</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_3</portrait>
+	<owner>-1</owner>
+	<weapon_type>axe</weapon_type>
+	<details>0</details>
+</object>
+
+<object id='3'>
+	<name>the sword aranath</name>
+	<id>3</id>
+	<type>object</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>32</x>
+	<y>80</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_4</portrait>
+	<owner>-1</owner>
+	<weapon_type>sword</weapon_type>
+	<details>0</details>
+</object>
+
+<object id='4'>
+	<name>the axe persuader</name>
+	<id>4</id>
+	<type>object</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>25</x>
+	<y>160</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_5</portrait>
+	<owner>-1</owner>
+	<weapon_type>axe</weapon_type>
+	<details>0</details>
+</object>
+
+<object id='5'>
+	<name>the axe skullcrusher</name>
+	<id>5</id>
+	<type>object</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>233</x>
+	<y>205</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_6</portrait>
+	<owner>-1</owner>
+	<weapon_type>axe</weapon_type>
+	<details>0</details>
+</object>
+
+<object id='6'>
+	<name>the sword swiftwing</name>
+	<id>6</id>
+	<type>object</type>
+	<char_flags_txt value='2'>+knowledge</char_flags_txt>
+	<flags_txt value='7'>+height+static+obstacle</flags_txt>
+	<x>241</x>
+	<y>10</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_7</portrait>
+	<owner>-1</owner>
+	<weapon_type>sword</weapon_type>
+	<details>0</details>
+</object>
+
+
+
+</lom3>

@@ -1,0 +1,7811 @@
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>155</x>
+	<y>244</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>104</x>
+	<y>231</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>159</x>
+	<y>231</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>211</x>
+	<y>230</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>219</x>
+	<y>228</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>155</x>
+	<y>225</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>184</x>
+	<y>224</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>188</x>
+	<y>223</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>144</x>
+	<y>222</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>157</x>
+	<y>222</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>72</x>
+	<y>221</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>176</x>
+	<y>221</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>115</x>
+	<y>218</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>54</x>
+	<y>217</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>79</x>
+	<y>215</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>222</x>
+	<y>215</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>52</x>
+	<y>214</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>119</x>
+	<y>212</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>85</x>
+	<y>210</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>231</x>
+	<y>204</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>217</x>
+	<y>199</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>84</x>
+	<y>198</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>60</x>
+	<y>197</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>9</x>
+	<y>195</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>66</x>
+	<y>193</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>208</x>
+	<y>192</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>32</x>
+	<y>188</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>177</x>
+	<y>188</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>136</x>
+	<y>186</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>198</x>
+	<y>185</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>74</x>
+	<y>184</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>95</x>
+	<y>182</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>21</x>
+	<y>181</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>69</x>
+	<y>181</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>79</x>
+	<y>180</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>104</x>
+	<y>178</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>141</x>
+	<y>173</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>178</x>
+	<y>171</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>214</x>
+	<y>158</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>28</x>
+	<y>158</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>29</x>
+	<y>150</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>75</x>
+	<y>149</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>77</x>
+	<y>149</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>79</x>
+	<y>149</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>86</x>
+	<y>147</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>21</x>
+	<y>144</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>221</x>
+	<y>144</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>104</x>
+	<y>143</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>129</x>
+	<y>143</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>196</x>
+	<y>140</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>38</x>
+	<y>138</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>13</x>
+	<y>136</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>97</x>
+	<y>136</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>135</x>
+	<y>134</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>164</x>
+	<y>133</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>20</x>
+	<y>131</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>217</x>
+	<y>131</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>159</x>
+	<y>130</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>222</x>
+	<y>129</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>120</x>
+	<y>125</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>5</x>
+	<y>124</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>48</x>
+	<y>119</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>144</x>
+	<y>119</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>161</x>
+	<y>117</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>147</x>
+	<y>112</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>230</x>
+	<y>108</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>60</x>
+	<y>106</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>245</x>
+	<y>104</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>191</x>
+	<y>104</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>179</x>
+	<y>102</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>4</x>
+	<y>99</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>64</x>
+	<y>98</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>15</x>
+	<y>92</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>13</x>
+	<y>87</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>226</x>
+	<y>87</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>167</x>
+	<y>84</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>148</x>
+	<y>84</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>221</x>
+	<y>83</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>175</x>
+	<y>82</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>224</x>
+	<y>82</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>156</x>
+	<y>81</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>43</x>
+	<y>77</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>141</x>
+	<y>77</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>204</x>
+	<y>75</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>79</x>
+	<y>74</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>157</x>
+	<y>74</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>94</x>
+	<y>74</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>194</x>
+	<y>72</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>182</x>
+	<y>71</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>226</x>
+	<y>71</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>79</x>
+	<y>69</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>243</x>
+	<y>69</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>44</x>
+	<y>67</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>14</x>
+	<y>63</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>27</x>
+	<y>60</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>50</x>
+	<y>59</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>150</x>
+	<y>57</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>56</x>
+	<y>54</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>243</x>
+	<y>54</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>24</x>
+	<y>53</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>147</x>
+	<y>52</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>195</x>
+	<y>52</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>223</x>
+	<y>49</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>220</x>
+	<y>49</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>80</x>
+	<y>47</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>86</x>
+	<y>43</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>63</x>
+	<y>42</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>122</x>
+	<y>41</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>28</x>
+	<y>40</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>242</x>
+	<y>40</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>213</x>
+	<y>39</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>213</x>
+	<y>36</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>21</x>
+	<y>31</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>25</x>
+	<y>31</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>75</x>
+	<y>31</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>208</x>
+	<y>31</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>215</x>
+	<y>28</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>194</x>
+	<y>28</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>94</x>
+	<y>27</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>181</x>
+	<y>27</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>238</x>
+	<y>25</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>24</x>
+	<y>25</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>28</x>
+	<y>23</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>180</x>
+	<y>23</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>14</x>
+	<y>19</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>109</x>
+	<y>19</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>18</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>217</x>
+	<y>17</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>244</x>
+	<y>12</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>111</x>
+	<y>10</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>26</x>
+	<y>9</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>178</x>
+	<y>8</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>256</x>
+	<y>256</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>14</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>14</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>129</x>
+	<y>155</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>15</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>129</x>
+	<y>155</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>15</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>131</x>
+	<y>234</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>15</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>131</x>
+	<y>234</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>15</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>134</x>
+	<y>182</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>15</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>134</x>
+	<y>182</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>16</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>16</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>16</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>119</x>
+	<y>207</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>16</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>119</x>
+	<y>207</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>16</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>170</x>
+	<y>191</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>16</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>170</x>
+	<y>191</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>17</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>17</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>17</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>134</x>
+	<y>200</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>17</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>134</x>
+	<y>200</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>17</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>150</x>
+	<y>247</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>18</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>150</x>
+	<y>247</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>18</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>117</x>
+	<y>188</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>18</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='0'>
+	<id>0</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>117</x>
+	<y>188</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='2'>
+	<id>2</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='5'>+height+obstacle</flags_txt>
+	<x>7</x>
+	<y>18</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_27</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>1</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>145</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>146</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>146</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>146</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>146</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>146</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>146</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='4100'>+dead+hidden</char_flags_txt>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>146</x>
+	<y>220</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>234</x>
+	<y>18</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>222</x>
+	<y>45</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>231</x>
+	<y>40</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>228</x>
+	<y>41</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>230</x>
+	<y>35</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>236</x>
+	<y>44</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>243</x>
+	<y>44</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>236</x>
+	<y>50</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>230</x>
+	<y>57</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>230</x>
+	<y>52</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>230</x>
+	<y>62</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>238</x>
+	<y>64</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>234</x>
+	<y>70</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>235</x>
+	<y>76</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>239</x>
+	<y>76</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>232</x>
+	<y>81</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>233</x>
+	<y>96</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>222</x>
+	<y>92</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>235</x>
+	<y>101</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>238</x>
+	<y>106</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>232</x>
+	<y>110</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>232</x>
+	<y>114</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>218</x>
+	<y>103</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>211</x>
+	<y>19</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>240</x>
+	<y>35</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>223</x>
+	<y>22</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>238</x>
+	<y>13</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>231</x>
+	<y>36</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>237</x>
+	<y>53</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+<beast id='3'>
+	<id>3</id>
+	<type>beast</type>
+	<char_flags_txt value='0'/>
+	<flags_txt value='4'>+obstacle</flags_txt>
+	<x>239</x>
+	<y>80</y>
+	<direction>NORTH</direction>
+
+	<shield>shield_1</shield>
+	<portrait>head_28</portrait>
+	<movetype>255</movetype>
+	<movemode>-1</movemode>
+	<speed>0</speed>
+	<int_speed>3</int_speed>
+	<energy>1440</energy>
+	<energy_max>1440</energy_max>
+	<energy_med>960</energy_med>
+	<rest>720</rest>
+	<rest_count>0</rest_count>
+	<timeout>0</timeout>
+	<combat_opponent>0</combat_opponent>
+	<combat_str>1024</combat_str>
+	<combat_power>128</combat_power>
+	<combat_limit>128</combat_limit>
+
+	<anim1>0</anim1>
+	<anim2>0</anim2>
+	<anim3>0</anim3>
+	<anim4>0</anim4>
+</beast>
+
+
+
+</lom3>
