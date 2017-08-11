@@ -166,7 +166,9 @@
 #define DAWN_ENERGY_BOOST               20
 #define DAWN_ENERGY_BOOST_AI            10
 
+        // MAX 128
 		enum mxterrain_t {
+            
 			// lom
 			TN_PLAINS		=	0,
 			TN_CITADEL		=	1,
@@ -183,37 +185,53 @@
 			TN_LITH			=	12,
 			TN_CAVERN		=	13,
 			TN_MOUNTAIN		=	14,
-            TN_UNUSED1      =   15,
+            TN_UNUSED1      =   15, // Used to be ARMY
             
 			// ddr
-			TN_PLAINS2		=	16,
-			TN_MOUNTAIN2	=	17,
-			TN_FOREST2		=	18,
-			TN_HILLS		=	19,
+            TN_PLAINS2		=	16,
+            TN_MOUNTAIN2	=	17,
+            TN_FOREST2		=	18,
+            TN_HILLS		=	19,
+            TN_GATE			=	20, // tunnel exit/entrance
+            TN_TEMPLE		=	21, // tunnel exit/entrance
+            TN_PIT			=	22, // tunnel exit/entrance
+            TN_PALACE		=	23, // tunnel exit/entrance
+            TN_FORTRESS		=	24,
+            TN_HALL			=	25,
+            TN_HUT			=	26,
+            TN_WATCHTOWER	=	27,
+            TN_CITY			=	28,
+            TN_FOUNTAIN		=	29,
+            TN_STONES		=	30,
+            TN_ICYWASTE     =	31,
             
-			TN_GATE			=	20, // tunnel exit/entrance
-			TN_TEMPLE		=	21, // tunnel exit/entrance
-			TN_PIT			=	22, // tunnel exit/entrance
-			TN_PALACE		=	23,// tunnel exit/entrance
-            
-			TN_FORTRESS		=	24,
-			TN_HALL			=	25,
-			TN_HUT			=	26,
-			TN_WATCHTOWER	=	27,
-			TN_CITY			=	28,
-			TN_FOUNTAIN		=	29,
-			TN_STONES		=	30,
-			TN_ICYWASTE     =	31,
+            // citadel
+            TN_LAND         =   32,
+            TN_ISLE         =   33,
+            TN_LAKELAND     =   34,
+            TN_PLAIN        =   35,
+            TN_PLAINS3      =   36,
+            TN_FOREST3      =   37,
+            TN_UNUSED2      =   38,
+            TN_TREES        =   39,
+            TN_MOUNTAIN3    =   40,
+            TN_ICY_MOUNTAIN =   41,
+            TN_DOWNS3       =   42,
+            TN_HILLS3       =   43,
+            TN_FOOTHILLS    =   44,
+            TN_VALLEY       =   45,
+            TN_BAY          =   46,
+            TN_SEA          =   47,
+            TN_RIVER        =   48,
+            TN_MARSH        =   49,
+            TN_LAKE3        =   50,
+            TN_UNUSED3      =   51,
+            TN_UNUSED4      =   52,
+            TN_UNUSED5      =   53,
+            TN_MIST         =   54,
+            TN_UNUSED6      =   55,
 
-//			TERRAIN_VARIANT(TN_MOUNTAINS,1),
-//			TERRAIN_VARIANT(TN_FOREST,1),
-//			TERRAIN_VARIANT(TN_TOWER,1),
-
-//			TN_ARMY,		// remove
-//			TN_MIST,		// remove
-
-
-			TN_NONE=255,
+			TN_NONE=127,
 
 		};
 

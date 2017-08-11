@@ -430,6 +430,28 @@ namespace tme {
     {
         return mx->SaveDiscoveryMap ( argv[0] );
     }
+
+    // COMMAND: @SETSCENARIO
+    //			Sets the scenario for the engine to use
+    //
+    COMMAND( OnSetMap )
+    {
+        mxmap* map = (mxmap*)argv[0].vPtr;
+        if ( map == NULL )
+            return MX_FAILED ;
+        
+        argv[0]=(s32)0;
+        
+        SAFEDELETE(mx->gamemap);
+        
+        mx->gamemap = map;
+        mx->gamemap->CalculateVisibleArea();
+        mx->gamemap->ClearVisible();
+        
+        
+        return MX_OK;
+    }
+
     
     static mxcommand_t mx_commands[] = {
         {"@SETSCENARIO",			1, OnSetScenario,			{variant::vptr} },
@@ -441,6 +463,9 @@ namespace tme {
         {"@DESCRIPTION",			2, OnGameDescription,		{variant::vstring,variant::vptr} },
         {"@LOADDISCOVERYMAP",       1, OnLoadDiscoveryMap,      {variant::vstring} },
         {"@SAVEDISCOVERYMAP",       1, OnSaveDiscoveryMap,      {variant::vstring} },
+        
+        {"@SETMAP",                  1, OnSetMap,                {variant::vptr} },
+        
     };
 
 	//

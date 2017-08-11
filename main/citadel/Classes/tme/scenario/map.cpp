@@ -278,7 +278,7 @@ BOOL mxmap::IsTunnelPassageway( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     mxterrain_t t = mx->scenario->NormaliseTerrain((mxterrain_t)mapsqr.terrain);
-    return mapsqr.HasTunnel() && (t >= TN_PLAINS2 && t<TN_GATE ) ;
+    return mapsqr.HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
 }
 
 void mxmap::SetTunnelVisible( mxgridref l, BOOL visible )
@@ -858,10 +858,7 @@ void mxmap::PutThingsOnMap ( void )
                 if ( mapsqr.IsTunnelPassageway() )
                     t = TN_ICYWASTE ;
    
-                
                 mapsqr.object = location_objects[t-TN_PLAINS2][key];
-                
-                
                 
             }else{
                 mapsqr.flags &= ~lf_creature ;
@@ -967,7 +964,7 @@ BOOL mxloc::HasTunnelEntrance() const
 BOOL mxloc::IsTunnelPassageway() const
 {
     mxterrain_t t = mx->scenario->NormaliseTerrain((mxterrain_t)terrain);
-    return HasTunnel() && (t >= TN_PLAINS2 && t<TN_GATE ) ;
+    return HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
 }
 #endif
     

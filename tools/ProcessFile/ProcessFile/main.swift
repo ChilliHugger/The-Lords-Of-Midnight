@@ -330,6 +330,12 @@ func processFileUnknown_asImage( _ inputFile:String, _ outputFile:String, _ rowS
         
  }
 
+processFileUnknown_asImage( "interior.sod", "/output/unknown.png", 512, true ) { data in
+    var v = UInt8( (data&0xf000) >> 12)
+    v = v & 0x01 // water
+    return PixelData( a: 255, r: v*255, g: v*255, b: v*255 )
+}
+
 
 
 processFileUnknown_asImage( "map.dat", "/output/water.png", 512, true ) { data in

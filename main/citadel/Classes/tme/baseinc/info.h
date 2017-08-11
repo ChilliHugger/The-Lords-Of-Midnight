@@ -371,23 +371,23 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 		u8 Density(mxgridref loc)  ;
 
         void ClearVisible();
+        void CalculateVisibleArea();
         
 	private:
 		void Pan_Location ( mxgridref loc, int distance, int xtype, int ytype, int scrtype ) ;
 		int Pan_AdjustMapPos ( int pos, int type, int dx, int dy );
 		BOOL Create ( size dimensions );
 
-        void CalculateVisibleArea();
+    
+    public:
 
         
-	private:
-		size	m_size;
-		mxloc*	m_data;
+        
+        size	m_size;
+        mxloc*	m_data;
         
         loc_t   m_top_visible;
         loc_t   m_bottom_visible;
-        
-    public:
         
         // ptr to the current discovery map
         mxdiscoverymap* m_discoverymap;

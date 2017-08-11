@@ -16,9 +16,6 @@
 
 #include "../baseinc/tme_internal.h"
 
-
-//#define _DDR_
-
 namespace tme {
 
 	//namespace processors {

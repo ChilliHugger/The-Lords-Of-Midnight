@@ -126,118 +126,24 @@ void ddr_x::initialiseAfterCreate( void )
 MXTRACE("Place Objects On Map");
     PlaceObjectsOnMap();
     
-//    mxcharacter* character=(mxcharacter*)mx->EntityByName("CH_TORINARG");
-//    character->warriors.Total(0);
-//    character->riders.Total(0);
-//    mxgridref loc = character->Location();
-//    loc.x++;
-//    character->Location(loc);
-    
-    
     for (int ii = 0; ii < sv_characters; ii++) {
         ddr_character* c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
         c->lastlocation=c->Location();
-
-//        if ( !c->IsAIControlled() ) {
-//            c->home_stronghold=NULL;
-//            c->orders=OD_NONE;
-//        } else {
-//            if ( c->orders == OD_NONE )
-//                c->orders = OD_HOME;
-//            else {
-//                c->orders = OD_FOLLOW_FOE;
-//            }
-//        }
-        
-//        if ( c->IsAIControlled() ) {
-//            c->warriors.Total(c->warriors.Total()*0.1);
-//            c->riders.Total(c->riders.Total()*0.1);
-//        }
-        
     }
     
     for ( int ii=0; ii < sv_strongholds; ii++ ) {
         mxstronghold* s = static_cast<mxstronghold*>(mx->StrongholdById(ii+1));
-        //s->Energy(180);
         s->Max(sv_stronghold_default_max);
         s->Min(sv_stronghold_default_min);
-        //s->Killed(0);
-        //s->Lost(0);
-        //s->Respawn( s->Terrain()==TN_FORTRESS ? 50 : 100 );
     }
-    
-    //mxobject* object = static_cast<mxobject*>(mx->EntityByName("OB_CROWN_VARENAND"));
-    //mxobject* object = static_cast<mxobject*>(mx->EntityByName("OB_CROWN_CARUDRIUM"));
-    //mxobject* object = static_cast<mxobject*>(mx->EntityByName("OB_SPELL_THIGRORN"));
-    //mxobject* object = static_cast<mxobject*>(mx->EntityByName("OB_RUNES_FINORN"));
-    //mxobject* object = static_cast<mxobject*>(mx->EntityByName("OB_CROWN_IMIRIEL"));
-    //mxcharacter* luxor = static_cast<mxcharacter*>(mx->EntityByName("CH_LUXOR"));
-    //luxor->energy=31;
-    
-    
-    //mxcharacter* shareth = static_cast<mxcharacter*>(mx->EntityByName("CH_SHARETH"));
-    
-    
-//    for ( int ii=0; ii<sv_races-1; ii++ ) {
-//        mxrace* rinfo = mx->RaceById(ii+1);
-//        MXTRACE("[%2d] %16s i=%d r=%f d=%d m=%d e=%d eh=%d"
-//                  , (int)rinfo->Id()
-//                  , (LPCSTR)rinfo->Symbol()
-//                  
-//                  , (int)rinfo->InitialMovementValue()
-//                  , rinfo->RidingMovementMultiplier()
-//                  
-//                  , (int)rinfo->DiagonalMovementModifier()
-//                  , (int)rinfo->MistTimeAffect()
-//                
-//                    , (int)rinfo->BaseEnergyCost()
-//                    , (int)rinfo->BaseEnergyCostHorse()
-//                  );
-//    
-//        //for ( int t=TN_PLAINS2; t<=TN_ICYWASTE; t++ ) {
-//        //    MXTRACE("%d,", (int)rinfo->TerrainMovementModifier((mxterrain_t)t));
-//        //}
-//    }
-
-//    L7285 DB 001h,002h,002h,004h,000h,001h,002h,003h
-//    DB 002h,004h,001h,002h,001h,002h,000h,003h
-
     
     mxterrain* tinfo = mx->TerrainById(TN_ICYWASTE);
     tinfo->movementcost=2;
     
-//    for ( int t=0; t<=TN_ICYWASTE; t++ ) {
-//        mxterrain* tinfo = mx->TerrainById(t);
-//        MXTRACE("[%2d] %16s Movement=%d Army=%d"
-//                  , (int)tinfo->Id()
-//                  , (LPCSTR)tinfo->Symbol()
-//                  , (int)tinfo->MovementCost()
-//                  , tinfo->IsArmyVisible()
-//                  );
-// //       tinfo->Flags().Set(tif_army);
-//    }
-    
     mxscenario::initialiseAfterCreate();
 
-    //((ddr_battle*)mx->battle)->Test();
-    
-
-    
 }
 	
-mxterrain_t ddr_x::NormaliseTerrain( mxterrain_t t) const
-{
-    if ( t == TN_PLAINS )
-        t=TN_PLAINS2;
-    else if ( t==TN_FOREST )
-        t=TN_FOREST2;
-    else if ( t==TN_MOUNTAIN )
-        t=TN_MOUNTAIN2;
-    else if ( t==TN_TOWER )
-        t=TN_WATCHTOWER;
-    return t;
-}
-    
 mxentity* ddr_x::CreateEntity ( id_type_t type )
 {
 	switch ( type ) {
@@ -322,6 +228,19 @@ void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
                              mx->text->CookText((LPSTR)mx->text->SystemString(SS_GUIDANCE2),character) );
         
     }
+}
+
+mxterrain_t ddr_x::NormaliseTerrain( mxterrain_t t) const
+{
+    if ( t == TN_PLAINS )
+        t=TN_PLAINS2;
+    else if ( t==TN_FOREST )
+        t=TN_FOREST2;
+    else if ( t==TN_MOUNTAIN )
+        t=TN_MOUNTAIN2;
+    else if ( t==TN_TOWER )
+        t=TN_WATCHTOWER;
+    return t;
 }
 
 

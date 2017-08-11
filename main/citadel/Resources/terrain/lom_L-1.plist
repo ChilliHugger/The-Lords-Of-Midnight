@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>t_henge0</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0.5,0}</string>
+                <key>spriteOffset</key>
+                <string>{2.5,0}</string>
+                <key>spriteSize</key>
+                <string>{595,188}</string>
+                <key>spriteSourceSize</key>
+                <string>{1024,188}</string>
+                <key>textureRect</key>
+                <string>{{756,2},{595,188}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>8 10 11 8 9 10 7 8 11 5 7 11 5 6 7 3 4 5 3 5 11 2 3 11 0 1 2 0 2 11</string>
+                <key>vertices</key>
+                <string>806 2 806 49 796 70 798 159 812 188 220 188 220 186 226 150 226 63 217 52 217 0 633 0</string>
+                <key>verticesUV</key>
+                <string>1345 4 1345 51 1335 72 1337 161 1351 190 759 190 759 188 765 152 765 65 756 54 756 2 1172 2</string>
+            </dict>
+            <key>t_keep0</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0.5,0}</string>
+                <key>spriteOffset</key>
+                <string>{7.5,0}</string>
+                <key>spriteSize</key>
+                <string>{475,281}</string>
+                <key>spriteSourceSize</key>
+                <string>{512,281}</string>
+                <key>textureRect</key>
+                <string>{{1310,2},{475,281}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>1 9 10 7 8 9 1 7 9 4 5 6 2 7 1 6 2 3 2 6 7 6 3 4 0 1 10</string>
+                <key>vertices</key>
+                <string>449 52 431 70 431 234 501 281 26 281 54 251 79 245 81 69 67 55 67 0 446 0</string>
+                <key>verticesUV</key>
+                <string>1733 54 1715 72 1715 236 1785 283 1310 283 1338 253 1363 247 1365 71 1351 57 1351 2 1730 2</string>
+            </dict>
+            <key>t_village0</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0.5,0}</string>
+                <key>spriteOffset</key>
+                <string>{-7.5,0.5}</string>
+                <key>spriteSize</key>
+                <string>{755,172}</string>
+                <key>spriteSourceSize</key>
+                <string>{1024,173}</string>
+                <key>textureRect</key>
+                <string>{{2,2},{755,172}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>20 21 22 18 19 20 15 16 17 14 15 17 14 17 10 18 9 10 12 13 14 11 12 14 14 10 11 0 20 22 17 18 10 18 20 9 5 7 8 5 6 7 8 2 3 3 4 5 8 3 5 2 8 9 0 1 2 0 2 9 0 9 20</string>
+                <key>vertices</key>
+                <string>435 26 638 26 640 47 695 40 711 22 765 46 854 46 882 150 747 167 317 169 278 172 181 165 128 172 127 162 177 151 177 47 214 50 228 64 306 61 336 27 384 18 385 10 409 0</string>
+                <key>verticesUV</key>
+                <string>310 28 513 28 515 49 570 42 586 24 640 48 729 48 757 152 622 169 192 171 153 174 56 167 3 174 2 164 52 153 52 49 89 52 103 66 181 63 211 29 259 20 260 12 284 2</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>lom_L-1.png</string>
+            <key>size</key>
+            <string>{2048,2048}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:4dbf54545ad5ada7fb5510270e8ca153:e477f09bb04c8c8690eef03e2a836d65:8a3a17d67473bddbc07dc0838b79a10b$</string>
+            <key>textureFileName</key>
+            <string>lom_L-1.png</string>
+        </dict>
+    </dict>
+</plist>

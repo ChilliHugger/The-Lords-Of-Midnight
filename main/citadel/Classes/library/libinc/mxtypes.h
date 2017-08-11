@@ -188,6 +188,8 @@ namespace chilli {
             void Toggle ( u32 flags );
 			void Clear()									{ m_flags = 0; }
 			BOOL Is ( u32 flag ) const ;
+            void ShiftLeft()                                { m_flags <<=1; }
+            void ShiftRight()                               { m_flags >>=1; }
 			lib::archive& Serialize ( lib::archive& ar );
 			operator u32() const ;
 			friend  lib::archive& operator<<(lib::archive& ar, flags32& flags );
@@ -206,6 +208,8 @@ namespace chilli {
             void Toggle ( u32 flags );
 			void Clear()									{ m_flags = 0; }
 			BOOL Is ( u8 flag ) const ;
+            void ShiftLeft()                                { m_flags <<=1; }
+            void ShiftRight()                               { m_flags >>=1; }
 			lib::archive& Serialize ( lib::archive& ar );
 			operator u8() const ;
 			friend  lib::archive& operator<<(lib::archive& ar, flags8& flags );
@@ -223,6 +227,8 @@ namespace chilli {
 			void Reset ( u16 flags ) ;
             void Toggle ( u32 flags );
 			BOOL Is ( u16 flag ) const ;
+            void ShiftLeft()                                { m_flags <<=1; }
+            void ShiftRight()                               { m_flags >>=1; }
 			void Clear()									{ m_flags = 0; }
 			lib::archive& Serialize ( lib::archive& ar );
 			operator u16() const ;

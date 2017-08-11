@@ -24,6 +24,11 @@
 #include "S3EFile.h"
 #endif
 
+// cocos2dx
+#define COCOS2DX
+
+
+
 namespace chilli {
     
     namespace os {
