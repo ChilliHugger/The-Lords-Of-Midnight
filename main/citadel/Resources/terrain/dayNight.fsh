@@ -7,6 +7,7 @@ varying vec2 v_texCoord;
 vec4 m = vec4( 0.0, 0.0, 0.0, 0.0 ) ;
 uniform vec4 p_left;
 uniform vec4 p_right  ;
+uniform float p_alpha  ;
 
 void main()
 {
@@ -31,6 +32,7 @@ void main()
    //     n = c; //vec4(1,1,1,0.5) ;
    //}
     
+    n.a = n.a * p_alpha;
    
     gl_FragColor = n ;
     

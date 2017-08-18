@@ -4,6 +4,29 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>dot</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0.5,0.5}</string>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{32,32}</string>
+                <key>spriteSourceSize</key>
+                <string>{32,32}</string>
+                <key>textureRect</key>
+                <string>{{1161,1578},{32,32}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>1 2 3 0 1 3</string>
+                <key>vertices</key>
+                <string>32 32 0 32 0 0 32 0</string>
+                <key>verticesUV</key>
+                <string>1193 1610 1161 1610 1161 1578 1193 1578</string>
+            </dict>
             <key>floor</key>
             <dict>
                 <key>aliases</key>
@@ -363,7 +386,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:4dbf54545ad5ada7fb5510270e8ca153:e477f09bb04c8c8690eef03e2a836d65:8a3a17d67473bddbc07dc0838b79a10b$</string>
+            <string>$TexturePacker:SmartUpdate:9c6f405bcb732fda51a7521c19965746:21c7e661891f779c49de8b48957a9e2f:8a3a17d67473bddbc07dc0838b79a10b$</string>
             <key>textureFileName</key>
             <string>lom_L-0.png</string>
         </dict>

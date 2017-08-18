@@ -6,11 +6,14 @@
 
 USING_NS_CC;
 
+#define _DEBUG_LANDSCAPE_
+
 #define BASE_HEIGHT             768
 #define BASE_WIDTH              1024
+
 #define PEOPLE_WINDOW_HEIGHT    256
 #define DIR_AMOUNT              512
-#define DIR_STEPS               16
+#define DIR_STEPS               512
 #define DIR_LEFT                (-DIR_AMOUNT/DIR_STEPS)
 #define DIR_RIGHT               (DIR_AMOUNT/DIR_STEPS)
 #define GSCALE                  4.0f
@@ -50,6 +53,20 @@ Scene* Landscape::createScene()
 }
 
 
+//static GLProgram* getOrCreateShader(std::string name, const GLchar* vert, const GLchar* frag)
+//{
+//    auto cache = GLProgramCache::getInstance();
+//    auto prog = cache->getGLProgram(name);
+//    if(prog == nullptr)
+//    {
+//        prog = GLProgram::createWithByteArrays(vert, frag);
+//        cache->addGLProgram(prog, name);
+//    }
+//    return prog;
+//}
+
+
+
 bool Landscape::init()
 {
     if ( !Scene::init() )
@@ -84,6 +101,7 @@ bool Landscape::init()
     glProgramState = GLProgramState::getOrCreateWithGLProgram( p1 );
     glProgramState->setUniformVec4("p_left", Vec4(0,0,165.0/255.0,1));      // outline
     glProgramState->setUniformVec4("p_right", Vec4(1,1,1,1));               // body
+    glProgramState->setUniformFloat("p_alpha", 1.0f);               // alpha
 
     
     // initialise TME
@@ -137,11 +155,15 @@ bool Landscape::init()
 
 void Landscape::InitKeyboard()
 {
+    
     auto eventListener = EventListenerKeyboard::create();
-
+    
     auto me = this;
     
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event){
+
+        if ( turning != 0 )
+            return;
         
         Vec2 loc = event->getCurrentTarget()->getPosition();
         switch(keyCode){
@@ -191,8 +213,10 @@ void Landscape::UpdateLandscape()
     current_landscape_node->addChild(floor);
     
     auto sky = Sprite::createWithSpriteFrameName( "sky_day" );
+    
+    
     sky->setScale(scalex,0.5);
-    sky->setPosition(0,floor->getContentSize().height*0.5);
+    sky->setPosition(0,RES((80*GSCALE)) );
     sky->setAnchorPoint( Vec2(0,0) );
     current_landscape_node->addChild(sky);
 
@@ -211,6 +235,8 @@ void Landscape::UpdateLandscape()
     
     this->addChild(current_landscape_node);
     
+
+    
 }
 
 Sprite* Landscape::GetTerrainImage( mxterrain_t terrain )
@@ -218,13 +244,25 @@ Sprite* Landscape::GetTerrainImage( mxterrain_t terrain )
     if ( terrain == TN_PLAINS || terrain == TN_PLAINS2 || terrain == TN_PLAINS3 )
         return nullptr;
     
+    Sprite* image = nullptr;
     
-    auto image = Sprite::createWithSpriteFrameName( terrain_graphics[terrain] );
+    
+    image = Sprite::createWithSpriteFrameName( terrain_graphics[terrain] );
+    
+
+    
+    if ( image == nullptr )
+        return image;
+    
     
     image->setScale(0.5);
     image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
-    image->setGLProgramState( glProgramState );
+    image->setGLProgramState( glProgramState->clone() );
     
+    if ( terrain == TN_LAKE ) {
+        image->setAnchorPoint(Vec2(0.5,1.0));
+    }
+
     return image;
 }
 
@@ -256,9 +294,9 @@ void Landscape::update(float delta)
 //    }
 //    
     
-    Moving();
+    //Moving();
     
-    Rotating();
+    //Rotating();
     
     // update the PeopleInFront
     
@@ -399,8 +437,8 @@ void Landscape::SetViewForCurrentCharacter ( void )
     character&	c = TME_CurrentCharacter();
     
     here = c.location;
-    here.x *= 16;
-    here.y *= 16;
+    here.x *= DIR_STEPS;
+    here.y *= DIR_STEPS;
     looking = c.looking * DIR_AMOUNT ;
     //SetTimeOfDay(c.time);
     
@@ -461,6 +499,22 @@ bool Landscape::StartLookLeft ( void )
     //next_info->StartSlideFromLeft();
     //current_info->StartSlideOffRight();
     
+    f32 originalLooking = looking;
+    f32 target = -DIR_AMOUNT ;
+    
+    auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+        looking = originalLooking + value;
+        UpdateLandscape();
+        if ( value <= target) {
+            StopRotating(LM_ROTATE_LEFT);
+        }
+        
+    });
+    
+    auto ease = new EaseSineInOut();
+    ease->initWithAction(actionfloat);
+    this->runAction(ease);
+    
     dragged=0;
     
     UpdateLandscape();
@@ -490,6 +544,24 @@ bool Landscape::StartLookRight ( void )
     //next_info->Initialise(c);
     //next_info->StartSlideFromRight();
     //current_info->StartSlideOffLeft();
+    
+    f32 originalLooking = looking;
+    f32 target = DIR_AMOUNT ;
+    
+    auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+        looking = originalLooking + value;
+        UpdateLandscape();
+        if ( value >= target) {
+            StopRotating(LM_ROTATE_RIGHT);
+        }
+        
+    });
+    
+    auto ease = new EaseSineInOut();
+    ease->initWithAction(actionfloat);
+    this->runAction(ease);
+    
+    
     
     dragged=0;
     
@@ -526,7 +598,6 @@ bool Landscape::StartMoving()
         bMoveLocationHasArmy =  TRUE;
     
     
-    
     moveFrom = c.location;
     if ( MXSUCCESS(Character_Move(c)) ) {
         
@@ -543,6 +614,24 @@ bool Landscape::StartMoving()
         //next_info->StartFadeIn();
         
         //current_info->StartFadeOut();
+        
+        f32 target = DIR_STEPS ;
+        
+        auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+
+            here.x = moveFrom.x*(DIR_STEPS - value) + moveTo.x*value;
+            here.y = moveFrom.y*(DIR_STEPS - value) + moveTo.y*value;
+            
+            if ( value >= target )
+                StopMoving();
+            ;
+            
+        });
+        
+        auto ease = new EaseSineInOut();
+        ease->initWithAction(actionfloat);
+        this->runAction(ease);
+        
         
         UpdateLandscape();
         
@@ -601,18 +690,18 @@ void Landscape::StopMoving()
 void Landscape::Rotating ( void )
 {
     
-    looking = looking+turning;
+    //looking = looking+turning;
 
     
     if ( turning ) {
         
-        rotate_look += fabsf(turning);
+//        rotate_look += fabsf(turning);
         
-        if ( turning>0 )
-            turning-=1;
-        
-        if ( turning<0)
-            turning+=1;
+//        if ( turning>0 )
+//            turning-=1;
+//        
+//        if ( turning<0)
+//            turning+=1;
         
         //f32 distance = rotate_look / (f32)DIR_AMOUNT;
         //if ( current_info )
@@ -645,8 +734,8 @@ Node* Landscape::BuildPanorama(s32 x, s32 y, Node* node)
 {
     s32	qDim;
     
-    x = x/16;
-    y = y/16;
+    x = x/DIR_STEPS;
+    y = y/DIR_STEPS;
     
     qDim = 8;
     x = x - qDim;
@@ -682,9 +771,13 @@ void Landscape::DrawQuadrant(Node* node, s32 x, s32 y, s32 dx, s32 dy, s32 qDim)
     }
     else
     {
+#if defined(_DEBUG_LANDSCAPE_)
+        DrawCell(x, y);
+#else
         auto cell = DrawCell(x, y);
         if ( cell!= nullptr )
             node->addChild(cell);
+#endif
     }
 }
 
@@ -701,42 +794,9 @@ Sprite* Landscape::DrawCell(s32 x, s32 y)
     //TME_GetTerrainInfo ( tinfo, MAKE_ID(INFO_TERRAININFO, map.terrain) );
 
     
-    Sprite* image = nullptr;
+    return DrawCellGraphic( GetTerrainImage( map.terrain ), x, y, false );
+    
 
-    image = GetTerrainImage( map.terrain );
-    
-    
-    if ( image != nullptr )
-        return DrawCellGraphic( image, x, y, false );
-    
-    
-    //d = (terrain_data_t*)tinfo.userdata;
-    
-    //current_terrain = map.terrain;
-    
-    
-//    if ( d )
-//    {
-        
-//        if ( map.terrain == TN_LAKE )				//	A hacky way of dealing with the ancient mistake in the y-positioning of lakes
-//        {
-//            UseHalfHeight = 1;
-//        }
-        
-//        feature = d->graphics;
-        
-//#if defined(_LOM_)
-//        if ( x == 4 && y == 10 )
-//            drawGraffiti=TRUE;
-//#else
-//        if ( x == 24 && y == 58 )
-//            drawGraffiti=TRUE;
-//#endif
-        
-//        DrawCellGraphic( feature, x, y, point(0,0) );
-        //UseHalfHeight = 0;
-//    }
-    
     
     
 //    t_global* gl = t_global::singleton();
@@ -784,136 +844,118 @@ Sprite* Landscape::DrawCellGraphic(Sprite* graphic, s32 x, s32 y, BOOL fade)
     return DrawInCylindricalProjection(graphic, point(x, y), fade );
 }
 
-Sprite* Landscape::DrawInCylindricalProjection(Sprite* graphic, point p, BOOL fade )
+
+// spectrum screen was 256x192
+// Sky was 112  height
+// floor was 80 height
+// location in front was at 48 pixels from the bottom
+// thus the panorama height was 32
+// we need a 3 pixel horizon adjustment to put the far locations on the horizon
+
+Sprite* Landscape::DrawInCylindricalProjection(Sprite* graphic, point tile, BOOL fade )
 {
-    float	d, x, y, xOff, yOff, angle, objAngle, viewAngle, scale, width, height;
+    float	distance, x, y, xOff, yOff, angle, objAngle, viewAngle, scale;
     
-    float   near=0.25f;
-    float   far=6.5f;
-    float	HorizonCentreX = RES(512.0f);
-    float	HorizonCentreY = RES(430.0f)+adjusty;
-    float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
-    float	PanoramaHeight = (float)RES(38.0f*GSCALE);
-    int     adjust=0;
+    const float   near=0.25f;
+    const float   far=11.5f;
     
-//    if ( t_global::singleton()->calc_landscape ) {
-//        HorizonCentreX = this->getContentSize().width*0.50f;
-//        HorizonCentreY = this->getContentSize().height*0.5833f;
-//        
-//        int h = this->getContentSize().height - 320 /*IMAGE(floor)->Height() * temp_aspect*/;
-//        
-//        near=0.25f;
-//        far=6.5f;
-//        f32 y_scale = (38*GSCALE) / 320.0f ;
-//        
-//        PanoramaWidth =  (float)RES((800.0f*GSCALE));
-//        PanoramaHeight = (float)h*y_scale;
-//        adjust = PanoramaHeight*(1.0f/far) ;
-//    }
+    const float	HorizonCentreX = RES( (256*GSCALE)/2  );
+    const float	HorizonCentreY = RES( (112*GSCALE) );
+
+    const float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
+    const float	PanoramaHeight = (float)RES(32.0f*GSCALE);
     
+    // adjustment for the furthest of our visible locations being on the horizon
+    int     horizonAdjust = RES((3*GSCALE));
+  
     
-    //location_infront_y = PanoramaHeight + HorizonCentreY - adjust;
-    
-    
-    x = (float)( (p.x*DIR_STEPS) - here.x) / (float)DIR_STEPS;
-    y = (float)( (p.y*DIR_STEPS) - here.y) / (float)DIR_STEPS;
+    x = (float)( (tile.x*DIR_STEPS) - here.x) / (float)DIR_STEPS;
+    y = (float)( (tile.y*DIR_STEPS) - here.y) / (float)DIR_STEPS;
     
     viewAngle = RadiansFromFixedPointAngle( looking );
+    
     objAngle = atan2f(x, -y);
+    
     angle = objAngle - viewAngle;
+    
     if (angle>MX_PI)
-    {
         angle -= MX_PI2;
-    }
+    
     if (angle<-MX_PI)
-    {
         angle += MX_PI2;
-    }
     
     //	convert angle to horizon centre xOffset (cylindrical projection)
     xOff = angle*PanoramaWidth/(MX_PI2);
     
     //	now do the horizon centre yOffset perspective projection
-    d = sqrtf(x*x + y*y);
+    distance = sqrtf(x*x + y*y);
     
-    scale = 1.0f/d;
+    scale = 1.0f/distance;
     
     yOff = PanoramaHeight*scale;
     
     x = xOff + HorizonCentreX;
-    y = yOff + HorizonCentreY - adjust;
-	   
+    y = yOff + HorizonCentreY - horizonAdjust;
+
     
-//    if ( pBitmap2!=NULL && scale <= 0.5f ) {
-//        pBitmap = pBitmap2;
-//        scale *= 2.0f;
-//    }
-//    
-//    if ( pBitmap==NULL ) {
-//        width=0;
-//        height=0;
-//    }else{
-//        
-//        width = (f32)pBitmap->Width()*scale*temp_aspect;
-//        height = (f32)pBitmap->Height()*scale*temp_aspect;
-//    }
-    
-//#if _DEBUG_LANDSCAPE_
-//    point p2 = point(x,y);
-//#endif
-//    x -= width*0.5f ;
-//    
-//    if (UseHalfHeight)
-//        y -= height*0.5f ;
-//    else
-//        y -= height;
-    
-    // fix for extra space added to remove stray horizontal lines
-    //y += RES(20)*scale*temp_aspect;
-    
-    
-//    p.x = (s32)x + (nudge.x*scale);
-//    p.y = (s32)y + (nudge.y*scale);
-    
-    if ((d>= near )&&(d<far))
+    if ((distance>=near)&&(distance<far))
     {
-//        u32	colour = 0xffffffff;
-//        u32	alpha;
-//        
-//        if (d<0.75f )
-//        {
-//            d = (d - near )*2.0f;
-//            alpha = (s32)(d*256.0f);
-//            colour = 0xffffff + (alpha<<24);
-//        }
-//        
-//        if ( pBitmap ) {
-//#if defined(_DAY_NIGHT_SHADER_)
-//            t_global* gl = t_global::singleton();
-//            pBitmap->setShader(gl->time_shader);
-//#else
-//            pBitmap->setShader(NULL);
-//#endif
-//            ui->DrawImage(pBitmap, p, scale*temp_aspect, colour);
-//        }
+        f32	alpha = 1.0f;
+
+        // fade anything too close - ie as we move through the locations
+        if (distance<0.75f )
+            alpha = (distance - near )*2.0f;
         
-//#ifdef _DEBUG_LANDSCAPE_
-//        rect r( point(p2.x-1,p2.y-1), size(3,3));
-//        ui->FillRect(r, _clrBlack);
-//#endif
+        if ( graphic ) {
+            graphic->setPosition(x, this->getContentSize().height - y);
+            graphic->setScale( graphic->getScale() * scale );
+            graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
+#if defined(_DEBUG_LANDSCAPE_)
+          current_landscape_node->addChild(graphic);
+#endif
+        }
         
-//        if ( drawGraffiti ) {
-//#if defined(_LOM_)
-//            ui->DrawImage(IMAGE(graffiti), point(p.x+(RES(165)*scale),p.y+(RES(110)*scale)), scale, _clrWhite,TRUE);
-//#endif
-//#if defined(_DDR_)
-//            ui->DrawImage(IMAGE(graffiti), point(p.x+(RES(235)*scale),p.y+(RES(210)*scale)), scale, _clrWhite,TRUE);
-//#endif
-//            drawGraffiti=FALSE;
-//        }
-     
-        graphic->setPosition(x, this->getContentSize().height - y);
-        graphic->setScale( graphic->getScale() * scale );
+#if defined(_DEBUG_LANDSCAPE_)
+        // debug
+        auto dot = Sprite::createWithSpriteFrameName( "dot" );
+        dot->setColor(Color3B::BLACK);
+        dot->setPosition(x, this->getContentSize().height - y);
+        dot->setScale(0.05f);
+        dot->setAnchorPoint(Vec2(0.5,0.5));
+        current_landscape_node->addChild(dot);
+        
+        //string label;
+        char buffer[20];
+        sprintf(buffer, "%d,%d", tile.x-(here.x/DIR_STEPS), tile.y-(here.y/DIR_STEPS));
+        
+        
+        auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 6);
+    
+        label->setColor(Color3B::BLUE);
+        //label->setMaxLineWidth(800);
+        label->setAlignment(TextHAlignment::CENTER);
+        label->setAnchorPoint(Vec2(0.5,0.5));
+        //label->setLineSpacing(0);
+        //label->setLineHeight(30);
+        label->setPosition(x, this->getContentSize().height - y);
+        current_landscape_node->addChild(label, 1);
+        
+        
+//        auto dot1 = Sprite::createWithSpriteFrameName( "dot" );
+//        dot1->setColor(Color3B::BLUE);
+//        dot1->setPosition(x-(256*scale), this->getContentSize().height - y);
+//        dot1->setScale(0.1f);
+//        dot1->setAnchorPoint(Vec2(0.5,0.5));
+//        current_landscape_node->addChild(dot1);
+//
+//        auto dot2 = Sprite::createWithSpriteFrameName( "dot" );
+//        dot2->setColor(Color3B::RED);
+//        dot2->setPosition(x+(256*scale), this->getContentSize().height - y);
+//        dot2->setScale(0.1f);
+//        dot2->setAnchorPoint(Vec2(0.5,0.5));
+//        current_landscape_node->addChild(dot2);
+        
+#endif
         
         return graphic;
     }

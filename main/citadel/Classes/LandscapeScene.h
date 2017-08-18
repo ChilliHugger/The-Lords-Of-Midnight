@@ -110,16 +110,17 @@ private:
     s32         left ;
     GESTURE_MODE fingermode;
     
-    s32             adjusty;
-    
     s32				moveCount ;
     s32				UseHalfHeight ;
     s32				snapback;
+    
     s32             location_infront_y;
     
 
     BOOL            bMoveLocationHasArmy;
     s32             compass_delay;
+    
+    GLProgram*      glShaderProgram;
     
 public:
     u32             mouse_down_time;
