@@ -5,6 +5,8 @@
 
 #include "tme_interface.h"
 
+#include "LandscapeGenerator.h"
+
 USING_NS_CC;
 
 typedef enum GESTURE_MODE {
@@ -36,7 +38,6 @@ enum LANDSCAPE_MOVEMENT
 };
 
 
-
 class Landscape : public cocos2d::Scene
 {
 public:
@@ -52,19 +53,9 @@ public:
 
     
     Sprite* GetTerrainImage( mxterrain_t terrain );
+    Sprite* GetFloorImage( floor_t floor );
     
-    Node* BuildPanorama(s32 x, s32 y, Node* node);
 
-    void DrawQuadrant(Node* node, s32 x, s32 y, s32 dx, s32 dy, s32 qDim);
-
-    Sprite* DrawCell(s32 x, s32 y);
-    Sprite* DrawCellGraphic( Sprite* graphic, s32 x, s32 y, BOOL fade);
-    
-    float RadiansFromFixedPointAngle(s32 fixed);
-    Sprite* DrawInCylindricalProjection(Sprite* graphic, point p, BOOL fade );
-
-    
-    
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
@@ -84,6 +75,11 @@ public:
 
     void SetViewForCurrentCharacter ( void );
     
+    void BuildFloors( Vector<LandscapeItem*>* items );
+    void BuildTerrain( Vector<LandscapeItem*>* items );
+    void BuildDebug( Vector<LandscapeItem*>* items );
+
+    
     void UpdateLandscape();
     void InitKeyboard();
     
@@ -97,7 +93,10 @@ private:
     Vec2            drag_current;
     Vec2            drag_stop;
     
+    
     /* landscaping */
+    LandscapeGenerator*  landscapeGen;
+    
     f32				rotate_look ;
     f32				voffset ;
     f32				looking ;

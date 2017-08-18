@@ -7,7 +7,7 @@
 LandscapeGenerator::LandscapeGenerator()
 {
     near=0.25f;
-    far=6.5f;
+    far=11.5f;
 
 	items = new Vector<LandscapeItem*>();
 	
@@ -18,8 +18,8 @@ LandscapeGenerator::LandscapeGenerator()
 void LandscapeGenerator::Build(loc_t location, f32 direction)
 {
     loc = location;
-    loc.x *= DIR_STEPS;
-    loc.y *= DIR_STEPS;
+    //loc.x *= DIR_STEPS;
+    //loc.y *= DIR_STEPS;
     looking = direction; //direction * DIR_AMOUNT ;
 
     
@@ -86,9 +86,11 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 	TME_GetTerrainInfo ( tinfo, MAKE_ID(INFO_TERRAININFO, map.terrain) );
 
 	item->loc = loc_t(x,y);
-	item->floor = ( map.terrain == TN_LAKE ) ? floor_water : floor_normal;
+	item->floor = ( map.terrain > TN_UNUSED1 ) ? floor_water : floor_normal;
 	item->army = false;
 	item->mist = false;
+    item->position = Vec3(0,0,0);
+    item->terrain = map.terrain;
 
 	if( map.flags&lf_army && tinfo.flags&tif_army )
 		item->army = true;
@@ -106,33 +108,28 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 }
 
 
+// spectrum screen was 256x192
+// Sky was 112  height
+// floor was 80 height
+// location in front was at 48 pixels from the bottom
+// thus the panorama height was 32
+// we need a 3 pixel horizon adjustment to put the far locations on the horizon
+
 LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item)
 {
-    float	x, y, xOff, yOff, angle, objAngle, viewAngle, width, height;
+    float	x, y, xOff, yOff, angle, objAngle, viewAngle;
     
-    float	HorizonCentreX = RES(512.0f);
-    float	HorizonCentreY = RES(430.0f);
-    float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
-    float	PanoramaHeight = (float)RES(38.0f*GSCALE);
-    int     adjust=0;
+
+    const float	HorizonCentreX = RES( (256*GSCALE)/2  );
+    const float	HorizonCentreY = RES( (112*GSCALE) );
     
-//    if ( t_global::singleton()->calc_landscape ) {
-//        HorizonCentreX = this->getContentSize().width*0.50f;
-//        HorizonCentreY = this->getContentSize().height*0.5833f;
-//        
-//        int h = this->getContentSize().height - 320 /*IMAGE(floor)->Height() * temp_aspect*/;
-//        
-//        near=0.25f;
-//        far=6.5f;
-//        f32 y_scale = (38*GSCALE) / 320.0f ;
-//        
-//        PanoramaWidth =  (float)RES((800.0f*GSCALE));
-//        PanoramaHeight = (float)h*y_scale;
-//        adjust = PanoramaHeight*(1.0f/far) ;
-//    }
+    const float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
+    const float	PanoramaHeight = (float)RES(32.0f*GSCALE);
     
+    // adjustment for the furthest of our visible locations being on the horizon
+    int     horizonAdjust = RES((3*GSCALE));
     
-    location_infront_y = PanoramaHeight + HorizonCentreY - adjust;
+    location_infront_y = PanoramaHeight + HorizonCentreY - horizonAdjust;
     
     x = (float)( (item->loc.x*DIR_STEPS) - loc.x) / (float)DIR_STEPS;
     y = (float)( (item->loc.y*DIR_STEPS) - loc.y) / (float)DIR_STEPS;
@@ -160,7 +157,7 @@ LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item
     yOff = PanoramaHeight*item->scale;
     
     item->position.x = xOff + HorizonCentreX;
-    item->position.y = yOff + HorizonCentreY - adjust;
+    item->position.y = yOff + HorizonCentreY - horizonAdjust;
     
     return item;
 }

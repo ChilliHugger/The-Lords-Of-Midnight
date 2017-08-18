@@ -8,20 +8,12 @@ USING_NS_CC;
 
 #define _DEBUG_LANDSCAPE_
 
-#define BASE_HEIGHT             768
-#define BASE_WIDTH              1024
 
-#define PEOPLE_WINDOW_HEIGHT    256
-#define DIR_AMOUNT              512
-#define DIR_STEPS               512
-#define DIR_LEFT                (-DIR_AMOUNT/DIR_STEPS)
-#define DIR_RIGHT               (DIR_AMOUNT/DIR_STEPS)
-#define GSCALE                  4.0f
 
 //#define MX_PI                   3.141592654358979323
 //#define MX_PI2                  (MX_PI*2.0)
 
-#define RES(x) (s32)	((x)*1.0)
+//#define RES(x) (s32)	((x)*1.0)
 //#define ASP(x) (s32)	((x)*uimanager::singleton()->aspect_scale)
 //#define SRC(x) (s32)	((x)*uimanager::singleton()->source_scale)
 
@@ -44,7 +36,10 @@ const std::string terrain_graphics[] = {
     , "t_mountain0"
 };
 
-
+const std::string floor_graphics[] = {
+    "t_land0"
+    , "t_water0"
+};
 
 
 Scene* Landscape::createScene()
@@ -118,11 +113,12 @@ bool Landscape::init()
 //#endif
     
     
-    //auto builder = new TMEMapBuilder();
-    //mxmap* map = builder->Build( "lom_map_test.tmx" );
-    //TME_DebugInstallMap(map);
+    auto builder = new TMEMapBuilder();
+    mxmap* map = builder->Build( "lom_map_test.tmx" );
+    TME_DebugInstallMap(map);
     
     
+    landscapeGen = new LandscapeGenerator();
     
     
     
@@ -158,7 +154,7 @@ void Landscape::InitKeyboard()
     
     auto eventListener = EventListenerKeyboard::create();
     
-    auto me = this;
+    //auto me = this;
     
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event){
 
@@ -177,6 +173,9 @@ void Landscape::InitKeyboard()
                 StartMoving();
                 break;
             case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+                break;
+                
+            default:
                 break;
         }
     };
@@ -202,6 +201,9 @@ void Landscape::UpdateLandscape()
         current_landscape_node=nullptr;
     }
     
+    landscapeGen->Build(here, looking);
+    
+    
     current_landscape_node = new Node();
     
     float scalex = 1024.0 / 128.0 ;
@@ -211,17 +213,26 @@ void Landscape::UpdateLandscape()
     floor->setPosition(0, 0);
     floor->setAnchorPoint( Vec2(0,0) );
     current_landscape_node->addChild(floor);
+  
+    // generate floors
+    BuildFloors(landscapeGen->items);
     
     auto sky = Sprite::createWithSpriteFrameName( "sky_day" );
-    
-    
     sky->setScale(scalex,0.5);
     sky->setPosition(0,RES((80*GSCALE)) );
     sky->setAnchorPoint( Vec2(0,0) );
     current_landscape_node->addChild(sky);
 
+    // generate terrain
+    BuildTerrain(landscapeGen->items);
+
+#if defined(_DEBUG_LANDSCAPE_)
+    BuildDebug(landscapeGen->items);
+#endif
     
-    BuildPanorama(here.x,here.y,current_landscape_node);
+    
+    
+//    BuildPanorama(here.x,here.y,current_landscape_node);
     
     
 //    Sprite* image;
@@ -239,10 +250,168 @@ void Landscape::UpdateLandscape()
     
 }
 
+void Landscape::BuildFloors( Vector<LandscapeItem*>* items )
+{
+    //
+    // Do the water first
+    //
+    for(auto const& item: *items) {
+    
+        if ( item->floor != floor_water )
+            continue;
+        
+        if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
+        {
+            auto graphic = GetFloorImage(item->floor);
+            
+            
+            if ( graphic ) {
+                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+                
+                graphic->setScaleX( graphic->getScaleX() * item->scale );
+                graphic->setScaleY( graphic->getScaleY() * item->scale );
+                
+
+                current_landscape_node->addChild(graphic);
+
+            }
+        }
+    
+    }
+
+    //
+    // The everything else
+    //
+    
+    for(auto const& item: *items) {
+        
+        if ( item->floor == floor_water )
+            continue;
+        
+        if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
+        {
+            auto graphic = GetFloorImage(item->floor);
+            
+            
+            if ( graphic ) {
+                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+                graphic->setScale( graphic->getScale() * item->scale );
+
+                current_landscape_node->addChild(graphic);
+
+            }
+        }
+        
+    }
+    
+    
+    //auto graphic = Sprite::createWithSpriteFrameName( "land_front" );
+    
+
+    
+    //graphic->setPosition(this->getContentSize().width/2, 0);
+//    
+//    graphic->setPosition(0, 0);
+//    graphic->setScaleX(2.0);
+//    graphic->setScaleY(1.0);
+//    current_landscape_node->addChild(graphic);
+    
+    
+}
+
+void Landscape::BuildTerrain( Vector<LandscapeItem*>* items )
+{
+    for(auto const& item: *items) {
+        
+        //landscapeGen->CalcCylindricalProjection(item);
+        
+        if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
+        {
+            f32	alpha = 1.0f;
+            
+            // fade anything too close - ie as we move through the locations
+            if (item->position.z<0.75f )
+                alpha = (item->position.z - landscapeGen->near )*2.0f;
+            
+            auto graphic = GetTerrainImage(item->terrain);
+            
+            if ( graphic ) {
+                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+                graphic->setScale( graphic->getScale() * item->scale );
+                graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
+#if !defined(_DEBUG_LANDSCAPE_)
+                current_landscape_node->addChild(graphic);
+#endif
+            }
+        }
+        
+    }
+    
+}
+
+void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
+{
+    for(auto const& item: *items) {
+        
+        //landscapeGen->CalcCylindricalProjection(item);
+        
+        if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
+        {
+
+            // debug
+            auto dot = Sprite::createWithSpriteFrameName( "dot" );
+            dot->setColor(Color3B::RED);
+            dot->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+            dot->setScale(0.1f);
+            dot->setAnchorPoint(Vec2(0.5,0.5));
+            current_landscape_node->addChild(dot);
+            
+//            char buffer[20];
+//            sprintf(buffer, "%d,%d", item->loc.x-(here.x/DIR_STEPS), item->loc.y-(here.y/DIR_STEPS));
+//            
+//            
+//            auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 6);
+//            
+//            label->setColor(Color3B::BLUE);
+//            //label->setMaxLineWidth(800);
+//            label->setAlignment(TextHAlignment::CENTER);
+//            label->setAnchorPoint(Vec2(0.5,0.5));
+//            //label->setLineSpacing(0);
+//            //label->setLineHeight(30);
+//            label->setPosition(item->position.x, this->getContentSize().height - item->position.y - RES(5));
+//            current_landscape_node->addChild(label, 1);
+            
+            
+            //        auto dot1 = Sprite::createWithSpriteFrameName( "dot" );
+            //        dot1->setColor(Color3B::BLUE);
+            //        dot1->setPosition(x-(256*scale), this->getContentSize().height - y);
+            //        dot1->setScale(0.1f);
+            //        dot1->setAnchorPoint(Vec2(0.5,0.5));
+            //        current_landscape_node->addChild(dot1);
+            //
+            //        auto dot2 = Sprite::createWithSpriteFrameName( "dot" );
+            //        dot2->setColor(Color3B::RED);
+            //        dot2->setPosition(x+(256*scale), this->getContentSize().height - y);
+            //        dot2->setScale(0.1f);
+            //        dot2->setAnchorPoint(Vec2(0.5,0.5));
+            //        current_landscape_node->addChild(dot2);
+
+        }
+        
+    }
+    
+}
+
+
+
 Sprite* Landscape::GetTerrainImage( mxterrain_t terrain )
 {
     if ( terrain == TN_PLAINS || terrain == TN_PLAINS2 || terrain == TN_PLAINS3 )
         return nullptr;
+    
+    if ( terrain >= TN_UNUSED1 )
+        return nullptr;
+    
     
     Sprite* image = nullptr;
     
@@ -265,6 +434,27 @@ Sprite* Landscape::GetTerrainImage( mxterrain_t terrain )
 
     return image;
 }
+
+Sprite* Landscape::GetFloorImage( floor_t floor )
+{
+
+    Sprite* image = Sprite::createWithSpriteFrameName( floor_graphics[floor] );
+    
+    if ( image == nullptr )
+        return image;
+    
+    image->setScale(0.6);
+    
+    if ( floor == floor_water )
+        image->setScale(0.7);
+    
+    //image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
+    //image->setGLProgramState( glProgramState->clone() );
+
+    
+    return image;
+}
+
 
 void Landscape::update(float delta)
 {
@@ -440,6 +630,7 @@ void Landscape::SetViewForCurrentCharacter ( void )
     here.x *= DIR_STEPS;
     here.y *= DIR_STEPS;
     looking = c.looking * DIR_AMOUNT ;
+    
     //SetTimeOfDay(c.time);
     
     //current_info=info[0];
@@ -727,252 +918,6 @@ void Landscape::Rotating ( void )
     
     
 }
-
-
-
-Node* Landscape::BuildPanorama(s32 x, s32 y, Node* node)
-{
-    s32	qDim;
-    
-    x = x/DIR_STEPS;
-    y = y/DIR_STEPS;
-    
-    qDim = 8;
-    x = x - qDim;
-    y = y - qDim;
-    
-    
-    DrawQuadrant(node, x, y, 0, 0, qDim);
-    DrawQuadrant(node, x + qDim, y, 1, 0, qDim);
-    DrawQuadrant(node, x, y + qDim, 0, 1, qDim);
-    DrawQuadrant(node, x + qDim, y + qDim, 1, 1, qDim);
-    
-    return node;
-}
-
-
-void Landscape::DrawQuadrant(Node* node, s32 x, s32 y, s32 dx, s32 dy, s32 qDim)
-{
-    s32	qx1, qy1, qx2, qy2;
-    
-    qDim = qDim>>1;
-    
-    if (qDim)
-    {
-        qx1 = x + dx*qDim;
-        qx2 = x + (1 - dx)*qDim;
-        qy1 = y + dy*qDim;
-        qy2 = y + (1 - dy)*qDim;
-        
-        DrawQuadrant( node, qx1, qy1, dx, dy, qDim);
-        DrawQuadrant( node, qx2, qy1, dx, dy, qDim);
-        DrawQuadrant( node, qx1, qy2, dx, dy, qDim);
-        DrawQuadrant( node, qx2, qy2, dx, dy, qDim);
-    }
-    else
-    {
-#if defined(_DEBUG_LANDSCAPE_)
-        DrawCell(x, y);
-#else
-        auto cell = DrawCell(x, y);
-        if ( cell!= nullptr )
-            node->addChild(cell);
-#endif
-    }
-}
-
-Sprite* Landscape::DrawCell(s32 x, s32 y)
-{
-    mxid			key;
-    maplocation		map;
-    //terraininfo		tinfo;
-    //terrain_data_t*	d;
-    //imagearray*		feature;
-    
-    key = MAKE_LOCID(x, y);
-    TME_GetLocation( map, key );
-    //TME_GetTerrainInfo ( tinfo, MAKE_ID(INFO_TERRAININFO, map.terrain) );
-
-    
-    return DrawCellGraphic( GetTerrainImage( map.terrain ), x, y, false );
-    
-
-    
-    
-//    t_global* gl = t_global::singleton();
-//    
-//    BOOL bDrawArmy=FALSE;
-//    if ( map.flags&lf_army && tinfo.flags&tif_army )
-//        bDrawArmy=TRUE;
-    
-
-//    if ( moveCount && bDrawArmy )
-//        if ( (x== moveFrom.x && y==moveFrom.y) || (x== moveTo.x && y==moveTo.y && !bMoveLocationHasArmy )  )
-//            bDrawArmy=FALSE;
-    
-//    // if there is mist here then we need to draw the mist
-//    if ( map.flags&lf_mist ) {
-//        DrawCellGraphic( ((terrain_data_t*)gl->terrain[1])->graphics, x, y, point(RES(-76),RES(8)) );
-//        DrawCellGraphic( ((terrain_data_t*)gl->terrain[1])->graphics, x, y, point(RES(76+76),RES(8)) );
-//        bDrawArmy=false;
-//    }
-    
-//    if ( bDrawArmy ) {
-//#if defined(_DDR_)
-//        DrawCellGraphic( ((terrain_data_t*)gl->terrain[0])->graphics, x, y, point(RES(-76),RES(4)) );
-//        DrawCellGraphic( ((terrain_data_t*)gl->terrain[0])->graphics, x, y, point(RES(76+76),RES(4)) );
-//#else
-//        DrawCellGraphic( ((terrain_data_t*)gl->terrain[0])->graphics, x, y, point(RES(0),RES(4)) );
-//#endif
-//    }
-    
-    return nullptr;
-    
-}
-
-
-Sprite* Landscape::DrawCellGraphic(Sprite* graphic, s32 x, s32 y, BOOL fade)
-{
-    //mximage*		pBitmap;
-    //pBitmap = graphic->Image(0);		// the biggest size
-    
-//#ifndef _DEBUG_LANDSCAPE_
-//    if ( pBitmap == NULL )
-//        return;
-//#endif
-    
-    return DrawInCylindricalProjection(graphic, point(x, y), fade );
-}
-
-
-// spectrum screen was 256x192
-// Sky was 112  height
-// floor was 80 height
-// location in front was at 48 pixels from the bottom
-// thus the panorama height was 32
-// we need a 3 pixel horizon adjustment to put the far locations on the horizon
-
-Sprite* Landscape::DrawInCylindricalProjection(Sprite* graphic, point tile, BOOL fade )
-{
-    float	distance, x, y, xOff, yOff, angle, objAngle, viewAngle, scale;
-    
-    const float   near=0.25f;
-    const float   far=11.5f;
-    
-    const float	HorizonCentreX = RES( (256*GSCALE)/2  );
-    const float	HorizonCentreY = RES( (112*GSCALE) );
-
-    const float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
-    const float	PanoramaHeight = (float)RES(32.0f*GSCALE);
-    
-    // adjustment for the furthest of our visible locations being on the horizon
-    int     horizonAdjust = RES((3*GSCALE));
-  
-    
-    x = (float)( (tile.x*DIR_STEPS) - here.x) / (float)DIR_STEPS;
-    y = (float)( (tile.y*DIR_STEPS) - here.y) / (float)DIR_STEPS;
-    
-    viewAngle = RadiansFromFixedPointAngle( looking );
-    
-    objAngle = atan2f(x, -y);
-    
-    angle = objAngle - viewAngle;
-    
-    if (angle>MX_PI)
-        angle -= MX_PI2;
-    
-    if (angle<-MX_PI)
-        angle += MX_PI2;
-    
-    //	convert angle to horizon centre xOffset (cylindrical projection)
-    xOff = angle*PanoramaWidth/(MX_PI2);
-    
-    //	now do the horizon centre yOffset perspective projection
-    distance = sqrtf(x*x + y*y);
-    
-    scale = 1.0f/distance;
-    
-    yOff = PanoramaHeight*scale;
-    
-    x = xOff + HorizonCentreX;
-    y = yOff + HorizonCentreY - horizonAdjust;
-
-    
-    if ((distance>=near)&&(distance<far))
-    {
-        f32	alpha = 1.0f;
-
-        // fade anything too close - ie as we move through the locations
-        if (distance<0.75f )
-            alpha = (distance - near )*2.0f;
-        
-        if ( graphic ) {
-            graphic->setPosition(x, this->getContentSize().height - y);
-            graphic->setScale( graphic->getScale() * scale );
-            graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
-#if defined(_DEBUG_LANDSCAPE_)
-          current_landscape_node->addChild(graphic);
-#endif
-        }
-        
-#if defined(_DEBUG_LANDSCAPE_)
-        // debug
-        auto dot = Sprite::createWithSpriteFrameName( "dot" );
-        dot->setColor(Color3B::BLACK);
-        dot->setPosition(x, this->getContentSize().height - y);
-        dot->setScale(0.05f);
-        dot->setAnchorPoint(Vec2(0.5,0.5));
-        current_landscape_node->addChild(dot);
-        
-        //string label;
-        char buffer[20];
-        sprintf(buffer, "%d,%d", tile.x-(here.x/DIR_STEPS), tile.y-(here.y/DIR_STEPS));
-        
-        
-        auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 6);
-    
-        label->setColor(Color3B::BLUE);
-        //label->setMaxLineWidth(800);
-        label->setAlignment(TextHAlignment::CENTER);
-        label->setAnchorPoint(Vec2(0.5,0.5));
-        //label->setLineSpacing(0);
-        //label->setLineHeight(30);
-        label->setPosition(x, this->getContentSize().height - y);
-        current_landscape_node->addChild(label, 1);
-        
-        
-//        auto dot1 = Sprite::createWithSpriteFrameName( "dot" );
-//        dot1->setColor(Color3B::BLUE);
-//        dot1->setPosition(x-(256*scale), this->getContentSize().height - y);
-//        dot1->setScale(0.1f);
-//        dot1->setAnchorPoint(Vec2(0.5,0.5));
-//        current_landscape_node->addChild(dot1);
-//
-//        auto dot2 = Sprite::createWithSpriteFrameName( "dot" );
-//        dot2->setColor(Color3B::RED);
-//        dot2->setPosition(x+(256*scale), this->getContentSize().height - y);
-//        dot2->setScale(0.1f);
-//        dot2->setAnchorPoint(Vec2(0.5,0.5));
-//        current_landscape_node->addChild(dot2);
-        
-#endif
-        
-        return graphic;
-    }
-    
-    return nullptr;
-}
-
-float Landscape::RadiansFromFixedPointAngle(s32 fixed)
-{
-    float angle;
-    
-    angle = (float)fixed;
-    angle = angle*MX_PI2/4096.0f;
-    
-    return angle;
-}
-
 
 
 

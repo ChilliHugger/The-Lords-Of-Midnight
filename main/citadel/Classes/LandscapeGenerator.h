@@ -16,9 +16,10 @@ USING_NS_CC;
 
 #define BASE_HEIGHT             768
 #define BASE_WIDTH              1024
+
 #define PEOPLE_WINDOW_HEIGHT    256
 #define DIR_AMOUNT              512
-#define DIR_STEPS               16
+#define DIR_STEPS               512
 #define DIR_LEFT                (-DIR_AMOUNT/DIR_STEPS)
 #define DIR_RIGHT               (DIR_AMOUNT/DIR_STEPS)
 #define GSCALE                  4.0f
@@ -27,7 +28,7 @@ USING_NS_CC;
 //#define ASP(x) (s32)	((x)*uimanager::singleton()->aspect_scale)
 //#define SRC(x) (s32)	((x)*uimanager::singleton()->source_scale)
 
-enum floor_t {
+typedef enum floor_t {
     floor_normal = 0,
     floor_water = 1,
     floor_snow = 2,
@@ -37,7 +38,7 @@ class LandscapeItem : public Ref {
 public:
     loc_t       loc;
     mxterrain_t	terrain;
-    int			floor;
+    floor_t		floor;
     bool		army;
     bool		mist;
     Vec3		position;

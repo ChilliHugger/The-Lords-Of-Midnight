@@ -284,8 +284,6 @@
 		8351E4021F376D7000605D75 /* ddr_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ddr_map.tmx; sourceTree = "<group>"; };
 		8351E4041F376D7B00605D75 /* lom_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map.tmx; sourceTree = "<group>"; };
 		8351E40D1F3A655C00605D75 /* lom_map_test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map_test.tmx; sourceTree = "<group>"; };
-		8351E40F1F3B81E700605D75 /* LandscapeScene2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LandscapeScene2.cpp; sourceTree = "<group>"; };
-		8351E4121F3B81F900605D75 /* LandscapeScene2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeScene2.h; sourceTree = "<group>"; };
 		8351E4131F3B825600605D75 /* LandscapeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LandscapeGenerator.cpp; sourceTree = "<group>"; };
 		8351E4161F3B827900605D75 /* LandscapeGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LandscapeGenerator.h; sourceTree = "<group>"; };
 		83D263E21F36052E001C6F13 /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "../../../../../../../../../../Developer/cocos2d-x-3.15.1/prebuilt/mac/libcocos2d Mac.a"; sourceTree = "<group>"; };
@@ -537,7 +535,6 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8351E4131F3B825600605D75 /* LandscapeGenerator.cpp */,
 				83D264E61F360857001C6F13 /* tinyxml */,
 				83D264861F36077E001C6F13 /* library */,
 				83D263E71F360724001C6F13 /* tme */,
@@ -545,15 +542,14 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				8306184A1F38687000D017E5 /* LandscapeScene.cpp */,
-				8351E40F1F3B81E700605D75 /* LandscapeScene2.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				8306184D1F38688000D017E5 /* LandscapeScene.h */,
-				8351E4121F3B81F900605D75 /* LandscapeScene2.h */,
+				8351E4131F3B825600605D75 /* LandscapeGenerator.cpp */,
+				8351E4161F3B827900605D75 /* LandscapeGenerator.h */,
+				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				830618611F38758800D017E5 /* tme_interface.h */,
 				830618621F38758800D017E5 /* tme.cpp */,
 				83D895F91F36666D00172245 /* TMEMapBuilder.cpp */,
 				83D895FA1F36666D00172245 /* TMEMapBuilder.h */,
-				8351E4161F3B827900605D75 /* LandscapeGenerator.h */,
 			);
 			name = Classes;
 			path = ../Classes;
