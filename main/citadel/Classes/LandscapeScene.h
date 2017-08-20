@@ -75,9 +75,10 @@ public:
 
     void SetViewForCurrentCharacter ( void );
     
-    void BuildFloors( Vector<LandscapeItem*>* items );
-    void BuildTerrain( Vector<LandscapeItem*>* items );
-    void BuildDebug( Vector<LandscapeItem*>* items );
+    void BuildFloors( LandscapeItems* items );
+    void BuildTerrain( LandscapeItems* items );
+    void BuildDebug( LandscapeItems* items );
+    void UpdateScreenCoordinates();
 
     
     void UpdateLandscape();
@@ -101,7 +102,12 @@ private:
     f32				voffset ;
     f32				looking ;
     f32				turning ;
+    
     loc_t			here ;
+    loc_t           currentLocation;
+    loc_t           aheadLocation;
+    mxdir_t         currentDirection;
+    
     loc_t			moveFrom ;
     loc_t			moveTo ;
     f32             movement_amount ;
@@ -128,8 +134,17 @@ public:
 
 
     Node*           current_landscape_node;
-    
+    f32             masterScale;
  
+    bool            showWater;
+    bool            showLand;
+    bool            showTerrain;
+    int             debugMode;
+    bool            debugLand;
+    f32             landScaleX;
+    f32             landScaleY;
+    
+    
 };
 
 #endif // __LANDSCAPE_SCENE_H__

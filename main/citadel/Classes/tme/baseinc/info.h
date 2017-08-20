@@ -603,6 +603,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 		{
 		public:
 			DEFAULT_IMPLEMENTATION(mxterrain);
+            
+            mxterrain( mxterrain_t id, LPCSTR symbol );
 
 			FLAG_PROPERTY ( IsPlural, tif_plural )
 			FLAG_PROPERTY ( IsBlock, tif_block )
@@ -1047,7 +1049,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
             virtual MXRESULT Cmd_DisbandGroup ( void );
             virtual MXRESULT Cmd_SwapGroupLeader ( mxcharacter* character );
-
+            virtual MXRESULT Cmd_Place(mxgridref loc);
             
 			virtual mxcharacter* Cmd_Approach ( mxcharacter* character=NULL );
 			virtual mxobject* Cmd_Fight ( void );

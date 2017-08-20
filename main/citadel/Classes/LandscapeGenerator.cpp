@@ -86,8 +86,22 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 	TME_GetTerrainInfo ( tinfo, MAKE_ID(INFO_TERRAININFO, map.terrain) );
 
 	item->loc = loc_t(x,y);
-	item->floor = ( map.terrain > TN_UNUSED1 ) ? floor_water : floor_normal;
-	item->army = false;
+    item->floor = floor_normal;
+    
+    
+    if ( map.terrain == TN_LAKE3 )
+        item->floor = floor_lake;
+    
+    if ( map.terrain == TN_RIVER )
+        item->floor = floor_river ;
+    
+    if ( map.terrain == TN_SEA || map.terrain == TN_BAY  )
+        item->floor = floor_sea ;
+        
+    if (map.terrain == TN_ICYWASTE || map.terrain == TN_FROZENWASTE)
+        item->floor = floor_snow ;
+	
+    item->army = false;
 	item->mist = false;
     item->position = Vec3(0,0,0);
     item->terrain = map.terrain;
@@ -103,6 +117,7 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 	if ( map.flags&lf_mist ) 
 		item->mist = true;
 
+    
     return CalcCylindricalProjection(item);
     
 }

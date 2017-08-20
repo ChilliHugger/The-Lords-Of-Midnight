@@ -185,10 +185,15 @@
 			TN_LITH			=	12,
 			TN_CAVERN		=	13,
 			TN_MOUNTAIN		=	14,
-            TN_UNUSED1      =   15, // Used to be ARMY
+            TN_UNUSED_15    =   15, // Used to be ARMY
+            
+            // NOTE: There is a mapping problem here between tiled and TME
+            // this needs to be resolved and may need to deal
+            // with backward compatability issues
             
 			// ddr
             TN_PLAINS2		=	16,
+            
             TN_MOUNTAIN2	=	17,
             TN_FOREST2		=	18,
             TN_HILLS		=	19,
@@ -204,32 +209,33 @@
             TN_FOUNTAIN		=	29,
             TN_STONES		=	30,
             TN_ICYWASTE     =	31,
+            TN_UNUSED_32    =   32,
             
             // citadel
-            TN_LAND         =   32,
-            TN_ISLE         =   33,
-            TN_LAKELAND     =   34,
-            TN_PLAIN        =   35,
-            TN_PLAINS3      =   36,
-            TN_FOREST3      =   37,
-            TN_UNUSED2      =   38,
-            TN_TREES        =   39,
-            TN_MOUNTAIN3    =   40,
-            TN_ICY_MOUNTAIN =   41,
-            TN_DOWNS3       =   42,
-            TN_HILLS3       =   43,
-            TN_FOOTHILLS    =   44,
-            TN_VALLEY       =   45,
-            TN_BAY          =   46,
-            TN_SEA          =   47,
-            TN_RIVER        =   48,
-            TN_MARSH        =   49,
-            TN_LAKE3        =   50,
-            TN_UNUSED3      =   51,
-            TN_UNUSED4      =   52,
-            TN_UNUSED5      =   53,
-            TN_MIST         =   54,
-            TN_UNUSED6      =   55,
+            TN_LAND         =   33,
+            TN_ISLE         =   34,
+            TN_LAKELAND     =   35,
+            TN_PLAIN        =   36,
+            TN_PLAINS3      =   37,
+            TN_FOREST3      =   38,
+            TN_UNUSED_39    =   39,
+            TN_TREES        =   40,
+            TN_MOUNTAIN3    =   41,
+            TN_ICY_MOUNTAIN =   42,
+            TN_DOWNS3       =   43,
+            TN_HILLS3       =   44,
+            TN_FOOTHILLS    =   45,
+            TN_VALLEY       =   46,
+            TN_BAY          =   47,
+            TN_SEA          =   48,
+            TN_RIVER        =   49,
+            TN_MARSH        =   50,
+            TN_LAKE3        =   51,
+            TN_UNUSED_52    =   52,
+            TN_UNUSED_53    =   53,
+            TN_UNUSED_54    =   54,
+            TN_MIST         =   55,
+            TN_UNUSED_56    =   56,
 
 			TN_NONE=127,
 
@@ -954,6 +960,10 @@ namespace tme {
 		void operator += ( mxdir_t dir )						{ AddDirection(dir); }
 		mxdir_t DirFromHere ( mxgridref loc ) const;
 
+        
+        
+        static s32 DirectionLookTable[];
+        
 	};
 	// mxgridref
 

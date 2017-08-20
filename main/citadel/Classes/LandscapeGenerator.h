@@ -29,10 +29,14 @@ USING_NS_CC;
 //#define SRC(x) (s32)	((x)*uimanager::singleton()->source_scale)
 
 typedef enum floor_t {
-    floor_normal = 0,
-    floor_water = 1,
-    floor_snow = 2,
+      floor_normal = 0
+    , floor_snow
+    , floor_river
+    , floor_sea
+    , floor_lake
+    , floor_debug
 } floor_t ;
+
 
 class LandscapeItem : public Ref {
 public:
@@ -46,7 +50,7 @@ public:
     
 };
 
-
+typedef Vector<LandscapeItem*> LandscapeItems;
 
 class LandscapeGenerator
 {
@@ -62,7 +66,7 @@ public:
     float RadiansFromFixedPointAngle(s32 fixed);
     
 public:
-    Vector<LandscapeItem*>* items;
+    LandscapeItems* items;
     
     s32     location_infront_y;
     

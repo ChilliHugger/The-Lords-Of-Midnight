@@ -724,6 +724,16 @@ BOOL Character_Move ( const character& c )
 	return TRUE;
 }
 
+
+BOOL Character_Place ( const character& c, loc_t location )
+{
+    args[0] = c.id;
+    args[1] = MAKE_LOCID(location.x,location.y) ;
+    mxi->Command("PLACE", args, 2);
+    TME_RefreshCurrentCharacter();
+    return true;
+}
+
 BOOL Character_Approach ( const character& c )
 {
 	args[0] = c.id ;

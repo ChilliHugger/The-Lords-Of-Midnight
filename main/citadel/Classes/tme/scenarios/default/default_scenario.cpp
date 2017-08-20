@@ -38,7 +38,7 @@ namespace tme {
         "rorthron@thelordsofmidnight.com",
         "http://www.thelordsofmidnight.com",
         "Default scenario for the Midnight Engine",
-        "Copyright 1999 - 2016 Mike Singleton & Chris Wild"
+        "Copyright 1984 - 2017 Mike Singleton & Chris Wild"
     };
 
 	mxscenario* def_scenario = NULL ;
@@ -567,6 +567,14 @@ namespace tme {
 			return character->Cmd_Lookat(loc);
 		}
 
+        COMMAND( OnCharPlace )
+        {
+            CONVERT_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_GRIDREF(argv[1],loc);
+            argv[0]=(s32)0;
+            return character->Cmd_Place(loc);
+        }
+    
 		COMMAND( OnCharApproach ) 
 		{
 			CONVERT_CHARACTER_ID( argv[0].vId, character );
@@ -897,6 +905,9 @@ namespace tme {
             {"DISBANDGROUP",1, OnCharDisbandGroup,  {arguments::character} },
             {"SWAPGROUPLEADER", 2, OnCharSwapGroupLeader,{arguments::character, arguments::character} },
 
+            {"PLACE",           2, OnCharPlace,		{arguments::character, arguments::location} },
+
+            
             
 					// Regiment Commands
 			{"HOLD",		1, OnRegimentHold,		{arguments::regiment} },
@@ -1984,6 +1995,37 @@ namespace tme {
             mapsqr.flags|=lf_routenode;
         }
 
+        
+        // let's add some Terrain Info
+#define ADD_TERRAIN(x) \
+        mx->objTerrainInfos.Add( new mxterrain( x, #x ) )
+    
+        ADD_TERRAIN(TN_LAND);
+        ADD_TERRAIN(TN_ISLE);
+        ADD_TERRAIN(TN_LAKELAND);
+        ADD_TERRAIN(TN_PLAIN);
+        ADD_TERRAIN(TN_PLAINS3);
+        ADD_TERRAIN(TN_FOREST3);
+        ADD_TERRAIN(TN_UNUSED_39);
+        ADD_TERRAIN(TN_TREES);
+        ADD_TERRAIN(TN_MOUNTAIN3);
+        ADD_TERRAIN(TN_ICY_MOUNTAIN);
+        ADD_TERRAIN(TN_DOWNS3);
+        ADD_TERRAIN(TN_HILLS3);
+        ADD_TERRAIN(TN_FOOTHILLS);
+        ADD_TERRAIN(TN_VALLEY);
+        ADD_TERRAIN(TN_BAY);
+        ADD_TERRAIN(TN_SEA);
+        ADD_TERRAIN(TN_RIVER);
+        ADD_TERRAIN(TN_MARSH);
+        ADD_TERRAIN(TN_LAKE3);
+        ADD_TERRAIN(TN_UNUSED_52);
+        ADD_TERRAIN(TN_UNUSED_53);
+        ADD_TERRAIN(TN_UNUSED_54);
+        ADD_TERRAIN(TN_MIST);
+        ADD_TERRAIN(TN_UNUSED_56);
+        
+        
     }
     
 

@@ -7,7 +7,8 @@
 USING_NS_CC;
 
 #define _DEBUG_LANDSCAPE_
-
+#define _CITADEL_MAP_
+//#define _LOM_MAP_
 
 
 //#define MX_PI                   3.141592654358979323
@@ -19,26 +20,83 @@ USING_NS_CC;
 
 
 const std::string terrain_graphics[] = {
-    ""
-    , "t_citadel0"
-    , "t_forest0"
-    , "t_henge0"
-    , "t_tower0"
-    , "t_village0"
-    , "t_downs0"
-    , "t_keep0"
-    , "t_snowhall0"
-    , "t_lake0"
-    , "t_frozenwaste0"
-    , "t_ruin0"
-    , "t_lith0"
-    , "t_cavern0"
-    , "t_mountain0"
+    
+// lom
+    ""                  //    TN_PLAINS
+    , "t_citadel0"      //    TN_CITADEL
+    , "t_forest0"       //    TN_FOREST
+    , "t_henge0"        //    TN_HENGE
+    , "t_tower0"        //    TN_TOWER
+    , "t_village0"      //    TN_VILLAGE
+    , "t_downs0"        //    TN_DOWNS
+    , "t_keep0"         //    TN_KEEP
+    , "t_snowhall0"     //    TN_SNOWHALL
+    , "t_lake0"         //    TN_LAKE
+    , "t_frozenwaste0"  //    TN_FROZENWASTE
+    , "t_ruin0"         //    TN_RUIN
+    , "t_lith0"         //    TN_LITH
+    , "t_cavern0"       //    TN_CAVERN
+    , "t_mountain0"     //    TN_MOUNTAIN
+    , ""                //    TN_UNUSED_15
+    
+// ddr
+    , ""                //    TN_PLAINS2
+    , ""                //    TN_MOUNTAIN2
+    , ""                //    TN_FOREST2
+    , ""                //    TN_HILLS
+    , ""                //    TN_GATE
+    , ""                //    TN_TEMPLE
+    , ""                //    TN_PIT
+    , ""                //    TN_PALACE
+    , ""                //    TN_FORTRESS
+    , ""                //    TN_HALL
+    , ""                //    TN_HUT
+    , ""                //    TN_WATCHTOWER
+    , ""                //    TN_CITY
+    , ""                //    TN_FOUNTAIN
+    , ""                //    TN_STONES
+    , ""                //    TN_ICYWASTE
+    , ""                //    TN_UNUSED_32
+    
+// citadel
+    , ""                //    TN_LAND
+    , ""                //    TN_ISLE
+    , ""                //    TN_LAKELAND
+    , ""                //    TN_PLAIN
+    , ""                //    TN_PLAINS3
+    , "t_forest0"                //    TN_FOREST3
+    , ""                //    TN_UNUSED_39
+    , "t_trees0"                //    TN_TREES
+    , "t_mountain0"                //    TN_MOUNTAIN3
+    , "t_mountain0"                //    TN_ICY_MOUNTAIN
+    , "t_downs0"                //    TN_DOWNS3
+    , "t_downs0"                //    TN_HILLS3
+    , "t_downs0"                //    TN_FOOTHILLS
+    , ""                //    TN_VALLEY
+    , ""                //    TN_BAY
+    , ""                //    TN_SEA
+    , ""                //    TN_RIVER
+    , ""                //    TN_MARSH
+    , ""                //    TN_LAKE3
+    , ""                //    TN_UNUSED_52
+    , ""                //    TN_UNUSED_53
+    , "t_mist0"                //    TN_UNUSED_54
+    , "t_mist0"                //    TN_MIST
+    , ""                //    TN_UNUSED_56
+
 };
 
 const std::string floor_graphics[] = {
-    "t_land0"
+    //"t_snow1"
+    //, "t_snow1"
+    //, "t_snow1"
+    
+    "t_land1"
+    , "t_snow1"
     , "t_water0"
+    , "t_water1"
+    , "t_water3"
+    , "t_snow1"
 };
 
 
@@ -87,9 +145,14 @@ bool Landscape::init()
 
     
     // load terrain
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_L-0.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_L-1.plist");
+    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_L-0.plist");
+    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_L-1.plist");
 
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/citadel_M-0.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/citadel_M-1.plist");
+    masterScale = 1.0;
+
+    
     
     // load shader
     auto p1 = GLProgram::createWithFilenames("terrain/standard.vsh", "terrain/dayNight.fsh");
@@ -112,21 +175,25 @@ bool Landscape::init()
     //variables::sv_cheat_commands_free = true ;
 //#endif
     
-    
+
+
+#if defined(_LOM_MAP_)
     auto builder = new TMEMapBuilder();
     mxmap* map = builder->Build( "lom_map_test.tmx" );
     TME_DebugInstallMap(map);
-    
+#endif
+
+#if defined(_CITADEL_MAP_)
+    auto builder = new TMEMapBuilderCitadel();
+    mxmap* map = builder->Build( "citadel_wip.tmx" );
+    TME_DebugInstallMap(map);
+#endif
     
     landscapeGen = new LandscapeGenerator();
     
     
     
-    SetViewForCurrentCharacter();
-    
-    
-    
-    
+
     //auto touchListener = EventListenerTouchOneByOne::create();
     
     //touchListener->onTouchBegan = CC_CALLBACK_2(Landscape::onTouchBegan, this);
@@ -146,6 +213,21 @@ bool Landscape::init()
     left = DIR_RIGHT;
     movement_amount=0;
     
+    showWater = true;
+    showLand  = true;
+    showTerrain = true ;
+    debugMode = 0;
+    landScaleX = 1.6;
+    landScaleY = 2.15;
+    debugLand=false;
+
+    character&	c = TME_CurrentCharacter();
+    Character_Place( c, loc_t(2,110) );
+    Character_Look(c, DR_NORTH);
+
+    
+    SetViewForCurrentCharacter();
+    
     return true;
 }
 
@@ -163,6 +245,52 @@ void Landscape::InitKeyboard()
         
         Vec2 loc = event->getCurrentTarget()->getPosition();
         switch(keyCode){
+                
+            case cocos2d::EventKeyboard::KeyCode::KEY_F2:
+                showLand = !showLand;
+                UpdateLandscape();
+                break;
+                
+            case cocos2d::EventKeyboard::KeyCode::KEY_F3:
+                showWater = !showWater;
+                UpdateLandscape();
+                break;
+
+            case cocos2d::EventKeyboard::KeyCode::KEY_F4:
+                showTerrain = !showTerrain;
+                UpdateLandscape();
+                break;
+
+            case cocos2d::EventKeyboard::KeyCode::KEY_F5:
+                debugLand = !debugLand;
+                UpdateLandscape();
+                break;
+                
+            case cocos2d::EventKeyboard::KeyCode::KEY_F1:
+                debugMode += 1;
+                if ( debugMode > 4 )
+                    debugMode = 0;
+                UpdateLandscape();
+                break;
+                
+            case cocos2d::EventKeyboard::KeyCode::KEY_O:
+                landScaleX += 0.01;
+                UpdateLandscape();
+                break;
+            case cocos2d::EventKeyboard::KeyCode::KEY_P:
+                landScaleX -= 0.01;
+                UpdateLandscape();
+                break;
+
+            case cocos2d::EventKeyboard::KeyCode::KEY_Q:
+                landScaleY += 0.01;
+                UpdateLandscape();
+                break;
+            case cocos2d::EventKeyboard::KeyCode::KEY_A:
+                landScaleY -= 0.01;
+                UpdateLandscape();
+                break;
+                
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
                 StartLookLeft();
                 break;
@@ -201,129 +329,178 @@ void Landscape::UpdateLandscape()
         current_landscape_node=nullptr;
     }
     
-    landscapeGen->Build(here, looking);
     
+    UpdateScreenCoordinates();
     
     current_landscape_node = new Node();
     
-    float scalex = 1024.0 / 128.0 ;
+    
+    
+    
+    float scalex = 1024.0 / RES(64) ;
     
     auto floor = Sprite::createWithSpriteFrameName( "floor" );
-    floor->setScale(scalex,0.5);
+    floor->setScale(scalex,masterScale);
     floor->setPosition(0, 0);
     floor->setAnchorPoint( Vec2(0,0) );
+    
+    if ( debugLand )
+        floor->setColor(Color3B::YELLOW);
+    
     current_landscape_node->addChild(floor);
   
     // generate floors
     BuildFloors(landscapeGen->items);
     
     auto sky = Sprite::createWithSpriteFrameName( "sky_day" );
-    sky->setScale(scalex,0.5);
+    sky->setScale(scalex,masterScale);
     sky->setPosition(0,RES((80*GSCALE)) );
     sky->setAnchorPoint( Vec2(0,0) );
     current_landscape_node->addChild(sky);
 
+    
+    
     // generate terrain
     BuildTerrain(landscapeGen->items);
 
-#if defined(_DEBUG_LANDSCAPE_)
     BuildDebug(landscapeGen->items);
-#endif
-    
-    
-    
-//    BuildPanorama(here.x,here.y,current_landscape_node);
-    
-    
-//    Sprite* image;
-//        image = Sprite::create("terrain/t_land0.png");
-//    image->setScale(1.5);
-//    image->setPosition(this->getContentSize().width/2, 0);
-//    current_landscape_node->addChild(image);
-    
-    
     
     
     this->addChild(current_landscape_node);
     
-
     
 }
 
-void Landscape::BuildFloors( Vector<LandscapeItem*>* items )
+void Landscape::UpdateScreenCoordinates()
 {
+    for(auto const &item: *landscapeGen->items) {
+        landscapeGen->loc = here;
+        landscapeGen->looking = looking;
+        landscapeGen->CalcCylindricalProjection(item);
+    }
+    
+}
+
+void Landscape::BuildFloors( LandscapeItems* items )
+{
+    LandscapeItem* loc1=nullptr;
+    LandscapeItem* loc2=nullptr;
+    
+    for(auto const& item: *items) {
+    
+        if ( item->loc == currentLocation)
+            loc1 = item;
+        
+        if ( item->loc == aheadLocation )
+            loc2 = item;
+    }
+    
+    auto fnDrawTerrain = [=]( LandscapeItem* item, f32 adjustX, f32 adjustY ) {
+        if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
+        {
+            auto graphic = GetFloorImage(item->floor);
+            
+            if ( graphic ) {
+                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+                
+                graphic->setScaleX( graphic->getScaleX() * item->scale*adjustX );
+                graphic->setScaleY( graphic->getScaleY() * item->scale*adjustY );
+                
+                current_landscape_node->addChild(graphic);
+                
+            }
+        }
+
+    };
+    
+    auto fnDrawItem = [=]( LandscapeItem* item ) {
+        
+        if ( item == loc1  )
+            return;
+        
+        if ( item != loc2) {
+            fnDrawTerrain(item, 1.0f, 1.0f);
+            return ;
+        }
+        
+        LandscapeItem under;
+        under.floor = item->floor;
+        under.position = item->position;
+        under.scale = item->scale;
+        fnDrawTerrain(&under, 1.0f, 1.0f);
+        
+//        under.floor = item->floor;
+//        under.position = item->position;
+//        under.position.x -= 128 * loc2->scale;
+//        fnDrawTerrain(&under, 1.0f, 1.0f);
+//        
+//        under.floor = item->floor;
+//        under.position = item->position;
+//        under.position.x += 128 * loc2->scale;
+//        fnDrawTerrain(&under, 1.0f, 1.0f);
+
+//        under.floor = item->floor;
+//        under.position = item->position;
+//        under.position.y -= 20;
+//        fnDrawTerrain(&under, 1.0f, 1.0f);
+//        
+//        under.floor = item->floor;
+//        under.position = item->position;
+//        under.position.y += 20 ;
+//        fnDrawTerrain(&under, 1.0f, 1.0f);
+        
+        
+    };
+    
+    
+
+    
     //
     // Do the water first
     //
-    for(auto const& item: *items) {
-    
-        if ( item->floor != floor_water )
-            continue;
-        
-        if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
-        {
-            auto graphic = GetFloorImage(item->floor);
+    if ( showWater ) {
+        for(auto const& item: *items) {
+            if ( item->floor != floor_river && item->floor != floor_sea && item->floor != floor_lake )
+                continue;
             
-            
-            if ( graphic ) {
-                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
-                
-                graphic->setScaleX( graphic->getScaleX() * item->scale );
-                graphic->setScaleY( graphic->getScaleY() * item->scale );
-                
-
-                current_landscape_node->addChild(graphic);
-
-            }
+            fnDrawItem(item);
         }
+    }
+
     
+    
+    //
+    // The everything else apart from snow
+    //
+    if ( showLand ) {
+        for(auto const& item: *items) {
+            if ( item->floor != floor_normal && item->floor != floor_debug )
+                continue;
+            
+            fnDrawItem(item);
+        }
     }
 
     //
-    // The everything else
+    // then snow
     //
-    
     for(auto const& item: *items) {
         
-        if ( item->floor == floor_water )
+        if ( item->floor != floor_snow )
             continue;
         
-        if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
-        {
-            auto graphic = GetFloorImage(item->floor);
-            
-            
-            if ( graphic ) {
-                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
-                graphic->setScale( graphic->getScale() * item->scale );
-
-                current_landscape_node->addChild(graphic);
-
-            }
-        }
+            fnDrawItem(item);
         
     }
-    
-    
-    //auto graphic = Sprite::createWithSpriteFrameName( "land_front" );
-    
-
-    
-    //graphic->setPosition(this->getContentSize().width/2, 0);
-//    
-//    graphic->setPosition(0, 0);
-//    graphic->setScaleX(2.0);
-//    graphic->setScaleY(1.0);
-//    current_landscape_node->addChild(graphic);
-    
     
 }
 
-void Landscape::BuildTerrain( Vector<LandscapeItem*>* items )
+void Landscape::BuildTerrain( LandscapeItems* items )
 {
+    if ( !showTerrain )
+        return;
+    
     for(auto const& item: *items) {
-        
-        //landscapeGen->CalcCylindricalProjection(item);
         
         if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
         {
@@ -338,10 +515,9 @@ void Landscape::BuildTerrain( Vector<LandscapeItem*>* items )
             if ( graphic ) {
                 graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
                 graphic->setScale( graphic->getScale() * item->scale );
-                graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
-#if !defined(_DEBUG_LANDSCAPE_)
+                //graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
+
                 current_landscape_node->addChild(graphic);
-#endif
             }
         }
         
@@ -351,9 +527,10 @@ void Landscape::BuildTerrain( Vector<LandscapeItem*>* items )
 
 void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
 {
+    if ( debugMode != 0 ) {
+
+    
     for(auto const& item: *items) {
-        
-        //landscapeGen->CalcCylindricalProjection(item);
         
         if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
         {
@@ -365,22 +542,34 @@ void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
             dot->setScale(0.1f);
             dot->setAnchorPoint(Vec2(0.5,0.5));
             current_landscape_node->addChild(dot);
+
+            char buffer[20];
             
-//            char buffer[20];
-//            sprintf(buffer, "%d,%d", item->loc.x-(here.x/DIR_STEPS), item->loc.y-(here.y/DIR_STEPS));
-//            
-//            
-//            auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 6);
-//            
-//            label->setColor(Color3B::BLUE);
-//            //label->setMaxLineWidth(800);
-//            label->setAlignment(TextHAlignment::CENTER);
-//            label->setAnchorPoint(Vec2(0.5,0.5));
-//            //label->setLineSpacing(0);
-//            //label->setLineHeight(30);
-//            label->setPosition(item->position.x, this->getContentSize().height - item->position.y - RES(5));
-//            current_landscape_node->addChild(label, 1);
+            switch (debugMode) {
+                case 1:
+                    sprintf(buffer, "%d,%d", item->loc.x-(here.x/DIR_STEPS), item->loc.y-(here.y/DIR_STEPS));
+                    break;
+                case 2:
+                    sprintf(buffer, "%f", item->scale);
+                    break;
+                case 3:
+                    sprintf(buffer, "%f,%f", item->position.x, item->position.y);
+                    break;
+                case 4:
+                    sprintf(buffer, "%d,%d", item->loc.x, item->loc.y);
+                    break;
+                default:
+                    break;
+            }
             
+            
+            auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 10);
+            
+            label->setColor(Color3B::BLUE);
+            label->setAlignment(TextHAlignment::CENTER);
+            label->setAnchorPoint(Vec2(0.5,0.5));
+            label->setPosition(item->position.x, this->getContentSize().height - item->position.y - RES(5));
+            current_landscape_node->addChild(label, 1);
             
             //        auto dot1 = Sprite::createWithSpriteFrameName( "dot" );
             //        dot1->setColor(Color3B::BLUE);
@@ -400,33 +589,41 @@ void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
         
     }
     
+    }
+    
+    
+    
+    char buffer[255];
+
+    sprintf(buffer, "Location %d,%d - Looking %f / %d Landscape Adj=(%f,%f)"
+            , currentLocation.x, currentLocation.y
+            , looking, currentDirection
+            , landScaleX, landScaleY );
+    
+    
+    auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 20);
+    
+    label->setMaxLineWidth(this->getContentSize().width);
+    label->setAnchorPoint(Vec2(0,0));
+    label->setColor(Color3B::WHITE);
+    label->setPosition(RES(10), (this->getContentSize().height - RES(20)));
+    current_landscape_node->addChild(label, 1);
+    
+    
 }
 
 
 
 Sprite* Landscape::GetTerrainImage( mxterrain_t terrain )
 {
-    if ( terrain == TN_PLAINS || terrain == TN_PLAINS2 || terrain == TN_PLAINS3 )
-        return nullptr;
     
-    if ( terrain >= TN_UNUSED1 )
-        return nullptr;
-    
-    
-    Sprite* image = nullptr;
-    
-    
-    image = Sprite::createWithSpriteFrameName( terrain_graphics[terrain] );
-    
-
-    
+    auto image = Sprite::createWithSpriteFrameName( terrain_graphics[terrain] );
     if ( image == nullptr )
         return image;
     
-    
-    image->setScale(0.5);
-    image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
-    image->setGLProgramState( glProgramState->clone() );
+    image->setScale(masterScale);
+    //image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
+    //image->setGLProgramState( glProgramState->clone() );
     
     if ( terrain == TN_LAKE ) {
         image->setAnchorPoint(Vec2(0.5,1.0));
@@ -443,13 +640,20 @@ Sprite* Landscape::GetFloorImage( floor_t floor )
     if ( image == nullptr )
         return image;
     
-    image->setScale(0.6);
+    //image->setScale(masterScale);
     
-    if ( floor == floor_water )
-        image->setScale(0.7);
+    //if ( floor == floor_water )
+    //    image->setScale(0.5);
     
     //image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     //image->setGLProgramState( glProgramState->clone() );
+
+    image->setScaleX(masterScale*landScaleX);
+    image->setScaleY(masterScale*landScaleY);
+    
+    if ( floor == floor_debug ) {
+        image->setColor(Color3B::YELLOW);
+    }
 
     
     return image;
@@ -604,7 +808,7 @@ void Landscape::update(float delta)
         
     }
     
-    UpdateLandscape();
+    //UpdateLandscape();
     
 }
 
@@ -629,7 +833,20 @@ void Landscape::SetViewForCurrentCharacter ( void )
     here = c.location;
     here.x *= DIR_STEPS;
     here.y *= DIR_STEPS;
+    
     looking = c.looking * DIR_AMOUNT ;
+    
+    currentLocation = c.location;
+    currentDirection = c.looking;
+    
+    aheadLocation.x = currentLocation.x + mxgridref::DirectionLookTable[currentDirection*2];
+    aheadLocation.y = currentLocation.y + mxgridref::DirectionLookTable[(currentDirection*2)+1];
+    
+    
+    // TODO: We don't need to generate the locations
+    // every time, just refresh the screen positions
+    // for the current look direction
+    landscapeGen->Build(here, looking);
     
     //SetTimeOfDay(c.time);
     
@@ -637,12 +854,11 @@ void Landscape::SetViewForCurrentCharacter ( void )
     //next_info=info[1];
     //prev_info=info[2];
     
-    
-#if defined(_DDR_)
-    BOOL isInTunnel = Character_IsInTunnel(c) ;
-#else
-    BOOL isInTunnel = FALSE;
-#endif
+//#if defined(_DDR_)
+//    BOOL isInTunnel = Character_IsInTunnel(c) ;
+//#else
+//    BOOL isInTunnel = FALSE;
+//#endif
     
     
     
@@ -694,12 +910,12 @@ bool Landscape::StartLookLeft ( void )
     f32 target = -DIR_AMOUNT ;
     
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+        turning = value;
         looking = originalLooking + value;
-        UpdateLandscape();
         if ( value <= target) {
             StopRotating(LM_ROTATE_LEFT);
         }
-        
+        UpdateLandscape();
     });
     
     auto ease = new EaseSineInOut();
@@ -707,8 +923,6 @@ bool Landscape::StartLookLeft ( void )
     this->runAction(ease);
     
     dragged=0;
-    
-    UpdateLandscape();
     
     return TRUE;
 }
@@ -740,12 +954,14 @@ bool Landscape::StartLookRight ( void )
     f32 target = DIR_AMOUNT ;
     
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+        turning = value;
         looking = originalLooking + value;
-        UpdateLandscape();
+
         if ( value >= target) {
             StopRotating(LM_ROTATE_RIGHT);
         }
         
+        UpdateLandscape();
     });
     
     auto ease = new EaseSineInOut();
@@ -753,10 +969,8 @@ bool Landscape::StartLookRight ( void )
     this->runAction(ease);
     
     
-    
     dragged=0;
     
-    UpdateLandscape();
     
     return TRUE;
     
@@ -815,7 +1029,8 @@ bool Landscape::StartMoving()
             
             if ( value >= target )
                 StopMoving();
-            ;
+            
+            UpdateLandscape();
             
         });
         
@@ -823,9 +1038,7 @@ bool Landscape::StartMoving()
         ease->initWithAction(actionfloat);
         this->runAction(ease);
         
-        
-        UpdateLandscape();
-        
+
         return true;
     }
     

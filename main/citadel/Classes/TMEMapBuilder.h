@@ -17,11 +17,19 @@
 class TMEMapBuilder
 {
 public:
-    mxmap* Build( const std::string& tmxFile );
+    virtual mxmap* Build( const std::string& tmxFile );
     
     
 };
 
+
+class TMEMapBuilderCitadel : public TMEMapBuilder
+{
+public:
+    mxmap* Build( const std::string& tmxFile );
+    
+    
+};
 
 
 

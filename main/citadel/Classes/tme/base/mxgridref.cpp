@@ -21,7 +21,7 @@
 namespace tme {
 
 	// Table to work out directions
-	static s32 DirectionLookTable[] = {
+    s32 mxgridref::DirectionLookTable[] = {
 		0,-1,		// DR_NORTH,
 		1,-1,		// DR_NORTHEAST,
 		1,0,		// DR_EAST,

@@ -74,7 +74,7 @@ namespace tme {
 			for ( u32 ii=0; ii<count; ii++, m_used++ )
 				m_objElements[ii] = scenario->CreateEntity(type);
 
-			m_bOwner=TRUE;
+			//m_bOwner=TRUE;
 			return TRUE ;
 		}
 

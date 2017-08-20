@@ -219,6 +219,7 @@ mxid Character_LocationObject (  const character& c );
 mxid Character_Fight ( const character& c );
 mxid Character_Seek ( const character& c );
 
+BOOL Character_Place ( const character& c, loc_t location );
 
 
 BOOL Character_Follow ( const character& c, mxid id );

@@ -681,6 +681,13 @@ namespace tme {
 			return Cmd_LookDir ( location.DirFromHere(loc) );
 		}
 
+        MXRESULT mxcharacter::Cmd_Place(mxgridref loc)
+        {
+            Location(loc);
+            EnterLocation( Location() );
+            return MX_OK ;
+        }
+        
 		MXRESULT mxcharacter::Cmd_Rest ( void )
 		{ 
 			SetLastCommand ( CMD_REST, NONE );
