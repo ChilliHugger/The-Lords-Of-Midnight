@@ -6,8 +6,7 @@
 
 LandscapeGenerator::LandscapeGenerator()
 {
-    near=0.25f;
-    far=11.5f;
+
 
 	items = new Vector<LandscapeItem*>();
 	
@@ -26,6 +25,13 @@ void LandscapeGenerator::Build(loc_t location, f32 direction)
     items->clear();
 	
     BuildPanorama();
+    
+    int count=0;
+    for(auto const& item: *items) {
+        CCLOG("%d,%d,%d,%d", count,item->loc.x, item->loc.y, item->terrain);
+        count++;
+    }
+    
 }
 	
 	
@@ -134,15 +140,6 @@ LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item
 {
     float	x, y, xOff, yOff, angle, objAngle, viewAngle;
     
-
-    const float	HorizonCentreX = RES( (256*GSCALE)/2  );
-    const float	HorizonCentreY = RES( (112*GSCALE) );
-    
-    const float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
-    const float	PanoramaHeight = (float)RES(32.0f*GSCALE);
-    
-    // adjustment for the furthest of our visible locations being on the horizon
-    int     horizonAdjust = RES((3*GSCALE));
     
     location_infront_y = PanoramaHeight + HorizonCentreY - horizonAdjust;
     
@@ -173,6 +170,16 @@ LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item
     
     item->position.x = xOff + HorizonCentreX;
     item->position.y = yOff + HorizonCentreY - horizonAdjust;
+    
+    // snap to the horizon
+//    if ( item->position.y < HorizonCentreY ) {
+//        item->position.y = HorizonCentreY;
+//    }
+    
+    // We are running a panorama that runs from N to NW along a linear
+    // so place all locations to the right
+    if (item->position.x<=-225)
+        item->position.x += 3200;
     
     return item;
 }

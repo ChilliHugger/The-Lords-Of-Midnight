@@ -79,7 +79,7 @@ public:
     void BuildTerrain( LandscapeItems* items );
     void BuildDebug( LandscapeItems* items );
     void UpdateScreenCoordinates();
-
+    int NormaliseXPosition(int x);
     
     void UpdateLandscape();
     void InitKeyboard();

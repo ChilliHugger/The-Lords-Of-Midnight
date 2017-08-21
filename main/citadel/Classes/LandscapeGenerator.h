@@ -55,6 +55,21 @@ typedef Vector<LandscapeItem*> LandscapeItems;
 class LandscapeGenerator
 {
 public:
+    
+    const float	HorizonCentreX = RES( (256*GSCALE)/2  );
+    const float	HorizonCentreY = RES( (112*GSCALE) );
+    
+    const float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
+    const float	PanoramaHeight = (float)RES(32.0f*GSCALE);
+    const float	LocationHeight = (float)RES(48.0f*GSCALE);
+    
+    const float near=0.25f;
+    const float far=21.5f;
+    
+    // adjustment for the furthest of our visible locations being on the horizon
+    const int     horizonAdjust = RES((3*GSCALE));
+    
+public:
     LandscapeGenerator();
     
     void Build(loc_t location, f32 looking );
@@ -72,9 +87,6 @@ public:
     
     loc_t	loc;
     f32     looking;
-    
-    f32     near;
-    f32     far;
     
 };
 

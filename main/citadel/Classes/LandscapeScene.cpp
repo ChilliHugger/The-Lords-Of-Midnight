@@ -7,8 +7,8 @@
 USING_NS_CC;
 
 #define _DEBUG_LANDSCAPE_
-#define _CITADEL_MAP_
-//#define _LOM_MAP_
+//#define _CITADEL_MAP_
+#define _LOM_MAP_
 
 
 //#define MX_PI                   3.141592654358979323
@@ -145,11 +145,17 @@ bool Landscape::init()
 
     
     // load terrain
-    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_L-0.plist");
-    //SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_L-1.plist");
-
+    
+#if defined(_LOM_MAP_)
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_M-0.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_M-1.plist");
+#endif
+    
+#if defined(_CITADEL_MAP_)
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/citadel_M-0.plist");
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/citadel_M-1.plist");
+#endif
+    
     masterScale = 1.0;
 
     
@@ -179,7 +185,7 @@ bool Landscape::init()
 
 #if defined(_LOM_MAP_)
     auto builder = new TMEMapBuilder();
-    mxmap* map = builder->Build( "lom_map_test.tmx" );
+    mxmap* map = builder->Build( "lom_map.tmx" );
     TME_DebugInstallMap(map);
 #endif
 
@@ -217,13 +223,13 @@ bool Landscape::init()
     showLand  = true;
     showTerrain = true ;
     debugMode = 0;
-    landScaleX = 1.6;
-    landScaleY = 2.15;
+    landScaleX = 1; //1.6;
+    landScaleY = 1; //2.15;
     debugLand=false;
 
-    character&	c = TME_CurrentCharacter();
-    Character_Place( c, loc_t(2,110) );
-    Character_Look(c, DR_NORTH);
+    //character&	c = TME_CurrentCharacter();
+    //Character_Place( c, loc_t(2,110) );
+    //Character_Look(c, DR_NORTH);
 
     
     SetViewForCurrentCharacter();
@@ -330,7 +336,7 @@ void Landscape::UpdateLandscape()
     }
     
     
-    UpdateScreenCoordinates();
+    //UpdateScreenCoordinates();
     
     current_landscape_node = new Node();
     
@@ -349,8 +355,6 @@ void Landscape::UpdateLandscape()
     
     current_landscape_node->addChild(floor);
   
-    // generate floors
-    BuildFloors(landscapeGen->items);
     
     auto sky = Sprite::createWithSpriteFrameName( "sky_day" );
     sky->setScale(scalex,masterScale);
@@ -358,6 +362,8 @@ void Landscape::UpdateLandscape()
     sky->setAnchorPoint( Vec2(0,0) );
     current_landscape_node->addChild(sky);
 
+    // generate floors
+    //BuildFloors(landscapeGen->items);
     
     
     // generate terrain
@@ -381,6 +387,16 @@ void Landscape::UpdateScreenCoordinates()
     
 }
 
+int Landscape::NormaliseXPosition(int x)
+{
+    x = x-rotate_look ;
+    if ( rotate_look<1024 && x>1600 )
+        x -= 3200;
+    if ( rotate_look>=1024 && x<-512 )
+        x += 3200;
+    return x;
+}
+
 void Landscape::BuildFloors( LandscapeItems* items )
 {
     LandscapeItem* loc1=nullptr;
@@ -401,7 +417,7 @@ void Landscape::BuildFloors( LandscapeItems* items )
             auto graphic = GetFloorImage(item->floor);
             
             if ( graphic ) {
-                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+                graphic->setPosition(NormaliseXPosition(item->position.x), this->getContentSize().height - item->position.y);
                 
                 graphic->setScaleX( graphic->getScaleX() * item->scale*adjustX );
                 graphic->setScaleY( graphic->getScaleY() * item->scale*adjustY );
@@ -479,19 +495,63 @@ void Landscape::BuildFloors( LandscapeItems* items )
             
             fnDrawItem(item);
         }
+
+        //
+        // then snow
+        //
+        for(auto const& item: *items) {
+            
+            if ( item->floor != floor_snow )
+                continue;
+            
+            fnDrawItem(item);
+            
+        }
+        
     }
 
+
+    
+    
+    LandscapeItem under;
+    under.floor = floor_debug; //loc1->floor;
+    under.position = loc1->position;
+    under.position.y = landscapeGen->HorizonCentreY + landscapeGen->PanoramaHeight + (landscapeGen->LocationHeight/2);
+    under.position.z = 1;
+    
+    under.scale = 1.0;
+    fnDrawTerrain(&under, 1.0f, 1.0f);
+    
+//    under.position.x = loc1->position.x - RES(1024) ;
+//    fnDrawTerrain(&under, 1.0f, 1.0f);
+//    
+//    under.position.x = loc1->position.x - RES(2048) ;
+//    fnDrawTerrain(&under, 1.0f, 1.0f);
+//    
+//    under.position.x = loc1->position.x + RES(1024) ;
+//    fnDrawTerrain(&under, 1.0f, 1.0f);
+//    
+//    under.position.x = loc1->position.x + RES(2048) ;
+//    fnDrawTerrain(&under, 1.0f, 1.0f);
+    
+    
+    
     //
-    // then snow
+    //        under.floor = item->floor;
+    //        under.position = item->position;
+    //        under.position.x += 128 * loc2->scale;
+    //        fnDrawTerrain(&under, 1.0f, 1.0f);
+    
+    //        under.floor = item->floor;
+    //        under.position = item->position;
+    //        under.position.y -= 20;
+    //        fnDrawTerrain(&under, 1.0f, 1.0f);
     //
-    for(auto const& item: *items) {
-        
-        if ( item->floor != floor_snow )
-            continue;
-        
-            fnDrawItem(item);
-        
-    }
+    //        under.floor = item->floor;
+    //        under.position = item->position;
+    //        under.position.y += 20 ;
+    //        fnDrawTerrain(&under, 1.0f, 1.0f);
+    
     
 }
 
@@ -513,10 +573,28 @@ void Landscape::BuildTerrain( LandscapeItems* items )
             auto graphic = GetTerrainImage(item->terrain);
             
             if ( graphic ) {
-                graphic->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+                
+                int y = item->position.y;
+                
+                if ( item->position.z >= 8.5f  && y < landscapeGen->HorizonCentreY) {
+                    f32 range = landscapeGen->far - 8.5f ;
+                    f32 diff = landscapeGen->far - item->position.z ;
+                    alpha = -1.0 + (2.0*(diff/range));
+                    y = landscapeGen->HorizonCentreY ;
+                    
+                    if ( item->terrain == TN_MOUNTAIN || item->terrain == TN_FROZENWASTE)
+                        alpha=1.0;
+                    
+                }
+                
+                
+                graphic->setPosition(NormaliseXPosition(item->position.x), this->getContentSize().height - y);
                 graphic->setScale( graphic->getScale() * item->scale );
-                //graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
+                graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
 
+                
+                
+                
                 current_landscape_node->addChild(graphic);
             }
         }
@@ -535,10 +613,12 @@ void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
         if ((item->position.z>=landscapeGen->near)&&(item->position.z<landscapeGen->far))
         {
 
+            int x = NormaliseXPosition(item->position.x);
+            
             // debug
             auto dot = Sprite::createWithSpriteFrameName( "dot" );
             dot->setColor(Color3B::RED);
-            dot->setPosition(item->position.x, this->getContentSize().height - item->position.y);
+            dot->setPosition(x, this->getContentSize().height - item->position.y);
             dot->setScale(0.1f);
             dot->setAnchorPoint(Vec2(0.5,0.5));
             current_landscape_node->addChild(dot);
@@ -553,7 +633,7 @@ void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
                     sprintf(buffer, "%f", item->scale);
                     break;
                 case 3:
-                    sprintf(buffer, "%f,%f", item->position.x, item->position.y);
+                    sprintf(buffer, "%d,%d", (int)item->position.x, (int)item->position.y);
                     break;
                 case 4:
                     sprintf(buffer, "%d,%d", item->loc.x, item->loc.y);
@@ -568,7 +648,7 @@ void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
             label->setColor(Color3B::BLUE);
             label->setAlignment(TextHAlignment::CENTER);
             label->setAnchorPoint(Vec2(0.5,0.5));
-            label->setPosition(item->position.x, this->getContentSize().height - item->position.y - RES(5));
+            label->setPosition(x, this->getContentSize().height - item->position.y - RES(5));
             current_landscape_node->addChild(label, 1);
             
             //        auto dot1 = Sprite::createWithSpriteFrameName( "dot" );
@@ -595,10 +675,13 @@ void Landscape::BuildDebug( Vector<LandscapeItem*>* items )
     
     char buffer[255];
 
-    sprintf(buffer, "Location %d,%d - Looking %f / %d Landscape Adj=(%f,%f)"
+    sprintf(buffer, "Location %d,%d - Looking %f / %d Landscape Adj=(%f,%f) Rotating=%d"
             , currentLocation.x, currentLocation.y
             , looking, currentDirection
-            , landScaleX, landScaleY );
+            , landScaleX, landScaleY
+            , (int)rotate_look
+            );
+   
     
     
     auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 20);
@@ -622,8 +705,8 @@ Sprite* Landscape::GetTerrainImage( mxterrain_t terrain )
         return image;
     
     image->setScale(masterScale);
-    //image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
-    //image->setGLProgramState( glProgramState->clone() );
+    image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
+    image->setGLProgramState( glProgramState->clone() );
     
     if ( terrain == TN_LAKE ) {
         image->setAnchorPoint(Vec2(0.5,1.0));
@@ -834,7 +917,10 @@ void Landscape::SetViewForCurrentCharacter ( void )
     here.x *= DIR_STEPS;
     here.y *= DIR_STEPS;
     
-    looking = c.looking * DIR_AMOUNT ;
+    looking = (c.looking * DIR_AMOUNT) ;
+    rotate_look = c.looking * 400;
+    if ( rotate_look >= 3200 )
+        rotate_look-=3200;
     
     currentLocation = c.location;
     currentDirection = c.looking;
@@ -846,7 +932,7 @@ void Landscape::SetViewForCurrentCharacter ( void )
     // TODO: We don't need to generate the locations
     // every time, just refresh the screen positions
     // for the current look direction
-    landscapeGen->Build(here, looking);
+    landscapeGen->Build(here, 0);
     
     //SetTimeOfDay(c.time);
     
@@ -885,7 +971,7 @@ void Landscape::SetViewForCurrentCharacter ( void )
 
 bool Landscape::StartLookLeft ( void )
 {
-    rotate_look = 0; //512;
+    //rotate_look = 0; //512;
     turning = DIR_LEFT;					//	-45 degrees / 16
     mouse_down=false;
     
@@ -906,15 +992,16 @@ bool Landscape::StartLookLeft ( void )
     //next_info->StartSlideFromLeft();
     //current_info->StartSlideOffRight();
     
-    f32 originalLooking = looking;
-    f32 target = -DIR_AMOUNT ;
+    f32 originalLooking = rotate_look;
+    f32 target = -400 ;
     
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
         turning = value;
-        looking = originalLooking + value;
+        rotate_look = originalLooking + value;
         if ( value <= target) {
             StopRotating(LM_ROTATE_LEFT);
         }
+
         UpdateLandscape();
     });
     
@@ -929,7 +1016,7 @@ bool Landscape::StartLookLeft ( void )
 
 bool Landscape::StartLookRight ( void )
 {
-    rotate_look=0;
+    //rotate_look=0;
     turning = DIR_RIGHT;					//	45 degrees / 16
     mouse_down=false;
     
@@ -950,17 +1037,17 @@ bool Landscape::StartLookRight ( void )
     //next_info->StartSlideFromRight();
     //current_info->StartSlideOffLeft();
     
-    f32 originalLooking = looking;
-    f32 target = DIR_AMOUNT ;
+    f32 originalLooking = rotate_look;
+    f32 target = 400 ;
     
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
         turning = value;
-        looking = originalLooking + value;
+        rotate_look = originalLooking + value;
 
         if ( value >= target) {
             StopRotating(LM_ROTATE_RIGHT);
         }
-        
+
         UpdateLandscape();
     });
     
@@ -1029,8 +1116,12 @@ bool Landscape::StartMoving()
             
             if ( value >= target )
                 StopMoving();
+
+            //UpdateScreenCoordinates();
             
+            landscapeGen->Build(here, 0);
             UpdateLandscape();
+            
             
         });
         
@@ -1048,7 +1139,7 @@ bool Landscape::StartMoving()
 
 void Landscape::StopRotating(LANDSCAPE_MOVEMENT type)
 {
-    rotate_look=0;
+    //rotate_look=0;
     turning = 0;
     
     // swap info
@@ -1116,17 +1207,17 @@ void Landscape::Rotating ( void )
     }
     
     
-    if ( turning < 0 ) {
-        if ( rotate_look >= DIR_AMOUNT ) {
-            StopRotating(LM_ROTATE_LEFT);
-        }
-    }
-    
-    if ( turning > 0 ) {
-        if ( rotate_look >= DIR_AMOUNT ) {
-            StopRotating(LM_ROTATE_RIGHT);
-        }
-    }
+//    if ( turning < 0 ) {
+//        if ( rotate_look >= DIR_AMOUNT ) {
+//            StopRotating(LM_ROTATE_LEFT);
+//        }
+//    }
+//    
+//    if ( turning > 0 ) {
+//        if ( rotate_look >= DIR_AMOUNT ) {
+//            StopRotating(LM_ROTATE_RIGHT);
+//        }
+//    }
     
     
     
