@@ -67,14 +67,26 @@
 		830620B61F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
 		83113FD41F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8306184A1F38687000D017E5 /* LandscapeScene.cpp */; };
 		83113FD51F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8306184A1F38687000D017E5 /* LandscapeScene.cpp */; };
-		83113FD61F3DC01F009DA10F /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83113FD21F3DBEF7009DA10F /* libcocos2d Mac.a */; };
 		8351E4031F376D7000605D75 /* ddr_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4021F376D7000605D75 /* ddr_map.tmx */; };
 		8351E4051F376D7B00605D75 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
 		8351E4061F376D7B00605D75 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
 		8351E4071F376D8300605D75 /* ddr_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4021F376D7000605D75 /* ddr_map.tmx */; };
 		8351E40E1F3A655C00605D75 /* lom_map_test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E40D1F3A655C00605D75 /* lom_map_test.tmx */; };
-		8351E4141F3B825600605D75 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351E4131F3B825600605D75 /* LandscapeGenerator.cpp */; };
-		8351E4151F3B825600605D75 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351E4131F3B825600605D75 /* LandscapeGenerator.cpp */; };
+		8397AFDC1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
+		8397AFDD1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
+		8397AFE11F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */; };
+		8397AFE21F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */; };
+		8397AFE51F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE31F4C1BB6009B00A2 /* LandscapeLand.cpp */; };
+		8397AFE61F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE31F4C1BB6009B00A2 /* LandscapeLand.cpp */; };
+		8397AFE91F4C1C99009B00A2 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
+		8397AFEA1F4C1C99009B00A2 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
+		8397AFEC1F4C21ED009B00A2 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8397AFEB1F4C21ED009B00A2 /* libcocos2d Mac.a */; };
+		8397AFEF1F4CC082009B00A2 /* LandscapeTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */; };
+		8397AFF21F4CC579009B00A2 /* LandscapeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */; };
+		8397AFF51F4CCAA4009B00A2 /* LandscapeDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */; };
+		8397AFF61F4CCAB0009B00A2 /* LandscapeTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */; };
+		8397AFF71F4CCAB2009B00A2 /* LandscapeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */; };
+		8397AFF81F4CCAB5009B00A2 /* LandscapeDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */; };
 		83D264301F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264311F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264321F360724001C6F13 /* mxengine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EA1F360724001C6F13 /* mxengine.cpp */; };
@@ -280,12 +292,24 @@
 		830618621F38758800D017E5 /* tme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tme.cpp; sourceTree = "<group>"; };
 		830620981F38855600D017E5 /* lom */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lom; sourceTree = "<group>"; };
 		830620B41F389B1200D017E5 /* terrain */ = {isa = PBXFileReference; lastKnownFileType = folder; path = terrain; sourceTree = "<group>"; };
-		83113FD21F3DBEF7009DA10F /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libcocos2d Mac.a"; sourceTree = "<group>"; };
 		8351E4021F376D7000605D75 /* ddr_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ddr_map.tmx; sourceTree = "<group>"; };
 		8351E4041F376D7B00605D75 /* lom_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map.tmx; sourceTree = "<group>"; };
 		8351E40D1F3A655C00605D75 /* lom_map_test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map_test.tmx; sourceTree = "<group>"; };
-		8351E4131F3B825600605D75 /* LandscapeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LandscapeGenerator.cpp; sourceTree = "<group>"; };
-		8351E4161F3B827900605D75 /* LandscapeGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LandscapeGenerator.h; sourceTree = "<group>"; };
+		8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGenerator.cpp; path = landscaping/LandscapeGenerator.cpp; sourceTree = "<group>"; };
+		8397AFDB1F4C18BA009B00A2 /* LandscapeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeGenerator.h; path = landscaping/LandscapeGenerator.h; sourceTree = "<group>"; };
+		8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeSky.cpp; path = landscaping/LandscapeSky.cpp; sourceTree = "<group>"; };
+		8397AFE01F4C1A2E009B00A2 /* LandscapeSky.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeSky.h; path = landscaping/LandscapeSky.h; sourceTree = "<group>"; };
+		8397AFE31F4C1BB6009B00A2 /* LandscapeLand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeLand.cpp; path = landscaping/LandscapeLand.cpp; sourceTree = "<group>"; };
+		8397AFE41F4C1BB6009B00A2 /* LandscapeLand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeLand.h; path = landscaping/LandscapeLand.h; sourceTree = "<group>"; };
+		8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeNode.cpp; path = landscaping/LandscapeNode.cpp; sourceTree = "<group>"; };
+		8397AFE81F4C1C99009B00A2 /* LandscapeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeNode.h; path = landscaping/LandscapeNode.h; sourceTree = "<group>"; };
+		8397AFEB1F4C21ED009B00A2 /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libcocos2d Mac.a"; sourceTree = "<group>"; };
+		8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeTerrain.cpp; path = landscaping/LandscapeTerrain.cpp; sourceTree = "<group>"; };
+		8397AFEE1F4CC082009B00A2 /* LandscapeTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeTerrain.h; path = landscaping/LandscapeTerrain.h; sourceTree = "<group>"; };
+		8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeView.cpp; path = landscaping/LandscapeView.cpp; sourceTree = "<group>"; };
+		8397AFF11F4CC579009B00A2 /* LandscapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeView.h; path = landscaping/LandscapeView.h; sourceTree = "<group>"; };
+		8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeDebug.cpp; path = landscaping/LandscapeDebug.cpp; sourceTree = "<group>"; };
+		8397AFF41F4CCAA4009B00A2 /* LandscapeDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeDebug.h; path = landscaping/LandscapeDebug.h; sourceTree = "<group>"; };
 		83D263E21F36052E001C6F13 /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "../../../../../../../../../../Developer/cocos2d-x-3.15.1/prebuilt/mac/libcocos2d Mac.a"; sourceTree = "<group>"; };
 		83D263E91F360724001C6F13 /* collections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collections.cpp; sourceTree = "<group>"; };
 		83D263EA1F360724001C6F13 /* mxengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxengine.cpp; sourceTree = "<group>"; };
@@ -434,7 +458,7 @@
 				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
 				8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
-				83113FD61F3DC01F009DA10F /* libcocos2d Mac.a in Frameworks */,
+				8397AFEC1F4C21ED009B00A2 /* libcocos2d Mac.a in Frameworks */,
 				5087E78B17EB975400C73F5D /* OpenGL.framework in Frameworks */,
 				5087E78917EB974C00C73F5D /* AppKit.framework in Frameworks */,
 				5087E76317EB910900C73F5D /* Foundation.framework in Frameworks */,
@@ -535,6 +559,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8397AFDE1F4C1936009B00A2 /* landscaping */,
 				83D264E61F360857001C6F13 /* tinyxml */,
 				83D264861F36077E001C6F13 /* library */,
 				83D263E71F360724001C6F13 /* tme */,
@@ -543,8 +568,6 @@
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				8306184A1F38687000D017E5 /* LandscapeScene.cpp */,
 				8306184D1F38688000D017E5 /* LandscapeScene.h */,
-				8351E4131F3B825600605D75 /* LandscapeGenerator.cpp */,
-				8351E4161F3B827900605D75 /* LandscapeGenerator.h */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				830618611F38758800D017E5 /* tme_interface.h */,
 				830618621F38758800D017E5 /* tme.cpp */,
@@ -568,7 +591,7 @@
 		503AE10617EB990700D1A890 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				83113FD21F3DBEF7009DA10F /* libcocos2d Mac.a */,
+				8397AFEB1F4C21ED009B00A2 /* libcocos2d Mac.a */,
 				503AE0F517EB97AB00D1A890 /* Icons */,
 				503AE10317EB98FF00D1A890 /* main.cpp */,
 				503AE10417EB98FF00D1A890 /* Prefix.pch */,
@@ -602,6 +625,27 @@
 			name = Icons;
 			path = ios;
 			sourceTree = SOURCE_ROOT;
+		};
+		8397AFDE1F4C1936009B00A2 /* landscaping */ = {
+			isa = PBXGroup;
+			children = (
+				8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */,
+				8397AFDB1F4C18BA009B00A2 /* LandscapeGenerator.h */,
+				8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */,
+				8397AFE01F4C1A2E009B00A2 /* LandscapeSky.h */,
+				8397AFE31F4C1BB6009B00A2 /* LandscapeLand.cpp */,
+				8397AFE41F4C1BB6009B00A2 /* LandscapeLand.h */,
+				8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */,
+				8397AFE81F4C1C99009B00A2 /* LandscapeNode.h */,
+				8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */,
+				8397AFEE1F4CC082009B00A2 /* LandscapeTerrain.h */,
+				8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */,
+				8397AFF11F4CC579009B00A2 /* LandscapeView.h */,
+				8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */,
+				8397AFF41F4CCAA4009B00A2 /* LandscapeDebug.h */,
+			);
+			name = landscaping;
+			sourceTree = "<group>";
 		};
 		83D263E71F360724001C6F13 /* tme */ = {
 			isa = PBXGroup;
@@ -987,15 +1031,19 @@
 			files = (
 				83D2646A1F360724001C6F13 /* item_victories.cpp in Sources */,
 				83D264801F360724001C6F13 /* default_scenario.cpp in Sources */,
+				8397AFE11F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */,
 				83D264681F360724001C6F13 /* item_stronghold.cpp in Sources */,
 				83D264381F360724001C6F13 /* mxgridref.cpp in Sources */,
+				8397AFF81F4CCAB5009B00A2 /* LandscapeDebug.cpp in Sources */,
 				83D2647A1F360724001C6F13 /* ddr_processor_night.cpp in Sources */,
 				83D2643E1F360724001C6F13 /* mxitem.cpp in Sources */,
+				8397AFF61F4CCAB0009B00A2 /* LandscapeTerrain.cpp in Sources */,
 				83D2646E1F360724001C6F13 /* processor_battle.cpp in Sources */,
 				83D2645E1F360724001C6F13 /* info_unit.cpp in Sources */,
 				83D2644C1F360724001C6F13 /* info_area.cpp in Sources */,
 				83D264F01F360857001C6F13 /* tinyxml.cpp in Sources */,
 				83D264D21F36077E001C6F13 /* ccollection.cpp in Sources */,
+				8397AFE51F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */,
 				83D264EE1F360857001C6F13 /* tinystr.cpp in Sources */,
 				83D264D41F36077E001C6F13 /* cflags.cpp in Sources */,
 				83D264481F360724001C6F13 /* army.cpp in Sources */,
@@ -1004,6 +1052,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				83D2644A1F360724001C6F13 /* discoverymap.cpp in Sources */,
 				83113FD51F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */,
+				8397AFF71F4CCAB2009B00A2 /* LandscapeView.cpp in Sources */,
 				83D264E21F36077E001C6F13 /* random.cpp in Sources */,
 				83D264321F360724001C6F13 /* mxengine.cpp in Sources */,
 				83D264841F360724001C6F13 /* lom_stronghold.cpp in Sources */,
@@ -1026,6 +1075,7 @@
 				83D2646C1F360724001C6F13 /* map.cpp in Sources */,
 				83D264CC1F36077E001C6F13 /* os.cpp in Sources */,
 				83D264741F360724001C6F13 /* units.cpp in Sources */,
+				8397AFE91F4C1C99009B00A2 /* LandscapeNode.cpp in Sources */,
 				83D264421F360724001C6F13 /* mxmemory.cpp in Sources */,
 				83D264C21F36077E001C6F13 /* xml.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
@@ -1056,7 +1106,7 @@
 				83D2645C1F360724001C6F13 /* info_terrain.cpp in Sources */,
 				830618631F38758800D017E5 /* tme.cpp in Sources */,
 				83D264581F360724001C6F13 /* info_object_type.cpp in Sources */,
-				8351E4141F3B825600605D75 /* LandscapeGenerator.cpp in Sources */,
+				8397AFDC1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */,
 				83D264501F360724001C6F13 /* info_direction.cpp in Sources */,
 				83D264B81F36077E001C6F13 /* cmemfile.cpp in Sources */,
 			);
@@ -1078,12 +1128,14 @@
 				83D264351F360724001C6F13 /* mxentity.cpp in Sources */,
 				83D264531F360724001C6F13 /* info_gender.cpp in Sources */,
 				83D264831F360724001C6F13 /* lom_scenario.cpp in Sources */,
+				8397AFE61F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */,
+				8397AFF21F4CC579009B00A2 /* LandscapeView.cpp in Sources */,
 				83D264C51F36077E001C6F13 /* cfile.cpp in Sources */,
 				83D264EF1F360857001C6F13 /* tinystr.cpp in Sources */,
 				83D264611F360724001C6F13 /* item_character.cpp in Sources */,
 				83D264451F360724001C6F13 /* variables.cpp in Sources */,
 				83D2647B1F360724001C6F13 /* ddr_processor_night.cpp in Sources */,
-				8351E4151F3B825600605D75 /* LandscapeGenerator.cpp in Sources */,
+				8397AFDD1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */,
 				83D264C91F36077E001C6F13 /* cfilemanager.cpp in Sources */,
 				83D2644F1F360724001C6F13 /* info_command.cpp in Sources */,
 				83D264D11F36077E001C6F13 /* cbitarray.cpp in Sources */,
@@ -1102,6 +1154,7 @@
 				83D2646D1F360724001C6F13 /* map.cpp in Sources */,
 				83D264371F360724001C6F13 /* mxfragment.cpp in Sources */,
 				83D264C71F36077E001C6F13 /* cfileList.cpp in Sources */,
+				8397AFEF1F4CC082009B00A2 /* LandscapeTerrain.cpp in Sources */,
 				83D264F51F360857001C6F13 /* tinyxmlparser.cpp in Sources */,
 				83D264E31F36077E001C6F13 /* random.cpp in Sources */,
 				83D264431F360724001C6F13 /* mxmemory.cpp in Sources */,
@@ -1112,6 +1165,7 @@
 				83D264551F360724001C6F13 /* info_object.cpp in Sources */,
 				83D264D91F36077E001C6F13 /* cstr.cpp in Sources */,
 				83D2645D1F360724001C6F13 /* info_terrain.cpp in Sources */,
+				8397AFF51F4CCAA4009B00A2 /* LandscapeDebug.cpp in Sources */,
 				83D2645F1F360724001C6F13 /* info_unit.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				83D2646B1F360724001C6F13 /* item_victories.cpp in Sources */,
@@ -1128,6 +1182,7 @@
 				83D264591F360724001C6F13 /* info_object_type.cpp in Sources */,
 				83D2643B1F360724001C6F13 /* mxinfo.cpp in Sources */,
 				83D264671F360724001C6F13 /* item_routenode.cpp in Sources */,
+				8397AFE21F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */,
 				83D2644B1F360724001C6F13 /* discoverymap.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				83D264391F360724001C6F13 /* mxgridref.cpp in Sources */,
@@ -1138,6 +1193,7 @@
 				83D264311F360724001C6F13 /* collections.cpp in Sources */,
 				83D264F31F360857001C6F13 /* tinyxmlerror.cpp in Sources */,
 				83D264771F360724001C6F13 /* ddr_character.cpp in Sources */,
+				8397AFEA1F4C1C99009B00A2 /* LandscapeNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

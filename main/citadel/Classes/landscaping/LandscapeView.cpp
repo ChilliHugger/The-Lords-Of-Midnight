@@ -1,0 +1,52 @@
+//
+//  LandscapeView.cpp
+//  citadel
+//
+//  Created by Chris Wild on 22/08/2017.
+//
+//
+
+#include "LandscapeView.h"
+
+void LandscapeView::Init(LandscapeOptions* options)
+{
+    LandscapeNode::Init(options);
+
+    setContentSize( Size(RES(1024),RES(768)) );
+
+    auto clipping = ClippingRectangleNode::create( Rect(0, 0, getContentSize().width, getContentSize().height));
+    //clipping->setPosition(getContentSize().width/2,getContentSize().height/2);
+    //clipping->setAnchorPoint(Vec2(0.5,0.5));
+    this->addChild(clipping);
+    
+    
+    auto land = new LandscapeLand();
+    land->Init(options);
+    clipping->addChild(land);
+    
+    
+    auto sky = new LandscapeSky();
+    sky->Init(options);
+    sky->setPosition(0,RES((80*GSCALE)) );
+    clipping->addChild(sky);
+    
+    
+    if ( options->showTerrain ) {
+        auto terrain = new LandscapeTerrain();
+        terrain->programState = programState;
+        terrain->Init(options);
+        clipping->addChild(terrain);
+    }
+    
+    if ( options->debugMode != 0 ) {
+        auto debug = new LandscapeDebug();
+        debug->Init(options);
+        debug->setAnchorPoint(Vec2(0, 0) );
+        debug->setPosition(Vec2(0,0));
+        clipping->addChild(debug);
+    }
+    
+
+
+    
+}

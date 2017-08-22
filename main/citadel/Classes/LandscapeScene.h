@@ -6,6 +6,8 @@
 #include "tme_interface.h"
 
 #include "LandscapeGenerator.h"
+#include "LandscapeView.h"
+
 
 USING_NS_CC;
 
@@ -78,8 +80,7 @@ public:
     void BuildFloors( LandscapeItems* items );
     void BuildTerrain( LandscapeItems* items );
     void BuildDebug( LandscapeItems* items );
-    void UpdateScreenCoordinates();
-    int NormaliseXPosition(int x);
+    f32 NormaliseXPosition(f32 x);
     
     void UpdateLandscape();
     void InitKeyboard();
@@ -87,62 +88,14 @@ public:
     
 private:
     GLProgramState* glProgramState;
-    
-    
-    f32				dragged;
-    Vec2            drag_start;
-    Vec2            drag_current;
-    Vec2            drag_stop;
-    
-    
-    /* landscaping */
-    LandscapeGenerator*  landscapeGen;
-    
-    f32				rotate_look ;
-    f32				voffset ;
-    f32				looking ;
-    f32				turning ;
-    
-    loc_t			here ;
-    loc_t           currentLocation;
-    loc_t           aheadLocation;
-    mxdir_t         currentDirection;
-    
-    loc_t			moveFrom ;
-    loc_t			moveTo ;
-    f32             movement_amount ;
-    s32         right ;
-    s32         left ;
-    GESTURE_MODE fingermode;
-    
-    s32				moveCount ;
-    s32				UseHalfHeight ;
-    s32				snapback;
-    
-    s32             location_infront_y;
-    
-
-    BOOL            bMoveLocationHasArmy;
-    s32             compass_delay;
-    
     GLProgram*      glShaderProgram;
+
     
 public:
-    u32             mouse_down_time;
-    BOOL            mouse_down;
-    point           mouse_down_pos;
-
-
-    Node*           current_landscape_node;
-    f32             masterScale;
- 
-    bool            showWater;
-    bool            showLand;
-    bool            showTerrain;
-    int             debugMode;
-    bool            debugLand;
-    f32             landScaleX;
-    f32             landScaleY;
+    LandscapeView*      landscapeView;
+    LandscapeOptions    options;
+    bool                isLooking;
+    bool                isMoving;
     
     
 };
