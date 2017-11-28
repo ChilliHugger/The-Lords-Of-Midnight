@@ -78,24 +78,24 @@ void CStrBuf::CheckSize ( size_t size )
 
 void CStrBuf::strcat ( LPCSTR input )		
 { 
-	CheckSize(Length() + chilli::lib::strlen(input));
-	chilli::lib::strcat( buffer, input ); 
+	CheckSize(Length() + c_strlen(input));
+	c_strcat( buffer, input );
 }
 
 void CStrBuf::strcpy ( LPCSTR input )		
 { 
-	CheckSize(chilli::lib::strlen(input));
-	chilli::lib::strcpy( buffer, input ); 
+	CheckSize(c_strlen(input));
+	c_strcpy( buffer, input );
 }
 void CStrBuf::Append ( CStrBuf* input )	
 { 
 	CheckSize(Length() + input->Length());
-	chilli::lib::strcat( buffer, input->GetAt() ); 
+	c_strcat( buffer, input->GetAt() );
 }
 void CStrBuf::Copy ( CStrBuf* input )
 { 
 	CheckSize(input->Length());
-	chilli::lib::strcpy( buffer, input->GetAt() ); 
+	c_strcpy( buffer, input->GetAt() );
 }
 
 void CStrBuf::Resize ( size_t size )
@@ -186,7 +186,7 @@ LPSTR mxtext::PurgeCache( CStrBuf* string )
 
 void mxtext::RememberStringBuffer ( CStrBuf* string )
 {
-	_ASSERTE ( currentbuffer<NUMELE(stringbuffers) );
+	_MXASSERTE ( currentbuffer<NUMELE(stringbuffers) );
 	stringbuffers[currentbuffer]=string;
 	string->Id(currentbuffer);
 	currentbuffer++;
@@ -240,7 +240,7 @@ int		count;
 	count=0;
 	token = (LPCSTR)strtok( (LPSTR)SystemString(id), "|" );
 	while ( token!=NULL ) {
-		if ( chilli::lib::strlen(token)==1 && token[0]=='-' )
+		if (c_strlen(token)==1 && token[0]=='-' )
 			array[count++] = NULL;
 		else
 			array[count++] = (LPSTR)token;
@@ -256,7 +256,7 @@ int		count;
 	count=0;
 	token = strtok( (LPSTR)SystemString(id), "|" );
 	while ( token!=NULL ) {
-		if ( chilli::lib::strlen(token)==1 && token[0]=='-' )
+		if (c_strlen(token)==1 && token[0]=='-' )
 			array.Add(NULL);
 		else
 			array.Add((LPSTR)token);
@@ -323,7 +323,7 @@ int id;
 mxid mxtext::StringByName ( LPCSTR name ) const
 {
 	for ( u32 ii=0; ii<m_cSystemStrings; ii++ ) {
-		if ( chilli::lib::stricmp(systemcodes[ii],name) == 0 ) {
+		if (c_stricmp(systemcodes[ii],name) == 0 ) {
 			return MAKE_ID(IDT_STRING,(ii+1));
 		}
 	}
@@ -352,7 +352,7 @@ LPCSTR mxtext::SystemStringById ( mxid id )
 
 LPCSTR mxtext::SystemString ( u32 id )
 {
-	//_ASSERTE ( id>=0 && id<m_cSystemStrings );
+	//_MXASSERTE ( id>=0 && id<m_cSystemStrings );
 	if ( /*id<0 ||*/ id>=m_cSystemStrings ) return "" ;
 	return systemstrings[id];
 }
@@ -391,7 +391,7 @@ LPSTR mxtext::CookedSystemString ( u32 id, const mxcharacter* character )
 
 LPSTR mxtext::SpecialStrings ( LPCSTR token, const mxcharacter* character )
 {
-	if ( chilli::lib::stricmp(token,"days") == 0 ) {
+	if (c_stricmp(token,"days") == 0 ) {
         
         CStrBuf*	buffer = new CStrBuf ;
         
@@ -466,7 +466,7 @@ CStrBuf*	buffer = new CStrBuf ;
 
 LPSTR mxtext::DescribeNumberPart ( int number, ZERO_MODE zeromode )
 {
-BOOL	useand;
+bool	useand;
 CStrBuf*	buffer = new CStrBuf ;
 
 	useand = FALSE ;
@@ -965,7 +965,7 @@ LPSTR mxtext::DescribeCharacterTraits ( const mxcharacter* character )
 CStrBuf*	buffer = new CStrBuf(1024) ;
 
 	u32 f = character->traits ;
-	BOOL first = TRUE;
+	bool first = TRUE;
 
 	for ( int ii=0; ii<32; ii++ ) {
 		int i = f&1;
@@ -1087,7 +1087,7 @@ LPSTR mxtext::DescribeCharacterSees ( const mxcharacter* character )
     CStrBuf*	buffer = new CStrBuf ;
 
     mxobject* object = mx->scenario->FindObjectAtLocation(character->Location());
-    BOOL entrance = mx->gamemap->HasTunnelEntrance(character->Location());
+    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
 
     if ( object== NULL && !entrance )
         return PurgeCache(buffer);
@@ -1356,10 +1356,10 @@ char		l;
             // NOTE: not size safe!!!!
 			LPSTR result = DecodeToken(token,character) ;
             
-            if ( chilli::lib::strlen(result)!=0  ) {
+            if (c_strlen(result)!=0  ) {
             
                 if ( m_case == CASE_NONE ) {
-                    chilli::lib::strcat ( os, result  );
+					c_strcat ( os, result  );
                 } else if ( m_case == CASE_FIRST ) {
                     os[0] = toupper(result[0]);
                     os[1] = '\0';
@@ -1370,7 +1370,7 @@ char		l;
                     strcat_lower ( os, result  );
                 }
                 
-                os+=chilli::lib::strlen(os);
+                os+= c_strlen(os);
                 m_case=CASE_NONE;
             //}else{
             //
@@ -1468,7 +1468,7 @@ c_ptr			tokens;
     (LPCSTR)tokens[is]
     
 #define IS_ARG(x)	\
-	 if ( chilli::lib::stricmp(x,GET_ARG) == 0 )
+	 if ( c_stricmp(x,GET_ARG) == 0 )
 
 	while (TRUE) {
 		if ( tokens[is] == NULL )

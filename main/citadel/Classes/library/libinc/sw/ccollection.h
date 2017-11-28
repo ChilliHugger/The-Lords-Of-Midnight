@@ -10,7 +10,7 @@ public:
 	CCollection(void);
 	CCollection( u32 count );
 	virtual ~CCollection(void);
-	BOOL Create( u32 count );
+	bool Create( u32 count );
 	void Clear(); 
 	u32 Count() const;
 
@@ -20,16 +20,16 @@ public:
 	u32& operator[]( u32 nSubscript )				{ return GetAt(nSubscript); }
 	void operator += ( u32 o )						{ Add(o); }
 	void operator += ( const CCollection& c )				{ Add(c); }
-	BOOL Add ( u32 o );
-	BOOL Add ( const CCollection& c );
-	BOOL Insert ( u32 nSubscript, u32 o );
+	bool Add ( u32 o );
+	bool Add ( const CCollection& c );
+	bool Insert ( u32 nSubscript, u32 o );
 
 	void operator = ( const CCollection& src );
 	void Destroy( void );
 	u32 Compact( void );
-	BOOL Resize ( u32 newsize );
+	bool Resize ( u32 newsize );
 
-	BOOL Delete ( u32 nSubscript );
+	bool Delete ( u32 nSubscript );
 
 	u32* RawData() const							{ return m_data; }
 
@@ -53,8 +53,8 @@ public:
 	void*& operator[]( u32 nSubscript )			{ return (void*&)CCollection::GetAt(nSubscript); }
 	void operator += ( void* o )				{ CCollection::Add((u32)o); }
 	void operator += ( const CPtrCollection& c ){ CCollection::Add((CCollection&)c); }
-	BOOL Add ( void* o )						{ return CCollection::Add((u32)o); }
-	BOOL Insert ( u32 nSubscript, void* o )		{ return CCollection::Insert(nSubscript,(u32)o); }
+	bool Add ( void* o )						{ return CCollection::Add((u32)o); }
+	bool Insert ( u32 nSubscript, void* o )		{ return CCollection::Insert(nSubscript,(u32)o); }
 
 };
 

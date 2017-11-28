@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -29,22 +29,16 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
-    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
-    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="C:\cocos2d-x\cocos\2d\cocos2d_headers.props" />
+    <Import Project="C:\cocos2d-x\cocos\2d\cocos2dx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -84,9 +78,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib;libcocos2d_2015.lib;librecast_2015.lib;libbullet_2015.lib;libbox2d_2015.lib;libSpine_2015.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);C:\cocos2d-x\prebuilt\win32</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -96,7 +90,8 @@
       </Command>
     </PostBuildEvent>
     <PreLinkEvent>
-      <Command></Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
@@ -108,7 +103,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       <Inputs>$(TargetFileName)</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -139,33 +133,148 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       </Command>
     </PostBuildEvent>
     <PreLinkEvent>
-      <Command></Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\LandscapeScene.cpp" />
+    <ClCompile Include="..\Classes\landscaping\LandscapeDebug.cpp" />
+    <ClCompile Include="..\Classes\landscaping\LandscapeGenerator.cpp" />
+    <ClCompile Include="..\Classes\landscaping\LandscapeLand.cpp" />
+    <ClCompile Include="..\Classes\landscaping\LandscapeNode.cpp" />
+    <ClCompile Include="..\Classes\landscaping\LandscapeSky.cpp" />
+    <ClCompile Include="..\Classes\landscaping\LandscapeTerrain.cpp" />
+    <ClCompile Include="..\Classes\landscaping\LandscapeView.cpp" />
+    <ClCompile Include="..\Classes\library\lib\misc\cmemfile.cpp" />
+    <ClCompile Include="..\Classes\library\lib\misc\xml.cpp" />
+    <ClCompile Include="..\Classes\library\lib\os\cfile.cpp" />
+    <ClCompile Include="..\Classes\library\lib\os\cfileList.cpp" />
+    <ClCompile Include="..\Classes\library\lib\os\cfilemanager.cpp" />
+    <ClCompile Include="..\Classes\library\lib\os\common_cfile.cpp" />
+    <ClCompile Include="..\Classes\library\lib\os\os.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\carchive.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\cbitarray.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\ccollection.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\cflags.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\crange.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\cstr.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\datatypes.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\idtcollection.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\librarysw.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\misc.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\random.cpp" />
+    <ClCompile Include="..\Classes\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\Classes\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\Classes\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\Classes\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\Classes\tme.cpp" />
+    <ClCompile Include="..\Classes\TMEMapBuilder.cpp" />
+    <ClCompile Include="..\Classes\tme\base\collections.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxengine.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxentity.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxfragment.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxgridref.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxinfo.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxinterface.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxitem.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxlocinfo.cpp" />
+    <ClCompile Include="..\Classes\tme\base\mxmemory.cpp" />
+    <ClCompile Include="..\Classes\tme\base\variables.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\citadel\citadel_scenario.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_character.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_battle.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_night.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_text.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_scenario.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\default\default_scenario.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\lom\lom_scenario.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\lom\lom_stronghold.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\army.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\discoverymap.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_area.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_command.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_direction.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_gender.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_object.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_object_power.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_object_type.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_race.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_terrain.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\info_unit.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\item_character.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\item_place.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\item_regiment.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\item_routenode.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\item_stronghold.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\item_victories.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\map.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\processor_battle.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\processor_night.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\processor_text.cpp" />
+    <ClCompile Include="..\Classes\tme\scenario\units.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\LandscapeScene.h" />
+    <ClInclude Include="..\Classes\landscaping\LandscapeDebug.h" />
+    <ClInclude Include="..\Classes\landscaping\LandscapeGenerator.h" />
+    <ClInclude Include="..\Classes\landscaping\LandscapeLand.h" />
+    <ClInclude Include="..\Classes\landscaping\LandscapeNode.h" />
+    <ClInclude Include="..\Classes\landscaping\LandscapeSky.h" />
+    <ClInclude Include="..\Classes\landscaping\LandscapeTerrain.h" />
+    <ClInclude Include="..\Classes\landscaping\LandscapeView.h" />
+    <ClInclude Include="..\Classes\library\chilli.h" />
+    <ClInclude Include="..\Classes\library\libinc\collections.h" />
+    <ClInclude Include="..\Classes\library\libinc\library.h" />
+    <ClInclude Include="..\Classes\library\libinc\misc\cmemfile.h" />
+    <ClInclude Include="..\Classes\library\libinc\misc\xml.h" />
+    <ClInclude Include="..\Classes\library\libinc\mxtypes.h" />
+    <ClInclude Include="..\Classes\library\libinc\os\cfile.h" />
+    <ClInclude Include="..\Classes\library\libinc\os\cfileclump.h" />
+    <ClInclude Include="..\Classes\library\libinc\os\cfilemanager.h" />
+    <ClInclude Include="..\Classes\library\libinc\os\os.h" />
+    <ClInclude Include="..\Classes\library\libinc\sw\carchive.h" />
+    <ClInclude Include="..\Classes\library\libinc\sw\ccollection.h" />
+    <ClInclude Include="..\Classes\library\libinc\sw\misc.h" />
+    <ClInclude Include="..\Classes\tinyxml\tinystr.h" />
+    <ClInclude Include="..\Classes\tinyxml\tinyxml.h" />
+    <ClInclude Include="..\Classes\TMEMapBuilder.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\info.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\lomxtypes.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\midnight.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\mxengine.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\mxinterface.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\processor_battle.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\processor_night.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\processor_text.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\scenario.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\tme_internal.h" />
+    <ClInclude Include="..\Classes\tme\baseinc\variables.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\citadel\scenario_citadel.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\citadel\scenario_citadel_internal.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\ddr_processor_battle.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\ddr_processor_night.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\ddr_processor_text.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\scenario_ddr.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\scenario_ddr_internal.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\default\default_scenario.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\default\default_scenario_internal.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\lom\scenario_lom.h" />
+    <ClInclude Include="..\Classes\tme\scenarios\lom\scenario_lom_internal.h" />
+    <ClInclude Include="..\Classes\tme\tme.h" />
+    <ClInclude Include="..\Classes\tme_interface.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">
-      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\cocos2d\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
-      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\cocos2d\external\Box2D\proj.win32\libbox2d.vcxproj">
-      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
-    </ProjectReference>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="game.rc" />
+    <None Include="..\Classes\library\libinc\sw\librarysw.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

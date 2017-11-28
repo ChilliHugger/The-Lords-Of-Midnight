@@ -1,40 +1,36 @@
 #ifndef _MISC_H_INCLUDED_
 #define _MISC_H_INCLUDED_
 
-#include "chilli.h"
-
-using namespace chilli;
+#include "../../chilli.h"
 
 namespace chilli {
 	namespace lib {
 
-		
-				
-		int Split ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) ;
+		int SplitString ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) ;
 		void JumbleArray ( int* array, int max );
 		int ConcatArray( int* array, int max );
 
-		LPSTR	strtok_r(LPSTR str, LPCSTR delim, char **nextp);
+		LPSTR	c_strtok_r(LPSTR str, LPCSTR delim, char **nextp);
 
-		int		stricmp(LPCSTR dst, LPCSTR src);
-		int		strnicmp ( LPCSTR first, LPCSTR last, size_t count );
-		LPSTR	strdup ( LPCSTR s );
-		LPSTR	strupr ( LPSTR text );
-		LPSTR	strlwr ( LPSTR text );
-		LPSTR	strcpy ( LPSTR dst, LPCSTR src );
-		LPSTR	strcat ( LPSTR dst, LPCSTR src );
-		size_t	strlen ( LPCSTR str );
+		int		c_stricmp(LPCSTR dst, LPCSTR src);
+		int		c_strnicmp ( LPCSTR first, LPCSTR last, size_t count );
+		LPSTR	c_strdup ( LPCSTR s );
+		LPSTR	c_strupr ( LPSTR text );
+		LPSTR	c_strlwr ( LPSTR text );
+		LPSTR	c_strcpy ( LPSTR dst, LPCSTR src );
+		LPSTR	c_strcat ( LPSTR dst, LPCSTR src );
+		size_t	c_strlen ( LPCSTR str );
 		
 		int wildicmp(LPCSTR wild, LPCSTR src);
 		int wildcmp(LPCSTR wild, LPCSTR src);
 
-		char	toupper ( char c );
-		char	tolower ( char c );
+		char	 toupper ( char c );
+		char	 tolower ( char c );
 		int		Compare ( s32 number1, s32 number2 );
 		int		Compare ( f64 number1, f64 number2 );
-		void	swap ( s32& num1, s32& num2 );
-		void	swap ( u32& num1, u32& num2 );
-		void	swap ( u8& num1, u8& num2 );
+		void	 swap ( s32& num1, s32& num2 );
+		void	 swap ( u32& num1, u32& num2 );
+		void	 swap ( u8& num1, u8& num2 );
 	
 		
 		u16		u16Swap (u16 l);
@@ -50,7 +46,7 @@ namespace chilli {
 		u32 BSub(u32 value, u32 amount, u32 min);
 		u32 BAdd(u32 value, u32 amount, u32 max);
 
-		BOOL isNumber( LPCSTR string );
+		bool isNumber( LPCSTR string );
 		long atol( LPCSTR text );
 
 	}

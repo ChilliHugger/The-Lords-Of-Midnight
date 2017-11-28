@@ -6,15 +6,11 @@
 #include "../../baseinc/lomxtypes.h"
 #include "../../baseinc/info.h"
 
-using namespace tme ;
-using namespace chilli;
-using namespace chilli::collections;
-
-
-
-
 namespace tme {
 
+    using namespace chilli;
+    using namespace chilli::collections;
+    
 	class CStrBuf;
 	
 	//namespace processors {

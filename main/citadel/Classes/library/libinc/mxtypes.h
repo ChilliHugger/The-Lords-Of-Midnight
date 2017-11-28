@@ -8,6 +8,16 @@
 #define __MACOSX__
 #endif
 
+#if defined _MSC_VER
+#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+#include <windows.h>
+#include <tchar.h>
+#endif
+
+
+// C RunTime Header Files
+#include "platform/CCStdC.h"
+
 
 //#include <malloc.h>
 
@@ -34,7 +44,7 @@
 	GET_FLAG_PROPERTY(n,f)
 
 #define GET_FLAG_PROPERTY( n, f ) \
-	BOOL n() const { return flags.Is(f); }
+	bool n() const { return flags.Is(f); }
 
 #define SET_FLAG_PROPERTY( n, f ) \
 	void n()  { flags.Set(f); }
@@ -136,7 +146,7 @@ namespace chilli {
 			range();
 			~range();
 			range( int min, int max );
-			BOOL IsInRange( int value );
+			bool IsInRange( int value );
 			int Range() const ;
 
 			range& operator= ( range_t value ) ;
@@ -159,13 +169,13 @@ namespace chilli {
 			void Attatch ( u8* pData, int nElements );
 			void Detatch();
 			void Destroy();
-			BOOL operator[](int bit) const;
+			bool operator[](int bit) const;
 
-			BOOL Create ( int nElements );
+			bool Create ( int nElements );
 			void Set ( int bit );
 			void Clr ( int bit );
 			void Xor ( int bit );
-			BOOL Get ( int bit ) const;
+			bool Get ( int bit ) const;
 
 			lib::archive& Serialize ( lib::archive& ar );
 			friend  lib::archive& operator<<(lib::archive& ar, bitarray& array );
@@ -187,7 +197,7 @@ namespace chilli {
 			void Reset ( u32 flags ) ;
             void Toggle ( u32 flags );
 			void Clear()									{ m_flags = 0; }
-			BOOL Is ( u32 flag ) const ;
+			bool Is ( u32 flag ) const ;
             void ShiftLeft()                                { m_flags <<=1; }
             void ShiftRight()                               { m_flags >>=1; }
 			lib::archive& Serialize ( lib::archive& ar );
@@ -207,7 +217,7 @@ namespace chilli {
 			void Reset ( u8 flags ) ;
             void Toggle ( u32 flags );
 			void Clear()									{ m_flags = 0; }
-			BOOL Is ( u8 flag ) const ;
+			bool Is ( u8 flag ) const ;
             void ShiftLeft()                                { m_flags <<=1; }
             void ShiftRight()                               { m_flags >>=1; }
 			lib::archive& Serialize ( lib::archive& ar );
@@ -226,7 +236,7 @@ namespace chilli {
 			void Set ( u16 flags ) ;
 			void Reset ( u16 flags ) ;
             void Toggle ( u32 flags );
-			BOOL Is ( u16 flag ) const ;
+			bool Is ( u16 flag ) const ;
             void ShiftLeft()                                { m_flags <<=1; }
             void ShiftRight()                               { m_flags >>=1; }
 			void Clear()									{ m_flags = 0; }
@@ -260,8 +270,8 @@ namespace chilli {
 			friend  lib::archive& operator<<(lib::archive& ar, string& value );
 			friend  lib::archive& operator>>( lib::archive& ar, string& value );
 
-			BOOL IsNull() const;
-			BOOL IsEmpty() const;
+			bool IsNull() const;
+			bool IsEmpty() const;
 
 			LPCSTR GetAt() const { return m_pchData; }
 
@@ -285,8 +295,8 @@ namespace chilli {
 			size(point initPt);
 
 		// Operations
-			BOOL operator==(size) const;
-			BOOL operator!=(size) const;
+			bool operator==(size) const;
+			bool operator!=(size) const;
 			void operator+=(size);
 			void operator-=(size);
 
@@ -331,8 +341,8 @@ namespace chilli {
 			void Offset(int xOffset, int yOffset);
 			void Offset(point);
 			void Offset(size);
-			BOOL operator==(point) const;
-			BOOL operator!=(point) const;
+			bool operator==(point) const;
+			bool operator!=(point) const;
 			void operator+=(size);
 			void operator-=(size);
 			void operator+=(point);
@@ -395,9 +405,9 @@ namespace chilli {
 			operator LPrect() const;
 #endif
 
-			BOOL IsRectEmpty() const;
-			BOOL IsRectNull() const;
-			BOOL PtInRect(point) const;
+			bool IsRectEmpty() const;
+			bool IsRectNull() const;
+			bool PtInRect(point) const;
 
 			int RectPosition ( const rect&  ) const;
 
@@ -406,7 +416,7 @@ namespace chilli {
 			void SetRect(point topLeft, point bottomRight);
 			void SetRectEmpty();
 			void CopyRect(const rect* );
-			BOOL EqualRect(const rect* ) const;
+			bool EqualRect(const rect* ) const;
 
 			void InflateRect(int x, int y);
 			void InflateRect(size);
@@ -425,13 +435,13 @@ namespace chilli {
 			void NormalizeRect();
 
 			// operations that fill '*this' with result
-			BOOL IntersectRect(const rect* , const rect* );
-			BOOL UnionRect(const rect* , const rect* );
+			bool IntersectRect(const rect* , const rect* );
+			bool UnionRect(const rect* , const rect* );
 
 		// Additional Operations
 			void operator=(const rect& );
-			BOOL operator==(const rect& ) const;
-			BOOL operator!=(const rect& ) const;
+			bool operator==(const rect& ) const;
+			bool operator!=(const rect& ) const;
 			void operator+=(point);
 			void operator+=(size);
 			void operator+=(const rect* );
@@ -470,8 +480,8 @@ namespace chilli {
 			int get ( int number );
 			int get ( int lower, int upper );
 			f32 getfloat();
-			//BOOL chance ( int chance );
-			BOOL chance ( f32 chance );
+			//bool chance ( int chance );
+			bool chance ( f32 chance );
 			void randomize();
 
 		public:
@@ -603,7 +613,7 @@ namespace chilli {
 
 #define NBITS(t)			(4 * (1 + _IS(t,4) + _IS(t,8) + _IS(t,12) + _IS(t,16) \
                         	 + _IS(t,20) + _IS(t,24) + _IS(t,28) + _IS(t,32)))
-#define MAXINT				(((unsigned)~0) >> 1)
+//#define MAXINT				(((unsigned)~0) >> 1)
 #define	FILLARRAY(x,y)		memset( x,  y, sizeof( x ) )
 #define	FILLSTRUCT(x,y)		memset( &x,  y, sizeof( x ) )
 #define FILLELEMENT(x,y)	memset( &x, y, sizeof( x ) )
@@ -627,10 +637,6 @@ namespace chilli {
 
 #define	STRUC_OFFSET(x,y)	((int)&(((x*)0)->y))
 #define	CLASS_OFFSET(x,y)	((int)&(((x*)0)->y))
-
-
-using namespace chilli::types ;
-
 
 
 

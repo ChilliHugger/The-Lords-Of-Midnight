@@ -2,7 +2,7 @@
 #include "LandscapeGenerator.h"
 
 
-
+using namespace tme;
 
 LandscapeGenerator::LandscapeGenerator()
 {

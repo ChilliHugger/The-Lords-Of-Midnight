@@ -57,7 +57,7 @@ namespace tme {
 			return mxentity::Compare(o,hint);
 		}
 
-		BOOL mxvictory::CheckComplete ( void )
+		bool mxvictory::CheckComplete ( void )
 		{
 			// should we be checking
 			if ( IsDisabled() )
@@ -124,7 +124,7 @@ namespace tme {
 			return mxentity::Compare(o,hint);
 		}
 
-		BOOL mxmission::Completed ( void )
+		bool mxmission::Completed ( void )
 		{
 			if ( IsComplete() )
 				return TRUE;
@@ -195,7 +195,7 @@ namespace tme {
 		}
 
 
-		BOOL mxmission::CheckComplete ( void )
+		bool mxmission::CheckComplete ( void )
 		{
 		u32			ii;
 		u32			usedref=0;

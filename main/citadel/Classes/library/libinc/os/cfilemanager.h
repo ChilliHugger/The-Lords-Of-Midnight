@@ -14,14 +14,14 @@ class  CFileManager
 {
 
 public:
-	static BOOL Exists ( LPCSTR lpFileName ) ;
-	static BOOL Get ( LPCSTR filename, PVOID lpBuffer, DWORD dwMaxSize) ;
+	static bool Exists ( LPCSTR lpFileName ) ;
+	static bool Get ( LPCSTR filename, PVOID lpBuffer, DWORD dwMaxSize) ;
 	static PVOID Load ( LPCSTR filename, int* size=NULL ) ;
 	static u32 Size ( LPCSTR filename ) ;
 	static void Unload ( u8** ptr ) ;
-	static BOOL Save( LPCSTR filename, const PVOID lpBuffer, DWORD dwSize ) ;
-	static BOOL Remove(LPCSTR lpszFileName) ;
-	static BOOL Rename(LPCSTR lpszOldName, LPCSTR lpszNewName) ;
+	static bool Save( LPCSTR filename, const PVOID lpBuffer, DWORD dwSize ) ;
+	static bool Remove(LPCSTR lpszFileName) ;
+	static bool Rename(LPCSTR lpszOldName, LPCSTR lpszNewName) ;
     
 
 };

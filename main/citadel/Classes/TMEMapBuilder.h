@@ -9,15 +9,17 @@
 #ifndef TMEMapBuilder_h
 #define TMEMapBuilder_h
 
-#include <stdio.h>
-#include "tme/baseinc/tme_internal.h"
+#include <string>
 
+namespace tme {
+	class mxmap;
+}
 
 
 class TMEMapBuilder
 {
 public:
-    virtual mxmap* Build( const std::string& tmxFile );
+    virtual tme::mxmap* Build( const std::string& tmxFile );
     
     
 };
@@ -26,7 +28,7 @@ public:
 class TMEMapBuilderCitadel : public TMEMapBuilder
 {
 public:
-    mxmap* Build( const std::string& tmxFile );
+    tme::mxmap* Build( const std::string& tmxFile );
     
     
 };

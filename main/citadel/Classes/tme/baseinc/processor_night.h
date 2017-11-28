@@ -11,7 +11,7 @@ namespace tme {
 			virtual ~mxnight();
 
 			virtual void Process(void);
-			virtual m_gameover_t CheckWinLoseConditions ( BOOL night );
+			virtual m_gameover_t CheckWinLoseConditions ( bool night );
 
             virtual void MoveMidwinter ( void );
             

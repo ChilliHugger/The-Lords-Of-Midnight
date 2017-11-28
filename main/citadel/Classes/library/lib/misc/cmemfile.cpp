@@ -9,7 +9,7 @@ using namespace chilli::os;
 
 CMemFile::CMemFile(u32 nGrowBytes)
 {
-//	_ASSERT(nGrowBytes <= UINT_MAX);
+//	_MXASSERT(nGrowBytes <= UINT_MAX);
 
 	m_nGrowBytes = nGrowBytes;
 	m_nPosition = 0;
@@ -21,7 +21,7 @@ CMemFile::CMemFile(u32 nGrowBytes)
 
 CMemFile::CMemFile(BYTE* lpBuffer, u32 nBufferSize, u32 nGrowBytes)
 {
-//	_ASSERT(nGrowBytes <= UINT_MAX);
+//	_MXASSERT(nGrowBytes <= UINT_MAX);
 
 	m_nGrowBytes = nGrowBytes;
 	m_nPosition = 0;
@@ -33,7 +33,7 @@ CMemFile::CMemFile(BYTE* lpBuffer, u32 nBufferSize, u32 nGrowBytes)
 
 void CMemFile::Attach(BYTE* lpBuffer, u32 nBufferSize, u32 nGrowBytes)
 {
-	_ASSERT(m_lpBuffer == NULL);
+	_MXASSERT(m_lpBuffer == NULL);
 
 	m_nGrowBytes = nGrowBytes;
 	m_nPosition = 0;
@@ -59,7 +59,7 @@ CMemFile::~CMemFile()
 	// Close should have already been called, but we check anyway
 	if (m_lpBuffer)
 		Close();
-	_ASSERT(m_lpBuffer == NULL);
+	_MXASSERT(m_lpBuffer == NULL);
 
 	m_nGrowBytes = 0;
 	m_nPosition = 0;
@@ -81,11 +81,11 @@ BYTE* CMemFile::Realloc(BYTE* lpMem, u32 nBytes)
 BYTE* CMemFile::Memcpy(BYTE* lpMemTarget, const BYTE* lpMemSource,
 	u32 nBytes)
 {
-	_ASSERT(lpMemTarget != NULL);
-	_ASSERT(lpMemSource != NULL);
+	_MXASSERT(lpMemTarget != NULL);
+	_MXASSERT(lpMemSource != NULL);
 
-	//_ASSERT(AfxIsValidAddress(lpMemTarget, nBytes));
-	//_ASSERT(AfxIsValidAddress(lpMemSource, nBytes, FALSE));
+	//_MXASSERT(AfxIsValidAddress(lpMemTarget, nBytes));
+	//_MXASSERT(AfxIsValidAddress(lpMemSource, nBytes, FALSE));
 
 	return (BYTE*)memcpy(lpMemTarget, lpMemSource, nBytes);
 }
@@ -93,20 +93,20 @@ BYTE* CMemFile::Memcpy(BYTE* lpMemTarget, const BYTE* lpMemSource,
 
 void CMemFile::Free(BYTE* lpMem)
 {
-	_ASSERT(lpMem != NULL);
+	_MXASSERT(lpMem != NULL);
 
 	free(lpMem);
 }
 
 u32 CMemFile::GetPosition() const
 {
-	////_ASSERT_VALID(this);
+	////_MXASSERT_VALID(this);
 	return m_nPosition;
 }
 
 void CMemFile::GrowFile(u32 dwNewLen)
 {
-	////_ASSERT_VALID(this);
+	////_MXASSERT_VALID(this);
 
 	if (dwNewLen > m_nBufferSize)
 	{
@@ -114,7 +114,7 @@ void CMemFile::GrowFile(u32 dwNewLen)
 		u32 dwNewBufferSize = m_nBufferSize;
 
 		// watch out for buffers which cannot be grown!
-		_ASSERT(m_nGrowBytes != 0);
+		_MXASSERT(m_nGrowBytes != 0);
 		//if (m_nGrowBytes == 0)
 		//	AfxThrowMemoryException();
 
@@ -135,19 +135,19 @@ void CMemFile::GrowFile(u32 dwNewLen)
 		m_lpBuffer = lpNew;
 		m_nBufferSize = dwNewBufferSize;
 	}
-	////_ASSERT_VALID(this);
+	////_MXASSERT_VALID(this);
 }
 
 u32 CMemFile::GetLength() const
 {
-   //_ASSERT_VALID(this);
+   //_MXASSERT_VALID(this);
 
    return m_nFileSize;
 }
 
-BOOL CMemFile::SetLength(u32 dwNewLen)
+bool CMemFile::SetLength(u32 dwNewLen)
 {
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 
 //#ifdef WIN32
 //   if (dwNewLen > ULONG_MAX)
@@ -160,20 +160,20 @@ BOOL CMemFile::SetLength(u32 dwNewLen)
 		m_nPosition = (u32)dwNewLen;
 
 	m_nFileSize = (u32)dwNewLen;
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 
 	return TRUE;
 }
 
 u32 CMemFile::Read(void* lpBuf, u32 nCount)
 {
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 
 	if (nCount == 0)
 		return 0;
 
-	_ASSERT(lpBuf != NULL);
-	//_ASSERT(AfxIsValidAddress(lpBuf, nCount));
+	_MXASSERT(lpBuf != NULL);
+	//_MXASSERT(AfxIsValidAddress(lpBuf, nCount));
 
 	if (m_nPosition > m_nFileSize)
 		return 0;
@@ -187,25 +187,25 @@ u32 CMemFile::Read(void* lpBuf, u32 nCount)
 	Memcpy((BYTE*)lpBuf, (BYTE*)m_lpBuffer + m_nPosition, nRead);
 	m_nPosition += nRead;
 
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 
 	return nRead;
 }
 
-BOOL CMemFile::Write(const void* lpBuf, u32 nCount)
+bool CMemFile::Write(const void* lpBuf, u32 nCount)
 {
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 
 	if (nCount == 0)
 		return TRUE;
 
-	_ASSERT(lpBuf != NULL);
-	//_ASSERT(AfxIsValidAddress(lpBuf, nCount, FALSE));
+	_MXASSERT(lpBuf != NULL);
+	//_MXASSERT(AfxIsValidAddress(lpBuf, nCount, FALSE));
 
 	if (m_nPosition + nCount > m_nBufferSize)
 		GrowFile(m_nPosition + nCount);
 
-	_ASSERT(m_nPosition + nCount <= m_nBufferSize);
+	_MXASSERT(m_nPosition + nCount <= m_nBufferSize);
 
 	Memcpy((BYTE*)m_lpBuffer + m_nPosition, (BYTE*)lpBuf, nCount);
 
@@ -214,14 +214,14 @@ BOOL CMemFile::Write(const void* lpBuf, u32 nCount)
 	if (m_nPosition > m_nFileSize)
 		m_nFileSize = m_nPosition;
 
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 	return TRUE;
 }
 
 u32 CMemFile::Seek(u32 lOff, u32 nFrom)
 {
-	//_ASSERT_VALID(this);
-	_ASSERT(nFrom == begin || nFrom == end || nFrom == current);
+	//_MXASSERT_VALID(this);
+	_MXASSERT(nFrom == begin || nFrom == end || nFrom == current);
 
 	LONG lNewPos = m_nPosition;
 
@@ -239,21 +239,21 @@ u32 CMemFile::Seek(u32 lOff, u32 nFrom)
 
 	m_nPosition = (u32)lNewPos;
 
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 	return m_nPosition;
 }
 
-BOOL CMemFile::Flush()
+bool CMemFile::Flush()
 {
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 	return TRUE;
 }
 
 void CMemFile::Close()
 {
-	//_ASSERT((m_lpBuffer == NULL && m_nBufferSize == 0) ||
+	//_MXASSERT((m_lpBuffer == NULL && m_nBufferSize == 0) ||
 	//	!m_bAutoDelete || AfxIsValidAddress(m_lpBuffer, (UINT)m_nBufferSize, FALSE));
-	//_ASSERT(m_nFileSize <= m_nBufferSize);
+	//_MXASSERT(m_nFileSize <= m_nBufferSize);
 
 	m_nGrowBytes = 0;
 	m_nPosition = 0;
@@ -266,13 +266,13 @@ void CMemFile::Close()
 
 void CMemFile::Abort()
 {
-	//_ASSERT_VALID(this);
+	//_MXASSERT_VALID(this);
 
 	Close();
 }
 
 
-BOOL CMemFile::IsOpen() const 
+bool CMemFile::IsOpen() const 
 { 
 	return m_lpBuffer!=NULL; 
 }
@@ -280,8 +280,8 @@ BOOL CMemFile::IsOpen() const
 
 u32 CMemFile::ReadLine(void* lpBuf, u32 max)
 {
-	_ASSERT(lpBuf != NULL);
-	//_ASSERT(AfxIsValidAddress(lpBuf, nCount));
+	_MXASSERT(lpBuf != NULL);
+	//_MXASSERT(AfxIsValidAddress(lpBuf, nCount));
 
 	if (m_nPosition > m_nFileSize)
 		return 0;
@@ -307,7 +307,7 @@ u32 CMemFile::ReadLine(void* lpBuf, u32 max)
 	return count;
 }
 
-BOOL CMemFile::Eof() const
+bool CMemFile::Eof() const
 {
 	if (m_nPosition >= m_nFileSize)
 		return TRUE;

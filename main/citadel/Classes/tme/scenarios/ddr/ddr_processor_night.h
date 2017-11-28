@@ -34,7 +34,7 @@ namespace tme {
 			virtual ~ddr_night();
 
 			virtual void Process(void);
-			virtual m_gameover_t CheckWinLoseConditions ( BOOL night );
+			virtual m_gameover_t CheckWinLoseConditions ( bool night );
             virtual void MoveMidwinter ( void );
             virtual void checkImportantCharactersDead(void);
             

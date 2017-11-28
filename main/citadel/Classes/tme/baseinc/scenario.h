@@ -217,7 +217,7 @@ namespace tme {
 				mxid			character;
 			} armytotal_t ;
 			
-			typedef struct army_t : public tme::info_t {
+			typedef struct army_t : public info_t {
 				mxid			parent;
 				mxarmytype_t	type;				// this is probably redundant, contained within parent?
 				mxunit_t		unit;

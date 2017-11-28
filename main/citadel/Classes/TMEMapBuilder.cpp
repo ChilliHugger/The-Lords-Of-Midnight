@@ -6,15 +6,15 @@
 //
 //
 
-#include "TMEMapBuilder.h"
-
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTMXLayer.h"
 
+#include "TMEMapBuilder.h"
+#include "tme/baseinc/tme_internal.h"
+
 USING_NS_CC;
-
-
+USING_NS_TME;
 
 tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
 {
@@ -27,7 +27,7 @@ tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
     
     // setup GID
     for (const auto &tileset : mapInfo->getTilesets() ) {
-        if ( tileset->_name == "areas" )
+        if ( tileset->_name.compare("areas") == 0 )
             areaGID = tileset->_firstGid ;
     }
     
@@ -35,12 +35,12 @@ tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
     
     for (const auto &layer : mapInfo->getLayers()) {
         
-        if ( layer->_name == "Area" ) {
+        if ( layer->_name.compare("Area") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ )
                 map->m_data[ii].area =  layer->_tiles[ii] - areaGID ;
         }
         
-        if ( layer->_name == "Terrain" ) {
+        if ( layer->_name.compare("Terrain") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 map->m_data[ii].terrain =  layer->_tiles[ii];
             }
@@ -62,7 +62,7 @@ tme::mxmap* TMEMapBuilderCitadel::Build( const std::string& tmxFile )
     
     // setup GID
     for (const auto &tileset : mapInfo->getTilesets() ) {
-        if ( tileset->_name == "areas" )
+        if ( tileset->_name.compare("areas") == 0 )
             areaGID = tileset->_firstGid ;
     }
     
@@ -74,75 +74,75 @@ tme::mxmap* TMEMapBuilderCitadel::Build( const std::string& tmxFile )
         //    continue;
 
         
-        if ( layer->_name == "Area" ) {
+        if ( layer->_name.compare("Area") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ )
                 map->m_data[ii].area =  layer->_tiles[ii] - areaGID ;
         }
         
-        if ( layer->_name == "mountains (40,41)" ) {
+        if ( layer->_name.compare("mountains (40,41)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
 
-        if ( layer->_name == "Trees (39)" ) {
+        if ( layer->_name.compare("Trees (39)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
 
-        if ( layer->_name == "forest (37)" ) {
+        if ( layer->_name.compare("forest (37)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
         
-        if ( layer->_name == "foothills (44)" ) {
+        if ( layer->_name.compare("foothills (44)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
         
-        if ( layer->_name == "hills (43)" ) {
+        if ( layer->_name.compare("hills (43)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
 
-        if ( layer->_name == "downs (42)" ) {
+        if ( layer->_name.compare("downs (42)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
 
-        if ( layer->_name == "border.txt" ) {
+        if ( layer->_name.compare("border.txt") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].flags |=  lf_mist;
             }
         }
         
-        if ( layer->_name == "river (48)" ) {
+        if ( layer->_name.compare("river (48)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
 
-        if ( layer->_name == "sea (47)" ) {
+        if ( layer->_name.compare("sea (47)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];
             }
         }
         
-        if ( layer->_name == "lake (50)" ) {
+        if ( layer->_name.compare("lake (50)") == 0 ) {
             for ( int ii=0; ii<totalSize; ii++ ) {
                 if ( layer->_tiles[ii] != 0 )
                     map->m_data[ii].terrain =  layer->_tiles[ii];

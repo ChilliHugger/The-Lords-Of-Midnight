@@ -94,7 +94,7 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
 {
     for(auto const& item: *items) {
         
-        if ((item->position.z>=options->generator->near)&&(item->position.z<options->generator->far))
+        if ((item->position.z>=options->generator->viewportNear)&&(item->position.z<options->generator->viewportFar))
         {
             f32	alpha = 1.0f;
             
@@ -102,7 +102,7 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
             
             // fade anything too close - ie as we move through the locations
             if (item->position.z<0.75f ) {
-                alpha = (item->position.z - options->generator->near )*2.0f;
+                alpha = (item->position.z - options->generator->viewportNear )*2.0f;
             }
             
             auto graphic = GetTerrainImage(item->terrain);
@@ -112,8 +112,8 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
                 
                 if ( item->position.z >= 8.5f  && y < 0 ) {
                     
-                    f32 range = options->generator->far - 8.5f ;
-                    f32 diff = options->generator->far - item->position.z ;
+                    f32 range = options->generator->viewportFar - 8.5f ;
+                    f32 diff = options->generator->viewportFar - item->position.z ;
                     alpha = -1.0 + (2.0*(diff/range));
                     
                     y = 0 ;

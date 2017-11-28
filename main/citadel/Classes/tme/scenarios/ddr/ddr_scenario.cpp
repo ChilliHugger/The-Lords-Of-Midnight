@@ -197,7 +197,7 @@ void ddr_stronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier
 
 void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
 {
-    int id = random(1,sv_characters-1);
+	int id = mxrandom(1,sv_characters-1);
     
     mxcharacter* c = mx->CharacterById(id);
     
@@ -207,7 +207,7 @@ void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
     } else {
         
         //int firstObject = mx->EntityByName("OB_CROWN_VARENAND")->Id();
-        //id =  random(firstObject,sv_objects-1);
+        //id =  mxrandom(firstObject,sv_objects-1);
         //mxobject* o = mx->ObjectById(id);
         
         ddr_character* ddr = static_cast<ddr_character*>(character);

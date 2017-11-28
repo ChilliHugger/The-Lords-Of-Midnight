@@ -35,7 +35,7 @@ namespace chilli {
 			memset ( m_lpBufStart, 0xfd, m_nBufSize );
 
 
-			_ASSERTE(m_lpBufStart != NULL);
+			_MXASSERTE(m_lpBufStart != NULL);
 
 			m_lpBufMax = m_lpBufStart + m_nBufSize;
 			m_lpBufCur = (IsLoading()) ? m_lpBufMax : m_lpBufStart;
@@ -87,7 +87,7 @@ namespace chilli {
 
 			if (nMaxTemp != 0)
 			{
-				_ASSERTE(m_lpBufCur == m_lpBufMax);
+				_MXASSERTE(m_lpBufCur == m_lpBufMax);
 
 				// read rest in buffer size chunks
 				nTemp = nMaxTemp - (nMaxTemp % m_nBufSize);
@@ -109,8 +109,8 @@ namespace chilli {
 				// read last chunk into buffer then copy
 				if (nRead == nTemp)
 				{
-					_ASSERTE(m_lpBufCur == m_lpBufMax);
-					_ASSERTE(nMaxTemp < (u32)m_nBufSize);
+					_MXASSERTE(m_lpBufCur == m_lpBufMax);
+					_MXASSERTE(nMaxTemp < (u32)m_nBufSize);
 
 					// fill buffer (similar to archive::FillBuffer, but no exception)
 						u32 nLeft = MAX(nMaxTemp, (u32)m_nBufSize);
@@ -169,8 +169,8 @@ namespace chilli {
 				nMax -= nTemp;
 
 				// copy remaining to active buffer
-				_ASSERTE(nMax < (u32)m_nBufSize);
-				_ASSERTE(m_lpBufCur == m_lpBufStart);
+				_MXASSERTE(nMax < (u32)m_nBufSize);
+				_MXASSERTE(m_lpBufCur == m_lpBufStart);
 				memcpy(m_lpBufCur, lpBuf, nMax);
 				m_lpBufCur += nMax;
 			}
@@ -305,13 +305,13 @@ namespace chilli {
 
 		archive& archive::operator<<(long l)
 		{ 
-			_ASSERTE(sizeof(long) == sizeof(u32));
+			_MXASSERTE(sizeof(long) == sizeof(u32));
 			return operator<<((u32) l);
 		}
 		 
 		archive& archive::operator<<(f32 f)
 		{
-			_ASSERTE(sizeof(f32) == sizeof(u32));
+			_MXASSERTE(sizeof(f32) == sizeof(u32));
 			//u32 l;
 			//memcpy( &l, &f, sizeof(u32) );
 			return operator<<((u32&)f);
@@ -320,7 +320,7 @@ namespace chilli {
 
 		archive& archive::operator<<(f64 f)
 		{
-			_ASSERTE(sizeof(f64) == sizeof(u64));
+			_MXASSERTE(sizeof(f64) == sizeof(u64));
 			//u64 l;
 			//memcpy( &l, &f, sizeof(u64) );
 			return operator<<((u64&)f);
@@ -393,20 +393,20 @@ namespace chilli {
 
 		archive& archive::operator>>(long& l)
 		{
-			_ASSERTE(sizeof(long) == sizeof(u32));
+			_MXASSERTE(sizeof(long) == sizeof(u32));
 			return operator>>((u32&) l);
 		}
 
 
 		archive& archive::operator>>(f32& f)
 		{
-			_ASSERTE(sizeof(f32) == sizeof(u32));
+			_MXASSERTE(sizeof(f32) == sizeof(u32));
 			return operator>>((u32&) f);
 		}
 
 		archive& archive::operator>>(f64& f)
 		{
-			_ASSERTE(sizeof(f64) == sizeof(u64));
+			_MXASSERTE(sizeof(f64) == sizeof(u64));
 			return operator>>((u64&) f);
 		}
 
@@ -415,7 +415,7 @@ namespace chilli {
 		u16 size = 0;
 
 			if ( string )
-				size = chilli::lib::strlen(string);
+				size = c_strlen(string);
 
 			*this << size ;
 

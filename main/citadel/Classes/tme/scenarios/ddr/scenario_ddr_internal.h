@@ -51,8 +51,8 @@ namespace tme {
 			virtual ~ddr_character();
 			
             
-			virtual BOOL CheckRecruitChar ( mxcharacter* character )  const ;
-			virtual BOOL Recruited ( mxcharacter* character );
+			virtual bool CheckRecruitChar ( mxcharacter* character )  const ;
+			virtual bool Recruited ( mxcharacter* character );
             virtual void Serialize ( archive& ar );
             virtual MXRESULT FillExportData ( info_t* data );
 
@@ -60,7 +60,7 @@ namespace tme {
 			virtual void DecreaseEnergy ( s32 amount );
             virtual void IncreaseEnergy ( s32 amount );
             
-			virtual MXRESULT Cmd_WalkForward ( BOOL perform_seek );
+			virtual MXRESULT Cmd_WalkForward ( bool perform_seek );
             virtual MXRESULT Cmd_Use ( void );
             virtual mxobject* Cmd_Fight( void );
 			            
@@ -76,7 +76,7 @@ namespace tme {
         
             void Target ( const mxitem* newtarget );
             void whatIsCharacterDoing ( void );
-            BOOL retarget ();
+            bool retarget ();
             void moveCharacterSomewhere ( void );
 
             void IncreaseDespondency( s32 amount );

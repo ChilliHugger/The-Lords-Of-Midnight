@@ -347,12 +347,12 @@ namespace tme {
 			return Location() - loc ;
 		}
 
-		BOOL mxcharacter::CheckFightObject ( mxobject* obj ) const
+		bool mxcharacter::CheckFightObject ( mxobject* obj ) const
 		{
 			return obj ? obj->CanFight() : FALSE ;
 		}
 
-		BOOL mxcharacter::CheckRecruitChar ( mxcharacter* character )  const
+		bool mxcharacter::CheckRecruitChar ( mxcharacter* character )  const
 		{
 			if ( character == this )
 				return FALSE ;
@@ -374,12 +374,12 @@ namespace tme {
 		int temp;
 			if ( !IsDead() ) {
 				if ( IsRiding() ) {
-					if ( random()&1)
+					if (mxrandom() & 1)
 						flags.Reset ( cf_riding );
 				}
 
 				temp = (energy/2) - 64 + reckless;
-				if ( random(255) >= temp ) {
+				if (mxrandom(255) >= temp) {
 					Cmd_Dead();
 				}
 			}
@@ -393,7 +393,7 @@ namespace tme {
 				return;
 
 			for (;; ) {
-				loc = Location() + (mxdir_t)random(0,7);
+				loc = Location() + (mxdir_t)mxrandom(0, 7);
 				if ( !mx->gamemap->IsLocationBlock( loc ) ) {
 					if ( IsRecruited() ) {
                         location = loc ;
@@ -414,7 +414,7 @@ namespace tme {
 			lastcommandid = id;
 		}
 
-		void mxcharacter::CommandTakesTime ( BOOL success )
+		void mxcharacter::CommandTakesTime ( bool success )
 		{
 			// ** CHEAT
 			if ( sv_cheat_commands_free )
@@ -493,7 +493,7 @@ namespace tme {
 		}
 
     
-        BOOL mxcharacter::CanWalkForward ( void )
+        bool mxcharacter::CanWalkForward ( void )
         {
             // dead men don't walk!
 			if ( IsDead() ) {
@@ -521,7 +521,7 @@ namespace tme {
         }
         
     
-		MXRESULT mxcharacter::Cmd_WalkForward ( BOOL perform_seek )
+		MXRESULT mxcharacter::Cmd_WalkForward ( bool perform_seek )
 		{
 		s32			TimeCost;
 		mxrace*		rinfo;
@@ -666,7 +666,7 @@ namespace tme {
 			return MX_OK ;
 		}
 
-		BOOL mxcharacter::EnterLocation ( mxgridref loc )
+		bool mxcharacter::EnterLocation ( mxgridref loc )
 		{
 			//location = loc ;
 			//mx->EnterLocation ( location, this );
@@ -753,7 +753,7 @@ namespace tme {
 				warriors.total += qty;
 			}
 
-			chilli::lib::strcpy( mx->LastActionMsg(), 
+			c_strcpy( mx->LastActionMsg(),
 				mx->text->DescribeCharacterRecruitMen ( this, stronghold, qty ) );
 
 			CommandTakesTime(TRUE);
@@ -797,8 +797,8 @@ namespace tme {
 				warriors.total -= stronghold->Add( Race(), UT_WARRIORS, MIN(warriors.total,qty));
 
 
-			chilli::lib::strcpy( mx->LastActionMsg(), 
-				mx->text->DescribeCharacterPostMen ( this, stronghold, qty ) );
+			c_strcpy( mx->LastActionMsg(),
+			mx->text->DescribeCharacterPostMen ( this, stronghold, qty ) );
 			
 			CommandTakesTime(TRUE);
 
@@ -902,7 +902,7 @@ namespace tme {
 		}
 
 #if defined(_DDR_)
-		BOOL mxcharacter::Recruited ( mxcharacter* c )
+		bool mxcharacter::Recruited ( mxcharacter* c )
 		{
             if ( !c->IsAIControlled() ) {
                 // set loyalty?
@@ -961,7 +961,7 @@ namespace tme {
 #endif
             
 #if defined(_LOM_)
-        BOOL mxcharacter::Recruited ( mxcharacter* c )
+        bool mxcharacter::Recruited ( mxcharacter* c )
         {
             // set loyalty?
             flags.Set ( cf_recruited );
@@ -1002,7 +1002,7 @@ namespace tme {
                 return MX_FAILED ;
             
 			mxlocinfo* info = GetLocInfo();
-			BOOL battle = info->flags.Is(lif_enterbattle) ;
+			bool battle = info->flags.Is(lif_enterbattle) ;
             mxcharacter* stubborn_follower = info->stubborn_follower_battle;
 			SAFEDELETE ( info );
 			if ( !battle || stubborn_follower )
@@ -1019,7 +1019,7 @@ namespace tme {
 		mxobject* mxcharacter::Cmd_Fight ( void )
 		{
 		mxlocinfo*	info;
-		BOOL		objectautokill = FALSE ;
+		bool		objectautokill = FALSE ;
 		int			message;
 
 		mxobject*	oinfo=NULL;
@@ -1073,7 +1073,7 @@ namespace tme {
 				message = SS_FIGHT ;
 			}
 
-			chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( message, this) );
+			c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( message, this) );
 
 			CommandTakesTime(TRUE);
 
@@ -1291,7 +1291,7 @@ namespace tme {
             return MX_OK ;
         }
     
-        BOOL mxcharacter::AddFollower ( mxcharacter* character )
+        bool mxcharacter::AddFollower ( mxcharacter* character )
         {
             if ( character->Following() != NULL )
                 return FALSE;
@@ -1302,7 +1302,7 @@ namespace tme {
             return TRUE;
         }
 
-        BOOL mxcharacter::RemoveFollower ( mxcharacter* character )
+        bool mxcharacter::RemoveFollower ( mxcharacter* character )
         {
             if ( character->Following() != this )
                 return FALSE;
@@ -1367,7 +1367,7 @@ namespace tme {
             return MX_OK;
         }
 
-        BOOL mxcharacter::CanFollow( const mxcharacter* c ) const
+        bool mxcharacter::CanFollow( const mxcharacter* c ) const
         {
 #ifdef ENABLE_GROUPING
             if ( c == NULL )
@@ -1422,7 +1422,7 @@ namespace tme {
 		mxthing_t			newobject;
 		mxobject*	oinfo;
 
-            BOOL mikeseek=FALSE;
+            bool mikeseek=FALSE;
 			SetLastCommand ( CMD_SEEK, NONE );
 			CommandTakesTime(TRUE);
 
@@ -1443,7 +1443,7 @@ namespace tme {
 			oinfo = mx->ObjectById ( newobject );
 
 			if ( oinfo == NULL ) {
-				chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK_NOTHING, this) );
+				c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK_NOTHING, this) );
 				return NULL;
 			}
 
@@ -1456,7 +1456,7 @@ namespace tme {
                 chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_GUIDANCE1, this) );
             else
 #endif
-                chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
+				c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
             
 			switch ( newobject ) {
 
@@ -1719,7 +1719,7 @@ namespace tme {
 #endif
     
     
-		BOOL mxcharacter::HasBattleInfo() const
+		bool mxcharacter::HasBattleInfo() const
 		{
 			mxgridref loc1 = battleloc ;
 			mxgridref loc2 = mxgridref(-1,-1);
@@ -1761,7 +1761,7 @@ namespace tme {
 
 		archive& operator<<(archive& ar, mxcharacter* ptr )
 		{
-			return ar << (DWORD) ptr->SafeId();
+			return ar << (u32) ptr->SafeId();
 		}
 
 		archive& operator>>( archive& ar, mxcharacter*& ptr )
@@ -1771,13 +1771,13 @@ namespace tme {
 			return ar ;
 		}
 
-		BOOL mxcharacter::IsFriend( const mxcharacter* c ) const
+		bool mxcharacter::IsFriend( const mxcharacter* c ) const
 		{
 			if ( c == NULL ) return NULL ;
 			return loyalty == c->loyalty ;
 		}
 
-		BOOL mxcharacter::IsOnSameSide ( const mxcharacter* c ) const
+		bool mxcharacter::IsOnSameSide ( const mxcharacter* c ) const
 		{
 			return CommanderInChief() == c->CommanderInChief() ;
 		}
@@ -1833,7 +1833,7 @@ namespace tme {
 			}
 
 			defaultexport::character_t* out = (defaultexport::character_t*)data;
-		//	_ASSERT_VALID ( this );
+		//	_MXASSERT_VALID ( this );
 			VALIDATE_INFO_BLOCK(out,INFO_CHARACTER,defaultexport::character_t);
 
 

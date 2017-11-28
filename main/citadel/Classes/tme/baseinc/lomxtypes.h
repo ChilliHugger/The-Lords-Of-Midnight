@@ -1,8 +1,9 @@
 #ifndef _LOMXTYPES_H_INCLUDED_
 #define _LOMXTYPES_H_INCLUDED_
 
-#include "library.h"
+#include "../../library/libinc/library.h"
 
+using namespace chilli::types;
 
 //#define _DDR_
 #define _LOM_
@@ -622,7 +623,6 @@
 	// namespace enums
 }
 // namespace tme
-	using namespace tme::enums ;
 #endif
 
 
@@ -671,8 +671,8 @@ namespace tme {
 
 #define CLEARINFOSTRUCT(x,t) 		CLEARSTRUCT(x); x.id = MAKE_ID(t,0); x.size = sizeof(x);
 #define CLEARINFOSTRUCTPTR(ptr,t,s) memset(ptr,0,sizeof(s)); ptr->id = MAKE_ID(t,0); ptr->size = sizeof(s);
-#define ID_4CC(ch0,ch1,ch2,ch3)		((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) | ((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
-#define TERRAIN_VARIANT(x,y)		(x|(y*<<6))
+#define ID_4CC(ch0,ch1,ch2,ch3)		(u32)((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) | ((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
+#define TERRAIN_VARIANT(x,y)			(x|(y*<<6))
 
 	typedef struct callback_t {
 		enum type_t {
@@ -705,7 +705,7 @@ namespace tme {
 	} gameover_callback_t ;
     
 	typedef void (*PFNNIGHTCALLBACK)( callback_t* );
-	typedef BOOL (*PFNSERIALIZE)( u32 version, lib::archive& ar );
+	typedef bool (*PFNSERIALIZE)( u32 version, chilli::lib::archive& ar );
 	typedef MXRESULT (*PFNCOMMAND)( const string& arg, variant argv[], u32 argc);
 	
 	
@@ -723,7 +723,7 @@ namespace tme {
         loc_t operator+(loc_t value) const			{ return loc_t(x + value.x, y + value.y); }
         loc_t operator-(loc_t value) const			{ return loc_t(x - value.x, y - value.y); }
 
-        BOOL operator==(loc_t value) const			{ return (x == value.x && y == value.y); }
+        bool operator==(loc_t value) const			{ return (x == value.x && y == value.y); }
 
     
     } loc_t ;
@@ -949,14 +949,14 @@ namespace tme {
 		mxgridref( loc_t loc );
 		~mxgridref();
 
-		lib::archive& Serialize ( lib::archive& ar );
+		chilli::lib::archive& Serialize ( chilli::lib::archive& ar );
 
 		// there are no subtracts
 		void AddDirection( mxdir_t dir );
 		mxgridref operator + ( mxdir_t dir );
 		s32 operator - ( mxgridref loc );
-		BOOL operator == ( mxgridref& loc );
-		BOOL operator != ( mxgridref& loc );
+		bool operator == ( mxgridref& loc );
+		bool operator != ( mxgridref& loc );
 		void operator += ( mxdir_t dir )						{ AddDirection(dir); }
 		mxdir_t DirFromHere ( mxgridref loc ) const;
 
@@ -979,7 +979,7 @@ namespace tme {
 		void sprintf ( LPSTR input, ... );
 		void sprintf ( CStrBuf* input, ... );
 		
-		size_t Length () const			{ return chilli::lib::strlen(buffer); }
+		size_t Length () const			{ return chilli::lib::c_strlen(buffer); }
 		LPSTR End ()					{ return GetAt()+Length(); }
 		LPSTR GetAt ()					{ return buffer; }
 		operator LPSTR() const			{ return buffer; }
@@ -1003,10 +1003,6 @@ namespace tme {
 
 }
 // namespace tme
-
-using namespace tme::flags ;
-
-
 
 #define DATABASEHEADER		"MidnightEngineDatabase"
 #if defined(_LOM_)

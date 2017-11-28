@@ -250,7 +250,7 @@ void mxstronghold::CheckForZero ( void )
 
 archive& operator<<(archive& ar, mxstronghold* ptr )
 {
-    return ar << (DWORD) ptr->SafeId();
+    return ar << (u32) ptr->SafeId();
 }
 
 archive& operator>>( archive& ar, mxstronghold*& ptr )

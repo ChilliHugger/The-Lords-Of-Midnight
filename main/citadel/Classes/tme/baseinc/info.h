@@ -1,7 +1,7 @@
 #ifndef _INFO_H_INCLUDED_
 #define _INFO_H_INCLUDED_
 
-#include "library.h"
+#include "../../library/libinc/library.h"
 
 #define MAX_CHARACTERS_FOLLOWING        32
 
@@ -25,10 +25,7 @@ class CListS;
 
 #include "variables.h"
 
-using namespace tme ;
-using namespace chilli;
-using namespace chilli::lib;
-using namespace chilli::collections;
+
 
 // enum control
 //#define DECLARE_ENUM(x)		namespace x { enum  
@@ -44,6 +41,13 @@ using namespace chilli::collections;
 
 namespace tme {
 
+    using namespace chilli;
+    using namespace chilli::lib;
+    using namespace chilli::collections;
+    using namespace variables;
+    using namespace tme::collections;
+    using namespace flags;
+    
 	// forward references
 
 	namespace types {} ;
@@ -128,7 +132,7 @@ namespace tme {
 		PROPERTY( u32, Id, id );
 
 		string& Symbol() 		{ return symbol ; }
-		BOOL IsSymbol(LPCSTR s) const { return lib::stricmp(symbol,s) == 0; }
+		bool IsSymbol(LPCSTR s) const { return c_stricmp(symbol,s) == 0; }
 
 		virtual int Compare ( mxentity* o, int hint ) const;
 
@@ -136,7 +140,7 @@ namespace tme {
 		const void* GetUserData() { return user_data; }
 
 		flags32& Flags()			{ return flags; } 
-		BOOL IsFlags(u32 f)			{ return flags.Is(f); }
+		bool IsFlags(u32 f)			{ return flags.Is(f); }
 		FLAG_PROPERTY( IsDisabled,	et_disabled )
 
 	protected:
@@ -260,7 +264,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 //#pragma pack ( 1 )
 	
 #define MAP_FLAG_PROPERTY( n, f ) \
-	BOOL n() const { return (flags&f) == f; }
+	bool n() const { return (flags&f) == f; }
 	
 	// class loc
 	class mxloc
@@ -283,13 +287,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 #endif
         MAP_FLAG_PROPERTY( HasArmy,			lf_army)
 		MAP_FLAG_PROPERTY( HasCharacter,	lf_character)
-		BOOL IsInteresting() const ;
+		bool IsInteresting() const ;
 		void Serialize ( chilli::lib::archive& ar ) ;
 		
 #if defined(_DDR_)
-		BOOL HasTunnelExit() const ;
-		BOOL HasTunnelEntrance() const ;
-        BOOL IsTunnelPassageway() const ;
+		bool HasTunnelExit() const ;
+		bool HasTunnelEntrance() const ;
+        bool IsTunnelPassageway() const ;
 #endif
         
 	public:
@@ -327,30 +331,30 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
 		virtual void Serialize ( chilli::lib::archive& ar ) ;
 
-		BOOL Load ( LPCSTR filename );
-		BOOL Save ( LPCSTR filename );
-		BOOL IsLocationSpecial( mxgridref loc );
-		BOOL IsLocationBlock( mxgridref loc ) ;
-		BOOL IsLocOnMap ( mxgridref loc ) const ;
-        BOOL IsLocationVisible( mxgridref loc );
+		bool Load ( LPCSTR filename );
+		bool Save ( LPCSTR filename );
+		bool IsLocationSpecial( mxgridref loc );
+		bool IsLocationBlock( mxgridref loc ) ;
+		bool IsLocOnMap ( mxgridref loc ) const ;
+        bool IsLocationVisible( mxgridref loc );
         
 		void SetLocationArmy( mxgridref loc, u32 number );
 		void SetLocationCharacter( mxgridref loc, u32 number );
 		void SetLocationSpecial( mxgridref loc, u32 number );
-        void SetLocationVisible( mxgridref l, BOOL visible );
-        void SetLocationLookedAt( mxgridref l, BOOL visible );
-        void SetLocationVisited( mxgridref l, BOOL visible );
+        void SetLocationVisible( mxgridref l, bool visible );
+        void SetLocationLookedAt( mxgridref l, bool visible );
+        void SetLocationVisited( mxgridref l, bool visible );
 
 #if defined(_DDR_)
-        BOOL HasTunnelEntrance( mxgridref l );
-        BOOL HasTunnelExit( mxgridref l );
+        bool HasTunnelEntrance( mxgridref l );
+        bool HasTunnelExit( mxgridref l );
 
-        void SetTunnelVisible( mxgridref l, BOOL visible );
-        BOOL IsTunnelVisible( mxgridref loc );
-        BOOL IsTunnel( mxgridref loc );
-        BOOL IsTunnelPassageway( mxgridref l );
-        BOOL HasObject( mxgridref l );
-        void SetObject( mxgridref l, BOOL value );
+        void SetTunnelVisible( mxgridref l, bool visible );
+        bool IsTunnelVisible( mxgridref loc );
+        bool IsTunnel( mxgridref loc );
+        bool IsTunnelPassageway( mxgridref l );
+        bool HasObject( mxgridref l );
+        void SetObject( mxgridref l, bool value );
         void MoveMists ( void );
         void PutThingsOnMap ( void );
 #endif
@@ -376,7 +380,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 	private:
 		void Pan_Location ( mxgridref loc, int distance, int xtype, int ytype, int scrtype ) ;
 		int Pan_AdjustMapPos ( int pos, int type, int dx, int dy );
-		BOOL Create ( size dimensions );
+		bool Create ( size dimensions );
 
     
     public:
@@ -404,27 +408,27 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         virtual void Serialize ( chilli::lib::archive& ar ) ;
         
         void CalculateVisibleArea();
-        BOOL Create ( size dimensions );
+        bool Create ( size dimensions );
         
         void ClearVisibleArea();
         void ResetVisibleArea();
-        BOOL Load ( LPCSTR filename );
-        BOOL Save ( LPCSTR filename );
+        bool Load ( LPCSTR filename );
+        bool Save ( LPCSTR filename );
         
-        BOOL IsLocationVisible( mxgridref l );
+        bool IsLocationVisible( mxgridref l );
         flags32& GetAt ( const mxgridref& mxloc );
-        BOOL IsLocOnMap ( mxgridref mxloc ) const;
+        bool IsLocOnMap ( mxgridref mxloc ) const;
         
         
-        void SetLocationVisible( mxgridref l, BOOL visible );
-        void SetLocationLookedAt( mxgridref l, BOOL visible );
-        void SetLocationVisited( mxgridref l, BOOL visible );
+        void SetLocationVisible( mxgridref l, bool visible );
+        void SetLocationLookedAt( mxgridref l, bool visible );
+        void SetLocationVisited( mxgridref l, bool visible );
         void CheckVisibleArea( mxgridref l );
         
         
 #if defined(_DDR_)
-        BOOL IsTunnelVisible( mxgridref l );
-        void SetTunnelVisible( mxgridref l, BOOL visible );
+        bool IsTunnelVisible( mxgridref l );
+        void SetTunnelVisible( mxgridref l, bool visible );
 #endif
         
         void TransferFromMap( mxmap* map );
@@ -451,10 +455,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 		public:
 			entities(void);
 			~entities(void);
-			BOOL Create( u32 count );
-			BOOL Create( mxscenario* scenario, id_type_t type, u32 count );
+			bool Create( u32 count );
+			bool Create( mxscenario* scenario, id_type_t type, u32 count );
 			void Clear(); 
-			BOOL CreateIdtCollection ( c_mxid& obj );
+			bool CreateIdtCollection ( c_mxid& obj );
 			u32 Count() const;
 
 			void operator = ( const entities& src );
@@ -466,7 +470,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			mxentity* FindSymbol ( const string& name ) ;
 			void Sort ( int hint ) ; // not thread safe
 
-			int Add ( mxentity* );
+			bool Add ( mxentity* );
 			u32 Compact( void );
 			void Resize ( u32 newsize );
             s32 IndexOf ( mxentity* entity );
@@ -475,7 +479,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			u32				m_max;
 			u32				m_used;
 			mxentity**		m_objElements;
-			BOOL			m_bOwner;
+			bool			m_bOwner;
 		};
 		// class entities collection
 
@@ -697,7 +701,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			GET_PROPERTY ( u32, Message, string );
 			GET_PROPERTY ( s32, Priority, priority );
 
-			virtual BOOL CheckComplete ( void );
+			virtual bool CheckComplete ( void );
 			virtual int Compare ( mxentity* o, int hint ) const;
 
 
@@ -723,8 +727,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			GET_PROPERTY ( s32, Priority, priority );
 			GET_PROPERTY ( m_condition_t, Condition, condition );
             
-			virtual BOOL CheckComplete ( void );
-			virtual BOOL Completed ( void );
+			virtual bool CheckComplete ( void );
+			virtual bool Completed ( void );
 			virtual mxgridref GetLocation ( mxid id ) const;
 			virtual int Compare ( mxentity* o, int hint ) const;
 
@@ -801,11 +805,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 #if defined(_DDR_)
             FLAG_PROPERTY( CanHelpRecruitment,		of_recruitment )
 			FLAG_PROPERTY( IsRandomStart,	of_randomstart )
-            BOOL IsCarried() const;
-            BOOL IsSpecial() const;
+            bool IsCarried() const;
+            bool IsSpecial() const;
 #endif
             
-			BOOL CanDestroy ( mxobject* obj ) const ;
+			bool CanDestroy ( mxobject* obj ) const ;
             
 			string& Name()  		{ return name ; }
 
@@ -858,7 +862,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 #if defined(_DDR_)
 			PROPERTY ( u32, Energy, energy )
 #endif
-			BOOL HasFallen() const				{ return race!=occupyingrace; }
+			bool HasFallen() const				{ return race!=occupyingrace; }
 
 		protected:
 			mxrace_t		occupyingrace;
@@ -937,7 +941,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 		// internal
 			virtual void NextTurn( void );
 			virtual void EndOfTurn( void );
-			virtual BOOL RetargetTarget ( void );
+			virtual bool RetargetTarget ( void );
 			virtual void Cmd_Goto ( void );
 			virtual void Cmd_Wander ( void );
 			virtual void Cmd_Follow ( void );
@@ -985,10 +989,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			GET_PROPERTY ( mxdir_t, Looking, looking )
 			GET_PROPERTY ( mxrace_t, Race, race )
 			//GET_PROPERTY ( charimages_t, Images, images )
-			GET_PROPERTY ( BOOL, IsWaiting, WaitMode()!=WM_NONE )
-			GET_PROPERTY ( BOOL, IsNight, Time()==(mxtime_t)sv_time_night||IsResting() )
-			GET_PROPERTY ( BOOL, IsDawn, Time()==(mxtime_t)sv_time_dawn&&!IsResting() )
-			GET_PROPERTY ( BOOL, IsFollowing, Following()!=NULL )
+			GET_PROPERTY ( bool, IsWaiting, WaitMode()!=WM_NONE )
+			GET_PROPERTY ( bool, IsNight, Time()==(mxtime_t)sv_time_night||IsResting() )
+			GET_PROPERTY ( bool, IsDawn, Time()==(mxtime_t)sv_time_dawn&&!IsResting() )
+			GET_PROPERTY ( bool, IsFollowing, Following()!=NULL )
 
 			GET_PROPERTY ( mxrace_t, Loyalty, loyalty )
 			GET_PROPERTY ( mxcharacter*, Foe, foe )
@@ -1020,20 +1024,20 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			FLAG_PROPERTY ( HasFollowers, cf_followers )
             
             
-			BOOL HasArmy() const				{ return ((riders.total+warriors.total) > 0); }
-			BOOL IsDead() const					{ return !flags.Is(cf_alive); }
+			bool HasArmy() const				{ return ((riders.total+warriors.total) > 0); }
+			bool IsDead() const					{ return !flags.Is(cf_alive); }
 			const string& Longname() const		{ return longname; }
 			const string& Shortname() const		{ return shortname; }
 
 			void SetLastCommand ( command_t cmd, mxid id );
-			void CommandTakesTime ( BOOL success );
+			void CommandTakesTime ( bool success );
 
 			// Commands
 			virtual MXRESULT Cmd_LookLeft ( void );
 			virtual MXRESULT Cmd_LookRight ( void );
 			virtual MXRESULT Cmd_LookDir ( mxdir_t dir );
 			virtual MXRESULT Cmd_MoveForward ( void );
-			virtual MXRESULT Cmd_WalkForward ( BOOL peform_seek );
+			virtual MXRESULT Cmd_WalkForward ( bool peform_seek );
 			virtual MXRESULT Cmd_PostMen ( mxstronghold* s=NULL, u32 qty=0 );
 			virtual MXRESULT Cmd_RecruitMen ( mxstronghold* s=NULL, u32 qty=0 );
 			virtual MXRESULT Cmd_Attack ( void );
@@ -1069,28 +1073,28 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 #endif
             virtual MXRESULT EnterBattle ( void );
 
-            virtual BOOL EnterLocation ( mxgridref loc );
+            virtual bool EnterLocation ( mxgridref loc );
 			virtual void CanSeeLocation ( mxgridref loc );
-            virtual BOOL CanFollow( const mxcharacter* c ) const ;
-			virtual BOOL CheckFightObject ( mxobject* object ) const;
-			virtual BOOL CheckRecruitChar ( mxcharacter* pChar ) const ;
-			virtual BOOL Recruited ( mxcharacter* character );
+            virtual bool CanFollow( const mxcharacter* c ) const ;
+			virtual bool CheckFightObject ( mxobject* object ) const;
+			virtual bool CheckRecruitChar ( mxcharacter* pChar ) const ;
+			virtual bool Recruited ( mxcharacter* character );
 			virtual void LostFight ( void );
 			virtual void Displace ( void );
 			virtual void DecreaseEnergy ( s32 amount );
 			virtual void IncreaseEnergy ( s32 amount );
 			virtual void StartDawn ( void );
-			virtual BOOL HasBattleInfo() const ;
+			virtual bool HasBattleInfo() const ;
 			virtual mxthing_t LocationThing() const ;
 			virtual void RefreshLocationBasedVariables ( const mxlocinfo* info ) ;
-            virtual BOOL CanWalkForward ( void );
+            virtual bool CanWalkForward ( void );
 
-            virtual BOOL AddFollower ( mxcharacter* c );
-            virtual BOOL RemoveFollower ( mxcharacter* c );
+            virtual bool AddFollower ( mxcharacter* c );
+            virtual bool RemoveFollower ( mxcharacter* c );
 
 			//
-			BOOL IsFriend( const mxcharacter* c ) const;
-			BOOL IsOnSameSide ( const mxcharacter* c ) const;
+			bool IsFriend( const mxcharacter* c ) const;
+			bool IsOnSameSide ( const mxcharacter* c ) const;
 			const mxcharacter* CommanderInChief ( void ) const;
 
 			void ForcedVariableRefresh() const;
@@ -1174,7 +1178,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 		};
 		// mxarmytotal
 
-	using namespace tme::collections;
 	
 		// mxlocinfo
 		class mxlocinfo : public mxitem  
@@ -1233,11 +1236,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			mxarmytotal			doomdark;								// info block for doomdark's regiments, does not include strongolds
 			mxarmy				armies[MAX_ARMIES_INLOCATION];			// list of armies here
 
-			entities            objStrongholds;							// list of strongholds here
-			entities            objRoutenodes;							// list of routenodes here
-			entities            objCharacters;							// list of characters here
-			entities            objRegiments;							// list of regiments here
-			entities            objRecruit;								// list of characters that <character> can recruit
+			collections::entities            objStrongholds;							// list of strongholds here
+			collections::entities            objRoutenodes;							// list of routenodes here
+			collections::entities            objCharacters;							// list of characters here
+			collections::entities            objRegiments;							// list of regiments here
+			collections::entities            objRecruit;								// list of characters that <character> can recruit
 
             mxcharacter*        stubborn_follower_move;                 // which character is stopping us moving
             mxcharacter*        stubborn_follower_battle;               // which character is stopping us attacking

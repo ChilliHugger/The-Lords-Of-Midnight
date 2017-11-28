@@ -128,6 +128,8 @@ mxentity* lom_x::CreateEntity ( id_type_t type )
 	switch ( type ) {
 		case IDT_STRONGHOLD:
 			return (mxentity*) new lom_stronghold ;
+        default:
+            break;
 	}
 
 	return mxscenario::CreateEntity ( type );
@@ -278,7 +280,7 @@ mxplace*		TowerOfDoom;
         // morkin, or luxor
         
         
-		int type = random(1,5);
+		int type = mxrandom(1,5);
 		
 		// ushgarak is not important if the icecrown is down
 		if ( c && type == 5 )
@@ -346,7 +348,7 @@ mxplace*		TowerOfDoom;
 		u32 base::CalcFearAdjuster(mxCLocInfo* locinfo) const
 		{
 		mxcharacter* character;
-		BOOL		icecrowncarrierhere;
+		bool		icecrowncarrierhere;
 		int			ii;
 		gridref		icefearbaseloc(0,0);
 

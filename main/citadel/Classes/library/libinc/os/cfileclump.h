@@ -48,15 +48,15 @@ class LIBAPI CFileClump
 public:
 	CFileClump();
 	virtual ~CFileClump();
-	BOOL Open ( LPSTR filename );
+	bool Open ( LPSTR filename );
 	void Close();
 	PCLUMPENTRY Load ( LPSTR szName ) const;
-	BOOL PreCache ( LPSTR szName ) const;
-	BOOL PreCache () const;
+	bool PreCache ( LPSTR szName ) const;
+	bool PreCache () const;
 	
 	int Size() const;
 	u8* Address() const;
-	BOOL IsOpen() const;
+	bool IsOpen() const;
 	int Count() const;
 
 private:

@@ -62,7 +62,7 @@ namespace tme {
 			//	return 0;
 			//}
 			//
-			//BOOL c_float::Add ( f32 o )
+			//bool c_float::Add ( f32 o )
 			//{
 			//	if ( m_used == m_max ) {
 			//		// add a new page				
@@ -83,14 +83,14 @@ namespace tme {
 			//	return 0;
 			//}
 
-			//BOOL c_float::Remove ( f32 o )
+			//bool c_float::Remove ( f32 o )
 			//{
 			//	int pos = IsInList(o);
 			//	if ( pos == 0 ) return FALSE ;
 			//	return Delete(pos-1);
 			//}
 
-			//BOOL c_float::Insert ( u32 nSubscript, f32 o )
+			//bool c_float::Insert ( u32 nSubscript, f32 o )
 			//{
 			//	if ( Count() < nSubscript )
 			//		return FALSE;
@@ -132,7 +132,7 @@ namespace tme {
 			//}
 
 
-			//BOOL base::Remove ( u32 o )
+			//bool base::Remove ( u32 o )
 			//{
 			//	int pos = IsInList(o);
 			//	if ( pos == 0 ) return FALSE ;
@@ -151,7 +151,7 @@ namespace tme {
 			//	}
 			//}
 
-			////BOOL base::CreateIdtCollection ( c_idt& obj )
+			////bool base::CreateIdtCollection ( c_idt& obj )
 			////{
 			////	obj.Create( Count() );
 			////	for ( int ii=0; ii<Count(); ii++ )
@@ -160,7 +160,7 @@ namespace tme {
 			////	return TRUE;
 			////}
 
-			//BOOL base::Create( u32 count )
+			//bool base::Create( u32 count )
 			//{
 			//	Clear();
 			//	m_max = MAX(count,MINIMUM_COLLECTION_SIZE);
@@ -181,7 +181,7 @@ namespace tme {
 			//	return Count();
 			//}
 
-			//BOOL base::Resize ( u32 newsize )
+			//bool base::Resize ( u32 newsize )
 			//{
 			//	if ( newsize == m_max )
 			//		return TRUE;
@@ -215,7 +215,7 @@ namespace tme {
 
 			//}
 
-			//BOOL base::Insert ( u32 nSubscript, u32 o )
+			//bool base::Insert ( u32 nSubscript, u32 o )
 			//{
 			//	if ( Count() < nSubscript )
 			//		return FALSE;
@@ -233,7 +233,7 @@ namespace tme {
 			//	return TRUE;
 			//}
 
-			//BOOL base::Delete ( u32 nSubscript )
+			//bool base::Delete ( u32 nSubscript )
 			//{
 			//	if ( nSubscript<0 || nSubscript>=Count() )
 			//		return FALSE;
@@ -253,7 +253,7 @@ namespace tme {
 			//	return TRUE;
 			//}
 
-			//BOOL base::Add ( u32 o )
+			//bool base::Add ( u32 o )
 			//{
 			//	if ( m_used == m_max ) {
 			//		// add a new page				
@@ -265,7 +265,7 @@ namespace tme {
 			//	return TRUE;
 			//}
 
-			//BOOL base::Add ( const base& c )
+			//bool base::Add ( const base& c )
 			//{
 			//	int count = c.Count();
 			//	if ( count == 0 )

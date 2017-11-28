@@ -104,7 +104,7 @@ namespace chilli {
                 
                 temp += chunk ;
                 dwSize -= chunk;
-                Sleep(0);
+                //Sleep(0);
             }
             
             delete pFile;
@@ -136,13 +136,13 @@ namespace chilli {
          *						on	FALSE GetLastError()
          */
         
-        BOOL filemanager::Get ( LPCSTR filename, void* lpBuffer, u32 dwMaxSize)
+        bool filemanager::Get ( LPCSTR filename, void* lpBuffer, u32 dwMaxSize)
         {
             u32	dwSize;
             
             //DEBUG("filemanager::Get(%s)... ", filename );
             
-            //	_ASSERTE ( IsValidAddress( lpBuffer, dwMaxSize, TRUE ) );
+            //	_MXASSERTE ( IsValidAddress( lpBuffer, dwMaxSize, TRUE ) );
             if ( !Exists ( filename ) ) {
                 //		DEBUG("FILE NOT FOUND...");
                 return FALSE ;
@@ -222,11 +222,11 @@ namespace chilli {
          *
          */
         
-        BOOL filemanager::Save( LPCSTR filename, const void* lpBuffer, u32 dwSize )
+        bool filemanager::Save( LPCSTR filename, const void* lpBuffer, u32 dwSize )
         {
             //DEBUG("...filemanager::Save(%s) %lp | %d", filename, lpBuffer, dwSize);
             
-            //	_ASSERTE ( IsValidAddress( lpBuffer, dwSize ) );
+            //	_MXASSERTE ( IsValidAddress( lpBuffer, dwSize ) );
             
             PFILE pFile = new file (  );
             if ( !pFile->Open(filename, file::modeWrite|file::modeCreate) ) {
@@ -270,7 +270,7 @@ namespace chilli {
          *
          */
         
-        BOOL filemanager::Exists ( LPCSTR lpFileName )
+        bool filemanager::Exists ( LPCSTR lpFileName )
         {
 #ifdef _MARMALADE_
             return IwFileCheckExists(lpFileName);
@@ -308,7 +308,7 @@ namespace chilli {
         
         
         
-        BOOL filemanager::ExistsDir(LPCSTR lpFileName)
+        bool filemanager::ExistsDir(LPCSTR lpFileName)
         {
             
             //S3E_API s3eFileList* s3eFileListDirectory(const char* dirName);
@@ -316,7 +316,7 @@ namespace chilli {
             return FALSE;
         }
         
-        BOOL filemanager::Rename(LPCSTR lpszOldName, LPCSTR lpszNewName)
+        bool filemanager::Rename(LPCSTR lpszOldName, LPCSTR lpszNewName)
         {
 #ifdef _MARMALADE_
             return s3eFileRename(lpszOldName, lpszNewName ) == S3E_RESULT_SUCCESS ;
@@ -325,12 +325,12 @@ namespace chilli {
 #endif
         }
         
-        BOOL filemanager::Remove(LPCSTR lpszFileName)
+        bool filemanager::Remove(LPCSTR lpszFileName)
         {
             return remove((LPSTR)lpszFileName) == 0;
         }
         
-        BOOL filemanager::Copy ( LPCSTR lpszSrcName, LPCSTR lpszDstName )
+        bool filemanager::Copy ( LPCSTR lpszSrcName, LPCSTR lpszDstName )
         {
 #ifdef _MARMALADE_
             return IwFileCopy( lpszDstName, lpszSrcName ) == S3E_RESULT_SUCCESS ;
@@ -338,10 +338,11 @@ namespace chilli {
             return false;
         }
         
-        BOOL filemanager::CreateDirectory(LPCSTR path)
+        bool filemanager::CreateDirectory(LPCSTR path)
         {
 #ifdef WIN32
-            return ::CreateDirectory(path,NULL);
+//            return ::CreateDirectory(path,NULL);
+			return false;
 #else
 #ifdef _MARMALADE_
             if ( s3eFileMakeDirectory (path) == S3E_RESULT_SUCCESS )
@@ -351,7 +352,7 @@ namespace chilli {
             return FALSE ;
         }
         
-        BOOL filemanager::DestroyDirectory ( LPCSTR path )
+        bool filemanager::DestroyDirectory ( LPCSTR path )
         {
 #ifdef _MARMALADE_
             char filename[MAX_PATH]={0};
@@ -389,7 +390,8 @@ namespace chilli {
         LPSTR filemanager::GetCurrentDirectory ( int max, LPSTR dir )
         {
 #ifdef WIN32
-            ::GetCurrentDirectory( max, dir );
+//            ::GetCurrentDirectory( max, dir );
+			return "";
 #else
             //getcwd ( dir, max );
 #endif
@@ -399,7 +401,7 @@ namespace chilli {
         void filemanager::SetCurrentDirectory ( LPCSTR dir )
         {
 #ifdef WIN32
-            ::SetCurrentDirectory( dir );
+//            ::SetCurrentDirectory( dir );
 #else
             //	setcwd ( dir );
 #endif

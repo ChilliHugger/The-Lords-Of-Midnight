@@ -19,7 +19,6 @@
 
 
 using namespace tme ;
-//using namespace tme::item ;
 
 mxengine* tme::mx=NULL;
 
@@ -28,12 +27,12 @@ mxengine* tme::mx=NULL;
 #define ACCESS_ITEM(x,y,z) \
 	x* mxengine::y(u32 id) \
 	{ 	if ( id==0 ) return NULL ; \
-		_ASSERTE ( id>0 && id<=z.Count() ); \
+		_MXASSERTE ( id>0 && id<=z.Count() ); \
 		return  (x*)z[id-1]; }
 
 #define ACCESS_INFO(x,y,z) \
 	x* mxengine::y(u32 id) \
-	{ 	_ASSERTE ( id>=0 && id<z.Count() ); \
+	{ 	_MXASSERTE ( id>=0 && id<z.Count() ); \
 		return  (x*)z[id]; }
 
 #define FIND_ENTITY(x,y) \
@@ -94,7 +93,7 @@ mxengine::~mxengine()
 /*
  * Function name	: mxengine::InstallScenario
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: LPSTR filename
  * 
@@ -102,7 +101,7 @@ mxengine::~mxengine()
  * 
  */
 /*
-BOOL mxengine::InstallScenario ( const string& filename )
+bool mxengine::InstallScenario ( const string& filename )
 {
 FUNCADDRESS			func;
 FNSCENARIOREGISTER	ScenarioRegister;
@@ -159,7 +158,7 @@ MXRESULT mxengine::LoadScenario ( mxscenario* scenario )
 /*
  * Function name	: mxengine::UnloadScenario
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: 
  * 
@@ -185,7 +184,7 @@ MXRESULT mxengine::UnloadScenario ()
 /*
  * Function name	: mxengine::SetDatabaseDirectory
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: 
  * 
@@ -199,7 +198,7 @@ MXRESULT mxengine::SetDatabaseDirectory ( const string& directory )
 
 	MX_REGISTER_SELF;
 
-	chilli::lib::strcpy ( m_szDatabase, directory );
+	c_strcpy ( m_szDatabase, directory );
 /*
 	sprintf ( file,"%s/config", m_szDatabase );
 	if ( (m_config = new os::config(file)) == NULL ) {
@@ -215,7 +214,7 @@ MXRESULT mxengine::SetDatabaseDirectory ( const string& directory )
  * 
  * Description	    : 
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: void
  */
@@ -289,7 +288,7 @@ MXTRACE( "Version=%d", (int)savegameversion);
 	ar >> header ;
 MXTRACE( "Header='%s'", (LPSTR)header);
 	
-    if ( chilli::lib::stricmp( header, DATABASEHEADER ) != 0 ) {
+    if (c_stricmp( header, DATABASEHEADER ) != 0 ) {
         MXTRACE("Invalid DATABASE Header");
 		return MX_UNKNOWN_FILE;
     }
@@ -435,7 +434,7 @@ MXTRACE( "Init Variables");
 /*
  * Function name	: mxengine::UnloadDatabase
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: void
  * 
@@ -593,7 +592,7 @@ void mxengine::NightCallback( callback_t* ptr)
 /*
  * Function name	: mxengine::LoadGame
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: LPSTR filename
  * 
@@ -796,7 +795,7 @@ MXRESULT mxengine::SaveGameDescription ( const string& filename, string& descrip
 /*
  * Function name	: mxengine::SaveGame
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: LPSTR filename
  * 
@@ -1018,7 +1017,7 @@ int ii;
 cvarreg_t* mxengine::FindDBVariable ( const string& name ) const
 {
 	for ( int ii=0; ii<sv_variables; ii++ ) {
-		if ( chilli::lib::stricmp( name, variables[ii].name ) == 0 )
+		if (c_stricmp( name, variables[ii].name ) == 0 )
 			return &variables[ii];
 	}
 	return NULL ;

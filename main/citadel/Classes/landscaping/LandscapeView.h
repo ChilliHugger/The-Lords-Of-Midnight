@@ -31,9 +31,9 @@ public:
     bool            debugLand;
     f32             landScaleX;
     f32             landScaleY;
-    loc_t			here ;
-    loc_t           currentLocation;
-    loc_t           aheadLocation;
+    tme::loc_t			here ;
+    tme::loc_t           currentLocation;
+    tme::loc_t           aheadLocation;
     mxdir_t         currentDirection;
     f32				rotate_look;
     

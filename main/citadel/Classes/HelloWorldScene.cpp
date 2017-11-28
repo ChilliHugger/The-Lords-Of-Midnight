@@ -1,7 +1,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 
-#include "TMEMapBuilder.h"
+//#include "TMEMapBuilder.h"
 
 USING_NS_CC;
 

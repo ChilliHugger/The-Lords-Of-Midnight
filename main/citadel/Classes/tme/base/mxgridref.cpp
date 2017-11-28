@@ -157,7 +157,7 @@ namespace tme {
 	//
 	// RETURNS:	true/false
 	//
-	BOOL mxgridref::operator == ( mxgridref& loc )
+	bool mxgridref::operator == ( mxgridref& loc )
 	{
 		return (loc.x==x) && (loc.y==y) ;
 	}
@@ -172,7 +172,7 @@ namespace tme {
 	//
 	// RETURNS:	true/false
 	//
-	BOOL mxgridref::operator != ( mxgridref& loc )
+	bool mxgridref::operator != ( mxgridref& loc )
 	{
 		return (loc.x!=x) || (loc.y!=y) ;
 	}

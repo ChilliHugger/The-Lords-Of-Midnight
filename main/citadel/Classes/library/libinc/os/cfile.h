@@ -9,7 +9,6 @@
 #include "../mxtypes.h"
 #include <stdlib.h>
 
-using namespace chilli::types ;
 
 /////////////////////////////////////////////////////////////////////////////
 // File - raw unbuffered disk file I/O
@@ -17,6 +16,8 @@ using namespace chilli::types ;
 namespace chilli {
 	namespace os {
 
+        using namespace chilli::types ;
+        
 		typedef class file* PFILE ;
 		class  file
 		{
@@ -63,24 +64,24 @@ namespace chilli {
 			DWORD GetPosition() const;
 
 		// Operations
-			BOOL Open(LPCSTR lpszFileName, u32 nOpenFlags );
+			bool Open(LPCSTR lpszFileName, u32 nOpenFlags );
 			LONG Seek(LONG lOff=0, u32 nFrom=begin) const;
-			BOOL SetLength(DWORD dwNewLen);
+			bool SetLength(DWORD dwNewLen);
 			DWORD GetLength() const;
 			u32 Read(void* lpBuf, u32 nCount);
-			BOOL Write(const void* lpBuf, u32 nCount);
+			bool Write(const void* lpBuf, u32 nCount);
 			void Abort();
-			BOOL Flush();
+			bool Flush();
 			void Close();
 
-			BOOL IsOpen() const ;
-			BOOL IsValidHandle() const ;
+			bool IsOpen() const ;
+			bool IsValidHandle() const ;
 			DWORD SeekToEnd();
 			void SeekToBegin();
 			LPSTR GetFileName();
 
 		protected:
-			BOOL m_bCloseOnDelete;
+			bool m_bCloseOnDelete;
 			char m_strFileName[MAX_PATH];
 			int	m_hFile;
 		};

@@ -1,7 +1,7 @@
 #ifndef _CMXINTERFACE_H_INCLUDED_
 #define _CMXINTERFACE_H_INCLUDED_
 
-#include "library.h"
+#include "../../library/libinc/library.h"
 #include "lomxtypes.h"
 
 namespace tme {

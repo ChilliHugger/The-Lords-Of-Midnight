@@ -10,16 +10,260 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes">
+      <UniqueIdentifier>{544c4faa-5334-444e-9ed2-50772cf0f9bc}</UniqueIdentifier>
+      <Extensions>
+      </Extensions>
+    </Filter>
+    <Filter Include="classes\library">
+      <UniqueIdentifier>{9967ed2e-9e7b-4eb5-8a84-621334b6ccac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tme">
+      <UniqueIdentifier>{d8119d43-c301-49a7-a64b-d59ac9a7b574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\tinyxml">
+      <UniqueIdentifier>{93ec969e-09a0-48c1-8eca-4550e5c50742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\landscaping">
+      <UniqueIdentifier>{00ad15fa-8386-46db-96d0-c617c1e1ab06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TMEMapBuilder.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\misc\cmemfile.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\misc\xml.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\os\cfile.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\os\cfileList.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\os\cfilemanager.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\os\common_cfile.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\os\os.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\carchive.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\cbitarray.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\ccollection.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\cflags.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\crange.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\cstr.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\datatypes.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\idtcollection.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\librarysw.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\misc.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\library\lib\sw\random.cpp">
+      <Filter>classes\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\collections.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxengine.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxentity.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxfragment.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxgridref.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxinfo.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxinterface.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxitem.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxlocinfo.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\mxmemory.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\base\variables.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\army.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\discoverymap.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_area.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_command.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_direction.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_gender.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_object.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_object_power.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_object_type.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_race.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_terrain.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\info_unit.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\item_character.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\item_place.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\item_regiment.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\item_routenode.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\item_stronghold.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\item_victories.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\map.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\processor_battle.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\processor_night.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\processor_text.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenario\units.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\citadel\citadel_scenario.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_character.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_battle.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_night.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_text.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_scenario.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\default\default_scenario.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\lom\lom_scenario.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\lom\lom_stronghold.cpp">
+      <Filter>classes\tme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tinyxml\tinystr.cpp">
+      <Filter>classes\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tinyxml\tinyxml.cpp">
+      <Filter>classes\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tinyxml\tinyxmlerror.cpp">
+      <Filter>classes\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tinyxml\tinyxmlparser.cpp">
+      <Filter>classes\tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LandscapeScene.cpp">
+      <Filter>classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\landscaping\LandscapeDebug.cpp">
+      <Filter>classes\landscaping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\landscaping\LandscapeGenerator.cpp">
+      <Filter>classes\landscaping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\landscaping\LandscapeLand.cpp">
+      <Filter>classes\landscaping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\landscaping\LandscapeNode.cpp">
+      <Filter>classes\landscaping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\landscaping\LandscapeSky.cpp">
+      <Filter>classes\landscaping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\landscaping\LandscapeTerrain.cpp">
+      <Filter>classes\landscaping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\landscaping\LandscapeView.cpp">
+      <Filter>classes\landscaping</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,10 +276,159 @@
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\tme_interface.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TMEMapBuilder.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\collections.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\library.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\misc\cmemfile.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\misc\xml.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\mxtypes.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\os\cfile.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\os\cfileclump.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\os\cfilemanager.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\os\os.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\sw\carchive.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\sw\ccollection.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\libinc\sw\misc.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\library\chilli.h">
+      <Filter>classes\library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\info.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\lomxtypes.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\midnight.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\mxengine.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\mxinterface.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\processor_battle.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\processor_night.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\processor_text.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\scenario.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\tme_internal.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\baseinc\variables.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\citadel\scenario_citadel.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\citadel\scenario_citadel_internal.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\ddr_processor_battle.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\ddr_processor_night.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\ddr_processor_text.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\scenario_ddr.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\ddr\scenario_ddr_internal.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\default\default_scenario.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\default\default_scenario_internal.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\lom\scenario_lom.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\scenarios\lom\scenario_lom_internal.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tme\tme.h">
+      <Filter>classes\tme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tinyxml\tinystr.h">
+      <Filter>classes\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tinyxml\tinyxml.h">
+      <Filter>classes\tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\LandscapeScene.h">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\LandscapeDebug.h">
+      <Filter>classes\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\LandscapeGenerator.h">
+      <Filter>classes\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\LandscapeLand.h">
+      <Filter>classes\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\LandscapeNode.h">
+      <Filter>classes\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\LandscapeSky.h">
+      <Filter>classes\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\LandscapeTerrain.h">
+      <Filter>classes\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\LandscapeView.h">
+      <Filter>classes\landscaping</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Classes\library\libinc\sw\librarysw.inl">
+      <Filter>classes\library</Filter>
+    </None>
   </ItemGroup>
 </Project>

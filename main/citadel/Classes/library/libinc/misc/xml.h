@@ -1,9 +1,7 @@
 #ifndef _XML_H_INCLUDED_
 #define _XML_H_INCLUDED_
 
-#include "chilli.h"
-
-using namespace chilli;
+#include "../../chilli.h"
 
 namespace chilli  {
 
@@ -16,7 +14,7 @@ namespace chilli  {
 			xml();
 			~xml();
 
-			BOOL Load ( LPCSTR filename );
+			bool Load ( LPCSTR filename );
 
 			class node : public TiXmlElement
 			{
@@ -24,7 +22,7 @@ namespace chilli  {
 				node* Find ( LPCSTR section );
 				node* Find( LPCSTR element, LPCSTR id );
 
-				BOOL IsType(LPCSTR name) const ;
+				bool IsType(LPCSTR name) const ;
 
 				LPCSTR ReadValue ( LPCSTR name );
 
@@ -32,7 +30,7 @@ namespace chilli  {
 				int ReadValueArray ( LPCSTR  name, collections::c_float& c );
 
 				int ReadIntProperty ( LPCSTR  name, int defaultvalue=0 );
-				BOOL ReadBoolProperty ( LPCSTR  name, BOOL defaultvalue=FALSE );
+				bool ReadBoolProperty ( LPCSTR  name, bool defaultvalue=FALSE );
 				f32 ReadFloatProperty ( LPCSTR  name, f32 defaultvalue=0 );
 				LPCSTR ReadStrProperty ( LPCSTR  name, LPCSTR defaultvalue=NULL );
 
@@ -42,7 +40,7 @@ namespace chilli  {
 
 				int ReadToken( LPCSTR token, token_t array[], int max, int defaultvalue=0 );
 				f32 ReadFloat ( LPCSTR name, f32 defaultvalue=0 );
-				BOOL ReadBool( LPCSTR name, BOOL defaultvalue=FALSE );
+				bool ReadBool( LPCSTR name, bool defaultvalue=FALSE );
 				int ReadInt( LPCSTR name, int defaultvalue=0 );
 				LPCSTR ReadStr( LPCSTR name, LPCSTR defaultvalue = NULL );
 
@@ -51,7 +49,7 @@ namespace chilli  {
 					int ReadItem ( LPCSTR name, int defaultvalue=0 );
 					f32 ReadItem ( LPCSTR name, f32 defaultvalue=0 );
 
-				BOOL Exists( LPCSTR name );
+				bool Exists( LPCSTR name );
 				int Count ();
 
 				LPCSTR ReadElement( LPCSTR element, LPCSTR id, LPCSTR tag );

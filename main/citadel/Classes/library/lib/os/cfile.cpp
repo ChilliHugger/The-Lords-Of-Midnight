@@ -16,14 +16,16 @@
 #include "../../libinc/library.h"
 
 #ifdef _WINDOWS
+
+
 //#ifdef _WIN32
 
 
 namespace chilli {
 
 	namespace os {
-
-		BOOL file::Open(LPCSTR lpszFileName, u32 nOpenFlags )
+		
+		bool file::Open(LPCSTR lpszFileName, u32 nOpenFlags )
 		{
 			// CFile objects are always binary and CreateFile does not need flag
 			nOpenFlags &= ~(u32)typeBinary;
@@ -34,10 +36,10 @@ namespace chilli {
 			memset( m_strFileName, 0x00, sizeof(m_strFileName) );
 			_fullpath( m_strFileName, lpszFileName, MAX_PATH );
 
-		//	_ASSERTE(shareCompat == 0);
+		//	_MXASSERTE(shareCompat == 0);
 
 			// map read/write mode
-			_ASSERTE((modeRead|modeWrite|modeReadWrite) == 3);
+			_MXASSERTE((modeRead|modeWrite|modeReadWrite) == 3);
 			DWORD dwAccess;
 			switch (nOpenFlags & 3)	{
 			case modeRead:
@@ -50,7 +52,7 @@ namespace chilli {
 				dwAccess = GENERIC_READ|GENERIC_WRITE;
 				break;
 			default:
-				_ASSERTE(FALSE);  // invalid share mode
+				_MXASSERTE(FALSE);  // invalid share mode
 			}
 
 			// map share mode
@@ -70,7 +72,7 @@ namespace chilli {
 				dwShareMode = FILE_SHARE_WRITE|FILE_SHARE_READ;
 				break;
 			default:
-				_ASSERTE(FALSE);  // invalid share mode?
+				_MXASSERTE(FALSE);  // invalid share mode?
 			}
 
 			// Note: typeText and typeBinary are used in derived classes only.
@@ -93,7 +95,10 @@ namespace chilli {
 				dwCreateFlag = OPEN_EXISTING;
 
 			// attempt file creation
-			HANDLE hFile = ::CreateFile(lpszFileName, dwAccess, dwShareMode, &sa,
+
+
+
+			HANDLE hFile = ::CreateFileA(lpszFileName, dwAccess, dwShareMode, &sa,
 				dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (hFile == INVALID_HANDLE_VALUE )
 				return FALSE;
@@ -104,12 +109,12 @@ namespace chilli {
 
 		u32 file::Read(void* lpBuf, u32 nCount)
 		{
-			_ASSERTE(m_hFile != (u32)hFileNull);
+			_MXASSERTE(m_hFile != (u32)hFileNull);
 
 			if (nCount == 0)
 				return 0;   // avoid Win32 "null-read"
 
-			_ASSERTE(lpBuf != NULL);
+			_MXASSERTE(lpBuf != NULL);
 
 			DWORD dwRead;
 			::ReadFile((HANDLE)m_hFile, lpBuf, nCount, &dwRead, NULL);
@@ -117,17 +122,17 @@ namespace chilli {
 			return (u32)dwRead;
 		}
 
-		BOOL file::Write(const void* lpBuf, u32 nCount)
+		bool file::Write(const void* lpBuf, u32 nCount)
 		{
-			_ASSERTE(m_hFile != (u32)hFileNull);
+			_MXASSERTE(m_hFile != (u32)hFileNull);
 
 			if (nCount == 0)
 				return(TRUE);     // avoid Win32 "null-write" option
 
-			_ASSERTE(lpBuf != NULL);
+			_MXASSERTE(lpBuf != NULL);
 
 			DWORD nWritten;
-			BOOL bRet = ::WriteFile((HANDLE)m_hFile, lpBuf, nCount, &nWritten, NULL);
+			bool bRet = ::WriteFile((HANDLE)m_hFile, lpBuf, nCount, &nWritten, NULL);
 
 			// Win32s will not return an error all the time (usually DISK_FULL)
 			if (nWritten != nCount)
@@ -138,9 +143,9 @@ namespace chilli {
 
 		LONG file::Seek(LONG lOff, u32 nFrom) const
 		{
-			_ASSERTE(m_hFile != (u32)hFileNull);
-			_ASSERTE(nFrom == begin || nFrom == end || nFrom == current);
-			_ASSERTE(begin == FILE_BEGIN && end == FILE_END && current == FILE_CURRENT);
+			_MXASSERTE(m_hFile != (u32)hFileNull);
+			_MXASSERTE(nFrom == begin || nFrom == end || nFrom == current);
+			_MXASSERTE(begin == FILE_BEGIN && end == FILE_END && current == FILE_CURRENT);
 
 			DWORD dwNew = ::SetFilePointer((HANDLE)m_hFile, lOff, NULL, (DWORD)nFrom);
 
@@ -149,14 +154,14 @@ namespace chilli {
 
 		DWORD file::GetPosition() const
 		{
-			_ASSERTE(m_hFile != (u32)hFileNull);
+			_MXASSERTE(m_hFile != (u32)hFileNull);
 
 			DWORD dwPos = ::SetFilePointer((HANDLE)m_hFile, 0, NULL, FILE_CURRENT);
 
 			return dwPos;
 		}
 
-		BOOL file::Flush()
+		bool file::Flush()
 		{
 			if (m_hFile == (u32)hFileNull)
 				return(TRUE);
@@ -166,9 +171,9 @@ namespace chilli {
 
 		void file::Close()
 		{
-			_ASSERTE(m_hFile != (u32)hFileNull);
+			_MXASSERTE(m_hFile != (u32)hFileNull);
 
-			BOOL bError = FALSE;
+			bool bError = FALSE;
 			if (m_hFile != (u32)hFileNull)
 				bError = !::CloseHandle((HANDLE)m_hFile);
 
@@ -188,9 +193,9 @@ namespace chilli {
 			memset( m_strFileName, 0x00, sizeof(m_strFileName) );
 		}
 
-		BOOL file::SetLength(DWORD dwNewLen)
+		bool file::SetLength(DWORD dwNewLen)
 		{
-			_ASSERTE(m_hFile != (u32)hFileNull);
+			_MXASSERTE(m_hFile != (u32)hFileNull);
 
 			Seek((LONG)dwNewLen, (u32)begin);
 

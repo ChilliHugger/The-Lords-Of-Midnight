@@ -46,7 +46,7 @@ namespace tme {
 			virtual u32 CalcStrongholdAdjuster(void) const;
 			virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character );
 			virtual void GetDefaultCharacters ( entities& collection );
-			virtual BOOL CanWeSelectCharacter ( const mxcharacter* character );
+			virtual bool CanWeSelectCharacter ( const mxcharacter* character );
 						
             virtual mxcharacter* CurrentMoonringWearer( void );
 			virtual mxcharacter* MoonringWearer( void ) ;
@@ -65,15 +65,15 @@ namespace tme {
 
 #endif
 			virtual void RemoveMapArmies ( void );
-			virtual void LookInDirection( mxgridref loc, mxdir_t dir, BOOL isintunnel );
+			virtual void LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel );
 			virtual void SetCharsLooking( void );
-			virtual BOOL DropObject ( mxgridref loc, mxobject* object );
-			virtual BOOL InCharactersMemory ( mxitem* item ) ;
+			virtual bool DropObject ( mxgridref loc, mxobject* object );
+			virtual bool InCharactersMemory ( mxitem* item ) ;
 			virtual void ClearFromMemory ( mxgridref loc );
 
             virtual void CheckMoonringWearerDead ( void );
             
-			virtual BOOL GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, entities& collection );
+			virtual bool GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, entities& collection );
 			virtual u32 FindArmiesAtLocation ( mxgridref loc, u32& enemies, u32& friends, flags32_t flags );
 			virtual u32 FindCharactersAtLocation ( mxgridref loc, entities& characters, flags32_t flags );
 
@@ -86,7 +86,7 @@ namespace tme {
             
 			virtual MXRESULT GetLocInfo ( mxid id, mxlocinfo*&	info  );
 
-			BOOL IsFeature(u32 flag) const { return (features&flag); }
+			bool IsFeature(u32 flag) const { return (features&flag) == flag; }
 			
 		public:
 			flags32_t	features;

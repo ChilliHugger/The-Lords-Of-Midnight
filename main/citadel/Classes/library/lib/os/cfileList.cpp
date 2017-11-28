@@ -10,6 +10,7 @@
 #include <io.h>
 #endif
 
+
 namespace chilli {
 
 	namespace os {
@@ -50,7 +51,7 @@ filelist::~filelist()
 }
 
 
-BOOL filelist::CreateDir ( string filespec, u32 attribs )
+bool filelist::CreateDir ( string filespec, u32 attribs )
 {
 	Destroy();
 
@@ -72,7 +73,7 @@ BOOL filelist::CreateDir ( string filespec, u32 attribs )
 	return TRUE ;
 }
 
-BOOL filelist::Destroy()
+bool filelist::Destroy()
 {
 	if ( m_dir ) {
 		SAFEDELETEARRAY( m_dir );
@@ -91,7 +92,7 @@ void filelist::MakeDirFileList ( void )
 
 	DIR *dir;
 	struct dirent *dir_entry;
-	BOOL found_file;
+	bool found_file;
 	unsigned count = 0;
 	char drive_letter[MAX_PATH];
 	char directory_name[MAX_PATH];
@@ -221,7 +222,7 @@ u32 filelist::CountDirFiles ()
 
 fileentry& filelist::GetAt ( u32 index ) const
 {
-	_ASSERTE ( index>=0 && index<m_count );
+	_MXASSERTE ( index>=0 && index<m_count );
 	return m_dir[index];
 }
 
@@ -231,7 +232,7 @@ static int file_compare( const void *arg1, const void *arg2 )
 	/* Compare all of both strings: */
 	fileentry* f1 = (fileentry*)arg1;
 	fileentry* f2 = (fileentry*)arg2;
-	return lib::stricmp( f1->m_filename, f2->m_filename );
+	return chilli::lib::c_stricmp( f1->m_filename, f2->m_filename );
 }
 
 void filelist::Sort ( void )

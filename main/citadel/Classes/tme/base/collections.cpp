@@ -49,7 +49,7 @@ namespace tme {
 			m_bOwner=FALSE;
 		}
 
-		BOOL entities::CreateIdtCollection ( c_mxid& obj )
+		bool entities::CreateIdtCollection ( c_mxid& obj )
 		{
 			obj.Create( Count() );
 			for ( u32 ii=0; ii<Count(); ii++ )
@@ -58,7 +58,7 @@ namespace tme {
 			return TRUE;
 		}
 
-		BOOL entities::Create( u32 count )
+		bool entities::Create( u32 count )
 		{
 			Destroy();
 			m_max = MAX(count,MINIMUM_COLLECTION_SIZE);
@@ -67,7 +67,7 @@ namespace tme {
 			return TRUE ;
 		}
 
-		BOOL entities::Create( mxscenario* scenario, id_type_t type, u32 count )
+		bool entities::Create( mxscenario* scenario, id_type_t type, u32 count )
 		{
 			Create(count);
 
@@ -81,7 +81,7 @@ namespace tme {
 		mxentity* entities::FindSymbol ( const string& name )
 		{
 			for ( u32 ii=0; ii<Count(); ii++ )
-				if ( chilli::lib::stricmp( m_objElements[ii]->Symbol(), name ) == 0 )
+				if (c_stricmp( m_objElements[ii]->Symbol(), name ) == 0 )
 					return m_objElements[ii] ;
 			return NULL ;
 		}
@@ -140,7 +140,7 @@ namespace tme {
 			Add(o);
 		}
 
-		BOOL entities::Add ( mxentity* o )
+		bool entities::Add ( mxentity* o )
 		{
 			if ( m_bOwner ) return FALSE;
 			if ( m_used == m_max ) {
@@ -150,7 +150,7 @@ namespace tme {
 				Resize( size );
 			}
 			m_objElements[m_used++] = o;
-			return TRUE;
+			return true;
 		}
 
         

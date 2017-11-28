@@ -208,7 +208,7 @@ namespace tme {
 				return;
 
 			// tunnel check
-			BOOL isInTunnel = c->IsInTunnel() ;
+			bool isInTunnel = c->IsInTunnel() ;
 
 			objRecruit.Create(MAX_CHARACTERS_INLOCATION);
 			
@@ -256,7 +256,7 @@ namespace tme {
 		mxcharacter*	moonringcarrier=NULL;
 		mxcharacter*	c=NULL;
 		mxobject*		moonring=NULL;
-		BOOL			bInTunnel = FALSE ;
+		bool			bInTunnel = FALSE ;
 
 			
 			
@@ -337,7 +337,7 @@ namespace tme {
 		u32		ii;
 		mxarmy*	army;
 		int		success;
-		BOOL	bInTunnel=FALSE;
+		bool	bInTunnel=FALSE;
 
 			nArmies=0;
 
@@ -383,7 +383,7 @@ namespace tme {
 
 					success = mx->TerrainById(mapsqr.terrain)->Success();
 
-                    BOOL isLoyal = stronghold->OccupyingRace() != RA_DOOMGUARD ;
+                    bool isLoyal = stronghold->OccupyingRace() != RA_DOOMGUARD ;
 #if defined(_DDR_)
                 isLoyal = stronghold->Loyalty() == ch_luxor->Loyalty();
 #endif

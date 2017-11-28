@@ -169,7 +169,7 @@ namespace tme {
         SetLastCommand ( CMD_FIGHT, fightobject->SafeIdt()) ;
 
         
-        u32 r = random(255) & 15 ;
+        u32 r = mxrandom(255) & 15 ;
         s32 loses = (r/2)*5;  
         
         // soldiers -= loses ;
@@ -353,7 +353,7 @@ namespace tme {
 //      DB 005h			; dwarf
     
 
-	MXRESULT ddr_character::Cmd_WalkForward ( BOOL perform_seek )
+	MXRESULT ddr_character::Cmd_WalkForward ( bool perform_seek )
 	{
 	int				TimeCost;
 	mxrace*         rinfo;
@@ -449,7 +449,7 @@ namespace tme {
             EnterLocation ( location );
 
 		// if this location has an exit then we must exit
-        BOOL exit_tunnel = false;
+        bool exit_tunnel = false;
 		if ( mx->gamemap->GetAt ( location ).HasTunnelExit() )
 			exit_tunnel=true;
 
@@ -499,7 +499,7 @@ namespace tme {
 		return MX_OK ;
 	}
     
-  	BOOL ddr_character::CheckRecruitChar ( mxcharacter* character )  const
+  	bool ddr_character::CheckRecruitChar ( mxcharacter* character )  const
 	{
 		if ( character == this )
 			return FALSE ;
@@ -564,7 +564,7 @@ namespace tme {
 
 	}
 
-	BOOL ddr_character::Recruited ( mxcharacter* character )
+	bool ddr_character::Recruited ( mxcharacter* character )
 	{
 		// morkin in DDR is special
 		if ( IsSymbol("CH_MORKIN") ) {
@@ -754,7 +754,7 @@ mxorders_t ddr_character::pickNewOrders () const
 {
     static mxorders_t order_map[] = { OD_FOLLOW_LIEGE, OD_FOLLOW_FOE, OD_FIND_OBJECT, OD_HOME, OD_NONE };
     
-    int temp = random(15);
+    int temp = mxrandom(15);
 
     if ( temp <= 4 )
         return order_map[temp];
@@ -952,7 +952,7 @@ void ddr_character::moveCharacterSomewhere ( void )
             if ( !IsDawn() || info->flags&lif_blocked )
                 reachedTarget=true;
             else{
-                if ( random(255)&1 ) {
+                if ( mxrandom(255)&1 ) {
                     reachedTarget=true;
                 }
             }
@@ -980,7 +980,7 @@ void ddr_character::moveCharacterSomewhere ( void )
     // are we at a stronghold?
     
     mxlocinfo* info = GetLocInfo();
-    BOOL atStronghold = info->objStrongholds.Count() > 0 ;
+    bool atStronghold = info->objStrongholds.Count() > 0 ;
     
     if ( !atStronghold ) {
         int enemies=0;

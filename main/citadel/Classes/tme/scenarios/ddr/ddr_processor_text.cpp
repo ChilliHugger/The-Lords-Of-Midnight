@@ -119,8 +119,8 @@ ddr_text::~ddr_text()
         CStrBuf*	buffer = new CStrBuf ;
         
         
-        BOOL needscomma=true;
-        BOOL needsand=false;
+        bool needscomma=true;
+        bool needsand=false;
         
         int units = number%20;
         int hundreds = number/20;

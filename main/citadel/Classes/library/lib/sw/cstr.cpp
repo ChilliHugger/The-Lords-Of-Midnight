@@ -22,7 +22,7 @@ namespace chilli {
 		{
 			SAFEFREE ( m_pchData );
 			if ( str )
-				m_pchData = chilli::lib::strdup ( str );
+				m_pchData = c_strdup ( str );
 			return *this;
 		}
 
@@ -30,7 +30,7 @@ namespace chilli {
 		{
 			SAFEFREE ( m_pchData );
 			if ( str.m_pchData )
-				m_pchData = chilli::lib::strdup ( str.m_pchData );
+				m_pchData = c_strdup ( str.m_pchData );
 			return *this;
 		}
 
@@ -39,29 +39,29 @@ namespace chilli {
 		{
 			m_pchData  = NULL ;
 			if ( str )
-				m_pchData = chilli::lib::strdup ( str );
+				m_pchData = c_strdup ( str );
 		}
 
 		string::string ( LPCSTR str )
 		{
 			m_pchData  = NULL ;
 			if ( str )
-				m_pchData = chilli::lib::strdup ( str );
+				m_pchData = c_strdup ( str );
 		}
 
-		BOOL string::IsNull() const
+		bool string::IsNull() const
 		{
 			return m_pchData == NULL ;
 		}
 
-		BOOL string::IsEmpty() const
+		bool string::IsEmpty() const
 		{
 			return Length() == 0 ;
 		}
 
 		size_t string::Length() const 
 		{
-			return m_pchData ? lib::strlen(m_pchData) : 0 ;
+			return m_pchData ? c_strlen(m_pchData) : 0 ;
 		}
 		archive& string::Serialize ( archive& ar )
 		{ 
@@ -73,8 +73,8 @@ namespace chilli {
 			}else{
 				ar >> &temp ; 
 				SAFEFREE ( m_pchData );
-				if ( temp && chilli::lib::strlen(temp) )
-					m_pchData = chilli::lib::strdup(temp);
+				if ( temp && c_strlen(temp) )
+					m_pchData = c_strdup(temp);
 			}
 
 			SAFEFREE ( temp );

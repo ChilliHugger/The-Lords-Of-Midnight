@@ -28,7 +28,7 @@ void LandscapeDebug::BuildDebug( LandscapeItems* items )
         
         for(auto const& item: *items) {
             
-            if ((item->position.z>=options->generator->near)&&(item->position.z<options->generator->far))
+            if ((item->position.z>=options->generator->viewportNear)&&(item->position.z<options->generator->viewportFar))
             {
                 
                 int x = options->generator->NormaliseXPosition(item->position.x);

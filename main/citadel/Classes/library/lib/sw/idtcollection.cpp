@@ -16,7 +16,7 @@ namespace tme {
 			Clear();
 		}
 
-		BOOL Idts::Create( u32 count )
+		bool Idts::Create( u32 count )
 		{
 			Clear();
 			m_count = count;

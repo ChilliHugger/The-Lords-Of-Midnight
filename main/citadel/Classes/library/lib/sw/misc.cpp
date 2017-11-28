@@ -5,7 +5,7 @@ namespace chilli {
 
 	namespace lib {
 
-		LPSTR strtok_r(LPSTR str, LPCSTR delim, char **nextp)
+		LPSTR c_strtok_r(LPSTR str, LPCSTR delim, char **nextp)
 		{
 			char *ret;
 
@@ -35,15 +35,15 @@ namespace chilli {
 			return ret;
 		}
 
-		int Split ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) 
+		int SplitString ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) 
 		{
 		string	token = source;
             char *saveptr1;
 			tokens.Clear();
-			LPSTR t = strtok_r(token,delim,&saveptr1);
+			LPSTR t = c_strtok_r(token,delim,&saveptr1);
 			while ( t ) {
 				tokens.Add(t);
-				t = strtok_r(NULL,delim,&saveptr1);
+				t = c_strtok_r(NULL,delim,&saveptr1);
 			}
 			return tokens.Count();
 		}
@@ -52,7 +52,7 @@ namespace chilli {
 		{
 			// jumble them up
 			for ( int ii=0; ii<max; ii++ ) {
-				int a=ii; //random(1,max)-1;
+				int a=ii; //mxrandom(1,max)-1;
 				int b= randomno::instance.get(1,max)-1;
 				int temp;
 				temp = array[a];
@@ -66,8 +66,8 @@ namespace chilli {
 		int i;
 		int count=0;
 
-			_ASSERTE( array != NULL );
-			BOOL Done = FALSE;
+			_MXASSERTE( array != NULL );
+			bool Done = FALSE;
 			while( !Done )
 			{
 				Done = TRUE;
@@ -93,24 +93,24 @@ namespace chilli {
 		{
 			if ( token ) {
 				for ( int ii=0; ii<max; ii++ ) {
-					if ( stricmp( array[ii].token, token ) == 0 )
+					if (c_stricmp( array[ii].token, token ) == 0 )
 						return array[ii].value;
 				}
 			}
 			return 0 ;
 		}
 
-		LPSTR strdup ( LPCSTR s )
+		LPSTR c_strdup ( LPCSTR s )
 		{
 			char *memory;
 			if (!s)
 					return(NULL);
-			if ((memory = (char*)malloc(chilli::lib::strlen(s) + 1)))
-					return(strcpy(memory,s));
+			if ((memory = (char*)malloc(c_strlen(s) + 1)))
+					return(c_strcpy(memory,s));
 			return(NULL);
 		}
 
-		int stricmp(LPCSTR dst, LPCSTR src)
+		int c_stricmp(LPCSTR dst, LPCSTR src)
 		{
 			if ( dst == NULL && src == NULL ) return 0;
 			if ( dst == NULL ) return -1;
@@ -126,7 +126,7 @@ namespace chilli {
 			return(f - l);
 		}
 
-		int strnicmp ( LPCSTR first, LPCSTR last, size_t count )
+		int c_strnicmp ( LPCSTR first, LPCSTR last, size_t count )
 		{
 			if ( first == NULL && last == NULL ) return 0;
 			if ( first == NULL ) return -1;
@@ -165,7 +165,7 @@ namespace chilli {
 			return c;
 		}
 
-		LPSTR strupr ( LPSTR text )
+		LPSTR c_strupr ( LPSTR text )
 		{
 		LPSTR output=text;
 		char c;
@@ -181,7 +181,7 @@ namespace chilli {
 			return output;
 		}
 
-		LPSTR strlwr ( LPSTR text )
+		LPSTR c_strlwr ( LPSTR text )
 		{
 		LPSTR output=text;
 		char c;
@@ -196,7 +196,7 @@ namespace chilli {
 			return output;
 		}
 
-		LPSTR strcat ( LPSTR dst, LPCSTR src )
+		LPSTR c_strcat ( LPSTR dst, LPCSTR src )
 		{
 			if ( src == NULL ) return dst;
 				LPSTR cp = dst;
@@ -206,7 +206,7 @@ namespace chilli {
 
 		}
 
-		size_t strlen ( LPCSTR str )
+		size_t c_strlen ( LPCSTR str )
 		{
 				if ( str==NULL ) return 0;
 				LPCSTR eos = str;
@@ -214,9 +214,9 @@ namespace chilli {
 				return( (int)(eos - str - 1) );
 		}
 
-		LPSTR strcpy ( LPSTR dst, LPCSTR src )
+		LPSTR c_strcpy ( LPSTR dst, LPCSTR src )
 		{
-			_ASSERTE ( dst != NULL );
+			_MXASSERTE ( dst != NULL );
 			if ( dst == NULL )
 				return NULL ;
 
@@ -297,7 +297,7 @@ namespace chilli {
 		#ifdef _UNIX_
 
 			const char	*start = path,
-				*end = start + ( chilli::lib::strlen( path ) ),
+				*end = start + ( c_strlen( path ) ),
 				
 				*dir_start = NULL,
 				*dir_end = NULL,
@@ -413,13 +413,13 @@ namespace chilli {
 		{
 			//case in-sensitive wildcard compare
 			int result;
-			LPSTR aw = new char[strlen(wild) + 1];
+			LPSTR aw = new char[c_strlen(wild) + 1];
 			strcpy(aw, wild);
-			LPSTR as = new char[strlen(string) + 1];
+			LPSTR as = new char[c_strlen(string) + 1];
 			strcpy(as, string);
 
-			strupr(aw);
-			strupr(as);
+			c_strupr(aw);
+			c_strupr(as);
 
 			result = wildcmp(aw, as);
 
@@ -491,13 +491,13 @@ namespace chilli {
 		}
 		// takes null terminated string 
 		// returns true if the string is a number, false otherwise
-		BOOL isNumber( LPCSTR string )
+		bool isNumber( LPCSTR string )
 		{
 			if( !string )
 				return FALSE;
 
 			int count=0;
-			int max = strlen( string );
+			int max = c_strlen( string );
 			while( count < max )
 			{
 				if( !isdigit(string[count]) )

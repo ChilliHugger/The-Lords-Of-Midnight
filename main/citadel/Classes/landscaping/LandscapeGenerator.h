@@ -37,7 +37,7 @@ typedef enum floor_t {
 
 class LandscapeItem : public Ref {
 public:
-    loc_t       loc;
+    tme::loc_t       loc;
     mxterrain_t	terrain;
     floor_t		floor;
     bool		army;
@@ -60,8 +60,8 @@ public:
     const float	PanoramaHeight = (float)RES(32.0f*GSCALE);
     const float	LocationHeight = (float)RES(48.0f*GSCALE);
     
-    const float near=0.25f;
-    const float far=21.5f;
+    const float viewportNear=0.25f;
+    const float viewportFar=21.5f;
     
     // adjustment for the furthest of our visible locations being on the horizon
     const int     horizonAdjust = RES((3*GSCALE));
@@ -69,7 +69,7 @@ public:
 public:
     LandscapeGenerator();
     
-    void Build(loc_t location, f32 looking );
+    void Build(tme::loc_t location, f32 looking );
     void BuildPanorama();
     
     void ProcessQuadrant(s32 x, s32 y, s32 dx, s32 dy, s32 qDim);
@@ -83,7 +83,7 @@ public:
     
     s32     location_infront_y;
     
-    loc_t	loc;
+    tme::loc_t	loc;
     f32     looking;
     f32     horizontalOffset;
     

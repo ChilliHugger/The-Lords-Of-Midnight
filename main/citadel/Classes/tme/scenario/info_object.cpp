@@ -64,18 +64,18 @@ namespace tme {
 			}
 		}
     
-		BOOL mxobject::CanDestroy ( mxobject* obj ) const
+		bool mxobject::CanDestroy ( mxobject* obj ) const
 		{
 			return (u32)kills == (u32)obj->Id() ;
 		}
 
 #if defined(_DDR_)
-        BOOL mxobject::IsCarried() const
+        bool mxobject::IsCarried() const
         {
             return carriedby != NULL ;
         }
     
-        BOOL mxobject::IsSpecial() const
+        bool mxobject::IsSpecial() const
         {
             if (IsSymbol("OB_CROWN_VARENAND"))
                 return true;
@@ -92,7 +92,7 @@ namespace tme {
 #endif
         archive& operator<<(archive& ar, mxobject* ptr )
 		{
-			return ar << (DWORD) ptr->SafeId();
+			return ar << (u32) ptr->SafeId();
 		}
 
 		archive& operator>>( archive& ar, mxobject*& ptr )

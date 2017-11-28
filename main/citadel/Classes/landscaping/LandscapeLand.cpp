@@ -33,8 +33,8 @@ void LandscapeLand::Init( LandscapeOptions* options )
     floor->setPosition(0, 0);
     floor->setAnchorPoint( Vec2(0,0) );
     
-    //if ( debugLand )
-    //    floor->setColor(Color3B::YELLOW);
+    if ( options->debugLand )
+        floor->setColor(Color3B::YELLOW);
     
     addChild(floor);
     
@@ -59,7 +59,7 @@ void LandscapeLand::BuildFloors( LandscapeItems* items )
     
     auto fnDrawTerrain = [=]( LandscapeItem* item, f32 adjustX, f32 adjustY )
     {
-        if ((item->position.z>=options->generator->near)&&(item->position.z<options->generator->far))
+        if ((item->position.z>=options->generator->viewportNear)&&(item->position.z<options->generator->viewportFar))
         {
             auto graphic = GetFloorImage(item->floor);
             
@@ -90,7 +90,7 @@ void LandscapeLand::BuildFloors( LandscapeItems* items )
         under.floor = item->floor;
         under.position = item->position;
         under.scale = item->scale;
-        fnDrawTerrain(&under, 1.0f, 1.0f);
+        //fnDrawTerrain(&under, 1.0f, 1.0f);
         
         //        under.floor = item->floor;
         //        under.position = item->position;
@@ -167,7 +167,7 @@ void LandscapeLand::BuildFloors( LandscapeItems* items )
     under.position.z = 1;
     
     under.scale = 1.0;
-    fnDrawTerrain(&under, 1.0f, 1.0f);
+    //fnDrawTerrain(&under, 1.0f, 1.0f);
     
     //    under.position.x = loc1->position.x - RES(1024) ;
     //    fnDrawTerrain(&under, 1.0f, 1.0f);

@@ -27,7 +27,7 @@ namespace chilli {
 		// out-of-line rect
 
 
-		BOOL rect::PtInRect(point p) const
+		bool rect::PtInRect(point p) const
 		{
 			return ( (p.x >= left) && (p.x <= right) &&
 					(p.y >= top) && (p.y <= bottom) );
@@ -41,7 +41,7 @@ namespace chilli {
 			bottom = y2 ;
 		}
 
-		BOOL rect::EqualRect(const rect* lpRect) const
+		bool rect::EqualRect(const rect* lpRect) const
 		{
 			return ( (lpRect->left == left) && (lpRect->right == right) &&
 					(lpRect->top == top) && (lpRect->bottom == bottom) );
@@ -172,7 +172,7 @@ namespace chilli {
 
 
 
-		BOOL rect::IntersectRect(const rect* lpRect1, const rect* lpRect2)
+		bool rect::IntersectRect(const rect* lpRect1, const rect* lpRect2)
 		{
 			SetRectEmpty();
 
@@ -203,7 +203,7 @@ namespace chilli {
 
 
 
-		BOOL rect::UnionRect( const rect* lpRect1, const rect* lpRect2)
+		bool rect::UnionRect( const rect* lpRect1, const rect* lpRect2)
 		{
 			SetRectEmpty();
 

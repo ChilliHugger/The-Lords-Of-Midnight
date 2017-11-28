@@ -9,15 +9,13 @@
 #define	MAX_STRING_BUFFERS	64
 #define MAX_STRING_SIZE		512
 
-using namespace tme ;
-using namespace chilli;
-using namespace chilli::collections;
-
-
-
 
 namespace tme {
 
+    using namespace chilli;
+    using namespace chilli::collections;
+
+    
 	class CStrBuf;
 	
 	//namespace processors {

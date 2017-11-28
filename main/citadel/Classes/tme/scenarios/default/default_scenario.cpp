@@ -203,6 +203,8 @@ namespace tme {
 				case IDT_OBJECT_TYPE:
 					return (mxentity*)new mxobjecttype ;
 #endif
+                default:
+                    break;
             }
 			return NULL;
 		}
@@ -294,7 +296,7 @@ namespace tme {
 				collection += mx->EntityByIdt(sv_character_default[ii]);
 		}
 
-		BOOL mxscenario::CanWeSelectCharacter ( const mxcharacter* character )
+		bool mxscenario::CanWeSelectCharacter ( const mxcharacter* character )
 		{
 			// TODO shouldn't we be checking if they are recruited here?
 			if ( IsFeature(SF_MOONRING) ) {
@@ -813,7 +815,7 @@ namespace tme {
 #endif
             mx->scenario->DeadCharactersDropObjects();
 
-			chilli::lib::strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_NIGHT) );
+			c_strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_NIGHT) );
 			
 			mx->NightCallback(NULL);
 
@@ -827,7 +829,7 @@ namespace tme {
 
 			mx->scenario->SetCharsLooking();
 
-            chilli::lib::strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_DAWN) );
+            c_strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_DAWN) );
             
 			mx->text->PurgeCache();
 
@@ -1602,7 +1604,7 @@ namespace tme {
 				mx->gamemap->SetLocationArmy(mx->RegimentById(ii+1)->Location(),0);
 		}
 
-		void mxscenario::LookInDirection( mxgridref loc, mxdir_t dir, BOOL isintunnel )
+		void mxscenario::LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel )
 		{
 		
 		panloc_t*	pview;
@@ -1676,7 +1678,7 @@ namespace tme {
 		}
 
 
-		BOOL mxscenario::DropObject ( mxgridref loc, mxobject* obj )
+		bool mxscenario::DropObject ( mxgridref loc, mxobject* obj )
 		{
 #if defined(_DDR_)
             if ( obj->IsUnique() ) {
@@ -1711,7 +1713,7 @@ namespace tme {
 			return mx->ObjectById(oldobject) ;
 		}
 
-		BOOL mxscenario::InCharactersMemory ( mxitem* item ) 
+		bool mxscenario::InCharactersMemory ( mxitem* item ) 
 		{
 		mxcharacter* character;
 			for ( int ii=0; ii<sv_characters; ii++ ) {
@@ -1768,7 +1770,7 @@ namespace tme {
 
 
 
-		BOOL mxscenario::GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, collections::entities& collection )
+		bool mxscenario::GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, collections::entities& collection )
 		{
 		int			count;
 		int			ii;
@@ -1837,7 +1839,7 @@ namespace tme {
 		mxcharacter*	c=NULL;
 		mxobject*		moonring=NULL;
 		int					count;
-		BOOL				in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
+		bool				in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
 
 			// TODO character needs a visible flag
 			mxcharacter* ch_doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
@@ -1914,10 +1916,10 @@ namespace tme {
             for ( int ii=0; ii<sv_objects; ii++ ) {
 				object = mx->ObjectById(ii+1);
                 if ( object->IsUnique() && object->IsRandomStart() ) {
-                    BOOL found=false;
+                    bool found=false;
                     while ( !found ) {
-                        loc.x = random(0,mx->gamemap->Size().cx-1);
-                        loc.y = random(0,mx->gamemap->Size().cy-1);
+						loc.x = mxrandom(0,mx->gamemap->Size().cx-1);
+						loc.y = mxrandom(0,mx->gamemap->Size().cy-1);
                         if ( !mx->gamemap->HasObject(loc) && !mx->gamemap->IsLocationBlock(loc)  )
                             found=true;
                     }
@@ -2031,12 +2033,12 @@ namespace tme {
 
     void mxscenario::GiveGuidance( mxcharacter* character, s32 hint )
     {
-        BOOL mikeseek = (hint == 1);
+        bool mikeseek = (hint == 1);
         
-        BOOL found = false;
-        if ( chance(0.80f) || mikeseek ) {
+        bool found = false;
+        if ( mxchance(0.80f) || mikeseek ) {
             while ( !found  ) {
-                int id = random(1,sv_characters-1);
+				int id = mxrandom(1, sv_characters - 1);
                 
                 mxcharacter* c = mx->CharacterById(id);
                 
@@ -2051,7 +2053,7 @@ namespace tme {
                 
                 mx->scenario->GetDefaultCharacters ( collection );
                 if ( collection.FindSymbol(c->Symbol()) == NULL ) {
-                    chilli::lib::strcat ( (LPSTR)mx->LastActionMsg(),
+					c_strcat ( (LPSTR)mx->LastActionMsg(),
                                          mx->text->CookText((LPSTR)mx->text->SystemString(SS_GUIDANCE1),c) );
                     found=TRUE;
                 }
@@ -2062,8 +2064,8 @@ namespace tme {
             }
         }
         if ( !found ) {
-            int msg = random(0,sv_guidance.Count()-1);
-            chilli::lib::strcat ( mx->LastActionMsg(),
+			int msg = mxrandom(0, sv_guidance.Count() - 1);
+			c_strcat ( mx->LastActionMsg(),
                                  mx->text->CookText((LPSTR)mx->text->SystemStringById(sv_guidance[msg]))) ;
         }
 

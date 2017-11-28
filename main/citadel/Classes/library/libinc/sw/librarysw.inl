@@ -10,17 +10,18 @@
 	#define MXINLINE MXINLINE
 #endif
 
-using namespace chilli ;
-using namespace chilli::types ;
+
 
 namespace chilli {
 
+    using namespace chilli::types ;
+    
 	namespace lib {
 		/* archive */
-		MXINLINE BOOL archive::IsLoading() const						{ return (m_nMode & archive::load) != 0; }
-		MXINLINE BOOL archive::IsStoring() const						{ return (m_nMode & archive::load) == 0; }
-		MXINLINE BOOL archive::IsByteSwapping() const					{ return (m_nMode & archive::bByteSwap); }
-		MXINLINE BOOL archive::IsBufferEmpty() const					{ return m_lpBufCur == m_lpBufMax; }
+		MXINLINE bool archive::IsLoading() const						{ return (m_nMode & archive::load) != 0; }
+		MXINLINE bool archive::IsStoring() const						{ return (m_nMode & archive::load) == 0; }
+		MXINLINE bool archive::IsByteSwapping() const					{ return (m_nMode & archive::bByteSwap); }
+		MXINLINE bool archive::IsBufferEmpty() const					{ return m_lpBufCur == m_lpBufMax; }
 		MXINLINE ARFILE archive::GetFile() const					{ return m_pFile; }
 		MXINLINE archive& archive::operator<<(int i)					{ return archive::operator<<((u32)i); }
 		MXINLINE archive& archive::operator<<(short w)				{ return archive::operator<<((u16)w); }
@@ -75,7 +76,7 @@ namespace chilli {
 	namespace types {
 
 		/* types::bitarray */
-		MXINLINE BOOL bitarray::operator[](int bit) const				{ return Get(bit); }
+		MXINLINE bool bitarray::operator[](int bit) const				{ return Get(bit); }
 		MXINLINE bitarray::bitarray()									{ Detatch(); }
 		MXINLINE bitarray::bitarray ( int nElements )					{ Create (nElements ); }
 		MXINLINE bitarray::~bitarray()								{ Destroy(); }
@@ -92,7 +93,7 @@ namespace chilli {
 		MXINLINE void flags32::Set ( u32 f )							{ m_flags |= f ; }
 		MXINLINE void flags32::Reset ( u32 f )						{ m_flags &= ~f ; }
         MXINLINE void flags32::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-		MXINLINE BOOL flags32::Is ( u32 f) const						{ return m_flags&f ? TRUE : FALSE  ; }
+		MXINLINE bool flags32::Is ( u32 f) const						{ return m_flags&f ? TRUE : FALSE  ; }
 		MXINLINE flags32::operator u32() const						{ return m_flags; }
 		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, flags32& f )		{ return f.Serialize(ar); }
 		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, flags32& f )		{ return f.Serialize(ar); }
@@ -102,7 +103,7 @@ namespace chilli {
 		MXINLINE void flags8::Set ( u8 f )							{ m_flags |= f ; }
 		MXINLINE void flags8::Reset ( u8 f )							{ m_flags &= ~f ; }
         MXINLINE void flags8::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-		MXINLINE BOOL flags8::Is ( u8 f ) const						{ return m_flags&f ? TRUE : FALSE  ; }
+		MXINLINE bool flags8::Is ( u8 f ) const						{ return m_flags&f ? TRUE : FALSE  ; }
 		MXINLINE flags8::operator u8() const							{ return m_flags; }
 		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, flags8& f )			{ return f.Serialize(ar); }
 		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, flags8& f )		{ return f.Serialize(ar); }
@@ -112,7 +113,7 @@ namespace chilli {
 		MXINLINE void flags16::Set ( u16 f )							{ m_flags |= f ; }
 		MXINLINE void flags16::Reset ( u16 f )						{ m_flags &= ~f ; }
         MXINLINE void flags16::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-		MXINLINE BOOL flags16::Is ( u16 f ) const						{ return m_flags&f ? TRUE : FALSE  ; }
+		MXINLINE bool flags16::Is ( u16 f ) const						{ return m_flags&f ? TRUE : FALSE  ; }
 		MXINLINE flags16::operator u16() const						{ return m_flags; }
 		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, flags16& f )		{ return f.Serialize(ar); }
 		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, flags16& f )		{ return f.Serialize(ar); }
@@ -127,8 +128,8 @@ namespace chilli {
 		MXINLINE size::size()											{ /* filled */ }
 		MXINLINE size::size(int initCX, int initCY)					{ cx = initCX; cy = initCY; }
 		MXINLINE size::size(point initPt)								{ *(point*)this = initPt; }
-		MXINLINE BOOL size::operator==(size value) const				{ return (cx == value.cx && cy == value.cy); }
-		MXINLINE BOOL size::operator!=(size value) const				{ return (cx != value.cx || cy != value.cy); }
+		MXINLINE bool size::operator==(size value) const				{ return (cx == value.cx && cy == value.cy); }
+		MXINLINE bool size::operator!=(size value) const				{ return (cx != value.cx || cy != value.cy); }
 		MXINLINE void size::operator+=(size value)					{ cx += value.cx; cy += value.cy; }
 		MXINLINE void size::operator-=(size value)					{ cx -= value.cx; cy -= value.cy; }
 		MXINLINE size size::operator+(size value) const				{ return size(cx + value.cx, cy + value.cy); }
@@ -144,8 +145,8 @@ namespace chilli {
 		MXINLINE void point::Offset(int xOffset, int yOffset)			{ x += xOffset; y += yOffset; }
 		MXINLINE void point::Offset(point value)						{ x += value.x; y += value.y; }
 		MXINLINE void point::Offset(size value)						{ x += value.cx; y += value.cy; }
-		MXINLINE BOOL point::operator==(point value) const			{ return (x == value.x && y == value.y); }
-		MXINLINE BOOL point::operator!=(point value) const			{ return (x != value.x || y != value.y); }
+		MXINLINE bool point::operator==(point value) const			{ return (x == value.x && y == value.y); }
+		MXINLINE bool point::operator!=(point value) const			{ return (x != value.x || y != value.y); }
 		MXINLINE void point::operator+=(size value)					{ x += value.cx; y += value.cy; }
 		MXINLINE void point::operator-=(size value)					{ x -= value.cx; y -= value.cy; }
 		MXINLINE void point::operator+=(point value)					{ x += value.x; y += value.y; }
@@ -173,16 +174,16 @@ namespace chilli {
 		MXINLINE point rect::CenterPoint() const						{ return point((left+right)/2, (top+bottom)/2); }
 		//MXINLINE rect::operator LPRECT()							//	{ return (LPRECT)this; }
 		//MXINLINE rect::operator LPCRECT() const						//	{ return (LPCRECT)this; }
-		MXINLINE BOOL rect::IsRectEmpty() const						{ return ( (left >= right) || (top >= bottom) ); }
-		MXINLINE BOOL rect::IsRectNull() const						{ return (left == 0 && right == 0 && top == 0 && bottom == 0); }
+		MXINLINE bool rect::IsRectEmpty() const						{ return ( (left >= right) || (top >= bottom) ); }
+		MXINLINE bool rect::IsRectNull() const						{ return (left == 0 && right == 0 && top == 0 && bottom == 0); }
 		MXINLINE void rect::OffsetRect(point point)					{ OffsetRect(point.x, point.y); }
 		MXINLINE void rect::OffsetRect(size value)					{ OffsetRect( value.cx, value.cy); }
 		MXINLINE void rect::SetRect(point topLeft, point bottomRight) { SetRect( topLeft.x, topLeft.y, bottomRight.x, bottomRight.y); }
 		MXINLINE void rect::SetRectEmpty()							{ memset ( this, 0x00, sizeof( rect ) ); }
 		MXINLINE void rect::CopyRect(const rect* lpSrcRect) 			{ memcpy ( this, lpSrcRect, sizeof( rect ) ); }
 		MXINLINE void rect::operator=(const rect& srcRect)			{ CopyRect((const rect* )&srcRect); }
-		MXINLINE BOOL rect::operator==(const rect& value) const		{ return EqualRect((const rect* )&value); }
-		MXINLINE BOOL rect::operator!=(const rect& value) const		{ return !EqualRect((const rect* )&value); }
+		MXINLINE bool rect::operator==(const rect& value) const		{ return EqualRect((const rect* )&value); }
+		MXINLINE bool rect::operator!=(const rect& value) const		{ return !EqualRect((const rect* )&value); }
 		MXINLINE void rect::operator+=(point value)					{ OffsetRect(value.x, value.y); }
 		MXINLINE void rect::operator+=(size value)					{ OffsetRect(value.cx, value.cy); }
 		MXINLINE void rect::operator+=(const rect*  lpRect)			{ InflateRect(lpRect); }
@@ -217,8 +218,8 @@ namespace chilli {
 		MXINLINE LPSTR file::GetFileName()							{ return m_strFileName; }
 		MXINLINE DWORD file::SeekToEnd()								{ return Seek(0, end); }
 		MXINLINE void file::SeekToBegin()								{ Seek(0, begin); }
-		MXINLINE BOOL file::IsOpen() const							{ return IsValidHandle(); }
-		MXINLINE BOOL file::IsValidHandle() const						{ return m_hFile != -1; }
+		MXINLINE bool file::IsOpen() const							{ return IsValidHandle(); }
+		MXINLINE bool file::IsValidHandle() const						{ return m_hFile != -1; }
 	}
 #endif //_DONT_DEFINE_MFC_CLASSES
 

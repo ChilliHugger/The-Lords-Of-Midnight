@@ -90,7 +90,7 @@ namespace tme {
 			mx->gamemap->SetLocationSpecial(loc,0);
 		}
 
-		m_gameover_t mxnight::CheckWinLoseConditions ( BOOL night )
+		m_gameover_t mxnight::CheckWinLoseConditions ( bool night )
 		{
 #ifndef _TME_DEMO_MODE_
 			collections::entities collection;
@@ -112,7 +112,7 @@ namespace tme {
 				mxvictory* v = (mxvictory*)collection[ii];
 				if ( v->CheckComplete() ) {
 					// display message
-					chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString(v->Message()) );
+					c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString(v->Message()) );
 					// game over?
 					m_gameover_t gameover = MG_NONE ;
                     if ( v->IsGameOver() ) {
@@ -134,7 +134,7 @@ namespace tme {
         {
             static tme::loc_t locations[] = { loc_t(38,18), loc_t(41,21), loc_t(42,15), loc_t(46,14), loc_t(49,13) };
         
-            int p = random(NUMELE(locations)-1);
+			int p = mxrandom(NUMELE(locations) - 1);
             
             mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
             if ( c==NULL )

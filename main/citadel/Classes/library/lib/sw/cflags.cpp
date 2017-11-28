@@ -4,12 +4,14 @@
 
 #include "../../libinc/library.h"
 
-using namespace chilli::lib;
+
 
 namespace chilli {
 
 	namespace types {
 
+        using namespace chilli::lib;
+        
 		flags32::~flags32()
 		{
 		}

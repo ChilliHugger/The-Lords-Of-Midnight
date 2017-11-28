@@ -1,7 +1,15 @@
 
 
+#include <cocos2d.h>
+#include <stdio.h>
+#include <string>
+
 #include "tme_interface.h"
 
+
+using namespace tme;
+using namespace chilli::collections;
+using namespace tme::scenarios::exports;
 
 mxinterface*	mxi ;
 character		cur_Character ;
@@ -39,7 +47,6 @@ mxid            location_someone_to_give_to;
 string			tme_text ;
 std::string          tme_path;
 static			variant args[20];
-
 
 
 #if defined(_LOM_)
@@ -87,7 +94,7 @@ size TME_MapSize ( void )
 	return size(0,0);
 }
 
-BOOL TME_MapInfo ( MapInfo_t* info ) 
+bool TME_MapInfo ( MapInfo_t* info ) 
 {    
     if ( info == NULL )
         return false;
@@ -153,7 +160,7 @@ LPCSTR TME_GetText ( const string& command, variant args[], int count )
 	}else
 		tme_text = "";
 	
-	_ASSERTE(CDebug::CheckMemory());
+	_MXASSERTE(CDebug::CheckMemory());
 	return tme_text ;
 }
 
@@ -163,7 +170,7 @@ LPCSTR TME_GetLocationText ( mxgridref loc )
 	return TME_GetText( "Location", args, 1 );
 }
 
-BOOL TME_GetLocation( maplocation& out, mxid id )
+bool TME_GetLocation( maplocation& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_LOCATION );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -171,7 +178,7 @@ BOOL TME_GetLocation( maplocation& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetLocation( maplocation& out, loc_t loc )
+bool TME_GetLocation( maplocation& out, loc_t loc )
 {
 	return TME_GetLocation(out,MAKE_LOCID(loc.x,loc.y));
 }
@@ -183,7 +190,7 @@ LPCSTR TME_GetMapLocationText ( mxgridref loc )
 	return TME_GetText( "MapLocation", args, 1 );
 }
 
-BOOL TME_GetMapLocation( maplocation& out, mxid id )
+bool TME_GetMapLocation( maplocation& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_MAPLOCATION );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -191,13 +198,13 @@ BOOL TME_GetMapLocation( maplocation& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetMapLocation( maplocation& out, loc_t loc )
+bool TME_GetMapLocation( maplocation& out, loc_t loc )
 {
 	return TME_GetLocation(out,MAKE_MAPLOCID(loc.x,loc.y));
 }
 
 
-BOOL TME_GetCharacter( character& out, mxid id )
+bool TME_GetCharacter( character& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_CHARACTER );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -205,7 +212,7 @@ BOOL TME_GetCharacter( character& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetRegiment( regiment& out, mxid id )
+bool TME_GetRegiment( regiment& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_REGIMENT );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -213,7 +220,7 @@ BOOL TME_GetRegiment( regiment& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetArmy( army_t& out, mxid id )
+bool TME_GetArmy( army_t& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_ARMY );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -222,7 +229,7 @@ BOOL TME_GetArmy( army_t& out, mxid id )
 }
 
 
-BOOL TME_GetStronghold( stronghold& out, mxid id )
+bool TME_GetStronghold( stronghold& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_STRONGHOLD );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -230,7 +237,7 @@ BOOL TME_GetStronghold( stronghold& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetTerrainInfo( terraininfo& out, mxid id )
+bool TME_GetTerrainInfo( terraininfo& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_TERRAININFO );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -238,7 +245,7 @@ BOOL TME_GetTerrainInfo( terraininfo& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetRaceInfo( raceinfo& out, mxid id )
+bool TME_GetRaceInfo( raceinfo& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_RACEINFO );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -246,7 +253,7 @@ BOOL TME_GetRaceInfo( raceinfo& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetObject( anobject& out, mxid id )
+bool TME_GetObject( anobject& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_OBJECT );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -254,7 +261,7 @@ BOOL TME_GetObject( anobject& out, mxid id )
 	return FALSE;
 }
 
-BOOL TME_GetUnitInfo( unitinfo& out, mxid id )
+bool TME_GetUnitInfo( unitinfo& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_UNITINFO );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )
@@ -319,12 +326,12 @@ s32 TME_GetFollowers ( mxid id, c_mxid& collection )
 }
 
 
-s32 TME_GetCharactersAtLocation ( loc_t loc, c_mxid& collection, BOOL showall )
+s32 TME_GetCharactersAtLocation ( loc_t loc, c_mxid& collection, bool showall )
 {
 	return TME_GetCharactersAtLocation ( MAKE_LOCID(loc.x,loc.y), collection, showall, FALSE );
 }
 
-s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, BOOL showall, BOOL showtunnel )
+s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel )
 {
 	args[0] = &collection ;
 	args[1] = id ;
@@ -360,7 +367,7 @@ MXRESULT TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends)
 }
 
 
-BOOL TME_GetLocationInfo( loc_t loc )
+bool TME_GetLocationInfo( loc_t loc )
 {
 	location_lookingatid = IDT_NONE ;
 	location_infrontid = IDT_NONE ;
@@ -418,7 +425,7 @@ BOOL TME_GetLocationInfo( loc_t loc )
 }
 
 
-BOOL TME_GetCharacterLocationInfo ( const character& c )
+bool TME_GetCharacterLocationInfo ( const character& c )
 {
 	location_lookingatid = IDT_NONE ;
 	location_infrontid = IDT_NONE ;
@@ -545,7 +552,7 @@ static void NightCallback ( callback_t* ptr )
 }
 
 
-BOOL TME_Night ( NightNotificationDelegate* delegate )
+bool TME_Night ( NightNotificationDelegate* delegate )
 {
 	nightDelegate=delegate;
 	args[0] = (void*) &NightCallback ;
@@ -555,7 +562,7 @@ BOOL TME_Night ( NightNotificationDelegate* delegate )
         TME_CurrentCharacter ( args[0] );
         TME_RefreshCurrentCharacter ();
 		
-        return (BOOL)args[1].vInt;
+        return (bool)args[1].vInt;
 	}
 
 	return FALSE;
@@ -571,7 +578,7 @@ m_gameover_t TME_CheckWinLose (void)
 }
 
 
-BOOL TME_Save ( LPSTR filespec, PFNSERIALIZE function )
+bool TME_Save ( LPSTR filespec, PFNSERIALIZE function )
 {
 	args[0] = filespec ;
     args[1] = (void*)function ;
@@ -581,7 +588,7 @@ BOOL TME_Save ( LPSTR filespec, PFNSERIALIZE function )
 	return TRUE;
 }
 
-BOOL TME_Load ( LPSTR filespec, PFNSERIALIZE function )
+bool TME_Load ( LPSTR filespec, PFNSERIALIZE function )
 {
 	args[0] = filespec ;
     args[1] = (void*)function ;
@@ -595,7 +602,7 @@ BOOL TME_Load ( LPSTR filespec, PFNSERIALIZE function )
 	return TRUE;
 }
 
-BOOL TME_SaveDescription ( LPSTR filespec, string& description )
+bool TME_SaveDescription ( LPSTR filespec, string& description )
 {
 	args[0] = filespec ;
     args[1] = (void*) &description ;
@@ -606,7 +613,7 @@ BOOL TME_SaveDescription ( LPSTR filespec, string& description )
 	return TRUE;
 }
 
-BOOL TME_LoadDiscoveryMap ( LPSTR filespec )
+bool TME_LoadDiscoveryMap ( LPSTR filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@LOADDISCOVERYMAP", args, 1 ) ) ) {
@@ -615,7 +622,7 @@ BOOL TME_LoadDiscoveryMap ( LPSTR filespec )
     return TRUE;
 }
 
-BOOL TME_SaveDiscoveryMap ( LPSTR filespec )
+bool TME_SaveDiscoveryMap ( LPSTR filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@SAVEDISCOVERYMAP", args, 1 ) ) ) {
@@ -625,7 +632,7 @@ BOOL TME_SaveDiscoveryMap ( LPSTR filespec )
 }
 
 #if defined(_DDR_)
-BOOL Character_EnterTunnel ( const character& c )
+bool Character_EnterTunnel ( const character& c )
 {
 	args[0] = c.id ;
 	if ( MXFAILED( mxi->Command("ENTERTUNNEL",args,1) ) )
@@ -657,10 +664,10 @@ void Character_Wait ( const character& c )
 	TME_RefreshCurrentCharacter();
 }
 
-BOOL Character_IsControllable( mxid id )
+bool Character_IsControllable( mxid id )
 {
 	if ( MXSUCCESS( mxi->GetEntityProperty ( id, "ISCONTROLLABLE", args[0] ) ) ){
-		return (BOOL)(s32)args[0] ;
+		return (bool)(s32)args[0] ;
 	}
 	return FALSE;
 }
@@ -678,10 +685,10 @@ mxid Character_LocationObject (  const character& c )
 	return args[0].vInt;
 }
 
-BOOL Character_HasBattleInfo ( const character& c )
+bool Character_HasBattleInfo ( const character& c )
 {
 	if ( MXSUCCESS( mxi->GetEntityProperty(c.id,"HASBATTLEINFO",args[0]) ) ) 
-		return (BOOL)(s32)args[0];
+		return (bool)(s32)args[0];
 	return FALSE;
 }
 
@@ -715,7 +722,7 @@ void Character_LookRight ( const character& c )
 	TME_RefreshCurrentCharacter();
 }
 
-BOOL Character_Move ( const character& c )
+bool Character_Move ( const character& c )
 {
 	args[0] = c.id ;
 	if ( MXFAILED( mxi->Command("FORWARD",args,1) ) )
@@ -725,7 +732,7 @@ BOOL Character_Move ( const character& c )
 }
 
 
-BOOL Character_Place ( const character& c, loc_t location )
+bool Character_Place ( const character& c, loc_t location )
 {
     args[0] = c.id;
     args[1] = MAKE_LOCID(location.x,location.y) ;
@@ -734,7 +741,7 @@ BOOL Character_Place ( const character& c, loc_t location )
     return true;
 }
 
-BOOL Character_Approach ( const character& c )
+bool Character_Approach ( const character& c )
 {
 	args[0] = c.id ;
 	args[1] = recruitable_characters[0] ;
@@ -749,7 +756,7 @@ BOOL Character_Approach ( const character& c )
     return false;
 }
 
-BOOL Character_Follow ( const character& c, mxid id )
+bool Character_Follow ( const character& c, mxid id )
 {
 	args[0] = c.id ;
 	args[1] = id ;
@@ -760,7 +767,7 @@ BOOL Character_Follow ( const character& c, mxid id )
     return FALSE;
 }
 
-BOOL Character_UnFollow ( const character& c, mxid id )
+bool Character_UnFollow ( const character& c, mxid id )
 {
 	args[0] = c.id ;
 	args[1] = id ;
@@ -771,16 +778,16 @@ BOOL Character_UnFollow ( const character& c, mxid id )
     return FALSE;
 }
 
-BOOL Character_CanFollow( const character& c, mxid id )
+bool Character_CanFollow( const character& c, mxid id )
 {
     args[0] = id ; 
 	if ( MXSUCCESS( mxi->GetEntityProperty ( c.id, "CANFOLLOW", args[0] ) ) ){
-		return (BOOL)(s32)args[0] ;
+		return (bool)(s32)args[0] ;
 	}
 	return FALSE;
 }
 
-BOOL Character_Disband ( const character& c )
+bool Character_Disband ( const character& c )
 {
 	args[0] = c.id ;
 	if ( MXSUCCESS( mxi->Command("DISBANDGROUP",args,1) ) ) {
@@ -790,7 +797,7 @@ BOOL Character_Disband ( const character& c )
     return FALSE;
 }
 
-BOOL Character_SwapGroupLeader ( const character& c, mxid id )
+bool Character_SwapGroupLeader ( const character& c, mxid id )
 {
 	args[0] = c.id ;
 	args[1] = id ;
@@ -803,7 +810,7 @@ BOOL Character_SwapGroupLeader ( const character& c, mxid id )
 
 
 
-BOOL Character_RecruitMen ( const character& c )
+bool Character_RecruitMen ( const character& c )
 {
 	TME_GetCharacterLocationInfo ( c );
 	args[0] = c.id ;
@@ -816,7 +823,7 @@ BOOL Character_RecruitMen ( const character& c )
 	return FALSE;
 }
 
-BOOL Character_PostMen ( const character& c )
+bool Character_PostMen ( const character& c )
 {
 	TME_GetCharacterLocationInfo ( c );
 	args[0] = c.id ;
@@ -829,7 +836,7 @@ BOOL Character_PostMen ( const character& c )
 	return FALSE;
 }
 
-BOOL Character_Hide ( const character& c )
+bool Character_Hide ( const character& c )
 {
 	MXRESULT res;
 	
@@ -856,7 +863,7 @@ mxid Character_Fight ( const character& c )
 	return NONE ;
 }
 
-BOOL Character_Attack ( const character& c )
+bool Character_Attack ( const character& c )
 {
 	args[0] = c.id;
 	if ( MXSUCCESS( mxi->Command("ATTACK",args,1) ) ) {
@@ -877,7 +884,7 @@ mxid Character_Seek ( const character& c )
 }
 
 #if defined(_DDR_)
-BOOL Character_Use ( const character& c )
+bool Character_Use ( const character& c )
 {
 	args[0] = c.id;
 	if ( MXSUCCESS( mxi->Command("USE",args,1) ) ) {
@@ -887,7 +894,7 @@ BOOL Character_Use ( const character& c )
 	return FALSE;
 }
 
-BOOL Character_Give ( const character& c, mxid to )
+bool Character_Give ( const character& c, mxid to )
 {
 	args[0] = c.id;
     args[1] = to;
@@ -898,7 +905,7 @@ BOOL Character_Give ( const character& c, mxid to )
 	return FALSE;
 }
 
-BOOL Character_Take ( const character& c )
+bool Character_Take ( const character& c )
 {
 	args[0] = c.id;
 	if ( MXSUCCESS( mxi->Command("TAKE",args,1) ) ) {
@@ -911,7 +918,7 @@ BOOL Character_Take ( const character& c )
 
 
 
-BOOL Character_Army ( mxid id, army_t& out )
+bool Character_Army ( mxid id, army_t& out )
 {
     CLEARINFOSTRUCT ( out, IDT_ARMY );
     
@@ -961,7 +968,7 @@ void* TME_GetEntityUserData ( mxid id)
 }
 
 
-BOOL TME_Init ( void )
+bool TME_Init ( void )
 {
 	// first we need an interface object
 	mxi = new mxinterface ;
@@ -1007,7 +1014,7 @@ BOOL TME_Init ( void )
 	return TRUE ;
 }
 
-BOOL TME_DeInit ( void )
+bool TME_DeInit ( void )
 {
 	if ( mxi ) {
 		
@@ -1033,7 +1040,7 @@ BOOL TME_DeInit ( void )
 	
 }
 
-BOOL TME_DebugInstallMap( void* map )
+bool TME_DebugInstallMap( void* map )
 {
     args[0] = map ;
     if ( MXSUCCESS( mxi->Command("@SETMAP",args,1) ) ) {

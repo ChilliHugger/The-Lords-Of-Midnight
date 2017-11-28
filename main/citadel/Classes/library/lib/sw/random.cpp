@@ -86,7 +86,7 @@ namespace chilli {
 			return (int) ( get( range ) + lower);
 		}
 
-		BOOL randomno::chance ( f32 chance )
+		bool randomno::chance ( f32 chance )
 		{
 			return getfloat() < chance ;
 		}

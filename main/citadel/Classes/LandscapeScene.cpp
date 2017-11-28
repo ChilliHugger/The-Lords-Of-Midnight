@@ -1,16 +1,18 @@
 
-#include "TMEMapBuilder.h"
-#include "LandscapeScene.h"
 
-#include "LandscapeSky.h"
-#include "LandscapeLand.h"
-#include "LandscapeTerrain.h"
+#include "LandscapeScene.h"
+#include "landscaping/LandscapeSky.h"
+#include "landscaping/LandscapeLand.h"
+#include "landscaping/LandscapeTerrain.h"
+
+#include "TMEMapBuilder.h"
 
 USING_NS_CC;
+using namespace tme;
 
 #define _DEBUG_LANDSCAPE_
-//#define _CITADEL_MAP_
-#define _LOM_MAP_
+#define _CITADEL_MAP_
+//#define _LOM_MAP_
 
 
 Scene* Landscape::createScene()
@@ -103,16 +105,19 @@ bool Landscape::init()
     options.showLand  = false;
     options.showTerrain = true ;
     options.debugMode = 0;
-    options.landScaleX = 1.6;
-    options.landScaleY = 2.15;
+    options.landScaleX = 1.6f;
+    options.landScaleY = 2.15f;
     options.debugLand=false;
 
     isMoving = false;
     isLooking = false;
     
-    //character&	c = TME_CurrentCharacter();
+    character&	c = TME_CurrentCharacter();
     //Character_Place( c, loc_t(2,110) );
-    //Character_Look(c, DR_NORTH);
+    Character_Place( c, loc_t(15,58) );
+    
+    
+    Character_Look(c, DR_NORTH);
 
     
     SetViewForCurrentCharacter();
@@ -163,20 +168,20 @@ void Landscape::InitKeyboard()
                 break;
                 
             case cocos2d::EventKeyboard::KeyCode::KEY_O:
-                options.landScaleX += 0.01;
+                options.landScaleX += 0.01f;
                 UpdateLandscape();
                 break;
             case cocos2d::EventKeyboard::KeyCode::KEY_P:
-                options.landScaleX -= 0.01;
+                options.landScaleX -= 0.01f;
                 UpdateLandscape();
                 break;
 
             case cocos2d::EventKeyboard::KeyCode::KEY_Q:
-                options.landScaleY += 0.01;
+                options.landScaleY += 0.01f;
                 UpdateLandscape();
                 break;
             case cocos2d::EventKeyboard::KeyCode::KEY_A:
-                options.landScaleY -= 0.01;
+                options.landScaleY -= 0.01f;
                 UpdateLandscape();
                 break;
                 

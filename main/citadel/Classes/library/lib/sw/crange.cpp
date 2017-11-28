@@ -26,7 +26,7 @@ namespace chilli {
 			this->max = max;
 		}
 
-		BOOL range::IsInRange( int value )
+		bool range::IsInRange( int value )
 		{ 
 			return value>=min && value<=max ;
 		}

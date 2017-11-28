@@ -44,7 +44,7 @@ namespace tme {
     /*
      * Function name	: map::Create
      *
-     * Return type		: BOOL
+     * Return type		: bool
      *
      * Arguments		: CSize dimensions
      *
@@ -52,7 +52,7 @@ namespace tme {
      *
      */
     
-    BOOL mxdiscoverymap::Create ( size dimensions )
+    bool mxdiscoverymap::Create ( size dimensions )
     {
         m_size = dimensions ;
         SAFEFREE ( m_data );
@@ -85,7 +85,7 @@ namespace tme {
     /*
      * Function name	: map::Load
      *
-     * Return type		: BOOL
+     * Return type		: bool
      *
      * Arguments		: LPCSTR filename
      *
@@ -93,7 +93,7 @@ namespace tme {
      *
      */
     
-    BOOL mxdiscoverymap::Load ( LPCSTR filename )
+    bool mxdiscoverymap::Load ( LPCSTR filename )
     {
         
         MXTRACE("Loading Discovery Map '%s'", filename);
@@ -135,7 +135,7 @@ namespace tme {
         ar >> header;
         MXTRACE("Header='%s'", (LPSTR)header);
         
-        if ( chilli::lib::stricmp(header,DISCOVERYHEADER) != 0 ) {
+        if (c_stricmp(header,DISCOVERYHEADER) != 0 ) {
             MXTRACE("Invalid DISCOVERYMAP Header");
             return FALSE;
         }
@@ -151,7 +151,7 @@ namespace tme {
         return TRUE ;
     }
     
-    BOOL mxdiscoverymap::Save ( LPCSTR filename )
+    bool mxdiscoverymap::Save ( LPCSTR filename )
     {
 
         chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
@@ -221,7 +221,7 @@ namespace tme {
     
     
     
-    BOOL mxdiscoverymap::IsLocOnMap ( mxgridref mxloc ) const
+    bool mxdiscoverymap::IsLocOnMap ( mxgridref mxloc ) const
     {
         if ( mxloc.x < 0 || mxloc.x >= m_size.cx || mxloc.y < 0 || mxloc.y >= m_size.cy ) {
             return FALSE;
@@ -256,18 +256,18 @@ namespace tme {
     }
     
     
-    BOOL mxdiscoverymap::IsLocationVisible( mxgridref l )
+    bool mxdiscoverymap::IsLocationVisible( mxgridref l )
     {
         return GetAt( l ).Is(lf_seen);
     }
     
 #if defined(_DDR_)
-    BOOL mxdiscoverymap::IsTunnelVisible( mxgridref l )
+    bool mxdiscoverymap::IsTunnelVisible( mxgridref l )
     {
         return GetAt( l ).Is( lf_tunnel_looked_at);
     }
     
-    void mxdiscoverymap::SetTunnelVisible( mxgridref l, BOOL visible )
+    void mxdiscoverymap::SetTunnelVisible( mxgridref l, bool visible )
     {
         flags32& mapsqr = GetAt( l );
         if ( visible ) {
@@ -280,7 +280,7 @@ namespace tme {
     
 #endif
     
-    void mxdiscoverymap::SetLocationVisible( mxgridref l, BOOL visible )
+    void mxdiscoverymap::SetLocationVisible( mxgridref l, bool visible )
     {
         flags32& mapsqr = GetAt( l );
         if ( visible ) {
@@ -290,7 +290,7 @@ namespace tme {
             mapsqr.Reset(lf_seen);
     }
     
-    void mxdiscoverymap::SetLocationLookedAt( mxgridref l, BOOL visible )
+    void mxdiscoverymap::SetLocationLookedAt( mxgridref l, bool visible )
     {
         flags32& mapsqr = GetAt( l );
         if ( visible ) {
@@ -299,7 +299,7 @@ namespace tme {
             mapsqr.Reset(lf_looked_at);
     }
     
-    void mxdiscoverymap::SetLocationVisited( mxgridref l, BOOL visible )
+    void mxdiscoverymap::SetLocationVisited( mxgridref l, bool visible )
     {
         flags32& mapsqr = GetAt( l );
         if ( visible ) {

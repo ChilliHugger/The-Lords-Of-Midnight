@@ -146,7 +146,7 @@ namespace tme {
         {
             static tme::loc_t locations[] = { loc_t(38,18), loc_t(41,21), loc_t(42,15), loc_t(46,14), loc_t(49,13) }; // SHOULD BE USING PLACE SYMBOLS
         
-            int p = random(NUMELE(locations)-1);
+			int p = mxrandom(NUMELE(locations)-1);
             
             mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
             if ( c==NULL )
@@ -221,7 +221,7 @@ namespace tme {
             
         }
     
-        m_gameover_t ddr_night::CheckWinLoseConditions ( BOOL night )
+        m_gameover_t ddr_night::CheckWinLoseConditions ( bool night )
         {
             victoryTargets=WIN_MAX_TARGETS;
             victoryFlags.Clear();

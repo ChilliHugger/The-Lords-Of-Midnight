@@ -19,7 +19,9 @@ namespace chilli {
 
 	namespace types {
 
-		BOOL bitarray::Create ( int nElements )
+        using namespace chilli::lib ;
+        
+		bool bitarray::Create ( int nElements )
 		{
 		u8	*temp;
 
@@ -68,7 +70,7 @@ namespace chilli {
 			m_pData[offset] ^= bitflag;
 		}
 
-		BOOL bitarray::Get ( int bit ) const
+		bool bitarray::Get ( int bit ) const
 		{
 		int offset, bitflag;
 
@@ -78,8 +80,6 @@ namespace chilli {
 			return ( (m_pData[offset] & bitflag) >> bit );
 		}
 
-		using namespace chilli::lib ;
-
 		archive& bitarray::Serialize ( archive& ar )
 		{
 			if ( ar.IsStoring() ){
@@ -88,7 +88,7 @@ namespace chilli {
 			}else{
 			int temp;
 				ar >> temp;
-				_ASSERTE( temp == m_nElements  );
+				_MXASSERTE( temp == m_nElements  );
 		//		if ( temp != m_nElements  ) {
 		//			DEBUG("bitarray: Different number of elements\n");
 		//			return(FALSE);

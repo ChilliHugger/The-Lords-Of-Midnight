@@ -79,8 +79,6 @@
 		8397AFE51F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE31F4C1BB6009B00A2 /* LandscapeLand.cpp */; };
 		8397AFE61F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE31F4C1BB6009B00A2 /* LandscapeLand.cpp */; };
 		8397AFE91F4C1C99009B00A2 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
-		8397AFEA1F4C1C99009B00A2 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
-		8397AFEC1F4C21ED009B00A2 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8397AFEB1F4C21ED009B00A2 /* libcocos2d Mac.a */; };
 		8397AFEF1F4CC082009B00A2 /* LandscapeTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */; };
 		8397AFF21F4CC579009B00A2 /* LandscapeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */; };
 		8397AFF51F4CCAA4009B00A2 /* LandscapeDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */; };
@@ -235,7 +233,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "../../Users/chris/Projects/The-Citadel/main/cocos2dx/platform/third_party/ios/libraries/libcurl.a"; sourceTree = COCOS_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* citadel-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "citadel-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -303,14 +301,12 @@
 		8397AFE41F4C1BB6009B00A2 /* LandscapeLand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeLand.h; path = landscaping/LandscapeLand.h; sourceTree = "<group>"; };
 		8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeNode.cpp; path = landscaping/LandscapeNode.cpp; sourceTree = "<group>"; };
 		8397AFE81F4C1C99009B00A2 /* LandscapeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeNode.h; path = landscaping/LandscapeNode.h; sourceTree = "<group>"; };
-		8397AFEB1F4C21ED009B00A2 /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libcocos2d Mac.a"; sourceTree = "<group>"; };
 		8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeTerrain.cpp; path = landscaping/LandscapeTerrain.cpp; sourceTree = "<group>"; };
 		8397AFEE1F4CC082009B00A2 /* LandscapeTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeTerrain.h; path = landscaping/LandscapeTerrain.h; sourceTree = "<group>"; };
 		8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeView.cpp; path = landscaping/LandscapeView.cpp; sourceTree = "<group>"; };
 		8397AFF11F4CC579009B00A2 /* LandscapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeView.h; path = landscaping/LandscapeView.h; sourceTree = "<group>"; };
 		8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeDebug.cpp; path = landscaping/LandscapeDebug.cpp; sourceTree = "<group>"; };
 		8397AFF41F4CCAA4009B00A2 /* LandscapeDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeDebug.h; path = landscaping/LandscapeDebug.h; sourceTree = "<group>"; };
-		83D263E21F36052E001C6F13 /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "../../../../../../../../../../Developer/cocos2d-x-3.15.1/prebuilt/mac/libcocos2d Mac.a"; sourceTree = "<group>"; };
 		83D263E91F360724001C6F13 /* collections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collections.cpp; sourceTree = "<group>"; };
 		83D263EA1F360724001C6F13 /* mxengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxengine.cpp; sourceTree = "<group>"; };
 		83D263EB1F360724001C6F13 /* mxentity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxentity.cpp; sourceTree = "<group>"; };
@@ -458,7 +454,6 @@
 				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
 				8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
-				8397AFEC1F4C21ED009B00A2 /* libcocos2d Mac.a in Frameworks */,
 				5087E78B17EB975400C73F5D /* OpenGL.framework in Frameworks */,
 				5087E78917EB974C00C73F5D /* AppKit.framework in Frameworks */,
 				5087E76317EB910900C73F5D /* Foundation.framework in Frameworks */,
@@ -512,7 +507,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				83D263E21F36052E001C6F13 /* libcocos2d Mac.a */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,
@@ -591,7 +585,6 @@
 		503AE10617EB990700D1A890 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				8397AFEB1F4C21ED009B00A2 /* libcocos2d Mac.a */,
 				503AE0F517EB97AB00D1A890 /* Icons */,
 				503AE10317EB98FF00D1A890 /* main.cpp */,
 				503AE10417EB98FF00D1A890 /* Prefix.pch */,
@@ -944,6 +937,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0830;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = 8K6PYTU8T7;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "citadel" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1193,7 +1191,6 @@
 				83D264311F360724001C6F13 /* collections.cpp in Sources */,
 				83D264F31F360857001C6F13 /* tinyxmlerror.cpp in Sources */,
 				83D264771F360724001C6F13 /* ddr_character.cpp in Sources */,
-				8397AFEA1F4C1C99009B00A2 /* LandscapeNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1206,6 +1203,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = 8K6PYTU8T7;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1243,6 +1241,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				DEVELOPMENT_TEAM = 8K6PYTU8T7;
 				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1277,6 +1276,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1311,6 +1311,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;

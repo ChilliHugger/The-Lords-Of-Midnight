@@ -96,7 +96,7 @@ void mxbattle::MakeFriendOrFoeList ( const mxcharacter* character )
 {
 u32 j;
 
-//	_ASSERTE ( character!=NULL );
+//	_MXASSERTE ( character!=NULL );
 
 	nFoes=0;
 	nFriends=0;
@@ -113,8 +113,8 @@ u32 j;
 		}
 	}
 
-	_ASSERTE ( nFriends < NUMELE( friends ) );
-	_ASSERTE ( nFoes < NUMELE( foes ) );
+	_MXASSERTE ( nFriends < NUMELE( friends ) );
+	_MXASSERTE ( nFoes < NUMELE( foes ) );
 }
 
 
@@ -210,13 +210,13 @@ u32 mxbattle::Fight ( u32 attacks, u32 success, mxarmy* foes[], u32& nFoes )
 
 	while ( attacks-- && nFoes ) {
 
-		if ( (u32)random(0,255) < (u32)success ) {
+		if ((u32)mxrandom(0, 255) < (u32)success) {
 
 			// pick a random army to fight from the
 			// foe table
-			army = random(0,nFoes-1);
+			army = mxrandom(0, nFoes - 1);
 
-			if ( (u32)random(0,255) > (u32)foes[army]->success ) {
+			if ((u32)mxrandom(0, 255) > (u32)foes[army]->success) {
 
 				int amount  = MIN(5,foes[army]->total);
 
@@ -290,7 +290,7 @@ mxunit*		unit;
                     
 					// find the first character that is allowed an army
 					// and allow them to occupy the keep
-					BOOL changesides=true;
+					bool changesides=true;
                     int j=0;
 					for ( j=0; j<info->objCharacters.Count(); j++ ) {
 						mxcharacter* character = (mxcharacter*)info->objCharacters[j];
@@ -389,10 +389,10 @@ mxunit*		unit;
 	//mx->text->ainfo = mx->AreaById(area);
 	mx->text->loc = info->Location();
 	if ( battlesfought==0 )
-		chilli::lib::strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE2) );
+		c_strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE2) );
 	else {
 		if ( !battleareas[area] )
-			chilli::lib::strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE3) );
+			c_strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE3) );
 	}
 
 

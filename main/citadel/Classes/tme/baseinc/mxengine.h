@@ -5,15 +5,17 @@
 #include "../baseinc/scenario.h"
 //#include "IwDebug.h"
 
-#define ISARG(x)	chilli::lib::stricmp( arg, x ) == 0 
+#define ISARG(x)	 c_stricmp( arg, x ) == 0 
 #define COMMAND(x)	static MXRESULT (x)( const string& arg, variant argv[], u32 argc)
-#define random		randomno::instance.get
-#define chance		randomno::instance.chance
-#define EOS(x)		x+chilli::lib::strlen(x)
+#define mxrandom	randomno::instance.get
+#define mxchance	randomno::instance.chance
+#define EOS(x)		x+c_strlen(x)
 
 
 namespace tme {
-
+	
+    using namespace tme::collections;
+    
 	DECLARE_ENUM(arguments) {
 		character	=	128+IDT_CHARACTER,
 		stronghold	=	128+IDT_STRONGHOLD,
@@ -34,9 +36,7 @@ namespace tme {
 		u32			arguments[16];
 	} mxcommand_t;
 
-		using namespace tme::collections;
-		
-	class mxengine  
+	class mxengine
 	{
 	public:
 		mxengine();
@@ -103,8 +103,8 @@ namespace tme {
 		MXRESULT EntityLinkData( mxid id, const void* data );
 
         u32 SaveGameVersion() const { return savegameversion; }
-        BOOL isSavedGame() const { return m_savegame; }
-        BOOL isDatabase() const { return !isSavedGame(); }
+        bool isSavedGame() const { return m_savegame; }
+        bool isDatabase() const { return !isSavedGame(); }
         
         
 	public:
@@ -137,15 +137,15 @@ namespace tme {
 		//types::randomno			m_random ;
 		PFNNIGHTCALLBACK		pfnNightCallback ;
 
-		BOOL					m_bEnergyCheat;
+		bool					m_bEnergyCheat;
 		u32						m_versionno;
-		BOOL					m_savegame;
+		bool					m_savegame;
 
 
 	private:
 		cvarreg_t*				variables ;
 	//os::config*				m_config;
-		BOOL					defaultscenario;
+		bool					defaultscenario;
 		u32						m_errorcode;
 		mxcharacter*			m_CurrentCharacter;
 		char					m_szDatabase[MAX_PATH];			
@@ -172,8 +172,8 @@ namespace tme {
 #else
 #define MXTRACE		if(0) printf
 #endif
-    
-using namespace tme;
+  
+#define USING_NS_TME	using namespace tme
 
 
 #endif //_CMIDNIGHTX_H_INCLUDED_

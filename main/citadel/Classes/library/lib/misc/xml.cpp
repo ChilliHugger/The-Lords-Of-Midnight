@@ -1,9 +1,9 @@
 #include "../../libinc/library.h"
 
-#if !defined _MSC_VER
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wtautological-undefined-compare"
-#endif
+//#if !defined _MSC_VER
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wtautological-undefined-compare"
+//#endif
 
 namespace chilli {
 	namespace lib {
@@ -24,7 +24,7 @@ xml::~xml()
 {
 }
 
-BOOL xml::Load ( LPCSTR filename )
+bool xml::Load ( LPCSTR filename )
 {
 u8* data = NULL ;
 u32 size=0;
@@ -56,9 +56,9 @@ xml::node* xml::node::Find ( LPCSTR section )
 	return (xml::node*)FirstChild(section)->ToElement();
 }
 
-BOOL xml::node::IsType(LPCSTR name) const
+bool xml::node::IsType(LPCSTR name) const
 {
-	return lib::stricmp(Value(),name) == 0;
+	return c_stricmp(Value(),name) == 0;
 }
 
 int xml::node::Count ()
@@ -77,7 +77,7 @@ xml::node* xml::node::Find( LPCSTR element, LPCSTR id )
 {
 	FOREACHELEMENT(this,e){
 		if ( e->IsType(element) ) {
-			if ( lib::stricmp(e->ReadStr("id"), id) == 0 ) {
+			if ( c_stricmp(e->ReadStr("id"), id) == 0 ) {
 				return e;
 			}
 		}
@@ -89,7 +89,7 @@ LPCSTR xml::node::ReadElement( LPCSTR element, LPCSTR id, LPCSTR tag )
 {
 	FOREACHELEMENT(this,e){
 		if ( e->IsType(element) ) {
-			if ( lib::stricmp(e->ReadStr("id"), id) == 0 ) {
+			if (c_stricmp(e->ReadStr("id"), id) == 0 ) {
 				return e->ReadStr(tag);
 			}
 		}
@@ -169,7 +169,7 @@ int xml::node::ReadItem ( LPCSTR name, int defaultvalue )
 	}
 
 
-BOOL xml::node::Exists( LPCSTR name )
+bool xml::node::Exists( LPCSTR name )
 {
 	if ( this == NULL )
 		return FALSE;
@@ -264,9 +264,9 @@ int xml::node::ReadToken( LPCSTR token, token_t array[], int max, int defaultval
 	return atoi(val);
 }
 
-BOOL xml::node::ReadBool( LPCSTR name, BOOL defaultvalue )
+bool xml::node::ReadBool( LPCSTR name, bool defaultvalue )
 {
-	return (BOOL)ReadToken( name, token_Bool, NUMELE(token_Bool), defaultvalue );
+	return (bool)ReadToken( name, token_Bool, NUMELE(token_Bool), defaultvalue );
 }
 
 int ConvertArray ( LPSTR value, collections::c_s32& c, LPCSTR delim )
@@ -347,7 +347,7 @@ int xml::node::ReadIntProperty ( LPCSTR  name, int defaultvalue )
 	return defaultvalue ;
 }
 
-BOOL xml::node::ReadBoolProperty ( LPCSTR  name, BOOL defaultvalue )
+bool xml::node::ReadBoolProperty ( LPCSTR  name, bool defaultvalue )
 {
 	xml::node* e = NULL ;
 	if ( (e = Find( "bool", name )) ) {

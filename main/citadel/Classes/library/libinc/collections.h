@@ -1,7 +1,7 @@
 #ifndef _COLLECTIONS_H_INCLUDED_
 #define _COLLECTIONS_H_INCLUDED_
 
-#include "chilli.h"
+#include "../chilli.h"
 
 namespace chilli {
 
@@ -9,10 +9,10 @@ namespace chilli {
 #define MINIMUM_COLLECTION_SIZE	COLLECTION_PAGE_SIZE
 
 
-	using namespace chilli::types ;
-
 	namespace collections {
-		
+
+        using namespace chilli::types ;
+        
 		typedef int ( * PFNSORTFUNCTION ) ( const void *, const void * ) ;
 		
 		
@@ -23,7 +23,7 @@ namespace chilli {
 			base(void);
 			base( u32 count );
 			virtual ~base(void);
-			BOOL Create( u32 count );
+			bool Create( u32 count );
 			void Clear(); 
 			u32 Count() const;
 
@@ -33,18 +33,18 @@ namespace chilli {
 			T& operator[]( u32 nSubscript )				{ return GetAt(nSubscript); }
 			void operator += ( T o )						{ Add(o); }
 			void operator += ( const base& c )				{ Add(c); }
-			BOOL Add ( T o );
-			BOOL Add ( const base& c );
-			BOOL Insert ( u32 nSubscript, T o );
-			BOOL Remove ( T o );
+			bool Add ( T o );
+			bool Add ( const base& c );
+			bool Insert ( u32 nSubscript, T o );
+			bool Remove ( T o );
 			void Sort ( PFNSORTFUNCTION sort);
 
 			void operator = ( const base& src );
 			void Destroy( void );
 			u32 Compact( void );
-			BOOL Resize ( u32 newsize );
+			bool Resize ( u32 newsize );
 
-			BOOL Delete ( u32 nSubscript );
+			bool Delete ( u32 nSubscript );
 
 			T* RawData() const							{ return m_data; }
 
@@ -95,7 +95,7 @@ namespace chilli {
 			s32 ii=0;
 			u32 count=0;
 
-				BOOL Done = FALSE;
+				bool Done = FALSE;
 				while( !Done )
 				{
 					Done = TRUE;
@@ -119,7 +119,7 @@ namespace chilli {
 
 
 			template <class T>
-			BOOL base<T>::Remove ( T o )
+			bool base<T>::Remove ( T o )
 			{
 				int pos = IsInList(o);
 				if ( pos == 0 ) return FALSE ;
@@ -140,7 +140,7 @@ namespace chilli {
 			}
 
 			template <class T>
-			BOOL base<T>::Create( u32 count )
+			bool base<T>::Create( u32 count )
 			{
 				Clear();
 				m_max = MAX(count,MINIMUM_COLLECTION_SIZE);
@@ -164,7 +164,7 @@ namespace chilli {
 			}
 
 			template <class T>
-			BOOL base<T>::Resize ( u32 newsize )
+			bool base<T>::Resize ( u32 newsize )
 			{
 				if ( newsize == m_max )
 					return TRUE;
@@ -198,7 +198,7 @@ namespace chilli {
 			}
 
 			template <class T>
-			BOOL base<T>::Insert ( u32 nSubscript, T o )
+			bool base<T>::Insert ( u32 nSubscript, T o )
 			{
 				if ( Count() < nSubscript )
 					return FALSE;
@@ -217,7 +217,7 @@ namespace chilli {
 			}
 
 			template <class T>
-			BOOL base<T>::Delete ( u32 nSubscript )
+			bool base<T>::Delete ( u32 nSubscript )
 			{
 				if ( /*nSubscript<0 ||*/ nSubscript>=Count() )
 					return FALSE;
@@ -238,7 +238,7 @@ namespace chilli {
 			}
 
 			template <class T>
-			BOOL base<T>::Add ( T o )
+			bool base<T>::Add ( T o )
 			{
 				if ( m_used == m_max ) {
 					// add a new page				
@@ -251,7 +251,7 @@ namespace chilli {
 			}
 
 			template <class T>
-			BOOL base<T>::Add ( const base& c )
+			bool base<T>::Add ( const base& c )
 			{
 				int count = c.Count();
 				if ( count == 0 )
@@ -320,7 +320,7 @@ namespace chilli {
 			}
 
 			template <class T>
-			BOOL base<T>::IsInList( T type ) const	
+			int base<T>::IsInList( T type ) const	
 			{
 				for ( u32 ii=0; ii<Count(); ii++ )
 					if ( m_data[ii] == type )
@@ -348,9 +348,9 @@ namespace chilli {
 		//	void*& operator[]( u32 nSubscript )			{ return (void*&)base::GetAt(nSubscript); }
 		//	void operator += ( void* o )				{ base::Add((u32)o); }
 		//	void operator += ( const c_ptr& c )			{ base::Add((base&)c); }
-		//	BOOL Add ( void* o )						{ return base::Add((u32)o); }
-		//	BOOL Insert ( u32 nSubscript, void* o )		{ return base::Insert(nSubscript,(u32)o); }
-		//	BOOL Remove ( void* o )						{ return base::Remove((u32)o); }
+		//	bool Add ( void* o )						{ return base::Add((u32)o); }
+		//	bool Insert ( u32 nSubscript, void* o )		{ return base::Insert(nSubscript,(u32)o); }
+		//	bool Remove ( void* o )						{ return base::Remove((u32)o); }
 
 		//};
 
@@ -366,9 +366,9 @@ namespace chilli {
 		//	void operator += ( const c_float& c )		{ base::Add((base&)c); }
 		//	f32 Get( u32 nSubscript );
 		//	void operator += ( f32 o )					{ Add(o); }
-		//	BOOL Add ( f32 o );
-		//	BOOL Insert ( u32 nSubscript, f32 o );
-		//	BOOL Remove ( f32 o );
+		//	bool Add ( f32 o );
+		//	bool Insert ( u32 nSubscript, f32 o );
+		//	bool Remove ( f32 o );
 		//	int IsInList( f32 type ) const;
 
 		//};
@@ -384,9 +384,9 @@ namespace chilli {
 		//	void*& operator[]( u32 nSubscript )			{ return (void*&)base::GetAt(nSubscript); }
 		//	void operator += ( void* o )				{ base::Add((u32)o); }
 		//	void operator += ( const c_point& c )			{ base::Add((base&)c); }
-		//	BOOL Add ( void* o )						{ return base::Add((u32)o); }
-		//	BOOL Insert ( u32 nSubscript, void* o )		{ return base::Insert(nSubscript,(u32)o); }
-		//	BOOL Remove ( void* o )						{ return base::Remove((u32)o); }
+		//	bool Add ( void* o )						{ return base::Add((u32)o); }
+		//	bool Insert ( u32 nSubscript, void* o )		{ return base::Insert(nSubscript,(u32)o); }
+		//	bool Remove ( void* o )						{ return base::Remove((u32)o); }
 
 		//};
 

@@ -1,7 +1,7 @@
 #ifndef _VARIABLES_H_INCLUDED_
 #define _VARIABLES_H_INCLUDED_
 
-#include "mxtypes.h"
+#include "../../library/libinc/mxtypes.h"
 #include "lomxtypes.h"
 
 namespace tme {
@@ -17,7 +17,7 @@ namespace tme {
 		typedef LPSTR	sv_str_t;
 		typedef bool	sv_bool_t;
 
-		typedef collections::c_mxid	sv_c_mxid_t;
+		typedef chilli::collections::c_mxid	sv_c_mxid_t;
 		typedef mxid		sv_mxid_t;
 
 
@@ -171,39 +171,38 @@ namespace tme {
 		extern sv_bool_t	sv_cheat_commands_free ;
 		
 		
+        inline CVar::CVar()
+        { vInt=0; vType=CVar::VNONE; }
+        //virtual CVar::~CVar();
+        
+        inline s32& CVar::operator = ( s32 value )
+        { vInt = value ; vType = CVar::INT; return vInt; }
+        inline f64& CVar::operator = ( f64 value )
+        { vDouble = value ; vType = CVar::DOUBLE; return vDouble; }
+        inline char*& CVar::operator = ( char* value )
+        { vString = value ; vType = CVar::STRING; return vString; }
+        inline void*& CVar::operator = ( void* value )
+        { vPtr = value ; vType = CVar::PTR; return vPtr; }
+        
+        inline CVar::operator s32() const
+        { return vInt; }
+        inline CVar::operator f64() const
+        { return vDouble; }
+        inline CVar::operator char*() const
+        { return vString; }
+        inline CVar::operator void*() const
+        { return vPtr; }
+        
 	}
+}
 
 #define REGIMENT_STOP_MOVE					0
 #define STRONGHOLD_SUCCESS_NONE				0
 
 
 
-}
 
 
-using namespace tme::variables ;
-
-		inline CVar::CVar()
-			{ vInt=0; vType=CVar::VNONE; }
-		//virtual CVar::~CVar();
-
-		inline s32& CVar::operator = ( s32 value )
-			{ vInt = value ; vType = CVar::INT; return vInt; }
-		inline f64& CVar::operator = ( f64 value )
-			{ vDouble = value ; vType = CVar::DOUBLE; return vDouble; }
-		inline char*& CVar::operator = ( char* value )
-			{ vString = value ; vType = CVar::STRING; return vString; }
-		inline void*& CVar::operator = ( void* value )
-			{ vPtr = value ; vType = CVar::PTR; return vPtr; }
-
-		inline CVar::operator s32() const
-			{ return vInt; }
-		inline CVar::operator f64() const
-			{ return vDouble; }
-		inline CVar::operator char*() const
-			{ return vString; }
-		inline CVar::operator void*() const
-			{ return vPtr; }
 
 
 

@@ -3,10 +3,11 @@
 
 #include "cocos2d.h"
 
-#include "tme_interface.h"
+#include "landscaping/LandscapeGenerator.h"
+#include "landscaping/LandscapeView.h"
 
-#include "LandscapeGenerator.h"
-#include "LandscapeView.h"
+//#include "tme_interface.h"
+
 
 
 USING_NS_CC;

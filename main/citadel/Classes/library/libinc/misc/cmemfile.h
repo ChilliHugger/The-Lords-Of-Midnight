@@ -4,11 +4,13 @@
 #ifndef _DONT_DEFINE_MFC_CLASSES
   
 
-using namespace chilli::types ;
+
 
 namespace chilli {
 	namespace os {
 
+        using namespace chilli::types ;
+        
 		class CMemFile : public os::file
 		{
 
@@ -36,22 +38,22 @@ namespace chilli {
 			u32 m_nBufferSize;
 			u32 m_nFileSize;
 			BYTE* m_lpBuffer;
-			BOOL m_bAutoDelete;
+			bool m_bAutoDelete;
 
 		public:
 			virtual ~CMemFile();
 			virtual u32 GetPosition() const;
 			virtual u32 Seek(u32 lOff=0, u32 nFrom=begin);
-			virtual BOOL SetLength(u32 dwNewLen);
+			virtual bool SetLength(u32 dwNewLen);
 			virtual u32 GetLength() const;
 			virtual u32 Read(void* lpBuf, u32 nCount);
-			virtual BOOL Write(const void* lpBuf, u32 nCount);
+			virtual bool Write(const void* lpBuf, u32 nCount);
 			virtual void Abort();
-			virtual BOOL Flush();
+			virtual bool Flush();
 			virtual void Close();
-			virtual BOOL IsOpen() const ;
+			virtual bool IsOpen() const ;
 			virtual u32 ReadLine(void* lpBuf,u32 max);
-			virtual BOOL Eof() const;
+			virtual bool Eof() const;
 
 		};
 	}

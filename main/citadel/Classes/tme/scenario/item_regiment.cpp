@@ -127,7 +127,7 @@ namespace tme {
 				return;
 			}
 
-			BOOL bFoundLocation = FALSE;
+			bool bFoundLocation = FALSE;
 			
 			// do a complete scan around us and see if there
 			// is anything more interesting to do than our current orders
@@ -256,7 +256,7 @@ namespace tme {
 		void mxregiment::Cmd_Wander ( void )
 		{
 			while (TRUE) {
-				mxdir_t dir  = (mxdir_t)random(DR_NORTH,DR_NORTHWEST);
+				mxdir_t dir = (mxdir_t)mxrandom(DR_NORTH, DR_NORTHWEST);
 				targetlocation = Location() + dir;
 				if ( !mx->gamemap->IsLocationBlock(targetlocation) )
 					break;
@@ -286,7 +286,7 @@ namespace tme {
 				loc1 = r->Location();
 				loc2 = Location();
 				if ( loc1 == loc2 )
-					i = random(1) ? r->Right() : r->Left();
+					i = mxrandom(1) ? r->Right() : r->Left();
 			}
 
 			Target ( i );
@@ -303,7 +303,7 @@ namespace tme {
 			turns = REGIMENT_STOP_MOVE;
 		}
 
-		BOOL mxregiment::RetargetTarget ( void )
+		bool mxregiment::RetargetTarget ( void )
 		{
 		int		route;
 		int		ii;
@@ -322,7 +322,7 @@ namespace tme {
 			directions[3] = (mxdir_t)((dir+1)&0x07);
 
 			for (ii = 0; ii < 8; ii++) {
-				route = random(0,3);
+				route = mxrandom(0, 3);
 				targetlocation = Location() + directions[route];
 				
 				mxloc& mapsqr = mx->gamemap->GetAt( targetlocation );

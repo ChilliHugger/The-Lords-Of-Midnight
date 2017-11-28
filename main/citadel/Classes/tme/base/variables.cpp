@@ -234,8 +234,8 @@ namespace tme {
 				case CVar::YESNO:
 					*((sv_bool_t*)variable->memory) = 0;
 
-					if ( chilli::lib::stricmp(variable->string,"TRUE") == 0 
-						|| chilli::lib::stricmp(variable->string,"YES") == 0 )
+					if (c_stricmp(variable->string,"TRUE") == 0
+						|| c_stricmp(variable->string,"YES") == 0 )
 						*((sv_bool_t*)variable->memory) = 1;
 
 					break;
@@ -268,7 +268,7 @@ namespace tme {
 							count=0;
 							token = strtok( s, "|" );
 							while ( token!=NULL ) {
-								if ( chilli::lib::strlen(token)==1 && token[0]=='-' )
+								if (c_strlen(token)==1 && token[0]=='-' )
 									c->Add(NULL);
 								else {
 									mxid id = mx->EntityByName(token)->SafeIdt();
@@ -329,7 +329,7 @@ namespace tme {
 			cvarreg_t* var = NULL ;
 
 			for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
-				if ( chilli::lib::stricmp( name, var_array[ii].name ) == 0 ) {
+				if (c_stricmp( name, var_array[ii].name ) == 0 ) {
 					var = &var_array[ii];
 					break;
 				}

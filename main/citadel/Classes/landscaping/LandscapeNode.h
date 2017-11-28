@@ -9,11 +9,11 @@
 #ifndef LandscapeNode_hpp
 #define LandscapeNode_hpp
 
-#include <stdio.h>
 
 #include "cocos2d.h"
-#include "tme_interface.h"
 #include <stdio.h>
+#include "tme_interface.h"
+
 
 USING_NS_CC;
 

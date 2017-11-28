@@ -201,7 +201,7 @@ namespace tme {
         ddr_character* attacker_character=NULL;
         mxstronghold* attacker_stronghold=NULL;
         
-        u32 rnd = random(255);
+        u32 rnd = mxrandom(255);
         u32 start = rnd % characters_here.Count();
         u32 end = start;
         
@@ -249,7 +249,7 @@ namespace tme {
             if ( !attacker_character->Flags().Is(cf_killed_foe))
                 attacker_character->fighting_against = defender ;
                     
-            s32 defenders_success = random(255);
+            s32 defenders_success = mxrandom(255);
             
             
             MXTRACE("    %-16s (%d) vs %-16s (%d)", attacker->Symbol().GetAt(), (int)attackers_success
@@ -297,7 +297,7 @@ namespace tme {
         s32 attackerSize = getArmySize(attacker);
         
         attackerStrength *= (attackerSize/5);
-        attackerStrength *= (random(255)&31)+16;
+		attackerStrength *= (mxrandom(255)&31)+16;
         
         s32 defenderStrength = getArmyStrength(defender);
         s32 defenderSize = getArmySize(defender);
@@ -324,8 +324,8 @@ namespace tme {
                 mxgridref loc;
                 do {
                     loc = defender_character->Location();
-                    loc.x ^= (random(255)&3);
-                    loc.y ^= (random(255)&3);
+					loc.x ^= (mxrandom(255)&3);
+					loc.y ^= (mxrandom(255)&3);
                     mapsqr = mx->gamemap->GetAt(loc);
                 } while ( mapsqr.terrain==TN_FROZENWASTE || mapsqr.terrain==TN_ICYWASTE );
                 defender_character->Location(loc);
@@ -414,7 +414,7 @@ namespace tme {
             character->Flags().Reset(cf_riding);
         }
         
-        u32 r = random(255);
+		u32 r = mxrandom(255);
         if ( (r&1) == 0 )
             return;
         
@@ -422,7 +422,7 @@ namespace tme {
             return;
         
         if (character->Carrying() && character->Carrying()->power == OP_BATTLE ) {
-            if ( random(255) >= 80 )
+			if ( mxrandom(255) >= 80 )
                 return;
         }
         

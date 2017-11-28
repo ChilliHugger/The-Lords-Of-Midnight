@@ -26,8 +26,8 @@ namespace tme {
         
 
     private:
-        BOOL    luxorAlive;
-        BOOL    morkinAlive;
+        bool    luxorAlive;
+        bool    morkinAlive;
 	};
 
 

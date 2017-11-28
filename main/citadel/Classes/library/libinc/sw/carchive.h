@@ -26,6 +26,8 @@ class file ;
 namespace chilli {
 	namespace lib {
 
+        using namespace chilli::types;
+        
 		class  archive
 		{
 		public:
@@ -40,10 +42,10 @@ namespace chilli {
 			ARFILE GetFile() const;
 
 		// Attributes
-			BOOL IsLoading() const;
-			BOOL IsStoring() const;
-			BOOL IsByteSwapping() const;
-			BOOL IsBufferEmpty() const;
+			bool IsLoading() const;
+			bool IsStoring() const;
+			bool IsByteSwapping() const;
+			bool IsBufferEmpty() const;
 
 
 		// Operations
@@ -91,8 +93,8 @@ namespace chilli {
 			archive(const archive& arSrc);
 			void operator=(const archive& arSrc);
 
-			BOOL		m_nMode;
-			BOOL		m_bUserBuf;
+			bool		m_nMode;
+			bool		m_bUserBuf;
 			int			m_nBufSize;
 			ARFILE		m_pFile;
 			BYTE*		m_lpBufCur;

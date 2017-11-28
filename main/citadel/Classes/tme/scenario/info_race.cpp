@@ -125,7 +125,7 @@ namespace tme {
 
 		string& mxrace::SoldiersName()
 		{
-			if ( ((LPSTR)soldiersname!=NULL) && chilli::lib::strlen(soldiersname) )
+			if ( ((LPSTR)soldiersname!=NULL) && c_strlen(soldiersname) )
 				return soldiersname; 
 			return Name();
 

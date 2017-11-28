@@ -47,7 +47,7 @@ mxmap::mxmap( u32 x, u32 y)
 /*
  * Function name	: map::Create
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: CSize dimensions
  * 
@@ -55,7 +55,7 @@ mxmap::mxmap( u32 x, u32 y)
  * 
  */
 
-BOOL mxmap::Create ( size dimensions )
+bool mxmap::Create ( size dimensions )
 {
 	m_size = dimensions ;
 	SAFEFREE ( m_data );
@@ -92,7 +92,7 @@ void mxmap::ResetVisibleRange()
 /*
  * Function name	: map::Load
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: LPCSTR filename
  * 
@@ -100,7 +100,7 @@ void mxmap::ResetVisibleRange()
  * 
  */
 
-BOOL mxmap::Load ( LPCSTR filename )
+bool mxmap::Load ( LPCSTR filename )
 {
 	
 MXTRACE( "Loading Map '%s'", filename);
@@ -142,7 +142,7 @@ MXTRACE( "Version=%d", (int)versionno);
 	ar >> header;
 MXTRACE( "Header='%s'", (LPSTR)header);
 
-    if ( chilli::lib::stricmp(header,MAPHEADER) != 0 ) {
+    if (c_stricmp(header,MAPHEADER) != 0 ) {
         MXTRACE("Invalid MAP Header");
 		return FALSE;
     }
@@ -229,7 +229,7 @@ mxloc& mxmap::GetAt ( const mxgridref& mxloc )
 /*
  * Function name	: map::IsLocationSpecial
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: gridref loc
  * 
@@ -237,51 +237,51 @@ mxloc& mxmap::GetAt ( const mxgridref& mxloc )
  * 
  */
 
-BOOL mxmap::IsLocationSpecial( mxgridref l )
+bool mxmap::IsLocationSpecial( mxgridref l )
 {
 	mxloc& mapsqr = GetAt( l );
 	return mapsqr.IsSpecial();
 }
     
-BOOL mxmap::IsLocationVisible( mxgridref l )
+bool mxmap::IsLocationVisible( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.IsVisible()  ;
 }
     
 #if defined(_DDR_)
-BOOL mxmap::HasTunnelEntrance( mxgridref l )
+bool mxmap::HasTunnelEntrance( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnelEntrance() ;
 }
-BOOL mxmap::HasTunnelExit( mxgridref l )
+bool mxmap::HasTunnelExit( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnelExit() ;
 }
     
     
-BOOL mxmap::IsTunnelVisible( mxgridref l )
+bool mxmap::IsTunnelVisible( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.IsTunnelVisible() ;
 }
 
-BOOL mxmap::IsTunnel( mxgridref l )
+bool mxmap::IsTunnel( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnel() ;
 }
     
-BOOL mxmap::IsTunnelPassageway( mxgridref l )
+bool mxmap::IsTunnelPassageway( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     mxterrain_t t = mx->scenario->NormaliseTerrain((mxterrain_t)mapsqr.terrain);
     return mapsqr.HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
 }
 
-void mxmap::SetTunnelVisible( mxgridref l, BOOL visible )
+void mxmap::SetTunnelVisible( mxgridref l, bool visible )
 {
     mxloc& mapsqr = GetAt( l );
     if ( visible ) {
@@ -291,13 +291,13 @@ void mxmap::SetTunnelVisible( mxgridref l, BOOL visible )
         mapsqr.flags&=~lf_tunnel_looked_at;
 }
     
-BOOL mxmap::HasObject( mxgridref l )
+bool mxmap::HasObject( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasObject() ;
 }
     
-void mxmap::SetObject( mxgridref l, BOOL value )
+void mxmap::SetObject( mxgridref l, bool value )
 {
     mxloc& mapsqr = GetAt( l );
     if ( value ) {
@@ -313,7 +313,7 @@ void mxmap::SetObject( mxgridref l, BOOL value )
 /*
  * Function name	: map::IsLocationBlock
  * 
- * Return type		: BOOL
+ * Return type		: bool
  * 
  * Arguments		: gridref loc
  * 
@@ -321,7 +321,7 @@ void mxmap::SetObject( mxgridref l, BOOL value )
  * 
  */
 
-BOOL mxmap::IsLocationBlock( mxgridref l )
+bool mxmap::IsLocationBlock( mxgridref l )
 {
 	mxloc& mapsqr = GetAt( l );
 	mxterrain* tinfo = mx->TerrainById( mapsqr.terrain );
@@ -350,7 +350,7 @@ void mxmap::SetLocationArmy( mxgridref l, u32 number )
 		mapsqr.flags&=~lf_army;
 }
 
-void mxmap::SetLocationVisible( mxgridref l, BOOL visible )
+void mxmap::SetLocationVisible( mxgridref l, bool visible )
 {
     mxloc& mapsqr = GetAt( l );
     if ( visible ) {
@@ -364,7 +364,7 @@ void mxmap::SetLocationVisible( mxgridref l, BOOL visible )
         mapsqr.flags&=~lf_seen;
 }
 
-void mxmap::SetLocationLookedAt( mxgridref l, BOOL visible )
+void mxmap::SetLocationLookedAt( mxgridref l, bool visible )
 {
     mxloc& mapsqr = GetAt( l );
     if ( visible ) {
@@ -378,7 +378,7 @@ void mxmap::SetLocationLookedAt( mxgridref l, BOOL visible )
         mapsqr.flags&=~lf_looked_at;
 }
 
-void mxmap::SetLocationVisited( mxgridref l, BOOL visible )
+void mxmap::SetLocationVisited( mxgridref l, bool visible )
 {
     mxloc& mapsqr = GetAt( l );
     if ( visible ) {
@@ -833,7 +833,7 @@ void mxmap::PutThingsOnMap ( void )
     
     for ( int y=0; y<m_size.cy; y++ ) {
         for ( int x=0; x<m_size.cx; x++ ) {
-            r =  random(3);
+			r =  mxrandom(3);
             key = calculateNameSeed(x,y) & 3;
             l.x=x;
             l.y=y;
@@ -912,7 +912,7 @@ void mxmap::MoveMists ( void )
 #endif
     
 
-BOOL mxmap::IsLocOnMap ( mxgridref mxloc ) const
+bool mxmap::IsLocOnMap ( mxgridref mxloc ) const
 {
 	if ( mxloc.x < 0 || mxloc.x >= m_size.cx || mxloc.y < 0 || mxloc.y >= m_size.cy ) {
 		return FALSE;
@@ -939,7 +939,7 @@ mxloc::~mxloc()
 {
 }
 
-BOOL mxloc::IsInteresting() const
+bool mxloc::IsInteresting() const
 {
 mxterrain* tinfo;
 	tinfo = mx->TerrainById( terrain );
@@ -947,21 +947,21 @@ mxterrain* tinfo;
 }
 
 #if defined(_DDR_)
-BOOL mxloc::HasTunnelExit() const 
+bool mxloc::HasTunnelExit() const 
 {
 	if ( HasTunnel() && (terrain >=TN_GATE && terrain <=TN_PALACE) )
 		return TRUE;
 	return flags & lf_tunnel_exit ;
 }
 
-BOOL mxloc::HasTunnelEntrance() const 
+bool mxloc::HasTunnelEntrance() const 
 {
 	if ( HasTunnel() && (terrain >=TN_GATE && terrain <=TN_PALACE) )
 		return TRUE;
 	return flags & lf_tunnel_entrance ;
 }
 
-BOOL mxloc::IsTunnelPassageway() const
+bool mxloc::IsTunnelPassageway() const
 {
     mxterrain_t t = mx->scenario->NormaliseTerrain((mxterrain_t)terrain);
     return HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
