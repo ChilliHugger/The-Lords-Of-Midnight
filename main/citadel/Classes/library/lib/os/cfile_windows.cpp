@@ -25,15 +25,6 @@ namespace chilli {
 
 	namespace os {
 		
-        file::file()
-        {
-        }
-        
-        file::~file()
-        {
-            Close();
-        }
-        
 		bool file::Open(LPCSTR lpszFileName, u32 nOpenFlags )
 		{
 			// CFile objects are always binary and CreateFile does not need flag

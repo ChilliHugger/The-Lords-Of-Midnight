@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,6 +14,7 @@
     <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -24,6 +25,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -32,6 +34,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -148,22 +151,17 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\landscaping\LandscapeSky.cpp" />
     <ClCompile Include="..\Classes\landscaping\LandscapeTerrain.cpp" />
     <ClCompile Include="..\Classes\landscaping\LandscapeView.cpp" />
-    <ClCompile Include="..\Classes\library\lib\misc\cmemfile.cpp" />
     <ClCompile Include="..\Classes\library\lib\misc\xml.cpp" />
-    <ClCompile Include="..\Classes\library\lib\os\cfile.cpp" />
     <ClCompile Include="..\Classes\library\lib\os\cfileList.cpp" />
     <ClCompile Include="..\Classes\library\lib\os\cfilemanager.cpp" />
-    <ClCompile Include="..\Classes\library\lib\os\common_cfile.cpp" />
-    <ClCompile Include="..\Classes\library\lib\os\os.cpp" />
+    <ClCompile Include="..\Classes\library\lib\os\cfile_common.cpp" />
+    <ClCompile Include="..\Classes\library\lib\os\cfile_windows.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\carchive.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\cbitarray.cpp" />
-    <ClCompile Include="..\Classes\library\lib\sw\ccollection.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\cflags.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\crange.cpp" />
-    <ClCompile Include="..\Classes\library\lib\sw\cstr.cpp" />
+    <ClCompile Include="..\Classes\library\lib\sw\c_str.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\datatypes.cpp" />
-    <ClCompile Include="..\Classes\library\lib\sw\idtcollection.cpp" />
-    <ClCompile Include="..\Classes\library\lib\sw\librarysw.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\misc.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\random.cpp" />
     <ClCompile Include="..\Classes\tinyxml\tinystr.cpp" />
@@ -231,15 +229,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\library\chilli.h" />
     <ClInclude Include="..\Classes\library\libinc\collections.h" />
     <ClInclude Include="..\Classes\library\libinc\library.h" />
-    <ClInclude Include="..\Classes\library\libinc\misc\cmemfile.h" />
     <ClInclude Include="..\Classes\library\libinc\misc\xml.h" />
     <ClInclude Include="..\Classes\library\libinc\mxtypes.h" />
     <ClInclude Include="..\Classes\library\libinc\os\cfile.h" />
     <ClInclude Include="..\Classes\library\libinc\os\cfileclump.h" />
-    <ClInclude Include="..\Classes\library\libinc\os\cfilemanager.h" />
     <ClInclude Include="..\Classes\library\libinc\os\os.h" />
     <ClInclude Include="..\Classes\library\libinc\sw\carchive.h" />
     <ClInclude Include="..\Classes\library\libinc\sw\ccollection.h" />
+    <ClInclude Include="..\Classes\library\libinc\sw\drawing.h" />
     <ClInclude Include="..\Classes\library\libinc\sw\misc.h" />
     <ClInclude Include="..\Classes\tinyxml\tinystr.h" />
     <ClInclude Include="..\Classes\tinyxml\tinyxml.h" />
@@ -272,9 +269,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Classes\library\libinc\sw\librarysw.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

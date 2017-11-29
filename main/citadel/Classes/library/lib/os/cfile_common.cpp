@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "mxtypes.h"
+#include "../../libinc/mxtypes.h"
 #include "../../libinc/os/cfile.h"
 #include "../../libinc/os/os.h"
 

@@ -101,7 +101,7 @@ namespace chilli {
 			archive(const archive& arSrc);
 			void operator=(const archive& arSrc);
 
-			bool		m_nMode;
+			u8			m_nMode;
 			bool		m_bUserBuf;
 			int			m_nBufSize;
 			ARFILE		m_pFile;
