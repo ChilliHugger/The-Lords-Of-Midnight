@@ -9,11 +9,12 @@
  * 
  * AUTHOR:  Chris Wild
  * 
- * � Copyright 1997 Smoking Gun Productions.
+ * (c) Copyright 2009 Chilli Hugger Software.
  * 
  */
 
-#include "../../libinc/library.h"
+#include "../../libinc/mxtypes.h"
+#include "../../libinc/sw/carchive.h"
 
 namespace chilli {
 

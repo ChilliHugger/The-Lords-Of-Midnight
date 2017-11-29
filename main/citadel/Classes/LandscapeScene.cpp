@@ -11,8 +11,8 @@ USING_NS_CC;
 using namespace tme;
 
 #define _DEBUG_LANDSCAPE_
-#define _CITADEL_MAP_
-//#define _LOM_MAP_
+//#define _CITADEL_MAP_
+#define _LOM_MAP_
 
 
 Scene* Landscape::createScene()

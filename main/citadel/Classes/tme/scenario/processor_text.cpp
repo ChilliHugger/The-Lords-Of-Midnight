@@ -294,8 +294,8 @@ int id;
 			delete [] systemstrings ;
 
 		ar >> m_cSystemStrings;
-		systemstrings = new string[m_cSystemStrings];
-		systemcodes = new string[m_cSystemStrings];
+		systemstrings = new c_str[m_cSystemStrings];
+		systemcodes = new c_str[m_cSystemStrings];
 		for ( ii=0; ii<m_cSystemStrings; ii++ ) {
 			ar >> id;
 			ar >> systemcodes[id] ;

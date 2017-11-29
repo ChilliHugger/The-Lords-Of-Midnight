@@ -123,7 +123,7 @@ namespace tme {
 //    DB TERRAIN_FROZENWASTE					;dwarf
 #endif
 
-		string& mxrace::SoldiersName()
+		c_str& mxrace::SoldiersName()
 		{
 			if ( ((LPSTR)soldiersname!=NULL) && c_strlen(soldiersname) )
 				return soldiersname; 

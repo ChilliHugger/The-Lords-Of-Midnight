@@ -101,7 +101,7 @@ mxengine::~mxengine()
  * 
  */
 /*
-bool mxengine::InstallScenario ( const string& filename )
+bool mxengine::InstallScenario ( const c_str& filename )
 {
 FUNCADDRESS			func;
 FNSCENARIOREGISTER	ScenarioRegister;
@@ -192,7 +192,7 @@ MXRESULT mxengine::UnloadScenario ()
  * 
  */
 
-MXRESULT mxengine::SetDatabaseDirectory ( const string& directory )
+MXRESULT mxengine::SetDatabaseDirectory ( const c_str& directory )
 {
 //char	file[MAX_PATH];
 
@@ -253,7 +253,7 @@ MXTRACE( "Loading Database '%s'", m_szDatabase);
 u32		magicno;
 u32		scenarioid;
 //u32		versionno;
-string	header;
+c_str	header;
 
 	// magic no
 	ar >> magicno ;
@@ -600,7 +600,7 @@ void mxengine::NightCallback( callback_t* ptr)
  * 
  */
 
-MXRESULT mxengine::LoadGame ( const string& filename, PFNSERIALIZE function )
+MXRESULT mxengine::LoadGame ( const c_str& filename, PFNSERIALIZE function )
 {
 	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
 	if ( !pFile->IsOpen() ) {
@@ -617,8 +617,8 @@ MXRESULT mxengine::LoadGame ( const string& filename, PFNSERIALIZE function )
 u32		magicno;
 u32		scenarioid;
 u16		temp16;
-string	header;
-string  description;
+c_str	header;
+c_str  description;
 
 	// magic no
 	ar >> magicno;
@@ -733,7 +733,7 @@ string  description;
 }
 
 
-MXRESULT mxengine::SaveGameDescription ( const string& filename, string& description )
+MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& description )
 {
  	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
 	if ( !pFile->IsOpen() ) {
@@ -750,7 +750,7 @@ MXRESULT mxengine::SaveGameDescription ( const string& filename, string& descrip
     u32		magicno;
     u32		scenarioid;
     //u16		temp16;
-    string	header;
+    c_str	header;
     
 	// magic no
 	ar >> magicno;
@@ -803,7 +803,7 @@ MXRESULT mxengine::SaveGameDescription ( const string& filename, string& descrip
  * 
  */
 
-MXRESULT mxengine::SaveGame ( const string& filename, PFNSERIALIZE function )
+MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
 {
 
 /* what needs to be saved?
@@ -1014,7 +1014,7 @@ int ii;
 
 
 
-cvarreg_t* mxengine::FindDBVariable ( const string& name ) const
+cvarreg_t* mxengine::FindDBVariable ( const c_str& name ) const
 {
 	for ( int ii=0; ii<sv_variables; ii++ ) {
 		if (c_stricmp( name, variables[ii].name ) == 0 )
@@ -1032,7 +1032,7 @@ LPCSTR mxengine::EntitySymbolById ( mxid id )
     return entity->Symbol();
 }
 
-mxentity* mxengine::EntityByName( const string& name, id_type_t type )
+mxentity* mxengine::EntityByName( const c_str& name, id_type_t type )
 {
 mxentity* obj;
 	
@@ -1125,7 +1125,7 @@ MXRESULT mxengine::EntityLinkData( mxid id, const void* data )
 	return MX_FAILED ;
 }
 
-MXRESULT mxengine::SaveDiscoveryMap ( const string& filename )
+MXRESULT mxengine::SaveDiscoveryMap ( const c_str& filename )
 {
     if ( discoverymap ) {
         if ( !discoverymap->Save( filename) )
@@ -1135,7 +1135,7 @@ MXRESULT mxengine::SaveDiscoveryMap ( const string& filename )
     return MX_OK ;
 }
 
-MXRESULT mxengine::LoadDiscoveryMap ( const string& filename )
+MXRESULT mxengine::LoadDiscoveryMap ( const c_str& filename )
 {
     if ( discoverymap == NULL ) {
         discoverymap = new mxdiscoverymap();

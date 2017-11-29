@@ -77,17 +77,17 @@ namespace tme {
 		return def_scenario->UnRegister(midnightx);
 	}
 	
-	MXRESULT default_scenario::Command ( const string& arg, variant argv[], u32 argc )
+	MXRESULT default_scenario::Command ( const c_str& arg, variant argv[], u32 argc )
 	{
 		return def_scenario->Command(arg, argv, argc);
 	}
 	
-	MXRESULT default_scenario::GetProperties ( const string& arg, variant argv[], u32 argc )
+	MXRESULT default_scenario::GetProperties ( const c_str& arg, variant argv[], u32 argc )
 	{
 		return def_scenario->GetProperties(arg, argv, argc);
 	}
 	
-	MXRESULT default_scenario::Text ( const string& command, variant* argv, u32 args )
+	MXRESULT default_scenario::Text ( const c_str& command, variant* argv, u32 args )
 	{
 		return def_scenario->Text(command, argv, args);
 	}
@@ -927,7 +927,7 @@ namespace tme {
 
 		};
 
-		MXRESULT mxscenario::Command ( const string& arg, variant argv[], u32 argc )
+		MXRESULT mxscenario::Command ( const c_str& arg, variant argv[], u32 argc )
 		{
 			return mx->ProcessCommand ( mx_commands, NUMELE(mx_commands), arg, argv, argc );
 		}
@@ -1188,7 +1188,7 @@ namespace tme {
 
 		};
 
-		MXRESULT mxscenario::GetProperties ( const string& arg, variant argv[], u32 argc )
+		MXRESULT mxscenario::GetProperties ( const c_str& arg, variant argv[], u32 argc )
 		{
 			return mx->ProcessCommand ( mx_properties, NUMELE(mx_properties), arg, argv, argc );
 		}
@@ -1453,7 +1453,7 @@ namespace tme {
 		};
 
 
-		MXRESULT mxscenario::Text ( const string& arg, variant* argv, u32 argc )
+		MXRESULT mxscenario::Text ( const c_str& arg, variant* argv, u32 argc )
 		{
 			return mx->ProcessCommand ( mx_text, NUMELE(mx_text), arg, argv, argc );
 		}

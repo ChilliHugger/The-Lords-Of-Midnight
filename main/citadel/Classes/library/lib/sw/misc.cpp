@@ -1,10 +1,15 @@
-#include "../../libinc/library.h"
+#include "../../libinc/mxtypes.h"
+#include "../../libinc/collections.h"
+#include "../../libinc/sw/misc.h"
+
 #include <string.h>
 
 namespace chilli {
 
 	namespace lib {
 
+        using namespace chilli::collections;
+        
 		LPSTR c_strtok_r(LPSTR str, LPCSTR delim, char **nextp)
 		{
 			char *ret;
@@ -37,7 +42,8 @@ namespace chilli {
 
 		int SplitString ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) 
 		{
-		string	token = source;
+            c_str	token = source;
+            
             char *saveptr1;
 			tokens.Clear();
 			LPSTR t = c_strtok_r(token,delim,&saveptr1);
@@ -310,16 +316,16 @@ namespace chilli {
 				*slash = strrchr( path, '/' );
 
 			if(drive)
-				strcpy(drive, "");
+				c_strcpy(drive, "");
 
 			if(dir)
-				strcpy(dir, "");
+				c_strcpy(dir, "");
 
 			if(fname)
-				strcpy(fname, "");
+				c_strcpy(fname, "");
 
 			if(ext)
-				strcpy(ext, "");
+				c_strcpy(ext, "");
 
 			// Do we have a '/' ?
 			if( slash ) {
@@ -497,7 +503,7 @@ namespace chilli {
 				return FALSE;
 
 			int count=0;
-			int max = c_strlen( string );
+			size_t max = c_strlen( string );
 			while( count < max )
 			{
 				if( !isdigit(string[count]) )

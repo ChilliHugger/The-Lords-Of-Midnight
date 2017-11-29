@@ -14,9 +14,9 @@ namespace tme {
 
 		scenarioinfo_t* GetInfoBlock() const;
 		
-		MXRESULT Command ( const string& arg, variant argv[], u32 argc );
-		MXRESULT GetProperties ( const string& arg, variant argv[], u32 argc );
-		MXRESULT Text ( const string& command, variant* argv=NULL, u32 args=0 );
+		MXRESULT Command ( const c_str& arg, variant argv[], u32 argc );
+		MXRESULT GetProperties ( const c_str& arg, variant argv[], u32 argc );
+		MXRESULT Text ( const c_str& command, variant* argv=NULL, u32 args=0 );
 		
 		static MXRESULT MXAPI Create ( tme::mxinterface* mx );
 

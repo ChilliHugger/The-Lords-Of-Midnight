@@ -1,8 +1,11 @@
-#include "../../libinc/library.h"
+#include "../../libinc/mxtypes.h"
+
+#include "../../libinc/misc/xml.h"
+
 
 //#if !defined _MSC_VER
 //#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Wtautological-undefined-compare"
+#pragma clang diagnostic ignored "-Wtautological-undefined-compare"
 //#endif
 
 namespace chilli {
@@ -274,7 +277,7 @@ int ConvertArray ( LPSTR value, collections::c_s32& c, LPCSTR delim )
 	if ( value == NULL ) return 0;
 	LPCSTR token = strtok( value, delim );
 	while( token != NULL )   {
-		c.Add( atol(token) ) ;
+		c.Add( (s32)atol(token) ) ;
 		token = strtok( NULL, delim );
 	}
 	return c.Count();
@@ -302,7 +305,7 @@ int xml::node::ReadArray ( LPCSTR name, collections::c_s32& c, LPCSTR delim )
 	//}
 
 
-	string value = ReadStr( name );
+	c_str value = ReadStr( name );
 	if ( value.IsNull() )
 		return 0;
 	return ConvertArray(value,c,delim);
@@ -328,13 +331,13 @@ LPCSTR xml::node::ReadValue ( LPCSTR name )
 
 int xml::node::ReadValueArray ( LPCSTR  name, collections::c_s32& c )
 {
-	string s = ReadValue(name);
+	c_str s = ReadValue(name);
 	return ConvertArray(s,c,",");
 }
 
 int xml::node::ReadValueArray ( LPCSTR  name, collections::c_float& c )
 {
-	string s = ReadValue(name);
+	c_str s = ReadValue(name);
 	return ConvertArray(s,c,",");
 }
 

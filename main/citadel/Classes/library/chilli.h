@@ -7,4 +7,9 @@
  *
  */
 
-#include "library.h"
+#ifndef _CHILLI_H_INCLUDED
+#define _CHILLI_H_INCLUDED
+
+#include "libinc/library.h"
+
+#endif // _CHILLI_H_INCLUDED

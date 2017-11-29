@@ -59,17 +59,17 @@ scenarioinfo_t* citadel::GetInfoBlock() const
 		return citadel_scenario->GetInfoBlock();
 	}
 	
-MXRESULT citadel::Command ( const string& arg, variant argv[], u32 argc )
+MXRESULT citadel::Command ( const c_str& arg, variant argv[], u32 argc )
 	{
 		return citadel_scenario->Command(arg, argv, argc);
 	}
 	
-MXRESULT citadel::GetProperties ( const string& arg, variant argv[], u32 argc )
+MXRESULT citadel::GetProperties ( const c_str& arg, variant argv[], u32 argc )
 	{
 		return citadel_scenario->GetProperties(arg, argv, argc);
 	}
 	
-MXRESULT citadel::Text ( const string& command, variant* argv, u32 args )
+MXRESULT citadel::Text ( const c_str& command, variant* argv, u32 args )
 	{
 		return citadel_scenario->Text(command, argv, args);
 	}

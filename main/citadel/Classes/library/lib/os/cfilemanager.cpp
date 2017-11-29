@@ -14,14 +14,16 @@
  *
  */
 
-#if 1
+#include "mxtypes.h"
+#include "../../libinc/os/cfile.h"
+#include "../../libinc/os/os.h"
+#include "../../libinc/sw/misc.h"
 
-#include "../../libinc/library.h"
 #include <stdio.h>
 
 #ifdef _MARMALADE_
-#include "IwFile.h"
-#include "S3EFile.h"
+    #include "IwFile.h"
+    #include "S3EFile.h"
 #endif
 
 // cocos2dx
@@ -406,7 +408,88 @@ namespace chilli {
             //	setcwd ( dir );
 #endif
         }
-        
+    
+        char* filemanager::Fullpath ( char *UserBuf, const char *path, u32 maxlen )
+        {
+            char    *buf;
+            size_t   cbPath;
+            
+            if( !path || !*path )
+                return( (char*)GetCurrentDirectory( maxlen, UserBuf ) );
+            
+            if (UserBuf && (strlen(path) > maxlen))
+                return NULL;
+            
+            // allocate buffer if necessary
+            
+            if( !UserBuf )
+            {
+                if( !(buf = (char*)malloc(MAX_PATH)) )
+                {
+                    //                 errno = ENOMEM;
+                    return( NULL );
+                }
+                else
+                {
+                    maxlen = MAX_PATH;
+                }
+            }
+            else
+            {
+                buf = UserBuf;
+            }
+            
+            cbPath = strlen(path);
+            if (cbPath > maxlen)
+            {
+                if (!UserBuf)
+                {
+                    free(buf);
+                }
+                //            errno = ERANGE;
+                return NULL;
+            }
+            
+            maxlen = maxlen - (u32)cbPath;
+            if (*path == ':')
+            {
+                maxlen++;        //this ":" is not counted
+            }
+            
+            if ((*path == ':') ||
+                (strstr(path, ":") == NULL) )
+            {
+                //partial path
+                if (GetCurrentDirectory( maxlen,buf ) != NULL)
+                {
+                    if (*path == ':')
+                    {
+                        lib::c_strcat(buf, path+1);
+                    }
+                    else
+                    {
+                        lib::c_strcat(buf, path);
+                    }
+                }
+                else
+                {
+                    if (!UserBuf)
+                    {
+                        free(buf);
+                    }
+                    return( NULL);
+                }
+            }
+            else
+            {
+                //fullpath
+                lib::c_strcpy(buf, path);
+            }
+            
+            return buf;
+            
+        }
+
         
         
     }
@@ -414,4 +497,3 @@ namespace chilli {
 }
 // namespace tme
 
-#endif

@@ -1,5 +1,8 @@
-#include "../../libinc/library.h"
-#include <string.h>
+#include "../../libinc/mxtypes.h"
+#include "../../libinc/os/cfile.h"
+#include "../../libinc/sw/carchive.h"
+#include "../../libinc/sw/misc.h"
+
 
 namespace chilli {
 

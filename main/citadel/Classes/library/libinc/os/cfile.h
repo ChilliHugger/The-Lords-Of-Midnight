@@ -55,7 +55,7 @@ namespace chilli {
 			enum { hFileNull = -1 };
 
 		// Constructors
-			file();
+            file();
 			file(int hFile);
 			file(LPCSTR lpszFileName, u32 nOpenFlags);
 			~file();
@@ -89,10 +89,26 @@ namespace chilli {
 #ifdef _UNIX_
 #define O_BINARY 0
 #endif
-
+        
 	}
 }
 
+#ifndef _DONT_DEFINE_MFC_CLASSES
+namespace chilli {
+    namespace os {
+        /* os::file */
+        MXINLINE file::file()											{ m_hFile = -1; m_bCloseOnDelete = FALSE; }
+        MXINLINE file::file(int hFile)								{ m_hFile = hFile; m_bCloseOnDelete = FALSE; }
+        MXINLINE file::file(LPCSTR lpszFileName, u32 nOpenFlags)		{ Open(lpszFileName, nOpenFlags); }
+        MXINLINE file::~file()										{ if (IsValidHandle() && m_bCloseOnDelete) Close(); }
+        MXINLINE LPSTR file::GetFileName()							{ return m_strFileName; }
+        MXINLINE DWORD file::SeekToEnd()								{ return Seek(0, end); }
+        MXINLINE void file::SeekToBegin()								{ Seek(0, begin); }
+        MXINLINE bool file::IsOpen() const							{ return IsValidHandle(); }
+        MXINLINE bool file::IsValidHandle() const						{ return m_hFile != -1; }
+    }
+}
+#endif //_DONT_DEFINE_MFC_CLASSES
 
 
 

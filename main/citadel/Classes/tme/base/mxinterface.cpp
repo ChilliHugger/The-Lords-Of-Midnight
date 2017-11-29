@@ -66,7 +66,7 @@ namespace tme {
 	//
 	// RETURNS:	MXRESULT
 	//
-	MXRESULT mxinterface::GetProperty( const string& name, variant& arg) const 
+	MXRESULT mxinterface::GetProperty( const c_str& name, variant& arg) const
 	{
 		return variables::GetProperty(name, arg);
 	}
@@ -82,7 +82,7 @@ namespace tme {
 	//
 	// RETURNS:	idt
 	//
-	mxid mxinterface::EntityByName( const string& name, id_type_t type )
+	mxid mxinterface::EntityByName( const c_str& name, id_type_t type )
 	{
 		mxentity* obj  = mx->EntityByName( name, type );
 		if ( obj ) {
@@ -271,7 +271,7 @@ namespace tme {
 	//
 	// RETURNS:	MXRESULT
 	//
-	MXRESULT mxinterface::GetProperties ( const string& arg, variant argv[], u32 argc )
+	MXRESULT mxinterface::GetProperties ( const c_str& arg, variant argv[], u32 argc )
 	{
 		return mx->scenario->GetProperties(arg,argv,argc);
 	}
@@ -289,7 +289,7 @@ namespace tme {
 	//
 	// RETURNS:	MXRESULT
 	//	
-	MXRESULT mxinterface::Text ( const string& arg, variant* argv, u32 argc )
+	MXRESULT mxinterface::Text ( const c_str& arg, variant* argv, u32 argc )
 	{
 		return mx->scenario->Text(arg,argv,argc);
 	}
@@ -308,7 +308,7 @@ namespace tme {
 	//
 	// RETURNS:	MXRESULT
 	//
-	MXRESULT mxengine::ProcessCommand ( mxcommand_t tblCommand[], u32 max, const string& arg, variant argv[], u32 argc )
+	MXRESULT mxengine::ProcessCommand ( mxcommand_t tblCommand[], u32 max, const c_str& arg, variant argv[], u32 argc )
 	{
 	MXRESULT	status = MX_UNKNOWN;
 
@@ -417,7 +417,7 @@ namespace tme {
 	COMMAND( OnGameDescription )
 	{
 		//argv[0]=0;
-        string& temp = *((string*)argv[1].vPtr) ;
+        c_str& temp = *((c_str*)argv[1].vPtr) ;
 		return mx->SaveGameDescription(argv[0], temp );
 	}
 
@@ -478,7 +478,7 @@ namespace tme {
 	//
 	// RETURNS:	MXRESULT
 	//
-	MXRESULT mxinterface::Command ( const string& arg, variant* argv, u32 argc )
+	MXRESULT mxinterface::Command ( const c_str& arg, variant* argv, u32 argc )
 	{
 		MXRESULT result = mx->ProcessCommand ( mx_commands, NUMELE(mx_commands), arg, argv, argc );
 		if ( result != MX_UNKNOWN )
@@ -504,7 +504,7 @@ namespace tme {
 	// RETURNS	MXRESULT
 	//
 	
-	MXRESULT mxinterface::GetEntityProperty( mxid id, const string& arg, variant& argv) const 
+	MXRESULT mxinterface::GetEntityProperty( mxid id, const c_str& arg, variant& argv) const
 	{
 		//character
 		if ( ID_TYPE(id) == IDT_CHARACTER ) {
@@ -611,7 +611,7 @@ namespace tme {
 	//
 	// RETURNS:	MXRESULT
 	//
-	MXRESULT mxinterface::GetEntityProperties ( mxid id, const string& arg, variant argv[], u32 argc )
+	MXRESULT mxinterface::GetEntityProperties ( mxid id, const c_str& arg, variant argv[], u32 argc )
 	{
 		if ( ID_TYPE(id) == IDT_CHARACTER ) {
 

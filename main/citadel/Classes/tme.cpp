@@ -44,7 +44,7 @@ mxid            location_object_tunnel;
 mxid            location_someone_to_give_to;
 #endif
 
-string			tme_text ;
+c_str			tme_text ;
 std::string          tme_path;
 static			variant args[20];
 
@@ -133,7 +133,7 @@ LPCSTR TME_LastActionMsg()
 	return TME_GetText("LastActionMsg");
 }
 
-LPCSTR TME_GetCharacterText ( const character& c, const string& command ) 
+LPCSTR TME_GetCharacterText ( const character& c, const c_str& command )
 {
 	args[0] = c.id ;
 	return TME_GetText(command,args,1);
@@ -146,12 +146,12 @@ LPCSTR TME_GetSystemString ( const character& c, int msg )
 	return TME_GetText("SpecialStrings",args,2);
 }
 
-LPCSTR TME_GetText ( const string& command ) 
+LPCSTR TME_GetText ( const c_str& command )
 {
 	return TME_GetText(command,args,0);
 }
 
-LPCSTR TME_GetText ( const string& command, variant args[], int count ) 
+LPCSTR TME_GetText ( const c_str& command, variant args[], int count )
 {
 	CStrBuf cache;
 	
@@ -602,7 +602,7 @@ bool TME_Load ( LPSTR filespec, PFNSERIALIZE function )
 	return TRUE;
 }
 
-bool TME_SaveDescription ( LPSTR filespec, string& description )
+bool TME_SaveDescription ( LPSTR filespec, c_str& description )
 {
 	args[0] = filespec ;
     args[1] = (void*) &description ;

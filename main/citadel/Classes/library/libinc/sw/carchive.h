@@ -15,7 +15,15 @@
 //#include <stdio.h>
 //#define ARFILE	FILE*
 //#else
-#define ARFILE	os::file*
+
+namespace chilli
+{
+    namespace os {
+        class file;
+    }
+}
+
+#define ARFILE	chilli::os::file*
 //#endif
 
 #define	UNALIGNED 
@@ -65,7 +73,7 @@ namespace chilli {
 			archive& operator<<(f32 f);
 			archive& operator<<(f64 d);
 			archive& operator<<(long l);
-			archive& operator<<(char * string );
+			archive& operator<<(char* s );
 			archive& operator<<(int i);
 			archive& operator<<(short w);
 			archive& operator<<(char ch);
@@ -104,6 +112,34 @@ namespace chilli {
 
 		};
 	}
+}
+
+namespace chilli {
+    namespace lib {
+        
+        /* archive */
+        MXINLINE bool archive::IsLoading() const						{ return (m_nMode & archive::load) != 0; }
+        MXINLINE bool archive::IsStoring() const						{ return (m_nMode & archive::load) == 0; }
+        MXINLINE bool archive::IsByteSwapping() const					{ return (m_nMode & archive::bByteSwap); }
+        MXINLINE bool archive::IsBufferEmpty() const					{ return m_lpBufCur == m_lpBufMax; }
+        MXINLINE ARFILE archive::GetFile() const					{ return m_pFile; }
+        MXINLINE archive& archive::operator<<(int i)					{ return archive::operator<<((u32)i); }
+        MXINLINE archive& archive::operator<<(short w)				{ return archive::operator<<((u16)w); }
+        MXINLINE archive& archive::operator<<(char ch)				{ return archive::operator<<((BYTE)ch); }
+        MXINLINE archive& archive::operator>>(int& i)					{ return archive::operator>>((u32&)i); }
+        MXINLINE archive& archive::operator>>(short& w)				{ return archive::operator>>((u16&)w); }
+        MXINLINE archive& archive::operator>>(char& ch)				{ return archive::operator>>((u8&)ch); }
+        
+        // archive output helpers
+        MXINLINE archive& operator<<(archive& ar, const size& s)		{ ar.Write(&s, sizeof(size)); return ar; }
+        MXINLINE archive& operator<<(archive& ar, const point& p)		{ ar.Write(&p, sizeof(point)); return ar; }
+        MXINLINE archive& operator<<(archive& ar, const rect& r)		{ ar.Write(&r, sizeof(rect)); return ar; }
+        MXINLINE archive& operator>>(archive& ar, size& s)             { ar.Read(&s, sizeof(size)); return ar; }
+        MXINLINE archive& operator>>(archive& ar, point& p)			{ ar.Read(&p, sizeof(point)); return ar; }
+        MXINLINE archive& operator>>(archive& ar, rect& r)             { ar.Read(&r, sizeof(rect)); return ar; }
+        MXINLINE archive& operator<<(archive& ar, const range& r)		{ ar.Write(&r, sizeof(range)); return ar; }
+        MXINLINE archive& operator>>(archive& ar, range& r)			{ ar.Read(&r, sizeof(range)); return ar; }
+    }
 }
 
 #endif // _CARCHIVE_H_INCLUDED_

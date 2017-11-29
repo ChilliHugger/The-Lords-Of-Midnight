@@ -1,7 +1,7 @@
 #ifndef _COLLECTIONS_H_INCLUDED_
 #define _COLLECTIONS_H_INCLUDED_
 
-#include "../chilli.h"
+//#include "../chilli.h"
 
 namespace chilli {
 
@@ -403,7 +403,7 @@ namespace chilli {
 		typedef base<point>		c_point ;
 		typedef base<f32>		c_float ;
 		typedef base<void*>		c_ptr ;
-		typedef base<string>	c_string ;
+		typedef base<c_str>     c_string ;
 		typedef base<u32>		c_u32 ;
 		typedef base<s32>		c_s32 ;
 		typedef base<mxid>		c_mxid ;

@@ -1,4 +1,6 @@
-#include "../../libinc/library.h"
+#include "../../libinc/mxtypes.h"
+#include "../../libinc/sw/misc.h"
+#include "../../libinc/sw/carchive.h"
 
 using namespace chilli::lib;
 
@@ -6,19 +8,19 @@ namespace chilli {
 
 	namespace types {
 
-		string	strNull;
+		c_str	strNull;
 
-		string::string()
+		c_str::c_str()
 		{
 			m_pchData = NULL ;
 		}
 
-		string::~string()
+		c_str::~c_str()
 		{
 			SAFEFREE ( m_pchData );
 		}
 
-		const string& string::operator= ( LPCSTR str )
+		const c_str& c_str::operator= ( LPCSTR str )
 		{
 			SAFEFREE ( m_pchData );
 			if ( str )
@@ -26,7 +28,7 @@ namespace chilli {
 			return *this;
 		}
 
-		const string& string::operator= ( const string& str )
+		const c_str& c_str::operator= ( const c_str& str )
 		{
 			SAFEFREE ( m_pchData );
 			if ( str.m_pchData )
@@ -35,37 +37,37 @@ namespace chilli {
 		}
 
 
-		string::string ( LPSTR str )
+		c_str::c_str ( LPSTR str )
 		{
 			m_pchData  = NULL ;
 			if ( str )
 				m_pchData = c_strdup ( str );
 		}
 
-		string::string ( LPCSTR str )
+		c_str::c_str ( LPCSTR str )
 		{
 			m_pchData  = NULL ;
 			if ( str )
 				m_pchData = c_strdup ( str );
 		}
 
-		bool string::IsNull() const
+		bool c_str::IsNull() const
 		{
 			return m_pchData == NULL ;
 		}
 
-		bool string::IsEmpty() const
+		bool c_str::IsEmpty() const
 		{
 			return Length() == 0 ;
 		}
 
-		size_t string::Length() const 
+		size_t c_str::Length() const
 		{
 			return m_pchData ? c_strlen(m_pchData) : 0 ;
 		}
-		archive& string::Serialize ( archive& ar )
-		{ 
-		//char temp[256];
+        
+		archive& c_str::Serialize ( archive& ar )
+		{
 		LPSTR temp = NULL;
 
 			if ( ar.IsStoring() ) {

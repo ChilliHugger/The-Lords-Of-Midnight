@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+//#include "HelloWorldScene.h"
 
 
 #include "LandscapeScene.h"

@@ -1,10 +1,6 @@
-// flags32.cpp: implementation of the flags32 class.
-//
-//////////////////////////////////////////////////////////////////////
 
-#include "../../libinc/library.h"
-
-
+#include "../../libinc/mxtypes.h"
+#include "../../libinc/sw/carchive.h"
 
 namespace chilli {
 

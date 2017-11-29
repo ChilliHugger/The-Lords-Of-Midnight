@@ -1,34 +1,15 @@
 
-#ifndef _LIBRARYSW_CPP_INCLUDED
-#define _LIBRARYSW_CPP_INCLUDED
+#ifndef _DRAWING_H_INCLUDED
+#define _DRAWING_H_INCLUDED
 
-#include <memory.h>
-
-#ifndef _USEINLINE_
-	#define	MXINLINE
-#else
-	#define MXINLINE MXINLINE
-#endif
-
-
+//#include <memory.h>
 
 namespace chilli {
 
     using namespace chilli::types ;
     
 	namespace lib {
-		/* archive */
-		MXINLINE bool archive::IsLoading() const						{ return (m_nMode & archive::load) != 0; }
-		MXINLINE bool archive::IsStoring() const						{ return (m_nMode & archive::load) == 0; }
-		MXINLINE bool archive::IsByteSwapping() const					{ return (m_nMode & archive::bByteSwap); }
-		MXINLINE bool archive::IsBufferEmpty() const					{ return m_lpBufCur == m_lpBufMax; }
-		MXINLINE ARFILE archive::GetFile() const					{ return m_pFile; }
-		MXINLINE archive& archive::operator<<(int i)					{ return archive::operator<<((u32)i); }
-		MXINLINE archive& archive::operator<<(short w)				{ return archive::operator<<((u16)w); }
-		MXINLINE archive& archive::operator<<(char ch)				{ return archive::operator<<((BYTE)ch); }
-		MXINLINE archive& archive::operator>>(int& i)					{ return archive::operator>>((u32&)i); }
-		MXINLINE archive& archive::operator>>(short& w)				{ return archive::operator>>((u16&)w); }
-		MXINLINE archive& archive::operator>>(char& ch)				{ return archive::operator>>((u8&)ch); }
+
 
 		MXINLINE int Compare ( s32 number1, s32 number2 )
 		{
@@ -75,55 +56,192 @@ namespace chilli {
 
 	namespace types {
 
-		/* types::bitarray */
-		MXINLINE bool bitarray::operator[](int bit) const				{ return Get(bit); }
-		MXINLINE bitarray::bitarray()									{ Detatch(); }
-		MXINLINE bitarray::bitarray ( int nElements )					{ Create (nElements ); }
-		MXINLINE bitarray::~bitarray()								{ Destroy(); }
-		MXINLINE void bitarray::ClrAll()								{ memset( m_pData, 0x00, Size() ); }
-		MXINLINE void bitarray::SetAll()								{ memset( m_pData, 0xff, Size() ); }
-		MXINLINE void bitarray::Attatch ( u8* pData, int nElements )	{ m_pData = pData; m_nElements = nElements ; }
-		MXINLINE void bitarray::Detatch()								{ m_pData = NULL; m_nElements = 0 ;}
-		MXINLINE void bitarray::Destroy()								{ if ( m_pData ) delete m_pData ;	m_pData = NULL;	m_nElements = 0; }
-		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, bitarray& array )	{ return array.Serialize(ar); }
-		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, bitarray& array )	{ return array.Serialize(ar); }
-
-		/* flags32 */
-		MXINLINE flags32::flags32()									{ m_flags = NONE ; }
-		MXINLINE void flags32::Set ( u32 f )							{ m_flags |= f ; }
-		MXINLINE void flags32::Reset ( u32 f )						{ m_flags &= ~f ; }
-        MXINLINE void flags32::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-		MXINLINE bool flags32::Is ( u32 f) const						{ return m_flags&f ? TRUE : FALSE  ; }
-		MXINLINE flags32::operator u32() const						{ return m_flags; }
-		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, flags32& f )		{ return f.Serialize(ar); }
-		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, flags32& f )		{ return f.Serialize(ar); }
-
-		/* flags8 */
-		MXINLINE flags8::flags8()										{ m_flags = NONE ; }
-		MXINLINE void flags8::Set ( u8 f )							{ m_flags |= f ; }
-		MXINLINE void flags8::Reset ( u8 f )							{ m_flags &= ~f ; }
-        MXINLINE void flags8::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-		MXINLINE bool flags8::Is ( u8 f ) const						{ return m_flags&f ? TRUE : FALSE  ; }
-		MXINLINE flags8::operator u8() const							{ return m_flags; }
-		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, flags8& f )			{ return f.Serialize(ar); }
-		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, flags8& f )		{ return f.Serialize(ar); }
-
-		/* flags16 */
-		MXINLINE flags16::flags16()									{ m_flags = NONE ; }
-		MXINLINE void flags16::Set ( u16 f )							{ m_flags |= f ; }
-		MXINLINE void flags16::Reset ( u16 f )						{ m_flags &= ~f ; }
-        MXINLINE void flags16::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-		MXINLINE bool flags16::Is ( u16 f ) const						{ return m_flags&f ? TRUE : FALSE  ; }
-		MXINLINE flags16::operator u16() const						{ return m_flags; }
-		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, flags16& f )		{ return f.Serialize(ar); }
-		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, flags16& f )		{ return f.Serialize(ar); }
-
-		/* string */
-		MXINLINE chilli::lib::archive& operator<<( chilli::lib::archive& ar, string& s )			{ return s.Serialize(ar); }
-		MXINLINE chilli::lib::archive& operator>>( chilli::lib::archive& ar, string& s )		{ return s.Serialize(ar); }
-		MXINLINE string::operator LPSTR() const						{ return m_pchData; }
-		MXINLINE string::operator LPCSTR() const						{ return m_pchData; }
-
+        // size
+        class  size
+        {
+        public:
+            
+            LONG cx;
+            LONG cy;
+            
+            // Constructors
+            size();
+            size(int initCX, int initCY);
+            size(point initPt);
+            
+            // Operations
+            bool operator==(size) const;
+            bool operator!=(size) const;
+            void operator+=(size);
+            void operator-=(size);
+            
+            // Operators returning size values
+            size operator+(size) const;
+            size operator-(size) const;
+            size operator-() const;
+            
+            // Operators returning point values
+            point operator+(point) const;
+            point operator-(point) const;
+            
+            // Operators returning rect values
+            rect operator+(const rect* lpRect) const;
+            rect operator-(const rect* lpRect) const;
+            
+            //friend  archive& operator<<(archive& ar, const size&);
+            //friend  archive& operator>>(archive& ar, size& );
+            
+            
+        };
+        
+        /////////////////////////////////////////////////////////////////////////////
+        // point - A 2-D point, similar to Windows point structure.
+        
+#define ONLEFT	0x01
+#define ONTOP	0x02
+        
+        class  point //: public tagPOINT
+        {
+        public:
+            
+            LONG x;
+            LONG y;
+            
+            // Constructors
+            point();
+            point(int initX, int initY);
+            point(size initSize);
+            
+            // Operations
+            void Offset(int xOffset, int yOffset);
+            void Offset(point);
+            void Offset(size);
+            bool operator==(point) const;
+            bool operator!=(point) const;
+            void operator+=(size);
+            void operator-=(size);
+            void operator+=(point);
+            void operator-=(point);
+            
+            // Operators returning point values
+            point operator+(size) const;
+            point operator-(size) const;
+            point operator-() const;
+            point operator+(point) const;
+            
+            // Operators returning size values
+            size operator-(point) const;
+            
+            // Operators returning rect values
+            rect operator+(const rect* lpRect) const;
+            rect operator-(const rect* lpRect) const;
+            
+            friend  archive& operator<<(archive& ar, const point& );
+            friend  archive& operator>>(archive& ar, point& );
+            
+            int PointPosition ( const point ) const;
+            
+        };
+        
+        /////////////////////////////////////////////////////////////////////////////
+        // rect - A 2-D rectangle, similar to Windows RECT structure.
+        
+        
+        class  rect //: public tagRECT
+        {
+        public:
+            
+            LONG left;
+            LONG top;
+            LONG right;
+            LONG bottom;
+            
+            // Constructors
+            rect();
+            rect(int l, int t, int r, int b);
+            rect(const rect& srrect);
+            rect(const rect* lpSrrect);
+            rect(point, size);
+            rect(point topLeft, point bottomRight);
+            
+            // Attributes (in addition to RECT members)
+            int Width() const;
+            int Height() const;
+            size Size() const;
+            point& TopLeft();
+            point& BottomRight();
+            const point& TopLeft() const;
+            const point& BottomRight() const;
+            point CenterPoint() const;
+            
+            // convert between rect and LPRECT/LPrect (no need for &)
+#ifdef LPRECT
+            operator LPRECT();
+            operator LPrect() const;
+#endif
+            
+            bool IsRectEmpty() const;
+            bool IsRectNull() const;
+            bool PtInRect(point) const;
+            
+            int RectPosition ( const rect&  ) const;
+            
+            // Operations
+            void SetRect(int x1, int y1, int x2, int y2);
+            void SetRect(point topLeft, point bottomRight);
+            void SetRectEmpty();
+            void CopyRect(const rect* );
+            bool EqualRect(const rect* ) const;
+            
+            void InflateRect(int x, int y);
+            void InflateRect(size);
+            void InflateRect(const rect* );
+            void InflateRect(int l, int t, int r, int b);
+            void DeflateRect(int x, int y);
+            void DeflateRect(size);
+            void DeflateRect(const rect* );
+            void DeflateRect(int l, int t, int r, int b);
+            
+            void ClipRect(const rect* lpRect);
+            
+            void OffsetRect(int x, int y);
+            void OffsetRect(size);
+            void OffsetRect(point);
+            void NormalizeRect();
+            
+            // operations that fill '*this' with result
+            bool IntersectRect(const rect* , const rect* );
+            bool UnionRect(const rect* , const rect* );
+            
+            // Additional Operations
+            void operator=(const rect& );
+            bool operator==(const rect& ) const;
+            bool operator!=(const rect& ) const;
+            void operator+=(point);
+            void operator+=(size);
+            void operator+=(const rect* );
+            void operator-=(point);
+            void operator-=(size);
+            void operator-=(const rect* );
+            void operator&=(const rect& );
+            //	void operator|=(const rect& );
+            
+            // Operators returning rect values
+            rect operator+(point) const;
+            rect operator-(point) const;
+            rect operator+(const rect* ) const;
+            rect operator+(size) const;
+            rect operator-(size) const;
+            rect operator-(const rect* ) const;
+            rect operator&(const rect& rect2) const;
+            rect operator|(const rect& rect2) const;
+            
+            friend  archive& operator<<(archive& ar, const rect& );
+            friend  archive& operator>>(archive& ar, rect& );
+            
+        };
+        
+        
 		// size
 		MXINLINE size::size()											{ /* filled */ }
 		MXINLINE size::size(int initCX, int initCY)					{ cx = initCX; cy = initCY; }
@@ -196,35 +314,12 @@ namespace chilli {
 		MXINLINE rect rect::operator+(size s) const					{ rect r(*this); r.OffsetRect(s.cx, s.cy); return r; }
 		MXINLINE rect rect::operator-(size s) const					{ rect r(*this); r.OffsetRect(-s.cx, -s.cy); return r; }
 
-		// archive output helpers
-		MXINLINE chilli::lib::archive& operator<<(chilli::lib::archive& ar, const size& s)		{ ar.Write(&s, sizeof(size)); return ar; }
-		MXINLINE chilli::lib::archive& operator<<(chilli::lib::archive& ar, const point& p)		{ ar.Write(&p, sizeof(point)); return ar; }
-		MXINLINE chilli::lib::archive& operator<<(chilli::lib::archive& ar, const rect& r)		{ ar.Write(&r, sizeof(rect)); return ar; }
-		MXINLINE chilli::lib::archive& operator>>(chilli::lib::archive& ar, size& s)			{ ar.Read(&s, sizeof(size)); return ar; }
-		MXINLINE chilli::lib::archive& operator>>(chilli::lib::archive& ar, point& p)			{ ar.Read(&p, sizeof(point)); return ar; }
-		MXINLINE chilli::lib::archive& operator>>(chilli::lib::archive& ar, rect& r)			{ ar.Read(&r, sizeof(rect)); return ar; }
-		MXINLINE chilli::lib::archive& operator<<(chilli::lib::archive& ar, const range& r)		{ ar.Write(&r, sizeof(range)); return ar; }
-		MXINLINE chilli::lib::archive& operator>>(chilli::lib::archive& ar, range& r)				{ ar.Read(&r, sizeof(range)); return ar; }
+
 	}
 	// namespace types
-
-#ifndef _DONT_DEFINE_MFC_CLASSES
-	namespace os {
-		/* os::file */
-		MXINLINE file::file()											{ m_hFile = -1; m_bCloseOnDelete = FALSE; }
-		MXINLINE file::file(int hFile)								{ m_hFile = hFile; m_bCloseOnDelete = FALSE; }
-		MXINLINE file::file(LPCSTR lpszFileName, u32 nOpenFlags)		{ Open(lpszFileName, nOpenFlags); }
-		MXINLINE file::~file()										{ if (IsValidHandle() && m_bCloseOnDelete) Close(); }
-		MXINLINE LPSTR file::GetFileName()							{ return m_strFileName; }
-		MXINLINE DWORD file::SeekToEnd()								{ return Seek(0, end); }
-		MXINLINE void file::SeekToBegin()								{ Seek(0, begin); }
-		MXINLINE bool file::IsOpen() const							{ return IsValidHandle(); }
-		MXINLINE bool file::IsValidHandle() const						{ return m_hFile != -1; }
-	}
-#endif //_DONT_DEFINE_MFC_CLASSES
 
 
 }
 // namespace chilli
 
-#endif // _LIBRARYSW_CPP_INCLUDED
+#endif // _DRAWING_H_INCLUDED

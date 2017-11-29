@@ -7,16 +7,14 @@
  * 
  * AUTHOR:  Chris Wild
  * 
- * � Copyright 1999 The Midnight Council.
+ * (c) Copyright 1999 The Midnight Council.
  * 
  * PURPOSE: 
  * 
  * 
  */
 
-
-#include "../../libinc/library.h"
-#include <cmath>
+#include "../../libinc/mxtypes.h"
 
 namespace chilli {
 

@@ -115,7 +115,7 @@ MXTRACE( "Loading Map '%s'", filename);
 
 u32 magicno;
 u32 versionno;
-string header;
+c_str header;
 
 	ar >> magicno;
 MXTRACE( "MagicNo=%x", (unsigned int)magicno);

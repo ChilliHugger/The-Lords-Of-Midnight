@@ -131,7 +131,7 @@ namespace tme {
 		PROPERTY( id_type_t, Type, type );
 		PROPERTY( u32, Id, id );
 
-		string& Symbol() 		{ return symbol ; }
+		c_str& Symbol() 		{ return symbol ; }
 		bool IsSymbol(LPCSTR s) const { return c_stricmp(symbol,s) == 0; }
 
 		virtual int Compare ( mxentity* o, int hint ) const;
@@ -146,7 +146,7 @@ namespace tme {
 	protected:
 		id_type_t	type;
 		u32			id;
-		string		symbol;
+		c_str		symbol;
 		flags32		flags;
 		const void*		user_data ;
 
@@ -220,7 +220,7 @@ namespace tme {
 #if defined(_DDR_)
             void Loses ( s32 value ) { total = BSub(total, value,0); }
 #endif
-			const string& Name() const;
+			const c_str& Name() const;
 
 		protected:
 			friend class	mxcharacter ;
@@ -467,7 +467,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
 			void Destroy( void );
 			virtual void Serialize( chilli::lib::archive& ar );
-			mxentity* FindSymbol ( const string& name ) ;
+			mxentity* FindSymbol ( const c_str& name ) ;
 			void Sort ( int hint ) ; // not thread safe
 
 			bool Add ( mxentity* );
@@ -508,12 +508,12 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			DEFAULT_IMPLEMENTATION(mxinfo);
 
 			//flags32& Flags()	{ return flags; } 
-			string& Name() 		{ return name ; }
+			c_str& Name() 		{ return name ; }
 
 		protected:
 			//u32		id;
 			//flags32	flags;
-			string	name;
+			c_str	name;
 
 		}; // base
 
@@ -537,7 +537,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			DEFAULT_IMPLEMENTATION(mxarea);
 
 		public:
-			string	prefix;
+			c_str	prefix;
 		}; // area
 
 		// direction
@@ -557,9 +557,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			DEFAULT_IMPLEMENTATION(mxgender);
 
 		public:
-			string	pronoun1;
-			string	pronoun2;
-			string	pronoun3;
+			c_str	pronoun1;
+			c_str	pronoun2;
+			c_str	pronoun3;
 		};
 
 		// race
@@ -584,10 +584,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
 			f64 RidingMovementMultiplier() const	{ return (f64)ridingmultiplier/10000.0; }
 			
-			string& SoldiersName();
+			c_str& SoldiersName();
 
 		protected:
-			string	soldiersname;
+			c_str	soldiersname;
 			u32		success;
 			u32		initialmovement;
 			s32		diagonalmodifier;
@@ -620,13 +620,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			GET_PROPERTY ( u32, Obstruction, obstruction )
 			GET_PROPERTY ( s32, MovementCost, movementcost )
 
-			string& Preposition() 					{ return preposition; }
-			string& Description() 					{ return description; }
+			c_str& Preposition() 					{ return preposition; }
+			c_str& Description() 					{ return description; }
 
 
 		public:
-			string	preposition;
-			string	description;
+			c_str	preposition;
+			c_str	description;
 			u32		success;
 			u32		visibility;
 			u32		obstruction;
@@ -811,12 +811,12 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
 			bool CanDestroy ( mxobject* obj ) const ;
             
-			string& Name()  		{ return name ; }
+			c_str& Name()  		{ return name ; }
 
 		public:
 			mxthing_t		kills;
-			string			name;
-			string			description;
+			c_str			name;
+			c_str			description;
 			u32				usedescription;
 			mxitem*			carriedby;
 
@@ -1026,8 +1026,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
 			bool HasArmy() const				{ return ((riders.total+warriors.total) > 0); }
 			bool IsDead() const					{ return !flags.Is(cf_alive); }
-			const string& Longname() const		{ return longname; }
-			const string& Shortname() const		{ return shortname; }
+			const c_str& Longname() const		{ return longname; }
+			const c_str& Shortname() const		{ return shortname; }
 
 			void SetLastCommand ( command_t cmd, mxid id );
 			void CommandTakesTime ( bool success );
@@ -1099,17 +1099,17 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
 			void ForcedVariableRefresh() const;
 
-			const string& HeOrShe() const ;
-			const string& HisOrHer() const ;
-			const string& HimOrHer() const ;
+			const c_str& HeOrShe() const ;
+			const c_str& HisOrHer() const ;
+			const c_str& HimOrHer() const ;
 
 
 		public:
 
 			mxdir_t			looking;
 			mxtime_t		time;
-			string			longname;
-			string			shortname;
+			c_str			longname;
+			c_str			shortname;
 			//charimages_t images;
             
 			mxgridref		battleloc;	// change this to CBattle

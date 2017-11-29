@@ -1,6 +1,6 @@
 
+#include "../../libinc/mxtypes.h"
 
-#include "../../libinc/library.h"
 #include <time.h>
 #include <stdlib.h>
 
@@ -41,7 +41,7 @@ namespace chilli {
 
 		void randomno::srand ( u32 seed )
 		{
-			m_seed = (long)seed;
+			m_seed = (u32)seed;
 		}
 
 		int randomno::get ( void )

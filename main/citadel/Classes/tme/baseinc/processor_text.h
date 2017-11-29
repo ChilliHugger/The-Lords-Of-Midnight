@@ -169,8 +169,8 @@ namespace tme {
             int             last_number;
 		protected:
 			u32				m_cSystemStrings;
-			string*			systemstrings;
-			string*			systemcodes;
+			c_str*			systemstrings;
+			c_str*			systemcodes;
 		};
 	//}
 }

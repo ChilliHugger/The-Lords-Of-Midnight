@@ -2,7 +2,7 @@
 #ifndef _MXSCENARIO_H_INCLUDED_
 #define _MXSCENARIO_H_INCLUDED_
 
-#include "../../baseinc/tme_internal.h"
+//#include "../../baseinc/tme_internal.h"
 
 namespace tme {
 
@@ -30,9 +30,9 @@ namespace tme {
 			virtual ~mxscenario();
 			
 			virtual scenarioinfo_t* GetInfoBlock() const;
-			virtual MXRESULT Command ( const string& arg, variant argv[], u32 argc );
-			virtual MXRESULT GetProperties ( const string& arg, variant argv[], u32 argc );
-			virtual MXRESULT Text ( const string& command, variant* argv=NULL, u32 args=0 );
+			virtual MXRESULT Command ( const c_str& arg, variant argv[], u32 argc );
+			virtual MXRESULT GetProperties ( const c_str& arg, variant argv[], u32 argc );
+			virtual MXRESULT Text ( const c_str& command, variant* argv=NULL, u32 args=0 );
 			virtual MXRESULT Register ( mxengine* midnightx ) ;
 			virtual MXRESULT UnRegister ( mxengine* midnightx );
 

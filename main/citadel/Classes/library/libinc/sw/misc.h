@@ -1,12 +1,16 @@
 #ifndef _MISC_H_INCLUDED_
 #define _MISC_H_INCLUDED_
 
-#include "../../chilli.h"
+#include "../../libinc/mxtypes.h"
+#include "../../libinc/collections.h"
 
 namespace chilli {
 	namespace lib {
 
-		int SplitString ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) ;
+        using namespace types;
+        using namespace collections;
+        
+		int SplitString ( LPCSTR source, LPCSTR delim, c_string& tokens ) ;
 		void JumbleArray ( int* array, int max );
 		int ConcatArray( int* array, int max );
 

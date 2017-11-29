@@ -260,13 +260,15 @@ namespace tme {
 				case CVar::IDARRAY:
 					{
 						sv_c_mxid_t* c = (sv_c_mxid_t*)variable->memory ;
-						string s = variable->string ;
+                        char *saveptr1;
+                        
+						c_str s = variable->string ;
 						c->Clear();
 						LPSTR	token;
 						int		count;
 							//set up arrays
 							count=0;
-							token = strtok( s, "|" );
+                            token = chilli::lib::c_strtok_r( s, "|", &saveptr1 );
 							while ( token!=NULL ) {
 								if (c_strlen(token)==1 && token[0]=='-' )
 									c->Add(NULL);
@@ -276,7 +278,7 @@ namespace tme {
 										id = mx->text->StringByName(token);
 									c->Add( id );
 								}
-								token=strtok(NULL,"|");
+                                token=chilli::lib::c_strtok_r(NULL,"|", &saveptr1);
 							}
 
 					}
@@ -321,7 +323,7 @@ namespace tme {
 			//
 		}
 
-		MXRESULT GetProperty(const string& name, variant& arg) 
+		MXRESULT GetProperty(const c_str& name, variant& arg)
 		{
 			arg.vType = variant::none ;
 			arg.vInt = 0 ;

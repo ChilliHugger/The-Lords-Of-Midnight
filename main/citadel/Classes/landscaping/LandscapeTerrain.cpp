@@ -143,6 +143,8 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
 
 Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
 {
+    if ( terrain_graphics[terrain] == "" )
+        return nullptr;
     
     auto image = Sprite::createWithSpriteFrameName( terrain_graphics[terrain] );
     if ( image == nullptr )
@@ -155,7 +157,7 @@ Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
         image->setGLProgramState( programState->clone() );
     
     if ( terrain == TN_LAKE ) {
-        image->setAnchorPoint(Vec2(0.5,1.0));
+      //  image->setAnchorPoint(Vec2(0.5,1.0));
     }
     
     return image;

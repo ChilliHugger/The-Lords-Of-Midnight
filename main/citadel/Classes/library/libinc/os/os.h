@@ -8,14 +8,15 @@ namespace chilli {
 
 	namespace os {
 
+        using namespace chilli::types;
+        
 		// class filemanager
 		class  filemanager
 		{
 		public:
             
             static char* Fullpath ( char *UserBuf, const char *path, u32 maxlen );
-
-            
+        
 			static bool Exists ( LPCSTR lpFileName ) ;
 			static bool ExistsDir ( LPCSTR lpFileName ) ;
 			static bool Get ( LPCSTR filename, void* lpBuffer, u32 maxSize) ;
@@ -50,7 +51,7 @@ namespace chilli {
 			virtual ~fileentry();
 
 		public:
-			string m_filename;
+			c_str m_filename;
 		};
 		// class fileentry
 
@@ -69,10 +70,10 @@ namespace chilli {
 			};
 
 			filelist();
-			filelist( string filespec, u32 attribs=NORMAL );
+			filelist( c_str filespec, u32 attribs=NORMAL );
 			virtual ~filelist();
 
-			bool CreateDir ( string filespec, u32 attribs=NORMAL );
+			bool CreateDir ( c_str filespec, u32 attribs=NORMAL );
 			bool Destroy();
 
 			int Count() const	{ return m_count; };
@@ -86,7 +87,7 @@ namespace chilli {
 			u32 CountDirFiles ();
 
 		protected:
-			string		m_filespec;
+			c_str		m_filespec;
 			u32			m_count;
 			fileentry*	m_dir;
 			u32			m_attribs;

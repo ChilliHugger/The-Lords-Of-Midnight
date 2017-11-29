@@ -63,9 +63,9 @@ LPCSTR		TME_ScenarioName ( void );
 bool		TME_Init ( void );
 bool		TME_DeInit ( void );
 void		TME_PurgeTextCache();
-LPCSTR		TME_GetCharacterText ( const character& c, const string& command ) ;
-LPCSTR		TME_GetText ( const string& command ) ;
-LPCSTR		TME_GetText ( const string& command, variant args[], int count ) ;
+LPCSTR		TME_GetCharacterText ( const character& c, const c_str& command ) ;
+LPCSTR		TME_GetText ( const c_str& command ) ;
+LPCSTR		TME_GetText ( const c_str& command, variant args[], int count ) ;
 LPCSTR		TME_GetSystemString ( const character& c, int msg ) ;
 LPCSTR		TME_LastActionMsg();
 LPCSTR		TME_GetNumber(int number);
@@ -97,7 +97,7 @@ m_gameover_t TME_CheckWinLose (void);
 bool		TME_Night ( NightNotificationDelegate* delegate );
 bool		TME_Save ( LPSTR filespec, tme::PFNSERIALIZE function );
 bool		TME_Load ( LPSTR filespec, tme::PFNSERIALIZE function );
-bool        TME_SaveDescription ( LPSTR filespec, string& description );
+bool        TME_SaveDescription ( LPSTR filespec, c_str& description );
 
 bool		TME_SaveDiscoveryMap ( LPSTR filespec );
 bool		TME_LoadDiscoveryMap ( LPSTR filespec );
@@ -212,7 +212,7 @@ inline bool Location_HasTunnelEntrance(const maplocation& l)		{ return l.flags.I
 void Vars_Init ( void );
 void Vars_DeInit ( void );
 void Vars_EmptyCache ( void );
-tme::info_t* Vars_GetVar( mxid id, const string& varname, tme::variables::CVar var );
+tme::info_t* Vars_GetVar( mxid id, const c_str& varname, tme::variables::CVar var );
 
 
 // Debug!!

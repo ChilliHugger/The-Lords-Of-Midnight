@@ -17,15 +17,15 @@ namespace tme {
 		MXRESULT EntityLinkData( mxid id, const void* data );
 		
 
-		mxid EntityByName( const string& name, id_type_t type=IDT_NONE );
-		MXRESULT GetEntityProperty( mxid id, const string& name, variant& arg) const ;
-		MXRESULT GetEntityProperties ( mxid id, const string& name, variant argv[], u32 argc );
+		mxid EntityByName( const c_str& name, id_type_t type=IDT_NONE );
+		MXRESULT GetEntityProperty( mxid id, const c_str& name, variant& arg) const ;
+		MXRESULT GetEntityProperties ( mxid id, const c_str& name, variant argv[], u32 argc );
 
-		MXRESULT GetProperty( const string& name, variant& arg) const ;
-		MXRESULT GetProperties ( const string& name, variant argv[], u32 argc );
+		MXRESULT GetProperty( const c_str& name, variant& arg) const ;
+		MXRESULT GetProperties ( const c_str& name, variant argv[], u32 argc );
 
-		MXRESULT Command ( const string& command, variant* argv=NULL, u32 args=0 );
-		MXRESULT Text ( const string& command, variant* argv=NULL, u32 args=0 );
+		MXRESULT Command ( const c_str& command, variant* argv=NULL, u32 args=0 );
+		MXRESULT Text ( const c_str& command, variant* argv=NULL, u32 args=0 );
 
 		void* EntityUserData ( mxid id );
 		

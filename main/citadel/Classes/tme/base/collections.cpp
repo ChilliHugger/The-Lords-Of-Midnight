@@ -78,7 +78,7 @@ namespace tme {
 			return TRUE ;
 		}
 
-		mxentity* entities::FindSymbol ( const string& name )
+		mxentity* entities::FindSymbol ( const c_str& name )
 		{
 			for ( u32 ii=0; ii<Count(); ii++ )
 				if (c_stricmp( m_objElements[ii]->Symbol(), name ) == 0 )

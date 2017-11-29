@@ -7,6 +7,8 @@
  *
  */
 
+#ifndef _TMEINTERNAL_H_INCLUDED_
+#define _TMEINTERNAL_H_INCLUDED_
 
 
 
@@ -17,3 +19,5 @@
 #include "lomxtypes.h"
 #include "../scenarios/default/default_scenario.h"
 #include "../scenarios/default/default_scenario_internal.h"
+
+#endif // _TMEINTERNAL_H_INCLUDED_

@@ -1791,17 +1791,17 @@ namespace tme {
 
 
 
-		const string& mxcharacter::HeOrShe() const
+		const c_str& mxcharacter::HeOrShe() const
 		{ 
 			return mx->GenderById ( gender )->pronoun1; 
 		}
 
-		const string& mxcharacter::HisOrHer() const
+		const c_str& mxcharacter::HisOrHer() const
 		{ 
 			return mx->GenderById ( gender )->pronoun2; 
 		}
 
-		const string& mxcharacter::HimOrHer() const
+		const c_str& mxcharacter::HimOrHer() const
 		{ 
 			return mx->GenderById ( gender )->pronoun3; 
 		}

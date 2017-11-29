@@ -108,7 +108,7 @@ namespace tme {
         
         u32 magicno;
         u32 versionno;
-        string header;
+        c_str header;
         
         ar >> magicno;
         MXTRACE("MagicNo=%x", (unsigned int)magicno);
