@@ -52,7 +52,7 @@ static			variant args[20];
 #if defined(_LOM_)
 LPCSTR TME_ScenarioDirectory ( void )
 {
-    tme_path = cocos2d::FileUtils::getInstance()->fullPathForFilename( "lom" ) ;
+	tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + "lom";
     return tme_path.c_str();
 }
 
@@ -65,7 +65,8 @@ LPCSTR TME_ScenarioName ( void )
 #if defined(_DDR_)
 LPCSTR TME_ScenarioDirectory ( void )
 {
-	return "ddr";
+	tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + "ddr";
+	return tme_path.c_str();
 }
 
 LPCSTR TME_ScenarioName ( void )

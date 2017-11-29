@@ -81,9 +81,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcurl.lib;libcocos2d_2015.lib;librecast_2015.lib;libbullet_2015.lib;libbox2d_2015.lib;libSpine_2015.lib</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib;libcocos2d.lib;librecast.lib;libbullet-2015.lib;libbox2d.lib;libSpine.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);C:\cocos2d-x\prebuilt\win32</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\cocos2d-x\prebuilt\Debug.win32;$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);C:\cocos2d-x\prebuilt\win32</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
