@@ -19,6 +19,9 @@
 #include "platform/CCStdC.h"
 
 
+typedef std::function<void(void)> MXVoidCallback;
+
+
 //#include <malloc.h>
 
 

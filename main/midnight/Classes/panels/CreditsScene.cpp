@@ -25,23 +25,9 @@ bool Credits::init()
         return false;
     }
     
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    
-    auto p = Sprite::create("credits.png");
-    addChild(p);
-    
-    p->setPosition(Vec2(0,0));
-    p->setAnchorPoint(Vec2(0,0));
-    
-    float scaley =  ( visibleSize.height / p->getContentSize().height)  ;
-    p->setScale(1.0, scaley );
+    setBackground("credits.png");
 
-    this->scheduleOnce( [](float) {
-        
-        CustomDirector *director = (CustomDirector *)Director::getInstance();
-        director->popSceneWithTransition<TransitionCrossFade>(1.0);
-        
-    }, 5.0, "mainmenu" );
+    fadeExit(5.0);
     
     return true;
 }

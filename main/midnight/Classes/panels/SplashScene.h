@@ -1,9 +1,9 @@
 #ifndef __SPLASH_SCENE_H__
 #define __SPLASH_SCENE_H__
 
-#include "cocos2d.h"
+#include "DefaultScene.h"
 
-class Splash : public cocos2d::Scene
+class Splash : public DefaultScene
 {
 public:
     static cocos2d::Scene* createScene();
@@ -11,10 +11,7 @@ public:
     virtual bool init();
     
     CREATE_FUNC(Splash);
-    
-    
-    
-    
+
 };
 
 #endif // __SPLASH_SCENE_H__

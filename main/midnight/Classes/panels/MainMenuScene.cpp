@@ -5,11 +5,14 @@
 #include "MainMenuScene.h"
 
 #include "CreditsScene.h"
+#include "OptionsScene.h"
 
 #include "SimpleAudioEngine.h"
 #include "resolutionmanager.h"
 
 #include "../frontend/layout_id.h"
+#include "../frontend/language.h"
+
 #include "../ui/uitextmenuitem.h"
 
 
@@ -58,18 +61,7 @@ bool MainMenu::init()
         return false;
     }
     
-    
-    
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    
-    auto p = Sprite::create("screens/misc/main_menu.png");
-    addChild(p);
-
-    p->setPosition(Vec2(0,0));
-    p->setAnchorPoint(Vec2(0,0));
-
-    float scaley =  ( visibleSize.height / p->getContentSize().height)  ;
-    p->setScale(1.0, scaley );
+    setBackground("screens/misc/main_menu.png");
 
     createMenu();
     
@@ -141,6 +133,8 @@ void MainMenu::OnHelpClose()
 
 void MainMenu::OnOptions()
 {
+    auto scene = Options::create();
+    Director::getInstance()->pushScene(TransitionCrossFade::create(1.0, scene) );
 }
 
 void MainMenu::OnCredits()
@@ -152,7 +146,10 @@ void MainMenu::OnCredits()
 
 void MainMenu::OnExit()
 {
-    Director::getInstance()->popScene();
+    AreYouSure(EXIT_MSG, [&] {
+        Director::getInstance()->popScene();
+    });
+    
 }
 
 void MainMenu::OnUpdate()

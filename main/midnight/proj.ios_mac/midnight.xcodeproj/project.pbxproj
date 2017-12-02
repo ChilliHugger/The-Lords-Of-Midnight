@@ -193,6 +193,12 @@
 		8397AFF81F4CCAB5009B00A2 /* LandscapeDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */; };
 		83B9BD691FD2CC9D00B4C721 /* CreditsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* CreditsScene.cpp */; };
 		83B9BD6A1FD2CC9D00B4C721 /* CreditsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* CreditsScene.cpp */; };
+		83B9BD6F1FD30A0100B4C721 /* OptionsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD6D1FD30A0100B4C721 /* OptionsScene.cpp */; };
+		83B9BD701FD30A0100B4C721 /* OptionsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD6D1FD30A0100B4C721 /* OptionsScene.cpp */; };
+		83B9BD731FD30AF700B4C721 /* DefaultScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD711FD30AF700B4C721 /* DefaultScene.cpp */; };
+		83B9BD741FD30AF700B4C721 /* DefaultScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD711FD30AF700B4C721 /* DefaultScene.cpp */; };
+		83B9BD771FD3114000B4C721 /* uipopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD751FD3114000B4C721 /* uipopup.cpp */; };
+		83B9BD781FD3114000B4C721 /* uipopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD751FD3114000B4C721 /* uipopup.cpp */; };
 		83D264301F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264311F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264321F360724001C6F13 /* mxengine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EA1F360724001C6F13 /* mxengine.cpp */; };
@@ -418,6 +424,13 @@
 		83B9BD671FD2CC9D00B4C721 /* CreditsScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CreditsScene.cpp; sourceTree = "<group>"; };
 		83B9BD681FD2CC9D00B4C721 /* CreditsScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreditsScene.h; sourceTree = "<group>"; };
 		83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDirector.h; sourceTree = "<group>"; };
+		83B9BD6D1FD30A0100B4C721 /* OptionsScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsScene.cpp; sourceTree = "<group>"; };
+		83B9BD6E1FD30A0100B4C721 /* OptionsScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsScene.h; sourceTree = "<group>"; };
+		83B9BD711FD30AF700B4C721 /* DefaultScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DefaultScene.cpp; sourceTree = "<group>"; };
+		83B9BD721FD30AF700B4C721 /* DefaultScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultScene.h; sourceTree = "<group>"; };
+		83B9BD751FD3114000B4C721 /* uipopup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uipopup.cpp; sourceTree = "<group>"; };
+		83B9BD761FD3114000B4C721 /* uipopup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uipopup.h; sourceTree = "<group>"; };
+		83B9BD791FD316F700B4C721 /* language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		83D263E91F360724001C6F13 /* collections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collections.cpp; sourceTree = "<group>"; };
 		83D263EA1F360724001C6F13 /* mxengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxengine.cpp; sourceTree = "<group>"; };
 		83D263EB1F360724001C6F13 /* mxentity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxentity.cpp; sourceTree = "<group>"; };
@@ -759,6 +772,10 @@
 				8344EC2B1FD1EC2C0067AAC1 /* SplashScene.h */,
 				83B9BD671FD2CC9D00B4C721 /* CreditsScene.cpp */,
 				83B9BD681FD2CC9D00B4C721 /* CreditsScene.h */,
+				83B9BD6D1FD30A0100B4C721 /* OptionsScene.cpp */,
+				83B9BD6E1FD30A0100B4C721 /* OptionsScene.h */,
+				83B9BD711FD30AF700B4C721 /* DefaultScene.cpp */,
+				83B9BD721FD30AF700B4C721 /* DefaultScene.h */,
 			);
 			path = panels;
 			sourceTree = "<group>";
@@ -770,6 +787,7 @@
 				8344EC2F1FD1EC6B0067AAC1 /* resolutionmanager.h */,
 				8344EC381FD29A110067AAC1 /* layout_id.h */,
 				8344EC391FD29BBE0067AAC1 /* panel_id.h */,
+				83B9BD791FD316F700B4C721 /* language.h */,
 			);
 			path = frontend;
 			sourceTree = "<group>";
@@ -778,6 +796,8 @@
 			isa = PBXGroup;
 			children = (
 				8344EC3A1FD29D0D0067AAC1 /* uitextmenuitem.h */,
+				83B9BD751FD3114000B4C721 /* uipopup.cpp */,
+				83B9BD761FD3114000B4C721 /* uipopup.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1231,6 +1251,7 @@
 			files = (
 				83D2646A1F360724001C6F13 /* item_victories.cpp in Sources */,
 				8344EC2C1FD1EC2C0067AAC1 /* SplashScene.cpp in Sources */,
+				83B9BD731FD30AF700B4C721 /* DefaultScene.cpp in Sources */,
 				83D264801F360724001C6F13 /* default_scenario.cpp in Sources */,
 				8397AFE11F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */,
 				83D264681F360724001C6F13 /* item_stronghold.cpp in Sources */,
@@ -1288,6 +1309,7 @@
 				83D264E01F36077E001C6F13 /* misc.cpp in Sources */,
 				83D264761F360724001C6F13 /* ddr_character.cpp in Sources */,
 				83D264341F360724001C6F13 /* mxentity.cpp in Sources */,
+				83B9BD6F1FD30A0100B4C721 /* OptionsScene.cpp in Sources */,
 				83D2643A1F360724001C6F13 /* mxinfo.cpp in Sources */,
 				83D264561F360724001C6F13 /* info_object_power.cpp in Sources */,
 				83D264CA1F36077E001C6F13 /* cfile_common.cpp in Sources */,
@@ -1303,6 +1325,7 @@
 				83D264401F360724001C6F13 /* mxlocinfo.cpp in Sources */,
 				83D264601F360724001C6F13 /* item_character.cpp in Sources */,
 				83D264821F360724001C6F13 /* lom_scenario.cpp in Sources */,
+				83B9BD771FD3114000B4C721 /* uipopup.cpp in Sources */,
 				83D2645C1F360724001C6F13 /* info_terrain.cpp in Sources */,
 				830618631F38758800D017E5 /* tme.cpp in Sources */,
 				83D264581F360724001C6F13 /* info_object_type.cpp in Sources */,
@@ -1335,6 +1358,7 @@
 				83D2647B1F360724001C6F13 /* ddr_processor_night.cpp in Sources */,
 				8397AFDD1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */,
 				83D264C91F36077E001C6F13 /* cfilemanager.cpp in Sources */,
+				83B9BD741FD30AF700B4C721 /* DefaultScene.cpp in Sources */,
 				83D2644F1F360724001C6F13 /* info_command.cpp in Sources */,
 				83D264D11F36077E001C6F13 /* cbitarray.cpp in Sources */,
 				83D264651F360724001C6F13 /* item_regiment.cpp in Sources */,
@@ -1342,6 +1366,7 @@
 				83D264511F360724001C6F13 /* info_direction.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				83D895FC1F36666D00172245 /* TMEMapBuilder.cpp in Sources */,
+				83B9BD701FD30A0100B4C721 /* OptionsScene.cpp in Sources */,
 				83D264C31F36077E001C6F13 /* xml.cpp in Sources */,
 				83113FD41F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */,
 				83D264731F360724001C6F13 /* processor_text.cpp in Sources */,
@@ -1359,6 +1384,7 @@
 				83D264431F360724001C6F13 /* mxmemory.cpp in Sources */,
 				83D264411F360724001C6F13 /* mxlocinfo.cpp in Sources */,
 				83D264DB1F36077E001C6F13 /* datatypes.cpp in Sources */,
+				83B9BD781FD3114000B4C721 /* uipopup.cpp in Sources */,
 				83D264711F360724001C6F13 /* processor_night.cpp in Sources */,
 				83D264751F360724001C6F13 /* units.cpp in Sources */,
 				83D264551F360724001C6F13 /* info_object.cpp in Sources */,

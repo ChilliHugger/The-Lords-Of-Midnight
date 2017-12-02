@@ -1,10 +1,10 @@
 #ifndef __MAINMENU_SCENE_H__
 #define __MAINMENU_SCENE_H__
 
-#include "cocos2d.h"
+#include "DefaultScene.h"
 #include "../frontend/layout_id.h"
 
-class MainMenu : public cocos2d::Scene
+class MainMenu : public DefaultScene
 {
 public:
     static cocos2d::Scene* createScene();

@@ -8,9 +8,9 @@
 #ifndef CreditsScene_h
 #define CreditsScene_h
 
-#include "cocos2d.h"
+#include "DefaultScene.h"
 
-class Credits : public cocos2d::Scene
+class Credits : public DefaultScene
 {
 public:
     static cocos2d::Scene* createScene();

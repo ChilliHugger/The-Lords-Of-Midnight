@@ -18,21 +18,7 @@ bool Splash::init()
         return false;
     }
     
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    
-    //Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
-    auto p = Sprite::create("splash.png");
-    addChild(p);
-
-    p->setPosition(Vec2(0,0));
-    p->setAnchorPoint(Vec2(0,0));
-
-    //auto res = resolutionmanager::getInstance();
-    float scaley =  ( visibleSize.height / p->getContentSize().height)  ;
-    p->setScale(1.0, scaley );
-    
-
+    setBackground("splash.png");
     
     this->scheduleOnce( [](float) {
         auto mainmenu = MainMenu::create();
