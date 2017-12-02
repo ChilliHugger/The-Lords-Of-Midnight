@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "MainMenu::createMenu()::$_0::operator()(cocos2d::Ref*) const:MainMenuScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "item.id">
+            </PersistentString>
+            <PersistentString
+               value = "item">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Landscape::Moving():LandscapeScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "here">
+            </PersistentString>
+            <PersistentString
+               value = "moveTo">
+            </PersistentString>
+            <PersistentString
+               value = "moveFrom">
+            </PersistentString>
+            <PersistentString
+               value = "moveCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

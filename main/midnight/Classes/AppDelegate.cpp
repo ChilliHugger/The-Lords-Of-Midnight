@@ -1,8 +1,11 @@
 #include "AppDelegate.h"
 //#include "HelloWorldScene.h"
 
+#include "frontend/resolutionmanager.h"
 
-#include "LandscapeScene.h"
+//#include "LandscapeScene.h"
+#include "SplashScene.h"
+
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -22,6 +25,7 @@ using namespace CocosDenshion;
 USING_NS_CC;
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 768);
+
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
@@ -94,10 +98,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
     }
 
+    
+    auto res = resolutionmanager::getInstance();
+    res->init();
+    
+    InitialisePaths();
+    
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = Landscape::createScene();
+    auto scene = Splash::createScene();
     if ( scene == nullptr )
         return false;
     
@@ -106,6 +116,24 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     return true;
 }
+
+void AppDelegate::InitialisePaths()
+{
+    std::vector<std::string> searchPaths;
+    
+    auto res = resolutionmanager::getInstance();
+    
+    char main_path[255];
+    sprintf( main_path, "lom/%s", (LPCSTR)res->current_resolution.folder );
+    searchPaths.push_back(main_path);
+
+    sprintf( main_path, "lom/%s/screens/%d", (LPCSTR)res->current_resolution.folder, res->Aspect() );
+    searchPaths.push_back(main_path);
+    
+    FileUtils::getInstance()->setSearchPaths(searchPaths);
+}
+
+
 
 // This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground() {

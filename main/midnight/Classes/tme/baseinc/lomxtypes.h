@@ -6,7 +6,7 @@
 using namespace chilli::types;
 
 //#define _DDR_
-#define _LOM_
+//#define _LOM_
 
 
 /* these are the various enums
@@ -783,27 +783,27 @@ namespace tme {
 		};
 
 		enum MISSIONFLAGS {
-			mf_complete					= MXBIT(0),	// this score has been completed
-			//mf_enabled				= MXBIT(1),	// this score is enabled
-			mf_any						= MXBIT(2),	// any reference will do
+			mf_complete					= MXBIT(0),	    // this score has been completed
+			//mf_enabled				= MXBIT(1),	    // this score is enabled
+			mf_any						= MXBIT(2),	    // any reference will do
 		};
 		enum VICTORYFLAGS {
-			vf_gameover					= MXBIT(0),	// this victory condition triggers game over 
-			//vf_enabled					= MXBIT(1),	// this victory condition is enabled
+			vf_gameover					= MXBIT(0),	    // this victory condition triggers game over
+			//vf_enabled				= MXBIT(1),	    // this victory condition is enabled
 			vf_complete					= MXBIT(2),
 		};
 
 		enum LOCATIONINFOFLAGS {
-			lif_moveforward				= MXBIT(0),	// can we move into the location we are looking at?
-			lif_seek					= MXBIT(1),	// can we do a search - always true at present
-			lif_hide					= MXBIT(2),	// can the character hide here?
-			lif_fight					= MXBIT(3),	// is there anything to fight, and can the <character> do it?
-			lif_recruitchar				= MXBIT(4),	// is there a lord to fight?
-			lif_recruitmen				= MXBIT(5),	// are there any soldiers to recruit, and can the <character> do it
-			lif_guardmen				= MXBIT(6),	// could the <character> place and men on guard
-			lif_enterbattle				= MXBIT(7),	// can we enter into battle?
-			lif_enter_tunnel			= MXBIT(8),	// can we enter tunnel
-			lif_exit_tunnel				= MXBIT(9),	// can we exit tunnel
+			lif_moveforward				= MXBIT(0),	    // can we move into the location we are looking at?
+			lif_seek					= MXBIT(1),	    // can we do a search - always true at present
+			lif_hide					= MXBIT(2),	    // can the character hide here?
+			lif_fight					= MXBIT(3),	    // is there anything to fight, and can the <character> do it?
+			lif_recruitchar				= MXBIT(4),	    // is there a lord to fight?
+			lif_recruitmen				= MXBIT(5),	    // are there any soldiers to recruit, and can the <character> do it
+			lif_guardmen				= MXBIT(6),	    // could the <character> place and men on guard
+			lif_enterbattle				= MXBIT(7),	    // can we enter into battle?
+			lif_enter_tunnel			= MXBIT(8),	    // can we enter tunnel
+			lif_exit_tunnel				= MXBIT(9),	    // can we exit tunnel
 			lif_rest					= MXBIT(10),	// can we rest
 			lif_give					= MXBIT(11),	// can we give
 			lif_take					= MXBIT(12),	// can we take
@@ -812,60 +812,62 @@ namespace tme {
 		};
 
 		enum LOCATIONFLAGS { // 28 bits
-			lf_mist						= MXBIT(0), // DDR Scenario, currently not used
-			lf_tunnel					= MXBIT(1), // DDR Scenario, currently not used
-			lf_creature					= MXBIT(2), // DDR Scenario, currently not used
-			lf_character				= MXBIT(3), // character in location
-			lf_army						= MXBIT(4), // army at location
-			lf_seen						= MXBIT(5), // has been seen by the mapper
-			lf_domain					= MXBIT(6), // special domain
-			lf_special					= MXBIT(7), // is interesting
-			lf_building					= MXBIT(8), // currently not used
-			lf_stronghold				= MXBIT(9), // stronghold at location
-			lf_routenode				= MXBIT(10), // routenode at location
-			lf_terrain_custom			= MXBIT(11), // terrain is custom stored
-			lf_object_custom			= MXBIT(12), // object is custom stored
-			lf_area_custom				= MXBIT(13), // area is custom stored
+			lf_mist						= MXBIT(0),     // DDR Scenario, currently not used
+			lf_tunnel					= MXBIT(1),     // DDR Scenario, currently not used
+			lf_creature					= MXBIT(2),     // DDR Scenario, currently not used
+			lf_character				= MXBIT(3),     // character in location
+			lf_army						= MXBIT(4),     // army at location
+			lf_seen						= MXBIT(5),     // has been seen by the mapper
+			lf_domain					= MXBIT(6),     // special domain
+			lf_special					= MXBIT(7),     // is interesting
+			lf_building					= MXBIT(8),     // currently not used
+			lf_stronghold				= MXBIT(9),     // stronghold at location
+			lf_routenode				= MXBIT(10),    // routenode at location
+			lf_terrain_custom			= MXBIT(11),    // terrain is custom stored
+			lf_object_custom			= MXBIT(12),    // object is custom stored
+			lf_area_custom				= MXBIT(13),    // area is custom stored
 #if defined(_DDR_)
-            lf_tunnel_exit				= MXBIT(14), // can exit tunnel here
-            lf_tunnel_entrance			= MXBIT(15), // can enter tunnel here
+            lf_tunnel_exit				= MXBIT(14),    // can exit tunnel here
+            lf_tunnel_entrance			= MXBIT(15),    // can enter tunnel here
 #endif
-            lf_looked_at                = MXBIT(16), // has been stood in front of
-            lf_visited                  = MXBIT(17), // player has visited this location
+            lf_looked_at                = MXBIT(16),    // has been stood in front of
+            lf_visited                  = MXBIT(17),    // player has visited this location
 #if defined(_DDR_)
-            lf_tunnel_looked_at         = MXBIT(18), // player has seen the tunnel
-            lf_tunnel_visited           = MXBIT(19), // played has visited the tunnel location
-            lf_tunnel_passageway        = MXBIT(20), // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
-            lf_object                   = MXBIT(21), // object to take
-            lf_object_special           = MXBIT(22), // the object to take is one of the special objects
+            lf_tunnel_looked_at         = MXBIT(18),    // player has seen the tunnel
+            lf_tunnel_visited           = MXBIT(19),    // played has visited the tunnel location
+            lf_tunnel_passageway        = MXBIT(20),    // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
+            lf_object                   = MXBIT(21),    // object to take
+            lf_object_special           = MXBIT(22),    // the object to take is one of the special objects
 #endif
 
 		};
 
 		enum CHARACTERFLAGS {
-			cf_hidden					= MXBIT(0),	// currently hiding 
-			cf_riding					= MXBIT(1),	// currently riding
-			cf_alive					= MXBIT(2),	// alive
-			cf_recruited				= MXBIT(3),	// currently recruited
-			cf_army						= MXBIT(4),	// allowed an army
-			cf_hide						= MXBIT(5),	// allowed to hide
-			cf_horse					= MXBIT(6),	// allowed a horse
-			cf_moonring					= MXBIT(7),	// allowed the moonring
+			cf_hidden					= MXBIT(0),	    // currently hiding
+			cf_riding					= MXBIT(1),	    // currently riding
+			cf_alive					= MXBIT(2),	    // alive
+			cf_recruited				= MXBIT(3),	    // currently recruited
+			cf_army						= MXBIT(4),	    // allowed an army
+			cf_hide						= MXBIT(5),	    // allowed to hide
+			cf_horse					= MXBIT(6),	    // allowed a horse
+			cf_moonring					= MXBIT(7),	    // allowed the moonring
 
 			// these should be user defined for the scenario
 			// lom
-			cf_icecrown					= MXBIT(8),	// allowed the icecrown
-			cf_destroyicecrown			= MXBIT(9),	// can destroy the ice crown
+			cf_icecrown					= MXBIT(8),	    // allowed the icecrown
+			cf_destroyicecrown			= MXBIT(9),	    // can destroy the ice crown
 			// lom
 			
 			// ddr
 			cf_allowedwarriors			= MXBIT(10),	// can have warriors
-			cf_allowedriders			= MXBIT(11),	// can have warriors
+			cf_allowedriders			= MXBIT(11),	// can have riders
 			// ddr
 
             cf_ai                       = MXBIT(12),    // character is an AI character
             cf_killed_foe               = MXBIT(13),    // character killed his foe
 			
+            // TODO: Resolve these
+            // Do we need to be backward compatible?
 #if defined(_LOM_)
             cf_resting					= MXBIT(16),	// currently resting
             cf_inbattle					= MXBIT(17),	// currently in battle
@@ -910,31 +912,31 @@ namespace tme {
 		};
 
 		enum REGIMENTFLAGS {
-			rf_direct					= MXBIT(0),	// regiment will directly do their command
+			rf_direct					= MXBIT(0),	    // regiment will directly do their command
 			rf_inbattle					= MXBIT(17),	// currently in battle
 			rf_tunnel					= MXBIT(19),	// currently in a tunnel (DDR)
 		};
 
 		enum OBJECTFLAGS {
-			of_fight					= MXBIT(0),	// object can be fought
-			of_pickup					= MXBIT(1),	// object can be picked up
-			of_drop						= MXBIT(2),	// object can be dropped
-			of_weapon					= MXBIT(3),	// object is a weapon
-			of_see						= MXBIT(4),	// object can be seen
-			of_remove					= MXBIT(5),	// object is removed from map when found
-			of_unique					= MXBIT(6),	// object is unique
-			of_enabled					= MXBIT(7),	// object is enabled
+			of_fight					= MXBIT(0),	    // object can be fought
+			of_pickup					= MXBIT(1),	    // object can be picked up
+			of_drop						= MXBIT(2),	    // object can be dropped
+			of_weapon					= MXBIT(3),	    // object is a weapon
+			of_see						= MXBIT(4),	    // object can be seen
+			of_remove					= MXBIT(5),	    // object is removed from map when found
+			of_unique					= MXBIT(6),	    // object is unique
+			of_enabled					= MXBIT(7),	    // object is enabled
 #if defined(_DDR_)
-            of_recruitment              = MXBIT(8), // object can help with recruitment
-            of_randomstart              = MXBIT(9), // object starts randomly on map
+            of_recruitment              = MXBIT(8),     // object can help with recruitment
+            of_randomstart              = MXBIT(9),     // object starts randomly on map
 #endif
 		};
 
 		enum TERRAININFOFLAGS {
-			tif_plural					= MXBIT(0),	// terrain has plural
-			tif_block					= MXBIT(1),	// terrain blocks movement? ( not implemented )
-			tif_interesting				= MXBIT(2),	// terrain is interesting
-			tif_army					= MXBIT(3),	// army is visible at terrain
+			tif_plural					= MXBIT(0),	    // terrain has plural
+			tif_block					= MXBIT(1),	    // terrain blocks movement? ( not implemented )
+			tif_interesting				= MXBIT(2),	    // terrain is interesting
+			tif_army					= MXBIT(3),	    // army is visible at terrain
 		};
 	}
 	// namespace flags

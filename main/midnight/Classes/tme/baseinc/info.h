@@ -1016,6 +1016,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			FLAG_PROPERTY ( IsAllowedMoonring, cf_moonring )
 			FLAG_PROPERTY ( IsAllowedIcecrown, cf_icecrown )
 			FLAG_PROPERTY ( CanDestroyIcecrown, cf_destroyicecrown )
+            
 			FLAG_PROPERTY ( IsInBattle, cf_inbattle )
 			FLAG_PROPERTY ( HasWonBattle, cf_wonbattle )
 			FLAG_PROPERTY ( IsInTunnel, cf_tunnel )
