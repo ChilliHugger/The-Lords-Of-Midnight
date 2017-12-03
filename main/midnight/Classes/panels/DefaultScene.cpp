@@ -31,7 +31,10 @@ void DefaultScene::setBackground( LPCSTR background )
     auto p = Sprite::create((LPCSTR)background);
     p->setPosition(Vec2(0,0));
     p->setAnchorPoint(Vec2(0,0));
-    p->setScale(1.0, ( visibleSize.height / p->getContentSize().height) );
+    
+    f32 scale = visibleSize.height / p->getContentSize().height ;
+    
+    p->setScale(scale, scale );
     addChild(p);
 
 }

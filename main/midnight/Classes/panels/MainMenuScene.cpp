@@ -170,10 +170,15 @@ void MainMenu::OnEndStory()
 
 void MainMenu::createMenu()
 {
+    auto rect = this->getBoundingBox();
+    
+    u32 itemHeight = RES(40);
+    u32 fontSize = RES(30);
+    u32 paddingY = RES(30);
     
     auto background = Scale9Sprite::create("misc/box_16.png");
-    background->setPosition( Vec2(RES(1024/2),RES(768/2)) );
-    background->setContentSize(Size(RES(512),RES(NUMELE(items)*RES(60))));
+    background->setPosition( Vec2(rect.getMidX(), rect.getMidY()) );
+    background->setContentSize(Size(RES(512), RES(512)) );
     background->setAnchorPoint( Vec2(0.5,0.5) );
     background->setColor(Color3B::BLACK);
     background->setOpacity(ALPHA(0.25));
@@ -181,49 +186,53 @@ void MainMenu::createMenu()
     
     
     auto mainmenu = Menu::create();
-
+    mainmenu->setPosition(Vec2::ZERO);
+    this->addChild(mainmenu);
     
     TTFConfig labelConfig;
     labelConfig.fontFilePath = "fonts/celtic.ttf";
-    labelConfig.fontSize = RES(30);
+    labelConfig.fontSize = fontSize;
     labelConfig.glyphs = GlyphCollection::DYNAMIC;
     labelConfig.outlineSize = 0;
     labelConfig.customGlyphs = nullptr;
     labelConfig.distanceFieldEnabled = false;
-
-    //Vec2 offset = Vec2(RES(1024/2),RES(768-100));
     
-    auto offset = Vec2( background->getBoundingBox().getMidX(), background->getBoundingBox().getMaxY() - RES(30));
-    
+    f32 height=0;
     for ( auto item : items ) {
         
         auto label = Label::createWithTTF(labelConfig, item.type.text );
         label->getFontAtlas()->setAntiAliasTexParameters();
         label->setTextColor(Color4B::WHITE);
-        //label->setLineHeight(RES(30));
-        //label->setLineSpacing(0);
-   
+        label->setLineHeight(itemHeight);
+        //label->setLineSpacing(RES(10));
+        
         auto menuItem = MenuItemLabel::create(label);
-        menuItem->setPosition(offset);
+        menuItem->setPosition(Vec2::ZERO);
+        menuItem->setAnchorPoint( Vec2(0.5,1.0) );
+
+        auto r = menuItem->getBoundingBox();
+        height += r.size.height;
         
         ICON_ID id = (ICON_ID)item.id;
-        
         menuItem->setCallback([&,id](cocos2d::Ref *sender) {
             OnMenuItem( sender, id );
         } );
         
         mainmenu->addChild(menuItem);
-        
-        offset.y -= RES(60);
-        
     }
 
-    mainmenu->setPosition(Vec2::ZERO);
-    
+
+
+    // resize background based on content
+    background->setContentSize(Size(RES(512),height+(2*paddingY)) );
 
     
-    
-    this->addChild(mainmenu);
+    // refresh positions
+    auto offset = Vec2( background->getBoundingBox().getMidX(), background->getBoundingBox().getMaxY()-paddingY );
+    for ( auto item : mainmenu->getChildren() ) {
+        item->setPosition(offset);
+        offset.y -= item->getBoundingBox().size.height;
+    }
     
 }
 

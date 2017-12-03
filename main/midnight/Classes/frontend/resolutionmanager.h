@@ -59,7 +59,7 @@ public:
 
 };
 
-#define RES(x) (s32)    ((x)*1.0)
+#define RES(x) (s32)    ((x)*resolutionmanager::getInstance()->Scale())
 #define ALPHA(x) (s32)    ((x)*255)
 
 #endif /* resolutionmanager_h */
