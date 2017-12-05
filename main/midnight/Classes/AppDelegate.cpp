@@ -1,10 +1,8 @@
 #include "AppDelegate.h"
-//#include "HelloWorldScene.h"
-
 #include "frontend/resolutionmanager.h"
 
 //#include "LandscapeScene.h"
-#include "SplashScene.h"
+#include "panel_splashscreen.h"
 
 
 // #define USE_AUDIO_ENGINE 1
@@ -107,7 +105,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = Splash::createScene();
+    auto scene = panel_splashscreen::createScene();
     if ( scene == nullptr )
         return false;
     
