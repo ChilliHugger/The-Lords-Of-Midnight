@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>map_warrior</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>anchor</key>
+                <string>{0.5,0.5}</string>
+                <key>spriteOffset</key>
+                <string>{-0.5,-1}</string>
+                <key>spriteSize</key>
+                <string>{99,100}</string>
+                <key>spriteSourceSize</key>
+                <string>{128,128}</string>
+                <key>textureRect</key>
+                <string>{{2,2},{99,100}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>4 6 7 4 5 6 2 4 7 2 3 4 0 1 2 0 2 7</string>
+                <key>vertices</key>
+                <string>113 47 113 85 80 107 45 115 14 66 14 37 30 19 62 15</string>
+                <key>verticesUV</key>
+                <string>101 34 101 72 68 94 33 102 2 53 2 24 18 6 50 2</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>rest-1.png</string>
+            <key>size</key>
+            <string>{1024,1024}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:bcac25456ea0b3e1b5bd292ff94b7e41:b313b1256887d49702dc29a281d37130:fc968d165773c8a0a06f49755236c03a$</string>
+            <key>textureFileName</key>
+            <string>rest-1.png</string>
+        </dict>
+    </dict>
+</plist>

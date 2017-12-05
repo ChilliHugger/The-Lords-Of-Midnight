@@ -29,7 +29,9 @@ protected:
     void setBackground( LPCSTR background );
     void fadeExit( f32 delay );
     void AreYouSure ( LPCSTR text, MXVoidCallback ok );
-    
+    void OpenPDF(LPCSTR pdf);
+
+private:
     uipopup*    popupWindow;
     
 };

@@ -12,7 +12,7 @@
 #include "../frontend/language.h"
 
 #include "../ui/uitextmenuitem.h"
-
+#include "../ui/uihelper.h"
 
 
 USING_NS_CC;
@@ -99,7 +99,8 @@ void panel_mainmenu::OnMenuItem( Ref* element, ICON_ID id )
             OnShowGuide();
             break;
         case ID_NEW_STORY:
-            OnNewStory();
+            OnShowGuide();
+           // OnNewStory();
             break;
         case ID_CONTINUE_STORY:
             OnContinueStory();
@@ -119,10 +120,19 @@ void panel_mainmenu::OnMenuItem( Ref* element, ICON_ID id )
 
 void panel_mainmenu::OnShowManual()
 {
+    //if ( gl->settings.novella_pdf ) {
+    //    OpenPDF(_NOVELLA_DOCUMENT_PDF_);
+    
+    AreYouSure(_NOVELLA_PROMPT_, [&] {
+        OpenPDF(_NOVELLA_DOCUMENT_);
+    });
 }
 
 void panel_mainmenu::OnShowGuide()
 {
+    AreYouSure(_GUIDE_PROMPT_, [&] {
+        OpenPDF(_GUIDE_DOCUMENT_);
+    });
 }
 
 void panel_mainmenu::OnHelpClose()
@@ -219,11 +229,8 @@ void panel_mainmenu::createMenu()
         mainmenu->addChild(menuItem);
     }
 
-
-
     // resize background based on content
     background->setContentSize(Size(RES(512),height+(2*paddingY)) );
-
     
     // refresh positions
     auto offset = Vec2( background->getBoundingBox().getMidX(), background->getBoundingBox().getMaxY()-paddingY );
@@ -231,6 +238,24 @@ void panel_mainmenu::createMenu()
         item->setPosition(offset);
         offset.y -= item->getBoundingBox().size.height;
     }
+
+    auto guide = ui::Button::create("i_guide","","", TextureResType::PLIST);
+    this->addChild(guide);
+    guide->setAnchorPoint( uihelper::AnchorBottomLeft );
+    uihelper::PositionParentBottomLeft(guide, RES(10), RES(10) );
+    
+    guide->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
+        OnMenuItem( s, ID_GUIDE );
+    } );
+
+    auto story = ui::Button::create("i_story","","", TextureResType::PLIST);
+    this->addChild(story);
+    story->setAnchorPoint( uihelper::AnchorBottomRight );
+    uihelper::PositionParentBottomRight(story, RES(10), RES(10) );
+    
+    story->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
+        OnMenuItem( s, ID_MANUAL );
+    } );
     
 }
 

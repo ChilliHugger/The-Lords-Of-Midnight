@@ -4,90 +4,83 @@
 //
 //  Created by Chris Wild on 02/12/2017.
 //
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+//#include "cocos2d.h"
+//#include "ui/CocosGUI.h"
 
+#include "uihelper.h"
 #include "uipopup.h"
+
+#include "../frontend/language.h"
+
 #include "resolutionmanager.h"
 
 USING_NS_CC;
 
 using namespace cocos2d::ui;
 
-uipopup::uipopup( Scene* parent, point pos, size s, LPCSTR text )
+uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
 {
     auto rect = parent->getBoundingBox();
     
     this->parent = parent;
 
     this->setContentSize( rect.size );
-    this->setPosition(0, 0);
-
+    this->setPosition( Vec2::ZERO );
+    
     auto rectNode = DrawNode::create();
     rectNode->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(0,0,0,0.75f) );
     this->addChild(rectNode);
 
+    //
+    s32 layout_padding = RES(10);
+    u32 button_height = RES(60);
+    u32 button_width = RES(128);
+    
     // layout
     auto layout = Layout::create();
     layout->setBackGroundImage("misc/box_16.png");
     layout->setBackGroundImageScale9Enabled(true);
-    layout->setContentSize(Size(s.cx,s.cy));
-    layout->setPosition( Vec2( rect.getMidX(), rect.getMidY() ) ) ;
-    layout->setAnchorPoint( Vec2(0.5,0.5) );
+    layout->setAnchorPoint( uihelper::AnchorCenter );
     this->addChild(layout);
+    uihelper::PositionParentCenter( layout ) ;
     
     // add text
-    auto label = Text::create(text, "fonts/sherwood.ttf", RES(40));
-    label->ignoreContentAdaptWithSize(false);
-    // TODO: calc height of text
-    label->setContentSize(Size(s.cx,s.cy));
-    label->setPosition( Vec2( s.cx/2, (s.cy/2) + RES(60) ) ) ;
-    label->setTextHorizontalAlignment(TextHAlignment::CENTER);
-    label->setTextVerticalAlignment(TextVAlignment::CENTER);
+    auto label = Label::createWithTTF(text, "fonts/sherwood.ttf", RES(40));
     label->setColor(Color3B::RED);
+    label->setAlignment(TextHAlignment::CENTER);
+    label->setLineHeight(RES(30));
+    label->setLineSpacing(0);
+    label->setMaxLineWidth(width-(2*layout_padding));
+    label->enableWrap(true);
     layout->addChild(label);
+    label->setAnchorPoint( uihelper::AnchorTopCenter );
+    // calc label height
+    auto h = label->getContentSize().height + (4*layout_padding) + button_height;
+    layout->setContentSize(Size(width,h));
+    uihelper::PositionParentTopCenter( label, 0, layout_padding ) ;
     
     // TODO: Make these buttons part of a menu
     
-    // add ok
-    u32 paddingX = RES(10);
-    u32 paddingY = RES(10);
-    u32 middleX = s.cx / 2 ;
-    
-    auto yes = Button::create("misc/box_16.png");
-    yes->setTitleFontName("fonts/celtic.ttf");
-    yes->setTitleFontSize(RES(30));
-    yes->setTitleColor(Color3B::RED);
-    yes->setTouchEnabled(true);
-    yes->setScale9Enabled(true);
-    yes->setContentSize(Size(RES(128),RES(60)));
-    yes->setTitleText("YES");
-    yes->setAnchorPoint( Vec2(0,0) );
-    yes->setPosition( Vec2(middleX+paddingX,paddingY ) );
-    // Adjust for centreY without trailing character
-    yes->getTitleRenderer()->setLineHeight(RES(25));
+    auto yes = uihelper::CreateBoxButton(Size(button_width,button_height));
+    yes->setTitleText(BUTTON_YES);
+    layout->addChild(yes);
+    yes->setAnchorPoint( uihelper::AnchorBottomRight );
+    uihelper::PositionParentBottomCenter(yes, -layout_padding, layout_padding);
     yes->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
         OnYes();
     } );
-    layout->addChild(yes);
     
     // add cancel
-    auto no = Button::create("misc/box_16.png");
-    no->setTitleFontName("fonts/celtic.ttf");
-    no->setTitleFontSize(RES(30));
-    no->setTitleColor(Color3B::RED);
-    no->setTouchEnabled(true);
-    no->setScale9Enabled(true);
-    no->setContentSize(Size(RES(128),RES(60)));
-    no->setTitleText("NO");
-    no->setAnchorPoint( Vec2(1,0) );
-    no->setPosition( Vec2(middleX-paddingX,paddingY) );
-    no->getTitleRenderer()->setLineHeight(RES(25));
+    auto no = uihelper::CreateBoxButton(Size(button_width,button_height));
+    no->setTitleText(BUTTON_NO);
+    layout->addChild(no);
+    no->setAnchorPoint( uihelper::AnchorBottomLeft );
+    uihelper::PositionParentBottomCenter(no, layout_padding, layout_padding);
     no->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
         OnNo();
     } );
-    layout->addChild(no);
     
+
 }
 
 void uipopup::Show()

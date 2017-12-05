@@ -48,8 +48,8 @@ bool Landscape::init()
     // load terrain
     
 #if defined(_LOM_MAP_)
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_M-0.plist");
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain/lom_M-1.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain-0.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("terrain-1.plist");
 #endif
     
 #if defined(_CITADEL_MAP_)

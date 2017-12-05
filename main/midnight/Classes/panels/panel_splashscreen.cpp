@@ -2,7 +2,7 @@
 #include "panel_mainmenu.h"
 #include "SimpleAudioEngine.h"
 
-#include "resolutionmanager.h"
+#include "../frontend/resolutionmanager.h"
 
 USING_NS_CC;
 
@@ -24,6 +24,10 @@ bool panel_splashscreen::init()
         auto panel = panel_mainmenu::create();
         Director::getInstance()->replaceScene(TransitionCrossFade::create(1.0, panel) );
     }, 1.0, "show_mainmenu" );
+    
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("rest-0.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("rest-1.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("language-0.plist");
     
     
     return true;

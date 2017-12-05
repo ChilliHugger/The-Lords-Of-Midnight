@@ -9,7 +9,6 @@
 #define uipopup_h
 
 #include "cocos2d.h"
-
 #include "../library/libinc/mxtypes.h"
 
 using namespace chilli::types;
@@ -23,7 +22,7 @@ private:
     uipopup();
 
 public:
-    uipopup( Scene* parent, point pos, size s, LPCSTR text );
+    uipopup( Scene* parent, point pos, f32 width, LPCSTR text );
 
     void Show();
     void Close();

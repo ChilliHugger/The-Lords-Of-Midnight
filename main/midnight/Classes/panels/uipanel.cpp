@@ -7,7 +7,6 @@
 
 #include "../ui/uipopup.h"
 #include "../Extensions/CustomDirector.h"
-
 #include "uipanel.h"
 #include "resolutionmanager.h"
 
@@ -62,7 +61,7 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
         popupWindow->Close();
     }
     
-    popupWindow = new uipopup( this, point(0,0), size(RES(600),RES(256+64)), text );
+    popupWindow = new uipopup( this, point(0,0), RES(600), text );
     popupWindow->onCancel = [&] {
         popupWindow = nullptr;
     };
@@ -74,3 +73,15 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
     popupWindow->Show();
     
 }
+
+void uipanel::OpenPDF(LPCSTR pdf)
+{
+#if defined(_OS_ANDROID_GOOGLE_DOCS_)
+    char buffer[MAX_PATH];
+    snprintf(buffer, MAX_PATH, "%s%s", PDF_VIEWER, pdf);
+    Application::getInstance()->openURL(buffer);
+#else
+    Application::getInstance()->openURL(pdf);
+#endif
+}
+
