@@ -4,16 +4,16 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.4.0</string>
+        <string>4.5.0</string>
         <key>fileName</key>
-        <string>/Users/chris/Desktop/versionA/terrains_maxSize/lom_terrain.tps</string>
+        <string>/Users/chris/Projects/The-Lords-Of-Midnight/lom/terrain_images/lom_terrain.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
                 <key>scale</key>
                 <double>1</double>
                 <key>extension</key>
-                <string>_L</string>
+                <string>gfx_h</string>
                 <key>spriteFilter</key>
                 <string></string>
                 <key>acceptFractionalValues</key>
@@ -30,7 +30,7 @@
                 <key>scale</key>
                 <double>0.5</double>
                 <key>extension</key>
-                <string>_M</string>
+                <string>gfx_m</string>
                 <key>spriteFilter</key>
                 <string></string>
                 <key>acceptFractionalValues</key>
@@ -167,7 +167,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>lom{v}-{n}.plist</filename>
+                <filename>../{v}/terrain-{n}.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>

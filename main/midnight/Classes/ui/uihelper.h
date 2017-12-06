@@ -14,6 +14,8 @@
 
 using namespace chilli::types;
 
+FORWARD_REFERENCE( uipanel );
+
 USING_NS_CC;
 
 class uihelper
@@ -30,6 +32,8 @@ public:
     static Vec2 AnchorBottomCenter;
     
     static void PositionParentTopCenter( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
+    static void PositionParentTopLeft( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
+
     static void PositionParentBottomCenter( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
     static void PositionParentBottomLeft( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
     static void PositionParentBottomRight( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
@@ -39,6 +43,8 @@ public:
     static void FillParent( Node* node );
 
     static ui::Button* CreateBoxButton( Size size );
+    static ui::Button* CreateImageButton( const std::string& name );
+    static ui::Button* CreateImageButton( const std::string& name, u32 id, uipanel* parent );
 
     
 };

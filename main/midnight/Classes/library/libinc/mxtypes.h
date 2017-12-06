@@ -24,6 +24,8 @@ typedef std::function<void(void)> MXVoidCallback;
 
 //#include <malloc.h>
 
+#define FORWARD_REFERENCE(x) \
+    class x
 
 #define SAFEFREE(x)	\
 	if ( x ) { free(x); x=NULL; }

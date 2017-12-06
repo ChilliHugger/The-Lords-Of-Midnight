@@ -100,6 +100,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto res = resolutionmanager::getInstance();
     res->init();
     
+    director->setContentScaleFactor(res->ContentScale());
+    
+    
     InitialisePaths();
     
     register_all_packages();

@@ -50,6 +50,7 @@ public:
     float Height() { return current_resolution.height; } const ;
     u32 Aspect() { return current_resolution.aspect; } const ;
     float Scale() { return current_resolution.screen_scale; } const ;
+    float ContentScale() { return current_resolution.target_scale; } const ;
 
     
 public:
@@ -59,7 +60,10 @@ public:
 
 };
 
-#define RES(x) (s32)    ((x)*resolutionmanager::getInstance()->Scale())
-#define ALPHA(x) (s32)    ((x)*255)
+//#define RES(x) (s32)    ((x)*1.0)
+
+#define RES(x) (f32)    ((x)*resolutionmanager::getInstance()->Scale())
+//#define ASP(x) (u32)    ((x)*resolutionmanager::getInstance()->Aspect())
+#define ALPHA(x) (f32)    ((x)*255)
 
 #endif /* resolutionmanager_h */

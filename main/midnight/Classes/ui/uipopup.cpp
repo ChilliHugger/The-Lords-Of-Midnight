@@ -32,9 +32,9 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
     this->addChild(rectNode);
 
     //
-    s32 layout_padding = RES(10);
-    u32 button_height = RES(60);
-    u32 button_width = RES(128);
+    f32 layout_padding = RES(10);
+    f32 button_height = RES(60);
+    f32 button_width = RES(128);
     
     // layout
     auto layout = Layout::create();

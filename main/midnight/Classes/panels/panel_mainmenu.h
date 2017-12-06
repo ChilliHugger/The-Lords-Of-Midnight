@@ -12,11 +12,12 @@ public:
     virtual bool init();
     
     CREATE_FUNC(panel_mainmenu);
+    
+    virtual void OnNotification( Ref* element, u32 tag );
 
 protected:
     void createMenu();
     
-    void OnMenuItem( Ref* element, ICON_ID id );
     void OnShowManual();
     void OnShowGuide();
     void OnHelpClose();

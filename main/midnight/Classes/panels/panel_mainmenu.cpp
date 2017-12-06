@@ -61,12 +61,17 @@ bool panel_mainmenu::init()
     
     setBackground("screens/misc/main_menu.png");
 
+    auto logo = Sprite::createWithSpriteFrameName("lom_logo");
+    this->addChild(logo);
+    uihelper::PositionParentTopLeft(logo);
+    
+    
     createMenu();
     
     return true;
 }
 
-void panel_mainmenu::OnMenuItem( Ref* element, ICON_ID id )
+void panel_mainmenu::OnNotification( Ref* element, u32 id )
 {
     switch (id) {
 #if defined(_OS_DESKTOP_)
@@ -99,8 +104,7 @@ void panel_mainmenu::OnMenuItem( Ref* element, ICON_ID id )
             OnShowGuide();
             break;
         case ID_NEW_STORY:
-            OnShowGuide();
-           // OnNewStory();
+            OnNewStory();
             break;
         case ID_CONTINUE_STORY:
             OnContinueStory();
@@ -185,14 +189,13 @@ void panel_mainmenu::createMenu()
     u32 paddingY = RES(30);
     
     auto background = Scale9Sprite::create("misc/box_16.png");
-    background->setPosition( Vec2(rect.getMidX(), rect.getMidY()) );
-    background->setContentSize(Size(RES(512), RES(512)) );
-    background->setAnchorPoint( Vec2(0.5,0.5) );
-    background->setColor(Color3B::BLACK);
-    background->setOpacity(ALPHA(0.25));
     this->addChild(background);
     
-    
+    background->setContentSize(Size(RES(512), RES(512)) );
+    background->setColor(Color3B::BLACK);
+    background->setOpacity(ALPHA(0.25));
+    uihelper::PositionParentCenter(background);
+
     auto mainmenu = Menu::create();
     mainmenu->setPosition(Vec2::ZERO);
     this->addChild(mainmenu);
@@ -216,14 +219,14 @@ void panel_mainmenu::createMenu()
         
         auto menuItem = MenuItemLabel::create(label);
         menuItem->setPosition(Vec2::ZERO);
-        menuItem->setAnchorPoint( Vec2(0.5,1.0) );
+        menuItem->setAnchorPoint( uihelper::AnchorTopCenter );
 
         auto r = menuItem->getBoundingBox();
         height += r.size.height;
         
         ICON_ID id = (ICON_ID)item.id;
         menuItem->setCallback([&,id](cocos2d::Ref *sender) {
-            OnMenuItem( sender, id );
+            OnNotification( sender, id );
         } );
         
         mainmenu->addChild(menuItem);
@@ -239,23 +242,11 @@ void panel_mainmenu::createMenu()
         offset.y -= item->getBoundingBox().size.height;
     }
 
-    auto guide = ui::Button::create("i_guide","","", TextureResType::PLIST);
-    this->addChild(guide);
-    guide->setAnchorPoint( uihelper::AnchorBottomLeft );
-    uihelper::PositionParentBottomLeft(guide, RES(10), RES(10) );
-    
-    guide->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
-        OnMenuItem( s, ID_GUIDE );
-    } );
+    auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, this);
+    uihelper::PositionParentBottomRight(guide, RES(10), RES(10) );
 
-    auto story = ui::Button::create("i_story","","", TextureResType::PLIST);
-    this->addChild(story);
-    story->setAnchorPoint( uihelper::AnchorBottomRight );
-    uihelper::PositionParentBottomRight(story, RES(10), RES(10) );
-    
-    story->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
-        OnMenuItem( s, ID_MANUAL );
-    } );
+    auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, this);
+    uihelper::PositionParentBottomLeft(story, RES(10), RES(10) );
     
 }
 

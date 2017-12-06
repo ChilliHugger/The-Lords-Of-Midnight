@@ -38,9 +38,9 @@
                 <key>maxTextureSize</key>
                 <QSize>
                     <key>width</key>
-                    <int>1024</int>
+                    <int>2048</int>
                     <key>height</key>
-                    <int>1024</int>
+                    <int>2048</int>
                 </QSize>
             </struct>
         </array>
@@ -246,7 +246,6 @@
             <key type="filename">misc/arrow_left.png</key>
             <key type="filename">misc/arrow_right.png</key>
             <key type="filename">misc/arrow_up.png</key>
-            <key type="filename">misc/box_16.png</key>
             <key type="filename">misc/close.png</key>
             <key type="filename">misc/i_minus.png</key>
             <key type="filename">misc/i_plus.png</key>
