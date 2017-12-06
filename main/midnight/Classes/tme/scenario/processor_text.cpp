@@ -1689,7 +1689,7 @@ __terrain:
 			}else
 // SYSTEM STRING
 			IS_ARG("str") {
-				return CookedSystemString(chilli::lib::atol((LPCSTR)tokens[is+1]),character);
+				return CookedSystemString((u32)chilli::lib::atol((LPCSTR)tokens[is+1]),character);
 			}else
 // SPECIAL
 			IS_ARG("special") {

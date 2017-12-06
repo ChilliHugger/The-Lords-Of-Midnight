@@ -24,6 +24,9 @@ public:
     
     //CREATE_FUNC(uipanel);
     
+    virtual void OnNotification( Ref* element, u32 tag );
+
+    
 protected:
     
     void setBackground( LPCSTR background );

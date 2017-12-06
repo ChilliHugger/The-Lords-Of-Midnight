@@ -1,5 +1,5 @@
 //
-//  DefaultScene.cpp
+//  uipanel.cpp
 //  midnight
 //
 //  Created by Chris Wild on 02/12/2017.
@@ -22,6 +22,10 @@ bool uipanel::init()
     }
     
     return true;
+}
+
+void uipanel::OnNotification( Ref* element, u32 id )
+{
 }
 
 void uipanel::setBackground( LPCSTR background )
