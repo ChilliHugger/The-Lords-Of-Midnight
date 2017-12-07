@@ -39,7 +39,9 @@ public:
     static void PositionParentBottomRight( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
 
     static void PositionParentCenter( Node* node, f32 paddingX = 0, f32 paddingY = 0  );
-    
+    static void PositionParentCenterLeft( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
+    static void PositionParentCenterRight( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
+
     static void FillParent( Node* node );
 
     static ui::Button* CreateBoxButton( Size size );

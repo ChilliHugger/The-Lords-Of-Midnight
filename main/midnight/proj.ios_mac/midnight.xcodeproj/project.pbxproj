@@ -189,6 +189,10 @@
 		83B9BD781FD3114000B4C721 /* uipopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD751FD3114000B4C721 /* uipopup.cpp */; };
 		83B9BD7C1FD7298D00B4C721 /* uihelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */; };
 		83B9BD7D1FD7298D00B4C721 /* uihelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */; };
+		83B9BD811FD9AE2000B4C721 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* config.cpp */; };
+		83B9BD821FD9AE2000B4C721 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* config.cpp */; };
+		83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD881FD9B13900B4C721 /* moonring.cpp */; };
+		83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD881FD9B13900B4C721 /* moonring.cpp */; };
 		83D264301F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264311F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264321F360724001C6F13 /* mxengine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EA1F360724001C6F13 /* mxengine.cpp */; };
@@ -418,6 +422,11 @@
 		83B9BD791FD316F700B4C721 /* language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uihelper.cpp; sourceTree = "<group>"; };
 		83B9BD7B1FD7298D00B4C721 /* uihelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uihelper.h; sourceTree = "<group>"; };
+		83B9BD7F1FD9AE2000B4C721 /* config.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = config.cpp; sourceTree = "<group>"; };
+		83B9BD801FD9AE2000B4C721 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		83B9BD871FD9B04D00B4C721 /* keyboard_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboard_id.h; sourceTree = "<group>"; };
+		83B9BD881FD9B13900B4C721 /* moonring.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moonring.cpp; sourceTree = "<group>"; };
+		83B9BD891FD9B13900B4C721 /* moonring.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = moonring.h; sourceTree = "<group>"; };
 		83D263E91F360724001C6F13 /* collections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collections.cpp; sourceTree = "<group>"; };
 		83D263EA1F360724001C6F13 /* mxengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxengine.cpp; sourceTree = "<group>"; };
 		83D263EB1F360724001C6F13 /* mxentity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxentity.cpp; sourceTree = "<group>"; };
@@ -677,6 +686,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				83B9BD7E1FD9ADE100B4C721 /* system */,
 				83B9BD6B1FD2D35900B4C721 /* Extensions */,
 				8344EC371FD20F280067AAC1 /* ui */,
 				8344EC2E1FD1EC510067AAC1 /* frontend */,
@@ -768,6 +778,7 @@
 				8344EC381FD29A110067AAC1 /* layout_id.h */,
 				8344EC391FD29BBE0067AAC1 /* panel_id.h */,
 				83B9BD791FD316F700B4C721 /* language.h */,
+				83B9BD871FD9B04D00B4C721 /* keyboard_id.h */,
 			);
 			path = frontend;
 			sourceTree = "<group>";
@@ -813,6 +824,17 @@
 				83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		83B9BD7E1FD9ADE100B4C721 /* system */ = {
+			isa = PBXGroup;
+			children = (
+				83B9BD7F1FD9AE2000B4C721 /* config.cpp */,
+				83B9BD801FD9AE2000B4C721 /* config.h */,
+				83B9BD881FD9B13900B4C721 /* moonring.cpp */,
+				83B9BD891FD9B13900B4C721 /* moonring.h */,
+			);
+			path = system;
 			sourceTree = "<group>";
 		};
 		83D263E71F360724001C6F13 /* tme */ = {
@@ -1237,6 +1259,7 @@
 				8397AFF61F4CCAB0009B00A2 /* LandscapeTerrain.cpp in Sources */,
 				8344EC311FD1EC6B0067AAC1 /* resolutionmanager.cpp in Sources */,
 				83D2646E1F360724001C6F13 /* processor_battle.cpp in Sources */,
+				83B9BD811FD9AE2000B4C721 /* config.cpp in Sources */,
 				83D2645E1F360724001C6F13 /* info_unit.cpp in Sources */,
 				83D2644C1F360724001C6F13 /* info_area.cpp in Sources */,
 				83D264F01F360857001C6F13 /* tinyxml.cpp in Sources */,
@@ -1293,6 +1316,7 @@
 				83D2645A1F360724001C6F13 /* info_race.cpp in Sources */,
 				83D264361F360724001C6F13 /* mxfragment.cpp in Sources */,
 				83D2644E1F360724001C6F13 /* info_command.cpp in Sources */,
+				83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				83D264D81F36077E001C6F13 /* c_str.cpp in Sources */,
 				83D264D61F36077E001C6F13 /* crange.cpp in Sources */,
 				83D264C81F36077E001C6F13 /* cfilemanager.cpp in Sources */,
@@ -1357,6 +1381,7 @@
 				83D264E31F36077E001C6F13 /* random.cpp in Sources */,
 				83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */,
 				83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */,
+				83B9BD821FD9AE2000B4C721 /* config.cpp in Sources */,
 				83D264431F360724001C6F13 /* mxmemory.cpp in Sources */,
 				83D264411F360724001C6F13 /* mxlocinfo.cpp in Sources */,
 				83D264DB1F36077E001C6F13 /* datatypes.cpp in Sources */,
@@ -1392,6 +1417,7 @@
 				83D264311F360724001C6F13 /* collections.cpp in Sources */,
 				83D264F31F360857001C6F13 /* tinyxmlerror.cpp in Sources */,
 				83D264771F360724001C6F13 /* ddr_character.cpp in Sources */,
+				83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				8344EC2D1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1492,7 +1518,6 @@
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
-					"COCOS2D_DEBUG=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -1728,6 +1753,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"MX_DEBUG=1",
+					"COCOS2D_DEBUG=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

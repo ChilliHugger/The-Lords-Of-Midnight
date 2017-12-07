@@ -8,7 +8,8 @@
 #include "../ui/uipopup.h"
 #include "../Extensions/CustomDirector.h"
 #include "uipanel.h"
-#include "resolutionmanager.h"
+#include "../frontend/resolutionmanager.h"
+#include "../system/moonring.h"
 
 
 USING_NS_CC;
@@ -21,6 +22,8 @@ bool uipanel::init()
         return false;
     }
     
+    mr = moonring::instance();
+    
     return true;
 }
 
@@ -28,7 +31,7 @@ void uipanel::OnNotification( Ref* element, u32 id )
 {
 }
 
-void uipanel::setBackground( LPCSTR background )
+void uipanel::SetBackground( LPCSTR background )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
@@ -42,7 +45,7 @@ void uipanel::setBackground( LPCSTR background )
 
 }
 
-void uipanel::fadeExit(f32 delay = 0.0f )
+void uipanel::FadeExit(f32 delay )
 {
     if ( delay == 0 ) {
         CustomDirector *director = (CustomDirector *)Director::getInstance();
@@ -89,3 +92,14 @@ void uipanel::OpenPDF(LPCSTR pdf)
 #endif
 }
 
+void uipanel::FillBackground()
+{
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto p = Sprite::createWithSpriteFrameName("background_tile");
+    p->setPosition( Vec2::ZERO );
+    p->setAnchorPoint( Vec2::ZERO );
+    f32 scaleY = visibleSize.height / p->getContentSize().height ;
+    f32 scaleX = visibleSize.width / p->getContentSize().width ;
+    p->setScale(scaleX, scaleY );
+    addChild(p);
+}

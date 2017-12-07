@@ -16,11 +16,8 @@
 
 
 USING_NS_CC;
-
 using namespace cocos2d::ui;
 
-#define KEYCODE(x) \
-    cocos2d::EventKeyboard::KeyCode::KEY_##x
 
 
 static uitextmenuitem items[] = {
@@ -45,21 +42,14 @@ static uitextmenuitem items[] = {
     
 };
 
-
-
-Scene* panel_mainmenu::createScene()
-{
-    return panel_mainmenu::create();
-}
-
 bool panel_mainmenu::init()
 {
-    if ( !Scene::init() )
+    if ( !uipanel::init() )
     {
         return false;
     }
     
-    setBackground("screens/misc/main_menu.png");
+    SetBackground("screens/misc/main_menu.png");
 
     auto logo = Sprite::createWithSpriteFrameName("lom_logo");
     this->addChild(logo);

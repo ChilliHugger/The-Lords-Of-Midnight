@@ -212,7 +212,7 @@
             <key>trimMode</key>
             <enum type="SpriteSettings::TrimMode">Polygon</enum>
             <key>tracerTolerance</key>
-            <int>128</int>
+            <int>42</int>
             <key>heuristicMask</key>
             <false/>
             <key>defaultPivotPoint</key>
@@ -286,6 +286,7 @@
             <key type="filename">map/map_current_location.png</key>
             <key type="filename">menu/bookmark.png</key>
             <key type="filename">menu/bookmark_overlay.png</key>
+            <key type="filename">misc/background_tile.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -338,6 +339,19 @@
                 <rect>128,141,256,281</rect>
                 <key>scale9Paddings</key>
                 <rect>128,141,256,281</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">menu/lom_logo.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>260,110,521,221</rect>
+                <key>scale9Paddings</key>
+                <rect>260,110,521,221</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

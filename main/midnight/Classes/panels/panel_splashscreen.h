@@ -6,7 +6,6 @@
 class panel_splashscreen : public uipanel
 {
 public:
-    static cocos2d::Scene* createScene();
     
     virtual bool init();
     

@@ -14,19 +14,27 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "panel_options::SetValues():panel_options.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "this-&gt;_children">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Landscape::Moving():LandscapeScene.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "here">
+               value = "moveCount">
             </PersistentString>
             <PersistentString
                value = "moveTo">
             </PersistentString>
             <PersistentString
-               value = "moveFrom">
+               value = "here">
             </PersistentString>
             <PersistentString
-               value = "moveCount">
+               value = "moveFrom">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

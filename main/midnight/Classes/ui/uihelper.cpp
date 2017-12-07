@@ -33,6 +33,36 @@ void uihelper::PositionParentTopCenter( Node* node, f32 paddingX, f32 paddingY )
     
 }
 
+void uihelper::PositionParentTopLeft( Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node->getParent() == nullptr )
+        return;
+    auto r = node->getParent()->getBoundingBox();
+    node->setPosition(paddingX, r.size.height-paddingY );
+    node->setAnchorPoint(uihelper::AnchorTopLeft);
+    
+}
+
+void uihelper::PositionParentCenterLeft( Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node->getParent() == nullptr )
+        return;
+    
+    auto r = node->getParent()->getBoundingBox();
+    node->setPosition(paddingX, (r.size.height/2)-paddingY );
+    node->setAnchorPoint(uihelper::AnchorLeftCenter);
+}
+
+void uihelper::PositionParentCenterRight( Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node->getParent() == nullptr )
+        return;
+    
+    auto r = node->getParent()->getBoundingBox();
+    node->setPosition(r.size.width - paddingX, (r.size.height/2)-paddingY );
+    node->setAnchorPoint(uihelper::AnchorRightCenter);
+}
+
 void uihelper::PositionParentBottomCenter( Node* node, f32 paddingX, f32 paddingY )
 {
     if ( node->getParent() == nullptr )
@@ -52,18 +82,6 @@ void uihelper::PositionParentBottomLeft( Node* node, f32 paddingX, f32 paddingY 
     node->setAnchorPoint( uihelper::AnchorBottomLeft );
     
 }
-
-void uihelper::PositionParentTopLeft( Node* node, f32 paddingX, f32 paddingY )
-{
-    if ( node->getParent() == nullptr )
-        return;
-    auto r = node->getParent()->getBoundingBox();
-    node->setPosition(paddingX, r.size.height-paddingY );
-    node->setAnchorPoint(uihelper::AnchorTopLeft);
-    
-}
-
-
 
 void uihelper::PositionParentBottomRight( Node* node, f32 paddingX, f32 paddingY )
 {
@@ -124,4 +142,5 @@ ui::Button* uihelper::CreateBoxButton( Size size )
     button->getTitleRenderer()->setLineHeight(RES(25));
     return button;
 }
+
 

@@ -12,21 +12,16 @@
 #include "resolutionmanager.h"
 
 
-Scene* panel_credits::createScene()
-{
-    return panel_credits::create();
-}
-
 bool panel_credits::init()
 {
-    if ( !Scene::init() )
+    if ( !uipanel::init() )
     {
         return false;
     }
     
-    setBackground("credits.png");
+    SetBackground("credits.png");
 
-    fadeExit(5.0);
+    FadeExit(5.0);
     
     return true;
 }

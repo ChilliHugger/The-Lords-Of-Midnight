@@ -64,9 +64,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("citadel", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect("midnight", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-        glview = GLViewImpl::create("citadel");
+        glview = GLViewImpl::create("midnight");
 #endif
         director->setOpenGLView(glview);
     }
@@ -101,14 +101,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
     res->init();
     
     director->setContentScaleFactor(res->ContentScale());
-    
+    //glview->setFrameZoomFactor(0.5);
     
     InitialisePaths();
     
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = panel_splashscreen::createScene();
+    auto scene = panel_splashscreen::create();
     if ( scene == nullptr )
         return false;
     

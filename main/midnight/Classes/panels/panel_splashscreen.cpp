@@ -6,19 +6,14 @@
 
 USING_NS_CC;
 
-Scene* panel_splashscreen::createScene()
-{
-    return panel_splashscreen::create();
-}
-
 bool panel_splashscreen::init()
 {
-    if ( !Scene::init() )
+    if ( !uipanel::init() )
     {
         return false;
     }
     
-    setBackground("splash.png");
+    SetBackground("splash.png");
     
     this->scheduleOnce( [](float) {
         auto panel = panel_mainmenu::create();

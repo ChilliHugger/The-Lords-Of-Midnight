@@ -14,7 +14,8 @@
 using namespace chilli::types;
 
 // forward references
-class uipopup;
+FORWARD_REFERENCE( uipopup );
+FORWARD_REFERENCE( moonring );
 
 class uipanel : public cocos2d::Scene
 {
@@ -29,14 +30,15 @@ public:
     
 protected:
     
-    void setBackground( LPCSTR background );
-    void fadeExit( f32 delay );
+    void SetBackground( LPCSTR background );
+    void FadeExit( f32 delay = 0);
     void AreYouSure ( LPCSTR text, MXVoidCallback ok );
     void OpenPDF(LPCSTR pdf);
-
-private:
-    uipopup*    popupWindow;
+    void FillBackground();
     
+protected:
+    uipopup*    popupWindow;
+    moonring*   mr;
 };
 
 
