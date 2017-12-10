@@ -21,10 +21,10 @@ namespace tme {
 	//namespace units {
 		mxunit::mxunit()
 		{
-			total=NONE;
-			energy=NONE;
-			lost=NONE;
-			slew=NONE;
+			total=0;
+			energy=0;
+			lost=0;
+			slew=0;
 		//	race=RA_NONE ;
 		}
 

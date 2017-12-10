@@ -38,22 +38,23 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
     
     // layout
     auto layout = Layout::create();
-    layout->setBackGroundImage("misc/box_16.png");
+    layout->setBackGroundImage(BOX_BACKGROUND_FILENAME);
     layout->setBackGroundImageScale9Enabled(true);
     layout->setAnchorPoint( uihelper::AnchorCenter );
     this->addChild(layout);
     uihelper::PositionParentCenter( layout ) ;
     
     // add text
-    auto label = Label::createWithTTF(text, "fonts/sherwood.ttf", RES(40));
-    label->setColor(Color3B::RED);
+    auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
+    label->setColor(Color3B::BLUE);
     label->setAlignment(TextHAlignment::CENTER);
-    label->setLineHeight(RES(30));
+    label->setLineHeight(RES(FONT_SIZE_BIG));
     label->setLineSpacing(0);
     label->setMaxLineWidth(width-(2*layout_padding));
     label->enableWrap(true);
     layout->addChild(label);
     label->setAnchorPoint( uihelper::AnchorTopCenter );
+    
     // calc label height
     auto h = label->getContentSize().height + (4*layout_padding) + button_height;
     layout->setContentSize(Size(width,h));

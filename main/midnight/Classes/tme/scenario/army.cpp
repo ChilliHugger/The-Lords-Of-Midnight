@@ -24,9 +24,9 @@ namespace tme {
 		armytype=AT_NONE;
 		race=RA_NONE;
 		type=UT_NONE;
-		total=NONE;
-		success=NONE;
-		killed=NONE;
+		total=0;
+		success=0;
+		killed=0;
 	}
 
 	mxarmy::~mxarmy()

@@ -13,13 +13,12 @@ enum eTextButton {
     TB_DOUBLE=1,
 };
 
-
 typedef struct uitextmenuitem
 {
     u32     id;
     union {
         const char*     text;
-        //Node*      element;
+      //  uioptionitem*   element;
     } type ;
     
     cocos2d::EventKeyboard::KeyCode     keyboard_shortcut;
@@ -27,7 +26,7 @@ typedef struct uitextmenuitem
     
     // nasty hack
     eTextButton text_button_type;
-    const char* text2;
+    //const char* text2;
     
 } uitextmenuitem ;
 

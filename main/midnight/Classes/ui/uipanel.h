@@ -16,18 +16,16 @@ using namespace chilli::types;
 // forward references
 FORWARD_REFERENCE( uipopup );
 FORWARD_REFERENCE( moonring );
+FORWARD_REFERENCE( uieventargs );
+FORWARD_REFERENCE( uielement );
 
 class uipanel : public cocos2d::Scene
 {
 public:
     
     virtual bool init();
-    
-    //CREATE_FUNC(uipanel);
-    
-    virtual void OnNotification( Ref* element, u32 tag );
+    virtual void OnNotification( Ref* element );
 
-    
 protected:
     
     void SetBackground( LPCSTR background );

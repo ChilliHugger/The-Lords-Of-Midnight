@@ -21,7 +21,7 @@ namespace tme {
 	mxentity::mxentity(void)
 	{
 		type = IDT_NONE ;
-		id = NONE ;
+		id = 0 ;
 	}
 
 	mxentity::~mxentity(void)

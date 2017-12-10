@@ -179,6 +179,14 @@
 		8397AFF61F4CCAB0009B00A2 /* LandscapeTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */; };
 		8397AFF71F4CCAB2009B00A2 /* LandscapeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */; };
 		8397AFF81F4CCAB5009B00A2 /* LandscapeDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */; };
+		839F0D6F1FDBE8B0000E2CC2 /* uioptionitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D6D1FDBE8B0000E2CC2 /* uioptionitem.cpp */; };
+		839F0D701FDBE8B0000E2CC2 /* uioptionitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D6D1FDBE8B0000E2CC2 /* uioptionitem.cpp */; };
+		839F0D731FDBEB7D000E2CC2 /* uitextmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D711FDBEB7D000E2CC2 /* uitextmenu.cpp */; };
+		839F0D741FDBEB7D000E2CC2 /* uitextmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D711FDBEB7D000E2CC2 /* uitextmenu.cpp */; };
+		839F0D771FDBFAA6000E2CC2 /* uielement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D751FDBFAA6000E2CC2 /* uielement.cpp */; };
+		839F0D781FDBFAA6000E2CC2 /* uielement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D751FDBFAA6000E2CC2 /* uielement.cpp */; };
+		839F0D7F1FDBFF25000E2CC2 /* uieventargs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */; };
+		839F0D801FDBFF25000E2CC2 /* uieventargs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */; };
 		83B9BD691FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6F1FD30A0100B4C721 /* panel_options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD6D1FD30A0100B4C721 /* panel_options.cpp */; };
@@ -410,6 +418,14 @@
 		8397AFF11F4CC579009B00A2 /* LandscapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeView.h; path = landscaping/LandscapeView.h; sourceTree = "<group>"; };
 		8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeDebug.cpp; path = landscaping/LandscapeDebug.cpp; sourceTree = "<group>"; };
 		8397AFF41F4CCAA4009B00A2 /* LandscapeDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeDebug.h; path = landscaping/LandscapeDebug.h; sourceTree = "<group>"; };
+		839F0D6D1FDBE8B0000E2CC2 /* uioptionitem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uioptionitem.cpp; sourceTree = "<group>"; };
+		839F0D6E1FDBE8B0000E2CC2 /* uioptionitem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uioptionitem.h; sourceTree = "<group>"; };
+		839F0D711FDBEB7D000E2CC2 /* uitextmenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uitextmenu.cpp; sourceTree = "<group>"; };
+		839F0D721FDBEB7D000E2CC2 /* uitextmenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uitextmenu.h; sourceTree = "<group>"; };
+		839F0D751FDBFAA6000E2CC2 /* uielement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uielement.cpp; sourceTree = "<group>"; };
+		839F0D761FDBFAA6000E2CC2 /* uielement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uielement.h; sourceTree = "<group>"; };
+		839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uieventargs.cpp; sourceTree = "<group>"; };
+		839F0D7E1FDBFF25000E2CC2 /* uieventargs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uieventargs.h; sourceTree = "<group>"; };
 		83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_credits.cpp; sourceTree = "<group>"; };
 		83B9BD681FD2CC9D00B4C721 /* panel_credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_credits.h; sourceTree = "<group>"; };
 		83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDirector.h; sourceTree = "<group>"; };
@@ -793,6 +809,14 @@
 				83B9BD761FD3114000B4C721 /* uipopup.h */,
 				83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */,
 				83B9BD7B1FD7298D00B4C721 /* uihelper.h */,
+				839F0D6D1FDBE8B0000E2CC2 /* uioptionitem.cpp */,
+				839F0D6E1FDBE8B0000E2CC2 /* uioptionitem.h */,
+				839F0D711FDBEB7D000E2CC2 /* uitextmenu.cpp */,
+				839F0D721FDBEB7D000E2CC2 /* uitextmenu.h */,
+				839F0D751FDBFAA6000E2CC2 /* uielement.cpp */,
+				839F0D761FDBFAA6000E2CC2 /* uielement.h */,
+				839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */,
+				839F0D7E1FDBFF25000E2CC2 /* uieventargs.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1287,6 +1311,7 @@
 				83D264441F360724001C6F13 /* variables.cpp in Sources */,
 				83D264781F360724001C6F13 /* ddr_processor_battle.cpp in Sources */,
 				83D264CE1F36077E001C6F13 /* carchive.cpp in Sources */,
+				839F0D6F1FDBE8B0000E2CC2 /* uioptionitem.cpp in Sources */,
 				83D264C61F36077E001C6F13 /* cfileList.cpp in Sources */,
 				83D264C41F36077E001C6F13 /* cfile_windows.cpp in Sources */,
 				83D264701F360724001C6F13 /* processor_night.cpp in Sources */,
@@ -1316,16 +1341,19 @@
 				83D2645A1F360724001C6F13 /* info_race.cpp in Sources */,
 				83D264361F360724001C6F13 /* mxfragment.cpp in Sources */,
 				83D2644E1F360724001C6F13 /* info_command.cpp in Sources */,
+				839F0D731FDBEB7D000E2CC2 /* uitextmenu.cpp in Sources */,
 				83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				83D264D81F36077E001C6F13 /* c_str.cpp in Sources */,
 				83D264D61F36077E001C6F13 /* crange.cpp in Sources */,
 				83D264C81F36077E001C6F13 /* cfilemanager.cpp in Sources */,
 				83D264721F360724001C6F13 /* processor_text.cpp in Sources */,
+				839F0D7F1FDBFF25000E2CC2 /* uieventargs.cpp in Sources */,
 				83D264401F360724001C6F13 /* mxlocinfo.cpp in Sources */,
 				83D264601F360724001C6F13 /* item_character.cpp in Sources */,
 				83D264821F360724001C6F13 /* lom_scenario.cpp in Sources */,
 				83B9BD771FD3114000B4C721 /* uipopup.cpp in Sources */,
 				83D2645C1F360724001C6F13 /* info_terrain.cpp in Sources */,
+				839F0D771FDBFAA6000E2CC2 /* uielement.cpp in Sources */,
 				830618631F38758800D017E5 /* tme.cpp in Sources */,
 				83D264581F360724001C6F13 /* info_object_type.cpp in Sources */,
 				8397AFDC1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */,
@@ -1358,11 +1386,13 @@
 				8397AFDD1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */,
 				83D264C91F36077E001C6F13 /* cfilemanager.cpp in Sources */,
 				83B9BD741FD30AF700B4C721 /* uipanel.cpp in Sources */,
+				839F0D781FDBFAA6000E2CC2 /* uielement.cpp in Sources */,
 				83D2644F1F360724001C6F13 /* info_command.cpp in Sources */,
 				83D264D11F36077E001C6F13 /* cbitarray.cpp in Sources */,
 				83D264651F360724001C6F13 /* item_regiment.cpp in Sources */,
 				83D264851F360724001C6F13 /* lom_stronghold.cpp in Sources */,
 				83D264511F360724001C6F13 /* info_direction.cpp in Sources */,
+				839F0D701FDBE8B0000E2CC2 /* uioptionitem.cpp in Sources */,
 				83B9BD7D1FD7298D00B4C721 /* uihelper.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				83D895FC1F36666D00172245 /* TMEMapBuilder.cpp in Sources */,
@@ -1399,8 +1429,10 @@
 				83D264631F360724001C6F13 /* item_place.cpp in Sources */,
 				8344EC321FD1EC6B0067AAC1 /* resolutionmanager.cpp in Sources */,
 				83D264F11F360857001C6F13 /* tinyxml.cpp in Sources */,
+				839F0D741FDBEB7D000E2CC2 /* uitextmenu.cpp in Sources */,
 				83D264E11F36077E001C6F13 /* misc.cpp in Sources */,
 				83D2645B1F360724001C6F13 /* info_race.cpp in Sources */,
+				839F0D801FDBFF25000E2CC2 /* uieventargs.cpp in Sources */,
 				83D264691F360724001C6F13 /* item_stronghold.cpp in Sources */,
 				83D264D71F36077E001C6F13 /* crange.cpp in Sources */,
 				83D895F51F36110400172245 /* citadel_scenario.cpp in Sources */,

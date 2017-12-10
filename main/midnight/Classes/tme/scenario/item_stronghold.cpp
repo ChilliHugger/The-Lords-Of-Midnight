@@ -21,7 +21,7 @@ mxstronghold::mxstronghold()
 {
 	mxentity::type = IDT_STRONGHOLD ;
 	race=RA_NONE;
-	total=NONE;
+	total=0;
 	owner=NULL;
 #if defined(_DDR_)
     lost=0;

@@ -212,10 +212,10 @@ namespace tme {
                 out->object_tunnel = IDT_NONE ;
 #if defined(_DDR_)
                 if ( m.IsTunnelPassageway() )
-                    out->object_tunnel = m.object ? MAKE_ID(IDT_OBJECT,m.object) : NONE ;
+                    out->object_tunnel = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
                 else
 #endif
-                    out->object = m.object ? MAKE_ID(IDT_OBJECT,m.object) : NONE ;
+                    out->object = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
                     
 				out->area = MAKE_ID(IDT_AREAINFO,m.area);
 				out->climate = m.climate ;

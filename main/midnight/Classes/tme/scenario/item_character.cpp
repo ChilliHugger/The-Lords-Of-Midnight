@@ -436,7 +436,7 @@ namespace tme {
 			std::auto_ptr<mxlocinfo> info;
 
 		
-			SetLastCommand ( CMD_MOVE, NONE );
+			SetLastCommand ( CMD_MOVE, IDT_NONE);
 
             // lords who are following cannot be moved on their own
             if ( IsFollowing() )
@@ -690,7 +690,7 @@ namespace tme {
         
 		MXRESULT mxcharacter::Cmd_Rest ( void )
 		{ 
-			SetLastCommand ( CMD_REST, NONE );
+			SetLastCommand ( CMD_REST, IDT_NONE );
 
 			if ( IsNight() || IsResting() )
 				return MX_FAILED ;
@@ -717,7 +717,7 @@ namespace tme {
 		mxlocinfo*			info;
 		mxstronghold*		def_stronghold = NULL ;
 
-			SetLastCommand ( CMD_RECRUITMEN, NONE );
+			SetLastCommand ( CMD_RECRUITMEN, IDT_NONE );
 
 			// get location info
 			info = GetLocInfo();
@@ -766,7 +766,7 @@ namespace tme {
 		mxlocinfo*			info;
 		mxstronghold*	def_stronghold = NULL ;
 
-			SetLastCommand ( CMD_POSTMEN, NONE );
+			SetLastCommand ( CMD_POSTMEN, IDT_NONE );
 
 			// get location info
 			info = GetLocInfo();
@@ -810,7 +810,7 @@ namespace tme {
 		mxlocinfo*			info;
 		mxcharacter*	def_character=NULL ;
 
-			SetLastCommand ( CMD_APPROACH, NONE );
+			SetLastCommand ( CMD_APPROACH, IDT_NONE );
 
 #if defined(_DDR_)
             // the leader of the group initiates the approach
@@ -1008,7 +1008,7 @@ namespace tme {
 			if ( !battle || stubborn_follower )
                 return MX_FAILED;
             
-			SetLastCommand(CMD_ATTACK,NONE);
+			SetLastCommand(CMD_ATTACK,IDT_NONE);
 			MXRESULT result = Cmd_WalkForward(false) ;
 			if ( result == MX_OK ) {
                 EnterBattle();
@@ -1026,7 +1026,7 @@ namespace tme {
 		mxobject*	fightobject=NULL;
 		int		friends_armies=0;
 
-			SetLastCommand ( CMD_FIGHT, NONE );
+			SetLastCommand ( CMD_FIGHT, IDT_NONE );
 
 			info = GetLocInfo();
 			
@@ -1085,7 +1085,7 @@ namespace tme {
 
 		MXRESULT mxcharacter::Cmd_Hide ( void )
 		{
-			SetLastCommand ( CMD_HIDE, NONE );
+			SetLastCommand ( CMD_HIDE, IDT_NONE );
 
 			if ( !IsAllowedHide() )
 				return MX_FAILED;
@@ -1100,7 +1100,7 @@ namespace tme {
 
 		MXRESULT mxcharacter::Cmd_UnHide ( void )
 		{
-			SetLastCommand ( CMD_UNHIDE, NONE );
+			SetLastCommand ( CMD_UNHIDE, IDT_NONE );
 
 			if ( !IsHidden() )
 				return MX_FAILED;
@@ -1423,7 +1423,7 @@ namespace tme {
 		mxobject*	oinfo;
 
             bool mikeseek=FALSE;
-			SetLastCommand ( CMD_SEEK, NONE );
+			SetLastCommand ( CMD_SEEK, IDT_NONE );
 			CommandTakesTime(TRUE);
 
 			mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
@@ -1808,7 +1808,7 @@ namespace tme {
 
 		MXRESULT mxcharacter::Cmd_Wait ( mxwait_t mode )
 		{
-			SetLastCommand ( CMD_WAIT, NONE );
+			SetLastCommand ( CMD_WAIT, IDT_NONE );
 
 			wait = mode ; 
 			return MX_OK;

@@ -519,7 +519,6 @@ namespace chilli {
 #define MX_PI2				(MX_PI*2)
 #define	DEGREETORAD(a)		(a*MX_PI/180)
 #define RADTODEGREE(a)		(a*(180/MX_PI))
-#define NONE				(0)
 
 #define	STRUC_OFFSET(x,y)	((int)&(((x*)0)->y))
 #define	CLASS_OFFSET(x,y)	((int)&(((x*)0)->y))
@@ -612,3 +611,9 @@ namespace chilli {
 #endif
 
 #endif //_UNIX_
+
+// can't imagine any case where you would include this file
+// and not want the namespace
+using namespace chilli::types;
+
+

@@ -4,11 +4,11 @@
 //
 //  Created by Chris Wild on 05/12/2017.
 //
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "uihelper.h"
 #include "uipanel.h"
 #include "../frontend/resolutionmanager.h"
+#include "../ui/uielement.h"
+#include "../ui/uieventargs.h"
 
 Vec2 uihelper::AnchorTopLeft = Vec2(0,1);
 Vec2 uihelper::AnchorTopRight = Vec2(1,1);
@@ -22,6 +22,23 @@ Vec2 uihelper::AnchorBottomLeft = Vec2(0,0);
 Vec2 uihelper::AnchorBottomRight = Vec2(1,0);
 Vec2 uihelper::AnchorBottomCenter = Vec2(0.5,0);
 
+TTFConfig uihelper::font_config_big;
+
+
+void uihelper::Init()
+{
+    font_config_big.fontFilePath = FONT_FILENAME;
+    font_config_big.fontSize = RES(FONT_SIZE_BIG);
+    font_config_big.glyphs = GlyphCollection::DYNAMIC;
+    font_config_big.outlineSize = 0;
+    font_config_big.customGlyphs = nullptr;
+    font_config_big.distanceFieldEnabled = false;
+
+}
+
+//
+// Parent Positioning
+//
 
 void uihelper::PositionParentTopCenter( Node* node, f32 paddingX, f32 paddingY )
 {
@@ -30,6 +47,7 @@ void uihelper::PositionParentTopCenter( Node* node, f32 paddingX, f32 paddingY )
     
     auto r = node->getParent()->getBoundingBox();
     node->setPosition((r.size.width/2)+paddingX, r.size.height-paddingY );
+    node->setAnchorPoint(uihelper::AnchorTopCenter);
     
 }
 
@@ -103,19 +121,38 @@ void uihelper::PositionParentCenter( Node* node, f32 paddingX, f32 paddingY )
     node->setAnchorPoint( uihelper::AnchorCenter );
 }
 
+//
+// Positioning
+//
+
+void uihelper::PositionBelow( Node* node, Node* ref, f32 paddingY)
+{
+    if ( ref == nullptr )
+        return;
+    
+    auto r = ref->getBoundingBox();
+    auto p = ref->getPosition();
+    
+    node->setPosition( p.x, p.y - r.size.height - paddingY );
+    node->setAnchorPoint( uihelper::AnchorTopCenter );
+}
+
+//
+// Creating
+//
+
 ui::Button* uihelper::CreateImageButton( const std::string& name )
 {
     return ui::Button::create(name,"","", cocos2d::ui::TextureResType::PLIST);
     
 }
 
-ui::Button* uihelper::CreateImageButton( const std::string& name, u32 id, uipanel* parent )
+ui::Button* uihelper::CreateImageButton( const std::string& name, u32 id, const cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback& callback )
 {
     auto button = uihelper::CreateImageButton(name);
-    parent->addChild(button);
-    button->addClickEventListener( [parent,id](Ref* s) {
-        parent->OnNotification( s, id );
-    });
+    button->setTag(id);
+    //parent->addChild(button);
+    button->addClickEventListener(callback);
     return button;
     
 }
@@ -131,10 +168,10 @@ void uihelper::FillParent( Node* node )
 
 ui::Button* uihelper::CreateBoxButton( Size size )
 {
-    auto button = ui::Button::create("misc/box_16.png");
-    button->setTitleFontName("fonts/celtic.ttf");
-    button->setTitleFontSize(RES(30));
-    button->setTitleColor(Color3B::RED);
+    auto button = ui::Button::create(BOX_BACKGROUND_FILENAME);
+    button->setTitleFontName(FONT_FILENAME);
+    button->setTitleFontSize(RES(FONT_SIZE_BIG));
+    button->setTitleColor(Color3B::BLUE);
     button->setTouchEnabled(true);
     button->setScale9Enabled(true);
     button->setContentSize(size);
@@ -142,5 +179,8 @@ ui::Button* uihelper::CreateBoxButton( Size size )
     button->getTitleRenderer()->setLineHeight(RES(25));
     return button;
 }
+
+
+
 
 

@@ -27,7 +27,7 @@ bool uipanel::init()
     return true;
 }
 
-void uipanel::OnNotification( Ref* element, u32 id )
+void uipanel::OnNotification( Ref* element )
 {
 }
 

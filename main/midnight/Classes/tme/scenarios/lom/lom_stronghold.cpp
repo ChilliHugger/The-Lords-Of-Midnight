@@ -28,7 +28,7 @@ namespace tme {
 	{
 		mxentity::type = IDT_STRONGHOLD ;
 		race=RA_NONE;
-		total=NONE;
+		total=0;
 		owner=NULL;
 
 	}

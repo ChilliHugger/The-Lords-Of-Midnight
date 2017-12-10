@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 
 #include "../frontend/resolutionmanager.h"
+#include "../ui/uihelper.h"
 
 USING_NS_CC;
 
@@ -12,6 +13,8 @@ bool panel_splashscreen::init()
     {
         return false;
     }
+    
+    uihelper::Init();
     
     SetBackground("splash.png");
     

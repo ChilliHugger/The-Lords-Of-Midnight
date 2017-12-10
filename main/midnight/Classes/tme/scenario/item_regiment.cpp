@@ -22,8 +22,8 @@ namespace tme {
 		mxregiment::mxregiment()
 		{
 			mxentity::type = IDT_REGIMENT ;
-			targetid=NONE;
-			total=NONE;
+			targetid=0;
+			total=0;
 			orders=OD_NONE;
             lost=0;
 		}

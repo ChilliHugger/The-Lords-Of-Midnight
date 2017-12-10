@@ -4,6 +4,9 @@
 #include "../ui/uipanel.h"
 #include "../frontend/layout_id.h"
 
+FORWARD_REFERENCE(menueventargs);
+FORWARD_REFERENCE(uinotificationinterface);
+
 class panel_mainmenu : public uipanel
 {
 public:
@@ -12,11 +15,10 @@ public:
     
     CREATE_FUNC(panel_mainmenu);
     
-    virtual void OnNotification( Ref* element, u32 tag );
-
-protected:
-    void createMenu();
+    void OnMenuNotification( uinotificationinterface*, menueventargs* );
+    virtual void OnNotification( Ref* element );
     
+protected:
     void OnShowManual();
     void OnShowGuide();
     void OnHelpClose();

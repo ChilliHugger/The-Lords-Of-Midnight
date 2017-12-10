@@ -15,6 +15,8 @@
 #include "../system/moonring.h"
 #include "../ui/uihelper.h"
 #include "../ui/uitextmenuitem.h"
+#include "../ui/uitextmenu.h"
+#include "../ui/uioptionitem.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -68,33 +70,33 @@ static uitextmenuitem items_main[] = {
 
 static uitextmenuitem items_display[] = {
 #if defined(_OS_DESKTOP_)
-    { ID_OPTION_SCREENMODE,             {"SCREEN MODE"},        KEYCODE(1), "1", TB_DOUBLE,"" },
+    { ID_OPTION_SCREENMODE,             {"SCREEN MODE"},        KEYCODE(1), "1", TB_DOUBLE, },
 #endif
-    { ID_OPTION_TRANSITIONS,            {"SCREEN TRANSITIONS"}, KEYCODE(2), "2", TB_DOUBLE,"" },
+    { ID_OPTION_TRANSITIONS,            {"SCREEN TRANSITIONS"}, KEYCODE(2), "2", TB_DOUBLE },
 };
 
 static uitextmenuitem items_game[] = {
-    { ID_OPTION_AUTO_FIGHT,             {"AUTO FIGHT"},         KEYCODE(1), "1", TB_DOUBLE,"" },
-    { ID_OPTION_AUTO_UNHIDE,            {"AUTO UNHIDE"},        KEYCODE(2), "2", TB_DOUBLE,"" },
-    { ID_OPTION_NIGHT_DISPLAY,          {"NIGHT DISPLAY"},      KEYCODE(3), "3", TB_DOUBLE,"" },
-    { ID_OPTION_BATTLE_FULL,            {"BATTLE REPORT "},     KEYCODE(4), "4", TB_DOUBLE,"" },
+    { ID_OPTION_AUTO_FIGHT,             {"AUTO FIGHT"},         KEYCODE(1), "1", TB_DOUBLE },
+    { ID_OPTION_AUTO_UNHIDE,            {"AUTO UNHIDE"},        KEYCODE(2), "2", TB_DOUBLE },
+    { ID_OPTION_NIGHT_DISPLAY,          {"NIGHT DISPLAY"},      KEYCODE(3), "3", TB_DOUBLE },
+    { ID_OPTION_BATTLE_FULL,            {"BATTLE REPORT "},     KEYCODE(4), "4", TB_DOUBLE },
 };
 
 static uitextmenuitem items_control[] = {
-    { ID_OPTION_COMPASS_DELAY,          {"COMPASS DELAY"},      KEYCODE(1), "1", TB_DOUBLE,"" },
-    { ID_OPTION_COMPASS_FEEDBACK,       {"COMPASS VIBRATE"},    KEYCODE(2), "2", TB_DOUBLE,"" },
-    { ID_OPTION_THINK_PAGING,           {"THINK PAGING"},       KEYCODE(3), "3", TB_DOUBLE,"" },
-    { ID_OPTION_NAVIGATION,             {"NAVIGATION STYLE"},   KEYCODE(4), "4", TB_DOUBLE,"" },
-    { ID_OPTION_KEYBOARD_STYLE,         {"KEYBOARD STYLE"},     KEYCODE(5), "5", TB_DOUBLE,"" },
+    { ID_OPTION_COMPASS_DELAY,          {"COMPASS DELAY"},      KEYCODE(1), "1", TB_DOUBLE },
+    { ID_OPTION_COMPASS_FEEDBACK,       {"COMPASS VIBRATE"},    KEYCODE(2), "2", TB_DOUBLE },
+    { ID_OPTION_THINK_PAGING,           {"THINK PAGING"},       KEYCODE(3), "3", TB_DOUBLE },
+    { ID_OPTION_NAVIGATION,             {"NAVIGATION STYLE"},   KEYCODE(4), "4", TB_DOUBLE },
+    { ID_OPTION_KEYBOARD_STYLE,         {"KEYBOARD STYLE"},     KEYCODE(5), "5", TB_DOUBLE },
 };
 
 static uitextmenuitem items_help[] = {
-    { ID_OPTION_TUTORIAL,               {"TUTORIAL"},           KEYCODE(1), "1", TB_DOUBLE,"" },
+    { ID_OPTION_TUTORIAL,               {"TUTORIAL"},           KEYCODE(1), "1", TB_DOUBLE },
 #if !defined(_OS_DESKTOP_)
-    { ID_OPTION_MOVE_INDICATORS,        {"MOVEMENT INDICATORS"},KEYCODE(2), "2", TB_DOUBLE,"" },
+    { ID_OPTION_MOVE_INDICATORS,        {"MOVEMENT INDICATORS"},KEYCODE(2), "2", TB_DOUBLE },
 #endif
 #if defined(_OS_IOS_) || defined(_OS_OSX_)
-    { ID_OPTION_NOVELLA,                {"NOVELLA"},            KEYCODE(3), "3", TB_DOUBLE,"" },
+    { ID_OPTION_NOVELLA,                {"NOVELLA"},            KEYCODE(3), "3", TB_DOUBLE },
 #endif
 };
 
@@ -135,7 +137,6 @@ bool panel_options::init()
     }
 
     menu2_background = NULL;
-    menu2 = NULL;
     fields.clear();
     
     FillBackground();
@@ -179,8 +180,10 @@ bool panel_options::init()
     return true;
 }
 
-void panel_options::OnNotification(cocos2d::Ref *element, u32 tag )
+void panel_options::OnMenuNotification( uinotificationinterface* sender, menueventargs* args )
 {
+    int tag = args->menuitem->id;
+    
     if ( tag == ID_HOME ) {
         FadeExit();
         mr->settings.Save();
@@ -300,10 +303,9 @@ void panel_options::SetValues ( void )
         
         if ( options[ii].type != OPT_NONE ) {
 
-            auto field = this->getChildByTag<Label*>(options[ii].id);
-            if ( field != nullptr )
-                field->setString(options[ii].text[item]);
-            
+            auto field = optionControls.at(options[ii].id);
+            if ( field != nullptr  )
+                field->setValue(options[ii].text[item]);
         }
         
     }
@@ -315,65 +317,15 @@ void panel_options::SetValues ( void )
 
 void panel_options::CreateMenu1()
 {
-    auto rect = this->getBoundingBox();
+    f32 width = RES(512-40);
     
-    u32 itemHeight = RES(40);
-    u32 fontSize = RES(30);
-    u32 paddingY = RES(30);
+    auto menu = new uitextmenu(width, items_main, NUMELE(items_main) );
+    addChild(menu);
+    uihelper::PositionParentCenterLeft(menu,RES(20), 0);
     
-    auto background = Scale9Sprite::create("misc/box_16.png");
-    this->addChild(background);
-    
-    background->setColor(Color3B::BLACK);
-    background->setOpacity(ALPHA(0.25));
-    uihelper::PositionParentCenterLeft(background, RES(40), RES(0) );
-    
-    auto mainmenu = Menu::create();
-    mainmenu->setPosition(Vec2::ZERO);
-    this->addChild(mainmenu);
-    
-    TTFConfig labelConfig;
-    labelConfig.fontFilePath = "fonts/celtic.ttf";
-    labelConfig.fontSize = fontSize;
-    labelConfig.glyphs = GlyphCollection::DYNAMIC;
-    labelConfig.outlineSize = 0;
-    labelConfig.customGlyphs = nullptr;
-    labelConfig.distanceFieldEnabled = false;
-    
-    f32 height=0;
-    for ( auto item : items_main ) {
-        
-        auto label = Label::createWithTTF(labelConfig, item.type.text );
-        label->getFontAtlas()->setAntiAliasTexParameters();
-        label->setTextColor(Color4B::WHITE);
-        label->setLineHeight(itemHeight);
-        //label->setLineSpacing(RES(10));
-        
-        auto menuItem = MenuItemLabel::create(label);
-        menuItem->setPosition(Vec2::ZERO);
-        menuItem->setAnchorPoint( uihelper::AnchorTopCenter );
-        
-        auto r = menuItem->getBoundingBox();
-        height += r.size.height;
-        
-        ICON_ID id = (ICON_ID)item.id;
-        menuItem->setCallback([&,id](cocos2d::Ref *sender) {
-            OnNotification( sender, id );
-        } );
-        
-        mainmenu->addChild(menuItem);
-    }
-    
-    // resize background based on content
-    background->setContentSize(Size(RES(400),height+(2*paddingY)) );
-    
-    // refresh positions
-    auto offset = Vec2( background->getBoundingBox().getMidX(), background->getBoundingBox().getMaxY()-paddingY );
-    for ( auto item : mainmenu->getChildren() ) {
-        item->setPosition(offset);
-        offset.y -= item->getBoundingBox().size.height;
-    }
-
+    menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
+        this->OnMenuNotification( s, (menueventargs*)e );
+    });
     
 }
 
@@ -381,93 +333,73 @@ void panel_options::CreateMenu1()
 
 void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
-    auto rect = this->getBoundingBox();
+    //auto rect = this->getBoundingBox();
     
-    u32 itemHeight = RES(40);
-    u32 fontSize = RES(30);
-    u32 paddingY = RES(30);
+    f32 width = RES(512-40);
     
-    if ( menu2_background == NULL ) {
-        menu2_background = Scale9Sprite::create("misc/box_16.png");
-        this->addChild(menu2_background);
-    
-        menu2_background->setContentSize(Size(RES(512), RES(512)) );
-        menu2_background->setColor(Color3B::BLACK);
-        menu2_background->setOpacity(ALPHA(0.25));
-        uihelper::PositionParentCenterRight(menu2_background, RES(40), RES(0) );
+    if ( menu2 != nullptr )  {
+        menu2->removeAllChildren();
+        menu2->removeFromParent();
     }
-    
-    if ( menu2 == NULL ) {
-        menu2 = Menu::create();
-        addChild(menu2);
-    //}else{
-    //    menu2->removeAllChildren();
-    }
-    
-    for( auto item : fields ) {
-        item->removeFromParent();
-    }
-    fields.clear();
-    
-    TTFConfig labelConfig;
-    labelConfig.fontFilePath = "fonts/celtic.ttf";
-    labelConfig.fontSize = fontSize;
-    labelConfig.glyphs = GlyphCollection::DYNAMIC;
-    labelConfig.outlineSize = 0;
-    labelConfig.customGlyphs = nullptr;
-    labelConfig.distanceFieldEnabled = false;
-    
 
+    menu2 = Menu::create();
+    
+    if ( menu2_background == nullptr ) {
+        menu2_background = DrawNode::create();
+        addChild(menu2_background);
+    }else{
+        menu2_background->removeAllChildren();
+        menu2_background->clear();
+    }
+    
+    u32 gapY = RES(5);
+    
+    menu2_background->addChild(menu2);
+    
+    fields.clear();
+    optionControls.clear();
     
     f32 height=0;
     for ( int ii=0; ii<elements; ii++ ) {
         
-        auto item = items[ii];
+        uitextmenuitem* item = &items[ii];
         
-        auto label = Label::createWithTTF(labelConfig, item.type.text );
-        label->getFontAtlas()->setAntiAliasTexParameters();
-        label->setTextColor(Color4B::WHITE);
-        label->setLineHeight(itemHeight);
-
-        auto menuItem = MenuItemLabel::create(label);
-        menuItem->setPosition(Vec2::ZERO);
-        menuItem->setAnchorPoint( uihelper::AnchorTopCenter );
+        auto button = new uioptionitem( width, item );
+        button->setTag(item->id);
+        
+        // find the options
+        optionControls.insert(item->id, button);
+        
+        auto menuItem = MenuItemOption::create(button);
         auto r = menuItem->getBoundingBox();
-        height += r.size.height;
-        
-        auto label2 = Label::createWithTTF(labelConfig, "OPTION" );
-        label2->getFontAtlas()->setAntiAliasTexParameters();
-        label2->setTextColor(Color4B::RED);
-        label2->setLineHeight(itemHeight);
-        label2->setAnchorPoint( uihelper::AnchorTopCenter );
-        label2->setTag(item.id);
-        
-        r = label2->getBoundingBox();
-        height += r.size.height;
-        
-        
-        ICON_ID id = (ICON_ID)item.id;
-        menuItem->setCallback([&,id](cocos2d::Ref *sender) {
-            OnNotification( sender, id );
+        height += r.size.height + gapY;
+
+        menuItem->setCallback([&,item](cocos2d::Ref *sender) {
+            menueventargs args;
+            args.menuitem = item;
+            OnMenuNotification( nullptr, &args );
         } );
         
         menu2->addChild(menuItem);
-        this->addChild(label2);
         fields.pushBack(menuItem);
-        fields.pushBack(label2);
     }
     
-    menu2->setPosition(Vec2::ZERO);
 
+    menu2_background->setContentSize(Size(width,height) );
+    uihelper::FillParent(menu2);
+    uihelper::PositionParentTopLeft(menu2);
     
-    // resize background based on content
-    menu2_background->setContentSize(Size(RES(512),height+(2*paddingY)) );
+    //menu2_background->drawSolidRect(Point::ZERO, Point(RES(512),height), Color4F::BLACK);
+    uihelper::PositionParentCenterRight(menu2_background,RES(20));
     
     // refresh positions
-    auto offset = Vec2( menu2_background->getBoundingBox().getMidX(), menu2_background->getBoundingBox().getMaxY() - paddingY );
+    auto offset = Vec2( width/2, 0 );
     for ( auto item : fields ) {
+        f32 height = item->getBoundingBox().size.height;
+        offset.y -= height/2;
+        item->setAnchorPoint( uihelper::AnchorCenter );
         item->setPosition(offset);
-        offset.y -= item->getBoundingBox().size.height;
+        offset.y -=  (height/2) + gapY;
     }
     
     

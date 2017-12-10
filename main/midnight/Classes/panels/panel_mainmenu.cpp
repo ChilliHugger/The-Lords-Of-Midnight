@@ -6,14 +6,13 @@
 #include "panel_credits.h"
 #include "panel_options.h"
 
-#include "SimpleAudioEngine.h"
 #include "../frontend/resolutionmanager.h"
 #include "../frontend/layout_id.h"
 #include "../frontend/language.h"
 
-#include "../ui/uitextmenuitem.h"
+#include "../ui/uitextmenu.h"
 #include "../ui/uihelper.h"
-
+#include "../ui/uioptionitem.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -49,21 +48,72 @@ bool panel_mainmenu::init()
         return false;
     }
     
+    //
+    // Background
+    //
     SetBackground("screens/misc/main_menu.png");
 
+    //
+    // Logo
+    //
     auto logo = Sprite::createWithSpriteFrameName("lom_logo");
     this->addChild(logo);
     uihelper::PositionParentTopLeft(logo);
     
+    //
+    // Menu
+    //
+    auto menu = new uitextmenu(RES(512), items, NUMELE(items) );
+    addChild(menu);
+    uihelper::PositionParentCenter(menu);
     
-    createMenu();
+    menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
+        this->OnMenuNotification( s, (menueventargs*)e );
+    });
+
+    //
+    // Guide and Manual
+    //
+    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback = [&] (Ref* ref ) {
+        this->OnNotification(ref);
+    };
+    
+    auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, callback);
+    addChild(guide);
+    uihelper::PositionParentBottomRight(guide, RES(10), RES(10) );
+    
+    auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, callback);
+    addChild(story);
+    uihelper::PositionParentBottomLeft(story, RES(10), RES(10) );
+    
+    //
+    // Other
+    //
+    
+    //auto button = new uioptionitem( RES(512), &items[0]);
+    //addChild(button);
+    //uihelper::PositionParentTopCenter(button, RES(0), RES(100) );
     
     return true;
 }
 
-void panel_mainmenu::OnNotification( Ref* element, u32 id )
+void panel_mainmenu::OnNotification( Ref* sender )
 {
-    switch (id) {
+    switch ( ((Button*)sender)->getTag() ) {
+        case ID_MANUAL:
+            OnShowManual();
+            break;
+        case ID_GUIDE:
+            OnShowGuide();
+            break;
+    }
+}
+
+void panel_mainmenu::OnMenuNotification( uinotificationinterface* sender, menueventargs* args )
+{
+    
+    switch (args->menuitem->id)
+    {
 #if defined(_OS_DESKTOP_)
         case ID_EXIT:
             OnExit();
@@ -87,12 +137,6 @@ void panel_mainmenu::OnNotification( Ref* element, u32 id )
         case ID_HELP_CLOSE:
             OnHelpClose();
             break;
-        case ID_MANUAL:
-            OnShowManual();
-            break;
-        case ID_GUIDE:
-            OnShowGuide();
-            break;
         case ID_NEW_STORY:
             OnNewStory();
             break;
@@ -106,9 +150,9 @@ void panel_mainmenu::OnNotification( Ref* element, u32 id )
             break;
     }
     
-    if ( id > ID_STORIES ) {
-        
-    }
+//    if ( id > ID_STORIES ) {
+//        
+//    }
     
 }
 
@@ -170,104 +214,6 @@ void panel_mainmenu::OnEndStory()
 {
 }
 
-void panel_mainmenu::createMenu()
-{
-    auto rect = this->getBoundingBox();
-    
-    u32 itemHeight = RES(40);
-    u32 fontSize = RES(30);
-    u32 paddingY = RES(30);
-    
-    auto background = Scale9Sprite::create("misc/box_16.png");
-    this->addChild(background);
-    
-    background->setContentSize(Size(RES(512), RES(512)) );
-    background->setColor(Color3B::BLACK);
-    background->setOpacity(ALPHA(0.25));
-    uihelper::PositionParentCenter(background);
-
-    auto mainmenu = Menu::create();
-    mainmenu->setPosition(Vec2::ZERO);
-    this->addChild(mainmenu);
-    
-    TTFConfig labelConfig;
-    labelConfig.fontFilePath = "fonts/celtic.ttf";
-    labelConfig.fontSize = fontSize;
-    labelConfig.glyphs = GlyphCollection::DYNAMIC;
-    labelConfig.outlineSize = 0;
-    labelConfig.customGlyphs = nullptr;
-    labelConfig.distanceFieldEnabled = false;
-    
-    f32 height=0;
-    for ( auto item : items ) {
-        
-        auto label = Label::createWithTTF(labelConfig, item.type.text );
-        label->getFontAtlas()->setAntiAliasTexParameters();
-        label->setTextColor(Color4B::WHITE);
-        label->setLineHeight(itemHeight);
-        //label->setLineSpacing(RES(10));
-        
-        auto menuItem = MenuItemLabel::create(label);
-        menuItem->setPosition(Vec2::ZERO);
-        menuItem->setAnchorPoint( uihelper::AnchorTopCenter );
-
-        auto r = menuItem->getBoundingBox();
-        height += r.size.height;
-        
-        ICON_ID id = (ICON_ID)item.id;
-        menuItem->setCallback([&,id](cocos2d::Ref *sender) {
-            OnNotification( sender, id );
-        } );
-        
-        mainmenu->addChild(menuItem);
-    }
-
-    // resize background based on content
-    background->setContentSize(Size(RES(512),height+(2*paddingY)) );
-    
-    // refresh positions
-    auto offset = Vec2( background->getBoundingBox().getMidX(), background->getBoundingBox().getMaxY()-paddingY );
-    for ( auto item : mainmenu->getChildren() ) {
-        item->setPosition(offset);
-        offset.y -= item->getBoundingBox().size.height;
-    }
-
-    auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, this);
-    uihelper::PositionParentBottomRight(guide, RES(10), RES(10) );
-
-    auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, this);
-    uihelper::PositionParentBottomLeft(story, RES(10), RES(10) );
-    
-}
-
-
-/*
- Button* button = Button::create("misc/box_16.png");
- button->setTouchEnabled(true);
- button->setTitleColor(Color3B::RED);
- button->setTitleFontSize(RES(30));
- button->setPosition(Vec2(RES(1024/2),RES(768-100)));
- button->setScale9Enabled(true);
- button->setContentSize( Size(RES(256),RES(120)) );
- button->setTitleText( item.type.text );
- button->setAnchorPoint(Vec2(0.5,0.5));
- button->setColor(Color3B::WHITE);
- button->setTitleAlignment(TextHAlignment::CENTER);
- 
- button->setTitleFontName("fonts/celtic.ttf");
- auto label = button->getTitleRenderer();
- 
- //label->setLineHeight(RES(30));
- //label->setLineSpacing(0);
- label->getFontAtlas()->setAntiAliasTexParameters();
- //   label->getFontAtlas()->setAliasTexParameters();
- 
- button->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
- 
- } );
- 
- this->addChild(button);
- */
 
 
 

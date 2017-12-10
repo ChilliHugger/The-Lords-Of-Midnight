@@ -41,9 +41,9 @@ namespace tme {
 			flags.Reset(0xffffffff);
 			flags.Set(lif_moveforward);
 			fightthing = OB_NONE ;
-			adj_fear = NONE ;
-			adj_moral = NONE ;
-			adj_stronghold = NONE ;
+			adj_fear = 0 ;
+			adj_moral = 0 ;
+			adj_stronghold = 0 ;
 
 			CLEARARRAY ( armies );
             friends.Clear();
@@ -53,8 +53,8 @@ namespace tme {
 			infront = NULL ;
 			owner = NULL;
 
-			nRecruited = NONE;
-			nArmies = NONE;
+			nRecruited = 0;
+			nArmies = 0;
 
 			objCharacters.Clear();
 			objRegiments.Clear();
@@ -411,7 +411,7 @@ namespace tme {
 					army->type = stronghold->Type();
 					army->total = stronghold->Total();
 					army->success = stronghold->BattleSuccess((mxlocinfo&)*this);
-					army->killed = NONE;
+					army->killed = 0;
 					army->loyalto = stronghold->Owner() ? stronghold->Owner()->loyalty : RA_NONE ;
 					army++;
 			}
@@ -428,7 +428,7 @@ namespace tme {
 					army->type = reg->Type();
 					army->total = reg->Total();
 					army->success = reg->BattleSuccess( (mxlocinfo&)*this );
-					army->killed = NONE;
+					army->killed = 0;
 					army->loyalto = reg->Loyalty()->loyalty ;
 
 					//if ( reg->Loyalty()->IsFriend(owner) ) {
@@ -466,7 +466,7 @@ namespace tme {
 					army->type = UT_WARRIORS;
 					army->total = c->warriors.Total();
 					army->success = c->warriors.BattleSuccess ( (mxlocinfo&)*this, c );
-					army->killed = NONE;
+					army->killed = 0;
 					army->loyalto = c->loyalty ;
 
 #if defined(_DDR_)
@@ -492,7 +492,7 @@ namespace tme {
 					army->type = UT_RIDERS;
 					army->total = c->riders.Total();
 					army->success = c->riders.BattleSuccess ( (mxlocinfo&)*this, c );
-					army->killed = NONE;
+					army->killed = 0;
 #if defined(_DDR_)
 					if ( c->IsFriend(ch_luxor) ) {
 						friends.armies++;

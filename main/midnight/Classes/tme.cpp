@@ -373,15 +373,15 @@ bool TME_GetLocationInfo( loc_t loc )
 	location_lookingatid = IDT_NONE ;
 	location_infrontid = IDT_NONE ;
 	location_flags.Clear() ;
-	location_fightthing = NONE;
+	location_fightthing = OB_NONE;
 	location_lookingat.x = 0;
 	location_lookingat.y = 0;
 	location_infront.x = 0;
 	location_infront.y = 0;
-	location_infront_object = NONE ;
-	location_object= NONE ;
+	location_infront_object = OB_NONE ;
+	location_object= OB_NONE ;
 #if defined(_DDR_)
-    location_object_tunnel = NONE ;
+    location_object_tunnel = OB_NONE ;
 #endif
     location_stubborn_lord_attack=IDT_NONE;
     location_stubborn_lord_move=IDT_NONE;
@@ -431,18 +431,18 @@ bool TME_GetCharacterLocationInfo ( const character& c )
 	location_lookingatid = IDT_NONE ;
 	location_infrontid = IDT_NONE ;
 	location_flags.Clear() ;
-	location_fightthing = NONE;
+	location_fightthing = OB_NONE;
 	location_lookingat.x = 0;
 	location_lookingat.y = 0;
 	location_infront.x = 0;
 	location_infront.y = 0;
-	location_infront_object = NONE ;
-	location_object= NONE ;
+	location_infront_object = OB_NONE ;
+	location_object= OB_NONE ;
     location_stubborn_lord_attack=IDT_NONE;
     location_stubborn_lord_move=IDT_NONE;
     
 #if defined(_DDR_)
-    location_object_tunnel = NONE ;
+    location_object_tunnel = OB_NONE ;
     location_someone_to_give_to=IDT_NONE;
 #endif
     
@@ -861,7 +861,7 @@ mxid Character_Fight ( const character& c )
 		TME_RefreshCurrentCharacter();
 		return args[1].vInt;
 	}
-	return NONE ;
+	return IDT_NONE ;
 }
 
 bool Character_Attack ( const character& c )
@@ -881,7 +881,7 @@ mxid Character_Seek ( const character& c )
 		TME_RefreshCurrentCharacter();
 		return args[1].vInt;
 	}
-	return NONE ;
+	return IDT_NONE ;
 }
 
 #if defined(_DDR_)

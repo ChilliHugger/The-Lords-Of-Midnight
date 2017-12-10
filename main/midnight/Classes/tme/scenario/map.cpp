@@ -931,7 +931,7 @@ mxloc::mxloc()
 	terrain=TN_FROZENWASTE;
 #endif
 	object=OB_NONE;
-	area=NONE;
+	area=0;
 	flags=0;
 }
 
