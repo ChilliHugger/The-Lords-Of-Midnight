@@ -6,15 +6,17 @@
 //  Copyright (c) 2012 Chilli Hugger. All rights reserved.
 //
 
-#include "config.h"
+#include "configmanager.h"
 
 //#include "ui.h"
 //#include "globals.h"
 
 using namespace chilli::lib ;
 
-config::config()
+configmanager::configmanager( moonring* mr)
 {
+    this->mr = mr;
+    
     tutorial=TRUE;
     autofight=FALSE;
     autounhide=FALSE;
@@ -54,11 +56,11 @@ config::config()
 }
 
 
-config::~config()
+configmanager::~configmanager()
 {
 }
 
-void config::setGameDefaults ()
+void configmanager::setGameDefaults ()
 {
     map_filters.Set(0xffffffff);
     select_filters.Set(0xffffffff);
@@ -72,7 +74,7 @@ void config::setGameDefaults ()
 
 
 
-BOOL config::Save ( void )
+BOOL configmanager::Save ( void )
 {
 	chilli::os::file* pFile = new chilli::os::file ( CONFIG_FILENAME, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
 	if ( pFile == NULL || !pFile->IsOpen() ) {
@@ -121,7 +123,7 @@ BOOL config::Save ( void )
     return TRUE;
 }
 
-BOOL config::Load ( void )
+BOOL configmanager::Load ( void )
 {
  	chilli::os::file* pFile = new chilli::os::file ( CONFIG_FILENAME, chilli::os::file::modeRead );
 	if ( !pFile->IsOpen() ) {

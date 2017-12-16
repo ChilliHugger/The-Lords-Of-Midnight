@@ -6,13 +6,17 @@
 //
 
 #include "../Extensions/CustomDirector.h"
-//#include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
 #include "panel_options.h"
 #include "panel_mainmenu.h"
+
+
 #include "../frontend/resolutionmanager.h"
 #include "../system/moonring.h"
+#include "../system/configmanager.h"
+#include "../system/keyboardmanager.h"
+
 #include "../ui/uihelper.h"
 #include "../ui/uitextmenuitem.h"
 #include "../ui/uitextmenu.h"
@@ -142,13 +146,11 @@ bool panel_options::init()
     FillBackground();
 
     auto logo = Sprite::createWithSpriteFrameName("lom_logo");
-    this->addChild(logo);
-    uihelper::PositionParentTopLeft(logo);
+    uihelper::AddTopLeft(this,logo);
     
     
     auto p2 = Sprite::create("screens/misc/corleth.png");
-    addChild(p2);
-    uihelper::PositionParentBottomLeft(p2);
+    uihelper::AddBottomLeft(this,p2);
     
     CreateMenu1();
     
@@ -169,7 +171,7 @@ bool panel_options::init()
     SET_OPTION(12, screen_mode);
     SET_OPTION(13, keyboard_mode);
     
-    if ( !mr->settings.fullscreensupported )
+    if ( !mr->config->fullscreensupported )
         options[12].text = values_screen2 ;
     
     
@@ -186,7 +188,7 @@ void panel_options::OnMenuNotification( uinotificationinterface* sender, menueve
     
     if ( tag == ID_HOME ) {
         FadeExit();
-        mr->settings.Save();
+        mr->config->Save();
         //gl->SetPanelMode(MODE_MAINMENU,TRANSITION_FADEIN);
         return;
     } else if ( tag == ID_MENU_GAME ) {
@@ -231,12 +233,12 @@ void panel_options::OnMenuNotification( uinotificationinterface* sender, menueve
     
     SetValues();
     
-//    if ( options[index].id == ID_OPTION_TUTORIAL ) {
-//        if ( mr->settings.tutorial )
-//            ShowHelpWindow(HELP_TUTORIAL_ON);
-//        else
-//            ShowHelpWindow(HELP_TUTORIAL_OFF);
-//    }
+    if ( options[index].id == ID_OPTION_TUTORIAL ) {
+        if ( mr->config->tutorial )
+            ShowHelpWindow(HELP_TUTORIAL_ON);
+        else
+            ShowHelpWindow(HELP_TUTORIAL_OFF);
+    }
     
     
 }
@@ -268,7 +270,7 @@ void panel_options::SetMenu ( int id )
         
         
 #if defined(_OS_DESKTOP_)
-        mr->settings.showmovementindicators=FALSE;
+        mr->config->showmovementindicators=FALSE;
 #endif
         
         SetValues();
@@ -277,7 +279,7 @@ void panel_options::SetMenu ( int id )
         SetMenu(items_help,NUMELE(items_help));
         
 #if !defined(_OS_IOS_) && !defined(_OS_OSX_)
-        mr->settings.novella_pdf=TRUE;
+        mr->config->novella_pdf=TRUE;
 #endif
         
         SetValues();
@@ -320,8 +322,7 @@ void panel_options::CreateMenu1()
     f32 width = RES(512-40);
     
     auto menu = new uitextmenu(width, items_main, NUMELE(items_main) );
-    addChild(menu);
-    uihelper::PositionParentCenterLeft(menu,RES(20), 0);
+    uihelper::AddCenterLeft(this,menu,RES(20), 0);
     
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );

@@ -6,11 +6,14 @@
 //
 
 #include "../ui/uipopup.h"
+#include "../ui/uihelpwindow.h"
 #include "../Extensions/CustomDirector.h"
 #include "uipanel.h"
 #include "../frontend/resolutionmanager.h"
 #include "../system/moonring.h"
-
+#include "../system/helpmanager.h"
+#include "../system/configmanager.h"
+#include "../ui/uihelper.h"
 
 USING_NS_CC;
 
@@ -22,7 +25,7 @@ bool uipanel::init()
         return false;
     }
     
-    mr = moonring::instance();
+    mr = moonring::mikesingleton();
     
     return true;
 }
@@ -35,13 +38,9 @@ void uipanel::SetBackground( LPCSTR background )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
-    p->setPosition(Vec2(0,0));
-    p->setAnchorPoint(Vec2(0,0));
-    
     f32 scale = visibleSize.height / p->getContentSize().height ;
-    
     p->setScale(scale, scale );
-    addChild(p);
+    uihelper::AddCenter(this, p);
 
 }
 
@@ -95,11 +94,83 @@ void uipanel::OpenPDF(LPCSTR pdf)
 void uipanel::FillBackground()
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
+    
     auto p = Sprite::createWithSpriteFrameName("background_tile");
-    p->setPosition( Vec2::ZERO );
-    p->setAnchorPoint( Vec2::ZERO );
     f32 scaleY = visibleSize.height / p->getContentSize().height ;
     f32 scaleX = visibleSize.width / p->getContentSize().width ;
     p->setScale(scaleX, scaleY );
-    addChild(p);
+    uihelper::AddCenter(this, p);
+    
 }
+
+BOOL uipanel::ShowHelpWindow ( helpid_t id, BOOL forceImportant, MXVoidCallback callback )
+{
+    helpmanager* help = mr->help;
+    
+    if ( !help->isAlways(id) ) {
+        
+        if ( !mr->config->tutorial )
+            return TRUE;
+        
+        if ( help->isShown(id) )
+            return TRUE;
+        
+        if ( help_pending && !help->isImportant(id) && !forceImportant )
+            return FALSE;
+    }
+    
+    if ( help->isImportant(id) || forceImportant ) {
+        PopupHelpWindow(id,callback);
+        return FALSE;
+    }
+    
+    // show the tutorial help
+    if ( !help->isShown(HELP_TUTORIAL) ) {
+        PopupHelpWindow(HELP_TUTORIAL,callback);
+    }
+    
+    // and set the required help to pending
+    help_pending_id = id;
+    help_pending=TRUE;
+    
+    HelpPending();
+
+    return FALSE;
+}
+
+void uipanel::HelpPending()
+{
+    //    i_help->ShowEnable();
+    //    uiaction* flash = new uiaFlash(300,10*1000);
+    //    flash->delegate=this;
+    //    flash->tag=9999;
+    //    i_help->AddAction ( flash) ;
+    //    a_help_timer->start(30*1000);
+}
+
+void uipanel::PopupHelpWindow ( helpid_t id, MXVoidCallback callback )
+{
+    help_pending = FALSE;
+    help_pending_id = HELP_NONE ;
+    
+    //if ( a_help_timer ) {
+    //    a_help_timer->stop();
+    //}
+    help_visible=id;
+    
+    if ( help_window != nullptr ) {
+        help_window->Close();
+    }
+    
+    help_window = new uihelpwindow( this, id );
+    help_window->Show( [&,callback] {
+        help_window = nullptr;
+        if ( callback != nullptr )
+            callback();
+    });
+    
+}
+
+
+
+

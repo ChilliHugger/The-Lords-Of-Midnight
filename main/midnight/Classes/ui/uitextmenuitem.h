@@ -30,8 +30,5 @@ typedef struct uitextmenuitem
     
 } uitextmenuitem ;
 
-#define KEYCODE(x) \
-    cocos2d::EventKeyboard::KeyCode::KEY_##x
-
 
 #endif /* uitextmenuitem_h */

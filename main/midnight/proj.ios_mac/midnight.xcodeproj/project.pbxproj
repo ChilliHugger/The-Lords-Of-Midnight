@@ -159,6 +159,16 @@
 		8344EC321FD1EC6B0067AAC1 /* resolutionmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8344EC301FD1EC6B0067AAC1 /* resolutionmanager.cpp */; };
 		8344EC351FD1F11D0067AAC1 /* panel_mainmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8344EC331FD1F11D0067AAC1 /* panel_mainmenu.cpp */; };
 		8344EC361FD1F11D0067AAC1 /* panel_mainmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8344EC331FD1F11D0067AAC1 /* panel_mainmenu.cpp */; };
+		8351A51D1FDF317400D9AB57 /* uihelpwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A51B1FDF317400D9AB57 /* uihelpwindow.cpp */; };
+		8351A51E1FDF317400D9AB57 /* uihelpwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A51B1FDF317400D9AB57 /* uihelpwindow.cpp */; };
+		8351A5201FDF398300D9AB57 /* helpmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A51F1FDF398300D9AB57 /* helpmanager.cpp */; };
+		8351A5211FDF398300D9AB57 /* helpmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A51F1FDF398300D9AB57 /* helpmanager.cpp */; };
+		8351A5241FE44B3E00D9AB57 /* storymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A5221FE44B3E00D9AB57 /* storymanager.cpp */; };
+		8351A5251FE44B3E00D9AB57 /* storymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A5221FE44B3E00D9AB57 /* storymanager.cpp */; };
+		8351A5281FE45B9000D9AB57 /* keyboardmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A5261FE45B9000D9AB57 /* keyboardmanager.cpp */; };
+		8351A5291FE45B9000D9AB57 /* keyboardmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A5261FE45B9000D9AB57 /* keyboardmanager.cpp */; };
+		8351A52C1FE4633100D9AB57 /* tmemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A52A1FE4633100D9AB57 /* tmemanager.cpp */; };
+		8351A52D1FE4633100D9AB57 /* tmemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A52A1FE4633100D9AB57 /* tmemanager.cpp */; };
 		8351E4031F376D7000605D75 /* ddr_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4021F376D7000605D75 /* ddr_map.tmx */; };
 		8351E4051F376D7B00605D75 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
 		8351E4061F376D7B00605D75 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
@@ -197,8 +207,8 @@
 		83B9BD781FD3114000B4C721 /* uipopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD751FD3114000B4C721 /* uipopup.cpp */; };
 		83B9BD7C1FD7298D00B4C721 /* uihelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */; };
 		83B9BD7D1FD7298D00B4C721 /* uihelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */; };
-		83B9BD811FD9AE2000B4C721 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* config.cpp */; };
-		83B9BD821FD9AE2000B4C721 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* config.cpp */; };
+		83B9BD811FD9AE2000B4C721 /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */; };
+		83B9BD821FD9AE2000B4C721 /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */; };
 		83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD881FD9B13900B4C721 /* moonring.cpp */; };
 		83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD881FD9B13900B4C721 /* moonring.cpp */; };
 		83D264301F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
@@ -401,6 +411,18 @@
 		8344EC381FD29A110067AAC1 /* layout_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = layout_id.h; sourceTree = "<group>"; };
 		8344EC391FD29BBE0067AAC1 /* panel_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_id.h; sourceTree = "<group>"; };
 		8344EC3A1FD29D0D0067AAC1 /* uitextmenuitem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uitextmenuitem.h; sourceTree = "<group>"; };
+		8351A5141FDF26BD00D9AB57 /* help_lom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = help_lom.cpp; sourceTree = "<group>"; };
+		8351A5171FDF26D400D9AB57 /* help_ddr.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = help_ddr.cpp; sourceTree = "<group>"; };
+		8351A51A1FDF2D4100D9AB57 /* helpmanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = helpmanager.h; sourceTree = "<group>"; };
+		8351A51B1FDF317400D9AB57 /* uihelpwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uihelpwindow.cpp; sourceTree = "<group>"; };
+		8351A51C1FDF317400D9AB57 /* uihelpwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uihelpwindow.h; sourceTree = "<group>"; };
+		8351A51F1FDF398300D9AB57 /* helpmanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpmanager.cpp; sourceTree = "<group>"; };
+		8351A5221FE44B3E00D9AB57 /* storymanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = storymanager.cpp; sourceTree = "<group>"; };
+		8351A5231FE44B3E00D9AB57 /* storymanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = storymanager.h; sourceTree = "<group>"; };
+		8351A5261FE45B9000D9AB57 /* keyboardmanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyboardmanager.cpp; sourceTree = "<group>"; };
+		8351A5271FE45B9000D9AB57 /* keyboardmanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboardmanager.h; sourceTree = "<group>"; };
+		8351A52A1FE4633100D9AB57 /* tmemanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tmemanager.cpp; sourceTree = "<group>"; };
+		8351A52B1FE4633100D9AB57 /* tmemanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tmemanager.h; sourceTree = "<group>"; };
 		8351E4021F376D7000605D75 /* ddr_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ddr_map.tmx; sourceTree = "<group>"; };
 		8351E4041F376D7B00605D75 /* lom_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map.tmx; sourceTree = "<group>"; };
 		8351E40D1F3A655C00605D75 /* lom_map_test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map_test.tmx; sourceTree = "<group>"; };
@@ -438,8 +460,8 @@
 		83B9BD791FD316F700B4C721 /* language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uihelper.cpp; sourceTree = "<group>"; };
 		83B9BD7B1FD7298D00B4C721 /* uihelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uihelper.h; sourceTree = "<group>"; };
-		83B9BD7F1FD9AE2000B4C721 /* config.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = config.cpp; sourceTree = "<group>"; };
-		83B9BD801FD9AE2000B4C721 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = configmanager.cpp; sourceTree = "<group>"; };
+		83B9BD801FD9AE2000B4C721 /* configmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configmanager.h; sourceTree = "<group>"; };
 		83B9BD871FD9B04D00B4C721 /* keyboard_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboard_id.h; sourceTree = "<group>"; };
 		83B9BD881FD9B13900B4C721 /* moonring.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moonring.cpp; sourceTree = "<group>"; };
 		83B9BD891FD9B13900B4C721 /* moonring.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = moonring.h; sourceTree = "<group>"; };
@@ -520,7 +542,7 @@
 		83D2649D1F36077E001C6F13 /* datatypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datatypes.cpp; sourceTree = "<group>"; };
 		83D264A01F36077E001C6F13 /* misc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = misc.cpp; sourceTree = "<group>"; };
 		83D264A11F36077E001C6F13 /* random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random.cpp; sourceTree = "<group>"; };
-		83D264A31F36077E001C6F13 /* collections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collections.h; sourceTree = "<group>"; };
+		83D264A31F36077E001C6F13 /* collections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = collections.h; path = ../Classes/library/libinc/collections.h; sourceTree = SOURCE_ROOT; };
 		83D264A41F36077E001C6F13 /* library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = library.h; sourceTree = "<group>"; };
 		83D264AB1F36077E001C6F13 /* xml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml.h; sourceTree = "<group>"; };
 		83D264AC1F36077E001C6F13 /* mxtypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mxtypes.h; sourceTree = "<group>"; };
@@ -817,6 +839,8 @@
 				839F0D761FDBFAA6000E2CC2 /* uielement.h */,
 				839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */,
 				839F0D7E1FDBFF25000E2CC2 /* uieventargs.h */,
+				8351A51B1FDF317400D9AB57 /* uihelpwindow.cpp */,
+				8351A51C1FDF317400D9AB57 /* uihelpwindow.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -853,10 +877,20 @@
 		83B9BD7E1FD9ADE100B4C721 /* system */ = {
 			isa = PBXGroup;
 			children = (
-				83B9BD7F1FD9AE2000B4C721 /* config.cpp */,
-				83B9BD801FD9AE2000B4C721 /* config.h */,
+				8351A5141FDF26BD00D9AB57 /* help_lom.cpp */,
+				8351A5171FDF26D400D9AB57 /* help_ddr.cpp */,
+				8351A51A1FDF2D4100D9AB57 /* helpmanager.h */,
+				8351A51F1FDF398300D9AB57 /* helpmanager.cpp */,
+				83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */,
+				83B9BD801FD9AE2000B4C721 /* configmanager.h */,
 				83B9BD881FD9B13900B4C721 /* moonring.cpp */,
 				83B9BD891FD9B13900B4C721 /* moonring.h */,
+				8351A5221FE44B3E00D9AB57 /* storymanager.cpp */,
+				8351A5231FE44B3E00D9AB57 /* storymanager.h */,
+				8351A5261FE45B9000D9AB57 /* keyboardmanager.cpp */,
+				8351A5271FE45B9000D9AB57 /* keyboardmanager.h */,
+				8351A52A1FE4633100D9AB57 /* tmemanager.cpp */,
+				8351A52B1FE4633100D9AB57 /* tmemanager.h */,
 			);
 			path = system;
 			sourceTree = "<group>";
@@ -1272,6 +1306,7 @@
 			files = (
 				83D2646A1F360724001C6F13 /* item_victories.cpp in Sources */,
 				8344EC2C1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,
+				8351A5201FDF398300D9AB57 /* helpmanager.cpp in Sources */,
 				83B9BD731FD30AF700B4C721 /* uipanel.cpp in Sources */,
 				83D264801F360724001C6F13 /* default_scenario.cpp in Sources */,
 				8397AFE11F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */,
@@ -1283,7 +1318,7 @@
 				8397AFF61F4CCAB0009B00A2 /* LandscapeTerrain.cpp in Sources */,
 				8344EC311FD1EC6B0067AAC1 /* resolutionmanager.cpp in Sources */,
 				83D2646E1F360724001C6F13 /* processor_battle.cpp in Sources */,
-				83B9BD811FD9AE2000B4C721 /* config.cpp in Sources */,
+				83B9BD811FD9AE2000B4C721 /* configmanager.cpp in Sources */,
 				83D2645E1F360724001C6F13 /* info_unit.cpp in Sources */,
 				83D2644C1F360724001C6F13 /* info_area.cpp in Sources */,
 				83D264F01F360857001C6F13 /* tinyxml.cpp in Sources */,
@@ -1295,8 +1330,10 @@
 				83D264F41F360857001C6F13 /* tinyxmlparser.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				83D2644A1F360724001C6F13 /* discoverymap.cpp in Sources */,
+				8351A52C1FE4633100D9AB57 /* tmemanager.cpp in Sources */,
 				83113FD51F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */,
 				8397AFF71F4CCAB2009B00A2 /* LandscapeView.cpp in Sources */,
+				8351A5281FE45B9000D9AB57 /* keyboardmanager.cpp in Sources */,
 				83D264E21F36077E001C6F13 /* random.cpp in Sources */,
 				83D264321F360724001C6F13 /* mxengine.cpp in Sources */,
 				83D264841F360724001C6F13 /* lom_stronghold.cpp in Sources */,
@@ -1313,6 +1350,7 @@
 				83D264CE1F36077E001C6F13 /* carchive.cpp in Sources */,
 				839F0D6F1FDBE8B0000E2CC2 /* uioptionitem.cpp in Sources */,
 				83D264C61F36077E001C6F13 /* cfileList.cpp in Sources */,
+				8351A5241FE44B3E00D9AB57 /* storymanager.cpp in Sources */,
 				83D264C41F36077E001C6F13 /* cfile_windows.cpp in Sources */,
 				83D264701F360724001C6F13 /* processor_night.cpp in Sources */,
 				83D2646C1F360724001C6F13 /* map.cpp in Sources */,
@@ -1344,6 +1382,7 @@
 				839F0D731FDBEB7D000E2CC2 /* uitextmenu.cpp in Sources */,
 				83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				83D264D81F36077E001C6F13 /* c_str.cpp in Sources */,
+				8351A51D1FDF317400D9AB57 /* uihelpwindow.cpp in Sources */,
 				83D264D61F36077E001C6F13 /* crange.cpp in Sources */,
 				83D264C81F36077E001C6F13 /* cfilemanager.cpp in Sources */,
 				83D264721F360724001C6F13 /* processor_text.cpp in Sources */,
@@ -1379,6 +1418,7 @@
 				8397AFE61F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */,
 				8397AFF21F4CC579009B00A2 /* LandscapeView.cpp in Sources */,
 				83D264C51F36077E001C6F13 /* cfile_windows.cpp in Sources */,
+				8351A5291FE45B9000D9AB57 /* keyboardmanager.cpp in Sources */,
 				83D264EF1F360857001C6F13 /* tinystr.cpp in Sources */,
 				83D264611F360724001C6F13 /* item_character.cpp in Sources */,
 				83D264451F360724001C6F13 /* variables.cpp in Sources */,
@@ -1402,6 +1442,7 @@
 				83D264731F360724001C6F13 /* processor_text.cpp in Sources */,
 				83D264CB1F36077E001C6F13 /* cfile_common.cpp in Sources */,
 				83D2647F1F360724001C6F13 /* ddr_scenario.cpp in Sources */,
+				8351A5211FDF398300D9AB57 /* helpmanager.cpp in Sources */,
 				83D2646D1F360724001C6F13 /* map.cpp in Sources */,
 				83D264371F360724001C6F13 /* mxfragment.cpp in Sources */,
 				83D264C71F36077E001C6F13 /* cfileList.cpp in Sources */,
@@ -1411,7 +1452,7 @@
 				83D264E31F36077E001C6F13 /* random.cpp in Sources */,
 				83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */,
 				83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */,
-				83B9BD821FD9AE2000B4C721 /* config.cpp in Sources */,
+				83B9BD821FD9AE2000B4C721 /* configmanager.cpp in Sources */,
 				83D264431F360724001C6F13 /* mxmemory.cpp in Sources */,
 				83D264411F360724001C6F13 /* mxlocinfo.cpp in Sources */,
 				83D264DB1F36077E001C6F13 /* datatypes.cpp in Sources */,
@@ -1421,6 +1462,7 @@
 				83D264551F360724001C6F13 /* info_object.cpp in Sources */,
 				83D264D91F36077E001C6F13 /* c_str.cpp in Sources */,
 				83D2645D1F360724001C6F13 /* info_terrain.cpp in Sources */,
+				8351A52D1FE4633100D9AB57 /* tmemanager.cpp in Sources */,
 				8397AFF51F4CCAA4009B00A2 /* LandscapeDebug.cpp in Sources */,
 				83D2645F1F360724001C6F13 /* info_unit.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
@@ -1440,6 +1482,7 @@
 				83D264591F360724001C6F13 /* info_object_type.cpp in Sources */,
 				83D2643B1F360724001C6F13 /* mxinfo.cpp in Sources */,
 				83D264671F360724001C6F13 /* item_routenode.cpp in Sources */,
+				8351A51E1FDF317400D9AB57 /* uihelpwindow.cpp in Sources */,
 				8397AFE21F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */,
 				83D2644B1F360724001C6F13 /* discoverymap.cpp in Sources */,
 				83D264391F360724001C6F13 /* mxgridref.cpp in Sources */,
@@ -1448,6 +1491,7 @@
 				83D2643D1F360724001C6F13 /* mxinterface.cpp in Sources */,
 				83D264311F360724001C6F13 /* collections.cpp in Sources */,
 				83D264F31F360857001C6F13 /* tinyxmlerror.cpp in Sources */,
+				8351A5251FE44B3E00D9AB57 /* storymanager.cpp in Sources */,
 				83D264771F360724001C6F13 /* ddr_character.cpp in Sources */,
 				83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				8344EC2D1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,

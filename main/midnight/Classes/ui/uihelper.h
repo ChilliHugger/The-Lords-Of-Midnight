@@ -55,6 +55,16 @@ public:
     static void PositionParentCenterLeft( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
     static void PositionParentCenterRight( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
 
+    //
+    static Node* AddTopCenter( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddTopLeft( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddCenterLeft( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddCenterRight( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddBottomCenter( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddBottomLeft( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddBottomRight( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddCenter( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    
     // Size
     static void FillParent( Node* node );
 

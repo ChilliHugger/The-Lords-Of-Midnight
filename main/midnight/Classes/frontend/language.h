@@ -46,7 +46,7 @@
 
 #define BUTTON_YES      "YES"
 #define BUTTON_NO       "NO"
-
+#define BUTTON_OK       "OK"
 
 
 

@@ -9,12 +9,13 @@
 #define uipanel_h
 
 #include "cocos2d.h"
-#include "../library/libinc/mxtypes.h"
+#include "../system/helpmanager.h"
 
 using namespace chilli::types;
 
 // forward references
 FORWARD_REFERENCE( uipopup );
+FORWARD_REFERENCE( uihelpwindow );
 FORWARD_REFERENCE( moonring );
 FORWARD_REFERENCE( uieventargs );
 FORWARD_REFERENCE( uielement );
@@ -26,6 +27,8 @@ public:
     virtual bool init();
     virtual void OnNotification( Ref* element );
 
+    moonring* GetMoonring() { return mr; }
+    
 protected:
     
     void SetBackground( LPCSTR background );
@@ -33,10 +36,19 @@ protected:
     void AreYouSure ( LPCSTR text, MXVoidCallback ok );
     void OpenPDF(LPCSTR pdf);
     void FillBackground();
+
+    BOOL ShowHelpWindow ( helpid_t id, BOOL forceImportant = false, MXVoidCallback callback=nullptr  );
+    void PopupHelpWindow ( helpid_t id, MXVoidCallback callback );
+    virtual void HelpPending();
     
 protected:
-    uipopup*    popupWindow;
-    moonring*   mr;
+    uipopup*        popupWindow;
+    moonring*       mr;
+    
+    helpid_t        help_pending_id;
+    BOOL            help_pending;
+    int             help_visible;
+    uihelpwindow*   help_window;
 };
 
 

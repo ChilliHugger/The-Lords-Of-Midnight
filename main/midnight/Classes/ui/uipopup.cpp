@@ -4,18 +4,13 @@
 //
 //  Created by Chris Wild on 02/12/2017.
 //
-//#include "cocos2d.h"
-//#include "ui/CocosGUI.h"
 
 #include "uihelper.h"
 #include "uipopup.h"
-
 #include "../frontend/language.h"
-
 #include "resolutionmanager.h"
 
 USING_NS_CC;
-
 using namespace cocos2d::ui;
 
 uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
@@ -32,21 +27,20 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
     this->addChild(rectNode);
 
     //
-    f32 layout_padding = RES(10);
+    f32 layout_padding = RES(20);
     f32 button_height = RES(60);
     f32 button_width = RES(128);
     
     // layout
-    auto layout = Layout::create();
+    //auto
+    layout = Layout::create();
     layout->setBackGroundImage(BOX_BACKGROUND_FILENAME);
     layout->setBackGroundImageScale9Enabled(true);
-    layout->setAnchorPoint( uihelper::AnchorCenter );
-    this->addChild(layout);
-    uihelper::PositionParentCenter( layout ) ;
+    uihelper::AddCenter( this, layout ) ;
     
     // add text
     auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
-    label->setColor(Color3B::BLUE);
+    label->setColor(_clrBlue);
     label->setAlignment(TextHAlignment::CENTER);
     label->setLineHeight(RES(FONT_SIZE_BIG));
     label->setLineSpacing(0);
@@ -56,7 +50,7 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
     label->setAnchorPoint( uihelper::AnchorTopCenter );
     
     // calc label height
-    auto h = label->getContentSize().height + (4*layout_padding) + button_height;
+    auto h = label->getContentSize().height + (3*layout_padding) + button_height;
     layout->setContentSize(Size(width,h));
     uihelper::PositionParentTopCenter( label, 0, layout_padding ) ;
     
@@ -95,6 +89,9 @@ void uipopup::Show()
     // by touching off the main window
     auto listener1 = EventListenerTouchOneByOne::create();
     listener1->onTouchBegan = [&](Touch* touch, Event* event){
+        // eat the touch in the message area
+        if ( layout->getBoundingBox().containsPoint(touch->getLocation()) )
+            return true;
         OnNo();
         return true;
     };

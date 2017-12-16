@@ -2,10 +2,9 @@
 
 #include <cocos2d.h>
 #include <stdio.h>
-#include <string>
 
 #include "tme_interface.h"
-
+#include "system/moonring.h"
 
 using namespace tme;
 using namespace chilli::collections;
@@ -581,6 +580,8 @@ m_gameover_t TME_CheckWinLose (void)
 
 bool TME_Save ( LPSTR filespec, PFNSERIALIZE function )
 {
+    UIDEBUG( "Save: %s", filespec );
+    
 	args[0] = filespec ;
     args[1] = (void*)function ;
 	if ( MXFAILED(mxi->Command( "@SAVE", args, 2 ) ) ) {
@@ -591,6 +592,8 @@ bool TME_Save ( LPSTR filespec, PFNSERIALIZE function )
 
 bool TME_Load ( LPSTR filespec, PFNSERIALIZE function )
 {
+    UIDEBUG( "Load: %s", filespec );
+    
 	args[0] = filespec ;
     args[1] = (void*)function ;
 	if ( MXFAILED(mxi->Command( "@LOAD", args, 2 ) ) ) {
@@ -614,7 +617,7 @@ bool TME_SaveDescription ( LPSTR filespec, c_str& description )
 	return TRUE;
 }
 
-bool TME_LoadDiscoveryMap ( LPSTR filespec )
+bool TME_LoadDiscoveryMap ( LPCSTR filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@LOADDISCOVERYMAP", args, 1 ) ) ) {
@@ -623,7 +626,7 @@ bool TME_LoadDiscoveryMap ( LPSTR filespec )
     return TRUE;
 }
 
-bool TME_SaveDiscoveryMap ( LPSTR filespec )
+bool TME_SaveDiscoveryMap ( LPCSTR filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@SAVEDISCOVERYMAP", args, 1 ) ) ) {

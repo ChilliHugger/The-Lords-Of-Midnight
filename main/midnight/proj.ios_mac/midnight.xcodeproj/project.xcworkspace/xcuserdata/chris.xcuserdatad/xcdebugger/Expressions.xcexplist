@@ -25,7 +25,7 @@
          contextName = "Landscape::Moving():LandscapeScene.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "moveCount">
+               value = "moveFrom">
             </PersistentString>
             <PersistentString
                value = "moveTo">
@@ -34,7 +34,15 @@
                value = "here">
             </PersistentString>
             <PersistentString
-               value = "moveFrom">
+               value = "moveCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "tmemanager::ResolveTMEData():tmemanager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "c.longname">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

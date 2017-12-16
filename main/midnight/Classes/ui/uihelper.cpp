@@ -121,6 +121,80 @@ void uihelper::PositionParentCenter( Node* node, f32 paddingX, f32 paddingY )
     node->setAnchorPoint( uihelper::AnchorCenter );
 }
 
+Node* uihelper::AddTopCenter( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentTopCenter(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+Node* uihelper::AddTopLeft( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentTopLeft(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+Node* uihelper::AddCenterLeft( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentCenterLeft(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+Node* uihelper::AddCenterRight( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentCenterRight(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+Node* uihelper::AddBottomCenter( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentBottomCenter(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+Node* uihelper::AddBottomLeft( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentBottomLeft(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+Node* uihelper::AddBottomRight( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentBottomRight(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+Node* uihelper::AddCenter( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentCenter(node,paddingX,paddingY);
+    }
+    return node;
+}
+
+
+
 //
 // Positioning
 //

@@ -14,23 +14,51 @@
 
 #pragma once
 
-#include "config.h"
+#include "../library/libinc/mxtypes.h"
+
+FORWARD_REFERENCE(configmanager);
+FORWARD_REFERENCE(helpmanager);
+FORWARD_REFERENCE(storymanager);
+FORWARD_REFERENCE(keyboardmanager);
+FORWARD_REFERENCE(tmemanager);
 
 class moonring {
 private:
-    moonring() {};
+    moonring();
 public:
+    virtual ~moonring();
     
-    static moonring* instance(){
+    static moonring* mikesingleton(){
         static moonring test;
         return &test;
     }
     
+    LPCSTR GetWritablePath();
+    
+    BOOL Serialize( u32 version, chilli::lib::archive& ar );
+    
+    void NewStory();
+
 public:
     
-    config      settings;
+    configmanager*          config;
+    helpmanager*            help;
+    storymanager*           stories;
+    keyboardmanager*        keyboard;
+    tmemanager*             tme;
+    c_str                   writeablepath;
 
     
 };
 
+void _complain (LPCSTR format, ... );
+void _debug (LPCSTR format, ... );
+void _msg (LPCSTR format, ... );
 
+#define COMPLAIN    _complain
+
+#ifdef MX_DEBUG
+#define UIDEBUG        CCLOG
+#else
+#define UIDEBUG        if(0) printf
+#endif

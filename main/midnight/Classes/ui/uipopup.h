@@ -10,13 +10,14 @@
 
 #include "cocos2d.h"
 #include "../library/libinc/mxtypes.h"
+#include "uielement.h"
 
 using namespace chilli::types;
 
 USING_NS_CC;
 
 
-class uipopup : Node {
+class uipopup : uielement {
 
 private:
     uipopup();
@@ -36,6 +37,7 @@ protected:
     
 protected:
     Scene*  parent;
+    cocos2d::ui::Layout* layout;
     
 };
 

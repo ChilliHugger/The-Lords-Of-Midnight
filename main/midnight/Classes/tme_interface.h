@@ -99,8 +99,8 @@ bool		TME_Save ( LPSTR filespec, tme::PFNSERIALIZE function );
 bool		TME_Load ( LPSTR filespec, tme::PFNSERIALIZE function );
 bool        TME_SaveDescription ( LPSTR filespec, c_str& description );
 
-bool		TME_SaveDiscoveryMap ( LPSTR filespec );
-bool		TME_LoadDiscoveryMap ( LPSTR filespec );
+bool		TME_SaveDiscoveryMap ( LPCSTR filespec );
+bool		TME_LoadDiscoveryMap ( LPCSTR filespec );
 
 
 void		TME_SelectChar ( mxid newid );

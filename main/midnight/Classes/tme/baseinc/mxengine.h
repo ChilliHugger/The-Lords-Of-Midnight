@@ -166,7 +166,7 @@ namespace tme {
 
 
     
-#ifdef IW_DEBUG
+#ifdef MX_DEBUG
 #define MX_DEBUG_ON 1
 #define MXTRACE		mx->debug
 #else

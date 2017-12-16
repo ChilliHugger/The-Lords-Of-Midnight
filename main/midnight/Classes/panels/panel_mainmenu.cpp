@@ -6,6 +6,11 @@
 #include "panel_credits.h"
 #include "panel_options.h"
 
+#include "../system/moonring.h"
+
+#include "../system/keyboardmanager.h"
+#include "../system/storymanager.h"
+#include "../system/helpmanager.h"
 #include "../frontend/resolutionmanager.h"
 #include "../frontend/layout_id.h"
 #include "../frontend/language.h"
@@ -57,15 +62,13 @@ bool panel_mainmenu::init()
     // Logo
     //
     auto logo = Sprite::createWithSpriteFrameName("lom_logo");
-    this->addChild(logo);
-    uihelper::PositionParentTopLeft(logo);
+    uihelper::AddTopLeft(this,logo);
     
     //
     // Menu
     //
     auto menu = new uitextmenu(RES(512), items, NUMELE(items) );
-    addChild(menu);
-    uihelper::PositionParentCenter(menu);
+    uihelper::AddCenter(this,menu);
     
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
@@ -79,12 +82,10 @@ bool panel_mainmenu::init()
     };
     
     auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, callback);
-    addChild(guide);
-    uihelper::PositionParentBottomRight(guide, RES(10), RES(10) );
+    uihelper::AddBottomRight(this,guide, RES(10), RES(10) );
     
     auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, callback);
-    addChild(story);
-    uihelper::PositionParentBottomLeft(story, RES(10), RES(10) );
+    uihelper::AddBottomLeft(this,story, RES(10), RES(10) );
     
     //
     // Other
@@ -204,14 +205,26 @@ void panel_mainmenu::OnUpdate()
 
 void panel_mainmenu::OnNewStory()
 {
+    //mr->NewStory();
+    
+    if (!ShowHelpWindow(HELP_GAME_WORKS, false, []() {}) )
+        return;
+    
+    // start game
+    //gl->SetPanelMode(MODE_LOOK);
+    return;
 }
 
 void panel_mainmenu::OnContinueStory()
 {
+    if (!ShowHelpWindow(HELP_LOOKING_AROUND, false, []() {}) )
+        return;
 }
 
 void panel_mainmenu::OnEndStory()
 {
+    if (!ShowHelpWindow(HELP_DAY1, false, []() {}) )
+        return;
 }
 
 

@@ -83,8 +83,9 @@ enum CONFIG_KEYBOARD_MODE
     CF_KEYBOARD_NEW=1,
 };
 
+FORWARD_REFERENCE(moonring);
 
-class config
+class configmanager
 {
     
 public:
@@ -110,8 +111,8 @@ public:
 
     
 public:
-    config();
-    virtual ~config();
+    configmanager( moonring* mr );
+    virtual ~configmanager();
 
     BOOL Save ( void );
     BOOL Load ( void );
@@ -119,6 +120,7 @@ public:
     void setGameDefaults();
 
 public:
+    moonring*   mr;
     
     // not stored
     BOOL    fullscreensupported;
