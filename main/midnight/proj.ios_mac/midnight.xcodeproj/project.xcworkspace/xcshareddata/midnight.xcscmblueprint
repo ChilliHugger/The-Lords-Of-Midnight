@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "AB1AB55A7C9925BB6A5AF67921D7F7D4AA80E87E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "852ED3691A47A99B0D19C820A500AE9772B2A44E" : 9223372036854775807,
+    "AB1AB55A7C9925BB6A5AF67921D7F7D4AA80E87E" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CD7FD32D-04B5-40F0-B955-BD985B1771CE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "852ED3691A47A99B0D19C820A500AE9772B2A44E" : "..\/..\/..\/Developer\/cocos2d-x",
+    "AB1AB55A7C9925BB6A5AF67921D7F7D4AA80E87E" : "The-Lords-Of-Midnight\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "midnight",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "main\/midnight\/proj.ios_mac\/midnight.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/cocos2d\/cocos2d-x.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "852ED3691A47A99B0D19C820A500AE9772B2A44E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ChilliHugger\/The-Lords-Of-Midnight.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AB1AB55A7C9925BB6A5AF67921D7F7D4AA80E87E"
+    }
+  ]
+}

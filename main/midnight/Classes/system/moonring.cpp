@@ -12,6 +12,8 @@
 #include "keyboardmanager.h"
 #include "tmemanager.h"
 
+USING_NS_CC;
+
 using namespace chilli::lib;
 
 static bool mySerialize ( u32 version, chilli::lib::archive& ar )
@@ -23,6 +25,7 @@ static bool mySerialize ( u32 version, chilli::lib::archive& ar )
 
 moonring::moonring()
 {
+    init_progess_callback = nullptr;
     
     help = new helpmanager(this);
     config = new configmanager(this);
@@ -125,6 +128,40 @@ BOOL moonring::Serialize( u32 version, archive& ar )
     return TRUE;
 }
 
+void moonring::Initialise( MXProgressCallback callback )
+{
+    init_progess_callback = callback;
+    
+    // let's give up some time to the ui Immediatley
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+    RUN_ON_UI_THREAD([=](){
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("rest-0.plist");
+        UpdateProgress(1);
+    });
+    
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    
+    RUN_ON_UI_THREAD([=](){
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("rest-1.plist");
+        UpdateProgress(2);
+    });
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+    RUN_ON_UI_THREAD([=](){
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("language-0.plist");
+        UpdateProgress(3);
+    });
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+}
+
+void moonring::UpdateProgress(int value)
+{
+    if ( init_progess_callback != nullptr )
+        init_progess_callback(3,value);
+}
 
 
 

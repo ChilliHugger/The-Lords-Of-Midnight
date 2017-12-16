@@ -31,7 +31,9 @@ public:
     
 protected:
     
-    void SetBackground( LPCSTR background );
+    Node* SetBackground( LPCSTR background );
+    Node* SetBackground( cocos2d::Color3B color );
+    
     void FadeExit( f32 delay = 0);
     void AreYouSure ( LPCSTR text, MXVoidCallback ok );
     void OpenPDF(LPCSTR pdf);

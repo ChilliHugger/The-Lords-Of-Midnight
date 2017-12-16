@@ -34,29 +34,38 @@ void uipanel::OnNotification( Ref* element )
 {
 }
 
-void uipanel::SetBackground( LPCSTR background )
+Node* uipanel::SetBackground( Color3B color )
+{
+    auto background = LayerColor::create(Color4B(color));
+    uihelper::AddBottomLeft(this, background);
+    uihelper::FillParent(background);
+    return background;
+}
+
+Node* uipanel::SetBackground( LPCSTR background )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
     f32 scale = visibleSize.height / p->getContentSize().height ;
     p->setScale(scale, scale );
     uihelper::AddCenter(this, p);
-
+    return p;
 }
 
 void uipanel::FadeExit(f32 delay )
 {
+    f32 duration = mr->config->screentransitions ? 1.0f : 0.0f;
+
     if ( delay == 0 ) {
         CustomDirector *director = (CustomDirector *)Director::getInstance();
-        director->popSceneWithTransition<TransitionCrossFade>(1.0);
+        director->popSceneWithTransition<TransitionCrossFade>(duration);
         return;
     }
     
-    
-    this->scheduleOnce( [](float) {
+    this->scheduleOnce( [duration](float) {
         
         CustomDirector *director = (CustomDirector *)Director::getInstance();
-        director->popSceneWithTransition<TransitionCrossFade>(1.0);
+        director->popSceneWithTransition<TransitionCrossFade>(duration);
         
     }, delay, "delayed_fade_exit" );
 }

@@ -337,6 +337,8 @@
 		83D895F81F36643F00172245 /* citadel_wip.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 83D895F61F36643F00172245 /* citadel_wip.tmx */; };
 		83D895FB1F36666D00172245 /* TMEMapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F91F36666D00172245 /* TMEMapBuilder.cpp */; };
 		83D895FC1F36666D00172245 /* TMEMapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F91F36666D00172245 /* TMEMapBuilder.cpp */; };
+		83E108B21FE5684B00C29042 /* panel_dedication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83E108B01FE5684B00C29042 /* panel_dedication.cpp */; };
+		83E108B31FE5687A00C29042 /* panel_dedication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83E108B01FE5684B00C29042 /* panel_dedication.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -566,6 +568,8 @@
 		83D895F91F36666D00172245 /* TMEMapBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TMEMapBuilder.cpp; sourceTree = "<group>"; };
 		83D895FA1F36666D00172245 /* TMEMapBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMEMapBuilder.h; sourceTree = "<group>"; };
 		83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "prebuilt/mac/libcocos2d Mac.a"; sourceTree = COCOS_ROOT; };
+		83E108B01FE5684B00C29042 /* panel_dedication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_dedication.cpp; sourceTree = "<group>"; };
+		83E108B11FE5684B00C29042 /* panel_dedication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_dedication.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -804,6 +808,8 @@
 				83B9BD681FD2CC9D00B4C721 /* panel_credits.h */,
 				83B9BD6D1FD30A0100B4C721 /* panel_options.cpp */,
 				83B9BD6E1FD30A0100B4C721 /* panel_options.h */,
+				83E108B01FE5684B00C29042 /* panel_dedication.cpp */,
+				83E108B11FE5684B00C29042 /* panel_dedication.h */,
 			);
 			path = panels;
 			sourceTree = "<group>";
@@ -1368,6 +1374,7 @@
 				83B9BD691FD2CC9D00B4C721 /* panel_credits.cpp in Sources */,
 				83D895FB1F36666D00172245 /* TMEMapBuilder.cpp in Sources */,
 				83D264E01F36077E001C6F13 /* misc.cpp in Sources */,
+				83E108B21FE5684B00C29042 /* panel_dedication.cpp in Sources */,
 				83D264761F360724001C6F13 /* ddr_character.cpp in Sources */,
 				83D264341F360724001C6F13 /* mxentity.cpp in Sources */,
 				83B9BD6F1FD30A0100B4C721 /* panel_options.cpp in Sources */,
@@ -1412,6 +1419,7 @@
 				83D264491F360724001C6F13 /* army.cpp in Sources */,
 				83D264D51F36077E001C6F13 /* cflags.cpp in Sources */,
 				83D264CF1F36077E001C6F13 /* carchive.cpp in Sources */,
+				83E108B31FE5687A00C29042 /* panel_dedication.cpp in Sources */,
 				83D264351F360724001C6F13 /* mxentity.cpp in Sources */,
 				83D264531F360724001C6F13 /* info_gender.cpp in Sources */,
 				83D264831F360724001C6F13 /* lom_scenario.cpp in Sources */,

@@ -3,6 +3,8 @@
 
 #include "uipanel.h"
 
+//FORWARD_REFERENCE(DrawNode);
+
 class panel_splashscreen : public uipanel
 {
 public:
@@ -11,6 +13,16 @@ public:
     
     CREATE_FUNC(panel_splashscreen);
 
+    void UpdateProgress( f32 percent );
+    void Complete();
+    
+protected:
+    f32 loading_width;
+    f32 loading_height;
+    cocos2d::DrawNode* loading_progress;
+    
+    long StartTime;
+    
 };
 
 #endif // __PANEL_SPLASHSCREEN_H__

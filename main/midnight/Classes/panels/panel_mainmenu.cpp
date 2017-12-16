@@ -180,14 +180,17 @@ void panel_mainmenu::OnHelpClose()
 
 void panel_mainmenu::OnOptions()
 {
+    f32 duration = mr->config->screentransitions ? 1.0f : 0.0f;
+        
     auto scene = panel_options::create();
-    Director::getInstance()->pushScene(TransitionCrossFade::create(1.0, scene) );
+    Director::getInstance()->pushScene(TransitionCrossFade::create(duration, scene) );
 }
 
 void panel_mainmenu::OnCredits()
 {
+    f32 duration = mr->config->screentransitions ? 1.0f : 0.0f;
     auto scene = panel_credits::create();
-    Director::getInstance()->pushScene(TransitionCrossFade::create(1.0, scene) );
+    Director::getInstance()->pushScene(TransitionCrossFade::create(duration, scene) );
 
 }
 

@@ -22,6 +22,9 @@ FORWARD_REFERENCE(storymanager);
 FORWARD_REFERENCE(keyboardmanager);
 FORWARD_REFERENCE(tmemanager);
 
+typedef std::function<void(int,int)> MXProgressCallback;
+#define RUN_ON_UI_THREAD    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread
+
 class moonring {
 private:
     moonring();
@@ -33,13 +36,22 @@ public:
         return &test;
     }
     
+    void Initialise( MXProgressCallback callback );
+    
     LPCSTR GetWritablePath();
     
     BOOL Serialize( u32 version, chilli::lib::archive& ar );
     
     void NewStory();
 
+protected:
+    
+    void UpdateProgress(int value);
+    
 public:
+    
+    MXProgressCallback      init_progess_callback;
+    
     
     configmanager*          config;
     helpmanager*            help;
