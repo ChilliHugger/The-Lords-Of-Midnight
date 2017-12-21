@@ -25,16 +25,16 @@
          contextName = "Landscape::Moving():LandscapeScene.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "moveFrom">
+               value = "moveCount">
             </PersistentString>
             <PersistentString
                value = "moveTo">
             </PersistentString>
             <PersistentString
-               value = "here">
+               value = "moveFrom">
             </PersistentString>
             <PersistentString
-               value = "moveCount">
+               value = "here">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -43,6 +43,14 @@
          <PersistentStrings>
             <PersistentString
                value = "c.longname">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "storymanager::getStoriesInfo():storymanager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "stories.chapter[0].description">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

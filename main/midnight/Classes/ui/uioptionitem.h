@@ -24,12 +24,23 @@ protected:
 };
 
 
-class MenuItemOption : public cocos2d::MenuItemSprite
+//class MenuItemOption : public cocos2d::MenuItemSprite
+//{
+//public:
+//    static MenuItemOption* create( uioptionitem* option);
+//
+//    virtual void selected();
+//    virtual void unselected();
+//
+//};
+
+class MenuItemNode : public cocos2d::MenuItemSprite
 {
 public:
-    static MenuItemOption* create( uioptionitem* option);
-    
+    static MenuItemNode* create( Node* node );
+
     virtual void selected();
     virtual void unselected();
-    
+
 };
+

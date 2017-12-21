@@ -23,6 +23,7 @@ USING_NS_CC;
 #define BOX_BACKGROUND_FILENAME "misc/box_16.png"
 #define FONT_FILENAME           "fonts/celtic.ttf"
 #define FONT_SIZE_BIG           30
+#define FONT_SIZE_MEDIUM        20
 
 class uihelper
 {
@@ -31,6 +32,7 @@ public:
 
     // Fonts
     static TTFConfig font_config_big;
+    static TTFConfig font_config_medium;
     
     // Anchors
     static Vec2 AnchorTopLeft;
@@ -76,32 +78,34 @@ public:
     // positioning
     
     static void PositionBelow( Node* node, Node* ref, f32 paddingY = 0 );
-    
+    static void PositionRight( Node* node, Node* ref, f32 paddingX = 0);
     
 };
+
+typedef Color3B rgb_t ;
 
 
 //
 // System default colours
 //
-const Color3B _clrBlack         = Color3B(0x00,0x00,0x00);
-const Color3B _clrBlue          = Color3B(0x00,0x00,0xff);
-const Color3B _clrRed           = Color3B(0xff,0x00,0x00);
-const Color3B _clrMagenta       = Color3B(0xff,0x00,0xff);
-const Color3B _clrGreen         = Color3B(0x00,0xff,0x00);
-const Color3B _clrCyan          = Color3B(0x00,0xff,0xff);
-const Color3B _clrYellow        = Color3B(0xff,0xff,0x00);
-const Color3B _clrWhite         = Color3B(0xff,0xff,0xff);
+const rgb_t _clrBlack         = Color3B(0x00,0x00,0x00);
+const rgb_t _clrBlue          = Color3B(0x00,0x00,0xff);
+const rgb_t _clrRed           = Color3B(0xff,0x00,0x00);
+const rgb_t _clrMagenta       = Color3B(0xff,0x00,0xff);
+const rgb_t _clrGreen         = Color3B(0x00,0xff,0x00);
+const rgb_t _clrCyan          = Color3B(0x00,0xff,0xff);
+const rgb_t _clrYellow        = Color3B(0xff,0xff,0x00);
+const rgb_t _clrWhite         = Color3B(0xff,0xff,0xff);
 
-const Color3B _clrDarkBlue      = Color3B(0x00,0x00,0xcd);
-const Color3B _clrDarkRed       = Color3B(0xcd,0x00,0x00);
-const Color3B _clrDarkMagenta   = Color3B(0xcd,0x00,0xcd);
-const Color3B _clrDarkGreen     = Color3B(0x00,0xcd,0x00);
-const Color3B _clrDarkCyan      = Color3B(0x00,0xcd,0xcd);
-const Color3B _clrDarkYellow    = Color3B(0xcd,0xcd,0x00);
-const Color3B _clrDarkWhite     = Color3B(0xcd,0xcd,0xcd);
+const rgb_t _clrDarkBlue      = Color3B(0x00,0x00,0xcd);
+const rgb_t _clrDarkRed       = Color3B(0xcd,0x00,0x00);
+const rgb_t _clrDarkMagenta   = Color3B(0xcd,0x00,0xcd);
+const rgb_t _clrDarkGreen     = Color3B(0x00,0xcd,0x00);
+const rgb_t _clrDarkCyan      = Color3B(0x00,0xcd,0xcd);
+const rgb_t _clrDarkYellow    = Color3B(0xcd,0xcd,0x00);
+const rgb_t _clrDarkWhite     = Color3B(0xcd,0xcd,0xcd);
 
-const Color3B _clrGrey          = Color3B(0x80,0x80,0x80);
+const rgb_t _clrGrey          = Color3B(0x80,0x80,0x80);
 
 
 

@@ -60,8 +60,6 @@ public:
 
 };
 
-//#define RES(x) (s32)    ((x)*1.0)
-
 #define RES(x) (f32)    ((x)*resolutionmanager::getInstance()->Scale())
 //#define ASP(x) (u32)    ((x)*resolutionmanager::getInstance()->Aspect())
 #define ALPHA(x) (f32)    ((x)*255)

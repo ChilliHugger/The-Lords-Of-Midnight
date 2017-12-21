@@ -59,18 +59,19 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
     auto yes = uihelper::CreateBoxButton(Size(button_width,button_height));
     yes->setTitleText(BUTTON_YES);
     layout->addChild(yes);
+
+    uihelper::PositionParentBottomCenter(yes, -layout_padding/2, layout_padding);
     yes->setAnchorPoint( uihelper::AnchorBottomRight );
-    uihelper::PositionParentBottomCenter(yes, -layout_padding, layout_padding);
     yes->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
         OnYes();
     } );
-    
+
     // add cancel
     auto no = uihelper::CreateBoxButton(Size(button_width,button_height));
     no->setTitleText(BUTTON_NO);
     layout->addChild(no);
+    uihelper::PositionParentBottomCenter(no, layout_padding/2, layout_padding);
     no->setAnchorPoint( uihelper::AnchorBottomLeft );
-    uihelper::PositionParentBottomCenter(no, layout_padding, layout_padding);
     no->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
         OnNo();
     } );

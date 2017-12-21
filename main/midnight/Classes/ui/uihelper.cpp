@@ -23,7 +23,7 @@ Vec2 uihelper::AnchorBottomRight = Vec2(1,0);
 Vec2 uihelper::AnchorBottomCenter = Vec2(0.5,0);
 
 TTFConfig uihelper::font_config_big;
-
+TTFConfig uihelper::font_config_medium;
 
 void uihelper::Init()
 {
@@ -34,6 +34,12 @@ void uihelper::Init()
     font_config_big.customGlyphs = nullptr;
     font_config_big.distanceFieldEnabled = false;
 
+    font_config_medium.fontFilePath = FONT_FILENAME;
+    font_config_medium.fontSize = RES(FONT_SIZE_MEDIUM);
+    font_config_medium.glyphs = GlyphCollection::DYNAMIC;
+    font_config_medium.outlineSize = 0;
+    font_config_medium.customGlyphs = nullptr;
+    font_config_medium.distanceFieldEnabled = false;
 }
 
 //
@@ -48,7 +54,7 @@ void uihelper::PositionParentTopCenter( Node* node, f32 paddingX, f32 paddingY )
     auto r = node->getParent()->getBoundingBox();
     node->setPosition((r.size.width/2)+paddingX, r.size.height-paddingY );
     node->setAnchorPoint(uihelper::AnchorTopCenter);
-    
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 void uihelper::PositionParentTopLeft( Node* node, f32 paddingX, f32 paddingY )
@@ -58,7 +64,7 @@ void uihelper::PositionParentTopLeft( Node* node, f32 paddingX, f32 paddingY )
     auto r = node->getParent()->getBoundingBox();
     node->setPosition(paddingX, r.size.height-paddingY );
     node->setAnchorPoint(uihelper::AnchorTopLeft);
-    
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 void uihelper::PositionParentCenterLeft( Node* node, f32 paddingX, f32 paddingY )
@@ -69,6 +75,7 @@ void uihelper::PositionParentCenterLeft( Node* node, f32 paddingX, f32 paddingY 
     auto r = node->getParent()->getBoundingBox();
     node->setPosition(paddingX, (r.size.height/2)-paddingY );
     node->setAnchorPoint(uihelper::AnchorLeftCenter);
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 void uihelper::PositionParentCenterRight( Node* node, f32 paddingX, f32 paddingY )
@@ -79,6 +86,7 @@ void uihelper::PositionParentCenterRight( Node* node, f32 paddingX, f32 paddingY
     auto r = node->getParent()->getBoundingBox();
     node->setPosition(r.size.width - paddingX, (r.size.height/2)-paddingY );
     node->setAnchorPoint(uihelper::AnchorRightCenter);
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 void uihelper::PositionParentBottomCenter( Node* node, f32 paddingX, f32 paddingY )
@@ -88,7 +96,8 @@ void uihelper::PositionParentBottomCenter( Node* node, f32 paddingX, f32 padding
     
     auto r = node->getParent()->getBoundingBox();
     node->setPosition((r.size.width/2)+paddingX, paddingY );
-    
+    node->setAnchorPoint( uihelper::AnchorBottomCenter );
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 void uihelper::PositionParentBottomLeft( Node* node, f32 paddingX, f32 paddingY )
@@ -98,6 +107,7 @@ void uihelper::PositionParentBottomLeft( Node* node, f32 paddingX, f32 paddingY 
     
     node->setPosition(paddingX, paddingY );
     node->setAnchorPoint( uihelper::AnchorBottomLeft );
+    node->setIgnoreAnchorPointForPosition(false);
     
 }
 
@@ -109,6 +119,7 @@ void uihelper::PositionParentBottomRight( Node* node, f32 paddingX, f32 paddingY
     auto r = node->getParent()->getBoundingBox();
     node->setPosition(r.size.width - paddingX, paddingY );
     node->setAnchorPoint( uihelper::AnchorBottomRight );
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 void uihelper::PositionParentCenter( Node* node, f32 paddingX, f32 paddingY )
@@ -119,6 +130,7 @@ void uihelper::PositionParentCenter( Node* node, f32 paddingX, f32 paddingY )
     auto r = node->getParent()->getBoundingBox();
     node->setPosition((r.size.width/2)+paddingX, (r.size.height/2)+paddingY );
     node->setAnchorPoint( uihelper::AnchorCenter );
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 Node* uihelper::AddTopCenter( Node* parent, Node* node, f32 paddingX, f32 paddingY )
@@ -209,6 +221,18 @@ void uihelper::PositionBelow( Node* node, Node* ref, f32 paddingY)
     
     node->setPosition( p.x, p.y - r.size.height - paddingY );
     node->setAnchorPoint( uihelper::AnchorTopCenter );
+}
+
+void uihelper::PositionRight( Node* node, Node* ref, f32 paddingX)
+{
+    if ( ref == nullptr )
+        return;
+    
+    auto r = ref->getBoundingBox();
+    auto p = ref->getPosition();
+   
+    node->setPosition( p.x + r.size.width + paddingX, p.y);
+    node->setAnchorPoint( ref->getAnchorPoint() );
 }
 
 //

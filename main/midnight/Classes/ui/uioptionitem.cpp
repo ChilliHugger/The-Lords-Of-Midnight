@@ -56,22 +56,22 @@ void uioptionitem::setValue( const std::string& text )
 }
 
 
-MenuItemOption* MenuItemOption::create( uioptionitem* option)
+MenuItemNode* MenuItemNode::create( Node* option)
 {
-    auto item = new MenuItemOption();
+    auto item = new MenuItemNode();
     
     item->initWithNormalSprite(option, nullptr, nullptr, nullptr);
     item->setEnabled(true);
     return item;
 }
 
-void MenuItemOption::selected()
+void MenuItemNode::selected()
 {
     MenuItemSprite::selected();
     setScale(0.9f);
 }
 
-void MenuItemOption::unselected()
+void MenuItemNode::unselected()
 {
     MenuItemSprite::unselected();
     setScale(1.0f);

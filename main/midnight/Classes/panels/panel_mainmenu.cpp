@@ -19,6 +19,9 @@
 #include "../ui/uihelper.h"
 #include "../ui/uioptionitem.h"
 
+#include "../ui/uibook.h"
+#include "../ui/uibookmenu.h"
+
 USING_NS_CC;
 using namespace cocos2d::ui;
 
@@ -83,18 +86,18 @@ bool panel_mainmenu::init()
     
     auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, callback);
     uihelper::AddBottomRight(this,guide, RES(10), RES(10) );
+    guide->cocos2d::Node::setScale(1.5f);
     
     auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, callback);
     uihelper::AddBottomLeft(this,story, RES(10), RES(10) );
+    story->cocos2d::Node::setScale(1.5f);
     
     //
     // Other
     //
     
-    //auto button = new uioptionitem( RES(512), &items[0]);
-    //addChild(button);
-    //uihelper::PositionParentTopCenter(button, RES(0), RES(100) );
-    
+    TME_Init();
+
     return true;
 }
 
@@ -208,7 +211,7 @@ void panel_mainmenu::OnUpdate()
 
 void panel_mainmenu::OnNewStory()
 {
-    //mr->NewStory();
+    mr->NewStory();
     
     if (!ShowHelpWindow(HELP_GAME_WORKS, false, []() {}) )
         return;
@@ -220,8 +223,17 @@ void panel_mainmenu::OnNewStory()
 
 void panel_mainmenu::OnContinueStory()
 {
-    if (!ShowHelpWindow(HELP_LOOKING_AROUND, false, []() {}) )
-        return;
+    
+    auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
+    uihelper::AddCenter(this,bookmenu);
+ 
+    bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
+        
+        ((uibookmenu*)s)->removeFromParent();
+        
+        //this->OnMenuNotification( s, (menueventargs*)e );
+    });
+    
 }
 
 void panel_mainmenu::OnEndStory()

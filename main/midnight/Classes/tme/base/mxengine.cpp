@@ -738,7 +738,6 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
  	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
 	if ( !pFile->IsOpen() ) {
 		if ( pFile ) delete pFile;
-		//COMPLAIN( "Cannot Load data file %s", filename );
 		return MX_FAILED;
 	}
     
@@ -749,7 +748,6 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
     
     u32		magicno;
     u32		scenarioid;
-    //u16		temp16;
     c_str	header;
     
 	// magic no

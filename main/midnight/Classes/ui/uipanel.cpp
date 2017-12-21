@@ -180,6 +180,31 @@ void uipanel::PopupHelpWindow ( helpid_t id, MXVoidCallback callback )
     
 }
 
+void uipanel::DebugNodes()
+{
+    auto layer = DrawNode::create();
+    layer->setContentSize( this->getContentSize() );
+    
+    layer->drawSolidRect(Point::ZERO, Point(this->getContentSize().width,this->getContentSize().width), Color4F(0, 0, 0, 0.25));
 
+    
+    DebugNodesChildren(layer,this, Vec2::ZERO );
 
+    addChild(layer);
+}
+
+void uipanel::DebugNodesChildren(DrawNode* layer, Node* parent, Vec2 origin)
+{
+    for( const auto &node : parent->getChildren() ) {
+        auto r = node->getBoundingBox();
+        
+        auto p = r.origin + origin ;
+        
+        layer->drawRect( p, Point(p.x + r.size.width, p.y + r.size.height), Color4F::WHITE);
+        
+        DebugNodesChildren(layer,node, p );
+        
+    }
+    
+}
 

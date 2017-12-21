@@ -43,6 +43,10 @@ protected:
     void PopupHelpWindow ( helpid_t id, MXVoidCallback callback );
     virtual void HelpPending();
     
+    
+    void DebugNodes();
+    void DebugNodesChildren(cocos2d::DrawNode* layer, Node* parent, cocos2d::Vec2 origin);
+    
 protected:
     uipopup*        popupWindow;
     moonring*       mr;

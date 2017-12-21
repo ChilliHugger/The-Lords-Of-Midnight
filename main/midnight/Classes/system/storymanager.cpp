@@ -10,9 +10,23 @@
 #include "configmanager.h"
 #include "../tme_interface.h"
 #include "moonring.h"
+#include "../ui/uihelper.h"
 
 using namespace chilli::os;
 using namespace chilli::lib;
+
+static rgb_t bookmark_colours[] = {
+    rgb_t(0xde, 0x00, 0x00),
+    rgb_t(0xde, 0x7e, 0x00),
+    rgb_t(0xcc, 0xcc, 0x00),
+    rgb_t(0x69, 0xa9, 0x00),
+    rgb_t(0x00, 0xb2, 0xa4),
+    rgb_t(0x00, 0x7e, 0xcc),
+    rgb_t(0x84, 0x00, 0xdb),
+    rgb_t(0x96, 0x96, 0x96)
+};
+
+
 
 storymanager::storymanager( moonring* mr)
 {
@@ -32,6 +46,30 @@ storymanager::storymanager( moonring* mr)
 storymanager::~storymanager()
 {
 }
+
+storyinfo_t* storymanager::getStoriesInfo()
+{
+    static storyinfo_t stories ;
+    
+    int used = 0;
+    
+    for ( u32 ii=0; ii<MAX_STORIES; ii++ ) {
+    
+        if ( filemanager::Exists( getPath(ii+1) ) ) {
+            getDescription(ii+1, stories.chapter[used].description);
+            stories.chapter[used].id = ii + 1;
+            stories.chapter[used].color = bookmark_colours[used];
+            used++;
+        }
+    
+    
+    }
+    
+    stories.count = used;
+    
+    return &stories;
+}
+
 
 void storymanager::checkStories( void )
 {

@@ -24,6 +24,19 @@ typedef enum savemode_t {
     savemode_last,
 } savemode_t;
 
+typedef struct storyheader_t {
+    storyid_t           id;
+    c_str               description ;
+    cocos2d::Color3B    color;
+    savemode_t          mode;
+} storyheader_t;
+
+typedef struct storyinfo_t
+{
+    u32                 count;
+    storyheader_t       chapter[MAX_STORIES];
+} storyinfo_t ;
+
 
 class storymanager
 {
@@ -32,6 +45,7 @@ public:
     virtual ~storymanager();
     
     void checkStories(void);
+    storyinfo_t* getStoriesInfo();
     
     int stories_used()  ;
     storyid_t next_free_story()  ;

@@ -126,13 +126,6 @@ static option_t options[] = {
     {   ID_HOME,                    OPT_NONE,    0, NULL, NULL },
 };
 
-
-
-//Scene* panel_options::createScene()
-//{
-//    return panel_options::create();
-//}
-
 bool panel_options::init()
 {
     if ( !uipanel::init() )
@@ -176,8 +169,6 @@ bool panel_options::init()
     
     
     SetMenu(ID_MENU_DISPLAY);
-    
-    //FadeExit(5.0);
     
     return true;
 }
@@ -319,11 +310,12 @@ void panel_options::SetValues ( void )
 
 void panel_options::CreateMenu1()
 {
-    f32 width = RES(512-40);
     
+    f32 width = RES(512-40);
+
     auto menu = new uitextmenu(width, items_main, NUMELE(items_main) );
     uihelper::AddCenterLeft(this,menu,RES(20), 0);
-    
+
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
     });
@@ -334,8 +326,6 @@ void panel_options::CreateMenu1()
 
 void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
-    //auto rect = this->getBoundingBox();
-    
     f32 width = RES(512-40);
     
     if ( menu2 != nullptr )  {
@@ -355,7 +345,7 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     
     u32 gapY = RES(5);
     
-    menu2_background->addChild(menu2);
+    this->addChild(menu2);
     
     fields.clear();
     optionControls.clear();
@@ -371,7 +361,7 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         // find the options
         optionControls.insert(item->id, button);
         
-        auto menuItem = MenuItemOption::create(button);
+        auto menuItem = MenuItemNode::create(button);
         auto r = menuItem->getBoundingBox();
         height += r.size.height + gapY;
 
@@ -385,16 +375,15 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         fields.pushBack(menuItem);
     }
     
-
     menu2_background->setContentSize(Size(width,height) );
-    uihelper::FillParent(menu2);
-    uihelper::PositionParentTopLeft(menu2);
-    
+    menu2->setContentSize(Size(width,height) );
+
     //menu2_background->drawSolidRect(Point::ZERO, Point(RES(512),height), Color4F::BLACK);
     uihelper::PositionParentCenterRight(menu2_background,RES(20));
+    uihelper::PositionParentCenterRight(menu2,RES(20));
     
     // refresh positions
-    auto offset = Vec2( width/2, 0 );
+    auto offset = Vec2( width/2, height );
     for ( auto item : fields ) {
         f32 height = item->getBoundingBox().size.height;
         offset.y -= height/2;
@@ -402,7 +391,6 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         item->setPosition(offset);
         offset.y -=  (height/2) + gapY;
     }
-    
     
 }
 

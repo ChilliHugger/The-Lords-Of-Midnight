@@ -43,7 +43,6 @@ void uitextmenu::Init()
     
     // menu
     auto mainmenu = Menu::create();
-    this->addChild(mainmenu);
 
     // add items
     f32 height=0;
@@ -72,10 +71,18 @@ void uitextmenu::Init()
     
     // resize background based on content
     this->setContentSize(Size(width,height+(2*paddingY)) );
-    uihelper::PositionParentTopLeft(mainmenu);
+
+    uihelper::AddCenter(this,mainmenu);
+    mainmenu->setContentSize(Size(width,height+(2*paddingY)) );
+    mainmenu->setPosition(Vec2::ZERO);
+    mainmenu->setAnchorPoint(uihelper::AnchorTopLeft);
+    mainmenu->setIgnoreAnchorPointForPosition(true);
+    
+    auto r1 = this->getBoundingBox();
+    auto r2 = mainmenu->getBoundingBox();
     
     // refresh positions
-    auto offset = Vec2( width/2, 0 - paddingY );
+    auto offset = Vec2( width/2, height + paddingY );
     for ( auto item : mainmenu->getChildren() ) {
 
         item->setAnchorPoint( uihelper::AnchorTopCenter );
