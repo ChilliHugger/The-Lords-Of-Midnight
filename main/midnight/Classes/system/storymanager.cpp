@@ -28,10 +28,8 @@ static rgb_t bookmark_colours[] = {
 
 
 
-storymanager::storymanager( moonring* mr)
+storymanager::storymanager()
 {
-    this->mr = mr;
-    
     CLEARARRAY(used);
     current=0;
     last_save=0;

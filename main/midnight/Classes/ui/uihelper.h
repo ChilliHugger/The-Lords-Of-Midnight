@@ -24,6 +24,7 @@ USING_NS_CC;
 #define FONT_FILENAME           "fonts/celtic.ttf"
 #define FONT_SIZE_BIG           30
 #define FONT_SIZE_MEDIUM        20
+#define IMAGE_LOGO              "lom_logo"
 
 class uihelper
 {

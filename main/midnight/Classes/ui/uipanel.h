@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "../system/helpmanager.h"
+#include "../frontend/panel_id.h"
 
 using namespace chilli::types;
 
@@ -35,6 +36,8 @@ protected:
     Node* SetBackground( cocos2d::Color3B color );
     
     void FadeExit( f32 delay = 0);
+    void Exit( f32 delay = 0);
+    
     void AreYouSure ( LPCSTR text, MXVoidCallback ok );
     void OpenPDF(LPCSTR pdf);
     void FillBackground();
@@ -55,6 +58,9 @@ protected:
     BOOL            help_pending;
     int             help_visible;
     uihelpwindow*   help_window;
+    
+public:
+    mode_t          currentmode;
 };
 
 

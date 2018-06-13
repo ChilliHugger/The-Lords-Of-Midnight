@@ -7,12 +7,12 @@
 
 #include "../ui/uipopup.h"
 #include "../ui/uihelpwindow.h"
-#include "../Extensions/CustomDirector.h"
 #include "uipanel.h"
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 #include "../system/helpmanager.h"
 #include "../system/configmanager.h"
+#include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 
 USING_NS_CC;
@@ -54,21 +54,19 @@ Node* uipanel::SetBackground( LPCSTR background )
 
 void uipanel::FadeExit(f32 delay )
 {
-    f32 duration = mr->config->screentransitions ? 1.0f : 0.0f;
-
-    if ( delay == 0 ) {
-        CustomDirector *director = (CustomDirector *)Director::getInstance();
-        director->popSceneWithTransition<TransitionCrossFade>(duration);
-        return;
-    }
-    
-    this->scheduleOnce( [duration](float) {
-        
-        CustomDirector *director = (CustomDirector *)Director::getInstance();
-        director->popSceneWithTransition<TransitionCrossFade>(duration);
-        
+    this->scheduleOnce( [&](float) {
+        mr->panels->ReturnToPrevious(TRANSITION_FADEIN);
     }, delay, "delayed_fade_exit" );
 }
+
+void uipanel::Exit(f32 delay )
+{
+    this->scheduleOnce( [&](float) {
+        mr->panels->ReturnToPrevious();
+    }, delay, "delayed_exit" );
+}
+
+
 
 void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
 {

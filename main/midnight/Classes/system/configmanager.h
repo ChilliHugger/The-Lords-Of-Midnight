@@ -9,6 +9,7 @@
 #pragma once
 
 #include "../tme_interface.h"
+#include "ringcontroller.h"
 
 #define SAVE_GAME_VERSION               1
 #define FRONTEND_SAVE_GAME_VERSION      13
@@ -21,12 +22,14 @@
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
+    #define _SHOW_DEDICATION_
     #define ADVERT_FREQUENCY            16
     //#define _USE_DEBUG_MENU_
     //#define _SHOW_GAME_VERSION_
     #define _DEBUG_UNDO_HISTORY_        1
 #else
     //#define _SHOW_SPLASH_
+    //#define _SHOW_DEDICATION_
     #define ADVERT_FREQUENCY            32
     #define _USE_DEBUG_MENU_
     #define _SHOW_GAME_VERSION_
@@ -83,9 +86,8 @@ enum CONFIG_KEYBOARD_MODE
     CF_KEYBOARD_NEW=1,
 };
 
-FORWARD_REFERENCE(moonring);
 
-class configmanager
+class configmanager : public ringcontroller
 {
     
 public:
@@ -111,17 +113,17 @@ public:
 
     
 public:
-    configmanager( moonring* mr );
+    configmanager();
     virtual ~configmanager();
 
     BOOL Save ( void );
     BOOL Load ( void );
 
+    
+    bool bumpAdvert();
     void setGameDefaults();
 
-public:
-    moonring*   mr;
-    
+public:    
     // not stored
     BOOL    fullscreensupported;
     

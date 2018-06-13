@@ -26,6 +26,3 @@ class menueventargs : public uieventargs
 public:
     uitextmenuitem*     menuitem;
 };
-
-
-

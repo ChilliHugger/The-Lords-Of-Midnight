@@ -8,7 +8,7 @@
 
 #include "uibook.h"
 #include "uihelper.h"
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 
 #define BOOK_IMAGE              "book"
 #define BOOKMARK_IMAGE          "bookmark"

@@ -9,7 +9,7 @@
 #include "uibookmenu.h"
 #include "uibook.h"
 #include "uihelper.h"
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../ui/uioptionitem.h"
 #include "MyButton.h"
 

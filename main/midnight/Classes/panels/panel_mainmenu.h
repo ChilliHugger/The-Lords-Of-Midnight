@@ -29,6 +29,9 @@ protected:
     void OnNewStory();
     void OnContinueStory();
     void OnEndStory();
+
+    void DeleteStory( storyid_t id );
+    void refreshStories( void );
 };
 
 #endif // __panel_mainmenu_h__

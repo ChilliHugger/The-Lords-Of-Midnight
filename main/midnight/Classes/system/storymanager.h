@@ -11,8 +11,7 @@
 #include "../library/libinc/mxtypes.h"
 #include "../library/libinc/collections.h"
 #include "lomxtypes.h"
-
-FORWARD_REFERENCE(moonring);
+#include "ringcontroller.h"
 
 #define MAX_STORIES 8
 typedef u32 storyid_t;
@@ -37,11 +36,10 @@ typedef struct storyinfo_t
     storyheader_t       chapter[MAX_STORIES];
 } storyinfo_t ;
 
-
-class storymanager
+class storymanager : public ringcontroller
 {
 public:
-    storymanager( moonring* mr );
+    storymanager();
     virtual ~storymanager();
     
     void checkStories(void);
@@ -90,8 +88,6 @@ public:
     
     
 private:
-    moonring*       mr;
-    
     BOOL            used[MAX_STORIES];
     storyid_t       current;
     tme::PFNSERIALIZE    loadsave;

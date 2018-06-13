@@ -9,7 +9,9 @@
 
 #include "panel_credits.h"
 #include "panel_mainmenu.h"
-#include "resolutionmanager.h"
+
+#include "../system/resolutionmanager.h"
+#include "../system/panelmanager.h"
 
 
 bool panel_credits::init()
@@ -21,7 +23,7 @@ bool panel_credits::init()
     
     SetBackground("credits.png");
 
-    FadeExit(5.0);
+    Exit(5.0);
     
     return true;
 }

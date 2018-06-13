@@ -6,7 +6,7 @@
 //
 
 #include "uioptionitem.h"
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "uihelper.h"
 
 

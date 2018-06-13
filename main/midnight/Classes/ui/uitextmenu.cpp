@@ -7,7 +7,7 @@
 //
 
 #include "uitextmenu.h"
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "uihelper.h"
 #include "uitextmenu.h"
 

@@ -18,9 +18,12 @@
 
 FORWARD_REFERENCE(configmanager);
 FORWARD_REFERENCE(helpmanager);
-FORWARD_REFERENCE(storymanager);
+//FORWARD_REFERENCE(storymanager);
 FORWARD_REFERENCE(keyboardmanager);
 FORWARD_REFERENCE(tmemanager);
+FORWARD_REFERENCE(panelmanager);
+
+#include "storymanager.h"
 
 typedef std::function<void(int,int)> MXProgressCallback;
 #define RUN_ON_UI_THREAD    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread
@@ -32,8 +35,8 @@ public:
     virtual ~moonring();
     
     static moonring* mikesingleton(){
-        static moonring test;
-        return &test;
+        static moonring singleton;
+        return &singleton;
     }
     
     void Initialise( MXProgressCallback callback );
@@ -43,16 +46,18 @@ public:
     BOOL Serialize( u32 version, chilli::lib::archive& ar );
     
     void NewStory();
-
+    void LoadStory( storyid_t id );
+    
 protected:
     
     void UpdateProgress(int value);
+    BOOL CheckGameOverConditions ( void );
     
 public:
     
     MXProgressCallback      init_progess_callback;
     
-    
+    panelmanager*           panels;
     configmanager*          config;
     helpmanager*            help;
     storymanager*           stories;
@@ -62,6 +67,8 @@ public:
 
     
 };
+
+#define CONFIG(x)   (mr->config->x)
 
 void _complain (LPCSTR format, ... );
 void _debug (LPCSTR format, ... );

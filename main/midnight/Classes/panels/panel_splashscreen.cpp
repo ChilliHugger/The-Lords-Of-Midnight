@@ -2,10 +2,11 @@
 #include "panel_dedication.h"
 #include "panel_mainmenu.h"
 
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
+#include "../system/panelmanager.h"
 
 #include <iostream>
 #include <string>
@@ -53,32 +54,24 @@ bool panel_splashscreen::init()
 
 void panel_splashscreen::Complete()
 {
-    if ( mr->config->screentransitions )
-        loading_progress->runAction( FadeOut::create(1.0) );
-    else
-        loading_progress->setVisible(false);
-    
     auto Duration = utils::getTimeInMilliseconds() - StartTime;
     
     // we want at least 3 seconds of splash screen
     f32 delay = MAX(0,(f32)(MAX_SPLASHSCREEN_TIME-Duration) / 1000.0f);
-    f32 transition = TRANSITION_TIME;
     
-    if (!mr->config->screentransitions ) {
+    if ( CONFIG(screentransitions) ) {
+        loading_progress->runAction( FadeOut::create(1.0) );
+    }else{
+        loading_progress->setVisible(false);
         delay = 1;
-        transition=0;
     }
     
     this->scheduleOnce( [&](float) {
-        
-        Scene* panel = nullptr;
-        
-        if ( mr->config->screentransitions )
-            panel = panel_dedication::create() ;
-        else
-            panel = panel_mainmenu::create();
-        
-        Director::getInstance()->replaceScene(TransitionCrossFade::create(transition, panel) );
+#if _SHOW_DEDICATION_
+        mr->panels->SetPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
+#else
+        mr->panels->SetPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
+#endif
     }, delay, "show_mainmenu" );
 }
 

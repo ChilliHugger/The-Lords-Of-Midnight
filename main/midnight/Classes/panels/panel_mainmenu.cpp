@@ -11,7 +11,8 @@
 #include "../system/keyboardmanager.h"
 #include "../system/storymanager.h"
 #include "../system/helpmanager.h"
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
+#include "../system/panelmanager.h"
 #include "../frontend/layout_id.h"
 #include "../frontend/language.h"
 
@@ -64,7 +65,7 @@ bool panel_mainmenu::init()
     //
     // Logo
     //
-    auto logo = Sprite::createWithSpriteFrameName("lom_logo");
+    auto logo = Sprite::createWithSpriteFrameName(IMAGE_LOGO);
     uihelper::AddTopLeft(this,logo);
     
     //
@@ -98,6 +99,8 @@ bool panel_mainmenu::init()
     
     TME_Init();
 
+    refreshStories();
+    
     return true;
 }
 
@@ -183,18 +186,12 @@ void panel_mainmenu::OnHelpClose()
 
 void panel_mainmenu::OnOptions()
 {
-    f32 duration = mr->config->screentransitions ? 1.0f : 0.0f;
-        
-    auto scene = panel_options::create();
-    Director::getInstance()->pushScene(TransitionCrossFade::create(duration, scene) );
+    mr->panels->SetPanelMode(MODE_OPTIONS, TRANSITION_FADEIN, true);
 }
 
 void panel_mainmenu::OnCredits()
 {
-    f32 duration = mr->config->screentransitions ? 1.0f : 0.0f;
-    auto scene = panel_credits::create();
-    Director::getInstance()->pushScene(TransitionCrossFade::create(duration, scene) );
-
+    mr->panels->SetPanelMode(MODE_CREDITS, TRANSITION_FADEIN, true);
 }
 
 void panel_mainmenu::OnExit()
@@ -223,25 +220,65 @@ void panel_mainmenu::OnNewStory()
 
 void panel_mainmenu::OnContinueStory()
 {
+    // only one story, so lets load that
+    if ( mr->stories->stories_used()== 1 ) {
+        mr->LoadStory( mr->stories->first_used_story() );
+        return;
+    }
+    
+    //
+    // Otherwise we need a chouce
+    //
     
     auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
     uihelper::AddCenter(this,bookmenu);
  
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
-        
         ((uibookmenu*)s)->removeFromParent();
-        
-        //this->OnMenuNotification( s, (menueventargs*)e );
+        mr->LoadStory( ((bookeventargs*)e)->id );
     });
     
 }
 
 void panel_mainmenu::OnEndStory()
 {
-    if (!ShowHelpWindow(HELP_DAY1, false, []() {}) )
-        return;
+    //
+    // Otherwise we need a chouce
+    //
+    
+    auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
+    uihelper::AddCenter(this,bookmenu);
+    
+    bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
+        ((uibookmenu*)s)->removeFromParent();
+        DeleteStory( ((bookeventargs*)e)->id );
+    });
 }
 
+void panel_mainmenu::DeleteStory( storyid_t id )
+{
+    AreYouSure(CLOSE_STORY_MSG, [&] {
+        mr->stories->destroy(id);
+        refreshStories();
+    });
+}
 
-
-
+void panel_mainmenu::refreshStories( void )
+{
+    int count = mr->stories->stories_used();
+    
+    storyid_t id = mr->stories->next_free_story();
+    // add bookmark to menu
+    
+//    if ( count==0 )
+//        menu->DisableButton(ID_CONTINUE_STORY);
+//    else
+//        menu->EnableButton(ID_CONTINUE_STORY);
+//
+//    if ( count==0 )
+//        menu->DisableButton(ID_END_STORY);
+//    else
+//        menu->EnableButton(ID_END_STORY);
+    
+    
+}

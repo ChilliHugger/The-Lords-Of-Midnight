@@ -11,6 +11,7 @@
 #include "storymanager.h"
 #include "keyboardmanager.h"
 #include "tmemanager.h"
+#include "panelmanager.h"
 
 USING_NS_CC;
 
@@ -27,11 +28,20 @@ moonring::moonring()
 {
     init_progess_callback = nullptr;
     
-    help = new helpmanager(this);
-    config = new configmanager(this);
-    stories = new storymanager(this);
+    help = new helpmanager();
+    help->InjectMoonRing(this);
+    
+    config = new configmanager();
+    config->InjectMoonRing(this);
+
+    stories = new storymanager();
+    stories->InjectMoonRing(this);
+
     keyboard = new keyboardmanager();
     tme = new tmemanager();
+    
+    panels = new panelmanager();
+    panels->InjectMoonRing(this);
     
     stories->SetLoadSave(&mySerialize);
     
@@ -45,6 +55,7 @@ moonring::moonring()
 
 moonring::~moonring()
 {
+    SAFEDELETE(panels);
     SAFEDELETE(help);
     SAFEDELETE(config);
     SAFEDELETE(stories);
@@ -86,6 +97,37 @@ void moonring::NewStory()
     help->Load( id );
 }
 
+void moonring::LoadStory( storyid_t id )
+{
+    //destroyGamePanels();
+    
+    stories->load(id);
+    help->Load( id );
+    
+    //createGamePanels();
+    
+    TME_CurrentCharacter( TME_CurrentCharacter().id );
+    
+    // start game
+    if (!CheckGameOverConditions() ) {
+        character& c = TME_CurrentCharacter();
+        auto mode = Character_IsDead(c) ? MODE_THINK : MODE_LOOK;
+        panels->SetPanelMode(mode,TRANSITION_PUSHUP);
+
+    }
+}
+
+BOOL moonring::CheckGameOverConditions ( void )
+{
+    m_gameover_t win = TME_CheckWinLose();
+    if ( win != MG_NONE ) {
+        auto mode =  win == MG_WIN ? MODE_WIN : MODE_LOSE ;
+        panels->SetPanelMode(mode);
+        return TRUE;
+    }
+    return FALSE;
+}
+
 BOOL moonring::Serialize( u32 version, archive& ar )
 {
     // TME will not call this function
@@ -97,7 +139,6 @@ BOOL moonring::Serialize( u32 version, archive& ar )
         return TRUE;
     
     version = FRONTEND_SAVE_GAME_VERSION;
-    
     
     if ( ar.IsStoring() ) {
         

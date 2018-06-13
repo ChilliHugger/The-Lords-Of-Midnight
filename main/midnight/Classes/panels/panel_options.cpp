@@ -12,10 +12,11 @@
 #include "panel_mainmenu.h"
 
 
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
 #include "../system/keyboardmanager.h"
+#include "../system/panelmanager.h"
 
 #include "../ui/uihelper.h"
 #include "../ui/uitextmenuitem.h"
@@ -178,7 +179,7 @@ void panel_options::OnMenuNotification( uinotificationinterface* sender, menueve
     int tag = args->menuitem->id;
     
     if ( tag == ID_HOME ) {
-        FadeExit();
+        Exit();
         mr->config->Save();
         //gl->SetPanelMode(MODE_MAINMENU,TRANSITION_FADEIN);
         return;

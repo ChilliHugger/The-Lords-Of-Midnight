@@ -40,6 +40,7 @@ enum panelmode_t {
     MODE_CREDITS,
     MODE_OPTIONS,
     MODE_ADVERT,
+    MODE_DEDICATION,
     
     MODE_MAINMENU,
 };

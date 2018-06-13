@@ -13,10 +13,8 @@
 
 using namespace chilli::lib ;
 
-configmanager::configmanager( moonring* mr)
-{
-    this->mr = mr;
-    
+configmanager::configmanager()
+{    
     tutorial=TRUE;
     autofight=FALSE;
     autounhide=FALSE;
@@ -72,7 +70,19 @@ void configmanager::setGameDefaults ()
 
 }
 
+bool configmanager::bumpAdvert()
+{
+    bool showAdvert = false;
+    
+    if (advert_screen_count%ADVERT_FREQUENCY==(ADVERT_FREQUENCY-1) ) {
+        showAdvert = true ;
+    }
 
+    advert_screen_count++;
+    Save();
+    
+    return showAdvert;
+}
 
 BOOL configmanager::Save ( void )
 {

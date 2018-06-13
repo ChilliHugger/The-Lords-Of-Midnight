@@ -14,10 +14,13 @@
 #include "help_ddr.cpp"
 #include "help_lom.cpp"
 
-helpmanager::helpmanager( moonring* mr )
+helpmanager::helpmanager()
 {
     CLEARARRAY(displayed);
-    this->mr = mr;
+}
+
+helpmanager::~helpmanager()
+{
 }
 
 LPCSTR helpmanager::Get( helpid_t id )

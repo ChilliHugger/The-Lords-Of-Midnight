@@ -6,7 +6,7 @@
 //
 #include "uihelper.h"
 #include "uipanel.h"
-#include "../frontend/resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../ui/uielement.h"
 #include "../ui/uieventargs.h"
 

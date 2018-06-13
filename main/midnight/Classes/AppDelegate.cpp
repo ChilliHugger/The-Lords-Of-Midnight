@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "frontend/resolutionmanager.h"
+#include "system/resolutionmanager.h"
 
 //#include "LandscapeScene.h"
 #include "panel_splashscreen.h"
