@@ -92,6 +92,11 @@ void LandscapeTerrain::Init( LandscapeOptions* options )
 
 void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
 {
+    auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));
+    auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(2));
+    
+    
+    
     for(auto const& item: *items) {
         
         if ((item->position.z>=options->generator->viewportNear)&&(item->position.z<options->generator->viewportFar))
@@ -127,10 +132,11 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
                 graphic->setPosition(options->generator->NormaliseXPosition(item->position.x), this->getContentSize().height - y);
                 graphic->setScale( graphic->getScale() * item->scale );
                 
-                graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);               // alpha
-                
-                
-                
+                graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);                    // alpha
+                graphic->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
+                graphic->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));               // body
+
+                //graphic->setColor(Color3B(tint0));
                 
                 this->addChild(graphic);
             }

@@ -109,8 +109,8 @@ bool Landscape::init()
     options.landScaleY = 2.15f;
     options.debugLand=false;
 
-    isMoving = false;
-    isLooking = false;
+    options.isMoving = false;
+    options.isLooking = false;
     
     character&	c = TME_CurrentCharacter();
     //Character_Place( c, loc_t(2,110) );
@@ -134,7 +134,7 @@ void Landscape::InitKeyboard()
     
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event){
 
-        if ( isMoving || isLooking )
+        if ( options.isMoving || options.isLooking )
             return;
         
         Vec2 loc = event->getCurrentTarget()->getPosition();
@@ -224,7 +224,7 @@ void Landscape::UpdateLandscape()
     }
     
     
-    options.generator->horizontalOffset = options.rotate_look;
+    options.generator->horizontalOffset = options.lookAmount;
 
     
     landscapeView = new LandscapeView();
@@ -253,9 +253,9 @@ void Landscape::SetViewForCurrentCharacter ( void )
     options.here.y *= DIR_STEPS;
     
    // looking = (c.looking * DIR_AMOUNT) ;
-    options.rotate_look = c.looking * 400;
-    if ( options.rotate_look >= 3200 )
-        options.rotate_look-=3200;
+    options.lookAmount = c.looking * 400;
+    if ( options.lookAmount >= 3200 )
+        options.lookAmount-=3200;
     
     options.currentLocation = c.location;
     options.currentDirection = c.looking;
@@ -275,13 +275,13 @@ bool Landscape::StartLookLeft ( void )
     character&	c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
-    f32 originalLooking = options.rotate_look;
+    f32 originalLooking = options.lookAmount;
     f32 target = -400 ;
     
-    isLooking = true;
+    options.isLooking = true;
     
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
-        options.rotate_look = originalLooking + value;
+        options.lookAmount = originalLooking + value;
         if ( value <= target) {
             StopRotating(LM_ROTATE_LEFT);
         }
@@ -301,13 +301,13 @@ bool Landscape::StartLookRight ( void )
     character&	c = TME_CurrentCharacter();
     Character_LookRight ( c );
     
-    f32 originalLooking = options.rotate_look;
+    f32 originalLooking = options.lookAmount;
     f32 target = 400 ;
     
-    isLooking = true;
+    options.isLooking = true;
     
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
-        options.rotate_look = originalLooking + value;
+        options.lookAmount = originalLooking + value;
 
         if ( value >= target) {
             StopRotating(LM_ROTATE_RIGHT);
@@ -344,7 +344,7 @@ bool Landscape::StartMoving()
         loc_t moveTo = c.location;
         f32 target = DIR_STEPS ;
         
-        isMoving = true;
+        options.isMoving = true;
         
         auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
 
@@ -353,7 +353,9 @@ bool Landscape::StartMoving()
             
             if ( value >= target )
                 StopMoving();
-
+            
+            options.movementAmount = (f32)(value-1) / (f32)DIR_STEPS ;
+            
             options.generator->Build(options.here, 0);
             UpdateLandscape();
             
@@ -374,7 +376,7 @@ bool Landscape::StartMoving()
 
 void Landscape::StopRotating(LANDSCAPE_MOVEMENT type)
 {
-    isLooking = false;
+    options.isLooking = false;
     
     SetViewForCurrentCharacter();
     
@@ -386,7 +388,7 @@ void Landscape::StopRotating(LANDSCAPE_MOVEMENT type)
 
 void Landscape::StopMoving()
 {
-    isMoving = false;
+    options.isMoving = false;
     
     SetViewForCurrentCharacter();
     

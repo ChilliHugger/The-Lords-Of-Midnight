@@ -22,11 +22,13 @@ FORWARD_REFERENCE(helpmanager);
 FORWARD_REFERENCE(keyboardmanager);
 FORWARD_REFERENCE(tmemanager);
 FORWARD_REFERENCE(panelmanager);
+FORWARD_REFERENCE(progressmonitor);
+FORWARD_REFERENCE(projectconfig);
 
 #include "storymanager.h"
 
-typedef std::function<void(int,int)> MXProgressCallback;
 #define RUN_ON_UI_THREAD    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread
+
 
 class moonring {
 private:
@@ -39,7 +41,7 @@ public:
         return &singleton;
     }
     
-    void Initialise( MXProgressCallback callback );
+    void Initialise( progressmonitor* monitor );
     
     LPCSTR GetWritablePath();
     
@@ -50,12 +52,13 @@ public:
     
 protected:
     
-    void UpdateProgress(int value);
     BOOL CheckGameOverConditions ( void );
     
-public:
+    std::mutex              mutex;
+    std::condition_variable condition;
+    bool                    isDataLoaded;
     
-    MXProgressCallback      init_progess_callback;
+public:
     
     panelmanager*           panels;
     configmanager*          config;
@@ -64,7 +67,10 @@ public:
     keyboardmanager*        keyboard;
     tmemanager*             tme;
     c_str                   writeablepath;
-
+    projectconfig*          project;
+    
+    cocos2d::GLProgramState*         glProgramState;
+    cocos2d::GLProgram*              glShaderProgram;
     
 };
 

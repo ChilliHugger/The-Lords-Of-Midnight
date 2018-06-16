@@ -108,7 +108,13 @@ const rgb_t _clrDarkWhite     = Color3B(0xcd,0xcd,0xcd);
 
 const rgb_t _clrGrey          = Color3B(0x80,0x80,0x80);
 
-
+//typedef u32                    rgb_t ;
+//#define _RGB(r,g,b)         _RGBA(r,g,b,255)
+//#define _RGBA(r,g,b,a)      ((r)|(g<<8)|(b<<16)|(a<<24))
+#define _RED(rgb)            ((BYTE)(rgb))
+#define _GREEN(rgb)            ((BYTE)(((WORD)(rgb)) >> 8))
+#define _BLUE(rgb)            ((BYTE)((rgb)>>16))
+#define _ALPHA(rgb)            ((BYTE)((rgb)>>24))
 
 
 #endif /* __UIHELPER_H_INCLUDED__ */

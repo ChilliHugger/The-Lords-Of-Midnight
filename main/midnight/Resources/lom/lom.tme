@@ -335,86 +335,46 @@
 			</imagelist>
 		</moon>
 	
-		<day>
-			<time id="0"  shade="#00202020" sky="sky/sky_00.jpg" moon="974,80"	scale="1.0"	/> 
-            <time id="1"  shade="#00453032" sky="sky/sky_01.jpg" moon="812,113"scale="1.33"	/>
-            <time id="2"  shade="#00655557" sky="sky/sky_02.jpg" moon="637,168" scale="1.5"	/>
-            <time id="3"  shade="#00736365" sky="sky/sky_03.jpg" moon="462,223"scale="2.0"	/>
-            <time id="4"  shade="#00807575" sky="sky/sky_04.jpg" />
-            <time id="5"  shade="#00808080" sky="sky/sky_05.jpg" />
-            <time id="6"  shade="#00808080" sky="sky/sky_06.jpg" />
-            <time id="7"  shade="#00808080" sky="sky/sky_07.jpg" />
-            <time id="8"  shade="#00808080" sky="sky/sky_08.jpg" />
-            <time id="9"  shade="#00808080" sky="sky/sky_09.jpg" />
-            <time id="10" shade="#00808080" sky="sky/sky_10.jpg" />
- 			<time id="11" shade="#00808080" sky="sky/sky_11.jpg" />
-			<time id="12" shade="#007a7a7a" sky="sky/sky_12.jpg" /> 
-			<time id="13" shade="#00747474" sky="sky/sky_13.jpg" /> 
-			<time id="14" shade="#006e6e6e" sky="sky/sky_14.jpg" /> 
-			<time id="15" shade="#00626262" sky="sky/sky_15.jpg" /> 
-			<time id="16" shade="#00565656" sky="sky/sky_16.jpg" /> 
-		</day>
-        
-        <day2>
-            <time id="0"  shade="#00221818" sky="sky/sky_00.jpg" moon="974,80"scale="1.0"	/>
-            <time id="1"  shade="#00454141" sky="sky/sky_01.jpg" moon="812,113" scale="1.33"	/>
-            <time id="2"  shade="#00656161" sky="sky/sky_02.jpg" moon="637,168"scale="1.5"	/>
-            <time id="3"  shade="#00737171" sky="sky/sky_03.jpg" moon="462,223" scale="2.0"	/>
-            <time id="4"  shade="#00787777" sky="sky/sky_04.jpg" />
-            <time id="5"  shade="#00808080" sky="sky/sky_05.jpg" />
-            <time id="6"  shade="#00808080" sky="sky/sky_06.jpg" />
-            <time id="7"  shade="#00808080" sky="sky/sky_07.jpg" />
-            <time id="8"  shade="#00808080" sky="sky/sky_08.jpg" />
-            <time id="9"  shade="#00808080" sky="sky/sky_09.jpg" />
-            <time id="10" shade="#00808080" sky="sky/sky_10.jpg" />
-            <time id="11" shade="#00808080" sky="sky/sky_11.jpg" />
-            <time id="12" shade="#00808080" sky="sky/sky_12.jpg" />
-            <time id="13" shade="#00797878" sky="sky/sky_13.jpg" />
-            <time id="14" shade="#00737171" sky="sky/sky_14.jpg" />
-            <time id="15" shade="#00696666" sky="sky/sky_15.jpg" />
-            <time id="16" shade="#00656060" sky="sky/sky_16.jpg" />
-        <day2>
-        
-<!--
         <day>
-			<time id="0"  shade="#00202020" sky="sky/sky_00.jpg" moon="974,80"	scale="1.0"	/>
-			<time id="1"  shade="#00262626" sky="sky/sky_01.jpg" moon="812,113"	scale="1.33"	/>
-			<time id="2"  shade="#002c2c2c" sky="sky/sky_02.jpg" moon="637,168"	scale="1.5"	/>
-			<time id="3"  shade="#00444444" sky="sky/sky_03.jpg" moon="462,223"	scale="2.0"	/>
-			<time id="4"  shade="#00626262" sky="sky/sky_04.jpg" />
-			<time id="5"  shade="#006e6e6e" sky="sky/sky_05.jpg" />
-			<time id="6"  shade="#00747474" sky="sky/sky_06.jpg" />
-			<time id="7"  shade="#007a7a7a" sky="sky/sky_07.jpg" />
-			<time id="8"  shade="#00808080" sky="sky/sky_08.jpg" />
-			<time id="9"  shade="#00808080" sky="sky/sky_09.jpg" />
-			<time id="10" shade="#00808080" sky="sky/sky_10.jpg" />
-			<time id="11" shade="#00808080" sky="sky/sky_11.jpg" />
-			<time id="12" shade="#007a7a7a" sky="sky/sky_12.jpg" />
-			<time id="13" shade="#00747474" sky="sky/sky_13.jpg" />
-			<time id="14" shade="#006e6e6e" sky="sky/sky_14.jpg" />
-			<time id="15" shade="#00626262" sky="sky/sky_15.jpg" />
-			<time id="16" shade="#00565656" sky="sky/sky_16.jpg" />
-		</day>
+            <time id="0"   shade="#00404040" sky="sky/sky_00.jpg" moon="974,80" scale="1.0"    />
+            <time id="1"   shade="#00453032" sky="sky/sky_01.jpg" moon="812,113" scale="1.33"    />
+            <time id="2"   shade="#00655557" sky="sky/sky_02.jpg" moon="637,168" scale="1.5"    />
+            <time id="3"   shade="#00736365" sky="sky/sky_03.jpg" moon="462,223"scale="2.0"    />
+            <time id="4"   shade="#00807575" sky="sky/sky_04.jpg" />
+            <time id="5"   shade="#00808080" sky="sky/sky_05.jpg" />
+            <time id="6"   shade="#00808080" sky="sky/sky_06.jpg" />
+            <time id="7"   shade="#00808080" sky="sky/sky_07.jpg" />
+            <time id="8"   shade="#00808080" sky="sky/sky_08.jpg" />
+            <time id="9"   shade="#00808080" sky="sky/sky_09.jpg" />
+            <time id="10"  shade="#00808080" sky="sky/sky_10.jpg" />
+            <time id="11"  shade="#00808080" sky="sky/sky_11.jpg" />
+            <time id="12"  shade="#007a7a7a" sky="sky/sky_12.jpg" />
+            <time id="13"  shade="#00747474" sky="sky/sky_13.jpg" />
+            <time id="14"  shade="#006e6e6e" sky="sky/sky_14.jpg" />
+            <time id="15"  shade="#00626262" sky="sky/sky_15.jpg" />
+            <time id="16"  shade="#00565656" sky="sky/sky_16.jpg" />
+        </day>
+        
+        <shade>
+            <time id="0"   fill="#00000000" outline="#00a50000" tint="#ff404040" />
+            <time id="1"   fill="#00ffffff" outline="#00a50000" tint="#ff606060" />
+            <time id="2"   fill="#00ffffff" outline="#00a50000" tint="#ff808080" />
+            <time id="3"   fill="#00ffffff" outline="#00a50000" tint="#ff909090" />
+            <time id="4"   fill="#00ffffff" outline="#00a50000" tint="#ffB0B0B0" />
+            <time id="5"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
+            <time id="6"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
+            <time id="7"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
+            <time id="8"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
+            <time id="9"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
+            <time id="10"  fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
+            <time id="11"  fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
+            <time id="12"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
+            <time id="13"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
+            <time id="14"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
+            <time id="15"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
+            <time id="16"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
+        </day>
 
-        <time id="1"  shade="#00453032" sky="sky/sky_01.jpg" moon="812,113"scale="1.33"	/>
-        <time id="2"  shade="#00655557" sky="sky/sky_02.jpg" moon="637,168" scale="1.5"	/>
-        <time id="3"  shade="#00736365" sky="sky/sky_03.jpg" moon="462,223"scale="2.0"	/>
-        <time id="4"  shade="#00807575" sky="sky/sky_04.jpg" />
-        <time id="5"  shade="#00808080" sky="sky/sky_05.jpg" />
-        <time id="6"  shade="#00808080" sky="sky/sky_06.jpg" />
-        <time id="7"  shade="#00808080" sky="sky/sky_07.jpg" />
-        <time id="8"  shade="#00808080" sky="sky/sky_08.jpg" />
-        <time id="9"  shade="#00808080" sky="sky/sky_09.jpg" />
-        <time id="10" shade="#00808080" sky="sky/sky_10.jpg" />
-        <time id="11" shade="#00808080" sky="sky/sky_11.jpg" />
-        <time id="12" shade="#00808080" sky="sky/sky_12.jpg" />
-        <time id="13" shade="#00807576" sky="sky/sky_13.jpg" />
-        <time id="14" shade="#00757071" sky="sky/sky_14.jpg" />
-        <time id="15" shade="#00706465" sky="sky/sky_15.jpg" />
-        <time id="16" shade="#00655558" sky="sky/sky_16.jpg" />
--->
-        
-        
 	</uilandscape>
 
 	

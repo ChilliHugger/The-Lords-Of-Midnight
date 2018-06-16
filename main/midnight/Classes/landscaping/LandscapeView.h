@@ -17,6 +17,7 @@
 #include "LandscapeLand.h"
 #include "LandscapeTerrain.h"
 #include "LandscapeDebug.h"
+#include "LandscapeColour.h"
 
 
 
@@ -24,6 +25,8 @@ class LandscapeOptions : Ref
 {
 public:
     LandscapeGenerator*  generator;
+    LandscapeColour*     colour;
+    
     bool            showWater;
     bool            showLand;
     bool            showTerrain;
@@ -31,12 +34,14 @@ public:
     bool            debugLand;
     f32             landScaleX;
     f32             landScaleY;
-    tme::loc_t			here ;
-    tme::loc_t           currentLocation;
-    tme::loc_t           aheadLocation;
+    tme::loc_t	    here ;
+    tme::loc_t      currentLocation;
+    tme::loc_t      aheadLocation;
     mxdir_t         currentDirection;
-    f32				rotate_look;
-    
+    bool            isMoving;
+    bool            isLooking;
+    f32             movementAmount;
+    f32             lookAmount;
 };
 
 

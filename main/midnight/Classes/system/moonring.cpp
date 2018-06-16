@@ -12,6 +12,8 @@
 #include "keyboardmanager.h"
 #include "tmemanager.h"
 #include "panelmanager.h"
+#include "projectconfig.h"
+#include "progressmonitor.h"
 
 USING_NS_CC;
 
@@ -26,8 +28,6 @@ static bool mySerialize ( u32 version, chilli::lib::archive& ar )
 
 moonring::moonring()
 {
-    init_progess_callback = nullptr;
-    
     help = new helpmanager();
     help->InjectMoonRing(this);
     
@@ -42,6 +42,9 @@ moonring::moonring()
     
     panels = new panelmanager();
     panels->InjectMoonRing(this);
+    
+    project = new projectconfig();
+    project->InjectMoonRing(this);
     
     stories->SetLoadSave(&mySerialize);
     
@@ -169,39 +172,103 @@ BOOL moonring::Serialize( u32 version, archive& ar )
     return TRUE;
 }
 
-void moonring::Initialise( MXProgressCallback callback )
+
+
+void moonring::Initialise( progressmonitor* monitor )
 {
-    init_progess_callback = callback;
+
+    isDataLoaded = false;
+    int count=0;
     
     // let's give up some time to the ui Immediatley
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-    RUN_ON_UI_THREAD([=](){
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("rest-0.plist");
-        UpdateProgress(1);
-    });
+    // load images
+    for (std::string file_name : {"rest-0", "rest-1", "language-0", "terrain-0", "terrain-1" }) {
+        Director::getInstance()->getTextureCache()->addImageAsync(file_name + ".png", [&,file_name](Texture2D* loaded_texture) {
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file_name + ".plist", loaded_texture);
+            monitor->Update("Loaded " + file_name,1);
+            count++;
+            if ( count == 5 ) {
+                std::lock_guard<std::mutex> guard(mutex);
+                isDataLoaded = true;
+                condition.notify_one();
+            }
+        });
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    }
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    // wait for the above to finish
+    std::unique_lock<std::mutex> mlock(mutex);
+    condition.wait(mlock, std::bind(&moonring::isDataLoaded, this));
+    isDataLoaded=false;
+    
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
     
     RUN_ON_UI_THREAD([=](){
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("rest-1.plist");
-        UpdateProgress(2);
+        // load shader
+        auto p1 = GLProgram::createWithFilenames("terrain/standard.vsh", "terrain/dayNight.fsh");
+        glProgramState = GLProgramState::getOrCreateWithGLProgram( p1 );
+        glProgramState->setUniformVec4("p_left", Vec4(0,0,165.0/255.0,1));      // outline
+        glProgramState->setUniformVec4("p_right", Vec4(1,1,1,1));               // body
+        glProgramState->setUniformFloat("p_alpha", 1.0f);               // alpha
+        monitor->Update("Loaded Shader", 1);
+        
+        std::lock_guard<std::mutex> guard(mutex);
+        isDataLoaded = true;
+        condition.notify_one();
+        
     });
-
+  
+    // wait for the above to finish
+    condition.wait(mlock, std::bind(&moonring::isDataLoaded, this));
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-    RUN_ON_UI_THREAD([=](){
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("language-0.plist");
-        UpdateProgress(3);
-    });
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    
+    UIDEBUG("panel_splashscreens::Run() - load confog");
+#if defined(_DDR_)
+    project->LoadXmlConfig("ddr/ddr.tme", monitor );
+#endif
+#if defined(_LOM_)
+    project->LoadXmlConfig("lom/lom.tme", monitor );
+#endif
+    
 
-}
+    // initialise TME
+    TME_Init();
+    
+#ifdef _TME_CHEAT_MODE_
+    UIDEBUG("Global:: _TME_CHEAT_MODE_");
+    tme::variables::sv_cheat_armies_noblock = true;
+    tme::variables::sv_cheat_nasties_noblock = true;
+    tme::variables::sv_cheat_movement_free = true ;
+    //variables::sv_cheat_movement_cheap = true ;
+    //variables::sv_cheat_commands_free = true ;
+#endif
 
-void moonring::UpdateProgress(int value)
-{
-    if ( init_progess_callback != nullptr )
-        init_progess_callback(3,value);
+#ifdef _TME_DEMO_MODE_
+    UIDEBUG("Global:: _TME_DEMO_MODE_");
+    tme::variables::sv_cheat_armies_noblock = true;
+    tme::variables::sv_cheat_nasties_noblock = true;
+    //variables::sv_cheat_movement_free = true ;
+    //tme::variables::sv_cheat_movement_cheap = true ;
+    //tme::variables::sv_cheat_commands_free = true ;
+#endif
+    
+#if defined(_LOM_MAP_)
+    auto builder = new TMEMapBuilder();
+    mxmap* map = builder->Build( "lom_map.tmx" );
+    TME_DebugInstallMap(map);
+#endif
+    
+#if defined(_CITADEL_MAP_)
+    auto builder = new TMEMapBuilderCitadel();
+    mxmap* map = builder->Build( "citadel_wip.tmx" );
+    TME_DebugInstallMap(map);
+#endif
+    
 }
 
 

@@ -16,9 +16,9 @@
 #define CONFIG_FILENAME                 "settings.cfg"
 #define CONFIG_VERSION                  7
 
-#if defined (_DDR_)
+//#if defined (_DDR_)
     #define _DAY_NIGHT_SHADER_
-#endif
+//#endif
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -38,6 +38,7 @@
 #endif
 
 //#define _TME_CHEAT_MODE_
+#define _TME_DEMO_MODE_
 
 #if defined(_LOM_)
     #define PRE_RENDERED_LORD_NAMES

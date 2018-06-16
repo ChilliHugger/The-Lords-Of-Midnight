@@ -99,7 +99,7 @@ void LandscapeDebug::BuildDebug( LandscapeItems* items )
             , options->currentLocation.x, options->currentLocation.y
             , options->currentDirection
             , options->landScaleX, options->landScaleY
-            , (int)options->rotate_look
+            , (int)options->lookAmount
             );
     
     

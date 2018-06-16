@@ -16,7 +16,8 @@ class LandscapeSky : public LandscapeNode
 {
 public:
     virtual void Init(LandscapeOptions* options);
-
+public:
+    GLProgramState* programState;
 };
 
 

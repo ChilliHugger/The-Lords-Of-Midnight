@@ -21,11 +21,13 @@ void LandscapeView::Init(LandscapeOptions* options)
     
     
     auto land = new LandscapeLand();
+    land->programState = programState;
     land->Init(options);
     clipping->addChild(land);
     
     
     auto sky = new LandscapeSky();
+    sky->programState = programState;
     sky->Init(options);
     sky->setPosition(0,RES((80*GSCALE)) );
     clipping->addChild(sky);

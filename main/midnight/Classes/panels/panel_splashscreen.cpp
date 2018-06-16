@@ -7,6 +7,7 @@
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
 #include "../system/panelmanager.h"
+#include "../system/progressmonitor.h"
 
 #include <iostream>
 #include <string>
@@ -36,18 +37,23 @@ bool panel_splashscreen::init()
     loading_progress = DrawNode::create();
     uihelper::AddBottomLeft(this, loading_progress, RES(8), RES(8));
     
-    UpdateProgress(0);
+    progress = new progressmonitor([&](int value) {
+        UpdateProgress( (f32)value / 10.0f );
+    });
+    progress->Start();
     
     StartTime = utils::getTimeInMilliseconds();
     
     // Initialise in a thread
     auto atp = AsyncTaskPool::getInstance();
     atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]() {
-        mr->Initialise( [&](int max, int value) {
-            UpdateProgress( (f32)value/(f32)max );
-        });
+        mr->Initialise( progress );
+        progress->Stop();
+        SAFEDELETE(progress);
         Complete();
     });
+    
+    
     
     return true;
 }
@@ -77,9 +83,12 @@ void panel_splashscreen::Complete()
 
 void panel_splashscreen::UpdateProgress(f32 percent)
 {
-    loading_progress->clear();
-    loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width,loading_height), Color4F(_clrBlue) );
-    loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width*percent,loading_height), Color4F(_clrRed) );
+    RUN_ON_UI_THREAD([=](){
+        loading_progress->clear();
+        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width,loading_height), Color4F(_clrBlue) );
+        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width*MIN(1.0,percent),loading_height), Color4F(_clrRed) );
+    });
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 

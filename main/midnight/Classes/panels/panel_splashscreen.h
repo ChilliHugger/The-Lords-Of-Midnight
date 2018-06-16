@@ -3,7 +3,7 @@
 
 #include "uipanel.h"
 
-//FORWARD_REFERENCE(DrawNode);
+FORWARD_REFERENCE(progressmonitor);
 
 class panel_splashscreen : public uipanel
 {
@@ -22,6 +22,7 @@ protected:
     cocos2d::DrawNode* loading_progress;
     
     long StartTime;
+    progressmonitor*    progress;
     
 };
 

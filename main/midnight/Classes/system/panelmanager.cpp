@@ -15,6 +15,7 @@
 #include "../panels/panel_splashscreen.h"
 #include "../panels/panel_dedication.h"
 #include "../panels/panel_options.h"
+#include "../panels/panel_look.h"
 #include "../ui/uioptionitem.h"
 
 #include "configmanager.h"
@@ -72,11 +73,12 @@ uipanel* panelmanager::GetPanel( panelmode_t mode )
         return panel_splashscreen::create() ;
     else if ( mode == MODE_DEDICATION  )
         return panel_dedication::create() ;
+    else if ( mode == MODE_LOOK )
+        return panel_look::create();
     
 //    else if ( mode == MODE_ADVERT )
 //        return panel_advert::create();
-//    else if ( mode == MODE_LOOK )
-//        return p_look;
+
 //    else if ( mode>= MODE_THINK && mode<=MODE_THINK_APPROACH )
 //        return p_think;
 //    else if ( mode>= MODE_SELECT && mode<=MODE_SELECT_LOC )

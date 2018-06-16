@@ -21,7 +21,8 @@ public:
 protected:
     void BuildFloors( LandscapeItems* items );
     Sprite* GetFloorImage( floor_t floor );
-    
+public:
+    GLProgramState* programState;
 };
 
 #endif /* LandscapeLand_hpp */

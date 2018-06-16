@@ -95,10 +95,7 @@ private:
 public:
     LandscapeView*      landscapeView;
     LandscapeOptions    options;
-    bool                isLooking;
-    bool                isMoving;
-    
-    
+
 };
 
 #endif // __LANDSCAPE_SCENE_H__
