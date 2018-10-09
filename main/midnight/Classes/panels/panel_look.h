@@ -5,6 +5,7 @@
 
 #include "../landscaping/LandscapeGenerator.h"
 #include "../landscaping/LandscapeView.h"
+#include "tme_interface.h"
 
 typedef enum SNAP_MODE {
     sm_back_right=1,
@@ -26,6 +27,18 @@ enum LANDSCAPE_MOVEMENT
     LM_HIDE_COMPASS=12,
 };
 
+typedef struct {
+    mxid            id;
+    //mximage*        shield;
+    //mximage*        person;
+    //mximage*        face;
+    std::string            name;
+    std::string            locationtext;
+#if defined(_DDR_)
+    BOOL            tunnel;
+#endif
+} locationinfo_t ;
+
 
 
 class panel_look : public uipanel
@@ -37,6 +50,9 @@ public:
     CREATE_FUNC(panel_look);
 	
 protected:
+    
+    void GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
+    void GetCurrentLocationInfo ( void );
     void SetViewForCurrentCharacter ( void );
     void InitKeyboard();
     
@@ -53,6 +69,9 @@ protected:
     LandscapeOptions    options;
     //bool                isLooking;
     //bool                isMoving;
+    
+    locationinfo_t*    current_info;
+    locationinfo_t*    follower_info;
 };
 
 

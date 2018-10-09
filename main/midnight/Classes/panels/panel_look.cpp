@@ -10,6 +10,8 @@
 #include "../landscaping/LandscapeLand.h"
 #include "../landscaping/LandscapeTerrain.h"
 
+#include "tme_interface.h"
+
 #include "TMEMapBuilder.h"
 
 USING_NS_CC;
@@ -21,6 +23,8 @@ bool panel_look::init()
     {
         return false;
     }
+    
+    // TODO: DDR Tunnel view
     
     options.generator = new LandscapeGenerator();
     options.colour = new LandscapeColour();
@@ -40,8 +44,169 @@ bool panel_look::init()
     
     SetViewForCurrentCharacter();
     
+    // TODO: Fade panel for transition in and out
+    
+    // TODO: Popup menu for character selection
+    
+    // TODO: Choose Action menu
+    //  BOTH    Attack
+    //          Approach
+    //          Post Men
+    //          Recruitment
+    //          Night
+    //          Map
+    //          Home
+    //          Think
+    //  LOM     Fight
+    //          Hide
+    //          Unhide
+    //          Seel
+    //  DDR     Give
+    //          Take
+    //          Use
+    //          Rest
+    
+    // TODO: Shortcut keys
+    
+    // TODO: Name label
+    // TODO: Description Label
+    
+    // TODO: Shield / Character
+    // TODO: Following
+    
+    // TODO: Debug Menu
+    
+    // TODO: Compass
+    
+    // TODO: Direction movement indicators
+    
+    // TODO: Help Dialog
+    
     return true;
 }
+
+//void panel_look::hideMenus ( void )
+//{
+//}
+
+//void panel_look::OnMovementComplete( uiview* sender, LANDSCAPE_MOVEMENT type )
+//{
+//}
+
+//void panel_look::OnActionComplete( uiaction* sender, s32 value )
+//{
+//  UNDO
+//  Enter Tunnel
+//  Exit Tunnel
+//  Menu Collapse
+//  Delayed Save
+//}
+
+//void panel_look::OnCompassEvent(uicompass *sender, uicompassevent *event)
+//{
+//}
+
+//void panel_look::fadeIn ( int tag, rgb_t colour )
+//{
+//}
+
+//void panel_look::fadeOut ( int tag, rgb_t colour )
+//{
+//}
+
+// TODO: Actions
+
+void panel_look::GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info)
+{
+//    info->id = c.id;
+//    info->shield = GetCharacterShield(c) ;
+//    info->person = GetCharacterImage(c);
+//    
+//#if defined(_DDR_)
+//    info->tunnel = Character_IsInTunnel(c);
+//    if ( info->shield == NULL )
+//        info->shield = info->person ;
+//#endif
+//    
+//    info->face = GetCharacterFace(c);
+//    info->name = c.longname ;
+//    lib::strupr ( info->name );
+//    info->locationtext = TME_GetCharacterText ( c, "CharLocation" );
+    
+}
+
+
+void panel_look::GetCurrentLocationInfo ( void )
+{
+    character&    c = TME_CurrentCharacter();
+    GetCharacterInfo(c, current_info);
+    TME_GetCharacterLocationInfo ( c );
+    
+    
+    if ( c.following ) {
+        character tempc;
+        TME_GetCharacter(tempc, c.following );
+        GetCharacterInfo(tempc, follower_info);
+    }else{
+        follower_info->id=0;
+    }
+    
+#if defined(_DDR_)
+    if ( current_info->tunnel ) {
+        if ( current_view != tunnel ) {
+            RemoveChild(landscape);
+            //landscape->OnDeInit();
+            AddChild(tunnel);
+            current_view=tunnel;
+        }
+    }else{
+        if ( current_view != landscape ) {
+            RemoveChild(tunnel);
+            //tunnel->OnDeInit();
+            AddChild(landscape);
+            current_view=landscape;
+        }
+        
+    }
+#else
+//    if ( current_view != landscape ) {
+//        AddChild(landscape);
+//        current_view=landscape;
+//    }
+#endif
+    
+    
+//    OnSetupIcons();
+//    OnSetupFaces();
+    
+}
+
+/*
+void panel_look::SetViewForCurrentCharacter ( void )
+{
+#if defined (_LOM_)
+    lblName->Text(current_info->name);
+    lblName->Enable();
+#endif
+    
+    lblDescription->Text(current_info->locationtext);
+    ((uiimage*)(imgShield->children[0]))->Image(current_info->shield);
+    
+    imgShield->Enable();
+    lblDescription->Enable();
+    
+    if ( follower_info->id ) {
+        uiimage* img = (uiimage*)i_Following->children[0];
+        img->Image(follower_info->face);
+        i_Following->dimensions = img->dimensions ;
+        i_Following->tag = follower_info->id;
+        i_Following->ShowEnable();
+        //ShowHelpWindow(HELP_GROUPED);
+    }else{
+        i_Following->HideDisable();
+    }
+}
+*/
 
 void panel_look::SetViewForCurrentCharacter ( void )
 {
@@ -67,6 +232,17 @@ void panel_look::SetViewForCurrentCharacter ( void )
     options.generator->Build(options.here, 0);
     
     UpdateLandscape();
+    
+    // Add location text
+    
+    // Add characters in front
+    
+    // Add shield
+    // Add shield if following
+    
+    // update actions
+    
+    
     
 }
 
