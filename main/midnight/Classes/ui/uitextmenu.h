@@ -23,6 +23,8 @@ private:
 public:
 	uitextmenu( f32 width, uitextmenuitem* items, u32 count );
     
+    void EnableItem( u32 id, bool enabled );
+    
 public:
 private:
 
@@ -34,6 +36,7 @@ protected:
     f32                 itemHeight;
     f32                 paddingY;
     f32                 width;
+    cocos2d::Menu*      mainmenu;
 };
 
 

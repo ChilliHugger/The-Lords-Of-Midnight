@@ -545,9 +545,7 @@ BOOL storymanager::destroy( storyid_t id )
 
     LPCSTR file = getFolder(id) ;
 
-    filemanager::DestroyDirectory(file) ;
-    
-    return TRUE;
+    return filemanager::DestroyDirectory(file) ;
 }
 
 

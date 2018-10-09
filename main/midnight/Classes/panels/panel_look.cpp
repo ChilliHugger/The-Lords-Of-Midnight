@@ -14,6 +14,10 @@
 
 #include "TMEMapBuilder.h"
 
+#include <iostream>
+#include <string>
+#include <algorithm>
+
 USING_NS_CC;
 using namespace tme;
 
@@ -40,9 +44,26 @@ bool panel_look::init()
     
     options.colour->options = &options;
 
+    lblName = Label::createWithTTF( uihelper::font_config_big, "" );
+    lblName->getFontAtlas()->setAntiAliasTexParameters();
+    lblName->setTextColor(Color4B::YELLOW);
+    lblName->setLocalZOrder(ZORDER_DEFAULT);
+    uihelper::AddTopLeft(this,lblName,RES(32),RES(32));
+
+    lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
+    lblDescription->getFontAtlas()->setAntiAliasTexParameters();
+    lblDescription->setTextColor(Color4B::WHITE);
+    lblDescription->setLocalZOrder(ZORDER_DEFAULT);
+    lblDescription->setWidth(RES(800-64));
+    uihelper::AddTopLeft(this,lblDescription, RES(32),RES(64));
+
+    
+    current_info = new locationinfo_t();
+    follower_info = new locationinfo_t();
+    
     InitKeyboard();
     
-    SetViewForCurrentCharacter();
+    //SetViewForCurrentCharacter();
     
     // TODO: Fade panel for transition in and out
     
@@ -89,9 +110,10 @@ bool panel_look::init()
 //{
 //}
 
-//void panel_look::OnMovementComplete( uiview* sender, LANDSCAPE_MOVEMENT type )
-//{
-//}
+void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type )
+{
+    SetCharacter(characterId);
+}
 
 //void panel_look::OnActionComplete( uiaction* sender, s32 value )
 //{
@@ -118,7 +140,11 @@ bool panel_look::init()
 
 void panel_look::GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info)
 {
-//    info->id = c.id;
+    info->id = c.id;
+    info->time = c.time;
+    info->location = c.location;
+    info->looking = c.looking;
+    
 //    info->shield = GetCharacterShield(c) ;
 //    info->person = GetCharacterImage(c);
 //    
@@ -129,9 +155,26 @@ void panel_look::GetCharacterInfo ( defaultexport::character_t& c, locationinfo_
 //#endif
 //    
 //    info->face = GetCharacterFace(c);
-//    info->name = c.longname ;
-//    lib::strupr ( info->name );
-//    info->locationtext = TME_GetCharacterText ( c, "CharLocation" );
+    info->name = c.longname ;
+    std::transform(info->name.begin(), info->name.end(), info->name.begin(), ::toupper);
+    
+    //lib::c_strupr ( info->name.c_str() );
+    info->locationtext = TME_GetCharacterText ( c, "CharLocation" );
+    
+}
+
+void panel_look::SetCharacter ( mxid c )
+{
+    characterId = c ;
+    TME_CurrentCharacter(c);
+    
+    //if ( parent ) {
+        GetCurrentLocationInfo( );
+        SetViewForCurrentCharacter();
+    //}
+    
+    //if ( current_view )
+    //    current_view->SetCharacter(c);
     
 }
 
@@ -181,50 +224,44 @@ void panel_look::GetCurrentLocationInfo ( void )
     
 }
 
-/*
-void panel_look::SetViewForCurrentCharacter ( void )
-{
-#if defined (_LOM_)
-    lblName->Text(current_info->name);
-    lblName->Enable();
-#endif
-    
-    lblDescription->Text(current_info->locationtext);
-    ((uiimage*)(imgShield->children[0]))->Image(current_info->shield);
-    
-    imgShield->Enable();
-    lblDescription->Enable();
-    
-    if ( follower_info->id ) {
-        uiimage* img = (uiimage*)i_Following->children[0];
-        img->Image(follower_info->face);
-        i_Following->dimensions = img->dimensions ;
-        i_Following->tag = follower_info->id;
-        i_Following->ShowEnable();
-        //ShowHelpWindow(HELP_GROUPED);
-    }else{
-        i_Following->HideDisable();
-    }
-}
-*/
 
 void panel_look::SetViewForCurrentCharacter ( void )
 {
-    character&    c = TME_CurrentCharacter();
+#if defined (_LOM_)
+    lblName->setString(current_info->name);
+    //lblName->Enable();
+#endif
     
-    options.colour->SetLookColour(c.time);
+    lblDescription->setString(current_info->locationtext);
+    //((uiimage*)(imgShield->children[0]))->Image(current_info->shield);
     
-    options.here = c.location;
+    //imgShield->Enable();
+    //lblDescription->Enable();
+    
+//    if ( follower_info->id ) {
+//        uiimage* img = (uiimage*)i_Following->children[0];
+//        img->Image(follower_info->face);
+//        i_Following->dimensions = img->dimensions ;
+//        i_Following->tag = follower_info->id;
+//        i_Following->ShowEnable();
+//        //ShowHelpWindow(HELP_GROUPED);
+//    }else{
+//        i_Following->HideDisable();
+//    }
+
+    options.colour->SetLookColour(current_info->time);
+    
+    options.here = current_info->location;
     options.here.x *= DIR_STEPS;
     options.here.y *= DIR_STEPS;
     
     // looking = (c.looking * DIR_AMOUNT) ;
-    options.lookAmount = c.looking * 400;
+    options.lookAmount = current_info->looking * 400;
     if ( options.lookAmount >= 3200 )
         options.lookAmount-=3200;
     
-    options.currentLocation = c.location;
-    options.currentDirection = c.looking;
+    options.currentLocation = current_info->location;
+    options.currentDirection = current_info->looking;
     
     options.aheadLocation.x = options.currentLocation.x + mxgridref::DirectionLookTable[options.currentDirection*2];
     options.aheadLocation.y = options.currentLocation.y + mxgridref::DirectionLookTable[(options.currentDirection*2)+1];
@@ -261,7 +298,7 @@ void panel_look::UpdateLandscape()
     landscapeView->Init(&options);
     landscapeView->setAnchorPoint(Vec2(0.5,0.5));
     landscapeView->setPosition( Vec2(getContentSize().width/2, getContentSize().height/2));
-    
+    landscapeView->setLocalZOrder(ZORDER_FAR);
     addChild(landscapeView);
     
 }
@@ -315,8 +352,8 @@ bool panel_look::StartLookLeft ( void )
         if ( value <= target) {
             StopRotating(LM_ROTATE_LEFT);
         }
-        
         UpdateLandscape();
+
     });
     
     auto ease = new EaseSineInOut();
@@ -417,11 +454,11 @@ void panel_look::StopRotating(LANDSCAPE_MOVEMENT type)
 {
     options.isLooking = false;
     
-    SetViewForCurrentCharacter();
+    //SetViewForCurrentCharacter();
     
-    //MovementNotification(type);
+    OnMovementComplete(type);
     
-    UpdateLandscape();
+    //UpdateLandscape();
     
 }
 
@@ -429,11 +466,11 @@ void panel_look::StopMoving()
 {
     options.isMoving = false;
     
-    SetViewForCurrentCharacter();
+    //SetViewForCurrentCharacter();
     
-    //MovementNotification(LM_MOVE_FORWARD);
+    OnMovementComplete(LM_MOVE_FORWARD);
     
-    UpdateLandscape();
+    //UpdateLandscape();
     
 }
 

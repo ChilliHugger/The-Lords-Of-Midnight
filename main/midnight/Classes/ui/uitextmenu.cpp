@@ -42,7 +42,7 @@ void uitextmenu::Init()
     this->setOpacity(ALPHA(0.25));
     
     // menu
-    auto mainmenu = Menu::create();
+    mainmenu = Menu::create();
 
     // add items
     f32 height=0;
@@ -56,13 +56,14 @@ void uitextmenu::Init()
         label->setLineHeight(itemHeight);
 
         auto menuItem = MenuItemLabel::create(label);
+        menuItem->setTag(item->id);
         mainmenu->addChild(menuItem);
-        
+    
         auto r = menuItem->getBoundingBox();
         height += r.size.height;
         
-        menueventargs args;
         menuItem->setCallback([&,item](cocos2d::Ref *sender) {
+            menueventargs args;
             args.menuitem = item;
             Notify( &args );
         } );
@@ -92,5 +93,15 @@ void uitextmenu::Init()
 
 
 }
-    
+
+void uitextmenu::EnableItem( u32 id, bool enabled )
+{
+    for ( auto item : mainmenu->getChildren() ) {
+        if ( item->getTag() == id ) {
+            auto menuitem = static_cast<MenuItem*>(item);
+            menuitem->setEnabled(enabled);
+            break;
+        }
+    }
+}
 

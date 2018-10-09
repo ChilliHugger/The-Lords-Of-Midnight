@@ -47,7 +47,7 @@ public:
     
     BOOL Serialize( u32 version, chilli::lib::archive& ar );
     
-    void NewStory();
+    storyid_t NewStory();
     void LoadStory( storyid_t id );
     
 protected:

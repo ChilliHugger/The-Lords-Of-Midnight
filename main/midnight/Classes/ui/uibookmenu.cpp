@@ -53,8 +53,9 @@ uibookmenu::uibookmenu( storyinfo_t* story )
 
         auto storyid = story->chapter[ii].id;
         
-        bookeventargs args;
+
         menuItem->addClickEventListener( [&,storyid] (Ref* ref ) {
+            bookeventargs args;
             args.id = storyid;
             Notify( &args );
         });

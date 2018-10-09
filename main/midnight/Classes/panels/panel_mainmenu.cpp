@@ -71,7 +71,7 @@ bool panel_mainmenu::init()
     //
     // Menu
     //
-    auto menu = new uitextmenu(RES(512), items, NUMELE(items) );
+    menu = new uitextmenu(RES(512), items, NUMELE(items) );
     uihelper::AddCenter(this,menu);
     
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
@@ -208,14 +208,12 @@ void panel_mainmenu::OnUpdate()
 
 void panel_mainmenu::OnNewStory()
 {
-    mr->NewStory();
+    storyid_t id = mr->NewStory();
     
-    if (!ShowHelpWindow(HELP_GAME_WORKS, false, []() {}) )
-        return;
-    
-    // start game
-    //gl->SetPanelMode(MODE_LOOK);
-    return;
+    ShowHelpWindow(HELP_GAME_WORKS, false, [&,id]() {
+        mr->LoadStory( id );
+    });
+
 }
 
 void panel_mainmenu::OnContinueStory()
@@ -234,8 +232,13 @@ void panel_mainmenu::OnContinueStory()
     uihelper::AddCenter(this,bookmenu);
  
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
-        ((uibookmenu*)s)->removeFromParent();
-        mr->LoadStory( ((bookeventargs*)e)->id );
+        uibookmenu* menu = static_cast<uibookmenu*>(s);
+        menu->removeFromParent();
+        
+        bookeventargs* event = static_cast<bookeventargs*>(e);
+        if ( event != nullptr ) { // null == cancelled
+            mr->LoadStory( event->id );
+        }
     });
     
 }
@@ -243,21 +246,27 @@ void panel_mainmenu::OnContinueStory()
 void panel_mainmenu::OnEndStory()
 {
     //
-    // Otherwise we need a chouce
+    // Otherwise we need a choice
     //
     
     auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
     uihelper::AddCenter(this,bookmenu);
     
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
-        ((uibookmenu*)s)->removeFromParent();
-        DeleteStory( ((bookeventargs*)e)->id );
+        
+        uibookmenu* menu = static_cast<uibookmenu*>(s);
+        menu->removeFromParent();
+        
+        bookeventargs* event = static_cast<bookeventargs*>(e);
+        if ( event != nullptr ) { // null == cancelled
+            DeleteStory( event->id );
+        }
     });
 }
 
 void panel_mainmenu::DeleteStory( storyid_t id )
 {
-    AreYouSure(CLOSE_STORY_MSG, [&] {
+    AreYouSure(CLOSE_STORY_MSG, [&,id] {
         mr->stories->destroy(id);
         refreshStories();
     });
@@ -270,15 +279,7 @@ void panel_mainmenu::refreshStories( void )
     storyid_t id = mr->stories->next_free_story();
     // add bookmark to menu
     
-//    if ( count==0 )
-//        menu->DisableButton(ID_CONTINUE_STORY);
-//    else
-//        menu->EnableButton(ID_CONTINUE_STORY);
-//
-//    if ( count==0 )
-//        menu->DisableButton(ID_END_STORY);
-//    else
-//        menu->EnableButton(ID_END_STORY);
-    
-    
+    menu->EnableItem(ID_CONTINUE_STORY, count > 0);
+    menu->EnableItem(ID_END_STORY, count > 0);
+
 }

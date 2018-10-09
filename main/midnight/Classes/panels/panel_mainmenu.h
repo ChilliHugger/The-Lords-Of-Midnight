@@ -6,6 +6,7 @@
 
 FORWARD_REFERENCE(menueventargs);
 FORWARD_REFERENCE(uinotificationinterface);
+FORWARD_REFERENCE(uitextmenu);
 
 class panel_mainmenu : public uipanel
 {
@@ -32,6 +33,9 @@ protected:
 
     void DeleteStory( storyid_t id );
     void refreshStories( void );
+    
+private:
+    uitextmenu* menu;
 };
 
 #endif // __panel_mainmenu_h__

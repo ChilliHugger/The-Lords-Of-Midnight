@@ -29,6 +29,10 @@ enum LANDSCAPE_MOVEMENT
 
 typedef struct {
     mxid            id;
+    mxdir_t         looking;
+    mxtime_t        time;
+    tme::loc_t      location;
+    
     //mximage*        shield;
     //mximage*        person;
     //mximage*        face;
@@ -39,7 +43,7 @@ typedef struct {
 #endif
 } locationinfo_t ;
 
-
+// TODO: Add SetCharacter Interface
 
 class panel_look : public uipanel
 {
@@ -49,6 +53,9 @@ public:
     virtual bool init();
     CREATE_FUNC(panel_look);
 	
+    void SetCharacter ( mxid c );
+    
+    
 protected:
     
     void GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
@@ -62,9 +69,12 @@ protected:
     bool StartLookLeft ( void );
     void StopRotating(LANDSCAPE_MOVEMENT type);
   
+    void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
+    
     void UpdateLandscape();
     
 protected:
+    mxid                characterId;
     LandscapeView*      landscapeView;
     LandscapeOptions    options;
     //bool                isLooking;
@@ -72,6 +82,10 @@ protected:
     
     locationinfo_t*    current_info;
     locationinfo_t*    follower_info;
+    
+    Label*              lblDescription;
+    Label*              lblName;
+    
 };
 
 

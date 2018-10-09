@@ -142,9 +142,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )"
-            landmarkType = "7">
+            endingLineNumber = "264">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -169,22 +167,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../Classes/panels/panel_look.cpp"
-            timestampString = "550795625.2429481"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "panel_look::StartLookRight ( void )"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "../Classes/landscaping/LandscapeColour.cpp"
             timestampString = "550841513.305431"
             startingColumnNumber = "9223372036854775807"
@@ -192,6 +174,22 @@
             startingLineNumber = "45"
             endingLineNumber = "45"
             landmarkName = "LandscapeColour::SetLookColour(mxtime_t time)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/ui/uibookmenu.cpp"
+            timestampString = "560790264.558715"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "uibookmenu::uibookmenu( storyinfo_t* story )"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

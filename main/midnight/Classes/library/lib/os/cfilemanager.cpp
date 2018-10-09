@@ -14,6 +14,9 @@
  *
  */
 
+// cocos2dx
+#define COCOS2DX
+
 #include "../../libinc/mxtypes.h"
 #include "../../libinc/os/cfile.h"
 #include "../../libinc/os/os.h"
@@ -26,8 +29,9 @@
     #include "S3EFile.h"
 #endif
 
-// cocos2dx
-#define COCOS2DX
+#if defined(COCOS2DX)
+#include "cocos2d.h"
+#endif
 
 
 
@@ -276,8 +280,11 @@ namespace chilli {
         {
 #ifdef _MARMALADE_
             return IwFileCheckExists(lpFileName);
-#else
-#if defined(_UNIX_) || defined(_LINUX_)
+            
+#elseif defined(COCOS2DX)
+            return cocos2d::FileUtils::getInstance()->isFileExist(lpFileName);
+            
+#elseif defined(_UNIX_) || defined(_LINUX_)
             filelist files;
             files.CreateDir ( (LPSTR)lpFileName );
             return files.Count() > 0 ;
@@ -294,9 +301,7 @@ namespace chilli {
             
             delete pFile;
             return TRUE ;
-#endif
-#endif
-            
+#endif            
         }
         
         s64 filemanager::DateTime(LPCSTR lpFileName)
@@ -312,9 +317,10 @@ namespace chilli {
         
         bool filemanager::ExistsDir(LPCSTR lpFileName)
         {
-            
+#if defined(COCOS2DX)
+            return cocos2d::FileUtils::getInstance()->isDirectoryExist(lpFileName);
+#endif
             //S3E_API s3eFileList* s3eFileListDirectory(const char* dirName);
-            
             return FALSE;
         }
         
@@ -322,6 +328,8 @@ namespace chilli {
         {
 #ifdef _MARMALADE_
             return s3eFileRename(lpszOldName, lpszNewName ) == S3E_RESULT_SUCCESS ;
+#elseif defined(COCOS2DX)
+            cocos2d::FileUtils::getInstance()->renameFile(lpszOldName,lpszNewName);
 #else
             return rename((LPSTR)lpszOldName, (LPSTR)lpszNewName) == 0;
 #endif
@@ -351,6 +359,11 @@ namespace chilli {
                 return TRUE;
 #endif
 #endif
+            
+#if defined(COCOS2DX)
+            return cocos2d::FileUtils::getInstance()->createDirectory(path);
+#endif
+            
             return FALSE ;
         }
         
@@ -371,6 +384,10 @@ namespace chilli {
             }
             
             s3eFileListClose(file);
+#endif
+            
+#if defined(COCOS2DX)
+            return cocos2d::FileUtils::getInstance()->removeDirectory(path);
 #endif
             
             return TRUE ;

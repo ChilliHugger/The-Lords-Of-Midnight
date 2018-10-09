@@ -15,6 +15,8 @@
 #include "projectconfig.h"
 #include "progressmonitor.h"
 
+#include "../panels/panel_look.h"
+
 USING_NS_CC;
 
 using namespace chilli::lib;
@@ -81,7 +83,7 @@ LPCSTR moonring::GetWritablePath()
 }
 
 
-void moonring::NewStory()
+storyid_t moonring::NewStory()
 {
     //destroyGamePanels();
     
@@ -98,6 +100,8 @@ void moonring::NewStory()
     //createGamePanels();
     
     help->Load( id );
+    
+    return id;
 }
 
 void moonring::LoadStory( storyid_t id )
@@ -115,8 +119,14 @@ void moonring::LoadStory( storyid_t id )
     if (!CheckGameOverConditions() ) {
         character& c = TME_CurrentCharacter();
         auto mode = Character_IsDead(c) ? MODE_THINK : MODE_LOOK;
+        
         panels->SetPanelMode(mode,TRANSITION_PUSHUP);
 
+        if ( mode == MODE_LOOK ) {
+            auto look = static_cast<panel_look*>(panels->CurrentPanel());
+            look->SetCharacter(c.id);
+        }
+        
     }
 }
 

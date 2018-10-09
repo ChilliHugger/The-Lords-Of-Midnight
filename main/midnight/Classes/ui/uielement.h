@@ -18,6 +18,14 @@ FORWARD_REFERENCE(uinotificationinterface);
 
 typedef std::function<void(uinotificationinterface* sender,uieventargs* event)> UINotificationCallback;
 
+enum ZSORT {
+    ZORDER_FAR=0,
+    ZORDER_DEFAULT=1000,
+    ZORDER_NEAR=2000,
+    ZORDER_DRAG=3000,
+};
+
+
 class uinotificationinterface
 {
 public:
