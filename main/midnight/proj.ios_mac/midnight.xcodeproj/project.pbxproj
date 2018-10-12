@@ -190,6 +190,8 @@
 		8351E4061F376D7B00605D75 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
 		8351E4071F376D8300605D75 /* ddr_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4021F376D7000605D75 /* ddr_map.tmx */; };
 		8351E40E1F3A655C00605D75 /* lom_map_test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E40D1F3A655C00605D75 /* lom_map_test.tmx */; };
+		8352FBD1216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
+		8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
 		83784AC61FCF216900F5AD66 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */; };
 		83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
 		8397AFDC1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
@@ -215,6 +217,8 @@
 		839F0D801FDBFF25000E2CC2 /* uieventargs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */; };
 		83A9ACBA1FEBBEBB00673B66 /* MyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */; };
 		83A9ACBB1FEBBEBB00673B66 /* MyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */; };
+		83A9B892216EA175005D9EE4 /* panel_think.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9B891216EA175005D9EE4 /* panel_think.cpp */; };
+		83A9B893216EA94E005D9EE4 /* panel_think.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9B891216EA175005D9EE4 /* panel_think.cpp */; };
 		83B9BD691FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6F1FD30A0100B4C721 /* panel_options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD6D1FD30A0100B4C721 /* panel_options.cpp */; };
@@ -463,6 +467,8 @@
 		8351E4021F376D7000605D75 /* ddr_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ddr_map.tmx; sourceTree = "<group>"; };
 		8351E4041F376D7B00605D75 /* lom_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map.tmx; sourceTree = "<group>"; };
 		8351E40D1F3A655C00605D75 /* lom_map_test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map_test.tmx; sourceTree = "<group>"; };
+		8352FBCF216DD693009E22E5 /* ILandscape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ILandscape.h; path = landscaping/ILandscape.h; sourceTree = "<group>"; };
+		8352FBD0216DD693009E22E5 /* ILandscape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ILandscape.cpp; path = landscaping/ILandscape.cpp; sourceTree = "<group>"; };
 		8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGenerator.cpp; path = landscaping/LandscapeGenerator.cpp; sourceTree = "<group>"; };
 		8397AFDB1F4C18BA009B00A2 /* LandscapeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeGenerator.h; path = landscaping/LandscapeGenerator.h; sourceTree = "<group>"; };
 		8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeSky.cpp; path = landscaping/LandscapeSky.cpp; sourceTree = "<group>"; };
@@ -487,6 +493,8 @@
 		839F0D7E1FDBFF25000E2CC2 /* uieventargs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uieventargs.h; sourceTree = "<group>"; };
 		83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyButton.cpp; sourceTree = "<group>"; };
 		83A9ACB91FEBBEBB00673B66 /* MyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyButton.h; sourceTree = "<group>"; };
+		83A9B890216EA175005D9EE4 /* panel_think.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_think.h; sourceTree = "<group>"; };
+		83A9B891216EA175005D9EE4 /* panel_think.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_think.cpp; sourceTree = "<group>"; };
 		83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_credits.cpp; sourceTree = "<group>"; };
 		83B9BD681FD2CC9D00B4C721 /* panel_credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_credits.h; sourceTree = "<group>"; };
 		83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDirector.h; sourceTree = "<group>"; };
@@ -849,6 +857,8 @@
 				83B9BD6E1FD30A0100B4C721 /* panel_options.h */,
 				83E108B01FE5684B00C29042 /* panel_dedication.cpp */,
 				83E108B11FE5684B00C29042 /* panel_dedication.h */,
+				83A9B890216EA175005D9EE4 /* panel_think.h */,
+				83A9B891216EA175005D9EE4 /* panel_think.cpp */,
 			);
 			path = panels;
 			sourceTree = "<group>";
@@ -914,6 +924,8 @@
 				8397AFF41F4CCAA4009B00A2 /* LandscapeDebug.h */,
 				834D04E520D2F649001B07CB /* LandscapeColour.cpp */,
 				834D04E620D2F649001B07CB /* LandscapeColour.h */,
+				8352FBCF216DD693009E22E5 /* ILandscape.h */,
+				8352FBD0216DD693009E22E5 /* ILandscape.cpp */,
 			);
 			name = landscaping;
 			sourceTree = "<group>";
@@ -1264,6 +1276,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = "Chilli Hugger Software";
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 8K6PYTU8T7;
@@ -1401,6 +1414,7 @@
 				831AD5861FE58F99001108AC /* uibookmenu.cpp in Sources */,
 				8351A5281FE45B9000D9AB57 /* keyboardmanager.cpp in Sources */,
 				83D264E21F36077E001C6F13 /* random.cpp in Sources */,
+				8352FBD1216DD693009E22E5 /* ILandscape.cpp in Sources */,
 				83D264321F360724001C6F13 /* mxengine.cpp in Sources */,
 				83D264841F360724001C6F13 /* lom_stronghold.cpp in Sources */,
 				83D2647E1F360724001C6F13 /* ddr_scenario.cpp in Sources */,
@@ -1435,6 +1449,7 @@
 				83D264F21F360857001C6F13 /* tinyxmlerror.cpp in Sources */,
 				83B9BD691FD2CC9D00B4C721 /* panel_credits.cpp in Sources */,
 				83D895FB1F36666D00172245 /* TMEMapBuilder.cpp in Sources */,
+				83A9B892216EA175005D9EE4 /* panel_think.cpp in Sources */,
 				83D264E01F36077E001C6F13 /* misc.cpp in Sources */,
 				83E108B21FE5684B00C29042 /* panel_dedication.cpp in Sources */,
 				83D264761F360724001C6F13 /* ddr_character.cpp in Sources */,
@@ -1515,6 +1530,7 @@
 				83B9BD701FD30A0100B4C721 /* panel_options.cpp in Sources */,
 				83D264C31F36077E001C6F13 /* xml.cpp in Sources */,
 				83113FD41F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */,
+				8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */,
 				83D264731F360724001C6F13 /* processor_text.cpp in Sources */,
 				83D264CB1F36077E001C6F13 /* cfile_common.cpp in Sources */,
 				83D2647F1F360724001C6F13 /* ddr_scenario.cpp in Sources */,
@@ -1546,6 +1562,7 @@
 				83D2645F1F360724001C6F13 /* info_unit.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				83D2646B1F360724001C6F13 /* item_victories.cpp in Sources */,
+				83A9B893216EA94E005D9EE4 /* panel_think.cpp in Sources */,
 				83D264811F360724001C6F13 /* default_scenario.cpp in Sources */,
 				83D264631F360724001C6F13 /* item_place.cpp in Sources */,
 				8344EC321FD1EC6B0067AAC1 /* resolutionmanager.cpp in Sources */,

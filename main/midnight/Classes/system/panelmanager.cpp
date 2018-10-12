@@ -11,6 +11,7 @@
 
 #include "panelmanager.h"
 #include "../panels/panel_mainmenu.h"
+#include "../panels/panel_think.h"
 #include "../panels/panel_credits.h"
 #include "../panels/panel_splashscreen.h"
 #include "../panels/panel_dedication.h"
@@ -63,24 +64,26 @@ void panelmanager::SetPanelMode ( panelmode_t mode, transition_t transition, boo
 
 uipanel* panelmanager::GetPanel( panelmode_t mode )
 {
+    uipanel* panel = nullptr;
+    
     if ( mode == MODE_MAINMENU     )
-        return panel_mainmenu::create();
+        panel = panel_mainmenu::create();
     else if ( mode == MODE_OPTIONS )
-        return panel_options::create();
+        panel =  panel_options::create();
     else if ( mode == MODE_CREDITS )
-        return panel_credits::create();
+        panel =  panel_credits::create();
     else if ( mode == MODE_TITLE  )
-        return panel_splashscreen::create() ;
+        panel =  panel_splashscreen::create() ;
     else if ( mode == MODE_DEDICATION  )
-        return panel_dedication::create() ;
+        panel =  panel_dedication::create() ;
     else if ( mode == MODE_LOOK )
-        return panel_look::create();
+        panel =  panel_look::create();
     
 //    else if ( mode == MODE_ADVERT )
 //        return panel_advert::create();
 
-//    else if ( mode>= MODE_THINK && mode<=MODE_THINK_APPROACH )
-//        return p_think;
+    else if ( mode>= MODE_THINK && mode<=MODE_THINK_APPROACH )
+        panel =  panel_think::create();
 //    else if ( mode>= MODE_SELECT && mode<=MODE_SELECT_LOC )
 //        return p_select;
 //    else if ( mode == MODE_NIGHT )
@@ -92,7 +95,12 @@ uipanel* panelmanager::GetPanel( panelmode_t mode )
 //        return p_gameover;
 //    else if ( mode == MODE_LOSE     )
 //        return p_gameover;
-    return NULL;
+    
+    if ( panel != nullptr ) {
+        panel->currentmode = mode;
+    }
+    
+    return panel;
 }
 
 void panelmanager::ReturnToPrevious()

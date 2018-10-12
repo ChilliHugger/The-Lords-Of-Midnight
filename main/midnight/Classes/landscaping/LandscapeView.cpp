@@ -8,6 +8,15 @@
 
 #include "LandscapeView.h"
 
+#include "LandscapeGenerator.h"
+#include "LandscapeNode.h"
+#include "LandscapeSky.h"
+#include "LandscapeLand.h"
+#include "LandscapeTerrain.h"
+#include "LandscapeDebug.h"
+#include "LandscapeColour.h"
+
+
 void LandscapeView::Init(LandscapeOptions* options)
 {
     LandscapeNode::Init(options);

@@ -15,13 +15,14 @@
 #pragma once
 
 #include "../library/libinc/mxtypes.h"
+#include "panelmanager.h"
 
 FORWARD_REFERENCE(configmanager);
 FORWARD_REFERENCE(helpmanager);
 //FORWARD_REFERENCE(storymanager);
 FORWARD_REFERENCE(keyboardmanager);
 FORWARD_REFERENCE(tmemanager);
-FORWARD_REFERENCE(panelmanager);
+//FORWARD_REFERENCE(panelmanager);
 FORWARD_REFERENCE(progressmonitor);
 FORWARD_REFERENCE(projectconfig);
 
@@ -49,6 +50,8 @@ public:
     
     storyid_t NewStory();
     void LoadStory( storyid_t id );
+    
+    void ShowPage( panelmode_t mode, mxid object );
     
 protected:
     

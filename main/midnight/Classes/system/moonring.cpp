@@ -16,6 +16,8 @@
 #include "progressmonitor.h"
 
 #include "../panels/panel_look.h"
+#include "../panels/panel_think.h"
+
 
 USING_NS_CC;
 
@@ -104,6 +106,12 @@ storyid_t moonring::NewStory()
     return id;
 }
 
+void moonring::ShowPage( panelmode_t mode, mxid object )
+{
+    panels->SetPanelMode(mode);
+    panels->CurrentPanel()->SetObject(object);
+}
+
 void moonring::LoadStory( storyid_t id )
 {
     //destroyGamePanels();
@@ -123,8 +131,7 @@ void moonring::LoadStory( storyid_t id )
         panels->SetPanelMode(mode,TRANSITION_PUSHUP);
 
         if ( mode == MODE_LOOK ) {
-            auto look = static_cast<panel_look*>(panels->CurrentPanel());
-            look->SetCharacter(c.id);
+            panels->CurrentPanel()->SetObject(c.id);
         }
         
     }

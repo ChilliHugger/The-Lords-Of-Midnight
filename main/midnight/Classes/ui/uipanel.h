@@ -27,8 +27,23 @@ public:
     
     virtual bool init();
     virtual void OnNotification( Ref* element );
+    virtual void SetObject( mxid object ) {};
+    virtual void OnShown( void );
+    virtual void OnActivate( void );
+    virtual void OnDeActivate( void );
 
+    // Cocos2dX Scene Helpers
+    virtual void onEnterTransitionDidFinish();
+    virtual void onEnter();
+    virtual void onExit();
+    //
+    
     moonring* GetMoonring() { return mr; }
+    
+    void Enable() { enabled = true; }
+    void Disable() { enabled = false; }
+    bool isEnabled() { return enabled; }
+    bool isHelpVisible() { return help_visible != HELP_NONE; }
     
 protected:
     
@@ -55,12 +70,14 @@ protected:
     moonring*       mr;
     
     helpid_t        help_pending_id;
-    BOOL            help_pending;
-    int             help_visible;
+    bool            help_pending;
+    helpid_t        help_visible;
     uihelpwindow*   help_window;
     
+    bool            enabled;
+    
 public:
-    mode_t          currentmode;
+    panelmode_t     currentmode;
 };
 
 

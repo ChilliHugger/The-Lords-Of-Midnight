@@ -90,6 +90,7 @@ uihelpwindow::uihelpwindow( uipanel* parent, helpid_t id)
     uihelper::AddTopLeft(layout,close, RES(8), RES(8) );
     close->setAnchorPoint(uihelper::AnchorCenter);
     
+    this->setLocalZOrder(ZORDER_NEAR);
 }
 
 void uihelpwindow::Show( MXVoidCallback callback )
@@ -119,6 +120,11 @@ void uihelpwindow::Show( MXVoidCallback callback )
 
 void uihelpwindow::OnClose()
 {
+    // Flsg this particular help event as having been shown
+    auto mr = moonring::mikesingleton();
+    mr->help->Shown( id );
+    mr->help->Save( mr->stories->current_story() );
+    
     Close();
     if ( closeCallback!=nullptr )
         closeCallback();

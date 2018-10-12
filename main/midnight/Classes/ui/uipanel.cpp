@@ -147,6 +147,7 @@ BOOL uipanel::ShowHelpWindow ( helpid_t id, BOOL forceImportant, MXVoidCallback 
 
 void uipanel::HelpPending()
 {
+    // TODO: Help Pending
     //    i_help->ShowEnable();
     //    uiaction* flash = new uiaFlash(300,10*1000);
     //    flash->delegate=this;
@@ -172,6 +173,7 @@ void uipanel::PopupHelpWindow ( helpid_t id, MXVoidCallback callback )
     help_window = new uihelpwindow( this, id );
     help_window->Show( [&,callback] {
         help_window = nullptr;
+        help_visible = HELP_NONE;
         if ( callback != nullptr )
             callback();
     });
@@ -206,3 +208,32 @@ void uipanel::DebugNodesChildren(DrawNode* layer, Node* parent, Vec2 origin)
     
 }
 
+void uipanel::onEnterTransitionDidFinish()
+{
+    Scene::onEnterTransitionDidFinish();
+    OnShown();
+}
+
+void uipanel::onExit()
+{
+    Scene::onExit();
+    OnDeActivate();
+}
+
+void uipanel::onEnter()
+{
+    Scene::onEnter();
+    OnActivate();
+}
+
+void uipanel::OnShown( void )
+{
+}
+
+void uipanel::OnDeActivate()
+{
+}
+
+void uipanel::OnActivate()
+{
+}

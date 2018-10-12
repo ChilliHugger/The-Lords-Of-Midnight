@@ -3,12 +3,17 @@
 
 #include "panel_look.h"
 #include "../system/moonring.h"
+#include "../system/configmanager.h"
+#include "../system/helpmanager.h"
+
+
 
 #include "../ui/uihelper.h"
 
 #include "../landscaping/LandscapeSky.h"
 #include "../landscaping/LandscapeLand.h"
 #include "../landscaping/LandscapeTerrain.h"
+#include "../landscaping/LandscapeColour.h"
 
 #include "tme_interface.h"
 
@@ -21,6 +26,20 @@
 USING_NS_CC;
 using namespace tme;
 
+enum TAG_IDS {
+    TAG_NONE            = 0,
+    TAG_MENU_COLLAPSE   = 1,
+    TAG_DELAYED_SAVE    = 2,
+    TAG_UNDO            = 3,
+    TAG_UNDO_DONE       = 4,
+    TAG_ENTER_TUNNEL    = 5,
+    TAG_ENTER_TUNNEL_DONE=6,
+    TAG_EXIT_TUNNEL     =7,
+    TAG_EXIT_TUNNEL_DONE=8,
+};
+
+
+
 bool panel_look::init()
 {
     if ( !uipanel::init() )
@@ -30,6 +49,7 @@ bool panel_look::init()
     
     // TODO: DDR Tunnel view
     
+    // TODO: DDR TunnelGenerator
     options.generator = new LandscapeGenerator();
     options.colour = new LandscapeColour();
     options.showWater = false;
@@ -112,7 +132,133 @@ bool panel_look::init()
 
 void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type )
 {
-    SetCharacter(characterId);
+#if defined(_DDR_)
+    if ( type == LM_MOVE_FORWARD_LEAVE_TUNNEL ) {
+        ExitTunnel();
+        return;
+    }
+#endif
+    
+    draw_arrows=FALSE;
+    
+    StartInactivity();
+    
+    
+    if ( type == LM_DRAG_START ) {
+        landscape_dragging=true;
+        StopInactivity();
+        return;
+    }
+    
+    landscape_dragging=FALSE;
+    
+    if ( type == LM_SHOW_COMPASS ) {
+        StopInactivity();
+        
+        // TODO:
+        //character&    c = TME_CurrentCharacter();
+        //i_compass->Show(landscape->mouse_down_pos, c.looking );
+        
+        return;
+    }
+    
+    Enable();
+    
+    SetObject(characterId);
+    
+    if ( type ==  LM_ROTATE_LEFT || type == LM_ROTATE_RIGHT || type == LM_NONE ) {
+        mr->help->Shown(HELP_LOOKING_AROUND);
+    }
+    
+    if ( type ==  LM_MOVE_FORWARD ) {
+        
+        mr->help->Shown(HELP_MOVEMENT);
+        mr->help->Shown(HELP_MOVING);
+        
+        Disable();
+        
+        //
+        // did we fight
+        // or seek ?
+        character&    c = TME_CurrentCharacter();
+        if ( c.lastcommand == CMD_FIGHT ) {
+            // think!
+            mr->ShowPage(MODE_THINK_FIGHT, c.lastcommandid);
+            
+        }else if ( c.lastcommand == CMD_SEEK ) {
+            mr->ShowPage(MODE_THINK_SEEK, c.lastcommandid);
+
+        }
+        
+        this->scheduleOnce( [&](float) {
+            delayedSave();
+        }, 0.1f, "DelayedSave" );
+        
+        
+    }
+    
+    // get the current location
+    TME_GetCharacterLocationInfo(TME_CurrentCharacter());
+    
+    if ( location_infront_armies.foes_armies ) {
+        if ( !ShowHelpWindow(HELP_BATTLE))
+            return;
+        if ( !ShowHelpWindow(HELP_ARMIES) )
+            return;
+    }
+    
+    int id = GET_ID(location_infront_object) ;
+    if ( id >= OB_WOLVES && id<=OB_WILDHORSES ) {
+        if ( !ShowHelpWindow(HELP_NASTIES) )
+            return;
+        return;
+    }
+    
+#if defined(_DDR_)
+    if ( Character_IsInTunnel(TME_CurrentCharacter()) ) {
+        return;
+    }
+#endif
+    
+    
+    defaultexport::location_t loc;
+    TME_GetMapLocation(loc, location_infrontid );
+    
+#if defined(_DDR_)
+    if ( loc.flags.Is(lf_mist) ) {
+        if ( !ShowHelpWindow( HELP_TN_MISTS ) )
+            return;
+    }
+#endif
+    if ( (loc.terrain == TN_PLAINS ) || (loc.terrain== TN_PLAINS2) ) {
+        TME_GetMapLocation(loc, location_lookingatid );
+        if ( (loc.terrain != TN_PLAINS) && (loc.terrain!=TN_PLAINS2) )
+            return;
+    }
+    
+#if defined(_DDR_)
+    // map plains for ddr plains
+    if ( loc.terrain == TN_PLAINS )
+        loc.terrain = TN_PLAINS2;
+    loc.terrain = (mxterrain_t)((int)loc.terrain - TN_PLAINS2) ;
+#endif
+    
+    if ( !ShowHelpWindow( (helpid_t)(HELP_NONE+1+(int)loc.terrain )) )
+        return;
+    
+    
+}
+
+void panel_look::delayedSave()
+{
+    mr->stories->save();
+    Enable();
+    SetObject(characterId);
+    
+    if ( (mr->panels->currentmode == this->currentmode)
+        && recruitable_characters.Count() ) {
+        mr->ShowPage ( MODE_THINK_APPROACH, characterId );
+    }
 }
 
 //void panel_look::OnActionComplete( uiaction* sender, s32 value )
@@ -125,14 +271,6 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
 //}
 
 //void panel_look::OnCompassEvent(uicompass *sender, uicompassevent *event)
-//{
-//}
-
-//void panel_look::fadeIn ( int tag, rgb_t colour )
-//{
-//}
-
-//void panel_look::fadeOut ( int tag, rgb_t colour )
 //{
 //}
 
@@ -163,8 +301,11 @@ void panel_look::GetCharacterInfo ( defaultexport::character_t& c, locationinfo_
     
 }
 
-void panel_look::SetCharacter ( mxid c )
+void panel_look::SetObject ( mxid c )
 {
+    if ( ID_TYPE(c) != IDT_CHARACTER )
+        return;
+    
     characterId = c ;
     TME_CurrentCharacter(c);
     
@@ -194,35 +335,11 @@ void panel_look::GetCurrentLocationInfo ( void )
         follower_info->id=0;
     }
     
-#if defined(_DDR_)
-    if ( current_info->tunnel ) {
-        if ( current_view != tunnel ) {
-            RemoveChild(landscape);
-            //landscape->OnDeInit();
-            AddChild(tunnel);
-            current_view=tunnel;
-        }
-    }else{
-        if ( current_view != landscape ) {
-            RemoveChild(tunnel);
-            //tunnel->OnDeInit();
-            AddChild(landscape);
-            current_view=landscape;
-        }
-        
-    }
-#else
-//    if ( current_view != landscape ) {
-//        AddChild(landscape);
-//        current_view=landscape;
-//    }
-#endif
-    
-    
-//    OnSetupIcons();
-//    OnSetupFaces();
+    OnSetupIcons();
+    OnSetupFaces();
     
 }
+
 
 
 void panel_look::SetViewForCurrentCharacter ( void )
@@ -233,11 +350,13 @@ void panel_look::SetViewForCurrentCharacter ( void )
 #endif
     
     lblDescription->setString(current_info->locationtext);
-    //((uiimage*)(imgShield->children[0]))->Image(current_info->shield);
-    
-    //imgShield->Enable();
     //lblDescription->Enable();
+
+    // TODO: Shield
+    //((uiimage*)(imgShield->children[0]))->Image(current_info->shield);
+    //imgShield->Enable();
     
+    // TODO: Following
 //    if ( follower_info->id ) {
 //        uiimage* img = (uiimage*)i_Following->children[0];
 //        img->Image(follower_info->face);
@@ -270,8 +389,6 @@ void panel_look::SetViewForCurrentCharacter ( void )
     
     UpdateLandscape();
     
-    // Add location text
-    
     // Add characters in front
     
     // Add shield
@@ -285,21 +402,29 @@ void panel_look::SetViewForCurrentCharacter ( void )
 
 void panel_look::UpdateLandscape()
 {
-    if ( landscapeView ) {
-        removeChild(landscapeView);
-        landscapeView->release();
-        landscapeView=nullptr;
+    if ( current_view ) {
+        removeChild(current_view);
+        current_view->release();
+        current_view=nullptr;
     }
     
     options.generator->horizontalOffset = options.lookAmount;
     
-    landscapeView = new LandscapeView();
-    landscapeView->programState = mr->glProgramState;
-    landscapeView->Init(&options);
-    landscapeView->setAnchorPoint(Vec2(0.5,0.5));
-    landscapeView->setPosition( Vec2(getContentSize().width/2, getContentSize().height/2));
-    landscapeView->setLocalZOrder(ZORDER_FAR);
-    addChild(landscapeView);
+    if ( current_info->tunnel ) {
+        // TODO: Tunnels
+        //tunnelView = new TunnelView();
+        //current_view = tunnelView;
+    }else{
+        landscapeView = new LandscapeView();
+        current_view = landscapeView;
+    }
+    
+    current_view->programState = mr->glProgramState;
+    current_view->Init(&options);
+    current_view->setAnchorPoint(Vec2(0.5,0.5));
+    current_view->setPosition( Vec2(getContentSize().width/2, getContentSize().height/2));
+    current_view->setLocalZOrder(ZORDER_FAR);
+    addChild(current_view);
     
 }
 
@@ -322,7 +447,7 @@ void panel_look::InitKeyboard()
                 StartLookRight();
                 break;
             case EventKeyboard::KeyCode::KEY_UP_ARROW:
-                StartMoving();
+                moveForward();
                 break;
             case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
                 break;
@@ -353,7 +478,6 @@ bool panel_look::StartLookLeft ( void )
             StopRotating(LM_ROTATE_LEFT);
         }
         UpdateLandscape();
-
     });
     
     auto ease = new EaseSineInOut();
@@ -392,6 +516,79 @@ bool panel_look::StartLookRight ( void )
     return TRUE;
     
 }
+
+
+bool panel_look::moveForward ( void )
+{
+    character& c = TME_CurrentCharacter();
+    
+    TME_GetCharacterLocationInfo ( c );
+    
+    // something is in our way that we must fight
+    // so check for auto fight
+    if ( location_flags&lif_fight ) {
+        if ( mr->config->autofight ) {
+            // do we have an army?
+            // do we have the correct sword?
+            
+            mxid fight = Character_Fight(c);
+            
+            if ( fight != IDT_NONE && Character_IsDead(c)) {
+                mr->ShowPage(MODE_THINK_FIGHT,fight);
+                mr->stories->save();
+                return FALSE;
+            }
+            
+            //return FALSE;
+        }
+    }
+    
+    //
+    if ( Character_IsHidden(c) ) {
+        if ( mr->config->autounhide ) {
+            if ( Character_Hide(c) ) {
+            }
+        }
+    }
+    
+    if ( !StartMoving() ) {
+        
+        character& c = TME_CurrentCharacter();
+        
+        TME_GetCharacterLocationInfo(c);
+        
+        if ( location_stubborn_lord_move!=IDT_NONE) {
+            // switch to the stubborn character
+            // and think
+            SetObject(location_stubborn_lord_move);
+            return true;
+        }
+        
+        if ( Character_IsNight(c) ) {
+            if ( !ShowHelpWindow(HELP_PRESS_NIGHT))
+                return TRUE;
+        }
+        
+        if ( c.following != IDT_NONE )
+            if (!ShowHelpWindow(HELP_GROUPED))
+                return TRUE;
+        
+        if ( location_infront_armies.foes_armies )
+            if (!ShowHelpWindow(HELP_BATTLE, TRUE))
+                return TRUE;
+        
+        // something is in our way that we must fight
+        mxid object = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);
+        
+        mr->ShowPage(MODE_THINK,object);
+        
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+
 
 bool panel_look::StartMoving()
 {
@@ -454,25 +651,178 @@ void panel_look::StopRotating(LANDSCAPE_MOVEMENT type)
 {
     options.isLooking = false;
     
-    //SetViewForCurrentCharacter();
-    
     OnMovementComplete(type);
-    
-    //UpdateLandscape();
-    
 }
 
 void panel_look::StopMoving()
 {
     options.isMoving = false;
     
-    //SetViewForCurrentCharacter();
-    
     OnMovementComplete(LM_MOVE_FORWARD);
-    
-    //UpdateLandscape();
     
 }
 
+void panel_look::StartInactivity()
+{
+    this->scheduleOnce( [&](float) {
+        ShowInactivityHelp();
+    }, NONE_ACTIVTY_DURATION, "NonActivityTimer" );
+}
+
+void panel_look::StopInactivity()
+{
+    this->unschedule("NonActivityTimer");
+}
+
+void panel_look::ShowInactivityHelp()
+{
+    static helpid_t help_options[] = { HELP_LOOKING_AROUND, HELP_MOVEMENT, HELP_SELECTING_CHARACTER, HELP_THINKING, HELP_CHOOSE };
+    
+    if ( isEnabled() ) {
+        if ( !isHelpVisible() ) {
+            for ( u32 ii=0; ii<NUMELE(help_options); ii++ ) {
+                if ( !ShowHelpWindow( help_options[ii] ) )
+                    break;
+            }
+        }
+    }
+}
+
+void panel_look::hideMenus ( void )
+{
+    // TODO: Hide Menus
+//    if ( actions )
+//        actions->Collapse();
+//    if ( faces )
+//        faces->Collapse();
+//    if ( debug )
+//        debug->Collapse();
+}
 
 
+void panel_look::fadeIn ( int tag, rgb_t colour )
+{
+//    if ( !gl->settings.screentransitions ) {
+//        uiaction action;
+//        action.tag=tag;
+//        OnActionComplete(&action, 0);
+//        return;
+//    }
+//
+//    uiaAlpha* alpha = new uiaAlpha( 0.0f, 3000);
+//    alpha->delegate=this;
+//    alpha->tag=tag;
+//    fade_panel->colour= colour;
+//    fade_panel->AddAction( alpha );
+//    UPDATE_DISPLAY;
+}
+
+void panel_look::fadeOut ( int tag, rgb_t colour )
+{
+//    if ( !gl->settings.screentransitions ) {
+//        uiaction action;
+//        action.tag=tag;
+//        OnActionComplete(&action, 0);
+//        return;
+//    }
+//
+//    fade_panel->ShowEnable();
+//    fade_panel->alpha=0;
+//    uiaction* action=new uiaAlpha(1.0f, 3000);
+//    action->delegate=this;
+//    action->tag=tag;
+//    fade_panel->colour= colour;
+//    fade_panel->AddAction( action );
+//    UPDATE_DISPLAY;
+}
+
+void panel_look::OnShown()
+{
+    StartInactivity();
+    
+    
+    if ( variables::sv_days == 0) {
+        if ( !ShowHelpWindow(HELP_DAY1))
+            return;
+        
+        if ( !ShowHelpWindow(HELP_CHOICE_OF_GAMES))
+            return;
+    }
+    
+    if ( variables::sv_days == 1) {
+        if ( !ShowHelpWindow(HELP_BATTLE))
+            return;
+#if defined(_LOM_)
+        if ( !ShowHelpWindow(HELP_ICEFEAR))
+            return;
+#endif
+    }
+    if ( variables::sv_days == 2) {
+        if ( !ShowHelpWindow(HELP_VICTORY))
+            return;
+    }
+    
+#if defined(_LOM_)
+    character& c = TME_CurrentCharacter();
+    if ( c.race == RA_FREE || c.race == RA_MORKIN )
+        if ( !ShowHelpWindow(HELP_FREE))
+            return;
+    if ( c.race == RA_FEY )
+        if ( !ShowHelpWindow(HELP_FEY))
+            return;
+    if ( c.race == RA_WISE )
+        if ( !ShowHelpWindow(HELP_WISE))
+            return;
+#endif
+}
+
+void panel_look::Undo ( savemode_t mode )
+{
+    undo_mode=mode;
+    fadeOut(TAG_UNDO,_clrBlack);
+}
+
+#if defined(_DDR_)
+void panel_look::EnterTunnel ( void )
+{
+    fadeOut(TAG_ENTER_TUNNEL, _clrBlack);
+}
+
+void panel_look::ExitTunnel ( void )
+{
+    fadeOut(TAG_EXIT_TUNNEL, _clrWhite);
+}
+#endif
+
+void panel_look::OnActivate( void )
+{
+    uipanel::OnActivate();
+    
+    // make sure we are working with our character
+    SetObject(characterId);
+    
+    character&    c = TME_CurrentCharacter();
+    
+    StopInactivity();
+    
+    if ( Character_IsDead(c) ) {
+        mr->ShowPage( MODE_THINK, c.id );
+        return;
+    }
+    
+    OnSetupIcons();
+    OnSetupFaces();
+}
+
+void panel_look::OnDeActivate( void )
+{
+    uipanel::OnDeActivate();
+}
+
+void panel_look::OnSetupIcons()
+{
+}
+
+void panel_look::OnSetupFaces()
+{
+}

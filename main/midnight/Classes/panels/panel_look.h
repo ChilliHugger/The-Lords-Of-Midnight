@@ -5,7 +5,13 @@
 
 #include "../landscaping/LandscapeGenerator.h"
 #include "../landscaping/LandscapeView.h"
+#include "uihelper.h"
+
+
 #include "tme_interface.h"
+
+#define NONE_ACTIVTY_DURATION   30.0f
+
 
 typedef enum SNAP_MODE {
     sm_back_right=1,
@@ -36,11 +42,11 @@ typedef struct {
     //mximage*        shield;
     //mximage*        person;
     //mximage*        face;
-    std::string            name;
-    std::string            locationtext;
-#if defined(_DDR_)
+    std::string     name;
+    std::string     locationtext;
+
     BOOL            tunnel;
-#endif
+
 } locationinfo_t ;
 
 // TODO: Add SetCharacter Interface
@@ -53,8 +59,8 @@ public:
     virtual bool init();
     CREATE_FUNC(panel_look);
 	
-    void SetCharacter ( mxid c );
-    
+    virtual void SetObject ( mxid c );
+   
     
 protected:
     
@@ -63,19 +69,50 @@ protected:
     void SetViewForCurrentCharacter ( void );
     void InitKeyboard();
     
+    bool moveForward ( void );
+
     bool StartMoving();
     void StopMoving();
     bool StartLookRight ( void );
     bool StartLookLeft ( void );
     void StopRotating(LANDSCAPE_MOVEMENT type);
   
+    void StartInactivity();
+    void StopInactivity();
+    void ShowInactivityHelp();
+    
+    void Undo ( savemode_t mode );
+    
+#if defined(_DDR_)
+    void EnterTunnel ( void );
+    void ExitTunnel ( void );
+#endif
+    
+    void delayedSave();
+
+    void hideMenus ( void );
+    void fadeIn ( int tag, rgb_t colour );
+    void fadeOut ( int tag, rgb_t colour );
+
+    
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
+    
+    void OnShown( void );
+    void OnActivate( void );
+    void OnDeActivate( void );
+
+    void OnSetupIcons();
+    void OnSetupFaces();
     
     void UpdateLandscape();
     
 protected:
     mxid                characterId;
+    
+    ILandscape*         current_view;
     LandscapeView*      landscapeView;
+    LandscapeView*      tunnelView;
+    
     LandscapeOptions    options;
     //bool                isLooking;
     //bool                isMoving;
@@ -85,6 +122,12 @@ protected:
     
     Label*              lblDescription;
     Label*              lblName;
+    
+    
+    u32             current_arrow;
+    bool            draw_arrows;
+    bool            landscape_dragging;
+    savemode_t      undo_mode;
     
 };
 
