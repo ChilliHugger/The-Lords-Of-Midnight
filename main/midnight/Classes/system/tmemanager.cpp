@@ -16,6 +16,11 @@ tmemanager::tmemanager()
 
 void tmemanager::ResolveTMEData ()
 {
+    for ( u32 ii=0; ii<characters.Count(); ii++ ) {
+        char_data_t* d = (char_data_t*)characters[ii];
+        d->id  = TME_LinkData(d->symbol,d);
+    }
+    
     // lets check that all characters have user data
     c_mxid all;
     TME_GetAllCharacters(all);

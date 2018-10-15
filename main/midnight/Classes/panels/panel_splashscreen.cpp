@@ -19,6 +19,7 @@ USING_NS_CC;
 
 #define MAX_SPLASHSCREEN_TIME   3000
 #define TRANSITION_TIME         2.0
+#define MAX_PROGESS             40.0f
 
 bool panel_splashscreen::init()
 {
@@ -38,7 +39,7 @@ bool panel_splashscreen::init()
     uihelper::AddBottomLeft(this, loading_progress, RES(8), RES(8));
     
     progress = new progressmonitor([&](int value) {
-        UpdateProgress( (f32)value / 10.0f );
+        UpdateProgress( (f32)value / MAX_PROGESS );
     });
     progress->Start();
     
@@ -49,6 +50,7 @@ bool panel_splashscreen::init()
     atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]() {
         mr->Initialise( progress );
         progress->Stop();
+        UIDEBUG("MAX_PROGESS=%d",progress->current);
         SAFEDELETE(progress);
         Complete();
     });

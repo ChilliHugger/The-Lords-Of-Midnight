@@ -33,6 +33,8 @@ public:
     virtual ~char_data_t();
     
 public:
+    c_str   face;
+    
     //mximage*    face;
     //mximage*    shield;
     //mximage*    body;
@@ -90,8 +92,6 @@ public:
     void UnResolveTMEData();
     
 public:
-
-private:
     c_ptr               characters;
     c_ptr               races;
     c_ptr               objects;

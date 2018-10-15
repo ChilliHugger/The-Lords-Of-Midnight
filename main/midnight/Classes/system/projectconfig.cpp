@@ -9,6 +9,7 @@
 #include "moonring.h"
 #include "../library/chilli.h"
 #include "progressmonitor.h"
+#include "tmemanager.h"
 
 #include "../landscaping/LandscapeColour.h"
 
@@ -162,25 +163,27 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //
 //    if ( pass == 1 ) {
 //        // characters
-//        UIDEBUG( "Frontend: Loading CHARACTERS..." );
-//        UpdateSplash("Loading Characters", progress++);
-//        if ( (e = base->Find( "characters")) ) {
-//            FOREACHELEMENT(e,c) {
-//                if ( c->IsType("character") ) {
-//                    char_data_t* d = new char_data_t ;
-//                    d->symbol = c->ReadStr("id");
-//                    UIDEBUG( "Frontend: Loading CHARACTERS... %s", (LPCSTR)d->symbol );
-//                    d->face = LOAD_IMAGE( c->ReadStr("face") );
-//                    d->shield = LOAD_IMAGE( c->ReadStr("shield") );
-//                    d->body = LOAD_IMAGE( c->ReadStr("body") );
-//                    d->horse = LOAD_IMAGE( c->ReadStr("horse") );
-//                    d->shortcut = c->ReadStr("shortcut");
-//                    d->shortcut2 = c->ReadStr("shortcut2");
-//                    characters.Add(d);
-//                }
-//                UpdateSplash("Loading Characters", progress++);
-//            }
-//        }
+        UIDEBUG( "Frontend: Loading CHARACTERS..." );
+        monitor->Update("Loading Characters", 0);
+        if ( (e = base->Find( "characters")) ) {
+            FOREACHELEMENT(e,c) {
+                if ( c->IsType("character") ) {
+                    char_data_t* d = new char_data_t ;
+                    d->symbol = c->ReadStr("id");
+                    UIDEBUG( "Frontend: Loading CHARACTERS... %s", (LPCSTR)d->symbol );
+                    
+                    d->face = c->ReadStr("face") ;
+                    //d->face = LOAD_IMAGE( c->ReadStr("face") );
+                    //d->shield = LOAD_IMAGE( c->ReadStr("shield") );
+                    //d->body = LOAD_IMAGE( c->ReadStr("body") );
+                    //d->horse = LOAD_IMAGE( c->ReadStr("horse") );
+                    d->shortcut = c->ReadStr("shortcut");
+                    d->shortcut2 = c->ReadStr("shortcut2");
+                    mr->tme->characters.Add(d);
+                }
+                monitor->Update("Loading Characters", 1);
+            }
+        }
 //    }
 //
 //    if ( pass == 1 ) {

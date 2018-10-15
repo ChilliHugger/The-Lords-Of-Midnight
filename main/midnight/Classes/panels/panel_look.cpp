@@ -6,6 +6,7 @@
 #include "../system/configmanager.h"
 #include "../system/helpmanager.h"
 #include "../system/resolutionmanager.h"
+#include "../system/tmemanager.h"
 
 #include "../frontend/layout_id.h"
 #include "../frontend/choose_id.h"
@@ -99,15 +100,12 @@ bool panel_look::init()
     
     // Command Window
     i_command_window = new uicommandwindow(this);
-//    i_command_window->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
-//
-//    });
-    
     
     auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, callback);
     uihelper::AddBottomRight(this, choose, RES(10), RES(10) );
     choose->setLocalZOrder(ZORDER_DEFAULT);
 
+    // Character Selection
     auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, callback);
     uihelper::AddBottomLeft(this, select, RES(10), RES(10) );
     select->setLocalZOrder(ZORDER_DEFAULT);
@@ -275,8 +273,6 @@ void panel_look::delayedSave()
 //void panel_look::OnCompassEvent(uicompass *sender, uicompassevent *event)
 //{
 //}
-
-// TODO: Actions
 
 void panel_look::GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info)
 {
@@ -704,13 +700,13 @@ void panel_look::hideMenus ( void )
 
 void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
 {
-//    if ( !gl->settings.screentransitions ) {
-//        uiaction action;
-//        action.tag=tag;
-//        OnActionComplete(&action, 0);
-//        return;
-//    }
-//
+    if ( !mr->config->screentransitions ) {
+        if ( callback != nullptr ) {
+            callback();
+        }
+        return;
+    }
+    
     auto rect = this->getBoundingBox();
     auto fade_panel = DrawNode::create();
     fade_panel->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
@@ -734,12 +730,12 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callba
 
 void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
 {
-//    if ( !gl->settings.screentransitions ) {
-//        uiaction action;
-//        action.tag=tag;
-//        OnActionComplete(&action, 0);
-//        return;
-//    }
+    if ( !mr->config->screentransitions ) {
+        if ( callback != nullptr ) {
+            callback();
+        }
+        return;
+    }
     
     auto rect = this->getBoundingBox();
     auto fade_panel = DrawNode::create();
@@ -838,7 +834,9 @@ void panel_look::OnNotification( Ref* sender )
     if ( button == nullptr )
         return;
     
-    switch ( button->getTag() ) {
+    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    
+    switch ( id ) {
             
         case ID_ACTIONS:
             OnChoose();
@@ -971,6 +969,22 @@ void panel_look::OnNotification( Ref* sender )
                 return;
             break;
         }
+            
+            // check for character selection
+        case ID_CHAR1:
+        case ID_CHAR2:
+        case ID_CHAR3:
+        case ID_CHAR4:
+        case ID_SHOW_LEADER:
+        {
+            char_data_t* data = static_cast<char_data_t*>(button->getUserData());
+            OnSelectCharacter(data->id);
+            return;
+            break;
+        }
+            
+        default:
+            break;
     }
     
     hideMenus();
@@ -983,6 +997,40 @@ void panel_look::OnNotification( Ref* sender )
 #pragma mark Commands
 #pragma mark -
 
+bool panel_look::OnSelectCharacter( mxid id )
+{
+    character c;
+    
+    hideMenus();
+    TME_GetCharacter(c,id);
+    
+    if ( Character_IsDead(c) ) {
+        TME_SelectChar(c.id);
+        SetObject(id);
+        mr->ShowPage( MODE_THINK );
+        mr->stories->save();
+        return true;
+    }
+    
+    SetObject(id);
+    
+    // We need to resetup the menus
+    // bu we need to wait until the menus have
+    // collapsed
+    this->scheduleOnce( [&](float) {
+        OnSetupIcons();
+        OnSetupFaces();
+    }, 1.0f, "delayed_icon_update" );
+    
+    
+    TME_RefreshCurrentCharacter();
+    TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
+    mr->stories->save();
+    
+    OnShown();
+    
+    return true;
+}
 
 bool panel_look::OnChoose()
 {
@@ -1281,86 +1329,7 @@ void panel_look::OnSetupIcons ( void )
     if ( i_command_window==NULL )
         return;
     
-    character& c = TME_CurrentCharacter();
-    TME_GetCharacterLocationInfo(c);
+    i_command_window->updateElements();
     
-    
-    //i_command_window->clearItems();
-    
-
-#if defined(_LOM_)
-    // SEEK
-    i_command_window->enableItem(ID_SEEK, location_flags.Is(lif_seek) );
-    
-    // HIDE
-    if ( Character_IsHidden(c) ) {
-        i_command_window->showItem(ID_UNHIDE, true);
-        i_command_window->showItem(ID_HIDE, false);
-    } else {
-        i_command_window->showItem(ID_UNHIDE, false);
-        i_command_window->showItem(ID_HIDE, true);
-        i_command_window->enableItem(ID_HIDE, location_flags.Is(lif_hide));
-    }
-
-    // FIGHT
-    i_command_window->enableItem(ID_FIGHT, location_flags.Is(lif_fight) );
-
-#endif
-
-
-#if defined(_DDR_)
-
-    i_command_window->enableItem(ID_GIVE, location_flags.Is(lif_give) );
-
-//    if ( location_flags.Is(lif_give)) {
-//        character c;
-//        TME_GetCharacter(c, location_someone_to_give_to );
-//        i_GiveText->Text(c.shortname);
-//        i_GiveText->ShowEnable();
-//    } else {
-//        i_Give->Disable();
-//        i_GiveText->HideDisable();
-//    }
-    
-    i_command_window->enableItem(ID_TAKE, location_flags.Is(lif_take) );
-    i_command_window->enableItem(ID_USE, location_flags.Is(lif_use) );
-    i_command_window->enableItem(ID_REST, location_flags.Is(lif_rest) );
-    i_command_window->enableItem(ID_ENTER_TUNNEL, location_flags.Is(lif_enter_tunnel) );
-
-    
-#endif
-    
-    // APPROACH
-    i_command_window->enableItem(ID_APPROACH, location_flags.Is(lif_recruitchar) );
-
-    // RECRUIT SOLDIERS
-    i_command_window->enableItem(ID_RECRUITMEN, location_flags.Is(lif_recruitmen) );
-
-    // POST SOLDIERS
-    i_command_window->enableItem(ID_POSTMEN, location_flags.Is(lif_guardmen) );
-
-    // BATTLE
-    i_command_window->enableItem(ID_ATTACK, location_flags.Is(lif_enterbattle) );
-
-    
-//    if ( SELECT_MODE == 2 ) {
-//        int count=0;
-//        for ( u32 ii=0; ii<i_char.Count(); ii++ ) {
-//            uielement* i = i_char[ii];
-//            if ( characterId != i->tag ) {
-//                character c;
-//                TME_GetCharacter(c, i->tag);
-//                if ( Character_IsAlive(c) && Character_IsControllable(i->tag) ) {
-//                    actions->addItem(i,CHOOSE_CHAR+count);
-//                    count++;
-//                }
-//            }
-//        }
-//    }
-    
-    
-    i_command_window->enableItem(ID_UNDO_DAWN, mr->stories->canUndo(savemode_dawn) );
-    i_command_window->enableItem(ID_UNDO, mr->stories->canUndo(savemode_last) );
-
 }
 

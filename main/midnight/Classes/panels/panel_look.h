@@ -103,6 +103,7 @@ protected:
     void UpdateLandscape();
     
     // Actions and Commands
+    bool OnSelectCharacter(mxid id);
     bool OnChoose();    // ID_CHOOSE
     bool OnHome();      // ID_HOME
     bool OnUndoNight();

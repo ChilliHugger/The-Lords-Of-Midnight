@@ -10,12 +10,15 @@
 #include "uicommandwindow.h"
 #include "uipanel.h"
 #include "../frontend/language.h"
-#include "resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
+#include "../system/configmanager.h"
 
 #include "../frontend/layout_id.h"
 #include "../frontend/choose_id.h"
 
+#include "tme_interface.h"
+#include "../system/tmemanager.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -48,56 +51,16 @@ uicommandwindow::uicommandwindow( uipanel* parent )
     layout = Layout::create();
     layout->setBackGroundImage(BOX_BACKGROUND_FILENAME);
     layout->setBackGroundImageScale9Enabled(true);
-    layout->setOpacity(ALPHA(0.75));
+//    layout->setOpacity(ALPHA(0.75));
+//    layout->setCascadeOpacityEnabled(true);
     uihelper::AddCenter( this,layout ) ;
 
-//    auto scrollView = ui::ScrollView::create();
-//    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
-//    layout->addChild(scrollView);
-//
-//    // add text
-//    auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
-//    label->setColor(_clrDarkRed);
-//    label->setAlignment(TextHAlignment::LEFT);
-//    label->setLineHeight(RES(FONT_SIZE_BIG));
-//    label->setLineSpacing(0);
-//    label->setMaxLineWidth(innerWidth);
-//    label->enableWrap(true);
-//    scrollView->addChild(label);
-//
-//    // calc label height
-//    auto textHeight = MIN(label->getContentSize().height,maxHeight) ;
-//    auto boxheight = textHeight + (2*layout_padding) ;
-//
     layout->setContentSize(Size(width,maxHeight));
-//    uihelper::PositionParentTopLeft( label, 0, layout_padding ) ;
-//
-//    scrollView->setInnerContainerSize(Size(innerWidth,label->getContentSize().height));
-//
-//    // allow some extra padding for the scrollview
-//    // so that the scrollbar is in the right padding area
-//    scrollView->setContentSize(Size(innerWidth+layout_padding,textHeight));
-//
-//    bool scrollingEnabled = label->getContentSize().height != textHeight ;
-//
-//    scrollView->setBounceEnabled( scrollingEnabled );
-//    scrollView->setScrollBarEnabled( scrollingEnabled );
-//
-//    uihelper::PositionParentTopLeft(scrollView,layout_padding,layout_padding);
-//    uihelper::PositionParentTopLeft(label);
-    
-
-    // Close Button in top left corner
-//    auto close = uihelper::CreateImageButton("close", 0, [&](Ref* ref)
-//                                             {
-//                                                 OnClose();
-//                                             });
-//    uihelper::AddTopLeft(layout,close, RES(8), RES(8) );
-//    close->setAnchorPoint(uihelper::AnchorCenter);
     
     this->setLocalZOrder(ZORDER_NEAR);
     
     initialiseCommands();
+    
 }
 
 void uicommandwindow::initialiseCommands()
@@ -122,7 +85,7 @@ void uicommandwindow::initialiseCommands()
     auto hide = uihelper::CreateImageButton("i_hide", ID_HIDE, callback);
     addItem(hide,CHOOSE_HIDE);
 
-    auto unhide = uihelper::CreateImageButton("i_unhide", ID_HIDE, callback);
+    auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, callback);
     addItem(unhide,CHOOSE_HIDE);
     
     // FIGHT
@@ -170,25 +133,9 @@ void uicommandwindow::initialiseCommands()
     auto postMen = uihelper::CreateImageButton("i_post", ID_POSTMEN, callback);
     addItem(postMen,CHOOSE_GUARD);
     
-    // 7
+    // ATTACK
     auto attack = uihelper::CreateImageButton("i_battle", ID_ATTACK, callback);
     addItem(attack,CHOOSE_BATTLE);
-    
-//    if ( SELECT_MODE == 2 ) {
-//        int count=0;
-//        for ( u32 ii=0; ii<i_char.Count(); ii++ ) {
-//            uielement* i = i_char[ii];
-//            if ( characterId != i->tag ) {
-//                character c;
-//                TME_GetCharacter(c, i->tag);
-//                if ( Character_IsAlive(c) && Character_IsControllable(i->tag) ) {
-//                    actions->addItem(i,CHOOSE_CHAR+count);
-//                    count++;
-//                }
-//            }
-//        }
-//    }
-    
     
     auto undoDawn = uihelper::CreateImageButton("undo_dawn", ID_UNDO_DAWN, callback);
     addItem(undoDawn,CHOOSE_UNDO_DAWN);
@@ -199,12 +146,125 @@ void uicommandwindow::initialiseCommands()
     auto home = uihelper::CreateImageButton("i_home", ID_HOME, callback);
     addItem(home,CHOOSE_EXIT);
     
+    // CHARACTERS
+    
+    // get the default faces
+    for ( u32 ii=0; ii<default_characters.Count(); ii++ ) {
+        char_data_t* data = (char_data_t*)TME_GetEntityUserData( default_characters[ii] );
+        
+        character c;
+        TME_GetCharacter(c, default_characters[ii] );
+        
+#ifdef _DDR_
+        mximage* face = NULL ;
+        
+        if ( data )
+            face = data->face ;
+        if ( face == NULL ) {
+            race_data_t* r_data = (race_data_t*) TME_GetEntityUserData( c.race );
+            if ( r_data )
+                face = r_data->face;
+        }
+        //uibutton* child =  new uibutton( new uiface( point(0,0), face, gl->images.fontS, c.shortname ) );
+        // TODO: DDR Face with name
+#else
+        
+        Director::getInstance()->getTextureCache()->addImage((LPCSTR)data->face);
+        auto face = uihelper::CreateImageButton((LPCSTR)data->face, ID_CHAR1+ii, callback);
+        face->setUserData(data);
+        addItem(face, CHOOSE_CHAR+ii);
+#endif
+
+    }
 }
 
+void uicommandwindow::updateElements()
+{
+    moonring* mr = moonring::mikesingleton();
+    
+    character& c = TME_CurrentCharacter();
+    TME_GetCharacterLocationInfo(c);
+    
+    
+#if defined(_LOM_)
+    // SEEK
+    enableItem(ID_SEEK, location_flags.Is(lif_seek) );
+    
+    // HIDE
+    if ( Character_IsHidden(c) ) {
+        showItem(ID_UNHIDE, true);
+        showItem(ID_HIDE, false);
+    } else {
+        showItem(ID_UNHIDE, false);
+        showItem(ID_HIDE, true);
+        enableItem(ID_HIDE, location_flags.Is(lif_hide));
+    }
+    
+    // FIGHT
+    enableItem(ID_FIGHT, location_flags.Is(lif_fight) );
+    
+#endif
+    
+    
+#if defined(_DDR_)
+    
+    enableItem(ID_GIVE, location_flags.Is(lif_give) );
+    
+    //    if ( location_flags.Is(lif_give)) {
+    //        character c;
+    //        TME_GetCharacter(c, location_someone_to_give_to );
+    //        i_GiveText->Text(c.shortname);
+    //        i_GiveText->ShowEnable();
+    //    } else {
+    //        i_Give->Disable();
+    //        i_GiveText->HideDisable();
+    //    }
+    
+    enableItem(ID_TAKE, location_flags.Is(lif_take) );
+    enableItem(ID_USE, location_flags.Is(lif_use) );
+    enableItem(ID_REST, location_flags.Is(lif_rest) );
+    enableItem(ID_ENTER_TUNNEL, location_flags.Is(lif_enter_tunnel) );
+    
+    
+#endif
+    
+    // APPROACH
+    enableItem(ID_APPROACH, location_flags.Is(lif_recruitchar) );
+    
+    // RECRUIT SOLDIERS
+    enableItem(ID_RECRUITMEN, location_flags.Is(lif_recruitmen) );
+    
+    // POST SOLDIERS
+    enableItem(ID_POSTMEN, location_flags.Is(lif_guardmen) );
+    
+    // BATTLE
+    enableItem(ID_ATTACK, location_flags.Is(lif_enterbattle) );
+    
+    // UNDO
+    enableItem(ID_UNDO_DAWN, mr->stories->canUndo(savemode_dawn) );
+    enableItem(ID_UNDO, mr->stories->canUndo(savemode_last) );
+    
+    // CHARACTERS
+    for ( u32 ii=0; ii<default_characters.Count(); ii++ ) {
+        character c;
+        TME_GetCharacter(c, default_characters[ii] );
+
+        layoutid_t id = (layoutid_t)((ID_CHAR1+ii));
+        
+        enableItem( id, Character_IsAlive(c)
+                   && Character_IsControllable(c.id)
+                   && c.id != TME_CurrentCharacter().id );
+        //showItem( id, c.id != TME_CurrentCharacter().id );
+        
+    }
+
+}
 
 
 void uicommandwindow::show( MXVoidCallback callback )
 {
+    moonring* mr = moonring::mikesingleton();
+    
     closeCallback = callback ;
     
     // stop the underlying parent
@@ -226,6 +286,20 @@ void uicommandwindow::show( MXVoidCallback callback )
     
     // and show
     parent->addChild(this);
+    
+    if ( mr->config->screentransitions ) {
+    
+        this->setCascadeOpacityEnabled(true);
+        this->setOpacity(ALPHA(0.0f));
+        this->runAction(FadeIn::create(0.25f));
+        
+        layout->setOpacity(ALPHA(0.0f));
+        layout->setCascadeOpacityEnabled(true);
+        layout->runAction(ActionFloat::create(0.25f,0.0f,0.75f, [&](f32 value){
+            layout->setOpacity(ALPHA(value));
+        }));
+    }
+
 }
 
 void uicommandwindow::OnClose()
@@ -290,20 +364,11 @@ void uicommandwindow::addItem( Button* element, u32 index )
     // invert the y
     pos.y = layout->getContentSize().height - pos.y;
     
-    
     element->setPosition(pos);
     element->setAnchorPoint(uihelper::AnchorCenter);
     layout->addChild(element);
-    
-    //element->setUserData((void*)index);
-    //element->setActionTag(index);
     elements.pushBack(element);
-    
-    //element->location = pos;
-    //element->EnableCenter();
-    //AddChild(element);
-    
-    //elements++;
+
     
 }
 

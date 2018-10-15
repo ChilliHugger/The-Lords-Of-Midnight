@@ -241,8 +241,10 @@ void uihelper::PositionRight( Node* node, Node* ref, f32 paddingX)
 
 ui::Button* uihelper::CreateImageButton( const std::string& name )
 {
-    return ui::Button::create(name,"","", cocos2d::ui::TextureResType::PLIST);
-    
+    if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
+        return ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
+    }
+    return ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::PLIST);
 }
 
 ui::Button* uihelper::CreateImageButton( const std::string& name, u32 id, const cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback& callback )

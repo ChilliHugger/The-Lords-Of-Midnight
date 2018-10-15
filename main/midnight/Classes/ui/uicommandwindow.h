@@ -33,15 +33,15 @@ public:
     void show( MXVoidCallback callback );
     void close();
     
-    void enableItem( layoutid_t id, bool enable );
-    void showItem( layoutid_t id, bool show );
-
+    void updateElements();
     
 protected:
     void OnClose();
     void initialiseCommands();
     void addItem( cocos2d::ui::Button* item, u32 index );
     cocos2d::ui::Button* findItemById( layoutid_t id );
+    void enableItem( layoutid_t id, bool enable );
+    void showItem( layoutid_t id, bool show );
 
 
 protected:
@@ -51,6 +51,7 @@ protected:
     cocos2d::ui::Layout*         layout;
     size            grid;
     size            padding;
+    
     Vector<cocos2d::ui::Button*> elements;
 };
 
