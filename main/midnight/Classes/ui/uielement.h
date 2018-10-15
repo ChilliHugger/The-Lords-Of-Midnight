@@ -39,7 +39,7 @@ protected:
 };
 
 
-class uielement : public cocos2d::Node, uinotificationinterface
+class uielement : public cocos2d::Node, public uinotificationinterface
 {
 public:
 	uielement();

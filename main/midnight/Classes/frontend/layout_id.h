@@ -8,22 +8,17 @@
 #ifndef layout_id_h
 #define layout_id_h
 
-enum ICON_ID
+enum layoutid_t
 {
     
-#if defined(_LOM_)
     ID_SEEK=1,              // 1
     ID_HIDE,
     ID_UNHIDE,
     ID_FIGHT,
-#endif
-    
-#if defined(_DDR_)
-    ID_GIVE=1,
+    ID_GIVE,
     ID_TAKE,
     ID_USE,
     ID_REST,
-#endif
     
     ID_APPROACH,
     ID_RECRUITMEN,

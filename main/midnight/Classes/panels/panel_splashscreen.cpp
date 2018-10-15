@@ -76,7 +76,12 @@ void panel_splashscreen::Complete()
 #if _SHOW_DEDICATION_
         mr->panels->SetPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
 #else
-        mr->panels->SetPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
+        storyid_t story = mr->getCurrentStory();
+        if ( story != STORY_NONE ) {
+            mr->LoadStory( story );
+        }else{
+            mr->panels->SetPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
+        }
 #endif
     }, delay, "show_mainmenu" );
 }

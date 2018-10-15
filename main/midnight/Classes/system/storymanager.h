@@ -14,6 +14,7 @@
 #include "ringcontroller.h"
 
 #define MAX_STORIES 8
+#define STORY_NONE 0
 typedef u32 storyid_t;
 
 typedef enum savemode_t {

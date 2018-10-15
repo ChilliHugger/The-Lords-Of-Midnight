@@ -95,7 +95,7 @@ storyid_t storymanager::next_free_story()
         if ( !used[ii])
             return ii+1;
     }
-    return 0;
+    return STORY_NONE;
 }
 
 storyid_t storymanager::first_used_story()
@@ -105,7 +105,7 @@ storyid_t storymanager::first_used_story()
         if ( used[ii])
             return ii+1;
     }
-    return 0;
+    return STORY_NONE;
 }
 
 storyid_t storymanager::alloc( void )
@@ -404,7 +404,9 @@ BOOL storymanager::save ( storyid_t id, savemode_t mode )
     // copy save file to last
     if ( last_save  ) {
         char* cpy = (char*)getPath(id, last_save);
-        filemanager::Copy( file, cpy );
+        if ( !filemanager::Copy( file, cpy ) ) {
+            UIDEBUG("Unable to create undo file");
+        }
     }
     
     last_save++;

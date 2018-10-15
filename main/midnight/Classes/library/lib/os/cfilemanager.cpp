@@ -15,7 +15,7 @@
  */
 
 // cocos2dx
-#define COCOS2DX
+#define COCOS2DX 1
 
 #include "../../libinc/mxtypes.h"
 #include "../../libinc/os/cfile.h"
@@ -281,10 +281,10 @@ namespace chilli {
 #ifdef _MARMALADE_
             return IwFileCheckExists(lpFileName);
             
-#elseif defined(COCOS2DX)
+#elif defined(COCOS2DX)
             return cocos2d::FileUtils::getInstance()->isFileExist(lpFileName);
             
-#elseif defined(_UNIX_) || defined(_LINUX_)
+#elif defined(_UNIX_) || defined(_LINUX_)
             filelist files;
             files.CreateDir ( (LPSTR)lpFileName );
             return files.Count() > 0 ;
@@ -328,22 +328,32 @@ namespace chilli {
         {
 #ifdef _MARMALADE_
             return s3eFileRename(lpszOldName, lpszNewName ) == S3E_RESULT_SUCCESS ;
-#elseif defined(COCOS2DX)
+#elif defined(COCOS2DX)
             cocos2d::FileUtils::getInstance()->renameFile(lpszOldName,lpszNewName);
 #else
             return rename((LPSTR)lpszOldName, (LPSTR)lpszNewName) == 0;
 #endif
+            return false;
         }
         
         bool filemanager::Remove(LPCSTR lpszFileName)
         {
+#if defined(COCOS2DX)
+            return cocos2d::FileUtils::getInstance()->removeFile(lpszFileName);
+#else
             return remove((LPSTR)lpszFileName) == 0;
+#endif
         }
         
         bool filemanager::Copy ( LPCSTR lpszSrcName, LPCSTR lpszDstName )
         {
 #ifdef _MARMALADE_
             return IwFileCopy( lpszDstName, lpszSrcName ) == S3E_RESULT_SUCCESS ;
+#elif defined(COCOS2DX)
+            auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(lpszSrcName);
+            return cocos2d::FileUtils::getInstance()->writeDataToFile(data, lpszDstName);
+#else
+
 #endif
             return false;
         }

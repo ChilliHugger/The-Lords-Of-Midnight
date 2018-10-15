@@ -5,10 +5,14 @@
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
 #include "../system/helpmanager.h"
+#include "../system/resolutionmanager.h"
 
-
+#include "../frontend/layout_id.h"
+#include "../frontend/choose_id.h"
+#include "../frontend/language.h"
 
 #include "../ui/uihelper.h"
+#include "../ui/uicommandwindow.h"
 
 #include "../landscaping/LandscapeSky.h"
 #include "../landscaping/LandscapeLand.h"
@@ -25,8 +29,9 @@
 
 USING_NS_CC;
 using namespace tme;
+using namespace cocos2d::ui;
 
-enum TAG_IDS {
+enum tagid_t {
     TAG_NONE            = 0,
     TAG_MENU_COLLAPSE   = 1,
     TAG_DELAYED_SAVE    = 2,
@@ -64,12 +69,14 @@ bool panel_look::init()
     
     options.colour->options = &options;
 
+    // Name Label
     lblName = Label::createWithTTF( uihelper::font_config_big, "" );
     lblName->getFontAtlas()->setAntiAliasTexParameters();
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(this,lblName,RES(32),RES(32));
 
+    // Location Desction Label
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
     lblDescription->getFontAtlas()->setAntiAliasTexParameters();
     lblDescription->setTextColor(Color4B::WHITE);
@@ -81,36 +88,37 @@ bool panel_look::init()
     current_info = new locationinfo_t();
     follower_info = new locationinfo_t();
     
+    //
+    // Generic mapping from Cocos2dx
+    //
+    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback = [&] (Ref* ref ) {
+        this->OnNotification(ref);
+    };
+    
+    
+    
+    // Command Window
+    i_command_window = new uicommandwindow(this);
+//    i_command_window->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
+//
+//    });
+    
+    
+    auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, callback);
+    uihelper::AddBottomRight(this, choose, RES(10), RES(10) );
+    choose->setLocalZOrder(ZORDER_DEFAULT);
+
+    auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, callback);
+    uihelper::AddBottomLeft(this, select, RES(10), RES(10) );
+    select->setLocalZOrder(ZORDER_DEFAULT);
+    
+    
+    // Keyboard
     InitKeyboard();
-    
-    //SetViewForCurrentCharacter();
-    
-    // TODO: Fade panel for transition in and out
     
     // TODO: Popup menu for character selection
     
-    // TODO: Choose Action menu
-    //  BOTH    Attack
-    //          Approach
-    //          Post Men
-    //          Recruitment
-    //          Night
-    //          Map
-    //          Home
-    //          Think
-    //  LOM     Fight
-    //          Hide
-    //          Unhide
-    //          Seel
-    //  DDR     Give
-    //          Take
-    //          Use
-    //          Rest
-    
     // TODO: Shortcut keys
-    
-    // TODO: Name label
-    // TODO: Description Label
     
     // TODO: Shield / Character
     // TODO: Following
@@ -121,20 +129,14 @@ bool panel_look::init()
     
     // TODO: Direction movement indicators
     
-    // TODO: Help Dialog
-    
     return true;
 }
-
-//void panel_look::hideMenus ( void )
-//{
-//}
 
 void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type )
 {
 #if defined(_DDR_)
     if ( type == LM_MOVE_FORWARD_LEAVE_TUNNEL ) {
-        ExitTunnel();
+        OnExitTunnel();
         return;
     }
 #endif
@@ -700,7 +702,7 @@ void panel_look::hideMenus ( void )
 }
 
 
-void panel_look::fadeIn ( int tag, rgb_t colour )
+void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
 {
 //    if ( !gl->settings.screentransitions ) {
 //        uiaction action;
@@ -709,15 +711,28 @@ void panel_look::fadeIn ( int tag, rgb_t colour )
 //        return;
 //    }
 //
-//    uiaAlpha* alpha = new uiaAlpha( 0.0f, 3000);
-//    alpha->delegate=this;
-//    alpha->tag=tag;
-//    fade_panel->colour= colour;
-//    fade_panel->AddAction( alpha );
-//    UPDATE_DISPLAY;
+    auto rect = this->getBoundingBox();
+    auto fade_panel = DrawNode::create();
+    fade_panel->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
+    fade_panel->setOpacity(ALPHA(initialAlpha));
+    fade_panel->setLocalZOrder(ZORDER_NEAR);
+    addChild(fade_panel);
+    
+    auto callbackAction = CallFunc::create([=]() {
+        if ( callback != nullptr ) {
+            callback();
+        }
+        this->removeChild(fade_panel);
+        //fade_panel = nullptr;
+    });
+    
+    auto action = FadeOut::create(3.0f);
+    auto sequence = Sequence::createWithTwoActions(action, callbackAction);
+    fade_panel->runAction(sequence);
+    
 }
 
-void panel_look::fadeOut ( int tag, rgb_t colour )
+void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
 {
 //    if ( !gl->settings.screentransitions ) {
 //        uiaction action;
@@ -725,15 +740,25 @@ void panel_look::fadeOut ( int tag, rgb_t colour )
 //        OnActionComplete(&action, 0);
 //        return;
 //    }
-//
-//    fade_panel->ShowEnable();
-//    fade_panel->alpha=0;
-//    uiaction* action=new uiaAlpha(1.0f, 3000);
-//    action->delegate=this;
-//    action->tag=tag;
-//    fade_panel->colour= colour;
-//    fade_panel->AddAction( action );
-//    UPDATE_DISPLAY;
+    
+    auto rect = this->getBoundingBox();
+    auto fade_panel = DrawNode::create();
+    fade_panel->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
+    fade_panel->setLocalZOrder(ZORDER_NEAR);
+    fade_panel->setOpacity(ALPHA(initialAlpha));
+    addChild(fade_panel);
+    
+    auto callbackAction = CallFunc::create([=]() {
+        if ( callback != nullptr ) {
+            callback();
+        }
+        this->removeChild(fade_panel);
+        //fade_panel = nullptr;
+    });
+    
+    auto action = FadeIn::create(3.0f);
+    auto sequence = Sequence::createWithTwoActions(action, callbackAction);
+    fade_panel->runAction(sequence);
 }
 
 void panel_look::OnShown()
@@ -776,24 +801,6 @@ void panel_look::OnShown()
 #endif
 }
 
-void panel_look::Undo ( savemode_t mode )
-{
-    undo_mode=mode;
-    fadeOut(TAG_UNDO,_clrBlack);
-}
-
-#if defined(_DDR_)
-void panel_look::EnterTunnel ( void )
-{
-    fadeOut(TAG_ENTER_TUNNEL, _clrBlack);
-}
-
-void panel_look::ExitTunnel ( void )
-{
-    fadeOut(TAG_EXIT_TUNNEL, _clrWhite);
-}
-#endif
-
 void panel_look::OnActivate( void )
 {
     uipanel::OnActivate();
@@ -819,10 +826,541 @@ void panel_look::OnDeActivate( void )
     uipanel::OnDeActivate();
 }
 
-void panel_look::OnSetupIcons()
-{
-}
-
 void panel_look::OnSetupFaces()
 {
 }
+
+void panel_look::OnNotification( Ref* sender )
+{
+    StopInactivity();
+    
+    auto button = static_cast<Button*>(sender);
+    if ( button == nullptr )
+        return;
+    
+    switch ( button->getTag() ) {
+            
+        case ID_ACTIONS:
+            OnChoose();
+            break;
+            
+        case ID_HOME:
+            OnHome();
+            break;
+            
+        case ID_UNDO_NIGHT:
+            OnUndoNight();
+            return;
+            break;
+            
+        case ID_UNDO_DAWN:
+        {
+            OnUndoDawn();
+            return;
+            break;
+        }
+            
+        case ID_UNDO:
+        {
+            OnUndo();
+            return;
+        }
+
+        case ID_NIGHT:
+        {
+            OnNight();
+            hideMenus();
+            return;
+        }
+            
+        case ID_MAP:
+        {
+            OnMap();
+            break;
+        }
+            
+        case ID_SELECT_ALL:
+        {
+            OnSelect();
+            break;
+        }
+            
+        case ID_APPROACH:
+        {
+            OnApproach();
+            return;
+        }
+#if defined(_LOM_)
+        case ID_SEEK:
+        {
+            OnSeek();
+            return;
+        }
+            
+        case ID_HIDE:
+        case ID_UNHIDE:
+        {
+            if ( OnHideUnhide() ) {
+                return;
+            }
+            break;
+        }
+            
+        case ID_FIGHT:
+        {
+            if ( OnFight() ) {
+                return;
+            }
+            break;
+        }
+#endif
+            
+#if defined(_DDR_)
+        case ID_GIVE:
+        {
+            if ( OnGive() )
+                return;
+            break;
+        }
+        case ID_TAKE:
+        {
+            if ( OnTake() )
+                return;
+            break;
+        }
+        case ID_USE:
+        {
+            if ( OnUse() )
+                return;
+            break;
+        }
+        case ID_REST:
+        {
+            OnRest();
+            break;
+        }
+        case ID_ENTER_TUNNEL:
+        {
+            OnEnterTunnel();
+            return;
+        }
+#endif
+            
+        case ID_THINK:
+        {
+            OnThink();
+            return;
+        }
+            
+        case ID_RECRUITMEN:
+        {
+            if ( OnRecruitMen() )
+                return;
+            break;
+        }
+        case ID_POSTMEN:
+        {
+            if ( OnPostMen() )
+                return;
+            break;
+        }
+            
+        case ID_ATTACK:
+        {
+            if ( OnAttack() )
+                return;
+            break;
+        }
+    }
+    
+    hideMenus();
+    
+    TME_RefreshCurrentCharacter();
+    TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
+    uipanel::OnNotification(sender);
+}
+
+#pragma mark Commands
+#pragma mark -
+
+
+bool panel_look::OnChoose()
+{
+    i_command_window->show(nullptr);
+    return true;
+}
+
+bool panel_look::OnHome()
+{
+    hideMenus();
+    
+    AreYouSure(CLOSE_STORY_MSG, [&] {
+        mr->stories->save();
+        mr->stories->cleanup();
+        mr->ShowPage( MODE_MAINMENU, 0 );
+    });
+    
+    return true;
+}
+
+bool panel_look::OnUndoNight()
+{
+    hideMenus();
+    
+    AreYouSure(UNDO_NIGHT_MSG, [&] {
+          OnUndo(savemode_night);
+    });
+    
+    return true;
+}
+
+bool panel_look::OnUndoDawn()
+{
+    hideMenus();
+    
+    AreYouSure(UNDO_DAWN_MSG, [&] {
+        OnUndo(savemode_dawn);
+    });
+    
+    return true;
+}
+
+bool panel_look::OnUndo()
+{
+    hideMenus();
+    OnUndo(savemode_normal);
+    return true;
+}
+
+bool panel_look::OnUndo ( savemode_t mode )
+{
+    undo_mode=mode;
+    fadeOut(_clrBlack, 0.75f, [&](){
+        mr->stories->undo(undo_mode);
+        SetObject( TME_CurrentCharacter().id );
+        TME_RefreshCurrentCharacter();
+        TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
+        fadeIn(_clrBlack, 1.0f, [&]{
+                // do nothing
+        });
+    });
+    return true;
+}
+
+bool panel_look::OnNight()
+{
+    hideMenus();
+    
+    AreYouSure(NIGHT_MSG, [&] {
+        mr->stories->save(savemode_night);
+        mr->ShowPage( MODE_NIGHT );
+    });
+    
+    return true;
+}
+
+bool panel_look::OnMap()
+{
+    hideMenus();
+    mr->ShowPage(MODE_MAP);
+    return true;
+}
+
+bool panel_look::OnSelect()
+{
+    hideMenus();
+    mr->help->Shown(HELP_SELECTING_CHARACTER);
+    mr->ShowPage( MODE_SELECT );
+    return true;
+}
+
+bool panel_look::OnApproach()
+{
+    hideMenus();
+    // if the recruit is successful then
+    // make the new character the current character
+    
+    character& c = TME_CurrentCharacter();
+    
+    if ( Character_Approach(c) ) {
+        if ( characterId != TME_CurrentCharacter().id ) {
+            // TODO: Add new lord to select screen
+            //mr->ShowPage(MODE_SELECT, TME_CurrentCharacter().id );
+            //select->AddNewLord(TME_CurrentCharacter().id);
+            SetObject( TME_CurrentCharacter().id );
+        }
+    }else{
+        TME_RefreshCurrentCharacter();
+    }
+    
+    mr->ShowPage ( MODE_THINK );
+    mr->stories->save();
+    return true;
+}
+
+bool panel_look::OnSeek()
+{
+    hideMenus();
+    character& c = TME_CurrentCharacter();
+    mr->ShowPage(MODE_THINK_SEEK, Character_Seek(c));
+    mr->stories->save();
+    return true;
+}
+
+bool panel_look::OnHideUnhide()
+{
+    hideMenus();
+    character& c = TME_CurrentCharacter();
+    if ( Character_Hide(c) ) {
+        mr->ShowPage(MODE_THINK);
+        mr->stories->save();
+        return true;
+    }
+    return false;
+}
+
+bool panel_look::OnFight()
+{
+    hideMenus();
+    character& c = TME_CurrentCharacter();
+    mxid fight = Character_Fight(c);
+    if ( fight != IDT_NONE ) {
+        mr->stories->save();
+        mr->ShowPage ( MODE_THINK_FIGHT, fight );
+        return true;
+    }
+    return false;
+}
+
+bool panel_look::OnThink()
+{
+    hideMenus();
+    character& c = TME_CurrentCharacter();
+    mr->ShowPage(MODE_THINK_PERSON, Character_LocationObject(c));
+    return true;
+}
+
+bool panel_look::OnRecruitMen()
+{
+    hideMenus();
+    character& c = TME_CurrentCharacter();
+    if ( Character_RecruitMen(c) ) {
+        mr->stories->save();
+        mr->ShowPage ( MODE_THINK_RECRUITGUARD, 0 );
+        return true;
+    }
+    return false;
+}
+
+bool panel_look::OnPostMen()
+{
+    hideMenus();
+    character& c = TME_CurrentCharacter();
+    if ( Character_PostMen(c) ) {
+        mr->stories->save();
+        mr->ShowPage ( MODE_THINK_RECRUITGUARD, 0 );
+        return true;
+    }
+    return false;
+}
+
+bool panel_look::OnAttack()
+{
+    character& c = TME_CurrentCharacter();
+    if ( Character_Attack(c) ) {
+        SetObject(characterId);
+        mr->stories->save();
+        mr->ShowPage(MODE_THINK_ARMY);
+        return true;
+    }else{
+        TME_GetCharacterLocationInfo(c);
+        if ( location_stubborn_lord_attack!=IDT_NONE ) {
+            SetObject(location_stubborn_lord_attack);
+            mr->stories->save();
+            mr->ShowPage(MODE_THINK_PERSON);
+            return true;
+        }
+    }
+    return false;
+}
+
+#if defined(_DDR_)
+bool panel_look::OnGive()
+{
+    hideMenus();
+    if ( Character_Give(c,location_someone_to_give_to) ) {
+        mr->stories->save();
+        mr->ShowPage( MODE_THINK_PLACE );
+        return true;
+    }
+    return false;
+}
+bool panel_look::OnTake()
+{
+    hideMenus();
+    if ( Character_Take(c) ) {
+        mr->stories->save();
+        mr->ShowPage( MODE_THINK_PLACE );
+        return true;
+    }
+    return false;
+}
+
+bool panel_look::OnUse()
+{
+    hideMenus();
+    if ( Character_Use(c) ) {
+        mr->stories->save();
+        mr->ShowPage( MODE_THINK_SEEK );
+        return true;
+    }
+    return false;
+}
+
+bool panel_look::OnRest()
+{
+    hideMenus();
+    Character_Rest(c);
+    mr->stories->save();
+    mr->ShowPage(MODE_THINK);
+    return true;
+}
+
+bool panel_look::OnEnterTunnel()
+{
+    hideMenus();
+    fadeOut(_clrBlack, 0.75f, [&](){
+        Character_EnterTunnel(TME_CurrentCharacter());
+        mr->stories->save();
+        GetCurrentLocationInfo();
+        SetViewForCurrentCharacter();
+        current_view->SetViewForCurrentCharacter();
+        fadeIn(_clrBlack, 1.0f, [&](){
+            ShowHelpWindow(HELP_TN_TUNNEL);
+        });
+    });
+    
+    
+    return true;
+}
+
+bool panel_look::OnExitTunnel()
+{
+    hideMenus();
+    fadeOut(_clrWhite, 0.0f, [&]() {
+        OnMovementComplete(NULL, LM_MOVE_FORWARD);
+        fadeIn(_clrBlack, 1.0f, [&](){
+        });
+    });
+    return true;
+}
+#endif
+
+
+void panel_look::OnSetupIcons ( void )
+{
+
+// TODO: Debug menu
+//    if ( debug ) {
+//        debug->ClearItems();
+//
+//        if ( gl->stories->canUndo(savemode_night) )
+//            debug->AddItem(i_debug_undo_night);
+//
+//        if ( gl->stories->canUndo(savemode_dawn) )
+//            debug->AddItem(i_debug_undo_dawn);
+//
+//        if ( gl->stories->canUndo(savemode_normal) )
+//            debug->AddItem(i_debug_undo);
+//
+//        debug->AddItem(i_debug_email);
+//        debug->AddItem(i_debug_map);
+//    }
+    
+    
+    if ( i_command_window==NULL )
+        return;
+    
+    character& c = TME_CurrentCharacter();
+    TME_GetCharacterLocationInfo(c);
+    
+    
+    //i_command_window->clearItems();
+    
+
+#if defined(_LOM_)
+    // SEEK
+    i_command_window->enableItem(ID_SEEK, location_flags.Is(lif_seek) );
+    
+    // HIDE
+    if ( Character_IsHidden(c) ) {
+        i_command_window->showItem(ID_UNHIDE, true);
+        i_command_window->showItem(ID_HIDE, false);
+    } else {
+        i_command_window->showItem(ID_UNHIDE, false);
+        i_command_window->showItem(ID_HIDE, true);
+        i_command_window->enableItem(ID_HIDE, location_flags.Is(lif_hide));
+    }
+
+    // FIGHT
+    i_command_window->enableItem(ID_FIGHT, location_flags.Is(lif_fight) );
+
+#endif
+
+
+#if defined(_DDR_)
+
+    i_command_window->enableItem(ID_GIVE, location_flags.Is(lif_give) );
+
+//    if ( location_flags.Is(lif_give)) {
+//        character c;
+//        TME_GetCharacter(c, location_someone_to_give_to );
+//        i_GiveText->Text(c.shortname);
+//        i_GiveText->ShowEnable();
+//    } else {
+//        i_Give->Disable();
+//        i_GiveText->HideDisable();
+//    }
+    
+    i_command_window->enableItem(ID_TAKE, location_flags.Is(lif_take) );
+    i_command_window->enableItem(ID_USE, location_flags.Is(lif_use) );
+    i_command_window->enableItem(ID_REST, location_flags.Is(lif_rest) );
+    i_command_window->enableItem(ID_ENTER_TUNNEL, location_flags.Is(lif_enter_tunnel) );
+
+    
+#endif
+    
+    // APPROACH
+    i_command_window->enableItem(ID_APPROACH, location_flags.Is(lif_recruitchar) );
+
+    // RECRUIT SOLDIERS
+    i_command_window->enableItem(ID_RECRUITMEN, location_flags.Is(lif_recruitmen) );
+
+    // POST SOLDIERS
+    i_command_window->enableItem(ID_POSTMEN, location_flags.Is(lif_guardmen) );
+
+    // BATTLE
+    i_command_window->enableItem(ID_ATTACK, location_flags.Is(lif_enterbattle) );
+
+    
+//    if ( SELECT_MODE == 2 ) {
+//        int count=0;
+//        for ( u32 ii=0; ii<i_char.Count(); ii++ ) {
+//            uielement* i = i_char[ii];
+//            if ( characterId != i->tag ) {
+//                character c;
+//                TME_GetCharacter(c, i->tag);
+//                if ( Character_IsAlive(c) && Character_IsControllable(i->tag) ) {
+//                    actions->addItem(i,CHOOSE_CHAR+count);
+//                    count++;
+//                }
+//            }
+//        }
+//    }
+    
+    
+    i_command_window->enableItem(ID_UNDO_DAWN, mr->stories->canUndo(savemode_dawn) );
+    i_command_window->enableItem(ID_UNDO, mr->stories->canUndo(savemode_last) );
+
+}
+

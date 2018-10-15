@@ -50,8 +50,9 @@ public:
     
     storyid_t NewStory();
     void LoadStory( storyid_t id );
+    storyid_t getCurrentStory();
     
-    void ShowPage( panelmode_t mode, mxid object );
+    void ShowPage( panelmode_t mode, mxid object = IDT_NONE );
     
 protected:
     

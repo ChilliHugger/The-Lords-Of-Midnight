@@ -12,6 +12,7 @@
 
 #define NONE_ACTIVTY_DURATION   30.0f
 
+FORWARD_REFERENCE(uicommandwindow);
 
 typedef enum SNAP_MODE {
     sm_back_right=1,
@@ -49,9 +50,8 @@ typedef struct {
 
 } locationinfo_t ;
 
-// TODO: Add SetCharacter Interface
 
-class panel_look : public uipanel
+class panel_look : public uipanel, uinotificationinterface
 {
 
 public:
@@ -63,6 +63,8 @@ public:
    
     
 protected:
+    
+    virtual void OnNotification( Ref* element );
     
     void GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
     void GetCurrentLocationInfo ( void );
@@ -81,21 +83,15 @@ protected:
     void StopInactivity();
     void ShowInactivityHelp();
     
-    void Undo ( savemode_t mode );
-    
-#if defined(_DDR_)
-    void EnterTunnel ( void );
-    void ExitTunnel ( void );
-#endif
-    
     void delayedSave();
 
     void hideMenus ( void );
-    void fadeIn ( int tag, rgb_t colour );
-    void fadeOut ( int tag, rgb_t colour );
+    void fadeIn ( rgb_t colour, f32 initialAlpha, MXVoidCallback callback );
+    void fadeOut ( rgb_t colour, f32 initialAlpha, MXVoidCallback callback );
 
     
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
+    //void OnActionComplete( tagid_t tag );
     
     void OnShown( void );
     void OnActivate( void );
@@ -105,6 +101,37 @@ protected:
     void OnSetupFaces();
     
     void UpdateLandscape();
+    
+    // Actions and Commands
+    bool OnChoose();    // ID_CHOOSE
+    bool OnHome();      // ID_HOME
+    bool OnUndoNight();
+    bool OnUndoDawn();
+    bool OnUndo();
+    bool OnUndo ( savemode_t mode );
+    bool OnNight();
+    bool OnMap();
+    bool OnSelect();
+    bool OnApproach();
+    bool OnSeek();
+    bool OnHideUnhide();
+    bool OnFight();
+    bool OnThink();
+    bool OnRecruitMen();
+    bool OnPostMen();
+    bool OnAttack();
+#if defined(_DDR_)
+    bool OnGive();
+    bool OnTake();
+    bool OnUse();
+    bool OnRest();
+    bool OnEnterTunnel();
+    bool OnExitTunnel();
+#endif
+
+    
+    
+   
     
 protected:
     mxid                characterId;
@@ -117,18 +144,21 @@ protected:
     //bool                isLooking;
     //bool                isMoving;
     
-    locationinfo_t*    current_info;
-    locationinfo_t*    follower_info;
+    locationinfo_t*     current_info;
+    locationinfo_t*     follower_info;
     
     Label*              lblDescription;
     Label*              lblName;
     
     
-    u32             current_arrow;
-    bool            draw_arrows;
-    bool            landscape_dragging;
-    savemode_t      undo_mode;
+    u32                 current_arrow;
+    bool                draw_arrows;
+    bool                landscape_dragging;
+    savemode_t          undo_mode;
     
+    // Actions and Commands
+    uicommandwindow*    i_command_window;
+    //DrawNode*          fade_panel;
 };
 
 

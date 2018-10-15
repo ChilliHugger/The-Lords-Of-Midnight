@@ -219,6 +219,8 @@
 		83A9ACBB1FEBBEBB00673B66 /* MyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */; };
 		83A9B892216EA175005D9EE4 /* panel_think.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9B891216EA175005D9EE4 /* panel_think.cpp */; };
 		83A9B893216EA94E005D9EE4 /* panel_think.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9B891216EA175005D9EE4 /* panel_think.cpp */; };
+		83B5AB5C2174E16300CC29EF /* uicommandwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */; };
+		83B5AB5D2174E16300CC29EF /* uicommandwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */; };
 		83B9BD691FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6F1FD30A0100B4C721 /* panel_options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD6D1FD30A0100B4C721 /* panel_options.cpp */; };
@@ -495,6 +497,9 @@
 		83A9ACB91FEBBEBB00673B66 /* MyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyButton.h; sourceTree = "<group>"; };
 		83A9B890216EA175005D9EE4 /* panel_think.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_think.h; sourceTree = "<group>"; };
 		83A9B891216EA175005D9EE4 /* panel_think.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_think.cpp; sourceTree = "<group>"; };
+		83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uicommandwindow.cpp; sourceTree = "<group>"; };
+		83B5AB5B2174E16300CC29EF /* uicommandwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uicommandwindow.h; sourceTree = "<group>"; };
+		83B5AB5E2174EE7500CC29EF /* choose_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = choose_id.h; sourceTree = "<group>"; };
 		83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_credits.cpp; sourceTree = "<group>"; };
 		83B9BD681FD2CC9D00B4C721 /* panel_credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_credits.h; sourceTree = "<group>"; };
 		83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDirector.h; sourceTree = "<group>"; };
@@ -871,6 +876,7 @@
 				83B9BD791FD316F700B4C721 /* language.h */,
 				83B9BD871FD9B04D00B4C721 /* keyboard_id.h */,
 				83398A9120D1B239007EAE7B /* help_id.h */,
+				83B5AB5E2174EE7500CC29EF /* choose_id.h */,
 			);
 			path = frontend;
 			sourceTree = "<group>";
@@ -878,6 +884,8 @@
 		8344EC371FD20F280067AAC1 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */,
+				83B5AB5B2174E16300CC29EF /* uicommandwindow.h */,
 				83B9BD711FD30AF700B4C721 /* uipanel.cpp */,
 				83B9BD721FD30AF700B4C721 /* uipanel.h */,
 				8344EC3A1FD29D0D0067AAC1 /* uitextmenuitem.h */,
@@ -1380,6 +1388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83D2646A1F360724001C6F13 /* item_victories.cpp in Sources */,
+				83B5AB5C2174E16300CC29EF /* uicommandwindow.cpp in Sources */,
 				8344EC2C1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,
 				8351A5201FDF398300D9AB57 /* helpmanager.cpp in Sources */,
 				83B9BD731FD30AF700B4C721 /* uipanel.cpp in Sources */,
@@ -1498,6 +1507,7 @@
 				83D2643F1F360724001C6F13 /* mxitem.cpp in Sources */,
 				83D2644D1F360724001C6F13 /* info_area.cpp in Sources */,
 				83D264491F360724001C6F13 /* army.cpp in Sources */,
+				83B5AB5D2174E16300CC29EF /* uicommandwindow.cpp in Sources */,
 				83D264D51F36077E001C6F13 /* cflags.cpp in Sources */,
 				83D264CF1F36077E001C6F13 /* carchive.cpp in Sources */,
 				83E108B31FE5687A00C29042 /* panel_dedication.cpp in Sources */,

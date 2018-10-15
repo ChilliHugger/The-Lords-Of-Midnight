@@ -112,6 +112,11 @@ void moonring::ShowPage( panelmode_t mode, mxid object )
     panels->CurrentPanel()->SetObject(object);
 }
 
+storyid_t moonring::getCurrentStory()
+{
+    return stories->first_used_story();
+}
+
 void moonring::LoadStory( storyid_t id )
 {
     //destroyGamePanels();
