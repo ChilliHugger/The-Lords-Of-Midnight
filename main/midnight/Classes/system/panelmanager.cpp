@@ -17,6 +17,12 @@
 #include "../panels/panel_dedication.h"
 #include "../panels/panel_options.h"
 #include "../panels/panel_look.h"
+#include "../panels/panel_map.h"
+#include "../panels/panel_select.h"
+#include "../panels/panel_advert.h"
+#include "../panels/panel_gameover.h"
+#include "../panels/panel_night.h"
+
 #include "../ui/uioptionitem.h"
 
 #include "configmanager.h"
@@ -29,17 +35,17 @@ using namespace cocos2d::ui;
 static const f32 defaultDuration = 1.0;
 
 
-uipanel* panelmanager::CurrentPanel()
+uipanel* panelmanager::currentPanel()
 {
     return currentpanel;
 }
 
-void panelmanager::SetPanelMode ( panelmode_t mode, bool history )
+void panelmanager::setPanelMode ( panelmode_t mode, bool history )
 {
-    SetPanelMode(mode, TRANSITION_NONE, history);
+    setPanelMode(mode, TRANSITION_NONE, history);
 }
 
-void panelmanager::SetPanelMode ( panelmode_t mode, transition_t transition, bool history )
+void panelmanager::setPanelMode ( panelmode_t mode, transition_t transition, bool history )
 {
     if ( mode == MODE_MAINMENU ) {
         if ( CONFIG(bumpAdvert()) )
@@ -50,19 +56,16 @@ void panelmanager::SetPanelMode ( panelmode_t mode, transition_t transition, boo
 
     this->currentmode = mode;
 
-    uipanel* panel = GetPanel(mode);
+    uipanel* panel = getPanel(mode);
 
-    if ( panel ) {
-        panel->currentmode = mode ;
-    }
 
     if ( history )
-        PushCurrentPanel(panel,transition);
+        pushCurrentPanel(panel,transition);
     else
-        SetCurrentPanel(panel, transition);
+        setCurrentPanel(panel, transition);
 }
 
-uipanel* panelmanager::GetPanel( panelmode_t mode )
+uipanel* panelmanager::getPanel( panelmode_t mode )
 {
     uipanel* panel = nullptr;
     
@@ -78,23 +81,18 @@ uipanel* panelmanager::GetPanel( panelmode_t mode )
         panel =  panel_dedication::create() ;
     else if ( mode == MODE_LOOK )
         panel =  panel_look::create();
-    
-//    else if ( mode == MODE_ADVERT )
-//        return panel_advert::create();
-
+    else if ( mode == MODE_ADVERT )
+        return panel_advert::create();
     else if ( mode>= MODE_THINK && mode<=MODE_THINK_APPROACH )
         panel =  panel_think::create();
-//    else if ( mode>= MODE_SELECT && mode<=MODE_SELECT_LOC )
-//        return p_select;
-//    else if ( mode == MODE_NIGHT )
-//        return p_night;
-//    else if ( mode == MODE_MAP || mode == MODE_DEBUG_MAP )
-//        return p_map;
-//
-//    else if ( mode == MODE_WIN     )
-//        return p_gameover;
-//    else if ( mode == MODE_LOSE     )
-//        return p_gameover;
+    else if ( mode>= MODE_SELECT && mode<=MODE_SELECT_LOC )
+        panel =  panel_select::create();
+    else if ( mode == MODE_NIGHT )
+        panel =  panel_night::create();
+    else if ( mode == MODE_MAP || mode == MODE_DEBUG_MAP )
+        panel =  panel_map::create();
+    else if ( mode == MODE_WIN || mode == MODE_LOSE    )
+        panel =  panel_gameover::create();
     
     if ( panel != nullptr ) {
         panel->currentmode = mode;
@@ -103,12 +101,12 @@ uipanel* panelmanager::GetPanel( panelmode_t mode )
     return panel;
 }
 
-void panelmanager::ReturnToPrevious()
+void panelmanager::returnToPrevious()
 {
-    ReturnToPrevious(reverseTransition);
+    returnToPrevious(reverseTransition);
 }
 
-void panelmanager::ReturnToPrevious( transition_t transition )
+void panelmanager::returnToPrevious( transition_t transition )
 {
     if ( !CONFIG(screentransitions) )
         transition=TRANSITION_NONE;
@@ -160,14 +158,14 @@ void panelmanager::ReturnToPrevious( transition_t transition )
     
 }
 
-void panelmanager::SetCurrentPanel( uipanel* incomming, transition_t transition )
+void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition )
 {
     //ui->hideKeyboardShortcuts(FALSE);
     
     if ( !CONFIG(screentransitions) )
         transition=TRANSITION_NONE;
     
-    outgoing_panel = CurrentPanel();
+    outgoing_panel = currentPanel();
     
     if ( outgoing_panel == incomming )
         transition = TRANSITION_NONE ;
@@ -223,13 +221,13 @@ void panelmanager::SetCurrentPanel( uipanel* incomming, transition_t transition 
     }
 }
 
-void panelmanager::PushCurrentPanel( uipanel* incomming, transition_t transition )
+void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
 {
     
     if ( !CONFIG(screentransitions) )
         transition=TRANSITION_NONE;
     
-    outgoing_panel = CurrentPanel();
+    outgoing_panel = currentPanel();
     
     if ( outgoing_panel == incomming )
         transition = TRANSITION_NONE ;

@@ -25,7 +25,7 @@ using namespace chilli::lib;
 
 static bool mySerialize ( u32 version, chilli::lib::archive& ar )
 {
-    return moonring::mikesingleton()->Serialize(version, ar );
+    return moonring::mikesingleton()->serialize(version, ar );
 }
 
 
@@ -71,7 +71,7 @@ moonring::~moonring()
 }
 
 
-LPCSTR moonring::GetWritablePath()
+LPCSTR moonring::getWritablePath()
 {
     auto path = cocos2d::FileUtils::getInstance()->getWritablePath();
     
@@ -84,8 +84,15 @@ LPCSTR moonring::GetWritablePath()
     return (LPCSTR)writeablepath;
 }
 
+void moonring::showPage( panelmode_t mode, mxid object )
+{
+    panels->setPanelMode(mode);
+    panels->currentPanel()->setObject(object);
+}
 
-storyid_t moonring::NewStory()
+// Stories
+
+storyid_t moonring::startNewStory()
 {
     //destroyGamePanels();
     
@@ -98,7 +105,7 @@ storyid_t moonring::NewStory()
     UIDEBUG("Resolve TME Data");
     
     tme->ResolveTMEData();
-
+    
     //createGamePanels();
     
     help->Load( id );
@@ -106,10 +113,11 @@ storyid_t moonring::NewStory()
     return id;
 }
 
-void moonring::ShowPage( panelmode_t mode, mxid object )
+void moonring::closeStory()
 {
-    panels->SetPanelMode(mode);
-    panels->CurrentPanel()->SetObject(object);
+    stories->save();
+    stories->cleanup();
+    showPage( MODE_MAINMENU, 0 );
 }
 
 storyid_t moonring::getCurrentStory()
@@ -117,7 +125,7 @@ storyid_t moonring::getCurrentStory()
     return stories->first_used_story();
 }
 
-void moonring::LoadStory( storyid_t id )
+void moonring::continueStory( storyid_t id )
 {
     //destroyGamePanels();
     
@@ -129,31 +137,246 @@ void moonring::LoadStory( storyid_t id )
     TME_CurrentCharacter( TME_CurrentCharacter().id );
     
     // start game
-    if (!CheckGameOverConditions() ) {
+    if (!checkGameOverConditions() ) {
         character& c = TME_CurrentCharacter();
         auto mode = Character_IsDead(c) ? MODE_THINK : MODE_LOOK;
         
-        panels->SetPanelMode(mode,TRANSITION_PUSHUP);
+        panels->setPanelMode(mode,TRANSITION_PUSHUP);
 
         if ( mode == MODE_LOOK ) {
-            panels->CurrentPanel()->SetObject(c.id);
+            panels->currentPanel()->setObject(c.id);
         }
         
     }
 }
 
-BOOL moonring::CheckGameOverConditions ( void )
+//
+
+bool moonring::look()
+{
+    if ( checkGameOverConditions() )
+        return true;
+    
+    if ( Character_IsDead(TME_CurrentCharacter()) )
+        showPage ( MODE_SELECT );
+    else
+        showPage(MODE_LOOK, TME_CurrentCharacter().id);
+    return true;
+}
+
+
+bool moonring::selectCharacter(mxid id)
+{
+    character c;
+    
+    TME_GetCharacter(c,id);
+    
+    if ( Character_IsDead(c) ) {
+        TME_SelectChar(c.id);
+        showPage( MODE_THINK );
+        stories->save();
+        return true;
+    }
+    
+    // change the current character
+    TME_SelectChar(id);
+    stories->save();
+    
+    TME_RefreshCurrentCharacter();
+    TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
+
+    panels->setPanelMode(MODE_LOOK,TRANSITION_FADEIN);
+    panels->currentPanel()->setObject(TME_CurrentCharacter().id);
+    
+    return true;
+}
+
+bool moonring::undo( savemode_t mode )
+{
+    stories->undo(mode);
+    TME_RefreshCurrentCharacter();
+    TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
+    return true;
+}
+
+bool moonring::night()
+{
+    stories->save(savemode_night);
+    showPage( MODE_NIGHT );
+    return true;
+}
+
+bool moonring::approach()
+{
+    character& c = TME_CurrentCharacter();
+    
+    mxid currentCharacter = TME_CurrentCharacter().id;
+    
+    // if the recruit is successful then
+    // make the new character the current character
+    
+    if ( Character_Approach(c) ) {
+        if ( currentCharacter != TME_CurrentCharacter().id ) {
+            // TODO: Add new lord to select screen
+            //mr->ShowPage(MODE_SELECT, TME_CurrentCharacter().id );
+            //select->AddNewLord(TME_CurrentCharacter().id);
+  
+        }
+    }else{
+        TME_RefreshCurrentCharacter();
+    }
+    
+    stories->save();
+    showPage ( MODE_THINK );
+
+    
+    return true;
+}
+
+bool moonring::seek()
+{
+    character& c = TME_CurrentCharacter();
+    mxid id = Character_Seek(c);
+    stories->save();
+    showPage(MODE_THINK_SEEK, id );
+    return true;
+}
+
+bool moonring::hideunhide()
+{
+    character& c = TME_CurrentCharacter();
+    if ( Character_Hide(c) ) {
+        stories->save();
+        showPage(MODE_THINK);
+        return true;
+    }
+    return false;
+}
+
+bool moonring::fight()
+{
+    character& c = TME_CurrentCharacter();
+    mxid fight = Character_Fight(c);
+    if ( fight != IDT_NONE ) {
+        stories->save();
+        showPage ( MODE_THINK_FIGHT, fight );
+        return true;
+    }
+    return false;
+}
+
+bool moonring::think()
+{
+    character& c = TME_CurrentCharacter();
+    //showPage(MODE_THINK_PERSON, Character_LocationObject(c));
+    showPage(MODE_THINK_PERSON, c.id);
+    return true;
+}
+
+bool moonring::recruitMen()
+{
+    character& c = TME_CurrentCharacter();
+    if ( Character_RecruitMen(c) ) {
+        stories->save();
+        showPage ( MODE_THINK_RECRUITGUARD, 0 );
+        return true;
+    }
+    return false;
+}
+
+bool moonring::postMen()
+{
+    character& c = TME_CurrentCharacter();
+    if ( Character_PostMen(c) ) {
+        stories->save();
+        showPage ( MODE_THINK_RECRUITGUARD, 0 );
+        return true;
+    }
+    return false;
+}
+
+bool moonring::attack()
+{
+    character& c = TME_CurrentCharacter();
+    if ( Character_Attack(c) ) {
+        //setObject(characterId);
+        stories->save();
+        showPage(MODE_THINK_ARMY);
+        return true;
+    }else{
+        TME_GetCharacterLocationInfo(c);
+        if ( location_stubborn_lord_attack!=IDT_NONE ) {
+            //setObject(location_stubborn_lord_attack);
+            stories->save();
+            showPage(MODE_THINK_PERSON);
+            return true;
+        }
+    }
+    return false;
+}
+
+#if defined(_DDR_)
+
+bool moonring::give()
+{
+    if ( Character_Give(c,location_someone_to_give_to) ) {
+        stories->save();
+        ShowPage( MODE_THINK_PLACE );
+        return true;
+    }
+    return false;
+}
+
+bool moonring::take()
+{
+    if ( Character_Take(c) ) {
+        stories->save();
+        ShowPage( MODE_THINK_PLACE );
+        return true;
+    }
+    return false;
+}
+
+bool moonring::use()
+{
+    if ( Character_Use(c) ) {
+        mr->stories->save();
+        mr->ShowPage( MODE_THINK_SEEK );
+        return true;
+    }
+}
+
+bool moonring::rest()
+{
+    Character_Rest(c);
+    mr->stories->save();
+    mr->ShowPage(MODE_THINK);
+    return true;
+}
+
+bool moonring::enterTunnel()
+{
+    Character_EnterTunnel(TME_CurrentCharacter());
+    mr->stories->save();
+    return true;
+}
+
+#endif
+
+// Game Over
+
+bool moonring::checkGameOverConditions ( void )
 {
     m_gameover_t win = TME_CheckWinLose();
     if ( win != MG_NONE ) {
         auto mode =  win == MG_WIN ? MODE_WIN : MODE_LOSE ;
-        panels->SetPanelMode(mode);
+        panels->setPanelMode(mode);
         return TRUE;
     }
     return FALSE;
 }
 
-BOOL moonring::Serialize( u32 version, archive& ar )
+bool moonring::serialize( u32 version, archive& ar )
 {
     // TME will not call this function
     // prior to version 5
@@ -196,7 +419,7 @@ BOOL moonring::Serialize( u32 version, archive& ar )
 
 
 
-void moonring::Initialise( progressmonitor* monitor )
+void moonring::initialise( progressmonitor* monitor )
 {
 
     isDataLoaded = false;

@@ -67,15 +67,15 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //
 //    if ( pass == 1 ) {
 //        // terrain
-//        UIDEBUG( "Frontend: Loading TERRAIN..." );
-//        if ( (e = base->Find( "terrain")) ) {
-//            FOREACHELEMENT(e,t) {
-//                if ( t->IsType("terrain") ) {
-//                    terrain_data_t* d = new terrain_data_t ;
-//                    d->symbol = t->ReadStr("id");
-//                    d->file = t->ReadStr("file");
-//                    UIDEBUG( "Frontend: Loading TERRAIN... %s", (LPCSTR)d->symbol );
-//                    terrain.Add(d);
+        UIDEBUG( "Frontend: Loading TERRAIN..." );
+        if ( (e = base->Find( "terrain")) ) {
+            FOREACHELEMENT(e,t) {
+                if ( t->IsType("terrain") ) {
+                    terrain_data_t* d = new terrain_data_t ;
+                    d->symbol = t->ReadStr("id");
+                    d->file = t->ReadStr("file");
+                    UIDEBUG( "Frontend: Loading TERRAIN... %s", (LPCSTR)d->symbol );
+                    mr->tme->terrain.Add(d);
 //                    d->graphics = new imagearray(d->symbol,MAX_TERRAIN_SCALES) ;
 //                    //for ( int ii=0; ii<MAX_TERRAIN_SCALES; ii++ ) {
 //                    if ( strlen(d->file)) {
@@ -87,12 +87,13 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //                        //}
 //                    }
 //                    d->mapimage = LOAD_CELLIMAGE( t->ReadStr("mapfile"), point(0,0), size(SRC(64),SRC(64)), size(4,4) );
-//                    d->mapcell = t->ReadInt("mapcell");
-//
-//                }
-//                UpdateSplash("Loading Terrain", progress++);
-//            }
-//        }
+                    d->mapimage = t->ReadStr("mapfile");
+                    d->mapcell = t->ReadInt("mapcell");
+
+                }
+                monitor->Update("Loading Terrain", 1);
+            }
+        }
 //    }
 //
 //
@@ -173,10 +174,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     UIDEBUG( "Frontend: Loading CHARACTERS... %s", (LPCSTR)d->symbol );
                     
                     d->face = c->ReadStr("face") ;
-                    //d->face = LOAD_IMAGE( c->ReadStr("face") );
-                    //d->shield = LOAD_IMAGE( c->ReadStr("shield") );
-                    //d->body = LOAD_IMAGE( c->ReadStr("body") );
-                    //d->horse = LOAD_IMAGE( c->ReadStr("horse") );
+                    d->shield = c->ReadStr("shield") ;
                     d->shortcut = c->ReadStr("shortcut");
                     d->shortcut2 = c->ReadStr("shortcut2");
                     mr->tme->characters.Add(d);
@@ -206,23 +204,22 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //    }
 //
 //    if ( pass == 1 ) {
-//        // race
-//        UIDEBUG( "Frontend: Loading RACES..." );
-//        if ( (e = base->Find( "races")) ) {
-//            FOREACHELEMENT(e,r) {
-//                if ( r->IsType("race") ) {
-//                    race_data_t* d = new race_data_t ;
-//                    d->symbol = r->ReadStr("id");
-//                    UIDEBUG( "Frontend: Loading RACES... %s", (LPCSTR)d->symbol );
-//                    d->face = LOAD_IMAGE( r->ReadStr("face") );
-//                    //d->shield = LOAD_IMAGE( r->ReadStr("shield") );
-//                    d->body = LOAD_IMAGE( r->ReadStr("body") );
-//                    d->horse = LOAD_IMAGE( r->ReadStr("horse") );
-//                    races.Add(d);
-//                }
-//                UpdateSplash("Loading Races", progress++);
-//            }
-//        }
+        // race
+        UIDEBUG( "Frontend: Loading RACES..." );
+        if ( (e = base->Find( "races")) ) {
+            FOREACHELEMENT(e,r) {
+                if ( r->IsType("race") ) {
+                    race_data_t* d = new race_data_t ;
+                    d->symbol = r->ReadStr("id");
+                    UIDEBUG( "Frontend: Loading RACES... %s", (LPCSTR)d->symbol );
+                    d->face = r->ReadStr("face") ;
+                    d->body = r->ReadStr("body") ;
+                    d->horse = r->ReadStr("horse") ;
+                    mr->tme->races.Add(d);
+                }
+                monitor->Update("Loading Races", 1);
+            }
+        }
 //    }
 //
 //    if ( pass == 1 ) {
@@ -264,3 +261,4 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
     
     return TRUE ;
 }
+

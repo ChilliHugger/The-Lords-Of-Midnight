@@ -27,7 +27,7 @@ public:
     
     virtual bool init();
     virtual void OnNotification( Ref* element );
-    virtual void SetObject( mxid object ) {};
+    virtual void setObject( mxid object ) {};
     virtual void OnShown( void );
     virtual void OnActivate( void );
     virtual void OnDeActivate( void );
@@ -47,8 +47,8 @@ public:
     
 protected:
     
-    Node* SetBackground( LPCSTR background );
-    Node* SetBackground( cocos2d::Color3B color );
+    Node* setBackground( LPCSTR background );
+    Node* setBackground( cocos2d::Color3B color );
     
     void FadeExit( f32 delay = 0);
     void Exit( f32 delay = 0);

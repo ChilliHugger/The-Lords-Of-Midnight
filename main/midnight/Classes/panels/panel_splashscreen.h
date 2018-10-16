@@ -13,8 +13,9 @@ public:
     
     CREATE_FUNC(panel_splashscreen);
 
-    void UpdateProgress( f32 percent );
-    void Complete();
+protected:
+    void updateProgress( f32 percent );
+    void complete();
     
 protected:
     f32 loading_width;

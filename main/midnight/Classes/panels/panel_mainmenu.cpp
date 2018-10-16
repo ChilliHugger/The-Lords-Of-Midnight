@@ -60,7 +60,7 @@ bool panel_mainmenu::init()
     //
     // Background
     //
-    SetBackground("screens/misc/main_menu.png");
+    setBackground("screens/misc/main_menu.png");
 
     //
     // Logo
@@ -186,12 +186,12 @@ void panel_mainmenu::OnHelpClose()
 
 void panel_mainmenu::OnOptions()
 {
-    mr->panels->SetPanelMode(MODE_OPTIONS, TRANSITION_FADEIN, true);
+    mr->panels->setPanelMode(MODE_OPTIONS, TRANSITION_FADEIN, true);
 }
 
 void panel_mainmenu::OnCredits()
 {
-    mr->panels->SetPanelMode(MODE_CREDITS, TRANSITION_FADEIN, true);
+    mr->panels->setPanelMode(MODE_CREDITS, TRANSITION_FADEIN, true);
 }
 
 void panel_mainmenu::OnExit()
@@ -208,10 +208,10 @@ void panel_mainmenu::OnUpdate()
 
 void panel_mainmenu::OnNewStory()
 {
-    storyid_t id = mr->NewStory();
+    storyid_t id = mr->startNewStory();
     
     ShowHelpWindow(HELP_GAME_WORKS, false, [&,id]() {
-        mr->LoadStory( id );
+        mr->continueStory( id );
     });
 
 }
@@ -220,7 +220,7 @@ void panel_mainmenu::OnContinueStory()
 {
     // only one story, so lets load that
     if ( mr->stories->stories_used()== 1 ) {
-        mr->LoadStory( mr->stories->first_used_story() );
+        mr->continueStory( mr->stories->first_used_story() );
         return;
     }
     
@@ -237,7 +237,7 @@ void panel_mainmenu::OnContinueStory()
         
         bookeventargs* event = static_cast<bookeventargs*>(e);
         if ( event != nullptr ) { // null == cancelled
-            mr->LoadStory( event->id );
+            mr->continueStory( event->id );
         }
     });
     
@@ -259,12 +259,12 @@ void panel_mainmenu::OnEndStory()
         
         bookeventargs* event = static_cast<bookeventargs*>(e);
         if ( event != nullptr ) { // null == cancelled
-            DeleteStory( event->id );
+            deleteStory( event->id );
         }
     });
 }
 
-void panel_mainmenu::DeleteStory( storyid_t id )
+void panel_mainmenu::deleteStory( storyid_t id )
 {
     AreYouSure(CLOSE_STORY_MSG, [&,id] {
         mr->stories->destroy(id);

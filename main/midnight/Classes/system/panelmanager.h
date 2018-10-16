@@ -40,13 +40,13 @@ class panelmanager : public ringcontroller
 public:
     
     // ** PANEL STUFF
-    void SetPanelMode ( panelmode_t mode, bool history = false);
-    void SetPanelMode ( panelmode_t mode, transition_t transition, bool history = false );
-    uipanel* CurrentPanel();
-    uipanel* GetPanel( panelmode_t mode );
+    void setPanelMode ( panelmode_t mode, bool history = false);
+    void setPanelMode ( panelmode_t mode, transition_t transition, bool history = false );
+    uipanel* currentPanel();
+    uipanel* getPanel( panelmode_t mode);
 
-    void ReturnToPrevious();
-    void ReturnToPrevious( transition_t transition );
+    void returnToPrevious();
+    void returnToPrevious( transition_t transition );
     
     //
     panelmode_t     currentmode;
@@ -55,8 +55,8 @@ public:
     uipanel*        outgoing_panel;
     
 protected:
-    void SetCurrentPanel( uipanel* panel, transition_t transition );
-    void PushCurrentPanel( uipanel* panel, transition_t transition );
+    void setCurrentPanel( uipanel* panel, transition_t transition );
+    void pushCurrentPanel( uipanel* panel, transition_t transition );
 
     transition_t    reverseTransition;
     

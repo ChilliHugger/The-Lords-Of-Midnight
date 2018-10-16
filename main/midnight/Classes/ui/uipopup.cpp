@@ -21,11 +21,11 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
 
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );
-    
-    auto rectNode = DrawNode::create();
-    rectNode->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(0,0,0,0.75f) );
-    this->addChild(rectNode);
 
+    auto background = LayerColor::create(Color4B(0,0,0,ALPHA(0.75f)));
+    uihelper::AddBottomLeft(this, background);
+    uihelper::FillParent(background);
+    
     //
     f32 layout_padding = RES(20);
     f32 button_height = RES(60);

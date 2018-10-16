@@ -59,29 +59,29 @@ public:
     virtual bool init();
     CREATE_FUNC(panel_look);
 	
-    virtual void SetObject ( mxid c );
+    virtual void setObject ( mxid c );
    
     
 protected:
     
     virtual void OnNotification( Ref* element );
     
-    void GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
-    void GetCurrentLocationInfo ( void );
-    void SetViewForCurrentCharacter ( void );
-    void InitKeyboard();
+    void getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
+    void getCurrentLocationInfo ( void );
+    void setViewForCurrentCharacter ( void );
+    void initKeyboard();
     
     bool moveForward ( void );
 
-    bool StartMoving();
-    void StopMoving();
-    bool StartLookRight ( void );
-    bool StartLookLeft ( void );
-    void StopRotating(LANDSCAPE_MOVEMENT type);
+    bool startMoving();
+    void stopMoving();
+    bool startLookRight ( void );
+    bool startLookLeft ( void );
+    void stopRotating(LANDSCAPE_MOVEMENT type);
   
-    void StartInactivity();
-    void StopInactivity();
-    void ShowInactivityHelp();
+    void startInactivity();
+    void stopInactivity();
+    void showInactivityHelp();
     
     void delayedSave();
 
@@ -103,35 +103,11 @@ protected:
     void UpdateLandscape();
     
     // Actions and Commands
-    bool OnSelectCharacter(mxid id);
-    bool OnChoose();    // ID_CHOOSE
-    bool OnHome();      // ID_HOME
-    bool OnUndoNight();
-    bool OnUndoDawn();
-    bool OnUndo();
     bool OnUndo ( savemode_t mode );
-    bool OnNight();
-    bool OnMap();
-    bool OnSelect();
-    bool OnApproach();
-    bool OnSeek();
-    bool OnHideUnhide();
-    bool OnFight();
-    bool OnThink();
-    bool OnRecruitMen();
-    bool OnPostMen();
-    bool OnAttack();
 #if defined(_DDR_)
-    bool OnGive();
-    bool OnTake();
-    bool OnUse();
-    bool OnRest();
     bool OnEnterTunnel();
     bool OnExitTunnel();
 #endif
-
-    
-    
    
     
 protected:

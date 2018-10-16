@@ -17,10 +17,13 @@ public:
     virtual bool init();
     
     CREATE_FUNC(panel_dedication);
-    
-    void NextPanel();
-    void StartDedication();
+
 protected:
+    
+    void nextPanel();
+    void startDedication();
+
+protected:    
     Node* image;
 };
 

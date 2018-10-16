@@ -130,6 +130,12 @@ void AppDelegate::InitialisePaths()
 
     sprintf( main_path, "lom/%s/screens/%d", (LPCSTR)res->current_resolution.folder, res->Aspect() );
     searchPaths.push_back(main_path);
+
+//    sprintf( main_path, "lom/%s/people", (LPCSTR)res->current_resolution.folder);
+//    searchPaths.push_back(main_path);
+//
+//    sprintf( main_path, "lom/%s/faces", (LPCSTR)res->current_resolution.folder);
+//    searchPaths.push_back(main_path);
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 }

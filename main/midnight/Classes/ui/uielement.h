@@ -42,7 +42,11 @@ protected:
 class uielement : public cocos2d::Node, public uinotificationinterface
 {
 public:
-	uielement();
+    static uielement* create();
+    virtual bool init() override;
+
+protected:
+        uielement();
         
 protected:
     u32                         id;

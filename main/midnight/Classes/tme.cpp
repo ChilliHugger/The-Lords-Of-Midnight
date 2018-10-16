@@ -646,7 +646,17 @@ bool Character_EnterTunnel ( const character& c )
 }
 
 //void Character_ExitTunnel ( const character& c );
-#endif
+
+void Character_Rest ( const character& c )
+{
+    args[0] = c.id;
+    if ( MXSUCCESS(mxi->Command("REST",args,1)) ) {
+        TME_RefreshCurrentCharacter();
+    }
+}
+
+
+#endif //_DDR_
 
 void Character_Lookat ( const character& c, loc_t location )
 {
@@ -694,14 +704,6 @@ bool Character_HasBattleInfo ( const character& c )
 	if ( MXSUCCESS( mxi->GetEntityProperty(c.id,"HASBATTLEINFO",args[0]) ) ) 
 		return (bool)(s32)args[0];
 	return FALSE;
-}
-
-void Character_Rest ( const character& c )
-{
-	args[0] = c.id;
-	if ( MXSUCCESS(mxi->Command("REST",args,1)) ) {
-		TME_RefreshCurrentCharacter();
-	}
 }
 
 void Character_Look ( const character& c, mxdir_t dir )

@@ -25,23 +25,23 @@ bool panel_dedication::init()
     }
     
     // Background White
-    SetBackground(_clrWhite);
+    setBackground(_clrWhite);
     
     // Dedication Image
-    image = SetBackground("in-memory-of.png");
+    image = setBackground("in-memory-of.png");
     image->setOpacity(0);
     
     f32 delay = CONFIG(screentransitions) ? 3.0f : 1.0f ;
     
     // wait for a moment then start the dedication fade
     this->scheduleOnce( [&](float) {
-        StartDedication();
+        startDedication();
     }, delay, "show_dedication" );
     
     return true;
 }
 
-void panel_dedication::StartDedication()
+void panel_dedication::startDedication()
 {
     if ( CONFIG(screentransitions) )
     {
@@ -50,17 +50,17 @@ void panel_dedication::StartDedication()
                                           DelayTime::create( 3.0f ),
                                           FadeOut::create( 3.0f ),
                                           DelayTime::create( 3.0f ),
-                                          CallFunc::create( [this] { NextPanel(); }),
+                                          CallFunc::create( [this] { nextPanel(); }),
                                           nullptr
                                           ));
     }else{
-        NextPanel();
+        nextPanel();
     }
 }
 
-void panel_dedication::NextPanel()
+void panel_dedication::nextPanel()
 {
-    mr->panels->SetPanelMode(MODE_MAINMENU,TRANSITION_FADEIN);
+    mr->panels->setPanelMode(MODE_MAINMENU,TRANSITION_FADEIN);
 }
 
 

@@ -2,6 +2,8 @@
 #include "ui/CocosGUI.h"
 
 #include "panel_look.h"
+#include "panel_think.h"
+
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
 #include "../system/helpmanager.h"
@@ -112,7 +114,7 @@ bool panel_look::init()
     
     
     // Keyboard
-    InitKeyboard();
+    initKeyboard();
     
     // TODO: Popup menu for character selection
     
@@ -141,19 +143,19 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     
     draw_arrows=FALSE;
     
-    StartInactivity();
+    startInactivity();
     
     
     if ( type == LM_DRAG_START ) {
         landscape_dragging=true;
-        StopInactivity();
+        stopInactivity();
         return;
     }
     
     landscape_dragging=FALSE;
     
     if ( type == LM_SHOW_COMPASS ) {
-        StopInactivity();
+        stopInactivity();
         
         // TODO:
         //character&    c = TME_CurrentCharacter();
@@ -164,7 +166,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     
     Enable();
     
-    SetObject(characterId);
+    setObject(characterId);
     
     if ( type ==  LM_ROTATE_LEFT || type == LM_ROTATE_RIGHT || type == LM_NONE ) {
         mr->help->Shown(HELP_LOOKING_AROUND);
@@ -183,10 +185,10 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
         character&    c = TME_CurrentCharacter();
         if ( c.lastcommand == CMD_FIGHT ) {
             // think!
-            mr->ShowPage(MODE_THINK_FIGHT, c.lastcommandid);
+            mr->showPage(MODE_THINK_FIGHT, c.lastcommandid);
             
         }else if ( c.lastcommand == CMD_SEEK ) {
-            mr->ShowPage(MODE_THINK_SEEK, c.lastcommandid);
+            mr->showPage(MODE_THINK_SEEK, c.lastcommandid);
 
         }
         
@@ -253,11 +255,11 @@ void panel_look::delayedSave()
 {
     mr->stories->save();
     Enable();
-    SetObject(characterId);
+    setObject(characterId);
     
     if ( (mr->panels->currentmode == this->currentmode)
         && recruitable_characters.Count() ) {
-        mr->ShowPage ( MODE_THINK_APPROACH, characterId );
+        mr->showPage ( MODE_THINK_APPROACH, characterId );
     }
 }
 
@@ -274,7 +276,7 @@ void panel_look::delayedSave()
 //{
 //}
 
-void panel_look::GetCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info)
+void panel_look::getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info)
 {
     info->id = c.id;
     info->time = c.time;
@@ -299,7 +301,7 @@ void panel_look::GetCharacterInfo ( defaultexport::character_t& c, locationinfo_
     
 }
 
-void panel_look::SetObject ( mxid c )
+void panel_look::setObject ( mxid c )
 {
     if ( ID_TYPE(c) != IDT_CHARACTER )
         return;
@@ -308,8 +310,8 @@ void panel_look::SetObject ( mxid c )
     TME_CurrentCharacter(c);
     
     //if ( parent ) {
-        GetCurrentLocationInfo( );
-        SetViewForCurrentCharacter();
+        getCurrentLocationInfo( );
+        setViewForCurrentCharacter();
     //}
     
     //if ( current_view )
@@ -318,17 +320,17 @@ void panel_look::SetObject ( mxid c )
 }
 
 
-void panel_look::GetCurrentLocationInfo ( void )
+void panel_look::getCurrentLocationInfo ( void )
 {
     character&    c = TME_CurrentCharacter();
-    GetCharacterInfo(c, current_info);
+    getCharacterInfo(c, current_info);
     TME_GetCharacterLocationInfo ( c );
     
     
     if ( c.following ) {
         character tempc;
         TME_GetCharacter(tempc, c.following );
-        GetCharacterInfo(tempc, follower_info);
+        getCharacterInfo(tempc, follower_info);
     }else{
         follower_info->id=0;
     }
@@ -340,7 +342,7 @@ void panel_look::GetCurrentLocationInfo ( void )
 
 
 
-void panel_look::SetViewForCurrentCharacter ( void )
+void panel_look::setViewForCurrentCharacter ( void )
 {
 #if defined (_LOM_)
     lblName->setString(current_info->name);
@@ -426,7 +428,7 @@ void panel_look::UpdateLandscape()
     
 }
 
-void panel_look::InitKeyboard()
+void panel_look::initKeyboard()
 {
     auto eventListener = EventListenerKeyboard::create();
     
@@ -439,10 +441,10 @@ void panel_look::InitKeyboard()
         switch(keyCode){
                 
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-                StartLookLeft();
+                startLookLeft();
                 break;
             case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-                StartLookRight();
+                startLookRight();
                 break;
             case EventKeyboard::KeyCode::KEY_UP_ARROW:
                 moveForward();
@@ -458,7 +460,7 @@ void panel_look::InitKeyboard()
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,this);
 }
 
-bool panel_look::StartLookLeft ( void )
+bool panel_look::startLookLeft ( void )
 {
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
@@ -473,7 +475,7 @@ bool panel_look::StartLookLeft ( void )
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
         options.lookAmount = originalLooking + value;
         if ( value <= target) {
-            StopRotating(LM_ROTATE_LEFT);
+            stopRotating(LM_ROTATE_LEFT);
         }
         UpdateLandscape();
     });
@@ -485,7 +487,7 @@ bool panel_look::StartLookLeft ( void )
     return TRUE;
 }
 
-bool panel_look::StartLookRight ( void )
+bool panel_look::startLookRight ( void )
 {
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
@@ -501,7 +503,7 @@ bool panel_look::StartLookRight ( void )
         options.lookAmount = originalLooking + value;
         
         if ( value >= target) {
-            StopRotating(LM_ROTATE_RIGHT);
+            stopRotating(LM_ROTATE_RIGHT);
         }
         
         UpdateLandscape();
@@ -532,7 +534,7 @@ bool panel_look::moveForward ( void )
             mxid fight = Character_Fight(c);
             
             if ( fight != IDT_NONE && Character_IsDead(c)) {
-                mr->ShowPage(MODE_THINK_FIGHT,fight);
+                mr->showPage(MODE_THINK_FIGHT,fight);
                 mr->stories->save();
                 return FALSE;
             }
@@ -549,7 +551,7 @@ bool panel_look::moveForward ( void )
         }
     }
     
-    if ( !StartMoving() ) {
+    if ( !startMoving() ) {
         
         character& c = TME_CurrentCharacter();
         
@@ -558,7 +560,7 @@ bool panel_look::moveForward ( void )
         if ( location_stubborn_lord_move!=IDT_NONE) {
             // switch to the stubborn character
             // and think
-            SetObject(location_stubborn_lord_move);
+            setObject(location_stubborn_lord_move);
             return true;
         }
         
@@ -575,10 +577,7 @@ bool panel_look::moveForward ( void )
             if (!ShowHelpWindow(HELP_BATTLE, TRUE))
                 return TRUE;
         
-        // something is in our way that we must fight
-        mxid object = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);
-        
-        mr->ShowPage(MODE_THINK,object);
+        mr->showPage(MODE_THINK, TME_CurrentCharacter().id);
         
         return TRUE;
     }
@@ -588,7 +587,7 @@ bool panel_look::moveForward ( void )
 
 
 
-bool panel_look::StartMoving()
+bool panel_look::startMoving()
 {
     character&    c = TME_CurrentCharacter();
     
@@ -622,7 +621,7 @@ bool panel_look::StartMoving()
             options.here.y = moveFrom.y*(DIR_STEPS - value) + moveTo.y*value;
             
             if ( value >= target )
-                StopMoving();
+                stopMoving();
         
             f32 result = value / target ;
             options.movementAmount = result;
@@ -645,14 +644,14 @@ bool panel_look::StartMoving()
     
 }
 
-void panel_look::StopRotating(LANDSCAPE_MOVEMENT type)
+void panel_look::stopRotating(LANDSCAPE_MOVEMENT type)
 {
     options.isLooking = false;
     
     OnMovementComplete(type);
 }
 
-void panel_look::StopMoving()
+void panel_look::stopMoving()
 {
     options.isMoving = false;
     
@@ -660,19 +659,19 @@ void panel_look::StopMoving()
     
 }
 
-void panel_look::StartInactivity()
+void panel_look::startInactivity()
 {
     this->scheduleOnce( [&](float) {
-        ShowInactivityHelp();
+        showInactivityHelp();
     }, NONE_ACTIVTY_DURATION, "NonActivityTimer" );
 }
 
-void panel_look::StopInactivity()
+void panel_look::stopInactivity()
 {
     this->unschedule("NonActivityTimer");
 }
 
-void panel_look::ShowInactivityHelp()
+void panel_look::showInactivityHelp()
 {
     static helpid_t help_options[] = { HELP_LOOKING_AROUND, HELP_MOVEMENT, HELP_SELECTING_CHARACTER, HELP_THINKING, HELP_CHOOSE };
     
@@ -759,7 +758,7 @@ void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callb
 
 void panel_look::OnShown()
 {
-    StartInactivity();
+    startInactivity();
     
     
     if ( variables::sv_days == 0) {
@@ -802,14 +801,14 @@ void panel_look::OnActivate( void )
     uipanel::OnActivate();
     
     // make sure we are working with our character
-    SetObject(characterId);
+    setObject(characterId);
     
     character&    c = TME_CurrentCharacter();
     
-    StopInactivity();
+    stopInactivity();
     
     if ( Character_IsDead(c) ) {
-        mr->ShowPage( MODE_THINK, c.id );
+        mr->showPage( MODE_THINK, c.id );
         return;
     }
     
@@ -828,7 +827,7 @@ void panel_look::OnSetupFaces()
 
 void panel_look::OnNotification( Ref* sender )
 {
-    StopInactivity();
+    stopInactivity();
     
     auto button = static_cast<Button*>(sender);
     if ( button == nullptr )
@@ -836,69 +835,88 @@ void panel_look::OnNotification( Ref* sender )
     
     layoutid_t id = static_cast<layoutid_t>(button->getTag());
     
+    hideMenus();
+    
     switch ( id ) {
             
         case ID_ACTIONS:
-            OnChoose();
+            i_command_window->show(nullptr);
             break;
             
         case ID_HOME:
-            OnHome();
+        {
+            AreYouSure(CLOSE_STORY_MSG, [&] {
+                mr->closeStory();
+            });
+            
             break;
+        }
             
         case ID_UNDO_NIGHT:
-            OnUndoNight();
+        {
+            AreYouSure(UNDO_NIGHT_MSG, [&] {
+                OnUndo(savemode_night);
+            });
+
             return;
             break;
+        }
             
         case ID_UNDO_DAWN:
         {
-            OnUndoDawn();
+            AreYouSure(UNDO_DAWN_MSG, [&] {
+                OnUndo(savemode_dawn);
+            });
+            
             return;
             break;
         }
             
         case ID_UNDO:
         {
-            OnUndo();
+            OnUndo(savemode_normal);
             return;
         }
 
         case ID_NIGHT:
         {
-            OnNight();
-            hideMenus();
+            AreYouSure(NIGHT_MSG, [&] {
+                mr->night();
+            });
+            
             return;
         }
             
         case ID_MAP:
         {
-            OnMap();
+            mr->showPage(MODE_MAP);
             break;
         }
             
         case ID_SELECT_ALL:
         {
-            OnSelect();
+            mr->help->Shown(HELP_SELECTING_CHARACTER);
+            mr->showPage( MODE_SELECT );
             break;
         }
             
         case ID_APPROACH:
         {
-            OnApproach();
-            return;
+            if ( mr->approach() )
+                return;
         }
+            
 #if defined(_LOM_)
         case ID_SEEK:
         {
-            OnSeek();
-            return;
+            if ( mr->seek() )
+                return;
         }
             
         case ID_HIDE:
         case ID_UNHIDE:
         {
-            if ( OnHideUnhide() ) {
+            if ( mr->hideunhide()) {
                 return;
             }
             break;
@@ -906,7 +924,7 @@ void panel_look::OnNotification( Ref* sender )
             
         case ID_FIGHT:
         {
-            if ( OnFight() ) {
+            if ( mr->fight() ) {
                 return;
             }
             break;
@@ -916,56 +934,57 @@ void panel_look::OnNotification( Ref* sender )
 #if defined(_DDR_)
         case ID_GIVE:
         {
-            if ( OnGive() )
+            if ( mr->give() )
                 return;
             break;
         }
         case ID_TAKE:
         {
-            if ( OnTake() )
+            if ( mr->take() )
                 return;
             break;
         }
         case ID_USE:
         {
-            if ( OnUse() )
+            if ( mr->use() )
                 return;
             break;
         }
         case ID_REST:
         {
-            OnRest();
+            if ( mr->rest() )
+                return;
             break;
         }
         case ID_ENTER_TUNNEL:
         {
-            OnEnterTunnel();
-            return;
+            if ( OnEnterTunnel() )
+                return;
         }
 #endif
             
         case ID_THINK:
         {
-            OnThink();
-            return;
+            if ( mr->think() )
+                return;
         }
             
         case ID_RECRUITMEN:
         {
-            if ( OnRecruitMen() )
+            if ( mr->recruitMen() )
                 return;
             break;
         }
         case ID_POSTMEN:
         {
-            if ( OnPostMen() )
+            if ( mr->postMen() )
                 return;
             break;
         }
             
         case ID_ATTACK:
         {
-            if ( OnAttack() )
+            if ( mr->attack() )
                 return;
             break;
         }
@@ -978,8 +997,10 @@ void panel_look::OnNotification( Ref* sender )
         case ID_SHOW_LEADER:
         {
             char_data_t* data = static_cast<char_data_t*>(button->getUserData());
-            OnSelectCharacter(data->id);
-            return;
+            
+            if ( mr->selectCharacter(data->id) )
+                return;
+ 
             break;
         }
             
@@ -997,97 +1018,12 @@ void panel_look::OnNotification( Ref* sender )
 #pragma mark Commands
 #pragma mark -
 
-bool panel_look::OnSelectCharacter( mxid id )
-{
-    character c;
-    
-    hideMenus();
-    TME_GetCharacter(c,id);
-    
-    if ( Character_IsDead(c) ) {
-        TME_SelectChar(c.id);
-        SetObject(id);
-        mr->ShowPage( MODE_THINK );
-        mr->stories->save();
-        return true;
-    }
-    
-    SetObject(id);
-    
-    // We need to resetup the menus
-    // bu we need to wait until the menus have
-    // collapsed
-    this->scheduleOnce( [&](float) {
-        OnSetupIcons();
-        OnSetupFaces();
-    }, 1.0f, "delayed_icon_update" );
-    
-    
-    TME_RefreshCurrentCharacter();
-    TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
-    mr->stories->save();
-    
-    OnShown();
-    
-    return true;
-}
-
-bool panel_look::OnChoose()
-{
-    i_command_window->show(nullptr);
-    return true;
-}
-
-bool panel_look::OnHome()
-{
-    hideMenus();
-    
-    AreYouSure(CLOSE_STORY_MSG, [&] {
-        mr->stories->save();
-        mr->stories->cleanup();
-        mr->ShowPage( MODE_MAINMENU, 0 );
-    });
-    
-    return true;
-}
-
-bool panel_look::OnUndoNight()
-{
-    hideMenus();
-    
-    AreYouSure(UNDO_NIGHT_MSG, [&] {
-          OnUndo(savemode_night);
-    });
-    
-    return true;
-}
-
-bool panel_look::OnUndoDawn()
-{
-    hideMenus();
-    
-    AreYouSure(UNDO_DAWN_MSG, [&] {
-        OnUndo(savemode_dawn);
-    });
-    
-    return true;
-}
-
-bool panel_look::OnUndo()
-{
-    hideMenus();
-    OnUndo(savemode_normal);
-    return true;
-}
-
 bool panel_look::OnUndo ( savemode_t mode )
 {
     undo_mode=mode;
     fadeOut(_clrBlack, 0.75f, [&](){
-        mr->stories->undo(undo_mode);
-        SetObject( TME_CurrentCharacter().id );
-        TME_RefreshCurrentCharacter();
-        TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
+        mr->undo(undo_mode);
+        setObject( TME_CurrentCharacter().id );
         fadeIn(_clrBlack, 1.0f, [&]{
                 // do nothing
         });
@@ -1095,191 +1031,16 @@ bool panel_look::OnUndo ( savemode_t mode )
     return true;
 }
 
-bool panel_look::OnNight()
-{
-    hideMenus();
-    
-    AreYouSure(NIGHT_MSG, [&] {
-        mr->stories->save(savemode_night);
-        mr->ShowPage( MODE_NIGHT );
-    });
-    
-    return true;
-}
-
-bool panel_look::OnMap()
-{
-    hideMenus();
-    mr->ShowPage(MODE_MAP);
-    return true;
-}
-
-bool panel_look::OnSelect()
-{
-    hideMenus();
-    mr->help->Shown(HELP_SELECTING_CHARACTER);
-    mr->ShowPage( MODE_SELECT );
-    return true;
-}
-
-bool panel_look::OnApproach()
-{
-    hideMenus();
-    // if the recruit is successful then
-    // make the new character the current character
-    
-    character& c = TME_CurrentCharacter();
-    
-    if ( Character_Approach(c) ) {
-        if ( characterId != TME_CurrentCharacter().id ) {
-            // TODO: Add new lord to select screen
-            //mr->ShowPage(MODE_SELECT, TME_CurrentCharacter().id );
-            //select->AddNewLord(TME_CurrentCharacter().id);
-            SetObject( TME_CurrentCharacter().id );
-        }
-    }else{
-        TME_RefreshCurrentCharacter();
-    }
-    
-    mr->ShowPage ( MODE_THINK );
-    mr->stories->save();
-    return true;
-}
-
-bool panel_look::OnSeek()
-{
-    hideMenus();
-    character& c = TME_CurrentCharacter();
-    mr->ShowPage(MODE_THINK_SEEK, Character_Seek(c));
-    mr->stories->save();
-    return true;
-}
-
-bool panel_look::OnHideUnhide()
-{
-    hideMenus();
-    character& c = TME_CurrentCharacter();
-    if ( Character_Hide(c) ) {
-        mr->ShowPage(MODE_THINK);
-        mr->stories->save();
-        return true;
-    }
-    return false;
-}
-
-bool panel_look::OnFight()
-{
-    hideMenus();
-    character& c = TME_CurrentCharacter();
-    mxid fight = Character_Fight(c);
-    if ( fight != IDT_NONE ) {
-        mr->stories->save();
-        mr->ShowPage ( MODE_THINK_FIGHT, fight );
-        return true;
-    }
-    return false;
-}
-
-bool panel_look::OnThink()
-{
-    hideMenus();
-    character& c = TME_CurrentCharacter();
-    mr->ShowPage(MODE_THINK_PERSON, Character_LocationObject(c));
-    return true;
-}
-
-bool panel_look::OnRecruitMen()
-{
-    hideMenus();
-    character& c = TME_CurrentCharacter();
-    if ( Character_RecruitMen(c) ) {
-        mr->stories->save();
-        mr->ShowPage ( MODE_THINK_RECRUITGUARD, 0 );
-        return true;
-    }
-    return false;
-}
-
-bool panel_look::OnPostMen()
-{
-    hideMenus();
-    character& c = TME_CurrentCharacter();
-    if ( Character_PostMen(c) ) {
-        mr->stories->save();
-        mr->ShowPage ( MODE_THINK_RECRUITGUARD, 0 );
-        return true;
-    }
-    return false;
-}
-
-bool panel_look::OnAttack()
-{
-    character& c = TME_CurrentCharacter();
-    if ( Character_Attack(c) ) {
-        SetObject(characterId);
-        mr->stories->save();
-        mr->ShowPage(MODE_THINK_ARMY);
-        return true;
-    }else{
-        TME_GetCharacterLocationInfo(c);
-        if ( location_stubborn_lord_attack!=IDT_NONE ) {
-            SetObject(location_stubborn_lord_attack);
-            mr->stories->save();
-            mr->ShowPage(MODE_THINK_PERSON);
-            return true;
-        }
-    }
-    return false;
-}
 
 #if defined(_DDR_)
-bool panel_look::OnGive()
-{
-    hideMenus();
-    if ( Character_Give(c,location_someone_to_give_to) ) {
-        mr->stories->save();
-        mr->ShowPage( MODE_THINK_PLACE );
-        return true;
-    }
-    return false;
-}
-bool panel_look::OnTake()
-{
-    hideMenus();
-    if ( Character_Take(c) ) {
-        mr->stories->save();
-        mr->ShowPage( MODE_THINK_PLACE );
-        return true;
-    }
-    return false;
-}
-
-bool panel_look::OnUse()
-{
-    hideMenus();
-    if ( Character_Use(c) ) {
-        mr->stories->save();
-        mr->ShowPage( MODE_THINK_SEEK );
-        return true;
-    }
-    return false;
-}
-
-bool panel_look::OnRest()
-{
-    hideMenus();
-    Character_Rest(c);
-    mr->stories->save();
-    mr->ShowPage(MODE_THINK);
-    return true;
-}
 
 bool panel_look::OnEnterTunnel()
 {
     hideMenus();
     fadeOut(_clrBlack, 0.75f, [&](){
-        Character_EnterTunnel(TME_CurrentCharacter());
-        mr->stories->save();
+        
+        mr->enterTunnel();
+        
         GetCurrentLocationInfo();
         SetViewForCurrentCharacter();
         current_view->SetViewForCurrentCharacter();
@@ -1302,7 +1063,8 @@ bool panel_look::OnExitTunnel()
     });
     return true;
 }
-#endif
+
+#endif // _DDR_
 
 
 void panel_look::OnSetupIcons ( void )

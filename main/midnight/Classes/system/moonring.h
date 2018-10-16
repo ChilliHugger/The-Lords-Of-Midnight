@@ -42,21 +42,46 @@ public:
         return &singleton;
     }
     
-    void Initialise( progressmonitor* monitor );
+    void initialise( progressmonitor* monitor );
+    LPCSTR getWritablePath();
+    bool serialize( u32 version, chilli::lib::archive& ar );
     
-    LPCSTR GetWritablePath();
-    
-    BOOL Serialize( u32 version, chilli::lib::archive& ar );
-    
-    storyid_t NewStory();
-    void LoadStory( storyid_t id );
+    // Stories
+    storyid_t startNewStory();
     storyid_t getCurrentStory();
+    void continueStory( storyid_t id );
+    void closeStory();
     
-    void ShowPage( panelmode_t mode, mxid object = IDT_NONE );
+    // Actions
+    bool selectCharacter(mxid id);
+    bool undo( savemode_t mode );
+    bool night();
+    bool approach();
+    bool seek();
+    bool fight();
+    bool hideunhide();
+    bool think();
+    bool recruitMen();
+    bool postMen();
+    bool attack();
+    
+#if defined(_DDR_)
+    bool use();
+    bool take();
+    bool give();
+    bool rest();
+    bool enterTunnel();
+#endif
+    
+    //
+    bool look();
+    
+    // Pages
+    void showPage( panelmode_t mode, mxid object = IDT_NONE );
     
 protected:
     
-    BOOL CheckGameOverConditions ( void );
+    bool checkGameOverConditions ( void );
     
     std::mutex              mutex;
     std::condition_variable condition;

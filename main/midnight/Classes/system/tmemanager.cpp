@@ -163,3 +163,127 @@ terrain_data_t::~terrain_data_t()
 
 
 
+
+//
+//
+//
+//
+
+LPCSTR GetCharacterImage(mxid id)
+{
+    character c;
+    TME_GetCharacter(c,id);
+    return GetCharacterImage(c);
+}
+
+LPCSTR GetCharacterImage(const character& c)
+{
+    return GetRaceImage(MAKE_ID(IDT_RACEINFO,c.race),Character_IsRiding(c));
+}
+
+LPCSTR GetCharacterFace(mxid id)
+{
+    character c;
+    TME_GetCharacter(c,id);
+    return GetCharacterFace(c);
+}
+
+LPCSTR GetCharacterFace(const character& c)
+{
+    char_data_t* d = (char_data_t*)c.userdata ;
+    if ( Character_IsDead(c) )
+        return LOAD_IMAGE("f_dead!");
+    LPCSTR image = d ? LOAD_IMAGE(d->face) : "" ;
+    if ( strlen(image) == 0 )
+        return GetRaceFace(MAKE_ID(IDT_RACEINFO,c.race));
+    return image;
+}
+
+LPCSTR GetCharacterShield(mxid id)
+{
+    character c;
+    TME_GetCharacter(c,id);
+    return GetCharacterShield(c);
+}
+
+LPCSTR GetCharacterShield(const character& c)
+{
+    char_data_t* d = (char_data_t*)c.userdata ;
+    return d ? LOAD_IMAGE(d->shield) : "" ;
+    // TODO if no shield then pickup liege's shield
+}
+
+
+LPCSTR GetObjectBig(mxid id)
+{
+    anobject o;
+    TME_GetObject(o,id);
+    return GetObjectBig(o);
+}
+
+LPCSTR GetObjectBig(const anobject& o)
+{
+    obj_data_t* d = (obj_data_t*)o.userdata;
+    return d ? LOAD_IMAGE(d->i_big) : "" ;
+}
+
+
+LPCSTR GetObjectSmall(mxid id)
+{
+    anobject o;
+    TME_GetObject(o,id);
+    return GetObjectSmall(o);
+}
+
+LPCSTR GetObjectSmall(const anobject& o)
+{
+    obj_data_t* d = (obj_data_t*)o.userdata;
+    return d ? LOAD_IMAGE(d->i_small) : "" ;
+}
+
+
+LPCSTR GetObjectBackground(mxid id)
+{
+    anobject o;
+    TME_GetObject(o,id);
+    return GetObjectBackground(o);
+}
+
+LPCSTR GetObjectBackground(const anobject& o)
+{
+    obj_data_t* d = (obj_data_t*)o.userdata;
+    return d ? LOAD_IMAGE(d->background) : "" ;
+}
+
+LPCSTR GetRaceImage(mxid id,BOOL horse)
+{
+    raceinfo r;
+    TME_GetRaceInfo(r,id);
+    return GetRaceImage(r,horse);
+}
+
+LPCSTR GetRaceImage(const raceinfo& r,BOOL horse)
+{
+    race_data_t* d = (race_data_t*)r.userdata ;
+    if ( d == NULL ) return "" ;
+    return LOAD_IMAGE( horse ? d->horse : d->body ) ;
+}
+
+LPCSTR GetRaceFace(mxid id)
+{
+    raceinfo r;
+    TME_GetRaceInfo(r,id);
+    return GetRaceFace(r);
+}
+
+LPCSTR GetRaceFace(const raceinfo& r)
+{
+    race_data_t* d = (race_data_t*)r.userdata ;
+    return d ? LOAD_IMAGE(d->face) : "" ;
+}
+
+LPCSTR LOAD_IMAGE( LPCSTR filename )
+{
+    cocos2d::Director::getInstance()->getTextureCache()->addImage(filename);
+    return filename;
+}

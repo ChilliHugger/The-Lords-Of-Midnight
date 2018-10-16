@@ -128,7 +128,7 @@ LPCSTR storymanager::DiscoveryMapFilename()
     static char filename[MAX_PATH]={0};
     
 
-    sprintf(filename, "%s/story/discovery.map", mr->GetWritablePath());
+    sprintf(filename, "%s/story/discovery.map", mr->getWritablePath());
     
     return filename;
     
@@ -154,7 +154,7 @@ LPCSTR storymanager::getFolder ( storyid_t id )
 {
     static char folder[MAX_PATH]={0};
     
-    sprintf(folder, "%s/story/%d", mr->GetWritablePath(), (int)id);
+    sprintf(folder, "%s/story/%d", mr->getWritablePath(), (int)id);
 
     return folder;
     

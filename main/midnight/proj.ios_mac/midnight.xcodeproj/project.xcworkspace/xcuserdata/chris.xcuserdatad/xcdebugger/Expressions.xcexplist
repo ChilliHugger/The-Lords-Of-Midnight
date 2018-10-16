@@ -3,13 +3,21 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "options.movementAmount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "progressmonitor::NotifyProgress():progressmonitor.cpp">
       </ContextState>
       <ContextState
          contextName = "Landscape::Moving():LandscapeScene.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "moveCount">
+               value = "moveFrom">
             </PersistentString>
             <PersistentString
                value = "moveTo">
@@ -18,15 +26,7 @@
                value = "here">
             </PersistentString>
             <PersistentString
-               value = "moveFrom">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "GLOBAL">
-         <PersistentStrings>
-            <PersistentString
-               value = "options.movementAmount">
+               value = "moveCount">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -50,15 +50,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "LandscapeColour::CalcCurrentMovementTint(unsigned int):LandscapeColour.cpp">
+      </ContextState>
+      <ContextState
          contextName = "storymanager::getStoriesInfo():storymanager.cpp">
          <PersistentStrings>
             <PersistentString
                value = "stories.chapter[0].description">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "LandscapeColour::CalcCurrentMovementTint(unsigned int):LandscapeColour.cpp">
       </ContextState>
       <ContextState
          contextName = "panel_look::StartMoving()::$_3::operator()(float) const:panel_look.cpp">
@@ -76,6 +76,14 @@
             </PersistentString>
             <PersistentString
                value = "item">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "uithinkpage::displayCharacter(tme::scenarios::exports::character_t const&amp;):uithinkpage.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "d">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

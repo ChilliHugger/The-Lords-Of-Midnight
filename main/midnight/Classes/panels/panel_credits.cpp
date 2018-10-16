@@ -21,7 +21,7 @@ bool panel_credits::init()
         return false;
     }
     
-    SetBackground("credits.png");
+    setBackground("credits.png");
 
     Exit(5.0);
     

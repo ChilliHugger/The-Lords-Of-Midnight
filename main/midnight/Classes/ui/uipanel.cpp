@@ -34,7 +34,7 @@ void uipanel::OnNotification( Ref* element )
 {
 }
 
-Node* uipanel::SetBackground( Color3B color )
+Node* uipanel::setBackground( Color3B color )
 {
     auto background = LayerColor::create(Color4B(color));
     uihelper::AddBottomLeft(this, background);
@@ -42,7 +42,7 @@ Node* uipanel::SetBackground( Color3B color )
     return background;
 }
 
-Node* uipanel::SetBackground( LPCSTR background )
+Node* uipanel::setBackground( LPCSTR background )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
@@ -55,14 +55,14 @@ Node* uipanel::SetBackground( LPCSTR background )
 void uipanel::FadeExit(f32 delay )
 {
     this->scheduleOnce( [&](float) {
-        mr->panels->ReturnToPrevious(TRANSITION_FADEIN);
+        mr->panels->returnToPrevious(TRANSITION_FADEIN);
     }, delay, "delayed_fade_exit" );
 }
 
 void uipanel::Exit(f32 delay )
 {
     this->scheduleOnce( [&](float) {
-        mr->panels->ReturnToPrevious();
+        mr->panels->returnToPrevious();
     }, delay, "delayed_exit" );
 }
 

@@ -215,21 +215,21 @@
 		<terrain id="ARMY"		file="terrain/t_army" />
 		<terrain id="MIST"		file="" />
 
-		<terrain id="TN_PLAIN"          file=""         mapfile="terrain/map_rest.png" mapcell="1" />
-		<terrain id="TN_CITADEL"        file="terrain/t_citadel"        mapfile="terrain/map_rest.png" mapcell="2" />
-		<terrain id="TN_FOREST"         file="terrain/t_forest"         mapfile="terrain/map_trees.png" />
-		<terrain id="TN_HENGE"          file="terrain/t_henge"          mapfile="terrain/map_rest.png" mapcell="3" />
-		<terrain id="TN_TOWER"          file="terrain/t_tower"          mapfile="terrain/map_rest.png" mapcell="4" />
-		<terrain id="TN_VILLAGE"        file="terrain/t_village"        mapfile="terrain/map_rest.png" mapcell="5" />
-		<terrain id="TN_DOWN"           file="terrain/t_downs"          mapfile="terrain/map_downs.png" />
-		<terrain id="TN_KEEP"           file="terrain/t_keep"           mapfile="terrain/map_rest.png" mapcell="6" />
-		<terrain id="TN_SNOWHALL"       file="terrain/t_snowhall"       mapfile="terrain/map_rest.png" mapcell="7" />
-		<terrain id="TN_LAKE"           file="terrain/t_lake"           mapfile="terrain/map_rest.png" mapcell="8" />
-		<terrain id="TN_FROZENWASTE"    file="terrain/t_frozenwaste"    mapfile="terrain/map_frozenwastes.png" />
-		<terrain id="TN_RUIN"           file="terrain/t_ruin"           mapfile="terrain/map_rest.png" mapcell="9" />
-		<terrain id="TN_LITH"           file="terrain/t_lith"           mapfile="terrain/map_rest.png" mapcell="10" />
-		<terrain id="TN_CAVERN"         file="terrain/t_cavern"         mapfile="terrain/map_rest.png" mapcell="11" />
-		<terrain id="TN_MOUNTAIN"       file="terrain/t_mountain"       mapfile="terrain/map_mountains.png" />
+		<terrain id="TN_PLAIN"          file=""                  mapfile="terrain/map_rest.png" mapcell="1" />
+		<terrain id="TN_CITADEL"        file="t_citadel0"        mapfile="terrain/map_rest.png" mapcell="2" />
+		<terrain id="TN_FOREST"         file="t_forest0"         mapfile="terrain/map_trees.png" />
+		<terrain id="TN_HENGE"          file="t_henge0"          mapfile="terrain/map_rest.png" mapcell="3" />
+		<terrain id="TN_TOWER"          file="t_tower0"          mapfile="terrain/map_rest.png" mapcell="4" />
+		<terrain id="TN_VILLAGE"        file="t_village0"        mapfile="terrain/map_rest.png" mapcell="5" />
+		<terrain id="TN_DOWN"           file="t_downs0"          mapfile="terrain/map_downs.png" />
+		<terrain id="TN_KEEP"           file="t_keep0"           mapfile="terrain/map_rest.png" mapcell="6" />
+		<terrain id="TN_SNOWHALL"       file="t_snowhall0"       mapfile="terrain/map_rest.png" mapcell="7" />
+		<terrain id="TN_LAKE"           file="t_lake0"           mapfile="terrain/map_rest.png" mapcell="8" />
+		<terrain id="TN_FROZENWASTE"    file="t_frozenwaste0"    mapfile="terrain/map_frozenwastes.png" />
+		<terrain id="TN_RUIN"           file="t_ruin0"           mapfile="terrain/map_rest.png" mapcell="9" />
+		<terrain id="TN_LITH"           file="t_lith0"           mapfile="terrain/map_rest.png" mapcell="10" />
+		<terrain id="TN_CAVERN"         file="t_cavern0"         mapfile="terrain/map_rest.png" mapcell="11" />
+		<terrain id="TN_MOUNTAIN"       file="t_mountain0"       mapfile="terrain/map_mountains.png" />
 	
 	</terrain>
 

@@ -30,7 +30,7 @@ bool panel_splashscreen::init()
     
     uihelper::Init();
     
-    SetBackground("splash.png");
+    setBackground("splash.png");
     
     loading_width = RES(512);
     loading_height = RES(16);
@@ -39,7 +39,7 @@ bool panel_splashscreen::init()
     uihelper::AddBottomLeft(this, loading_progress, RES(8), RES(8));
     
     progress = new progressmonitor([&](int value) {
-        UpdateProgress( (f32)value / MAX_PROGESS );
+        updateProgress( (f32)value / MAX_PROGESS );
     });
     progress->Start();
     
@@ -48,11 +48,11 @@ bool panel_splashscreen::init()
     // Initialise in a thread
     auto atp = AsyncTaskPool::getInstance();
     atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]() {
-        mr->Initialise( progress );
+        mr->initialise( progress );
         progress->Stop();
         UIDEBUG("MAX_PROGESS=%d",progress->current);
         SAFEDELETE(progress);
-        Complete();
+        complete();
     });
     
     
@@ -60,7 +60,7 @@ bool panel_splashscreen::init()
     return true;
 }
 
-void panel_splashscreen::Complete()
+void panel_splashscreen::complete()
 {
     auto Duration = utils::getTimeInMilliseconds() - StartTime;
     
@@ -80,15 +80,15 @@ void panel_splashscreen::Complete()
 #else
         storyid_t story = mr->getCurrentStory();
         if ( story != STORY_NONE ) {
-            mr->LoadStory( story );
+            mr->continueStory( story );
         }else{
-            mr->panels->SetPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
+            mr->panels->setPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
         }
 #endif
     }, delay, "show_mainmenu" );
 }
 
-void panel_splashscreen::UpdateProgress(f32 percent)
+void panel_splashscreen::updateProgress(f32 percent)
 {
     RUN_ON_UI_THREAD([=](){
         loading_progress->clear();

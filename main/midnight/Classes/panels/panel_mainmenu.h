@@ -31,7 +31,7 @@ protected:
     void OnContinueStory();
     void OnEndStory();
 
-    void DeleteStory( storyid_t id );
+    void deleteStory( storyid_t id );
     void refreshStories( void );
     
 private:

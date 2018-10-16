@@ -36,9 +36,9 @@ uicommandwindow::uicommandwindow( uipanel* parent )
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );
     
-    auto rectNode = DrawNode::create();
-    rectNode->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(0,0,0,0.75f) );
-    this->addChild(rectNode);
+    auto background = LayerColor::create(Color4B(0,0,0,ALPHA(0.75f)));
+    uihelper::AddBottomLeft(this, background);
+    uihelper::FillParent(background);
     
     //
     //f32 layout_padding = RES(32);
@@ -47,12 +47,9 @@ uicommandwindow::uicommandwindow( uipanel* parent )
     //f32 innerWidth = width-(2*layout_padding);
     
     // layout
-    //auto
     layout = Layout::create();
     layout->setBackGroundImage(BOX_BACKGROUND_FILENAME);
     layout->setBackGroundImageScale9Enabled(true);
-//    layout->setOpacity(ALPHA(0.75));
-//    layout->setCascadeOpacityEnabled(true);
     uihelper::AddCenter( this,layout ) ;
 
     layout->setContentSize(Size(width,maxHeight));
