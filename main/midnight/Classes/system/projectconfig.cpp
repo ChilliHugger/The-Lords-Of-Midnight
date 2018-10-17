@@ -76,20 +76,8 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     d->file = t->ReadStr("file");
                     UIDEBUG( "Frontend: Loading TERRAIN... %s", (LPCSTR)d->symbol );
                     mr->tme->terrain.Add(d);
-//                    d->graphics = new imagearray(d->symbol,MAX_TERRAIN_SCALES) ;
-//                    //for ( int ii=0; ii<MAX_TERRAIN_SCALES; ii++ ) {
-//                    if ( strlen(d->file)) {
-//                        int ii=0;
-//                        sprintf(path,"%s%d.png", (LPCSTR)d->file, ii );
-//                        d->graphics->LoadImage(ii,path);
-//                        d->graphics->Image(ii)->setClamping(true);
-//                        UpdateSplash("Loading Terrain", progress++);
-//                        //}
-//                    }
-//                    d->mapimage = LOAD_CELLIMAGE( t->ReadStr("mapfile"), point(0,0), size(SRC(64),SRC(64)), size(4,4) );
                     d->mapimage = t->ReadStr("mapfile");
                     d->mapcell = t->ReadInt("mapcell");
-
                 }
                 monitor->Update("Loading Terrain", 1);
             }
@@ -185,22 +173,22 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //    }
 //
 //    if ( pass == 1 ) {
-//        // objects
-//        UIDEBUG( "Frontend: Loading OBJECTS..." );
-//        if ( (e = base->Find( "objects") ) ) {
-//            FOREACHELEMENT(e,o) {
-//                if ( o->IsType("object") ) {
-//                    obj_data_t* d = new obj_data_t ;
-//                    d->symbol = o->ReadStr("id");
-//                    UIDEBUG( "Frontend: Loading OBJECTS... %s", (LPCSTR)d->symbol );
-//                    //d->background = LOAD_IMAGE( o->ReadStr("background") );
-//                    d->i_big = LOAD_IMAGE( o->ReadStr("big") );
-//                    //d->i_small = LOAD_IMAGE( o->ReadStr("small") );
-//                    objects.Add(d);
-//                }
-//                UpdateSplash("Loading Objects", progress++);
-//            }
-//        }
+        // objects
+        UIDEBUG( "Frontend: Loading OBJECTS..." );
+        if ( (e = base->Find( "objects") ) ) {
+            FOREACHELEMENT(e,o) {
+                if ( o->IsType("object") ) {
+                    obj_data_t* d = new obj_data_t ;
+                    d->symbol = o->ReadStr("id");
+                    UIDEBUG( "Frontend: Loading OBJECTS... %s", (LPCSTR)d->symbol );
+                    //d->background = o->ReadStr("background") ;
+                    d->i_big = o->ReadStr("big") ;
+                    //d->i_small = o->ReadStr("small") ;
+                    mr->tme->objects.Add(d);
+                }
+                monitor->Update("Loading Objects", 1);
+            }
+        }
 //    }
 //
 //    if ( pass == 1 ) {

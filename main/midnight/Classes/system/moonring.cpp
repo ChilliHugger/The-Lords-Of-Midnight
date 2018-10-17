@@ -268,8 +268,7 @@ bool moonring::fight()
 bool moonring::think()
 {
     character& c = TME_CurrentCharacter();
-    //showPage(MODE_THINK_PERSON, Character_LocationObject(c));
-    showPage(MODE_THINK_PERSON, c.id);
+    showPage(MODE_THINK_PERSON, Character_LocationObject(c));
     return true;
 }
 
@@ -278,7 +277,7 @@ bool moonring::recruitMen()
     character& c = TME_CurrentCharacter();
     if ( Character_RecruitMen(c) ) {
         stories->save();
-        showPage ( MODE_THINK_RECRUITGUARD, 0 );
+        showPage ( MODE_THINK_RECRUITGUARD );
         return true;
     }
     return false;
@@ -289,7 +288,7 @@ bool moonring::postMen()
     character& c = TME_CurrentCharacter();
     if ( Character_PostMen(c) ) {
         stories->save();
-        showPage ( MODE_THINK_RECRUITGUARD, 0 );
+        showPage ( MODE_THINK_RECRUITGUARD );
         return true;
     }
     return false;

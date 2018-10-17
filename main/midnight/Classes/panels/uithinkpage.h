@@ -21,7 +21,7 @@ public:
    
     CREATE_FUNC(uithinkpage);
     
-    void setObject( mxid id, panelmode_t mode );
+    void setObject( mxid id, mxid objectId, panelmode_t mode );
     
 protected:
 
@@ -58,6 +58,18 @@ protected:
     cocos2d::Sprite*    imgTerrain;
     cocos2d::Sprite*    imgCharacter;
     cocos2d::Sprite*    imgObject;
+    
+    cocos2d::ui::ScrollView* scrollView;
+    
+public:
+    bool                approach;
+    bool                fight;
+    bool                unhide;
+    bool                leave;
+    bool                disband;
+    bool                postMen;
+    bool                recruitMen;
+    
 };
 
 

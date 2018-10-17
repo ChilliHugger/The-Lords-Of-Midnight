@@ -64,7 +64,7 @@ public:
     
 protected:
     
-    virtual void OnNotification( Ref* element );
+    virtual void OnNotification( Ref* element ) override;
     
     void getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
     void getCurrentLocationInfo ( void );

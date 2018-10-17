@@ -22,6 +22,8 @@
 #define TERRAIN_Y           352
 #define CHARACTER_X         384
 #define CHARACTER_Y         352 //332
+#define OBJECT_Y            352 //332
+#define OBJECT_X            128
 #define BACKGROUND_COLOUR   _clrWhite
 #define NAME_TEXT_COLOUR    _clrDarkRed
 #endif
@@ -34,6 +36,8 @@
 #define TERRAIN_Y           (768-96)
 #define CHARACTER_X         190
 #define CHARACTER_Y         (768-96)
+#define OBJECT_Y            352 //332
+#define OBJECT_X            128
 #define BACKGROUND_COLOUR   _clrCyan
 #define NAME_TEXT_COLOUR    _clrBlue
 #endif
@@ -43,25 +47,76 @@ using namespace tme;
 
 uithinkpage::uithinkpage()
 {
+    approach = false;
+    fight = false;
+    unhide = false;
+    leave = false;
+    disband = false;
+    postMen = false;
+    recruitMen = false;
+    id = IDT_NONE;
+    objectid = IDT_NONE;
 }
 
-void uithinkpage::setObject( mxid id, panelmode_t mode )
+void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 {
+    f32 x,y;
+    
     this->id = id;
     this->mode = mode;
+    this->objectid = objectId;
     
     // get the character we are interested in
     TME_GetCharacter(current_character, id);
-    
-    TME_GetCharacterLocationInfo(current_character);
-    if ( mode == MODE_THINK ) {
-        // something is in our way that we must fight
-        objectid = location_flags&lif_fight ? location_fightthing : Character_LocationObject(current_character);
-    }else{
-        objectid = IDT_NONE;
-    }
+    TME_GetCharacterLocationInfo ( current_character );
+    flags = location_flags;
     
     setupUI();
+    
+    auto size = this->getContentSize();
+    auto textSize = lblDescription->getContentSize();
+    
+    f32 padding = RES(64);
+    f32 textY = RES(TEXT_Y+64);
+    f32 height = textY+textSize.height;
+
+    if ( height >= size.height ) {
+        height+=padding;
+    }else{
+        height=size.height;
+        scrollView->setEnabled(false);
+    }
+    
+    scrollView->setInnerContainerSize( Size(size.width,height) );
+    scrollView->setContentSize(Size(size.width,size.height));
+    //scrollView->setInnerContainerPosition(Vec2(0,0));
+
+    // name
+    uihelper::AddTopLeft(scrollView,lblName,RES(NAME_X),RES(NAME_Y));
+
+    // text
+    uihelper::AddTopLeft(scrollView,lblDescription, RES(TEXT_X),textY);
+
+    // character
+    y = RES(CHARACTER_Y) - imgCharacter->getContentSize().height;
+    x = RES(CHARACTER_X) - (imgCharacter->getContentSize().width/2);
+    uihelper::PositionParentTopLeft(imgCharacter,x,y);
+    
+    // terrain
+    y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
+    x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
+    uihelper::PositionParentTopLeft(imgTerrain,x,y);
+
+    // object
+#if defined(_LOM_)
+    y = RES(OBJECT_Y) - imgObject->getContentSize().height;
+    x = RES(OBJECT_X) - (imgObject->getContentSize().width/2);
+    uihelper::PositionParentTopLeft(imgObject,x,y);
+#endif
+    
+    uihelper::AddTopLeft(this, scrollView);
+    uihelper::FillParent(scrollView);
+    
 }
 
 bool uithinkpage::init()
@@ -71,45 +126,53 @@ bool uithinkpage::init()
         return false;
     }
 
-    
-    
     auto size = Director::getInstance()->getVisibleSize();
     
     setContentSize(size);
     
-    //auto background = LayerColor::create(Color4B(_clrCyan));
-    //uihelper::AddBottomLeft(this, background);
-    //uihelper::FillParent(background);
+    scrollView = ui::ScrollView::create();
+    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    scrollView->setBounceEnabled(true);
+    scrollView->setScrollBarEnabled(true);
+
     
+
     // Name
     lblName = Label::createWithTTF( uihelper::font_config_big, "" );
     lblName->getFontAtlas()->setAntiAliasTexParameters();
     lblName->setTextColor(Color4B(NAME_TEXT_COLOUR));
     lblName->setLocalZOrder(ZORDER_DEFAULT);
-    uihelper::AddTopLeft(this,lblName,RES(NAME_X),RES(NAME_Y));
-
+ 
     // Description
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
     lblDescription->getFontAtlas()->setAntiAliasTexParameters();
     lblDescription->setTextColor(Color4B(_clrDarkRed));
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
     lblDescription->setWidth(size.width-RES(TEXT_X*2));
-    lblDescription->setHeight(size.height-RES(TEXT_Y+64));
-    uihelper::AddTopLeft(this,lblDescription, RES(TEXT_X),RES(TEXT_Y+64));
+    //lblDescription->setHeight(size.height-RES(TEXT_Y+64));
+    lblDescription->setAlignment(TextHAlignment::LEFT);
+    //lblDescription->setLineHeight(RES(FONT_SIZE_BIG));
+    lblDescription->setLineSpacing(0);
+    lblDescription->setMaxLineWidth(size.width-RES(TEXT_X*2));
+    lblDescription->enableWrap(true);
+    
 
     // Character Image
     imgCharacter = Sprite::create();
-    //imgCharacter->setPosition(Vec2(RES(0),RES(0)));
-    //imgCharacter->setContentSize(Size(RES(128),RES(128)) );
-    addChild(imgCharacter);
+
+//    auto listener1 = EventListenerTouchOneByOne::create();
+//    listener1->onTouchEnded = [](Touch* touch, Event* event){
+//        return true; // if you are consuming it
+//    };
+//    imgCharacter->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener1, this);
+//    
+    scrollView->addChild(imgCharacter);
 
     // Object Image
 #if defined(_LOM_)
     // create image for object
     imgObject = Sprite::create();
-    //imgObject->setPosition(Vec2(RES(0),RES(0)));
-    //imgObject->setContentSize(Size(RES(128),RES(128)) );
-    addChild(imgObject);
+    scrollView->addChild(imgObject);
 #endif
     
     auto mr = moonring::mikesingleton();
@@ -117,8 +180,6 @@ bool uithinkpage::init()
     
     // Terrain Image
     imgTerrain = Sprite::create();
-    //imgTerrain->setPosition(Vec2(RES(TERRAIN_X),RES(TERRAIN_Y)));
-    //imgTerrain->setContentSize(Size(RES(512),RES(332)) );
     imgTerrain->setGLProgramState(mr->glProgramState->clone());
     imgTerrain->setScale(1.0f);
     imgTerrain->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
@@ -131,7 +192,7 @@ bool uithinkpage::init()
     imgTerrain->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));               // body
     
     
-    addChild(imgTerrain);
+    scrollView->addChild(imgTerrain);
     
     return true;
 }
@@ -143,38 +204,7 @@ void uithinkpage::displayCharacter ( const character& c )
     lblName->setString(current_character.longname);
 
     imgCharacter->initWithFile(GetCharacterImage(c));
-    
-//#if defined(_DDR_)
-//    f32 y = getContentSize().height - (i_look->Height()*i_look->scale) - imgCharacter->Height();
-//    f32 x = RES(CHARACTER_X) - (imgCharacter->Width()/2);
-//    uihelper::PositionParentTopLeft(imgCharacter,x,y);
-//#else
-    f32 y = RES(CHARACTER_Y) - imgCharacter->getContentSize().height;
-    f32 x = RES(CHARACTER_X) - (imgCharacter->getContentSize().width/2);
-    uihelper::PositionParentTopLeft(imgCharacter,x,y);
-//#endif
-    
-//
-//    i_character->id = ID_SELECT_CHAR;
-//    i_character->tag = c.id ;
-//
-//#if defined(_DDR_)
-//    i_character->location.y = Height() - (i_look->Height()*i_look->scale) - imgCharacter->Height();
-//    i_character->location.x = RES(CHARACTER_X) - (imgCharacter->Width()/2);
-//#else
-//    i_character->location.y = RES(CHARACTER_X) - imgCharacter->Height();
-//    i_character->location.x = RES(CHARACTER_X) - (imgCharacter->Width()/2);
-//#endif
-//
-//    i_character->dimensions = imgCharacter->dimensions;
-//    i_character->delegate = this ;
-//    i_character->disabled_alpha=1.0f;
-//
-//    if ( Character_IsRecruited(c) )
-//        i_character->Enable();
-//    else
-//        i_character->Disable();
-    
+
 }
 
 void uithinkpage::displayCharacterTerrain(  const character& c )
@@ -210,19 +240,8 @@ void uithinkpage::displayTerrain ( mxterrain_t terrain )
         return;
     }
 
-    //imgTerrain->initWithFile(LOAD_IMAGE(d->file));
     imgTerrain->initWithSpriteFrameName((LPCSTR)d->file);
 
-
-//#if defined(_DDR_)
-//    imgTerrain->location.y = Height() - (i_look->Height()*i_look->scale) - imgTerrain->Height();
-//    imgTerrain->location.x = RES(TERRAIN_X) - imgTerrain->Width()/2;
-//#else
-    f32 y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
-    f32 x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
-    uihelper::PositionParentTopLeft(imgTerrain,x,y);
-//#endif
-    
     imgTerrain->setVisible(true);
 }
 
@@ -235,17 +254,8 @@ void uithinkpage::displayArmy ( void )
     }
 
     imgTerrain->initWithSpriteFrameName((LPCSTR)d->file);
-    
-//#if defined(_DDR_)
-//    imgTerrain->location.y = Height() - (i_look->Height()*i_look->scale) - imgTerrain->Height();
-//    imgTerrain->location.x = RES(TERRAIN_X) - imgTerrain->Width()/2;
-//#else
-    f32 y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
-    f32 x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
-    uihelper::PositionParentTopLeft(imgTerrain,x,y);
-//#endif
+
     imgTerrain->setVisible(true);
-    
     
 }
 
@@ -259,9 +269,6 @@ void uithinkpage::displayObject ( mxid objectid )
     }
     
     imgObject->initWithFile( GetObjectBig(objectid) );
-    f32 y = RES(332) - imgObject->getContentSize().height;
-    f32 x = RES(128) - (imgObject->getContentSize().width/2);
-    uihelper::PositionParentTopLeft(imgObject,x,y);
     imgObject->setVisible(true);
 #endif
     
@@ -270,7 +277,7 @@ void uithinkpage::displayObject ( mxid objectid )
 
 void uithinkpage::setupUI()
 {
-    tme::CStrBuf     buffer(512);
+    tme::CStrBuf     buffer(1024);
     LPCSTR      text=NULL;
     
     displayCharacter ( current_character );
@@ -279,7 +286,7 @@ void uithinkpage::setupUI()
     
     switch ( mode ) {
         case MODE_THINK_ARMY:
-            //checkArmy();
+            checkArmy();
             return;
         case MODE_THINK_PERSON:
         case MODE_THINK_APPROACH:
@@ -289,7 +296,7 @@ void uithinkpage::setupUI()
             checkPlace();
             return;
         case MODE_THINK_BATTLE:
-            //checkBattle();
+            checkBattle();
             return;
         default:
             break;
@@ -310,11 +317,11 @@ void uithinkpage::setupUI()
 #if defined(_LOM_)
             if ( Character_IsHidden(current_character) ) {
                 text = TME_GetSystemString(current_character,SS_HIDDEN);
-                //i_Unhide->ShowEnable();
+                unhide = true;
             }else if ( objectid ) {
                 if ( flags.Is(lif_fight) ) {
                     text = TME_GetSystemString(current_character,SS_MUSTFIGHT);
-                    //i_Fight->ShowEnable();
+                    fight=true;
                     displayObject(objectid);
                 }else{
                     text = TME_GetSystemString(current_character,SS_THINGATLOCATION);
@@ -327,7 +334,7 @@ void uithinkpage::setupUI()
             text = TME_LastActionMsg();
             
             TME_GetStronghold(current_stronghold, location_strongholds[0]);
-            //recruitPostOptions(current_stronghold);
+            recruitPostOptions(current_stronghold);
             lblDescription->setString(text);
             return;
             
@@ -349,10 +356,17 @@ void uithinkpage::setupUI()
     
     // TODO display entrance to tunnel
     
-    if ( text )
+    if ( text ) {
         buffer.strcpy ( text );
+    }
     
     chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
+    
+   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
+   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
+   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
+   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
+    
     text = buffer.GetAt();
     
     lblDescription->setString(text);
@@ -449,7 +463,7 @@ void uithinkpage::checkPerson ( void )
         if ( c.id == TME_GetId("CH_MIDWINTER", IDT_CHARACTER))
             msg=SS_MESSAGE8;
 #endif
-        BOOL isInBattle = Character_IsInBattle(c) ;
+        bool isInBattle = Character_IsInBattle(c) ;
         
 #if defined(_DDR_)
         if ( Character_IsPreparingForBattle(c) )
@@ -459,9 +473,8 @@ void uithinkpage::checkPerson ( void )
         // not recruited but we could recruit
         // then add an approach button
         if ( msg == SS_MESSAGE7 && location_flags.Is(lif_recruitchar) ) {
-            //if ( !isInBattle )
-                //i_Approach->ShowEnable();
-            
+            if ( !isInBattle )
+                approach = true;
         }
     }
     
@@ -470,11 +483,11 @@ void uithinkpage::checkPerson ( void )
     
     if ( c.id == TME_CurrentCharacter().id ) {
         if ( Character_IsFollowing(c) ) {
-            //i_Leave->ShowEnable();
+            leave = true;
         }
         
         if ( Character_IsLeading(c) ) {
-            //i_Disband->ShowEnable();
+            disband = true;
         }
     }
     

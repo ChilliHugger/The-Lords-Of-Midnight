@@ -11,6 +11,7 @@
 
 #include "uipanel.h"
 #include "uithinkpage.h"
+#include "../frontend/layout_id.h"
 
 class panel_think : public uipanel
 {
@@ -30,6 +31,11 @@ protected:
     void setupPages();
     void addPage( mxid id );
     
+    void enableButtons();
+    void enableButton(layoutid_t id, bool enabled);
+    void showButton(layoutid_t id, bool enabled);
+    void tintButton(layoutid_t id,cocos2d::Color3B colour);
+
 protected:
     flags32         flags;
     //s32             page;
@@ -40,4 +46,5 @@ protected:
     mxid            objectId;
     
     cocos2d::ui::PageView*       pageView;
+    int             current_tab;
 };

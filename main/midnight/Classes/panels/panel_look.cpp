@@ -259,7 +259,7 @@ void panel_look::delayedSave()
     
     if ( (mr->panels->currentmode == this->currentmode)
         && recruitable_characters.Count() ) {
-        mr->showPage ( MODE_THINK_APPROACH, characterId );
+        mr->showPage ( MODE_THINK_APPROACH );
     }
 }
 
@@ -577,7 +577,10 @@ bool panel_look::moveForward ( void )
             if (!ShowHelpWindow(HELP_BATTLE, TRUE))
                 return TRUE;
         
-        mr->showPage(MODE_THINK, TME_CurrentCharacter().id);
+        // something is in our way that we must fight
+        mxid objectid = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);
+        
+        mr->showPage(MODE_THINK, objectid);
         
         return TRUE;
     }
@@ -808,7 +811,7 @@ void panel_look::OnActivate( void )
     stopInactivity();
     
     if ( Character_IsDead(c) ) {
-        mr->showPage( MODE_THINK, c.id );
+        mr->showPage( MODE_THINK );
         return;
     }
     
