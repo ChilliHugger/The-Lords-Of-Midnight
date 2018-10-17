@@ -159,6 +159,7 @@ void panel_think::tintButton(layoutid_t id,Color3B colour)
     auto button = getChildByTag<ui::Button*>(id);
     if ( button ) {
         button->setEnabled(false);
+        button->setBright(true);
         button->setColor(colour);
     }
 }

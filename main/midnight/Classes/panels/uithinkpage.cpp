@@ -82,9 +82,13 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 
     if ( height >= size.height ) {
         height+=padding;
+        scrollView->setBounceEnabled(true);
+        scrollView->setScrollBarEnabled(true);
     }else{
         height=size.height;
         scrollView->setEnabled(false);
+        scrollView->setBounceEnabled(false);
+        scrollView->setScrollBarEnabled(false);
     }
     
     scrollView->setInnerContainerSize( Size(size.width,height) );
@@ -132,10 +136,6 @@ bool uithinkpage::init()
     
     scrollView = ui::ScrollView::create();
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
-    scrollView->setBounceEnabled(true);
-    scrollView->setScrollBarEnabled(true);
-
-    
 
     // Name
     lblName = Label::createWithTTF( uihelper::font_config_big, "" );
@@ -165,7 +165,7 @@ bool uithinkpage::init()
 //        return true; // if you are consuming it
 //    };
 //    imgCharacter->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener1, this);
-//    
+//
     scrollView->addChild(imgCharacter);
 
     // Object Image
