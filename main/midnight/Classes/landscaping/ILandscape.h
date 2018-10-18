@@ -24,6 +24,8 @@ public:
     bool            showWater;
     bool            showLand;
     bool            showTerrain;
+    bool            showPeople;
+    
     int             debugMode;
     bool            debugLand;
     f32             landScaleX;

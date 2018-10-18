@@ -5,6 +5,7 @@
 
 #include "../landscaping/LandscapeGenerator.h"
 #include "../landscaping/LandscapeView.h"
+#include "../landscaping/LandscapePeople.h"
 #include "uihelper.h"
 
 
@@ -46,7 +47,7 @@ typedef struct {
     std::string     name;
     std::string     locationtext;
 
-    BOOL            tunnel;
+    bool            tunnel;
 
 } locationinfo_t ;
 
@@ -56,10 +57,10 @@ class panel_look : public uipanel, uinotificationinterface
 
 public:
     
-    virtual bool init();
+    bool init() override;
     CREATE_FUNC(panel_look);
 	
-    virtual void setObject ( mxid c );
+    virtual void setObject ( mxid c ) override;
    
     
 protected:
@@ -93,9 +94,9 @@ protected:
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
     //void OnActionComplete( tagid_t tag );
     
-    void OnShown( void );
-    void OnActivate( void );
-    void OnDeActivate( void );
+    void OnShown( void ) override;
+    void OnActivate( void ) override;
+    void OnDeActivate( void ) override;
 
     void OnSetupIcons();
     void OnSetupFaces();
@@ -136,6 +137,12 @@ protected:
     // Actions and Commands
     uicommandwindow*    i_command_window;
     //DrawNode*          fade_panel;
+    
+    LandscapePeople*    people[3];
+    LandscapePeople*    current_people;
+    LandscapePeople*    next_people;
+    LandscapePeople*    prev_people;
+    
 };
 
 

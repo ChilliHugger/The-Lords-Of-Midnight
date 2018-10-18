@@ -48,7 +48,7 @@ void LandscapeView::Init(LandscapeOptions* options)
         terrain->Init(options);
         clipping->addChild(terrain);
     }
-    
+        
     if ( options->debugMode != 0 ) {
         auto debug = new LandscapeDebug();
         debug->Init(options);

@@ -73,7 +73,7 @@ const helpitem_t help_messages[] = {
     {
         hf_none,
         "HALL\n\n"
-        "\tA war-chief s hall can offer warmth and shelter to the lonely traveller, if its people prove friendly."
+        "\tA war-chief's hall can offer warmth and shelter to the lonely traveller, if its people prove friendly."
     }
     ,
     {

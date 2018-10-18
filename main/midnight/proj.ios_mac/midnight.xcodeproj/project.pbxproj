@@ -233,6 +233,8 @@
 		83B5AB7221760B4100CC29EF /* panel_select.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB6721760B4000CC29EF /* panel_select.cpp */; };
 		83B5AB75217617CD00CC29EF /* uithinkpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB73217617CD00CC29EF /* uithinkpage.cpp */; };
 		83B5AB76217617CD00CC29EF /* uithinkpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB73217617CD00CC29EF /* uithinkpage.cpp */; };
+		83B5AB792177892B00CC29EF /* LandscapePeople.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB772177892B00CC29EF /* LandscapePeople.cpp */; };
+		83B5AB7A2177892B00CC29EF /* LandscapePeople.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB772177892B00CC29EF /* LandscapePeople.cpp */; };
 		83B9BD691FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83B9BD6F1FD30A0100B4C721 /* panel_options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD6D1FD30A0100B4C721 /* panel_options.cpp */; };
@@ -524,6 +526,8 @@
 		83B5AB6821760B4000CC29EF /* panel_select.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = panel_select.h; sourceTree = "<group>"; };
 		83B5AB73217617CD00CC29EF /* uithinkpage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uithinkpage.cpp; sourceTree = "<group>"; };
 		83B5AB74217617CD00CC29EF /* uithinkpage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uithinkpage.h; sourceTree = "<group>"; };
+		83B5AB772177892B00CC29EF /* LandscapePeople.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapePeople.cpp; path = landscaping/LandscapePeople.cpp; sourceTree = "<group>"; };
+		83B5AB782177892B00CC29EF /* LandscapePeople.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LandscapePeople.h; path = landscaping/LandscapePeople.h; sourceTree = "<group>"; };
 		83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_credits.cpp; sourceTree = "<group>"; };
 		83B9BD681FD2CC9D00B4C721 /* panel_credits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_credits.h; sourceTree = "<group>"; };
 		83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDirector.h; sourceTree = "<group>"; };
@@ -970,6 +974,8 @@
 				834D04E620D2F649001B07CB /* LandscapeColour.h */,
 				8352FBCF216DD693009E22E5 /* ILandscape.h */,
 				8352FBD0216DD693009E22E5 /* ILandscape.cpp */,
+				83B5AB772177892B00CC29EF /* LandscapePeople.cpp */,
+				83B5AB782177892B00CC29EF /* LandscapePeople.h */,
 			);
 			name = landscaping;
 			sourceTree = "<group>";
@@ -1481,6 +1487,7 @@
 				8351A5241FE44B3E00D9AB57 /* storymanager.cpp in Sources */,
 				83D264C41F36077E001C6F13 /* cfile_windows.cpp in Sources */,
 				83D264701F360724001C6F13 /* processor_night.cpp in Sources */,
+				83B5AB792177892B00CC29EF /* LandscapePeople.cpp in Sources */,
 				83D2646C1F360724001C6F13 /* map.cpp in Sources */,
 				83D264741F360724001C6F13 /* units.cpp in Sources */,
 				834D04EB20D2FB3C001B07CB /* projectconfig.cpp in Sources */,
@@ -1551,6 +1558,7 @@
 				83D264491F360724001C6F13 /* army.cpp in Sources */,
 				83B5AB5D2174E16300CC29EF /* uicommandwindow.cpp in Sources */,
 				83D264D51F36077E001C6F13 /* cflags.cpp in Sources */,
+				83B5AB7A2177892B00CC29EF /* LandscapePeople.cpp in Sources */,
 				83D264CF1F36077E001C6F13 /* carchive.cpp in Sources */,
 				83E108B31FE5687A00C29042 /* panel_dedication.cpp in Sources */,
 				83D264351F360724001C6F13 /* mxentity.cpp in Sources */,

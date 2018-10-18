@@ -10,6 +10,7 @@
 #define LandscapeGenerator_h
 
 #include "LandscapeNode.h"
+#include "../system/resolutionmanager.h"
 
 #define BASE_HEIGHT             768
 #define BASE_WIDTH              1024

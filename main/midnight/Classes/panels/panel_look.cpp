@@ -87,6 +87,23 @@ bool panel_look::init()
     lblDescription->setWidth(RES(800-64));
     uihelper::AddTopLeft(this,lblDescription, RES(32),RES(64));
 
+    // people in front
+    
+    //auto background = LayerColor::create(Color4B(_clrRed));
+    //background->setLocalZOrder(ZORDER_DEFAULT);
+    //background->setContentSize( Size(getContentSize().width,RES(PEOPLE_WINDOW_HEIGHT)));
+    //uihelper::AddBottomLeft(this, background);
+    //uihelper::FillParent(background);
+    
+    for ( int ii=0; ii<3; ii++ ) {
+        people[ii] = LandscapePeople::create();
+        addChild(people[ii]);
+    }
+    
+    //people[1]->setVisible(false);
+    //people[2]->setVisible(false);
+    
+    //
     
     current_info = new locationinfo_t();
     follower_info = new locationinfo_t();
@@ -344,6 +361,8 @@ void panel_look::getCurrentLocationInfo ( void )
 
 void panel_look::setViewForCurrentCharacter ( void )
 {
+    character&    c = TME_CurrentCharacter();
+    
 #if defined (_LOM_)
     lblName->setString(current_info->name);
     //lblName->Enable();
@@ -387,7 +406,36 @@ void panel_look::setViewForCurrentCharacter ( void )
     
     options.generator->Build(options.here, 0);
     
+    // Initialise people
+    current_people=people[0];
+    next_people=people[1];
+    prev_people=people[2];
+    
+    auto width = getContentSize().width;
+    
+    if ( current_people ) {
+        current_people->Init(&options);
+        current_people->Initialise(c);
+        current_people->setPositionX(0);
+    }
+    
+    if ( next_people ) {
+        next_people->Init(&options);
+        next_people->Initialise(NEXT_DIRECTION(current_info->looking), current_info->tunnel);
+        next_people->setPositionX(width);
+    }
+    
+    if ( prev_people ) {
+        prev_people->Init(&options);
+        prev_people->Initialise(PREV_DIRECTION(current_info->looking), current_info->tunnel);
+        prev_people->setPositionX(-width);
+    }
+    
+    
+    
     UpdateLandscape();
+    
+    
     
     // Add characters in front
     
@@ -474,8 +522,18 @@ bool panel_look::startLookLeft ( void )
     
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
         options.lookAmount = originalLooking + value;
+        
+        //UIDEBUG("MovementLeft  %f %f %f", target, options.lookAmount, value);
+        
+        f32 distance = value / target;
+        if ( current_people )
+            current_people->adjustMovement( distance );
+        if (next_people)
+            next_people->adjustMovement( distance );
+        
         if ( value <= target) {
             stopRotating(LM_ROTATE_LEFT);
+            return;
         }
         UpdateLandscape();
     });
@@ -483,6 +541,14 @@ bool panel_look::startLookLeft ( void )
     auto ease = new EaseSineInOut();
     ease->initWithAction(actionfloat);
     this->runAction(ease);
+    
+    next_people->Initialise(c);
+    next_people->startSlideFromLeft();
+    
+    //current_people->Initialise(c);
+    current_people->startSlideOffRight();
+
+    
     
     return TRUE;
 }
@@ -502,8 +568,17 @@ bool panel_look::startLookRight ( void )
     auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
         options.lookAmount = originalLooking + value;
         
+        //UIDEBUG("MovementRight  %f %f %f", target, options.lookAmount, value);
+        
+        f32 distance = value / target;
+        if ( current_people )
+            current_people->adjustMovement( distance );
+        if (next_people)
+            next_people->adjustMovement( distance );
+        
         if ( value >= target) {
             stopRotating(LM_ROTATE_RIGHT);
+            return;
         }
         
         UpdateLandscape();
@@ -512,6 +587,12 @@ bool panel_look::startLookRight ( void )
     auto ease = new EaseSineInOut();
     ease->initWithAction(actionfloat);
     this->runAction(ease);
+    
+    next_people->Initialise(c);
+    next_people->startSlideFromRight();
+    
+    //current_people->Initialise(c);
+    current_people->startSlideOffLeft();
     
     return TRUE;
     
@@ -606,7 +687,7 @@ bool panel_look::startMoving()
     //    if ( map.flags&lf_army )
     //        bMoveLocationHasArmy =  TRUE;
     
-    
+
     loc_t moveFrom = c.location;
     if ( MXSUCCESS(Character_Move(c)) ) {
         
@@ -618,13 +699,15 @@ bool panel_look::startMoving()
         
         options.isMoving = true;
    
-        auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+        auto actionfloat = ActionFloat::create(0.5f, 0, target, [=](float value) {
             
             options.here.x = moveFrom.x*(DIR_STEPS - value) + moveTo.x*value;
             options.here.y = moveFrom.y*(DIR_STEPS - value) + moveTo.y*value;
             
-            if ( value >= target )
+            if ( value >= target ) {
                 stopMoving();
+                return;
+            }
         
             f32 result = value / target ;
             options.movementAmount = result;
@@ -639,6 +722,13 @@ bool panel_look::startMoving()
         ease->initWithAction(actionfloat);
         this->runAction(ease);
         
+        //this->runAction(actionfloat);
+        
+        next_people->Initialise(c);
+        next_people->startFadeIn();
+        
+        //current_people->Initialise(c);
+        current_people->startFadeOut();
         
         return true;
     }
@@ -651,12 +741,33 @@ void panel_look::stopRotating(LANDSCAPE_MOVEMENT type)
 {
     options.isLooking = false;
     
+    LandscapePeople* temp = next_people;
+    next_people=current_people;
+    current_people=temp;
+    
+    next_people->clear();
+    current_people->stopAnim();
+    prev_people->clear();
+    
+    setViewForCurrentCharacter();
+    
     OnMovementComplete(type);
 }
 
 void panel_look::stopMoving()
 {
     options.isMoving = false;
+    
+    // swap info
+    LandscapePeople* temp = next_people;
+    next_people=current_people;
+    current_people=temp;
+    
+    next_people->clear();
+    current_people->stopAnim();
+    prev_people->clear();
+    
+    setViewForCurrentCharacter();
     
     OnMovementComplete(LM_MOVE_FORWARD);
     

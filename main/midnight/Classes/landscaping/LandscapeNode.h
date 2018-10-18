@@ -17,13 +17,17 @@
 
 USING_NS_CC;
 
-#define RES(x) (s32)	((x)*1.0)
+//#define RES(x) (s32)	((x)*1.0)
 class LandscapeOptions;
 
 class LandscapeNode : public Node
 {
 public:
-    virtual void Init(LandscapeOptions* options);
+    
+    CREATE_FUNC(LandscapeNode);
+    virtual bool init() override;
+    
+    virtual void Init(LandscapeOptions* options) ;
     
 public:
     LandscapeOptions*   options;

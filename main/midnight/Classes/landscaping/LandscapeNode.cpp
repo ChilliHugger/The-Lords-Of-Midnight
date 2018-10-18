@@ -8,6 +8,16 @@
 
 #include "LandscapeNode.h"
 
+bool LandscapeNode::init()
+{
+    if ( !Node::init() )
+    {
+        return false;
+    }
+    
+    return true;
+}
+
 void LandscapeNode::Init(LandscapeOptions* options)
 {
     this->options = options;
