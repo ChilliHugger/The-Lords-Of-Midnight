@@ -60,7 +60,7 @@ bool panel_mainmenu::init()
     //
     // Background
     //
-    setBackground("screens/misc/main_menu.png");
+    setBackgroundToHeight("screens/misc/main_menu.png");
 
     //
     // Logo
@@ -80,11 +80,7 @@ bool panel_mainmenu::init()
 
     //
     // Guide and Manual
-    //
-    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback = [&] (Ref* ref ) {
-        this->OnNotification(ref);
-    };
-    
+    //    
     auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, callback);
     uihelper::AddBottomRight(this,guide, RES(10), RES(10) );
     guide->cocos2d::Node::setScale(1.5f);

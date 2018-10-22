@@ -9,6 +9,8 @@
 #define uipanel_h
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
+
 #include "../system/helpmanager.h"
 #include "../frontend/panel_id.h"
 
@@ -47,7 +49,8 @@ public:
     
 protected:
     
-    Node* setBackground( LPCSTR background );
+    Node* setBackgroundToHeight( LPCSTR background );
+    Node* setBackgroundToWidth( LPCSTR background );
     Node* setBackground( cocos2d::Color3B color );
     
     void FadeExit( f32 delay = 0);
@@ -75,6 +78,8 @@ protected:
     uihelpwindow*   help_window;
     
     bool            enabled;
+    
+    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback;
     
 public:
     panelmode_t     currentmode;

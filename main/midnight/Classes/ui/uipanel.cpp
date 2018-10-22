@@ -27,6 +27,13 @@ bool uipanel::init()
     
     mr = moonring::mikesingleton();
     
+    //
+    // Generic mapping from Cocos2dx
+    //
+    callback = [&] (Ref* ref ) {
+        this->OnNotification(ref);
+    };
+    
     return true;
 }
 
@@ -42,11 +49,22 @@ Node* uipanel::setBackground( Color3B color )
     return background;
 }
 
-Node* uipanel::setBackground( LPCSTR background )
+Node* uipanel::setBackgroundToHeight( LPCSTR background )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
     f32 scale = visibleSize.height / p->getContentSize().height ;
+    p->setScale(scale, scale );
+    uihelper::AddCenter(this, p);
+    return p;
+}
+
+Node* uipanel::setBackgroundToWidth( LPCSTR background )
+{
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto p = Sprite::create((LPCSTR)background);
+    
+    f32 scale = visibleSize.width / p->getContentSize().width ;
     p->setScale(scale, scale );
     uihelper::AddCenter(this, p);
     return p;

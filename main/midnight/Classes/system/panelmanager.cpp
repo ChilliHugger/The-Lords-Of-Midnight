@@ -17,7 +17,8 @@
 #include "../panels/panel_dedication.h"
 #include "../panels/panel_options.h"
 #include "../panels/panel_look.h"
-#include "../panels/panel_map.h"
+#include "../panels/panel_map_overview.h"
+#include "../panels/panel_map_detailed.h"
 #include "../panels/panel_select.h"
 #include "../panels/panel_advert.h"
 #include "../panels/panel_gameover.h"
@@ -89,8 +90,10 @@ uipanel* panelmanager::getPanel( panelmode_t mode )
         panel =  panel_select::create();
     else if ( mode == MODE_NIGHT )
         panel =  panel_night::create();
-    else if ( mode == MODE_MAP || mode == MODE_DEBUG_MAP )
-        panel =  panel_map::create();
+    else if ( mode == MODE_MAP_OVERVIEW  )
+        panel =  panel_map_overview::create();
+    else if ( mode == MODE_MAP_DETAILED  )
+        panel =  panel_map_detailed::create();
     else if ( mode == MODE_WIN || mode == MODE_LOSE    )
         panel =  panel_gameover::create();
     

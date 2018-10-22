@@ -28,8 +28,9 @@ enum panelmode_t {
     MODE_SELECT_LOYAL,
     MODE_SELECT_LOC,
     MODE_NIGHT,
-    MODE_MAP,
-    MODE_DEBUG_MAP,
+    MODE_MAP_OVERVIEW,
+    MODE_MAP_DETAILED,
+    MODE_MAP_DEBUG,
     MODE_LOAD,
     MODE_SAVE,
     

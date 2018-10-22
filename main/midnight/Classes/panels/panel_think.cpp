@@ -36,14 +36,7 @@ bool panel_think::init()
     setContentSize(Director::getInstance()->getVisibleSize());
     
     setBackground(_clrWhite);
-    
-    //
-    // Generic mapping from Cocos2dx
-    //
-    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback = [&] (Ref* ref ) {
-        this->OnNotification(ref);
-    };
-    
+        
     // lets have a pageview
     pageView = PageView::create();
     pageView->setDirection(ui::PageView::Direction::HORIZONTAL);

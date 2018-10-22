@@ -107,16 +107,7 @@ bool panel_look::init()
     
     current_info = new locationinfo_t();
     follower_info = new locationinfo_t();
-    
-    //
-    // Generic mapping from Cocos2dx
-    //
-    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback = [&] (Ref* ref ) {
-        this->OnNotification(ref);
-    };
-    
-    
-    
+        
     // Command Window
     i_command_window = new uicommandwindow(this);
     
@@ -1003,7 +994,7 @@ void panel_look::OnNotification( Ref* sender )
             
         case ID_MAP:
         {
-            mr->showPage(MODE_MAP);
+            mr->showPage(MODE_MAP_OVERVIEW);
             break;
         }
             

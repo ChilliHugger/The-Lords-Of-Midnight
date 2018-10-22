@@ -28,7 +28,7 @@ bool panel_dedication::init()
     setBackground(_clrWhite);
     
     // Dedication Image
-    image = setBackground("in-memory-of.png");
+    image = setBackgroundToHeight("in-memory-of.png");
     image->setOpacity(0);
     
     f32 delay = CONFIG(screentransitions) ? 3.0f : 1.0f ;
