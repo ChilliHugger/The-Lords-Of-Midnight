@@ -11,11 +11,15 @@
 #include "panel_night.h"
 
 #include "../system/moonring.h"
-//#include "../system/configmanager.h"
-//#include "../system/resolutionmanager.h"
-//#include "../system/panelmanager.h"
+#include "../system/configmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 
+#include "../frontend/layout_id.h"
+
+USING_NS_CC;
+using namespace tme;
+using namespace cocos2d::ui;
 
 bool panel_night::init()
 {
@@ -24,7 +28,131 @@ bool panel_night::init()
         return false;
     }
     
-    setBackground(_clrDarkBlue);
+    setBackground(_clrBlack);
+    
+    // Look Icon
+    auto look = uihelper::CreateImageButton("i_dawn", ID_DAWN, callback);
+    uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
+    look->setLocalZOrder(ZORDER_DEFAULT);
+    look->setEnabled(false);
+    look->setOpacity(ALPHA(0.25f));
+    
+    auto size = Director::getInstance()->getVisibleSize();
+    
+    setContentSize(size);
+    
+    scrollView = ui::ScrollView::create();
+    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    scrollView->setLocalZOrder(ZORDER_DEFAULT-1);
+    
+    // Description
+    lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
+    lblDescription->getFontAtlas()->setAntiAliasTexParameters();
+    lblDescription->setTextColor(Color4B(_clrYellow));
+    lblDescription->setLocalZOrder(ZORDER_DEFAULT);
+    lblDescription->setWidth(size.width-RES(64));
+    lblDescription->setAlignment(TextHAlignment::LEFT);
+    lblDescription->setLineSpacing(0);
+    lblDescription->setMaxLineWidth(size.width-RES(64));
+    lblDescription->enableWrap(true);
+
+    scrollView->addChild(lblDescription);
+    addChild(scrollView);
+    
+    setBackgroundToWidth("screens/misc/night.png");
     
     return true;
+}
+
+void panel_night::OnShown()
+{
+    variables::sv_collate_battle_areas = !mr->config->night_battle_full ;
+    
+    // Initialise in a thread
+    auto atp = AsyncTaskPool::getInstance();
+    atp->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, [&]() {
+
+        TME_Night(this);
+        std::string msg = TME_LastActionMsg();
+        
+        RUN_ON_UI_THREAD([&,msg](){
+            setNightText( msg );
+            auto button = getChildByTag<ui::Button*>(ID_DAWN);
+            button->setEnabled(true);
+            button->setOpacity(ALPHA(1.0f));
+            
+        });
+
+    });
+    
+    
+}
+
+void panel_night::OnNotification( Ref* sender )
+{
+    auto button = static_cast<Button*>(sender);
+    if ( button == nullptr )
+        return;
+    
+    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    
+    switch ( id  )
+    {
+        case ID_DAWN:
+            mr->dawn();
+            break;
+            
+        default:
+            break;
+    }
+}
+
+void panel_night::OnNightNotification ( callback_t* event )
+{
+    if ( event == NULL ) {
+
+        std::string msg = TME_LastActionMsg();
+ 
+        RUN_ON_UI_THREAD([&,msg](){
+            setNightText( msg );
+        });
+
+        if ( !mr->config->night_display_fast )
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    }else{
+        int a = 100;
+    }
+}
+
+
+void panel_night::setNightText( const std::string& text )
+{
+    lblDescription->setString(text);
+    
+    auto size = this->getContentSize();
+    auto textSize = lblDescription->getContentSize();
+    
+    f32 padding = RES(64);
+    f32 textY = RES(32);
+    f32 height = textY+textSize.height;
+    bool enabled = true;
+    
+    if ( height >= size.height ) {
+        height+=padding;
+        enabled=true;
+    }else{
+        height=size.height;
+        enabled=false;
+    }
+    
+    scrollView->setEnabled(enabled);
+    scrollView->setBounceEnabled(enabled);
+    scrollView->setScrollBarEnabled(enabled);
+    
+    scrollView->setInnerContainerSize( Size(size.width,height) );
+    scrollView->setContentSize(size);
+
+    lblDescription->setAnchorPoint(uihelper::AnchorTopLeft);
+    lblDescription->setPosition(RES(32), height-textY);
 }

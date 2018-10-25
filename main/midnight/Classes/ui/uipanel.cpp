@@ -44,6 +44,7 @@ void uipanel::OnNotification( Ref* element )
 Node* uipanel::setBackground( Color3B color )
 {
     auto background = LayerColor::create(Color4B(color));
+    background->setLocalZOrder(ZORDER_FAR);
     uihelper::AddBottomLeft(this, background);
     uihelper::FillParent(background);
     return background;
@@ -55,6 +56,7 @@ Node* uipanel::setBackgroundToHeight( LPCSTR background )
     auto p = Sprite::create((LPCSTR)background);
     f32 scale = visibleSize.height / p->getContentSize().height ;
     p->setScale(scale, scale );
+    p->setLocalZOrder(ZORDER_FAR);
     uihelper::AddCenter(this, p);
     return p;
 }
@@ -63,9 +65,9 @@ Node* uipanel::setBackgroundToWidth( LPCSTR background )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
-    
     f32 scale = visibleSize.width / p->getContentSize().width ;
     p->setScale(scale, scale );
+    p->setLocalZOrder(ZORDER_FAR);
     uihelper::AddCenter(this, p);
     return p;
 }

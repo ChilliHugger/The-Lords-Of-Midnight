@@ -75,6 +75,7 @@ public:
     
     //
     bool look();
+    bool dawn();
     
     // Pages
     void showPage( panelmode_t mode, mxid object = IDT_NONE );

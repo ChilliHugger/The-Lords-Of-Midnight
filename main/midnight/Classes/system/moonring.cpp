@@ -362,6 +362,35 @@ bool moonring::enterTunnel()
 
 #endif
 
+//
+bool moonring::dawn()
+{
+    stories->save(savemode_dawn);
+ 
+    TME_RefreshCurrentCharacter();
+    
+    m_gameover_t gameover = TME_CheckWinLose();
+    
+    if ( gameover == MG_WIN ) {
+        showPage(MODE_WIN);
+        return true;
+    }
+
+    if ( gameover == MG_LOSE ) {
+        showPage(MODE_LOSE);
+        return true;
+    }
+    
+    if ( Character_IsDead(TME_CurrentCharacter()) ) {
+        showPage( MODE_THINK );
+        return true;
+    }
+    
+    showPage(MODE_LOOK, TME_CurrentCharacter().id);
+    
+    return true;
+}
+
 // Game Over
 
 bool moonring::checkGameOverConditions ( void )
