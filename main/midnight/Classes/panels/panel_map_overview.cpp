@@ -57,13 +57,11 @@ bool panel_map_overview::init()
     
     // Command Window
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, callback);
+    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
-    look->setLocalZOrder(ZORDER_DEFAULT);
-
-    auto map = uihelper::CreateImageButton("i_small_map", ID_MAP_DISCOVERY, callback);
+  
+    auto map = uihelper::CreateImageButton("i_small_map", ID_MAP_DISCOVERY, clickCallback);
     uihelper::AddBottomRight(this, map, RES(10), RES(10) );
-    map->setLocalZOrder(ZORDER_DEFAULT);
     
     return true;
 }

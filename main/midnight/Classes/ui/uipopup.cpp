@@ -99,7 +99,7 @@ void uipopup::Show()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
     
     // and show
-    this->setLocalZOrder(ZORDER_NEAR+100);
+    this->setLocalZOrder(ZORDER_POPUP);
     parent->addChild(this);
 }
 

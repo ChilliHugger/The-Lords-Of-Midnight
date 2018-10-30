@@ -26,6 +26,7 @@ USING_NS_CC;
 #define FONT_SIZE_MEDIUM        20
 #define IMAGE_LOGO              "lom_logo"
 
+
 class uihelper
 {
 public:
@@ -49,6 +50,7 @@ public:
     // Parent Node Positioning
     static void PositionParentTopCenter( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
     static void PositionParentTopLeft( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
+    static void PositionParentTopRight( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
 
     static void PositionParentBottomCenter( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
     static void PositionParentBottomLeft( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
@@ -61,6 +63,7 @@ public:
     //
     static Node* AddTopCenter( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
     static Node* AddTopLeft( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
+    static Node* AddTopRight( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
     static Node* AddCenterLeft( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
     static Node* AddCenterRight( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
     static Node* AddBottomCenter( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );
@@ -74,12 +77,16 @@ public:
     // create UI Elements
     static ui::Button* CreateBoxButton( Size size );
     static ui::Button* CreateImageButton( const std::string& name );
-    static ui::Button* CreateImageButton( const std::string& name, u32 id,  const cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback& callback  );
+    static ui::Button* CreateImageButton( const std::string& name, u32 id,  const WidgetClickCallback& callback  );
 
     // positioning
     
     static void PositionBelow( Node* node, Node* ref, f32 paddingY = 0 );
     static void PositionRight( Node* node, Node* ref, f32 paddingX = 0);
+    
+    //
+    static ui::Button* setEnabled( ui::Button* button, bool enabled );
+
     
 };
 

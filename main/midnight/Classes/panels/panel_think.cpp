@@ -18,7 +18,7 @@
 #include "../system/resolutionmanager.h"
 //#include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
-#include "uithinkpage.h"
+#include "../ui/uithinkpage.h"
 
 #include "../frontend/layout_id.h"
 
@@ -60,68 +60,58 @@ bool panel_think::init()
 
     // Command Window
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, callback);
+    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
-    look->setLocalZOrder(ZORDER_DEFAULT);
     
     // TAB ICONS
     int x = RES(10) ;
     int c = RES(100);
     // Person
-    auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, callback);
+    auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, clickCallback);
     uihelper::AddBottomRight(this, person, x+c*0, RES(10) );
-    person->setLocalZOrder(ZORDER_DEFAULT);
     
     // Place
-    auto place = uihelper::CreateImageButton("think_place", ID_THINK_PLACE, callback);
+    auto place = uihelper::CreateImageButton("think_place", ID_THINK_PLACE, clickCallback);
     uihelper::AddBottomRight(this, place, x+c*1, RES(10) );
-    place->setLocalZOrder(ZORDER_DEFAULT);
     
     // Army
-    auto army = uihelper::CreateImageButton("think_army", ID_THINK_ARMY, callback);
+    auto army = uihelper::CreateImageButton("think_army", ID_THINK_ARMY, clickCallback);
     uihelper::AddBottomRight(this, army, x+c*2, RES(10) );
-    army->setLocalZOrder(ZORDER_DEFAULT);
     
     // Battle
-    auto battle = uihelper::CreateImageButton("think_battle", ID_THINK_BATTLE, callback);
+    auto battle = uihelper::CreateImageButton("think_battle", ID_THINK_BATTLE, clickCallback);
     uihelper::AddBottomRight(this, battle, x+c*3, RES(10) );
-    battle->setLocalZOrder(ZORDER_DEFAULT);
     
     // MISC Action Icons
     x = RES(10) + (5.5*c) ;
     c+= RES(20);
     
     // Approach
-    auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, callback);
+    auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, clickCallback);
     uihelper::AddBottomRight(this, approach, x+c*0, RES(10) );
-    approach->setLocalZOrder(ZORDER_DEFAULT);
     approach->setVisible(false);
     
     // Fight
 #if defined(_LOM_)
-    auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
+    auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
     uihelper::AddBottomRight(this, fight, x+c*0, RES(10) );
-    fight->setLocalZOrder(ZORDER_DEFAULT);
     fight->setVisible(false);
     
     // Unhide
-    auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, callback);
+    auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, clickCallback);
     uihelper::AddBottomRight(this, unhide, x+c*0, RES(10) );
-    unhide->setLocalZOrder(ZORDER_DEFAULT);
     unhide->setVisible(false);
 #endif
     
     // Leave
-    auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEFT, callback);
+    auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEFT, clickCallback);
     uihelper::AddBottomRight(this, leave, x+c*0, RES(10) );
-    leave->setLocalZOrder(ZORDER_DEFAULT);
     leave->setVisible(false);
     
     
     // Disband
-    auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, callback);
+    auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);
     uihelper::AddBottomRight(this, disband, x+c*0, RES(10) );
-    disband->setLocalZOrder(ZORDER_DEFAULT);
     disband->setVisible(false);
     
     // Stronghold
@@ -141,10 +131,7 @@ void panel_think::showButton(layoutid_t id, bool enabled)
 void panel_think::enableButton(layoutid_t id, bool enabled)
 {
     auto button = getChildByTag<ui::Button*>(id);
-    if ( button ) {
-        button->setEnabled(enabled);
-        button->setOpacity( enabled ? ALPHA(1.0f) : ALPHA(0.25f) );
-    }
+    uihelper::setEnabled(button, enabled);
 }
 
 void panel_think::tintButton(layoutid_t id,Color3B colour)

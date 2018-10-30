@@ -67,6 +67,18 @@ void uihelper::PositionParentTopLeft( Node* node, f32 paddingX, f32 paddingY )
     node->setIgnoreAnchorPointForPosition(false);
 }
 
+void uihelper::PositionParentTopRight( Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node->getParent() == nullptr )
+        return;
+    
+    auto r = node->getParent()->getBoundingBox();
+    node->setPosition(r.size.width - paddingX, r.size.height-paddingY );
+    node->setAnchorPoint( uihelper::AnchorTopRight );
+    node->setIgnoreAnchorPointForPosition(false);
+}
+
+
 void uihelper::PositionParentCenterLeft( Node* node, f32 paddingX, f32 paddingY )
 {
     if ( node->getParent() == nullptr )
@@ -150,6 +162,16 @@ Node* uihelper::AddTopLeft( Node* parent, Node* node, f32 paddingX, f32 paddingY
     }
     return node;
 }
+
+Node* uihelper::AddTopRight( Node* parent, Node* node, f32 paddingX, f32 paddingY )
+{
+    if ( node != nullptr ) {
+        parent->addChild(node);
+        uihelper::PositionParentTopRight(node,paddingX,paddingY);
+    }
+    return node;
+}
+
 
 Node* uihelper::AddCenterLeft( Node* parent, Node* node, f32 paddingX, f32 paddingY )
 {
@@ -241,13 +263,17 @@ void uihelper::PositionRight( Node* node, Node* ref, f32 paddingX)
 
 ui::Button* uihelper::CreateImageButton( const std::string& name )
 {
+ui:cocos2d::ui::Button* button;
     if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
-        return ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
+        button=ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
+    }else{
+        button=ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::PLIST);
     }
-    return ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::PLIST);
+    button->setLocalZOrder(ZORDER_UI);
+    return uihelper::setEnabled(button,true);
 }
 
-ui::Button* uihelper::CreateImageButton( const std::string& name, u32 id, const cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback& callback )
+ui::Button* uihelper::CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback )
 {
     auto button = uihelper::CreateImageButton(name);
     button->setTag(id);
@@ -275,11 +301,21 @@ ui::Button* uihelper::CreateBoxButton( Size size )
     button->setTouchEnabled(true);
     button->setScale9Enabled(true);
     button->setContentSize(size);
+    button->setLocalZOrder(ZORDER_UI);
+    uihelper::setEnabled(button,true);
     // Adjust for centreY without trailing character
     button->getTitleRenderer()->setLineHeight(RES(25));
     return button;
 }
 
+ui::Button* uihelper::setEnabled( ui::Button* button, bool enabled )
+{
+    if ( button != nullptr ) {
+        button->setEnabled(enabled);
+        button->setOpacity( enabled ? ALPHA(1.0f) : ALPHA(0.25f) );
+    }
+    return button;
+}
 
 
 

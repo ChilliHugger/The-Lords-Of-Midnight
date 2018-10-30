@@ -81,11 +81,11 @@ bool panel_mainmenu::init()
     //
     // Guide and Manual
     //    
-    auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, callback);
+    auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback);
     uihelper::AddBottomRight(this,guide, RES(10), RES(10) );
     guide->cocos2d::Node::setScale(1.5f);
     
-    auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, callback);
+    auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, clickCallback);
     uihelper::AddBottomLeft(this,story, RES(10), RES(10) );
     story->cocos2d::Node::setScale(1.5f);
     

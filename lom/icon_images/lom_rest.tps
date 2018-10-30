@@ -4,9 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.5.0</string>
-        <key>fileName</key>
-        <string>/Users/chris/Projects/The-Lords-Of-Midnight/lom/icon_images/lom_rest.tps</string>
+        <string>4.9.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -146,22 +144,6 @@
                 <uint>1</uint>
             </struct>
         </struct>
-        <key>andEngine</key>
-        <struct type="AndEngine">
-            <key>minFilter</key>
-            <enum type="AndEngine::MinFilter">Linear</enum>
-            <key>packageName</key>
-            <string>Texture</string>
-            <key>wrap</key>
-            <struct type="AndEngineWrap">
-                <key>s</key>
-                <enum type="AndEngineWrap::Wrap">Clamp</enum>
-                <key>t</key>
-                <enum type="AndEngineWrap::Wrap">Clamp</enum>
-            </struct>
-            <key>magFilter</key>
-            <enum type="AndEngine::MagFilter">MagLinear</enum>
-        </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
             <key>data</key>
@@ -250,6 +232,7 @@
             <key type="filename">misc/i_minus.png</key>
             <key type="filename">misc/i_plus.png</key>
             <key type="filename">select/f_dead!.png</key>
+            <key type="filename">select/i_cleanup.png</key>
             <key type="filename">select/i_disband_group.png</key>
             <key type="filename">select/i_leave_group.png</key>
             <key type="filename">select/lord_battle.png</key>
@@ -287,6 +270,7 @@
             <key type="filename">menu/bookmark.png</key>
             <key type="filename">menu/bookmark_overlay.png</key>
             <key type="filename">misc/background_tile.png</key>
+            <key type="filename">misc/lord_select_circle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

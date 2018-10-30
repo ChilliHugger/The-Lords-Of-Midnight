@@ -30,7 +30,11 @@ bool uipanel::init()
     //
     // Generic mapping from Cocos2dx
     //
-    callback = [&] (Ref* ref ) {
+    clickCallback = [&] (Ref* ref ) {
+        this->OnNotification(ref);
+    };
+    
+    eventCallback = [&] (Ref* ref, int evt ) {
         this->OnNotification(ref);
     };
     

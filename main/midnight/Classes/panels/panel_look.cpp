@@ -111,14 +111,12 @@ bool panel_look::init()
     // Command Window
     i_command_window = new uicommandwindow(this);
     
-    auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, callback);
+    auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, clickCallback);
     uihelper::AddBottomRight(this, choose, RES(10), RES(10) );
-    choose->setLocalZOrder(ZORDER_DEFAULT);
 
     // Character Selection
-    auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, callback);
+    auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, clickCallback);
     uihelper::AddBottomLeft(this, select, RES(10), RES(10) );
-    select->setLocalZOrder(ZORDER_DEFAULT);
     
     
     // Keyboard

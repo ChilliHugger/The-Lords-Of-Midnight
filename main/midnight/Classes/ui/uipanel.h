@@ -13,6 +13,7 @@
 
 #include "../system/helpmanager.h"
 #include "../frontend/panel_id.h"
+#include "../ui/uielement.h"
 
 using namespace chilli::types;
 
@@ -21,7 +22,7 @@ FORWARD_REFERENCE( uipopup );
 FORWARD_REFERENCE( uihelpwindow );
 FORWARD_REFERENCE( moonring );
 FORWARD_REFERENCE( uieventargs );
-FORWARD_REFERENCE( uielement );
+//FORWARD_REFERENCE( uielement );
 
 class uipanel : public cocos2d::Scene
 {
@@ -79,7 +80,8 @@ protected:
     
     bool            enabled;
     
-    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback;
+    WidgetClickCallback clickCallback;
+    WidgetEventCallback eventCallback;
     
 public:
     panelmode_t     currentmode;

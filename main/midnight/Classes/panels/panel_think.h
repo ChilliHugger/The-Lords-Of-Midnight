@@ -10,7 +10,7 @@
 #pragma once
 
 #include "uipanel.h"
-#include "uithinkpage.h"
+#include "../ui/uithinkpage.h"
 #include "../frontend/layout_id.h"
 
 class panel_think : public uipanel

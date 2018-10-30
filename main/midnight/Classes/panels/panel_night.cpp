@@ -31,19 +31,17 @@ bool panel_night::init()
     setBackground(_clrBlack);
     
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_dawn", ID_DAWN, callback);
+    auto look = uihelper::CreateImageButton("i_dawn", ID_DAWN, clickCallback);
     uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
-    look->setLocalZOrder(ZORDER_DEFAULT);
-    look->setEnabled(false);
-    look->setOpacity(ALPHA(0.25f));
-    
+    uihelper::setEnabled(look, false);
+
     auto size = Director::getInstance()->getVisibleSize();
     
     setContentSize(size);
     
     scrollView = ui::ScrollView::create();
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
-    scrollView->setLocalZOrder(ZORDER_DEFAULT-1);
+    scrollView->setLocalZOrder(ZORDER_FAR);
     
     // Description
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
@@ -77,9 +75,9 @@ void panel_night::OnShown()
         
         RUN_ON_UI_THREAD([&,msg](){
             setNightText( msg );
+            
             auto button = getChildByTag<ui::Button*>(ID_DAWN);
-            button->setEnabled(true);
-            button->setOpacity(ALPHA(1.0f));
+            uihelper::setEnabled(button, true);
             
         });
 

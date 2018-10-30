@@ -17,6 +17,14 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
+uihelpwindow::uihelpwindow()
+{
+    closeCallback = nullptr;
+    layout=nullptr;
+    id= HELP_NONE;
+    parent=nullptr;
+}
+
 uihelpwindow::uihelpwindow( uipanel* parent, helpid_t id)
 {
     auto rect = parent->getBoundingBox();
@@ -90,7 +98,7 @@ uihelpwindow::uihelpwindow( uipanel* parent, helpid_t id)
     uihelper::AddTopLeft(layout,close, RES(8), RES(8) );
     close->setAnchorPoint(uihelper::AnchorCenter);
     
-    this->setLocalZOrder(ZORDER_NEAR);
+    this->setLocalZOrder(ZORDER_POPUP);
 }
 
 void uihelpwindow::Show( MXVoidCallback callback )

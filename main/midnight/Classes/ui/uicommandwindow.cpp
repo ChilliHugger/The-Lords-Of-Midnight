@@ -54,7 +54,7 @@ uicommandwindow::uicommandwindow( uipanel* parent )
 
     layout->setContentSize(Size(width,maxHeight));
     
-    this->setLocalZOrder(ZORDER_NEAR);
+    this->setLocalZOrder(ZORDER_POPUP);
     
     initialiseCommands();
     
