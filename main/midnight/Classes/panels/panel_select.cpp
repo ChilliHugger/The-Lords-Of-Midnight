@@ -16,6 +16,7 @@
 //#include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 #include "../frontend/language.h"
+#include "../ui/characters/uisinglelord.h"
 
 
 USING_NS_CC;
@@ -77,6 +78,9 @@ bool panel_select::init()
     auto cleanup = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
     uihelper::AddTopRight(this, cleanup, RES(10), (r*6)-adjy );
 
+    auto test = uisinglelord::createWithLord(default_characters[0]);
+    test->setPosition(200,200);
+    addChild(test);
     
     return true;
 }

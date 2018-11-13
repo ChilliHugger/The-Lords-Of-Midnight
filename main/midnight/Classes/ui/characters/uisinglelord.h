@@ -17,6 +17,9 @@ class uisinglelord : public uilordselect
 public:
     CREATE_FUNC(uisinglelord);
     virtual bool init() override;
+    static uisinglelord* createWithLord ( mxid characterid );
+
+    bool setLord( mxid characterid );
     
 protected:
     uisinglelord();
