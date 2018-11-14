@@ -45,7 +45,7 @@ protected:
 };
 
 
-class uielement : public cocos2d::Node, public uinotificationinterface
+class uielement : public cocos2d::Layer, public uinotificationinterface
 {
 public:
     static uielement* create();

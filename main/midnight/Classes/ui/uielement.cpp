@@ -5,9 +5,14 @@
 //  Created by Chris Wild on 09/12/2017.
 //
 //
+#include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 #include "uielement.h"
+#include "uihelper.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
 
 uielement::uielement()
 {
@@ -29,5 +34,5 @@ uielement* uielement::create()
 
 bool uielement::init()
 {
-    return Node::init();
+    return Layer::init();
 }

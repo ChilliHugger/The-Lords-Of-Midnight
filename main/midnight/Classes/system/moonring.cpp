@@ -369,17 +369,17 @@ bool moonring::dawn()
  
     TME_RefreshCurrentCharacter();
     
-    m_gameover_t gameover = TME_CheckWinLose();
-    
-    if ( gameover == MG_WIN ) {
-        showPage(MODE_WIN);
-        return true;
-    }
-
-    if ( gameover == MG_LOSE ) {
-        showPage(MODE_LOSE);
-        return true;
-    }
+//    m_gameover_t gameover = TME_CheckWinLose();
+//    
+//    if ( gameover == MG_WIN ) {
+//        showPage(MODE_WIN);
+//        return true;
+//    }
+//
+//    if ( gameover == MG_LOSE ) {
+//        showPage(MODE_LOSE);
+//        return true;
+//    }
     
     if ( Character_IsDead(TME_CurrentCharacter()) ) {
         showPage( MODE_THINK );

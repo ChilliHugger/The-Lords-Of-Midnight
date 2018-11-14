@@ -159,7 +159,7 @@ namespace tme {
         mxstronghold* sh_xajorkith = (mxstronghold*)mx->EntityByName("SH_CITADEL_XAJORKITH");
     
         
-        int test = 6;
+        int test = 5;
         
         morkin->carrying = mx->ObjectById(OB_ICECROWN);
 
@@ -235,6 +235,12 @@ namespace tme {
                 
                 xajorkith->Location( luxor->Location() );
                 mx->battle->KickOffAtLocation(luxor->Location());
+                break;
+                
+            case 8:
+                // luxor and morkin dead
+                luxor->Cmd_Dead();
+                morkin->Cmd_Dead();
                 break;
                 
                 

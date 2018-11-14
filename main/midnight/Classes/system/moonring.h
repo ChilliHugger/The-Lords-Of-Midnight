@@ -79,10 +79,11 @@ public:
     
     // Pages
     void showPage( panelmode_t mode, mxid object = IDT_NONE );
-    
+
+    bool checkGameOverConditions ( void );
 protected:
     
-    bool checkGameOverConditions ( void );
+
     
     std::mutex              mutex;
     std::condition_variable condition;

@@ -33,11 +33,11 @@ public:
     virtual ~char_data_t();
     
 public:
-    c_str   face;
-    c_str    shield;
+    c_str       face;
+    c_str       shield;
     
     // select screen
-    point       select_loc;
+    point      select_loc;
     c_str      shortcut;
     c_str      shortcut2;
     

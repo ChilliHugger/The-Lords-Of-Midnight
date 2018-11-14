@@ -15,9 +15,11 @@ class panel_gameover : public uipanel
 {
 	
 public:
-    virtual bool init();
+    virtual bool init() override;
     
     CREATE_FUNC(panel_gameover);
     
-protected:	
+protected:
+    void OnNotification( Ref* sender ) override;
+    void OnShown() override;
 };

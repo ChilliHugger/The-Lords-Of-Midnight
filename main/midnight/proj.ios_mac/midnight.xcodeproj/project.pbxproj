@@ -63,6 +63,14 @@
 		831AD5831FE58671001108AC /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
 		831AD5861FE58F99001108AC /* uibookmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5841FE58F99001108AC /* uibookmenu.cpp */; };
 		831AD5871FE5A0FC001108AC /* uibookmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5841FE58F99001108AC /* uibookmenu.cpp */; };
+		833172F7219B1E85009A52E7 /* uiselectpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172EF219B1E84009A52E7 /* uiselectpanel.cpp */; };
+		833172F8219B1E85009A52E7 /* uiselectpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172EF219B1E84009A52E7 /* uiselectpanel.cpp */; };
+		833172F9219B1E85009A52E7 /* uisinglelord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F0219B1E84009A52E7 /* uisinglelord.cpp */; };
+		833172FA219B1E85009A52E7 /* uisinglelord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F0219B1E84009A52E7 /* uisinglelord.cpp */; };
+		833172FB219B1E85009A52E7 /* uigrouplord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F4219B1E85009A52E7 /* uigrouplord.cpp */; };
+		833172FC219B1E85009A52E7 /* uigrouplord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F4219B1E85009A52E7 /* uigrouplord.cpp */; };
+		833172FD219B1E85009A52E7 /* uilordselect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F5219B1E85009A52E7 /* uilordselect.cpp */; };
+		833172FE219B1E85009A52E7 /* uilordselect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F5219B1E85009A52E7 /* uilordselect.cpp */; };
 		83398A8B20D1A46C007EAE7B /* panelmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8920D1A46C007EAE7B /* panelmanager.cpp */; };
 		83398A8C20D1A46C007EAE7B /* panelmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8920D1A46C007EAE7B /* panelmanager.cpp */; };
 		83398A8F20D1ADCB007EAE7B /* ringcontroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8D20D1ADCB007EAE7B /* ringcontroller.cpp */; };
@@ -192,10 +200,6 @@
 		8351E40E1F3A655C00605D75 /* lom_map_test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E40D1F3A655C00605D75 /* lom_map_test.tmx */; };
 		8352FBD1216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
 		8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
-		837523D8218B8477005E3C35 /* uilordselect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837523D0218B8476005E3C35 /* uilordselect.cpp */; };
-		837523D9218B8477005E3C35 /* uiselectpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837523D5218B8477005E3C35 /* uiselectpanel.cpp */; };
-		837523DA218B8477005E3C35 /* uisinglelord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837523D6218B8477005E3C35 /* uisinglelord.cpp */; };
-		837523DB218B8477005E3C35 /* uigrouplord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837523D7218B8477005E3C35 /* uigrouplord.cpp */; };
 		83784AC61FCF216900F5AD66 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */; };
 		83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
 		8397AFDC1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
@@ -453,6 +457,14 @@
 		831AD5811FE58436001108AC /* uibook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uibook.h; sourceTree = "<group>"; };
 		831AD5841FE58F99001108AC /* uibookmenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uibookmenu.cpp; sourceTree = "<group>"; };
 		831AD5851FE58F99001108AC /* uibookmenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uibookmenu.h; sourceTree = "<group>"; };
+		833172EF219B1E84009A52E7 /* uiselectpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uiselectpanel.cpp; sourceTree = "<group>"; };
+		833172F0219B1E84009A52E7 /* uisinglelord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uisinglelord.cpp; sourceTree = "<group>"; };
+		833172F1219B1E84009A52E7 /* uigrouplord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uigrouplord.h; sourceTree = "<group>"; };
+		833172F2219B1E84009A52E7 /* uilordselect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uilordselect.h; sourceTree = "<group>"; };
+		833172F3219B1E85009A52E7 /* uisinglelord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uisinglelord.h; sourceTree = "<group>"; };
+		833172F4219B1E85009A52E7 /* uigrouplord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uigrouplord.cpp; sourceTree = "<group>"; };
+		833172F5219B1E85009A52E7 /* uilordselect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uilordselect.cpp; sourceTree = "<group>"; };
+		833172F6219B1E85009A52E7 /* uiselectpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uiselectpanel.h; sourceTree = "<group>"; };
 		83398A8920D1A46C007EAE7B /* panelmanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panelmanager.cpp; sourceTree = "<group>"; };
 		83398A8A20D1A46C007EAE7B /* panelmanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panelmanager.h; sourceTree = "<group>"; };
 		83398A8D20D1ADCB007EAE7B /* ringcontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ringcontroller.cpp; sourceTree = "<group>"; };
@@ -493,14 +505,6 @@
 		8351E40D1F3A655C00605D75 /* lom_map_test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map_test.tmx; sourceTree = "<group>"; };
 		8352FBCF216DD693009E22E5 /* ILandscape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ILandscape.h; path = landscaping/ILandscape.h; sourceTree = "<group>"; };
 		8352FBD0216DD693009E22E5 /* ILandscape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ILandscape.cpp; path = landscaping/ILandscape.cpp; sourceTree = "<group>"; };
-		837523D0218B8476005E3C35 /* uilordselect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uilordselect.cpp; path = ../characters/uilordselect.cpp; sourceTree = "<group>"; };
-		837523D1218B8476005E3C35 /* uilordselect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uilordselect.h; path = ../characters/uilordselect.h; sourceTree = "<group>"; };
-		837523D2218B8476005E3C35 /* uisinglelord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uisinglelord.h; path = ../characters/uisinglelord.h; sourceTree = "<group>"; };
-		837523D3218B8476005E3C35 /* uigrouplord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uigrouplord.h; path = ../characters/uigrouplord.h; sourceTree = "<group>"; };
-		837523D4218B8476005E3C35 /* uiselectpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uiselectpanel.h; path = ../characters/uiselectpanel.h; sourceTree = "<group>"; };
-		837523D5218B8477005E3C35 /* uiselectpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uiselectpanel.cpp; path = ../characters/uiselectpanel.cpp; sourceTree = "<group>"; };
-		837523D6218B8477005E3C35 /* uisinglelord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uisinglelord.cpp; path = ../characters/uisinglelord.cpp; sourceTree = "<group>"; };
-		837523D7218B8477005E3C35 /* uigrouplord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uigrouplord.cpp; path = ../characters/uigrouplord.cpp; sourceTree = "<group>"; };
 		8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGenerator.cpp; path = landscaping/LandscapeGenerator.cpp; sourceTree = "<group>"; };
 		8397AFDB1F4C18BA009B00A2 /* LandscapeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeGenerator.h; path = landscaping/LandscapeGenerator.h; sourceTree = "<group>"; };
 		8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeSky.cpp; path = landscaping/LandscapeSky.cpp; sourceTree = "<group>"; };
@@ -895,6 +899,21 @@
 			path = ios;
 			sourceTree = SOURCE_ROOT;
 		};
+		833172FF219B1E8B009A52E7 /* characters */ = {
+			isa = PBXGroup;
+			children = (
+				833172F4219B1E85009A52E7 /* uigrouplord.cpp */,
+				833172F1219B1E84009A52E7 /* uigrouplord.h */,
+				833172F5219B1E85009A52E7 /* uilordselect.cpp */,
+				833172F2219B1E84009A52E7 /* uilordselect.h */,
+				833172EF219B1E84009A52E7 /* uiselectpanel.cpp */,
+				833172F6219B1E85009A52E7 /* uiselectpanel.h */,
+				833172F0219B1E84009A52E7 /* uisinglelord.cpp */,
+				833172F3219B1E85009A52E7 /* uisinglelord.h */,
+			);
+			path = characters;
+			sourceTree = "<group>";
+		};
 		8344EC291FD1EB010067AAC1 /* panels */ = {
 			isa = PBXGroup;
 			children = (
@@ -944,9 +963,9 @@
 		8344EC371FD20F280067AAC1 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				833172FF219B1E8B009A52E7 /* characters */,
 				83A600032187B98700FBDAFC /* uithinkpage.cpp */,
 				83A600042187B98700FBDAFC /* uithinkpage.h */,
-				83A600022187B5A800FBDAFC /* Characters */,
 				83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */,
 				83B5AB5B2174E16300CC29EF /* uicommandwindow.h */,
 				83B9BD711FD30AF700B4C721 /* uipanel.cpp */,
@@ -1003,22 +1022,6 @@
 				83B5AB782177892B00CC29EF /* LandscapePeople.h */,
 			);
 			name = landscaping;
-			sourceTree = "<group>";
-		};
-		83A600022187B5A800FBDAFC /* Characters */ = {
-			isa = PBXGroup;
-			children = (
-				837523D7218B8477005E3C35 /* uigrouplord.cpp */,
-				837523D3218B8476005E3C35 /* uigrouplord.h */,
-				837523D0218B8476005E3C35 /* uilordselect.cpp */,
-				837523D1218B8476005E3C35 /* uilordselect.h */,
-				837523D5218B8477005E3C35 /* uiselectpanel.cpp */,
-				837523D4218B8476005E3C35 /* uiselectpanel.h */,
-				837523D6218B8477005E3C35 /* uisinglelord.cpp */,
-				837523D2218B8476005E3C35 /* uisinglelord.h */,
-			);
-			name = Characters;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		83B9BD6B1FD2D35900B4C721 /* Extensions */ = {
@@ -1478,6 +1481,7 @@
 				83D264801F360724001C6F13 /* default_scenario.cpp in Sources */,
 				8397AFE11F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */,
 				83D264681F360724001C6F13 /* item_stronghold.cpp in Sources */,
+				833172F7219B1E85009A52E7 /* uiselectpanel.cpp in Sources */,
 				83D264381F360724001C6F13 /* mxgridref.cpp in Sources */,
 				8397AFF81F4CCAB5009B00A2 /* LandscapeDebug.cpp in Sources */,
 				83D2647A1F360724001C6F13 /* ddr_processor_night.cpp in Sources */,
@@ -1488,9 +1492,9 @@
 				83B5AB6B21760B4100CC29EF /* panel_map_overview.cpp in Sources */,
 				83A9ACBA1FEBBEBB00673B66 /* MyButton.cpp in Sources */,
 				83A600052187B98700FBDAFC /* uithinkpage.cpp in Sources */,
+				833172F9219B1E85009A52E7 /* uisinglelord.cpp in Sources */,
 				83B9BD811FD9AE2000B4C721 /* configmanager.cpp in Sources */,
 				83D2645E1F360724001C6F13 /* info_unit.cpp in Sources */,
-				837523D8218B8477005E3C35 /* uilordselect.cpp in Sources */,
 				83B5AB6F21760B4100CC29EF /* panel_night.cpp in Sources */,
 				83B668992185EF5700B130FC /* uifilterbutton.cpp in Sources */,
 				83D2644C1F360724001C6F13 /* info_area.cpp in Sources */,
@@ -1518,11 +1522,10 @@
 				83D264DA1F36077E001C6F13 /* datatypes.cpp in Sources */,
 				83D264641F360724001C6F13 /* item_regiment.cpp in Sources */,
 				83D2647C1F360724001C6F13 /* ddr_processor_text.cpp in Sources */,
-				837523DB218B8477005E3C35 /* uigrouplord.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				83D264541F360724001C6F13 /* info_object.cpp in Sources */,
-				837523D9218B8477005E3C35 /* uiselectpanel.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				833172FB219B1E85009A52E7 /* uigrouplord.cpp in Sources */,
 				83D895F41F36110400172245 /* citadel_scenario.cpp in Sources */,
 				83398A8F20D1ADCB007EAE7B /* ringcontroller.cpp in Sources */,
 				83D264441F360724001C6F13 /* variables.cpp in Sources */,
@@ -1551,7 +1554,6 @@
 				83D895FB1F36666D00172245 /* TMEMapBuilder.cpp in Sources */,
 				83A9B892216EA175005D9EE4 /* panel_think.cpp in Sources */,
 				83D264E01F36077E001C6F13 /* misc.cpp in Sources */,
-				837523DA218B8477005E3C35 /* uisinglelord.cpp in Sources */,
 				83E108B21FE5684B00C29042 /* panel_dedication.cpp in Sources */,
 				83D264761F360724001C6F13 /* ddr_character.cpp in Sources */,
 				83D264341F360724001C6F13 /* mxentity.cpp in Sources */,
@@ -1569,6 +1571,7 @@
 				83D2644E1F360724001C6F13 /* info_command.cpp in Sources */,
 				839F0D731FDBEB7D000E2CC2 /* uitextmenu.cpp in Sources */,
 				83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */,
+				833172FD219B1E85009A52E7 /* uilordselect.cpp in Sources */,
 				83D264D81F36077E001C6F13 /* c_str.cpp in Sources */,
 				8351A51D1FDF317400D9AB57 /* uihelpwindow.cpp in Sources */,
 				83D264D61F36077E001C6F13 /* crange.cpp in Sources */,
@@ -1600,6 +1603,7 @@
 				83D2646F1F360724001C6F13 /* processor_battle.cpp in Sources */,
 				83D264331F360724001C6F13 /* mxengine.cpp in Sources */,
 				831AD5871FE5A0FC001108AC /* uibookmenu.cpp in Sources */,
+				833172FC219B1E85009A52E7 /* uigrouplord.cpp in Sources */,
 				83D2643F1F360724001C6F13 /* mxitem.cpp in Sources */,
 				83D2644D1F360724001C6F13 /* info_area.cpp in Sources */,
 				83D264491F360724001C6F13 /* army.cpp in Sources */,
@@ -1640,6 +1644,7 @@
 				83D264C31F36077E001C6F13 /* xml.cpp in Sources */,
 				83113FD41F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */,
 				8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */,
+				833172FE219B1E85009A52E7 /* uilordselect.cpp in Sources */,
 				83A600062187B98700FBDAFC /* uithinkpage.cpp in Sources */,
 				83D264731F360724001C6F13 /* processor_text.cpp in Sources */,
 				83D264CB1F36077E001C6F13 /* cfile_common.cpp in Sources */,
@@ -1688,6 +1693,7 @@
 				839F0D801FDBFF25000E2CC2 /* uieventargs.cpp in Sources */,
 				83D264691F360724001C6F13 /* item_stronghold.cpp in Sources */,
 				83D264D71F36077E001C6F13 /* crange.cpp in Sources */,
+				833172F8219B1E85009A52E7 /* uiselectpanel.cpp in Sources */,
 				83D895F51F36110400172245 /* citadel_scenario.cpp in Sources */,
 				83D264791F360724001C6F13 /* ddr_processor_battle.cpp in Sources */,
 				83D264591F360724001C6F13 /* info_object_type.cpp in Sources */,
@@ -1708,6 +1714,7 @@
 				83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				8344EC2D1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,
 				83A9ACBB1FEBBEBB00673B66 /* MyButton.cpp in Sources */,
+				833172FA219B1E85009A52E7 /* uisinglelord.cpp in Sources */,
 				83B5AB7E217E20A000CC29EF /* panel_map_detailed.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

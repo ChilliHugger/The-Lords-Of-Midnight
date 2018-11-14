@@ -3,42 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "GLOBAL">
-         <PersistentStrings>
-            <PersistentString
-               value = "options.movementAmount">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "progressmonitor::NotifyProgress():progressmonitor.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "Landscape::Moving():LandscapeScene.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "moveFrom">
-            </PersistentString>
-            <PersistentString
-               value = "moveTo">
-            </PersistentString>
-            <PersistentString
-               value = "here">
-            </PersistentString>
-            <PersistentString
-               value = "moveCount">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "tmemanager::ResolveTMEData():tmemanager.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "c.longname">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "moonring::Initialise(progressmonitor*)::$_0::operator()(cocos2d::Texture2D*) const:moonring.cpp">
          <PersistentStrings>
             <PersistentString
@@ -50,7 +14,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "LandscapeColour::CalcCurrentMovementTint(unsigned int):LandscapeColour.cpp">
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "options.movementAmount">
+            </PersistentString>
+            <PersistentString
+               value = "mx-&gt;lastactiontext">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "storymanager::getStoriesInfo():storymanager.cpp">
@@ -61,10 +33,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "panel_look::StartMoving()::$_3::operator()(float) const:panel_look.cpp">
+         contextName = "tmemanager::ResolveTMEData():tmemanager.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "this-&gt;options">
+               value = "c.longname">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -80,12 +52,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "uithinkpage::displayCharacter(tme::scenarios::exports::character_t const&amp;):uithinkpage.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "d">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "LandscapeColour::CalcCurrentMovementTint(unsigned int):LandscapeColour.cpp">
       </ContextState>
       <ContextState
          contextName = "panel_options::SetValues():panel_options.cpp">
@@ -94,6 +61,42 @@
                value = "this-&gt;_children">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "uithinkpage::displayCharacter(tme::scenarios::exports::character_t const&amp;):uithinkpage.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "d">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "panel_look::StartMoving()::$_3::operator()(float) const:panel_look.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "this-&gt;options">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Landscape::Moving():LandscapeScene.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "moveCount">
+            </PersistentString>
+            <PersistentString
+               value = "moveTo">
+            </PersistentString>
+            <PersistentString
+               value = "moveFrom">
+            </PersistentString>
+            <PersistentString
+               value = "here">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "progressmonitor::NotifyProgress():progressmonitor.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

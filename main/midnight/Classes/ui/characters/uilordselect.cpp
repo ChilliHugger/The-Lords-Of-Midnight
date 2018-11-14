@@ -15,5 +15,5 @@ uilordselect::uilordselect()
 
 bool uilordselect::init()
 {
-    return uielement::init();
+    return Widget::init();
 }

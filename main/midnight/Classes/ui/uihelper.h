@@ -24,6 +24,7 @@ USING_NS_CC;
 #define FONT_FILENAME           "fonts/celtic.ttf"
 #define FONT_SIZE_BIG           30
 #define FONT_SIZE_MEDIUM        20
+#define FONT_SIZE_SMALL         12
 #define IMAGE_LOGO              "lom_logo"
 
 
@@ -35,6 +36,7 @@ public:
     // Fonts
     static TTFConfig font_config_big;
     static TTFConfig font_config_medium;
+    static TTFConfig font_config_small;
     
     // Anchors
     static Vec2 AnchorTopLeft;
@@ -59,6 +61,8 @@ public:
     static void PositionParentCenter( Node* node, f32 paddingX = 0, f32 paddingY = 0  );
     static void PositionParentCenterLeft( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
     static void PositionParentCenterRight( Node* node, f32 paddingX = 0, f32 paddingY = 0 );
+
+    static void PositionCenterAnchor (Node* node, Vec2 anchor, f32 paddingX=0, f32 paddingY=0 );
 
     //
     static Node* AddTopCenter( Node* parent, Node* node, f32 paddingX=0, f32 paddingY=0 );

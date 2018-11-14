@@ -24,6 +24,7 @@ Vec2 uihelper::AnchorBottomCenter = Vec2(0.5,0);
 
 TTFConfig uihelper::font_config_big;
 TTFConfig uihelper::font_config_medium;
+TTFConfig uihelper::font_config_small;
 
 void uihelper::Init()
 {
@@ -40,6 +41,14 @@ void uihelper::Init()
     font_config_medium.outlineSize = 0;
     font_config_medium.customGlyphs = nullptr;
     font_config_medium.distanceFieldEnabled = false;
+
+    font_config_small.fontFilePath = FONT_FILENAME;
+    font_config_small.fontSize = RES(FONT_SIZE_SMALL);
+    font_config_small.glyphs = GlyphCollection::DYNAMIC;
+    font_config_small.outlineSize = 0;
+    font_config_small.customGlyphs = nullptr;
+    font_config_small.distanceFieldEnabled = false;
+
 }
 
 //
@@ -255,6 +264,17 @@ void uihelper::PositionRight( Node* node, Node* ref, f32 paddingX)
    
     node->setPosition( p.x + r.size.width + paddingX, p.y);
     node->setAnchorPoint( ref->getAnchorPoint() );
+}
+
+void uihelper::PositionCenterAnchor (Node* node, Vec2 anchor, f32 paddingX, f32 paddingY )
+{
+    if ( node->getParent() == nullptr )
+        return;
+    
+    auto r = node->getParent()->getBoundingBox();
+    node->setPosition((r.size.width*anchor.x)+paddingX, (r.size.height*anchor.y)-paddingY );
+    node->setAnchorPoint(uihelper::AnchorCenter);
+    node->setIgnoreAnchorPointForPosition(false);
 }
 
 //

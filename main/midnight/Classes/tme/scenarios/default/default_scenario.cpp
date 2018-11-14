@@ -16,6 +16,7 @@
 
 #include "../../baseinc/tme_internal.h"
 
+
 using namespace chilli;
 using namespace chilli::lib;
 using namespace chilli::collections;
@@ -785,19 +786,21 @@ namespace tme {
 		COMMAND ( OnNight )
 		{
 
-			mx->pfnNightCallback = (PFNNIGHTCALLBACK)argv[0].vPtr ;
-
-			argv[0]=(s32)0;
-
+			mx->pfnNightCallback = nullptr ;
+            mx->LastActionMsg()[0] = '\0';
+            
 #if defined(_DDR_)
             sv_days++;
-            mx->LastActionMsg()[0] = '\0';
 #endif
             
 #ifdef _TEST_WINLOSE_CONDITIONS_
             mx->night->testWinLoseConditions();
+            mx->LastActionMsg()[0] = '\0';
 #endif
 
+            mx->pfnNightCallback = (PFNNIGHTCALLBACK)argv[0].vPtr ;
+            argv[0]=(s32)0;
+            
             m_gameover_t win = mx->night->CheckWinLoseConditions(TRUE);
             if ( win != MG_NONE ) {
                 gameover_callback_t event;
@@ -811,7 +814,6 @@ namespace tme {
             
 #if defined(_LOM_)
             sv_days++;
-            mx->LastActionMsg()[0] = '\0';
 #endif
             mx->scenario->DeadCharactersDropObjects();
 

@@ -41,7 +41,7 @@ bool panel_night::init()
     
     scrollView = ui::ScrollView::create();
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
-    scrollView->setLocalZOrder(ZORDER_FAR);
+    scrollView->setLocalZOrder(ZORDER_FAR+1);
     
     // Description
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
@@ -119,7 +119,15 @@ void panel_night::OnNightNotification ( callback_t* event )
             std::this_thread::sleep_for(std::chrono::seconds(2));
 
     }else{
-        int a = 100;
+        if ( event->type == callback_t::gameover ) {
+            auto gameover = static_cast<gameover_callback_t*>(event)->condition;
+            
+            RUN_ON_UI_THREAD([&,gameover](){
+                mr->stories->save(savemode_dawn);
+                mr->checkGameOverConditions();
+            });
+            return;
+        }
     }
 }
 
