@@ -34,16 +34,15 @@ bool panel_gameover::init()
     
     // Look Icon
     auto home = uihelper::CreateImageButton("i_home", ID_HOME, clickCallback);
-    uihelper::AddBottomLeft(this, home, RES(10), RES(10) );
+    uihelper::AddBottomLeft(safeArea, home, RES(10), RES(10) );
     
     return true;
 }
 
 void panel_gameover::OnShown()
 {
-    auto size = Director::getInstance()->getVisibleSize();
-    
-    setContentSize(size);
+    auto size = safeArea->getContentSize();
+//    setContentSize(size);
     
     // Description
     auto lblDescription = Label::createWithTTF( uihelper::font_config_big, TME_LastActionMsg() );
@@ -57,7 +56,7 @@ void panel_gameover::OnShown()
     lblDescription->setAnchorPoint(uihelper::AnchorTopLeft);
     lblDescription->setPosition(RES(32), size.height);
     lblDescription->setHorizontalAlignment(TextHAlignment::CENTER);
-    addChild(lblDescription);
+    safeArea->addChild(lblDescription);
 
     if ( currentmode == MODE_WIN ) {
         setBackgroundToWidth( "screens/misc/win.png" );

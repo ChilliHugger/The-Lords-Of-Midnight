@@ -168,7 +168,7 @@ namespace tme {
     
 #ifdef MX_DEBUG
 #define MX_DEBUG_ON 1
-#define MXTRACE		mx->debug
+#define MXTRACE		CCLOG
 #else
 #define MXTRACE		if(0) printf
 #endif

@@ -223,27 +223,30 @@ MXRESULT mxengine::LoadDatabase ( void )
 int ii;
 int id;
 char filename[MAX_PATH];
+char database[MAX_PATH];
 
 	MX_REGISTER_SELF;
 
 	variables::Init(1);
 
-//	sys->config->SetSection("Engine");
-//	if ( sys->config->ReadBool("RandomStart",TRUE) )
-//		randomseed(-1);
-//	LPSTR filename = (LPSTR)sys->AllocTmpBuffer();
-
-	sprintf ( filename, "%s/%s", m_szDatabase, "database" );
-
+    // We need to move the default database into an accessible folder
+#if !defined(_OS_DESKTOP_)
+	sprintf ( database, "%s/%s", m_szDatabase, "database" );
+    sprintf ( filename, "%s/database", cocos2d::FileUtils::getInstance()->getWritablePath().c_str() );
+    MXTRACE( "Copying Database '%s' from '%s' to '%s'", m_szDatabase, database, filename);
+    chilli::os::filemanager::Copy(database, filename);
+#else
+    sprintf ( filename, "%s/%s", m_szDatabase, "database" );
+#endif
+    
 MXTRACE( "Loading Database '%s'", m_szDatabase);
 
-	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
-	if ( !pFile->IsOpen() ) {
-		if ( pFile ) delete pFile;
-		//COMPLAIN( "Cannot Load data file %s", filename );
-		return MX_FAILED;
-	}
-
+   chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    if ( !pFile->IsOpen() ) {
+        if ( pFile ) delete pFile;
+        //COMPLAIN( "Cannot Load data file %s", filename );
+        return MX_FAILED;
+    }
 
 	archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
@@ -398,8 +401,16 @@ MXTRACE( "Update Variables");
 
 MXTRACE("Loading MAP");
 
-	sprintf ( filename, "%s/%s", m_szDatabase, sv_map_file );
-	
+#if !defined(_OS_DESKTOP_)
+    sprintf ( database, "%s/%s", m_szDatabase, sv_map_file );
+    sprintf ( filename, "%s/%s", cocos2d::FileUtils::getInstance()->getWritablePath().c_str(), sv_map_file );
+    MXTRACE( "Copying Map '%s' from '%s' to '%s'", sv_map_file, database, filename);
+    chilli::os::filemanager::Copy(database, filename);
+#else
+    sprintf ( filename, "%s/%s", m_szDatabase, sv_map_file );
+#endif
+
+    
 	//sv_map_width = 66;
 	//sv_map_height = 63;
 	gamemap = new mxmap() ;
@@ -602,79 +613,79 @@ void mxengine::NightCallback( callback_t* ptr)
 
 MXRESULT mxengine::LoadGame ( const c_str& filename, PFNSERIALIZE function )
 {
-	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
-	if ( !pFile->IsOpen() ) {
-		if ( pFile ) delete pFile;
-		//COMPLAIN( "Cannot Load data file %s", filename );
-		return MX_FAILED;
-	}
+    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    if ( !pFile->IsOpen() ) {
+        if ( pFile ) delete pFile;
+        //COMPLAIN( "Cannot Load data file %s", filename );
+        return MX_FAILED;
+    }
 
-	archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
+    archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
-	// serialize is for save game
-	m_savegame = TRUE ;
+    // serialize is for save game
+    m_savegame = TRUE ;
 
-u32		magicno;
-u32		scenarioid;
-u16		temp16;
-c_str	header;
+u32        magicno;
+u32        scenarioid;
+u16        temp16;
+c_str    header;
 c_str  description;
 
-	// magic no
-	ar >> magicno;
-	// check for valid header and possible byte swap version
-	if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
-		// turn on byte swapping
-		ar.m_nMode |= archive::bByteSwap ;
-	}else{
-		if ( magicno != TME_MAGIC_NO )
-			return MX_UNKNOWN_FILE;
-	}
+    // magic no
+    ar >> magicno;
+    // check for valid header and possible byte swap version
+    if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
+        // turn on byte swapping
+        ar.m_nMode |= archive::bByteSwap ;
+    }else{
+        if ( magicno != TME_MAGIC_NO )
+            return MX_UNKNOWN_FILE;
+    }
 
-	ar >> scenarioid;
-	if ( scenarioid != scenario->GetInfoBlock()->Id )
-		return MX_UNKNOWN_FILE;
+    ar >> scenarioid;
+    if ( scenarioid != scenario->GetInfoBlock()->Id )
+        return MX_UNKNOWN_FILE;
 
-	ar >> m_versionno ;
-	//if ( m_versionno != SAVEGAMEVERSION )
-	//	return MX_INCORRECT_VERSION;
+    ar >> m_versionno ;
+    //if ( m_versionno != SAVEGAMEVERSION )
+    //    return MX_INCORRECT_VERSION;
 
     savegameversion = m_versionno ;
-    
-	ar >> header ;
-	if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
-		return MX_UNKNOWN_FILE;
+
+    ar >> header ;
+    if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
+        return MX_UNKNOWN_FILE;
 
     if ( SaveGameVersion()>8 ) {
         ar >>  description;
     }else{
         description="";
     }
-    
-	/* save the game map */
-	gamemap->Serialize ( ar );
 
-	ar >> sv_characters ;		objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
-	ar >> sv_regiments ;		objRegiments.Create(scenario,IDT_REGIMENT,sv_regiments);
-	ar >> sv_routenodes ;		objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
-	ar >> sv_strongholds ;		objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
-	ar >> sv_missions ;			objMissions.Create(scenario,IDT_MISSION,sv_missions);
-	ar >> sv_victories ;		objVictories.Create(scenario,IDT_VICTORY,sv_victories);
-	ar >> sv_objects;			objObjects.Create(scenario,IDT_OBJECT,sv_objects);
+    /* save the game map */
+    gamemap->Serialize ( ar );
 
-	/* default engine vars */
- 	ar >> temp16; m_CurrentCharacter = CharacterById(temp16);
-	ar >> sv_days;
-	ar >> sv_strongholdadjuster;
+    ar >> sv_characters ;        objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
+    ar >> sv_regiments ;        objRegiments.Create(scenario,IDT_REGIMENT,sv_regiments);
+    ar >> sv_routenodes ;        objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
+    ar >> sv_strongholds ;        objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
+    ar >> sv_missions ;            objMissions.Create(scenario,IDT_MISSION,sv_missions);
+    ar >> sv_victories ;        objVictories.Create(scenario,IDT_VICTORY,sv_victories);
+    ar >> sv_objects;            objObjects.Create(scenario,IDT_OBJECT,sv_objects);
 
-	//
-	objRoutenodes.Serialize(ar);
-	objCharacters.Serialize(ar);
-	objStrongholds.Serialize(ar);
-	objRegiments.Serialize(ar);
-	objMissions.Serialize(ar);
-	objVictories.Serialize(ar);
-	objObjects.Serialize(ar);
+    /* default engine vars */
+     ar >> temp16; m_CurrentCharacter = CharacterById(temp16);
+    ar >> sv_days;
+    ar >> sv_strongholdadjuster;
+
+    //
+    objRoutenodes.Serialize(ar);
+    objCharacters.Serialize(ar);
+    objStrongholds.Serialize(ar);
+    objRegiments.Serialize(ar);
+    objMissions.Serialize(ar);
+    objVictories.Serialize(ar);
+    objObjects.Serialize(ar);
 
     /* update map */
     if ( SaveGameVersion() < 8 ) {
@@ -683,38 +694,38 @@ c_str  description;
          mxloc& mapsqr = gamemap->GetAt ( stronghold->Location() );
          if ( mapsqr.IsVisible() )
              mapsqr.flags |= lf_visited|lf_looked_at ;
-     
+
      }
     }
 
-	/* Load Character memories */
-	for ( int ii=0; ii<sv_characters; ii++ )
-		CharacterById(ii+1)->memory.Serialize ( ar );
+    /* Load Character memories */
+    for ( int ii=0; ii<sv_characters; ii++ )
+        CharacterById(ii+1)->memory.Serialize ( ar );
 
-	/* Load scenario specific */
-	scenario->Serialize ( ar );
+    /* Load scenario specific */
+    scenario->Serialize ( ar );
 
     /* load Frontend Specific */
     //if ( SaveGameVersion() > 5 && function!=NULL )
     if ( function!= NULL )
         function(SaveGameVersion(),ar);
-        
-    
-	ar.Close();
 
-	SAFEDELETE ( pFile );
 
-	mx->CurrentChar ( m_CurrentCharacter );
+    ar.Close();
+
+    SAFEDELETE ( pFile );
+
+    mx->CurrentChar ( m_CurrentCharacter );
 
 #if defined(_DDR_)
     if ( SaveGameVersion() >= 11 ) {
         // fix save games
         mxcharacter* morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
         morkin->race = RA_MORKIN;
-        
+
         if ( !morkin->IsRecruited() )
             morkin->Flags().Set(cf_ai);
-        
+
         // fix for morkin being AI character
         // after being recruited
         if ( morkin->IsRecruited() && morkin->IsAIControlled() ) {
@@ -725,53 +736,50 @@ c_str  description;
 
     }
 #endif
-    
-    
-    
-    
+
 	return MX_OK ;
 }
 
 
 MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& description )
 {
- 	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
-	if ( !pFile->IsOpen() ) {
-		if ( pFile ) delete pFile;
-		return MX_FAILED;
-	}
+    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    if ( !pFile->IsOpen() ) {
+        if ( pFile ) delete pFile;
+        return MX_FAILED;
+    }
     
-	archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
+    archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
     
-	// serialize is for save game
-	m_savegame = TRUE ;
+    // serialize is for save game
+    m_savegame = TRUE ;
     
-    u32		magicno;
-    u32		scenarioid;
-    c_str	header;
+    u32        magicno;
+    u32        scenarioid;
+    c_str    header;
     
-	// magic no
-	ar >> magicno;
-	// check for valid header and possible byte swap version
-	if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
-		// turn on byte swapping
-		ar.m_nMode |= archive::bByteSwap ;
-	}else{
-		if ( magicno != TME_MAGIC_NO )
-			return MX_UNKNOWN_FILE;
-	}
+    // magic no
+    ar >> magicno;
+    // check for valid header and possible byte swap version
+    if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
+        // turn on byte swapping
+        ar.m_nMode |= archive::bByteSwap ;
+    }else{
+        if ( magicno != TME_MAGIC_NO )
+            return MX_UNKNOWN_FILE;
+    }
     
-	ar >> scenarioid;
-	if ( scenarioid != scenario->GetInfoBlock()->Id )
-		return MX_UNKNOWN_FILE;
+    ar >> scenarioid;
+    if ( scenarioid != scenario->GetInfoBlock()->Id )
+        return MX_UNKNOWN_FILE;
     
-	ar >> m_versionno ;
+    ar >> m_versionno ;
     
     savegameversion = m_versionno ;
     
-	ar >> header ;
-	if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
-		return MX_UNKNOWN_FILE;
+    ar >> header ;
+    if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
+        return MX_UNKNOWN_FILE;
     
     if ( SaveGameVersion()>8 ) {
         ar >>  description;
@@ -780,11 +788,10 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
     }
 
     
-	ar.Close();
+    ar.Close();
     
-	SAFEDELETE ( pFile );
+    SAFEDELETE ( pFile );
 
-    
 	return MX_OK ;
 }
 
@@ -826,22 +833,22 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
 
 */
 
-	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
-	if ( pFile == NULL || !pFile->IsOpen() ) {
-		if ( pFile ) delete pFile;
-		//COMPLAIN( "Cannot Save data file %s", filename );
-		return MX_FAILED;
-	}
+    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
+    if ( pFile == NULL || !pFile->IsOpen() ) {
+        if ( pFile ) delete pFile;
+        //COMPLAIN( "Cannot Save data file %s", filename );
+        return MX_FAILED;
+    }
 
-	archive ar (pFile, archive::store | archive::bNoFlushOnDelete );
+    archive ar (pFile, archive::store | archive::bNoFlushOnDelete );
 
-	// serialize is for save game
-	m_savegame = TRUE ;
+    // serialize is for save game
+    m_savegame = TRUE ;
 
-	ar << TME_MAGIC_NO ;
-	ar << scenario->GetInfoBlock()->Id;
-	ar << SAVEGAMEVERSION ;
-	ar << (char*)SAVEGAMEHEADER ;
+    ar << TME_MAGIC_NO ;
+    ar << scenario->GetInfoBlock()->Id;
+    ar << SAVEGAMEVERSION ;
+    ar << (char*)SAVEGAMEHEADER ;
 
     
     //LPCSTR description = "DAY 000: Luxor - Tower of the Moon";
@@ -851,7 +858,7 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
     for ( int ii=0; ii<sv_characters; ii++ ) {
         mxcharacter* c = CharacterById(ii+1);
         if ( scenario->CanWeSelectCharacter(c))
-		if ( c->IsRecruited() &&  c->IsAlive() )
+        if ( c->IsRecruited() &&  c->IsAlive() )
             lords++;
     }
     
@@ -865,37 +872,37 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
     
     ar << (char*)buffer ;
     
-	/* save the game map */
-	gamemap->Serialize ( ar );
+    /* save the game map */
+    gamemap->Serialize ( ar );
 
-	// object collections
-	ar << sv_characters ;
-	ar << sv_regiments ;
-	ar << sv_routenodes ;
-	ar << sv_strongholds ;
-	ar << sv_missions ;
-	ar << sv_victories ;
-	ar << sv_objects ;
+    // object collections
+    ar << sv_characters ;
+    ar << sv_regiments ;
+    ar << sv_routenodes ;
+    ar << sv_strongholds ;
+    ar << sv_missions ;
+    ar << sv_victories ;
+    ar << sv_objects ;
 
-	/* default engine vars */
-	ar << (u16)m_CurrentCharacter->Id();
-	ar << sv_days;
-	ar << sv_strongholdadjuster;
+    /* default engine vars */
+    ar << (u16)m_CurrentCharacter->Id();
+    ar << sv_days;
+    ar << sv_strongholdadjuster;
 
-	objRoutenodes.Serialize(ar);
-	objCharacters.Serialize(ar);
-	objStrongholds.Serialize(ar);
-	objRegiments.Serialize(ar);
-	objMissions.Serialize(ar);
-	objVictories.Serialize(ar);
-	objObjects.Serialize(ar);
+    objRoutenodes.Serialize(ar);
+    objCharacters.Serialize(ar);
+    objStrongholds.Serialize(ar);
+    objRegiments.Serialize(ar);
+    objMissions.Serialize(ar);
+    objVictories.Serialize(ar);
+    objObjects.Serialize(ar);
 
-	/* Save Character memories */
-	for ( int ii=0; ii<sv_characters; ii++ )
-		CharacterById(ii+1)->memory.Serialize ( ar );
+    /* Save Character memories */
+    for ( int ii=0; ii<sv_characters; ii++ )
+        CharacterById(ii+1)->memory.Serialize ( ar );
 
-	/* save scenario specific */
-	scenario->Serialize ( ar );
+    /* save scenario specific */
+    scenario->Serialize ( ar );
 
     
     /* save frontend specific */
@@ -903,9 +910,9 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
         function(SAVEGAMEVERSION,ar);
     
  
-	ar.Close();
+    ar.Close();
 
-	SAFEDELETE ( pFile );
+    SAFEDELETE ( pFile );
 
 	return MX_OK ;
 

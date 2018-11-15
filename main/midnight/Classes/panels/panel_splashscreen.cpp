@@ -75,8 +75,8 @@ void panel_splashscreen::complete()
     }
     
     this->scheduleOnce( [&](float) {
-#if _SHOW_DEDICATION_
-        mr->panels->SetPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
+#if defined(_SHOW_DEDICATION_)
+        mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
 #else
         storyid_t story = mr->getCurrentStory();
         if ( story != STORY_NONE ) {

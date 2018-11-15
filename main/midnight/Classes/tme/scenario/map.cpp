@@ -102,56 +102,56 @@ void mxmap::ResetVisibleRange()
 
 bool mxmap::Load ( LPCSTR filename )
 {
-	
+    
 MXTRACE( "Loading Map '%s'", filename);
 
-	chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
-	if ( !pFile->IsOpen() ) {
-		if ( pFile ) delete pFile;
-		return FALSE;
-	}
+    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    if ( !pFile->IsOpen() ) {
+        if ( pFile ) delete pFile;
+        return FALSE;
+    }
 
-	archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
+    archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
 u32 magicno;
 u32 versionno;
 c_str header;
 
-	ar >> magicno;
+    ar >> magicno;
 MXTRACE( "MagicNo=%x", (unsigned int)magicno);
 
-	// check for valid header and possible byte swap version
-	if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
-		// turn on byte swapping
+    // check for valid header and possible byte swap version
+    if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
+        // turn on byte swapping
 MXTRACE( "ByteSwapping ON");
-		ar.m_nMode |= archive::bByteSwap ;
-	}else{
+        ar.m_nMode |= archive::bByteSwap ;
+    }else{
         if ( magicno != TME_MAGIC_NO ) {
             MXTRACE("Invalid MAP MagicNo");
             return FALSE;
         }
-	}
+    }
 
-	ar >> versionno;
+    ar >> versionno;
 MXTRACE( "Version=%d", (int)versionno);
     if ( versionno != MAPVERSION ) {
         MXTRACE("Invalid MAP VersionNO");
         return FALSE;
     }
-	
-	ar >> header;
+    
+    ar >> header;
 MXTRACE( "Header='%s'", (LPSTR)header);
 
     if (c_stricmp(header,MAPHEADER) != 0 ) {
         MXTRACE("Invalid MAP Header");
-		return FALSE;
+        return FALSE;
     }
 
-	Serialize(ar);
+    Serialize(ar);
 
-	ar.Close();
+    ar.Close();
 
-	SAFEDELETE ( pFile );
+    SAFEDELETE ( pFile );
     
     CalculateVisibleArea();
 

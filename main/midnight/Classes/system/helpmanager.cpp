@@ -58,25 +58,25 @@ BOOL helpmanager::Save ( storyid_t id )
 {
     char filename[MAX_PATH]={0};
     sprintf(filename, "%s/help", mr->stories->getFolder(id) );
-    
+
     chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
     if ( pFile == NULL || !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;
     }
-    
+
     chilli::lib::archive ar (pFile, archive::store | archive::bNoFlushOnDelete );
-    
+
     u32 version=1;
     u32 count=HELP_MAX;
-    
+
     ar << version ;
     ar << count ;
     for ( u32 ii=0; ii<HELP_MAX; ii++ )
         ar << displayed[ ii ];
-    
+
     ar.Close();
-    
+
     SAFEDELETE ( pFile );
     
     return TRUE;
@@ -86,30 +86,30 @@ BOOL helpmanager::Load ( storyid_t id )
 {
     
     CLEARARRAY(displayed);
-    
+
     char filename[MAX_PATH]={0};
     sprintf(filename, "%s/help", mr->stories->getFolder(id) );
-    
-    
+
+
     chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;
     }
-    
-    
+
+
     archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
-    
+
     u32 version=1;
     u32 count=0;
-    
+
     ar >> version ;
     ar >> count ;
     for ( u32 ii=0; ii<count; ii++ )
         ar >> displayed[ ii ];
-    
+
     ar.Close();
-    
+
     SAFEDELETE ( pFile );
     
     

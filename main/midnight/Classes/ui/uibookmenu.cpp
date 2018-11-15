@@ -21,8 +21,10 @@ uibookmenu::uibookmenu( storyinfo_t* story )
     if ( story == nullptr || story->count == 0 )
         return;
     
-    f32 menuHeight = RES(768);
-    f32 menuWidth = RES(1024);
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
+    f32 menuHeight = visibleSize.height;
+    f32 menuWidth = visibleSize.width;
     f32 scrollWidth = menuWidth/2;
     
     initWithColor(Color4B(_clrBlack), menuWidth, menuHeight);
@@ -78,8 +80,5 @@ uibookmenu::uibookmenu( storyinfo_t* story )
                                              });
     uihelper::AddTopLeft(this,close, RES(8), RES(8) );
 
-    
-    
-    
 }
 

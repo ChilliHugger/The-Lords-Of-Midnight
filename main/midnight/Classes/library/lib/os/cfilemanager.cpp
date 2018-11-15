@@ -54,6 +54,13 @@ namespace chilli {
         
         void* filemanager::Load ( LPCSTR filename, u32* size )
         {
+#if defined(COCOS2DX)
+            auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(filename);
+            *size = (u32)data.getSize();
+            void* buffer = malloc ( data.getSize() );
+            memcpy(buffer, data.getBytes(), data.getSize());
+            return buffer;
+#else
             u32		dwSize;
             void*	lpBuffer;
             
@@ -118,6 +125,7 @@ namespace chilli {
             //DEBUG("OK\n");
             
             return ( lpBuffer );
+#endif
         }
         
         
@@ -125,80 +133,13 @@ namespace chilli {
         void filemanager::Unload ( u8** lpMem )
         {
             SAFEFREE( *lpMem );
-            SAFEFREE( *lpMem );
         }
-        
-        
-        
-        /*
-         * filemanager::Get
-         *
-         * 				reads a file into memory, as given by the user
-         *
-         * ENTRY:       LPSTR	filename 	- File to get!
-         *				PVOID	memory		- where to load the file to
-         *				u32		size		- maximum size of buffer
-         * EXIT:		return 		TRUE on success
-         *						on	FALSE GetLastError()
-         */
-        
-        bool filemanager::Get ( LPCSTR filename, void* lpBuffer, u32 dwMaxSize)
-        {
-            u32	dwSize;
-            
-            //DEBUG("filemanager::Get(%s)... ", filename );
-            
-            //	_MXASSERTE ( IsValidAddress( lpBuffer, dwMaxSize, TRUE ) );
-            if ( !Exists ( filename ) ) {
-                //		DEBUG("FILE NOT FOUND...");
-                return FALSE ;
-            }
-            
-            PFILE pFile = new file ();
-            if ( !pFile->Open( filename, file::modeRead) ) {
-                //		DEBUG("ERROR Open\n");
-                if ( pFile ) delete pFile;
-                return ( NULL );
-            }
-            
-            /* get the file size */
-            dwSize = pFile->GetLength();
-            if ( dwSize == 0xffffffff )	{
-                //		DEBUG("ERROR FileSize\n");
-                delete pFile;
-                return ( FALSE );
-            }
-            
-            /* if the filesize is greater than the buffer then truncate the read,
-             * perform the read operation but return an warning error
-             */
-            if ( dwSize > dwMaxSize )	{
-                if ( !pFile->Read ( lpBuffer, dwMaxSize ) ) {
-                    //			DEBUG("ERROR TruncRead\n");
-                    return ( FALSE );
-                }
-                
-                delete pFile;
-                //		SetLastError( FILEIO_BUFFER_EXCEEDED );
-                return ( FALSE );
-            }
-            
-            /* read the data */
-            if ( !pFile->Read( lpBuffer, dwSize ) ) {
-                //		DEBUG("ERROR Read\n");
-                return ( FALSE );
-            }
-            
-            delete pFile;
-            
-            //DEBUG("OK\n");
-            
-            return ( TRUE );
-        }
-        
         
         u32 filemanager::Size ( LPCSTR filename )
         {
+#if defined(COCOS2DX)
+            return (u32)cocos2d::FileUtils::getInstance()->getFileSize(filename);
+#else
             DWORD	dwSize;
             
             PFILE pFile = new file ( );
@@ -212,6 +153,7 @@ namespace chilli {
             delete pFile;
             
             return ( dwSize );
+#endif
         }
         
         
@@ -230,10 +172,11 @@ namespace chilli {
         
         bool filemanager::Save( LPCSTR filename, const void* lpBuffer, u32 dwSize )
         {
-            //DEBUG("...filemanager::Save(%s) %lp | %d", filename, lpBuffer, dwSize);
-            
-            //	_MXASSERTE ( IsValidAddress( lpBuffer, dwSize ) );
-            
+#if defined(COCOS2DX)
+            cocos2d::Data data;
+            data.copy((const unsigned char* )lpBuffer, dwSize);
+            return cocos2d::FileUtils::getInstance()->writeDataToFile(data, filename);
+#else
             PFILE pFile = new file (  );
             if ( !pFile->Open(filename, file::modeWrite|file::modeCreate) ) {
                 //		DEBUG("ERROR Open\n");
@@ -255,11 +198,8 @@ namespace chilli {
 #endif
             
             delete pFile;
-            
-            //DEBUG("OK\n");
-            
             return ( TRUE );
-            
+#endif
             
         }
         

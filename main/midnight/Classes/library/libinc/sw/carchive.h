@@ -22,8 +22,7 @@ namespace chilli
         class file;
     }
 }
-
-#define ARFILE	chilli::os::file*
+#define ARFILE    chilli::os::file*
 //#endif
 
 #define	UNALIGNED 
@@ -43,11 +42,12 @@ namespace chilli {
 			enum Mode { store = 0, load = 1, bNoFlushOnDelete = 2, bByteSwap = 4 };
 
 			archive();
-			archive( ARFILE pFile, u32 nMode );
-			virtual ~archive();
+            archive( std::string& filename, u32 nMode );
+            virtual ~archive();
 
-			void Open( ARFILE pFile, u32 nMode );
-			ARFILE GetFile() const;
+            archive( ARFILE pFile, u32 nMode );
+            void Open( ARFILE pFile, u32 nMode );
+            ARFILE GetFile() const;
 
 		// Attributes
 			bool IsLoading() const;

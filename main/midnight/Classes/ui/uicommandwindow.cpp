@@ -27,8 +27,8 @@ uicommandwindow::uicommandwindow( uipanel* parent )
 {
     auto rect = parent->getBoundingBox();
     
-    grid=size(RES(128),RES(80));
-    padding = size( RES(32), RES(16) );
+    grid=size(DIS(128),DIS(80));
+    padding = size( DIS(32), DIS(16) );
     
     this->parent = parent;
     this->id = id;

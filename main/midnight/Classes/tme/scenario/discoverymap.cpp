@@ -95,24 +95,23 @@ namespace tme {
     
     bool mxdiscoverymap::Load ( LPCSTR filename )
     {
-        
         MXTRACE("Loading Discovery Map '%s'", filename);
-        
+
         chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
         if ( !pFile->IsOpen() ) {
             if ( pFile ) delete pFile;
             return FALSE;
         }
-        
+
         archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
-        
+
         u32 magicno;
         u32 versionno;
         c_str header;
-        
+
         ar >> magicno;
         MXTRACE("MagicNo=%x", (unsigned int)magicno);
-        
+
         // check for valid header and possible byte swap version
         if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
             // turn on byte swapping
@@ -124,28 +123,28 @@ namespace tme {
                 return FALSE;
             }
         }
-        
+
         ar >> versionno;
         MXTRACE( "Version=%d", (int)versionno);
         if ( versionno != DISCOVERYVERSION ) {
             MXTRACE("Invalid DISCOVERYMAP Version");
             return FALSE;
         }
-        
+
         ar >> header;
         MXTRACE("Header='%s'", (LPSTR)header);
-        
+
         if (c_stricmp(header,DISCOVERYHEADER) != 0 ) {
             MXTRACE("Invalid DISCOVERYMAP Header");
             return FALSE;
         }
-        
+
         Serialize(ar);
-        
+
         ar.Close();
-        
+
         SAFEDELETE ( pFile );
-        
+
         CalculateVisibleArea();
         
         return TRUE ;
@@ -153,7 +152,6 @@ namespace tme {
     
     bool mxdiscoverymap::Save ( LPCSTR filename )
     {
-
         chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
         if ( pFile == NULL || !pFile->IsOpen() ) {
             if ( pFile ) delete pFile;

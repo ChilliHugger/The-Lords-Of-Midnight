@@ -140,11 +140,11 @@ bool panel_options::init()
     FillBackground();
 
     auto logo = Sprite::createWithSpriteFrameName("lom_logo");
-    uihelper::AddTopLeft(this,logo);
+    uihelper::AddTopLeft(safeArea,logo);
     
     
     auto p2 = Sprite::create("screens/misc/corleth.png");
-    uihelper::AddBottomLeft(this,p2);
+    uihelper::AddBottomLeft(safeArea,p2);
     
     CreateMenu1();
     
@@ -315,7 +315,7 @@ void panel_options::CreateMenu1()
     f32 width = RES(512-40);
 
     auto menu = new uitextmenu(width, items_main, NUMELE(items_main) );
-    uihelper::AddCenterLeft(this,menu,RES(20), 0);
+    uihelper::AddCenterLeft(safeArea,menu,RES(20), 0);
 
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );

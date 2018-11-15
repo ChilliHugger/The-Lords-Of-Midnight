@@ -83,6 +83,9 @@ protected:
     WidgetClickCallback clickCallback;
     WidgetEventCallback eventCallback;
     
+    cocos2d::Layer*         safeArea;
+    
+    
 public:
     panelmode_t     currentmode;
 };

@@ -25,9 +25,15 @@ typedef struct {
     u32     fontset;
     f32     screen_scale;
     f32     target_scale;
+    f32     aspect_scale;
 } resolution_support ;
 
-
+typedef struct {
+    f32 left;
+    f32 top;
+    f32 right;
+    f32 bottom;
+} padding;
 
 
 class resolutionmanager
@@ -46,12 +52,15 @@ public:
     
     bool calcDisplayInfo();
 
-    float Width() { return current_resolution.width; } const ;
-    float Height() { return current_resolution.height; } const ;
-    u32 Aspect() { return current_resolution.aspect; } const ;
-    float Scale() { return current_resolution.screen_scale; } const ;
-    float ContentScale() { return current_resolution.target_scale; } const ;
-
+    f32 Width() { return current_resolution.width; } ;
+    f32 Height() { return current_resolution.height; } ;
+    u32 Aspect() { return current_resolution.aspect; } ;
+    f32 AspectScale() { return current_resolution.aspect_scale; }  ;
+    f32 Scale() { return current_resolution.screen_scale; }  ;
+    f32 ContentScale() { return current_resolution.target_scale; } ;
+    f32 phoneScale();
+    
+    padding getSafeArea();
     
 public:
     
@@ -60,8 +69,15 @@ public:
 
 };
 
-#define RES(x) (f32)    ((x)*resolutionmanager::getInstance()->Scale())
-//#define ASP(x) (u32)    ((x)*resolutionmanager::getInstance()->Aspect())
+#define RES(x) (f32)    ((x))
+#define DIS(x) (f32)    ((x)*resolutionmanager::getInstance()->AspectScale())
+
+//#define RES(x) (f32)    ((x)*resolutionmanager::getInstance()->Scale())
+//#define ASP(x) (f32)    ((x)*resolutionmanager::getInstance()->AspectScale())
+
+
 #define ALPHA(x) (f32)    ((x)*255)
+
+
 
 #endif /* resolutionmanager_h */

@@ -19,7 +19,9 @@ void LandscapeSky::Init(LandscapeOptions* options)
 {
     LandscapeNode::Init(options);
     
-    setContentSize( Size(RES(1024),RES(112*4)) );
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    setContentSize( Size(visibleSize.width,RES(112*GSCALE)) );
     
     // TODO: None dithered sky...
         

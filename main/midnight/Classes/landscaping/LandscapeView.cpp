@@ -21,7 +21,8 @@ void LandscapeView::Init(LandscapeOptions* options)
 {
     LandscapeNode::Init(options);
 
-    setContentSize( Size(RES(1024),RES(768)) );
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    setContentSize( visibleSize );
 
     auto clipping = ClippingRectangleNode::create( Rect(0, 0, getContentSize().width, getContentSize().height));
     //clipping->setPosition(getContentSize().width/2,getContentSize().height/2);
@@ -32,13 +33,16 @@ void LandscapeView::Init(LandscapeOptions* options)
     auto land = new LandscapeLand();
     land->programState = programState;
     land->Init(options);
+    land->setAnchorPoint(Vec2::ZERO);
+    land->setPosition(Vec2::ZERO);
     clipping->addChild(land);
     
     
     auto sky = new LandscapeSky();
     sky->programState = programState;
     sky->Init(options);
-    sky->setPosition(0,RES((80*GSCALE)) );
+    sky->setAnchorPoint(Vec2::ZERO);
+    sky->setPosition(0, RES((80*GSCALE)));
     clipping->addChild(sky);
     
     

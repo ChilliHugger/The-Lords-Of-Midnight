@@ -32,12 +32,10 @@ bool panel_night::init()
     
     // Look Icon
     auto look = uihelper::CreateImageButton("i_dawn", ID_DAWN, clickCallback);
-    uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
+    uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     uihelper::setEnabled(look, false);
 
-    auto size = Director::getInstance()->getVisibleSize();
-    
-    setContentSize(size);
+    auto size = safeArea->getContentSize();
     
     scrollView = ui::ScrollView::create();
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
@@ -55,7 +53,7 @@ bool panel_night::init()
     lblDescription->enableWrap(true);
 
     scrollView->addChild(lblDescription);
-    addChild(scrollView);
+    safeArea->addChild(scrollView);
     
     setBackgroundToWidth("screens/misc/night.png");
     

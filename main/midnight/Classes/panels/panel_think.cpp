@@ -33,8 +33,6 @@ bool panel_think::init()
         return false;
     }
     
-    setContentSize(Director::getInstance()->getVisibleSize());
-    
     setBackground(_clrWhite);
         
     // lets have a pageview
@@ -45,11 +43,14 @@ bool panel_think::init()
     pageView->setCurrentPageIndex(0);
     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
-    pageView->setIndicatorIndexNodesScale(.25f);
-    pageView->setIndicatorSpaceBetweenIndexNodes(RES(-20));
+    pageView->setIndicatorIndexNodesScale(DIS(0.50f));
+    pageView->setIndicatorSpaceBetweenIndexNodes(DIS(10));
+    
     uihelper::AddBottomLeft(this, pageView);
     uihelper::FillParent(pageView);
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,0) );
+    
+    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
     
     pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
         if ( e == PageView::EventType::TURNING ) {
@@ -61,26 +62,26 @@ bool panel_think::init()
     // Command Window
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
-    uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
+    uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     
     // TAB ICONS
     int x = RES(10) ;
-    int c = RES(100);
+    int c = DIS(100);
     // Person
     auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, clickCallback);
-    uihelper::AddBottomRight(this, person, x+c*0, RES(10) );
+    uihelper::AddBottomRight(safeArea, person, x+c*0, RES(10) );
     
     // Place
     auto place = uihelper::CreateImageButton("think_place", ID_THINK_PLACE, clickCallback);
-    uihelper::AddBottomRight(this, place, x+c*1, RES(10) );
+    uihelper::AddBottomRight(safeArea, place, x+c*1, RES(10) );
     
     // Army
     auto army = uihelper::CreateImageButton("think_army", ID_THINK_ARMY, clickCallback);
-    uihelper::AddBottomRight(this, army, x+c*2, RES(10) );
+    uihelper::AddBottomRight(safeArea, army, x+c*2, RES(10) );
     
     // Battle
     auto battle = uihelper::CreateImageButton("think_battle", ID_THINK_BATTLE, clickCallback);
-    uihelper::AddBottomRight(this, battle, x+c*3, RES(10) );
+    uihelper::AddBottomRight(safeArea, battle, x+c*3, RES(10) );
     
     // MISC Action Icons
     x = RES(10) + (5.5*c) ;
@@ -88,31 +89,31 @@ bool panel_think::init()
     
     // Approach
     auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, clickCallback);
-    uihelper::AddBottomRight(this, approach, x+c*0, RES(10) );
+    uihelper::AddBottomRight(safeArea, approach, x+c*0, RES(10) );
     approach->setVisible(false);
     
     // Fight
 #if defined(_LOM_)
     auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
-    uihelper::AddBottomRight(this, fight, x+c*0, RES(10) );
+    uihelper::AddBottomRight(safeArea, fight, x+c*0, RES(10) );
     fight->setVisible(false);
     
     // Unhide
     auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, clickCallback);
-    uihelper::AddBottomRight(this, unhide, x+c*0, RES(10) );
+    uihelper::AddBottomRight(safeArea, unhide, x+c*0, RES(10) );
     unhide->setVisible(false);
 #endif
     
     // Leave
     auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEFT, clickCallback);
-    uihelper::AddBottomRight(this, leave, x+c*0, RES(10) );
+    uihelper::AddBottomRight(safeArea, leave, x+c*0, RES(10) );
     leave->setVisible(false);
     
     
     // Disband
     auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);
-    uihelper::AddBottomRight(this, disband, x+c*0, RES(10) );
-    disband->setVisible(false);
+    uihelper::AddBottomRight(safeArea, disband, x+c*0, RES(10) );
+    disband->setVisible(safeArea);
     
     // Stronghold
     // Postmen
@@ -123,20 +124,20 @@ bool panel_think::init()
 
 void panel_think::showButton(layoutid_t id, bool enabled)
 {
-    auto button = getChildByTag<ui::Button*>(id);
+    auto button = safeArea->getChildByTag<ui::Button*>(id);
     if ( button )
         button->setVisible(enabled);
 }
 
 void panel_think::enableButton(layoutid_t id, bool enabled)
 {
-    auto button = getChildByTag<ui::Button*>(id);
+    auto button = safeArea->getChildByTag<ui::Button*>(id);
     uihelper::setEnabled(button, enabled);
 }
 
 void panel_think::tintButton(layoutid_t id,Color3B colour)
 {
-    auto button = getChildByTag<ui::Button*>(id);
+    auto button = safeArea->getChildByTag<ui::Button*>(id);
     if ( button ) {
         button->setEnabled(false);
         button->setBright(true);

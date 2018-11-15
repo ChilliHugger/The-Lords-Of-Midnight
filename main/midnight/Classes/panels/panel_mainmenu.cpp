@@ -66,13 +66,13 @@ bool panel_mainmenu::init()
     // Logo
     //
     auto logo = Sprite::createWithSpriteFrameName(IMAGE_LOGO);
-    uihelper::AddTopLeft(this,logo);
+    uihelper::AddTopLeft(safeArea,logo);
     
     //
     // Menu
     //
     menu = new uitextmenu(RES(512), items, NUMELE(items) );
-    uihelper::AddCenter(this,menu);
+    uihelper::AddCenter(safeArea,menu);
     
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
@@ -82,12 +82,10 @@ bool panel_mainmenu::init()
     // Guide and Manual
     //    
     auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback);
-    uihelper::AddBottomRight(this,guide, RES(10), RES(10) );
-    guide->cocos2d::Node::setScale(1.5f);
-    
+    uihelper::AddBottomRight(safeArea,guide, RES(10), RES(10) );
+
     auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, clickCallback);
-    uihelper::AddBottomLeft(this,story, RES(10), RES(10) );
-    story->cocos2d::Node::setScale(1.5f);
+    uihelper::AddBottomLeft(safeArea,story, RES(10), RES(10) );
     
     //
     // Other
@@ -246,6 +244,7 @@ void panel_mainmenu::OnEndStory()
     //
     
     auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
+    bookmenu->setLocalZOrder(ZORDER_POPUP);
     uihelper::AddCenter(this,bookmenu);
     
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {

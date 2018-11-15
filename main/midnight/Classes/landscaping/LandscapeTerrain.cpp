@@ -89,7 +89,8 @@ void LandscapeTerrain::Init( LandscapeOptions* options )
 {
     LandscapeNode::Init(options);
 
-    setContentSize( Size(RES(1024),RES(768)) );
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    setContentSize( visibleSize );
     
     BuildTerrain( options->generator->items );
     

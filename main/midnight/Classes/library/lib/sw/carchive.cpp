@@ -2,6 +2,7 @@
 #include "../../libinc/os/cfile.h"
 #include "../../libinc/sw/carchive.h"
 #include "../../libinc/sw/misc.h"
+//#include "../../libinc/sw/"
 
 
 namespace chilli {
@@ -12,39 +13,53 @@ namespace chilli {
 		{
 		}
 
-		archive::archive(ARFILE pFile, u32 nMode )
-		{
-			Open(pFile, nMode );
-		}
-		  
-		void archive::Open(ARFILE pFile, u32 nMode )
-		{
-			// initialize members not dependent on allocated buffer
-			m_nMode = nMode;
-			m_pFile = pFile;
+        archive::archive( std::string& filename, u32 nMode )
+        {
+//            u32 size;
+//            void* data = chilli::os::filemanager::Load(filename,&size);
+//            if ( data == nullptr ) {
+//                return;
+//            }
+//
+//            m_nBufSize = 0;
+//            m_lpBufStart = NULL;
+            
+        }
+        
+        
+        archive::archive(ARFILE pFile, u32 nMode )
+        {
+            Open(pFile, nMode );
+        }
+        
+        void archive::Open(ARFILE pFile, u32 nMode )
+        {
+            // initialize members not dependent on allocated buffer
+            m_nMode = nMode;
+            m_pFile = pFile;
 
-			// initialize the buffer.  minimum size is 128
-			m_lpBufStart = NULL;
-			m_bUserBuf = FALSE;
+            // initialize the buffer.  minimum size is 128
+            m_lpBufStart = NULL;
+            m_bUserBuf = FALSE;
 
-			m_nBufSize = 0;
-			m_lpBufStart = NULL;
+            m_nBufSize = 0;
+            m_lpBufStart = NULL;
 
-			// force use of private buffer of minimum size
-		#if defined(_BUFFERED_ARCHIVE_) 
-			m_nBufSize = 4906*4;
+            // force use of private buffer of minimum size
+        #if defined(_BUFFERED_ARCHIVE_)
+            m_nBufSize = 4906*4;
 
-			m_lpBufStart = new BYTE[m_nBufSize];
-			memset ( m_lpBufStart, 0xfd, m_nBufSize );
+            m_lpBufStart = new BYTE[m_nBufSize];
+            memset ( m_lpBufStart, 0xfd, m_nBufSize );
 
 
-			_MXASSERTE(m_lpBufStart != NULL);
+            _MXASSERTE(m_lpBufStart != NULL);
 
-			m_lpBufMax = m_lpBufStart + m_nBufSize;
-			m_lpBufCur = (IsLoading()) ? m_lpBufMax : m_lpBufStart;
-		#endif
+            m_lpBufMax = m_lpBufStart + m_nBufSize;
+            m_lpBufCur = (IsLoading()) ? m_lpBufMax : m_lpBufStart;
+        #endif
 
-		}
+        }
 
 		archive::~archive()
 		{
@@ -142,7 +157,7 @@ namespace chilli {
 			return nMax - nMaxTemp;
 		#else
 			return m_pFile->Read(lpBuf, nMax);
-		//	return fread ( lpBuf,sizeof(u8), nMax, m_pFile );
+			//return fread ( lpBuf,sizeof(u8), nMax, m_pFile );
 		#endif //_BUFFERED_ARCHIVE_
 
 		}
@@ -180,7 +195,7 @@ namespace chilli {
 		#else
 
 			m_pFile->Write(lpBuf, nMax);
-		//	fwrite ( lpBuf,sizeof(u8), nMax, m_pFile );
+			//fwrite ( lpBuf,sizeof(u8), nMax, m_pFile );
 
 		#endif // _BUFFERED_ARCHIVE_
 
@@ -207,7 +222,7 @@ namespace chilli {
 
 		void archive::FillBuffer(u32 nBytesNeeded)
 		{
-		#if defined(_BUFFERED_ARCHIVE_) 
+		#if defined(_BUFFERED_ARCHIVE_)
 			u32 nUnused = m_lpBufMax - m_lpBufCur;
 			u32 nTotalNeeded = ((u32)nBytesNeeded) + nUnused;
 

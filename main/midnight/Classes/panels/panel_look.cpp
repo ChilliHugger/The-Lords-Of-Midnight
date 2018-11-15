@@ -77,7 +77,7 @@ bool panel_look::init()
     lblName->getFontAtlas()->setAntiAliasTexParameters();
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
-    uihelper::AddTopLeft(this,lblName,RES(32),RES(32));
+    uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32));
 
     // Location Desction Label
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
@@ -85,7 +85,7 @@ bool panel_look::init()
     lblDescription->setTextColor(Color4B::WHITE);
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
     lblDescription->setWidth(RES(800-64));
-    uihelper::AddTopLeft(this,lblDescription, RES(32),RES(64));
+    uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(64));
 
     // people in front
     
@@ -112,11 +112,11 @@ bool panel_look::init()
     i_command_window = new uicommandwindow(this);
     
     auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, clickCallback);
-    uihelper::AddBottomRight(this, choose, RES(10), RES(10) );
+    uihelper::AddBottomRight(safeArea, choose, RES(10), RES(10) );
 
     // Character Selection
     auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, clickCallback);
-    uihelper::AddBottomLeft(this, select, RES(10), RES(10) );
+    uihelper::AddBottomLeft(safeArea, select, RES(10), RES(10) );
     
     
     // Keyboard

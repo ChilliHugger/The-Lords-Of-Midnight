@@ -30,7 +30,9 @@ void LandscapeLand::Init( LandscapeOptions* options )
 {
     LandscapeNode::Init(options);
     
-    setContentSize( Size(RES(1024),RES(80*4)) );
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    setContentSize( Size(visibleSize.width,RES(80*GSCALE)) );
     
     auto floor = Sprite::createWithSpriteFrameName( "floor" );
     

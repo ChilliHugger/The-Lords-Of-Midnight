@@ -29,21 +29,21 @@ TTFConfig uihelper::font_config_small;
 void uihelper::Init()
 {
     font_config_big.fontFilePath = FONT_FILENAME;
-    font_config_big.fontSize = RES(FONT_SIZE_BIG);
+    font_config_big.fontSize = DIS(FONT_SIZE_BIG);
     font_config_big.glyphs = GlyphCollection::DYNAMIC;
     font_config_big.outlineSize = 0;
     font_config_big.customGlyphs = nullptr;
     font_config_big.distanceFieldEnabled = false;
 
     font_config_medium.fontFilePath = FONT_FILENAME;
-    font_config_medium.fontSize = RES(FONT_SIZE_MEDIUM);
+    font_config_medium.fontSize = DIS(FONT_SIZE_MEDIUM);
     font_config_medium.glyphs = GlyphCollection::DYNAMIC;
     font_config_medium.outlineSize = 0;
     font_config_medium.customGlyphs = nullptr;
     font_config_medium.distanceFieldEnabled = false;
 
     font_config_small.fontFilePath = FONT_FILENAME;
-    font_config_small.fontSize = RES(FONT_SIZE_SMALL);
+    font_config_small.fontSize = DIS(FONT_SIZE_SMALL);
     font_config_small.glyphs = GlyphCollection::DYNAMIC;
     font_config_small.outlineSize = 0;
     font_config_small.customGlyphs = nullptr;
@@ -297,8 +297,8 @@ ui::Button* uihelper::CreateImageButton( const std::string& name, u32 id, const 
 {
     auto button = uihelper::CreateImageButton(name);
     button->setTag(id);
-    //parent->addChild(button);
     button->addClickEventListener(callback);
+    button->setScale(resolutionmanager::getInstance()->phoneScale());
     return button;
     
 }

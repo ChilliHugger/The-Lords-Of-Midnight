@@ -29,9 +29,9 @@ bool uisinglelord::init()
 {
     if ( uilordselect::init() ) {
         setContentSize(Size(SELECT_ELEMENT_WIDTH, SELECT_ELEMENT_HEIGHT));
-        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
-        bg->setContentSize(this->getContentSize());
-        this->addChild(bg);
+//        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
+//        bg->setContentSize(this->getContentSize());
+//        this->addChild(bg);
         this->setTouchEnabled(true);
         return true;
     }

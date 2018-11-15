@@ -17,7 +17,6 @@
 
 USING_NS_CC;
 
-
 bool uipanel::init()
 {
     if ( !Scene::init() )
@@ -25,7 +24,22 @@ bool uipanel::init()
         return false;
     }
     
+    auto size = Director::getInstance()->getVisibleSize();
+    setContentSize(size);
+    
+    
     mr = moonring::mikesingleton();
+    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    
+    // create a safe layout panel for icons etc
+    size.width -= padding.left+padding.right;
+    size.height -= padding.top+padding.bottom;
+    safeArea = cocos2d::Layer::create();
+    safeArea->setContentSize(size);
+    safeArea->setLocalZOrder(ZORDER_FAR+1);
+    safeArea->setPosition(padding.left,padding.bottom);
+    addChild(safeArea);
+    
     
     //
     // Generic mapping from Cocos2dx

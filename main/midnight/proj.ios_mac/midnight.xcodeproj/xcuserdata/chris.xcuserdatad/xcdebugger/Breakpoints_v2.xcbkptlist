@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/landscaping/LandscapeLand.cpp"
-            timestampString = "563893557.6166641"
+            timestampString = "564003199.970927"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "LandscapeLand::BuildFloors( LandscapeItems* items )"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/landscaping/LandscapeLand.cpp"
-            timestampString = "563893557.616721"
+            timestampString = "564003199.970987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "LandscapeLand::BuildFloors( LandscapeItems* items )"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/landscaping/LandscapeLand.cpp"
-            timestampString = "563893557.616762"
+            timestampString = "564003199.971055"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "LandscapeLand::BuildFloors( LandscapeItems* items )"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/landscaping/LandscapeTerrain.cpp"
-            timestampString = "561475563.758674"
+            timestampString = "564003199.9711601"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "LandscapeTerrain::BuildTerrain( LandscapeItems* items )"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/system/storymanager.cpp"
-            timestampString = "561918166.6869071"
+            timestampString = "564003199.971225"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "408"
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/library/lib/os/cfilemanager.cpp"
-            timestampString = "561918166.686963"
+            timestampString = "564003199.9712681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
             landmarkName = "filemanager::CreateDirectory(LPCSTR path)"
             landmarkType = "7">
          </BreakpointContent>
@@ -192,6 +192,22 @@
             startingLineNumber = "477"
             endingLineNumber = "477"
             landmarkName = "uithinkpage::checkPerson ( void )"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/tme/base/mxengine.cpp"
+            timestampString = "564003199.971338"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1145"
+            endingLineNumber = "1145"
+            landmarkName = "mxengine::LoadDiscoveryMap ( const c_str&amp; filename )"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

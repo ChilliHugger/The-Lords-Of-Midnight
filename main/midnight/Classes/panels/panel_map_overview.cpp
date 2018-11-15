@@ -37,7 +37,6 @@ bool panel_map_overview::init()
     scrollView->setScrollBarEnabled(true);
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    
     auto image = Sprite::create("screens/misc/overview_map.png");
     f32 scale = visibleSize.width / image->getContentSize().width ;
     image->setScale(scale, scale );
@@ -58,10 +57,10 @@ bool panel_map_overview::init()
     // Command Window
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
-    uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
+    uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
   
     auto map = uihelper::CreateImageButton("i_small_map", ID_MAP_DISCOVERY, clickCallback);
-    uihelper::AddBottomRight(this, map, RES(10), RES(10) );
+    uihelper::AddBottomRight(safeArea, map, RES(10), RES(10) );
     
     return true;
 }

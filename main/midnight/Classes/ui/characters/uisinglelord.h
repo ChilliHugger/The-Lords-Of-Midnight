@@ -13,9 +13,9 @@
 #include "uilordselect.h"
 #include "../../system/tmemanager.h"
 
-#define SELECT_ELEMENT_WIDTH   RES(128)
-#define SELECT_ELEMENT_HEIGHT  RES(110)
-#define SELECT_IMAGE_HEIGHT    RES(72)
+#define SELECT_ELEMENT_WIDTH   DIS(128)
+#define SELECT_ELEMENT_HEIGHT  DIS(110)
+#define SELECT_IMAGE_HEIGHT    DIS(72)
 
 
 class uisinglelord : public uilordselect

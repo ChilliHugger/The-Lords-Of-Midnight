@@ -52,16 +52,16 @@ bool panel_select::init()
     setBackground(BACKGROUND_COLOUR);
     
     //int c = RES(48);
-    int r = RES(64);
+    int r = DIS(64);
     //int h = RES(32);
     
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
-    uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
+    uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     
     // Look Icon
     auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, clickCallback);
-    uihelper::AddBottomRight(this, night, RES(10), RES(10) );
+    uihelper::AddBottomRight(safeArea, night, RES(10), RES(10) );
     
     int adjy=RES(32);
     //int adjx=RES(12);
@@ -74,7 +74,7 @@ bool panel_select::init()
     createFilterButton(ID_FILTER_CURRENT_LOC,   (r*5)-adjy, "i_center",     filter_show_current);
     
     auto cleanup = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
-    uihelper::AddTopRight(this, cleanup, RES(16), (r*6)-adjy );
+    uihelper::AddTopRight(safeArea, cleanup, RES(16), (r*6)-adjy );
 
     scrollView = ui::ScrollView::create();
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
@@ -84,10 +84,10 @@ bool panel_select::init()
 //    scrollView->setBackGroundColor(_clrYellow);
 //    scrollView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
     scrollView->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(this, scrollView, START_X, START_Y);
+    uihelper::AddTopLeft(safeArea, scrollView, START_X, START_Y);
     
     // calc size of scrollview
-    auto size = getContentSize();
+    auto size = safeArea->getContentSize();
     size.height -= (START_Y*2) + RES(64);
     size.width -= (START_X*2) + RES(64) ;
     SELECT_GRID_X_LEADING = (size.width-(MAX_COLUMNS*SELECT_ELEMENT_WIDTH))/MAX_COLUMNS;
@@ -114,7 +114,7 @@ void panel_select::getCharacters()
     f32 height = pos.y + SELECT_ELEMENT_HEIGHT + RES(0);
     
     // adjust the inner container of the scroll view
-    auto size = getContentSize();
+    auto size = safeArea->getContentSize();
     f32 width = scrollView->getContentSize().width;
     
     // scroll?
@@ -240,9 +240,10 @@ uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const st
 {
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
+    button->setScale(resolutionmanager::getInstance()->phoneScale());
     button->setSelected(mr->config->select_filters.Is(flag));
     button->addEventListener(eventCallback);
-    uihelper::AddTopRight(this, button, RES(16), y );
+    uihelper::AddTopRight(safeArea, button, RES(16), y );
     return button;
 }
 

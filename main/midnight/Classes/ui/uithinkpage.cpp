@@ -73,7 +73,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     setupUI();
     
-    auto size = this->getContentSize();
+    auto size = safeArea->getContentSize();
     auto textSize = lblDescription->getContentSize();
     
     f32 padding = RES(64);
@@ -93,7 +93,6 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     scrollView->setInnerContainerSize( Size(size.width,height) );
     scrollView->setContentSize(Size(size.width,size.height));
-    //scrollView->setInnerContainerPosition(Vec2(0,0));
 
     // name
     uihelper::AddTopLeft(scrollView,lblName,RES(NAME_X),RES(NAME_Y));
@@ -118,7 +117,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     uihelper::PositionParentTopLeft(imgObject,x,y);
 #endif
     
-    uihelper::AddTopLeft(this, scrollView);
+    uihelper::AddTopLeft(safeArea, scrollView);
     uihelper::FillParent(scrollView);
     
 }
@@ -131,9 +130,18 @@ bool uithinkpage::init()
     }
 
     auto size = Director::getInstance()->getVisibleSize();
-    
     setContentSize(size);
     
+    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    size.width -= padding.left+padding.right;
+    size.height -= padding.top+padding.bottom;
+    safeArea = cocos2d::Layer::create();
+    safeArea->setContentSize(size);
+    safeArea->setLocalZOrder(ZORDER_FAR+1);
+    safeArea->setPosition(padding.left,padding.bottom);
+    addChild(safeArea);
+    
+
     scrollView = ui::ScrollView::create();
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
 
@@ -149,9 +157,7 @@ bool uithinkpage::init()
     lblDescription->setTextColor(Color4B(_clrDarkRed));
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
     lblDescription->setWidth(size.width-RES(TEXT_X*2));
-    //lblDescription->setHeight(size.height-RES(TEXT_Y+64));
     lblDescription->setAlignment(TextHAlignment::LEFT);
-    //lblDescription->setLineHeight(RES(FONT_SIZE_BIG));
     lblDescription->setLineSpacing(0);
     lblDescription->setMaxLineWidth(size.width-RES(TEXT_X*2));
     lblDescription->enableWrap(true);
@@ -160,12 +166,6 @@ bool uithinkpage::init()
     // Character Image
     imgCharacter = Sprite::create();
 
-//    auto listener1 = EventListenerTouchOneByOne::create();
-//    listener1->onTouchEnded = [](Touch* touch, Event* event){
-//        return true; // if you are consuming it
-//    };
-//    imgCharacter->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener1, this);
-//
     scrollView->addChild(imgCharacter);
 
     // Object Image

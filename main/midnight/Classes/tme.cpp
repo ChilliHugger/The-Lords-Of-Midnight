@@ -617,7 +617,7 @@ bool TME_SaveDescription ( LPSTR filespec, c_str& description )
 	return TRUE;
 }
 
-bool TME_LoadDiscoveryMap ( LPCSTR filespec )
+bool TME_LoadDiscoveryMap ( LPSTR filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@LOADDISCOVERYMAP", args, 1 ) ) ) {
@@ -626,7 +626,7 @@ bool TME_LoadDiscoveryMap ( LPCSTR filespec )
     return TRUE;
 }
 
-bool TME_SaveDiscoveryMap ( LPCSTR filespec )
+bool TME_SaveDiscoveryMap ( LPSTR filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@SAVEDISCOVERYMAP", args, 1 ) ) ) {

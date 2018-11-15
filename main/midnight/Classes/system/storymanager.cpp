@@ -145,7 +145,7 @@ BOOL storymanager::create ( storyid_t id )
     
     cocos2d::FileUtils::getInstance()->createDirectory(getFolder(id));
     
-    TME_LoadDiscoveryMap( DiscoveryMapFilename() );
+    TME_LoadDiscoveryMap( (char*)DiscoveryMapFilename() );
     
     return save(id,savemode_dawn);
 }
@@ -421,7 +421,7 @@ BOOL storymanager::save ( storyid_t id, savemode_t mode )
         return FALSE ;
     }
     
-    TME_SaveDiscoveryMap( DiscoveryMapFilename() );
+    TME_SaveDiscoveryMap( (char*)DiscoveryMapFilename() );
     
     cleanup();
     
@@ -437,7 +437,7 @@ BOOL storymanager::load ( storyid_t id )
         return FALSE ;
     }
     
-    TME_LoadDiscoveryMap( DiscoveryMapFilename() );
+    TME_LoadDiscoveryMap( (char*)DiscoveryMapFilename() );
     
     return TRUE ;
 }

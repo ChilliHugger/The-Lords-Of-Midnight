@@ -35,6 +35,12 @@
 #pragma mark -
 #pragma mark Application lifecycle
 
+extern float safeAreaTopPadding;
+extern float safeAreaBottomPadding;
+extern float safeAreaLeftPadding;
+extern float safeAreaRightPadding;
+
+
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
 
@@ -75,6 +81,17 @@ static AppDelegate s_sharedApplication;
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
+    
+    if (@available(iOS 11.0, *)) {
+        UIWindow *window = UIApplication.sharedApplication.keyWindow;
+        CGFloat screenScale = 1.0f; //[[UIScreen mainScreen] scale];
+        safeAreaTopPadding = window.safeAreaInsets.top * screenScale;
+        safeAreaBottomPadding = window.safeAreaInsets.bottom * screenScale;
+        safeAreaLeftPadding = window.safeAreaInsets.left * screenScale;
+        safeAreaRightPadding = window.safeAreaInsets.right * screenScale;
+    } else {
+        // Fallback on earlier versions
+    }
     
     //run the cocos2d-x game scene
     app->run();

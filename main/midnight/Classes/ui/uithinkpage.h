@@ -60,6 +60,7 @@ protected:
     cocos2d::Sprite*    imgObject;
     
     cocos2d::ui::ScrollView* scrollView;
+    cocos2d::Layer*    safeArea;
     
 public:
     bool                approach;

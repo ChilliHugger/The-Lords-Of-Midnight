@@ -71,6 +71,8 @@
 		833172FC219B1E85009A52E7 /* uigrouplord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F4219B1E85009A52E7 /* uigrouplord.cpp */; };
 		833172FD219B1E85009A52E7 /* uilordselect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F5219B1E85009A52E7 /* uilordselect.cpp */; };
 		833172FE219B1E85009A52E7 /* uilordselect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F5219B1E85009A52E7 /* uilordselect.cpp */; };
+		83317301219D7B61009A52E7 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83317300219D7B61009A52E7 /* libcocos2d iOS.a */; };
+		83317304219DCDBD009A52E7 /* launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83317303219DCDBD009A52E7 /* launch.storyboard */; };
 		83398A8B20D1A46C007EAE7B /* panelmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8920D1A46C007EAE7B /* panelmanager.cpp */; };
 		83398A8C20D1A46C007EAE7B /* panelmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8920D1A46C007EAE7B /* panelmanager.cpp */; };
 		83398A8F20D1ADCB007EAE7B /* ringcontroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8D20D1ADCB007EAE7B /* ringcontroller.cpp */; };
@@ -465,6 +467,8 @@
 		833172F4219B1E85009A52E7 /* uigrouplord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uigrouplord.cpp; sourceTree = "<group>"; };
 		833172F5219B1E85009A52E7 /* uilordselect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uilordselect.cpp; sourceTree = "<group>"; };
 		833172F6219B1E85009A52E7 /* uiselectpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uiselectpanel.h; sourceTree = "<group>"; };
+		83317300219D7B61009A52E7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d iOS.a"; path = "../../../../../../../Developer/cocos2d-x/prebuilt/ios/libcocos2d iOS.a"; sourceTree = "<group>"; };
+		83317303219DCDBD009A52E7 /* launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = launch.storyboard; sourceTree = "<group>"; };
 		83398A8920D1A46C007EAE7B /* panelmanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panelmanager.cpp; sourceTree = "<group>"; };
 		83398A8A20D1A46C007EAE7B /* panelmanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panelmanager.h; sourceTree = "<group>"; };
 		83398A8D20D1ADCB007EAE7B /* ringcontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ringcontroller.cpp; sourceTree = "<group>"; };
@@ -688,6 +692,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83317301219D7B61009A52E7 /* libcocos2d iOS.a in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
@@ -786,6 +791,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83317300219D7B61009A52E7 /* libcocos2d iOS.a */,
 				83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
@@ -894,6 +900,7 @@
 				5087E77A17EB970100C73F5D /* Icon-72.png */,
 				5087E77B17EB970100C73F5D /* Icon-76.png */,
 				5087E77C17EB970100C73F5D /* Info.plist */,
+				83317303219DCDBD009A52E7 /* launch.storyboard */,
 			);
 			name = Icons;
 			path = ios;
@@ -1412,6 +1419,7 @@
 				8351E4031F376D7000605D75 /* ddr_map.tmx in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
+				83317304219DCDBD009A52E7 /* launch.storyboard in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
@@ -1814,8 +1822,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_FILE32API,
-					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"$(inherited)",
+					_LOM_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -1851,9 +1859,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_FILE32API,
-					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"$(inherited)",
 					NDEBUG,
+					_LOM_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
