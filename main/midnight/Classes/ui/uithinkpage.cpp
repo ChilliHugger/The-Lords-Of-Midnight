@@ -3,7 +3,7 @@
 //  midnight
 //
 //  Created by Chris Wild on 16/10/2018.
-//Copyright © 2018 Chilli Hugger Software. All rights reserved.
+//  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
 
 #include "uithinkpage.h"
@@ -18,7 +18,7 @@
 #define NAME_Y              32
 #define TEXT_X              32
 #define TEXT_Y              332
-#define TERRAIN_X           764 //512
+#define TERRAIN_X           (1024-764)
 #define TERRAIN_Y           352
 #define CHARACTER_X         384
 #define CHARACTER_Y         352 //332
@@ -32,7 +32,7 @@
 #define NAME_Y              32
 #define TEXT_X              32
 #define TEXT_Y              16
-#define TERRAIN_X           640 //512
+#define TERRAIN_X           (1024-640)
 #define TERRAIN_Y           (768-96)
 #define CHARACTER_X         190
 #define CHARACTER_Y         (768-96)
@@ -108,7 +108,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     // terrain
     y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
-    uihelper::PositionParentTopLeft(imgTerrain,x,y);
+    uihelper::PositionParentTopRight(imgTerrain,x,y);
 
     // object
 #if defined(_LOM_)

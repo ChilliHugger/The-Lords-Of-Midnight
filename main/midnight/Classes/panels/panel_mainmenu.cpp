@@ -223,6 +223,7 @@ void panel_mainmenu::OnContinueStory()
     //
     
     auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
+    bookmenu->setLocalZOrder(ZORDER_POPUP);
     uihelper::AddCenter(this,bookmenu);
  
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {

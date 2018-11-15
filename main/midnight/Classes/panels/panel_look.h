@@ -41,7 +41,7 @@ typedef struct {
     mxtime_t        time;
     tme::loc_t      location;
     
-    //mximage*        shield;
+    std::string     shield;
     //mximage*        person;
     //mximage*        face;
     std::string     name;
@@ -127,6 +127,7 @@ protected:
     
     Label*              lblDescription;
     Label*              lblName;
+    Sprite*             imgShield;
     
     
     u32                 current_arrow;

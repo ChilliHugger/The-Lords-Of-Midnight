@@ -29,7 +29,11 @@ bool panel_map_overview::init()
         return false;
     }
     
-    setBackground(Color3B(245,238,228));
+    auto backgroundColour = Color3B(245,238,228);
+    
+    setBackground(backgroundColour);
+    
+    f32 layout_padding = RES(20);
     
     auto scrollView = ui::ScrollView::create();
     scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
@@ -41,17 +45,28 @@ bool panel_map_overview::init()
     f32 scale = visibleSize.width / image->getContentSize().width ;
     image->setScale(scale, scale );
 
-    scrollView->setInnerContainerSize( image->getContentSize() );
+    f32 width = visibleSize.width;
+    
+    scrollView->setInnerContainerSize( Size(width,image->getContentSize().height+(2*layout_padding)) );
     scrollView->setContentSize(visibleSize);
     
     image->setAnchorPoint(uihelper::AnchorBottomLeft);
-    image->setPosition(0,0);
+    image->setPosition(0,layout_padding);
     
     scrollView->addChild(image);
     addChild(scrollView);
     
     uihelper::FillParent(scrollView);
     
+    // bottom gradient
+    auto gradientB = LayerGradient::create( Color4B(backgroundColour,ALPHA(0.0f)), Color4B(backgroundColour,ALPHA(1.0f)) );
+    gradientB->setContentSize(Size(width, layout_padding));
+    uihelper::AddBottomLeft(this, gradientB);
+    
+    // top gradient
+    auto gradientT = LayerGradient::create( Color4B(backgroundColour,ALPHA(1.0f)), Color4B(backgroundColour,ALPHA(0.0f)) );
+    gradientT->setContentSize(Size(width, layout_padding));
+    uihelper::AddTopLeft(this, gradientT);
     
     
     // Command Window

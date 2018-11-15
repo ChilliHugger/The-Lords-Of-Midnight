@@ -43,8 +43,9 @@ bool panel_think::init()
     pageView->setCurrentPageIndex(0);
     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
-    pageView->setIndicatorIndexNodesScale(DIS(0.50f));
-    pageView->setIndicatorSpaceBetweenIndexNodes(DIS(10));
+    
+    pageView->setIndicatorIndexNodesScale(DIS(0.25f));
+    pageView->setIndicatorSpaceBetweenIndexNodes(DIS(-5));
     
     uihelper::AddBottomLeft(this, pageView);
     uihelper::FillParent(pageView);

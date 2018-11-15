@@ -46,7 +46,10 @@ enum tagid_t {
     TAG_EXIT_TUNNEL_DONE=8,
 };
 
-
+#define SHIELD_X        RES(0)
+#define SHIELD_Y        RES(16)
+#define SHIELD_WIDTH    RES(192)
+#define SHIELD_HEIGHT   RES(224)
 
 bool panel_look::init()
 {
@@ -87,6 +90,13 @@ bool panel_look::init()
     lblDescription->setWidth(RES(800-64));
     uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(64));
 
+    // Shield
+    f32 shield_scale = 1.0f ; //* ( resolutionmanager::getInstance()->isTablet ? 1.0f : 0.9f );
+    imgShield = Sprite::create();
+    imgShield->setLocalZOrder(ZORDER_DEFAULT);
+    imgShield->setScale(shield_scale);
+    uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
+    
     // people in front
     
     //auto background = LayerColor::create(Color4B(_clrRed));
@@ -289,7 +299,7 @@ void panel_look::getCharacterInfo ( defaultexport::character_t& c, locationinfo_
     info->location = c.location;
     info->looking = c.looking;
     
-//    info->shield = GetCharacterShield(c) ;
+    info->shield = GetCharacterShield(c) ;
 //    info->person = GetCharacterImage(c);
 //    
 //#if defined(_DDR_)
@@ -354,12 +364,15 @@ void panel_look::setViewForCurrentCharacter ( void )
     
 #if defined (_LOM_)
     lblName->setString(current_info->name);
-    //lblName->Enable();
 #endif
     
     lblDescription->setString(current_info->locationtext);
-    //lblDescription->Enable();
 
+    imgShield->initWithFile(current_info->shield);
+    imgShield->setAnchorPoint(uihelper::AnchorTopRight);
+    imgShield->setIgnoreAnchorPointForPosition(false);
+    
+    
     // TODO: Shield
     //((uiimage*)(imgShield->children[0]))->Image(current_info->shield);
     //imgShield->Enable();
@@ -813,7 +826,7 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callba
     auto fade_panel = DrawNode::create();
     fade_panel->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
     fade_panel->setOpacity(ALPHA(initialAlpha));
-    fade_panel->setLocalZOrder(ZORDER_NEAR);
+    fade_panel->setLocalZOrder(ZORDER_POPUP);
     addChild(fade_panel);
     
     auto callbackAction = CallFunc::create([=]() {
@@ -842,7 +855,7 @@ void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callb
     auto rect = this->getBoundingBox();
     auto fade_panel = DrawNode::create();
     fade_panel->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
-    fade_panel->setLocalZOrder(ZORDER_NEAR);
+    fade_panel->setLocalZOrder(ZORDER_POPUP);
     fade_panel->setOpacity(ALPHA(initialAlpha));
     addChild(fade_panel);
     

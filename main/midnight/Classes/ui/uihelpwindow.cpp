@@ -43,6 +43,7 @@ uihelpwindow::uihelpwindow( uipanel* parent, helpid_t id)
     
     //
     f32 layout_padding = RES(32);
+    f32 border = RES(8);
     f32 width = RES(800);
     f32 maxHeight = RES(500);
     f32 innerWidth = width-(2*layout_padding);
@@ -62,34 +63,44 @@ uihelpwindow::uihelpwindow( uipanel* parent, helpid_t id)
     auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
     label->setColor(_clrDarkRed);
     label->setAlignment(TextHAlignment::LEFT);
-    label->setLineHeight(RES(FONT_SIZE_BIG));
+    label->setLineHeight(DIS(FONT_SIZE_BIG));
     label->setLineSpacing(0);
     label->setMaxLineWidth(innerWidth);
     label->enableWrap(true);
     scrollView->addChild(label);
 
+    
+    f32 textHeight = label->getContentSize().height+(2*layout_padding);
+    
     // calc label height
-    auto textHeight = MIN(label->getContentSize().height,maxHeight) ;
-    auto boxheight = textHeight + (2*layout_padding) ;
-    
+    auto innerHeight = MIN(textHeight,maxHeight) ;
+    auto boxheight = innerHeight + (2*border) ;
     layout->setContentSize(Size(width,boxheight));
-    uihelper::PositionParentTopLeft( label, 0, layout_padding ) ;
     
-    scrollView->setInnerContainerSize(Size(innerWidth,label->getContentSize().height));
+    scrollView->setInnerContainerSize(Size(innerWidth,textHeight));
     
     // allow some extra padding for the scrollview
     // so that the scrollbar is in the right padding area
-    scrollView->setContentSize(Size(innerWidth+layout_padding,textHeight));
-    
-    bool scrollingEnabled = label->getContentSize().height != textHeight ;
+    scrollView->setContentSize(Size(innerWidth+layout_padding,innerHeight));
+  
+    bool scrollingEnabled = textHeight > innerHeight ;
     
     scrollView->setBounceEnabled( scrollingEnabled );
     scrollView->setScrollBarEnabled( scrollingEnabled );
     
-    uihelper::PositionParentTopLeft(scrollView,layout_padding,layout_padding);
-    uihelper::PositionParentTopLeft(label);
+    uihelper::PositionParentTopLeft(scrollView,layout_padding,border);
+    uihelper::PositionParentTopLeft( label, 0, layout_padding ) ;
     
-
+    // bottom gradient
+    auto gradientB = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
+    gradientB->setContentSize(Size(width-(2*border), layout_padding));
+    uihelper::AddBottomLeft(layout, gradientB,border,border);
+    
+    // top gradient
+    auto gradientT = LayerGradient::create( Color4B(_clrWhite,ALPHA(1.0f)), Color4B(_clrWhite,ALPHA(0.0f)) );
+    gradientT->setContentSize(Size(width-(2*border), layout_padding));
+    uihelper::AddTopLeft(layout, gradientT,border,border);
+    
     // Close Button in top left corner
     auto close = uihelper::CreateImageButton("close", 0, [&](Ref* ref)
                                              {
