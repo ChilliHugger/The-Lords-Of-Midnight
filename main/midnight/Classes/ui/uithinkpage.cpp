@@ -185,7 +185,7 @@ bool uithinkpage::init()
     imgTerrain->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     
     auto tint2 = Color4F(_clrWhite);
-    auto tint1 = Color4F(0,0,0.65,0);
+    auto tint1 = Color4F(0,0,0.65f,0);
     
     imgTerrain->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
     imgTerrain->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline

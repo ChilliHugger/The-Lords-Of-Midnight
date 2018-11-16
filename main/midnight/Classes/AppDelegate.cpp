@@ -2,7 +2,7 @@
 #include "system/resolutionmanager.h"
 
 //#include "LandscapeScene.h"
-#include "panel_splashscreen.h"
+#include "panels/panel_splashscreen.h"
 
 
 // #define USE_AUDIO_ENGINE 1

@@ -8,7 +8,7 @@
 #ifndef __PANEL_CREDITS_H_
 #define __PANEL_CREDITS_H_
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 
 class panel_credits : public uipanel
 {

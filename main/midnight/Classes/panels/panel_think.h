@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 #include "../ui/uithinkpage.h"
 #include "../frontend/layout_id.h"
 

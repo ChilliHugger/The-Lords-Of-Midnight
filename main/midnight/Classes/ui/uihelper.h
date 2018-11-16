@@ -119,9 +119,11 @@ const rgb_t _clrDarkWhite     = Color3B(0xcd,0xcd,0xcd);
 
 const rgb_t _clrGrey          = Color3B(0x80,0x80,0x80);
 
-//typedef u32                    rgb_t ;
-//#define _RGB(r,g,b)         _RGBA(r,g,b,255)
-//#define _RGBA(r,g,b,a)      ((r)|(g<<8)|(b<<16)|(a<<24))
+#ifdef WIN32
+#undef _ALPHA
+#endif // WIN32
+
+
 #define _RED(rgb)            ((BYTE)(rgb))
 #define _GREEN(rgb)            ((BYTE)(((WORD)(rgb)) >> 8))
 #define _BLUE(rgb)            ((BYTE)((rgb)>>16))

@@ -10,7 +10,7 @@
 #include "uihelpwindow.h"
 #include "uipanel.h"
 #include "../frontend/language.h"
-#include "resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 
 

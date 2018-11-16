@@ -13,19 +13,6 @@ namespace chilli {
 		{
 		}
 
-        archive::archive( std::string& filename, u32 nMode )
-        {
-//            u32 size;
-//            void* data = chilli::os::filemanager::Load(filename,&size);
-//            if ( data == nullptr ) {
-//                return;
-//            }
-//
-//            m_nBufSize = 0;
-//            m_lpBufStart = NULL;
-            
-        }
-        
         
         archive::archive(ARFILE pFile, u32 nMode )
         {

@@ -7,10 +7,10 @@
 //
 
 #pragma once
-
+#include "cocos2d.h"
 #include "../library/libinc/mxtypes.h"
 #include "../library/libinc/collections.h"
-#include "lomxtypes.h"
+#include "../tme/baseinc/lomxtypes.h"
 #include "ringcontroller.h"
 
 #define MAX_STORIES 8

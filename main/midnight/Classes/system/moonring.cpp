@@ -484,7 +484,7 @@ void moonring::initialise( progressmonitor* monitor )
         // load shader
         auto p1 = GLProgram::createWithFilenames("terrain/standard.vsh", "terrain/dayNight.fsh");
         glProgramState = GLProgramState::getOrCreateWithGLProgram( p1 );
-        glProgramState->setUniformVec4("p_left", Vec4(0,0,165.0/255.0,1));      // outline
+        glProgramState->setUniformVec4("p_left", Vec4(0,0,(165.0f/255.0f),1));      // outline
         glProgramState->setUniformVec4("p_right", Vec4(1,1,1,1));               // body
         glProgramState->setUniformFloat("p_alpha", 1.0f);               // alpha
         monitor->Update("Loaded Shader", 1);

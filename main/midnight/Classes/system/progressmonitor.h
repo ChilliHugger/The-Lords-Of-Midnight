@@ -9,6 +9,7 @@
 #define progressmonitor_hpp
 
 #include <stdio.h>
+#include <functional>
 
 typedef std::function<void(int)> MXProgressCallback;
 

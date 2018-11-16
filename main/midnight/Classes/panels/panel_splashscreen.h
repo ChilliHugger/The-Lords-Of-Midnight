@@ -1,7 +1,7 @@
 #ifndef __PANEL_SPLASHSCREEN_H__
 #define __PANEL_SPLASHSCREEN_H__
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 
 FORWARD_REFERENCE(progressmonitor);
 

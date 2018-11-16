@@ -13,7 +13,7 @@
 #include "../uielement.h"
 
 
-#include "tme_interface.h"
+#include "../../tme_interface.h"
 
 enum LORD_STATUS {
     status_normal=0,

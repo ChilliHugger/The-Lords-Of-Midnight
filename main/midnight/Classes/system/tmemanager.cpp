@@ -6,6 +6,7 @@
 //
 //
 
+#include "cocos2d.h"
 #include "tmemanager.h"
 
 

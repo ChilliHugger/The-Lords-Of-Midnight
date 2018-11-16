@@ -8,7 +8,7 @@
 #include "uihelper.h"
 #include "uipopup.h"
 #include "../frontend/language.h"
-#include "resolutionmanager.h"
+#include "../system/resolutionmanager.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;

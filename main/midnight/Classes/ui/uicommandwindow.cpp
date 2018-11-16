@@ -17,7 +17,7 @@
 #include "../frontend/layout_id.h"
 #include "../frontend/choose_id.h"
 
-#include "tme_interface.h"
+#include "../tme_interface.h"
 #include "../system/tmemanager.h"
 
 USING_NS_CC;

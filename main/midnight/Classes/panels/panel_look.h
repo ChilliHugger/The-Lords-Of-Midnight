@@ -1,15 +1,13 @@
 #pragma once
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 #include "../system/storymanager.h"
 
 #include "../landscaping/LandscapeGenerator.h"
 #include "../landscaping/LandscapeView.h"
 #include "../landscaping/LandscapePeople.h"
-#include "uihelper.h"
-
-
-#include "tme_interface.h"
+#include "../ui/uihelper.h"
+#include "../tme_interface.h"
 
 #define NONE_ACTIVTY_DURATION   30.0f
 

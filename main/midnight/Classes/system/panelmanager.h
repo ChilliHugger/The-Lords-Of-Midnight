@@ -12,7 +12,7 @@
 #include "ringcontroller.h"
 
 using namespace chilli::types;
-#include "panel_id.h"
+#include "../frontend/panel_id.h"
 
 FORWARD_REFERENCE( uipanel );
 

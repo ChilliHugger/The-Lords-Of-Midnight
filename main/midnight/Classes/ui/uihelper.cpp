@@ -283,7 +283,7 @@ void uihelper::PositionCenterAnchor (Node* node, Vec2 anchor, f32 paddingX, f32 
 
 ui::Button* uihelper::CreateImageButton( const std::string& name )
 {
-ui:cocos2d::ui::Button* button;
+ui::Button* button;
     if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
         button=ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
     }else{

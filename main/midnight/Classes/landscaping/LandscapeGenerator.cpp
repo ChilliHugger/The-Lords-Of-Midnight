@@ -149,7 +149,8 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 
 LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item)
 {
-    float	x, y, xOff, yOff, angle, objAngle, viewAngle;
+	float	x, y, xOff, yOff;
+	double angle, objAngle, viewAngle;
     
     x = (float)( (item->loc.x*DIR_STEPS) - loc.x) / (float)DIR_STEPS;
     y = (float)( (item->loc.y*DIR_STEPS) - loc.y) / (float)DIR_STEPS;

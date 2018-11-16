@@ -36,6 +36,6 @@ void MyButton::onPressStateChangedToPressed()
 {
     Button::onPressStateChangedToPressed();
     if ( getChildren().size() > 0 )
-        getChildren().front()->setScale(1.1);
+        getChildren().front()->setScale(1.1f);
     
 }

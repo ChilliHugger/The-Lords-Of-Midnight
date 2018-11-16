@@ -22,9 +22,9 @@
 #include "../landscaping/LandscapeTerrain.h"
 #include "../landscaping/LandscapeColour.h"
 
-#include "tme_interface.h"
+#include "../tme_interface.h"
 
-#include "TMEMapBuilder.h"
+#include "../TMEMapBuilder.h"
 
 #include <iostream>
 #include <string>
@@ -691,7 +691,7 @@ bool panel_look::startMoving()
     
 
     loc_t moveFrom = c.location;
-    if ( MXSUCCESS(Character_Move(c)) ) {
+    if ( Character_Move(c) ) {
         
         options.colour->SetMovementColour(startTime,c.time);
         
@@ -1130,9 +1130,6 @@ void panel_look::OnNotification( Ref* sender )
     TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
     uipanel::OnNotification(sender);
 }
-
-#pragma mark Commands
-#pragma mark -
 
 bool panel_look::OnUndo ( savemode_t mode )
 {

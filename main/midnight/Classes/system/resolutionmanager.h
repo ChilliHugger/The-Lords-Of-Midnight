@@ -10,7 +10,7 @@
 #define resolutionmanager_h
 
 #include "cocos2d.h"
-#include "mxtypes.h"
+#include "../library/libinc/mxtypes.h"
 
 USING_NS_CC;
 

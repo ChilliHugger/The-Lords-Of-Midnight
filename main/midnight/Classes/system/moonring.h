@@ -108,8 +108,8 @@ public:
 #define CONFIG(x)   (mr->config->x)
 
 void _complain (LPCSTR format, ... );
-void _debug (LPCSTR format, ... );
-void _msg (LPCSTR format, ... );
+//void _debug (LPCSTR format, ... );
+//void _msg (LPCSTR format, ... );
 
 #define COMPLAIN    _complain
 

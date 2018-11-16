@@ -9,8 +9,7 @@
 #pragma once
 
 #include "../library/libinc/mxtypes.h"
-
-FORWARD_REFERENCE(uitextmenuitem);
+#include "uitextmenu.h"
 
 class uieventargs 
 {    

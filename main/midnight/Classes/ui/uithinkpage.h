@@ -10,7 +10,7 @@
 
 #include "../ui/uielement.h"
 #include "../frontend/panel_id.h"
-#include "tme_interface.h"
+#include "../tme_interface.h"
 
 class uithinkpage : public uielement
             // , public uinotificationdelegate

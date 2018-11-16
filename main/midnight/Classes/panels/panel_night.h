@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 #include "../tme_interface.h"
 
 class panel_night : public uipanel

@@ -14,6 +14,7 @@
  * 
  */
 
+#include "cocos2d.h"
 #include "../baseinc/tme_internal.h"
 #include <stdio.h>
 

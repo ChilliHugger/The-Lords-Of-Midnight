@@ -12,7 +12,7 @@
 
 #include "cocos2d.h"
 #include <stdio.h>
-#include "tme_interface.h"
+#include "../tme_interface.h"
 
 
 USING_NS_CC;

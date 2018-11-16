@@ -8,7 +8,7 @@
 #ifndef __PANEL_OPTIONS_H__
 #define __PANEL_OPTIONS_H__
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 #include "../ui/uitextmenuitem.h"
 
 FORWARD_REFERENCE(menueventargs);

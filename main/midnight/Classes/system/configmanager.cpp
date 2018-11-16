@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Chilli Hugger. All rights reserved.
 //
 
-#include "configmanager.h"
 #include "moonring.h"
+#include "configmanager.h"
+
 
 using namespace chilli::lib ;
 

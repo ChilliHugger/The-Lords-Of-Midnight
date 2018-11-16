@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 
 class panel_advert : public uipanel
 {

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 
 class panel_dedication : public uipanel
 {

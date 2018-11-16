@@ -12,11 +12,14 @@
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #include <windows.h>
 #include <tchar.h>
+#include <functional>
 #endif
 
 
 // C RunTime Header Files
 #include "platform/CCStdC.h"
+
+
 
 
 typedef std::function<void(void)> MXVoidCallback;
@@ -28,16 +31,16 @@ typedef std::function<void(void)> MXVoidCallback;
     class x
 
 #define SAFEFREE(x)	\
-	if ( x ) { free(x); x=NULL; }
+	if ( x ) { free(x); x=nullptr; }
 
 #define SAFEDELETE(x) \
-	if ( x ) { delete x; x=NULL; }
+	if ( x ) { delete x; x=nullptr; }
 
 #define SAFERELEASE(x) \
-	if ( x ) { x->Release(); x=NULL; }
+	if ( x ) { x->Release(); x=nullptr; }
 
 #define SAFEDELETEARRAY(x) \
-	if ( x ) { delete [] x; x=NULL; }
+	if ( x ) { delete [] x; x=nullptr; }
 
 #define GET_PROPERTY(t,n,m)\
 	t n() const { return m; } 

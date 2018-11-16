@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "uipanel.h"
+#include "../ui/uipanel.h"
 
 class panel_gameover : public uipanel
 {

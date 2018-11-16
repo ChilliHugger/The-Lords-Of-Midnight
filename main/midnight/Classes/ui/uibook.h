@@ -9,7 +9,7 @@
 #pragma once
 
 #include "uielement.h"
-#include "storymanager.h"
+#include "../system/storymanager.h"
 
 class uibook : public cocos2d::Node /*cocos2d::ui::Scale9Sprite*/
 {
