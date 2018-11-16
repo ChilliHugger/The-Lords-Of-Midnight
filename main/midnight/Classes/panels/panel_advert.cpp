@@ -42,7 +42,11 @@ bool panel_advert::init()
     
     setBackgroundToWidth(SCREEN_ADVERT);
     
-    Exit(5.0);
+    //Exit(5.0);
+    
+    this->scheduleOnce( [&](float) {
+        mr->panels->setPanelMode(MODE_MAINMENU, TRANSITION_FADEIN);
+    }, 5.0f, "delayed_fade_exit" );
     
     return true;
 }

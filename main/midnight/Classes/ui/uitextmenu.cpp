@@ -22,7 +22,6 @@ uitextmenu::uitextmenu( f32 width, uitextmenuitem* items, u32 count )
     this->items = items;
     this->items_count = count;
     
-    itemHeight = RES(40);
     paddingY = RES(30);
     this->width = width;
     
@@ -53,7 +52,6 @@ void uitextmenu::Init()
         auto label = Label::createWithTTF( uihelper::font_config_big, item->type.text );
         label->getFontAtlas()->setAntiAliasTexParameters();
         label->setTextColor(Color4B::WHITE);
-        label->setLineHeight(itemHeight);
 
         auto menuItem = MenuItemLabel::create(label);
         menuItem->setTag(item->id);

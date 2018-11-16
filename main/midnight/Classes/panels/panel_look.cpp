@@ -88,7 +88,7 @@ bool panel_look::init()
     lblDescription->setTextColor(Color4B::WHITE);
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
     lblDescription->setWidth(RES(800-64));
-    uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(64));
+    uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(32)+DIS(32));
 
     // Shield
     f32 shield_scale = 1.0f ; //* ( resolutionmanager::getInstance()->isTablet ? 1.0f : 0.9f );

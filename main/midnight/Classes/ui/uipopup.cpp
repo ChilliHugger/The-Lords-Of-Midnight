@@ -42,8 +42,8 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
     auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
     label->setColor(_clrBlue);
     label->setAlignment(TextHAlignment::CENTER);
-    label->setLineHeight(RES(FONT_SIZE_BIG));
-    label->setLineSpacing(0);
+    //label->setLineHeight(RES(FONT_SIZE_BIG));
+    label->setLineSpacing(DIS(0));
     label->setMaxLineWidth(width-(2*layout_padding));
     label->enableWrap(true);
     layout->addChild(label);

@@ -136,8 +136,8 @@ bool uisinglelord::setLord( mxid characterid )
     title->enableOutline(Color4B(_clrBlack),RES(1));
     title->setAnchorPoint(uihelper::AnchorCenter);
     title->setWidth(getContentSize().width);
-    title->setLineHeight(RES(10));
-    title->setHeight(RES(32));
+    title->setLineSpacing(DIS(-2));
+    title->setHeight(DIS(32));
     title->setHorizontalAlignment(TextHAlignment::CENTER);
     title->setVerticalAlignment(TextVAlignment::CENTER);
     uihelper::AddBottomCenter(face, title, RES(0), RES(-16));

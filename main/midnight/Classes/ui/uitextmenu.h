@@ -33,7 +33,6 @@ private:
 protected:
     uitextmenuitem*     items;
     u32                 items_count;
-    f32                 itemHeight;
     f32                 paddingY;
     f32                 width;
     cocos2d::Menu*      mainmenu;
