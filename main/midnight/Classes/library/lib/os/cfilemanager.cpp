@@ -359,18 +359,17 @@ namespace chilli {
         LPSTR filemanager::GetCurrentDirectory ( int max, LPSTR dir )
         {
 #ifdef WIN32
-//            ::GetCurrentDirectory( max, dir );
-			return "";
+            ::GetCurrentDirectoryA( max, dir );
 #else
             //getcwd ( dir, max );
 #endif
             return dir ;
         }
         
-        void filemanager::SetCurrentDirectory ( LPCSTR dir )
+        void filemanager::SetCurrentDirectory (LPCSTR dir )
         {
 #ifdef WIN32
-//            ::SetCurrentDirectory( dir );
+            ::SetCurrentDirectoryA( dir );
 #else
             //	setcwd ( dir );
 #endif

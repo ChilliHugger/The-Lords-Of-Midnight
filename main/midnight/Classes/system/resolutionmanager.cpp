@@ -199,5 +199,10 @@ padding resolutionmanager::getSafeArea()
 
 f32 resolutionmanager::phoneScale()
 {
+#if !defined(_OS_DESKTOP_)
     return isTablet ? 1.0f : 1.4f;
+#else
+	return 1.0f;
+#endif
+
 }

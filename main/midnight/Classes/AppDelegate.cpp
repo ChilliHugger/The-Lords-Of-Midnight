@@ -123,6 +123,14 @@ void AppDelegate::InitialisePaths()
 {
     std::vector<std::string> searchPaths;
     
+	auto fileutils = FileUtils::getInstance();
+
+#ifdef _OS_WINDOWS_
+	char path[MAX_PATH];
+	chilli::os::filemanager::GetCurrentDirectory(MAX_PATH,path);
+	fileutils->setDefaultResourceRootPath(path);
+#endif
+
     auto res = resolutionmanager::getInstance();
     
     char main_path[255];
@@ -132,13 +140,7 @@ void AppDelegate::InitialisePaths()
     sprintf( main_path, "lom/%s/screens/%d", (LPCSTR)res->current_resolution.folder, res->Aspect() );
     searchPaths.push_back(main_path);
 
-//    sprintf( main_path, "lom/%s/people", (LPCSTR)res->current_resolution.folder);
-//    searchPaths.push_back(main_path);
-//
-//    sprintf( main_path, "lom/%s/faces", (LPCSTR)res->current_resolution.folder);
-//    searchPaths.push_back(main_path);
-    
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
+	fileutils->setSearchPaths(searchPaths);
 }
 
 
