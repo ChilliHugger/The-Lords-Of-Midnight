@@ -13,7 +13,8 @@
 
 #include "ILandscape.h"
 
-
+#define LANDSCAPE_SKY_HEIGHT    (55*GSCALE)
+#define LANDSCAPE_FLOOR_HEIGHT  (80*GSCALE)
 
 class LandscapeView : public ILandscape
 {

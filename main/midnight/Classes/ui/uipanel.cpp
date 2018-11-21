@@ -36,7 +36,7 @@ bool uipanel::init()
     size.height -= padding.top+padding.bottom;
     safeArea = cocos2d::Layer::create();
     safeArea->setContentSize(size);
-    safeArea->setLocalZOrder(ZORDER_FAR+1);
+    safeArea->setLocalZOrder(ZORDER_FAR+500);
     safeArea->setPosition(padding.left,padding.bottom);
     addChild(safeArea);
     

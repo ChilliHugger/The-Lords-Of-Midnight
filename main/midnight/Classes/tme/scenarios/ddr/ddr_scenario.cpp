@@ -151,6 +151,8 @@ mxentity* ddr_x::CreateEntity ( id_type_t type )
 			return static_cast<mxentity*>(new ddr_character) ;
         case IDT_STRONGHOLD:
             return static_cast<mxentity*>(new ddr_stronghold);
+        default:
+            break;
 	}
 
 	return mxscenario::CreateEntity ( type );
@@ -161,9 +163,6 @@ void ddr_x::NightStop(void)
 }
 	//}
 	// namespace scenarios
-
-}
-// namespace tme
 
 
 ddr_stronghold::ddr_stronghold()
@@ -202,7 +201,7 @@ void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
     mxcharacter* c = mx->CharacterById(id);
     
     if ( (c->Loyalty() != character->Loyalty() && c->IsAlive()) ) {
-        chilli::lib::strcat ( (LPSTR)mx->LastActionMsg(),
+        c_strcat ( (LPSTR)mx->LastActionMsg(),
                              mx->text->CookText((LPSTR)mx->text->SystemString(SS_SEEK_MSG1),c) );
     } else {
         
@@ -215,16 +214,16 @@ void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
         
         if ( (character->Carrying() == o) || o==NULL ) {
             c = (mxcharacter*)mx->EntityByName("CH_SHARETH");
-            chilli::lib::strcat ( (LPSTR)mx->LastActionMsg(),
+            c_strcat ( (LPSTR)mx->LastActionMsg(),
                                  mx->text->CookText((LPSTR)mx->text->SystemString(SS_SEEK_MSG1),c) );
-            chilli::lib::strcat ( (LPSTR)mx->LastActionMsg(),
+            c_strcat ( (LPSTR)mx->LastActionMsg(),
                                  mx->text->CookText((LPSTR)mx->text->SystemString(SS_GUIDANCE2),character) );
             return;
         }
         
-        chilli::lib::strcat ( (LPSTR)mx->LastActionMsg(),
+        c_strcat ( (LPSTR)mx->LastActionMsg(),
                              mx->text->DescribeObjectLocation(o) );
-        chilli::lib::strcat ( (LPSTR)mx->LastActionMsg(),
+        c_strcat ( (LPSTR)mx->LastActionMsg(),
                              mx->text->CookText((LPSTR)mx->text->SystemString(SS_GUIDANCE2),character) );
         
     }
@@ -242,6 +241,9 @@ mxterrain_t ddr_x::NormaliseTerrain( mxterrain_t t) const
         t=TN_WATCHTOWER;
     return t;
 }
+
+}
+// namespace tme
 
 
 #endif // _DDR_

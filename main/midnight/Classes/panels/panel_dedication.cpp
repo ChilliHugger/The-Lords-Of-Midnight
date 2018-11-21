@@ -28,8 +28,9 @@ bool panel_dedication::init()
     setBackground(_clrWhite);
     
     // Dedication Image
-    image = setBackgroundToHeight("in-memory-of.png");
+    image = Sprite::create("misc/in-memory-of.png");
     image->setOpacity(0);
+    uihelper::AddCenter(this, image);
     
     f32 delay = CONFIG(screentransitions) ? 3.0f : 1.0f ;
     

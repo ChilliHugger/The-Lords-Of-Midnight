@@ -88,7 +88,7 @@ Sprite* uisinglelord::getStatusImage()
     return nullptr;
 }
 
-Sprite* uisinglelord::getFaceImage()
+Sprite* uisinglelord::getFaceImage(character& c)
 {
     if ( status.Is(LORD_STATUS::status_dead))
         return Sprite::createWithSpriteFrameName("f_dead!");
@@ -98,19 +98,14 @@ Sprite* uisinglelord::getFaceImage()
     // 2. if there is no shield the get a face
     // 3. then get a race
     
+    
 #ifdef _DDR_
-    mximage* face = NULL ;
-    if ( data )
-        face = data->face ;
-    if ( face == NULL ) {
-        race_data_t* r_data = (race_data_t*) TME_GetEntityUserData( c.race );
-        if ( r_data )
-            face = r_data->face;
-    }
+    auto face = GetCharacterFace(c);
+    return Sprite::create( face );
 #else
     return Sprite::create( (LPCSTR)userdata->face );
 #endif
-    return nullptr;
+
 }
 
 
@@ -123,7 +118,7 @@ bool uisinglelord::setLord( mxid characterid )
     
     updateStatus(c);
 
-    auto face = getFaceImage();
+    auto face = getFaceImage(c);
     if ( face == nullptr )
         face = Sprite::createWithSpriteFrameName("f_dead!");
     

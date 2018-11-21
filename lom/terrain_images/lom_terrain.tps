@@ -4,9 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.5.0</string>
-        <key>fileName</key>
-        <string>/Users/chris/Projects/The-Lords-Of-Midnight/lom/terrain_images/lom_terrain.tps</string>
+        <string>4.10.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -146,28 +144,12 @@
                 <uint>1</uint>
             </struct>
         </struct>
-        <key>andEngine</key>
-        <struct type="AndEngine">
-            <key>minFilter</key>
-            <enum type="AndEngine::MinFilter">Linear</enum>
-            <key>packageName</key>
-            <string>Texture</string>
-            <key>wrap</key>
-            <struct type="AndEngineWrap">
-                <key>s</key>
-                <enum type="AndEngineWrap::Wrap">Clamp</enum>
-                <key>t</key>
-                <enum type="AndEngineWrap::Wrap">Clamp</enum>
-            </struct>
-            <key>magFilter</key>
-            <enum type="AndEngine::MagFilter">MagLinear</enum>
-        </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../{v}/terrain-{n}.plist</filename>
+                <filename>../{v}/terrain/terrain-{n}.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>
@@ -212,7 +194,7 @@
             <key>trimMode</key>
             <enum type="SpriteSettings::TrimMode">Polygon</enum>
             <key>tracerTolerance</key>
-            <int>128</int>
+            <int>21</int>
             <key>heuristicMask</key>
             <false/>
             <key>defaultPivotPoint</key>
@@ -248,17 +230,16 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">sky_day.png</key>
-            <key type="filename">sky_night.png</key>
+            <key type="filename">sky.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>32,224,64,448</rect>
+                <rect>32,96,64,192</rect>
                 <key>scale9Paddings</key>
-                <rect>32,224,64,448</rect>
+                <rect>32,96,64,192</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -379,23 +360,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">t_land1.png</key>
-            <key type="filename">t_snow1.png</key>
-            <key type="filename">t_water0.png</key>
-            <key type="filename">t_water1.png</key>
-            <key type="filename">t_water3.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>256,25,512,50</rect>
-                <key>scale9Paddings</key>
-                <rect>256,25,512,50</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">t_lith0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -493,14 +457,8 @@
             <filename>t_tower0.png</filename>
             <filename>t_village0.png</filename>
             <filename>floor.png</filename>
-            <filename>sky_day.png</filename>
-            <filename>sky_night.png</filename>
             <filename>dot.png</filename>
-            <filename>t_land1.png</filename>
-            <filename>t_snow1.png</filename>
-            <filename>t_water0.png</filename>
-            <filename>t_water1.png</filename>
-            <filename>t_water3.png</filename>
+            <filename>sky.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

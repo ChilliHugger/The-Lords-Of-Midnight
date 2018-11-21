@@ -38,8 +38,8 @@ public:
 protected:
     void OnClose();
     void initialiseCommands();
-    void addItem( cocos2d::ui::Button* item, u32 index );
-    cocos2d::ui::Button* findItemById( layoutid_t id );
+    void addItem( cocos2d::ui::Widget* item, u32 index );
+    cocos2d::ui::Widget* findItemById( layoutid_t id );
     void enableItem( layoutid_t id, bool enable );
     void showItem( layoutid_t id, bool show );
 
@@ -52,6 +52,6 @@ protected:
     size            grid;
     size            padding;
     
-    Vector<cocos2d::ui::Button*> elements;
+    Vector<cocos2d::ui::Widget*> elements;
 };
 

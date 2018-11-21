@@ -58,8 +58,8 @@ public:
     virtual void Init(LandscapeOptions* options) override;
    
     void Initialise( const character& c);
-    void Initialise( mxdir_t dir, bool isintunnel );
-    void Initialise( bool isintunnel );
+    void Initialise( mxdir_t dir );
+    void Initialise();
    
     void clear();
     void stopAnim();
@@ -82,8 +82,6 @@ public:
     GLProgramState* programState;
     
 #if defined(_DDR_)
-    bool            islookingdowntunnel;
-    bool            isintunnel;
     mxtime_t        time;
 #endif
     tme::loc_t      loc;

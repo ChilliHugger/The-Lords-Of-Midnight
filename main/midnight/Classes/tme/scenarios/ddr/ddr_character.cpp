@@ -154,7 +154,7 @@ namespace tme {
 		//mxobject*	oinfo=NULL;
 		mxobject*	fightobject=NULL;
         
-        SetLastCommand ( CMD_FIGHT, NONE );
+        SetLastCommand ( CMD_FIGHT, IDT_NONE );
         
         info = GetLocInfo();
         
@@ -189,7 +189,7 @@ namespace tme {
         // we have killed the enemy
         //
         mx->text->oinfo = fightobject;
-        chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_FIGHT, this) );
+        c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_FIGHT, this) );
         
         CommandTakesTime(TRUE);
         
@@ -636,7 +636,7 @@ namespace tme {
                     }
                 }
                 // luxor the moonprince places the crown of carudrium on his head, the power contained within brings all lords loyal to him.
-                chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_1, this) );
+                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_1, this) );
                 break;
                 
             //case OB_CROWN_IMIRIEL: //4
@@ -656,7 +656,7 @@ namespace tme {
                 
                 // Tarithel the fey casts the Spell of Thigor, Morkin is transported to be with her.
             }
-                chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_2, this) );
+                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_2, this) );
                 break;
                 
             case OB_RUNES_FINORN: //3
@@ -671,7 +671,7 @@ namespace tme {
                     }
                 }
                 // rorthron throws the runes of finorn, all lords loyal to the moon prince are refreshed and envigorated
-                chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_3, this) );
+                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_3, this) );
 
                 break;
                 
@@ -679,7 +679,7 @@ namespace tme {
                 despondency=MAX_DESPONDENCY;
                 energy=MAX_ENERGY;
                 // rorthron uses the %s, he now feels refreshed and envigorated.
-                chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
+                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
 
                 break;
         }

@@ -15,75 +15,8 @@
 #include "LandscapeDebug.h"
 #include "LandscapeColour.h"
 
-const std::string terrain_graphics[] = {
-    
-    // lom
-    ""                  //    TN_PLAINS
-    , "t_citadel0"      //    TN_CITADEL
-    , "t_forest0"       //    TN_FOREST
-    , "t_henge0"        //    TN_HENGE
-    , "t_tower0"        //    TN_TOWER
-    , "t_village0"      //    TN_VILLAGE
-    , "t_downs0"        //    TN_DOWNS
-    , "t_keep0"         //    TN_KEEP
-    , "t_snowhall0"     //    TN_SNOWHALL
-    , "t_lake0"         //    TN_LAKE
-    , "t_frozenwaste0"  //    TN_FROZENWASTE
-    , "t_ruin0"         //    TN_RUIN
-    , "t_lith0"         //    TN_LITH
-    , "t_cavern0"       //    TN_CAVERN
-    , "t_mountain0"     //    TN_MOUNTAIN
-    , ""                //    TN_UNUSED_15
-    
-    // ddr
-    , ""                //    TN_PLAINS2
-    , ""                //    TN_MOUNTAIN2
-    , ""                //    TN_FOREST2
-    , ""                //    TN_HILLS
-    , ""                //    TN_GATE
-    , ""                //    TN_TEMPLE
-    , ""                //    TN_PIT
-    , ""                //    TN_PALACE
-    , ""                //    TN_FORTRESS
-    , ""                //    TN_HALL
-    , ""                //    TN_HUT
-    , ""                //    TN_WATCHTOWER
-    , ""                //    TN_CITY
-    , ""                //    TN_FOUNTAIN
-    , ""                //    TN_STONES
-    , ""                //    TN_ICYWASTE
-    , ""                //    TN_UNUSED_32
-    
-    // citadel
-    , ""                //    TN_LAND
-    , ""                //    TN_ISLE
-    , ""                //    TN_LAKELAND
-    , ""                //    TN_PLAIN
-    , ""                //    TN_PLAINS3
-    , "t_forest0"                //    TN_FOREST3
-    , ""                //    TN_UNUSED_39
-    , "t_trees0"                //    TN_TREES
-    , "t_mountain0"                //    TN_MOUNTAIN3
-    , "t_mountain0"                //    TN_ICY_MOUNTAIN
-    , "t_downs0"                //    TN_DOWNS3
-    , "t_downs0"                //    TN_HILLS3
-    , "t_downs0"                //    TN_FOOTHILLS
-    , ""                //    TN_VALLEY
-    , ""                //    TN_BAY
-    , ""                //    TN_SEA
-    , ""                //    TN_RIVER
-    , ""                //    TN_MARSH
-    , ""                //    TN_LAKE3
-    , ""                //    TN_UNUSED_52
-    , ""                //    TN_UNUSED_53
-    , "t_mist0"                //    TN_UNUSED_54
-    , "t_mist0"                //    TN_MIST
-    , ""                //    TN_UNUSED_56
-    
-};
-
-
-
+#include "../tme_interface.h"
+#include "../system/tmemanager.h"
 
 void LandscapeTerrain::Init( LandscapeOptions* options )
 {
@@ -130,14 +63,20 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
                     
                     y = 0 ;
                     
-                    if ( item->terrain == TN_MOUNTAIN || item->terrain == TN_FROZENWASTE)
+                    if ( item->terrain == TN_MOUNTAIN
+                        || item->terrain == TN_FROZENWASTE
+                        || item->terrain == TN_MOUNTAIN2
+                        || item->terrain == TN_ICYWASTE
+                        )
                         alpha=1.0;
                     
                 }
                 
                 
-                graphic->setPosition(options->generator->NormaliseXPosition(item->position.x), this->getContentSize().height - y);
                 graphic->setScale( graphic->getScale() * item->scale );
+                graphic->setPosition(options->generator->NormaliseXPosition(item->position.x),
+                                     this->getContentSize().height - y);
+                graphic->setAnchorPoint(Vec2(0.5,0));
                 
                 graphic->getGLProgramState()->setUniformFloat("p_alpha", alpha);                    // alpha
                 graphic->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
@@ -156,10 +95,16 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
 
 Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
 {
-    if ( terrain_graphics[terrain] == "" )
+    // TODO: Cache this!
+    terrain_data_t*    d = (terrain_data_t*)TME_GetEntityUserData(MAKE_ID(INFO_TERRAININFO, terrain));
+    if ( d == nullptr || strlen(d->file) == 0 ) {
         return nullptr;
+    }
     
-    auto image = Sprite::createWithSpriteFrameName( terrain_graphics[terrain] );
+//    if ( terrain_graphics[terrain] == "" )
+//        return nullptr;
+//
+    auto image = Sprite::createWithSpriteFrameName( d->file.GetAt() );
     if ( image == nullptr )
         return image;
     

@@ -21,17 +21,22 @@ void LandscapeSky::Init(LandscapeOptions* options)
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    setContentSize( Size(visibleSize.width,RES(112*GSCALE)) );
+    // header = 57
+    // sky = 55
+    // floor = 80
+    // total = 192
     
     // TODO: None dithered sky...
         
-    auto sky = Sprite::createWithSpriteFrameName( "sky_night" );
+    auto sky = Sprite::createWithSpriteFrameName( "sky" );
+    
+    setContentSize( Size(visibleSize.width,RES(LANDSCAPE_SKY_HEIGHT)) );
     
     float scalex = getContentSize().width / sky->getContentSize().width ;
 
-    sky->setScale(scalex,1.0);
-    sky->setPosition(0, 0);
-    sky->setAnchorPoint( Vec2(0,0) );
+    sky->setScale(scalex,1.0f);
+    sky->setPosition( Vec2::ZERO );
+    sky->setAnchorPoint( Vec2::ZERO );
     
     if ( programState ) {
         auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));

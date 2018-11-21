@@ -318,9 +318,10 @@ bool moonring::attack()
 
 bool moonring::give()
 {
+    character& c = TME_CurrentCharacter();
     if ( Character_Give(c,location_someone_to_give_to) ) {
         stories->save();
-        ShowPage( MODE_THINK_PLACE );
+        showPage( MODE_THINK_PLACE );
         return true;
     }
     return false;
@@ -328,9 +329,10 @@ bool moonring::give()
 
 bool moonring::take()
 {
+    character& c = TME_CurrentCharacter();
     if ( Character_Take(c) ) {
         stories->save();
-        ShowPage( MODE_THINK_PLACE );
+        showPage( MODE_THINK_PLACE );
         return true;
     }
     return false;
@@ -338,25 +340,29 @@ bool moonring::take()
 
 bool moonring::use()
 {
+    character& c = TME_CurrentCharacter();
     if ( Character_Use(c) ) {
-        mr->stories->save();
-        mr->ShowPage( MODE_THINK_SEEK );
+        stories->save();
+        showPage( MODE_THINK_SEEK );
         return true;
     }
+    return false;
 }
 
 bool moonring::rest()
 {
+    character& c = TME_CurrentCharacter();
     Character_Rest(c);
-    mr->stories->save();
-    mr->ShowPage(MODE_THINK);
+    stories->save();
+    showPage(MODE_THINK);
     return true;
 }
 
 bool moonring::enterTunnel()
 {
-    Character_EnterTunnel(TME_CurrentCharacter());
-    mr->stories->save();
+    character& c = TME_CurrentCharacter();
+    Character_EnterTunnel(c);
+    stories->save();
     return true;
 }
 
@@ -457,8 +463,11 @@ void moonring::initialise( progressmonitor* monitor )
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     // load images
-    for (std::string file_name : {"rest-0", "rest-1", "language-0", "terrain-0", "terrain-1" }) {
+    for (std::string file_name : {"rest-0", "rest-1", "language-0", "terrain/terrain-0", "terrain/terrain-1" }) {
         Director::getInstance()->getTextureCache()->addImageAsync(file_name + ".png", [&,file_name](Texture2D* loaded_texture) {
+            
+            auto cache = SpriteFrameCache::getInstance();
+            
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file_name + ".plist", loaded_texture);
             monitor->Update("Loaded " + file_name,1);
             count++;
@@ -516,8 +525,8 @@ void moonring::initialise( progressmonitor* monitor )
     UIDEBUG("Global:: _TME_CHEAT_MODE_");
     tme::variables::sv_cheat_armies_noblock = true;
     tme::variables::sv_cheat_nasties_noblock = true;
-    tme::variables::sv_cheat_movement_free = true ;
-    //variables::sv_cheat_movement_cheap = true ;
+    //tme::variables::sv_cheat_movement_free = true ;
+    tme::variables::sv_cheat_movement_cheap = true ;
     //variables::sv_cheat_commands_free = true ;
 #endif
 

@@ -51,7 +51,7 @@ static			variant args[20];
 #if defined(_LOM_)
 LPCSTR TME_ScenarioDirectory ( void )
 {
-	tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + "lom";
+	tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
     return tme_path.c_str();
 }
 
@@ -59,18 +59,29 @@ LPCSTR TME_ScenarioName ( void )
 {
 	return "The Lords of Midnight" ; 
 }
+
+LPCSTR TME_ScenarioShortName ( void )
+{
+    return "lom" ;
+}
+
 #endif
 
 #if defined(_DDR_)
 LPCSTR TME_ScenarioDirectory ( void )
 {
-	tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + "ddr";
+	tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
 	return tme_path.c_str();
 }
 
 LPCSTR TME_ScenarioName ( void )
 {
 	return "Doomdark's Revenge" ;
+}
+
+LPCSTR TME_ScenarioShortName ( void )
+{
+    return "ddr" ;
 }
 #endif
 
@@ -181,6 +192,13 @@ bool TME_GetLocation( maplocation& out, mxid id )
 bool TME_GetLocation( maplocation& out, loc_t loc )
 {
 	return TME_GetLocation(out,MAKE_LOCID(loc.x,loc.y));
+}
+
+bool TME_GetLocationInDirection( maplocation& out, loc_t loc, mxdir_t dir )
+{
+    mxgridref ref(loc);
+    ref.AddDirection(dir);
+    return TME_GetLocation(out,MAKE_LOCID(ref.x,ref.y));
 }
 
 

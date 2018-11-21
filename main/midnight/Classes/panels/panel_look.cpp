@@ -46,10 +46,26 @@ enum tagid_t {
     TAG_EXIT_TUNNEL_DONE=8,
 };
 
-#define SHIELD_X        RES(0)
-#define SHIELD_Y        RES(16)
+
 #define SHIELD_WIDTH    RES(192)
 #define SHIELD_HEIGHT   RES(224)
+
+
+#if defined(_LOM_)
+#define DESCRIPTION_COLOUR  _clrWhite
+#define SHIELD_X        RES(0)
+#define SHIELD_Y        RES(16)
+#define SHIELD_SCALE    1.0f
+#endif
+
+#if defined(_DDR_)
+#define DESCRIPTION_COLOUR  _clrRed
+#define SHIELD_X        RES(32)
+#define SHIELD_Y        RES(-16)
+#define SHIELD_SCALE    0.9f
+#endif
+
+
 
 bool panel_look::init()
 {
@@ -75,26 +91,38 @@ bool panel_look::init()
     
     options.colour->options = &options;
 
+    // Header area
+    layHeader = LayerColor::create(Color4B(_clrWhite), getContentSize().width, RES(228) );
+    layHeader->setLocalZOrder(ZORDER_FAR+1);
+    uihelper::AddTopLeft(this,layHeader);
+    
+    f32 lblNameAdjust = 0;
+    
     // Name Label
+#if defined(_LOM_)
     lblName = Label::createWithTTF( uihelper::font_config_big, "" );
     lblName->getFontAtlas()->setAntiAliasTexParameters();
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32));
+    lblNameAdjust = DIS(32) ;
+#endif
 
     // Location Desction Label
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
     lblDescription->getFontAtlas()->setAntiAliasTexParameters();
-    lblDescription->setTextColor(Color4B::WHITE);
+    lblDescription->setTextColor(Color4B(DESCRIPTION_COLOUR));
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
     lblDescription->setWidth(RES(800-64));
-    uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(32)+DIS(32));
+    uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(32)+lblNameAdjust);
 
     // Shield
-    f32 shield_scale = 1.0f ; //* ( resolutionmanager::getInstance()->isTablet ? 1.0f : 0.9f );
-    imgShield = Sprite::create();
+    imgShield = ImageView::create();
     imgShield->setLocalZOrder(ZORDER_DEFAULT);
-    imgShield->setScale(shield_scale);
+    imgShield->setScale(SHIELD_SCALE);
+    imgShield->setTouchEnabled(true);
+    imgShield->addClickEventListener(clickCallback);
+    imgShield->setTag(ID_THINK);
     uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
     
     // people in front
@@ -300,15 +328,19 @@ void panel_look::getCharacterInfo ( defaultexport::character_t& c, locationinfo_
     info->looking = c.looking;
     
     info->shield = GetCharacterShield(c) ;
-//    info->person = GetCharacterImage(c);
-//    
-//#if defined(_DDR_)
-//    info->tunnel = Character_IsInTunnel(c);
-//    if ( info->shield == NULL )
-//        info->shield = info->person ;
-//#endif
-//    
-//    info->face = GetCharacterFace(c);
+    info->person = GetCharacterImage(c);
+    info->face = GetCharacterFace(c);
+    
+#if defined(_DDR_)
+    info->tunnel = Character_IsInTunnel(c);
+    
+    maplocation m;
+    TME_GetLocationInDirection(m, c.location, c.looking);
+
+    info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
+    
+#endif
+
     info->name = c.longname ;
     std::transform(info->name.begin(), info->name.end(), info->name.begin(), ::toupper);
     
@@ -365,10 +397,13 @@ void panel_look::setViewForCurrentCharacter ( void )
 #if defined (_LOM_)
     lblName->setString(current_info->name);
 #endif
+
+    std::string shieldImage = current_info->shield;
+    if ( shieldImage.empty() )
+        shieldImage = current_info->person ;
     
     lblDescription->setString(current_info->locationtext);
-
-    imgShield->initWithFile(current_info->shield);
+    imgShield->loadTexture(shieldImage, Widget::TextureResType::LOCAL);
     imgShield->setAnchorPoint(uihelper::AnchorTopRight);
     imgShield->setIgnoreAnchorPointForPosition(false);
     
@@ -394,6 +429,12 @@ void panel_look::setViewForCurrentCharacter ( void )
     options.here = current_info->location;
     options.here.x *= DIR_STEPS;
     options.here.y *= DIR_STEPS;
+
+#if defined(_DDR_)
+    options.isInTunnel = current_info->tunnel;
+    options.isLookingDownTunnel = current_info->lookingdowntunnel;
+#endif
+
     
     // looking = (c.looking * DIR_AMOUNT) ;
     options.lookAmount = current_info->looking * 400;
@@ -423,30 +464,21 @@ void panel_look::setViewForCurrentCharacter ( void )
     
     if ( next_people ) {
         next_people->Init(&options);
-        next_people->Initialise(NEXT_DIRECTION(current_info->looking), current_info->tunnel);
+        next_people->Initialise(NEXT_DIRECTION(current_info->looking));
         next_people->setPositionX(width);
     }
     
     if ( prev_people ) {
         prev_people->Init(&options);
-        prev_people->Initialise(PREV_DIRECTION(current_info->looking), current_info->tunnel);
+        prev_people->Initialise(PREV_DIRECTION(current_info->looking));
         prev_people->setPositionX(-width);
     }
     
-    
-    
     UpdateLandscape();
     
-    
-    
-    // Add characters in front
-    
-    // Add shield
     // Add shield if following
     
     // update actions
-    
-    
     
 }
 
@@ -471,10 +503,16 @@ void panel_look::UpdateLandscape()
     
     current_view->programState = mr->glProgramState;
     current_view->Init(&options);
-    current_view->setAnchorPoint(Vec2(0.5,0.5));
-    current_view->setPosition( Vec2(getContentSize().width/2, getContentSize().height/2));
+    current_view->setAnchorPoint(Vec2::ZERO);
+    current_view->setPosition( Vec2::ZERO);
     current_view->setLocalZOrder(ZORDER_FAR);
     addChild(current_view);
+    
+    // LoM's header is affectively part of the backgroun
+    // so update the colour to the same as the sky
+#if defined(_LOM_)
+    layHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(1)));
+#endif
     
 }
 
@@ -945,7 +983,7 @@ void panel_look::OnNotification( Ref* sender )
 {
     stopInactivity();
     
-    auto button = static_cast<Button*>(sender);
+    auto button = static_cast<Widget*>(sender);
     if ( button == nullptr )
         return;
     
@@ -1154,9 +1192,9 @@ bool panel_look::OnEnterTunnel()
         
         mr->enterTunnel();
         
-        GetCurrentLocationInfo();
-        SetViewForCurrentCharacter();
-        current_view->SetViewForCurrentCharacter();
+        getCurrentLocationInfo();
+        setViewForCurrentCharacter();
+       // current_view->SetViewForCurrentCharacter();
         fadeIn(_clrBlack, 1.0f, [&](){
             ShowHelpWindow(HELP_TN_TUNNEL);
         });
@@ -1170,7 +1208,7 @@ bool panel_look::OnExitTunnel()
 {
     hideMenus();
     fadeOut(_clrWhite, 0.0f, [&]() {
-        OnMovementComplete(NULL, LM_MOVE_FORWARD);
+        OnMovementComplete(LM_MOVE_FORWARD);
         fadeIn(_clrBlack, 1.0f, [&](){
         });
     });

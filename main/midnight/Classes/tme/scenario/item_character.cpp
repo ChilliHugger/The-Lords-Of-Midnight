@@ -1453,7 +1453,7 @@ namespace tme {
 
 #if defined(_DDR_)
             if ( newobject == OB_GUIDANCE )
-                chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_GUIDANCE1, this) );
+                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_GUIDANCE1, this) );
             else
 #endif
 				c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
@@ -1587,7 +1587,7 @@ namespace tme {
 #if defined(_DDR_)
             if ( reset_msg ) {
                 mx->text->oinfo = oinfo ;
-                chilli::lib::strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
+                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
             }
             
             mapsqr.RemoveObject();

@@ -26,6 +26,8 @@
 #define OBJECT_X            128
 #define BACKGROUND_COLOUR   _clrWhite
 #define NAME_TEXT_COLOUR    _clrDarkRed
+#define TERRAIN_COLOUR      Color3B(0x00,0x00,0xA5)
+
 #endif
 #if defined(_DDR_)
 #define NAME_X              32
@@ -40,6 +42,7 @@
 #define OBJECT_X            128
 #define BACKGROUND_COLOUR   _clrCyan
 #define NAME_TEXT_COLOUR    _clrBlue
+#define TERRAIN_COLOUR      _clrBlack
 #endif
 
 using namespace tme;
@@ -109,7 +112,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
     uihelper::PositionParentTopRight(imgTerrain,x,y);
-
+    
     // object
 #if defined(_LOM_)
     y = RES(OBJECT_Y) - imgObject->getContentSize().height;
@@ -164,14 +167,14 @@ bool uithinkpage::init()
     
 
     // Character Image
-    imgCharacter = Sprite::create();
+    imgCharacter = ImageView::create();
 
     scrollView->addChild(imgCharacter);
 
     // Object Image
 #if defined(_LOM_)
     // create image for object
-    imgObject = Sprite::create();
+    imgObject = ImageView::create();
     scrollView->addChild(imgObject);
 #endif
     
@@ -185,8 +188,8 @@ bool uithinkpage::init()
     imgTerrain->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     
     auto tint2 = Color4F(_clrWhite);
-    auto tint1 = Color4F(0,0,0.65f,0);
-    
+    auto tint1 = Color4F(TERRAIN_COLOUR);
+
     imgTerrain->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
     imgTerrain->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
     imgTerrain->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));               // body
@@ -203,7 +206,7 @@ void uithinkpage::displayCharacter ( const character& c )
     // display character name
     lblName->setString(current_character.longname);
 
-    imgCharacter->initWithFile(GetCharacterImage(c));
+    imgCharacter->loadTexture(GetCharacterImage(c), Widget::TextureResType::LOCAL);
 
 }
 
@@ -241,7 +244,6 @@ void uithinkpage::displayTerrain ( mxterrain_t terrain )
     }
 
     imgTerrain->initWithSpriteFrameName((LPCSTR)d->file);
-
     imgTerrain->setVisible(true);
 }
 
@@ -254,7 +256,6 @@ void uithinkpage::displayArmy ( void )
     }
 
     imgTerrain->initWithSpriteFrameName((LPCSTR)d->file);
-
     imgTerrain->setVisible(true);
     
 }
@@ -268,7 +269,7 @@ void uithinkpage::displayObject ( mxid objectid )
         return;
     }
     
-    imgObject->initWithFile( GetObjectBig(objectid) );
+    imgObject->loadTexture( GetObjectBig(objectid), Widget::TextureResType::LOCAL );
     imgObject->setVisible(true);
 #endif
     

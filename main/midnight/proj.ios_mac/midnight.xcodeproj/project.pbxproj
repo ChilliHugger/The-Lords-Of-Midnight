@@ -57,8 +57,6 @@
 		8306209A1F38855600D017E5 /* lom in Resources */ = {isa = PBXBuildFile; fileRef = 830620981F38855600D017E5 /* lom */; };
 		830620B51F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
 		830620B61F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
-		83113FD41F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8306184A1F38687000D017E5 /* LandscapeScene.cpp */; };
-		83113FD51F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8306184A1F38687000D017E5 /* LandscapeScene.cpp */; };
 		831AD5821FE58436001108AC /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
 		831AD5831FE58671001108AC /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
 		831AD5861FE58F99001108AC /* uibookmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5841FE58F99001108AC /* uibookmenu.cpp */; };
@@ -80,13 +78,9 @@
 		83398A9420D1D708007EAE7B /* panel_look.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A9320D1D708007EAE7B /* panel_look.cpp */; };
 		83398A9520D1D708007EAE7B /* panel_look.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A9320D1D708007EAE7B /* panel_look.cpp */; };
 		8344EBC01FD1E43F0067AAC1 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
-		8344EBC21FD1E43F0067AAC1 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
 		8344EBC31FD1E43F0067AAC1 /* lom in Resources */ = {isa = PBXBuildFile; fileRef = 830620981F38855600D017E5 /* lom */; };
 		8344EBC41FD1E43F0067AAC1 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		8344EBC51FD1E43F0067AAC1 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
-		8344EBC61FD1E43F0067AAC1 /* citadel_wip.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 83D895F61F36643F00172245 /* citadel_wip.tmx */; };
-		8344EBC71FD1E43F0067AAC1 /* ddr_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4021F376D7000605D75 /* ddr_map.tmx */; };
-		8344EBC81FD1E43F0067AAC1 /* lom_map_test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E40D1F3A655C00605D75 /* lom_map_test.tmx */; };
 		8344EBC91FD1E43F0067AAC1 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		8344EBCB1FD1E43F0067AAC1 /* drawing.h in Resources */ = {isa = PBXBuildFile; fileRef = 83D264B51F36077E001C6F13 /* drawing.h */; };
 		8344EBCE1FD1E43F0067AAC1 /* ddr_processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264211F360724001C6F13 /* ddr_processor_text.cpp */; };
@@ -117,7 +111,6 @@
 		8344EBE71FD1E43F0067AAC1 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		8344EBE81FD1E43F0067AAC1 /* TMEMapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F91F36666D00172245 /* TMEMapBuilder.cpp */; };
 		8344EBE91FD1E43F0067AAC1 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2648F1F36077E001C6F13 /* xml.cpp */; };
-		8344EBEA1FD1E43F0067AAC1 /* LandscapeScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8306184A1F38687000D017E5 /* LandscapeScene.cpp */; };
 		8344EBEB1FD1E43F0067AAC1 /* processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264181F360724001C6F13 /* processor_text.cpp */; };
 		8344EBEC1FD1E43F0067AAC1 /* cfile_common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264941F36077E001C6F13 /* cfile_common.cpp */; };
 		8344EBED1FD1E43F0067AAC1 /* ddr_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264231F360724001C6F13 /* ddr_scenario.cpp */; };
@@ -195,11 +188,6 @@
 		8351A5291FE45B9000D9AB57 /* keyboardmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A5261FE45B9000D9AB57 /* keyboardmanager.cpp */; };
 		8351A52C1FE4633100D9AB57 /* tmemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A52A1FE4633100D9AB57 /* tmemanager.cpp */; };
 		8351A52D1FE4633100D9AB57 /* tmemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A52A1FE4633100D9AB57 /* tmemanager.cpp */; };
-		8351E4031F376D7000605D75 /* ddr_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4021F376D7000605D75 /* ddr_map.tmx */; };
-		8351E4051F376D7B00605D75 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
-		8351E4061F376D7B00605D75 /* lom_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4041F376D7B00605D75 /* lom_map.tmx */; };
-		8351E4071F376D8300605D75 /* ddr_map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E4021F376D7000605D75 /* ddr_map.tmx */; };
-		8351E40E1F3A655C00605D75 /* lom_map_test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 8351E40D1F3A655C00605D75 /* lom_map_test.tmx */; };
 		8352FBD1216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
 		8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
 		83784AC61FCF216900F5AD66 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */; };
@@ -373,8 +361,6 @@
 		83D264E11F36077E001C6F13 /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264A01F36077E001C6F13 /* misc.cpp */; };
 		83D264E21F36077E001C6F13 /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264A11F36077E001C6F13 /* random.cpp */; };
 		83D264E31F36077E001C6F13 /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264A11F36077E001C6F13 /* random.cpp */; };
-		83D264E41F36077E001C6F13 /* drawing.h in Resources */ = {isa = PBXBuildFile; fileRef = 83D264B51F36077E001C6F13 /* drawing.h */; };
-		83D264E51F36077E001C6F13 /* drawing.h in Resources */ = {isa = PBXBuildFile; fileRef = 83D264B51F36077E001C6F13 /* drawing.h */; };
 		83D264EE1F360857001C6F13 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264E71F360857001C6F13 /* tinystr.cpp */; };
 		83D264EF1F360857001C6F13 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264E71F360857001C6F13 /* tinystr.cpp */; };
 		83D264F01F360857001C6F13 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264E91F360857001C6F13 /* tinyxml.cpp */; };
@@ -385,12 +371,146 @@
 		83D264F51F360857001C6F13 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264EC1F360857001C6F13 /* tinyxmlparser.cpp */; };
 		83D895F41F36110400172245 /* citadel_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F11F36110400172245 /* citadel_scenario.cpp */; };
 		83D895F51F36110400172245 /* citadel_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F11F36110400172245 /* citadel_scenario.cpp */; };
-		83D895F71F36643F00172245 /* citadel_wip.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 83D895F61F36643F00172245 /* citadel_wip.tmx */; };
-		83D895F81F36643F00172245 /* citadel_wip.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 83D895F61F36643F00172245 /* citadel_wip.tmx */; };
 		83D895FB1F36666D00172245 /* TMEMapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F91F36666D00172245 /* TMEMapBuilder.cpp */; };
 		83D895FC1F36666D00172245 /* TMEMapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F91F36666D00172245 /* TMEMapBuilder.cpp */; };
 		83E108B21FE5684B00C29042 /* panel_dedication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83E108B01FE5684B00C29042 /* panel_dedication.cpp */; };
 		83E108B31FE5687A00C29042 /* panel_dedication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83E108B01FE5684B00C29042 /* panel_dedication.cpp */; };
+		83E3019D21A41BE3005C3F5C /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
+		83E3019F21A41BE3005C3F5C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
+		83E301A021A41BE3005C3F5C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
+		83E301A121A41BE3005C3F5C /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
+		83E301A321A41BE3005C3F5C /* ddr_processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264211F360724001C6F13 /* ddr_processor_text.cpp */; };
+		83E301A421A41BE3005C3F5C /* processor_battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264161F360724001C6F13 /* processor_battle.cpp */; };
+		83E301A521A41BE3005C3F5C /* mxengine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EA1F360724001C6F13 /* mxengine.cpp */; };
+		83E301A621A41BE3005C3F5C /* uibookmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5841FE58F99001108AC /* uibookmenu.cpp */; };
+		83E301A721A41BE3005C3F5C /* uigrouplord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F4219B1E85009A52E7 /* uigrouplord.cpp */; };
+		83E301A821A41BE3005C3F5C /* mxitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263F01F360724001C6F13 /* mxitem.cpp */; };
+		83E301A921A41BE3005C3F5C /* info_area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264051F360724001C6F13 /* info_area.cpp */; };
+		83E301AA21A41BE3005C3F5C /* army.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264031F360724001C6F13 /* army.cpp */; };
+		83E301AB21A41BE3005C3F5C /* uicommandwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */; };
+		83E301AC21A41BE3005C3F5C /* cflags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2649A1F36077E001C6F13 /* cflags.cpp */; };
+		83E301AD21A41BE3005C3F5C /* LandscapePeople.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB772177892B00CC29EF /* LandscapePeople.cpp */; };
+		83E301AE21A41BE3005C3F5C /* carchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264971F36077E001C6F13 /* carchive.cpp */; };
+		83E301AF21A41BE3005C3F5C /* panel_dedication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83E108B01FE5684B00C29042 /* panel_dedication.cpp */; };
+		83E301B021A41BE3005C3F5C /* mxentity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EB1F360724001C6F13 /* mxentity.cpp */; };
+		83E301B121A41BE3005C3F5C /* info_gender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264081F360724001C6F13 /* info_gender.cpp */; };
+		83E301B221A41BE3005C3F5C /* lom_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2642B1F360724001C6F13 /* lom_scenario.cpp */; };
+		83E301B321A41BE3005C3F5C /* LandscapeLand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE31F4C1BB6009B00A2 /* LandscapeLand.cpp */; };
+		83E301B421A41BE3005C3F5C /* LandscapeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF01F4CC579009B00A2 /* LandscapeView.cpp */; };
+		83E301B521A41BE3005C3F5C /* cfile_windows.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264911F36077E001C6F13 /* cfile_windows.cpp */; };
+		83E301B621A41BE3005C3F5C /* keyboardmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A5261FE45B9000D9AB57 /* keyboardmanager.cpp */; };
+		83E301B721A41BE3005C3F5C /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264E71F360857001C6F13 /* tinystr.cpp */; };
+		83E301B821A41BE3005C3F5C /* item_character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640F1F360724001C6F13 /* item_character.cpp */; };
+		83E301B921A41BE3005C3F5C /* variables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263F31F360724001C6F13 /* variables.cpp */; };
+		83E301BA21A41BE3005C3F5C /* ddr_processor_night.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641F1F360724001C6F13 /* ddr_processor_night.cpp */; };
+		83E301BB21A41BE3005C3F5C /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
+		83E301BC21A41BE3005C3F5C /* cfilemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264931F36077E001C6F13 /* cfilemanager.cpp */; };
+		83E301BD21A41BE3005C3F5C /* uipanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD711FD30AF700B4C721 /* uipanel.cpp */; };
+		83E301BE21A41BE3005C3F5C /* uielement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D751FDBFAA6000E2CC2 /* uielement.cpp */; };
+		83E301BF21A41BE3005C3F5C /* info_command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264061F360724001C6F13 /* info_command.cpp */; };
+		83E301C021A41BE3005C3F5C /* cbitarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264981F36077E001C6F13 /* cbitarray.cpp */; };
+		83E301C121A41BE3005C3F5C /* item_regiment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264111F360724001C6F13 /* item_regiment.cpp */; };
+		83E301C221A41BE3005C3F5C /* lom_stronghold.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2642C1F360724001C6F13 /* lom_stronghold.cpp */; };
+		83E301C321A41BE3005C3F5C /* info_direction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264071F360724001C6F13 /* info_direction.cpp */; };
+		83E301C421A41BE3005C3F5C /* LandscapeColour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834D04E520D2F649001B07CB /* LandscapeColour.cpp */; };
+		83E301C521A41BE3005C3F5C /* projectconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834D04E920D2FB3C001B07CB /* projectconfig.cpp */; };
+		83E301C621A41BE3005C3F5C /* uioptionitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D6D1FDBE8B0000E2CC2 /* uioptionitem.cpp */; };
+		83E301C721A41BE3005C3F5C /* uihelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */; };
+		83E301C821A41BE3005C3F5C /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
+		83E301C921A41BE3005C3F5C /* TMEMapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F91F36666D00172245 /* TMEMapBuilder.cpp */; };
+		83E301CA21A41BE3005C3F5C /* panel_options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD6D1FD30A0100B4C721 /* panel_options.cpp */; };
+		83E301CB21A41BE3005C3F5C /* panel_select.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB6721760B4000CC29EF /* panel_select.cpp */; };
+		83E301CC21A41BE3005C3F5C /* panel_advert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB6121760B4000CC29EF /* panel_advert.cpp */; };
+		83E301CD21A41BE3005C3F5C /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2648F1F36077E001C6F13 /* xml.cpp */; };
+		83E301CE21A41BE3005C3F5C /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
+		83E301CF21A41BE3005C3F5C /* uilordselect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F5219B1E85009A52E7 /* uilordselect.cpp */; };
+		83E301D021A41BE3005C3F5C /* uithinkpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A600032187B98700FBDAFC /* uithinkpage.cpp */; };
+		83E301D121A41BE3005C3F5C /* processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264181F360724001C6F13 /* processor_text.cpp */; };
+		83E301D221A41BE3005C3F5C /* cfile_common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264941F36077E001C6F13 /* cfile_common.cpp */; };
+		83E301D321A41BE3005C3F5C /* ddr_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264231F360724001C6F13 /* ddr_scenario.cpp */; };
+		83E301D421A41BE3005C3F5C /* panel_gameover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB6321760B4000CC29EF /* panel_gameover.cpp */; };
+		83E301D521A41BE3005C3F5C /* helpmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A51F1FDF398300D9AB57 /* helpmanager.cpp */; };
+		83E301D621A41BE3005C3F5C /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264151F360724001C6F13 /* map.cpp */; };
+		83E301D721A41BE3005C3F5C /* mxfragment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EC1F360724001C6F13 /* mxfragment.cpp */; };
+		83E301D821A41BE3005C3F5C /* panel_night.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB6621760B4000CC29EF /* panel_night.cpp */; };
+		83E301D921A41BE3005C3F5C /* cfileList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264921F36077E001C6F13 /* cfileList.cpp */; };
+		83E301DA21A41BE3005C3F5C /* panelmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8920D1A46C007EAE7B /* panelmanager.cpp */; };
+		83E301DB21A41BE3005C3F5C /* panel_mainmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8344EC331FD1F11D0067AAC1 /* panel_mainmenu.cpp */; };
+		83E301DC21A41BE3005C3F5C /* LandscapeTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFED1F4CC082009B00A2 /* LandscapeTerrain.cpp */; };
+		83E301DD21A41BE3005C3F5C /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264EC1F360857001C6F13 /* tinyxmlparser.cpp */; };
+		83E301DE21A41BE3005C3F5C /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264A11F36077E001C6F13 /* random.cpp */; };
+		83E301DF21A41BE3005C3F5C /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
+		83E301E021A41BE3005C3F5C /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
+		83E301E121A41BE3005C3F5C /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */; };
+		83E301E221A41BE3005C3F5C /* mxmemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263F21F360724001C6F13 /* mxmemory.cpp */; };
+		83E301E321A41BE3005C3F5C /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
+		83E301E421A41BE3005C3F5C /* progressmonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834D04ED20D30776001B07CB /* progressmonitor.cpp */; };
+		83E301E521A41BE3005C3F5C /* mxlocinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263F11F360724001C6F13 /* mxlocinfo.cpp */; };
+		83E301E621A41BE3005C3F5C /* datatypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2649D1F36077E001C6F13 /* datatypes.cpp */; };
+		83E301E721A41BE3005C3F5C /* uifilterbutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B668972185EF5700B130FC /* uifilterbutton.cpp */; };
+		83E301E821A41BE3005C3F5C /* uipopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD751FD3114000B4C721 /* uipopup.cpp */; };
+		83E301E921A41BE3005C3F5C /* panel_map_overview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB6221760B4000CC29EF /* panel_map_overview.cpp */; };
+		83E301EA21A41BE3005C3F5C /* processor_night.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264171F360724001C6F13 /* processor_night.cpp */; };
+		83E301EB21A41BE3005C3F5C /* units.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264191F360724001C6F13 /* units.cpp */; };
+		83E301EC21A41BE3005C3F5C /* info_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264091F360724001C6F13 /* info_object.cpp */; };
+		83E301ED21A41BE3005C3F5C /* c_str.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2649C1F36077E001C6F13 /* c_str.cpp */; };
+		83E301EE21A41BE3005C3F5C /* info_terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640D1F360724001C6F13 /* info_terrain.cpp */; };
+		83E301EF21A41BE3005C3F5C /* tmemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A52A1FE4633100D9AB57 /* tmemanager.cpp */; };
+		83E301F021A41BE3005C3F5C /* LandscapeDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFF31F4CCAA4009B00A2 /* LandscapeDebug.cpp */; };
+		83E301F121A41BE3005C3F5C /* info_unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640E1F360724001C6F13 /* info_unit.cpp */; };
+		83E301F221A41BE3005C3F5C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503AE10317EB98FF00D1A890 /* main.cpp */; };
+		83E301F321A41BE3005C3F5C /* item_victories.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264141F360724001C6F13 /* item_victories.cpp */; };
+		83E301F421A41BE3005C3F5C /* panel_think.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9B891216EA175005D9EE4 /* panel_think.cpp */; };
+		83E301F521A41BE3005C3F5C /* default_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264271F360724001C6F13 /* default_scenario.cpp */; };
+		83E301F621A41BE3005C3F5C /* item_place.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264101F360724001C6F13 /* item_place.cpp */; };
+		83E301F721A41BE3005C3F5C /* resolutionmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8344EC301FD1EC6B0067AAC1 /* resolutionmanager.cpp */; };
+		83E301F821A41BE3005C3F5C /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264E91F360857001C6F13 /* tinyxml.cpp */; };
+		83E301F921A41BE3005C3F5C /* uitextmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D711FDBEB7D000E2CC2 /* uitextmenu.cpp */; };
+		83E301FA21A41BE3005C3F5C /* misc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264A01F36077E001C6F13 /* misc.cpp */; };
+		83E301FB21A41BE3005C3F5C /* ringcontroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8D20D1ADCB007EAE7B /* ringcontroller.cpp */; };
+		83E301FC21A41BE3005C3F5C /* info_race.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640C1F360724001C6F13 /* info_race.cpp */; };
+		83E301FD21A41BE3005C3F5C /* uieventargs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */; };
+		83E301FE21A41BE3005C3F5C /* item_stronghold.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264131F360724001C6F13 /* item_stronghold.cpp */; };
+		83E301FF21A41BE3005C3F5C /* crange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2649B1F36077E001C6F13 /* crange.cpp */; };
+		83E3020021A41BE3005C3F5C /* uiselectpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172EF219B1E84009A52E7 /* uiselectpanel.cpp */; };
+		83E3020121A41BE3005C3F5C /* citadel_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F11F36110400172245 /* citadel_scenario.cpp */; };
+		83E3020221A41BE3005C3F5C /* ddr_processor_battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641D1F360724001C6F13 /* ddr_processor_battle.cpp */; };
+		83E3020321A41BE3005C3F5C /* info_object_type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640B1F360724001C6F13 /* info_object_type.cpp */; };
+		83E3020421A41BE3005C3F5C /* panel_look.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A9320D1D708007EAE7B /* panel_look.cpp */; };
+		83E3020521A41BE3005C3F5C /* mxinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EE1F360724001C6F13 /* mxinfo.cpp */; };
+		83E3020621A41BE3005C3F5C /* item_routenode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264121F360724001C6F13 /* item_routenode.cpp */; };
+		83E3020721A41BE3005C3F5C /* uihelpwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A51B1FDF317400D9AB57 /* uihelpwindow.cpp */; };
+		83E3020821A41BE3005C3F5C /* LandscapeSky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */; };
+		83E3020921A41BE3005C3F5C /* discoverymap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264041F360724001C6F13 /* discoverymap.cpp */; };
+		83E3020A21A41BE3005C3F5C /* mxgridref.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263ED1F360724001C6F13 /* mxgridref.cpp */; };
+		83E3020B21A41BE3005C3F5C /* tme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830618621F38758800D017E5 /* tme.cpp */; };
+		83E3020C21A41BE3005C3F5C /* info_object_power.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640A1F360724001C6F13 /* info_object_power.cpp */; };
+		83E3020D21A41BE3005C3F5C /* mxinterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EF1F360724001C6F13 /* mxinterface.cpp */; };
+		83E3020E21A41BE3005C3F5C /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
+		83E3020F21A41BE3005C3F5C /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264EB1F360857001C6F13 /* tinyxmlerror.cpp */; };
+		83E3021021A41BE3005C3F5C /* storymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A5221FE44B3E00D9AB57 /* storymanager.cpp */; };
+		83E3021121A41BE3005C3F5C /* ddr_character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641C1F360724001C6F13 /* ddr_character.cpp */; };
+		83E3021221A41BE3005C3F5C /* moonring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD881FD9B13900B4C721 /* moonring.cpp */; };
+		83E3021321A41BE3005C3F5C /* panel_splashscreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8344EC2A1FD1EC2C0067AAC1 /* panel_splashscreen.cpp */; };
+		83E3021421A41BE3005C3F5C /* MyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */; };
+		83E3021521A41BE3005C3F5C /* uisinglelord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F0219B1E84009A52E7 /* uisinglelord.cpp */; };
+		83E3021621A41BE3005C3F5C /* panel_map_detailed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB7B217E20A000CC29EF /* panel_map_detailed.cpp */; };
+		83E3021821A41BE3005C3F5C /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */; };
+		83E3021921A41BE3005C3F5C /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
+		83E3021A21A41BE3005C3F5C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
+		83E3021B21A41BE3005C3F5C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		83E3021C21A41BE3005C3F5C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503AE11A17EB9C5A00D1A890 /* IOKit.framework */; };
+		83E3021D21A41BE3005C3F5C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5087E78A17EB975400C73F5D /* OpenGL.framework */; };
+		83E3021E21A41BE3005C3F5C /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5087E78817EB974C00C73F5D /* AppKit.framework */; };
+		83E3021F21A41BE3005C3F5C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		83E3022021A41BE3005C3F5C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		83E3022121A41BE3005C3F5C /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
+		83E3022221A41BE3005C3F5C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
+		83E3022321A41BE3005C3F5C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		83E3035B21A41C30005C3F5C /* ddr in Resources */ = {isa = PBXBuildFile; fileRef = 83E3035A21A41C30005C3F5C /* ddr */; };
+		83E3035D21A4267F005C3F5C /* all in Resources */ = {isa = PBXBuildFile; fileRef = 83E3035C21A4267F005C3F5C /* all */; };
+		83E3035E21A4267F005C3F5C /* all in Resources */ = {isa = PBXBuildFile; fileRef = 83E3035C21A4267F005C3F5C /* all */; };
+		83E3035F21A4267F005C3F5C /* all in Resources */ = {isa = PBXBuildFile; fileRef = 83E3035C21A4267F005C3F5C /* all */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -449,8 +569,6 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		8306184A1F38687000D017E5 /* LandscapeScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LandscapeScene.cpp; sourceTree = "<group>"; };
-		8306184D1F38688000D017E5 /* LandscapeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeScene.h; sourceTree = "<group>"; };
 		830618611F38758800D017E5 /* tme_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tme_interface.h; sourceTree = "<group>"; };
 		830618621F38758800D017E5 /* tme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tme.cpp; sourceTree = "<group>"; };
 		830620981F38855600D017E5 /* lom */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lom; sourceTree = "<group>"; };
@@ -504,9 +622,6 @@
 		8351A5271FE45B9000D9AB57 /* keyboardmanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboardmanager.h; sourceTree = "<group>"; };
 		8351A52A1FE4633100D9AB57 /* tmemanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tmemanager.cpp; sourceTree = "<group>"; };
 		8351A52B1FE4633100D9AB57 /* tmemanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tmemanager.h; sourceTree = "<group>"; };
-		8351E4021F376D7000605D75 /* ddr_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ddr_map.tmx; sourceTree = "<group>"; };
-		8351E4041F376D7B00605D75 /* lom_map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map.tmx; sourceTree = "<group>"; };
-		8351E40D1F3A655C00605D75 /* lom_map_test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lom_map_test.tmx; sourceTree = "<group>"; };
 		8352FBCF216DD693009E22E5 /* ILandscape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ILandscape.h; path = landscaping/ILandscape.h; sourceTree = "<group>"; };
 		8352FBD0216DD693009E22E5 /* ILandscape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ILandscape.cpp; path = landscaping/ILandscape.cpp; sourceTree = "<group>"; };
 		8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGenerator.cpp; path = landscaping/LandscapeGenerator.cpp; sourceTree = "<group>"; };
@@ -670,12 +785,15 @@
 		83D895F11F36110400172245 /* citadel_scenario.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = citadel_scenario.cpp; sourceTree = "<group>"; };
 		83D895F21F36110400172245 /* scenario_citadel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenario_citadel.h; sourceTree = "<group>"; };
 		83D895F31F36110400172245 /* scenario_citadel_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenario_citadel_internal.h; sourceTree = "<group>"; };
-		83D895F61F36643F00172245 /* citadel_wip.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = citadel_wip.tmx; sourceTree = "<group>"; };
 		83D895F91F36666D00172245 /* TMEMapBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TMEMapBuilder.cpp; sourceTree = "<group>"; };
 		83D895FA1F36666D00172245 /* TMEMapBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMEMapBuilder.h; sourceTree = "<group>"; };
 		83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "prebuilt/mac/libcocos2d Mac.a"; sourceTree = COCOS_ROOT; };
 		83E108B01FE5684B00C29042 /* panel_dedication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_dedication.cpp; sourceTree = "<group>"; };
 		83E108B11FE5684B00C29042 /* panel_dedication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_dedication.h; sourceTree = "<group>"; };
+		83E3022721A41BE3005C3F5C /* ddr-desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ddr-desktop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83E3022821A41BE3005C3F5C /* ddr-desktop-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ddr-desktop-Info.plist"; path = "/Users/chris/Projects/The-Lords-Of-Midnight/main/midnight/proj.ios_mac/ddr-desktop-Info.plist"; sourceTree = "<absolute>"; };
+		83E3035A21A41C30005C3F5C /* ddr */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ddr; sourceTree = "<group>"; };
+		83E3035C21A4267F005C3F5C /* all */ = {isa = PBXFileReference; lastKnownFileType = folder; path = all; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -747,6 +865,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83E3021721A41BE3005C3F5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E3021821A41BE3005C3F5C /* libcocos2d Mac.a in Frameworks */,
+				83E3021921A41BE3005C3F5C /* libiconv.dylib in Frameworks */,
+				83E3021A21A41BE3005C3F5C /* libz.dylib in Frameworks */,
+				83E3021B21A41BE3005C3F5C /* Security.framework in Frameworks */,
+				83E3021C21A41BE3005C3F5C /* IOKit.framework in Frameworks */,
+				83E3021D21A41BE3005C3F5C /* OpenGL.framework in Frameworks */,
+				83E3021E21A41BE3005C3F5C /* AppKit.framework in Frameworks */,
+				83E3021F21A41BE3005C3F5C /* Foundation.framework in Frameworks */,
+				83E3022021A41BE3005C3F5C /* QuartzCore.framework in Frameworks */,
+				83E3022121A41BE3005C3F5C /* OpenAL.framework in Frameworks */,
+				83E3022221A41BE3005C3F5C /* AVFoundation.framework in Frameworks */,
+				83E3022321A41BE3005C3F5C /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -771,6 +908,7 @@
 				1D6058910D05DD3D006BFB54 /* midnight-mobile.app */,
 				5087E76F17EB910900C73F5D /* midnight-desktop.app */,
 				8344EC271FD1E43F0067AAC1 /* citadel-desktop.app */,
+				83E3022721A41BE3005C3F5C /* ddr-desktop.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -784,6 +922,7 @@
 				080E96DDFE201D6D7F000001 /* ios */,
 				503AE10617EB990700D1A890 /* mac */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				83E3022821A41BE3005C3F5C /* ddr-desktop-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -820,12 +959,10 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83E3035C21A4267F005C3F5C /* all */,
+				83E3035A21A41C30005C3F5C /* ddr */,
 				830620B41F389B1200D017E5 /* terrain */,
 				830620981F38855600D017E5 /* lom */,
-				8351E4041F376D7B00605D75 /* lom_map.tmx */,
-				8351E40D1F3A655C00605D75 /* lom_map_test.tmx */,
-				8351E4021F376D7000605D75 /* ddr_map.tmx */,
-				83D895F61F36643F00172245 /* citadel_wip.tmx */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 			);
@@ -847,8 +984,6 @@
 				83D263E71F360724001C6F13 /* tme */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				8306184A1F38687000D017E5 /* LandscapeScene.cpp */,
-				8306184D1F38688000D017E5 /* LandscapeScene.h */,
 				830618611F38758800D017E5 /* tme_interface.h */,
 				830618621F38758800D017E5 /* tme.cpp */,
 				83D895F91F36666D00172245 /* TMEMapBuilder.cpp */,
@@ -1370,6 +1505,23 @@
 			productReference = 8344EC271FD1E43F0067AAC1 /* citadel-desktop.app */;
 			productType = "com.apple.product-type.application";
 		};
+		83E3019B21A41BE3005C3F5C /* ddr-desktop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83E3022421A41BE3005C3F5C /* Build configuration list for PBXNativeTarget "ddr-desktop" */;
+			buildPhases = (
+				83E3019C21A41BE3005C3F5C /* Resources */,
+				83E301A221A41BE3005C3F5C /* Sources */,
+				83E3021721A41BE3005C3F5C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ddr-desktop";
+			productName = iphone;
+			productReference = 83E3022721A41BE3005C3F5C /* ddr-desktop.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1401,6 +1553,7 @@
 				1D6058900D05DD3D006BFB54 /* lom-mobile */,
 				5087E73D17EB910900C73F5D /* lom-desktop */,
 				8344EBBE1FD1E43F0067AAC1 /* citadel-desktop */,
+				83E3019B21A41BE3005C3F5C /* ddr-desktop */,
 			);
 		};
 /* End PBXProject section */
@@ -1416,13 +1569,13 @@
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
-				8351E4031F376D7000605D75 /* ddr_map.tmx in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				83317304219DCDBD009A52E7 /* launch.storyboard in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				83E3035D21A4267F005C3F5C /* all in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				830620B51F389B1200D017E5 /* terrain in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
@@ -1430,12 +1583,9 @@
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
-				8351E4051F376D7B00605D75 /* lom_map.tmx in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
-				83D264E41F36077E001C6F13 /* drawing.h in Resources */,
-				83D895F71F36643F00172245 /* citadel_wip.tmx in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1444,16 +1594,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83E3035E21A4267F005C3F5C /* all in Resources */,
 				830620B61F389B1200D017E5 /* terrain in Resources */,
-				8351E4061F376D7B00605D75 /* lom_map.tmx in Resources */,
 				8306209A1F38855600D017E5 /* lom in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
-				83D895F81F36643F00172245 /* citadel_wip.tmx in Resources */,
-				8351E4071F376D8300605D75 /* ddr_map.tmx in Resources */,
-				8351E40E1F3A655C00605D75 /* lom_map_test.tmx in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
-				83D264E51F36077E001C6F13 /* drawing.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1462,15 +1608,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				8344EBC01FD1E43F0067AAC1 /* terrain in Resources */,
-				8344EBC21FD1E43F0067AAC1 /* lom_map.tmx in Resources */,
 				8344EBC31FD1E43F0067AAC1 /* lom in Resources */,
 				8344EBC41FD1E43F0067AAC1 /* Icon.icns in Resources */,
 				8344EBC51FD1E43F0067AAC1 /* res in Resources */,
-				8344EBC61FD1E43F0067AAC1 /* citadel_wip.tmx in Resources */,
-				8344EBC71FD1E43F0067AAC1 /* ddr_map.tmx in Resources */,
-				8344EBC81FD1E43F0067AAC1 /* lom_map_test.tmx in Resources */,
 				8344EBC91FD1E43F0067AAC1 /* fonts in Resources */,
 				8344EBCB1FD1E43F0067AAC1 /* drawing.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83E3019C21A41BE3005C3F5C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E3035F21A4267F005C3F5C /* all in Resources */,
+				83E3019D21A41BE3005C3F5C /* terrain in Resources */,
+				83E3019F21A41BE3005C3F5C /* Icon.icns in Resources */,
+				83E3035B21A41C30005C3F5C /* ddr in Resources */,
+				83E301A021A41BE3005C3F5C /* res in Resources */,
+				83E301A121A41BE3005C3F5C /* fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1516,7 +1671,6 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				83D2644A1F360724001C6F13 /* discoverymap.cpp in Sources */,
 				8351A52C1FE4633100D9AB57 /* tmemanager.cpp in Sources */,
-				83113FD51F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */,
 				834D04EF20D30776001B07CB /* progressmonitor.cpp in Sources */,
 				8397AFF71F4CCAB2009B00A2 /* LandscapeView.cpp in Sources */,
 				83398A8B20D1A46C007EAE7B /* panelmanager.cpp in Sources */,
@@ -1650,7 +1804,6 @@
 				83B5AB7221760B4100CC29EF /* panel_select.cpp in Sources */,
 				83B5AB6A21760B4100CC29EF /* panel_advert.cpp in Sources */,
 				83D264C31F36077E001C6F13 /* xml.cpp in Sources */,
-				83113FD41F3DBFC1009DA10F /* LandscapeScene.cpp in Sources */,
 				8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */,
 				833172FE219B1E85009A52E7 /* uilordselect.cpp in Sources */,
 				83A600062187B98700FBDAFC /* uithinkpage.cpp in Sources */,
@@ -1759,7 +1912,6 @@
 				8344EBE71FD1E43F0067AAC1 /* AppDelegate.cpp in Sources */,
 				8344EBE81FD1E43F0067AAC1 /* TMEMapBuilder.cpp in Sources */,
 				8344EBE91FD1E43F0067AAC1 /* xml.cpp in Sources */,
-				8344EBEA1FD1E43F0067AAC1 /* LandscapeScene.cpp in Sources */,
 				8344EBEB1FD1E43F0067AAC1 /* processor_text.cpp in Sources */,
 				8344EBEC1FD1E43F0067AAC1 /* cfile_common.cpp in Sources */,
 				8344EBED1FD1E43F0067AAC1 /* ddr_scenario.cpp in Sources */,
@@ -1806,6 +1958,129 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83E301A221A41BE3005C3F5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E301A321A41BE3005C3F5C /* ddr_processor_text.cpp in Sources */,
+				83E301A421A41BE3005C3F5C /* processor_battle.cpp in Sources */,
+				83E301A521A41BE3005C3F5C /* mxengine.cpp in Sources */,
+				83E301A621A41BE3005C3F5C /* uibookmenu.cpp in Sources */,
+				83E301A721A41BE3005C3F5C /* uigrouplord.cpp in Sources */,
+				83E301A821A41BE3005C3F5C /* mxitem.cpp in Sources */,
+				83E301A921A41BE3005C3F5C /* info_area.cpp in Sources */,
+				83E301AA21A41BE3005C3F5C /* army.cpp in Sources */,
+				83E301AB21A41BE3005C3F5C /* uicommandwindow.cpp in Sources */,
+				83E301AC21A41BE3005C3F5C /* cflags.cpp in Sources */,
+				83E301AD21A41BE3005C3F5C /* LandscapePeople.cpp in Sources */,
+				83E301AE21A41BE3005C3F5C /* carchive.cpp in Sources */,
+				83E301AF21A41BE3005C3F5C /* panel_dedication.cpp in Sources */,
+				83E301B021A41BE3005C3F5C /* mxentity.cpp in Sources */,
+				83E301B121A41BE3005C3F5C /* info_gender.cpp in Sources */,
+				83E301B221A41BE3005C3F5C /* lom_scenario.cpp in Sources */,
+				83E301B321A41BE3005C3F5C /* LandscapeLand.cpp in Sources */,
+				83E301B421A41BE3005C3F5C /* LandscapeView.cpp in Sources */,
+				83E301B521A41BE3005C3F5C /* cfile_windows.cpp in Sources */,
+				83E301B621A41BE3005C3F5C /* keyboardmanager.cpp in Sources */,
+				83E301B721A41BE3005C3F5C /* tinystr.cpp in Sources */,
+				83E301B821A41BE3005C3F5C /* item_character.cpp in Sources */,
+				83E301B921A41BE3005C3F5C /* variables.cpp in Sources */,
+				83E301BA21A41BE3005C3F5C /* ddr_processor_night.cpp in Sources */,
+				83E301BB21A41BE3005C3F5C /* LandscapeGenerator.cpp in Sources */,
+				83E301BC21A41BE3005C3F5C /* cfilemanager.cpp in Sources */,
+				83E301BD21A41BE3005C3F5C /* uipanel.cpp in Sources */,
+				83E301BE21A41BE3005C3F5C /* uielement.cpp in Sources */,
+				83E301BF21A41BE3005C3F5C /* info_command.cpp in Sources */,
+				83E301C021A41BE3005C3F5C /* cbitarray.cpp in Sources */,
+				83E301C121A41BE3005C3F5C /* item_regiment.cpp in Sources */,
+				83E301C221A41BE3005C3F5C /* lom_stronghold.cpp in Sources */,
+				83E301C321A41BE3005C3F5C /* info_direction.cpp in Sources */,
+				83E301C421A41BE3005C3F5C /* LandscapeColour.cpp in Sources */,
+				83E301C521A41BE3005C3F5C /* projectconfig.cpp in Sources */,
+				83E301C621A41BE3005C3F5C /* uioptionitem.cpp in Sources */,
+				83E301C721A41BE3005C3F5C /* uihelper.cpp in Sources */,
+				83E301C821A41BE3005C3F5C /* AppDelegate.cpp in Sources */,
+				83E301C921A41BE3005C3F5C /* TMEMapBuilder.cpp in Sources */,
+				83E301CA21A41BE3005C3F5C /* panel_options.cpp in Sources */,
+				83E301CB21A41BE3005C3F5C /* panel_select.cpp in Sources */,
+				83E301CC21A41BE3005C3F5C /* panel_advert.cpp in Sources */,
+				83E301CD21A41BE3005C3F5C /* xml.cpp in Sources */,
+				83E301CE21A41BE3005C3F5C /* ILandscape.cpp in Sources */,
+				83E301CF21A41BE3005C3F5C /* uilordselect.cpp in Sources */,
+				83E301D021A41BE3005C3F5C /* uithinkpage.cpp in Sources */,
+				83E301D121A41BE3005C3F5C /* processor_text.cpp in Sources */,
+				83E301D221A41BE3005C3F5C /* cfile_common.cpp in Sources */,
+				83E301D321A41BE3005C3F5C /* ddr_scenario.cpp in Sources */,
+				83E301D421A41BE3005C3F5C /* panel_gameover.cpp in Sources */,
+				83E301D521A41BE3005C3F5C /* helpmanager.cpp in Sources */,
+				83E301D621A41BE3005C3F5C /* map.cpp in Sources */,
+				83E301D721A41BE3005C3F5C /* mxfragment.cpp in Sources */,
+				83E301D821A41BE3005C3F5C /* panel_night.cpp in Sources */,
+				83E301D921A41BE3005C3F5C /* cfileList.cpp in Sources */,
+				83E301DA21A41BE3005C3F5C /* panelmanager.cpp in Sources */,
+				83E301DB21A41BE3005C3F5C /* panel_mainmenu.cpp in Sources */,
+				83E301DC21A41BE3005C3F5C /* LandscapeTerrain.cpp in Sources */,
+				83E301DD21A41BE3005C3F5C /* tinyxmlparser.cpp in Sources */,
+				83E301DE21A41BE3005C3F5C /* random.cpp in Sources */,
+				83E301DF21A41BE3005C3F5C /* panel_credits.cpp in Sources */,
+				83E301E021A41BE3005C3F5C /* LandscapeNode.cpp in Sources */,
+				83E301E121A41BE3005C3F5C /* configmanager.cpp in Sources */,
+				83E301E221A41BE3005C3F5C /* mxmemory.cpp in Sources */,
+				83E301E321A41BE3005C3F5C /* uibook.cpp in Sources */,
+				83E301E421A41BE3005C3F5C /* progressmonitor.cpp in Sources */,
+				83E301E521A41BE3005C3F5C /* mxlocinfo.cpp in Sources */,
+				83E301E621A41BE3005C3F5C /* datatypes.cpp in Sources */,
+				83E301E721A41BE3005C3F5C /* uifilterbutton.cpp in Sources */,
+				83E301E821A41BE3005C3F5C /* uipopup.cpp in Sources */,
+				83E301E921A41BE3005C3F5C /* panel_map_overview.cpp in Sources */,
+				83E301EA21A41BE3005C3F5C /* processor_night.cpp in Sources */,
+				83E301EB21A41BE3005C3F5C /* units.cpp in Sources */,
+				83E301EC21A41BE3005C3F5C /* info_object.cpp in Sources */,
+				83E301ED21A41BE3005C3F5C /* c_str.cpp in Sources */,
+				83E301EE21A41BE3005C3F5C /* info_terrain.cpp in Sources */,
+				83E301EF21A41BE3005C3F5C /* tmemanager.cpp in Sources */,
+				83E301F021A41BE3005C3F5C /* LandscapeDebug.cpp in Sources */,
+				83E301F121A41BE3005C3F5C /* info_unit.cpp in Sources */,
+				83E301F221A41BE3005C3F5C /* main.cpp in Sources */,
+				83E301F321A41BE3005C3F5C /* item_victories.cpp in Sources */,
+				83E301F421A41BE3005C3F5C /* panel_think.cpp in Sources */,
+				83E301F521A41BE3005C3F5C /* default_scenario.cpp in Sources */,
+				83E301F621A41BE3005C3F5C /* item_place.cpp in Sources */,
+				83E301F721A41BE3005C3F5C /* resolutionmanager.cpp in Sources */,
+				83E301F821A41BE3005C3F5C /* tinyxml.cpp in Sources */,
+				83E301F921A41BE3005C3F5C /* uitextmenu.cpp in Sources */,
+				83E301FA21A41BE3005C3F5C /* misc.cpp in Sources */,
+				83E301FB21A41BE3005C3F5C /* ringcontroller.cpp in Sources */,
+				83E301FC21A41BE3005C3F5C /* info_race.cpp in Sources */,
+				83E301FD21A41BE3005C3F5C /* uieventargs.cpp in Sources */,
+				83E301FE21A41BE3005C3F5C /* item_stronghold.cpp in Sources */,
+				83E301FF21A41BE3005C3F5C /* crange.cpp in Sources */,
+				83E3020021A41BE3005C3F5C /* uiselectpanel.cpp in Sources */,
+				83E3020121A41BE3005C3F5C /* citadel_scenario.cpp in Sources */,
+				83E3020221A41BE3005C3F5C /* ddr_processor_battle.cpp in Sources */,
+				83E3020321A41BE3005C3F5C /* info_object_type.cpp in Sources */,
+				83E3020421A41BE3005C3F5C /* panel_look.cpp in Sources */,
+				83E3020521A41BE3005C3F5C /* mxinfo.cpp in Sources */,
+				83E3020621A41BE3005C3F5C /* item_routenode.cpp in Sources */,
+				83E3020721A41BE3005C3F5C /* uihelpwindow.cpp in Sources */,
+				83E3020821A41BE3005C3F5C /* LandscapeSky.cpp in Sources */,
+				83E3020921A41BE3005C3F5C /* discoverymap.cpp in Sources */,
+				83E3020A21A41BE3005C3F5C /* mxgridref.cpp in Sources */,
+				83E3020B21A41BE3005C3F5C /* tme.cpp in Sources */,
+				83E3020C21A41BE3005C3F5C /* info_object_power.cpp in Sources */,
+				83E3020D21A41BE3005C3F5C /* mxinterface.cpp in Sources */,
+				83E3020E21A41BE3005C3F5C /* collections.cpp in Sources */,
+				83E3020F21A41BE3005C3F5C /* tinyxmlerror.cpp in Sources */,
+				83E3021021A41BE3005C3F5C /* storymanager.cpp in Sources */,
+				83E3021121A41BE3005C3F5C /* ddr_character.cpp in Sources */,
+				83E3021221A41BE3005C3F5C /* moonring.cpp in Sources */,
+				83E3021321A41BE3005C3F5C /* panel_splashscreen.cpp in Sources */,
+				83E3021421A41BE3005C3F5C /* MyButton.cpp in Sources */,
+				83E3021521A41BE3005C3F5C /* uisinglelord.cpp in Sources */,
+				83E3021621A41BE3005C3F5C /* panel_map_detailed.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -1824,6 +2099,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					_LOM_,
+					_OS_IOS_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -1862,6 +2138,7 @@
 					"$(inherited)",
 					NDEBUG,
 					_LOM_,
+					_OS_IOS_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -1900,6 +2177,7 @@
 					"$(inherited)",
 					_OS_DESKTOP_,
 					_LOM_,
+					_OS_OSX_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1936,6 +2214,7 @@
 					NDEBUG,
 					"$(inherited)",
 					_LOM_,
+					_OS_OSX_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
@@ -2014,6 +2293,80 @@
 					"$(COCOS_ROOT)/external/glfw3/include/mac",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(COCOS_ROOT)/prebuilt/mac",
+				);
+				OTHER_LDFLAGS = (
+					"$(_COCOS_LIB_MAC_BEGIN)",
+					"$(_COCOS_LIB_MAC_END)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
+			};
+			name = Release;
+		};
+		83E3022521A41BE3005C3F5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = mac/Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					_OS_DESKTOP_,
+					_DDR_,
+					_OS_OSX_,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(COCOS_ROOT)/external/glfw3/include/mac",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/ddr-desktop-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(COCOS_ROOT)/prebuilt/mac",
+				);
+				OTHER_LDFLAGS = (
+					"$(_COCOS_LIB_MAC_BEGIN)",
+					"$(_COCOS_LIB_MAC_END)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
+			};
+			name = Debug;
+		};
+		83E3022621A41BE3005C3F5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = mac/Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_OS_DESKTOP_,
+					NDEBUG,
+					"$(inherited)",
+					_DDR_,
+					_OS_OSX_,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(COCOS_ROOT)/external/glfw3/include/mac",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/ddr-desktop-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(COCOS_ROOT)/prebuilt/mac",
@@ -2162,6 +2515,15 @@
 			buildConfigurations = (
 				8344EC251FD1E43F0067AAC1 /* Debug */,
 				8344EC261FD1E43F0067AAC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		83E3022421A41BE3005C3F5C /* Build configuration list for PBXNativeTarget "ddr-desktop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83E3022521A41BE3005C3F5C /* Debug */,
+				83E3022621A41BE3005C3F5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

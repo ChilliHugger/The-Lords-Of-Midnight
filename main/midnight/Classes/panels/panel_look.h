@@ -40,12 +40,13 @@ typedef struct {
     tme::loc_t      location;
     
     std::string     shield;
-    //mximage*        person;
-    //mximage*        face;
+    std::string     person;
+    std::string     face;
     std::string     name;
     std::string     locationtext;
 
     bool            tunnel;
+    bool            lookingdowntunnel;
 
 } locationinfo_t ;
 
@@ -125,7 +126,8 @@ protected:
     
     Label*              lblDescription;
     Label*              lblName;
-    Sprite*             imgShield;
+    ui::ImageView*          imgShield;
+    LayerColor*         layHeader;
     
     
     u32                 current_arrow;

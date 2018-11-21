@@ -32,116 +32,6 @@
 		</imagelist>
 	</compass>
 
-    
-	<general>
-		<image id="bk_army" file="objects/bk_army.png" />
-		<image id="chardead" file="icons/f_dead!.png" />
-		<image id="compass" file="icons/compass.png" />	
-		<image id="floor" file="terrain/floor.jpg" />
-		<image id="background" file="background.jpg" />
-			
-		<imagelist id="lord_status">
-			<image file="icons/lord_dawn.png" />
-			<image file="icons/lord_night.png" />
-			<image file="icons/lord_battle.png" />
-			<image file="icons/f_dead!.png" />
-		</imagelist>
-        
-		<imagelist id="icons">
-			<image file="" />
-
-			<image file="icons/i_seek.png" />
-			<image file="icons/i_hide.png" />
-			<image file="icons/i_unhide.png" />
-			<image file="icons/i_fight.png" />
-            
-			<image file="icons/i_approach.png" />
-			<image file="icons/i_recruit.png" />
-			<image file="icons/i_post.png" />
-			<image file="icons/i_battle.png" />
-			<image file="icons/i_home.png" />
-            
-            <image file="icons/debug_email.png" />
-            <image file="icons/undo.png" />
-            <image file="icons/undo_night.png" />
-            <image file="icons/undo_dawn.png" />
-			
-            <image file="" />
-			<image file="" />
-			<image file="" />
-			<image file="" />
-			<image file="icons/i_select1.png" />
-			<image file="icons/i_select2.png" />
-            <image file="icons/i_actions.png" />
-            
-            <!--
-			<image file="icons/i_up.png" />
-			<image file="icons/i_left.png" />
-			<image file="icons/i_down.png" />
-			<image file="icons/i_right.png" />
-            -->
-            
-            <image file="icons/arrow_up.png" />
-			<image file="icons/arrow_left.png" />
-			<image file="icons/arrow_down.png" />
-			<image file="icons/arrow_right.png" />
-            
-			<image file="icons/i_plus.png" />
-			<image file="icons/i_minus.png" />
-            <image file="icons/i_recruit_minus.png" />
-			<image file="icons/i_recruit_plus.png" />
-            
-            <image file="icons/arrow_up.png" />
-			<image file="icons/arrow_left.png" />
-			<image file="icons/arrow_down.png" />
-			<image file="icons/arrow_right.png" />
-
-			<image file="icons/i_look.png" />
-			<image file="icons/i_think.png" />
-			<image file="icons/i_night.png" />
-			<image file="icons/i_map.png" />
-			<image file="icons/i_dawn.png" />
-            
-			<image file="icons/i_story.png" />
-			<image file="icons/i_guide.png" />
-			<image file="icons/i_tutorial_flash.png" />
-			<image file="icons/i_tutorial_onoff.png" />
-            
-
-			<image file="icons/i_big_map.png" />
-			<image file="icons/i_small_map.png" />
-			<image file="icons/i_center.png" />
-            <image file="icons/i_critters.png" />
-
-			<image file="icons/i_visible.png" />
-			<image file="icons/i_not_visible.png" />
-            
-            <image file="icons/think_person.png" />
-            <image file="icons/think_place.png" />
-            <image file="icons/think_army.png" />
-            <image file="icons/think_battle.png" />
-
-            
-			<image file="" />
-			<image file="" />
-            <image file="icons/bookmark.png" />
-            <image file="icons/bookmark_overlay.png" />
-            <image file="icons/book.png" />
-            <image file="misc/close.png" />
-			<image file="" />
-            
-            <image file="icons/i_leave_group.png" />
-            <image file="icons/i_disband_group.png" />
-            <image file="" />
-            <image file="" />
-            <image file="icons/map_lords_many.png" />
-
-
-
-
-		</imagelist>
-	</general>
-
 	<characters>
 		<character id="CH_LUXOR"	face="faces/f_luxor.png"		shield = "shields/s_luxor.png"      shortcut="C" shortcut2="1" />
 		<character id="CH_MORKIN"	face="faces/f_morkin.png"		shield = "shields/s_morkin.png"     shortcut="V" shortcut2="2" />
@@ -175,16 +65,16 @@
 		<character id="CH_FAWKRIN"	face="faces/f_fawkrin.png"		shield = "shields/s_fawkrin.png"    shortcut="H" shortcut2="X" />
 		<character id="CH_LORGRIM"	face="faces/f_lorgrim.png"		shield = "shields/s_lorgrim.png"    shortcut="J" shortcut2="C" />
 		<character id="CH_FARFLAME" face="faces/f_farflame.png"		shield = "shields/s_farflame.png"   shortcut="K" shortcut2="V" />
-		<character id="CH_MIDWINTER" face=""		shield = "" body = "people/c_midwinterh.png"	horse = "people/c_midwinterh.png"/>
+		<character id="CH_MIDWINTER" face=""		                shield = "" />
 	</characters>
 
 	<objects>
-		<object id="OB_WOLVES"		background = "objects/bk_wolf.png"		big="objects/bo_wolf.png"		small = "objects/so_wolf.png"	/>
-		<object id="OB_DRAGONS"		background = "objects/bk_dragon.png"	big="objects/bo_dragon.png"		small = "objects/so_dragon.png"	/>
-		<object id="OB_ICETROLLS"		background = "objects/bk_troll.png"	big="objects/bo_troll.png"		small = "objects/so_troll.png"	/>
+		<object id="OB_WOLVES"		    background = "objects/bk_wolf.png"		big="objects/bo_wolf.png"		small = "objects/so_wolf.png"	/>
+		<object id="OB_DRAGONS"		    background = "objects/bk_dragon.png"	big="objects/bo_dragon.png"		small = "objects/so_dragon.png"	/>
+		<object id="OB_ICETROLLS"		background = "objects/bk_troll.png"	    big="objects/bo_troll.png"		small = "objects/so_troll.png"	/>
 		<object id="OB_SKULKRIN"		background = "objects/bk_skulkrin.png"	big="objects/bo_skulkrin.png"	small = "objects/so_skulkrin.png"	/>
-		<object id="OB_WILDHORSES"		background = "objects/bk_horse.png"	big="objects/bo_horse.png"		small = "objects/so_horse.png"	/>
-		<object id="OB_SHELTER"		background = "objects/bk_shelter.png" />
+		<object id="OB_WILDHORSES"		background = "objects/bk_horse.png"	    big="objects/bo_horse.png"		small = "objects/so_horse.png"	/>
+		<object id="OB_SHELTER"		    background = "objects/bk_shelter.png" />
 		<object id="OB_GUIDANCE"		background = "objects/bk_guidance.png" />
 		<object id="OB_SHADOWSOFDEATH"	background = "objects/bk_shadowsofdeath.png" />
 		<object id="OB_WATERSOFLIFE"	background = "objects/bk_watersoflife.png" />
@@ -205,7 +95,7 @@
 		<race id="RA_MORKIN"	body = "people/c_morkin.png"		horse = "people/c_morkinh.png" />	
 		<race id="RA_SKULKRIN"	body = "people/c_skulkrin.png" />
 		<race id="RA_DRAGON"	body = "people/c_dragon.png" />
-		<!race id="RA_TROLL"		body = "people/c_troll.png" />
+		<!race id="RA_TROLL"	body = "people/c_troll.png" />
 		<race id="RA_MIDWINTER"	body = "people/c_midwinterh.png"	horse = "people/c_midwinterh.png" />
 		<!race id="RA_DOOMDARK"	body = "people/c_doomdark.png"		horse = "people/c_doomdarkh.png" />
 	</races>
@@ -314,45 +204,24 @@
 	
 	<uilandscape>
 	
-		<moonlight>4,5,6,7,6,5,4,3,2,1,0,1,2,3</moonlight>
-		
-		<moon>
-			<imagelist id="phases">
-				<image file="moon/moon01.png" />
-				<image file="moon/moon02.png" />
-				<image file="moon/moon03.png" />
-				<image file="moon/moon04.png" />
-				<image file="moon/moon05.png" />
-				<image file="moon/moon06.png" />
-				<image file="moon/moon07.png" />
-				<image file="moon/moon08.png" />
-				<image file="moon/moon09.png" />
-				<image file="moon/moon10.png" />
-				<image file="moon/moon11.png" />
-				<image file="moon/moon12.png" />
-				<image file="moon/moon13.png" />
-				<image file="moon/moon14.png" />
-			</imagelist>
-		</moon>
-	
         <day>
-            <time id="0"   shade="#00404040" sky="sky/sky_00.jpg" moon="974,80" scale="1.0"    />
-            <time id="1"   shade="#00453032" sky="sky/sky_01.jpg" moon="812,113" scale="1.33"    />
-            <time id="2"   shade="#00655557" sky="sky/sky_02.jpg" moon="637,168" scale="1.5"    />
-            <time id="3"   shade="#00736365" sky="sky/sky_03.jpg" moon="462,223"scale="2.0"    />
-            <time id="4"   shade="#00807575" sky="sky/sky_04.jpg" />
-            <time id="5"   shade="#00808080" sky="sky/sky_05.jpg" />
-            <time id="6"   shade="#00808080" sky="sky/sky_06.jpg" />
-            <time id="7"   shade="#00808080" sky="sky/sky_07.jpg" />
-            <time id="8"   shade="#00808080" sky="sky/sky_08.jpg" />
-            <time id="9"   shade="#00808080" sky="sky/sky_09.jpg" />
-            <time id="10"  shade="#00808080" sky="sky/sky_10.jpg" />
-            <time id="11"  shade="#00808080" sky="sky/sky_11.jpg" />
-            <time id="12"  shade="#007a7a7a" sky="sky/sky_12.jpg" />
-            <time id="13"  shade="#00747474" sky="sky/sky_13.jpg" />
-            <time id="14"  shade="#006e6e6e" sky="sky/sky_14.jpg" />
-            <time id="15"  shade="#00626262" sky="sky/sky_15.jpg" />
-            <time id="16"  shade="#00565656" sky="sky/sky_16.jpg" />
+            <time id="0"   shade="#00404040" />
+            <time id="1"   shade="#00453032" />
+            <time id="2"   shade="#00655557" />
+            <time id="3"   shade="#00736365" />
+            <time id="4"   shade="#00807575" />
+            <time id="5"   shade="#00808080" />
+            <time id="6"   shade="#00808080" />
+            <time id="7"   shade="#00808080" />
+            <time id="8"   shade="#00808080" />
+            <time id="9"   shade="#00808080" />
+            <time id="10"  shade="#00808080" />
+            <time id="11"  shade="#00808080" />
+            <time id="12"  shade="#007a7a7a" />
+            <time id="13"  shade="#00747474" />
+            <time id="14"  shade="#006e6e6e" />
+            <time id="15"  shade="#00626262" />
+            <time id="16"  shade="#00565656" />
         </day>
         
         <shade>

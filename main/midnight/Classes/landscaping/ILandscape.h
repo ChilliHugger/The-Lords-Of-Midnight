@@ -30,7 +30,7 @@ public:
     bool            debugLand;
     f32             landScaleX;
     f32             landScaleY;
-    tme::loc_t        here ;
+    tme::loc_t      here ;
     tme::loc_t      currentLocation;
     tme::loc_t      aheadLocation;
     mxdir_t         currentDirection;
@@ -38,6 +38,12 @@ public:
     bool            isLooking;
     f32             movementAmount;
     f32             lookAmount;
+    
+    bool            isInTunnel;
+    bool            isLookingDownTunnel;
+    
+    
+    
 };
 
 class ILandscape : public LandscapeNode

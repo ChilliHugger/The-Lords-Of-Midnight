@@ -12,6 +12,9 @@
 #include "../frontend/panel_id.h"
 #include "../tme_interface.h"
 
+using namespace cocos2d::ui;
+using namespace cocos2d;
+
 class uithinkpage : public uielement
             // , public uinotificationdelegate
             // , public uiactioncompletedelegate
@@ -55,12 +58,12 @@ protected:
     cocos2d::Label*     lblName;
     cocos2d::Label*     lblDescription;
     
-    cocos2d::Sprite*    imgTerrain;
-    cocos2d::Sprite*    imgCharacter;
-    cocos2d::Sprite*    imgObject;
+    Sprite*             imgTerrain;
+    ImageView*          imgCharacter;
+    ImageView*          imgObject;
     
-    cocos2d::ui::ScrollView* scrollView;
-    cocos2d::Layer*    safeArea;
+    ScrollView*         scrollView;
+    Layer*              safeArea;
     
 public:
     bool                approach;

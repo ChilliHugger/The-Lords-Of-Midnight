@@ -28,7 +28,7 @@
     //#define _SHOW_GAME_VERSION_
     #define _DEBUG_UNDO_HISTORY_        1
 #else
-    //#define _SHOW_SPLASH_
+    #define _SHOW_SPLASH_
     //#define _SHOW_DEDICATION_
     #define ADVERT_FREQUENCY            5
     #define _USE_DEBUG_MENU_

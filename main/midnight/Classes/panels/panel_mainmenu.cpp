@@ -65,8 +65,13 @@ bool panel_mainmenu::init()
     //
     // Logo
     //
-    auto logo = Sprite::createWithSpriteFrameName(IMAGE_LOGO);
+    auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
+#if defined(_LOM_)
     uihelper::AddTopLeft(safeArea,logo);
+#endif
+#if defined(_DDR_)
+    uihelper::AddTopCenter(safeArea,logo,0,RES(32));
+#endif
     
     //
     // Menu

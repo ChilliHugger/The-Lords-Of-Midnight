@@ -139,8 +139,13 @@ bool panel_options::init()
     
     FillBackground();
 
-    auto logo = Sprite::createWithSpriteFrameName("lom_logo");
+    auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
+#if defined(_LOM_)
     uihelper::AddTopLeft(safeArea,logo);
+#endif
+#if defined(_DDR_)
+    uihelper::AddTopCenter(safeArea,logo,0,RES(32));
+#endif
     
     
     auto p2 = Sprite::create("screens/misc/corleth.png");

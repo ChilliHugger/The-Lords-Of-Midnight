@@ -25,7 +25,7 @@ USING_NS_CC;
 #define FONT_SIZE_BIG           30
 #define FONT_SIZE_MEDIUM        20
 #define FONT_SIZE_SMALL         12
-#define IMAGE_LOGO              "lom_logo"
+#define IMAGE_LOGO              "misc/logo.png"
 
 
 class uihelper

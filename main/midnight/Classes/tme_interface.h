@@ -59,6 +59,8 @@ using namespace tme::flags;
 
 LPCSTR		TME_ScenarioDirectory ( void );
 LPCSTR		TME_ScenarioName ( void );
+LPCSTR      TME_ScenarioShortName ( void );
+
 
 bool		TME_Init ( void );
 bool		TME_DeInit ( void );
@@ -83,6 +85,7 @@ bool		TME_GetObject( anobject& out, mxid id );
 bool		TME_GetUnitInfo( unitinfo& out, mxid id );
 bool		TME_GetLocation( maplocation& out, mxid id );
 bool		TME_GetLocation( maplocation& out, tme::loc_t loc );
+bool        TME_GetLocationInDirection( maplocation& out, tme::loc_t loc, mxdir_t dir );
 
 bool		TME_GetMapLocation( maplocation& out, mxid id );
 bool		TME_GetMapLocation( maplocation& out, tme::loc_t loc );

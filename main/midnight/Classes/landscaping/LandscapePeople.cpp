@@ -9,6 +9,7 @@
 //#include "ui/CocosGUI.h"
 
 #include "LandscapePeople.h"
+#include "LandscapeColour.h"
 #include "ILandscape.h"
 #include "../system/resolutionmanager.h"
 #include "../system/tmemanager.h"
@@ -43,14 +44,10 @@ void LandscapePeople::Init(LandscapeOptions* options)
     CLEARARRAY(columns);
     
 #if defined(_DDR_)
-    islookingdowntunnel=false;
-    isintunnel=false;
-    time = sv_time_dawn;
+    time = tme::variables::sv_time_dawn;
 #endif
-    //DisableMouse();
-    
+
     loc = options->currentLocation;
-    
 }
 
 void LandscapePeople::Initialise( const character& c)
@@ -58,24 +55,22 @@ void LandscapePeople::Initialise( const character& c)
     loc = c.location;
     
 #if defined(_DDR_)
-    isintunnel = Character_IsInTunnel(c);
     time  = c.time;
-    Initialise(isintunnel);
-#else
-    Initialise(c.looking, false);
 #endif
+    Initialise(c.looking);
+
 }
 
-void LandscapePeople::Initialise( mxdir_t dir, bool isintunnel )
+void LandscapePeople::Initialise( mxdir_t dir )
 {
     mxgridref ref(loc);
     ref.AddDirection(dir);
     
     loc = ref;
-    Initialise(isintunnel);
+    Initialise();
 }
 
-void LandscapePeople::Initialise( bool isintunnel )
+void LandscapePeople::Initialise()
 {
     u32           ii;
     LPCSTR        person=NULL;
@@ -98,14 +93,6 @@ void LandscapePeople::Initialise( bool isintunnel )
     
     TME_GetLocationInfo(loc);
     
-#if defined(_DDR_)
-    maplocation m;
-    TME_GetLocation(m, locid);
-    
-    if ( m.flags.Is(lf_tunnel) && isintunnel  )
-        islookingdowntunnel=true;
-#endif
-    
     // we have not printed anyone yet
     characters = 0;
     CLEARARRAY ( columns );
@@ -118,7 +105,7 @@ void LandscapePeople::Initialise( bool isintunnel )
 #endif
     
 #if defined(_DDR_)
-    TME_GetCharactersAtLocation(locid,characters, TRUE, isintunnel);
+    TME_GetCharactersAtLocation(locid, objects, TRUE, options->isInTunnel);
 #endif
     
     // if there are characters in front of us then
@@ -128,7 +115,7 @@ void LandscapePeople::Initialise( bool isintunnel )
         TME_GetCharacter ( c, objects[ii] );
         
 #if defined(_DDR_)
-        if ( islookingdowntunnel && !Character_IsInTunnel(c) )
+        if ( options->isLookingDownTunnel && !Character_IsInTunnel(c) )
             continue;
         if ( Character_IsDead(c) ||  Character_IsHidden(c) )
             continue;
@@ -140,7 +127,7 @@ void LandscapePeople::Initialise( bool isintunnel )
     
     s32 objectid = GET_ID(location_object) ;
 #if defined(_DDR_)
-    if ( isintunnel )
+    if ( options->isInTunnel )
         objectid = GET_ID(location_object_tunnel);
 #endif
     //
@@ -194,7 +181,7 @@ void LandscapePeople::add( LPCSTR person, int number /*, void* hotspot */ )
     int max_chars = MAX_DISPLAY_CHARACTERS ;
     
 #if defined(_DDR_)
-    if ( islookingdowntunnel )
+    if ( options->isLookingDownTunnel )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
 #endif
     
@@ -220,6 +207,7 @@ void LandscapePeople::add( LPCSTR person, int number /*, void* hotspot */ )
         
         image->setAnchorPoint(uihelper::AnchorBottomLeft);
         image->setPosition(x1, y1);
+        image->setColor(options->colour->GetPersonColour());
         addChild(image);
         
         //uihelper::AddBottomLeft(this, image, x1, y1);
@@ -250,6 +238,7 @@ void LandscapePeople::add( LPCSTR person, int number /*, void* hotspot */ )
     }
     
 }
+
 
 void LandscapePeople::clear()
 {

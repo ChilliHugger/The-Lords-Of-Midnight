@@ -20,6 +20,8 @@
 #include "../tme_interface.h"
 #include "../system/tmemanager.h"
 
+#include "characters/uisinglelord.h"
+
 USING_NS_CC;
 using namespace cocos2d::ui;
 
@@ -152,26 +154,11 @@ void uicommandwindow::initialiseCommands()
         character c;
         TME_GetCharacter(c, default_characters[ii] );
         
-#ifdef _DDR_
-        mximage* face = NULL ;
-        
-        if ( data )
-            face = data->face ;
-        if ( face == NULL ) {
-            race_data_t* r_data = (race_data_t*) TME_GetEntityUserData( c.race );
-            if ( r_data )
-                face = r_data->face;
-        }
-        //uibutton* child =  new uibutton( new uiface( point(0,0), face, gl->images.fontS, c.shortname ) );
-        // TODO: DDR Face with name
-#else
-        
-        Director::getInstance()->getTextureCache()->addImage((LPCSTR)data->face);
-        auto face = uihelper::CreateImageButton((LPCSTR)data->face, ID_CHAR1+ii, callback);
-        face->setUserData(data);
-        addItem(face, CHOOSE_CHAR+ii);
-#endif
-
+        auto lord = uisinglelord::createWithLord(c.id);
+        lord->setTag(ID_CHAR1+ii);
+        lord->setUserData(data);
+        lord->addClickEventListener(callback);
+        addItem(lord, CHOOSE_CHAR+ii);
     }
 }
 
@@ -320,7 +307,7 @@ void uicommandwindow::clearItems()
 {
 }
 
-Button* uicommandwindow::findItemById( layoutid_t id )
+Widget* uicommandwindow::findItemById( layoutid_t id )
 {
     for(auto const& button: elements)
      {
@@ -348,7 +335,7 @@ void uicommandwindow::showItem( layoutid_t id, bool show )
     }
 }
 
-void uicommandwindow::addItem( Button* element, u32 index )
+void uicommandwindow::addItem( Widget* element, u32 index )
 {
     auto width = (int)layout->getContentSize().width;
     

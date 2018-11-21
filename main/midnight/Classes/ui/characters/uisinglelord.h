@@ -33,7 +33,7 @@ protected:
     void updateStatus(character& c);
     
     cocos2d::Sprite* getStatusImage();
-    cocos2d::Sprite* getFaceImage();
+    cocos2d::Sprite* getFaceImage(character& c);
 
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;

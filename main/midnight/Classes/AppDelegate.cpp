@@ -1,9 +1,9 @@
 #include "AppDelegate.h"
 #include "system/resolutionmanager.h"
 
-//#include "LandscapeScene.h"
 #include "panels/panel_splashscreen.h"
 
+#include "tme_interface.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -19,6 +19,8 @@ using namespace cocos2d::experimental;
 #include "audio/include/SimpleAudioEngine.h"
 using namespace CocosDenshion;
 #endif
+
+
 
 USING_NS_CC;
 
@@ -133,13 +135,24 @@ void AppDelegate::InitialisePaths()
 
     auto res = resolutionmanager::getInstance();
     
-    char main_path[255];
-    sprintf( main_path, "lom/%s", (LPCSTR)res->current_resolution.folder );
+
+    LPCSTR scenario = TME_ScenarioShortName();
+
+    char main_path[MAX_PATH];
+    
+    sprintf( main_path, "%s/%s", scenario, (LPCSTR)res->current_resolution.folder );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "lom/%s/screens/%d", (LPCSTR)res->current_resolution.folder, res->Aspect() );
+    sprintf( main_path, "%s/%s/screens/%d", scenario, (LPCSTR)res->current_resolution.folder, res->Aspect() );
     searchPaths.push_back(main_path);
 
+    sprintf( main_path, "all/%s", (LPCSTR)res->current_resolution.folder );
+    searchPaths.push_back(main_path);
+    
+    sprintf( main_path, "all/%s/screens/%d", (LPCSTR)res->current_resolution.folder, res->Aspect() );
+    searchPaths.push_back(main_path);
+    
+    
 	fileutils->setSearchPaths(searchPaths);
 }
 

@@ -17,13 +17,7 @@ void LandscapeGenerator::Build(loc_t location, f32 direction)
     items->clear();
 	
     BuildPanorama();
-    
-//    int count=0;
-//    for(auto const& item: *items) {
-//        CCLOG("%d,%d,%d,%d", count,item->loc.x, item->loc.y, item->terrain);
-//        count++;
-//    }
-    
+
 }
 	
 	
@@ -35,17 +29,10 @@ void LandscapeGenerator::BuildPanorama()
     s32 y = loc.y/DIR_STEPS;
     
     qDim = 8;
-	
-    //x = x - qDim;
-    //y = y - qDim;
-    
     
     for ( int y1=y-qDim; y1<=y+qDim; y1++ ) {
         for ( int x1=x-qDim; x1<=x+qDim; x1++ ) {
-            
-//            if ( x1<0 || y1<0 )
-//                continue;
-            
+
             auto cell = ProcessLocation(x1, y1);
             if ( cell!= nullptr )
                 items->pushBack(cell);
@@ -56,12 +43,6 @@ void LandscapeGenerator::BuildPanorama()
     {
         return lhs->position.z > rhs->position.z;
     });
-    
-    
-//    ProcessQuadrant(x, y, 0, 0, qDim);
-//    ProcessQuadrant(x + qDim, y, 1, 0, qDim);
-//    ProcessQuadrant(x, y + qDim, 0, 1, qDim);
-//    ProcessQuadrant(x + qDim, y + qDim, 1, 1, qDim);
     
 }
 

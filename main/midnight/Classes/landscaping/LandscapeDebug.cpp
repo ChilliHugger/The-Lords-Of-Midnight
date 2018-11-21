@@ -66,6 +66,9 @@ void LandscapeDebug::BuildDebug( LandscapeItems* items )
                     case 4:
                         sprintf(buffer, "%d,%d", item->loc.x, item->loc.y);
                         break;
+                    case 5:
+                        sprintf(buffer, "%d", item->terrain);
+                        break;
                     default:
                         break;
                 }

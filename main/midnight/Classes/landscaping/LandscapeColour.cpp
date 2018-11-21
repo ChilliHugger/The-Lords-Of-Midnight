@@ -42,6 +42,8 @@ void LandscapeColour::SetMovementColour(mxtime_t start,mxtime_t end)
 
 void LandscapeColour::SetLookColour(mxtime_t time)
 {
+    timeofday = time ;
+    
     startTint[0]  = CreateTimeBrightness(time);
     endTint[0] = startTint[0];
     
@@ -151,6 +153,20 @@ Color4B LandscapeColour::CalcCurrentMovementTint ( u32 index )
     b1 += b3*options->movementAmount;
     
     return Color4B(r1,g1,b1,255);
+}
+
+Color3B LandscapeColour::GetPersonColour()
+{
+    Color3B colour = _clrWhite ;
+#if defined(_DDR_)
+    if ( timeofday >= tme::variables::sv_time_dawn-1 || timeofday <= tme::variables::sv_time_night+4 )
+        colour = Color3B(100,200,100);
+    
+    if (options->isInTunnel)
+        colour = Color3B(64,64,64);
+#endif
+    
+    return colour;
 }
 
 void LandscapeColour::OnXmlInit ( chilli::xml::node* node )
