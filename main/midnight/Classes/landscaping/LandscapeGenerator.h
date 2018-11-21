@@ -10,6 +10,7 @@
 #define LandscapeGenerator_h
 
 #include "LandscapeNode.h"
+
 #include "../system/resolutionmanager.h"
 
 #define BASE_HEIGHT             768
@@ -23,8 +24,6 @@
 #define GSCALE                  4.0f
 
 
-//#define ASP(x) (s32)	((x)*uimanager::singleton()->aspect_scale)
-//#define SRC(x) (s32)	((x)*uimanager::singleton()->source_scale)
 
 typedef enum floor_t {
       floor_normal = 0
@@ -50,6 +49,8 @@ public:
 
 typedef Vector<LandscapeItem*> LandscapeItems;
 
+FORWARD_REFERENCE(LandscapeOptions);
+
 class LandscapeGenerator
 {
 public:
@@ -70,7 +71,7 @@ public:
 public:
     LandscapeGenerator();
     
-    void Build(tme::loc_t location, f32 looking );
+    void Build(LandscapeOptions* options);
     void BuildPanorama();
     
     void ProcessQuadrant(s32 x, s32 y, s32 dx, s32 dy, s32 qDim);
@@ -80,13 +81,16 @@ public:
     f32 NormaliseXPosition(f32 x);
     
 public:
-    LandscapeItems* items;
+    LandscapeItems*     items;
+    LandscapeOptions*   options;
+
     
     s32     location_infront_y;
     
     tme::loc_t	loc;
     f32     looking;
     f32     horizontalOffset;
+
     
 };
 

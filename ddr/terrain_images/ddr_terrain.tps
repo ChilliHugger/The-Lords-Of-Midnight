@@ -194,7 +194,7 @@
             <key>trimMode</key>
             <enum type="SpriteSettings::TrimMode">Polygon</enum>
             <key>tracerTolerance</key>
-            <int>21</int>
+            <int>1000</int>
             <key>heuristicMask</key>
             <false/>
             <key>defaultPivotPoint</key>

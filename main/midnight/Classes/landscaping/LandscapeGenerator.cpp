@@ -1,5 +1,6 @@
 
 #include "LandscapeGenerator.h"
+#include "ILandscape.h"
 
 
 using namespace tme;
@@ -9,10 +10,12 @@ LandscapeGenerator::LandscapeGenerator()
 	items = new Vector<LandscapeItem*>();
 }
 
-void LandscapeGenerator::Build(loc_t location, f32 direction)
+void LandscapeGenerator::Build(LandscapeOptions* options)
 {
-    loc = location;
-    looking = direction;
+    this->options = options;
+    
+    loc = options->here;
+    looking = 0;
     
     items->clear();
 	
@@ -107,9 +110,12 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 	if( map.flags&lf_army && tinfo.flags&tif_army )
 		item->army = true;
 
-//    if ( moveCount && bDrawArmy )
-//        if ( (x== moveFrom.x && y==moveFrom.y) || (x== moveTo.x && y==moveTo.y && !bMoveLocationHasArmy )  )
-//            bDrawArmy=FALSE;
+    // check the current lords army temporarily
+    // popping up as we move in or out of a location
+    if ( options->isMoving && item->army )
+        if (   (x== options->moveFrom.x && y==options->moveFrom.y)
+            || (x== options->moveTo.x && y==options->moveTo.y && !options->moveLocationHasArmy )  )
+            item->army=false;
     
     // if there is mist here then we need to draw the mist
 	if ( map.flags&lf_mist ) 

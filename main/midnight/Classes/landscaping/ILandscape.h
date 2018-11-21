@@ -30,13 +30,19 @@ public:
     bool            debugLand;
     f32             landScaleX;
     f32             landScaleY;
+    
     tme::loc_t      here ;
     tme::loc_t      currentLocation;
     tme::loc_t      aheadLocation;
     mxdir_t         currentDirection;
+    
     bool            isMoving;
-    bool            isLooking;
+    tme::loc_t      moveFrom;
+    tme::loc_t      moveTo;
     f32             movementAmount;
+    bool            moveLocationHasArmy;
+    
+    bool            isLooking;
     f32             lookAmount;
     
     bool            isInTunnel;

@@ -429,14 +429,14 @@ void panel_look::setViewForCurrentCharacter ( void )
     options.here = current_info->location;
     options.here.x *= DIR_STEPS;
     options.here.y *= DIR_STEPS;
+    options.isMoving = false;
+    options.isLooking = false;
 
 #if defined(_DDR_)
     options.isInTunnel = current_info->tunnel;
     options.isLookingDownTunnel = current_info->lookingdowntunnel;
 #endif
 
-    
-    // looking = (c.looking * DIR_AMOUNT) ;
     options.lookAmount = current_info->looking * 400;
     if ( options.lookAmount >= 3200 )
         options.lookAmount-=3200;
@@ -447,7 +447,7 @@ void panel_look::setViewForCurrentCharacter ( void )
     options.aheadLocation.x = options.currentLocation.x + mxgridref::DirectionLookTable[options.currentDirection*2];
     options.aheadLocation.y = options.currentLocation.y + mxgridref::DirectionLookTable[(options.currentDirection*2)+1];
     
-    options.generator->Build(options.here, 0);
+    options.generator->Build(&options);
     
     // Initialise people
     current_people=people[0];
@@ -723,26 +723,22 @@ bool panel_look::startMoving()
     key = MAKE_LOCID(location_infront.x, location_infront.y);
     TME_GetLocation( map, key );
     
-    //    bMoveLocationHasArmy=FALSE;
-    //    if ( map.flags&lf_army )
-    //        bMoveLocationHasArmy =  TRUE;
+    options.moveLocationHasArmy = map.flags&lf_army ;
+    options.moveFrom = c.location;
     
-
-    loc_t moveFrom = c.location;
     if ( Character_Move(c) ) {
         
         options.colour->SetMovementColour(startTime,c.time);
         
-        
-        loc_t moveTo = c.location;
+        options.moveTo = c.location;
         f32 target = DIR_STEPS ;
         
         options.isMoving = true;
    
         auto actionfloat = ActionFloat::create(0.5f, 0, target, [=](float value) {
             
-            options.here.x = moveFrom.x*(DIR_STEPS - value) + moveTo.x*value;
-            options.here.y = moveFrom.y*(DIR_STEPS - value) + moveTo.y*value;
+            options.here.x = options.moveFrom.x*(DIR_STEPS - value) + options.moveTo.x*value;
+            options.here.y = options.moveFrom.y*(DIR_STEPS - value) + options.moveTo.y*value;
             
             if ( value >= target ) {
                 stopMoving();
@@ -752,7 +748,7 @@ bool panel_look::startMoving()
             f32 result = value / target ;
             options.movementAmount = result;
             
-            options.generator->Build(options.here, 0);
+            options.generator->Build(&options);
             UpdateLandscape();
             
             
