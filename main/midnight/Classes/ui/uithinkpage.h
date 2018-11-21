@@ -31,7 +31,7 @@ protected:
     uithinkpage();
     virtual bool init() override;
     
-    void setupUI();
+    void setupUIElements();
     
     void displayCharacter ( const character& c );
     void displayCharacterTerrain(  const character& c );
@@ -52,7 +52,7 @@ protected:
     mxid                id;
     mxid                objectid ;
     panelmode_t         mode;
-    character           current_character;
+    //character           current_character;
     stronghold          current_stronghold;
     
     cocos2d::Label*     lblName;

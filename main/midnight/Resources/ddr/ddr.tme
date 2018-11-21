@@ -59,7 +59,8 @@
 	</objects>
 
 	<races>
-		<race id="RA_FREE"          body = "people/c_free.png"          horse = "people/c_freeh.png"        face="faces/p_free.png" />
+        <race id="RA_DOOMGUARD"     body = "people/c_icelord.png"       horse = "people/c_icelordh.png"     face="faces/p_icelord.png" />
+        <race id="RA_FREE"          body = "people/c_free.png"          horse = "people/c_freeh.png"        face="faces/p_free.png" />
 		<race id="RA_FEY"           body = "people/c_fey.png"           horse = "people/c_feyh.png"         face="faces/p_fey.png" />
 		<race id="RA_WISE"          body = "people/c_wise.png"          horse = "people/c_wiseh.png"        face="faces/p_wise.png" />
 		<race id="RA_MORKIN"		body = "people/c_morkin.png"        horse = "people/c_morkinh.png"      face="faces/p_morkin.png" />
@@ -178,78 +179,6 @@
 	
 	
 	<uilandscape>
-		
-        <!--
-		<day>
-			<time id="0"  shade="#00940000" />
-			<time id="1"  shade="#00ff2000" />
-			<time id="2"  shade="#00ff4000" />
-			<time id="3"  shade="#00ff8000" />
-			<time id="4"  shade="#00ffd000" />
-			<time id="5"  shade="#00ffff00" />
-			<time id="6"  shade="#00ffff00" />
-			<time id="7"  shade="#00ffff00" />
-			<time id="8"  shade="#00ffff00" />
-			<time id="9"  shade="#00ffff00" />
-			<time id="10" shade="#00ffff00" />
-			<time id="11" shade="#00ffff00" />
-			<time id="12" shade="#00ffff00" />
-			<time id="13" shade="#00ffff00" />
-			<time id="14" shade="#00ffff00" />
-			<time id="15" shade="#00ffff00" />
-			<time id="16" shade="#00ffff00" />
-			<time id="17" shade="#00ffff00" />
-			<time id="18" shade="#00ffff00" />
-			<time id="19" shade="#00ffff00" />
-			<time id="20" shade="#00ffff00" />
-			<time id="21" shade="#00ffff00" />
-			<time id="22" shade="#00ffff00" />
-			<time id="23" shade="#00ffff00" />
-			<time id="24" shade="#00ffff00" />
-			<time id="25" shade="#00ffff00" />
-			<time id="26" shade="#00ffff00" />
-			<time id="27" shade="#00ffff00" />
-			<time id="28" shade="#00ffff00" />
-			<time id="29" shade="#00ffff00" />
-			<time id="30" shade="#000000ff" />
-			<time id="31" shade="#000000d0" />
-		</day>
-        
-        <shade>
-            <time id="0"  fill="#00940000" outline="#00000000" tint="#ff404040" />
-            <time id="1"  fill="#00ff2000" outline="#00100000" tint="#ff606060" />
-            <time id="2"  fill="#00ff4000" outline="#00200000" tint="#ff808080" />
-            <time id="3"  fill="#00ff8000" outline="#00400000" tint="#ff909090" />
-            <time id="4"  fill="#00ffd000" outline="#00800000" tint="#ffB0B0B0" />
-            <time id="5"  fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="6"  fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="7"  fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="8"  fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="9"  fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="10" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="11" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="12" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="13" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="14" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="15" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="16" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="17" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="18" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="19" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="20" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="21" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="22" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="23" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="24" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="25" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="26" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="27" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="28" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="29" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
-            <time id="30" fill="#000000ff" outline="#0000ffff" tint="#ff00ffff" />
-            <time id="31" fill="#000000d0" outline="#0000d0d0" tint="#ff00ffff" />
-        </share>
-         -->
         
         <day>
             <time id="0"  shade="#00ffffff" />

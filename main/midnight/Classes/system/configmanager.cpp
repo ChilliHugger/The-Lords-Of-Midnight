@@ -38,7 +38,11 @@ configmanager::configmanager()
 #endif
     setGameDefaults();
     
+#if defined(ADVERT_FREQUENCY)
     advert_screen_count=ADVERT_FREQUENCY-4;
+#else
+    advert_screen_count=0;
+#endif
     
 #if defined(_OS_IOS_) || defined(_OS_OSX_)
     novella_pdf=false;
@@ -72,13 +76,14 @@ void configmanager::setGameDefaults ()
 bool configmanager::bumpAdvert()
 {
     bool showAdvert = false;
-    
-    if (advert_screen_count%ADVERT_FREQUENCY==(ADVERT_FREQUENCY-1) ) {
-        showAdvert = true ;
-    }
 
-    advert_screen_count++;
-    Save();
+#if defined(ADVERT_FREQUENCY)
+        if (advert_screen_count%ADVERT_FREQUENCY==(ADVERT_FREQUENCY-1) ) {
+            showAdvert = true ;
+        }
+        advert_screen_count++;
+        Save();
+#endif
     
     return showAdvert;
 }

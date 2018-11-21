@@ -520,7 +520,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
 	args[1] = c.id ;
 	mxi->GetProperties ( "RECRUITABLE", args, 2 );
 	
-	// strongholds
+	// strongholds here
 	args[0] = &location_strongholds ;
 	args[1] = c.id ;
 	mxi->GetProperties ( "STRONGHOLDS", args, 2 );

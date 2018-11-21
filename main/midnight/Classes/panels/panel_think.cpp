@@ -26,6 +26,30 @@ USING_NS_CC;
 using namespace tme;
 using namespace cocos2d::ui;
 
+// think pages are
+// person
+//        think current character
+//        think characters at location
+//        think characters infront
+
+// place
+//      DDR: normal think
+//        think stronghold
+//        think stronghold infront
+//        foe armies
+//        foe armies in front
+
+// army
+//        think current character
+//        think characters at location
+//        think characters infront
+//        think stronghold
+//        think stronghold infront
+//        foe armies
+//        foe armies in front
+
+
+
 bool panel_think::init()
 {
     if ( !uipanel::init() )

@@ -88,7 +88,8 @@
 
 	<races>
 		<race id="RA_DOOMDARK"	body = "people/c_doomguard.png"		horse = "people/c_doomguardh.png" />
-		<race id="RA_FREE"		body = "people/c_free.png"			horse = "people/c_freeh.png" />
+        <race id="RA_DOOMGUARD" body = "people/c_doomguard.png"     horse = "people/c_doomguardh.png" />
+        <race id="RA_FREE"		body = "people/c_free.png"			horse = "people/c_freeh.png" />
 		<race id="RA_FEY"		body = "people/c_fey.png"			horse = "people/c_feyh.png" />
 		<race id="RA_TARG"		body = "people/c_targ.png"			horse = "people/c_targh.png" />
 		<race id="RA_WISE"		body = "people/c_wise.png"			horse = "people/c_wiseh.png" />

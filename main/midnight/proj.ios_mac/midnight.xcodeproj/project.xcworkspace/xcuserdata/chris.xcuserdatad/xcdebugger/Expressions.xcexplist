@@ -55,10 +55,21 @@
          contextName = "LandscapeColour::CalcCurrentMovementTint(unsigned int):LandscapeColour.cpp">
       </ContextState>
       <ContextState
+         contextName = "tme::PropStrongholds2(chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):default_scenario.cpp">
+      </ContextState>
+      <ContextState
          contextName = "panel_options::SetValues():panel_options.cpp">
          <PersistentStrings>
             <PersistentString
                value = "this-&gt;_children">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "panel_think::addPage(unsigned int):panel_think.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "id">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -82,7 +93,7 @@
          contextName = "Landscape::Moving():LandscapeScene.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "moveCount">
+               value = "here">
             </PersistentString>
             <PersistentString
                value = "moveTo">
@@ -91,7 +102,18 @@
                value = "moveFrom">
             </PersistentString>
             <PersistentString
-               value = "here">
+               value = "moveCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TME_GetCharacterLocationInfo(tme::scenarios::exports::character_t const&amp;):tme.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "panel_think::setupPages():panel_think.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "pages">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

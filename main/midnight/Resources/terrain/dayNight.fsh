@@ -24,9 +24,9 @@ void main()
             m.r = 1.0 - c.r ;
             m.g = 1.0 - c.g ;
             m.b = 1.0 - c.b ;
+            m.a = c.a;
             
-            
-            n = vec4((p_right.r*c.r)+(p_left.r*m.r), (p_right.g*c.g)+(p_left.g*m.g), (p_right.b*c.b)+(p_left.b*m.b), c.a) ;
+            n = vec4((p_right.r*c.r)+(p_left.r*m.r), (p_right.g*c.g)+(p_left.g*m.g), (p_right.b*c.b)+(p_left.b*m.b), m.a) ;
         }
     //}else{
    //     n = c; //vec4(1,1,1,0.5) ;

@@ -82,8 +82,7 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
                 graphic->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
                 graphic->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));               // body
 
-                //graphic->setColor(Color3B(tint0));
-                
+  
                 this->addChild(graphic);
             }
         }
@@ -101,9 +100,6 @@ Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
         return nullptr;
     }
     
-//    if ( terrain_graphics[terrain] == "" )
-//        return nullptr;
-//
     auto image = Sprite::createWithSpriteFrameName( d->file.GetAt() );
     if ( image == nullptr )
         return image;

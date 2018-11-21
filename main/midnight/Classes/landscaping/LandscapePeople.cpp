@@ -134,19 +134,20 @@ void LandscapePeople::Initialise()
     // get location infront map
     //
     
-    int foe_warriors = location_armies.foe_warriors ;
-    int foe_riders = location_armies.foe_riders ;
     
-    // if there are riders
-    if ( foe_riders )    {
-        // get RA_DOOMGUARD
+#if defined(_LOM_)
+    if ( location_armies.foe_riders )
+    {
+        // LoM shows characters when there is an army in the location in front
+        // however DDR only shows the army terrain image for wandering lords
         person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_DOOMGUARD),TRUE);
         add( person, DEFAULT_PRINT_RIDERS/*, NULL*/);
-    } else if ( foe_warriors ) {
+    } else if ( location_armies.foe_warriors ) {
         person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_DOOMGUARD),FALSE);
         add( person,DEFAULT_PRINT_WARRIORS /*, NULL*/);
-        return;
-    } else     if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
+    } else
+#endif
+        if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
         //hotspot.type = HOTSPOT_OBJECT;
         //hotspot.thing = (thing_t)GET_ID(location_infront_object);
         

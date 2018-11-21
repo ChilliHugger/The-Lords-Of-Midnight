@@ -69,12 +69,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     this->mode = mode;
     this->objectid = objectId;
     
-    // get the character we are interested in
-    TME_GetCharacter(current_character, id);
-    TME_GetCharacterLocationInfo ( current_character );
-    flags = location_flags;
-    
-    setupUI();
+    setupUIElements();
     
     auto size = safeArea->getContentSize();
     auto textSize = lblDescription->getContentSize();
@@ -204,10 +199,16 @@ void uithinkpage::displayCharacter ( const character& c )
 {
 
     // display character name
-    lblName->setString(current_character.longname);
+    lblName->setString(c.longname);
 
     imgCharacter->loadTexture(GetCharacterImage(c), Widget::TextureResType::LOCAL);
 
+    // TODO: If character recruited then enable the character image
+    // as a button
+//    if ( Character_IsRecruited(c) )
+//        i_character->Enable();
+//    else
+//        i_character->Disable();
 }
 
 void uithinkpage::displayCharacterTerrain(  const character& c )
@@ -276,13 +277,15 @@ void uithinkpage::displayObject ( mxid objectid )
 }
 
 
-void uithinkpage::setupUI()
+void uithinkpage::setupUIElements()
 {
     tme::CStrBuf     buffer(1024);
     LPCSTR      text=NULL;
     
-    displayCharacter ( current_character );
-    displayCharacterTerrain(current_character);
+    character& c = TME_CurrentCharacter();
+    
+    displayCharacter (c);
+    displayCharacterTerrain(c);
     displayObject(IDT_NONE);
     
     switch ( mode ) {
@@ -304,9 +307,9 @@ void uithinkpage::setupUI()
     }
 
     // completely different if dead!
-    if ( Character_IsDead(current_character) ) {
-        objectid = current_character.killedby;
-        text = TME_GetCharacterText(current_character,"CharDeath");
+    if ( Character_IsDead(c) ) {
+        objectid = c.killedby;
+        text = TME_GetCharacterText(c,"CharDeath");
         lblDescription->setString(text);
         return;
     }
@@ -316,16 +319,16 @@ void uithinkpage::setupUI()
             
         case MODE_THINK:
 #if defined(_LOM_)
-            if ( Character_IsHidden(current_character) ) {
-                text = TME_GetSystemString(current_character,SS_HIDDEN);
+            if ( Character_IsHidden(c) ) {
+                text = TME_GetSystemString(c,SS_HIDDEN);
                 unhide = true;
             }else if ( objectid ) {
                 if ( flags.Is(lif_fight) ) {
-                    text = TME_GetSystemString(current_character,SS_MUSTFIGHT);
+                    text = TME_GetSystemString(c,SS_MUSTFIGHT);
                     fight=true;
                     displayObject(objectid);
                 }else{
-                    text = TME_GetSystemString(current_character,SS_THINGATLOCATION);
+                    text = TME_GetSystemString(c,SS_THINGATLOCATION);
                 }
             }
 #endif
@@ -361,7 +364,7 @@ void uithinkpage::setupUI()
         buffer.strcpy ( text );
     }
     
-    chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
+    chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(c,SS_MESSAGE1) );
     
    // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
    // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
