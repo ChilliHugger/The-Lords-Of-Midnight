@@ -87,7 +87,7 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
     label->setColor(_clrDarkRed);
     label->setAlignment(TextHAlignment::LEFT);
-    label->setLineHeight(DIS(FONT_SIZE_BIG));
+    //label->setLineHeight(DIS(FONT_SIZE_BIG));
     label->setLineSpacing(0);
     label->setMaxLineWidth(innerWidth);
     label->enableWrap(true);

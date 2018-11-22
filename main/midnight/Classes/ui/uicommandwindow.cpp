@@ -57,8 +57,10 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     
     auto rect = parent->getBoundingBox();
     
-    grid=size(DIS(128),DIS(80));
-    padding = size( DIS(32), DIS(16) );
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    
+    grid=size(DIS(128)*scale,DIS(80)*scale);
+    padding = size( DIS(32)*scale, DIS(16)*scale );
     
     this->parent = parent;
     this->id = id;

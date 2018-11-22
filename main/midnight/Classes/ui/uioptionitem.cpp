@@ -32,21 +32,21 @@ bool uioptionitem::initWithItem(f32 width, uitextmenuitem* item)
     if ( !initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
         return false;
     
-    f32 itemHeight = uihelper::font_config_big.fontSize;
+    //f32 itemHeight = uihelper::font_config_big.fontSize;
     f32 paddingY = RES(10);
     f32 height=0;
     
     title = Label::createWithTTF( uihelper::font_config_big, item->type.text );
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setTextColor(Color4B(_clrBlue));
-    title->setLineHeight(itemHeight);
+    //title->setLineHeight(itemHeight);
     addChild(title);
     height += title->getBoundingBox().size.height;
     
     value = Label::createWithTTF(uihelper::font_config_big, "OPTION" );
     value->getFontAtlas()->setAntiAliasTexParameters();
     value->setTextColor(Color4B(_clrRed));
-    value->setLineHeight(itemHeight);
+    //value->setLineHeight(itemHeight);
     addChild(value);
     height += value->getBoundingBox().size.height;
     

@@ -148,8 +148,8 @@ bool panel_options::init()
 #endif
     
     
-    auto p2 = Sprite::create("screens/misc/corleth.png");
-    uihelper::AddBottomLeft(safeArea,p2);
+    //auto p2 = Sprite::create("screens/misc/corleth.png");
+    //uihelper::AddBottomLeft(safeArea,p2);
     
     CreateMenu1();
     
@@ -319,8 +319,13 @@ void panel_options::CreateMenu1()
     
     f32 width = RES(512-40);
 
+    f32 contentWidth = safeArea->getContentSize().width;
+    f32 contentHeight = safeArea->getContentSize().height;
+    
     auto menu = uitextmenu::create(width, items_main, NUMELE(items_main) );
-    uihelper::AddCenterLeft(safeArea,menu,RES(20), 0);
+    menu->setAnchorPoint(uihelper::AnchorCenter);
+    menu->setPosition(Vec2(contentWidth/4,contentHeight/2));
+    safeArea->addChild(menu);
 
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
@@ -334,21 +339,17 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
     f32 width = RES(512-40);
     
+    f32 contentWidth = safeArea->getContentSize().width;
+    f32 contentHeight = safeArea->getContentSize().height;
+
+    
     if ( menu2 != nullptr )  {
         menu2->removeAllChildren();
         menu2->removeFromParent();
     }
 
     menu2 = Menu::create();
-    
-    if ( menu2_background == nullptr ) {
-        menu2_background = DrawNode::create();
-        addChild(menu2_background);
-    }else{
-        menu2_background->removeAllChildren();
-        menu2_background->clear();
-    }
-    
+
     u32 gapY = RES(5);
     
     this->addChild(menu2);
@@ -381,12 +382,11 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         fields.pushBack(menuItem);
     }
     
-    menu2_background->setContentSize(Size(width,height) );
     menu2->setContentSize(Size(width,height) );
-
-    //menu2_background->drawSolidRect(Point::ZERO, Point(RES(512),height), Color4F::BLACK);
-    uihelper::PositionParentCenterRight(menu2_background,RES(20));
-    uihelper::PositionParentCenterRight(menu2,RES(20));
+    //menu2->setAnchorPoint(uihelper::AnchorCenter);
+    //menu2->setPosition(Vec2(contentWidth/2,contentHeight/2));
+    
+    uihelper::PositionParentCenterLeft(menu2,contentWidth/2);
     
     // refresh positions
     auto offset = Vec2( width/2, height );

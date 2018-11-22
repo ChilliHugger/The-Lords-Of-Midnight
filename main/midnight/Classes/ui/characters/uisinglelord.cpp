@@ -28,10 +28,11 @@ uisinglelord::uisinglelord() :
 bool uisinglelord::init()
 {
     if ( uilordselect::init() ) {
-        setContentSize(Size(SELECT_ELEMENT_WIDTH, SELECT_ELEMENT_HEIGHT));
-//        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
-//        bg->setContentSize(this->getContentSize());
-//        this->addChild(bg);
+        f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+        setContentSize(Size(SELECT_ELEMENT_WIDTH*scale, SELECT_ELEMENT_HEIGHT*scale));
+        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
+        bg->setContentSize(this->getContentSize());
+        this->addChild(bg);
         this->setTouchEnabled(true);
         return true;
     }
@@ -124,18 +125,21 @@ bool uisinglelord::setLord( mxid characterid )
     
     uihelper::AddCenter(this, face);
     
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    
+    
     // set name label
     auto title = Label::createWithTTF( uihelper::font_config_small, c.longname );
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
     title->setAnchorPoint(uihelper::AnchorCenter);
-    title->setWidth(getContentSize().width);
+    title->setWidth(getContentSize().width-DIS(16));
     title->setLineSpacing(DIS(-2));
-    title->setHeight(DIS(32));
+    title->setHeight(DIS(32)*scale);
     title->setHorizontalAlignment(TextHAlignment::CENTER);
     title->setVerticalAlignment(TextVAlignment::BOTTOM);
-    uihelper::AddBottomCenter(face, title, RES(0), RES(-16));
+    uihelper::AddBottomCenter(face, title, RES(0), DIS(-16));
     
 
     // Add status image

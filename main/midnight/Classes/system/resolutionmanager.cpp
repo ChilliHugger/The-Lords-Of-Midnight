@@ -194,6 +194,9 @@ padding resolutionmanager::getSafeArea()
     result.top = safeAreaTopPadding;
     result.right = safeAreaRightPadding;
     result.bottom = safeAreaBottomPadding;
+    
+    //auto r = Director::getInstance()->getSafeAreaRect();
+    
     return result;
 }
 

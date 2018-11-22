@@ -90,8 +90,9 @@ bool panel_think::init()
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     
     // TAB ICONS
-    int x = RES(10) ;
-    int c = DIS(100);
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    int x = RES(10) * scale ;
+    int c = DIS(100) * scale;
     // Person
     auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, clickCallback);
     uihelper::AddBottomRight(safeArea, person, x+c*0, RES(10) );

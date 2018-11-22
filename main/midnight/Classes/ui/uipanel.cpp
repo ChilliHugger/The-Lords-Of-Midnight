@@ -80,6 +80,12 @@ Node* uipanel::setBackgroundToHeight( LPCSTR background )
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
     f32 scale = visibleSize.height / p->getContentSize().height ;
+
+    f32 w = p->getContentSize().width * scale;
+    if ( w < visibleSize.width ) {
+        scale = visibleSize.width / p->getContentSize().width ;
+    }
+    
     p->setScale(scale, scale );
     p->setLocalZOrder(ZORDER_FAR);
     uihelper::AddCenter(this, p);

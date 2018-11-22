@@ -39,9 +39,10 @@ bool panel_select::init()
     {
         return false;
     }
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
     
-    SELECT_GRID_X = RES(SELECT_ELEMENT_WIDTH);
-    SELECT_GRID_Y = RES(SELECT_ELEMENT_HEIGHT);
+    SELECT_GRID_X = SELECT_ELEMENT_WIDTH * scale;
+    SELECT_GRID_Y = SELECT_ELEMENT_HEIGHT * scale;
     SELECT_GRID_Y_LEADING = RES(1);
     SELECT_GRID_X_LEADING = RES(1);
     MAX_COLUMNS = 7;
@@ -51,9 +52,8 @@ bool panel_select::init()
     
     setBackground(BACKGROUND_COLOUR);
     
-    //int c = RES(48);
-    int r = DIS(64);
-    //int h = RES(32);
+  
+    int r = DIS(64) * scale;
     
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
@@ -63,10 +63,8 @@ bool panel_select::init()
     auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, clickCallback);
     uihelper::AddBottomRight(safeArea, night, RES(10), RES(10) );
     
-    int adjy=RES(32);
-    //int adjx=RES(12);
-    //int cx = (Width()-c)+adjx ;
-    
+    int adjy=RES(32)*scale;
+
     createFilterButton(ID_FILTER_DAWN,          (r*1)-adjy, "lord_dawn",    filter_show_dawn);
     createFilterButton(ID_FILTER_NIGHT,         (r*2)-adjy, "lord_night",   filter_show_night);
     createFilterButton(ID_FILTER_BATTLE,        (r*3)-adjy, "lord_battle",  filter_show_battle);
@@ -90,7 +88,7 @@ bool panel_select::init()
     auto size = safeArea->getContentSize();
     size.height -= (START_Y*2) + RES(64);
     size.width -= (START_X*2) + RES(64) ;
-    SELECT_GRID_X_LEADING = (size.width-(MAX_COLUMNS*SELECT_ELEMENT_WIDTH))/MAX_COLUMNS;
+    SELECT_GRID_X_LEADING = (size.width-(MAX_COLUMNS*SELECT_GRID_X))/MAX_COLUMNS;
     scrollView->setInnerContainerSize( size );
     scrollView->setContentSize( size );
     
@@ -111,7 +109,7 @@ void panel_select::getCharacters()
     // calc position of last item in the grid
     // so that we have a canvas height
     auto pos = calcGridLocation(characters.Count()-1);
-    f32 height = pos.y + SELECT_ELEMENT_HEIGHT + RES(0);
+    f32 height = pos.y + SELECT_GRID_Y + RES(0);
     
     // adjust the inner container of the scroll view
     auto size = safeArea->getContentSize();
