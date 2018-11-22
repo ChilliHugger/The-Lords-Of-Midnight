@@ -17,20 +17,44 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-uihelpwindow::uihelpwindow()
+uihelpwindow::uihelpwindow() :
+      parent(nullptr)
+    , layout(nullptr)
+    , id(HELP_NONE)
+    , closeCallback(nullptr)
 {
-    closeCallback = nullptr;
-    layout=nullptr;
-    id= HELP_NONE;
-    parent=nullptr;
 }
 
-uihelpwindow::uihelpwindow( uipanel* parent, helpid_t id)
+uihelpwindow::~uihelpwindow()
 {
+    CC_SAFE_RELEASE_NULL(parent);
+}
+
+uihelpwindow* uihelpwindow::create(uipanel* parent, helpid_t id)
+{
+    uihelpwindow* node = new (std::nothrow) uihelpwindow();
+    if (node && node->initWithParent(parent,id))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
+{
+    if ( parent == nullptr )
+        return false;
+    
+    if ( !uielement::init() )
+        return false;
+    
     auto rect = parent->getBoundingBox();
     
     this->parent = parent;
     this->id = id;
+    this->parent->retain();
     
     auto text = parent->GetMoonring()->help->Get(id);
     
@@ -110,6 +134,8 @@ uihelpwindow::uihelpwindow( uipanel* parent, helpid_t id)
     close->setAnchorPoint(uihelper::AnchorCenter);
     
     this->setLocalZOrder(ZORDER_POPUP);
+    
+    return true;
 }
 
 void uihelpwindow::Show( MXVoidCallback callback )
@@ -147,6 +173,7 @@ void uihelpwindow::OnClose()
     Close();
     if ( closeCallback!=nullptr )
         closeCallback();
+    
 }
 
 void uihelpwindow::Close()

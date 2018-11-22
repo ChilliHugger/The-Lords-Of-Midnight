@@ -76,8 +76,9 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     d->file = t->ReadStr("file");
                     UIDEBUG( "Frontend: Loading TERRAIN... %s", (LPCSTR)d->symbol );
                     mr->tme->terrain.Add(d);
-                    d->mapimage = t->ReadStr("mapfile");
-                    d->mapcell = t->ReadInt("mapcell");
+                    
+                    d->mapimage = t->ReadStr("mapfile","");
+                    d->mapcell = t->ReadInt("mapcell",0);
                 }
                 monitor->Update("Loading Terrain", 1);
             }
@@ -161,10 +162,10 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     d->symbol = c->ReadStr("id");
                     UIDEBUG( "Frontend: Loading CHARACTERS... %s", (LPCSTR)d->symbol );
                     
-                    d->face = c->ReadStr("face") ;
-                    d->shield = c->ReadStr("shield") ;
-                    d->shortcut = c->ReadStr("shortcut");
-                    d->shortcut2 = c->ReadStr("shortcut2");
+                    d->face = c->ReadStr("face","") ;
+                    d->shield = c->ReadStr("shield","") ;
+                    d->shortcut = c->ReadChar("shortcut",0);
+                    d->shortcut2 = c->ReadChar("shortcut2",0);
                     mr->tme->characters.Add(d);
                 }
                 monitor->Update("Loading Characters", 1);
@@ -181,9 +182,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     obj_data_t* d = new obj_data_t ;
                     d->symbol = o->ReadStr("id");
                     UIDEBUG( "Frontend: Loading OBJECTS... %s", (LPCSTR)d->symbol );
-                    //d->background = o->ReadStr("background") ;
-                    d->i_big = o->ReadStr("big") ;
-                    //d->i_small = o->ReadStr("small") ;
+                    d->i_big = o->ReadStr("big","") ;
                     mr->tme->objects.Add(d);
                 }
                 monitor->Update("Loading Objects", 1);
@@ -198,11 +197,11 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
             FOREACHELEMENT(e,r) {
                 if ( r->IsType("race") ) {
                     race_data_t* d = new race_data_t ;
-                    d->symbol = r->ReadStr("id");
+                    d->symbol = r->ReadStr("id","");
                     UIDEBUG( "Frontend: Loading RACES... %s", (LPCSTR)d->symbol );
-                    d->face = r->ReadStr("face") ;
-                    d->body = r->ReadStr("body") ;
-                    d->horse = r->ReadStr("horse") ;
+                    d->face = r->ReadStr("face","") ;
+                    d->body = r->ReadStr("body","") ;
+                    d->horse = r->ReadStr("horse","") ;
                     mr->tme->races.Add(d);
                 }
                 monitor->Update("Loading Races", 1);
@@ -249,4 +248,5 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
     
     return TRUE ;
 }
+
 

@@ -319,7 +319,7 @@ void panel_options::CreateMenu1()
     
     f32 width = RES(512-40);
 
-    auto menu = new uitextmenu(width, items_main, NUMELE(items_main) );
+    auto menu = uitextmenu::create(width, items_main, NUMELE(items_main) );
     uihelper::AddCenterLeft(safeArea,menu,RES(20), 0);
 
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
@@ -361,7 +361,7 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         
         uitextmenuitem* item = &items[ii];
         
-        auto button = new uioptionitem( width, item );
+        auto button = uioptionitem::create( width, item );
         button->setTag(item->id);
         
         // find the options

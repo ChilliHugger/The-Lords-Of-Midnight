@@ -73,7 +73,7 @@
                 <key>verticesUV</key>
                 <string>258 1288 2 1288 2 776 258 776</string>
             </dict>
-            <key>t_fountain2</key>
+            <key>t_fountain</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -156,7 +156,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:ea67fab6e0d3d000f4a98b3dfc4b0673:2d920782894253de5d203033cf5b0b80:8e90b992225262fb38ed17a113ef71b1$</string>
+            <string>$TexturePacker:SmartUpdate:5b20c1ab913ab0da29cb9b59e2c17906:2d920782894253de5d203033cf5b0b80:8e90b992225262fb38ed17a113ef71b1$</string>
             <key>textureFileName</key>
             <string>terrain-1.png</string>
         </dict>

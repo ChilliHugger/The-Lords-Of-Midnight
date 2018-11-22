@@ -76,7 +76,7 @@ bool panel_mainmenu::init()
     //
     // Menu
     //
-    menu = new uitextmenu(RES(512), items, NUMELE(items) );
+    menu = uitextmenu::create(RES(512), items, NUMELE(items) );
     uihelper::AddCenter(safeArea,menu);
     
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
@@ -227,7 +227,10 @@ void panel_mainmenu::OnContinueStory()
     // Otherwise we need a chouce
     //
     
-    auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
+    auto bookmenu = uibookmenu::createWithStory( mr->stories->getStoriesInfo() );
+    if ( bookmenu == nullptr )
+        return;
+    
     bookmenu->setLocalZOrder(ZORDER_POPUP);
     uihelper::AddCenter(this,bookmenu);
  
@@ -249,7 +252,10 @@ void panel_mainmenu::OnEndStory()
     // Otherwise we need a choice
     //
     
-    auto bookmenu = new uibookmenu( mr->stories->getStoriesInfo() );
+    auto bookmenu = uibookmenu::createWithStory( mr->stories->getStoriesInfo() );
+    if ( bookmenu == nullptr )
+        return;
+    
     bookmenu->setLocalZOrder(ZORDER_POPUP);
     uihelper::AddCenter(this,bookmenu);
     

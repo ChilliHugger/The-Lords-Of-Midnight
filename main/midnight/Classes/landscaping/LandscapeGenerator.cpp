@@ -81,7 +81,9 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
     maplocation		map;
 	terraininfo		tinfo;
 
-	LandscapeItem* item = new LandscapeItem();
+    LandscapeItem* item = new LandscapeItem();
+    item->autorelease();
+    
 	
 	TME_GetLocation( map, MAKE_LOCID(x, y) );
 	TME_GetTerrainInfo ( tinfo, MAKE_ID(INFO_TERRAININFO, map.terrain) );
@@ -110,6 +112,11 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 	if( map.flags&lf_army && tinfo.flags&tif_army )
 		item->army = true;
 
+    if ( !options->isMoving && item->army ) {
+        if (x== options->currentLocation.x && y==options->currentLocation.y)
+            item->army = false;
+    }
+    
     // check the current lords army temporarily
     // popping up as we move in or out of a location
     if ( options->isMoving && item->army )
@@ -121,6 +128,10 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 	if ( map.flags&lf_mist ) 
 		item->mist = true;
 
+    if ( item->army ) {
+        int a = 100;
+    }
+        
     
     return CalcCylindricalProjection(item);
     

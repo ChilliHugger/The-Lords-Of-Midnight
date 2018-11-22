@@ -16,26 +16,33 @@ USING_NS_CC;
 
 using namespace cocos2d::ui;
 
-
-uitextmenu::uitextmenu( f32 width, uitextmenuitem* items, u32 count )
+uitextmenu* uitextmenu::create( f32 width, uitextmenuitem* items, u32 count )
 {
+    uitextmenu* node = new (std::nothrow) uitextmenu();
+    if (node && node->initWithItems(width,items,count))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+
+bool uitextmenu::initWithItems( f32 width, uitextmenuitem* items, u32 count )
+{
+    if ( count == 0 || items == nullptr )
+        return false;
+    
+    if ( !initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
+        return false;
+    
     this->items = items;
     this->items_count = count;
     
     paddingY = RES(30);
     this->width = width;
-    
-    if ( initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
-    {
-        autorelease();
-    }
-    
-    Init();
-}
-
-
-void uitextmenu::Init()
-{
     this->setContentSize(Size(width, RES(128)) );
     this->setColor(Color3B::BLACK);
     this->setOpacity(ALPHA(0.25));
@@ -89,7 +96,7 @@ void uitextmenu::Init()
         offset.y -= item->getBoundingBox().size.height;
     }
 
-
+    return true;
 }
 
 void uitextmenu::EnableItem( u32 id, bool enabled )

@@ -112,12 +112,14 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
         popupWindow->Close();
     }
     
-    popupWindow = new uipopup( this, point(0,0), RES(600), text );
+    popupWindow = uipopup::create( this, point(0,0), RES(600), text );
+    popupWindow->retain();
+    
     popupWindow->onCancel = [&] {
-        popupWindow = nullptr;
+        CC_SAFE_RELEASE_NULL(popupWindow);
     };
     popupWindow->onOk = [&,ok] {
-        popupWindow = nullptr;
+        CC_SAFE_RELEASE_NULL(popupWindow);
         if ( ok != nullptr )
             ok();
     };
@@ -208,9 +210,11 @@ void uipanel::PopupHelpWindow ( helpid_t id, MXVoidCallback callback )
         help_window->Close();
     }
     
-    help_window = new uihelpwindow( this, id );
+    help_window = uihelpwindow::create( this, id );
+    help_window->retain();
+    
     help_window->Show( [&,callback] {
-        help_window = nullptr;
+        CC_SAFE_RELEASE_NULL( help_window );
         help_visible = HELP_NONE;
         if ( callback != nullptr )
             callback();

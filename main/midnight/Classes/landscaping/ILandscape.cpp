@@ -15,7 +15,7 @@ ILandscape::ILandscape()
 {
 }
 
-void ILandscape::Init(LandscapeOptions* options)
+bool ILandscape::initWithOptions( LandscapeOptions* options )
 {
+    return LandscapeNode::initWithOptions(options) ;
 }
-

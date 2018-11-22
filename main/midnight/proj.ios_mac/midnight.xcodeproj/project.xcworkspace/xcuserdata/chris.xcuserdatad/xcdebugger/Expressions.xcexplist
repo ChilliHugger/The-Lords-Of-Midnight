@@ -41,6 +41,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "tme::mxinterface::GetEntityProperties(unsigned int, chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):mxinterface.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "panel_look::UpdateLandscape():panel_look.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "landscapeView">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "MainMenu::createMenu()::$_0::operator()(cocos2d::Ref*) const:MainMenuScene.cpp">
          <PersistentStrings>
             <PersistentString
@@ -72,6 +83,9 @@
                value = "id">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "panel_look::~panel_look():panel_look.cpp">
       </ContextState>
       <ContextState
          contextName = "uithinkpage::displayCharacter(tme::scenarios::exports::character_t const&amp;):uithinkpage.cpp">

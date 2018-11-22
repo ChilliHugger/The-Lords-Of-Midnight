@@ -65,7 +65,10 @@ enum tagid_t {
 #define SHIELD_SCALE    0.9f
 #endif
 
-
+panel_look::~panel_look()
+{
+    CC_SAFE_RELEASE_NULL(i_command_window);
+}
 
 bool panel_look::init()
 {
@@ -88,7 +91,7 @@ bool panel_look::init()
     options.debugLand=false;
     options.isMoving=false;
     options.isLooking=false;
-    
+    options.programState = mr->glProgramState;
     options.colour->options = &options;
 
     // Header area
@@ -134,7 +137,7 @@ bool panel_look::init()
     //uihelper::FillParent(background);
     
     for ( int ii=0; ii<3; ii++ ) {
-        people[ii] = LandscapePeople::create();
+        people[ii] = LandscapePeople::create(&options);
         addChild(people[ii]);
     }
     
@@ -147,7 +150,8 @@ bool panel_look::init()
     follower_info = new locationinfo_t();
         
     // Command Window
-    i_command_window = new uicommandwindow(this);
+    i_command_window = uicommandwindow::create(this);
+    i_command_window->retain();
     
     auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, clickCallback);
     uihelper::AddBottomRight(safeArea, choose, RES(10), RES(10) );
@@ -164,7 +168,6 @@ bool panel_look::init()
     
     // TODO: Shortcut keys
     
-    // TODO: Shield / Character
     // TODO: Following
     
     // TODO: Debug Menu
@@ -457,19 +460,16 @@ void panel_look::setViewForCurrentCharacter ( void )
     auto width = getContentSize().width;
     
     if ( current_people ) {
-        current_people->Init(&options);
         current_people->Initialise(c);
         current_people->setPositionX(0);
     }
     
     if ( next_people ) {
-        next_people->Init(&options);
         next_people->Initialise(NEXT_DIRECTION(current_info->looking));
         next_people->setPositionX(width);
     }
     
     if ( prev_people ) {
-        prev_people->Init(&options);
         prev_people->Initialise(PREV_DIRECTION(current_info->looking));
         prev_people->setPositionX(-width);
     }
@@ -486,8 +486,6 @@ void panel_look::UpdateLandscape()
 {
     if ( current_view ) {
         removeChild(current_view);
-        current_view->release();
-        current_view=nullptr;
     }
     
     options.generator->horizontalOffset = options.lookAmount;
@@ -497,12 +495,9 @@ void panel_look::UpdateLandscape()
         //tunnelView = new TunnelView();
         //current_view = tunnelView;
     }else{
-        landscapeView = new LandscapeView();
-        current_view = landscapeView;
+        current_view = LandscapeView::create(&options);
     }
-    
-    current_view->programState = mr->glProgramState;
-    current_view->Init(&options);
+
     current_view->setAnchorPoint(Vec2::ZERO);
     current_view->setPosition( Vec2::ZERO);
     current_view->setLocalZOrder(ZORDER_FAR);
@@ -578,9 +573,7 @@ bool panel_look::startLookLeft ( void )
         UpdateLandscape();
     });
     
-    auto ease = new EaseSineInOut();
-    ease->initWithAction(actionfloat);
-    this->runAction(ease);
+    this->runAction(EaseSineInOut::create(actionfloat));
     
     next_people->Initialise(c);
     next_people->startSlideFromLeft();
@@ -624,9 +617,7 @@ bool panel_look::startLookRight ( void )
         UpdateLandscape();
     });
     
-    auto ease = new EaseSineInOut();
-    ease->initWithAction(actionfloat);
-    this->runAction(ease);
+    this->runAction(EaseSineInOut::create(actionfloat));
     
     next_people->Initialise(c);
     next_people->startSlideFromRight();
@@ -754,11 +745,7 @@ bool panel_look::startMoving()
             
         });
         
-        auto ease = new EaseSineInOut();
-        ease->initWithAction(actionfloat);
-        this->runAction(ease);
-        
-        //this->runAction(actionfloat);
+        this->runAction(EaseSineInOut::create(actionfloat));
         
         next_people->Initialise(c);
         next_people->startFadeIn();

@@ -55,6 +55,7 @@ class panel_look : public uipanel, uinotificationinterface
 {
 
 public:
+    virtual ~panel_look();
     
     bool init() override;
     CREATE_FUNC(panel_look);
@@ -114,8 +115,6 @@ protected:
     mxid                characterId;
     
     ILandscape*         current_view;
-    LandscapeView*      landscapeView;
-    LandscapeView*      tunnelView;
     
     LandscapeOptions    options;
     //bool                isLooking;

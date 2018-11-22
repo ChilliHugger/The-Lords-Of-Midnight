@@ -17,10 +17,11 @@ class LandscapeDebug : public LandscapeNode
 {
 public:
     const float	horizonOffset = RES( (112*GSCALE) );
-    
+    static LandscapeDebug* create( LandscapeOptions* options );
+
 public:
-    virtual void Init(LandscapeOptions* options);
-    
+    bool initWithOptions( LandscapeOptions* options );
+
 private:
     void BuildDebug( LandscapeItems* items );
 

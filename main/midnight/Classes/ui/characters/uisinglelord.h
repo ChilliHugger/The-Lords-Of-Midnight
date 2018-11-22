@@ -43,4 +43,5 @@ protected:
     flags16         status;
     char_data_t*    userdata;
     Node*           buttonNode;
+    Node*           statusNode;
 };

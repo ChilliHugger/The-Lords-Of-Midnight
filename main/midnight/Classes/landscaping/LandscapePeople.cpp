@@ -22,23 +22,32 @@ using namespace tme;
 #define TRANSITION_DURATION     0.5f
 #define adjusty                 RES(8)
 
-bool LandscapePeople::init()
+LandscapePeople::LandscapePeople()
 {
-    if ( !LandscapeNode::init() )
+}
+
+LandscapePeople* LandscapePeople::create( LandscapeOptions* options )
+{
+    LandscapePeople* node = new (std::nothrow) LandscapePeople();
+    if (node && node->initWithOptions(options))
     {
-        return false;
+        node->autorelease();
+        return node;
     }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool LandscapePeople::initWithOptions( LandscapeOptions* options )
+{
+    if ( !LandscapeNode::initWithOptions(options) )
+        return false;
 
     setLocalZOrder(ZORDER_DEFAULT);
     setPosition(0,adjusty);
     setCascadeOpacityEnabled(true);
     setOpacity(ALPHA(1.0));
-    return true;
-}
-
-void LandscapePeople::Init(LandscapeOptions* options)
-{
-    this->options = options;
     
     characters=0;
     CLEARARRAY(columns);
@@ -46,8 +55,10 @@ void LandscapePeople::Init(LandscapeOptions* options)
 #if defined(_DDR_)
     time = tme::variables::sv_time_dawn;
 #endif
-
+    
     loc = options->currentLocation;
+    
+    return true;
 }
 
 void LandscapePeople::Initialise( const character& c)
@@ -72,9 +83,8 @@ void LandscapePeople::Initialise( mxdir_t dir )
 
 void LandscapePeople::Initialise()
 {
-    u32           ii;
-    LPCSTR        person=NULL;
-    c_mxid        objects;
+    std::string person;
+    c_mxid      objects;
     
     this->removeAllChildren();
     
@@ -110,7 +120,7 @@ void LandscapePeople::Initialise()
     
     // if there are characters in front of us then
     // print them on screen
-    for (ii = 0; ii < objects.Count(); ii++) {
+    for (u32 ii = 0; ii < objects.Count(); ii++) {
         character c;
         TME_GetCharacter ( c, objects[ii] );
         
@@ -161,9 +171,8 @@ void LandscapePeople::Initialise()
     
 }
 
-void LandscapePeople::add( LPCSTR person, int number /*, void* hotspot */ )
+void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ )
 {
-    int ii;
     int column;
     
 #if defined(_LOM_)
@@ -176,7 +185,7 @@ void LandscapePeople::add( LPCSTR person, int number /*, void* hotspot */ )
     
     //lookhotspot_t*    newhotspot;
     
-    if ( person == NULL )
+    if ( person.empty() )
         return;
     
     int max_chars = MAX_DISPLAY_CHARACTERS ;
@@ -186,7 +195,7 @@ void LandscapePeople::add( LPCSTR person, int number /*, void* hotspot */ )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
 #endif
     
-    for (ii = 0; ii < number; ii++)    {
+    for (u32 ii = 0; ii < number; ii++)    {
         
         // make sure our printing position is free
         for(;characters<max_chars;characters++)
@@ -341,12 +350,7 @@ void LandscapePeople::startFadeOut()
         
     });
     
-    
-    auto ease = new EaseSineInOut();
-    ease->initWithAction(actionfloat);
-    this->runAction(ease);
-//    this->runAction(actionfloat);
-    
+    this->runAction(EaseSineInOut::create(actionfloat));
 }
 
 void LandscapePeople::startFadeIn()
@@ -381,10 +385,6 @@ void LandscapePeople::startFadeIn()
 
     });
     
-    
-    auto ease = new EaseSineInOut();
-    ease->initWithAction(actionfloat);
-    this->runAction(ease);
-    
-//    this->runAction(actionfloat);
+    this->runAction(EaseSineInOut::create(actionfloat));
+
 }

@@ -15,9 +15,24 @@
 #include "LandscapeDebug.h"
 #include "LandscapeColour.h"
 
-void LandscapeSky::Init(LandscapeOptions* options)
+
+LandscapeSky* LandscapeSky::create( LandscapeOptions* options )
 {
-    LandscapeNode::Init(options);
+    LandscapeSky* node = new (std::nothrow) LandscapeSky();
+    if (node && node->initWithOptions(options))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool LandscapeSky::initWithOptions( LandscapeOptions* options )
+{
+    if ( !LandscapeNode::initWithOptions(options) )
+        return false;
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -38,10 +53,10 @@ void LandscapeSky::Init(LandscapeOptions* options)
     sky->setPosition( Vec2::ZERO );
     sky->setAnchorPoint( Vec2::ZERO );
     
-    if ( programState ) {
+    if ( options->programState ) {
         auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));
         auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(2));
-        sky->setGLProgramState( programState->clone() );
+        sky->setGLProgramState( options->programState->clone() );
         sky->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
         sky->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
         sky->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));
@@ -49,4 +64,5 @@ void LandscapeSky::Init(LandscapeOptions* options)
     
     addChild(sky);
     
+    return true;
 }

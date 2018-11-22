@@ -25,17 +25,19 @@ class uicommandwindow : public uielement {
     
 private:
     uicommandwindow();
+    ~uicommandwindow();
     
 public:
-    uicommandwindow( uipanel* parent );
+    
+    static uicommandwindow* create( uipanel* parent );
     
     void clearItems();
     void show( MXVoidCallback callback );
     void close();
-    
     void updateElements();
     
 protected:
+    bool initWithParent( uipanel* parent );
     void OnClose();
     void initialiseCommands();
     void addItem( cocos2d::ui::Widget* item, u32 index );

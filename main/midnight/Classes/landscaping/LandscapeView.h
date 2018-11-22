@@ -18,8 +18,15 @@
 
 class LandscapeView : public ILandscape
 {
+private:
+    LandscapeView();
+    
 public:
-    virtual void Init(LandscapeOptions* options);
+    static LandscapeView* create( LandscapeOptions* options );
+
+protected:
+    bool initWithOptions( LandscapeOptions* options );
+
 };
 
 

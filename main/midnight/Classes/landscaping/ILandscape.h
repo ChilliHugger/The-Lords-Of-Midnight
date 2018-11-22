@@ -18,8 +18,9 @@ FORWARD_REFERENCE(LandscapeColour);
 class LandscapeOptions : Ref
 {
 public:
-    LandscapeGenerator*  generator;
-    LandscapeColour*     colour;
+    LandscapeGenerator*     generator;
+    LandscapeColour*        colour;
+    GLProgramState*         programState;
     
     bool            showWater;
     bool            showLand;
@@ -58,9 +59,6 @@ public:
 	ILandscape();
     virtual ~ILandscape() {};
     
-    virtual void Init(LandscapeOptions* options);
-    
-public:
-    GLProgramState* programState;
-    
+protected:
+    bool initWithOptions( LandscapeOptions* options );
 };

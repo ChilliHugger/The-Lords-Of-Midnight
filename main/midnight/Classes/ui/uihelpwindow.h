@@ -20,27 +20,27 @@ USING_NS_CC;
 FORWARD_REFERENCE(moonring);
 FORWARD_REFERENCE(uipanel);
 
-class uihelpwindow : uielement {
+class uihelpwindow : public uielement {
     
 private:
     uihelpwindow();
+    ~uihelpwindow();
     
 public:
-    uihelpwindow( uipanel* parent, helpid_t id );
+    static uihelpwindow* create(uipanel* parent, helpid_t id);
     
     void Show( MXVoidCallback callback );
     void Close();
     
-
-    
 protected:
+    bool initWithParent( uipanel* parent, helpid_t id );
     void OnClose();
     
 protected:
-    Scene*          parent;
-    helpid_t        id;
-    MXVoidCallback  closeCallback;
-    cocos2d::ui::Layout*         layout;
+    Scene*                  parent;
+    helpid_t                id;
+    MXVoidCallback          closeCallback;
+    cocos2d::ui::Layout*    layout;
     
 };
 

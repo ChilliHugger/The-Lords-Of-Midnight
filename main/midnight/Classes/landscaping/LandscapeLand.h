@@ -16,13 +16,12 @@
 class LandscapeLand : public LandscapeNode
 {
 public:
-    virtual void Init(LandscapeOptions* options);
-    
+    static LandscapeLand* create( LandscapeOptions* options );
+
 protected:
+    bool initWithOptions( LandscapeOptions* options );
     void BuildFloors( LandscapeItems* items );
     Sprite* GetFloorImage( floor_t floor );
-public:
-    GLProgramState* programState;
 };
 
 #endif /* LandscapeLand_hpp */

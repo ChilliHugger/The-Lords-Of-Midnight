@@ -25,8 +25,36 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-uicommandwindow::uicommandwindow( uipanel* parent )
+uicommandwindow::uicommandwindow() :
+    parent(nullptr)
 {
+}
+
+uicommandwindow::~uicommandwindow()
+{
+    CC_SAFE_RELEASE_NULL(parent);
+}
+
+uicommandwindow* uicommandwindow::create( uipanel* parent )
+{
+    uicommandwindow* node = new (std::nothrow) uicommandwindow();
+    if (node && node->initWithParent(parent))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+bool uicommandwindow::initWithParent( uipanel* parent )
+{
+    if ( parent == nullptr )
+        return false;
+    
+    if ( !uielement::init() )
+        return false;
+    
     auto rect = parent->getBoundingBox();
     
     grid=size(DIS(128),DIS(80));
@@ -34,6 +62,7 @@ uicommandwindow::uicommandwindow( uipanel* parent )
     
     this->parent = parent;
     this->id = id;
+    parent->retain();
     
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );
@@ -60,6 +89,7 @@ uicommandwindow::uicommandwindow( uipanel* parent )
     
     initialiseCommands();
     
+    return true;
 }
 
 void uicommandwindow::initialiseCommands()

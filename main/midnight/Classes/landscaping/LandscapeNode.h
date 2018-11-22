@@ -23,11 +23,11 @@ class LandscapeOptions;
 class LandscapeNode : public Node
 {
 public:
-    
-    CREATE_FUNC(LandscapeNode);
-    virtual bool init() override;
-    
-    virtual void Init(LandscapeOptions* options) ;
+    static LandscapeNode* create(LandscapeOptions* options);
+
+
+protected:
+    bool initWithOptions(LandscapeOptions* options) ;
     
 public:
     LandscapeOptions*   options;

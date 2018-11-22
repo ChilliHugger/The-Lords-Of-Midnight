@@ -239,24 +239,24 @@ void uithinkpage::displayCharacterTerrain(  const character& c )
 
 void uithinkpage::displayTerrain ( mxterrain_t terrain )
 {
-    terrain_data_t*    d = (terrain_data_t*)TME_GetEntityUserData(MAKE_ID(INFO_TERRAININFO, terrain));
-    if ( d == nullptr || strlen(d->file) == 0 ) {
+    terrain_data_t*    d = static_cast<terrain_data_t*>(TME_GetEntityUserData(MAKE_ID(INFO_TERRAININFO, terrain)));
+    if ( d == nullptr || d->file.empty() ) {
         return;
     }
 
-    imgTerrain->initWithSpriteFrameName((LPCSTR)d->file);
+    imgTerrain->initWithSpriteFrameName(d->file);
     imgTerrain->setVisible(true);
 }
 
 void uithinkpage::displayArmy ( void )
 {
     auto* mr = moonring::mikesingleton();
-    terrain_data_t* d = ((terrain_data_t*)mr->tme->terrain[0]);
-    if ( d == nullptr || strlen(d->file) == 0 ) {
+    terrain_data_t* d = static_cast<terrain_data_t*>(mr->tme->terrain[0]);
+    if ( d == nullptr || d->file.empty() ) {
         return;
     }
 
-    imgTerrain->initWithSpriteFrameName((LPCSTR)d->file);
+    imgTerrain->initWithSpriteFrameName(d->file);
     imgTerrain->setVisible(true);
     
 }

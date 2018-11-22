@@ -14,5 +14,9 @@
 class uibook : public cocos2d::Node /*cocos2d::ui::Scale9Sprite*/
 {
 public:
-    uibook(storyheader_t* story);
+    CREATE_FUNC(uibook);
+    static uibook* createWithChapter(storyheader_t* story);
+    
+protected:
+    bool initWithChapter(storyheader_t* story);
 };

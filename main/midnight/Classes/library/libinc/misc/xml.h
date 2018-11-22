@@ -57,6 +57,9 @@ namespace chilli  {
 				size ReadSize( LPCSTR name, size& s1 );
 
 				int ReadColour( LPCSTR name, int defaultvalue );
+                
+                char ReadChar( LPCSTR name, char defaultvalue );
+
 			};
 
 			node* Find ( LPCSTR section );

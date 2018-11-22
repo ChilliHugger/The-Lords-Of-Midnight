@@ -18,15 +18,31 @@
 #include "../tme_interface.h"
 #include "../system/tmemanager.h"
 
-void LandscapeTerrain::Init( LandscapeOptions* options )
+
+LandscapeTerrain* LandscapeTerrain::create( LandscapeOptions* options )
 {
-    LandscapeNode::Init(options);
+    LandscapeTerrain* node = new (std::nothrow) LandscapeTerrain();
+    if (node && node->initWithOptions(options))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool LandscapeTerrain::initWithOptions( LandscapeOptions* options )
+{
+    if ( !LandscapeNode::initWithOptions(options) )
+        return false;
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     setContentSize( visibleSize );
     
     BuildTerrain( options->generator->items );
     
+    return true;
 }
 
 
@@ -69,16 +85,19 @@ void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
             AddGraphic(GetTerrainImage(item->terrain),x,y,tint1,tint2,alpha, item->scale);
    
             if ( item->mist ) {
-                AddGraphic(GetImage("t_mist"),x-RES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
-                AddGraphic(GetImage("t_mist"),x+RES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
+                
+                std::string mist = "t_mist";
+                AddGraphic(GetImage(mist),x-RES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
+                AddGraphic(GetImage(mist),x+RES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
             }
             else if ( item->army ) {
 #if defined(_DDR_)
-                AddGraphic(GetImage("t_army2"),x-RES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
-                AddGraphic(GetImage("t_army2"),x+RES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
-
+                std::string army = "t_army2";
+                AddGraphic(GetImage(army),x-RES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
+                AddGraphic(GetImage(army),x+RES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
 #else
-                AddGraphic(GetImage("t_army0"),x,y,tint1,tint2,alpha, item->scale);
+                std::string army = "t_army0";
+                AddGraphic(GetImage(army),x,y,tint1,tint2,alpha, item->scale);
 #endif
             }
         }
@@ -105,12 +124,12 @@ Sprite* LandscapeTerrain::AddGraphic(Sprite* graphic, f32 x, f32 y, Color4F tint
 Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
 {
     // TODO: Cache this!
-    terrain_data_t*    d = (terrain_data_t*)TME_GetEntityUserData(MAKE_ID(INFO_TERRAININFO, terrain));
-    if ( d == nullptr || strlen(d->file) == 0 ) {
+    terrain_data_t*    d = static_cast<terrain_data_t*>(TME_GetEntityUserData(MAKE_ID(INFO_TERRAININFO, terrain)));
+    if ( d == nullptr || d->file.empty() ) {
         return nullptr;
     }
     
-    auto image = GetImage( d->file.GetAt() );
+    auto image = GetImage( d->file );
     if ( image == nullptr )
         return image;
     
@@ -121,15 +140,18 @@ Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
     return image;
 }
 
-Sprite* LandscapeTerrain::GetImage( LPCSTR imagename )
+Sprite* LandscapeTerrain::GetImage( std::string& imagename )
 {
+    if ( imagename.empty() )
+        return nullptr;
+    
     auto image = Sprite::createWithSpriteFrameName( imagename );
     if ( image != nullptr ) {
         image->setScale(1.0f);
         image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         
-        if ( programState )
-            image->setGLProgramState( programState->clone() );
+        if ( options->programState )
+            image->setGLProgramState( options->programState->clone() );
     }
     return image;
 }

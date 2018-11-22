@@ -15,14 +15,31 @@
 #include "LandscapeDebug.h"
 #include "LandscapeColour.h"
 
-void LandscapeDebug::Init(LandscapeOptions* options)
+
+LandscapeDebug* LandscapeDebug::create( LandscapeOptions* options )
 {
-    LandscapeNode::Init(options);
+    LandscapeDebug* node = new (std::nothrow) LandscapeDebug();
+    if (node && node->initWithOptions(options))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool LandscapeDebug::initWithOptions( LandscapeOptions* options )
+{
+    if ( !LandscapeNode::initWithOptions(options) )
+        return false;
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     setContentSize( visibleSize );
     
     BuildDebug(options->generator->items);
+    
+    return true;
 }
 
 

@@ -16,19 +16,37 @@
 
 USING_NS_CC;
 
-uibookmenu::uibookmenu( storyinfo_t* story )
+
+
+uibookmenu* uibookmenu::createWithStory( storyinfo_t* story )
+{
+    uibookmenu* node = new (std::nothrow) uibookmenu();
+    if (node && node->initWithStory(story))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool uibookmenu::initWithStory( storyinfo_t* story )
 {
     if ( story == nullptr || story->count == 0 )
-        return;
-    
+        return false;
+ 
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    
     f32 menuHeight = visibleSize.height;
     f32 menuWidth = visibleSize.width;
+    
+    
+    if ( !initWithColor(Color4B(_clrBlack), menuWidth, menuHeight) )
+        return false;
+    
     f32 scrollWidth = menuWidth/2;
     
-    initWithColor(Color4B(_clrBlack), menuWidth, menuHeight);
-    this->setOpacity(ALPHA(0.75));
+     this->setOpacity(ALPHA(0.75));
     this->setAnchorPoint(uihelper::AnchorCenter);
     
     auto scrollview = ui::ScrollView::create();
@@ -39,7 +57,7 @@ uibookmenu::uibookmenu( storyinfo_t* story )
     for ( int ii=0; ii< story->count; ii++ ) {
         f32 pad = ii == 0 ? 0 : RES(32);
         
-        auto book1 = new uibook( &story->chapter[ii] );
+        auto book1 = uibook::createWithChapter( &story->chapter[ii] );
         
         auto menuItem = MyButton::create(BOX_BACKGROUND_FILENAME);
         menuItem->setContentSize(Size(RES(512), RES(400)) );
@@ -80,5 +98,6 @@ uibookmenu::uibookmenu( storyinfo_t* story )
                                              });
     uihelper::AddTopLeft(this,close, RES(8), RES(8) );
 
+    return true;
 }
 

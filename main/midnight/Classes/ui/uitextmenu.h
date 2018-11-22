@@ -21,14 +21,14 @@ private:
     uitextmenu() {};
     
 public:
-	uitextmenu( f32 width, uitextmenuitem* items, u32 count );
-    
+    static uitextmenu* create( f32 width, uitextmenuitem* items, u32 count );
     void EnableItem( u32 id, bool enabled );
     
-public:
-private:
 
-    void Init();
+protected:
+
+    bool initWithItems( f32 width, uitextmenuitem* items, u32 count );
+
 
 protected:
     uitextmenuitem*     items;

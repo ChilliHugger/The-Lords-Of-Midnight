@@ -14,16 +14,26 @@ USING_NS_CC;
 
 using namespace cocos2d::ui;
 
-uioptionitem::uioptionitem(f32 width, uitextmenuitem* item)
+uioptionitem* uioptionitem::create( f32 width, uitextmenuitem* item )
 {
+    uioptionitem* node = new (std::nothrow) uioptionitem();
+    if (node && node->initWithItem(width,item))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool uioptionitem::initWithItem(f32 width, uitextmenuitem* item)
+{
+    if ( !initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
+        return false;
+    
     f32 itemHeight = uihelper::font_config_big.fontSize;
     f32 paddingY = RES(10);
-    
-    if ( initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
-    {
-        autorelease();
-    }
-    
     f32 height=0;
     
     title = Label::createWithTTF( uihelper::font_config_big, item->type.text );
@@ -48,6 +58,7 @@ uioptionitem::uioptionitem(f32 width, uitextmenuitem* item)
     uihelper::PositionParentCenter(value, 0, 0 );
     value->setAnchorPoint( uihelper::AnchorTopCenter );
     
+    return true;
 }
 
 void uioptionitem::setValue( const std::string& text )
@@ -56,13 +67,26 @@ void uioptionitem::setValue( const std::string& text )
 }
 
 
-MenuItemNode* MenuItemNode::create( Node* option)
+MenuItemNode* MenuItemNode::create( Node* option )
 {
-    auto item = new MenuItemNode();
+    MenuItemNode* node = new (std::nothrow) MenuItemNode();
+    if (node && node->initWithNode(option))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+bool MenuItemNode::initWithNode( Node* option)
+{
+    if (!initWithNormalSprite(option, nullptr, nullptr, nullptr) )
+        return false;
     
-    item->initWithNormalSprite(option, nullptr, nullptr, nullptr);
-    item->setEnabled(true);
-    return item;
+    setEnabled(true);
+    
+    return true;
 }
 
 void MenuItemNode::selected()

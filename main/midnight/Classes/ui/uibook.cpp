@@ -25,12 +25,23 @@ std::string ReplaceAll(std::string str, const std::string& from, const std::stri
     return str;
 }
 
-uibook::uibook( storyheader_t* story )
+uibook* uibook::createWithChapter( storyheader_t* story )
 {
-    //if ( initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
-    //{
-    //    autorelease();
-    //}
+    uibook* node = new (std::nothrow) uibook();
+    if (node && node->initWithChapter(story))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+bool uibook::initWithChapter( storyheader_t* story )
+{
+    if ( !Node::init() )
+        return false;
+    
     this->setContentSize(Size(RES(512), RES(400)) );
     
     f32 itemHeight = RES(28);
@@ -50,7 +61,7 @@ uibook::uibook( storyheader_t* story )
     gradient->setContentSize(Size(RES(504), RES(198)));
     uihelper::AddBottomLeft(this, gradient, RES(4), RES(4));
     
-    auto outlineColor = Color4B(_clrBlack); //Color4B(0x3b,0x3d,0xa8,0xff); // 3b3da8
+    //auto outlineColor = Color4B(_clrBlack); //Color4B(0x3b,0x3d,0xa8,0xff); // 3b3da8
     auto textColor = Color4B(_clrWhite);
     
     auto line = ReplaceAll( (LPCSTR)story->description, "\n", "\n\r");
@@ -64,5 +75,6 @@ uibook::uibook( storyheader_t* story )
     
     uihelper::AddBottomCenter(this, title1, RES(0), RES(16));
     
+    return true;
 }
 

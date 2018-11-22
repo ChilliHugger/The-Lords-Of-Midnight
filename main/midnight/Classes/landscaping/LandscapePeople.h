@@ -17,10 +17,10 @@
 #include "LandscapeGenerator.h"
 
 typedef struct {
-    bool    used;
-    point   pos;
-    f32     scale;
-    LPCSTR  image;
+    bool        used;
+    point       pos;
+    f32         scale;
+    std::string image;
 } persontodraw_t ;
 
 
@@ -51,12 +51,8 @@ typedef struct {
 class LandscapePeople : public LandscapeNode
 {
 public:
-    
-    CREATE_FUNC(LandscapePeople);
-    virtual bool init() override;
-    
-    virtual void Init(LandscapeOptions* options) override;
-   
+    static LandscapePeople* create( LandscapeOptions* options );
+
     void Initialise( const character& c);
     void Initialise( mxdir_t dir );
     void Initialise();
@@ -75,12 +71,12 @@ public:
 
     
 protected:
-
-    void add( LPCSTR image, int number /*, void* hotspot*/ );
-
-public:
-    GLProgramState* programState;
+    LandscapePeople();
     
+    bool initWithOptions( LandscapeOptions* options );
+    void add( std::string& image, int number /*, void* hotspot*/ );
+
+public:    
 #if defined(_DDR_)
     mxtime_t        time;
 #endif

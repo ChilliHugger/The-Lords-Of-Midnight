@@ -103,7 +103,7 @@ Sprite* uisinglelord::getFaceImage(character& c)
     auto face = GetCharacterFace(c);
     return Sprite::create( face );
 #else
-    return Sprite::create( (LPCSTR)userdata->face );
+    return Sprite::create( userdata->face );
 #endif
 
 }
@@ -134,16 +134,16 @@ bool uisinglelord::setLord( mxid characterid )
     title->setLineSpacing(DIS(-2));
     title->setHeight(DIS(32));
     title->setHorizontalAlignment(TextHAlignment::CENTER);
-    title->setVerticalAlignment(TextVAlignment::CENTER);
+    title->setVerticalAlignment(TextVAlignment::BOTTOM);
     uihelper::AddBottomCenter(face, title, RES(0), RES(-16));
     
 
     // Add status image
-    auto image = getStatusImage();
-    if ( image!= nullptr ) {
-        image->setScale(0.5f);
-        face->addChild(image);
-        uihelper::PositionCenterAnchor(image, uihelper::AnchorTopLeft);
+    statusNode = getStatusImage();
+    if ( statusNode!= nullptr ) {
+        statusNode->setScale(0.5f);
+        face->addChild(statusNode);
+        uihelper::PositionCenterAnchor(statusNode, uihelper::AnchorTopLeft);
     }
     
     buttonNode = face;
@@ -154,8 +154,10 @@ bool uisinglelord::setLord( mxid characterid )
 void uisinglelord::onPressStateChangedToNormal()
 {
     if ( buttonNode ) {
-    buttonNode->setScale(1.0f);
-    buttonNode->setOpacity(ALPHA(1.0f));
+        buttonNode->setScale(1.0f);
+        buttonNode->setOpacity(ALPHA(1.0f));
+        if ( statusNode )
+            statusNode->setVisible(true);
     }
 }
 
@@ -164,6 +166,8 @@ void uisinglelord::onPressStateChangedToPressed()
     if ( buttonNode ) {
         buttonNode->setScale(0.75f);
         buttonNode->setOpacity(ALPHA(1.0f));
+        if ( statusNode )
+            statusNode->setVisible(true);
     }
 }
 
@@ -172,5 +176,7 @@ void uisinglelord::onPressStateChangedToDisabled()
     if ( buttonNode ) {
         buttonNode->setScale(1.0f);
         buttonNode->setOpacity(ALPHA(0.25f));
+        if ( statusNode )
+            statusNode->setVisible(false);
     }
 }

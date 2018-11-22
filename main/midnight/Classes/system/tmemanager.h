@@ -33,13 +33,13 @@ public:
     virtual ~char_data_t();
     
 public:
-    c_str       face;
-    c_str       shield;
+    std::string       face;
+    std::string       shield;
     
     // select screen
-    point      select_loc;
-    c_str      shortcut;
-    c_str      shortcut2;
+    point               select_loc;
+    char            shortcut;
+    char            shortcut2;
     
     
 } ;
@@ -51,9 +51,9 @@ public:
     virtual ~obj_data_t();
     
 public:
-    c_str    background;
-    c_str    i_big;
-    c_str    i_small;
+    std::string    background;
+    std::string    i_big;
+    std::string    i_small;
 } ;
 
 class race_data_t : public tme_item
@@ -63,9 +63,9 @@ public:
     virtual ~race_data_t();
     
 public:
-    c_str    body;
-    c_str    horse;
-    c_str   face;
+    std::string   body;
+    std::string   horse;
+    std::string   face;
 } ;
 
 class terrain_data_t : public tme_item
@@ -75,10 +75,10 @@ public:
     virtual ~terrain_data_t();
     
 public:
-    c_str           file;
+    std::string           file;
     //imagearray*     graphics;
     //mxcellimage*    mapimage;
-    c_str           mapimage;
+    std::string           mapimage;
     int             mapcell;
 } ;
 
@@ -101,20 +101,20 @@ public:
 
 
 
-LPCSTR GetCharacterImage(mxid id);
-LPCSTR GetCharacterImage(const character& c);
-LPCSTR GetCharacterFace(mxid id);
-LPCSTR GetCharacterFace(const character& c);
-LPCSTR GetCharacterShield(mxid id);
-LPCSTR GetCharacterShield(const character& c);
-LPCSTR GetObjectBig(mxid id);
-LPCSTR GetObjectBig(const anobject& o);
-LPCSTR GetObjectSmall(mxid id);
-LPCSTR GetObjectSmall(const anobject& o);
-LPCSTR GetObjectBackground(mxid id);
-LPCSTR GetObjectBackground(const anobject& o);
-LPCSTR GetRaceImage(mxid id,BOOL horse);
-LPCSTR GetRaceImage(const raceinfo& r,BOOL horse);
-LPCSTR GetRaceFace(mxid id);
-LPCSTR GetRaceFace(const raceinfo& r);
-LPCSTR LOAD_IMAGE( LPCSTR filename );
+std::string& GetCharacterImage(mxid id);
+std::string& GetCharacterImage(const character& c);
+std::string& GetCharacterFace(mxid id);
+std::string& GetCharacterFace(const character& c);
+std::string& GetCharacterShield(mxid id);
+std::string& GetCharacterShield(const character& c);
+std::string& GetObjectBig(mxid id);
+std::string& GetObjectBig(const anobject& o);
+std::string& GetObjectSmall(mxid id);
+std::string& GetObjectSmall(const anobject& o);
+std::string& GetObjectBackground(mxid id);
+std::string& GetObjectBackground(const anobject& o);
+std::string& GetRaceImage(mxid id,BOOL horse);
+std::string& GetRaceImage(const raceinfo& r,BOOL horse);
+std::string& GetRaceFace(mxid id);
+std::string& GetRaceFace(const raceinfo& r);
+std::string& LOAD_IMAGE( std::string& filename );

@@ -13,12 +13,40 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
+uipopup::uipopup() :
+    parent(nullptr),
+    layout(nullptr)
 {
+}
+
+uipopup::~uipopup()
+{
+    CC_SAFE_RELEASE_NULL(parent);
+}
+
+uipopup* uipopup::create( Scene* parent, point pos, f32 width, LPCSTR text )
+{
+    uipopup* node = new (std::nothrow) uipopup();
+    if (node && node->initWithParent(parent,pos,width,text) )
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
+{
+    if ( !uielement::init() )
+        return false;
+    
     auto rect = parent->getBoundingBox();
     
     this->parent = parent;
-
+    parent->retain();
+    
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );
 
@@ -76,7 +104,7 @@ uipopup::uipopup( Scene* parent, point pos, f32 width, LPCSTR text )
         OnNo();
     } );
     
-
+    return true;
 }
 
 void uipopup::Show()

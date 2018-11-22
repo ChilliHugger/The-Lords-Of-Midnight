@@ -17,14 +17,15 @@ using namespace chilli::types;
 USING_NS_CC;
 
 
-class uipopup : uielement {
+class uipopup : public uielement {
 
 private:
     uipopup();
-
+    ~uipopup();
+    
 public:
-    uipopup( Scene* parent, point pos, f32 width, LPCSTR text );
-
+    static uipopup* create( Scene* parent, point pos, f32 width, LPCSTR text );
+    
     void Show();
     void Close();
     
@@ -32,6 +33,7 @@ public:
     MXVoidCallback onOk;
     
 protected:
+    bool initWithParent( Scene* parent, point pos, f32 width, LPCSTR text );
     void OnYes();
     void OnNo();
     

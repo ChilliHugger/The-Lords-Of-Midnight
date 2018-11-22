@@ -24,10 +24,10 @@ class uibookmenu : public cocos2d::LayerColor
                  , public uinotificationinterface
 {
 public:
-	uibookmenu( storyinfo_t* stories );
     
-public:
-
-private:
+    CREATE_FUNC(uibookmenu);
+    static uibookmenu* createWithStory( storyinfo_t* stories );
     
+protected:
+	bool initWithStory( storyinfo_t* stories );
 };

@@ -8,17 +8,26 @@
 
 #include "LandscapeNode.h"
 
-bool LandscapeNode::init()
+
+LandscapeNode* LandscapeNode::create( LandscapeOptions* options )
 {
-    if ( !Node::init() )
+    LandscapeNode* node = new (std::nothrow) LandscapeNode();
+    if (node && node->initWithOptions(options))
     {
-        return false;
+        node->autorelease();
+        return node;
     }
-    
-    return true;
+    CC_SAFE_DELETE(node);
+    return nullptr;
 }
 
-void LandscapeNode::Init(LandscapeOptions* options)
+
+bool LandscapeNode::initWithOptions(LandscapeOptions* options)
 {
+    if ( !Node::init() )
+        return false;
+
     this->options = options;
+
+    return true;
 }

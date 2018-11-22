@@ -20,7 +20,7 @@ using namespace chilli::types;
 //#endif 
 
 //#define _TME_DEMO_MODE_
-#define _TEST_WINLOSE_CONDITIONS_
+//#define _TEST_WINLOSE_CONDITIONS_
 
 // enum control
 #define DECLARE_ENUM(x)		namespace x { enum x##_t

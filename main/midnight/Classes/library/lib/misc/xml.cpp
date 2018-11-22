@@ -140,10 +140,19 @@ LPCSTR xml::node::ReadItem ( LPCSTR name, LPCSTR defaultvalue )
 	return value;
 }
 
-	LPCSTR  xml::node::ReadStr( LPCSTR name, LPCSTR defaultvalue )
-	{
-		return ReadItem ( name, defaultvalue );
-	}
+LPCSTR  xml::node::ReadStr( LPCSTR name, LPCSTR defaultvalue )
+{
+    return ReadItem ( name, defaultvalue );
+}
+
+char  xml::node::ReadChar( LPCSTR name, char defaultvalue )
+{
+    std::string item = ReadItem ( name, "" );
+    if ( item.empty() ) {
+        return defaultvalue;
+    }
+    return item[0];
+}
 
 f32 xml::node::ReadItem ( LPCSTR name, f32 defaultvalue )
 {

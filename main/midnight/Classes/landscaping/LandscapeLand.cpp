@@ -24,11 +24,23 @@ const std::string floor_graphics[] = {
     , "t_snow1"
 };
 
-
-
-void LandscapeLand::Init( LandscapeOptions* options )
+LandscapeLand* LandscapeLand::create( LandscapeOptions* options )
 {
-    LandscapeNode::Init(options);
+    LandscapeLand* node = new (std::nothrow) LandscapeLand();
+    if (node && node->initWithOptions(options))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool LandscapeLand::initWithOptions( LandscapeOptions* options )
+{
+    if ( !LandscapeNode::initWithOptions(options) )
+        return false;
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -42,10 +54,10 @@ void LandscapeLand::Init( LandscapeOptions* options )
     floor->setPosition(0, 0);
     floor->setAnchorPoint( Vec2(0,0) );
     
-    if ( programState ) {
+    if ( options->programState ) {
         auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));
         auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(2));
-        floor->setGLProgramState( programState->clone() );
+        floor->setGLProgramState( options->programState->clone() );
         floor->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
         floor->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
         floor->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));
@@ -59,6 +71,7 @@ void LandscapeLand::Init( LandscapeOptions* options )
     
     BuildFloors( options->generator->items );
     
+    return true;
 }
 
 
@@ -236,10 +249,10 @@ Sprite* LandscapeLand::GetFloorImage( floor_t floor )
     
     //image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     
-    if ( programState ) {
+    if ( options->programState ) {
         auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(0));
         auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(1));
-        image->setGLProgramState( programState->clone() );
+        image->setGLProgramState( options->programState->clone() );
         image->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
         image->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
         image->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));

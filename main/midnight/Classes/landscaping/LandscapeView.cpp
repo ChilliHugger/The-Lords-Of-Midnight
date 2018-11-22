@@ -16,10 +16,27 @@
 #include "LandscapeDebug.h"
 #include "LandscapeColour.h"
 
-
-void LandscapeView::Init(LandscapeOptions* options)
+LandscapeView::LandscapeView()
 {
-    LandscapeNode::Init(options);
+}
+
+LandscapeView* LandscapeView::create( LandscapeOptions* options )
+{
+    LandscapeView* node = new (std::nothrow) LandscapeView();
+    if (node && node->initWithOptions(options))
+    {
+        node->autorelease();
+        return node;
+    }
+    CC_SAFE_DELETE(node);
+    return nullptr;
+}
+
+
+bool LandscapeView::initWithOptions( LandscapeOptions* options )
+{
+    if ( !ILandscape::initWithOptions(options) )
+        return false;
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     visibleSize.height = RES( LANDSCAPE_SKY_HEIGHT+LANDSCAPE_FLOOR_HEIGHT ) ;
@@ -28,33 +45,27 @@ void LandscapeView::Init(LandscapeOptions* options)
     auto clipping = ClippingRectangleNode::create( Rect(0, 0, getContentSize().width, getContentSize().height));
     this->addChild(clipping);
     
-    auto land = new LandscapeLand();
-    land->programState = programState;
-    land->Init(options);
+    auto land = LandscapeLand::create(options);
     land->setAnchorPoint(Vec2::ZERO);
     land->setPosition(Vec2::ZERO);
     clipping->addChild(land);
 
-    auto sky = new LandscapeSky();
-    sky->programState = programState;
-    sky->Init(options);
+    auto sky = LandscapeSky::create(options);
     sky->setAnchorPoint(Vec2::ZERO);
     sky->setPosition(0, land->getContentSize().height);
     clipping->addChild(sky);
     
     if ( options->showTerrain ) {
-        auto terrain = new LandscapeTerrain();
-        terrain->programState = programState;
-        terrain->Init(options);
+        auto terrain = LandscapeTerrain::create(options);
         clipping->addChild(terrain);
     }
     
     if ( options->debugMode != 0 ) {
-        auto debug = new LandscapeDebug();
-        debug->Init(options);
+        auto debug = LandscapeDebug::create(options);
         debug->setAnchorPoint(Vec2(0, 0) );
         debug->setPosition(Vec2(0,0));
         clipping->addChild(debug);
     }
     
+    return true;
 }
