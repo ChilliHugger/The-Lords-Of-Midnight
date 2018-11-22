@@ -53,6 +53,8 @@ protected:
     Node* setBackgroundToHeight( LPCSTR background );
     Node* setBackgroundToWidth( LPCSTR background );
     Node* setBackground( cocos2d::Color3B color );
+    Node* setBackgroundCentered( LPCSTR background );
+
     
     void FadeExit( f32 delay = 0);
     void Exit( f32 delay = 0);

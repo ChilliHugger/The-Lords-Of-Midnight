@@ -3,34 +3,29 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "moonring::Initialise(progressmonitor*)::$_0::operator()(cocos2d::Texture2D*) const:moonring.cpp">
+         contextName = "TME_GetCharacterLocationInfo(tme::scenarios::exports::character_t const&amp;):tme.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "uithinkpage::displayCharacter(tme::scenarios::exports::character_t const&amp;):uithinkpage.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "count">
-            </PersistentString>
-            <PersistentString
-               value = "file_name">
+               value = "d">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GLOBAL">
+         contextName = "panel_think::setupPages():panel_think.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "options.movementAmount">
-            </PersistentString>
-            <PersistentString
-               value = "mx-&gt;lastactiontext">
+               value = "pages">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "storymanager::getStoriesInfo():storymanager.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "stories.chapter[0].description">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "progressmonitor::NotifyProgress():progressmonitor.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "tme::PropStrongholds2(chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):default_scenario.cpp">
       </ContextState>
       <ContextState
          contextName = "tmemanager::ResolveTMEData():tmemanager.cpp">
@@ -41,15 +36,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "tme::mxinterface::GetEntityProperties(unsigned int, chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):mxinterface.cpp">
-      </ContextState>
-      <ContextState
          contextName = "panel_look::UpdateLandscape():panel_look.cpp">
          <PersistentStrings>
             <PersistentString
                value = "landscapeView">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LandscapeTerrain::GetImage(char const*):LandscapeTerrain.cpp">
       </ContextState>
       <ContextState
          contextName = "MainMenu::createMenu()::$_0::operator()(cocos2d::Ref*) const:MainMenuScene.cpp">
@@ -63,43 +58,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "LandscapeColour::CalcCurrentMovementTint(unsigned int):LandscapeColour.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "tme::PropStrongholds2(chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):default_scenario.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "panel_options::SetValues():panel_options.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "this-&gt;_children">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "panel_think::addPage(unsigned int):panel_think.cpp">
          <PersistentStrings>
             <PersistentString
                value = "id">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "panel_look::~panel_look():panel_look.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "uithinkpage::displayCharacter(tme::scenarios::exports::character_t const&amp;):uithinkpage.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "d">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "panel_look::StartMoving()::$_3::operator()(float) const:panel_look.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "this-&gt;options">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -121,18 +83,76 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "TME_GetCharacterLocationInfo(tme::scenarios::exports::character_t const&amp;):tme.cpp">
+         contextName = "LandscapeGenerator::ProcessLocation(int, int):LandscapeGenerator.cpp">
       </ContextState>
       <ContextState
-         contextName = "panel_think::setupPages():panel_think.cpp">
+         contextName = "panel_look::StartMoving()::$_3::operator()(float) const:panel_look.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "pages">
+               value = "this-&gt;options">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "progressmonitor::NotifyProgress():progressmonitor.cpp">
+         contextName = "storymanager::getStoriesInfo():storymanager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "stories.chapter[0].description">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "tme::mxinterface::GetEntityProperties(unsigned int, chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):mxinterface.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "uihelpwindow::Close():uihelpwindow.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "panel_options::SetValues():panel_options.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "this-&gt;_children">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LandscapeColour::CalcCurrentMovementTint(unsigned int):LandscapeColour.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "uipopup::Close():uipopup.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "options.movementAmount">
+            </PersistentString>
+            <PersistentString
+               value = "mx-&gt;lastactiontext">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "tme::ddr_night::CheckWinLoseConditions(bool):ddr_processor_night.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "victoryFlags">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "moonring::Initialise(progressmonitor*)::$_0::operator()(cocos2d::Texture2D*) const:moonring.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "count">
+            </PersistentString>
+            <PersistentString
+               value = "file_name">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "panel_look::~panel_look():panel_look.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

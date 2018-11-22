@@ -268,7 +268,7 @@ namespace tme {
             
             mxgridref gate_varenorn = mxgridref(6,92); // SHOULD BE USING PLACE SYMBOL
             
-            for ( u32 ii=0; ii<NUMELE(characters); ii++ ) {
+            for ( u32 ii=0; ii<characters.Count(); ii++ ) {
                 mxcharacter* c = static_cast<mxcharacter*>( characters[ii] ) ;
                 
                 if ( c->IsAlive() && c->Loyalty() == RA_MOONPRINCE) {
@@ -342,7 +342,7 @@ namespace tme {
 
             mxgridref gate_varenorn = mxgridref(6,92);
             
-            int test = 3;
+            int test = 1;
             
             mx->battle->ResetBattlesFought();
             

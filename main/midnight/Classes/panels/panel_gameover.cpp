@@ -58,6 +58,7 @@ void panel_gameover::OnShown()
     lblDescription->setHorizontalAlignment(TextHAlignment::CENTER);
     safeArea->addChild(lblDescription);
 
+#if defined(_LOM_)
     if ( currentmode == MODE_WIN ) {
         setBackgroundToWidth( "screens/misc/win.png" );
         lblDescription->enableOutline(Color4B(_clrRed,ALPHA(0.75f)),RES(2));
@@ -68,6 +69,23 @@ void panel_gameover::OnShown()
         lblDescription->enableOutline(Color4B(_clrWhite,ALPHA(0.75f)),RES(2));
         lblDescription->setTextColor(Color4B(_clrDarkRed));
     }
+#endif
+   
+#if defined(_DDR_)
+    if ( currentmode == MODE_WIN ) {
+        Node* node = setBackgroundCentered( "screens/misc/win.png" );
+        lblDescription->enableOutline(Color4B(_clrRed,ALPHA(0.75f)),RES(2));
+        lblDescription->setTextColor(Color4B(_clrWhite));
+        node->setScale(1.5f);
+        
+    } else {
+        Node* node = setBackgroundCentered( "screens/misc/lose.png" );
+        lblDescription->enableOutline(Color4B(_clrWhite,ALPHA(0.75f)),RES(2));
+        lblDescription->setTextColor(Color4B(_clrDarkRed));
+        node->setScale(1.5f);
+    }
+    lblDescription->setPosition(RES(32), size.height-RES(32));
+#endif
     
 }
 

@@ -68,6 +68,13 @@ Node* uipanel::setBackground( Color3B color )
     return background;
 }
 
+Node* uipanel::setBackgroundCentered( LPCSTR background )
+{
+    auto image = Sprite::create(background);
+    uihelper::AddCenter(this, image);
+    return image;
+}
+
 Node* uipanel::setBackgroundToHeight( LPCSTR background )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
