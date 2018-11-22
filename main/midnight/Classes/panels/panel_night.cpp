@@ -74,7 +74,7 @@ void panel_night::OnShown()
         RUN_ON_UI_THREAD([&,msg](){
             setNightText( msg );
             
-            auto button = getChildByTag<ui::Button*>(ID_DAWN);
+            auto button = safeArea->getChildByTag<ui::Button*>(ID_DAWN);
             uihelper::setEnabled(button, true);
             
         });

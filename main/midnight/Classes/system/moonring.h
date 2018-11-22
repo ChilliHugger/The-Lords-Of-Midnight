@@ -30,6 +30,7 @@ FORWARD_REFERENCE(projectconfig);
 
 #define RUN_ON_UI_THREAD    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread
 
+#define RUN_EVENT(x)           RUN_ON_UI_THREAD([=](){ x; } )
 
 class moonring {
 private:

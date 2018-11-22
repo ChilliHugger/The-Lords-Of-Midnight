@@ -120,8 +120,9 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
     };
     popupWindow->onOk = [&,ok] {
         CC_SAFE_RELEASE_NULL(popupWindow);
-        if ( ok != nullptr )
-            ok();
+        if ( ok != nullptr ) {
+            RUN_EVENT(ok(););
+        }
     };
     popupWindow->Show();
     
