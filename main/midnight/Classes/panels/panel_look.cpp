@@ -175,6 +175,30 @@ bool panel_look::init()
     // TODO: Compass
     
     // TODO: Direction movement indicators
+    setupMovementIndicators();
+    
+    // mouse events
+    auto listener = EventListenerTouchOneByOne::create();
+    
+    // trigger when you push down
+    listener->onTouchBegan = [=](Touch* touch, Event* event){
+        bool result=OnMouseEvent(touch,event,true);
+        updateMovementIndicators();
+        return result;
+    };
+    
+    // trigger when moving touch
+    listener->onTouchMoved = [](Touch* touch, Event* event){
+    };
+    
+    // trigger when you let up
+    listener->onTouchEnded = [=](Touch* touch, Event* event){
+        OnMouseEvent(touch,event,false);
+        updateMovementIndicators();
+    };
+    
+    // Add listener
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     return true;
 }
@@ -188,7 +212,8 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     }
 #endif
     
-    draw_arrows=FALSE;
+    draw_arrows=false;
+    updateMovementIndicators();
     
     startInactivity();
     
@@ -1229,3 +1254,126 @@ void panel_look::OnSetupIcons ( void )
     
 }
 
+bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
+{
+    f32 MOUSE_MOVE_BLEED = 256;
+    f32 MOUSE_LOOK_BLEED = 256;
+    
+    auto size = getContentSize();
+    
+    bool IsLeftMouseDown = false;
+    bool IsLeftMouseUp = false;
+    
+    if ( event->getType() == Event::Type::MOUSE || event->getType() == Event::Type::TOUCH ) {
+        if ( pressed )
+            IsLeftMouseDown = true;
+        else
+            IsLeftMouseUp = true;
+    }
+    
+    auto position =  touch->getLocation();
+    
+    if ( mr->config->nav_mode!=CF_NAV_SWIPE ) {
+        
+        int move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
+        
+        // use full centre height if we are only pressing
+        if ( mr->config->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
+            move_press_y = size.height * 0.75 ;
+        
+        else if ( mr->config->nav_mode==CF_NAV_PRESS )
+            move_press_y = size.height ;
+        
+        if ( IsLeftMouseDown  ) {
+            
+            
+            if ( mr->config->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
+                if ( position.y > move_press_y && (position.x>RES(MOUSE_LOOK_BLEED) /*&& event->m_mouse.x < imgShield->location.x*/) ) {
+                    draw_arrows=true;
+                    current_arrow=LM_MOVE_FORWARD;
+                    return true;
+                }
+            }
+            
+            if ( position.x > size.width-RES(MOUSE_LOOK_BLEED) ) {
+                draw_arrows=true;
+                current_arrow=LM_ROTATE_RIGHT;
+                return true;
+            } else if ( position.x < RES(MOUSE_LOOK_BLEED) ) {
+                draw_arrows=true;
+                current_arrow=LM_ROTATE_LEFT;
+                return true;
+            }
+            
+        }
+        
+        if ( IsLeftMouseUp  ) {
+            
+            if ( !draw_arrows )
+                return true;
+            
+            if ( mr->config->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
+                if ( position.y > move_press_y && (position.x>RES(MOUSE_LOOK_BLEED) /*&&  event->m_mouse.x < imgShield->location.x*/ ) ) {
+                    draw_arrows=false;
+                    moveForward();
+                    return true;
+                }
+            }
+            
+            if ( position.x > size.width-RES(MOUSE_LOOK_BLEED) ) {
+                draw_arrows=false;
+                startLookRight();
+                return true;
+            } else if ( position.x < RES(MOUSE_LOOK_BLEED) ) {
+                draw_arrows=false;
+                startLookLeft();
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+void panel_look::setupMovementIndicators()
+{
+    if ( !mr->config->showmovementindicators )
+        return;
+    
+    f32 scale = 2.5f;
+    
+    movementIndicators[0] = Sprite::createWithSpriteFrameName("arrow_left");
+    movementIndicators[0]->setScale(scale);
+    movementIndicators[0]->setLocalZOrder(ZORDER_DEFAULT+1);
+    uihelper::AddCenterLeft(this, movementIndicators[0], RES(48),RES(0));
+
+    
+    movementIndicators[1] = Sprite::createWithSpriteFrameName("arrow_right");
+    movementIndicators[1]->setScale(scale);
+    movementIndicators[1]->setLocalZOrder(ZORDER_DEFAULT+1);
+    uihelper::AddCenterRight(this, movementIndicators[1], RES(48),RES(0));
+
+    movementIndicators[2] = Sprite::createWithSpriteFrameName("arrow_up");
+    movementIndicators[2]->setScale(scale);
+    movementIndicators[2]->setLocalZOrder(ZORDER_DEFAULT+1);
+    uihelper::AddTopCenter(this, movementIndicators[2],RES(0),RES(256));
+
+    draw_arrows = false;
+    updateMovementIndicators();
+}
+
+void panel_look::updateMovementIndicators()
+{
+    for ( int ii=0; ii<NUMELE(movementIndicators); ii++ ) {
+        movementIndicators[ii]->setVisible(draw_arrows);
+        movementIndicators[ii]->setColor(_clrWhite);
+        
+        if ( draw_arrows ) {
+            if ( current_arrow == (ii+1) ) {
+                movementIndicators[ii]->setOpacity(ALPHA(1.0f));
+            }else{
+                movementIndicators[ii]->setOpacity(ALPHA(0.25f));
+            }
+        }
+    }
+}

@@ -93,6 +93,7 @@ protected:
     
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
     //void OnActionComplete( tagid_t tag );
+    bool OnMouseEvent( Touch* touch, Event* event, bool pressed );
     
     void OnShown( void ) override;
     void OnActivate( void ) override;
@@ -110,6 +111,8 @@ protected:
     bool OnExitTunnel();
 #endif
    
+    void setupMovementIndicators();
+    void updateMovementIndicators();
     
 protected:
     mxid                characterId;
@@ -125,7 +128,7 @@ protected:
     
     Label*              lblDescription;
     Label*              lblName;
-    ui::ImageView*          imgShield;
+    ui::ImageView*      imgShield;
     LayerColor*         layHeader;
     
     
@@ -143,6 +146,7 @@ protected:
     LandscapePeople*    next_people;
     LandscapePeople*    prev_people;
     
+    Sprite*             movementIndicators[3];
 };
 
 
