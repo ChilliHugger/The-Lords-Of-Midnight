@@ -6,7 +6,6 @@
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
 #include "cocos2d.h"
-//#include "ui/CocosGUI.h"
 
 #include "LandscapePeople.h"
 #include "LandscapeColour.h"
@@ -52,28 +51,15 @@ bool LandscapePeople::initWithOptions( LandscapeOptions* options )
     characters=0;
     CLEARARRAY(columns);
     
-#if defined(_DDR_)
-    time = tme::variables::sv_time_dawn;
-#endif
-    
     loc = options->currentLocation;
     
     return true;
 }
 
-void LandscapePeople::Initialise( const character& c)
+void LandscapePeople::Initialise( const character& c, mxdir_t dir )
 {
     loc = c.location;
-    
-#if defined(_DDR_)
-    time  = c.time;
-#endif
-    Initialise(c.looking);
 
-}
-
-void LandscapePeople::Initialise( mxdir_t dir )
-{
     mxgridref ref(loc);
     ref.AddDirection(dir);
     
@@ -88,18 +74,11 @@ void LandscapePeople::Initialise()
     
     this->removeAllChildren();
     
-//    auto background = LayerColor::create(Color4B(_clrRed));
-//    background->setPosition(0,0);
-//    background->setContentSize( Size(Director::getInstance()->getVisibleSize().width,RES(PEOPLE_WINDOW_HEIGHT)));
-//    background->setAnchorPoint(uihelper::AnchorBottomLeft);
-//    background->setOpacity(ALPHA(0.25f));
-//    addChild(background);
-    
     setOpacity(ALPHA(1.0f));
     setPosition(0,adjusty);
     setScale(1.0f);
     
-    mxid            locid = MAKE_LOCID( loc.x, loc.y );
+    mxid locid = MAKE_LOCID( loc.x, loc.y );
     
     TME_GetLocationInfo(loc);
     

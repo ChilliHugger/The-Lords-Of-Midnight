@@ -107,7 +107,6 @@ protected:
     void OnDeActivate( void ) override;
 
     void OnSetupIcons();
-    void OnSetupFaces();
     
     void UpdateLandscape();
     
@@ -128,7 +127,7 @@ protected:
     void OnStartDrag(uidragevent* event) override;
     bool allowDragDownMove();
     bool allowDragLook();
-    void process_snapback();
+    void lookPanoramaSnap();
     void stopDragging();
 
 

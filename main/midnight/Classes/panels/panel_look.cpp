@@ -148,23 +148,12 @@ bool panel_look::init()
     uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
     
     // people in front
-    
-    //auto background = LayerColor::create(Color4B(_clrRed));
-    //background->setLocalZOrder(ZORDER_DEFAULT);
-    //background->setContentSize( Size(getContentSize().width,RES(PEOPLE_WINDOW_HEIGHT)));
-    //uihelper::AddBottomLeft(this, background);
-    //uihelper::FillParent(background);
-    
     for ( int ii=0; ii<3; ii++ ) {
         people[ii] = LandscapePeople::create(&options);
         addChild(people[ii]);
     }
-    
-    //people[1]->setVisible(false);
-    //people[2]->setVisible(false);
-    
+
     //
-    
     current_info = new locationinfo_t();
     follower_info = new locationinfo_t();
         
@@ -202,7 +191,6 @@ bool panel_look::init()
     // mouse events
     auto listener = EventListenerTouchOneByOne::create();
     
-
     // trigger when you push down
     listener->onTouchBegan = [=](Touch* touch, Event* event){
         mouse_down_pos = touch->getLocation();
@@ -253,23 +241,8 @@ bool panel_look::init()
         }
 
         mouse_last_position = touch->getLocation();
-        UIDEBUG("Mouse Up = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
-
-        
+        //UIDEBUG("Mouse Up = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
         OnMouseEvent(touch,event,false);
-    };
-    
-    // trigger when you let up
-    listener->onTouchCancelled = [=](Touch* touch, Event* event){
-        UIDEBUG("Touch Cancelled" );
-
-//        if ( isDragging() ) {
-//            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::stop);
-//            dev.time = utils::getTimeInMilliseconds() ;
-//            OnStopDrag(&dev);
-//            return;
-//        }
-        
     };
     
     // Add listener
@@ -280,7 +253,7 @@ bool panel_look::init()
 
 void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type )
 {
-    UIDEBUG("OnMovementComplete(%d)", type);
+    //UIDEBUG("OnMovementComplete(%d)", type);
     
 #if defined(_DDR_)
     if ( type == LM_MOVE_FORWARD_LEAVE_TUNNEL ) {
@@ -292,7 +265,6 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     updateMovementIndicators(LM_NONE);
     
     startInactivity();
-    
     
     if ( type == LM_DRAG_START ) {
         landscape_dragging=true;
@@ -370,7 +342,6 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     }
 #endif
     
-    
     defaultexport::location_t loc;
     TME_GetMapLocation(loc, location_infrontid );
     
@@ -395,7 +366,6 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     
     if ( !ShowHelpWindow( (helpid_t)(HELP_NONE+1+(int)loc.terrain )) )
         return;
-    
     
 }
 
@@ -461,13 +431,8 @@ void panel_look::setObject ( mxid c )
     characterId = c ;
     TME_CurrentCharacter(c);
     
-    //if ( parent ) {
-        getCurrentLocationInfo( );
-        setViewForCurrentCharacter();
-    //}
-    
-    //if ( current_view )
-    //    current_view->SetCharacter(c);
+    getCurrentLocationInfo();
+    setViewForCurrentCharacter();
     
 }
 
@@ -488,7 +453,6 @@ void panel_look::getCurrentLocationInfo ( void )
     }
     
     OnSetupIcons();
-    OnSetupFaces();
     
 }
 
@@ -561,17 +525,17 @@ void panel_look::setViewForCurrentCharacter ( void )
     auto width = getContentSize().width;
     
     if ( current_people ) {
-        current_people->Initialise(c);
+        current_people->Initialise(c, current_info->looking );
         current_people->setPositionX(0);
     }
     
     if ( next_people ) {
-        next_people->Initialise(NEXT_DIRECTION(current_info->looking));
+        next_people->Initialise( c, NEXT_DIRECTION(current_info->looking));
         next_people->setPositionX(width);
     }
     
     if ( prev_people ) {
-        prev_people->Initialise(PREV_DIRECTION(current_info->looking));
+        prev_people->Initialise( c, PREV_DIRECTION(current_info->looking));
         prev_people->setPositionX(-width);
     }
     
@@ -652,7 +616,7 @@ bool panel_look::startLookLeft ( void )
     options.colour->SetLookColour(c.time);
     
     f32 originalLooking = options.lookAmount;
-    f32 target = -400 ;
+    f32 target = -LANDSCAPE_DIR_AMOUNT ;
     
     options.isLooking = true;
     
@@ -664,8 +628,8 @@ bool panel_look::startLookLeft ( void )
         f32 distance = value / target;
         if ( current_people )
             current_people->adjustMovement( distance );
-        if (next_people)
-            next_people->adjustMovement( distance );
+        if (prev_people)
+            prev_people->adjustMovement( distance );
         
         if ( value <= target) {
             stopRotating(LM_ROTATE_LEFT);
@@ -676,8 +640,8 @@ bool panel_look::startLookLeft ( void )
     
     this->runAction(EaseSineInOut::create(actionfloat));
     
-    next_people->Initialise(c);
-    next_people->startSlideFromLeft();
+    //next_people->Initialise(c, c.looking);
+    prev_people->startSlideFromLeft();
     
     //current_people->Initialise(c);
     current_people->startSlideOffRight();
@@ -695,7 +659,7 @@ bool panel_look::startLookRight ( void )
     options.colour->SetLookColour(c.time);
     
     f32 originalLooking = options.lookAmount;
-    f32 target = 400 ;
+    f32 target = LANDSCAPE_DIR_AMOUNT ;
     
     options.isLooking = true;
     
@@ -720,7 +684,7 @@ bool panel_look::startLookRight ( void )
     
     this->runAction(EaseSineInOut::create(actionfloat));
     
-    next_people->Initialise(c);
+    //next_people->Initialise(c);
     next_people->startSlideFromRight();
     
     //current_people->Initialise(c);
@@ -848,7 +812,7 @@ bool panel_look::startMoving()
         
         this->runAction(EaseSineInOut::create(actionfloat));
         
-        next_people->Initialise(c);
+        next_people->Initialise(c, c.looking);
         next_people->startFadeIn();
         
         //current_people->Initialise(c);
@@ -928,8 +892,6 @@ void panel_look::hideMenus ( void )
     // TODO: Hide Menus
 //    if ( actions )
 //        actions->Collapse();
-//    if ( faces )
-//        faces->Collapse();
 //    if ( debug )
 //        debug->Collapse();
 }
@@ -1051,16 +1013,12 @@ void panel_look::OnActivate( void )
     }
     
     OnSetupIcons();
-    OnSetupFaces();
+
 }
 
 void panel_look::OnDeActivate( void )
 {
     uipanel::OnDeActivate();
-}
-
-void panel_look::OnSetupFaces()
-{
 }
 
 void panel_look::OnNotification( Ref* sender )
@@ -1484,8 +1442,6 @@ void panel_look::OnStartDrag(uidragevent* event)
     startDragLookAmount = options.lookAmount;
 }
 
-
-
 void panel_look::OnStopDrag(uidragevent* event)
 {
     uidragelement::OnStopDrag(event);
@@ -1494,12 +1450,9 @@ void panel_look::OnStopDrag(uidragevent* event)
         return;
     }
 
-    process_snapback();
+    lookPanoramaSnap();
     
 }
-
-
-
 
 void panel_look::OnDrag(uidragevent* event)
 {
@@ -1521,70 +1474,66 @@ void panel_look::OnDrag(uidragevent* event)
 
 }
 
-
+//
+// we need to offset the overlay views
+// by the required amount in the correct direction
+// they are going to move 1024 pixels
+// in the time it takes the main view to move 512 ( maybe 400 )
+//
 void panel_look::parallaxCharacters ( void )
 {
-//    f32 distance = fabsf(dragged) / (f32)LANDSCAPE_DIR_AMOUNT;
-//
-//    f32 width = getContentSize().width;
-//    f32 movement = width * distance ;
-//
-//    // we need to offset the overlay views
-//    // by the required amount in the correct direction
-//
-//    // they are going to move 1024 pixels
-//    // in the time it takes the main view to move 512 ( maybe 400 )
-//
-//    if ( dragged > 0 ) {
-//        movement *= -1;
-//    }
+    f32 distance = (startDragLookAmount - options.lookAmount) / LANDSCAPE_DIR_AMOUNT;
+
+    f32 width = getContentSize().width;
+    f32 movement = width * distance;
     
-    //current_info->location.x = 0 + movement ;
-    //prev_info->location.x = ((s32)width*-1) + movement ;
-    //next_info->location.x = width + movement ;
-    
+    prev_people->setPositionX( -width + movement  );
+    current_people->setPositionX( 0 + movement  );
+    next_people->setPositionX( width + movement  );
     
 }
 
-void panel_look::process_snapback()
+//
+// we need to snap the view to the nearest look direction
+// we either snap forward or back
+//
+void panel_look::lookPanoramaSnap()
 {
-        // round the look amount to the nearest look direction
-        
-        f32 amount = (options.lookAmount / LANDSCAPE_DIR_AMOUNT);
-        amount = ((s32)ROUNDFLOAT(amount)) * LANDSCAPE_DIR_AMOUNT ;
+    f32 amount = (options.lookAmount / LANDSCAPE_DIR_AMOUNT);
+    amount = ((s32)ROUNDFLOAT(amount)) * LANDSCAPE_DIR_AMOUNT ;
+
+    // TODO: Work out time based on total distance to travel
+
+    auto actionfloat = ActionFloat::create(0.5, options.lookAmount, amount, [=](float value) {
+        options.isLooking = true;
+        options.lookAmount =  value;
+        UpdateLandscape();
+        parallaxCharacters();
+    });
     
-        // TODO: Work out time based on total distance to travel
-    
-        auto actionfloat = ActionFloat::create(0.5, options.lookAmount, amount, [=](float value) {
-            options.isLooking = true;
-            options.lookAmount =  value;
-            UpdateLandscape();
-        });
-        
-        runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
-                                                 CallFunc::create( [=] { stopDragging(); } )
-                                    ));
+    runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
+                                             CallFunc::create( [=] { stopDragging(); } )
+                                ));
 }
 
+//
+// Reset the view after dragging and snap back
+//
 void panel_look::stopDragging()
 {
-    UIDEBUG("stopDragging");
     character&    c = TME_CurrentCharacter();
     
     if ( options.lookAmount<0 )
         options.lookAmount+=LANDSCAPE_FULL_WIDTH;
+    
     mxdir_t dir = (mxdir_t) (int)((options.lookAmount + (LANDSCAPE_DIR_AMOUNT/2)) / (f32)LANDSCAPE_DIR_AMOUNT) ;
     
     options.lookAmount = 0;
     options.isLooking = false;
     
     if ( c.looking != dir ) {
-        // work out what direction we are now looking
-        UIDEBUG("New Look Direction = %d", dir);
         Character_Look( c, dir );
     }
-    
-    OnMovementComplete(LM_NONE);
-    
+    stopRotating(LM_NONE);
 }
 

@@ -28,10 +28,21 @@
          contextName = "tme::PropStrongholds2(chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):default_scenario.cpp">
       </ContextState>
       <ContextState
+         contextName = "panel_look::process_snapback()::$_17::operator()(float) const:panel_look.cpp">
+      </ContextState>
+      <ContextState
          contextName = "tmemanager::ResolveTMEData():tmemanager.cpp">
          <PersistentStrings>
             <PersistentString
                value = "c.longname">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "panel_look::process_snapback()::$_18::operator()() const:panel_look.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "options.lookAmount">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -69,16 +80,16 @@
          contextName = "Landscape::Moving():LandscapeScene.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "here">
+               value = "moveCount">
             </PersistentString>
             <PersistentString
                value = "moveTo">
             </PersistentString>
             <PersistentString
-               value = "moveFrom">
+               value = "here">
             </PersistentString>
             <PersistentString
-               value = "moveCount">
+               value = "moveFrom">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -94,15 +105,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "tme::mxinterface::GetEntityProperties(unsigned int, chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):mxinterface.cpp">
+      </ContextState>
+      <ContextState
          contextName = "storymanager::getStoriesInfo():storymanager.cpp">
          <PersistentStrings>
             <PersistentString
                value = "stories.chapter[0].description">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "tme::mxinterface::GetEntityProperties(unsigned int, chilli::types::c_str const&amp;, chilli::types::variant*, unsigned int):mxinterface.cpp">
       </ContextState>
       <ContextState
          contextName = "uihelpwindow::Close():uihelpwindow.cpp">
@@ -141,6 +152,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "panel_look::process_snapback():panel_look.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "options.lookAmount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "moonring::Initialise(progressmonitor*)::$_0::operator()(cocos2d::Texture2D*) const:moonring.cpp">
          <PersistentStrings>
             <PersistentString
@@ -153,6 +172,9 @@
       </ContextState>
       <ContextState
          contextName = "panel_look::~panel_look():panel_look.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "panel_look::OnStopDrag(uidragevent*):panel_look.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
