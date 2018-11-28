@@ -514,7 +514,7 @@ namespace chilli {
 #define PERCENTAGEOF(v,t)	((v*100.0)/t)
 #define PERCENTAGEDIFF(a,b)	PERCENTAGEOF((a-b),b)
 
-#define ROUNDFLOAT(rating)	(((rating*2.0)+1.0)/2.0)
+#define ROUNDFLOAT(rating)	(((rating*2.0)+(1.0*SIGN(rating)))/2.0)
 #define ROUNDDOWN(rating)	((int)rating)
 
 

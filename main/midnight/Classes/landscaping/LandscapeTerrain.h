@@ -19,7 +19,7 @@ class LandscapeTerrain : public LandscapeNode
 {
 public:
     
-    const float	horizonOffset = RES( (112*GSCALE) );
+    const float	horizonOffset = RES( (112*LANDSCAPE_GSCALE) );
     
     static LandscapeTerrain* create( LandscapeOptions* options );
 

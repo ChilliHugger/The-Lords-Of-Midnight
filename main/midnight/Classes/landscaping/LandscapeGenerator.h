@@ -17,11 +17,13 @@
 #define BASE_WIDTH              1024
 
 #define PEOPLE_WINDOW_HEIGHT    256
-#define DIR_AMOUNT              512
-#define DIR_STEPS               512
-#define DIR_LEFT                (-DIR_AMOUNT/DIR_STEPS)
-#define DIR_RIGHT               (DIR_AMOUNT/DIR_STEPS)
-#define GSCALE                  4.0f
+#define LANDSCAPE_DIR_AMOUNT    400.0f
+#define LANDSCAPE_DIR_STEPS     400.0f
+#define LANDSCAPE_DIR           (LANDSCAPE_DIR_AMOUNT/LANDSCAPE_DIR_STEPS)
+#define LANDSCAPE_DIR_LEFT      (-LANDSCAPE_DIR)
+#define LANDSCAPE_DIR_RIGHT     LANDSCAPE_DIR
+#define LANDSCAPE_GSCALE        4.0f
+#define LANDSCAPE_FULL_WIDTH    (LANDSCAPE_DIR_AMOUNT*8)
 
 
 
@@ -55,18 +57,18 @@ class LandscapeGenerator
 {
 public:
     
-    const float	HorizonCentreX = RES( (256*GSCALE)/2  );
+    const float	HorizonCentreX = RES( (256*LANDSCAPE_GSCALE)/2  );
     const float	HorizonCentreY = 0 ; //RES( -112 );
     
-    const float	PanoramaWidth =  (float)RES((800.0f*GSCALE));
-    const float	PanoramaHeight = (float)RES(38.0f*GSCALE); // 32
-    const float	LocationHeight = (float)RES(48.0f*GSCALE);
+    const float	PanoramaWidth =  (float)RES((800.0f*LANDSCAPE_GSCALE));
+    const float	PanoramaHeight = (float)RES(38.0f*LANDSCAPE_GSCALE); // 32
+    const float	LocationHeight = (float)RES(48.0f*LANDSCAPE_GSCALE);
     
     const float viewportNear=0.25f;
     const float viewportFar=6.5f;
     
     // adjustment for the furthest of our visible locations being on the horizon
-    const int     horizonAdjust = RES((5*GSCALE));
+    const int     horizonAdjust = RES((5*LANDSCAPE_GSCALE));
     
 public:
     LandscapeGenerator();

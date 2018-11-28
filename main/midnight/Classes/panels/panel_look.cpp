@@ -65,6 +65,25 @@ enum tagid_t {
 #define SHIELD_SCALE    0.9f
 #endif
 
+panel_look::panel_look() :
+    current_view(nullptr),
+    current_info(nullptr),
+    follower_info(nullptr),
+    i_command_window(nullptr),
+    lblDescription(nullptr),
+    lblName(nullptr),
+    imgShield(nullptr),
+    layHeader(nullptr),
+    landscape_dragging(false),
+    current_people(nullptr),
+    next_people(nullptr),
+    prev_people(nullptr)
+{
+    CLEARARRAY(people);
+    CLEARARRAY(movementIndicators);
+}
+
+
 panel_look::~panel_look()
 {
     CC_SAFE_RELEASE_NULL(i_command_window);
@@ -177,24 +196,80 @@ bool panel_look::init()
     // TODO: Direction movement indicators
     setupMovementIndicators();
     
+    // TODO: Turn these into gestures
+    // we need swipe, drag, pinch zoom
+    //
     // mouse events
     auto listener = EventListenerTouchOneByOne::create();
     
+
     // trigger when you push down
     listener->onTouchBegan = [=](Touch* touch, Event* event){
-        bool result=OnMouseEvent(touch,event,true);
-        updateMovementIndicators();
-        return result;
+        mouse_down_pos = touch->getLocation();
+        mouse_last_position = mouse_down_pos;
+        //UIDEBUG("Mouse Down = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+        OnMouseEvent(touch,event,true);
+        return true;
     };
     
     // trigger when moving touch
-    listener->onTouchMoved = [](Touch* touch, Event* event){
+    listener->onTouchMoved = [=](Touch* touch, Event* event){
+        
+        Vec2 delta = touch->getLocation() - mouse_down_pos;
+        //UIDEBUG("Total Mouse Move = (%f,%f)", delta.x, delta.y );
+      
+        if ( isDragging() ) {
+            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::drag);
+            dev.lastposition = mouse_last_position;
+            dev.time = utils::getTimeInMilliseconds() ;
+            
+            //UIDEBUG("Dragged = (%f,%f)", drag_amount.x, drag_amount.y );
+            OnDrag(&dev);
+            return;
+        }
+
+         if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
+             || ABS(delta.y) > MINIMUM_VERTICAL_DRAG_MOVEMENT ) {
+            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::start);
+            dev.lastposition = mouse_down_pos;
+            dev.time = utils::getTimeInMilliseconds() ;
+            OnStartDrag(&dev);
+            //touch_capture = focus;
+         }
+        
+        mouse_last_position = touch->getLocation();
+        //UIDEBUG("Mouse Move = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+
     };
     
     // trigger when you let up
     listener->onTouchEnded = [=](Touch* touch, Event* event){
+        
+        if ( isDragging() ) {
+            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::stop);
+            dev.time = utils::getTimeInMilliseconds() ;
+            OnStopDrag(&dev);
+            return;
+        }
+
+        mouse_last_position = touch->getLocation();
+        UIDEBUG("Mouse Up = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+
+        
         OnMouseEvent(touch,event,false);
-        updateMovementIndicators();
+    };
+    
+    // trigger when you let up
+    listener->onTouchCancelled = [=](Touch* touch, Event* event){
+        UIDEBUG("Touch Cancelled" );
+
+//        if ( isDragging() ) {
+//            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::stop);
+//            dev.time = utils::getTimeInMilliseconds() ;
+//            OnStopDrag(&dev);
+//            return;
+//        }
+        
     };
     
     // Add listener
@@ -205,6 +280,8 @@ bool panel_look::init()
 
 void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type )
 {
+    UIDEBUG("OnMovementComplete(%d)", type);
+    
 #if defined(_DDR_)
     if ( type == LM_MOVE_FORWARD_LEAVE_TUNNEL ) {
         OnExitTunnel();
@@ -212,8 +289,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     }
 #endif
     
-    draw_arrows=false;
-    updateMovementIndicators();
+    updateMovementIndicators(LM_NONE);
     
     startInactivity();
     
@@ -455,8 +531,8 @@ void panel_look::setViewForCurrentCharacter ( void )
     options.colour->SetLookColour(current_info->time);
     
     options.here = current_info->location;
-    options.here.x *= DIR_STEPS;
-    options.here.y *= DIR_STEPS;
+    options.here.x *= LANDSCAPE_DIR_STEPS;
+    options.here.y *= LANDSCAPE_DIR_STEPS;
     options.isMoving = false;
     options.isLooking = false;
 
@@ -465,9 +541,9 @@ void panel_look::setViewForCurrentCharacter ( void )
     options.isLookingDownTunnel = current_info->lookingdowntunnel;
 #endif
 
-    options.lookAmount = current_info->looking * 400;
-    if ( options.lookAmount >= 3200 )
-        options.lookAmount-=3200;
+    options.lookAmount = current_info->looking * LANDSCAPE_DIR_AMOUNT;
+    if ( options.lookAmount >= LANDSCAPE_FULL_WIDTH )
+        options.lookAmount-=LANDSCAPE_FULL_WIDTH;
     
     options.currentLocation = current_info->location;
     options.currentDirection = current_info->looking;
@@ -747,14 +823,14 @@ bool panel_look::startMoving()
         options.colour->SetMovementColour(startTime,c.time);
         
         options.moveTo = c.location;
-        f32 target = DIR_STEPS ;
+        f32 target = LANDSCAPE_DIR_STEPS ;
         
         options.isMoving = true;
    
         auto actionfloat = ActionFloat::create(0.5f, 0, target, [=](float value) {
             
-            options.here.x = options.moveFrom.x*(DIR_STEPS - value) + options.moveTo.x*value;
-            options.here.y = options.moveFrom.y*(DIR_STEPS - value) + options.moveTo.y*value;
+            options.here.x = options.moveFrom.x*(LANDSCAPE_DIR_STEPS - value) + options.moveTo.x*value;
+            options.here.y = options.moveFrom.y*(LANDSCAPE_DIR_STEPS - value) + options.moveTo.y*value;
             
             if ( value >= target ) {
                 stopMoving();
@@ -1179,9 +1255,8 @@ void panel_look::OnNotification( Ref* sender )
 
 bool panel_look::OnUndo ( savemode_t mode )
 {
-    undo_mode=mode;
     fadeOut(_clrBlack, 0.75f, [&](){
-        mr->undo(undo_mode);
+        mr->undo(mode);
         setObject( TME_CurrentCharacter().id );
         fadeIn(_clrBlack, 1.0f, [&]{
                 // do nothing
@@ -1288,20 +1363,19 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
             
             
             if ( mr->config->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
-                if ( position.y > move_press_y && (position.x>RES(MOUSE_LOOK_BLEED) /*&& event->m_mouse.x < imgShield->location.x*/) ) {
-                    draw_arrows=true;
-                    current_arrow=LM_MOVE_FORWARD;
+                if ( position.y > move_press_y
+                    && (position.x>RES(MOUSE_LOOK_BLEED)
+                        && position.x < imgShield->getPosition().x ) ) {
+                    updateMovementIndicators(LM_MOVE_FORWARD);
                     return true;
                 }
             }
             
             if ( position.x > size.width-RES(MOUSE_LOOK_BLEED) ) {
-                draw_arrows=true;
-                current_arrow=LM_ROTATE_RIGHT;
+                updateMovementIndicators(LM_ROTATE_RIGHT);
                 return true;
             } else if ( position.x < RES(MOUSE_LOOK_BLEED) ) {
-                draw_arrows=true;
-                current_arrow=LM_ROTATE_LEFT;
+                updateMovementIndicators(LM_ROTATE_LEFT);
                 return true;
             }
             
@@ -1309,23 +1383,25 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
         
         if ( IsLeftMouseUp  ) {
             
-            if ( !draw_arrows )
+            if ( currentMovementIndicator == LM_NONE )
                 return true;
             
             if ( mr->config->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
-                if ( position.y > move_press_y && (position.x>RES(MOUSE_LOOK_BLEED) /*&&  event->m_mouse.x < imgShield->location.x*/ ) ) {
-                    draw_arrows=false;
+                if ( position.y > move_press_y
+                    && (position.x>RES(MOUSE_LOOK_BLEED)
+                            && position.x < imgShield->getPosition().x ) ) {
+                    updateMovementIndicators(LM_NONE);
                     moveForward();
                     return true;
                 }
             }
             
             if ( position.x > size.width-RES(MOUSE_LOOK_BLEED) ) {
-                draw_arrows=false;
+                updateMovementIndicators(LM_NONE);
                 startLookRight();
                 return true;
             } else if ( position.x < RES(MOUSE_LOOK_BLEED) ) {
-                draw_arrows=false;
+                updateMovementIndicators(LM_NONE);
                 startLookLeft();
                 return true;
             }
@@ -1358,18 +1434,23 @@ void panel_look::setupMovementIndicators()
     movementIndicators[2]->setLocalZOrder(ZORDER_DEFAULT+1);
     uihelper::AddTopCenter(this, movementIndicators[2],RES(0),RES(256));
 
-    draw_arrows = false;
-    updateMovementIndicators();
+    updateMovementIndicators(LM_NONE);
 }
 
-void panel_look::updateMovementIndicators()
+void panel_look::updateMovementIndicators(LANDSCAPE_MOVEMENT movement)
 {
+    bool drawArrows = movement != LM_NONE ;
+    currentMovementIndicator = movement;
+ 
+    if ( !mr->config->showmovementindicators )
+        return;
+
     for ( int ii=0; ii<NUMELE(movementIndicators); ii++ ) {
-        movementIndicators[ii]->setVisible(draw_arrows);
-        movementIndicators[ii]->setColor(_clrWhite);
+        movementIndicators[ii]->setVisible(drawArrows);
+//        movementIndicators[ii]->setColor(_clrWhite);
         
-        if ( draw_arrows ) {
-            if ( current_arrow == (ii+1) ) {
+        if ( drawArrows ) {
+            if ( movement == (ii+1) ) {
                 movementIndicators[ii]->setOpacity(ALPHA(1.0f));
             }else{
                 movementIndicators[ii]->setOpacity(ALPHA(0.25f));
@@ -1377,3 +1458,133 @@ void panel_look::updateMovementIndicators()
         }
     }
 }
+
+bool panel_look::allowDragDownMove()
+{
+    int value = mr->config->nav_mode ;
+    if ( value != CF_NAV_PRESS)
+        return  TRUE;
+    return FALSE;
+}
+
+bool panel_look::allowDragLook()
+{
+    int value = mr->config->nav_mode ;
+    if ( value != CF_NAV_PRESS && value != CF_NAV_SWIPE_MOVE_PRESS_LOOK )
+        return  TRUE;
+    return FALSE;
+}
+
+void panel_look::OnStartDrag(uidragevent* event)
+{
+    uidragelement::OnStartDrag(event);
+    
+    OnMovementComplete(LM_DRAG_START);
+
+    startDragLookAmount = options.lookAmount;
+}
+
+
+
+void panel_look::OnStopDrag(uidragevent* event)
+{
+    uidragelement::OnStopDrag(event);
+
+    if ( ! allowDragLook() ) {
+        return;
+    }
+
+    process_snapback();
+    
+}
+
+
+
+
+void panel_look::OnDrag(uidragevent* event)
+{
+    uidragelement::OnDrag(event);
+    
+    if ( ! allowDragLook() )
+        return;
+    
+    auto size = getContentSize();
+    Vec2 delta = drag_start - drag_current;
+    f32 dx = delta.x / size.width ;
+
+    options.isLooking = true;
+    options.isMoving=false;
+    options.lookAmount = startDragLookAmount + ((LANDSCAPE_DIR_AMOUNT*2) * dx);
+    UpdateLandscape();
+    
+    parallaxCharacters();
+
+}
+
+
+void panel_look::parallaxCharacters ( void )
+{
+//    f32 distance = fabsf(dragged) / (f32)LANDSCAPE_DIR_AMOUNT;
+//
+//    f32 width = getContentSize().width;
+//    f32 movement = width * distance ;
+//
+//    // we need to offset the overlay views
+//    // by the required amount in the correct direction
+//
+//    // they are going to move 1024 pixels
+//    // in the time it takes the main view to move 512 ( maybe 400 )
+//
+//    if ( dragged > 0 ) {
+//        movement *= -1;
+//    }
+    
+    //current_info->location.x = 0 + movement ;
+    //prev_info->location.x = ((s32)width*-1) + movement ;
+    //next_info->location.x = width + movement ;
+    
+    
+}
+
+void panel_look::process_snapback()
+{
+        // round the look amount to the nearest look direction
+        
+        f32 amount = (options.lookAmount / LANDSCAPE_DIR_AMOUNT);
+        amount = ((s32)ROUNDFLOAT(amount)) * LANDSCAPE_DIR_AMOUNT ;
+    
+        // TODO: Work out time based on total distance to travel
+    
+        auto actionfloat = ActionFloat::create(0.5, options.lookAmount, amount, [=](float value) {
+            options.isLooking = true;
+            options.lookAmount =  value;
+            UpdateLandscape();
+        });
+        
+        runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
+                                                 CallFunc::create( [=] { stopDragging(); } )
+                                    ));
+}
+
+void panel_look::stopDragging()
+{
+    UIDEBUG("stopDragging");
+    character&    c = TME_CurrentCharacter();
+    
+    if ( options.lookAmount<0 )
+        options.lookAmount+=LANDSCAPE_FULL_WIDTH;
+    mxdir_t dir = (mxdir_t) (int)((options.lookAmount + (LANDSCAPE_DIR_AMOUNT/2)) / (f32)LANDSCAPE_DIR_AMOUNT) ;
+    
+    options.lookAmount = 0;
+    options.isLooking = false;
+    
+    if ( c.looking != dir ) {
+        // work out what direction we are now looking
+        UIDEBUG("New Look Direction = %d", dir);
+        Character_Look( c, dir );
+    }
+    
+    OnMovementComplete(LM_NONE);
+    
+}
+

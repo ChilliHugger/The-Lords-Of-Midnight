@@ -28,8 +28,8 @@ void LandscapeGenerator::BuildPanorama()
 {
     s32	qDim;
     
-    s32 x = loc.x/DIR_STEPS;
-    s32 y = loc.y/DIR_STEPS;
+    s32 x = loc.x/LANDSCAPE_DIR_STEPS;
+    s32 y = loc.y/LANDSCAPE_DIR_STEPS;
     
     qDim = 8;
     
@@ -150,10 +150,18 @@ LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item
 	float	x, y, xOff, yOff;
 	double angle, objAngle, viewAngle;
     
-    x = (float)( (item->loc.x*DIR_STEPS) - loc.x) / (float)DIR_STEPS;
-    y = (float)( (item->loc.y*DIR_STEPS) - loc.y) / (float)DIR_STEPS;
+    x = (float)( (item->loc.x*LANDSCAPE_DIR_STEPS) - loc.x) / (float)LANDSCAPE_DIR_STEPS;
+    y = (float)( (item->loc.y*LANDSCAPE_DIR_STEPS) - loc.y) / (float)LANDSCAPE_DIR_STEPS;
     
-    viewAngle = RadiansFromFixedPointAngle( looking );
+    f32 looking_amount = looking;
+    
+    // normalise
+    if ( looking_amount < 0 )
+        looking_amount+=LANDSCAPE_FULL_WIDTH;
+    if ( looking_amount > LANDSCAPE_FULL_WIDTH )
+        looking_amount-=LANDSCAPE_FULL_WIDTH;
+    
+    viewAngle = RadiansFromFixedPointAngle( looking_amount );
 	
     objAngle = atan2f(x, -y);
 	
@@ -181,7 +189,7 @@ LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item
     // We are running a panorama that runs from N to NW along a linear
     // so place all locations to the right
     if (item->position.x<=-225)
-        item->position.x += 3200;
+        item->position.x += LANDSCAPE_FULL_WIDTH;
     
     return item;
 }
@@ -198,8 +206,8 @@ f32 LandscapeGenerator::NormaliseXPosition(f32 x)
 {
     x = x-horizontalOffset ;
     if ( horizontalOffset<1024 && x>1600 )
-        x -= 3200;
+        x -= LANDSCAPE_FULL_WIDTH;
     if ( horizontalOffset>=1024 && x<-512 )
-        x += 3200;
+        x += LANDSCAPE_FULL_WIDTH;
     return x;
 }

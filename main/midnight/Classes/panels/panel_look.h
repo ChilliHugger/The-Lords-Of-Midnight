@@ -7,6 +7,7 @@
 #include "../landscaping/LandscapeView.h"
 #include "../landscaping/LandscapePeople.h"
 #include "../ui/uihelper.h"
+#include "../ui/uielement.h"
 #include "../tme_interface.h"
 
 #define NONE_ACTIVTY_DURATION   30.0f
@@ -17,6 +18,12 @@ typedef enum SNAP_MODE {
     sm_back_right=1,
     sm_forward_right=3,
 } SNAP_MODE ;
+
+typedef enum GESTURE_MODE {
+    none=0,
+    horizontal=1,
+    vertical=2,
+} GESTURE_MODE ;
 
 enum LANDSCAPE_MOVEMENT
 {
@@ -51,7 +58,7 @@ typedef struct {
 } locationinfo_t ;
 
 
-class panel_look : public uipanel, uinotificationinterface
+class panel_look : public uipanel, uinotificationinterface, uidragelement
 {
 
 public:
@@ -64,7 +71,7 @@ public:
    
     
 protected:
-    
+    panel_look();
     virtual void OnNotification( Ref* element ) override;
     
     void getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
@@ -112,8 +119,19 @@ protected:
 #endif
    
     void setupMovementIndicators();
-    void updateMovementIndicators();
+    void updateMovementIndicators(LANDSCAPE_MOVEMENT movement);
     
+    // dragging
+    void parallaxCharacters ( void );
+    void OnDrag(uidragevent* event) override;
+    void OnStopDrag(uidragevent* event) override;
+    void OnStartDrag(uidragevent* event) override;
+    bool allowDragDownMove();
+    bool allowDragLook();
+    void process_snapback();
+    void stopDragging();
+
+
 protected:
     mxid                characterId;
     
@@ -131,22 +149,33 @@ protected:
     ui::ImageView*      imgShield;
     LayerColor*         layHeader;
     
-    
-    u32                 current_arrow;
-    bool                draw_arrows;
-    bool                landscape_dragging;
-    savemode_t          undo_mode;
-    
+    LANDSCAPE_MOVEMENT  currentMovementIndicator;
+ 
     // Actions and Commands
     uicommandwindow*    i_command_window;
-    //DrawNode*          fade_panel;
-    
+  
     LandscapePeople*    people[3];
     LandscapePeople*    current_people;
     LandscapePeople*    next_people;
     LandscapePeople*    prev_people;
     
     Sprite*             movementIndicators[3];
+    
+    // draggin
+    //f32                 dragged;
+    bool                landscape_dragging;
+    u32                 mouse_down_time;
+    bool                mouse_down;
+    Vec2                mouse_down_pos;
+    Vec2                mouse_last_position;
+//    GESTURE_MODE        fingermode;
+//    s32                 right;
+//    s32                 left;
+//    f32                 movement_amount;
+//    s32                 snapback;
+//    //f32                 looking;
+    f32                 startDragLookAmount;
+    
 };
 
 
