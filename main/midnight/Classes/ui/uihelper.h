@@ -91,6 +91,12 @@ public:
     //
     static ui::Button* setEnabled( ui::Button* button, bool enabled );
 
+    static Node* getChildByTagRecursively(const int nodeTag, cocos2d::Node* parent) ;
+
+    template <typename T>
+    static T getChildByTagRecursively(const int nodeTag, cocos2d::Node* parent)
+        { return static_cast<T>(getChildByTagRecursively(nodeTag,parent)); }
+
     
 };
 

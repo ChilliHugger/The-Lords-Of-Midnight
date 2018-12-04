@@ -33,13 +33,13 @@ public:
     virtual ~char_data_t();
     
 public:
-    std::string       face;
-    std::string       shield;
+    std::string     face;
+    std::string     shield;
     
     // select screen
-    point               select_loc;
-    char            shortcut;
-    char            shortcut2;
+    point           select_loc;
+    std::string     shortcut_old;
+    std::string     shortcut_new;
     
     
 } ;

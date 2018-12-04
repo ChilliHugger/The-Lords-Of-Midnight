@@ -9,6 +9,8 @@
 #include "uipopup.h"
 #include "../frontend/language.h"
 #include "../system/resolutionmanager.h"
+#include "../system/moonring.h"
+#include "../system/keyboardmanager.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -41,6 +43,21 @@ bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
 {
     if ( !uielement::init() )
         return false;
+    
+    WidgetClickCallback callback = [&] (Ref* ref ) {
+        auto button = static_cast<Widget*>(ref);
+        if ( button == nullptr )
+            return;
+        
+        layoutid_t id = static_cast<layoutid_t>(button->getTag());
+        
+        switch ( id ) {
+            case ID_YES: OnYes(); break;
+            case ID_NO: OnNo(); break;
+            default: break;
+        }
+        
+    };
     
     auto rect = parent->getBoundingBox();
     
@@ -82,29 +99,52 @@ bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
     layout->setContentSize(Size(width,h));
     uihelper::PositionParentTopCenter( label, 0, layout_padding ) ;
     
+    
+    
     // TODO: Make these buttons part of a menu
     
     auto yes = uihelper::CreateBoxButton(Size(button_width,button_height));
     yes->setTitleText(BUTTON_YES);
+    yes->setTag(ID_YES);
     layout->addChild(yes);
 
     uihelper::PositionParentBottomCenter(yes, -layout_padding/2, layout_padding);
     yes->setAnchorPoint( uihelper::AnchorBottomRight );
-    yes->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
-        OnYes();
-    } );
+    yes->addClickEventListener(callback);
 
     // add cancel
     auto no = uihelper::CreateBoxButton(Size(button_width,button_height));
     no->setTitleText(BUTTON_NO);
+    no->setTag(ID_NO);
     layout->addChild(no);
     uihelper::PositionParentBottomCenter(no, layout_padding/2, layout_padding);
     no->setAnchorPoint( uihelper::AnchorBottomLeft );
-    no->addTouchEventListener( [&](Ref* s,Widget::TouchEventType e) {
-        OnNo();
-    } );
+    no->addClickEventListener(callback);
+    
+    // map keyboard shortcut keys to layout children
+    uishortcutkeys::init(layout,callback);
+    addShortcutKey(ID_YES, K_YES);
+    addShortcutKey(ID_NO, K_NO);
+    addShortcutKey(ID_NO, K_ESC);
     
     return true;
+}
+
+
+void uipopup::addTouchListener()
+{
+    // now add an event listener
+    // for the using cancelling
+    // by touching off the main window
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = [&](Touch* touch, Event* event){
+        // eat the touch in the message area
+        if ( layout->getBoundingBox().containsPoint(touch->getLocation()) )
+            return true;
+        OnNo();
+        return true;
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void uipopup::Show()
@@ -113,18 +153,9 @@ void uipopup::Show()
     // from getting any of the events
     parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);
 
-    // now add an event listener
-    // for the using cancelling
-    // by touching off the main window
-    auto listener1 = EventListenerTouchOneByOne::create();
-    listener1->onTouchBegan = [&](Touch* touch, Event* event){
-        // eat the touch in the message area
-        if ( layout->getBoundingBox().containsPoint(touch->getLocation()) )
-            return true;
-        OnNo();
-        return true;
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
+    addTouchListener();
+    
+    uishortcutkeys::addKeyboardListener(this);
     
     // and show
     this->setLocalZOrder(ZORDER_POPUP);
@@ -153,7 +184,7 @@ void uipopup::Close()
     
     // give the parent events back
     parent->getEventDispatcher()->resumeEventListenersForTarget(parent,true);
-
+    
 }
 
 

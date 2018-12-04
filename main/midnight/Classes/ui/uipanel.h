@@ -14,6 +14,7 @@
 #include "../system/helpmanager.h"
 #include "../frontend/panel_id.h"
 #include "../ui/uielement.h"
+#include "../ui/uishortcutkeys.h"
 
 using namespace chilli::types;
 
@@ -24,16 +25,20 @@ FORWARD_REFERENCE( moonring );
 FORWARD_REFERENCE( uieventargs );
 //FORWARD_REFERENCE( uielement );
 
-class uipanel : public cocos2d::Scene
+class uipanel :
+    public cocos2d::Scene,
+    public uishortcutkeys
 {
 public:
     
     virtual bool init();
-    virtual void OnNotification( Ref* element );
     virtual void setObject( mxid object ) {};
+    
+    virtual void OnNotification( Ref* element );
     virtual void OnShown( void );
     virtual void OnActivate( void );
     virtual void OnDeActivate( void );
+    virtual bool OnKeyboardEvent( uikeyboardevent* event );
 
     // Cocos2dX Scene Helpers
     virtual void onEnterTransitionDidFinish();
@@ -43,8 +48,8 @@ public:
     
     moonring* GetMoonring() { return mr; }
     
-    void Enable() { enabled = true; }
-    void Disable() { enabled = false; }
+    void Enable() { setEnabled(true); }
+    void Disable() { setEnabled(false); }
     bool isEnabled() { return enabled; }
     bool isHelpVisible() { return help_visible != HELP_NONE; }
     
@@ -70,6 +75,10 @@ protected:
     
     void DebugNodes();
     void DebugNodesChildren(cocos2d::DrawNode* layer, Node* parent, cocos2d::Vec2 origin);
+    
+    void setEnabled(bool enabled);
+    
+    void addKeyboardListener();
     
 protected:
     uipopup*        popupWindow;

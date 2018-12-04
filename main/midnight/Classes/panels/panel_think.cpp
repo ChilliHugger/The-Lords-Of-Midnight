@@ -144,7 +144,21 @@ bool panel_think::init()
     // Stronghold
     // Postmen
     // Recruitmen
-
+    
+    uishortcutkeys::init(safeArea, clickCallback);
+    addShortcutKey(ID_LOOK          ,K_LOOK);
+    addShortcutKey(ID_THINK_PERSON  ,K_PERSON);
+    addShortcutKey(ID_THINK_PLACE   ,K_PLACE);
+    addShortcutKey(ID_THINK_ARMY    ,K_ARMY);
+    addShortcutKey(ID_THINK_BATTLE  ,K_BATTLE);
+    addShortcutKey(ID_APPROACH      ,K_APPROACH);
+#if defined(_LOM_)
+    addShortcutKey(ID_FIGHT         ,K_FIGHT);
+    addShortcutKey(ID_UNHIDE        ,K_UNHIDE);
+#endif
+    addShortcutKey(ID_GROUP_LEAVE   ,K_LEAVE);
+    addShortcutKey(ID_GROUP_DISBAND ,K_DISBAND);
+    
     return true;
 }
 

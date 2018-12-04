@@ -55,6 +55,7 @@ public:
     
     // Actions
     bool selectCharacter(mxid id);
+    bool look( mxdir_t dir );
     bool undo( savemode_t mode );
     bool night();
     bool approach();

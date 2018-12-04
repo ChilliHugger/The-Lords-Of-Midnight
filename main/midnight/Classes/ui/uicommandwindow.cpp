@@ -13,6 +13,7 @@
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
+#include "../system/keyboardmanager.h"
 
 #include "../frontend/layout_id.h"
 #include "../frontend/choose_id.h"
@@ -91,15 +92,44 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     
     initialiseCommands();
     
+    addShortcutKey(ID_THINK,     K_THINK);
+    addShortcutKey(ID_NIGHT,     K_NIGHT);
+    addShortcutKey(ID_HOME,      K_ESC);
+    addShortcutKey(ID_MAP,       K_MAP);
+#if defined(_LOM_)
+    addShortcutKey(ID_SEEK,      K_SEEK);
+    addShortcutKey(ID_HIDE,      K_HIDE);
+    addShortcutKey(ID_UNHIDE,    K_UNHIDE);
+    addShortcutKey(ID_FIGHT,     K_FIGHT);
+#endif
+#if defined(_DDR_)
+    addShortcutKey(ID_GIVE,      K_GIVE);
+    addShortcutKey(ID_TAKE,      K_TAKE);
+    addShortcutKey(ID_USE,       K_USE);
+    addShortcutKey(ID_ENTER_TUNNEL,    K_TUNNEL);
+    addShortcutKey(ID_REST,      K_REST);
+#endif
+    addShortcutKey(ID_APPROACH,   K_APPROACH);
+    addShortcutKey(ID_RECRUITMEN, K_RECRUIT);
+    addShortcutKey(ID_POSTMEN,    K_POST);
+    addShortcutKey(ID_ATTACK,     K_ATTACK);
+    
+    
     return true;
 }
 
+
+
+
 void uicommandwindow::initialiseCommands()
 {
-    cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback = [&] (Ref* ref ) {
+    WidgetClickCallback callback = [&] (Ref* ref ) {
         this->OnClose();
         this->parent->OnNotification(ref);
     };
+    
+    // map keyboard shortcut keys to layout children
+    uishortcutkeys::init(layout, callback);
     
     // THINK
     auto think = uihelper::CreateImageButton("i_think", ID_THINK, callback);
@@ -276,6 +306,23 @@ void uicommandwindow::updateElements()
 
 }
 
+void uicommandwindow::addTouchListener()
+{
+    // for the using cancelling
+    // by touching off the main window
+    auto listener = EventListenerTouchOneByOne::create();
+    
+    listener->onTouchBegan = [&](Touch* touch, Event* event){
+        // eat the touch in the message area
+        if ( layout->getBoundingBox().containsPoint(touch->getLocation()) )
+            return true;
+        OnClose();
+        return true;
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+}
 
 void uicommandwindow::show( MXVoidCallback callback )
 {
@@ -285,20 +332,11 @@ void uicommandwindow::show( MXVoidCallback callback )
     
     // stop the underlying parent
     // from getting any of the events
-    parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);
+    parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);// now add an event listener
     
-    // now add an event listener
-    // for the using cancelling
-    // by touching off the main window
-    auto listener1 = EventListenerTouchOneByOne::create();
-    listener1->onTouchBegan = [&](Touch* touch, Event* event){
-        // eat the touch in the message area
-        if ( layout->getBoundingBox().containsPoint(touch->getLocation()) )
-            return true;
-        OnClose();
-        return true;
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
+    uishortcutkeys::addKeyboardListener(this);
+    
+    addTouchListener();
     
     // and show
     parent->addChild(this);

@@ -11,13 +11,14 @@
 #include "cocos2d.h"
 #include "../library/libinc/mxtypes.h"
 #include "uielement.h"
+#include "uishortcutkeys.h"
 
 using namespace chilli::types;
 
 USING_NS_CC;
 
 
-class uipopup : public uielement {
+class uipopup : public uielement, public uishortcutkeys {
 
 private:
     uipopup();
@@ -34,6 +35,9 @@ public:
     
 protected:
     bool initWithParent( Scene* parent, point pos, f32 width, LPCSTR text );
+    void addTouchListener();
+    void addKeyboardListener();
+
     void OnYes();
     void OnNo();
     

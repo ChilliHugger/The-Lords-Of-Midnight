@@ -12,6 +12,7 @@
 #include "../library/libinc/mxtypes.h"
 #include "uielement.h"
 #include "../system/helpmanager.h"
+#include "uishortcutkeys.h"
 
 using namespace chilli::types;
 
@@ -20,7 +21,7 @@ USING_NS_CC;
 FORWARD_REFERENCE(moonring);
 FORWARD_REFERENCE(uipanel);
 
-class uihelpwindow : public uielement {
+class uihelpwindow : public uielement, public uishortcutkeys {
     
 private:
     uihelpwindow();
@@ -34,6 +35,8 @@ public:
     
 protected:
     bool initWithParent( uipanel* parent, helpid_t id );
+    void addTouchListener();
+    void addKeyboardListener();
     void OnClose();
     
 protected:

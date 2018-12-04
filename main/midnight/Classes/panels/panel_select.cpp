@@ -39,6 +39,9 @@ bool panel_select::init()
     {
         return false;
     }
+    
+    uishortcutkeys::init(safeArea, clickCallback);
+    
     f32 scale = resolutionmanager::getInstance()->phoneScale() ;
     
     SELECT_GRID_X = SELECT_ELEMENT_WIDTH * scale;
@@ -94,6 +97,16 @@ bool panel_select::init()
     
     getCharacters();
     
+    addShortcutKey(ID_FILTER_DAWN,       KEYCODE(F1));
+    addShortcutKey(ID_FILTER_NIGHT,      KEYCODE(F2));
+    addShortcutKey(ID_FILTER_BATTLE,     KEYCODE(F3));
+    addShortcutKey(ID_FILTER_DEAD,       KEYCODE(F4));
+    addShortcutKey(ID_FILTER_CURRENT_LOC,KEYCODE(F5));
+    
+    addShortcutKey(ID_LOOK,              K_LOOK);
+    addShortcutKey(ID_NIGHT,             K_NIGHT);
+    
+    
     return true;
 }
 
@@ -136,13 +149,24 @@ void panel_select::getCharacters()
         auto pos = calcGridLocation(ii);
         pos.y = height-pos.y;
         
+        layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+characters[ii]);
+        
         auto lord = uisinglelord::createWithLord(c.id);
         lord->setAnchorPoint(uihelper::AnchorTopLeft);
         lord->setIgnoreAnchorPointForPosition(false);
         lord->setPosition( pos);
-        lord->setTag(ID_SELECT_CHAR+characters[ii]);
+        lord->setTag(tag);
         lord->addClickEventListener(clickCallback);
         scrollView->addChild(lord);
+        
+        auto userdata = (char_data_t*)TME_GetEntityUserData( c.id );
+        
+        if ( mr->config->keyboard_mode == CF_KEYBOARD_CLASSIC )
+            addShortcutKey(tag, mr->keyboard->getKeyboardValue(userdata->shortcut_old));
+        else
+            addShortcutKey(tag, mr->keyboard->getKeyboardValue(userdata->shortcut_new));
+
+        
     }
     
     //scrollView->setInnerContainerPosition(Vec2(0,height));
@@ -245,6 +269,18 @@ uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const st
     return button;
 }
 
+void panel_select::updateFilterButton(Ref* sender,select_filters flag)
+{
+    mr->config->select_filters.Toggle(flag);
+    auto button = static_cast<uifilterbutton*>(sender);
+    if ( button != nullptr ) {
+        button->addEventListener(nullptr);
+        button->setSelected(mr->config->select_filters.Is(flag));
+        button->addEventListener(eventCallback);
+    }
+    updateFilters();
+}
+
 void panel_select::OnNotification( Ref* sender )
 {
     auto button = static_cast<Button*>(sender);
@@ -259,32 +295,26 @@ void panel_select::OnNotification( Ref* sender )
         return;
     }
     
-    
     switch ( id  )
     {
         case ID_LOOK:
             mr->look();
             break;
-
+            
         case ID_FILTER_DAWN:
-            mr->config->select_filters.Toggle(filter_show_dawn);
-            updateFilters();
+            updateFilterButton(sender,filter_show_dawn);
             break;
         case ID_FILTER_NIGHT:
-            mr->config->select_filters.Toggle(filter_show_night);
-            updateFilters();
+            updateFilterButton(sender,filter_show_night);
             break;
         case ID_FILTER_BATTLE:
-            mr->config->select_filters.Toggle(filter_show_battle);
-            updateFilters();
+            updateFilterButton(sender,filter_show_battle);
             break;
         case ID_FILTER_DEAD:
-            mr->config->select_filters.Toggle(filter_show_dead);
-            updateFilters();
+            updateFilterButton(sender,filter_show_dead);
             break;
         case ID_FILTER_CURRENT_LOC:
-            mr->config->select_filters.Toggle(filter_show_current);
-            updateFilters();
+            updateFilterButton(sender,filter_show_current);
             break;
             
         case ID_NIGHT:

@@ -61,6 +61,9 @@
 		831AD5831FE58671001108AC /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
 		831AD5861FE58F99001108AC /* uibookmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5841FE58F99001108AC /* uibookmenu.cpp */; };
 		831AD5871FE5A0FC001108AC /* uibookmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5841FE58F99001108AC /* uibookmenu.cpp */; };
+		8330781F21B5D1D400562893 /* uishortcutkeys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8330781D21B5D1D400562893 /* uishortcutkeys.cpp */; };
+		8330782021B5D1D400562893 /* uishortcutkeys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8330781D21B5D1D400562893 /* uishortcutkeys.cpp */; };
+		8330782121B5D1D400562893 /* uishortcutkeys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8330781D21B5D1D400562893 /* uishortcutkeys.cpp */; };
 		833172F7219B1E85009A52E7 /* uiselectpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172EF219B1E84009A52E7 /* uiselectpanel.cpp */; };
 		833172F8219B1E85009A52E7 /* uiselectpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172EF219B1E84009A52E7 /* uiselectpanel.cpp */; };
 		833172F9219B1E85009A52E7 /* uisinglelord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833172F0219B1E84009A52E7 /* uisinglelord.cpp */; };
@@ -577,6 +580,8 @@
 		831AD5811FE58436001108AC /* uibook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uibook.h; sourceTree = "<group>"; };
 		831AD5841FE58F99001108AC /* uibookmenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uibookmenu.cpp; sourceTree = "<group>"; };
 		831AD5851FE58F99001108AC /* uibookmenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uibookmenu.h; sourceTree = "<group>"; };
+		8330781D21B5D1D400562893 /* uishortcutkeys.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uishortcutkeys.cpp; sourceTree = "<group>"; };
+		8330781E21B5D1D400562893 /* uishortcutkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uishortcutkeys.h; sourceTree = "<group>"; };
 		833172EF219B1E84009A52E7 /* uiselectpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uiselectpanel.cpp; sourceTree = "<group>"; };
 		833172F0219B1E84009A52E7 /* uisinglelord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uisinglelord.cpp; sourceTree = "<group>"; };
 		833172F1219B1E84009A52E7 /* uigrouplord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uigrouplord.h; sourceTree = "<group>"; };
@@ -1135,6 +1140,8 @@
 				83A9ACB91FEBBEBB00673B66 /* MyButton.h */,
 				83B668972185EF5700B130FC /* uifilterbutton.cpp */,
 				83B668982185EF5700B130FC /* uifilterbutton.h */,
+				8330781D21B5D1D400562893 /* uishortcutkeys.cpp */,
+				8330781E21B5D1D400562893 /* uishortcutkeys.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1707,6 +1714,7 @@
 				83B9BD7C1FD7298D00B4C721 /* uihelper.cpp in Sources */,
 				83D264C21F36077E001C6F13 /* xml.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				8330781F21B5D1D400562893 /* uishortcutkeys.cpp in Sources */,
 				83D264661F360724001C6F13 /* item_routenode.cpp in Sources */,
 				83D264301F360724001C6F13 /* collections.cpp in Sources */,
 				83D264D01F36077E001C6F13 /* cbitarray.cpp in Sources */,
@@ -1795,6 +1803,7 @@
 				83D264851F360724001C6F13 /* lom_stronghold.cpp in Sources */,
 				83D264511F360724001C6F13 /* info_direction.cpp in Sources */,
 				834D04E820D2F649001B07CB /* LandscapeColour.cpp in Sources */,
+				8330782021B5D1D400562893 /* uishortcutkeys.cpp in Sources */,
 				834D04EC20D2FB3C001B07CB /* projectconfig.cpp in Sources */,
 				839F0D701FDBE8B0000E2CC2 /* uioptionitem.cpp in Sources */,
 				83B9BD7D1FD7298D00B4C721 /* uihelper.cpp in Sources */,
@@ -1996,6 +2005,7 @@
 				83E301C221A41BE3005C3F5C /* lom_stronghold.cpp in Sources */,
 				83E301C321A41BE3005C3F5C /* info_direction.cpp in Sources */,
 				83E301C421A41BE3005C3F5C /* LandscapeColour.cpp in Sources */,
+				8330782121B5D1D400562893 /* uishortcutkeys.cpp in Sources */,
 				83E301C521A41BE3005C3F5C /* projectconfig.cpp in Sources */,
 				83E301C621A41BE3005C3F5C /* uioptionitem.cpp in Sources */,
 				83E301C721A41BE3005C3F5C /* uihelper.cpp in Sources */,

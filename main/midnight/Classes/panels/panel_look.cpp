@@ -8,6 +8,7 @@
 #include "../system/configmanager.h"
 #include "../system/helpmanager.h"
 #include "../system/resolutionmanager.h"
+#include "../system/keyboardmanager.h"
 #include "../system/tmemanager.h"
 
 #include "../frontend/layout_id.h"
@@ -167,14 +168,17 @@ bool panel_look::init()
     // Character Selection
     auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, clickCallback);
     uihelper::AddBottomLeft(safeArea, select, RES(10), RES(10) );
+
+    // map keyboard shortcut keys to layout children
+    uishortcutkeys::init(safeArea, clickCallback);
     
-    
-    // Keyboard
-    initKeyboard();
+    addTouchListener();
     
     // TODO: Popup menu for character selection
     
     // TODO: Shortcut keys
+    addShortcutKey(ID_SELECT_ALL, K_SELECT);
+    addShortcutKey(ID_ACTIONS,    K_CHOOSE);
     
     // TODO: Following
     
@@ -185,69 +189,7 @@ bool panel_look::init()
     // TODO: Direction movement indicators
     setupMovementIndicators();
     
-    // TODO: Turn these into gestures
-    // we need swipe, drag, pinch zoom
-    //
-    // mouse events
-    auto listener = EventListenerTouchOneByOne::create();
-    
-    // trigger when you push down
-    listener->onTouchBegan = [=](Touch* touch, Event* event){
-        mouse_down_pos = touch->getLocation();
-        mouse_last_position = mouse_down_pos;
-        //UIDEBUG("Mouse Down = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
-        OnMouseEvent(touch,event,true);
-        return true;
-    };
-    
-    // trigger when moving touch
-    listener->onTouchMoved = [=](Touch* touch, Event* event){
-        
-        Vec2 delta = touch->getLocation() - mouse_down_pos;
-        //UIDEBUG("Total Mouse Move = (%f,%f)", delta.x, delta.y );
-      
-        if ( isDragging() ) {
-            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::drag);
-            dev.lastposition = mouse_last_position;
-            dev.time = utils::getTimeInMilliseconds() ;
-            
-            //UIDEBUG("Dragged = (%f,%f)", drag_amount.x, drag_amount.y );
-            OnDrag(&dev);
-            return;
-        }
-
-         if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
-             || ABS(delta.y) > MINIMUM_VERTICAL_DRAG_MOVEMENT ) {
-            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::start);
-            dev.lastposition = mouse_down_pos;
-            dev.time = utils::getTimeInMilliseconds() ;
-            OnStartDrag(&dev);
-            //touch_capture = focus;
-         }
-        
-        mouse_last_position = touch->getLocation();
-        //UIDEBUG("Mouse Move = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
-
-    };
-    
-    // trigger when you let up
-    listener->onTouchEnded = [=](Touch* touch, Event* event){
-        
-        if ( isDragging() ) {
-            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::stop);
-            dev.time = utils::getTimeInMilliseconds() ;
-            OnStopDrag(&dev);
-            return;
-        }
-
-        mouse_last_position = touch->getLocation();
-        //UIDEBUG("Mouse Up = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
-        OnMouseEvent(touch,event,false);
-    };
-    
-    // Add listener
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
+   
     return true;
 }
 
@@ -475,11 +417,6 @@ void panel_look::setViewForCurrentCharacter ( void )
     imgShield->setAnchorPoint(uihelper::AnchorTopRight);
     imgShield->setIgnoreAnchorPointForPosition(false);
     
-    
-    // TODO: Shield
-    //((uiimage*)(imgShield->children[0]))->Image(current_info->shield);
-    //imgShield->Enable();
-    
     // TODO: Following
 //    if ( follower_info->id ) {
 //        uiimage* img = (uiimage*)i_Following->children[0];
@@ -576,40 +513,78 @@ void panel_look::UpdateLandscape()
     
 }
 
-void panel_look::initKeyboard()
+void panel_look::addTouchListener()
 {
-    auto eventListener = EventListenerKeyboard::create();
+    // TODO: Turn these into gestures
+    // we need swipe, drag, pinch zoom
+    //
+    // mouse events
+    auto listener = EventListenerTouchOneByOne::create();
     
-    eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event){
-        
-        if ( options.isMoving || options.isLooking )
-            return;
-        
-        Vec2 loc = event->getCurrentTarget()->getPosition();
-        switch(keyCode){
-                
-            case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-                startLookLeft();
-                break;
-            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-                startLookRight();
-                break;
-            case EventKeyboard::KeyCode::KEY_UP_ARROW:
-                moveForward();
-                break;
-            case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-                break;
-                
-            default:
-                break;
-        }
+    // trigger when you push down
+    listener->onTouchBegan = [=](Touch* touch, Event* event){
+        mouse_down_pos = touch->getLocation();
+        mouse_last_position = mouse_down_pos;
+        //UIDEBUG("Mouse Down = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+        OnMouseEvent(touch,event,true);
+        return true;
     };
     
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,this);
+    // trigger when moving touch
+    listener->onTouchMoved = [=](Touch* touch, Event* event){
+        
+        Vec2 delta = touch->getLocation() - mouse_down_pos;
+        //UIDEBUG("Total Mouse Move = (%f,%f)", delta.x, delta.y );
+        
+        if ( isDragging() ) {
+            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::drag);
+            dev.lastposition = mouse_last_position;
+            dev.time = utils::getTimeInMilliseconds() ;
+            
+            //UIDEBUG("Dragged = (%f,%f)", drag_amount.x, drag_amount.y );
+            OnDrag(&dev);
+            return;
+        }
+        
+        if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
+            || ABS(delta.y) > MINIMUM_VERTICAL_DRAG_MOVEMENT ) {
+            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::start);
+            dev.lastposition = mouse_down_pos;
+            dev.time = utils::getTimeInMilliseconds() ;
+            OnStartDrag(&dev);
+            //touch_capture = focus;
+        }
+        
+        mouse_last_position = touch->getLocation();
+        //UIDEBUG("Mouse Move = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+        
+    };
+    
+    // trigger when you let up
+    listener->onTouchEnded = [=](Touch* touch, Event* event){
+        
+        if ( isDragging() ) {
+            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::stop);
+            dev.time = utils::getTimeInMilliseconds() ;
+            OnStopDrag(&dev);
+            return;
+        }
+        
+        mouse_last_position = touch->getLocation();
+        //UIDEBUG("Mouse Up = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+        OnMouseEvent(touch,event,false);
+    };
+    
+    // Add listener
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
 }
+
 
 bool panel_look::startLookLeft ( void )
 {
+    Disable();
+    
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
@@ -653,6 +628,8 @@ bool panel_look::startLookLeft ( void )
 
 bool panel_look::startLookRight ( void )
 {
+    Disable();
+    
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
     
@@ -759,20 +736,21 @@ bool panel_look::moveForward ( void )
         
         mr->showPage(MODE_THINK, objectid);
         
-        return TRUE;
+        return true;
     }
     
-    return FALSE;
+    return false;
 }
 
 
 
 bool panel_look::startMoving()
 {
+    Disable();
+    
     character&    c = TME_CurrentCharacter();
     
     mxtime_t startTime = c.time;
-    
     
     mxid            key;
     maplocation        map;
@@ -821,6 +799,8 @@ bool panel_look::startMoving()
         return true;
     }
     
+    Enable();
+    
     return false;
     
 }
@@ -840,6 +820,8 @@ void panel_look::stopRotating(LANDSCAPE_MOVEMENT type)
     setViewForCurrentCharacter();
     
     OnMovementComplete(type);
+    
+    Enable();
 }
 
 void panel_look::stopMoving()
@@ -858,6 +840,8 @@ void panel_look::stopMoving()
     setViewForCurrentCharacter();
     
     OnMovementComplete(LM_MOVE_FORWARD);
+    
+    Enable();
     
 }
 
@@ -1020,6 +1004,58 @@ void panel_look::OnDeActivate( void )
 {
     uipanel::OnDeActivate();
 }
+
+bool panel_look::OnKeyboardEvent( uikeyboardevent* event )
+{
+    if ( !event->isUp() )
+        return false;
+    
+    if ( options.isMoving || options.isLooking )
+        return false;
+    
+    //
+    if ( event->getKey() >= KEYCODE(1) && event->getKey() <= KEYCODE(8) ) {
+        if ( event->isShift() ) {
+            mxdir_t dir = (mxdir_t)((u32)event->getKey() - (u32)KEYCODE(0));
+            mr->look(dir);
+            getCurrentLocationInfo();
+            setViewForCurrentCharacter();
+            startInactivity();
+            return true;
+        }
+    }
+    
+    switch(event->getKey()){
+        
+        case KEYCODE(LEFT_ARROW):
+        {
+            startLookLeft();
+            return true;
+        }
+        case KEYCODE(RIGHT_ARROW):
+        {
+            startLookRight();
+            return true;
+        }
+        case KEYCODE(UP_ARROW):
+        {
+            moveForward();
+            return true;
+        }
+        case KEYCODE(DOWN_ARROW):
+        {
+            return true;
+        }
+        default:
+            if ( i_command_window != nullptr ) {
+                if( i_command_window->dispatchShortcutKey(event->getKey()) )
+                    return true;
+            }
+            break;
+    }
+    return uipanel::OnKeyboardEvent(event);
+}
+
 
 void panel_look::OnNotification( Ref* sender )
 {

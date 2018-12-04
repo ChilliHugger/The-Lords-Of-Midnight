@@ -164,8 +164,8 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     
                     d->face = c->ReadStr("face","") ;
                     d->shield = c->ReadStr("shield","") ;
-                    d->shortcut = c->ReadChar("shortcut",0);
-                    d->shortcut2 = c->ReadChar("shortcut2",0);
+                    d->shortcut_old = c->ReadChar("shortcut",0);
+                    d->shortcut_new = c->ReadChar("shortcut2",0);
                     mr->tme->characters.Add(d);
                 }
                 monitor->Update("Loading Characters", 1);

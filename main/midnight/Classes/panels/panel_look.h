@@ -77,7 +77,8 @@ protected:
     void getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
     void getCurrentLocationInfo ( void );
     void setViewForCurrentCharacter ( void );
-    void initKeyboard();
+    
+    void addTouchListener();
     
     bool moveForward ( void );
 
@@ -99,8 +100,9 @@ protected:
 
     
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
-    //void OnActionComplete( tagid_t tag );
     bool OnMouseEvent( Touch* touch, Event* event, bool pressed );
+    bool OnKeyboardEvent( uikeyboardevent* event ) override;
+
     
     void OnShown( void ) override;
     void OnActivate( void ) override;

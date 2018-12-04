@@ -50,6 +50,21 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     if ( !uielement::init() )
         return false;
     
+    WidgetClickCallback callback = [&] (Ref* ref ) {
+        auto button = static_cast<Widget*>(ref);
+        if ( button == nullptr )
+            return;
+        
+        layoutid_t id = static_cast<layoutid_t>(button->getTag());
+        
+        switch ( id ) {
+            case ID_CLOSE: OnClose(); break;
+            default: break;
+        }
+        
+    };
+    
+    
     auto rect = parent->getBoundingBox();
     
     this->parent = parent;
@@ -126,16 +141,33 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     uihelper::AddTopLeft(layout, gradientT,border,border);
     
     // Close Button in top left corner
-    auto close = uihelper::CreateImageButton("close", 0, [&](Ref* ref)
-                                             {
-                                                 OnClose();
-                                             });
+    auto close = uihelper::CreateImageButton("close", ID_CLOSE, callback ) ;
     uihelper::AddTopLeft(layout,close, RES(8), RES(8) );
     close->setAnchorPoint(uihelper::AnchorCenter);
     
     this->setLocalZOrder(ZORDER_POPUP);
     
+    // map keyboard shortcut keys to layout children
+    uishortcutkeys::init(layout,callback);
+    addShortcutKey(ID_CLOSE, K_ESC);
+    
     return true;
+}
+
+void uihelpwindow::addTouchListener()
+{
+    // now add an event listener
+    // for the using cancelling
+    // by touching off the main window
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = [&](Touch* touch, Event* event){
+        // eat the touch in the message area
+        if ( layout->getBoundingBox().containsPoint(touch->getLocation()) )
+            return true;
+        OnClose();
+        return true;
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void uihelpwindow::Show( MXVoidCallback callback )
@@ -146,19 +178,10 @@ void uihelpwindow::Show( MXVoidCallback callback )
     // from getting any of the events
     parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);
     
-    // now add an event listener
-    // for the using cancelling
-    // by touching off the main window
-    auto listener1 = EventListenerTouchOneByOne::create();
-    listener1->onTouchBegan = [&](Touch* touch, Event* event){
-        // eat the touch in the message area
-        if ( layout->getBoundingBox().containsPoint(touch->getLocation()) )
-            return true;
-        OnClose();
-        return true;
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
+    addTouchListener();
     
+    uishortcutkeys::addKeyboardListener(this);
+
     // and show
     parent->addChild(this);
 }

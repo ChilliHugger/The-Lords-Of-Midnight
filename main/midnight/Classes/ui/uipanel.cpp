@@ -52,6 +52,8 @@ bool uipanel::init()
         this->OnNotification(ref);
     };
     
+    addKeyboardListener();
+    
     return true;
 }
 
@@ -292,4 +294,41 @@ void uipanel::OnDeActivate()
 
 void uipanel::OnActivate()
 {
+}
+
+void uipanel::setEnabled(bool enabled)
+{
+    this->enabled = enabled;
+    Director::getInstance()->getEventDispatcher()->setEnabled( enabled );
+}
+
+bool uipanel::OnKeyboardEvent( uikeyboardevent* event )
+{
+    if ( event->isUp() && dispatchShortcutKey(event->getKey()) ) {
+        return true;
+    }
+    return false;
+}
+
+void uipanel::addKeyboardListener()
+{
+    auto eventListener = EventListenerKeyboard::create();
+    
+    eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)
+    {
+        auto keyEvent = mr->keyboard->createEvent(keyCode, true) ;
+        if ( OnKeyboardEvent( &keyEvent ) ) {
+            event->stopPropagation();
+        }
+    };
+    
+    eventListener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event)
+    {
+        auto keyEvent = mr->keyboard->createEvent(keyCode, false) ;
+        if ( OnKeyboardEvent( &keyEvent ) ) {
+            event->stopPropagation();
+        }
+    };
+    
+    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,this);
 }

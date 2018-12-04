@@ -26,7 +26,8 @@ public:
     
 protected:
     uifilterbutton* createFilterButton( layoutid_t id, s32 y, const std::string& image, select_filters flag );
-    
+    void updateFilterButton(Ref* sender,select_filters flag);
+
     virtual void OnNotification( Ref* sender ) override;
     
 

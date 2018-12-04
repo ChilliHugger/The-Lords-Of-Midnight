@@ -15,7 +15,7 @@
     #define _GUIDE_PROMPT_      "You are about to open a browser window to read the Lords of Midnight Playing Guide\n\nAre you sure that you wish to continue?"
     #define _GUIDE_DOCUMENT_    "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight_guide.pdf"
     #define _NOVELLA_DOCUMENT_PDF_  "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.pdf"
-    #if defined(_OS_IOS_) || defined(_OS_OSX_)
+    #if defined(_OS_IOS_) //|| defined(_OS_OSX_)
         #define _NOVELLA_DOCUMENT_  "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.epub"
     #else
         #define _NOVELLA_DOCUMENT_  _NOVELLA_DOCUMENT_PDF_
@@ -29,7 +29,7 @@
     #define _GUIDE_PROMPT_      "You are about to open a browser window to read the Doomdark's Revenge Playing Guide\n\nAre you sure that you wish to continue?"
     #define _NOVELLA_DOCUMENT_PDF_  "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.pdf"
     #define _GUIDE_DOCUMENT_    "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge_guide.pdf"
-    #if defined(_OS_IOS_) || defined(_OS_OSX_)
+    #if defined(_OS_IOS_) //|| defined(_OS_OSX_)
         #define _NOVELLA_DOCUMENT_  "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.epub"
     #else
         #define _NOVELLA_DOCUMENT_  _NOVELLA_DOCUMENT_PDF_

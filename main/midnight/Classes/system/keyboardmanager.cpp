@@ -50,6 +50,8 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(J) // K_NO
         , KEYCODE(L) // K_LEAVE
         , KEYCODE(D) // K_DISBAND
+        , KEYCODE(TAB)  // K_MAP
+        , KEYCODE(ESCAPE)  // K_ESC
     },
     {
           KEYCODE(L) // K_LOOK
@@ -83,18 +85,137 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(N) // K_NO
         , KEYCODE(L) // K_LEAVE
         , KEYCODE(D) // K_DISBAND
+        , KEYCODE(TAB) // K_MAP
+        , KEYCODE(ESCAPE)  // K_ESC
         
     }
 };
 
+const LPCSTR keyboard_descriptions[] = {
+    "",
+    "PAUSE", "SCR-LCK", "PRINT","SYSREQ", "BRK", "ESC",
+    //"BACK",
+    "BS","TAB","BACK-TAB","RET","CAPS-LCK","SHIFT",
+    //"LSHIFT",
+    "RSHIFT","CTRL",
+    //"LCTRL",
+    "RCTRL","ALT",
+    //"LALT",
+    "RALT","MENU","HYPER","INS","HOME","PGUP","DEL","END","PGDN",
+    "LEFT","RIGHT","UP","DOWN","NUM-LCK",
+    "KP+","KP-","KP*","KP/","KPENTER","KPHOME","KP-UP","KP-PGUP","KP-LEFT",
+    "KP-FIVE","KP-RIGHT","KP-END","KP-DOWN","KP-PGDN","KP-INS","KP-DEL",
+    "F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12",
+    "SPC","!","\"","#","$","%","^","&","'","[","]","*","+",",","-",".","/",
+    "0","1","2","3","4","5","6","7","8","9",
+    ":",";","<","=",">","?","@",
+    "","","","","","","","","","","","","","","","","","","","","","","","","","", // CAPITAL A-Z
+    "(","\\",")","_","`",
+    "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+    "{","|","}","~","€","£","","",
+    "SRCH","D-LEFT","D-RIGHT","D-UP","D-DOWN","D-CENTER","ENTER","PLAY"
+};
+
+LPCSTR keyboardmanager::getKeyboardDescription ( keycode_t key )
+{
+    //key = key & ~(IS_UP_MASK|IS_SHIFT_MASK|IS_CTRL_MASK|IS_ALT_MASK);
+    if ( (u32)key > NUMELE(keyboard_descriptions) )
+        return "err";
+    return keyboard_descriptions[(u32)key];
+}
+
+keycode_t keyboardmanager::getKeyboardValue ( std::string& key )
+{
+    for (u32 ii=0; ii<NUMELE(keyboard_descriptions); ii++) {
+        if ( strcasecmp(key.c_str(), keyboard_descriptions[ii]) == 0 )
+            return (keycode_t)ii;
+    }
+    return KEYCODE(NONE);
+}
+
+uikeyboardevent keyboardmanager::createEvent(keycode_t key, bool pressed )
+{
+    return uikeyboardevent(key,setModifierKey(key, pressed),pressed);
+}
+
+flags16_t keyboardmanager::getModifierKeys()
+{
+    return key_flags;
+}
+
+flags16_t keyboardmanager::setModifierKey( keycode_t key, bool pressed )
+{
+    keyflags_t flags = kf_none;
+    
+    if ( key == KEYCODE(SHIFT) || key == KEYCODE(RIGHT_SHIFT))
+        flags = kf_shift;
+    else if ( key == KEYCODE(ALT) || key == KEYCODE(RIGHT_ALT) )
+        flags = kf_alt;
+    else if ( key == KEYCODE(SHIFT) || key == KEYCODE(RIGHT_CTRL))
+        flags = kf_ctrl;
+    
+    if ( pressed ) {
+        key_flags.Set(flags);
+    }else{
+        key_flags.Reset(flags);
+    }
+    
+    return key_flags;
+}
+
 keyboardmanager::keyboardmanager()
 {
     key_mapping = &keyboard_map[0][0];
+    key_flags.Clear();
 }
 
 void keyboardmanager::SetKeyboardMode ( CONFIG_KEYBOARD_MODE mode )
 {
     key_mapping = &keyboard_map[mode][0];
-    
 }
 
+keycode_t keyboardmanager::getKeycode( KEY_MAP key )
+{
+    return key_mapping[ key ];
+}
+
+uikeyboardevent::uikeyboardevent( keycode_t key, flags16_t flags, bool pressed )
+{
+    this->key = key;
+    this->flags.Clear();
+    this->flags.Set(flags);
+    if ( pressed )
+        this->flags.Set(kf_pressed);
+    else
+        this->flags.Reset(kf_pressed);
+}
+
+keycode_t uikeyboardevent::getKey()
+{
+    return key;
+}
+
+bool uikeyboardevent::isShift()
+{
+    return flags.Is(kf_shift);
+}
+
+bool uikeyboardevent::isAlt()
+{
+    return flags.Is(kf_alt);
+}
+
+bool uikeyboardevent::isCtrl()
+{
+    return flags.Is(kf_ctrl);
+}
+
+bool uikeyboardevent::isUp()
+{
+    return !flags.Is(kf_pressed);
+}
+
+bool uikeyboardevent::isDown()
+{
+    return flags.Is(kf_pressed);
+}

@@ -46,6 +46,8 @@ enum KEY_MAP {
     K_NO,
     K_LEAVE,
     K_DISBAND,
+    K_MAP,
+    K_ESC,
     K_MAP_MAX,
 };
 

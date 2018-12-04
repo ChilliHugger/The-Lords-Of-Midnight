@@ -164,6 +164,12 @@ bool moonring::look()
     return true;
 }
 
+bool moonring::look( mxdir_t dir )
+{
+    character&    c = TME_CurrentCharacter();
+    Character_Look(c, dir);
+    return false;
+}
 
 bool moonring::selectCharacter(mxid id)
 {
