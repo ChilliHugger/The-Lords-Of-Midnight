@@ -12,6 +12,7 @@
 #include "../system/resolutionmanager.h"
 #include "../system/tmemanager.h"
 #include "../ui/uihelper.h"
+#include "../frontend/layout_id.h"
 
 #if defined(_LOM_)
 #define NAME_X              32
@@ -84,11 +85,11 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
         scrollView->setScrollBarEnabled(true);
     }else{
         height=size.height;
-        scrollView->setEnabled(false);
+        //scrollView->setEnabled(false);
         scrollView->setBounceEnabled(false);
         scrollView->setScrollBarEnabled(false);
     }
-    
+    scrollView->setSwallowTouches(false);
     scrollView->setInnerContainerSize( Size(size.width,height) );
     scrollView->setContentSize(Size(size.width,size.height));
 
@@ -202,7 +203,10 @@ void uithinkpage::displayCharacter ( const character& c )
     lblName->setString(c.longname);
 
     imgCharacter->loadTexture(GetCharacterImage(c), Widget::TextureResType::LOCAL);
-
+    imgCharacter->setTouchEnabled( Character_IsRecruited(c) );
+    imgCharacter->setTag(ID_SELECT_CHAR+c.id);
+    imgCharacter->addClickEventListener(clickCallback);
+    
     // TODO: If character recruited then enable the character image
     // as a button
 //    if ( Character_IsRecruited(c) )

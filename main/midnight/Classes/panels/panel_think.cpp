@@ -289,6 +289,7 @@ void panel_think::setObject(mxid id)
 void panel_think::addPage( mxid id )
 {
     uithinkpage* page = uithinkpage::create();
+    page->setCallback(clickCallback);
     page->setObject(id, objectId, currentmode);
     pages.pushBack(page);
 }
@@ -396,6 +397,13 @@ void panel_think::OnNotification( Ref* sender )
     
     layoutid_t id = static_cast<layoutid_t>(button->getTag());
     
+    if ( id >= ID_SELECT_CHAR ) {
+        mxid characterId = id-ID_SELECT_CHAR;
+        mr->selectCharacter(characterId);
+        return;
+    }
+    
+    
     switch ( id  )
     {
         case ID_LOOK:
@@ -478,35 +486,15 @@ void panel_think::OnNotification( Ref* sender )
         }
 #endif
             
-        case ID_SELECT_CHAR:
-        {
-//            panel_look* view = (panel_look*) gl->GetPanel(MODE_LOOK);
-//            view->SetCharacter( sender->tag );
-//            gl->SetPanelMode(MODE_LOOK);
-            return;
-        }
-            
         case ID_APPROACH:
         {
             mr->approach();
             break;
         }
             
-//        case ID_UP:
-//        {
-//            PageUp();
-//            break;
-//        }
-//
-//        case ID_DOWN:
-//        {
-//            PageDown();
-//            break;
-//        }
-            
         case ID_THINK_PERSON:
         {
-             mr->showPage(MODE_THINK_PERSON);
+            mr->showPage(MODE_THINK_PERSON);
             break;
         }
             

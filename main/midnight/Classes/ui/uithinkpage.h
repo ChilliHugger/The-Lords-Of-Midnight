@@ -25,6 +25,7 @@ public:
     CREATE_FUNC(uithinkpage);
     
     void setObject( mxid id, mxid objectId, panelmode_t mode );
+    void setCallback( WidgetClickCallback callback ) { clickCallback = callback;}
     
 protected:
 
@@ -64,6 +65,7 @@ protected:
     
     ScrollView*         scrollView;
     Layer*              safeArea;
+    WidgetClickCallback clickCallback;
     
 public:
     bool                approach;
