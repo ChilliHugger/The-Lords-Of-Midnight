@@ -22,6 +22,7 @@ USING_NS_CC;
 
 #define BOX_BACKGROUND_FILENAME "misc/box_16.png"
 #define FONT_FILENAME           "fonts/celtic.ttf"
+#define FONT_SIZE_SHORTCUT      25
 #define FONT_SIZE_BIG           30
 #define FONT_SIZE_MEDIUM        20
 #define FONT_SIZE_SMALL         12
@@ -37,6 +38,7 @@ public:
     static TTFConfig font_config_big;
     static TTFConfig font_config_medium;
     static TTFConfig font_config_small;
+    static TTFConfig font_config_shortcut;
     
     // Anchors
     static Vec2 AnchorTopLeft;

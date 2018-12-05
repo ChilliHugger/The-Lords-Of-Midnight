@@ -25,6 +25,7 @@ Vec2 uihelper::AnchorBottomCenter = Vec2(0.5,0);
 TTFConfig uihelper::font_config_big;
 TTFConfig uihelper::font_config_medium;
 TTFConfig uihelper::font_config_small;
+TTFConfig uihelper::font_config_shortcut;
 
 void uihelper::Init()
 {
@@ -49,6 +50,13 @@ void uihelper::Init()
     font_config_small.customGlyphs = nullptr;
     font_config_small.distanceFieldEnabled = false;
 
+    font_config_shortcut.fontFilePath = FONT_FILENAME;
+    font_config_shortcut.fontSize = DIS(FONT_SIZE_SHORTCUT);
+    font_config_shortcut.glyphs = GlyphCollection::DYNAMIC;
+    font_config_shortcut.outlineSize = 0;
+    font_config_shortcut.customGlyphs = nullptr;
+    font_config_shortcut.distanceFieldEnabled = false;
+    
 }
 
 //

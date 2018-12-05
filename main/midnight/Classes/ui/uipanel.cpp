@@ -304,9 +304,15 @@ void uipanel::setEnabled(bool enabled)
 
 bool uipanel::OnKeyboardEvent( uikeyboardevent* event )
 {
-    if ( event->isUp() && dispatchShortcutKey(event->getKey()) ) {
-        return true;
+    if ( event->isUp() ) {
+        if ( dispatchShortcutKey(event->getKey()) )
+            return true;
+        //
+        displayShortcuts();
     }
+    
+
+    
     return false;
 }
 

@@ -21,14 +21,17 @@
 class uishortcutkeys
 {
 public:
+    bool dispatchShortcutKey( keycode_t keyCode );
+    void displayShortcuts();
+    
+protected:
+    keyinfo* getKeyboardShortcut( keycode_t key);
+    void addKeyboardListener(cocos2d::Node* node);
     void addShortcutKey( layoutid_t id, KEY_MAP key);
     void addShortcutKey( layoutid_t id, keycode_t key);
-
-    
-    keyinfo* getKeyboardShortcut( keycode_t key);
-    bool dispatchShortcutKey( keycode_t keyCode );
-    void addKeyboardListener(cocos2d::Node* node);
     void init( cocos2d::Node* node, WidgetClickCallback callback );
+    void addShortcutLabel(cocos2d::Node* node, LPCSTR text);
+    cocos2d::Node* checkValidTarget( layoutid_t id );
 
 protected:
     cocos2d::Vector<keyinfo*>   keys;

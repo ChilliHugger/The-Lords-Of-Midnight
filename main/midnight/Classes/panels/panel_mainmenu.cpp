@@ -209,10 +209,17 @@ void panel_mainmenu::OnNewStory()
 {
     storyid_t id = mr->startNewStory();
     
-    ShowHelpWindow(HELP_GAME_WORKS, false, [&,id]() {
+    // if the help window is shown, then we must wait
+    // for the user to close it
+    // before continuing. Otherwise continue straight away.
+    bool shown = ShowHelpWindow(HELP_GAME_WORKS, false, [&,id]() {
         mr->continueStory( id );
     });
 
+    if ( !shown ) {
+        mr->continueStory( id );
+    }
+    
 }
 
 void panel_mainmenu::OnContinueStory()

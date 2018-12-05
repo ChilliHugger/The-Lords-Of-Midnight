@@ -30,9 +30,9 @@ bool uisinglelord::init()
     if ( uilordselect::init() ) {
         f32 scale = resolutionmanager::getInstance()->phoneScale() ;
         setContentSize(Size(SELECT_ELEMENT_WIDTH*scale, SELECT_ELEMENT_HEIGHT*scale));
-        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
-        bg->setContentSize(this->getContentSize());
-        this->addChild(bg);
+//        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
+//        bg->setContentSize(this->getContentSize());
+//        this->addChild(bg);
         this->setTouchEnabled(true);
         return true;
     }
