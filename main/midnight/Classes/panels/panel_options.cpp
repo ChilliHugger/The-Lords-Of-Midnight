@@ -232,9 +232,9 @@ void panel_options::OnMenuNotification( uinotificationinterface* sender, menueve
     
     if ( options[index].id == ID_OPTION_TUTORIAL ) {
         if ( mr->config->tutorial )
-            ShowHelpWindow(HELP_TUTORIAL_ON);
+            showHelpWindow(HELP_TUTORIAL_ON);
         else
-            ShowHelpWindow(HELP_TUTORIAL_OFF);
+            showHelpWindow(HELP_TUTORIAL_OFF);
     }
     
     

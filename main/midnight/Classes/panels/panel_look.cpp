@@ -169,6 +169,12 @@ bool panel_look::init()
     auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, clickCallback);
     uihelper::AddBottomLeft(safeArea, select, RES(10), RES(10) );
 
+    // Help
+    i_help = uihelper::CreateImageButton("i_tutorial_flash", ID_HELP, clickCallback);
+    i_help->setVisible(false);
+    uihelper::AddTopRight(safeArea, i_help, RES(10), RES(10) );
+    
+    
     // map keyboard shortcut keys to layout children
     uishortcutkeys::init(safeArea, clickCallback);
     
@@ -265,15 +271,15 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     TME_GetCharacterLocationInfo(TME_CurrentCharacter());
     
     if ( location_infront_armies.foes_armies ) {
-        if ( !ShowHelpWindow(HELP_BATTLE))
+        if ( !showHelpWindow(HELP_BATTLE))
             return;
-        if ( !ShowHelpWindow(HELP_ARMIES) )
+        if ( !showHelpWindow(HELP_ARMIES) )
             return;
     }
     
     int id = GET_ID(location_infront_object) ;
     if ( id >= OB_WOLVES && id<=OB_WILDHORSES ) {
-        if ( !ShowHelpWindow(HELP_NASTIES) )
+        if ( !showHelpWindow(HELP_NASTIES) )
             return;
         return;
     }
@@ -306,7 +312,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     loc.terrain = (mxterrain_t)((int)loc.terrain - TN_PLAINS2) ;
 #endif
     
-    if ( !ShowHelpWindow( (helpid_t)(HELP_NONE+1+(int)loc.terrain )) )
+    if ( !showHelpWindow( (helpid_t)(HELP_NONE+1+(int)loc.terrain )) )
         return;
     
 }
@@ -719,16 +725,16 @@ bool panel_look::moveForward ( void )
         }
         
         if ( Character_IsNight(c) ) {
-            if ( !ShowHelpWindow(HELP_PRESS_NIGHT))
+            if ( !showHelpWindow(HELP_PRESS_NIGHT))
                 return TRUE;
         }
         
         if ( c.following != IDT_NONE )
-            if (!ShowHelpWindow(HELP_GROUPED))
+            if (!showHelpWindow(HELP_GROUPED))
                 return TRUE;
         
         if ( location_infront_armies.foes_armies )
-            if (!ShowHelpWindow(HELP_BATTLE, TRUE))
+            if (!showHelpWindow(HELP_BATTLE, TRUE))
                 return TRUE;
         
         // something is in our way that we must fight
@@ -864,7 +870,7 @@ void panel_look::showInactivityHelp()
     if ( isEnabled() ) {
         if ( !isHelpVisible() ) {
             for ( u32 ii=0; ii<NUMELE(help_options); ii++ ) {
-                if ( !ShowHelpWindow( help_options[ii] ) )
+                if ( !showHelpWindow( help_options[ii] ) )
                     break;
             }
         }
@@ -946,36 +952,36 @@ void panel_look::OnShown()
     
     
     if ( variables::sv_days == 0) {
-        if ( !ShowHelpWindow(HELP_DAY1))
+        if ( !showHelpWindow(HELP_DAY1))
             return;
         
-        if ( !ShowHelpWindow(HELP_CHOICE_OF_GAMES))
+        if ( !showHelpWindow(HELP_CHOICE_OF_GAMES))
             return;
     }
     
     if ( variables::sv_days == 1) {
-        if ( !ShowHelpWindow(HELP_BATTLE))
+        if ( !showHelpWindow(HELP_BATTLE))
             return;
 #if defined(_LOM_)
-        if ( !ShowHelpWindow(HELP_ICEFEAR))
+        if ( !showHelpWindow(HELP_ICEFEAR))
             return;
 #endif
     }
     if ( variables::sv_days == 2) {
-        if ( !ShowHelpWindow(HELP_VICTORY))
+        if ( !showHelpWindow(HELP_VICTORY))
             return;
     }
     
 #if defined(_LOM_)
     character& c = TME_CurrentCharacter();
     if ( c.race == RA_FREE || c.race == RA_MORKIN )
-        if ( !ShowHelpWindow(HELP_FREE))
+        if ( !showHelpWindow(HELP_FREE))
             return;
     if ( c.race == RA_FEY )
-        if ( !ShowHelpWindow(HELP_FEY))
+        if ( !showHelpWindow(HELP_FEY))
             return;
     if ( c.race == RA_WISE )
-        if ( !ShowHelpWindow(HELP_WISE))
+        if ( !showHelpWindow(HELP_WISE))
             return;
 #endif
 }
@@ -1070,6 +1076,10 @@ void panel_look::OnNotification( Ref* sender )
     hideMenus();
     
     switch ( id ) {
+            
+        case ID_HELP:
+            showHelpPending();
+            break;
             
         case ID_ACTIONS:
             i_command_window->show(nullptr);

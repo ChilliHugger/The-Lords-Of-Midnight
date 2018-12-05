@@ -143,7 +143,8 @@ void uishortcutkeys::displayShortcuts()
             shortcut->runAction(
                                 Sequence::create( DelayTime::create(2.0f),
                                                   FadeOut::create(2.0f),
-                                                  CallFunc::create( [shortcut] { shortcut->setVisible(false); }),
+                                                  ToggleVisibility::create(),
+                                                  //CallFunc::create( [shortcut] { shortcut->setVisible(false); }),
                                                   nullptr
                                                  )
                                 );

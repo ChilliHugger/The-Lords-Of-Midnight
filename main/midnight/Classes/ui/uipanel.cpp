@@ -17,6 +17,18 @@
 
 USING_NS_CC;
 
+uipanel::uipanel() :
+    popupWindow(nullptr),
+    help_window(nullptr),
+    help_pending(false),
+    help_visible(HELP_NONE),
+    clickCallback(nullptr),
+    eventCallback(nullptr),
+    safeArea(nullptr),
+    currentmode(MODE_NONE)
+{
+}
+
 bool uipanel::init()
 {
     if ( !Scene::init() )
@@ -166,61 +178,82 @@ void uipanel::FillBackground()
     
 }
 
-BOOL uipanel::ShowHelpWindow ( helpid_t id, BOOL forceImportant, MXVoidCallback callback )
+bool uipanel::showHelpWindow ( helpid_t id, BOOL forceImportant, MXVoidCallback callback )
 {
     helpmanager* help = mr->help;
     
     if ( !help->isAlways(id) ) {
         
-        if ( !mr->config->tutorial )
-            return TRUE;
+        if ( !mr->config->tutorial ) {
+            if ( callback != nullptr )
+                callback();
+            return true;
+        }
         
         if ( help->isShown(id) )
-            return TRUE;
+            return true;
         
         if ( help_pending && !help->isImportant(id) && !forceImportant )
-            return FALSE;
+            return false;
     }
     
     if ( help->isImportant(id) || forceImportant ) {
-        PopupHelpWindow(id,callback);
-        return FALSE;
+        popupHelpWindow(id,callback);
+        return false;
     }
     
     // show the tutorial help
     if ( !help->isShown(HELP_TUTORIAL) ) {
-        PopupHelpWindow(HELP_TUTORIAL,callback);
+        popupHelpWindow(HELP_TUTORIAL,callback);
     }
     
     // and set the required help to pending
     help_pending_id = id;
-    help_pending=TRUE;
+    help_pending=true;
     
-    HelpPending();
+    helpPending();
 
-    return FALSE;
+    return false;
 }
 
-void uipanel::HelpPending()
+void uipanel::helpPending()
 {
-    // TODO: Help Pending
-    //    i_help->ShowEnable();
-    //    uiaction* flash = new uiaFlash(300,10*1000);
-    //    flash->delegate=this;
-    //    flash->tag=9999;
-    //    i_help->AddAction ( flash) ;
-    //    a_help_timer->start(30*1000);
+    if ( i_help == nullptr )
+        return;
+    
+    auto fadeInOut = Sequence::createWithTwoActions( FadeOut::create(0.5f),
+                                                    FadeIn::create(0.5f));
+
+    i_help->stopAllActions();
+    i_help->setVisible(true);
+    i_help->setOpacity(ALPHA(1.0f));
+    i_help->runAction(Sequence::create(
+                                Repeat::create( fadeInOut, 10),
+                                DelayTime::create(15.0f),
+                                FadeOut::create(0.5f),
+                                ToggleVisibility::create(),
+                                nullptr)
+                      );
+    
 }
 
-void uipanel::PopupHelpWindow ( helpid_t id, MXVoidCallback callback )
+void uipanel::showHelpPending()
 {
-    help_pending = FALSE;
+    if ( help_pending ) {
+        popupHelpWindow(help_pending_id, nullptr);
+    }
+}
+
+void uipanel::popupHelpWindow ( helpid_t id, MXVoidCallback callback )
+{
+    help_pending = false;
     help_pending_id = HELP_NONE ;
-    
-    //if ( a_help_timer ) {
-    //    a_help_timer->stop();
-    //}
     help_visible=id;
+    
+    if ( i_help ) {
+        i_help->stopAllActions();
+        i_help->setVisible(false);
+    }
     
     if ( help_window != nullptr ) {
         help_window->Close();

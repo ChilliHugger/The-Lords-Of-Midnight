@@ -114,6 +114,8 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     addShortcutKey(ID_POSTMEN,    K_POST);
     addShortcutKey(ID_ATTACK,     K_ATTACK);
     
+    addShortcutKey(ID_UNDO_DAWN,  KEYCODE(F9));
+    addShortcutKey(ID_UNDO,       KEYCODE(F10));
     
     return true;
 }

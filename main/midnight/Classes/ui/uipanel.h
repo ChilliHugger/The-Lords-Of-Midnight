@@ -52,8 +52,11 @@ public:
     void Disable() { setEnabled(false); }
     bool isEnabled() { return enabled; }
     bool isHelpVisible() { return help_visible != HELP_NONE; }
+    void showHelpPending();
+
     
 protected:
+    uipanel();
     
     Node* setBackgroundToHeight( LPCSTR background );
     Node* setBackgroundToWidth( LPCSTR background );
@@ -68,9 +71,9 @@ protected:
     void OpenPDF(LPCSTR pdf);
     void FillBackground();
 
-    BOOL ShowHelpWindow ( helpid_t id, BOOL forceImportant = false, MXVoidCallback callback=nullptr  );
-    void PopupHelpWindow ( helpid_t id, MXVoidCallback callback );
-    virtual void HelpPending();
+    bool showHelpWindow ( helpid_t id, BOOL forceImportant = false, MXVoidCallback callback=nullptr  );
+    void popupHelpWindow ( helpid_t id, MXVoidCallback callback );
+    virtual void helpPending();
     
     
     void DebugNodes();
@@ -88,6 +91,7 @@ protected:
     bool            help_pending;
     helpid_t        help_visible;
     uihelpwindow*   help_window;
+    cocos2d::ui::Button*         i_help;
     
     bool            enabled;
     

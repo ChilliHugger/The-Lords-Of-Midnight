@@ -164,11 +164,12 @@ void panel_mainmenu::OnMenuNotification( uinotificationinterface* sender, menuev
 
 void panel_mainmenu::OnShowManual()
 {
-    //if ( gl->settings.novella_pdf ) {
-    //    OpenPDF(_NOVELLA_DOCUMENT_PDF_);
-    
     AreYouSure(_NOVELLA_PROMPT_, [&] {
-        OpenPDF(_NOVELLA_DOCUMENT_);
+        if ( mr->config->novella_pdf ) {
+            OpenPDF(_NOVELLA_DOCUMENT_PDF_);
+        }else{
+            OpenPDF(_NOVELLA_DOCUMENT_);
+        }
     });
 }
 
@@ -212,14 +213,10 @@ void panel_mainmenu::OnNewStory()
     // if the help window is shown, then we must wait
     // for the user to close it
     // before continuing. Otherwise continue straight away.
-    bool shown = ShowHelpWindow(HELP_GAME_WORKS, false, [&,id]() {
+    showHelpWindow(HELP_GAME_WORKS, false, [&,id]() {
         mr->continueStory( id );
     });
 
-    if ( !shown ) {
-        mr->continueStory( id );
-    }
-    
 }
 
 void panel_mainmenu::OnContinueStory()
