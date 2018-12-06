@@ -113,23 +113,6 @@ bool panel_think::init()
     x = RES(10) + (5.5*c) ;
     c+= RES(20);
     
-    // Approach
-    auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, clickCallback);
-    uihelper::AddBottomRight(safeArea, approach, x+c*0, RES(10) );
-    approach->setVisible(false);
-    
-    // Fight
-#if defined(_LOM_)
-    auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
-    uihelper::AddBottomRight(safeArea, fight, x+c*0, RES(10) );
-    fight->setVisible(false);
-    
-    // Unhide
-    auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, clickCallback);
-    uihelper::AddBottomRight(safeArea, unhide, x+c*0, RES(10) );
-    unhide->setVisible(false);
-#endif
-    
     // Leave
     auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEFT, clickCallback);
     uihelper::AddBottomRight(safeArea, leave, x+c*0, RES(10) );
@@ -151,13 +134,14 @@ bool panel_think::init()
     addShortcutKey(ID_THINK_PLACE   ,K_PLACE);
     addShortcutKey(ID_THINK_ARMY    ,K_ARMY);
     addShortcutKey(ID_THINK_BATTLE  ,K_BATTLE);
-    addShortcutKey(ID_APPROACH      ,K_APPROACH);
-#if defined(_LOM_)
-    addShortcutKey(ID_FIGHT         ,K_FIGHT);
-    addShortcutKey(ID_UNHIDE        ,K_UNHIDE);
-#endif
-    addShortcutKey(ID_GROUP_LEAVE   ,K_LEAVE);
-    addShortcutKey(ID_GROUP_DISBAND ,K_DISBAND);
+    
+//    addShortcutKey(ID_APPROACH      ,K_APPROACH);
+//#if defined(_LOM_)
+//    addShortcutKey(ID_FIGHT         ,K_FIGHT);
+//    addShortcutKey(ID_UNHIDE        ,K_UNHIDE);
+//#endif
+//    addShortcutKey(ID_GROUP_LEAVE   ,K_LEAVE);
+//    addShortcutKey(ID_GROUP_DISBAND ,K_DISBAND);
     
     return true;
 }
@@ -193,9 +177,6 @@ void panel_think::enableButtons()
     
     showButton(ID_GROUP_DISBAND, page->disband );
     showButton(ID_GROUP_LEAVE, page->leave );
-    showButton(ID_FIGHT, page->fight );
-    showButton(ID_APPROACH, page->approach );
-    showButton(ID_UNHIDE, page->unhide );
     
     // postmen
     // recruitmen

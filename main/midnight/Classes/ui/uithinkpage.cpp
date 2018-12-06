@@ -65,6 +65,7 @@ uithinkpage::uithinkpage()
 void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 {
     f32 x,y;
+    Vec2 pos = Vec2::ZERO;
     
     this->id = id;
     this->mode = mode;
@@ -104,6 +105,25 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     x = RES(CHARACTER_X) - (imgCharacter->getContentSize().width/2);
     uihelper::PositionParentTopLeft(imgCharacter,x,y);
     
+    // Approach
+    auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, clickCallback);
+    pos = imgCharacter->getPosition();
+    pos.y -= imgCharacter->getContentSize().height;
+    approach->setPosition(pos);
+    approach->setVisible(this->approach);
+    scrollView->addChild(approach);
+    
+#if defined(_LOM_)
+    // Unhide
+    auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, clickCallback);
+    pos = imgCharacter->getPosition();
+    pos.y -= imgCharacter->getContentSize().height;
+    unhide->setPosition(pos);
+    unhide->setVisible(this->unhide);
+    scrollView->addChild(unhide);
+#endif
+    
+    
     // terrain
     y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
@@ -114,6 +134,13 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     y = RES(OBJECT_Y) - imgObject->getContentSize().height;
     x = RES(OBJECT_X) - (imgObject->getContentSize().width/2);
     uihelper::PositionParentTopLeft(imgObject,x,y);
+
+    auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
+    pos = imgObject->getPosition();
+    pos.y -= imgObject->getContentSize().height;
+    fight->setPosition(pos);
+    fight->setVisible(this->fight);
+    scrollView->addChild(fight);
 #endif
     
     uihelper::AddTopLeft(safeArea, scrollView);
@@ -207,12 +234,7 @@ void uithinkpage::displayCharacter ( const character& c )
     imgCharacter->setTag(ID_SELECT_CHAR+c.id);
     imgCharacter->addClickEventListener(clickCallback);
     
-    // TODO: If character recruited then enable the character image
-    // as a button
-//    if ( Character_IsRecruited(c) )
-//        i_character->Enable();
-//    else
-//        i_character->Disable();
+    
 }
 
 void uithinkpage::displayCharacterTerrain(  const character& c )
@@ -287,6 +309,9 @@ void uithinkpage::setupUIElements()
     LPCSTR      text=NULL;
     
     character& c = TME_CurrentCharacter();
+    
+    TME_GetCharacterLocationInfo ( c );
+    flags = location_flags;
     
     displayCharacter (c);
     displayCharacterTerrain(c);
@@ -480,7 +505,7 @@ void uithinkpage::checkPerson ( void )
         
         // not recruited but we could recruit
         // then add an approach button
-        if ( msg == SS_MESSAGE7 && location_flags.Is(lif_recruitchar) ) {
+        if ( msg == SS_MESSAGE7 && flags.Is(lif_recruitchar) ) {
             if ( !isInBattle )
                 approach = true;
         }
