@@ -131,14 +131,20 @@ namespace chilli {
         
         // archive output helpers
         MXINLINE archive& operator<<(archive& ar, const size& s)		{ ar.Write(&s, sizeof(size)); return ar; }
-        MXINLINE archive& operator<<(archive& ar, const point& p)		{ ar.Write(&p, sizeof(point)); return ar; }
-        MXINLINE archive& operator<<(archive& ar, const rect& r)		{ ar.Write(&r, sizeof(rect)); return ar; }
         MXINLINE archive& operator>>(archive& ar, size& s)             { ar.Read(&s, sizeof(size)); return ar; }
-        MXINLINE archive& operator>>(archive& ar, point& p)			{ ar.Read(&p, sizeof(point)); return ar; }
+        
         MXINLINE archive& operator>>(archive& ar, rect& r)             { ar.Read(&r, sizeof(rect)); return ar; }
+        MXINLINE archive& operator<<(archive& ar, const rect& r)        { ar.Write(&r, sizeof(rect)); return ar; }
+        
         MXINLINE archive& operator<<(archive& ar, const range& r)		{ ar.Write(&r, sizeof(range)); return ar; }
         MXINLINE archive& operator>>(archive& ar, range& r)			{ ar.Read(&r, sizeof(range)); return ar; }
+    
+        MXINLINE archive& operator<<(archive& ar, const point& p)   { ar.Write(&p, sizeof(point)); return ar; }
+        MXINLINE archive& operator>>(archive& ar, point& p)         { ar.Read(&p, sizeof(point)); return ar; }
+        
     }
+    
+    
 }
 
 #endif // _CARCHIVE_H_INCLUDED_

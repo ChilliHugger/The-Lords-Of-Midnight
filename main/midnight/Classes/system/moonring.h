@@ -17,6 +17,11 @@
 #include "../library/libinc/mxtypes.h"
 #include "panelmanager.h"
 
+// models
+#include "../models/selectmodel.h"
+
+//
+
 FORWARD_REFERENCE(configmanager);
 FORWARD_REFERENCE(helpmanager);
 //FORWARD_REFERENCE(storymanager);
@@ -104,6 +109,8 @@ public:
     
     cocos2d::GLProgramState*         glProgramState;
     cocos2d::GLProgram*              glShaderProgram;
+    
+    selectmodel             selectmodel;
     
 };
 

@@ -102,6 +102,9 @@ storyid_t moonring::startNewStory()
     
     config->setGameDefaults();
     
+    selectmodel.setDefaults();
+    
+    
     UIDEBUG("Resolve TME Data");
     
     tme->ResolveTMEData();
@@ -420,7 +423,6 @@ bool moonring::serialize( u32 version, archive& ar )
 {
     // TME will not call this function
     // prior to version 5
-    
     tme->ResolveTMEData();
     
     if ( version <=5 )
@@ -434,19 +436,20 @@ bool moonring::serialize( u32 version, archive& ar )
         
         //p_map->Serialize(version, ar);
         ////p_look->Serialize(version, ar);
-        //p_select->Serialize(version, ar);
+        selectmodel.serialize(version, ar);
         ////p_think->Serialize(version, ar);
         
         stories->Serialize(version, ar);
         
         
     }else{
+
         
         ar >> version ;
         
         //p_map->Serialize(version, ar);
         ////p_look->Serialize(version, ar);
-        //p_select->Serialize(version, ar);
+        selectmodel.serialize(version, ar);
         ////p_think->Serialize(version, ar);
         
         if ( version>= 10 )

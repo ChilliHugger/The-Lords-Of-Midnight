@@ -109,6 +109,17 @@ void uilordselect::onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event* event
     Widget::onTouchCancelled(touch, event);
 }
 
+void uilordselect::OnStopDrag(uidragevent* event)
+{
+    uidragmoveelement::OnStopDrag(event);
+    
+    char_data_t* userdata = static_cast<char_data_t*>( getUserData() );
+    if ( userdata != nullptr ) {
+        userdata->select_loc.x = getPosition().x;
+        userdata->select_loc.y = getPosition().y;
+    }
+    
+}
 
 
 //void uilordselect::addTouchListener()

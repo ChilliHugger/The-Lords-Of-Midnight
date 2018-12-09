@@ -159,7 +159,6 @@ public:
     
     // game specific
     flags32 map_filters;
-    flags32 select_filters;
     point   oldoffset;
     f32     mapscale;
     f32     lastmapscale;

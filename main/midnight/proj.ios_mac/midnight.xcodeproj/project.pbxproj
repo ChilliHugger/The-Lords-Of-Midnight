@@ -195,6 +195,12 @@
 		8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
 		83784AC61FCF216900F5AD66 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */; };
 		83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
+		8378E3C521BD4FAD0030AE3C /* panelmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8378E3C321BD4FAD0030AE3C /* panelmodel.cpp */; };
+		8378E3C621BD4FAD0030AE3C /* panelmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8378E3C321BD4FAD0030AE3C /* panelmodel.cpp */; };
+		8378E3C721BD4FAD0030AE3C /* panelmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8378E3C321BD4FAD0030AE3C /* panelmodel.cpp */; };
+		8378E3CA21BD51190030AE3C /* selectmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8378E3C821BD51190030AE3C /* selectmodel.cpp */; };
+		8378E3CB21BD51190030AE3C /* selectmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8378E3C821BD51190030AE3C /* selectmodel.cpp */; };
+		8378E3CC21BD51190030AE3C /* selectmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8378E3C821BD51190030AE3C /* selectmodel.cpp */; };
 		8397AFDC1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
 		8397AFDD1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
 		8397AFE11F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */; };
@@ -629,6 +635,10 @@
 		8351A52B1FE4633100D9AB57 /* tmemanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tmemanager.h; sourceTree = "<group>"; };
 		8352FBCF216DD693009E22E5 /* ILandscape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ILandscape.h; path = landscaping/ILandscape.h; sourceTree = "<group>"; };
 		8352FBD0216DD693009E22E5 /* ILandscape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ILandscape.cpp; path = landscaping/ILandscape.cpp; sourceTree = "<group>"; };
+		8378E3C321BD4FAD0030AE3C /* panelmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panelmodel.cpp; sourceTree = "<group>"; };
+		8378E3C421BD4FAD0030AE3C /* panelmodel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panelmodel.h; sourceTree = "<group>"; };
+		8378E3C821BD51190030AE3C /* selectmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = selectmodel.cpp; sourceTree = "<group>"; };
+		8378E3C921BD51190030AE3C /* selectmodel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = selectmodel.h; sourceTree = "<group>"; };
 		8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGenerator.cpp; path = landscaping/LandscapeGenerator.cpp; sourceTree = "<group>"; };
 		8397AFDB1F4C18BA009B00A2 /* LandscapeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeGenerator.h; path = landscaping/LandscapeGenerator.h; sourceTree = "<group>"; };
 		8397AFDF1F4C1A2E009B00A2 /* LandscapeSky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeSky.cpp; path = landscaping/LandscapeSky.cpp; sourceTree = "<group>"; };
@@ -978,6 +988,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8378E3C221BD4F680030AE3C /* models */,
 				83B9BD7E1FD9ADE100B4C721 /* system */,
 				83B9BD6B1FD2D35900B4C721 /* Extensions */,
 				8344EC371FD20F280067AAC1 /* ui */,
@@ -1144,6 +1155,17 @@
 				8330781E21B5D1D400562893 /* uishortcutkeys.h */,
 			);
 			path = ui;
+			sourceTree = "<group>";
+		};
+		8378E3C221BD4F680030AE3C /* models */ = {
+			isa = PBXGroup;
+			children = (
+				8378E3C321BD4FAD0030AE3C /* panelmodel.cpp */,
+				8378E3C421BD4FAD0030AE3C /* panelmodel.h */,
+				8378E3C821BD51190030AE3C /* selectmodel.cpp */,
+				8378E3C921BD51190030AE3C /* selectmodel.h */,
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 		8397AFDE1F4C1936009B00A2 /* landscaping */ = {
@@ -1667,6 +1689,7 @@
 				83D2645E1F360724001C6F13 /* info_unit.cpp in Sources */,
 				83B5AB6F21760B4100CC29EF /* panel_night.cpp in Sources */,
 				83B668992185EF5700B130FC /* uifilterbutton.cpp in Sources */,
+				8378E3C521BD4FAD0030AE3C /* panelmodel.cpp in Sources */,
 				83D2644C1F360724001C6F13 /* info_area.cpp in Sources */,
 				83D264F01F360857001C6F13 /* tinyxml.cpp in Sources */,
 				8397AFE51F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */,
@@ -1753,6 +1776,7 @@
 				83D264601F360724001C6F13 /* item_character.cpp in Sources */,
 				83D264821F360724001C6F13 /* lom_scenario.cpp in Sources */,
 				83B9BD771FD3114000B4C721 /* uipopup.cpp in Sources */,
+				8378E3CA21BD51190030AE3C /* selectmodel.cpp in Sources */,
 				83398A9420D1D708007EAE7B /* panel_look.cpp in Sources */,
 				83D2645C1F360724001C6F13 /* info_terrain.cpp in Sources */,
 				839F0D771FDBFAA6000E2CC2 /* uielement.cpp in Sources */,
@@ -1835,6 +1859,7 @@
 				83B9BD821FD9AE2000B4C721 /* configmanager.cpp in Sources */,
 				83D264431F360724001C6F13 /* mxmemory.cpp in Sources */,
 				831AD5831FE58671001108AC /* uibook.cpp in Sources */,
+				8378E3C621BD4FAD0030AE3C /* panelmodel.cpp in Sources */,
 				834D04F020D30776001B07CB /* progressmonitor.cpp in Sources */,
 				83D264411F360724001C6F13 /* mxlocinfo.cpp in Sources */,
 				83D264DB1F36077E001C6F13 /* datatypes.cpp in Sources */,
@@ -1883,6 +1908,7 @@
 				83D264771F360724001C6F13 /* ddr_character.cpp in Sources */,
 				83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				8344EC2D1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,
+				8378E3CB21BD51190030AE3C /* selectmodel.cpp in Sources */,
 				83A9ACBB1FEBBEBB00673B66 /* MyButton.cpp in Sources */,
 				833172FA219B1E85009A52E7 /* uisinglelord.cpp in Sources */,
 				83B5AB7E217E20A000CC29EF /* panel_map_detailed.cpp in Sources */,
@@ -2037,6 +2063,7 @@
 				83E301E121A41BE3005C3F5C /* configmanager.cpp in Sources */,
 				83E301E221A41BE3005C3F5C /* mxmemory.cpp in Sources */,
 				83E301E321A41BE3005C3F5C /* uibook.cpp in Sources */,
+				8378E3C721BD4FAD0030AE3C /* panelmodel.cpp in Sources */,
 				83E301E421A41BE3005C3F5C /* progressmonitor.cpp in Sources */,
 				83E301E521A41BE3005C3F5C /* mxlocinfo.cpp in Sources */,
 				83E301E621A41BE3005C3F5C /* datatypes.cpp in Sources */,
@@ -2085,6 +2112,7 @@
 				83E3021121A41BE3005C3F5C /* ddr_character.cpp in Sources */,
 				83E3021221A41BE3005C3F5C /* moonring.cpp in Sources */,
 				83E3021321A41BE3005C3F5C /* panel_splashscreen.cpp in Sources */,
+				8378E3CC21BD51190030AE3C /* selectmodel.cpp in Sources */,
 				83E3021421A41BE3005C3F5C /* MyButton.cpp in Sources */,
 				83E3021521A41BE3005C3F5C /* uisinglelord.cpp in Sources */,
 				83E3021621A41BE3005C3F5C /* panel_map_detailed.cpp in Sources */,

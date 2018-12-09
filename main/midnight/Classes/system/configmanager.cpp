@@ -64,7 +64,6 @@ configmanager::~configmanager()
 void configmanager::setGameDefaults ()
 {
     map_filters.Set(0xffffffff);
-    select_filters.Set(0xffffffff);
     map_filters.Reset(filter_show_critters);
 
     oldoffset = point(0,0);

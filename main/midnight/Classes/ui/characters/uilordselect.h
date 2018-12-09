@@ -43,6 +43,10 @@ protected:
     void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* )  override;
     void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event* ) override;
     
+    virtual void OnStopDrag(uidragevent* event) override;
+
+    
+    
     cocos2d::Vec2 mouse_down_pos;
     cocos2d::Vec2 mouse_last_position;;
     

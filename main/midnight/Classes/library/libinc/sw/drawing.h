@@ -136,8 +136,8 @@ namespace chilli {
             rect operator+(const rect* lpRect) const;
             rect operator-(const rect* lpRect) const;
             
-            friend  archive& operator<<(archive& ar, const point& );
-            friend  archive& operator>>(archive& ar, point& );
+            //friend  archive& operator<<(archive& ar, const point& );
+            //friend  archive& operator>>(archive& ar, point& );
             
             int PointPosition ( const point ) const;
             

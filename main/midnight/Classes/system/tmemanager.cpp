@@ -52,10 +52,10 @@ void tmemanager::ResolveTMEData ()
     }
     
     // clear the lord select locations
-    for ( u32 ii=0; ii<characters.Count(); ii++ ) {
-        auto d = static_cast<char_data_t*>(characters[ii]);
-        d->select_loc = point(0,0);
-    }
+//    for ( u32 ii=0; ii<characters.Count(); ii++ ) {
+//        auto d = static_cast<char_data_t*>(characters[ii]);
+//        d->select_loc = point(0,0);
+//    }
     
     TME_RefreshCurrentCharacter ();
     
