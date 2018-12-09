@@ -123,11 +123,32 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     scrollView->addChild(unhide);
 #endif
     
+    // bottom gradient on character
+   if ( this->unhide || this->approach ) {
+        auto gradientB = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
+        gradientB->setContentSize(Size(RES(128),RES(64)));
+        gradientB->setPosition(pos);
+        scrollView->addChild(gradientB);
+    }
+
+    
     
     // terrain
     y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
     uihelper::PositionParentTopRight(imgTerrain,x,y);
+    
+    //if ( this->unhide || this->approach ) {
+    pos=imgTerrain->getPosition();
+    pos.y-=imgTerrain->getContentSize().height;
+    pos.x-=imgTerrain->getContentSize().width;
+//    auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
+//    gradientC->setContentSize(Size(imgTerrain->getContentSize().width,RES(64)));
+//    gradientC->setPosition(pos);
+//    scrollView->addChild(gradientC);
+    //}
+
+    
     
     // object
 #if defined(_LOM_)
@@ -141,6 +162,15 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     fight->setPosition(pos);
     fight->setVisible(this->fight);
     scrollView->addChild(fight);
+    
+    if ( this->fight ) {
+        auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
+        gradientC->setContentSize(Size(RES(128),RES(64)));
+        gradientC->setPosition(pos);
+        scrollView->addChild(gradientC);
+    }
+
+    
 #endif
     
     uihelper::AddTopLeft(safeArea, scrollView);

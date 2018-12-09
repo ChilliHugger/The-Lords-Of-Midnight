@@ -211,6 +211,8 @@ void uicommandwindow::initialiseCommands()
     
     // CHARACTERS
     
+    auto mr = moonring::mikesingleton();
+    
     // get the default faces
     for ( u32 ii=0; ii<default_characters.Count(); ii++ ) {
         char_data_t* data = (char_data_t*)TME_GetEntityUserData( default_characters[ii] );
@@ -218,11 +220,19 @@ void uicommandwindow::initialiseCommands()
         character c;
         TME_GetCharacter(c, default_characters[ii] );
         
+        layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
+        
         auto lord = uisinglelord::createWithLord(c.id);
-        lord->setTag(ID_CHAR1+ii);
+        lord->setTag(tag);
         lord->setUserData(data);
         lord->addClickEventListener(callback);
         addItem(lord, CHOOSE_CHAR+ii);
+        
+        if ( mr->config->keyboard_mode == CF_KEYBOARD_CLASSIC )
+            addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_old));
+        else
+            addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
+        
     }
 }
 

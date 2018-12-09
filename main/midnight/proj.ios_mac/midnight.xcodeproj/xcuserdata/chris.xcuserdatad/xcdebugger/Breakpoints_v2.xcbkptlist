@@ -170,13 +170,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/panels/panel_look.cpp"
-            timestampString = "565125189.097057"
+            timestampString = "565833413.581974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
             landmarkName = "panel_look::~panel_look()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "panel_look::~panel_look()"
+                  moduleName = "midnight-desktop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Projects/The-Lords-Of-Midnight/main/midnight/Classes/panels/panel_look.cpp"
+                  timestampString = "565833414.3726211"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "47">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "panel_look::~panel_look()"
+                  moduleName = "midnight-desktop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Projects/The-Lords-Of-Midnight/main/midnight/Classes/panels/panel_look.cpp"
+                  timestampString = "565833414.37596"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "panel_look::~panel_look()"
+                  moduleName = "midnight-desktop"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Projects/The-Lords-Of-Midnight/main/midnight/Classes/panels/panel_look.cpp"
+                  timestampString = "565833414.379302"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

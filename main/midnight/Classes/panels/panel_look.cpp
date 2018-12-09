@@ -151,6 +151,7 @@ bool panel_look::init()
     // people in front
     for ( int ii=0; ii<3; ii++ ) {
         people[ii] = LandscapePeople::create(&options);
+        people[ii]->setLocalZOrder(ZORDER_FAR+1);
         addChild(people[ii]);
     }
 
@@ -164,7 +165,7 @@ bool panel_look::init()
     
     auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, clickCallback);
     uihelper::AddBottomRight(safeArea, choose, RES(10), RES(10) );
-
+    
     // Character Selection
     auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, clickCallback);
     uihelper::AddBottomLeft(safeArea, select, RES(10), RES(10) );
@@ -185,6 +186,7 @@ bool panel_look::init()
     // TODO: Shortcut keys
     addShortcutKey(ID_SELECT_ALL, K_SELECT);
     addShortcutKey(ID_ACTIONS,    K_CHOOSE);
+    
     
     // TODO: Following
     
@@ -1075,6 +1077,12 @@ void panel_look::OnNotification( Ref* sender )
     
     hideMenus();
     
+    if ( id >= ID_SELECT_CHAR ) {
+        mxid characterId = id-ID_SELECT_CHAR;
+        mr->selectCharacter(characterId);
+        return;
+    }
+    
     switch ( id ) {
             
         case ID_HELP:
@@ -1231,11 +1239,7 @@ void panel_look::OnNotification( Ref* sender )
             break;
         }
             
-            // check for character selection
-        case ID_CHAR1:
-        case ID_CHAR2:
-        case ID_CHAR3:
-        case ID_CHAR4:
+        // check for character selection
         case ID_SHOW_LEADER:
         {
             char_data_t* data = static_cast<char_data_t*>(button->getUserData());

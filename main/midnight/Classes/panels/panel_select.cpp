@@ -149,7 +149,7 @@ void panel_select::getCharacters()
         auto pos = calcGridLocation(ii);
         pos.y = height-pos.y;
         
-        layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+characters[ii]);
+        layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
         
         auto lord = uisinglelord::createWithLord(c.id);
         lord->setAnchorPoint(uihelper::AnchorTopLeft);

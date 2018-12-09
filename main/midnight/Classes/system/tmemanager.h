@@ -23,7 +23,7 @@ public:
     
 public:
     mxid        id;
-    c_str    symbol;
+    std::string symbol;
 } ;
 
 class char_data_t : public tme_item

@@ -74,7 +74,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     terrain_data_t* d = new terrain_data_t ;
                     d->symbol = t->ReadStr("id");
                     d->file = t->ReadStr("file");
-                    UIDEBUG( "Frontend: Loading TERRAIN... %s", (LPCSTR)d->symbol );
+                    UIDEBUG( "Frontend: Loading TERRAIN... %s", d->symbol.c_str() );
                     mr->tme->terrain.Add(d);
                     
                     d->mapimage = t->ReadStr("mapfile","");
@@ -160,7 +160,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                 if ( c->IsType("character") ) {
                     char_data_t* d = new char_data_t ;
                     d->symbol = c->ReadStr("id");
-                    UIDEBUG( "Frontend: Loading CHARACTERS... %s", (LPCSTR)d->symbol );
+                    UIDEBUG( "Frontend: Loading CHARACTERS... %s", d->symbol.c_str() );
                     
                     d->face = c->ReadStr("face","") ;
                     d->shield = c->ReadStr("shield","") ;
@@ -181,7 +181,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                 if ( o->IsType("object") ) {
                     obj_data_t* d = new obj_data_t ;
                     d->symbol = o->ReadStr("id");
-                    UIDEBUG( "Frontend: Loading OBJECTS... %s", (LPCSTR)d->symbol );
+                    UIDEBUG( "Frontend: Loading OBJECTS... %s",d->symbol.c_str() );
                     d->i_big = o->ReadStr("big","") ;
                     mr->tme->objects.Add(d);
                 }
@@ -198,7 +198,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                 if ( r->IsType("race") ) {
                     race_data_t* d = new race_data_t ;
                     d->symbol = r->ReadStr("id","");
-                    UIDEBUG( "Frontend: Loading RACES... %s", (LPCSTR)d->symbol );
+                    UIDEBUG( "Frontend: Loading RACES... %s",d->symbol.c_str() );
                     d->face = r->ReadStr("face","") ;
                     d->body = r->ReadStr("body","") ;
                     d->horse = r->ReadStr("horse","") ;

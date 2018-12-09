@@ -103,7 +103,7 @@
 
 
 	<terrain>
-		<terrain id="ARMY"		file="terrain/t_army" />
+		<terrain id="ARMY"		file="t_army0" />
 		<terrain id="MIST"		file="" />
 
 		<terrain id="TN_PLAIN"          file=""                  mapfile="terrain/map_rest.png" mapcell="1" />

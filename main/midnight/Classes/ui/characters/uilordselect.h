@@ -25,7 +25,7 @@ enum LORD_STATUS {
 };
 
 
-class uilordselect : public cocos2d::ui::Widget
+class uilordselect : public cocos2d::ui::Widget, public uidragmoveelement
 {
 public:
     
@@ -35,4 +35,15 @@ public:
 
 protected:
     uilordselect();
+    void enableDragAndDrop();
+    void addTouchListener();
+
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event* ) override;
+    void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* ) override;
+    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* )  override;
+    void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event* ) override;
+    
+    cocos2d::Vec2 mouse_down_pos;
+    cocos2d::Vec2 mouse_last_position;;
+    
 };

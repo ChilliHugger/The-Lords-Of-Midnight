@@ -18,7 +18,7 @@ void tmemanager::ResolveTMEData ()
 {
     for ( u32 ii=0; ii<characters.Count(); ii++ ) {
         char_data_t* d = static_cast<char_data_t*>(characters[ii]);
-        d->id  = TME_LinkData(d->symbol,d);
+        d->id  = TME_LinkData(d->symbol.c_str(),d);
     }
     
     // lets check that all characters have user data
@@ -32,23 +32,23 @@ void tmemanager::ResolveTMEData ()
             auto u = new char_data_t;
             characters.Add(u);
             u->symbol = TME_GetSymbol(c.id);
-            u->id = TME_LinkData(u->symbol,u);
+            u->id = TME_LinkData(u->symbol.c_str(),u);
         }
     }
     
     for ( u32 ii=0; ii<races.Count(); ii++ ) {
         auto d = static_cast<race_data_t*>(races[ii]);
-        d->id  = TME_LinkData(d->symbol,d);
+        d->id  = TME_LinkData(d->symbol.c_str(),d);
     }
     
     for ( u32 ii=0; ii<objects.Count(); ii++ ) {
         auto d = static_cast<obj_data_t*>(objects[ii]);
-        d->id  = TME_LinkData(d->symbol,d);
+        d->id  = TME_LinkData(d->symbol.c_str(),d);
     }
     
     for ( u32 ii=0; ii<terrain.Count(); ii++ ) {
         auto d = static_cast<terrain_data_t*>(terrain[ii]);
-        d->id  = TME_LinkData(d->symbol,d);
+        d->id  = TME_LinkData(d->symbol.c_str(),d);
     }
     
     // clear the lord select locations
