@@ -406,7 +406,22 @@ namespace chilli {
 		typedef base<c_str>     c_string ;
 		typedef base<u32>		c_u32 ;
 		typedef base<s32>		c_s32 ;
-		typedef base<mxid>		c_mxid ;
+        
+        
+        
+        
+        
+        template <class T>
+        class myvector : public std::vector<T>
+        {
+        public:
+            void Clear() { std::vector<T>::clear(); }
+            u32 Count() const { return (u32)std::vector<T>::size(); }
+            bool Add(T o) { std::vector<T>::push_back(o); return true; }
+            void Create( u32 size ) { std::vector<T>::resize(size); }
+        };
+        
+        typedef myvector<mxid>        c_mxid ;
 
 	}
 

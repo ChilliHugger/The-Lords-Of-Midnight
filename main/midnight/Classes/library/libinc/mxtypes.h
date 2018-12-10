@@ -24,8 +24,17 @@
 
 typedef std::function<void(void)> MXVoidCallback;
 
+#define CONTINUE_IF( x )  \
+    if ( (x) ) continue
 
-//#include <malloc.h>
+#define CONTINUE_IF_NULL( x ) \
+    CONTINUE_IF( (x) == nullptr )
+
+#define BREAK_IF( x )  \
+    if ( (x) ) break
+
+#define BREAK_IF_NULL( x )  \
+    BREAK_IF( (x) == nullptr )
 
 #define FORWARD_REFERENCE(x) \
     class x

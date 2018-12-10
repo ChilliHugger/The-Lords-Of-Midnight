@@ -35,7 +35,10 @@ protected:
     chilli::types::f32 extracted();
     
     void getCharacters();
-    f32 calcInitialScrollViewHeight();
+    void setInitialScrollViewHeight();
+    void updateScrollViewHeight( f32 height );
+    void resizeScrollView();
+
     cocos2d::Vec2 calcGridLocation ( u32 index );
     
     void updateFilters();
@@ -45,7 +48,7 @@ protected:
     uilordselect* getOverlappingLord ( uilordselect* source );
     void resetPositions();
 
-    
+    void showCharacterPositions();
 private:
     s32            SELECT_GRID_X ;
     s32            SELECT_GRID_Y ;
@@ -54,7 +57,7 @@ private:
     s32            MAX_COLUMNS ;
     s32            START_X ;
     s32            START_Y ;
-    tme::loc_t     loc;
+
     
     cocos2d::ui::ScrollView* scrollView;
     selectmodel*    model;

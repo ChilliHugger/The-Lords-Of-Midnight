@@ -32,6 +32,8 @@ using namespace cocos2d::ui;
     #define BACKGROUND_COLOUR   _clrCyan
 #endif
 
+static const point PointZero(0,0);
+
 
 bool panel_select::init()
 {
@@ -84,8 +86,8 @@ bool panel_select::init()
     scrollView->setBounceEnabled(true);
     scrollView->setScrollBarEnabled(true);
     scrollView->setScrollBarPositionFromCornerForVertical(Vec2(RES(8),0));
-//    scrollView->setBackGroundColor(_clrYellow);
-//    scrollView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+    //scrollView->setBackGroundColor(_clrYellow);
+    //scrollView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
     scrollView->setLocalZOrder(ZORDER_FAR);
     uihelper::AddTopLeft(safeArea, scrollView, START_X, START_Y);
     
@@ -94,9 +96,12 @@ bool panel_select::init()
     size.height -= (START_Y*2) + RES(64);
     size.width -= (START_X*2) + RES(64) ;
     SELECT_GRID_X_LEADING = (size.width-(MAX_COLUMNS*SELECT_GRID_X))/MAX_COLUMNS;
+    
     scrollView->setInnerContainerSize( size );
     scrollView->setContentSize( size );
+
     
+    //setInitialScrollViewHeight();
     getCharacters();
     
     addShortcutKey(ID_FILTER_DAWN,       KEYCODE(F1));
@@ -112,13 +117,61 @@ bool panel_select::init()
     return true;
 }
 
-f32 panel_select::calcInitialScrollViewHeight()
+void panel_select::setInitialScrollViewHeight()
 {
-    auto pos = calcGridLocation(model->characters.Count()-1);
-    f32 height = pos.y + SELECT_GRID_Y + RES(0);
+    //auto pos = calcGridLocation(model->characters.Count()-1);
+    //f32 height = pos.y + SELECT_GRID_Y + RES(0);
+
+    f32 height = 1024*4;
+    updateScrollViewHeight(height);
+}
+
+void panel_select::resizeScrollView()
+{
+    f32 maxy=0;
+    f32 miny=999999;
+    f32 previousHeight = scrollView->getInnerContainerSize().height;
     
+    for( auto node : scrollView->getChildren() ) {
+        auto e = dynamic_cast<uilordselect*>(node);
+        CONTINUE_IF_NULL(e);
+        
+        f32 y = e->getPosition().y;
+        if ( y > maxy )
+            maxy = y;
+        if ( y < miny )
+            miny = y;
+    }
+    
+    f32 height = (maxy - miny) + SELECT_GRID_Y;
+    // top and bottom padding + bottom icon space
+    //
+    height += (START_Y*2) + RES(64);
+    
+    updateScrollViewHeight(height);
+    height = scrollView->getInnerContainerSize().height;
+
+    f32 diff =  previousHeight - height;
+    for( auto node : scrollView->getChildren() ) {
+        auto e = dynamic_cast<uilordselect*>(node);
+        CONTINUE_IF_NULL(e);
+        f32 y = e->getPosition().y;
+        e->setPositionY(y-diff);
+    }
+    
+//    auto pos = scrollView->getInnerContainerPosition();
+//    pos.y+=diff;
+//    scrollView->setInnerContainerPosition(pos);
+
+    updateScrollViewHeight(height);
+}
+
+void panel_select::updateScrollViewHeight( f32 height )
+{
     // adjust the inner container of the scroll view
     auto size = safeArea->getContentSize();
+    size.height -= (START_Y*2) + RES(64);
+    
     f32 width = scrollView->getContentSize().width;
     
     // scroll?
@@ -126,46 +179,38 @@ f32 panel_select::calcInitialScrollViewHeight()
         scrollView->setBounceEnabled(false);
         scrollView->setScrollBarEnabled(false);
         height = size.height;
-        scrollView->setContentSize(Size(width,height));
     }
     
+    scrollView->setContentSize(Size(width,size.height));
     scrollView->setInnerContainerSize(Size(width,height));
-    return height;
 }
 
 void panel_select::getCharacters()
 {
-    // TODO: This should be a TME_ or mr->
-    variant args[3];
-    args[0] = &model->characters ;
-    args[1] = CMDG_LOYAL ;
-    args[2] = MAKE_LOCID(loc.x,loc.y) ;
-    mxi->GetProperties( "CharsForCommand", args, 3 );
+    model->updateCharacters();
     
     // calc position of last item in the grid
     // so that we have a canvas height
-    f32 height = calcInitialScrollViewHeight();
+    setInitialScrollViewHeight();
+    
+    f32 height = 0;
     
     // now place all the lords
     character c;
-    for ( u32 ii=0; ii<model->characters.Count(); ii++ ) {
-        
+    for ( u32 ii=0; ii<model->characters.Count(); ii++ )
+    {
         TME_GetCharacter(c,model->characters[ii]);
-        if ( c.following )
-            continue;
         
-        auto pos = calcGridLocation(ii);
-        pos.y = height-pos.y;
+        CONTINUE_IF ( c.following );
         
         layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
         
         auto lord = uisinglelord::createWithLord(c.id);
         lord->setAnchorPoint(uihelper::AnchorTopLeft);
         lord->setIgnoreAnchorPointForPosition(false);
-
+        lord->addClickEventListener(clickCallback);
         lord->setTag(tag);
         lord->setUserData(c.userdata);
-        lord->addClickEventListener(clickCallback);
         scrollView->addChild(lord);
 
         auto userdata = static_cast<char_data_t*>(c.userdata);
@@ -175,20 +220,42 @@ void panel_select::getCharacters()
         else
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(userdata->shortcut_new));
 
-        if ( userdata->select_loc.x != 0 && userdata->select_loc.y != 0) {
+        // only add positions for lords that already
+        // have a position
+        if ( userdata->select_loc != PointZero ) {
+            Vec2 pos;
             pos.x = userdata->select_loc.x;
             pos.y = userdata->select_loc.y;
+            lord->setPosition( pos);
+            if ( pos.y > height )
+                height = pos.y;
         }
         
-        lord->setPosition( pos);
         applyFilters( lord, c );
         
     }
+
+    updateScrollViewHeight(height);
     
+    // now position all the lords that haven't already been added
+    // to the scrollview
+    for ( u32 ii=0; ii<model->characters.Count(); ii++ )
+    {
+        TME_GetCharacter(c,model->characters[ii]);
+        CONTINUE_IF ( c.following );
+        
+        auto lord = getLordElement(c.id);
+        
+        auto userdata = static_cast<char_data_t*>(c.userdata);
+        if ( userdata->select_loc == PointZero ) {
+            lord->setPosition(calcGridLocation(ii));
+            checkCollision(lord);
+            auto pos = lord->getPosition();
+            userdata->select_loc.x = pos.x;
+            userdata->select_loc.y = pos.y;
+        }
+    }
     
-    
-    //scrollView->setInnerContainerPosition(Vec2(0,height));
- 
 }
 
 uilordselect* panel_select::getLordElement( mxid id )
@@ -199,11 +266,11 @@ uilordselect* panel_select::getLordElement( mxid id )
 void panel_select::checkCollision ( uilordselect* lord )
 {
     uilordselect* overlap;
-    if ( (overlap=getOverlappingLord(lord)) != NULL ) {
+    if ( (overlap=getOverlappingLord(lord)) != nullptr ) {
         for ( int ii=0; ii<500; ii++ ) {
             lord->setPosition( calcGridLocation(ii) );
             
-            if ( (overlap=getOverlappingLord(lord)) == NULL )
+            if ( (overlap=getOverlappingLord(lord)) == nullptr )
                 break;
         }
     }
@@ -231,38 +298,28 @@ uilordselect* panel_select::getOverlappingLord ( uilordselect* source )
 //            return lord1;
 //    }
 //
-    int g1=SELECT_GRID_X/2;
-    int g2=SELECT_GRID_X/2;
-    
     mxid id = source->getTag() - ID_SELECT_CHAR;
     TME_GetCharacter(c, id );
-    if ( c.followers )
-        g1=128;
+
+    int g2=SELECT_GRID_X/2;
+    int g1 = ( c.followers ) ? SELECT_GRID_X : SELECT_GRID_X/2 ;
     
-    
-    for ( u32 ii=0; ii<model->characters.Count(); ii++ ) {
+    //for ( u32 ii=0; ii<model->characters.Count(); ii++ )
+    for ( auto id : model->characters )
+    {
+        auto target = getLordElement(id);
         
-        auto target = getLordElement(model->characters[ii]);
-        
-        if ( target == source )
-            continue;
-        
-        if ( !target->isEnabled() )
-            continue;
-        
-        if ( target->getTag() == 0 )
-            continue ;
+        CONTINUE_IF_NULL( target );
+        CONTINUE_IF( target == source );
+        CONTINUE_IF( !target->isEnabled() );
+        CONTINUE_IF( target->getTag() == 0 );
         
         mxid id2 = target->getTag() - ID_SELECT_CHAR;
         
         TME_GetCharacter(c,id2 );
-        if ( c.following )
-            continue;
+        CONTINUE_IF(c.following);
         
-        g2=SELECT_GRID_X/2;
-        if ( c.followers )
-            g2=128;
-        
+        g2 = ( c.followers ) ? SELECT_GRID_X : SELECT_GRID_X/2 ;
         
         auto p2 = target->getPosition();
         auto p1 = source->getPosition();
@@ -277,41 +334,36 @@ uilordselect* panel_select::getOverlappingLord ( uilordselect* source )
             return target;
     }
     
-    return NULL ;
+    return nullptr ;
 }
 
 // position from top left of canvas
 Vec2 panel_select::calcGridLocation ( u32 index )
 {
-    f32 x = 0 ;
-    f32 y = 0 ;
+    Vec2 pos = Vec2::ZERO ;
     
     int r = index / MAX_COLUMNS ;
     int c = index % MAX_COLUMNS ;
     
-    x += c * (SELECT_GRID_X+SELECT_GRID_X_LEADING) ;
-    y += r * (SELECT_GRID_Y+SELECT_GRID_Y_LEADING) ;
+    pos.x = c * (SELECT_GRID_X+SELECT_GRID_X_LEADING) ;
+    pos.y = r * (SELECT_GRID_Y+SELECT_GRID_Y_LEADING) ;
+    pos.y = scrollView->getInnerContainerSize().height-pos.y;
     
-    return Vec2(x,y);
+    return pos;
 }
 
 
 void panel_select::updateFilters()
 {
-
-    // setup lords
     character        c;
-    for ( u32 ii=0; ii<model->characters.Count(); ii++ ) {
-        
-        TME_GetCharacter(c,model->characters[ii]);
-        
-        auto button = getLordElement(c.id);
-        if ( button == NULL )
-            continue;
-        
-        if ( c.following )
-            continue;
-        
+    for ( auto id : model->characters )
+    {
+        auto button = getLordElement(id);
+        CONTINUE_IF_NULL( button );
+   
+        TME_GetCharacter(c,id);
+        CONTINUE_IF( c.following );
+   
         applyFilters( button, c );
     }
     
@@ -429,7 +481,7 @@ void panel_select::OnNotification( Ref* sender )
             AreYouSure(NIGHT_MSG, [&] {
                 mr->night();
             });
-            
+            break;
         }
         
         case ID_CLEANUP_SELECT:
@@ -443,30 +495,44 @@ void panel_select::OnNotification( Ref* sender )
 
 void panel_select::resetPositions()
 {
-    f32 height = calcInitialScrollViewHeight();
+    setInitialScrollViewHeight();
     
     character c;
     for ( u32 ii=0; ii<model->characters.Count(); ii++ ) {
         
         TME_GetCharacter(c,model->characters[ii]);
-        
-        if ( c.following )
-            continue;
+        CONTINUE_IF(c.following);
         
         auto button = getLordElement(c.id);
-        if ( button == NULL )
-            continue;
-   
-        auto pos = calcGridLocation(ii);
-        pos.y = height-pos.y;
-        
-        button->setPosition(pos);
+        CONTINUE_IF_NULL(button);
+
+        button->setPosition(calcGridLocation(ii));
         
     }
-
+    resizeScrollView();
 }
 
 void panel_select::OnDeActivate()
 {
     uipanel::OnDeActivate();
+    
+    for( auto node : scrollView->getChildren() ) {
+        auto lord = dynamic_cast<uilordselect*>(node);
+        CONTINUE_IF_NULL(lord);
+        auto userdata = static_cast<char_data_t*>(lord->getUserData());
+        auto pos = lord->getPosition();
+        userdata->select_loc.x = pos.x;
+        userdata->select_loc.y = pos.y;
+    }
+    
+}
+
+void panel_select::showCharacterPositions()
+{
+    for( auto node : scrollView->getChildren() ) {
+        auto e = dynamic_cast<uilordselect*>(node);
+        CONTINUE_IF_NULL(e);
+        auto ud = static_cast<char_data_t*>(e->getUserData());
+        UIDEBUG( "%s = (%f,%f)", ud->symbol.c_str(), e->getPosition().x, e->getPosition().y);
+    }
 }

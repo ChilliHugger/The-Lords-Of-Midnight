@@ -11,6 +11,7 @@
 #include "../tme_interface.h"
 
 using namespace chilli::lib;
+using namespace tme;
 
 void selectmodel::setDefaults()
 {
@@ -18,6 +19,15 @@ void selectmodel::setDefaults()
     filters.Set(0xffffffff);
     
     characters.Clear();
+}
+
+void selectmodel::updateCharacters()
+{
+    variant args[3];
+    args[0] = &characters ;
+    args[1] = CMDG_LOYAL ;
+    args[2] = MAKE_LOCID(loc.x,loc.y) ;
+    mxi->GetProperties( "CharsForCommand", args, 3 );
 }
 
 void selectmodel::serialize( u32 version, lib::archive& ar )

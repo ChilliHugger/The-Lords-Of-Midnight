@@ -16,10 +16,11 @@ class selectmodel : public panelmodel
 public:
     void serialize( u32 version, lib::archive& ar ) override;
     virtual void setDefaults() override;
-    
+    void updateCharacters();
+
 public:
     c_mxid characters;
     flags32 filters;
-    
+    tme::loc_t     loc;
     
 };
