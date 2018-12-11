@@ -22,6 +22,8 @@ enum LORD_STATUS {
     status_inbattle = MXBIT(3),
     status_dead     = MXBIT(4),
     status_tunnel   = MXBIT(5),
+    status_selected = MXBIT(6),
+    status_location = MXBIT(7),
 };
 
 
@@ -32,7 +34,9 @@ public:
     CREATE_FUNC(uilordselect);
     
     virtual bool init() override;
-
+    virtual void updateStatus(character& c);
+    virtual void refreshStatus();
+    
 protected:
     uilordselect();
     void enableDragAndDrop();
@@ -45,9 +49,14 @@ protected:
     
     virtual void OnStopDrag(uidragevent* event) override;
 
-    
+
+
     
     cocos2d::Vec2 mouse_down_pos;
     cocos2d::Vec2 mouse_last_position;;
+
+public:
+    flags16         status;
+
     
 };

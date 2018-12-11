@@ -36,8 +36,15 @@ bool uisinglelord::init()
         this->setTouchEnabled(true);
         this->enableDragAndDrop();
         
+        selectedNode = Sprite::createWithSpriteFrameName("lord_select_circle");
+        selectedNode->setColor(_clrBlue);
+        uihelper::AddCenter(this, selectedNode, 0, DIS(-9));
+        selectedNode->setVisible(false);
         
-        
+        locationNode = Sprite::createWithSpriteFrameName("map_current_location");
+        locationNode->setContentSize(this->getContentSize());
+        uihelper::AddCenter(this, locationNode);
+        locationNode->setVisible(false);
         return true;
     }
     return false;
@@ -74,7 +81,12 @@ void uisinglelord::updateStatus(character& c)
     
     if ( Character_IsDead(c) )
         status.Set(LORD_STATUS::status_dead);
-    
+}
+
+void uisinglelord::refreshStatus()
+{
+    locationNode->setVisible( status.Is(LORD_STATUS::status_location) );
+    selectedNode->setVisible( status.Is(LORD_STATUS::status_selected) );
 }
 
 Sprite* uisinglelord::getStatusImage()

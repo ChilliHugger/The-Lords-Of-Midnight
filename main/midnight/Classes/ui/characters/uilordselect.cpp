@@ -28,6 +28,14 @@ bool uilordselect::init()
     return Widget::init();
 }
 
+void uilordselect::updateStatus(character& c)
+{
+}
+
+void uilordselect::refreshStatus()
+{
+}
+
 void uilordselect::enableDragAndDrop()
 {
     //addTouchListener();

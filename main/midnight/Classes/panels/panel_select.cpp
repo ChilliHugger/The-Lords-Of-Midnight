@@ -388,29 +388,27 @@ void panel_select::applyFilters ( uilordselect* e, character& c )
         show=false;
     if ( Character_IsPreparingForBattle(c) && !filters.Is(filter_show_battle) )
         show=false;
-    
 #endif
     
-    // TODO: Current Location
-    // TODO: Current Selection
+    e->status.Reset(LORD_STATUS::status_location|LORD_STATUS::status_selected);
     
-   // e->isCurrentSelection=FALSE;
-   // e->isCurrentLocation=FALSE;
+    if ( c.id == TME_CurrentCharacter().id )
+        e->status.Set(LORD_STATUS::status_selected|LORD_STATUS::status_location);
     
-//    if ( filters.Is(filter_show_current) ) {
-//        if ( c.id == TME_CurrentCharacter().id )
-//            e->isCurrentSelection=TRUE;
-//
-//        if ( (c.location.x == TME_CurrentCharacter().location.x) && (c.location.y == TME_CurrentCharacter().location.y) )
-//            e->isCurrentLocation=TRUE;
-//
-//#if defined(_DDR_)
-//        if ( Character_IsInTunnel(c) != Character_IsInTunnel(TME_CurrentCharacter()))
-//            e->isCurrentLocation = FALSE ;
-//#endif
-//    }
+    if ( c.location == TME_CurrentCharacter().location )
+        e->status.Set(LORD_STATUS::status_location);
     
+#if defined(_DDR_)
+    if ( Character_IsInTunnel(c) != Character_IsInTunnel(TME_CurrentCharacter()))
+        e->status.Reset(LORD_STATUS::status_location);
+#endif
+
+    if ( !filters.Is(filter_show_current) && e->status.Is(LORD_STATUS::status_location) )
+        show=false;
+
+
     e->setVisible(show);
+    e->refreshStatus();
 }
 
 

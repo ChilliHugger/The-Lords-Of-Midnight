@@ -14,7 +14,7 @@
 #include "../../system/tmemanager.h"
 
 #define SELECT_ELEMENT_WIDTH   DIS(128)
-#define SELECT_ELEMENT_HEIGHT  DIS(110)
+#define SELECT_ELEMENT_HEIGHT  DIS(128)
 #define SELECT_IMAGE_HEIGHT    DIS(72)
 
 
@@ -26,12 +26,13 @@ public:
     static uisinglelord* createWithLord ( mxid characterid );
 
     bool setLord( mxid characterid );
+    void refreshStatus() override;
+    void updateStatus(character& c) override;
     
 protected:
     uisinglelord();
     
-    void updateStatus(character& c);
-    
+ 
     cocos2d::Sprite* getStatusImage();
     cocos2d::Sprite* getFaceImage(character& c);
 
@@ -40,8 +41,8 @@ protected:
     virtual void onPressStateChangedToDisabled() override;
     
 protected:
-    flags16         status;
-    //char_data_t*    userdata;
     Node*           buttonNode;
     Node*           statusNode;
+    Node*           locationNode;
+    Node*           selectedNode;
 };
