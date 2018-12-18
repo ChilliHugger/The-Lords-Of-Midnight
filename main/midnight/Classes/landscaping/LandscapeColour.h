@@ -32,6 +32,8 @@ public:
     Color4B Adjust( Color4B source, Color4F tint );
     Color3B GetPersonColour();
     
+    void updateNode( Node* node );
+
 public:
     LandscapeOptions*   options;
     

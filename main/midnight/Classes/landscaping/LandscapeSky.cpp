@@ -54,12 +54,13 @@ bool LandscapeSky::initWithOptions( LandscapeOptions* options )
     sky->setAnchorPoint( Vec2::ZERO );
     
     if ( options->programState ) {
-        auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));
-        auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(2));
-        sky->setGLProgramState( options->programState->clone() );
-        sky->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
-        sky->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
-        sky->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));
+        options->colour->updateNode(sky);
+//        auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));
+//        auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(2));
+//        sky->setGLProgramState( options->programState->clone() );
+//        sky->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
+//        sky->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
+//        sky->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));
     }
     
     addChild(sky);

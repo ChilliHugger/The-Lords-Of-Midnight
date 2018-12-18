@@ -65,6 +65,7 @@ enum tagid_t {
 #define SHIELD_X        RES(32)
 #define SHIELD_Y        RES(-16)
 #define SHIELD_SCALE    0.9f
+#define IMAGE_HEADER    "misc/header.png"
 #endif
 
 panel_look::panel_look() :
@@ -119,6 +120,12 @@ bool panel_look::init()
     layHeader = LayerColor::create(Color4B(_clrWhite), getContentSize().width, RES(228) );
     layHeader->setLocalZOrder(ZORDER_FAR+1);
     uihelper::AddTopLeft(this,layHeader);
+    
+#if defined(_DDR_)
+    imgHeader = ImageView::create(IMAGE_HEADER);
+    imgHeader->setColor(_clrBlack);
+    uihelper::AddBottomLeft(layHeader,imgHeader,RES(0), RES(0));
+#endif
     
     f32 lblNameAdjust = 0;
     
@@ -518,6 +525,11 @@ void panel_look::UpdateLandscape()
     // so update the colour to the same as the sky
 #if defined(_LOM_)
     layHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(1)));
+#endif
+#if defined(_DDR_)
+    //options.colour->updateNode(imgHeader);
+    imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(2)));
+
 #endif
     
 }

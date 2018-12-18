@@ -150,6 +150,7 @@ protected:
     Label*              lblName;
     ui::ImageView*      imgShield;
     LayerColor*         layHeader;
+    ui::ImageView*      imgHeader;
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
  

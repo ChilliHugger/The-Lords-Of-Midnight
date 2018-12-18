@@ -12,6 +12,16 @@
 
 static Color4B TimeOfDayColours[32][4];
 
+void LandscapeColour::updateNode( Node* node )
+{
+    auto tint1 = Color4F(CalcCurrentMovementTint(1));
+    auto tint2 = Color4F(CalcCurrentMovementTint(2));
+    node->setGLProgramState( options->programState->clone() );
+    node->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
+    node->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
+    node->getGLProgramState()->setUniformVec4("p_right", Vec4(tint2.r,tint2.g,tint2.b,tint2.a));
+
+}
 
 Color4B LandscapeColour::Adjust( Color4B source, Color4F tint )
 {
