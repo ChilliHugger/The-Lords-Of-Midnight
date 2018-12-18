@@ -17,6 +17,7 @@
 
 #include "../ui/uihelper.h"
 #include "../ui/uicommandwindow.h"
+#include "../ui/characters/uisinglelord.h"
 
 #include "../landscaping/LandscapeSky.h"
 #include "../landscaping/LandscapeLand.h"
@@ -71,7 +72,6 @@ enum tagid_t {
 panel_look::panel_look() :
     current_view(nullptr),
     current_info(nullptr),
-    follower_info(nullptr),
     i_command_window(nullptr),
     lblDescription(nullptr),
     lblName(nullptr),
@@ -156,6 +156,16 @@ bool panel_look::init()
     imgShield->setTag(ID_THINK);
     uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
     
+    // Leader Shield
+    following = uisinglelord::create();
+    following->setLocalZOrder(ZORDER_DEFAULT+1);
+    following->addClickEventListener(callback);
+    f32 y=RES(16);
+#if defined(_DDR_)
+    y = RES(228-64);
+#endif
+    uihelper::AddTopRight(safeArea, following,0,y);
+    
     // people in front
     for ( int ii=0; ii<3; ii++ ) {
         people[ii] = LandscapePeople::create(&options);
@@ -165,8 +175,7 @@ bool panel_look::init()
 
     //
     current_info = new locationinfo_t();
-    follower_info = new locationinfo_t();
-        
+    
     // Command Window
     i_command_window = uicommandwindow::create(this);
     i_command_window->retain();
@@ -191,18 +200,15 @@ bool panel_look::init()
     
     // TODO: Popup menu for character selection
     
-    // TODO: Shortcut keys
+    // Shortcut keys
     addShortcutKey(ID_SELECT_ALL, K_SELECT);
     addShortcutKey(ID_ACTIONS,    K_CHOOSE);
-    
-    
-    // TODO: Following
-    
+
     // TODO: Debug Menu
     
     // TODO: Compass
     
-    // TODO: Direction movement indicators
+    // Direction movement indicators
     setupMovementIndicators();
     
    
@@ -358,7 +364,7 @@ void panel_look::getCharacterInfo ( defaultexport::character_t& c, locationinfo_
     info->time = c.time;
     info->location = c.location;
     info->looking = c.looking;
-    
+    info->following = c.following;
     info->shield = GetCharacterShield(c) ;
     info->person = GetCharacterImage(c);
     info->face = GetCharacterFace(c);
@@ -401,21 +407,31 @@ void panel_look::getCurrentLocationInfo ( void )
     character&    c = TME_CurrentCharacter();
     getCharacterInfo(c, current_info);
     TME_GetCharacterLocationInfo ( c );
-    
-    
-    if ( c.following ) {
-        character tempc;
-        TME_GetCharacter(tempc, c.following );
-        getCharacterInfo(tempc, follower_info);
-    }else{
-        follower_info->id=0;
-    }
-    
+
     OnSetupIcons();
     
 }
 
+void panel_look::setupLeaderButton()
+{
+    if ( current_info->following == IDT_NONE ) {
+        following->setVisible(false);
+        return;
+    }
+    
+    character c;
+    TME_GetCharacter(c, current_info->following);
+    
+    layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
+    following->setLord( c.id );
+    following->setTag(tag);
+    following->setUserData(static_cast<char_data_t*>(c.userdata));
+    following->status.Clear();
+    following->refreshStatus();
+    following->setStatusImageVisible(false);
+    following->setVisible(true);
 
+}
 
 void panel_look::setViewForCurrentCharacter ( void )
 {
@@ -434,17 +450,7 @@ void panel_look::setViewForCurrentCharacter ( void )
     imgShield->setAnchorPoint(uihelper::AnchorTopRight);
     imgShield->setIgnoreAnchorPointForPosition(false);
     
-    // TODO: Following
-//    if ( follower_info->id ) {
-//        uiimage* img = (uiimage*)i_Following->children[0];
-//        img->Image(follower_info->face);
-//        i_Following->dimensions = img->dimensions ;
-//        i_Following->tag = follower_info->id;
-//        i_Following->ShowEnable();
-//        //ShowHelpWindow(HELP_GROUPED);
-//    }else{
-//        i_Following->HideDisable();
-//    }
+    setupLeaderButton();
 
     options.colour->SetLookColour(current_info->time);
     

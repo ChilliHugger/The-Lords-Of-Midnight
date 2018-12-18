@@ -13,6 +13,7 @@
 #define NONE_ACTIVTY_DURATION   30.0f
 
 FORWARD_REFERENCE(uicommandwindow);
+FORWARD_REFERENCE(uisinglelord);
 
 typedef enum SNAP_MODE {
     sm_back_right=1,
@@ -45,6 +46,7 @@ typedef struct {
     mxdir_t         looking;
     mxtime_t        time;
     tme::loc_t      location;
+    mxid            following;
     
     std::string     shield;
     std::string     person;
@@ -110,6 +112,7 @@ protected:
     void OnDeActivate( void ) override;
 
     void OnSetupIcons();
+    void setupLeaderButton();
     
     void UpdateLandscape();
     
@@ -144,13 +147,13 @@ protected:
     //bool                isMoving;
     
     locationinfo_t*     current_info;
-    locationinfo_t*     follower_info;
     
     Label*              lblDescription;
     Label*              lblName;
     ui::ImageView*      imgShield;
     LayerColor*         layHeader;
     ui::ImageView*      imgHeader;
+    uisinglelord*       following;
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
  

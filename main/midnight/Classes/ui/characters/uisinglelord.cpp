@@ -188,6 +188,10 @@ bool uisinglelord::setLord( mxid characterid )
     return true;
 }
 
+void uisinglelord::setStatusImageVisible( bool visible )
+{
+    statusNode->setVisible(visible);
+}
 
 void uisinglelord::onPressStateChangedToNormal()
 {
@@ -195,7 +199,7 @@ void uisinglelord::onPressStateChangedToNormal()
         buttonNode->setScale(1.0f);
         buttonNode->setOpacity(ALPHA(1.0f));
         if ( statusNode )
-            statusNode->setVisible(true);
+            statusNode->setOpacity(ALPHA(1.0f));
     }
 }
 
@@ -205,7 +209,7 @@ void uisinglelord::onPressStateChangedToPressed()
         buttonNode->setScale(0.75f);
         buttonNode->setOpacity(ALPHA(1.0f));
         if ( statusNode )
-            statusNode->setVisible(true);
+            statusNode->setOpacity(ALPHA(1.0f));
     }
 }
 
@@ -215,6 +219,6 @@ void uisinglelord::onPressStateChangedToDisabled()
         buttonNode->setScale(1.0f);
         buttonNode->setOpacity(ALPHA(0.25f));
         if ( statusNode )
-            statusNode->setVisible(false);
+            statusNode->setOpacity(ALPHA(0.0f));
     }
 }

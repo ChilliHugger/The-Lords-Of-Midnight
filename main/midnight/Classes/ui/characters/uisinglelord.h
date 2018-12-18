@@ -27,12 +27,16 @@ public:
 
     bool setLord( mxid characterid );
     void refreshStatus() override;
-    void updateStatus(character& c) override;
+
+    
+    void setStatusImageVisible( bool visible );
+
     
 protected:
     uisinglelord();
     
- 
+     void updateStatus(character& c) override;
+    
     cocos2d::Sprite* getStatusImage();
     cocos2d::Sprite* getFaceImage(character& c);
 
