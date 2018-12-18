@@ -54,6 +54,7 @@ typedef struct {
 
     bool            tunnel;
     bool            lookingdowntunnel;
+    bool            lookingouttunnel;
 
 } locationinfo_t ;
 

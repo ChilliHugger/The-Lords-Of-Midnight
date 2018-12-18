@@ -222,6 +222,9 @@
 		839F0D781FDBFAA6000E2CC2 /* uielement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D751FDBFAA6000E2CC2 /* uielement.cpp */; };
 		839F0D7F1FDBFF25000E2CC2 /* uieventargs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */; };
 		839F0D801FDBFF25000E2CC2 /* uieventargs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */; };
+		839F9F4321C23E8C00EC5DBB /* TunnelView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F9F4121C23E8C00EC5DBB /* TunnelView.cpp */; };
+		839F9F4421C23E8C00EC5DBB /* TunnelView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F9F4121C23E8C00EC5DBB /* TunnelView.cpp */; };
+		839F9F4521C23E8C00EC5DBB /* TunnelView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 839F9F4121C23E8C00EC5DBB /* TunnelView.cpp */; };
 		83A600052187B98700FBDAFC /* uithinkpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A600032187B98700FBDAFC /* uithinkpage.cpp */; };
 		83A600062187B98700FBDAFC /* uithinkpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A600032187B98700FBDAFC /* uithinkpage.cpp */; };
 		83A9ACBA1FEBBEBB00673B66 /* MyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */; };
@@ -661,6 +664,8 @@
 		839F0D761FDBFAA6000E2CC2 /* uielement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uielement.h; sourceTree = "<group>"; };
 		839F0D7D1FDBFF25000E2CC2 /* uieventargs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uieventargs.cpp; sourceTree = "<group>"; };
 		839F0D7E1FDBFF25000E2CC2 /* uieventargs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uieventargs.h; sourceTree = "<group>"; };
+		839F9F4121C23E8C00EC5DBB /* TunnelView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TunnelView.cpp; path = landscaping/TunnelView.cpp; sourceTree = "<group>"; };
+		839F9F4221C23E8C00EC5DBB /* TunnelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TunnelView.h; path = landscaping/TunnelView.h; sourceTree = "<group>"; };
 		83A600032187B98700FBDAFC /* uithinkpage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uithinkpage.cpp; sourceTree = "<group>"; };
 		83A600042187B98700FBDAFC /* uithinkpage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uithinkpage.h; sourceTree = "<group>"; };
 		83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MyButton.cpp; sourceTree = "<group>"; };
@@ -1191,6 +1196,8 @@
 				8352FBD0216DD693009E22E5 /* ILandscape.cpp */,
 				83B5AB772177892B00CC29EF /* LandscapePeople.cpp */,
 				83B5AB782177892B00CC29EF /* LandscapePeople.h */,
+				839F9F4121C23E8C00EC5DBB /* TunnelView.cpp */,
+				839F9F4221C23E8C00EC5DBB /* TunnelView.h */,
 			);
 			name = landscaping;
 			sourceTree = "<group>";
@@ -1763,6 +1770,7 @@
 				83B5AB7D217E20A000CC29EF /* panel_map_detailed.cpp in Sources */,
 				83D2644E1F360724001C6F13 /* info_command.cpp in Sources */,
 				839F0D731FDBEB7D000E2CC2 /* uitextmenu.cpp in Sources */,
+				839F9F4321C23E8C00EC5DBB /* TunnelView.cpp in Sources */,
 				83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				833172FD219B1E85009A52E7 /* uilordselect.cpp in Sources */,
 				83D264D81F36077E001C6F13 /* c_str.cpp in Sources */,
@@ -1873,6 +1881,7 @@
 				83D2645D1F360724001C6F13 /* info_terrain.cpp in Sources */,
 				8351A52D1FE4633100D9AB57 /* tmemanager.cpp in Sources */,
 				8397AFF51F4CCAA4009B00A2 /* LandscapeDebug.cpp in Sources */,
+				839F9F4421C23E8C00EC5DBB /* TunnelView.cpp in Sources */,
 				83D2645F1F360724001C6F13 /* info_unit.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				83D2646B1F360724001C6F13 /* item_victories.cpp in Sources */,
@@ -2077,6 +2086,7 @@
 				83E301EE21A41BE3005C3F5C /* info_terrain.cpp in Sources */,
 				83E301EF21A41BE3005C3F5C /* tmemanager.cpp in Sources */,
 				83E301F021A41BE3005C3F5C /* LandscapeDebug.cpp in Sources */,
+				839F9F4521C23E8C00EC5DBB /* TunnelView.cpp in Sources */,
 				83E301F121A41BE3005C3F5C /* info_unit.cpp in Sources */,
 				83E301F221A41BE3005C3F5C /* main.cpp in Sources */,
 				83E301F321A41BE3005C3F5C /* item_victories.cpp in Sources */,

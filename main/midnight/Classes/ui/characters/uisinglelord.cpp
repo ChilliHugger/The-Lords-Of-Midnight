@@ -81,6 +81,18 @@ void uisinglelord::updateStatus(character& c)
     
     if ( Character_IsDead(c) )
         status.Set(LORD_STATUS::status_dead);
+    
+    if ( c.id == TME_CurrentCharacter().id )
+        status.Set(LORD_STATUS::status_selected|LORD_STATUS::status_location);
+    
+    if ( c.location == TME_CurrentCharacter().location )
+        status.Set(LORD_STATUS::status_location);
+    
+#if defined(_DDR_)
+    if ( Character_IsInTunnel(c) != Character_IsInTunnel(TME_CurrentCharacter()))
+        status.Reset(LORD_STATUS::status_location);
+#endif
+    
 }
 
 void uisinglelord::refreshStatus()
@@ -169,6 +181,9 @@ bool uisinglelord::setLord( mxid characterid )
     }
     
     buttonNode = face;
+    
+    refreshStatus();
+    
     return true;
 }
 

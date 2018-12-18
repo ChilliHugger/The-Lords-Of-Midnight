@@ -48,6 +48,7 @@ public:
     
     bool            isInTunnel;
     bool            isLookingDownTunnel;
+    bool            isLookingOutTunnel;
     
     
     

@@ -170,7 +170,7 @@ void uicommandwindow::initialiseCommands()
     auto rest = uihelper::CreateImageButton("i_rest", ID_REST, callback);
     addItem(rest,CHOOSE_REST);
     
-    auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_TUNNEL, callback);
+    auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, callback);
     addItem(tunnel, CHOOSE_TUNNEL);
     
 #endif

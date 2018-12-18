@@ -96,7 +96,7 @@
                 <key>verticesUV</key>
                 <string>421 39 438 107 434 124 430 128 3 128 2 25 143 2</string>
             </dict>
-            <key>t_flames</key>
+            <key>t_column</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -225,7 +225,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:5b20c1ab913ab0da29cb9b59e2c17906:2d920782894253de5d203033cf5b0b80:8e90b992225262fb38ed17a113ef71b1$</string>
+            <string>$TexturePacker:SmartUpdate:02681ac479ba3891b39e4eddd981149e:2d920782894253de5d203033cf5b0b80:8e90b992225262fb38ed17a113ef71b1$</string>
             <key>textureFileName</key>
             <string>terrain-1.png</string>
         </dict>

@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.10.0</string>
+        <string>4.11.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -284,7 +284,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">t_flames.png</key>
+            <key type="filename">t_column.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -323,16 +323,16 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">t_fountain2.png</key>
+            <key type="filename">t_fountain.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>113,66,225,133</rect>
+                <rect>113,62,225,124</rect>
                 <key>scale9Paddings</key>
-                <rect>113,66,225,133</rect>
+                <rect>113,62,225,124</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -515,10 +515,8 @@
             <filename>flame03.png</filename>
             <filename>t_army2.png</filename>
             <filename>t_city.png</filename>
-            <filename>t_flames.png</filename>
             <filename>t_forest2.png</filename>
             <filename>t_fortress.png</filename>
-            <filename>t_fountain2.png</filename>
             <filename>t_gate.png</filename>
             <filename>t_hall.png</filename>
             <filename>t_hills2.png</filename>
@@ -533,6 +531,8 @@
             <filename>t_temple.png</filename>
             <filename>t_tower2.png</filename>
             <filename>sky.png</filename>
+            <filename>t_fountain.png</filename>
+            <filename>t_column.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

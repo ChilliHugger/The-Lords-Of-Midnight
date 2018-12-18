@@ -19,6 +19,9 @@ void LandscapeGenerator::Build(LandscapeOptions* options)
     
     items->clear();
 	
+    if ( options->isInTunnel )
+        return;
+    
     BuildPanorama();
 
 }

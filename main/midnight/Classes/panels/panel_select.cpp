@@ -390,25 +390,10 @@ void panel_select::applyFilters ( uilordselect* e, character& c )
         show=false;
 #endif
     
-    e->status.Reset(LORD_STATUS::status_location|LORD_STATUS::status_selected);
-    
-    if ( c.id == TME_CurrentCharacter().id )
-        e->status.Set(LORD_STATUS::status_selected|LORD_STATUS::status_location);
-    
-    if ( c.location == TME_CurrentCharacter().location )
-        e->status.Set(LORD_STATUS::status_location);
-    
-#if defined(_DDR_)
-    if ( Character_IsInTunnel(c) != Character_IsInTunnel(TME_CurrentCharacter()))
-        e->status.Reset(LORD_STATUS::status_location);
-#endif
-
     if ( !filters.Is(filter_show_current) && e->status.Is(LORD_STATUS::status_location) )
         show=false;
-
-
+    
     e->setVisible(show);
-    e->refreshStatus();
 }
 
 

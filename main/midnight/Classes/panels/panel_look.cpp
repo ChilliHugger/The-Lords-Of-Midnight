@@ -22,6 +22,7 @@
 #include "../landscaping/LandscapeLand.h"
 #include "../landscaping/LandscapeTerrain.h"
 #include "../landscaping/LandscapeColour.h"
+#include "../landscaping/TunnelView.h"
 
 #include "../tme_interface.h"
 
@@ -297,7 +298,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     
 #if defined(_DDR_)
     if ( loc.flags.Is(lf_mist) ) {
-        if ( !ShowHelpWindow( HELP_TN_MISTS ) )
+        if ( !showHelpWindow( HELP_TN_MISTS ) )
             return;
     }
 #endif
@@ -362,6 +363,7 @@ void panel_look::getCharacterInfo ( defaultexport::character_t& c, locationinfo_
     TME_GetLocationInDirection(m, c.location, c.looking);
 
     info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
+    info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
     
 #endif
 
@@ -448,6 +450,7 @@ void panel_look::setViewForCurrentCharacter ( void )
 #if defined(_DDR_)
     options.isInTunnel = current_info->tunnel;
     options.isLookingDownTunnel = current_info->lookingdowntunnel;
+    options.isLookingOutTunnel = current_info->lookingouttunnel;
 #endif
 
     options.lookAmount = current_info->looking * LANDSCAPE_DIR_AMOUNT;
@@ -501,9 +504,7 @@ void panel_look::UpdateLandscape()
     options.generator->horizontalOffset = options.lookAmount;
     
     if ( current_info->tunnel ) {
-        // TODO: Tunnels
-        //tunnelView = new TunnelView();
-        //current_view = tunnelView;
+        current_view = TunnelView::create(&options);
     }else{
         current_view = LandscapeView::create(&options);
     }
@@ -513,7 +514,7 @@ void panel_look::UpdateLandscape()
     current_view->setLocalZOrder(ZORDER_FAR);
     addChild(current_view);
     
-    // LoM's header is affectively part of the backgroun
+    // LoM's header is affectively part of the background
     // so update the colour to the same as the sky
 #if defined(_LOM_)
     layHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(1)));
@@ -596,6 +597,11 @@ bool panel_look::startLookLeft ( void )
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
+    if ( options.isInTunnel ) {
+        stopRotating(LM_ROTATE_LEFT);
+        return true;
+    }
+    
     options.colour->SetLookColour(c.time);
     
     f32 originalLooking = options.lookAmount;
@@ -640,6 +646,11 @@ bool panel_look::startLookRight ( void )
     
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
+    
+    if ( options.isInTunnel ) {
+        stopRotating(LM_ROTATE_RIGHT);
+        return true;
+    }
     
     options.colour->SetLookColour(c.time);
     
@@ -769,6 +780,11 @@ bool panel_look::startMoving()
     options.moveFrom = c.location;
     
     if ( Character_Move(c) ) {
+        
+        if ( options.isInTunnel ) {
+            stopMoving();
+            return true;
+        }
         
         options.colour->SetMovementColour(startTime,c.time);
         
@@ -1287,7 +1303,7 @@ bool panel_look::OnEnterTunnel()
         setViewForCurrentCharacter();
        // current_view->SetViewForCurrentCharacter();
         fadeIn(_clrBlack, 1.0f, [&](){
-            ShowHelpWindow(HELP_TN_TUNNEL);
+            showHelpWindow(HELP_TN_TUNNEL);
         });
     });
     
