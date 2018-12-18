@@ -237,12 +237,16 @@ void uicommandwindow::initialiseCommands()
         lord->setTag(tag);
         lord->setUserData(data);
         lord->addClickEventListener(callback);
+        lord->status.Reset(LORD_STATUS::status_location|LORD_STATUS::status_selected);
+        lord->refreshStatus();
         addItem(lord, CHOOSE_CHAR+ii);
         
         if ( mr->config->keyboard_mode == CF_KEYBOARD_CLASSIC )
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_old));
         else
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
+        
+
         
     }
 }
