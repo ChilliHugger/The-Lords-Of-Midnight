@@ -159,7 +159,18 @@ void uicommandwindow::initialiseCommands()
 #if defined(_DDR_)
     auto give = uihelper::CreateImageButton("i_give", ID_GIVE, callback);
     addItem(give,CHOOSE_GIVE);
-    // TODO: Add text to give button
+    
+    auto givetext = Label::createWithTTF( uihelper::font_config_small, "luxor" );
+    givetext->setName("givetext");
+    givetext->getFontAtlas()->setAntiAliasTexParameters();
+    givetext->setTextColor(Color4B(_clrWhite));
+    givetext->enableOutline(Color4B(_clrBlack),RES(1));
+    givetext->setAnchorPoint(uihelper::AnchorCenter);
+    givetext->setWidth(give->getContentSize().width-DIS(16));
+    givetext->setHorizontalAlignment(TextHAlignment::CENTER);
+    givetext->setVerticalAlignment(TextVAlignment::BOTTOM);
+    givetext->setVisible(false);
+    uihelper::AddBottomCenter(give, givetext, RES(0), DIS(-16));
     
     auto take = uihelper::CreateImageButton("i_take", ID_TAKE, callback);
     addItem(take,CHOOSE_TAKE);
@@ -267,16 +278,7 @@ void uicommandwindow::updateElements()
 #if defined(_DDR_)
     
     enableItem(ID_GIVE, location_flags.Is(lif_give) );
-    
-    //    if ( location_flags.Is(lif_give)) {
-    //        character c;
-    //        TME_GetCharacter(c, location_someone_to_give_to );
-    //        i_GiveText->Text(c.shortname);
-    //        i_GiveText->ShowEnable();
-    //    } else {
-    //        i_Give->Disable();
-    //        i_GiveText->HideDisable();
-    //    }
+    setupGiveText();
     
     enableItem(ID_TAKE, location_flags.Is(lif_take) );
     enableItem(ID_USE, location_flags.Is(lif_use) );
@@ -316,6 +318,23 @@ void uicommandwindow::updateElements()
         
     }
 
+}
+
+void uicommandwindow::setupGiveText()
+{
+    auto button = findItemById(ID_GIVE);
+    auto text = button->getChildByName<Label*>(std::string("givetext"));
+
+    if ( location_flags.Is(lif_give) ) {
+        character c;
+        TME_GetCharacter(c, location_someone_to_give_to );
+        text->setString(c.shortname);
+        text->setVisible(true);
+    }else{
+        text->setVisible(false);
+    }
+    
+    
 }
 
 void uicommandwindow::addTouchListener()
