@@ -13,9 +13,11 @@
 #include "uilordselect.h"
 #include "../../system/tmemanager.h"
 
-#define SELECT_ELEMENT_WIDTH   DIS(128)
-#define SELECT_ELEMENT_HEIGHT  DIS(128)
-#define SELECT_IMAGE_HEIGHT    DIS(72)
+#if defined(_DDR_)
+#define SHIELD_OFFSET_Y 0
+#else
+#define SHIELD_OFFSET_Y RES(-6)
+#endif
 
 
 class uisinglelord : public uilordselect
@@ -25,12 +27,10 @@ public:
     virtual bool init() override;
     static uisinglelord* createWithLord ( mxid characterid );
 
-    bool setLord( mxid characterid );
+    virtual bool setLord( mxid characterid ) override;
     void refreshStatus() override;
 
-    
     void setStatusImageVisible( bool visible );
-
     
 protected:
     uisinglelord();
@@ -43,10 +43,15 @@ protected:
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
+    virtual void OnStopDrag(uidragevent* event) override;
+    virtual void OnStartDrag(uidragevent* event) override;
     
 protected:
-    Node*           buttonNode;
-    Node*           statusNode;
-    Node*           locationNode;
-    Node*           selectedNode;
+    Node*               buttonNode;
+    Node*               statusNode;
+    Node*               locationNode;
+    Node*               selectedNode;
+    cocos2d::DrawNode*  innerCircle;
+    cocos2d::LayerColor*    bg;
+    bool                statusVisible;
 };

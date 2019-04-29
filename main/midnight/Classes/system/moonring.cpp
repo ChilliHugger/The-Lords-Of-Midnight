@@ -153,6 +153,35 @@ void moonring::continueStory( storyid_t id )
     }
 }
 
+// Grouping
+
+bool moonring::swapGroupLeader(mxid id)
+{
+    character c;
+    TME_GetCharacter(c, id );
+    return Character_SwapGroupLeader(c,c.following);
+}
+
+bool moonring::joinGroup(mxid id, mxid leaderid )
+{
+    character c;
+    TME_GetCharacter(c, id );
+    return Character_Follow(c, leaderid);
+}
+
+bool moonring::leaveGroup(mxid id)
+{
+    character c;
+    TME_GetCharacter(c, id );
+    return Character_UnFollow(c, c.following);
+}
+
+bool moonring::disbandGroup(mxid id)
+{
+    character c;
+    TME_GetCharacter(c, id );
+    return Character_Disband(c);
+}
 //
 
 bool moonring::look()

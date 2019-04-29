@@ -17,35 +17,62 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-
-
 uisinglelord::uisinglelord() :
-    buttonNode(nullptr)
-    //userdata(nullptr)
+    buttonNode(nullptr),
+    selectedNode(nullptr),
+    locationNode(nullptr),
+    innerCircle(nullptr),
+    statusNode(nullptr),
+    statusVisible(true)
 {
+    lordtype = lordtype_single;
 }
 
 bool uisinglelord::init()
 {
     if ( uilordselect::init() ) {
-        f32 scale = resolutionmanager::getInstance()->phoneScale() ;
-        setContentSize(Size(SELECT_ELEMENT_WIDTH*scale, SELECT_ELEMENT_HEIGHT*scale));
-//        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
-//        bg->setContentSize(this->getContentSize());
-//        this->addChild(bg);
         
-        this->setTouchEnabled(true);
-        this->enableDragAndDrop();
+        f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+        f32 width = SELECT_ELEMENT_WIDTH*scale;
+        f32 height = SELECT_ELEMENT_HEIGHT*scale;
+        
+        setContentSize(Size(width,height));
+
+//        bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
+//        bg->setContentSize(this->getContentSize());
+//        bg->setAnchorPoint(uihelper::AnchorCenter);
+//        bg->setPosition(Vec2(0,0));
+//        addChild(bg);
         
         selectedNode = Sprite::createWithSpriteFrameName("lord_select_circle");
         selectedNode->setColor(_clrBlue);
-        uihelper::AddCenter(this, selectedNode, 0, DIS(-9));
+        selectedNode->setAnchorPoint(uihelper::AnchorCenter);
+        selectedNode->setPosition(Vec2(width/2,height/2));
         selectedNode->setVisible(false);
+        addChild(selectedNode);
         
         locationNode = Sprite::createWithSpriteFrameName("map_current_location");
         locationNode->setContentSize(this->getContentSize());
-        uihelper::AddCenter(this, locationNode);
+        locationNode->setAnchorPoint(uihelper::AnchorCenter);
+        locationNode->setPosition(Vec2(width/2,height/2));
         locationNode->setVisible(false);
+        addChild(locationNode);
+        
+        innerCircle = DrawNode::create();
+        innerCircle->setContentSize( this->getContentSize() );
+        innerCircle->drawSolidCircle(Vec2(width/2,height/2), DISTANCE_INNER/2 , 0, 64, 1.0, 1.0, Color4F(0,0,0,0.1));
+        innerCircle->setAnchorPoint(uihelper::AnchorCenter);
+        innerCircle->setPosition(Vec2(width/2,height/2));
+        innerCircle->setVisible(false);
+        addChild(innerCircle);
+        
+        //        auto outer_circle = DrawNode::create();
+        //        outer_circle->setContentSize( this->getContentSize() );
+        //        outer_circle->drawSolidCircle(Vec2(width/2,height/2), width/2 , 0, 64, 1.0, 1.0, Color4F(0,0,0, 0.25f));
+        //        addChild(outer_circle);
+        
+        setTouchEnabled(true);
+        
         return true;
     }
     return false;
@@ -98,8 +125,13 @@ void uisinglelord::updateStatus(character& c)
 
 void uisinglelord::refreshStatus()
 {
-    locationNode->setVisible( status.Is(LORD_STATUS::status_location) );
-    selectedNode->setVisible( status.Is(LORD_STATUS::status_selected) );
+    innerCircle->setVisible( isDropFocus );
+    setScale( isDropFocus ? 1.25 : 1.0 );
+
+    locationNode->setVisible( status.Is(LORD_STATUS::status_location) && !isDragging() && statusVisible );
+    selectedNode->setVisible( status.Is(LORD_STATUS::status_selected) && !isDragging() && statusVisible );
+    if ( statusNode )
+        statusNode->setVisible(statusVisible);
 }
 
 Sprite* uisinglelord::getStatusImage()
@@ -142,32 +174,38 @@ Sprite* uisinglelord::getFaceImage(character& c)
 
 bool uisinglelord::setLord( mxid characterid )
 {
-    auto userdata = (char_data_t*)TME_GetEntityUserData( characterid );
-    setUserData(userdata);
-    
+    uilordselect::setLord(characterid);
+        
     character c;
     TME_GetCharacter(c, characterid );
-    
+
     updateStatus(c);
 
+    removeChildByName("face");
+    removeChildByName("title");
+    
     auto face = getFaceImage(c);
     if ( face == nullptr )
         face = Sprite::createWithSpriteFrameName("f_dead!");
+    face->setName("face");
     
-    uihelper::AddCenter(this, face);
+    
+    uihelper::AddCenter(this, face, 0, SHIELD_OFFSET_Y);
     
     f32 scale = resolutionmanager::getInstance()->phoneScale() ;
-    
+    f32 width = SELECT_ELEMENT_WIDTH*scale;
     
     // set name label
     auto title = Label::createWithTTF( uihelper::font_config_small, c.longname );
-    title->getFontAtlas()->setAntiAliasTexParameters();
+    title->setName("title");
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
-    title->setAnchorPoint(uihelper::AnchorCenter);
-    title->setWidth(getContentSize().width-DIS(16));
     title->setLineSpacing(DIS(-2));
     title->setHeight(DIS(32)*scale);
+    title->getFontAtlas()->setAntiAliasTexParameters();
+    title->setAnchorPoint(uihelper::AnchorCenter);
+    title->setWidth(width-DIS(16));
+
     title->setHorizontalAlignment(TextHAlignment::CENTER);
     title->setVerticalAlignment(TextVAlignment::BOTTOM);
     uihelper::AddBottomCenter(face, title, RES(0), DIS(-16));
@@ -190,7 +228,8 @@ bool uisinglelord::setLord( mxid characterid )
 
 void uisinglelord::setStatusImageVisible( bool visible )
 {
-    statusNode->setVisible(visible);
+    statusVisible = visible;
+    refreshStatus();
 }
 
 void uisinglelord::onPressStateChangedToNormal()
@@ -222,3 +261,17 @@ void uisinglelord::onPressStateChangedToDisabled()
             statusNode->setOpacity(ALPHA(0.0f));
     }
 }
+
+void uisinglelord::OnStopDrag(uidragevent* event)
+{
+    uilordselect::OnStopDrag(event);
+    setStatusImageVisible(true);
+}
+
+void uisinglelord::OnStartDrag(uidragevent* event)
+{
+    uilordselect::OnStartDrag(event);
+    setStatusImageVisible(false);
+}
+
+

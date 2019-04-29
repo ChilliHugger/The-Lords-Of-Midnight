@@ -80,6 +80,9 @@
 		83398A9020D1ADCB007EAE7B /* ringcontroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A8D20D1ADCB007EAE7B /* ringcontroller.cpp */; };
 		83398A9420D1D708007EAE7B /* panel_look.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A9320D1D708007EAE7B /* panel_look.cpp */; };
 		83398A9520D1D708007EAE7B /* panel_look.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83398A9320D1D708007EAE7B /* panel_look.cpp */; };
+		833EA6E222552CE8002AF008 /* uigroupedlord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833EA6E022552CE7002AF008 /* uigroupedlord.cpp */; };
+		833EA6E322552CE8002AF008 /* uigroupedlord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833EA6E022552CE7002AF008 /* uigroupedlord.cpp */; };
+		833EA6E422552CE8002AF008 /* uigroupedlord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 833EA6E022552CE7002AF008 /* uigroupedlord.cpp */; };
 		8344EBC01FD1E43F0067AAC1 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
 		8344EBC31FD1E43F0067AAC1 /* lom in Resources */ = {isa = PBXBuildFile; fileRef = 830620981F38855600D017E5 /* lom */; };
 		8344EBC41FD1E43F0067AAC1 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -608,6 +611,8 @@
 		83398A9120D1B239007EAE7B /* help_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = help_id.h; sourceTree = "<group>"; };
 		83398A9220D1D707007EAE7B /* panel_look.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = panel_look.h; sourceTree = "<group>"; };
 		83398A9320D1D708007EAE7B /* panel_look.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = panel_look.cpp; sourceTree = "<group>"; };
+		833EA6E022552CE7002AF008 /* uigroupedlord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uigroupedlord.cpp; sourceTree = "<group>"; };
+		833EA6E122552CE7002AF008 /* uigroupedlord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uigroupedlord.h; sourceTree = "<group>"; };
 		8344EC271FD1E43F0067AAC1 /* citadel-desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "citadel-desktop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8344EC2A1FD1EC2C0067AAC1 /* panel_splashscreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = panel_splashscreen.cpp; sourceTree = "<group>"; };
 		8344EC2B1FD1EC2C0067AAC1 /* panel_splashscreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = panel_splashscreen.h; sourceTree = "<group>"; };
@@ -1065,6 +1070,8 @@
 		833172FF219B1E8B009A52E7 /* characters */ = {
 			isa = PBXGroup;
 			children = (
+				833EA6E022552CE7002AF008 /* uigroupedlord.cpp */,
+				833EA6E122552CE7002AF008 /* uigroupedlord.h */,
 				833172F4219B1E85009A52E7 /* uigrouplord.cpp */,
 				833172F1219B1E84009A52E7 /* uigrouplord.h */,
 				833172F5219B1E85009A52E7 /* uilordselect.cpp */,
@@ -1682,6 +1689,7 @@
 				83D264681F360724001C6F13 /* item_stronghold.cpp in Sources */,
 				833172F7219B1E85009A52E7 /* uiselectpanel.cpp in Sources */,
 				83D264381F360724001C6F13 /* mxgridref.cpp in Sources */,
+				833EA6E222552CE8002AF008 /* uigroupedlord.cpp in Sources */,
 				8397AFF81F4CCAB5009B00A2 /* LandscapeDebug.cpp in Sources */,
 				83D2647A1F360724001C6F13 /* ddr_processor_night.cpp in Sources */,
 				83D2643E1F360724001C6F13 /* mxitem.cpp in Sources */,
@@ -1833,6 +1841,7 @@
 				83D264D11F36077E001C6F13 /* cbitarray.cpp in Sources */,
 				83D264651F360724001C6F13 /* item_regiment.cpp in Sources */,
 				83D264851F360724001C6F13 /* lom_stronghold.cpp in Sources */,
+				833EA6E322552CE8002AF008 /* uigroupedlord.cpp in Sources */,
 				83D264511F360724001C6F13 /* info_direction.cpp in Sources */,
 				834D04E820D2F649001B07CB /* LandscapeColour.cpp in Sources */,
 				8330782021B5D1D400562893 /* uishortcutkeys.cpp in Sources */,
@@ -2038,6 +2047,7 @@
 				83E301C021A41BE3005C3F5C /* cbitarray.cpp in Sources */,
 				83E301C121A41BE3005C3F5C /* item_regiment.cpp in Sources */,
 				83E301C221A41BE3005C3F5C /* lom_stronghold.cpp in Sources */,
+				833EA6E422552CE8002AF008 /* uigroupedlord.cpp in Sources */,
 				83E301C321A41BE3005C3F5C /* info_direction.cpp in Sources */,
 				83E301C421A41BE3005C3F5C /* LandscapeColour.cpp in Sources */,
 				8330782121B5D1D400562893 /* uishortcutkeys.cpp in Sources */,

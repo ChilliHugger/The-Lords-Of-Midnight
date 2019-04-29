@@ -45,13 +45,16 @@ protected:
     void OnClose();
     void initialiseCommands();
     void addItem( cocos2d::ui::Widget* item, u32 index );
-    void setupGiveText();
     void enableItem( layoutid_t id, bool enable );
     void showItem( layoutid_t id, bool show );
     cocos2d::ui::Widget* findItemById( layoutid_t id );
 
     void addTouchListener();
     void addKeyboardListener();
+
+#if defined(_DDR_)
+    void setupGiveText();
+#endif
     
 protected:
     uipanel*        parent;

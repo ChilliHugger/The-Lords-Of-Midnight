@@ -26,6 +26,7 @@ USING_NS_CC;
 #define FONT_SIZE_BIG           30
 #define FONT_SIZE_MEDIUM        20
 #define FONT_SIZE_SMALL         12
+#define FONT_SIZE_DEBUG         8
 #define IMAGE_LOGO              "misc/logo.png"
 
 
@@ -39,6 +40,7 @@ public:
     static TTFConfig font_config_medium;
     static TTFConfig font_config_small;
     static TTFConfig font_config_shortcut;
+    static TTFConfig font_config_debug;
     
     // Anchors
     static Vec2 AnchorTopLeft;

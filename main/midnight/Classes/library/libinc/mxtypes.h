@@ -24,6 +24,9 @@
 
 typedef std::function<void(void)> MXVoidCallback;
 
+#define IF_NOT_NULL(x) \
+    if ( (x) != nullptr ) (x)
+
 #define CONTINUE_IF( x )  \
     if ( (x) ) continue
 

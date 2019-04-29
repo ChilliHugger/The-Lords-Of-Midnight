@@ -26,6 +26,7 @@ TTFConfig uihelper::font_config_big;
 TTFConfig uihelper::font_config_medium;
 TTFConfig uihelper::font_config_small;
 TTFConfig uihelper::font_config_shortcut;
+TTFConfig uihelper::font_config_debug;
 
 void uihelper::Init()
 {
@@ -57,6 +58,12 @@ void uihelper::Init()
     font_config_shortcut.customGlyphs = nullptr;
     font_config_shortcut.distanceFieldEnabled = false;
     
+    font_config_debug.fontFilePath = FONT_FILENAME;
+    font_config_debug.fontSize = DIS(FONT_SIZE_DEBUG);
+    font_config_debug.glyphs = GlyphCollection::DYNAMIC;
+    font_config_debug.outlineSize = 0;
+    font_config_debug.customGlyphs = nullptr;
+    font_config_debug.distanceFieldEnabled = false;
 }
 
 //

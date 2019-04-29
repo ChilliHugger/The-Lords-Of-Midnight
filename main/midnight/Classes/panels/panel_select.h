@@ -17,7 +17,7 @@
 
 FORWARD_REFERENCE(uilordselect);
 
-class panel_select : public uipanel
+class panel_select : public uipanel, uidragdropdelegate
 {
 	
 public:
@@ -29,6 +29,7 @@ protected:
     uifilterbutton* createFilterButton( layoutid_t id, s32 y, const std::string& image, select_filters flag );
     void updateFilterButton(Ref* sender,select_filters flag);
 
+    virtual void OnDragDropNotification( uidragelement* sender, uidragevent* event ) override ;
     virtual void OnNotification( Ref* sender ) override;
     virtual void OnDeActivate() override;
     
@@ -36,8 +37,9 @@ protected:
     
     void getCharacters();
     void setInitialScrollViewHeight();
-    void updateScrollViewHeight( f32 height );
+    void updateScrollViewSize( f32 width, f32 height );
     void resizeScrollView();
+    void resizeCanvas( s32 left, s32 top, s32 right, s32 bottom );
 
     cocos2d::Vec2 calcGridLocation ( u32 index );
     
@@ -46,9 +48,17 @@ protected:
     uilordselect* getLordElement( mxid id );
     void checkCollision ( uilordselect* lord );
     uilordselect* getOverlappingLord ( uilordselect* source );
+    uilordselect* getDropTarget( uilordselect* lord, UIMOUSEOVER where, UIMOUSEOVER& result );
     void resetPositions();
 
     void showCharacterPositions();
+    void refreshCharacters();
+
+    mxid getIdFromTag( uilordselect* lord );
+    void storeLordPosition( uilordselect* lord );
+
+    
+    
 private:
     s32            SELECT_GRID_X ;
     s32            SELECT_GRID_Y ;
@@ -59,7 +69,13 @@ private:
     s32            START_Y ;
 
     
-    cocos2d::ui::ScrollView* scrollView;
-    selectmodel*    model;
+    selectmodel*                        model;
+    cocos2d::ui::ScrollView*            scrollView;
+    cocos2d::Vector<Node*>      lords;
 
+    uilordselect* dropTarget;
+    mxid potentialLeader;
+    
+    uilordselect* draggedLord;
+    mxid currentlyFollowing;
 };

@@ -143,3 +143,17 @@ void uidragmoveelement::OnDrag(uidragevent* event)
     NotifyDragDelegate( event );
     
 }
+
+uidroptarget::uidroptarget() : isDropFocus(false)
+{
+}
+
+void uidroptarget::OnDropStart()
+{
+    isDropFocus = true;
+}
+
+void uidroptarget::OnDropStop()
+{
+    isDropFocus = false;
+}

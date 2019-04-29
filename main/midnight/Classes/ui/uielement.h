@@ -23,14 +23,28 @@ typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallb
 
 
 enum ZSORT {
-    ZORDER_FAR=0,
-    ZORDER_DEFAULT=1000,
-    ZORDER_NEAR=2000,
-    ZORDER_UI=3000,
-    ZORDER_POPUP=4000,
-    ZORDER_DRAG=5000,
+    ZORDER_FAR                  =0,
+    ZORDER_DEFAULT              =1000,
+    ZORDER_NEAR                 =2000,
+    ZORDER_UI                   =3000,
+    ZORDER_POPUP                =4000,
+    ZORDER_DRAG                 =5000,
 };
 
+enum UIMOUSEOVER {
+    MOUSE_OVER_NONE             =0,
+    MOUSE_OVER_ALL              =1,
+    MOUSE_OVER_DRAG             =2,
+    MOUSE_OVER_DROP             =3,
+    MOUSE_OVER_USER             =100
+} ;
+
+enum UIMOUSEOVERHINT {
+    MOUSE_OVER_HINT_ALL         =0,
+    MOUSE_OVER_HINT_DRAG        =1,
+    MOUSE_OVER_HINT_DROP        =2,
+    MOUSE_OVER_HINT_ELEMENT     =3,
+} ;
 
 class uinotificationinterface
 {
@@ -109,12 +123,15 @@ public:
     virtual void OnStopDrag(uidragevent* event)=0;
     virtual void OnDrag(uidragevent* event)=0;
     virtual BOOL isDragging() {return dragging;}
-    
+    virtual void enableDrag() { drag_enabled = true;}
+    virtual void disableDrag() { drag_enabled = false;}
+    virtual bool isDragEnabled() { return drag_enabled;}
     virtual void NotifyDragDelegate ( uidragevent* event );
     
 public:
     uidragdropdelegate* drag_delegate;
     bool                dragging;
+    bool                drag_enabled;
     cocos2d::Vec2       drag_start;
     cocos2d::Vec2       drag_stop;
     cocos2d::Vec2       drag_current;
@@ -136,4 +153,25 @@ public:
 public:
     u32     zorder;
     cocos2d::Vec2    start_location;
+};
+
+class uidroptarget {
+public:
+    uidroptarget();
+    
+    virtual UIMOUSEOVER MouseOverHotspot( cocos2d::Vec2 pos, UIMOUSEOVERHINT hint ) const = 0;
+    
+    virtual void endDropTarget() { OnDropStop(); }
+    virtual void startDropTarget() { OnDropStart(); }
+    
+    virtual void OnDropStart();
+    virtual void OnDropStop();
+
+    virtual void enableDrop() { drop_enabled = true;}
+    virtual void disableDrop() { drop_enabled = false;}
+    virtual bool isDropEnabled() { return drop_enabled;}
+    
+public:
+    bool isDropFocus;
+    bool drop_enabled;
 };

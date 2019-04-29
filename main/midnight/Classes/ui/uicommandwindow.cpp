@@ -324,6 +324,7 @@ void uicommandwindow::updateElements()
 
 }
 
+#if defined(_DDR_)
 void uicommandwindow::setupGiveText()
 {
     auto button = findItemById(ID_GIVE);
@@ -337,9 +338,8 @@ void uicommandwindow::setupGiveText()
     }else{
         text->setVisible(false);
     }
-    
-    
 }
+#endif
 
 void uicommandwindow::addTouchListener()
 {

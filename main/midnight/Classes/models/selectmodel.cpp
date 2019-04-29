@@ -25,7 +25,7 @@ void selectmodel::updateCharacters()
 {
     variant args[3];
     args[0] = &characters ;
-    args[1] = CMDG_LOYAL ;
+    args[1] = CMDG_ALL; //CMDG_LOYAL ;
     args[2] = MAKE_LOCID(loc.x,loc.y) ;
     mxi->GetProperties( "CharsForCommand", args, 3 );
 }

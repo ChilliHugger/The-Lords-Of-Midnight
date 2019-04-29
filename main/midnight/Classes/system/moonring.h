@@ -58,6 +58,12 @@ public:
     void continueStory( storyid_t id );
     void closeStory();
     
+    // Group
+    bool swapGroupLeader(mxid id);
+    bool joinGroup(mxid id, mxid leaderid );
+    bool leaveGroup(mxid id);
+    bool disbandGroup(mxid id);
+
     // Actions
     bool selectCharacter(mxid id);
     bool look( mxdir_t dir );

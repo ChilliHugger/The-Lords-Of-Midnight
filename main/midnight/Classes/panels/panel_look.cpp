@@ -160,6 +160,7 @@ bool panel_look::init()
     following = uisinglelord::create();
     following->setLocalZOrder(ZORDER_DEFAULT+1);
     following->addClickEventListener(callback);
+    following->setStatusImageVisible(false);
     f32 y=RES(16);
 #if defined(_DDR_)
     y = RES(228-64);
