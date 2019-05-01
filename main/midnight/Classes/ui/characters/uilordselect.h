@@ -46,7 +46,7 @@ enum lord_type_t {
 };
 
 
-class uilordselect : public cocos2d::ui::Widget,
+class uilordselect : public Widget,
 public uidragmoveelement, public uidroptarget
 {
 public:
@@ -58,23 +58,31 @@ public:
     virtual bool setLord( mxid characterid );
     virtual void refreshStatus();
 
-    virtual UIMOUSEOVER MouseOverHotspot( cocos2d::Vec2 pos, UIMOUSEOVERHINT hint ) const override ;
+    virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const override ;
 
-    cocos2d::Vec2 getCenter() const;
+    Vec2 getCenter() const;
+    
+    virtual void setPage(s32 page) { this->page = page; }
+    s32 getPage() const { return page;}
     
 protected:
     uilordselect();
     void addTouchListener();
 
-    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event* ) override;
-    void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* ) override;
-    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* )  override;
-    void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event* ) override;
+    bool onTouchBegan(Touch *touch, Event* ) override;
+    void onTouchMoved(Touch *touch, Event* ) override;
+    void onTouchEnded(Touch *touch, Event* )  override;
+    void onTouchCancelled(Touch *touch, Event* ) override;
     
     virtual void OnStopDrag(uidragevent* event) override;
     virtual void OnStartDrag(uidragevent* event) override;
     virtual void OnDropStart() override;
     virtual void OnDropStop() override;
+    
+    f32 getDistanceFromCentre( Vec2 pos ) const;
+
+    //virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
+
     
     cocos2d::Vec2 mouse_down_pos;
     cocos2d::Vec2 mouse_last_position;;
@@ -83,5 +91,7 @@ public:
     flags16         status;
     mxid            characterId;
     lord_type_t     lordtype;
+    s32             page;
     
 };
+

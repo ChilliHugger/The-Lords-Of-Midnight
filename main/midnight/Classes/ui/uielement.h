@@ -12,14 +12,17 @@
 #include "ui/CocosGUI.h"
 #include "../library/libinc/mxtypes.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 FORWARD_REFERENCE(uieventargs);
 FORWARD_REFERENCE(uielement);
 FORWARD_REFERENCE(uinotificationinterface);
 
 typedef std::function<void(uinotificationinterface* sender,uieventargs* event)> UINotificationCallback;
 
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+typedef AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+typedef AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
 
 enum ZSORT {
@@ -59,7 +62,7 @@ protected:
 };
 
 
-class uielement : public cocos2d::Layer, public uinotificationinterface
+class uielement : public Layer, public uinotificationinterface
 {
 public:
     static uielement* create();
@@ -86,19 +89,21 @@ class uidragevent
 public:
     enum drageventtype {
         none=0,
-        start=1,
-        stop=2,
-        drag=3,
+        select=1,
+        start=2,
+        stop=3,
+        drag=4,
+        
     };
     
 public:
     uidragevent();
-    uidragevent(cocos2d::Node* element, cocos2d::Vec2 p, drageventtype type );
+    uidragevent(Node* element, Vec2 p, drageventtype type );
     
 public:
-    cocos2d::Node*  element;
-    cocos2d::Vec2   lastposition;
-    cocos2d::Vec2   position;
+    Node*           element;
+    Vec2            lastposition;
+    Vec2            position;
     drageventtype   type;
     u64             time;
     
@@ -119,6 +124,7 @@ class uidragelement
 public:
     uidragelement();
     
+    virtual void OnSelectDrag(uidragevent* event)=0;
     virtual void OnStartDrag(uidragevent* event)=0;
     virtual void OnStopDrag(uidragevent* event)=0;
     virtual void OnDrag(uidragevent* event)=0;
@@ -132,10 +138,10 @@ public:
     uidragdropdelegate* drag_delegate;
     bool                dragging;
     bool                drag_enabled;
-    cocos2d::Vec2       drag_start;
-    cocos2d::Vec2       drag_stop;
-    cocos2d::Vec2       drag_current;
-    cocos2d::Vec2       drag_amount;
+    Vec2                drag_start;
+    Vec2                drag_stop;
+    Vec2                drag_current;
+    Vec2                drag_amount;
     u64                 drag_start_time;
     u64                 drag_stop_time;
     u32                 drag_touch_count;
@@ -146,20 +152,21 @@ class uidragmoveelement : public uidragelement
 public:
     uidragmoveelement();
     
+    virtual void OnSelectDrag(uidragevent* event);
     virtual void OnStartDrag(uidragevent* event);
     virtual void OnStopDrag(uidragevent* event);
     virtual void OnDrag(uidragevent* event);
     
 public:
     u32     zorder;
-    cocos2d::Vec2    start_location;
+    Vec2    start_location;
 };
 
 class uidroptarget {
 public:
     uidroptarget();
     
-    virtual UIMOUSEOVER MouseOverHotspot( cocos2d::Vec2 pos, UIMOUSEOVERHINT hint ) const = 0;
+    virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const = 0;
     
     virtual void endDropTarget() { OnDropStop(); }
     virtual void startDropTarget() { OnDropStart(); }

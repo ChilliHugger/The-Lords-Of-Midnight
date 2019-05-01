@@ -370,3 +370,45 @@ Node* uihelper::getChildByTagRecursively(const int nodeTag, cocos2d::Node* paren
     return node;
 }
 
+
+Node* uihelper::createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir ) {
+    // top gradient
+    auto node = Node::create();
+    node->setContentSize(Size(width,height));
+    
+    auto gradient = LayerGradient::create( Color4B(color,ALPHA(1.0f)), Color4B(color,ALPHA(0.0f)), Vec2(0,dir) );
+    gradient->setContentSize(Size(width,gradientHeight));
+    
+    auto filled = LayerColor::create(Color4B(color), width, height-gradientHeight);
+    
+    if ( dir == 1 ) {
+        uihelper::AddTopLeft(node, gradient);
+        uihelper::AddBottomLeft(node, filled);
+    }else{
+        uihelper::AddTopLeft(node, filled);
+        uihelper::AddBottomLeft(node, gradient);
+    }
+    
+    return node;
+}
+
+Node* uihelper::createHorizontalGradient( Color3B& color, f32 width, f32 gradientWidth, f32 height, s32 dir ) {
+    // top gradient
+    auto node = Node::create();
+    node->setContentSize(Size(width,height));
+    
+    auto gradient = LayerGradient::create( Color4B(color,ALPHA(1.0f)), Color4B(color,ALPHA(0.0f)), Vec2(dir,0) );
+    gradient->setContentSize(Size(gradientWidth,height));
+    
+    auto filled = LayerColor::create(Color4B(color), width-gradientWidth, height);
+    
+    if ( dir == 1 ) {
+        uihelper::AddBottomRight(node, gradient);
+        uihelper::AddBottomLeft(node, filled);
+    }else{
+        uihelper::AddBottomRight(node, filled);
+        uihelper::AddBottomLeft(node, gradient);
+    }
+    
+    return node;
+}

@@ -37,8 +37,8 @@ protected:
     
      void updateStatus(character& c) override;
     
-    cocos2d::Sprite* getStatusImage();
-    cocos2d::Sprite* getFaceImage(character& c);
+    Sprite* getStatusImage();
+    Sprite* getFaceImage(character& c);
 
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
@@ -47,11 +47,12 @@ protected:
     virtual void OnStartDrag(uidragevent* event) override;
     
 protected:
-    Node*               buttonNode;
-    Node*               statusNode;
-    Node*               locationNode;
-    Node*               selectedNode;
-    cocos2d::DrawNode*  innerCircle;
-    cocos2d::LayerColor*    bg;
-    bool                statusVisible;
+    Node*       buttonNode;
+    Node*       statusNode;
+    Node*       locationNode;
+    Node*       selectedNode;
+    DrawNode*   innerCircle;
+    LayerColor* bg;
+    bool        statusVisible;
 };
+

@@ -32,8 +32,7 @@ using namespace cocos2d::ui;
     #define BACKGROUND_COLOUR   _clrCyan
 #endif
 
-static const point PointZero(0,0);
-
+static const u32 MaxPages = 10;
 
 bool panel_select::init()
 {
@@ -45,23 +44,41 @@ bool panel_select::init()
     model = &mr->selectmodel;
     dropTarget = nullptr;
     draggedLord = nullptr;
+    pageFlipAllowed = true;
     
     uishortcutkeys::init(safeArea, clickCallback);
     
     f32 scale = resolutionmanager::getInstance()->phoneScale() ;
     
+    RIGHT_STRIP_WIDTH = RES(128);
+    BOTTOM_STRIP_HEIGHT = RES(128);
     SELECT_GRID_X = SELECT_ELEMENT_WIDTH * scale;
     SELECT_GRID_Y = SELECT_ELEMENT_HEIGHT * scale;
-    SELECT_GRID_Y_LEADING = RES(1);
-    SELECT_GRID_X_LEADING = RES(1);
-    MAX_COLUMNS = 6;
-
+    SELECT_GRID_Y_LEADING = RES(0);
+    SELECT_GRID_X_LEADING = RES(0);
+    MAX_COLUMNS = (getContentSize().width-RIGHT_STRIP_WIDTH)/SELECT_GRID_X;
+    MAX_ROWS = (getContentSize().height-BOTTOM_STRIP_HEIGHT)/SELECT_GRID_Y;
+    MAX_LORDS_PER_PAGE = MAX_ROWS * MAX_COLUMNS ;
+    
     START_X = SELECT_GRID_X/2;
     START_Y = SELECT_GRID_Y/2;
     
     setBackground(BACKGROUND_COLOUR);
     
-  
+    auto backgroundColour = BACKGROUND_COLOUR;
+
+    auto gradientB = uihelper::createVerticalGradient( backgroundColour, BOTTOM_STRIP_HEIGHT, BOTTOM_STRIP_HEIGHT/2, getContentSize().width, 1 );
+    gradientB->setLocalZOrder(ZORDER_UI-1);
+    addChild(gradientB);
+
+    auto gradientR =  uihelper::createHorizontalGradient( backgroundColour, RIGHT_STRIP_WIDTH, RIGHT_STRIP_WIDTH/2, getContentSize().height, -1 );
+    gradientR->setLocalZOrder(ZORDER_UI-1);
+    uihelper::AddTopRight(this,gradientR);
+    
+    safeArea->setLocalZOrder(ZORDER_UI);
+    
+    
+    
     int r = DIS(64) * scale;
     
     // Look Icon
@@ -83,24 +100,8 @@ bool panel_select::init()
     auto cleanup = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
     uihelper::AddTopRight(safeArea, cleanup, RES(32), (r*6)-adjy );
 
-    scrollView = ui::ScrollView::create();
-    scrollView->setDirection(ui::ScrollView::Direction::BOTH);
-    scrollView->setBounceEnabled(true);
-    scrollView->setScrollBarEnabled(true);
-    scrollView->setScrollBarPositionFromCornerForVertical(Vec2(RES(8),0));
-scrollView->setBackGroundColor(_clrYellow);
-scrollView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
-    scrollView->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(safeArea, scrollView, RES(128), 0);
+    createPageView();
     
-    // calc size of scrollview
-    auto size = safeArea->getContentSize();
-    size.width -= DIS(256);
-    //SELECT_GRID_X_LEADING = 0; //(size.width-START_X-(MAX_COLUMNS*SELECT_GRID_X))/MAX_COLUMNS;
-    
-    scrollView->setInnerContainerSize( size );
-    scrollView->setContentSize( size );
-
     getCharacters();
     
     addShortcutKey(ID_FILTER_DAWN,       KEYCODE(F1));
@@ -112,114 +113,94 @@ scrollView->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
     addShortcutKey(ID_LOOK,              K_LOOK);
     addShortcutKey(ID_NIGHT,             K_NIGHT);
     
+    // set current page
+    
+    pageView->setCurrentPageIndex(model->page);
+    
     return true;
 }
 
-void panel_select::setInitialScrollViewHeight()
+void panel_select::createPageView()
 {
-    //auto pos = calcGridLocation(model->characters.Count()-1);
-    //f32 height = pos.y + SELECT_GRID_Y + RES(0);
-
-    f32 height = 1024*4;
-    f32 width = 1024*4;
-    updateScrollViewSize(width,height);
+    // lets have a pageview
+    pageView = PageView::create();
+    pageView->setDirection(ui::PageView::Direction::HORIZONTAL);
+    pageView->setBounceEnabled(true);
+    pageView->setIndicatorEnabled(true);
+    pageView->setCurrentPageIndex(0);
+    pageView->setIndicatorIndexNodesColor(_clrBlack);
+    pageView->setIndicatorSelectedIndexColor(_clrBlue);
+    
+    pageView->setIndicatorIndexNodesScale(DIS(0.25f));
+    pageView->setIndicatorSpaceBetweenIndexNodes(DIS(-5));
+    
+    uihelper::AddBottomLeft(safeArea, pageView);
+    uihelper::FillParent(pageView);
+    
+    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
+    
+    pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
+        if ( e == PageView::EventType::TURNING ) {
+            UIDEBUG("Page turning");
+        }
+    });
+    
+    setupPages();
+    
 }
 
-void panel_select::resizeScrollView()
-{
-    f32 maxy=0;
-    f32 miny=999999;
-    f32 maxx=0;
-    f32 minx=999999;
-    
-    f32 previousHeight = scrollView->getInnerContainerSize().height;
-    f32 previousWidth = scrollView->getInnerContainerSize().width;
-    
-    for( auto node : scrollView->getChildren() ) {
-        auto e = dynamic_cast<uilordselect*>(node);
-        CONTINUE_IF_NULL(e);
-        
-        f32 y = e->getPosition().y;
-        if ( y > maxy ) maxy = y;
-        if ( y < miny ) miny = y;
-
-        f32 x = e->getPosition().x;
-        if ( x > maxx ) maxx = x;
-        if ( x < minx ) minx = x;
-    }
-    
-    f32 height = (maxy - miny) ; //+ SELECT_GRID_Y;
-    f32 width = (maxx - minx) ; //+ SELECT_GRID_Y;
-    
-    updateScrollViewSize(width,height);
-    
-    height = scrollView->getInnerContainerSize().height;
-    width = scrollView->getInnerContainerSize().width;
-
-    
-    f32 diffH =  previousHeight - height;
-    f32 diffW =  previousWidth - width;
-    
-    for( auto node : scrollView->getChildren() ) {
-        auto e = dynamic_cast<uilordselect*>(node);
-        CONTINUE_IF_NULL(e);
-        
-        f32 y = e->getPosition().y;
-        e->setPositionY(y-diffH);
-        
-        f32 x = e->getPosition().x;
-        e->setPositionX(x-diffW);
-    }
-    
-//    auto pos = scrollView->getInnerContainerPosition();
-//    pos.y+=diff;
-//    scrollView->setInnerContainerPosition(pos);
-
-    updateScrollViewSize(width,height);
+void panel_select::addNewPage(s32 ii) {
+    auto page = Layout::create();
+    page->setContentSize(pageView->getContentSize());
+    page->setTag(ii+1);
+    pages.pushBack(page);
+    pageView->insertPage(page, ii);
 }
 
-void panel_select::updateScrollViewSize( f32 width, f32 height )
+void panel_select::setupPages()
 {
-    // adjust the inner container of the scroll view
-    auto size = safeArea->getContentSize();
-    
-    //f32 width = scrollView->getContentSize().width;
- 
-    
-    // scroll?
-    if ( height <= size.height ) {
-        height = size.height;
+    for ( s32 ii=0; ii<MaxPages; ii++ ) {
+        addNewPage(ii);
     }
+}
 
-    if ( width <= size.width ) {
-        width = size.width;
+
+
+void panel_select::enableUI()
+{
+    pageView->setTouchEnabled(true);
+    for ( auto node : safeArea->getChildren() ) {
+        CONTINUE_IF( node == pageView );
+        node->setCascadeOpacityEnabled(true);
+        node->runAction(FadeIn::create(0.25f));
     }
-    
-    if ( width == size.width && height == size.height ) {
-        scrollView->setBounceEnabled(false);
-        scrollView->setScrollBarEnabled(false);
-    }else{
-        scrollView->setBounceEnabled(true);
-        scrollView->setScrollBarEnabled(true);
+}
+
+void panel_select::disableUI()
+{
+    pageView->setTouchEnabled(false);
+    for ( auto node : safeArea->getChildren() ) {
+        CONTINUE_IF( node == pageView );
+        node->setCascadeOpacityEnabled(true);
+        node->runAction(FadeOut::create(0.25f));
     }
-    
-    
-    //scrollView->setContentSize(Size(size.width,size.height));
-    scrollView->setInnerContainerSize(Size(width,height));
+}
+
+void panel_select::showNewLordPosition( uilordselect* lord )
+{
+    lord->setCascadeOpacityEnabled(true);
+    lord->setOpacity(0);
+    lord->runAction(FadeIn::create(1.00f));
 }
 
 void panel_select::getCharacters()
 {
+    s32 usedIndex=0;
+    
     lords.clear();
     
     model->updateCharacters();
-    
-    // calc position of last item in the grid
-    // so that we have a canvas height
-    setInitialScrollViewHeight();
-    
-    f32 height = 0;
-    f32 width = 0;
     
     // now place all the lords
     character c;
@@ -247,7 +228,6 @@ void panel_select::getCharacters()
         lord->enableDrag();
         lord->enableDrop();
         lord->drag_delegate = this;
-        scrollView->addChild(lord);
         lords.pushBack(lord);
         
         auto userdata = static_cast<char_data_t*>(c.userdata);
@@ -259,15 +239,11 @@ void panel_select::getCharacters()
 
         // only add positions for lords that already
         // have a position
-        if ( userdata->select_loc != PointZero ) {
+        if ( userdata->select_loc != PointZero && userdata->select_page > InvalidPage ) {
             Vec2 pos;
             pos.x = userdata->select_loc.x;
             pos.y = userdata->select_loc.y;
-            lord->setPosition( pos);
-            if ( pos.y > height )
-                height = pos.y;
-            if ( pos.x > width )
-                width = pos.x;
+            addToPage(lord, userdata->select_page, pos);
         }
         
         if ( c.followers ) {
@@ -277,68 +253,130 @@ void panel_select::getCharacters()
         applyFilters( lord, c );
         
     }
-
-    updateScrollViewSize(width,height);
     
     // now position all the lords that haven't already been added
     // to the scrollview
-    for ( u32 ii=0; ii<model->characters.Count(); ii++ )
+    
+    for ( auto node : lords )
     {
-        TME_GetCharacter(c,model->characters[ii]);
-        CONTINUE_IF ( c.following );
+        auto lord = static_cast<uilordselect*>(node);
         
-        auto lord = getLordElement(c.id);
+        auto userdata = static_cast<char_data_t*>(lord->getUserData());
         
-        auto userdata = static_cast<char_data_t*>(c.userdata);
         if ( userdata->select_loc == PointZero ) {
-            lord->setPosition(calcGridLocation(ii));
-            checkCollision(lord);
+        
+            s32 index = usedIndex;
+            s32 page = calcPage(index);
+            
+            if ( userdata->select_page < InvalidPage ) {
+                page = userdata->select_page * -1;
+                index = (page-1) * MAX_LORDS_PER_PAGE;
+            } else {
+                usedIndex++;
+            }
+            
+            // add the lord to their page in their position
+            addToPage(lord, page, calcGridLocation(index));
+            
+            // now check that is valid, and move them accordingly
+            checkCollision(lord,index);
+            
+            // and store
             storeLordPosition(lord);
+            
+            // animate
+            showNewLordPosition(lord);
         }
     }
     
-    resizeScrollView();
+    removeEmptyEndPages();
+}
+
+void panel_select::addToPage( uilordselect* lord, s32 page, Vec2 pos)
+{
+    lord->setPage(page);
+    lord->setPosition(pos);
+    pages.at(page-1)->addChild(lord);
 }
 
 uilordselect* panel_select::getLordElement( mxid id )
 {
-    return static_cast<uilordselect*>(scrollView->getChildByTag(ID_SELECT_CHAR+id));
+//    int tag = ID_SELECT_CHAR+id;
+//    for (const auto child : lords)
+//    {
+//        if(child && child->getTag() == tag)
+//            return static_cast<uilordselect*>(child);
+//    }
+    return nullptr;
 }
 
-void panel_select::checkCollision ( uilordselect* lord )
+s32 panel_select::getLordPage( uilordselect* lord  ) {
+
+    if ( lord->lordtype == lordtype_grouped) {
+        return InvalidPage;
+    }
+    
+    return lord->getParent()->getTag();
+}
+
+void panel_select::checkCollision ( uilordselect* lord, s32 start )
 {
     uilordselect* overlap;
-    if ( (overlap=getOverlappingLord(lord)) != nullptr ) {
-        for ( int ii=0; ii<500; ii++ ) {
-            lord->setPosition( calcGridLocation(ii) );
-            
-            if ( (overlap=getOverlappingLord(lord)) == nullptr )
-                break;
+    
+    s32 page = lord->getPage(); //getLordPage(lord);
+    
+    s32 index = start;
+    bool looped = false;
+    
+    for(;;) {
+    
+        if ( (overlap=getOverlappingLord(page,lord)) == nullptr )
+            break;
+        
+        page = calcPage(index);
+        if ( page > pages.size() ) {
+            if ( page < MaxPages ) {
+                addNewPage(page);
+            }else{
+                if ( looped == true ) {
+                    addToPage(lord, 0, calcGridLocation(0));
+                    break;
+                }
+                page=1;
+                index=0;
+                continue;
+            }
         }
+        
+        lord->removeFromParent();
+        addToPage(lord, page, calcGridLocation(index));
+        index++;
     }
     
 }
 
-uilordselect* panel_select::getOverlappingLord ( uilordselect* source )
+uilordselect* panel_select::getOverlappingLord ( s32 page, uilordselect* source )
 {
     character c;
     
-    // TODO: ui frig to stop collision with look button
-
     mxid id = getIdFromTag(source);
     TME_GetCharacter(c, id );
 
     int g2=SELECT_GRID_X/2;
     int g1 = ( c.followers ) ? SELECT_GRID_X : SELECT_GRID_X/2 ;
+ 
+    auto pageNode = pages.at(page-1);
     
-    for ( auto id : model->characters )
+    for ( Node* node : pageNode->getChildren() )
     {
-        auto target = getLordElement(id);
+        auto target = dynamic_cast<uilordselect*>(node);
         
-        CONTINUE_IF_NULL( target );
+        CONTINUE_IF_NULL(target);
         CONTINUE_IF( target == source );
-        CONTINUE_IF( !target->isEnabled() );
-        CONTINUE_IF( target->getTag() == 0 );
+        CONTINUE_IF( getLordPage(target) != page);
+        
+        auto p2 = target->getPosition();
+        auto p1 = source->getPosition();
         
         mxid id2 = getIdFromTag(target);
         
@@ -346,9 +384,6 @@ uilordselect* panel_select::getOverlappingLord ( uilordselect* source )
         CONTINUE_IF(c.following);
         
         g2 = ( c.followers ) ? SELECT_GRID_X : SELECT_GRID_X/2 ;
-        
-        auto p2 = target->getPosition();
-        auto p1 = source->getPosition();
         
         int radius_added = RES(g1) + RES(g2) ;
         
@@ -363,17 +398,27 @@ uilordselect* panel_select::getOverlappingLord ( uilordselect* source )
     return nullptr ;
 }
 
+s32 panel_select::calcPage( u32 index )
+{
+    return (index / MAX_LORDS_PER_PAGE) +1 ;
+}
+
 // position from top left of canvas
 Vec2 panel_select::calcGridLocation ( u32 index )
 {
     Vec2 pos = Vec2::ZERO ;
+    
+    // find page
+    s32 page = calcPage(index);
+    
+    index = index - ((page-1) * MAX_LORDS_PER_PAGE);
     
     int r = index / MAX_COLUMNS ;
     int c = index % MAX_COLUMNS ;
     
     pos.x = (c * (SELECT_GRID_X+SELECT_GRID_X_LEADING)) + START_X;
     pos.y = (r * (SELECT_GRID_Y+SELECT_GRID_Y_LEADING)) + START_Y;
-    pos.y = scrollView->getInnerContainerSize().height-pos.y;
+    pos.y = this->getContentSize().height-pos.y;
     
     return pos;
 }
@@ -382,14 +427,15 @@ Vec2 panel_select::calcGridLocation ( u32 index )
 void panel_select::updateFilters()
 {
     character        c;
-    for ( auto id : model->characters )
+    for ( auto node : lords )
     {
-        auto button = getLordElement(id);
-        CONTINUE_IF_NULL( button );
-   
+        auto button = static_cast<uilordselect*>(node);
+        
+        auto id = getIdFromTag(button);
+        
         TME_GetCharacter(c,id);
         CONTINUE_IF( c.following );
-   
+
         applyFilters( button, c );
     }
     
@@ -421,10 +467,6 @@ void panel_select::applyFilters ( uilordselect* e, character& c )
     
     e->setVisible(show);
 }
-
-
-
-
 
 uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const std::string& image, select_filters flag )
 {
@@ -466,6 +508,7 @@ void panel_select::OnNotification( Ref* sender )
     switch ( id  )
     {
         case ID_LOOK:
+            model->page = (s32)pageView->getCurrentPageIndex();
             mr->look();
             break;
             
@@ -488,6 +531,7 @@ void panel_select::OnNotification( Ref* sender )
         case ID_NIGHT:
         {
             AreYouSure(NIGHT_MSG, [&] {
+                model->page = (s32)pageView->getCurrentPageIndex();
                 mr->night();
             });
             break;
@@ -495,14 +539,19 @@ void panel_select::OnNotification( Ref* sender )
         
         case ID_CLEANUP_SELECT:
             resetPositions();
+            pageView->scrollToPage(0);
             break;
             
         case ID_GROUP_DISBAND:
         {
             auto parent = static_cast<Button*>(sender)->getParent();
             auto leader = static_cast<uigrouplord*>(parent);
+            
+            storeAllLordsPositions();
+            
             layoutid_t id = static_cast<layoutid_t>(leader->getTag()-ID_SELECT_CHAR);
             mr->disbandGroup(id);
+            
             refreshCharacters();
             break;
         }
@@ -514,44 +563,136 @@ void panel_select::OnNotification( Ref* sender )
 
 void panel_select::resetPositions()
 {
-    setInitialScrollViewHeight();
-    
-    character c;
-    for ( u32 ii=0; ii<model->characters.Count(); ii++ ) {
-        
-        TME_GetCharacter(c,model->characters[ii]);
-        CONTINUE_IF(c.following);
-        
-        auto button = getLordElement(c.id);
-        CONTINUE_IF_NULL(button);
-
-        button->setPosition(calcGridLocation(ii));
-        checkCollision(button);
-        storeLordPosition(button);
-    
+    for( auto node : lords ) {
+        node->removeFromParent();
     }
-    resizeScrollView();
+    
+    s32 index = 0;
+    for( auto node : lords ) {
+        auto button = static_cast<uilordselect*>(node);
+        addToPage(button, calcPage(index), calcGridLocation(index));
+        checkCollision(button,0);
+        
+        // adjust for big group circle
+        if ( button->lordtype == lordtype_group ) {
+            auto pos = button->getPosition();
+            f32 adjustX = SELECT_ELEMENT_WIDTH/2;
+            if ( pos.x-adjustX <= 0 )
+                pos.x += adjustX;
+            
+            pos.y -= SELECT_ELEMENT_HEIGHT/2;
+            button->setPosition(pos);
+        }
+
+        storeLordPosition(button);
+        index++;
+    }
+}
+
+void panel_select::storeAllLordsPositions()
+{
+    showCharacterPositions();
+
+    for ( auto node : lords ) {
+        auto lord = static_cast<uilordselect*>(node);
+        storeLordPosition(lord);
+    }
 }
 
 void panel_select::OnDeActivate()
 {
     uipanel::OnDeActivate();
     
-    for( auto node : scrollView->getChildren() ) {
-        auto lord = dynamic_cast<uilordselect*>(node);
-        CONTINUE_IF_NULL(lord);
-        storeLordPosition(lord);
-    }
+    storeAllLordsPositions();
     
 }
 
 void panel_select::showCharacterPositions()
 {
-    for( auto node : scrollView->getChildren() ) {
-        auto e = dynamic_cast<uilordselect*>(node);
-        CONTINUE_IF_NULL(e);
+    for( auto node : lords ) {
+        auto e = static_cast<uilordselect*>(node);
         auto ud = static_cast<char_data_t*>(e->getUserData());
-        UIDEBUG( "%s = (%f,%f)", ud->symbol.c_str(), e->getPosition().x, e->getPosition().y);
+        UIDEBUG( "%d %s = (%f,%f) %d", ud->id, ud->symbol.c_str(), e->getPosition().x, e->getPosition().y, e->getPage());
+        
+        if ( e->lordtype == lordtype_group ) {
+            auto parent = static_cast<uigrouplord*>(e);
+            for( auto child : parent->followers ) {
+                auto c = static_cast<uilordselect*>(child);
+                auto u = static_cast<char_data_t*>(c->getUserData());
+                UIDEBUG( "    %d %s = (%f,%f) %d", u->id, u->symbol.c_str(), c->getPosition().x, c->getPosition().y, c->getPage());
+            }
+        }
+        
+    }
+}
+
+void panel_select::placeDraggedLordOnCurrentPage()
+{
+    s32 currentPage = (s32)pageView->getCurrentPageIndex();
+    pages.at(currentPage)->addChild(draggedLord);
+    draggedLord->setPage(currentPage+1);
+}
+
+void panel_select::draggedLordMovesOnPage()
+{
+    placeDraggedLordOnCurrentPage();
+    storeLordPosition(draggedLord);
+    draggedLord = nullptr;
+}
+
+void panel_select::draggedLordLeavesGroup( uidragevent *event)
+{
+    mxid draggedLordId = getIdFromTag(draggedLord);
+    if ( mr->leaveGroup(draggedLordId) ) {
+        s32 currentPage = (s32)pageView->getCurrentPageIndex();
+        draggedLord->setPosition(event->position);
+        draggedLord->setPage(currentPage+1);
+        storeLordPosition(draggedLord);
+        refreshCharacters();
+    }else{
+        draggedLordReturnsToGroup();
+    }
+}
+
+void panel_select::draggedLordMovesGroup()
+{
+    mxid draggedLordId = getIdFromTag(draggedLord);
+    if ( mr->leaveGroup(draggedLordId) ) {
+        draggedLord->setPage(InvalidPage);
+        draggedLord->setPosition(Vec2::ZERO);
+        if ( mr->joinGroup(draggedLordId, potentialLeader) ) {
+            draggedLord->setPage(dropTarget->getPage()*-1);
+        }
+        refreshCharacters();
+    }else{
+        draggedLordReturnsToGroup();
+    }
+}
+
+void panel_select::draggedLordBecomesLeader()
+{
+    mxid draggedLordId = getIdFromTag(draggedLord);
+    if ( mr->swapGroupLeader(draggedLordId) ) {
+        s32 currentPage = (s32)pageView->getCurrentPageIndex();
+        draggedLord->setPage(currentPage+1);
+        draggedLord->setPosition(dropTarget->getPosition());
+        dropTarget->setPage(draggedLord->getPage()*-1);
+        dropTarget->setPosition(Vec2::ZERO);
+        storeLordPosition(draggedLord);
+        storeLordPosition(dropTarget);
+        refreshCharacters();
+    }else{
+        draggedLordReturnsToGroup();
+    }
+}
+
+void panel_select::draggedLordJoinsGroup()
+{
+    mxid draggedLordId = getIdFromTag(draggedLord);
+    if ( mr->joinGroup(draggedLordId, potentialLeader) ) {
+        refreshCharacters();
+    }else{
+        draggedLordReturnsToPage();
     }
 }
 
@@ -565,6 +706,18 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
     Vec2 droppedAt;
 
     switch (event->type) {
+            
+        case uidragevent::drageventtype::select:
+            
+            // get intial position
+            startDragParent = lord->getParent();
+            startDragPosition = lord->getPosition();
+            startDragPage = lord->getPage();
+            
+            // disable scrolling while dragging
+            disableUI();
+            break;
+            
         case uidragevent::drageventtype::start:
             // clear drop target
             dropTarget = nullptr;
@@ -573,18 +726,31 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             currentlyFollowing = c.following;
             potentialLeader = IDT_NONE;
             
-            // turn off canvas scrolling
-            scrollView->setTouchEnabled(false);
+            // remove from page and add to panel
+            draggedLord->removeFromParent();
+            this->addChild(draggedLord);
+            if ( currentlyFollowing ) {
+                draggedLord->setPosition(event->position);
+                draggedLord->setScale(1.0f);
+            }
             
             break;
 
         case uidragevent::drageventtype::stop:
         {
-            // turn on scrolling
-            scrollView->setTouchEnabled(true);
+            // enable scrolling after dragging
+            enableUI();
+        
+            // remove lord from panel
+            draggedLord->removeFromParent();
             
+            // check if off page
+            if ( !checkValidDropLocation() )
+                return;
+            
+            // just moved
             if ( dropTarget == nullptr && currentlyFollowing == IDT_NONE ) {
-                draggedLord = nullptr;
+                draggedLordMovesOnPage();
                 return;
             }
             
@@ -598,34 +764,30 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             //  NO - If we drop on nothing then we have just moved
             //  NO - if we drop on someone then follow them
             
-
+            showCharacterPositions();
+            
             if ( currentlyFollowing ) {
                 
                 if ( potentialLeader == IDT_NONE ) {
-                    mr->leaveGroup(draggedLordId);
-                    draggedLord->setPosition(event->position);
-                    storeLordPosition(draggedLord);
-                    refreshCharacters();
+                    draggedLordLeavesGroup(event);
                 }
                 else if ( potentialLeader == currentlyFollowing ) {
-                    mr->swapGroupLeader(draggedLordId);
-                    refreshCharacters();
+                    
+                    // check for swapping group lord
+                    if ( lordDropResult == MOUSE_OVER_OUTER  ) {
+                        draggedLordReturnsToGroup();
+                    } else {
+                        draggedLordBecomesLeader();
+                    }
                 }
                 else {
-                    if ( mr->leaveGroup(draggedLordId) ) {
-                        mr->joinGroup(draggedLordId, potentialLeader);
-                        refreshCharacters();
-                    }
+                    draggedLordMovesGroup();
                 }
             }
             else {
                 if ( potentialLeader != IDT_NONE ) {
-                    if ( mr->joinGroup(draggedLordId, potentialLeader) ) {
-                        //mr->look();
-                        refreshCharacters();
-                    }
+                    draggedLordJoinsGroup();
                 }
-                
             }
             
             dropTarget = nullptr;
@@ -635,46 +797,10 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             
         case uidragevent::drageventtype::drag:
         {
-            UIMOUSEOVER result;
+            checkValidDropTarget();
             
-            auto newTarget = getDropTarget(lord,MOUSE_OVER_INNER,result);
-            
-            if ( newTarget != dropTarget ) {
-                
-                // clear old target
-                if ( dropTarget != nullptr ) {
-                    dropTarget->endDropTarget();
-                    potentialLeader = IDT_NONE;
-                }
-                
-                if ( newTarget != NULL ) {
-                    
-                    potentialLeader = getIdFromTag(newTarget);
-                    
-                    mxid id = getIdFromTag(lord);
-                    TME_GetCharacter(c,id );
-                
-                    if ( Character_CanFollow(c,potentialLeader) ) {
-                        newTarget->startDropTarget();
-                    }else{
-                        newTarget=nullptr;
-                    }
-
-                }
-            }
-            
-            dropTarget = newTarget;
-            
-            // check
-            auto position = draggedLord->getPosition();
-            auto size = scrollView->getContentSize();
-            if (position.x > size.width - RES(16) ) {
-                resizeCanvas(0,0,RES(16),0);
-            }
-            else if (position.x < RES(16) ) {
-                resizeCanvas(RES(16),0,0,0);
-            }
-            
+            checkPageFlip();
+  
             break;
         }
             
@@ -683,12 +809,113 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
     }
 }
 
+void panel_select::checkValidDropTarget()
+{
+    character c;
+    
+    if ( dropTarget && dropTarget->lordtype == lordtype_group ) {
+        static_cast<uigrouplord*>(dropTarget)->possibleSwap = false;
+        dropTarget->refreshStatus();
+    }
+    
+    auto newTarget = getDropTarget(draggedLord,MOUSE_OVER_OUTER,lordDropResult);
+    
+    if ( newTarget && newTarget->lordtype == lordtype_group ) {
+        if ( currentlyFollowing && currentlyFollowing == potentialLeader ) {
+            static_cast<uigrouplord*>(newTarget)->possibleSwap = lordDropResult != MOUSE_OVER_OUTER;
+            newTarget->refreshStatus();
+        }
+    }
+    
+    
+    if ( newTarget != dropTarget ) {
+        
+        
+        // clear old target
+        if ( dropTarget != nullptr ) {
+            dropTarget->endDropTarget();
+        }
+        
+        if ( newTarget != NULL ) {
+            
+            potentialLeader = getIdFromTag(newTarget);
+            
+            mxid id = getIdFromTag(draggedLord);
+            TME_GetCharacter(c,id );
+            
+            if ( Character_CanFollow(c,potentialLeader) ) {
+                newTarget->startDropTarget();
+            }else{
+                newTarget=nullptr;
+                potentialLeader = IDT_NONE;
+            }
+            
+        } else {
+            potentialLeader = IDT_NONE;
+        }
+        
+        dropTarget = newTarget;
+    }
+
+}
+
+void panel_select::draggedLordReturnsToGroup()
+{
+    draggedLord->setScale(GROUPED_LORD_SCALE);
+    draggedLord->setPosition(startDragPosition);
+    startDragParent->addChild(draggedLord);
+    startDragPage *= -1;
+    pageView->scrollToPage(startDragPage-1);
+    
+}
+
+void panel_select::draggedLordReturnsToPage()
+{
+    draggedLord->setPosition(startDragPosition);
+    pages.at(startDragPage-1)->addChild(draggedLord);
+    draggedLord->setPage(startDragPage);
+    pageView->scrollToPage(startDragPage-1);
+}
+
+bool panel_select::checkValidDropLocation()
+{
+    bool valid = true;
+    
+    if ( dropTarget == nullptr
+        && (draggedLord->getPosition().x > getContentSize().width - RIGHT_STRIP_WIDTH
+            || draggedLord->getPosition().y < BOTTOM_STRIP_HEIGHT) ) {
+            
+            valid = false;
+        }
+    
+    else if ( dropTarget == nullptr ) {
+        UIMOUSEOVER result;
+        if ( getDropTarget(draggedLord, MOUSE_OVER_OUTER, result) != nullptr) {
+            valid = false;
+        }
+    }
+    
+    if ( !valid ) {
+        if ( currentlyFollowing ) {
+            draggedLordReturnsToGroup();
+        }else{
+            draggedLordReturnsToPage();
+        }
+    }
+    
+    return valid;
+}
+
 void panel_select::refreshCharacters() {
 
     this->scheduleOnce( [&](float) {
-
-        for ( auto element : lords ) {
-            scrollView->removeChild(element);
+        for ( auto node : lords ) {
+            auto lord = static_cast<uilordselect*>(node);
+            lord->removeFromParent();
+            // store children
+            if ( lord->lordtype == lordtype_group ) {
+                static_cast<uigrouplord*>(lord)->clearFollowers();
+            }
         }
         getCharacters();
         
@@ -707,15 +934,15 @@ uilordselect* panel_select::getDropTarget( uilordselect* lord, UIMOUSEOVER where
 {
     auto pos = lord->getCenter();
     
-    if ( lord->lordtype == lordtype_grouped ) {
-        pos = lord->getWorldPosition();
-    }
+    s32 currentPage = (s32)pageView->getCurrentPageIndex()+1;
     
     for ( auto element : lords ) {
         
         CONTINUE_IF(element==lord);
-        
+
         auto target = static_cast<uilordselect*>(element);
+
+        CONTINUE_IF( target->getPage() != currentPage );
         
         result = target->MouseOverHotspot(pos, MOUSE_OVER_HINT_DROP);
         
@@ -738,39 +965,80 @@ uilordselect* panel_select::getDropTarget( uilordselect* lord, UIMOUSEOVER where
 
 void panel_select::storeLordPosition( uilordselect* lord ) {
     char_data_t* userdata = static_cast<char_data_t*>( lord->getUserData() );
-    auto position = lord->getPosition();
     if ( userdata != nullptr ) {
-        userdata->select_loc.x = position.x;
-        userdata->select_loc.y = position.y;
+        auto position = lord->getPosition();
+
+        if ( lord->getPage() <= InvalidPage ) {
+            //auto parent = static_cast<uilordselect*>(lord->getParent());
+            //userdata->select_page = parent->getPage()*-1;
+            userdata->select_page = lord->getPage();
+            userdata->select_loc.x = 0;
+            userdata->select_loc.y = 0;
+        } else {
+            userdata->select_page = lord->getPage();
+            userdata->select_loc.x = position.x;
+            userdata->select_loc.y = position.y;
+        }
     }
+    
+    // store children
+    if ( lord->lordtype == lordtype_group ) {
+        for( auto child : static_cast<uigrouplord*>(lord)->followers ) {
+            storeLordPosition(static_cast<uilordselect*>(child));
+        }
+    }
+    
 }
 
-
-void panel_select::resizeCanvas( s32 left, s32 top, s32 right, s32 bottom ) {
+void panel_select::checkPageFlip()
+    {
     
-    auto size = scrollView->getInnerContainerSize();
-    
-    s32 xAdj=0;
-    s32 yAdj=0;
-    
-    if ( left ) {
-        size.width += left;
-        xAdj = left ;
-    }
-    if ( right ) {
-        size.width += right;
-        xAdj = 0 ;
+    if ( !pageFlipAllowed ) {
+        return;
     }
     
-    for( auto node : lords ) {
-        CONTINUE_IF(node == draggedLord);
+    if ( draggedLord == nullptr )
+        return;
+    
+    // check
+    auto position = draggedLord->getPosition();
+    auto size = this->getContentSize();
+    auto index = pageView->getCurrentPageIndex();
+    
+    if (position.x > size.width - (RIGHT_STRIP_WIDTH*0.75) ) {
+    
+        if ( index == pages.size()-1 && index < MaxPages ) {
+            addNewPage((s32)index+1);
+            pageView->setCurrentPageIndex(index+1);
+        }
+        else if ( index<pages.size() ) {
+            pageView->scrollToPage(index+1);
+        }
+        pageFlipAllowed=false;
+    }
+    else if (position.x < (RIGHT_STRIP_WIDTH*0.50) && index>0 ) {
+        pageView->scrollToPage(index-1);
+        pageFlipAllowed=false;
+    }
+    
+    if ( !pageFlipAllowed ) {
+        this->scheduleOnce( [&](float) {
+            pageFlipAllowed=true;
+            this->checkPageFlip();
+        }, 2, "freshPageFlip" );
         
-        auto p = node->getPosition();
-        p.x += xAdj;
-        p.y += yAdj;
-        node->setPosition(p);
     }
     
-    scrollView->setInnerContainerSize(size);
-    //resizeScrollView();
+}
+
+void panel_select::removeEmptyEndPages()
+{
+    for (;;) {
+        auto page = pages.at( pages.size()-1 );
+        if ( page->getChildren().size() != 0 ) {
+            break;
+        }
+        pages.popBack();
+        pageView->removePage(page);
+    }
 }

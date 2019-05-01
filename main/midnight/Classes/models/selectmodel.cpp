@@ -19,6 +19,8 @@ void selectmodel::setDefaults()
     filters.Set(0xffffffff);
     
     characters.Clear();
+    
+    page = 0;
 }
 
 void selectmodel::updateCharacters()
@@ -49,10 +51,17 @@ void selectmodel::serialize( u32 version, lib::archive& ar )
                 
                 ar << characters[ii]  ;
                 ar << ud->select_loc;
+                
+                // Version 14
+                ar << ud->select_page;
+                
             }
         
+        // Version 11
         ar << filters ;
         
+        // Version 15
+        ar << page;
         
     }else{
         
@@ -60,18 +69,24 @@ void selectmodel::serialize( u32 version, lib::archive& ar )
         for ( u32 ii=0; ii<count; ii++ ) {
             ar >> id ;
             TME_GetCharacter(c, id ) ;
+            
             char_data_t* ud = (char_data_t*)c.userdata;
-            
-            point p;
-            
-            ar >> p;
-            ud->select_loc = p ;
+            ar >> ud->select_loc;
+            if ( version >= 14 )
+                ar >> ud->select_page;
+            else
+                ud->select_page = InvalidPage;
         }
         
         if ( version >=11 )
             ar >> filters ;
+        else
+            filters.Set(0xffffffff);
         
-        
+        if ( version >= 15 )
+            ar >> page;
+        else
+            page = 0;
     }
     
 }

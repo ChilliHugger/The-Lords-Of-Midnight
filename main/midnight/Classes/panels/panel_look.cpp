@@ -1518,6 +1518,11 @@ bool panel_look::allowDragLook()
     return FALSE;
 }
 
+void panel_look::OnSelectDrag(uidragevent* event)
+{
+    uidragelement::OnSelectDrag(event);
+}
+
 void panel_look::OnStartDrag(uidragevent* event)
 {
     uidragelement::OnStartDrag(event);

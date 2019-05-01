@@ -19,8 +19,9 @@ public:
     void updateCharacters();
 
 public:
-    c_mxid characters;
-    flags32 filters;
-    tme::loc_t     loc;
+    c_mxid          characters;
+    flags32         filters;
+    tme::loc_t      loc;
+    s32             page;
     
 };

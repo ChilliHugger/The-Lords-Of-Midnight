@@ -58,32 +58,10 @@ bool panel_think::init()
     }
     
     setBackground(_clrWhite);
-        
-    // lets have a pageview
-    pageView = PageView::create();
-    pageView->setDirection(ui::PageView::Direction::HORIZONTAL);
-    pageView->setBounceEnabled(true);
-    pageView->setIndicatorEnabled(true);
-    pageView->setCurrentPageIndex(0);
-    pageView->setIndicatorIndexNodesColor(_clrBlack);
-    pageView->setIndicatorSelectedIndexColor(_clrBlue);
     
-    pageView->setIndicatorIndexNodesScale(DIS(0.25f));
-    pageView->setIndicatorSpaceBetweenIndexNodes(DIS(-5));
+    // Let's create a pageview
+    createPageView();
     
-    uihelper::AddBottomLeft(this, pageView);
-    uihelper::FillParent(pageView);
-    
-    auto padding = resolutionmanager::getInstance()->getSafeArea();
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
-    
-    pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
-        if ( e == PageView::EventType::TURNING ) {
-            UIDEBUG("Page turning");
-            this->enableButtons();
-        }
-    });
-
     // Command Window
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
@@ -93,6 +71,7 @@ bool panel_think::init()
     f32 scale = resolutionmanager::getInstance()->phoneScale() ;
     int x = RES(10) * scale ;
     int c = DIS(100) * scale;
+    
     // Person
     auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, clickCallback);
     uihelper::AddBottomRight(safeArea, person, x+c*0, RES(10) );
@@ -108,21 +87,6 @@ bool panel_think::init()
     // Battle
     auto battle = uihelper::CreateImageButton("think_battle", ID_THINK_BATTLE, clickCallback);
     uihelper::AddBottomRight(safeArea, battle, x+c*3, RES(10) );
-    
-    // MISC Action Icons
-    x = RES(10) + (5.5*c) ;
-    c+= RES(20);
-    
-    // Leave
-    auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEFT, clickCallback);
-    uihelper::AddBottomRight(safeArea, leave, x+c*0, RES(10) );
-    leave->setVisible(false);
-    
-    
-    // Disband
-    auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);
-    uihelper::AddBottomRight(safeArea, disband, x+c*0, RES(10) );
-    disband->setVisible(safeArea);
     
     // Stronghold
     // Postmen
@@ -267,6 +231,35 @@ void panel_think::setObject(mxid id)
     
 }
 
+void panel_think::createPageView()
+{
+    // lets have a pageview
+    pageView = PageView::create();
+    pageView->setDirection(ui::PageView::Direction::HORIZONTAL);
+    pageView->setBounceEnabled(true);
+    pageView->setIndicatorEnabled(true);
+    pageView->setCurrentPageIndex(0);
+    pageView->setIndicatorIndexNodesColor(_clrBlack);
+    pageView->setIndicatorSelectedIndexColor(_clrBlue);
+    
+    pageView->setIndicatorIndexNodesScale(DIS(0.25f));
+    pageView->setIndicatorSpaceBetweenIndexNodes(DIS(-5));
+    
+    uihelper::AddBottomLeft(this, pageView);
+    uihelper::FillParent(pageView);
+    
+    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
+    
+    pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
+        if ( e == PageView::EventType::TURNING ) {
+            UIDEBUG("Page turning");
+            this->enableButtons();
+        }
+    });
+
+}
+
 void panel_think::addPage( mxid id )
 {
     uithinkpage* page = uithinkpage::create();
@@ -391,42 +384,21 @@ void panel_think::OnNotification( Ref* sender )
             mr->look();
             break;
             
-//        case ID_GROUP_LEAVE:
-//        {
-//            character& c = TME_CurrentCharacter();
-//            if ( Character_UnFollow(c,c.following) ) {
-//
-//                //panel_select* select = (panel_select*) gl->GetPanel(MODE_SELECT);
-//                //select->AddNewLord(c.id);
-//
-//                char_data_t* ud = (char_data_t*)c.userdata;
-//                ud->select_loc = point(0,0);
-//
-//                panel_think* panel = (panel_think*)gl->GetPanel(MODE_THINK);
-//                panel->SetObject(NONE) ;
-//                gl->stories->save();
-//                gl->SetPanelMode ( MODE_THINK );
-//                return;
-//            }
-//            break;
-//        }
+        case ID_GROUP_LEAVE:
+        {
+            if ( mr->leaveGroup(TME_CurrentCharacter().id) ) {
+                mr->think();
+            }
+            break;
+        }
             
-//        case ID_GROUP_DISBAND:
-//        {
-//            character& c = TME_CurrentCharacter();
-//            //if ( Character_Disband(c) ) {
-//
-//            panel_select* select = (panel_select*) gl->GetPanel(MODE_SELECT);
-//            select->disbandGroup(c.id, TRUE);
-//
-//            panel_think* panel = (panel_think*)gl->GetPanel(MODE_THINK);
-//            panel->SetObject(NONE) ;
-//            gl->stories->save();
-//            gl->SetPanelMode ( MODE_THINK );
-//            return;
-//            //}
-//            break;
-//        }
+        case ID_GROUP_DISBAND:
+        {
+            if ( mr->disbandGroup(TME_CurrentCharacter().id) ) {
+                mr->think();
+            }
+            break;
+        }
             
 //        case ID_POSTRECRUIT_RIDERS:
 //        case ID_POSTRECRUIT_WARRIORS:

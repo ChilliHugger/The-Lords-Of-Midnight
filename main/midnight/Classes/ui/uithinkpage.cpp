@@ -13,6 +13,7 @@
 #include "../system/tmemanager.h"
 #include "../ui/uihelper.h"
 #include "../frontend/layout_id.h"
+#include "../frontend/keyboard_id.h"
 
 #if defined(_LOM_)
 #define NAME_X              32
@@ -123,8 +124,24 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     scrollView->addChild(unhide);
 #endif
     
+    // Leave
+    auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEAVE, clickCallback);
+    pos = imgCharacter->getPosition();
+    pos.y -= imgCharacter->getContentSize().height;
+    leave->setPosition(pos);
+    leave->setVisible(this->leave);
+    scrollView->addChild(leave);
+    
+    // Disband
+    auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);   pos = imgCharacter->getPosition();
+    pos.y -= imgCharacter->getContentSize().height;
+    disband->setPosition(pos);
+    disband->setVisible(this->disband);
+    scrollView->addChild(disband);
+    
+    
     // bottom gradient on character
-   if ( this->unhide || this->approach ) {
+   if ( this->unhide || this->approach || this->disband || this->leave ) {
         auto gradientB = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
         gradientB->setContentSize(Size(RES(128),RES(64)));
         gradientB->setPosition(pos);
@@ -175,6 +192,11 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     uihelper::AddTopLeft(safeArea, scrollView);
     uihelper::FillParent(scrollView);
+    
+//#if defined(_LOM_)
+//    addShortcutKey(ID_FIGHT         ,K_FIGHT);
+//    addShortcutKey(ID_UNHIDE        ,K_UNHIDE);
+//#endif
     
 }
 

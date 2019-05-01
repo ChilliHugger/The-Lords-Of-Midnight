@@ -28,6 +28,7 @@ protected:
     virtual void OnNotification( Ref* sender ) override;
     virtual void setObject(mxid id) override;
 
+    void createPageView();
     void setupPages();
     void addPage( mxid id );
     
@@ -38,13 +39,11 @@ protected:
 
 protected:
     flags32         flags;
-    //s32             page;
-    //c_mxid          pages;
-    cocos2d::Vector<uithinkpage*>    pages;
     s64             currentPage;
     mxid            id;
     mxid            objectId;
-    
-    cocos2d::ui::PageView*       pageView;
     int             current_tab;
+
+    cocos2d::ui::PageView*       pageView;
+    cocos2d::Vector<uithinkpage*>    pages;
 };

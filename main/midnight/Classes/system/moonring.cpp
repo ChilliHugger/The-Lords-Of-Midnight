@@ -159,28 +159,44 @@ bool moonring::swapGroupLeader(mxid id)
 {
     character c;
     TME_GetCharacter(c, id );
-    return Character_SwapGroupLeader(c,c.following);
+    if ( Character_SwapGroupLeader(c,c.following) ) {
+        stories->save();
+        return true;
+    }
+    return false;
 }
 
 bool moonring::joinGroup(mxid id, mxid leaderid )
 {
     character c;
     TME_GetCharacter(c, id );
-    return Character_Follow(c, leaderid);
+    if ( Character_Follow(c, leaderid) ) {
+        stories->save();
+        return true;
+    }
+    return false;
 }
 
 bool moonring::leaveGroup(mxid id)
 {
     character c;
     TME_GetCharacter(c, id );
-    return Character_UnFollow(c, c.following);
+    if ( Character_UnFollow(c, c.following) ) {
+        stories->save();
+        return true;
+    }
+    return false;
 }
 
 bool moonring::disbandGroup(mxid id)
 {
     character c;
     TME_GetCharacter(c, id );
-    return Character_Disband(c);
+    if ( Character_Disband(c) ) {
+        stories->save();
+        return true;
+    }
+    return false;
 }
 //
 
@@ -468,6 +484,7 @@ bool moonring::serialize( u32 version, archive& ar )
         selectmodel.serialize(version, ar);
         ////p_think->Serialize(version, ar);
         
+        // Version 10
         stories->Serialize(version, ar);
         
         

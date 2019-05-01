@@ -20,18 +20,19 @@ public:
     virtual bool setLord( mxid characterid ) override;
     static uigroupedlord* createWithLord ( mxid characterid );
 
-    void setTitleAlignment(cocos2d::TextHAlignment align);
+    void setTitleAlignment(TextHAlignment align);
 
 protected:
     uigroupedlord();
 
-    cocos2d::Sprite* getFaceImage(character& c);
+    Sprite* getFaceImage(character& c);
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
- 
+    bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const;
+
 private:
     Node* buttonNode;
-    cocos2d::Label* title;
-    cocos2d::LayerColor* titleBackground;
+    Label* title;
+    LayerColor* titleBackground;
 
 };

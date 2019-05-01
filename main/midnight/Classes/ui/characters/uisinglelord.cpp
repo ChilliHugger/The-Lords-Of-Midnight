@@ -63,7 +63,7 @@ bool uisinglelord::init()
         innerCircle->drawSolidCircle(Vec2(width/2,height/2), DISTANCE_INNER/2 , 0, 64, 1.0, 1.0, Color4F(0,0,0,0.1));
         innerCircle->setAnchorPoint(uihelper::AnchorCenter);
         innerCircle->setPosition(Vec2(width/2,height/2));
-        innerCircle->setVisible(false);
+        innerCircle->setVisible(true);
         addChild(innerCircle);
         
         //        auto outer_circle = DrawNode::create();
@@ -192,8 +192,7 @@ bool uisinglelord::setLord( mxid characterid )
     
     uihelper::AddCenter(this, face, 0, SHIELD_OFFSET_Y);
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
-    f32 width = SELECT_ELEMENT_WIDTH*scale;
+    f32 width = SELECT_ELEMENT_WIDTH;
     
     // set name label
     auto title = Label::createWithTTF( uihelper::font_config_small, c.longname );
@@ -201,7 +200,7 @@ bool uisinglelord::setLord( mxid characterid )
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
     title->setLineSpacing(DIS(-2));
-    title->setHeight(DIS(32)*scale);
+    title->setHeight(DIS(32));
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setAnchorPoint(uihelper::AnchorCenter);
     title->setWidth(width-DIS(16));

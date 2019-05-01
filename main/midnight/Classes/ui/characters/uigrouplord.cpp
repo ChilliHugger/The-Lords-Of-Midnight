@@ -20,12 +20,15 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-const int MAX_VISIBLE_LORDS = 8;
+static const s32 MAX_VISIBLE_LORDS = 8;
+static const s32 GROUP_RADIUS = 95;
+static const f32 GROUP_STEPS = 10.0;
 
 uigrouplord::uigrouplord() :
     i_group_left(nullptr),
     i_group_right(nullptr),
-    follower_adjust(0)
+    follower_adjust(0),
+    possibleSwap(false)
 {
     lordtype = lordtype_group;
 }
@@ -38,6 +41,7 @@ bool uigrouplord::init()
         setContentSize(circle->getContentSize());
         circle->setAnchorPoint(uihelper::AnchorCenter);
         circle->setIgnoreAnchorPointForPosition(true);
+        circle->setLocalZOrder(ZORDER_FAR);
         addChild(circle);
         
 //        auto box = DrawNode::create();
@@ -117,8 +121,8 @@ void uigrouplord::createFollowers()
         addFollower(ii,followers[ii]);
     }
 
-//    for ( int ii=0; ii<16; ii++ )
-//        addFollower(ii,followers[0]+ii);
+//    for ( int ii=0; ii<8; ii++ )
+//        addFollower(ii,followers[0]);
     
     follower_adjust=0;
     updateFollowers();
@@ -143,25 +147,35 @@ void uigrouplord::updateFollowers()
     
 }
 
+void uigrouplord::clearFollowers()
+{
+    for ( auto lord : followers ) {
+        lord->removeFromParent();
+    }
+    followers.clear();
+}
+
 void uigrouplord::addFollower( int pos, mxid id )
 {
     auto lord = uigroupedlord::createWithLord(id);
     layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+id);
-    lord->setAnchorPoint(uihelper::AnchorCenter);
+    //lord->setIgnoreAnchorPointForPosition(true);
     lord->setPosition( calcCirclePos(pos) );
+    lord->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     lord->setTag(tag);
     lord->addClickEventListener( _clickEventListener );
     lord->drag_delegate = drag_delegate;
+    lord->setPage( getPage()*-1 );
+    lord->setScale(GROUPED_LORD_SCALE);
     addChild(lord);
     followers.pushBack(lord);
 }
 
 Vec2 uigrouplord::calcCirclePos ( f32 pos )
 {
-    f32 steps= 10 ;
-    f32 step = 360 / steps ;
+    f32 step = 360 / GROUP_STEPS ;
     f32 a = step*pos;
-    f32 r = RES(95);
+    f32 r = RES(GROUP_RADIUS);
     
     auto size = getContentSize();
     auto center = Vec2(size.width/2, size.height/2);
@@ -169,10 +183,49 @@ Vec2 uigrouplord::calcCirclePos ( f32 pos )
     f32 y = center.y - r * sin(DEGREETORAD(a));
     
     return Vec2(x,y);
+    //return center;
+}
+
+void uigrouplord::setPage(s32 page) {
+    uilordselect::setPage(page);
+    for ( auto node : followers ) {
+        auto lord = static_cast<uigroupedlord*>(node);
+        lord->setPage(page*-1);
+    }
 }
 
 bool uigrouplord::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
-    return MouseOverHotspot(pt, MOUSE_OVER_HINT_DROP) == MOUSE_OVER_FACE ;
+    return Widget::hitTest(pt, camera, p)
+        && MouseOverHotspot(pt, MOUSE_OVER_HINT_DROP) == MOUSE_OVER_FACE ;
 }
 
+UIMOUSEOVER uigrouplord::MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const
+{
+    if ( hint == MOUSE_OVER_HINT_DROP ) {
+
+        f32 scale = getScale();
+        
+        f32 distance = getDistanceFromCentre(pos);
+        
+        if ( distance < (DISTANCE_SHIELD * scale) )
+            return MOUSE_OVER_FACE ; // face
+        
+        if ( distance < (DISTANCE_INNER * scale) )
+            return MOUSE_OVER_INNER ; // inner
+
+        if ( distance < (DISTANCE_OUTER * scale) )
+            return MOUSE_OVER_OUTER ; // outer
+        
+    }
+    return MOUSE_OVER_NONE ;
+}
+
+
+void uigrouplord::refreshStatus()
+{
+    uisinglelord::refreshStatus();
+
+    buttonNode->setOpacity( possibleSwap ? ALPHA(0.10f) : ALPHA(1.00f) );
+    
+}

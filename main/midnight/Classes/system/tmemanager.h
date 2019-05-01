@@ -38,6 +38,7 @@ public:
     
     // select screen
     point           select_loc;
+    s32             select_page;
     std::string     shortcut_old;
     std::string     shortcut_new;
     
@@ -118,3 +119,7 @@ std::string& GetRaceImage(const raceinfo& r,BOOL horse);
 std::string& GetRaceFace(mxid id);
 std::string& GetRaceFace(const raceinfo& r);
 std::string& LOAD_IMAGE( std::string& filename );
+
+const s32 InvalidPage = 0;
+const point PointZero(0,0);
+

@@ -54,6 +54,12 @@ bool uilordselect::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event* event )
     if ( Widget::onTouchBegan(touch, event) ) {
         mouse_down_pos = touch->getLocation();
         mouse_last_position = mouse_down_pos;
+        
+        uidragevent    dev(this,touch->getLocation(),uidragevent::select);
+        dev.lastposition = mouse_down_pos;
+        dev.time = utils::getTimeInMilliseconds() ;
+        OnSelectDrag(&dev);
+        
         return true;
     }
     
@@ -76,7 +82,7 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
             dev.lastposition = mouse_last_position;
             dev.time = utils::getTimeInMilliseconds() ;
             OnDrag(&dev);
-            event->stopPropagation();
+            //event->stopPropagation();
             setHighlighted(false);
             
         }else if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
@@ -85,9 +91,12 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
             dev.lastposition = mouse_down_pos;
             dev.time = utils::getTimeInMilliseconds() ;
             OnStartDrag(&dev);
-            event->stopPropagation();
+            //event->stopPropagation();
             setHighlighted(false);
         }
+        
+        event->stopPropagation();
+        
     }
 
     mouse_last_position = touch->getLocation();
@@ -138,7 +147,6 @@ void uilordselect::OnStopDrag(uidragevent* event)
         userdata->select_loc.x = getPosition().x;
         userdata->select_loc.y = getPosition().y;
     }
-    
 }
 
 void uilordselect::OnDropStart()
@@ -153,23 +161,32 @@ void uilordselect::OnDropStop()
     refreshStatus();
 }
 
+f32 uilordselect::getDistanceFromCentre( Vec2 pos ) const
+{
+    auto center = getWorldPosition(); //getCenter();
+
+    // calc the distance from the center
+    f32 dx = ABS(center.x - pos.x);
+    f32 dy = ABS(center.y - pos.y);
+    f32 distance = hypot(dx,dy);
+
+    UIDEBUG("getDistanceFromCentre: center(%f,%f) mouse(%f,%f) distance=%f", center.x, center.y, pos.x, pos.y, distance);
+    
+    return distance;
+}
 
 UIMOUSEOVER uilordselect::MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const
 {
     if ( hint == MOUSE_OVER_HINT_DROP ) {
 
-        auto center = getCenter();
+        f32 scale = getScale();
         
-        // calc the distance from the center
-        double dx = ABS(center.x - pos.x);
-        double dy = ABS(center.y - pos.y);
-        double distance = hypot(dx,dy);
+        f32 distance = getDistanceFromCentre(pos);
         
-        //UIDEBUG("check drop: center(%d,%d) mouse(%d,%d) distance=%d", center.x, center.y, pos.x, pos.y, distance);
-        if ( distance < DISTANCE_SHIELD )
+        if ( distance < (DISTANCE_SHIELD * scale) )
             return MOUSE_OVER_FACE ; // face
         
-        if ( distance < DISTANCE_INNER )
+        if ( distance < (DISTANCE_INNER * scale) )
             return MOUSE_OVER_INNER ; // inner
         
     }

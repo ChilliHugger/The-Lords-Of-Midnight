@@ -128,6 +128,7 @@ protected:
     
     // dragging
     void parallaxCharacters ( void );
+    void OnSelectDrag(uidragevent* event) override;
     void OnDrag(uidragevent* event) override;
     void OnStopDrag(uidragevent* event) override;
     void OnStartDrag(uidragevent* event) override;

@@ -22,18 +22,27 @@ public:
     
     void createFollowers();
     void updateFollowers();
+    void clearFollowers();
     
 protected:
     uigrouplord();
     void addFollower( int pos, mxid id );
     
-    cocos2d::Vec2 calcCirclePos ( f32 pos );
-    virtual bool hitTest(const cocos2d::Vec2 &pt, const cocos2d::Camera* camera, cocos2d::Vec3 *p) const override;
+    Vec2 calcCirclePos ( f32 pos );
+    virtual void setPage(s32 page) override;
+    virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const override;
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
+    virtual void refreshStatus() override;
 
 private:
-    cocos2d::Vector<Node*> followers;
     s32 follower_adjust;
+    Button* i_group_left;
+    Button* i_group_right;
+
     
-    cocos2d::ui::Button* i_group_left;
-    cocos2d::ui::Button* i_group_right;
+public:
+    Vector<Node*> followers;
+    bool possibleSwap;
 };
+
+#define GROUPED_LORD_SCALE 0.75f 

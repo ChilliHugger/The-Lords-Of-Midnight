@@ -101,13 +101,14 @@ tme_item::~tme_item()
 {
 }
 
-char_data_t::char_data_t()
+char_data_t::char_data_t() :
+    select_page(InvalidPage),
+    select_loc(PointZero)
 {
     //face = NULL ;
     //shield = NULL ;
     //body = NULL ;
     //horse = NULL ;
-    select_loc =point(0,0);
 }
 
 char_data_t::~char_data_t()

@@ -823,8 +823,8 @@ bool Character_Disband ( const character& c )
 
 bool Character_SwapGroupLeader ( const character& c, mxid id )
 {
-	args[0] = c.id ;
-	args[1] = id ;
+	args[0] = id ;      // new leader
+	args[1] = c.id ;    // old leader
 	if ( MXSUCCESS( mxi->Command("SWAPGROUPLEADER",args,2) ) ) {
         TME_RefreshCurrentCharacter();
         return TRUE;

@@ -12,7 +12,7 @@
 #include "ringcontroller.h"
 
 #define SAVE_GAME_VERSION               1
-#define FRONTEND_SAVE_GAME_VERSION      13
+#define FRONTEND_SAVE_GAME_VERSION      15
 #define CONFIG_FILENAME                 "settings.cfg"
 #define CONFIG_VERSION                  7
 

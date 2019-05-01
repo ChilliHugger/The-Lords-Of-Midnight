@@ -18,8 +18,6 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-const f32 groupedLordScale = 0.75f ;
-
 uigroupedlord::uigroupedlord() :
     buttonNode(nullptr)
 {
@@ -30,9 +28,8 @@ bool uigroupedlord::init()
 {
     if ( uilordselect::init() ) {
         
-        f32 scale = resolutionmanager::getInstance()->phoneScale() ;
-        f32 width = SELECT_ELEMENT_WIDTH*groupedLordScale*scale;
-        f32 height = SELECT_ELEMENT_HEIGHT*groupedLordScale*scale;
+        f32 width = DISTANCE_INNER;
+        f32 height = DISTANCE_INNER;
         setContentSize(Size(width,height));
         
 //        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
@@ -69,11 +66,8 @@ bool uigroupedlord::setLord(mxid characterid)
         face = Sprite::createWithSpriteFrameName("f_dead!");
     uihelper::AddCenter(this, face, 0, SHIELD_OFFSET_Y);
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
-    face->setScale(groupedLordScale*scale);
-    
 //    titleBackground = cocos2d::LayerColor::create(Color4B(_clrRed));
-//    titleBackground->setContentSize(Size(getContentSize().width,DIS(16)*scale));
+//    titleBackground->setContentSize(Size(getContentSize().width,DIS(16)));
 //    titleBackground->setPosition(-(face->getContentSize().width/2),0);
 //    face->addChild(titleBackground);
     
@@ -81,9 +75,9 @@ bool uigroupedlord::setLord(mxid characterid)
     title = Label::createWithTTF( uihelper::font_config_small, c.shortname );
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
-    title->setHeight(DIS(16)*scale);
+    //title->setHeight(DIS(16));
     title->getFontAtlas()->setAntiAliasTexParameters();
-    title->setWidth(getContentSize().width);
+    //title->setWidth(getContentSize().width);
     title->setHorizontalAlignment(TextHAlignment::CENTER);
     title->setVerticalAlignment(TextVAlignment::BOTTOM);
     title->setAnchorPoint(uihelper::AnchorCenter);
@@ -93,7 +87,8 @@ bool uigroupedlord::setLord(mxid characterid)
     buttonNode = face;
     
     auto userdata = static_cast<char_data_t*>(getUserData());
-    userdata->select_loc = point(0,0);
+    userdata->select_loc = PointZero;
+    userdata->select_page = InvalidPage;
     
     refreshStatus();
     
@@ -128,7 +123,7 @@ Sprite* uigroupedlord::getFaceImage(character& c)
 void uigroupedlord::onPressStateChangedToNormal()
 {
     if ( buttonNode ) {
-        buttonNode->setScale(0.75f);
+        buttonNode->setScale(1.0f);
         buttonNode->setOpacity(ALPHA(1.0f));
     }
 }
@@ -136,7 +131,14 @@ void uigroupedlord::onPressStateChangedToNormal()
 void uigroupedlord::onPressStateChangedToPressed()
 {
     if ( buttonNode ) {
-        buttonNode->setScale(0.50f);
+        buttonNode->setScale(0.75f);
         buttonNode->setOpacity(ALPHA(1.0f));
     }
+}
+
+
+bool uigroupedlord::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
+{
+    return Widget::hitTest(pt, camera, p)
+        && MouseOverHotspot(pt, MOUSE_OVER_HINT_DROP) == MOUSE_OVER_FACE ;
 }

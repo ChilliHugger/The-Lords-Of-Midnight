@@ -80,6 +80,10 @@ void uidragelement::NotifyDragDelegate ( uidragevent* event )
         drag_delegate->OnDragDropNotification(this, event);
 }
 
+void uidragelement::OnSelectDrag(uidragevent *event)
+{
+}
+
 void uidragelement::OnStartDrag(uidragevent* event)
 {
     drag_start=event->position;
@@ -102,7 +106,18 @@ void uidragelement::OnDrag(uidragevent* event)
 }
 
 
-
+void uidragmoveelement::OnSelectDrag(uidragevent *event)
+{
+    uidragelement::OnSelectDrag(event);
+    
+    if ( !event->element )
+        return;
+    
+    start_location = event->element->getPosition();
+    zorder=event->element->getLocalZOrder();
+    event->element->setLocalZOrder(ZORDER_DRAG);
+    NotifyDragDelegate( event );
+}
 
 void uidragmoveelement::OnStartDrag(uidragevent* event)
 {
@@ -111,9 +126,9 @@ void uidragmoveelement::OnStartDrag(uidragevent* event)
     if ( !event->element )
         return;
     
-    start_location = event->element->getPosition();
-    zorder=event->element->getLocalZOrder();
-    event->element->setLocalZOrder(ZORDER_DRAG);
+    //start_location = event->element->getPosition();
+    //zorder=event->element->getLocalZOrder();
+    //event->element->setLocalZOrder(ZORDER_DRAG);
     NotifyDragDelegate( event );
 }
 

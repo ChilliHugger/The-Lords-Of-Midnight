@@ -87,6 +87,11 @@ public:
     static ui::Button* CreateImageButton( const std::string& name );
     static ui::Button* CreateImageButton( const std::string& name, u32 id,  const WidgetClickCallback& callback  );
 
+    // layers
+    static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );
+    static Node* createHorizontalGradient( Color3B& color, f32 width, f32 gradientWidth, f32 height, s32 dir );
+
+    
     // positioning
     
     static void PositionBelow( Node* node, Node* ref, f32 paddingY = 0 );
@@ -101,7 +106,7 @@ public:
     static T getChildByTagRecursively(const int nodeTag, cocos2d::Node* parent)
         { return static_cast<T>(getChildByTagRecursively(nodeTag,parent)); }
 
-    
+
 };
 
 typedef Color3B rgb_t ;
