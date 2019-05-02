@@ -95,19 +95,19 @@ void moonring::showPage( panelmode_t mode, mxid object )
 storyid_t moonring::startNewStory()
 {
     //destroyGamePanels();
+
+    config->setGameDefaults();
+    
+    selectmodel.setDefaults();
     
     storyid_t id = stories->alloc();
     
     stories->create(id);
     
-    config->setGameDefaults();
-    
-    selectmodel.setDefaults();
-    
-    
     UIDEBUG("Resolve TME Data");
     
     tme->ResolveTMEData();
+    tme->resetTMEData();
     
     //createGamePanels();
     
@@ -548,9 +548,9 @@ void moonring::initialise( progressmonitor* monitor )
         // load shader
         auto p1 = GLProgram::createWithFilenames("terrain/standard.vsh", "terrain/dayNight.fsh");
         glProgramState = GLProgramState::getOrCreateWithGLProgram( p1 );
-        glProgramState->setUniformVec4("p_left", Vec4(0,0,(165.0f/255.0f),1));      // outline
-        glProgramState->setUniformVec4("p_right", Vec4(1,1,1,1));               // body
-        glProgramState->setUniformFloat("p_alpha", 1.0f);               // alpha
+        glProgramState->setUniformVec4("p_left", Vec4(0,0,(165.0f/255.0f),alpha_normal));      // outline
+        glProgramState->setUniformVec4("p_right", Vec4(1,1,1,alpha_normal));               // body
+        glProgramState->setUniformFloat("p_alpha", alpha_normal);               // alpha
         monitor->Update("Loaded Shader", 1);
         
         std::lock_guard<std::mutex> guard(mutex);

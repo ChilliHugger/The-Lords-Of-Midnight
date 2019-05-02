@@ -72,7 +72,7 @@ void LandscapeDebug::BuildDebug( LandscapeItems* items )
                 
                 switch (options->debugMode) {
                     case 1:
-                        sprintf(buffer, "%d,%d", item->loc.x-(options->here.x/LANDSCAPE_DIR_STEPS), item->loc.y-(options->here.y/LANDSCAPE_DIR_STEPS));
+                        sprintf(buffer, "%f,%d", item->loc.x-(options->here.x/LANDSCAPE_DIR_STEPS), item->loc.y-(options->here.y/LANDSCAPE_DIR_STEPS));
                         break;
                     case 2:
                         sprintf(buffer, "%f", item->scale);

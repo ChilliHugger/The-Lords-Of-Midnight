@@ -88,6 +88,7 @@ void uifilterbutton::initChildren()
     addChild(notvisible);
     
     setSelected(false);
+    setLocalZOrder(ZORDER_UI);
     
     WidgetClickCallback callback = [&] (Ref* ref ) {
         

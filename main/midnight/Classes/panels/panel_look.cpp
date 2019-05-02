@@ -161,11 +161,13 @@ bool panel_look::init()
     following->setLocalZOrder(ZORDER_DEFAULT+1);
     following->addClickEventListener(callback);
     following->setStatusImageVisible(false);
-    f32 y=RES(16);
+    f32 y=SHIELD_Y-RES(48);
+    f32 x=SHIELD_X+RES(128)+RES(32);
 #if defined(_DDR_)
     y = RES(228-64);
+    x = SHIELD_X;
 #endif
-    uihelper::AddTopRight(safeArea, following,0,y);
+    uihelper::AddTopRight(safeArea, following, x,y);
     
     // people in front
     for ( int ii=0; ii<3; ii++ ) {

@@ -5,17 +5,12 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
 #include "uisinglelord.h"
 #include "../uihelper.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"
 
-USING_NS_CC;
-using namespace cocos2d::ui;
 
 uisinglelord::uisinglelord() :
     buttonNode(nullptr),
@@ -25,7 +20,7 @@ uisinglelord::uisinglelord() :
     statusNode(nullptr),
     statusVisible(true)
 {
-    lordtype = lordtype_single;
+    lordtype = lordwidget::single;
 }
 
 bool uisinglelord::init()
@@ -52,14 +47,14 @@ bool uisinglelord::init()
         addChild(selectedNode);
         
         locationNode = Sprite::createWithSpriteFrameName("map_current_location");
-        locationNode->setContentSize(this->getContentSize());
+        locationNode->setContentSize(getContentSize());
         locationNode->setAnchorPoint(uihelper::AnchorCenter);
         locationNode->setPosition(Vec2(width/2,height/2));
         locationNode->setVisible(false);
         addChild(locationNode);
         
         innerCircle = DrawNode::create();
-        innerCircle->setContentSize( this->getContentSize() );
+        innerCircle->setContentSize( getContentSize() );
         innerCircle->drawSolidCircle(Vec2(width/2,height/2), DISTANCE_INNER/2 , 0, 64, 1.0, 1.0, Color4F(0,0,0,0.1));
         innerCircle->setAnchorPoint(uihelper::AnchorCenter);
         innerCircle->setPosition(Vec2(width/2,height/2));

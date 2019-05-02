@@ -59,15 +59,12 @@ bool panel_map_overview::init()
     uihelper::FillParent(scrollView);
     
     // bottom gradient
-    auto gradientB = LayerGradient::create( Color4B(backgroundColour,ALPHA(0.0f)), Color4B(backgroundColour,ALPHA(1.0f)) );
-    gradientB->setContentSize(Size(width, layout_padding));
+    auto gradientB = uihelper::createVerticalGradient( backgroundColour, layout_padding*2, layout_padding, width, 1 );
     uihelper::AddBottomLeft(this, gradientB);
     
     // top gradient
-    auto gradientT = LayerGradient::create( Color4B(backgroundColour,ALPHA(1.0f)), Color4B(backgroundColour,ALPHA(0.0f)) );
-    gradientT->setContentSize(Size(width, layout_padding));
+    auto gradientT = uihelper::createVerticalGradient( backgroundColour, layout_padding*2, layout_padding, width, -1 );
     uihelper::AddTopLeft(this, gradientT);
-    
     
     // Command Window
     // Look Icon

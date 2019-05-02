@@ -20,6 +20,8 @@ namespace chilli {
 
 	namespace types {
 
+        const point point::ZERO(0, 0);
+        
 
 		/////////////////////////////////////////////////////////////////////////////
 		// out-of-line rect

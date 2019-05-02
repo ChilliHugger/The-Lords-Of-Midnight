@@ -7,8 +7,6 @@
 //
 
 #pragma once
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "../uielement.h"
 #include "uilordselect.h"
 
@@ -28,7 +26,7 @@ protected:
     Sprite* getFaceImage(character& c);
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
-    bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const;
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
 
 private:
     Node* buttonNode;

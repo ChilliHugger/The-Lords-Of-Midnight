@@ -76,8 +76,6 @@ public:
 //#define ASP(x) (f32)    ((x)*resolutionmanager::getInstance()->AspectScale())
 
 
-#define ALPHA(x) (f32)    ((x)*255)
-
 
 
 #endif /* resolutionmanager_h */

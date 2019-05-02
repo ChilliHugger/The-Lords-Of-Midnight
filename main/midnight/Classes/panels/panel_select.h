@@ -8,14 +8,13 @@
  */
 
 #pragma once
-
+#include "cocos.h"
+#include "../ui/characters/uilordselect.h"
 #include "../ui/uipanel.h"
 #include "../ui/uifilterbutton.h"
 #include "../frontend/layout_id.h"
 #include "../system/configmanager.h"
 #include "../models/selectmodel.h"
-
-FORWARD_REFERENCE(uilordselect);
 
 class panel_select : public uipanel, uidragdropdelegate
 {
@@ -36,20 +35,18 @@ protected:
     void getCharacters();
 
     cocos2d::Vec2 calcGridLocation ( u32 index );
-    s32 calcPage( u32 index );
-    s32 getLordPage( uilordselect* lord  );
-    void addToPage( uilordselect* lord, s32 page, cocos2d::Vec2 pos);
+    page_t calcPage( u32 index );
+    void addToPage( uilordselect* lord, page_t page, cocos2d::Vec2 pos);
     void checkPageFlip() ;
 
-    
     void updateFilters();
     void applyFilters ( uilordselect* e, character& c );
-    uilordselect* getLordElement( mxid id );
     void checkCollision ( uilordselect* lord, s32 index );
-    uilordselect* getOverlappingLord ( s32 page, uilordselect* source );
-    uilordselect* getDropTarget( uilordselect* lord, UIMOUSEOVER where, UIMOUSEOVER& result );
     void resetPositions();
-
+    
+    uilordselect* getOverlappingLord ( page_t page, uilordselect* source );
+    uilordselect* getDropTarget( uilordselect* lord, UIMOUSEOVER where, UIMOUSEOVER& result );
+    
     void showCharacterPositions();
     void refreshCharacters();
 
@@ -57,11 +54,10 @@ protected:
     void storeLordPosition( uilordselect* lord );
 
     void createPageView();
-    void addNewPage(s32 ii);
+    void addNewPage(ssize_t page);
     void setupPages();
     void removeEmptyEndPages();
 
-    
     void storeAllLordsPositions();
 
     void disableUI();
@@ -92,24 +88,23 @@ private:
     s32 BOTTOM_STRIP_HEIGHT;
     s32 RIGHT_STRIP_WIDTH;
 
-    cocos2d::ui::PageView*          pageView;
-    cocos2d::Vector<cocos2d::ui::Layout*>     pages;
-
-    selectmodel*                        model;
-    cocos2d::ui::ScrollView*            scrollView;
-    cocos2d::Vector<Node*>      lords;
-
-    uilordselect* dropTarget;
-    mxid potentialLeader;
+    selectmodel*            model;
     
-    uilordselect* draggedLord;
-    mxid currentlyFollowing;
+    Node*                   gradientB;
+    Node*                   gradientR;
+    PageView*               pageView;
+    ScrollView*             scrollView;
+    Vector<uilordselect*>   lords;
+    Vector<Layout*>         pages;
     
-    cocos2d::Node* startDragParent;
-    cocos2d::Vec2 startDragPosition;
-    s32 startDragPage;
-    UIMOUSEOVER lordDropResult;
-    
-    
-    bool pageFlipAllowed;
+    // drag and drop
+    uilordselect*           dropTarget;
+    uilordselect*           draggedLord;
+    mxid                    potentialLeader;
+    mxid                    currentlyFollowing;
+    Node*                   startDragParent;
+    Vec2                    startDragPosition;
+    page_t                  startDragPage;
+    UIMOUSEOVER             lordDropResult;
+    bool                    pageFlipAllowed;
 };

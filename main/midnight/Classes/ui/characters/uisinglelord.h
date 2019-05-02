@@ -7,8 +7,6 @@
 //
 
 #pragma once
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "../uielement.h"
 #include "uilordselect.h"
 #include "../../system/tmemanager.h"

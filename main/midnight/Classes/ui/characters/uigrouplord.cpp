@@ -5,11 +5,7 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
 #include "uigrouplord.h"
-#include "uigroupedlord.h"
 #include "../uihelper.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
@@ -17,20 +13,13 @@
 #include "../../system/moonring.h"
 #include "../../frontend/layout_id.h"
 
-USING_NS_CC;
-using namespace cocos2d::ui;
-
-static const s32 MAX_VISIBLE_LORDS = 8;
-static const s32 GROUP_RADIUS = 95;
-static const f32 GROUP_STEPS = 10.0;
-
 uigrouplord::uigrouplord() :
     i_group_left(nullptr),
     i_group_right(nullptr),
     follower_adjust(0),
     possibleSwap(false)
 {
-    lordtype = lordtype_group;
+    lordtype = lordwidget::group;
 }
 
 bool uigrouplord::init()
@@ -56,10 +45,6 @@ bool uigrouplord::init()
         selectedNode->setPosition(pos);
         locationNode->setPosition(pos);
         
-        // i_group_disband  calcCirclePos(8.5f)
-        // i_group_left     calcCirclePos(7.9f)
-        // i_group_right    calcCirclePos(9.1f)
-
         // Left button
         i_group_left = uihelper::CreateImageButton("i_group_left", ID_GROUP_LEFT, [&] (Ref* ref ) {
             f32 min = ( MAX_VISIBLE_LORDS - followers.size()) ;
@@ -69,7 +54,7 @@ bool uigrouplord::init()
             }
         });
         
-        i_group_left->setPosition( calcCirclePos(7.9f) );
+        i_group_left->setPosition( calcCirclePos(LEFT_BUTTON_POSITION) );
         addChild(i_group_left);
 
         // Right Button
@@ -79,7 +64,7 @@ bool uigrouplord::init()
                 updateFollowers();
             }
         });
-        i_group_right->setPosition( calcCirclePos(9.1f) );
+        i_group_right->setPosition( calcCirclePos(RIGHT_BUTTON_POSITION) );
         addChild(i_group_right);
         
         // Disband
@@ -87,9 +72,8 @@ bool uigrouplord::init()
             _clickEventListener(ref);
         });
         
-        disband->setPosition( calcCirclePos(8.5f) );
+        disband->setPosition( calcCirclePos(DISBAND_BUTTON_POSITION) );
         addChild(disband);
-        
         
         return true;
     }
@@ -141,7 +125,7 @@ void uigrouplord::updateFollowers()
         lord->setVisible( pos>=0 && pos<MAX_VISIBLE_LORDS );
         
         TextHAlignment align =  ( pos < 3 || pos == MAX_VISIBLE_LORDS-1 ) ? TextHAlignment::LEFT : TextHAlignment::RIGHT;
-        static_cast<uigroupedlord*>(lord)->setTitleAlignment(align);
+        lord->setTitleAlignment(align);
         index++;
     }
     
@@ -159,7 +143,6 @@ void uigrouplord::addFollower( int pos, mxid id )
 {
     auto lord = uigroupedlord::createWithLord(id);
     layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+id);
-    //lord->setIgnoreAnchorPointForPosition(true);
     lord->setPosition( calcCirclePos(pos) );
     lord->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     lord->setTag(tag);
@@ -178,19 +161,18 @@ Vec2 uigrouplord::calcCirclePos ( f32 pos )
     f32 r = RES(GROUP_RADIUS);
     
     auto size = getContentSize();
-    auto center = Vec2(size.width/2, size.height/2);
+    auto center = Vec2( HALF(size.width), HALF(size.height));
     f32 x = center.x + r * cos(DEGREETORAD(a));
     f32 y = center.y - r * sin(DEGREETORAD(a));
     
     return Vec2(x,y);
-    //return center;
 }
 
-void uigrouplord::setPage(s32 page) {
+void uigrouplord::setPage(page_t page)
+{
     uilordselect::setPage(page);
-    for ( auto node : followers ) {
-        auto lord = static_cast<uigroupedlord*>(node);
-        lord->setPage(page*-1);
+    for ( auto lord : followers ) {
+        lord->setPage( TO_PARENT_PAGE(page) );
     }
 }
 
@@ -226,6 +208,6 @@ void uigrouplord::refreshStatus()
 {
     uisinglelord::refreshStatus();
 
-    buttonNode->setOpacity( possibleSwap ? ALPHA(0.10f) : ALPHA(1.00f) );
+    buttonNode->setOpacity( possibleSwap ? ALPHA(alpha_1qtr) : ALPHA(alpha_normal) );
     
 }

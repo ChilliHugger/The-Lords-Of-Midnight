@@ -8,12 +8,9 @@
 
 #pragma once
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "../uielement.h"
-
-
 #include "../../tme_interface.h"
+#include "../../system/tmemanager.h"
 
 enum LORD_STATUS {
     status_normal=0,
@@ -38,17 +35,20 @@ enum LORD_STATUS {
 #define SELECT_ELEMENT_HEIGHT   DIS(128)
 #define SELECT_IMAGE_HEIGHT     DIS(72)
 
-enum lord_type_t {
-    lordtype_select = 0,
-    lordtype_single = 1,
-    lordtype_group = 2,
-    lordtype_grouped = 3
+enum class lordwidget {
+    select = 0,
+    single = 1,
+    group = 2,
+    grouped = 3
 };
 
 
 class uilordselect : public Widget,
-public uidragmoveelement, public uidroptarget
+    public uidragmoveelement, public uidroptarget
 {
+public:
+
+    
 public:
     
     CREATE_FUNC(uilordselect);
@@ -60,10 +60,13 @@ public:
 
     virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const override ;
 
+    char_data_t* userData()  { return static_cast<char_data_t*>(getUserData()); }
+    
+    
     Vec2 getCenter() const;
     
-    virtual void setPage(s32 page) { this->page = page; }
-    s32 getPage() const { return page;}
+    virtual void setPage(page_t page) { this->page = page; }
+    page_t getPage() const { return page;}
     
 protected:
     uilordselect();
@@ -81,17 +84,14 @@ protected:
     
     f32 getDistanceFromCentre( Vec2 pos ) const;
 
-    //virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
-
-    
-    cocos2d::Vec2 mouse_down_pos;
-    cocos2d::Vec2 mouse_last_position;;
+    Vec2 mouse_down_pos;
+    Vec2 mouse_last_position;
 
 public:
     flags16         status;
     mxid            characterId;
-    lord_type_t     lordtype;
-    s32             page;
+    lordwidget      lordtype;
+    page_t          page;
     
 };
 

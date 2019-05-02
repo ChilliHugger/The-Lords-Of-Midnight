@@ -26,6 +26,8 @@ public:
     std::string symbol;
 } ;
 
+typedef s32 page_t;
+
 class char_data_t : public tme_item
 {
 public:
@@ -38,7 +40,7 @@ public:
     
     // select screen
     point           select_loc;
-    s32             select_page;
+    page_t          select_page;
     std::string     shortcut_old;
     std::string     shortcut_new;
     
@@ -92,6 +94,7 @@ public:
 
     void ResolveTMEData();
     void UnResolveTMEData();
+    void resetTMEData();
     
 public:
     c_ptr               characters;
@@ -120,6 +123,6 @@ std::string& GetRaceFace(mxid id);
 std::string& GetRaceFace(const raceinfo& r);
 std::string& LOAD_IMAGE( std::string& filename );
 
-const s32 InvalidPage = 0;
-const point PointZero(0,0);
+const page_t InvalidPage = 0;
+
 

@@ -5,9 +5,6 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
 #include "uigroupedlord.h"
 #include "uisinglelord.h"
 #include "../uihelper.h"
@@ -15,36 +12,30 @@
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"
 
-USING_NS_CC;
-using namespace cocos2d::ui;
-
 uigroupedlord::uigroupedlord() :
     buttonNode(nullptr)
 {
-    lordtype = lordtype_grouped;
+    lordtype = lordwidget::grouped;
 }
 
 bool uigroupedlord::init()
 {
     if ( uilordselect::init() ) {
         
-        f32 width = DISTANCE_INNER;
-        f32 height = DISTANCE_INNER;
-        setContentSize(Size(width,height));
+        setContentSize(Size(DISTANCE_INNER,DISTANCE_INNER));
         
 //        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
 //        bg->setContentSize(this->getContentSize());
 //        this->addChild(bg);
 
-        this->setTouchEnabled(true);
-        this->enableDrag();
-        this->enableDrop();
+        setTouchEnabled(true);
+        enableDrag();
+        enableDrop();
         
         return true;
     }
     return false;
 }
-
 
 uigroupedlord* uigroupedlord::createWithLord ( mxid characterid )
 {
@@ -81,13 +72,13 @@ bool uigroupedlord::setLord(mxid characterid)
     title->setHorizontalAlignment(TextHAlignment::CENTER);
     title->setVerticalAlignment(TextVAlignment::BOTTOM);
     title->setAnchorPoint(uihelper::AnchorCenter);
-    title->setPosition(face->getContentSize().width/2,0);
+    title->setPosition( HALF(face->getContentSize().width),0);
     face->addChild(title);
     
     buttonNode = face;
     
     auto userdata = static_cast<char_data_t*>(getUserData());
-    userdata->select_loc = PointZero;
+    userdata->select_loc = point::ZERO;
     userdata->select_page = InvalidPage;
     
     refreshStatus();
@@ -123,19 +114,18 @@ Sprite* uigroupedlord::getFaceImage(character& c)
 void uigroupedlord::onPressStateChangedToNormal()
 {
     if ( buttonNode ) {
-        buttonNode->setScale(1.0f);
-        buttonNode->setOpacity(ALPHA(1.0f));
+        buttonNode->setScale(scale_normal);
+        buttonNode->setOpacity(ALPHA(alpha_normal));
     }
 }
 
 void uigroupedlord::onPressStateChangedToPressed()
 {
     if ( buttonNode ) {
-        buttonNode->setScale(0.75f);
-        buttonNode->setOpacity(ALPHA(1.0f));
+        buttonNode->setScale(scale_3qtr);
+        buttonNode->setOpacity(ALPHA(alpha_normal));
     }
 }
-
 
 bool uigroupedlord::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {

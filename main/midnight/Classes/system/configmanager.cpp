@@ -66,7 +66,7 @@ void configmanager::setGameDefaults ()
     map_filters.Set(0xffffffff);
     map_filters.Reset(filter_show_critters);
 
-    oldoffset = point(0,0);
+    oldoffset = point::ZERO;
     mapscale=1.0f;
     lastmapscale=0.5f;
 

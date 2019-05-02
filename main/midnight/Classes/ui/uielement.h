@@ -8,12 +8,8 @@
 
 #pragma once
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "cocos.h"
 #include "../library/libinc/mxtypes.h"
-
-USING_NS_CC;
-using namespace cocos2d::ui;
 
 FORWARD_REFERENCE(uieventargs);
 FORWARD_REFERENCE(uielement);
@@ -24,6 +20,11 @@ typedef std::function<void(uinotificationinterface* sender,uieventargs* event)> 
 typedef AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
 typedef AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
+#define QUICK_SWIPE_LIMIT                   500
+#define MINIMUM_HORIZONTAL_SWIPE_MOVEMENT   25
+#define MINIMUM_HORIZONTAL_DRAG_MOVEMENT    16
+#define MINIMUM_VERTICAL_DRAG_MOVEMENT      16
+#define MINIMUM_VERTICAL_DRAG_GESTURE       25
 
 enum ZSORT {
     ZORDER_FAR                  =0,
@@ -77,12 +78,6 @@ protected:
     flags32                     flags;
 
 };
-
-#define QUICK_SWIPE_LIMIT                   500
-#define MINIMUM_HORIZONTAL_SWIPE_MOVEMENT   25
-#define MINIMUM_HORIZONTAL_DRAG_MOVEMENT    16
-#define MINIMUM_VERTICAL_DRAG_MOVEMENT      16
-#define MINIMUM_VERTICAL_DRAG_GESTURE       25
 
 class uidragevent
 {
@@ -182,3 +177,21 @@ public:
     bool isDropFocus;
     bool drop_enabled;
 };
+
+static const f32 scale_double = 2.0f;
+static const f32 scale_normal = 1.0f;
+static const f32 scale_3qtr = 0.75f;
+static const f32 scale_half = 0.5f;
+static const f32 scale_1qtr = 0.25f;
+static const f32 scale_zero = 0.0f;
+
+static const f32 alpha_normal = 1.0f;
+static const f32 alpha_3qtr = 0.75f;
+static const f32 alpha_half = 0.5f;
+static const f32 alpha_1qtr = 0.25f;
+static const f32 alpha_zero = 0.0f;
+
+#define HALF(x) (x/2)
+
+
+

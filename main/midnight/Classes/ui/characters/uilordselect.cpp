@@ -5,21 +5,12 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 
 #include "uilordselect.h"
-
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/moonring.h"
 #include "../../system/resolutionmanager.h"
-
-
-
-USING_NS_CC;
-using namespace cocos2d::ui;
-
 
 uilordselect::uilordselect()
 {
@@ -68,7 +59,6 @@ bool uilordselect::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event* event )
 
 void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
 {
-
     //auto userdata = static_cast<char_data_t*>(getUserData());
     //UIDEBUG("onTouchMoved %s", userdata->symbol.c_str() );
     
@@ -82,7 +72,6 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
             dev.lastposition = mouse_last_position;
             dev.time = utils::getTimeInMilliseconds() ;
             OnDrag(&dev);
-            //event->stopPropagation();
             setHighlighted(false);
             
         }else if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
@@ -91,7 +80,6 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
             dev.lastposition = mouse_down_pos;
             dev.time = utils::getTimeInMilliseconds() ;
             OnStartDrag(&dev);
-            //event->stopPropagation();
             setHighlighted(false);
         }
         
@@ -106,8 +94,8 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
 
 void uilordselect::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* event )
 {
-    auto userdata = static_cast<char_data_t*>(getUserData());
-    UIDEBUG("onTouchEnded %s", userdata->symbol.c_str() );
+    //auto userdata = userData();
+    //UIDEBUG("onTouchEnded %s", userdata->symbol.c_str() );
     
     Widget::onTouchEnded(touch, event);
     
@@ -126,8 +114,8 @@ void uilordselect::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* event )
 
 void uilordselect::onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event* event)
 {
-    auto userdata = static_cast<char_data_t*>(getUserData());
-    UIDEBUG("onTouchCancelled %s", userdata->symbol.c_str() );
+    //auto userdata = userData();
+    //UIDEBUG("onTouchCancelled %s", userdata->symbol.c_str() );
     
     Widget::onTouchCancelled(touch, event);
 }
@@ -170,7 +158,7 @@ f32 uilordselect::getDistanceFromCentre( Vec2 pos ) const
     f32 dy = ABS(center.y - pos.y);
     f32 distance = hypot(dx,dy);
 
-    UIDEBUG("getDistanceFromCentre: center(%f,%f) mouse(%f,%f) distance=%f", center.x, center.y, pos.x, pos.y, distance);
+    //UIDEBUG("getDistanceFromCentre: center(%f,%f) mouse(%f,%f) distance=%f", center.x, center.y, pos.x, pos.y, distance);
     
     return distance;
 }

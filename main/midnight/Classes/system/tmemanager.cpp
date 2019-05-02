@@ -26,8 +26,8 @@ void tmemanager::ResolveTMEData ()
     TME_GetAllCharacters(all);
     
     character c;
-    for ( u32 ii=0; ii<all.Count(); ii++ ) {
-        TME_GetCharacter(c, all[ii]);
+    for ( auto id: all) {
+        TME_GetCharacter(c, id);
         if ( c.userdata == nullptr ) {
             auto u = new char_data_t;
             characters.Add(u);
@@ -50,13 +50,7 @@ void tmemanager::ResolveTMEData ()
         auto d = static_cast<terrain_data_t*>(terrain[ii]);
         d->id  = TME_LinkData(d->symbol.c_str(),d);
     }
-    
-    // clear the lord select locations
-//    for ( u32 ii=0; ii<characters.Count(); ii++ ) {
-//        auto d = static_cast<char_data_t*>(characters[ii]);
-//        d->select_loc = point(0,0);
-//    }
-    
+
     TME_RefreshCurrentCharacter ();
     
 }
@@ -92,6 +86,16 @@ void tmemanager::UnResolveTMEData()
     terrain.Destroy();
 }
 
+void tmemanager::resetTMEData()
+{
+    // clear the lord select locations
+        for ( u32 ii=0; ii<characters.Count(); ii++ ) {
+            auto d = static_cast<char_data_t*>(characters[ii]);
+            d->select_loc = point::ZERO;
+            d->select_page = InvalidPage;
+        }
+    
+}
 
 tme_item::tme_item()
 {
@@ -103,7 +107,7 @@ tme_item::~tme_item()
 
 char_data_t::char_data_t() :
     select_page(InvalidPage),
-    select_loc(PointZero)
+    select_loc(point::ZERO)
 {
     //face = NULL ;
     //shield = NULL ;

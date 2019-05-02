@@ -141,8 +141,13 @@ namespace chilli {
             
             int PointPosition ( const point ) const;
             
+            
+            /** equals to point(0,0) */
+            static const point ZERO;
+
         };
         
+         
         /////////////////////////////////////////////////////////////////////////////
         // rect - A 2-D rectangle, similar to Windows RECT structure.
         

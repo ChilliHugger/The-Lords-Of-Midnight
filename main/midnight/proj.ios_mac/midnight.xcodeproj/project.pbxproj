@@ -819,6 +819,7 @@
 		83E3022821A41BE3005C3F5C /* ddr-desktop-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ddr-desktop-Info.plist"; path = "/Users/chris/Projects/The-Lords-Of-Midnight/main/midnight/proj.ios_mac/ddr-desktop-Info.plist"; sourceTree = "<absolute>"; };
 		83E3035A21A41C30005C3F5C /* ddr */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ddr; sourceTree = "<group>"; };
 		83E3035C21A4267F005C3F5C /* all */ = {isa = PBXFileReference; lastKnownFileType = folder; path = all; sourceTree = "<group>"; };
+		83EBB687227B6CA200AD5C7B /* cocos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cocos.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1014,6 +1015,7 @@
 				830618621F38758800D017E5 /* tme.cpp */,
 				83D895F91F36666D00172245 /* TMEMapBuilder.cpp */,
 				83D895FA1F36666D00172245 /* TMEMapBuilder.h */,
+				83EBB687227B6CA200AD5C7B /* cocos.h */,
 			);
 			name = Classes;
 			path = ../Classes;

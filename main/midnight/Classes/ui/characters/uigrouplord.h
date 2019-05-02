@@ -7,10 +7,9 @@
 //
 
 #pragma once
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "../uielement.h"
 #include "uisinglelord.h"
+#include "uigroupedlord.h"
 
 class uigrouplord : public uisinglelord
 {
@@ -29,7 +28,7 @@ protected:
     void addFollower( int pos, mxid id );
     
     Vec2 calcCirclePos ( f32 pos );
-    virtual void setPage(s32 page) override;
+    virtual void setPage(page_t page) override;
     virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const override;
     virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     virtual void refreshStatus() override;
@@ -41,8 +40,20 @@ private:
 
     
 public:
-    Vector<Node*> followers;
+    Vector<uigroupedlord*> followers;
     bool possibleSwap;
 };
 
-#define GROUPED_LORD_SCALE 0.75f 
+static const s32 MAX_VISIBLE_LORDS = 8;
+static const s32 GROUP_RADIUS = 95;
+static const f32 GROUP_STEPS = 10.0;
+static const f32 LEFT_BUTTON_POSITION = 7.9f;
+static const f32 RIGHT_BUTTON_POSITION = 9.1f;
+static const f32 DISBAND_BUTTON_POSITION = 8.5f;
+static const f32 GROUPED_LORD_SCALE = scale_3qtr;
+
+#define TO_PARENT_PAGE(x)   (x*-1)
+#define FROM_PARENT_PAGE(x) (abs(x))
+#define IS_PARENT_PAGE(x)   (x<InvalidPage)
+#define TO_PAGE_INDEX(x)    ((s32)x-1)
+#define FROM_PAGE_INDEX(x)    ((page_t)x+1)
