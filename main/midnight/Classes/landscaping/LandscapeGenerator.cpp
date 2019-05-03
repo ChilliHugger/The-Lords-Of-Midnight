@@ -130,11 +130,6 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
     // if there is mist here then we need to draw the mist
 	if ( map.flags&lf_mist ) 
 		item->mist = true;
-
-    if ( item->army ) {
-        int a = 100;
-    }
-        
     
     return CalcCylindricalProjection(item);
     

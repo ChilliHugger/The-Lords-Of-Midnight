@@ -64,7 +64,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     padding = size( DIS(32)*scale, DIS(24)*scale );
     
     this->parent = parent;
-    this->id = id;
+    // this->id = id;
     parent->retain();
     
     this->setContentSize( rect.size );

@@ -387,7 +387,10 @@ f32 xml::node::ReadFloatProperty ( LPCSTR  name, f32 defaultvalue )
 }
 
 
-
+#if !defined _MSC_VER
+#pragma clang diagnostic pop
+#endif
+        
 //
 //CDate xml::ReadDate ( TiXmlElement* element, LPCSTR name )
 //{

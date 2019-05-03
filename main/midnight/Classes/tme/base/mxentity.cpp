@@ -33,7 +33,13 @@ namespace tme {
 
 		return MX_FAILED ;
 	}
+    
 
+#if !defined _MSC_VER
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wtautological-undefined-compare"
+#endif
+    
 	u32 mxentity::SafeId() const
 	{
 		if ( this==NULL )
@@ -48,6 +54,10 @@ namespace tme {
 		return MAKE_ID(type,Id());
 	}
 
+#if !defined _MSC_VER
+    #pragma clang diagnostic pop
+#endif
+    
 	void mxentity::Serialize ( archive& ar )
 	{
 		if ( ar.IsStoring() ) {

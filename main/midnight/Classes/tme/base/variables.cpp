@@ -241,7 +241,7 @@ namespace tme {
 					break;
 
 				case CVar::INT:
-					*((sv_int_t*)variable->memory) = chilli::lib::atol(variable->string);
+					*((sv_int_t*)variable->memory) = (s32)chilli::lib::atol(variable->string);
 					break;
 
 				case CVar::STRING:

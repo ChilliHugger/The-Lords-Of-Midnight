@@ -340,8 +340,6 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     f32 width = RES(512-40);
     
     f32 contentWidth = safeArea->getContentSize().width;
-    f32 contentHeight = safeArea->getContentSize().height;
-
     
     if ( menu2 != nullptr )  {
         menu2->removeAllChildren();
