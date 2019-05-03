@@ -96,9 +96,8 @@ storyid_t moonring::startNewStory()
 {
     //destroyGamePanels();
 
-    config->setGameDefaults();
-    
     selectmodel.setDefaults();
+    mapmodel.setDefaults();
     
     storyid_t id = stories->alloc();
     
@@ -271,10 +270,6 @@ bool moonring::approach()
     
     if ( Character_Approach(c) ) {
         if ( currentCharacter != TME_CurrentCharacter().id ) {
-            // TODO: Add new lord to select screen
-            //mr->ShowPage(MODE_SELECT, TME_CurrentCharacter().id );
-            //select->AddNewLord(TME_CurrentCharacter().id);
-  
         }
     }else{
         TME_RefreshCurrentCharacter();
@@ -479,10 +474,8 @@ bool moonring::serialize( u32 version, archive& ar )
         
         ar << version ;
         
-        //p_map->Serialize(version, ar);
-        ////p_look->Serialize(version, ar);
+        mapmodel.serialize(version, ar);
         selectmodel.serialize(version, ar);
-        ////p_think->Serialize(version, ar);
         
         // Version 10
         stories->Serialize(version, ar);
@@ -490,17 +483,13 @@ bool moonring::serialize( u32 version, archive& ar )
         
     }else{
 
-        
         ar >> version ;
         
-        //p_map->Serialize(version, ar);
-        ////p_look->Serialize(version, ar);
+        mapmodel.serialize(version, ar);
         selectmodel.serialize(version, ar);
-        ////p_think->Serialize(version, ar);
         
         if ( version>= 10 )
             stories->Serialize(version, ar);
-        
     }
     
     return TRUE;

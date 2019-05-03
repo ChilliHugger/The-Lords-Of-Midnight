@@ -22,6 +22,7 @@
 		#include "sw/misc.h"
 		#include "os/os.h"
 		#include "misc/xml.h"
+        #include "sw/cflags.h"
 
 
 //#if !defined _MSC_VER

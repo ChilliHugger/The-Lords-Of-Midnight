@@ -52,6 +52,7 @@ enum tagid_t {
 
 #define SHIELD_WIDTH    RES(192)
 #define SHIELD_HEIGHT   RES(224)
+#define HEADER_HEIGHT   RES(228)
 
 
 #if defined(_LOM_)
@@ -117,7 +118,7 @@ bool panel_look::init()
     options.colour->options = &options;
 
     // Header area
-    layHeader = LayerColor::create(Color4B(_clrWhite), getContentSize().width, RES(228) );
+    layHeader = LayerColor::create(Color4B(_clrWhite), getContentSize().width, HEADER_HEIGHT );
     layHeader->setLocalZOrder(ZORDER_FAR+1);
     uihelper::AddTopLeft(this,layHeader);
     
@@ -159,15 +160,13 @@ bool panel_look::init()
     // Leader Shield
     following = uisinglelord::create();
     following->setLocalZOrder(ZORDER_DEFAULT+1);
-    following->addClickEventListener(callback);
+    following->addClickEventListener(clickCallback);
     following->setStatusImageVisible(false);
-    f32 y=SHIELD_Y-RES(48);
-    f32 x=SHIELD_X+RES(128)+RES(32);
 #if defined(_DDR_)
-    y = RES(228-64);
-    x = SHIELD_X;
+    uihelper::AddTopRight(safeArea, following, SHIELD_X+RES(96),HEADER_HEIGHT-RES(128));
+#else
+    uihelper::AddTopRight(safeArea, following, SHIELD_X+RES(128)+RES(32),SHIELD_Y-RES(48));
 #endif
-    uihelper::AddTopRight(safeArea, following, x,y);
     
     // people in front
     for ( int ii=0; ii<3; ii++ ) {
@@ -193,7 +192,11 @@ bool panel_look::init()
     // Help
     i_help = uihelper::CreateImageButton("i_tutorial_flash", ID_HELP, clickCallback);
     i_help->setVisible(false);
+#if defined(_DDR_)
+    uihelper::AddTopRight(safeArea, i_help, RES(10), HEADER_HEIGHT-RES(32) );
+#else
     uihelper::AddTopRight(safeArea, i_help, RES(10), RES(10) );
+#endif
     
     
     // map keyboard shortcut keys to layout children
@@ -718,6 +721,7 @@ bool panel_look::moveForward ( void )
     
     TME_GetCharacterLocationInfo ( c );
     
+    // mr->checkFight?
     // something is in our way that we must fight
     // so check for auto fight
     if ( location_flags&lif_fight ) {
@@ -737,7 +741,7 @@ bool panel_look::moveForward ( void )
         }
     }
     
-    //
+    // mr->checkUnhide?
     if ( Character_IsHidden(c) ) {
         if ( mr->config->autounhide ) {
             if ( Character_Hide(c) ) {
@@ -774,8 +778,12 @@ bool panel_look::moveForward ( void )
         // something is in our way that we must fight
         mxid objectid = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);
         
-        mr->showPage(MODE_THINK, objectid);
-        
+        // TODO: Character_UtterlyTired(c)
+        if ( objectid == IDT_NONE && c.energy <= tme::variables::sv_energy_cannot_continue ) {
+            mr->showPage(MODE_THINK_PERSON);
+        }else{
+            mr->showPage(MODE_THINK, objectid);
+        }
         return true;
     }
     
@@ -843,6 +851,9 @@ bool panel_look::startMoving()
         
         return true;
     }
+    
+    // why did move fail?
+    
     
     Enable();
     

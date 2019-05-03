@@ -11,8 +11,10 @@
 #include "../tme_interface.h"
 #include "ringcontroller.h"
 
-#define SAVE_GAME_VERSION               1
-#define FRONTEND_SAVE_GAME_VERSION      15
+#define OLD_SAVE_GAME_VERSION           12
+#define NEW_SAVE_GAME_VERSION           13
+
+#define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
 #define CONFIG_VERSION                  7
 
@@ -87,27 +89,6 @@ enum CONFIG_KEYBOARD_MODE
     CF_KEYBOARD_NEW=1,
 };
 
-enum select_filters {
-    filter_show_dawn    = MXBIT(0),
-    filter_show_night   = MXBIT(1),
-    filter_show_battle  = MXBIT(2),
-    filter_show_dead    = MXBIT(3),
-    filter_show_current = MXBIT(4),
-#if defined(_DDR_)
-    filter_show_intunnel= MXBIT(5),
-#endif
-};
-
-enum map_filters {
-    filter_show_critters    = MXBIT(0),
-    filter_centre_char      = MXBIT(1),
-    filter_overview_map     = MXBIT(2),
-#if defined(_DDR_)
-    filter_show_tunnels     = MXBIT(3),
-#endif
-};
-
-
 class configmanager : public ringcontroller
 {
     
@@ -117,10 +98,8 @@ public:
 
     BOOL Save ( void );
     BOOL Load ( void );
-
     
     bool bumpAdvert();
-    void setGameDefaults();
 
 public:    
     // not stored
@@ -155,14 +134,5 @@ public:
     // version 7
     int     advert_screen_count;
     BOOL    novella_pdf ;
-    
-    
-    // game specific
-    flags32 map_filters;
-    point   oldoffset;
-    f32     mapscale;
-    f32     lastmapscale;
-
-    
     
 };

@@ -196,6 +196,10 @@
 		8351A52D1FE4633100D9AB57 /* tmemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8351A52A1FE4633100D9AB57 /* tmemanager.cpp */; };
 		8352FBD1216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
 		8352FBD2216DD693009E22E5 /* ILandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8352FBD0216DD693009E22E5 /* ILandscape.cpp */; };
+		83733923227C30D5001D61FD /* mapmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83733921227C30D5001D61FD /* mapmodel.cpp */; };
+		83733924227C30D5001D61FD /* mapmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83733921227C30D5001D61FD /* mapmodel.cpp */; };
+		83733925227C30D5001D61FD /* mapmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83733921227C30D5001D61FD /* mapmodel.cpp */; };
+		83733926227C30D5001D61FD /* mapmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83733921227C30D5001D61FD /* mapmodel.cpp */; };
 		83784AC61FCF216900F5AD66 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */; };
 		83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
 		8378E3C521BD4FAD0030AE3C /* panelmodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8378E3C321BD4FAD0030AE3C /* panelmodel.cpp */; };
@@ -643,6 +647,9 @@
 		8351A52B1FE4633100D9AB57 /* tmemanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tmemanager.h; sourceTree = "<group>"; };
 		8352FBCF216DD693009E22E5 /* ILandscape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ILandscape.h; path = landscaping/ILandscape.h; sourceTree = "<group>"; };
 		8352FBD0216DD693009E22E5 /* ILandscape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ILandscape.cpp; path = landscaping/ILandscape.cpp; sourceTree = "<group>"; };
+		83733921227C30D5001D61FD /* mapmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mapmodel.cpp; sourceTree = "<group>"; };
+		83733922227C30D5001D61FD /* mapmodel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mapmodel.h; sourceTree = "<group>"; };
+		83733927227C40E9001D61FD /* cflags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cflags.h; sourceTree = "<group>"; };
 		8378E3C321BD4FAD0030AE3C /* panelmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panelmodel.cpp; sourceTree = "<group>"; };
 		8378E3C421BD4FAD0030AE3C /* panelmodel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panelmodel.h; sourceTree = "<group>"; };
 		8378E3C821BD51190030AE3C /* selectmodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = selectmodel.cpp; sourceTree = "<group>"; };
@@ -1178,6 +1185,8 @@
 				8378E3C421BD4FAD0030AE3C /* panelmodel.h */,
 				8378E3C821BD51190030AE3C /* selectmodel.cpp */,
 				8378E3C921BD51190030AE3C /* selectmodel.h */,
+				83733921227C30D5001D61FD /* mapmodel.cpp */,
+				83733922227C30D5001D61FD /* mapmodel.h */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1469,6 +1478,7 @@
 				83D264B41F36077E001C6F13 /* ccollection.h */,
 				83D264B51F36077E001C6F13 /* drawing.h */,
 				83D264B61F36077E001C6F13 /* misc.h */,
+				83733927227C40E9001D61FD /* cflags.h */,
 			);
 			path = sw;
 			sourceTree = "<group>";
@@ -1717,6 +1727,7 @@
 				83D264F41F360857001C6F13 /* tinyxmlparser.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				83D2644A1F360724001C6F13 /* discoverymap.cpp in Sources */,
+				83733923227C30D5001D61FD /* mapmodel.cpp in Sources */,
 				8351A52C1FE4633100D9AB57 /* tmemanager.cpp in Sources */,
 				834D04EF20D30776001B07CB /* progressmonitor.cpp in Sources */,
 				8397AFF71F4CCAB2009B00A2 /* LandscapeView.cpp in Sources */,
@@ -1875,6 +1886,7 @@
 				83D264E31F36077E001C6F13 /* random.cpp in Sources */,
 				83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */,
 				83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */,
+				83733924227C30D5001D61FD /* mapmodel.cpp in Sources */,
 				83B9BD821FD9AE2000B4C721 /* configmanager.cpp in Sources */,
 				83D264431F360724001C6F13 /* mxmemory.cpp in Sources */,
 				831AD5831FE58671001108AC /* uibook.cpp in Sources */,
@@ -1991,6 +2003,7 @@
 				8344EC001FD1E43F0067AAC1 /* item_victories.cpp in Sources */,
 				8344EC011FD1E43F0067AAC1 /* default_scenario.cpp in Sources */,
 				8344EC021FD1E43F0067AAC1 /* item_place.cpp in Sources */,
+				83733925227C30D5001D61FD /* mapmodel.cpp in Sources */,
 				8344EC031FD1E43F0067AAC1 /* tinyxml.cpp in Sources */,
 				8344EC041FD1E43F0067AAC1 /* misc.cpp in Sources */,
 				8344EC051FD1E43F0067AAC1 /* info_race.cpp in Sources */,
@@ -2081,6 +2094,7 @@
 				83E301DE21A41BE3005C3F5C /* random.cpp in Sources */,
 				83E301DF21A41BE3005C3F5C /* panel_credits.cpp in Sources */,
 				83E301E021A41BE3005C3F5C /* LandscapeNode.cpp in Sources */,
+				83733926227C30D5001D61FD /* mapmodel.cpp in Sources */,
 				83E301E121A41BE3005C3F5C /* configmanager.cpp in Sources */,
 				83E301E221A41BE3005C3F5C /* mxmemory.cpp in Sources */,
 				83E301E321A41BE3005C3F5C /* uibook.cpp in Sources */,

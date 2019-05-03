@@ -89,11 +89,11 @@ bool panel_select::init()
     
     int adjy=RES(32)*scale;
 
-    createFilterButton(ID_FILTER_DAWN,          (r*1)-adjy, "lord_dawn",    filter_show_dawn);
-    createFilterButton(ID_FILTER_NIGHT,         (r*2)-adjy, "lord_night",   filter_show_night);
-    createFilterButton(ID_FILTER_BATTLE,        (r*3)-adjy, "lord_battle",  filter_show_battle);
-    createFilterButton(ID_FILTER_DEAD,          (r*4)-adjy, "f_dead!",      filter_show_dead);
-    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*5)-adjy, "i_center",     filter_show_current);
+    createFilterButton(ID_FILTER_DAWN,          (r*1)-adjy, "lord_dawn",    select_filters::show_dawn);
+    createFilterButton(ID_FILTER_NIGHT,         (r*2)-adjy, "lord_night",   select_filters::show_night);
+    createFilterButton(ID_FILTER_BATTLE,        (r*3)-adjy, "lord_battle",  select_filters::show_battle);
+    createFilterButton(ID_FILTER_DEAD,          (r*4)-adjy, "f_dead!",      select_filters::show_dead);
+    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*5)-adjy, "i_center",     select_filters::show_current);
     
     auto cleanup = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
     uihelper::AddTopRight(safeArea, cleanup, RES(32), (r*6)-adjy );
@@ -235,11 +235,13 @@ void panel_select::getCharacters()
 
         // only add positions for lords that already
         // have a position
-        if ( userdata->select_loc != point::ZERO && userdata->select_page > InvalidPage ) {
-            Vec2 pos;
-            pos.x = userdata->select_loc.x;
-            pos.y = userdata->select_loc.y;
-            addToPage(lord, userdata->select_page, pos);
+        if ( model->upgraded ) {
+            if ( userdata->select_loc != point::ZERO && userdata->select_page > InvalidPage ) {
+                Vec2 pos;
+                pos.x = userdata->select_loc.x;
+                pos.y = userdata->select_loc.y;
+                addToPage(lord, userdata->select_page, pos);
+            }
         }
         
         if ( c.followers ) {
@@ -252,35 +254,38 @@ void panel_select::getCharacters()
     
     // now position all the lords that haven't already been added
     // to the scrollview
-    
-    for ( auto lord : lords )
-    {
-        auto userdata = lord->userData();
-        
-        if ( userdata->select_loc == point::ZERO ) {
-        
-            s32 index = usedIndex;
-            auto page = calcPage(index);
+    if ( model->upgraded ) {
+        for ( auto lord : lords )
+        {
+            auto userdata = lord->userData();
             
-            if ( IS_PARENT_PAGE(userdata->select_page) ) {
-                page = FROM_PARENT_PAGE(userdata->select_page);
-                index = ((s32)page-1) * MAX_LORDS_PER_PAGE;
-            } else {
-                usedIndex++;
+            if ( userdata->select_loc == point::ZERO ) {
+            
+                s32 index = usedIndex;
+                auto page = calcPage(index);
+                
+                if ( IS_PARENT_PAGE(userdata->select_page) ) {
+                    page = FROM_PARENT_PAGE(userdata->select_page);
+                    index = ((s32)page-1) * MAX_LORDS_PER_PAGE;
+                } else {
+                    usedIndex++;
+                }
+                
+                // add the lord to their page in their position
+                addToPage(lord, page, calcGridLocation(index));
+                
+                // now check that is valid, and move them accordingly
+                checkCollision(lord,index);
+                
+                // and store
+                storeLordPosition(lord);
+                
+                // animate
+                showNewLordPosition(lord);
             }
-            
-            // add the lord to their page in their position
-            addToPage(lord, page, calcGridLocation(index));
-            
-            // now check that is valid, and move them accordingly
-            checkCollision(lord,index);
-            
-            // and store
-            storeLordPosition(lord);
-            
-            // animate
-            showNewLordPosition(lord);
         }
+    }else{
+        resetPositions();
     }
     
     removeEmptyEndPages();
@@ -418,23 +423,23 @@ void panel_select::applyFilters ( uilordselect* e, character& c )
     auto filters = model->filters;
     
     BOOL show=true;
-    if ( Character_IsNight(c) && !filters.Is(filter_show_night) )
+    if ( Character_IsNight(c) && !filters.Is(select_filters::show_night) )
         show=false;
-    if ( Character_IsDawn(c) && !filters.Is(filter_show_dawn))
+    if ( Character_IsDawn(c) && !filters.Is(select_filters::show_dawn))
         show=false;
-    if ( Character_IsInBattle(c) && !filters.Is(filter_show_battle) )
+    if ( Character_IsInBattle(c) && !filters.Is(select_filters::show_battle) )
         show=false;
-    if ( Character_IsDead(c) && !filters.Is(filter_show_dead))
+    if ( Character_IsDead(c) && !filters.Is(select_filters::show_dead))
         show=false;
     
 #if defined(_DDR_)
-    if ( Character_IsInTunnel(c) && !filters.Is(filter_show_intunnel))
+    if ( Character_IsInTunnel(c) && !filters.Is(select_filters::show_intunnel))
         show=false;
-    if ( Character_IsPreparingForBattle(c) && !filters.Is(filter_show_battle) )
+    if ( Character_IsPreparingForBattle(c) && !filters.Is(select_filters::show_battle) )
         show=false;
 #endif
     
-    if ( !filters.Is(filter_show_current) && e->status.Is(LORD_STATUS::status_location) )
+    if ( !filters.Is(select_filters::show_current) && e->status.Is(LORD_STATUS::status_location) )
         show=false;
     
     e->setVisible(show);
@@ -487,19 +492,19 @@ void panel_select::OnNotification( Ref* sender )
             break;
             
         case ID_FILTER_DAWN:
-            updateFilterButton(sender,filter_show_dawn);
+            updateFilterButton(sender,select_filters::show_dawn);
             break;
         case ID_FILTER_NIGHT:
-            updateFilterButton(sender,filter_show_night);
+            updateFilterButton(sender,select_filters::show_night);
             break;
         case ID_FILTER_BATTLE:
-            updateFilterButton(sender,filter_show_battle);
+            updateFilterButton(sender,select_filters::show_battle);
             break;
         case ID_FILTER_DEAD:
-            updateFilterButton(sender,filter_show_dead);
+            updateFilterButton(sender,select_filters::show_dead);
             break;
         case ID_FILTER_CURRENT_LOC:
-            updateFilterButton(sender,filter_show_current);
+            updateFilterButton(sender,select_filters::show_current);
             break;
             
         case ID_NIGHT:
@@ -998,11 +1003,16 @@ void panel_select::checkPageFlip()
 
 void panel_select::removeEmptyEndPages()
 {
+    if ( pages.size() == 0)
+        return;
+    
     for (;;) {
+        BREAK_IF(pages.size() == 0);
+        
         auto page = pages.at( pages.size()-1 );
-        if ( page->getChildren().size() != 0 ) {
-            break;
-        }
+        
+        BREAK_IF ( page->getChildren().size() != 0 ) ;
+        
         pages.popBack();
         pageView->removePage(page);
     }

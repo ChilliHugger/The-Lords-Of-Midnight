@@ -11,6 +11,25 @@
 
 #include "../tme_interface.h"
 
+
+enum class select_filters : u32 {
+    show_dawn    = MXBIT(0),
+    show_night   = MXBIT(1),
+    show_battle  = MXBIT(2),
+    show_dead    = MXBIT(3),
+    show_current = MXBIT(4),
+//#if defined(_DDR_)
+    show_intunnel= MXBIT(5),
+//#endif
+    all          = show_dawn
+                 | show_night
+                 | show_battle
+                 | show_dead
+                 | show_current
+                 | show_intunnel
+};
+
+
 class selectmodel : public panelmodel
 {
 public:
@@ -20,8 +39,8 @@ public:
 
 public:
     c_mxid          characters;
-    flags32         filters;
+    flags<select_filters>         filters;
     tme::loc_t      loc;
     s32             page;
-    
+    bool            upgraded;
 };

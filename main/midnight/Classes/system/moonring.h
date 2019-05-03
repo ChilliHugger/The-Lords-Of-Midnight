@@ -19,6 +19,7 @@
 
 // models
 #include "../models/selectmodel.h"
+#include "../models/mapmodel.h"
 
 //
 
@@ -117,6 +118,7 @@ public:
     cocos2d::GLProgram*              glShaderProgram;
     
     selectmodel             selectmodel;
+    mapmodel                mapmodel;
     
 };
 

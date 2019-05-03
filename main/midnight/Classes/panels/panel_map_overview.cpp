@@ -46,8 +46,9 @@ bool panel_map_overview::init()
     image->setScale(scale, scale );
 
     f32 width = visibleSize.width;
+    auto imagesize = image->getContentSize();
     
-    scrollView->setInnerContainerSize( Size(width,image->getContentSize().height+(2*layout_padding)) );
+    scrollView->setInnerContainerSize( Size(width,(image->getContentSize().height*scale)+(2*layout_padding)) );
     scrollView->setContentSize(visibleSize);
     
     image->setAnchorPoint(uihelper::AnchorBottomLeft);

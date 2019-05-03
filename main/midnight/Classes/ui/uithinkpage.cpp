@@ -105,11 +105,21 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     y = RES(CHARACTER_Y) - imgCharacter->getContentSize().height;
     x = RES(CHARACTER_X) - (imgCharacter->getContentSize().width/2);
     uihelper::PositionParentTopLeft(imgCharacter,x,y);
+  
+    
+    //
+    // Approach, Unhide, leave, disband
+    // all show in the same place near the character
+    //
+    pos = imgCharacter->getPosition();
+    pos.y -= imgCharacter->getContentSize().height - RES(16);
+#if defined(_DDR_)
+    pos.x += imgCharacter->getContentSize().width;
+#endif
+    
     
     // Approach
     auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, clickCallback);
-    pos = imgCharacter->getPosition();
-    pos.y -= imgCharacter->getContentSize().height;
     approach->setPosition(pos);
     approach->setVisible(this->approach);
     scrollView->addChild(approach);
@@ -117,8 +127,6 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 #if defined(_LOM_)
     // Unhide
     auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, clickCallback);
-    pos = imgCharacter->getPosition();
-    pos.y -= imgCharacter->getContentSize().height;
     unhide->setPosition(pos);
     unhide->setVisible(this->unhide);
     scrollView->addChild(unhide);
@@ -126,29 +134,25 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     // Leave
     auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEAVE, clickCallback);
-    pos = imgCharacter->getPosition();
-    pos.y -= imgCharacter->getContentSize().height;
     leave->setPosition(pos);
     leave->setVisible(this->leave);
     scrollView->addChild(leave);
     
     // Disband
-    auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);   pos = imgCharacter->getPosition();
-    pos.y -= imgCharacter->getContentSize().height;
+    auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);
     disband->setPosition(pos);
     disband->setVisible(this->disband);
     scrollView->addChild(disband);
     
-    
     // bottom gradient on character
    if ( this->unhide || this->approach || this->disband || this->leave ) {
-        auto gradientB = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
-        gradientB->setContentSize(Size(RES(128),RES(64)));
-        gradientB->setPosition(pos);
-        scrollView->addChild(gradientB);
+       pos = imgCharacter->getPosition();
+       pos.y -= imgCharacter->getContentSize().height;
+       auto color = _clrWhite ;
+       auto gradientB = uihelper::createVerticalGradient(color, RES(64), RES(56), RES(128), 1);
+       gradientB->setPosition(pos);
+       scrollView->addChild(gradientB);
     }
-
-    
     
     // terrain
     y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
@@ -156,9 +160,9 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     uihelper::PositionParentTopRight(imgTerrain,x,y);
     
     //if ( this->unhide || this->approach ) {
-    pos=imgTerrain->getPosition();
-    pos.y-=imgTerrain->getContentSize().height;
-    pos.x-=imgTerrain->getContentSize().width;
+//    pos=imgTerrain->getPosition();
+//    pos.y-=imgTerrain->getContentSize().height;
+//    pos.x-=imgTerrain->getContentSize().width;
 //    auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
 //    gradientC->setContentSize(Size(imgTerrain->getContentSize().width,RES(64)));
 //    gradientC->setPosition(pos);

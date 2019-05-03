@@ -8,6 +8,7 @@
 
 #include "selectmodel.h"
 #include "../system/tmemanager.h"
+#include "../system/configmanager.h"
 #include "../tme_interface.h"
 
 using namespace chilli::lib;
@@ -16,18 +17,21 @@ using namespace tme;
 void selectmodel::setDefaults()
 {
     // all filters on
-    filters.Set(0xffffffff);
+    filters.Set(select_filters::all);
     
     characters.Clear();
     
     page = 0;
+    
+    upgraded = true;
 }
 
 void selectmodel::updateCharacters()
 {
     variant args[3];
     args[0] = &characters ;
-    args[1] = CMDG_ALL; //CMDG_LOYAL ;
+    //args[1] = CMDG_ALL;
+    args[1] = CMDG_LOYAL ;
     args[2] = MAKE_LOCID(loc.x,loc.y) ;
     mxi->GetProperties( "CharsForCommand", args, 3 );
 }
@@ -65,6 +69,8 @@ void selectmodel::serialize( u32 version, lib::archive& ar )
         
     }else{
         
+        upgraded =  ( version >= NEW_SAVE_GAME_VERSION );
+        
         ar >> count ;
         for ( u32 ii=0; ii<count; ii++ ) {
             ar >> id ;
@@ -72,6 +78,7 @@ void selectmodel::serialize( u32 version, lib::archive& ar )
             
             char_data_t* ud = (char_data_t*)c.userdata;
             ar >> ud->select_loc;
+            
             if ( version >= 14 )
                 ar >> ud->select_page;
             else
@@ -80,13 +87,9 @@ void selectmodel::serialize( u32 version, lib::archive& ar )
         
         if ( version >=11 )
             ar >> filters ;
-        else
-            filters.Set(0xffffffff);
         
-        if ( version >= 15 )
+        if ( version >= 16 )
             ar >> page;
-        else
-            page = 0;
     }
     
 }

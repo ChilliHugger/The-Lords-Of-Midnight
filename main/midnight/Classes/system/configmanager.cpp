@@ -36,7 +36,6 @@ configmanager::configmanager()
 #else
     showmovementindicators=TRUE;
 #endif
-    setGameDefaults();
     
 #if defined(ADVERT_FREQUENCY)
     advert_screen_count=ADVERT_FREQUENCY-4;
@@ -59,17 +58,6 @@ configmanager::configmanager()
 
 configmanager::~configmanager()
 {
-}
-
-void configmanager::setGameDefaults ()
-{
-    map_filters.Set(0xffffffff);
-    map_filters.Reset(filter_show_critters);
-
-    oldoffset = point::ZERO;
-    mapscale=1.0f;
-    lastmapscale=0.5f;
-
 }
 
 bool configmanager::bumpAdvert()
