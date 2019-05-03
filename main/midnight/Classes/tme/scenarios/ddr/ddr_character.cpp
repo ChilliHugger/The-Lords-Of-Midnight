@@ -168,21 +168,23 @@ namespace tme {
         
         SetLastCommand ( CMD_FIGHT, fightobject->SafeIdt()) ;
 
-        
-        u32 r = mxrandom(255) & 15 ;
-        s32 loses = (r/2)*5;  
-        
-        // soldiers -= loses ;
-        warriors.Loses(loses);
-        riders.Loses(loses);
-        
-        static u8 critter_success[] = { 0, 9, 8, 10, 11 };
-        
-        if ( r > critter_success[fightobject->Id()]  ) {
-            static_cast<ddr_battle*>(mx->battle)->loseFight(this,r);
-            if ( IsDead() ) {
-                killedbyobject = fightobject;
-                return fightobject;
+        if ( ! sv_cheat_nasties_noblock )
+        {
+            u32 r = mxrandom(255) & 15 ;
+            s32 loses = (r/2)*5;
+            
+            // soldiers -= loses ;
+            warriors.Loses(loses);
+            riders.Loses(loses);
+            
+            static u8 critter_success[] = { 0, 9, 8, 10, 11 };
+            
+            if ( r > critter_success[fightobject->Id()]  ) {
+                static_cast<ddr_battle*>(mx->battle)->loseFight(this,r);
+                if ( IsDead() ) {
+                    killedbyobject = fightobject;
+                    return fightobject;
+                }
             }
         }
         

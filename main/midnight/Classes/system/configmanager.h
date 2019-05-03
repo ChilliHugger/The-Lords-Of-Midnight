@@ -39,7 +39,7 @@
     //#define _DEBUG_LANDSCAPE_
 #endif
 
-//#define _TME_CHEAT_MODE_
+#define _TME_CHEAT_MODE_
 //#define _TME_DEMO_MODE_
 
 #if defined(_LOM_)
