@@ -105,7 +105,7 @@ void uigrouplord::createFollowers()
         addFollower(ii,followers[ii]);
     }
 
-//    for ( int ii=0; ii<8; ii++ )
+//    for ( int ii=0; ii<10; ii++ )
 //        addFollower(ii,followers[0]);
     
     follower_adjust=0;
@@ -115,8 +115,8 @@ void uigrouplord::createFollowers()
 void uigrouplord::updateFollowers()
 {
     f32 min = ( MAX_VISIBLE_LORDS - followers.size()) ;
-    IF_NOT_NULL( i_group_left )->setEnabled(follower_adjust > min);
-    IF_NOT_NULL( i_group_right )->setEnabled(follower_adjust<0);
+    IF_NOT_NULL( i_group_left )->setVisible(follower_adjust > min);
+    IF_NOT_NULL( i_group_right )->setVisible(follower_adjust<0);
     
     s32 index=0;
     for ( auto lord : followers ) {
