@@ -511,7 +511,7 @@ namespace tme {
 			}
 
 			
-			nArmies = army - armies ;
+			nArmies = (u32)(army - armies) ;
 		}
 
 		mxarmytotal::mxarmytotal()

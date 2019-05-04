@@ -122,14 +122,24 @@ int temp;
  * 
  */
 
+#if !defined _MSC_VER
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-undefined-compare"
+#endif
+    
 s32 mxstronghold::BattleSuccess ( const mxlocinfo& locinfo )
 {
-	if ( this == NULL ) return STRONGHOLD_SUCCESS_NONE ;
+	if ( this == nullptr ) return STRONGHOLD_SUCCESS_NONE ;
 	if ( OccupyingRace() == RA_DOOMGUARD )
 		return enemy_success + mx->battle->BaseDoomdarkSuccess( OccupyingRace(),Type(), locinfo );
 	return mx->UnitById(Type())->Success()+mx->RaceById(OccupyingRace())->Success() ;
 }
 
+#if !defined _MSC_VER
+#pragma clang diagnostic pop
+#endif
+
+    
 #if defined(_DDR_)
 void mxstronghold::OnRespawn ( void )
 {

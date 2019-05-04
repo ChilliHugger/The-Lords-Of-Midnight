@@ -509,9 +509,7 @@ void moonring::initialise( progressmonitor* monitor )
     // load images
     for (std::string file_name : {"rest-0", "rest-1", "language-0", "terrain/terrain-0", "terrain/terrain-1" }) {
         Director::getInstance()->getTextureCache()->addImageAsync(file_name + ".png", [&,file_name](Texture2D* loaded_texture) {
-            
-            auto cache = SpriteFrameCache::getInstance();
-            
+                   
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file_name + ".plist", loaded_texture);
             monitor->Update("Loaded " + file_name,1);
             count++;

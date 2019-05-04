@@ -224,7 +224,6 @@ MXRESULT mxengine::LoadDatabase ( void )
 int ii;
 int id;
 char filename[MAX_PATH];
-char database[MAX_PATH];
 
 	MX_REGISTER_SELF;
 
