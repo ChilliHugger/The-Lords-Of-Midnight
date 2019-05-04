@@ -87,7 +87,7 @@ void TunnelView::createColumn(f32 x, LPCSTR images[], u32 count)
         frames.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName(images[ii]));
     }
     
-    auto anim = Animation::createWithSpriteFrames(frames,0.0833,-1);
+    auto anim = Animation::createWithSpriteFrames(frames,0.0833f,-1);
     flame->runAction( Animate::create(anim) );;
     
     

@@ -10,7 +10,7 @@
 
 #include "../tme_interface.h"
 
-typedef cocos2d::Node mximage;
+//typedef cocos2d::Node mximage;
 
 FORWARD_REFERENCE(imagearray);
 FORWARD_REFERENCE(mxcellimage);

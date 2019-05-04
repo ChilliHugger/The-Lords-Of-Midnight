@@ -12,6 +12,11 @@
 #include "keyboardmanager.h"
 #include "../frontend/keyboard_id.h"
 
+
+#if defined(_WIN32) || defined(_WIN64) 
+#define strcasecmp _stricmp 
+#endif
+
 // c luxor
 // v morkin
 // b corleth

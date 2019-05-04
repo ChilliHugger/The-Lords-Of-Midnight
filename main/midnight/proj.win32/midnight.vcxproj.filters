@@ -91,6 +91,9 @@
     <Filter Include="src\library\libinc\sw">
       <UniqueIdentifier>{cca09a7f-8b51-4da5-bd6a-9126a1a13d29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\models">
+      <UniqueIdentifier>{6128b096-8db1-415d-8802-76ab60907bd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -450,6 +453,24 @@
     <ClCompile Include="..\Classes\landscaping\LandscapeView.cpp">
       <Filter>src\landscaping</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\models\mapmodel.cpp">
+      <Filter>src\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\models\panelmodel.cpp">
+      <Filter>src\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\models\selectmodel.cpp">
+      <Filter>src\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\ui\uishortcutkeys.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\landscaping\TunnelView.cpp">
+      <Filter>src\landscaping</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\ui\characters\uigroupedlord.cpp">
+      <Filter>src\ui\characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -754,6 +775,27 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Extensions\CustomDirector.h">
       <Filter>src\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cocos.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\models\selectmodel.h">
+      <Filter>src\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\models\mapmodel.h">
+      <Filter>src\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\models\panelmodel.h">
+      <Filter>src\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\ui\uishortcutkeys.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\landscaping\TunnelView.h">
+      <Filter>src\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\ui\characters\uigroupedlord.h">
+      <Filter>src\ui\characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@
 //
 
 #pragma once
-
+#include "storymanager.h"
 #include "../library/libinc/mxtypes.h"
 #include "panelmanager.h"
 
@@ -22,6 +22,7 @@
 #include "../models/mapmodel.h"
 
 //
+#include <mutex>
 
 FORWARD_REFERENCE(configmanager);
 FORWARD_REFERENCE(helpmanager);
@@ -32,11 +33,18 @@ FORWARD_REFERENCE(tmemanager);
 FORWARD_REFERENCE(progressmonitor);
 FORWARD_REFERENCE(projectconfig);
 
-#include "storymanager.h"
-
 #define RUN_ON_UI_THREAD    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread
 
 #define RUN_EVENT(x)           RUN_ON_UI_THREAD([=](){ x; } )
+
+namespace cocos2d {
+	class GLProgramState;
+	class GLProgram;
+}
+
+using cocos2d::GLProgramState;
+using cocos2d::GLProgram;
+
 
 class moonring {
 private:
@@ -114,8 +122,8 @@ public:
     c_str                   writeablepath;
     projectconfig*          project;
     
-    cocos2d::GLProgramState*         glProgramState;
-    cocos2d::GLProgram*              glShaderProgram;
+    GLProgramState*         glProgramState;
+    GLProgram*              glShaderProgram;
     
     selectmodel             selectmodel;
     mapmodel                mapmodel;

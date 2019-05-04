@@ -3,6 +3,8 @@
 
 //#include "../chilli.h"
 
+#include <vector>
+
 namespace chilli {
 
 #define COLLECTION_PAGE_SIZE	16

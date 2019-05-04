@@ -50,7 +50,7 @@ bool uibook::initWithChapter( storyheader_t* story )
     uihelper::AddCenter(this, bookImage);
     
     auto bookmarkImage = Sprite::createWithSpriteFrameName(BOOKMARK_IMAGE);
-    bookmarkImage->setColor(story->color);
+    //bookmarkImage->setColor(story->color);
     uihelper::AddTopLeft(bookImage, bookmarkImage, RES(22), RES(22));
     
     auto bookmarkOverlayImage = Sprite::createWithSpriteFrameName(BOOKMARK_OVERLAY_IMAGE);

@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Chilli Hugger. All rights reserved.
 //
 
-#include "moonring.h"
 #include "configmanager.h"
+#include "moonring.h"
 
+#include <mutex>
 
 using namespace chilli::lib ;
 
