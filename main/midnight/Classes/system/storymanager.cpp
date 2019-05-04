@@ -6,11 +6,12 @@
 //
 //
 
+#include "../ui/uihelper.h"
 #include "storymanager.h"
 #include "configmanager.h"
 #include "../tme_interface.h"
 #include "moonring.h"
-#include "../ui/uihelper.h"
+
 
 using namespace chilli::os;
 using namespace chilli::lib;
@@ -56,7 +57,7 @@ storyinfo_t* storymanager::getStoriesInfo()
         if ( filemanager::Exists( getPath(ii+1) ) ) {
             getDescription(ii+1, stories.chapter[used].description);
             stories.chapter[used].id = ii + 1;
-            stories.chapter[used].color = bookmark_colours[used];
+//            stories.chapter[used].color = bookmark_colours[used];
             used++;
         }
     

@@ -7,7 +7,9 @@
 //
 
 #pragma once
-#include "cocos2d.h"
+//#undef character
+//#include "cocos2d.h"
+
 #include "../library/libinc/mxtypes.h"
 #include "../library/libinc/collections.h"
 #include "../tme/baseinc/lomxtypes.h"
@@ -27,7 +29,7 @@ typedef enum savemode_t {
 typedef struct storyheader_t {
     storyid_t           id;
     c_str               description ;
-    cocos2d::Color3B    color;
+    //cocos2d::Color3B    color;
     savemode_t          mode;
 } storyheader_t;
 

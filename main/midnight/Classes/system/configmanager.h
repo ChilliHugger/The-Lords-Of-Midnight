@@ -8,8 +8,9 @@
 
 #pragma once
 
-#include "../tme_interface.h"
 #include "ringcontroller.h"
+#include "../tme_interface.h"
+
 
 #define OLD_SAVE_GAME_VERSION           12
 #define NEW_SAVE_GAME_VERSION           13

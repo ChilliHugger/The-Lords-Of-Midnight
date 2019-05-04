@@ -5,6 +5,9 @@
 //  Created by Chris Wild on 07/12/2017.
 //
 
+#include "../panels/panel_look.h"
+#include "../panels/panel_think.h"
+
 #include "moonring.h"
 #include "helpmanager.h"
 #include "configmanager.h"
@@ -15,8 +18,7 @@
 #include "projectconfig.h"
 #include "progressmonitor.h"
 
-#include "../panels/panel_look.h"
-#include "../panels/panel_think.h"
+
 
 
 USING_NS_CC;

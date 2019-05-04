@@ -8,7 +8,7 @@
  */
 
 #pragma once
-#include "cocos.h"
+#include "../cocos.h"
 #include "../ui/characters/uilordselect.h"
 #include "../ui/uipanel.h"
 #include "../ui/uifilterbutton.h"
