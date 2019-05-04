@@ -137,7 +137,8 @@ bool panel_options::init()
     menu2_background = NULL;
     fields.clear();
     
-    FillBackground();
+    //FillBackground();
+    setBackgroundToHeight("screens/misc/main_menu.png");
 
     auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
 #if defined(_LOM_)

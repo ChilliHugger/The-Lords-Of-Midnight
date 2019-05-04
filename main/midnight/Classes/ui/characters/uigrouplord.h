@@ -33,6 +33,9 @@ protected:
     virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     virtual void refreshStatus() override;
 
+//    void rotateEveryoneLeft();
+//    void rotateEveryoneRight();
+    
 private:
     s32 follower_adjust;
     Button* i_group_left;

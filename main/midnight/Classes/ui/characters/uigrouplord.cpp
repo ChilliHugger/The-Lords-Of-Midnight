@@ -81,6 +81,44 @@ bool uigrouplord::init()
     return false;
 }
 
+//void uigrouplord::rotateEveryoneLeft() {
+//
+//
+//
+//    auto actionfloat = ActionFloat::create(0.25f, 0.0f, 1.0f, [=](float value) {
+//        s32 index=0;
+//        for ( auto lord : followers ) {
+//            f32 pos = index+follower_adjust+value;
+//            lord->setPosition( calcCirclePos( pos ) );
+//            index++;
+//        }
+//    });
+//
+//    runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
+//                                             CallFunc::create( [=] { follower_adjust+=1; updateFollowers(); } )
+//                                             ));
+//
+//
+//}
+//
+//void uigrouplord::rotateEveryoneRight() {
+//
+//    auto actionfloat = ActionFloat::create(0.25f, 1.0f, 0.0f, [=](float value) {
+//        s32 index=0;
+//        for ( auto lord : followers ) {
+//            f32 pos = index+follower_adjust+value;
+//            lord->setPosition( calcCirclePos( pos ) );
+//            index++;
+//        }
+//    });
+//
+//    runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
+//                                             CallFunc::create( [=] { follower_adjust-=1; updateFollowers(); } )
+//                                             ));
+//
+//}
+
+
 uigrouplord* uigrouplord::createWithLord ( mxid characterid )
 {
     auto select = uigrouplord::create();
