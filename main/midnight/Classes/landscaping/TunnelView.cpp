@@ -15,6 +15,8 @@
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 
+USING_NS_CC;
+
 static LPCSTR flames_left[] = { "flame01", "flame02","flame03" };
 static LPCSTR flames_right[] = { "flame03", "flame01","flame02" };
 
