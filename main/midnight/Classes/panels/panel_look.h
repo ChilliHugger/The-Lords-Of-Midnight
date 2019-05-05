@@ -61,7 +61,10 @@ typedef struct {
 } locationinfo_t ;
 
 
-class panel_look : public uipanel, uinotificationinterface, uidragelement
+class panel_look :
+    public uipanel,
+    chilli::ui::NotificationInterface,
+    chilli::ui::DragElement
 {
     using Touch = cocos2d::Touch;
     using Event = cocos2d::Event;
@@ -69,6 +72,7 @@ class panel_look : public uipanel, uinotificationinterface, uidragelement
     using ImageView = cocos2d::ui::ImageView;
     using Label = cocos2d::Label;
     using LayerColor = cocos2d::LayerColor;
+    using uidragevent = chilli::ui::DragEvent;
     
 public:
     virtual ~panel_look();

@@ -6,9 +6,7 @@
 //
 //
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
+#include "../cocos.h"
 #include "keyboardmanager.h"
 #include "../frontend/keyboard_id.h"
 

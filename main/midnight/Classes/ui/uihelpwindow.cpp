@@ -47,7 +47,7 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     if ( parent == nullptr )
         return false;
     
-    if ( !uielement::init() )
+    if ( !Element::init() )
         return false;
     
     chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {

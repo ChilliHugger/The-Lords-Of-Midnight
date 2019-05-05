@@ -207,7 +207,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 
 bool uithinkpage::init()
 {
-    if ( !uielement::init() )
+    if ( !Element::init() )
     {
         return false;
     }

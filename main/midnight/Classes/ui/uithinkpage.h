@@ -13,7 +13,7 @@
 #include "../tme_interface.h"
 
 
-class uithinkpage : public uielement
+class uithinkpage : public chilli::ui::Element
             // , public uinotificationdelegate
             // , public uiactioncompletedelegate
             // , public uidragmoveelement

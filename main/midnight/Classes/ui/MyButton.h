@@ -7,9 +7,7 @@
 //
 
 #pragma once
-
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 
 class MyButton : public cocos2d::ui::Button
 {

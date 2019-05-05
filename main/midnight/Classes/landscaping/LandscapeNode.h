@@ -8,9 +8,7 @@
 
 #ifndef LandscapeNode_hpp
 #define LandscapeNode_hpp
-
-
-#include "cocos2d.h"
+#include "../cocos.h"
 #include <stdio.h>
 #include "../tme_interface.h"
 

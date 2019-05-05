@@ -6,7 +6,7 @@
 //
 //
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include "tmemanager.h"
 #include <string>
 

@@ -49,38 +49,30 @@ enum UIMOUSEOVERHINT {
 namespace chilli {
     namespace ui {
         
-    typedef std::function<void(uinotificationinterface* sender,uieventargs* event)> UINotificationCallback;
     typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
     typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
-    }
-}
-
-    
-    class uinotificationinterface
+    class NotificationInterface
     {
-        using UINotificationCallback = chilli::ui::UINotificationCallback;
+        using NotificationCallback = std::function<void(NotificationInterface* sender,uieventargs* event)>;
     public:
-        virtual void setNotificationCallback(const UINotificationCallback& callback)
-            { notificationCallback = callback; }
-        virtual void Notify( uieventargs* args )
-            { notificationCallback(this,args); }
+        virtual void setNotificationCallback(const NotificationCallback& callback)    { notificationCallback = callback; }
+        virtual void Notify( uieventargs* args )                                        { notificationCallback(this,args); }
         
     protected:
-        UINotificationCallback      notificationCallback;
+        NotificationCallback      notificationCallback;
     };
-
-
-    class uielement :
+        
+    class Element :
         public cocos2d::Layer,
-        public uinotificationinterface
+        public NotificationInterface
     {
     public:
-        static uielement* create();
+        static Element* create();
         virtual bool init() override;
 
     protected:
-        uielement();
+        Element();
         
     protected:
         u32                         id;
@@ -89,13 +81,13 @@ namespace chilli {
 
     };
 
-    class uidragevent
+    class DragEvent
     {
     protected:
         using Node = cocos2d::Node;
         
     public:
-        enum drageventtype {
+        enum class Type {
             none=0,
             select=1,
             start=2,
@@ -105,42 +97,42 @@ namespace chilli {
         };
         
     public:
-        uidragevent();
-        uidragevent(Node* element, Vec2 p, drageventtype type );
+        DragEvent();
+        DragEvent(Node* element, Vec2 p, Type type );
         
     public:
-        Node*           element;
-        Vec2            lastposition;
-        Vec2            position;
-        drageventtype   type;
-        u64             time;
+        Node*  element;
+        Vec2   lastposition;
+        Vec2   position;
+        Type   type;
+        u64    time;
         
     };
 
-    class uidragelement;
+    class DragElement;
 
     class uidragdropdelegate
     {
     public:
-        virtual void OnDragDropNotification( uidragelement* sender, uidragevent* event ) = 0 ;
+        virtual void OnDragDropNotification( DragElement* sender, DragEvent* event ) = 0 ;
     };
 
 
 
-    class uidragelement
+    class DragElement
     {
     public:
-        uidragelement();
+        DragElement();
         
-        virtual void OnSelectDrag(uidragevent* event)=0;
-        virtual void OnStartDrag(uidragevent* event)=0;
-        virtual void OnStopDrag(uidragevent* event)=0;
-        virtual void OnDrag(uidragevent* event)=0;
+        virtual void OnSelectDrag(DragEvent* event)=0;
+        virtual void OnStartDrag(DragEvent* event)=0;
+        virtual void OnStopDrag(DragEvent* event)=0;
+        virtual void OnDrag(DragEvent* event)=0;
         virtual BOOL isDragging() {return dragging;}
         virtual void enableDrag() { drag_enabled = true;}
         virtual void disableDrag() { drag_enabled = false;}
         virtual bool isDragEnabled() { return drag_enabled;}
-        virtual void NotifyDragDelegate ( uidragevent* event );
+        virtual void NotifyDragDelegate ( DragEvent* event );
         
     public:
         uidragdropdelegate* drag_delegate;
@@ -155,24 +147,24 @@ namespace chilli {
         u32                 drag_touch_count;
     };
 
-    class uidragmoveelement : public uidragelement
+    class DragMoveElement : public DragElement
     {
     public:
-        uidragmoveelement();
+        DragMoveElement();
         
-        virtual void OnSelectDrag(uidragevent* event);
-        virtual void OnStartDrag(uidragevent* event);
-        virtual void OnStopDrag(uidragevent* event);
-        virtual void OnDrag(uidragevent* event);
+        virtual void OnSelectDrag(DragEvent* event);
+        virtual void OnStartDrag(DragEvent* event);
+        virtual void OnStopDrag(DragEvent* event);
+        virtual void OnDrag(DragEvent* event);
         
     public:
         u32     zorder;
         Vec2    start_location;
     };
 
-    class uidroptarget {
+    class DropTarget {
     public:
-        uidroptarget();
+        DropTarget();
         
         virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const = 0;
         
@@ -191,7 +183,10 @@ namespace chilli {
         bool drop_enabled;
     };
 
-        
+    }
+}
+
+
 static const f32 scale_double = 2.0f;
 static const f32 scale_normal = 1.0f;
 static const f32 scale_3qtr = 0.75f;

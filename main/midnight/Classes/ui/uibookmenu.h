@@ -22,7 +22,7 @@ public:
 
 class uibookmenu :
     public cocos2d::LayerColor,
-    public uinotificationinterface
+    public chilli::ui::NotificationInterface
 {
 public:
     

@@ -1,6 +1,5 @@
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 
 #include "panel_mainmenu.h"
 #include "panel_credits.h"
@@ -115,7 +114,7 @@ void panel_mainmenu::OnNotification( Ref* sender )
     }
 }
 
-void panel_mainmenu::OnMenuNotification( uinotificationinterface* sender, menueventargs* args )
+void panel_mainmenu::OnMenuNotification( const uinotificationinterface* sender, menueventargs* args )
 {
     
     switch (args->menuitem->id)

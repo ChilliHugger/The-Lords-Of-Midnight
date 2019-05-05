@@ -23,6 +23,7 @@ protected:
     using Sprite = cocos2d::Sprite;
     using DrawNode = cocos2d::DrawNode;
     using LayerColor = cocos2d::LayerColor;
+    using uidragevent = chilli::ui::DragEvent;
     
 public:
     CREATE_FUNC(uisinglelord);

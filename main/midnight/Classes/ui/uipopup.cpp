@@ -41,7 +41,7 @@ uipopup* uipopup::create( Scene* parent, point pos, f32 width, LPCSTR text )
 
 bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
 {
-    if ( !uielement::init() )
+    if ( !Element::init() )
         return false;
     
     chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {

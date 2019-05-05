@@ -23,7 +23,7 @@ FORWARD_REFERENCE(moonring);
 FORWARD_REFERENCE(uipanel);
 
 class uicommandwindow :
-    public uielement,
+    public chilli::ui::Element,
     public uishortcutkeys
 {
     using Widget = cocos2d::ui::Widget;

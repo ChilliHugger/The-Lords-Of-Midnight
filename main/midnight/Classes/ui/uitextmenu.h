@@ -16,7 +16,7 @@ using namespace chilli::types;
 
 class uitextmenu :
     public cocos2d::ui::Scale9Sprite,
-    public uinotificationinterface
+    public chilli::ui::NotificationInterface
 {
 protected:
     using Menu = cocos2d::Menu;

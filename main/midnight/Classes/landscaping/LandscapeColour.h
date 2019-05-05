@@ -8,7 +8,7 @@
 #ifndef LandscapeColour_hpp
 #define LandscapeColour_hpp
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include <stdio.h>
 #include "../tme_interface.h"
 

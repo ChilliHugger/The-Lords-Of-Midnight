@@ -20,7 +20,7 @@ FORWARD_REFERENCE(moonring);
 FORWARD_REFERENCE(uipanel);
 
 class uihelpwindow :
-    public uielement,
+    public chilli::ui::Element,
     public uishortcutkeys
 {
     using Scene = cocos2d::Scene;

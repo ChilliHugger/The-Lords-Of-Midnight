@@ -9,8 +9,7 @@
 #ifndef uishortcutkeys_h
 #define uishortcutkeys_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
 
 #include "../system/keyboardmanager.h"

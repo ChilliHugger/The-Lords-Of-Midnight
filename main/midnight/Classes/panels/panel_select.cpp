@@ -671,6 +671,8 @@ void panel_select::draggedLordJoinsGroup()
 
 void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* event )
 {
+    using DragEventType = chilli::ui::DragEvent::Type;
+    
     auto lord = static_cast<uilordselect*>(event->element);
 
     mxid draggedLordId = getIdFromTag(lord);
@@ -680,7 +682,7 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
 
     switch (event->type) {
             
-        case uidragevent::drageventtype::select:
+        case DragEventType::select:
             
             // get intial position
             startDragParent = lord->getParent();
@@ -691,7 +693,7 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             disableUI();
             break;
             
-        case uidragevent::drageventtype::start:
+        case DragEventType::start:
             // clear drop target
             dropTarget = nullptr;
             draggedLord = lord;
@@ -709,7 +711,7 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             
             break;
 
-        case uidragevent::drageventtype::stop:
+        case DragEventType::stop:
         {
             // enable scrolling after dragging
             enableUI();
@@ -768,7 +770,7 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             break;
         }
             
-        case uidragevent::drageventtype::drag:
+        case DragEventType::drag:
         {
             checkValidDropTarget();
             

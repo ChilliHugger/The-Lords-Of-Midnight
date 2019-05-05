@@ -53,7 +53,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     if ( parent == nullptr )
         return false;
     
-    if ( !uielement::init() )
+    if ( !Element::init() )
         return false;
     
     auto rect = parent->getBoundingBox();

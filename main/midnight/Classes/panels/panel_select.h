@@ -16,12 +16,15 @@
 #include "../system/configmanager.h"
 #include "../models/selectmodel.h"
 
-class panel_select : public uipanel, uidragdropdelegate
+class panel_select :
+    public uipanel,
+    chilli::ui::uidragdropdelegate
 {
     using PageView = cocos2d::ui::PageView;
     using ScrollView = cocos2d::ui::ScrollView;
     using Layout = cocos2d::ui::Layout;
-    
+    using uidragevent = chilli::ui::DragEvent;
+    using uidragelement = chilli::ui::DragElement;
 public:
     virtual bool init() override;
     

@@ -10,7 +10,7 @@
 
 #include "../uielement.h"
 
-class uiselectpanel : public uielement
+class uiselectpanel : public chilli::ui::Element
 {
 public:
     CREATE_FUNC(uiselectpanel);

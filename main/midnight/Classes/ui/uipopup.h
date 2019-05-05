@@ -8,7 +8,7 @@
 #ifndef uipopup_h
 #define uipopup_h
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
 #include "uielement.h"
 #include "uishortcutkeys.h"
@@ -16,7 +16,7 @@
 using namespace chilli::types;
 
 class uipopup :
-    public uielement,
+    public chilli::ui::Element,
     public uishortcutkeys
 {
 protected:

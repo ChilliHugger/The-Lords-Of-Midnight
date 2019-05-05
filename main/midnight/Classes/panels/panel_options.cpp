@@ -6,7 +6,7 @@
 //
 
 #include "../Extensions/CustomDirector.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 
 #include "panel_options.h"
 #include "panel_mainmenu.h"
@@ -24,7 +24,7 @@
 #include "../ui/uioptionitem.h"
 
 USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_CC_UI;
 
 static const char* values_onoff[]               = {"OFF","ON"};
 static const char* values_yesno[]               = {"NO","YES"};
@@ -180,7 +180,7 @@ bool panel_options::init()
     return true;
 }
 
-void panel_options::OnMenuNotification( uinotificationinterface* sender, menueventargs* args )
+void panel_options::OnMenuNotification( const uinotificationinterface* sender, menueventargs* args )
 {
     int tag = args->menuitem->id;
     
@@ -328,9 +328,11 @@ void panel_options::CreateMenu1()
     menu->setPosition(Vec2(contentWidth/4,contentHeight/2));
     safeArea->addChild(menu);
 
-    menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
+    menu->setNotificationCallback ( [&](const uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
     });
+
+
     
 }
 

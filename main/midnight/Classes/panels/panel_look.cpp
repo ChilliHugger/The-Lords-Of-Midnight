@@ -1,5 +1,4 @@
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 
 #include "panel_look.h"
 #include "panel_think.h"
@@ -548,6 +547,8 @@ void panel_look::UpdateLandscape()
 
 void panel_look::addTouchListener()
 {
+    using DragEventType = uidragevent::Type;
+    
     // TODO: Turn these into gestures
     // we need swipe, drag, pinch zoom
     //
@@ -570,7 +571,7 @@ void panel_look::addTouchListener()
         //UIDEBUG("Total Mouse Move = (%f,%f)", delta.x, delta.y );
         
         if ( isDragging() ) {
-            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::drag);
+            uidragevent    dev(nullptr,touch->getLocation(),DragEventType::drag);
             dev.lastposition = mouse_last_position;
             dev.time = utils::getTimeInMilliseconds() ;
             
@@ -581,7 +582,7 @@ void panel_look::addTouchListener()
         
         if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
             || ABS(delta.y) > MINIMUM_VERTICAL_DRAG_MOVEMENT ) {
-            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::start);
+            uidragevent    dev(nullptr,touch->getLocation(),DragEventType::start);
             dev.lastposition = mouse_down_pos;
             dev.time = utils::getTimeInMilliseconds() ;
             OnStartDrag(&dev);
@@ -597,7 +598,7 @@ void panel_look::addTouchListener()
     listener->onTouchEnded = [=](Touch* touch, Event* event){
         
         if ( isDragging() ) {
-            uidragevent    dev(nullptr,touch->getLocation(),uidragevent::stop);
+            uidragevent    dev(nullptr,touch->getLocation(),DragEventType::stop);
             dev.time = utils::getTimeInMilliseconds() ;
             OnStopDrag(&dev);
             return;
@@ -1533,12 +1534,12 @@ bool panel_look::allowDragLook()
 
 void panel_look::OnSelectDrag(uidragevent* event)
 {
-    uidragelement::OnSelectDrag(event);
+    DragElement::OnSelectDrag(event);
 }
 
 void panel_look::OnStartDrag(uidragevent* event)
 {
-    uidragelement::OnStartDrag(event);
+    DragElement::OnStartDrag(event);
     
     OnMovementComplete(LM_DRAG_START);
 
@@ -1547,7 +1548,7 @@ void panel_look::OnStartDrag(uidragevent* event)
 
 void panel_look::OnStopDrag(uidragevent* event)
 {
-    uidragelement::OnStopDrag(event);
+    DragElement::OnStopDrag(event);
 
     if ( ! allowDragLook() ) {
         return;
@@ -1559,7 +1560,7 @@ void panel_look::OnStopDrag(uidragevent* event)
 
 void panel_look::OnDrag(uidragevent* event)
 {
-    uidragelement::OnDrag(event);
+    DragElement::OnDrag(event);
     
     if ( ! allowDragLook() )
         return;

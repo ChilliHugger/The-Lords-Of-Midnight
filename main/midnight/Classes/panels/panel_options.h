@@ -38,6 +38,7 @@ class panel_options : public uipanel
     using Node = cocos2d::Node;
     using DrawNode = cocos2d::DrawNode;
     using Menu = cocos2d::Menu;
+    using uinotificationinterface = chilli::ui::NotificationInterface;
     
 public:
 
@@ -51,7 +52,7 @@ protected:
     void SetMenu ( int id );
     void SetMenu( uitextmenuitem items[], int elements);
     
-    void OnMenuNotification( uinotificationinterface*, menueventargs* );
+    void OnMenuNotification( const uinotificationinterface*, menueventargs* );
     
 protected:
     DrawNode*               menu2_background;
