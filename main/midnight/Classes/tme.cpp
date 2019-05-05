@@ -271,7 +271,7 @@ bool TME_GetRaceInfo( raceinfo& out, mxid id )
 	return FALSE;
 }
 
-bool TME_GetObject( anobject& out, mxid id )
+bool TME_GetObject( object& out, mxid id )
 {
 	CLEARINFOSTRUCT ( out, IDT_OBJECT );
 	if ( MXSUCCESS(mxi->EntityById ( id, &out )) )

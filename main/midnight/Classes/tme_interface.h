@@ -22,22 +22,32 @@
 #ifdef _LOM_
 #include "tme/scenarios/lom/scenario_lom.h"
 #define lomexport	tme::scenarios::lom
+
+namespace tme {
+    using character     = tme::scenarios::exports::character_t;
+    using regiment      = tme::scenarios::exports::regiment_t;
+    using stronghold    = tme::scenarios::exports::stronghold_t;
+    using object        = tme::scenarios::exports::object_t;
+    using unitinfo      = tme::scenarios::exports::unitinfo_t;
+    using maplocation   = tme::scenarios::exports::location_t;
+    using terraininfo   = tme::scenarios::exports::terraininfo_t;
+    using raceinfo      = tme::scenarios::exports::raceinfo_t;
+}
 #endif
 
-
-#define character	defaultexport::character_t
-#define regiment	defaultexport::regiment_t
-#define stronghold	defaultexport::stronghold_t
-#define anobject	defaultexport::object_t
-#define unitinfo	defaultexport::unitinfo_t
-#define maplocation	defaultexport::location_t 
-#define terraininfo	defaultexport::terraininfo_t 
-#define raceinfo	defaultexport::raceinfo_t 
-//#define army		defaultexport::army_t
+using chilli::collections::c_mxid;
+using tme::character;
+using tme::regiment;
+using tme::stronghold;
+using tme::object;
+using tme::unitinfo;
+using tme::maplocation;
+using tme::terraininfo;
+using tme::raceinfo;
 
 
 typedef struct loc_armyinfo_t {
-    chilli::collections::c_mxid	armies;
+    c_mxid	armies;
 	u32		friends_warriors;
 	u32		friends_riders;
 	u32		friends_armies;
@@ -53,9 +63,6 @@ class NightNotificationDelegate
 public:
 	virtual void OnNightNotification( tme::callback_t* event ) = 0 ;
 };
-
-using namespace tme::flags;
-
 
 LPCSTR		TME_ScenarioDirectory ( void );
 LPCSTR		TME_ScenarioName ( void );
@@ -81,7 +88,7 @@ bool		TME_GetCharacter( character& out, mxid id );
 bool		TME_GetStronghold( stronghold& out, mxid id );
 bool		TME_GetTerrainInfo( terraininfo& out, mxid id );
 bool		TME_GetRaceInfo( raceinfo& out, mxid id );
-bool		TME_GetObject( anobject& out, mxid id );
+bool		TME_GetObject( object& out, mxid id );
 bool		TME_GetUnitInfo( unitinfo& out, mxid id );
 bool		TME_GetLocation( maplocation& out, mxid id );
 bool		TME_GetLocation( maplocation& out, tme::loc_t loc );
@@ -110,13 +117,13 @@ void		TME_SelectChar ( mxid newid );
 
 size		TME_MapSize ( void );
 void		TME_GetArmies ( mxid loc, loc_armyinfo_t* army );
-s32         TME_GetAllStrongholds (chilli::collections::c_mxid& collection ) ;
-s32         TME_GetAllRegiments (chilli::collections::c_mxid& collection );
-s32			TME_GetCharacters ( mxid id, chilli::collections::c_mxid& collection, u32& recruited );
-s32         TME_GetAllCharacters (chilli::collections::c_mxid& collection );
-s32         TME_GetFollowers ( mxid id, chilli::collections::c_mxid& collection );
-s32			TME_GetCharactersAtLocation ( mxid id, chilli::collections::c_mxid& collection, bool showall, bool showtunnel  );
-s32			TME_GetCharactersAtLocation ( tme::loc_t loc, chilli::collections::c_mxid& collection, bool showall  );
+s32         TME_GetAllStrongholds (c_mxid& collection ) ;
+s32         TME_GetAllRegiments (c_mxid& collection );
+s32			TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited );
+s32         TME_GetAllCharacters (c_mxid& collection );
+s32         TME_GetFollowers ( mxid id, c_mxid& collection );
+s32			TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel  );
+s32			TME_GetCharactersAtLocation ( tme::loc_t loc, c_mxid& collection, bool showall  );
 MXRESULT	TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends );
 MXRESULT	TME_GetArmiesAtLocation( tme::loc_t loc, u32& enemies, u32& friends );
 LPCSTR      TME_GetSymbol( mxid id );
@@ -134,7 +141,7 @@ typedef struct MapInfo_t {
 bool        TME_MapInfo ( MapInfo_t* info );
 
 
-
+using namespace tme::flags;
 
 
 // character helpers
@@ -223,11 +230,11 @@ bool TME_DebugInstallMap( void* map );
 
 
 extern tme::mxinterface*	mxi ;
-extern chilli::collections::c_mxid			default_characters ;
-extern chilli::collections::c_mxid			recruitable_characters;
-extern chilli::collections::c_mxid			location_characters;
+extern c_mxid			    default_characters ;
+extern c_mxid			    recruitable_characters;
+extern c_mxid			    location_characters;
 extern u32                  location_recruited;
-extern chilli::collections::c_mxid			location_strongholds;
+extern c_mxid   			location_strongholds;
 extern mxid                 location_infrontid;
 extern mxid                 location_lookingatid;
 extern tme::loc_t			location_infront;
@@ -244,11 +251,11 @@ extern mxid                 location_object_tunnel;
 extern mxid                 location_someone_to_give_to;
 #endif
 
-extern chilli::collections::c_mxid			location_infront_strongholds;
+extern c_mxid   			location_infront_strongholds;
 extern mxid                 location_infront_object;
 
-extern	loc_armyinfo_t	location_infront_armies;
-extern	loc_armyinfo_t	location_armies;
+extern loc_armyinfo_t	    location_infront_armies;
+extern loc_armyinfo_t	    location_armies;
 
 
 #endif // _TME_INTERFACE_H_INCLUDED

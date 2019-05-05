@@ -172,9 +172,6 @@ namespace tme {
 #else
 #define MXTRACE		if(0) printf
 #endif
-  
-#define USING_NS_TME	using namespace tme
-
 
 #endif //_CMIDNIGHTX_H_INCLUDED_
 	

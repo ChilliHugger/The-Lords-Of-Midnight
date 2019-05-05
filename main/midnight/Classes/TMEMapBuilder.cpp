@@ -14,7 +14,7 @@
 #include "tme/baseinc/tme_internal.h"
 
 USING_NS_CC;
-USING_NS_TME;
+using namespace tme;
 
 tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
 {

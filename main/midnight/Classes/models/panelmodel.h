@@ -10,7 +10,6 @@
 #include "../library/libinc/mxtypes.h"
 
 using namespace chilli;
-//using namespace chilli::types;
 
 class panelmodel
 {
