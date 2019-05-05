@@ -17,7 +17,7 @@ class panel_think : public uipanel
 {
     using PageView = cocos2d::ui::PageView;
     using Color3B = cocos2d::Color3B;
-    
+    template<class T> using Vector = cocos2d::Vector<T>;
 public:
     virtual bool init() override;
     
@@ -46,5 +46,5 @@ protected:
     mxid                    objectId;
     int                     current_tab;
     PageView*               pageView;
-    cocos2d::Vector<uithinkpage*>    pages;
+    Vector<uithinkpage*>    pages;
 };

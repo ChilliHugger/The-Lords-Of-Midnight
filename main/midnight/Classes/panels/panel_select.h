@@ -25,6 +25,7 @@ class panel_select :
     using Layout = cocos2d::ui::Layout;
     using uidragevent = chilli::ui::DragEvent;
     using uidragelement = chilli::ui::DragElement;
+    template<class T> using Vector = cocos2d::Vector<T>;
 public:
     virtual bool init() override;
     
@@ -100,8 +101,8 @@ private:
     Node*                   gradientR;
     PageView*               pageView;
     ScrollView*             scrollView;
-    cocos2d::Vector<uilordselect*>   lords;
-    cocos2d::Vector<Layout*>         pages;
+    Vector<uilordselect*>   lords;
+    Vector<Layout*>         pages;
     
     // drag and drop
     uilordselect*           dropTarget;

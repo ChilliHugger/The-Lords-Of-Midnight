@@ -39,7 +39,7 @@ class panel_options : public uipanel
     using DrawNode = cocos2d::DrawNode;
     using Menu = cocos2d::Menu;
     using uinotificationinterface = chilli::ui::NotificationInterface;
-    
+    template<class T> using Vector = cocos2d::Vector<T>;
 public:
 
     virtual bool init();
@@ -56,7 +56,7 @@ protected:
     
 protected:
     DrawNode*               menu2_background;
-    cocos2d::Vector<Node*>           fields;
+    Vector<Node*>           fields;
     Menu*                   menu2;
     cocos2d::Map<int, uioptionitem*> optionControls;
     

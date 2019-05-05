@@ -28,7 +28,7 @@ class uicommandwindow :
 {
     using Widget = cocos2d::ui::Widget;
     using Layout = cocos2d::ui::Layout;
-    
+    template<class T> using Vector = cocos2d::Vector<T>;
 private:
     uicommandwindow();
     ~uicommandwindow();
@@ -66,7 +66,7 @@ protected:
     size            grid;
     size            padding;
     
-    cocos2d::Vector<Widget*> elements;
+    Vector<Widget*> elements;
 
 };
 

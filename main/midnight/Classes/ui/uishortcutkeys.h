@@ -21,7 +21,7 @@ class uishortcutkeys
 {
     using Node = cocos2d::Node;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
-    
+    template<class T> using Vector = cocos2d::Vector<T>;
 public:
     bool dispatchShortcutKey( keycode_t keyCode );
     void displayShortcuts();
@@ -36,7 +36,7 @@ protected:
     Node* checkValidTarget( layoutid_t id );
 
 protected:
-    cocos2d::Vector<keyinfo*>   keys;
+    Vector<keyinfo*>   keys;
     Node*              dispatchNode;
     WidgetClickCallback callback;
 };
