@@ -21,6 +21,7 @@
 class uishortcutkeys
 {
     using Node = cocos2d::Node;
+    using WidgetClickCallback = chilli::ui::WidgetClickCallback;
     
 public:
     bool dispatchShortcutKey( keycode_t keyCode );

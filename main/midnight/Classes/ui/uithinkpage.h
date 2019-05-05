@@ -22,6 +22,7 @@ class uithinkpage : public uielement
     using ImageView = cocos2d::ui::ImageView;
     using ScrollView = cocos2d::ui::ScrollView;
     using Label = cocos2d::Label;
+    using WidgetClickCallback = chilli::ui::WidgetClickCallback;
 
 public:
    

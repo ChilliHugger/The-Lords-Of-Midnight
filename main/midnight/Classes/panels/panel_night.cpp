@@ -18,8 +18,8 @@
 #include "../frontend/layout_id.h"
 
 USING_NS_CC;
+USING_NS_CC_UI;
 using namespace tme;
-using namespace cocos2d::ui;
 
 bool panel_night::init()
 {
@@ -37,8 +37,8 @@ bool panel_night::init()
 
     auto size = safeArea->getContentSize();
     
-    scrollView = ui::ScrollView::create();
-    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    scrollView = ScrollView::create();
+    scrollView->setDirection(ScrollView::Direction::VERTICAL);
     scrollView->setLocalZOrder(ZORDER_FAR+1);
     
     // Description
@@ -77,7 +77,7 @@ void panel_night::OnShown()
         RUN_ON_UI_THREAD([&,msg](){
             setNightText( msg );
             
-            auto button = safeArea->getChildByTag<ui::Button*>(ID_DAWN);
+            auto button = safeArea->getChildByTag<Button*>(ID_DAWN);
             uihelper::setEnabled(button, true);
             
         });

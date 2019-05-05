@@ -34,6 +34,8 @@ protected:
     using Button = cocos2d::ui::Button;
     using Layer = cocos2d::Layer;
     using Node = cocos2d::Node;
+    using WidgetClickCallback = chilli::ui::WidgetClickCallback;
+    using WidgetEventCallback = chilli::ui::WidgetEventCallback;
 public:
     
     virtual bool init();

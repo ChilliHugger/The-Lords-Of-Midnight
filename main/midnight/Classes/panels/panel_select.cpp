@@ -19,10 +19,8 @@
 #include "../ui/characters/uigrouplord.h"
 
 USING_NS_CC;
+USING_NS_CC_UI;
 using namespace tme;
-using namespace cocos2d::ui;
-
-
 
 #if defined(_LOM_)
     #define BACKGROUND_COLOUR   _clrWhite
@@ -122,7 +120,7 @@ void panel_select::createPageView()
 {
     // lets have a pageview
     pageView = PageView::create();
-    pageView->setDirection(ui::PageView::Direction::HORIZONTAL);
+    pageView->setDirection(PageView::Direction::HORIZONTAL);
     pageView->setBounceEnabled(true);
     pageView->setIndicatorEnabled(true);
     pageView->setCurrentPageIndex(0);

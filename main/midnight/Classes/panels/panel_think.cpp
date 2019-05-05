@@ -8,23 +8,17 @@
  *
  */
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
+#include "../cocos.h"
 #include "panel_think.h"
-
 #include "../system/moonring.h"
-//#include "../system/configmanager.h"
 #include "../system/resolutionmanager.h"
-//#include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 #include "../ui/uithinkpage.h"
-
 #include "../frontend/layout_id.h"
 
 USING_NS_CC;
+USING_NS_CC_UI;
 using namespace tme;
-using namespace cocos2d::ui;
 
 // think pages are
 // person
@@ -112,20 +106,20 @@ bool panel_think::init()
 
 void panel_think::showButton(layoutid_t id, bool enabled)
 {
-    auto button = safeArea->getChildByTag<ui::Button*>(id);
+    auto button = safeArea->getChildByTag<Button*>(id);
     if ( button )
         button->setVisible(enabled);
 }
 
 void panel_think::enableButton(layoutid_t id, bool enabled)
 {
-    auto button = safeArea->getChildByTag<ui::Button*>(id);
+    auto button = safeArea->getChildByTag<Button*>(id);
     uihelper::setEnabled(button, enabled);
 }
 
 void panel_think::tintButton(layoutid_t id,Color3B colour)
 {
-    auto button = safeArea->getChildByTag<ui::Button*>(id);
+    auto button = safeArea->getChildByTag<Button*>(id);
     if ( button ) {
         button->setEnabled(false);
         button->setBright(true);
@@ -235,7 +229,7 @@ void panel_think::createPageView()
 {
     // lets have a pageview
     pageView = PageView::create();
-    pageView->setDirection(ui::PageView::Direction::HORIZONTAL);
+    pageView->setDirection(PageView::Direction::HORIZONTAL);
     pageView->setBounceEnabled(true);
     pageView->setIndicatorEnabled(true);
     pageView->setCurrentPageIndex(0);

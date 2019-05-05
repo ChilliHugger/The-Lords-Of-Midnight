@@ -225,8 +225,8 @@ bool uithinkpage::init()
     addChild(safeArea);
     
 
-    scrollView = ui::ScrollView::create();
-    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    scrollView = ScrollView::create();
+    scrollView->setDirection(ScrollView::Direction::VERTICAL);
 
     // Name
     lblName = Label::createWithTTF( uihelper::font_config_big, "" );

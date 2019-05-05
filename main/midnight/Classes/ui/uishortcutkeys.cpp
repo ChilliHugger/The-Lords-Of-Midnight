@@ -12,9 +12,9 @@
 #include "uihelper.h"
 
 USING_NS_CC;
-//using namespace cocos2d::ui;
+USING_NS_CC_UI;
 
-void uishortcutkeys::init( Node* node, cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback callback )
+void uishortcutkeys::init( Node* node, chilli::ui::WidgetClickCallback callback )
 {
     this->dispatchNode = node;
     this->callback = callback;
@@ -26,7 +26,7 @@ Node* uishortcutkeys::checkValidTarget( layoutid_t id )
     if ( dispatchNode == nullptr )
         return nullptr;
     
-    return uihelper::getChildByTagRecursively<ui::Widget*>(id,dispatchNode);
+    return uihelper::getChildByTagRecursively<Widget*>(id,dispatchNode);
 }
 
 void uishortcutkeys::addShortcutKey( layoutid_t id, KEY_MAP key)
@@ -73,7 +73,7 @@ bool uishortcutkeys::dispatchShortcutKey( keycode_t keyCode )
     
     auto key = getKeyboardShortcut(keyCode);
     if ( key != nullptr ) {
-        auto sender = uihelper::getChildByTagRecursively<ui::Widget*>(key->id,dispatchNode);
+        auto sender = uihelper::getChildByTagRecursively<Widget*>(key->id,dispatchNode);
         if ( sender != nullptr && sender->isEnabled() ) {
             
             callback(sender);
@@ -131,7 +131,7 @@ void uishortcutkeys::displayShortcuts()
 {
     for( auto k : keys ) {
 
-        auto sender = uihelper::getChildByTagRecursively<ui::Widget*>(k->id,dispatchNode);
+        auto sender = uihelper::getChildByTagRecursively<Widget*>(k->id,dispatchNode);
         if ( sender && sender->isVisible() && sender->isEnabled() ) {
             auto shortcut = sender->getChildByName<Label*>("shortcut_label");
             if ( shortcut == nullptr )
