@@ -85,6 +85,7 @@ namespace chilli {
     {
     protected:
         using Node = cocos2d::Node;
+        using Vec2 = cocos2d::Vec2;
         
     public:
         enum class Type {
@@ -121,6 +122,8 @@ namespace chilli {
 
     class DragElement
     {
+        using Vec2 = cocos2d::Vec2;
+        
     public:
         DragElement();
         
@@ -149,6 +152,7 @@ namespace chilli {
 
     class DragMoveElement : public DragElement
     {
+        using Vec2 = cocos2d::Vec2;
     public:
         DragMoveElement();
         
@@ -162,7 +166,9 @@ namespace chilli {
         Vec2    start_location;
     };
 
-    class DropTarget {
+    class DropTarget
+    {
+        using Vec2 = cocos2d::Vec2;
     public:
         DropTarget();
         

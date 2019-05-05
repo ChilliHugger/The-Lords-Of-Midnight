@@ -36,7 +36,7 @@ protected:
     Node* checkValidTarget( layoutid_t id );
 
 protected:
-    Vector<keyinfo*>   keys;
+    cocos2d::Vector<keyinfo*>   keys;
     Node*              dispatchNode;
     WidgetClickCallback callback;
 };

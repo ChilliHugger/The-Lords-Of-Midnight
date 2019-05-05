@@ -17,6 +17,8 @@ class uigroupedlord : public uilordselect
     using Label = cocos2d::Label;
     using Sprite = cocos2d::Sprite;
     using LayerColor = cocos2d::LayerColor;
+    using Vec2 = cocos2d::Vec2;
+    using Vec3 = cocos2d::Vec3;
     
 public:
     CREATE_FUNC(uigroupedlord);

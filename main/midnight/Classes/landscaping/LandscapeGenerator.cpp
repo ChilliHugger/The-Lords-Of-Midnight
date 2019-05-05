@@ -2,6 +2,7 @@
 #include "LandscapeGenerator.h"
 #include "ILandscape.h"
 
+USING_NS_CC;
 
 using namespace tme;
 

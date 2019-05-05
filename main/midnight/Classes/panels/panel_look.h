@@ -72,6 +72,7 @@ class panel_look :
     using ImageView = cocos2d::ui::ImageView;
     using Label = cocos2d::Label;
     using LayerColor = cocos2d::LayerColor;
+    using Vec2 = cocos2d::Vec2;
     using uidragevent = chilli::ui::DragEvent;
     
 public:

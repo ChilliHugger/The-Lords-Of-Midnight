@@ -15,19 +15,16 @@ using namespace chilli::types;
 
 FORWARD_REFERENCE( uipanel );
 
-#define BOX_BACKGROUND_FILENAME "misc/box_16.png"
-#define FONT_FILENAME           "fonts/celtic.ttf"
-#define FONT_SIZE_SHORTCUT      25
-#define FONT_SIZE_BIG           30
-#define FONT_SIZE_MEDIUM        20
-#define FONT_SIZE_SMALL         12
-#define FONT_SIZE_DEBUG         8
-#define IMAGE_LOGO              "misc/logo.png"
+constexpr auto BOX_BACKGROUND_FILENAME = "misc/box_16.png";
+constexpr auto FONT_FILENAME           = "fonts/celtic.ttf";
+constexpr auto FONT_SIZE_SHORTCUT      = 25;
+constexpr auto FONT_SIZE_BIG           = 30;
+constexpr auto FONT_SIZE_MEDIUM        = 20;
+constexpr auto FONT_SIZE_SMALL         = 12;
+constexpr auto FONT_SIZE_DEBUG         = 8;
+constexpr auto IMAGE_LOGO              = "misc/logo.png";
 
 
-
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 using cocos2d::Color3B;
 
 class uihelper
@@ -36,6 +33,8 @@ class uihelper
     using Node = cocos2d::Node;
     using Button = cocos2d::ui::Button;
     using Size = cocos2d::Size;
+    using Vec2 = cocos2d::Vec2;
+
 public:
     static void Init();
 
@@ -89,7 +88,7 @@ public:
     // create UI Elements
     static Button* CreateBoxButton( Size size );
     static Button* CreateImageButton( const std::string& name );
-    static Button* CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback  );
+    static Button* CreateImageButton( const std::string& name, u32 id, const chilli::ui::WidgetClickCallback& callback  );
 
     // layers
     static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );

@@ -90,7 +90,7 @@ void uifilterbutton::initChildren()
     setSelected(false);
     setLocalZOrder(ZORDER_UI);
     
-    WidgetClickCallback callback = [&] (Ref* ref ) {
+    chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {
         
         setSelected( !isSelected() );
         

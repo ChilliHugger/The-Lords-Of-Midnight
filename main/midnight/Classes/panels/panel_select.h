@@ -100,8 +100,8 @@ private:
     Node*                   gradientR;
     PageView*               pageView;
     ScrollView*             scrollView;
-    Vector<uilordselect*>   lords;
-    Vector<Layout*>         pages;
+    cocos2d::Vector<uilordselect*>   lords;
+    cocos2d::Vector<Layout*>         pages;
     
     // drag and drop
     uilordselect*           dropTarget;

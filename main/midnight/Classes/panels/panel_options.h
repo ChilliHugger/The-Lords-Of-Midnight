@@ -56,9 +56,9 @@ protected:
     
 protected:
     DrawNode*               menu2_background;
-    Vector<Node*>           fields;
+    cocos2d::Vector<Node*>           fields;
     Menu*                   menu2;
-    Map<int, uioptionitem*> optionControls;
+    cocos2d::Map<int, uioptionitem*> optionControls;
     
 };
 

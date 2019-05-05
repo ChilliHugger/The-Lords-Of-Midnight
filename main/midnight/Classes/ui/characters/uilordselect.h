@@ -49,10 +49,13 @@ class uilordselect :
     public chilli::ui::DragMoveElement,
     public chilli::ui::DropTarget
 {
+protected:
     using Widget = cocos2d::ui::Widget;
     using Touch = cocos2d::Touch;
     using Event = cocos2d::Event;
+    using Vec2 = cocos2d::Vec2;
     using uidragevent = chilli::ui::DragEvent;
+    
     
 public:
     

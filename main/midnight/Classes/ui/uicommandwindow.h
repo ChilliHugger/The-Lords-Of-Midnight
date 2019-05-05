@@ -66,7 +66,7 @@ protected:
     size            grid;
     size            padding;
     
-    Vector<Widget*> elements;
+    cocos2d::Vector<Widget*> elements;
 
 };
 

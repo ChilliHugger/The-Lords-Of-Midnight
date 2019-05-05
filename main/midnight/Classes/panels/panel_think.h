@@ -46,5 +46,5 @@ protected:
     mxid                    objectId;
     int                     current_tab;
     PageView*               pageView;
-    Vector<uithinkpage*>    pages;
+    cocos2d::Vector<uithinkpage*>    pages;
 };
