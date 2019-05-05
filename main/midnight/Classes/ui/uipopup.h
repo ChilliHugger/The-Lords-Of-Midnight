@@ -15,11 +15,14 @@
 
 using namespace chilli::types;
 
-USING_NS_CC;
-
-
-class uipopup : public uielement, public uishortcutkeys {
-
+class uipopup :
+    public uielement,
+    public uishortcutkeys
+{
+protected:
+    using Layout = cocos2d::ui::Layout;
+    using Scene = cocos2d::Scene;
+    
 private:
     uipopup();
     ~uipopup();
@@ -43,7 +46,7 @@ protected:
     
 protected:
     Scene*  parent;
-    cocos2d::ui::Layout* layout;
+    Layout* layout;
     
 };
 

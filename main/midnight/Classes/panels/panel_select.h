@@ -18,7 +18,10 @@
 
 class panel_select : public uipanel, uidragdropdelegate
 {
-	
+    using PageView = cocos2d::ui::PageView;
+    using ScrollView = cocos2d::ui::ScrollView;
+    using Layout = cocos2d::ui::Layout;
+    
 public:
     virtual bool init() override;
     
@@ -34,9 +37,9 @@ protected:
     
     void getCharacters();
 
-    cocos2d::Vec2 calcGridLocation ( u32 index );
+    Vec2 calcGridLocation ( u32 index );
     page_t calcPage( u32 index );
-    void addToPage( uilordselect* lord, page_t page, cocos2d::Vec2 pos);
+    void addToPage( uilordselect* lord, page_t page, Vec2 pos);
     void checkPageFlip() ;
 
     void updateFilters();
@@ -108,3 +111,5 @@ private:
     UIMOUSEOVER             lordDropResult;
     bool                    pageFlipAllowed;
 };
+
+

@@ -16,12 +16,11 @@
 
 #ifdef _DDR_
 #include "tme/scenarios/ddr/scenario_ddr.h"
-#define ddrexport	tme::scenarios::ddr
 #endif
 
 #ifdef _LOM_
 #include "tme/scenarios/lom/scenario_lom.h"
-#define lomexport	tme::scenarios::lom
+#endif
 
 namespace tme {
     using character     = tme::scenarios::exports::character_t;
@@ -33,7 +32,6 @@ namespace tme {
     using terraininfo   = tme::scenarios::exports::terraininfo_t;
     using raceinfo      = tme::scenarios::exports::raceinfo_t;
 }
-#endif
 
 using chilli::collections::c_mxid;
 using tme::character;

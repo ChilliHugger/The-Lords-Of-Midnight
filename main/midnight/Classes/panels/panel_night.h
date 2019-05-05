@@ -12,10 +12,13 @@
 #include "../ui/uipanel.h"
 #include "../tme_interface.h"
 
-class panel_night : public uipanel
-                    , protected NightNotificationDelegate
+class panel_night :
+    public uipanel,
+    protected NightNotificationDelegate
 {
-	
+protected:
+    using Label = cocos2d::Label;
+    using ScrollView = cocos2d::ui::ScrollView;
 public:
     virtual bool init() override;
     
@@ -30,6 +33,6 @@ protected:
     void setNightText( const std::string& text );
     
 private:
-    cocos2d::Label*     lblDescription;
-    cocos2d::ui::ScrollView* scrollView;
+    Label*     lblDescription;
+    ScrollView* scrollView;
 };

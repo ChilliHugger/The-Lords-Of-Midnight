@@ -7,6 +7,7 @@ FORWARD_REFERENCE(progressmonitor);
 
 class panel_splashscreen : public uipanel
 {
+    using DrawNode = cocos2d::DrawNode;
 public:
     
     virtual bool init();
@@ -18,11 +19,10 @@ protected:
     void complete();
     
 protected:
-    f32 loading_width;
-    f32 loading_height;
-    cocos2d::DrawNode* loading_progress;
-    
-    long StartTime;
+    f32                 loading_width;
+    f32                 loading_height;
+    DrawNode*           loading_progress;
+    long                StartTime;
     progressmonitor*    progress;
     
 };

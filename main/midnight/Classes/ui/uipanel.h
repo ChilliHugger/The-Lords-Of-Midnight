@@ -8,8 +8,7 @@
 #ifndef uipanel_h
 #define uipanel_h
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 
 #include "../system/helpmanager.h"
 #include "../frontend/panel_id.h"
@@ -29,6 +28,12 @@ class uipanel :
     public cocos2d::Scene,
     public uishortcutkeys
 {
+protected:
+    using Color3B = cocos2d::Color3B;
+    using DrawNode = cocos2d::DrawNode;
+    using Button = cocos2d::ui::Button;
+    using Layer = cocos2d::Layer;
+    using Node = cocos2d::Node;
 public:
     
     virtual bool init();
@@ -60,7 +65,7 @@ protected:
     
     Node* setBackgroundToHeight( LPCSTR background );
     Node* setBackgroundToWidth( LPCSTR background );
-    Node* setBackground( cocos2d::Color3B color );
+    Node* setBackground( Color3B color );
     Node* setBackgroundCentered( LPCSTR background );
 
     
@@ -77,7 +82,7 @@ protected:
     
     
     void DebugNodes();
-    void DebugNodesChildren(cocos2d::DrawNode* layer, Node* parent, cocos2d::Vec2 origin);
+    void DebugNodesChildren(DrawNode* layer, Node* parent, Vec2 origin);
     
     void setEnabled(bool enabled);
     
@@ -91,14 +96,14 @@ protected:
     bool            help_pending;
     helpid_t        help_visible;
     uihelpwindow*   help_window;
-    cocos2d::ui::Button*         i_help;
+    Button*         i_help;
     
     bool            enabled;
     
     WidgetClickCallback clickCallback;
     WidgetEventCallback eventCallback;
     
-    cocos2d::Layer*         safeArea;
+    Layer*         safeArea;
     
     
 public:

@@ -7,13 +7,12 @@
 //
 
 #pragma once
-//#undef character
-//#include "cocos2d.h"
-
 #include "../library/libinc/mxtypes.h"
 #include "../library/libinc/collections.h"
 #include "../tme/baseinc/lomxtypes.h"
 #include "ringcontroller.h"
+
+using chilli::collections::c_u32;
 
 #define MAX_STORIES 8
 #define STORY_NONE 0

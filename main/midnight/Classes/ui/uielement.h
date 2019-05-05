@@ -11,11 +11,6 @@
 #include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
 
-//using cocos2d::ui::AbstractCheckButton;
-using cocos2d::Node;
-using cocos2d::Layer;
-using cocos2d::Vec2;
-
 FORWARD_REFERENCE(uieventargs);
 FORWARD_REFERENCE(uielement);
 FORWARD_REFERENCE(uinotificationinterface);
@@ -68,14 +63,16 @@ protected:
 };
 
 
-class uielement : public Layer, public uinotificationinterface
+class uielement :
+    public cocos2d::Layer,
+    public uinotificationinterface
 {
 public:
     static uielement* create();
     virtual bool init() override;
 
 protected:
-        uielement();
+    uielement();
         
 protected:
     u32                         id;
@@ -86,6 +83,9 @@ protected:
 
 class uidragevent
 {
+protected:
+    using Node = cocos2d::Node;
+    
 public:
     enum drageventtype {
         none=0,

@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 17/10/2018.
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
-#include "cocos2d.h"
+#include "../cocos.h"
 
 #include "LandscapePeople.h"
 #include "LandscapeColour.h"
@@ -16,6 +16,7 @@
 
 #include "../tme_interface.h"
 
+USING_NS_CC;
 using namespace tme;
 
 #define TRANSITION_DURATION     0.5f

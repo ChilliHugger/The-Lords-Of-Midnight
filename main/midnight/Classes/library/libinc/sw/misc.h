@@ -8,7 +8,8 @@ namespace chilli {
 	namespace lib {
 
         using namespace types;
-        using namespace collections;
+       
+        using collections::c_string;
         
 		int SplitString ( LPCSTR source, LPCSTR delim, c_string& tokens ) ;
 		void JumbleArray ( int* array, int max );

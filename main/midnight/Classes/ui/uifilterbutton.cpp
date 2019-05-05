@@ -6,12 +6,12 @@
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
 
+#include "../cocos.h"
 #include "uifilterbutton.h"
 #include "uihelper.h"
 #include "../system/resolutionmanager.h"
 
-#include "ui/CocosGUI.h"
-
+USING_NS_CC;
 using namespace cocos2d::ui;
 
 

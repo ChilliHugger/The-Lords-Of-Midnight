@@ -43,11 +43,13 @@ enum class lordwidget {
 };
 
 
-class uilordselect : public Widget,
+
+class uilordselect : public cocos2d::ui::Widget,
     public uidragmoveelement, public uidroptarget
 {
-public:
-
+    using Widget = cocos2d::ui::Widget;
+    using Touch = cocos2d::Touch;
+    using Event = cocos2d::Event;
     
 public:
     

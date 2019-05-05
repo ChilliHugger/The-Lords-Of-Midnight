@@ -17,9 +17,13 @@
 #define SHIELD_OFFSET_Y RES(-6)
 #endif
 
-
 class uisinglelord : public uilordselect
 {
+protected:
+    using Sprite = cocos2d::Sprite;
+    using DrawNode = cocos2d::DrawNode;
+    using LayerColor = cocos2d::LayerColor;
+    
 public:
     CREATE_FUNC(uisinglelord);
     virtual bool init() override;

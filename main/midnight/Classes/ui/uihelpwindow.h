@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
 #include "uielement.h"
 #include "../system/helpmanager.h"
@@ -16,12 +16,15 @@
 
 using namespace chilli::types;
 
-USING_NS_CC;
-
 FORWARD_REFERENCE(moonring);
 FORWARD_REFERENCE(uipanel);
 
-class uihelpwindow : public uielement, public uishortcutkeys {
+class uihelpwindow :
+    public uielement,
+    public uishortcutkeys
+{
+    using Scene = cocos2d::Scene;
+    using Layout = cocos2d::ui::Layout;
     
 private:
     uihelpwindow();
@@ -40,10 +43,10 @@ protected:
     void OnClose();
     
 protected:
-    Scene*                  parent;
-    helpid_t                id;
-    MXVoidCallback          closeCallback;
-    cocos2d::ui::Layout*    layout;
+    Scene*          parent;
+    helpid_t        id;
+    MXVoidCallback  closeCallback;
+    Layout*         layout;
     
 };
 

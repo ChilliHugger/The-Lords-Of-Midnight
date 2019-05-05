@@ -12,11 +12,11 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
-
 #define ALPHA(x) (f32)    ((x)*255)
 
-USING_NS_CC;
-using namespace cocos2d::ui;
-
+using cocos2d::Vector;
+using cocos2d::Vec2;
+using cocos2d::Vec3;
+using cocos2d::Map;
 
 #endif /* cocos_h */

@@ -49,6 +49,7 @@
 
 using namespace tme;
 
+USING_NS_CC;
 
 uithinkpage::uithinkpage()
 {
@@ -285,7 +286,7 @@ void uithinkpage::displayCharacter ( const character& c )
     // display character name
     lblName->setString(c.longname);
 
-    imgCharacter->loadTexture(GetCharacterImage(c), Widget::TextureResType::LOCAL);
+    imgCharacter->loadTexture(GetCharacterImage(c), cocos2d::ui::Widget::TextureResType::LOCAL);
     imgCharacter->setTouchEnabled( Character_IsRecruited(c) );
     imgCharacter->setTag(ID_SELECT_CHAR+c.id);
     imgCharacter->addClickEventListener(clickCallback);
@@ -352,7 +353,7 @@ void uithinkpage::displayObject ( mxid objectid )
         return;
     }
     
-    imgObject->loadTexture( GetObjectBig(objectid), Widget::TextureResType::LOCAL );
+    imgObject->loadTexture( GetObjectBig(objectid), cocos2d::ui::Widget::TextureResType::LOCAL );
     imgObject->setVisible(true);
 #endif
     

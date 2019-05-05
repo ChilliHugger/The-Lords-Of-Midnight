@@ -14,9 +14,13 @@
 
 using namespace chilli::types;
 
-class uitextmenu : public cocos2d::ui::Scale9Sprite
-                 , public uinotificationinterface
+class uitextmenu :
+    public cocos2d::ui::Scale9Sprite,
+    public uinotificationinterface
 {
+protected:
+    using Menu = cocos2d::Menu;
+    
 private:
     uitextmenu() {};
     
@@ -35,7 +39,7 @@ protected:
     u32                 items_count;
     f32                 paddingY;
     f32                 width;
-    cocos2d::Menu*      mainmenu;
+    Menu*               mainmenu;
 };
 
 

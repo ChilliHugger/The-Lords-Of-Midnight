@@ -37,7 +37,7 @@ typedef enum floor_t {
 } floor_t ;
 
 
-class LandscapeItem : public Ref {
+class LandscapeItem : public cocos2d::Ref {
 public:
     tme::loc_t       loc;
     mxterrain_t	terrain;

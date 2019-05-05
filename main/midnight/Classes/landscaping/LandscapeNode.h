@@ -14,13 +14,9 @@
 #include <stdio.h>
 #include "../tme_interface.h"
 
-
-USING_NS_CC;
-
-//#define RES(x) (s32)	((x)*1.0)
 class LandscapeOptions;
 
-class LandscapeNode : public Node
+class LandscapeNode : public cocos2d::Node
 {
 public:
     static LandscapeNode* create(LandscapeOptions* options);

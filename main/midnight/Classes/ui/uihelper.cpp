@@ -10,6 +10,8 @@
 #include "../ui/uielement.h"
 #include "../ui/uieventargs.h"
 
+USING_NS_CC;
+
 Vec2 uihelper::AnchorTopLeft = Vec2(0,1);
 Vec2 uihelper::AnchorTopRight = Vec2(1,1);
 Vec2 uihelper::AnchorTopCenter = Vec2(0.5,1);

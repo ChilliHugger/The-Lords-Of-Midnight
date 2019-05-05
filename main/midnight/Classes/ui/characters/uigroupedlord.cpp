@@ -12,6 +12,8 @@
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"
 
+USING_NS_CC;
+
 uigroupedlord::uigroupedlord() :
     buttonNode(nullptr)
 {
@@ -129,6 +131,6 @@ void uigroupedlord::onPressStateChangedToPressed()
 
 bool uigroupedlord::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
-    return Widget::hitTest(pt, camera, p)
+    return cocos2d::ui::Widget::hitTest(pt, camera, p)
         && MouseOverHotspot(pt, MOUSE_OVER_HINT_DROP) == MOUSE_OVER_FACE ;
 }

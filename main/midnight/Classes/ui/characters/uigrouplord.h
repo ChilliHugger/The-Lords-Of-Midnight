@@ -13,6 +13,9 @@
 
 class uigrouplord : public uisinglelord
 {
+    using Button = cocos2d::ui::Button;
+    using Camera = cocos2d::Camera;
+    
 public:
     CREATE_FUNC(uigrouplord);
     virtual bool init() override;

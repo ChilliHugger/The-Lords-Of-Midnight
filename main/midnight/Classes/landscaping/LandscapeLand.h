@@ -15,6 +15,7 @@
 
 class LandscapeLand : public LandscapeNode
 {
+    using Sprite = cocos2d::Sprite;
 public:
     static LandscapeLand* create( LandscapeOptions* options );
 

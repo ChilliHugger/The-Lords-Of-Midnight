@@ -43,9 +43,9 @@ namespace tme {
 
     using namespace chilli;
     using namespace chilli::lib;
-    using namespace chilli::collections;
+    //using namespace chilli::collections;
     using namespace variables;
-    using namespace tme::collections;
+    //using namespace tme::collections;
     using namespace flags;
     
 	// forward references
@@ -447,12 +447,14 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
     }; // class mxdiscoverymap
     
     
+    using chilli::collections::c_mxid;
+    
 	// namespace collections
 	namespace collections {
 		// class entities collection
 		class entities
 		{
-		public:
+    	public:
 			entities(void);
 			~entities(void);
 			bool Create( u32 count );

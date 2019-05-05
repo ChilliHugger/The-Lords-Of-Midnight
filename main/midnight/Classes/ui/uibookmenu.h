@@ -20,8 +20,9 @@ public:
 
 
 
-class uibookmenu : public cocos2d::LayerColor
-                 , public uinotificationinterface
+class uibookmenu :
+    public cocos2d::LayerColor,
+    public uinotificationinterface
 {
 public:
     

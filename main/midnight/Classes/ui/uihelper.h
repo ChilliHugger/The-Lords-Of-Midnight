@@ -24,18 +24,18 @@ FORWARD_REFERENCE( uipanel );
 #define FONT_SIZE_DEBUG         8
 #define IMAGE_LOGO              "misc/logo.png"
 
-using cocos2d::TTFConfig;
-using cocos2d::Vec2;
-using cocos2d::Node;
-using cocos2d::ui::Button;
-using cocos2d::Color3B;
-using cocos2d::Size;
+
 
 typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
 typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+using cocos2d::Color3B;
 
 class uihelper
 {
+    using TTFConfig = cocos2d::TTFConfig;
+    using Node = cocos2d::Node;
+    using Button = cocos2d::ui::Button;
+    using Size = cocos2d::Size;
 public:
     static void Init();
 

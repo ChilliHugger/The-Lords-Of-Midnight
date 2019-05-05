@@ -11,6 +11,7 @@
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"
 
+USING_NS_CC;
 
 uisinglelord::uisinglelord() :
     buttonNode(nullptr),

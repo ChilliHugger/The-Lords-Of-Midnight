@@ -12,6 +12,12 @@
 
 class uigroupedlord : public uilordselect
 {
+    using TextHAlignment = cocos2d::TextHAlignment;
+    using Camera = cocos2d::Camera;
+    using Label = cocos2d::Label;
+    using Sprite = cocos2d::Sprite;
+    using LayerColor = cocos2d::LayerColor;
+    
 public:
     CREATE_FUNC(uigroupedlord);
     virtual bool init() override;
@@ -32,5 +38,4 @@ private:
     Node* buttonNode;
     Label* title;
     LayerColor* titleBackground;
-
 };

@@ -63,7 +63,13 @@ typedef struct {
 
 class panel_look : public uipanel, uinotificationinterface, uidragelement
 {
-
+    using Touch = cocos2d::Touch;
+    using Event = cocos2d::Event;
+    using Sprite = cocos2d::Sprite;
+    using ImageView = cocos2d::ui::ImageView;
+    using Label = cocos2d::Label;
+    using LayerColor = cocos2d::LayerColor;
+    
 public:
     virtual ~panel_look();
     
@@ -77,7 +83,7 @@ protected:
     panel_look();
     virtual void OnNotification( Ref* element ) override;
     
-    void getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
+    void getCharacterInfo ( character& c, locationinfo_t* info);
     void getCurrentLocationInfo ( void );
     void setViewForCurrentCharacter ( void );
     
@@ -151,9 +157,9 @@ protected:
     
     Label*              lblDescription;
     Label*              lblName;
-    ui::ImageView*      imgShield;
+    ImageView*          imgShield;
     LayerColor*         layHeader;
-    ui::ImageView*      imgHeader;
+    ImageView*          imgHeader;
     uisinglelord*       following;
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
@@ -175,12 +181,7 @@ protected:
     bool                mouse_down;
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;
-//    GESTURE_MODE        fingermode;
-//    s32                 right;
-//    s32                 left;
-//    f32                 movement_amount;
-//    s32                 snapback;
-//    //f32                 looking;
+
     f32                 startDragLookAmount;
     
 };
