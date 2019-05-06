@@ -6,7 +6,6 @@
 #include "../landscaping/LandscapeGenerator.h"
 #include "../landscaping/LandscapeView.h"
 #include "../landscaping/LandscapePeople.h"
-#include "../ui/uihelper.h"
 #include "../ui/uielement.h"
 #include "../tme_interface.h"
 

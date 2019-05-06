@@ -5,10 +5,9 @@
 //  Created by Chris Wild on 16/12/2017.
 //
 //
-
+#include "uihelper.h"
 #include "uibookmenu.h"
 #include "uibook.h"
-#include "uihelper.h"
 #include "../system/resolutionmanager.h"
 #include "../ui/uioptionitem.h"
 #include "MyButton.h"

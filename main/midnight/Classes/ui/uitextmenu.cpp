@@ -5,10 +5,9 @@
 //  Created by Chris Wild on 09/12/2017.
 //
 //
-
+#include "uihelper.h"
 #include "uitextmenu.h"
 #include "../system/resolutionmanager.h"
-#include "uihelper.h"
 #include "uitextmenu.h"
 
 

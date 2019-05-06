@@ -33,7 +33,8 @@ class uihelper
     using Node = cocos2d::Node;
     using Button = cocos2d::ui::Button;
     using Size = cocos2d::Size;
-    using Vec2 = cocos2d::Vec2;
+	using Vec2 = cocos2d::Vec2;
+	using WidgetClickCallback = chilli::ui::WidgetClickCallback;
 
 public:
     static void Init();
@@ -88,7 +89,7 @@ public:
     // create UI Elements
     static Button* CreateBoxButton( Size size );
     static Button* CreateImageButton( const std::string& name );
-    static Button* CreateImageButton( const std::string& name, u32 id, const chilli::ui::WidgetClickCallback& callback  );
+    static Button* CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback  );
 
     // layers
     static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );

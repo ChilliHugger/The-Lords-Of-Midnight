@@ -5,8 +5,8 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-#include "uigrouplord.h"
 #include "../uihelper.h"
+#include "uigrouplord.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"

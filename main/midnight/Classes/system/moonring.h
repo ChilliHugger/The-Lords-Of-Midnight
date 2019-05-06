@@ -13,6 +13,7 @@
 //
 
 #pragma once
+#include "../cocos.h"
 #include "storymanager.h"
 #include "../library/libinc/mxtypes.h"
 #include "panelmanager.h"

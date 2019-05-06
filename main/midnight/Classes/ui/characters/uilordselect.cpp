@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-
+#include "../uihelper.h"
 #include "uilordselect.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"

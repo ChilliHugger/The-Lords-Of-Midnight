@@ -6,7 +6,8 @@
 //
 //
 
-#pragma once
+#ifndef __UIELEMENT_H_INCLUDED__
+#define __UIELEMENT_H_INCLUDED__
 
 #include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
@@ -208,5 +209,6 @@ static const f32 alpha_zero = 0.0f;
 
 #define HALF(x) (x/2)
 
+#endif // __UIELEMENT_H_INCLUDED__
 
 

@@ -5,9 +5,9 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
+#include "../uihelper.h"
 #include "uigroupedlord.h"
 #include "uisinglelord.h"
-#include "../uihelper.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"

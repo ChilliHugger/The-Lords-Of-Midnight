@@ -5,13 +5,12 @@
 //  Created by Chris Wild on 16/10/2018.
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
-
+#include "../ui/uihelper.h"
 #include "uithinkpage.h"
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../system/tmemanager.h"
-#include "../ui/uihelper.h"
 #include "../frontend/layout_id.h"
 #include "../frontend/keyboard_id.h"
 
