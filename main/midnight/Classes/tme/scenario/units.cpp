@@ -169,7 +169,7 @@ namespace tme {
 			s32 energyadj = (locinfo.mapsqr.terrain == TN_MOUNTAIN) 
 				? (s32)sv_success_riders_energy_mountain : (s32)sv_success_riders_energy_other ;
 			
-			success = locinfo.friends.adjustment + energyadj ;
+			success = locinfo.friends.adjustment + energy + energyadj ;
 
 		// TODO Should be table
 			if ( locinfo.mapsqr.terrain == TN_FOREST && parent->Race() == RA_FEY && parent->IsRiding() )
