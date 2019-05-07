@@ -8,8 +8,13 @@
 
 #pragma once
 
-#include "cocos.h"
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
+
+//using cocos2d::ui::AbstractCheckButton;
+using cocos2d::Node;
+using cocos2d::Layer;
+using cocos2d::Vec2;
 
 FORWARD_REFERENCE(uieventargs);
 FORWARD_REFERENCE(uielement);
@@ -17,8 +22,8 @@ FORWARD_REFERENCE(uinotificationinterface);
 
 typedef std::function<void(uinotificationinterface* sender,uieventargs* event)> UINotificationCallback;
 
-typedef AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-typedef AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
 #define QUICK_SWIPE_LIMIT                   500
 #define MINIMUM_HORIZONTAL_SWIPE_MOVEMENT   25

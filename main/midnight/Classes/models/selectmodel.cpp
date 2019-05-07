@@ -5,6 +5,7 @@
 //  Created by Chris Wild on 09/12/2018.
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
+#include "../cocos.h"
 
 #include "selectmodel.h"
 #include "../system/tmemanager.h"

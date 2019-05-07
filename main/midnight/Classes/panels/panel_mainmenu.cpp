@@ -263,7 +263,9 @@ void panel_mainmenu::OnEndStory()
     bookmenu->setLocalZOrder(ZORDER_POPUP);
     uihelper::AddCenter(this,bookmenu);
     
-    bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
+	auto mainmenu = this;
+
+    bookmenu->setNotificationCallback ( [&,mainmenu,bookmenu](uinotificationinterface* s, uieventargs* e) {
         
         uibookmenu* menu = static_cast<uibookmenu*>(s);
         menu->removeFromParent();

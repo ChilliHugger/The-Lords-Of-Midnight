@@ -166,6 +166,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\library\lib\sw\datatypes.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\misc.cpp" />
     <ClCompile Include="..\Classes\library\lib\sw\random.cpp" />
+    <ClCompile Include="..\Classes\models\mapmodel.cpp" />
+    <ClCompile Include="..\Classes\models\panelmodel.cpp" />
+    <ClCompile Include="..\Classes\models\selectmodel.cpp" />
     <ClCompile Include="..\Classes\panels\panel_advert.cpp" />
     <ClCompile Include="..\Classes\panels\panel_credits.cpp" />
     <ClCompile Include="..\Classes\panels\panel_dedication.cpp" />
@@ -259,10 +262,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ui\uipopup.cpp" />
     <ClCompile Include="..\Classes\ui\uitextmenu.cpp" />
     <ClCompile Include="..\Classes\ui\uithinkpage.cpp" />
+    <ClCompile Include="Classes\landscaping\TunnelView.cpp" />
+    <ClCompile Include="Classes\ui\characters\uigroupedlord.cpp" />
+    <ClCompile Include="Classes\ui\uishortcutkeys.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\cocos.h" />
     <ClInclude Include="..\Classes\Extensions\CustomDirector.h" />
     <ClInclude Include="..\Classes\frontend\choose_id.h" />
     <ClInclude Include="..\Classes\frontend\help_id.h" />
@@ -292,6 +299,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\library\libinc\sw\ccollection.h" />
     <ClInclude Include="..\Classes\library\libinc\sw\drawing.h" />
     <ClInclude Include="..\Classes\library\libinc\sw\misc.h" />
+    <ClInclude Include="..\Classes\models\mapmodel.h" />
+    <ClInclude Include="..\Classes\models\panelmodel.h" />
+    <ClInclude Include="..\Classes\models\selectmodel.h" />
     <ClInclude Include="..\Classes\panels\panel_advert.h" />
     <ClInclude Include="..\Classes\panels\panel_credits.h" />
     <ClInclude Include="..\Classes\panels\panel_dedication.h" />
@@ -362,6 +372,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ui\uitextmenu.h" />
     <ClInclude Include="..\Classes\ui\uitextmenuitem.h" />
     <ClInclude Include="..\Classes\ui\uithinkpage.h" />
+    <ClInclude Include="Classes\landscaping\TunnelView.h" />
+    <ClInclude Include="Classes\ui\characters\uigroupedlord.h" />
+    <ClInclude Include="Classes\ui\uishortcutkeys.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

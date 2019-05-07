@@ -8,17 +8,12 @@
 #ifndef __UIHELPER_H_INCLUDED__
 #define __UIHELPER_H_INCLUDED__
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
 #include "../library/libinc/mxtypes.h"
 #include "uielement.h"
 
 using namespace chilli::types;
 
 FORWARD_REFERENCE( uipanel );
-
-USING_NS_CC;
 
 #define BOX_BACKGROUND_FILENAME "misc/box_16.png"
 #define FONT_FILENAME           "fonts/celtic.ttf"
@@ -29,6 +24,15 @@ USING_NS_CC;
 #define FONT_SIZE_DEBUG         8
 #define IMAGE_LOGO              "misc/logo.png"
 
+using cocos2d::TTFConfig;
+using cocos2d::Vec2;
+using cocos2d::Node;
+using cocos2d::ui::Button;
+using cocos2d::Color3B;
+using cocos2d::Size;
+
+typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
 class uihelper
 {
@@ -83,9 +87,9 @@ public:
     static void FillParent( Node* node );
 
     // create UI Elements
-    static ui::Button* CreateBoxButton( Size size );
-    static ui::Button* CreateImageButton( const std::string& name );
-    static ui::Button* CreateImageButton( const std::string& name, u32 id,  const WidgetClickCallback& callback  );
+    static Button* CreateBoxButton( Size size );
+    static Button* CreateImageButton( const std::string& name );
+    static Button* CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback  );
 
     // layers
     static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );
@@ -98,12 +102,12 @@ public:
     static void PositionRight( Node* node, Node* ref, f32 paddingX = 0);
     
     //
-    static ui::Button* setEnabled( ui::Button* button, bool enabled );
+    static Button* setEnabled( Button* button, bool enabled );
 
-    static Node* getChildByTagRecursively(const int nodeTag, cocos2d::Node* parent) ;
+    static Node* getChildByTagRecursively(const int nodeTag, Node* parent) ;
 
     template <typename T>
-    static T getChildByTagRecursively(const int nodeTag, cocos2d::Node* parent)
+    static T getChildByTagRecursively(const int nodeTag, Node* parent)
         { return static_cast<T>(getChildByTagRecursively(nodeTag,parent)); }
 
 

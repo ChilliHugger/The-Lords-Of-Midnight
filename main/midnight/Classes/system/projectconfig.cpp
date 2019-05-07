@@ -5,13 +5,13 @@
 //  Created by Chris Wild on 14/06/2018.
 //
 
+#include "../landscaping/LandscapeColour.h"
 #include "projectconfig.h"
 #include "moonring.h"
-#include "../library/chilli.h"
 #include "progressmonitor.h"
 #include "tmemanager.h"
+#include "../library/chilli.h"
 
-#include "../landscaping/LandscapeColour.h"
 
 projectconfig::projectconfig()
 {

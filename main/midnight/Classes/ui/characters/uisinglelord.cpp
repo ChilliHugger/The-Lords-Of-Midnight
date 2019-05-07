@@ -55,7 +55,7 @@ bool uisinglelord::init()
         
         innerCircle = DrawNode::create();
         innerCircle->setContentSize( getContentSize() );
-        innerCircle->drawSolidCircle(Vec2(width/2,height/2), DISTANCE_INNER/2 , 0, 64, 1.0, 1.0, Color4F(0,0,0,0.1));
+        innerCircle->drawSolidCircle(Vec2(width/2,height/2), DISTANCE_INNER/2 , 0, 64, 1.0f, 1.0f, Color4F(0,0,0,0.1f));
         innerCircle->setAnchorPoint(uihelper::AnchorCenter);
         innerCircle->setPosition(Vec2(width/2,height/2));
         innerCircle->setVisible(true);
