@@ -270,7 +270,7 @@ namespace tme {
 			count=0;
 			for (ii = 0; ii < sv_strongholds; ii++) {
 				mxstronghold* stronghold =  mx->StrongholdById(ii+1);
-				if ( stronghold->HasFallen() ) {
+				if ( stronghold->OccupyingRace() == RA_DOOMGUARD ) {
 					adj_stronghold += stronghold->Influence() ;
 					count++;
 				}
