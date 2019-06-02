@@ -62,18 +62,8 @@ bool panel_select::init()
     
     setBackground(BACKGROUND_COLOUR);
     
-    auto backgroundColour = BACKGROUND_COLOUR;
 
-    gradientB = uihelper::createVerticalGradient( backgroundColour, BOTTOM_STRIP_HEIGHT, HALF(BOTTOM_STRIP_HEIGHT), getContentSize().width, 1 );
-    gradientB->setLocalZOrder(ZORDER_UI-1);
-    safeArea->addChild(gradientB);
 
-    gradientR =  uihelper::createHorizontalGradient( backgroundColour, RIGHT_STRIP_WIDTH, HALF(RIGHT_STRIP_WIDTH), getContentSize().height, -1 );
-    gradientR->setLocalZOrder(ZORDER_UI-1);
-    uihelper::AddTopRight(safeArea,gradientR);
-    
-    //safeArea->setLocalZOrder(ZORDER_UI);
-    
     
     int r = DIS(64) * scale;
     
@@ -142,6 +132,18 @@ void panel_select::createPageView()
         }
     });
     
+    auto backgroundColour = BACKGROUND_COLOUR;
+    
+    gradientB = uihelper::createVerticalGradient( backgroundColour, BOTTOM_STRIP_HEIGHT, HALF(BOTTOM_STRIP_HEIGHT), getContentSize().width, 1 );
+    pageView->addProtectedChild(gradientB,ZORDER_UI);
+    gradientB->setGlobalZOrder(ZORDER_UI);
+    
+    gradientR =  uihelper::createHorizontalGradient( backgroundColour, RIGHT_STRIP_WIDTH, HALF(RIGHT_STRIP_WIDTH), getContentSize().height, -1 );
+    gradientR->setLocalZOrder(ZORDER_UI-1);
+    gradientR->setPosition(Vec2(pageView->getContentSize().width,pageView->getContentSize().height));
+    gradientR->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+    pageView->addProtectedChild(gradientR,ZORDER_UI);
+
     setupPages();
     
 }
@@ -475,6 +477,8 @@ void panel_select::OnNotification( Ref* sender )
     layoutid_t id = static_cast<layoutid_t>(button->getTag());
     
     if ( id >= ID_SELECT_CHAR ) {
+        gradientB->setVisible(false);
+        gradientR->setVisible(false);
         mxid characterId = id-ID_SELECT_CHAR;
         mr->selectCharacter(characterId);
         return;

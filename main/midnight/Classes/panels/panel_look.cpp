@@ -464,6 +464,9 @@ void panel_look::setViewForCurrentCharacter ( void )
     options.here.y *= LANDSCAPE_DIR_STEPS;
     options.isMoving = false;
     options.isLooking = false;
+    options.isInTunnel = false;
+    options.isLookingDownTunnel = false;
+    options.isLookingOutTunnel = false;
 
 #if defined(_DDR_)
     options.isInTunnel = current_info->tunnel;
@@ -1074,11 +1077,11 @@ bool panel_look::OnKeyboardEvent( uikeyboardevent* event )
     if ( event->getKey() >= KEYCODE(1) && event->getKey() <= KEYCODE(8) ) {
         if ( event->isShift() ) {
             mxdir_t dir = (mxdir_t)((u32)event->getKey() - (u32)KEYCODE(0));
-            mr->look(dir);
-            getCurrentLocationInfo();
-            setViewForCurrentCharacter();
-            startInactivity();
-            return true;
+            return mr->look(dir);
+            //getCurrentLocationInfo();
+            //setViewForCurrentCharacter();
+            //startInactivity();
+            //return true;
         }
     }
     

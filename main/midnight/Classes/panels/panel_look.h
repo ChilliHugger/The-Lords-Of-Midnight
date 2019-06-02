@@ -73,6 +73,7 @@ class panel_look :
     using LayerColor = cocos2d::LayerColor;
     using Vec2 = cocos2d::Vec2;
     using uidragevent = chilli::ui::DragEvent;
+    using Color3B = cocos2d::Color3B;
     
 public:
     virtual ~panel_look();
@@ -108,8 +109,8 @@ protected:
     void delayedSave();
 
     void hideMenus ( void );
-    void fadeIn ( rgb_t colour, f32 initialAlpha, MXVoidCallback callback );
-    void fadeOut ( rgb_t colour, f32 initialAlpha, MXVoidCallback callback );
+    void fadeIn ( Color3B colour, f32 initialAlpha, MXVoidCallback callback );
+    void fadeOut ( Color3B colour, f32 initialAlpha, MXVoidCallback callback );
 
     
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
