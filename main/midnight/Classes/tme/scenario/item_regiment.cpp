@@ -134,7 +134,7 @@ namespace tme {
 			// ie: someone else is in the next location
 			if ( !IsFlags(rf_direct) ) {
 				for (dir=DR_NORTH; dir<=DR_NORTHWEST; dir=(mxdir_t)((int)dir+1))	{
-					targetlocation = Location()+dir;
+					targetlocation = mx->scenario->FindLookingTowards(Location(),dir);
 					if ( mx->gamemap->IsLocationSpecial(targetlocation) ) {
 						bFoundLocation=TRUE;
 						break;
