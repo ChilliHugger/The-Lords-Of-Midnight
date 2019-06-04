@@ -52,6 +52,9 @@ public:
         return &singleton;
     }
     
+	static void complain(LPCSTR format, ...);
+	static void log(LPCSTR format, ...);
+
     void initialise( progressmonitor* monitor );
     LPCSTR getWritablePath();
     bool serialize( u32 version, chilli::lib::archive& ar );
@@ -127,14 +130,13 @@ public:
 
 #define CONFIG(x)   (mr->config->x)
 
-void _complain (LPCSTR format, ... );
-//void _debug (LPCSTR format, ... );
+
 //void _msg (LPCSTR format, ... );
 
-#define COMPLAIN    _complain
+#define COMPLAIN    moonring::complain
 
 #ifdef MX_DEBUG
-#define UIDEBUG        CCLOG
+#define UIDEBUG        moonring::log
 #else
 #define UIDEBUG        if(0) printf
 #endif

@@ -1167,8 +1167,8 @@ void mxengine::debug (LPCSTR format, ... )
   	vsprintf( msg_buffer, format, arglist );
   	va_end( arglist ) ;
 	
-	//IwTrace( TME, ("%s",msg_buffer));
-	
+    CCLOG("TME: %s",msg_buffer);
+
 }
 
 

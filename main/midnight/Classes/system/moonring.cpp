@@ -569,8 +569,8 @@ void moonring::initialise( progressmonitor* monitor )
     UIDEBUG("Global:: _TME_CHEAT_MODE_");
     tme::variables::sv_cheat_armies_noblock = true;
     tme::variables::sv_cheat_nasties_noblock = true;
-    //tme::variables::sv_cheat_movement_free = true ;
-    tme::variables::sv_cheat_movement_cheap = true ;
+    tme::variables::sv_cheat_movement_free = true ;
+    //tme::variables::sv_cheat_movement_cheap = true ;
     //variables::sv_cheat_commands_free = true ;
 #endif
 
@@ -600,7 +600,7 @@ void moonring::initialise( progressmonitor* monitor )
 
 
 
-void _complain (LPCSTR format, ... )
+void moonring::complain (LPCSTR format, ... )
 {
     static char msg_buffer[1024];
 
@@ -616,4 +616,16 @@ void _complain (LPCSTR format, ... )
 }
 
 
+void  moonring::log(LPCSTR format, ...)
+{
+	static char msg_buffer[1024];
 
+	va_list arglist;
+
+	va_start(arglist, format);
+	vsprintf(msg_buffer, format, arglist);
+	va_end(arglist);
+
+	CCLOG("UI: %s", msg_buffer);
+
+}
