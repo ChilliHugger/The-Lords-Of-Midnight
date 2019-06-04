@@ -6,7 +6,6 @@
 #include "../landscaping/LandscapeGenerator.h"
 #include "../landscaping/LandscapeView.h"
 #include "../landscaping/LandscapePeople.h"
-#include "../ui/uihelper.h"
 #include "../ui/uielement.h"
 #include "../tme_interface.h"
 
@@ -61,9 +60,21 @@ typedef struct {
 } locationinfo_t ;
 
 
-class panel_look : public uipanel, uinotificationinterface, uidragelement
+class panel_look :
+    public uipanel,
+    chilli::ui::NotificationInterface,
+    chilli::ui::DragElement
 {
-
+    using Touch = cocos2d::Touch;
+    using Event = cocos2d::Event;
+    using Sprite = cocos2d::Sprite;
+    using ImageView = cocos2d::ui::ImageView;
+    using Label = cocos2d::Label;
+    using LayerColor = cocos2d::LayerColor;
+    using Vec2 = cocos2d::Vec2;
+    using uidragevent = chilli::ui::DragEvent;
+    using Color3B = cocos2d::Color3B;
+    
 public:
     virtual ~panel_look();
     
@@ -77,7 +88,7 @@ protected:
     panel_look();
     virtual void OnNotification( Ref* element ) override;
     
-    void getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info);
+    void getCharacterInfo ( character& c, locationinfo_t* info);
     void getCurrentLocationInfo ( void );
     void setViewForCurrentCharacter ( void );
     
@@ -98,8 +109,8 @@ protected:
     void delayedSave();
 
     void hideMenus ( void );
-    void fadeIn ( rgb_t colour, f32 initialAlpha, MXVoidCallback callback );
-    void fadeOut ( rgb_t colour, f32 initialAlpha, MXVoidCallback callback );
+    void fadeIn ( Color3B colour, f32 initialAlpha, MXVoidCallback callback );
+    void fadeOut ( Color3B colour, f32 initialAlpha, MXVoidCallback callback );
 
     
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
@@ -151,9 +162,9 @@ protected:
     
     Label*              lblDescription;
     Label*              lblName;
-    ui::ImageView*      imgShield;
+    ImageView*          imgShield;
     LayerColor*         layHeader;
-    ui::ImageView*      imgHeader;
+    ImageView*          imgHeader;
     uisinglelord*       following;
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
@@ -175,12 +186,7 @@ protected:
     bool                mouse_down;
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;
-//    GESTURE_MODE        fingermode;
-//    s32                 right;
-//    s32                 left;
-//    f32                 movement_amount;
-//    s32                 snapback;
-//    //f32                 looking;
+
     f32                 startDragLookAmount;
     
 };

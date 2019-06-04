@@ -13,6 +13,7 @@
 //
 
 #pragma once
+#include "../cocos.h"
 #include "storymanager.h"
 #include "../library/libinc/mxtypes.h"
 #include "panelmanager.h"
@@ -29,7 +30,6 @@ FORWARD_REFERENCE(helpmanager);
 //FORWARD_REFERENCE(storymanager);
 FORWARD_REFERENCE(keyboardmanager);
 FORWARD_REFERENCE(tmemanager);
-//FORWARD_REFERENCE(panelmanager);
 FORWARD_REFERENCE(progressmonitor);
 FORWARD_REFERENCE(projectconfig);
 
@@ -37,16 +37,11 @@ FORWARD_REFERENCE(projectconfig);
 
 #define RUN_EVENT(x)           RUN_ON_UI_THREAD([=](){ x; } )
 
-namespace cocos2d {
-	class GLProgramState;
-	class GLProgram;
-}
+class moonring
+{
+    using GLProgramState = cocos2d::GLProgramState;
+    using GLProgram = cocos2d::GLProgram;
 
-using cocos2d::GLProgramState;
-using cocos2d::GLProgram;
-
-
-class moonring {
 private:
     moonring();
 public:

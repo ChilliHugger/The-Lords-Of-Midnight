@@ -9,7 +9,7 @@
 namespace tme {
 
     using namespace chilli;
-    using namespace chilli::collections;
+    //using namespace chilli::collections;
     
 	class CStrBuf;
 	

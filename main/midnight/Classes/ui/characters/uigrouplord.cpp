@@ -5,13 +5,15 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-#include "uigrouplord.h"
 #include "../uihelper.h"
+#include "uigrouplord.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"
 #include "../../system/moonring.h"
 #include "../../frontend/layout_id.h"
+
+USING_NS_CC;
 
 uigrouplord::uigrouplord() :
     i_group_left(nullptr),
@@ -216,7 +218,7 @@ void uigrouplord::setPage(page_t page)
 
 bool uigrouplord::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
-    return Widget::hitTest(pt, camera, p)
+    return cocos2d::ui::Widget::hitTest(pt, camera, p)
         && MouseOverHotspot(pt, MOUSE_OVER_HINT_DROP) == MOUSE_OVER_FACE ;
 }
 

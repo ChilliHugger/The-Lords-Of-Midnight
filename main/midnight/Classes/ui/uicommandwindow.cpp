@@ -24,7 +24,7 @@
 #include "characters/uisinglelord.h"
 
 USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_CC_UI;
 
 uicommandwindow::uicommandwindow() :
     parent(nullptr)
@@ -53,7 +53,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     if ( parent == nullptr )
         return false;
     
-    if ( !uielement::init() )
+    if ( !Element::init() )
         return false;
     
     auto rect = parent->getBoundingBox();
@@ -125,7 +125,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
 
 void uicommandwindow::initialiseCommands()
 {
-    WidgetClickCallback callback = [&] (Ref* ref ) {
+    chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {
         this->OnClose();
         this->parent->OnNotification(ref);
     };

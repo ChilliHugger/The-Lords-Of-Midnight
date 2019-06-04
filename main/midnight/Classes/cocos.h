@@ -12,11 +12,7 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
-
-#define ALPHA(x) (f32)    ((x)*255)
-
-USING_NS_CC;
-using namespace cocos2d::ui;
-
+#define ALPHA(x)        (f32)((x)*255)
+#define USING_NS_CC_UI  using namespace cocos2d::ui
 
 #endif /* cocos_h */

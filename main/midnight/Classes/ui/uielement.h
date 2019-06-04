@@ -6,24 +6,16 @@
 //
 //
 
-#pragma once
+#ifndef __UIELEMENT_H_INCLUDED__
+#define __UIELEMENT_H_INCLUDED__
 
 #include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
-
-//using cocos2d::ui::AbstractCheckButton;
-using cocos2d::Node;
-using cocos2d::Layer;
-using cocos2d::Vec2;
 
 FORWARD_REFERENCE(uieventargs);
 FORWARD_REFERENCE(uielement);
 FORWARD_REFERENCE(uinotificationinterface);
 
-typedef std::function<void(uinotificationinterface* sender,uieventargs* event)> UINotificationCallback;
-
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
 #define QUICK_SWIPE_LIMIT                   500
 #define MINIMUM_HORIZONTAL_SWIPE_MOVEMENT   25
@@ -55,133 +47,152 @@ enum UIMOUSEOVERHINT {
     MOUSE_OVER_HINT_ELEMENT     =3,
 } ;
 
-class uinotificationinterface
-{
-public:
-    virtual void setNotificationCallback(const UINotificationCallback& callback)
-        { notificationCallback = callback; }
-    virtual void Notify( uieventargs* args )
-        { notificationCallback(this,args); }
-    
-protected:
-    UINotificationCallback      notificationCallback;
-};
-
-
-class uielement : public Layer, public uinotificationinterface
-{
-public:
-    static uielement* create();
-    virtual bool init() override;
-
-protected:
-        uielement();
+namespace chilli {
+    namespace ui {
         
-protected:
-    u32                         id;
-    c_str                       name;
-    flags32                     flags;
+    typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+    typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
-};
+    class NotificationInterface
+    {
+        using NotificationCallback = std::function<void(NotificationInterface* sender,uieventargs* event)>;
+    public:
+        virtual void setNotificationCallback(const NotificationCallback& callback)    { notificationCallback = callback; }
+        virtual void Notify( uieventargs* args )                                        { notificationCallback(this,args); }
+        
+    protected:
+        NotificationCallback      notificationCallback;
+    };
+        
+    class Element :
+        public cocos2d::Layer,
+        public NotificationInterface
+    {
+    public:
+        static Element* create();
+        virtual bool init() override;
 
-class uidragevent
-{
-public:
-    enum drageventtype {
-        none=0,
-        select=1,
-        start=2,
-        stop=3,
-        drag=4,
+    protected:
+        Element();
+        
+    protected:
+        u32                         id;
+        c_str                       name;
+        flags32                     flags;
+
+    };
+
+    class DragEvent
+    {
+    protected:
+        using Node = cocos2d::Node;
+        using Vec2 = cocos2d::Vec2;
+        
+    public:
+        enum class Type {
+            none=0,
+            select=1,
+            start=2,
+            stop=3,
+            drag=4,
+            
+        };
+        
+    public:
+        DragEvent();
+        DragEvent(Node* element, Vec2 p, Type type );
+        
+    public:
+        Node*  element;
+        Vec2   lastposition;
+        Vec2   position;
+        Type   type;
+        u64    time;
         
     };
-    
-public:
-    uidragevent();
-    uidragevent(Node* element, Vec2 p, drageventtype type );
-    
-public:
-    Node*           element;
-    Vec2            lastposition;
-    Vec2            position;
-    drageventtype   type;
-    u64             time;
-    
-};
 
-class uidragelement;
+    class DragElement;
 
-class uidragdropdelegate
-{
-public:
-    virtual void OnDragDropNotification( uidragelement* sender, uidragevent* event ) = 0 ;
-};
+    class uidragdropdelegate
+    {
+    public:
+        virtual void OnDragDropNotification( DragElement* sender, DragEvent* event ) = 0 ;
+    };
 
 
 
-class uidragelement
-{
-public:
-    uidragelement();
-    
-    virtual void OnSelectDrag(uidragevent* event)=0;
-    virtual void OnStartDrag(uidragevent* event)=0;
-    virtual void OnStopDrag(uidragevent* event)=0;
-    virtual void OnDrag(uidragevent* event)=0;
-    virtual BOOL isDragging() {return dragging;}
-    virtual void enableDrag() { drag_enabled = true;}
-    virtual void disableDrag() { drag_enabled = false;}
-    virtual bool isDragEnabled() { return drag_enabled;}
-    virtual void NotifyDragDelegate ( uidragevent* event );
-    
-public:
-    uidragdropdelegate* drag_delegate;
-    bool                dragging;
-    bool                drag_enabled;
-    Vec2                drag_start;
-    Vec2                drag_stop;
-    Vec2                drag_current;
-    Vec2                drag_amount;
-    u64                 drag_start_time;
-    u64                 drag_stop_time;
-    u32                 drag_touch_count;
-};
+    class DragElement
+    {
+        using Vec2 = cocos2d::Vec2;
+        
+    public:
+        DragElement();
+        
+        virtual void OnSelectDrag(DragEvent* event)=0;
+        virtual void OnStartDrag(DragEvent* event)=0;
+        virtual void OnStopDrag(DragEvent* event)=0;
+        virtual void OnDrag(DragEvent* event)=0;
+        virtual BOOL isDragging() {return dragging;}
+        virtual void enableDrag() { drag_enabled = true;}
+        virtual void disableDrag() { drag_enabled = false;}
+        virtual bool isDragEnabled() { return drag_enabled;}
+        virtual void NotifyDragDelegate ( DragEvent* event );
+        
+    public:
+        uidragdropdelegate* drag_delegate;
+        bool                dragging;
+        bool                drag_enabled;
+        Vec2                drag_start;
+        Vec2                drag_stop;
+        Vec2                drag_current;
+        Vec2                drag_amount;
+        u64                 drag_start_time;
+        u64                 drag_stop_time;
+        u32                 drag_touch_count;
+    };
 
-class uidragmoveelement : public uidragelement
-{
-public:
-    uidragmoveelement();
-    
-    virtual void OnSelectDrag(uidragevent* event);
-    virtual void OnStartDrag(uidragevent* event);
-    virtual void OnStopDrag(uidragevent* event);
-    virtual void OnDrag(uidragevent* event);
-    
-public:
-    u32     zorder;
-    Vec2    start_location;
-};
+    class DragMoveElement : public DragElement
+    {
+        using Vec2 = cocos2d::Vec2;
+    public:
+        DragMoveElement();
+        
+        virtual void OnSelectDrag(DragEvent* event);
+        virtual void OnStartDrag(DragEvent* event);
+        virtual void OnStopDrag(DragEvent* event);
+        virtual void OnDrag(DragEvent* event);
+        
+    public:
+        u32     zorder;
+        Vec2    start_location;
+    };
 
-class uidroptarget {
-public:
-    uidroptarget();
-    
-    virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const = 0;
-    
-    virtual void endDropTarget() { OnDropStop(); }
-    virtual void startDropTarget() { OnDropStart(); }
-    
-    virtual void OnDropStart();
-    virtual void OnDropStop();
+    class DropTarget
+    {
+        using Vec2 = cocos2d::Vec2;
+    public:
+        DropTarget();
+        
+        virtual UIMOUSEOVER MouseOverHotspot( Vec2 pos, UIMOUSEOVERHINT hint ) const = 0;
+        
+        virtual void endDropTarget() { OnDropStop(); }
+        virtual void startDropTarget() { OnDropStart(); }
+        
+        virtual void OnDropStart();
+        virtual void OnDropStop();
 
-    virtual void enableDrop() { drop_enabled = true;}
-    virtual void disableDrop() { drop_enabled = false;}
-    virtual bool isDropEnabled() { return drop_enabled;}
-    
-public:
-    bool isDropFocus;
-    bool drop_enabled;
-};
+        virtual void enableDrop() { drop_enabled = true;}
+        virtual void disableDrop() { drop_enabled = false;}
+        virtual bool isDropEnabled() { return drop_enabled;}
+        
+    public:
+        bool isDropFocus;
+        bool drop_enabled;
+    };
+
+    }
+}
+
 
 static const f32 scale_double = 2.0f;
 static const f32 scale_normal = 1.0f;
@@ -198,5 +209,6 @@ static const f32 alpha_zero = 0.0f;
 
 #define HALF(x) (x/2)
 
+#endif // __UIELEMENT_H_INCLUDED__
 
 

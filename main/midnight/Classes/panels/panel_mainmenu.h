@@ -10,13 +10,15 @@ FORWARD_REFERENCE(uitextmenu);
 
 class panel_mainmenu : public uipanel
 {
+    using uinotificationinterface = chilli::ui::NotificationInterface;
+    
 public:
     
     virtual bool init();
     
     CREATE_FUNC(panel_mainmenu);
     
-    void OnMenuNotification( uinotificationinterface*, menueventargs* );
+    void OnMenuNotification( const uinotificationinterface*, menueventargs* );
     virtual void OnNotification( Ref* element );
     
 protected:

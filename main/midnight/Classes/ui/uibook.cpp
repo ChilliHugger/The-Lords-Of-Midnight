@@ -5,9 +5,8 @@
 //  Created by Chris Wild on 16/12/2017.
 //
 //
-
-#include "uibook.h"
 #include "uihelper.h"
+#include "uibook.h"
 #include "../system/resolutionmanager.h"
 
 #define BOOK_IMAGE              "book"

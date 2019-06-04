@@ -5,12 +5,13 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-#include "uisinglelord.h"
 #include "../uihelper.h"
+#include "uisinglelord.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"
 
+USING_NS_CC;
 
 uisinglelord::uisinglelord() :
     buttonNode(nullptr),

@@ -15,7 +15,9 @@
 
 class panel_think : public uipanel
 {
-	
+    using PageView = cocos2d::ui::PageView;
+    using Color3B = cocos2d::Color3B;
+    template<class T> using Vector = cocos2d::Vector<T>;
 public:
     virtual bool init() override;
     
@@ -35,15 +37,14 @@ protected:
     void enableButtons();
     void enableButton(layoutid_t id, bool enabled);
     void showButton(layoutid_t id, bool enabled);
-    void tintButton(layoutid_t id,cocos2d::Color3B colour);
+    void tintButton(layoutid_t id, Color3B colour);
 
 protected:
-    flags32         flags;
-    s64             currentPage;
-    mxid            id;
-    mxid            objectId;
-    int             current_tab;
-
-    cocos2d::ui::PageView*       pageView;
-    cocos2d::Vector<uithinkpage*>    pages;
+    flags32                 flags;
+    s64                     currentPage;
+    mxid                    id;
+    mxid                    objectId;
+    int                     current_tab;
+    PageView*               pageView;
+    Vector<uithinkpage*>    pages;
 };

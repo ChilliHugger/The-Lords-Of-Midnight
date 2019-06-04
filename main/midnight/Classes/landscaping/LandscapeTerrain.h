@@ -14,6 +14,7 @@
 #include "LandscapeNode.h"
 #include "LandscapeGenerator.h"
 
+USING_NS_CC;
 
 class LandscapeTerrain : public LandscapeNode
 {

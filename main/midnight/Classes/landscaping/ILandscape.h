@@ -15,8 +15,10 @@ FORWARD_REFERENCE(LandscapeGenerator);
 FORWARD_REFERENCE(LandscapeColour);
 
 
-class LandscapeOptions : Ref
+class LandscapeOptions : cocos2d::Ref
 {
+    using GLProgramState = cocos2d::GLProgramState;
+    
 public:
     LandscapeGenerator*     generator;
     LandscapeColour*        colour;

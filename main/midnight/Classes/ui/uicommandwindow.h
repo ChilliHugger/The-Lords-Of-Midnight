@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
 #include "uielement.h"
 #include "../system/keyboardmanager.h"
@@ -17,16 +17,18 @@
 #include "../frontend/keyboard_id.h"
 #include "../ui/uishortcutkeys.h"
 
-
 using namespace chilli::types;
-
-USING_NS_CC;
 
 FORWARD_REFERENCE(moonring);
 FORWARD_REFERENCE(uipanel);
 
-class uicommandwindow : public uielement, public uishortcutkeys {
-    
+class uicommandwindow :
+    public chilli::ui::Element,
+    public uishortcutkeys
+{
+    using Widget = cocos2d::ui::Widget;
+    using Layout = cocos2d::ui::Layout;
+    template<class T> using Vector = cocos2d::Vector<T>;
 private:
     uicommandwindow();
     ~uicommandwindow();
@@ -44,10 +46,10 @@ protected:
     bool initWithParent( uipanel* parent );
     void OnClose();
     void initialiseCommands();
-    void addItem( cocos2d::ui::Widget* item, u32 index );
+    void addItem( Widget* item, u32 index );
     void enableItem( layoutid_t id, bool enable );
     void showItem( layoutid_t id, bool show );
-    cocos2d::ui::Widget* findItemById( layoutid_t id );
+    Widget* findItemById( layoutid_t id );
 
     void addTouchListener();
     void addKeyboardListener();
@@ -60,11 +62,11 @@ protected:
     uipanel*        parent;
     helpid_t        id;
     MXVoidCallback  closeCallback;
-    cocos2d::ui::Layout*         layout;
+    Layout*         layout;
     size            grid;
     size            padding;
     
-    Vector<cocos2d::ui::Widget*> elements;
+    Vector<Widget*> elements;
 
 };
 

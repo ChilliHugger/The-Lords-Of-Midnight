@@ -5,170 +5,175 @@
 //  Created by Chris Wild on 09/12/2017.
 //
 //
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
+#include "../cocos.h"
 #include "uielement.h"
 #include "uihelper.h"
 
 USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_CC_UI;
 
-uielement::uielement()
-{
-}
+namespace chilli {
+    namespace ui {
+        
+        Element::Element()
+        {
+        }
 
-uielement* uielement::create()
-{
-    uielement * ret = new (std::nothrow) uielement();
-    if (ret && ret->init())
-    {
-        ret->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(ret);
-    }
-    return ret;
-}
+        Element* Element::create()
+        {
+            Element * ret = new (std::nothrow) Element();
+            if (ret && ret->init())
+            {
+                ret->autorelease();
+            }
+            else
+            {
+                CC_SAFE_DELETE(ret);
+            }
+            return ret;
+        }
 
-bool uielement::init()
-{
-    return Layer::init();
-}
-
-
-uidragevent::uidragevent() :
-    element(nullptr),
-    position(Vec2::ZERO),
-    type(uidragevent::none),
-    time(0)
-{
-}
-
-uidragevent::uidragevent(Node* element, Vec2 p, uidragevent::drageventtype type) :
-    element(element),
-    position(p),
-    type(type),
-    time(0)
-{
-}
+        bool Element::init()
+        {
+            return Layer::init();
+        }
 
 
-uidragelement::uidragelement() :
-    dragging(false),
-    drag_delegate(nullptr),
-    drag_start(Vec2::ZERO),
-    drag_stop(Vec2::ZERO),
-    drag_current(Vec2::ZERO),
-    drag_amount(Vec2::ZERO),
-    drag_start_time(0),
-    drag_stop_time(0),
-    drag_touch_count(0)
-{
-}
+        DragEvent::DragEvent() :
+            element(nullptr),
+            position(Vec2::ZERO),
+            type( DragEvent::Type::none),
+            time(0)
+        {
+        }
 
-uidragmoveelement::uidragmoveelement() :
-    zorder(0),
-    start_location(Vec2::ZERO)
-{
-}
-
-void uidragelement::NotifyDragDelegate ( uidragevent* event )
-{
-    if ( drag_delegate )
-        drag_delegate->OnDragDropNotification(this, event);
-}
-
-void uidragelement::OnSelectDrag(uidragevent *event)
-{
-}
-
-void uidragelement::OnStartDrag(uidragevent* event)
-{
-    drag_start=event->position;
-    drag_current = drag_start;
-    drag_start_time = event->time;
-    dragging=true;
-}
-
-void uidragelement::OnStopDrag(uidragevent* event)
-{
-    dragging=false;
-    drag_stop_time = event->time;
-    drag_stop=event->position;
-}
-
-void uidragelement::OnDrag(uidragevent* event)
-{
-    drag_amount = event->position - drag_current;
-    drag_current=event->position;
-}
+        DragEvent::DragEvent(Node* element, Vec2 p, DragEvent::Type type) :
+            element(element),
+            position(p),
+            type(type),
+            time(0)
+        {
+        }
 
 
-void uidragmoveelement::OnSelectDrag(uidragevent *event)
-{
-    uidragelement::OnSelectDrag(event);
-    
-    if ( !event->element )
-        return;
-    
-    start_location = event->element->getPosition();
-    zorder=event->element->getLocalZOrder();
-    event->element->setLocalZOrder(ZORDER_DRAG);
-    NotifyDragDelegate( event );
-}
+        DragElement::DragElement() :
+            dragging(false),
+            drag_delegate(nullptr),
+            drag_start(Vec2::ZERO),
+            drag_stop(Vec2::ZERO),
+            drag_current(Vec2::ZERO),
+            drag_amount(Vec2::ZERO),
+            drag_start_time(0),
+            drag_stop_time(0),
+            drag_touch_count(0)
+        {
+        }
 
-void uidragmoveelement::OnStartDrag(uidragevent* event)
-{
-    uidragelement::OnStartDrag(event);
-    
-    if ( !event->element )
-        return;
-    
-    //start_location = event->element->getPosition();
-    //zorder=event->element->getLocalZOrder();
-    //event->element->setLocalZOrder(ZORDER_DRAG);
-    NotifyDragDelegate( event );
-}
+        DragMoveElement::DragMoveElement() :
+            zorder(0),
+            start_location(Vec2::ZERO)
+        {
+        }
 
-void uidragmoveelement::OnStopDrag(uidragevent* event)
-{
-    uidragelement::OnStopDrag(event);
+        void DragElement::NotifyDragDelegate ( DragEvent* event )
+        {
+            if ( drag_delegate )
+                drag_delegate->OnDragDropNotification(this, event);
+        }
 
-    if ( !event->element )
-        return;
-    
-    event->element->setLocalZOrder(zorder);
-    
-    NotifyDragDelegate( event );
-}
+        void DragElement::OnSelectDrag(DragEvent *event)
+        {
+        }
 
-void uidragmoveelement::OnDrag(uidragevent* event)
-{
-    uidragelement::OnDrag(event);
+        void DragElement::OnStartDrag(DragEvent* event)
+        {
+            drag_start=event->position;
+            drag_current = drag_start;
+            drag_start_time = event->time;
+            dragging=true;
+        }
 
-    if ( !event->element )
-        return;
-    
-    Vec2 location = event->element->getPosition();
-    
-    event->element->setPosition( location + drag_amount );
-    
-    NotifyDragDelegate( event );
-    
-}
+        void DragElement::OnStopDrag(DragEvent* event)
+        {
+            dragging=false;
+            drag_stop_time = event->time;
+            drag_stop=event->position;
+        }
 
-uidroptarget::uidroptarget() : isDropFocus(false)
-{
-}
+        void DragElement::OnDrag(DragEvent* event)
+        {
+            drag_amount = event->position - drag_current;
+            drag_current=event->position;
+        }
 
-void uidroptarget::OnDropStart()
-{
-    isDropFocus = true;
-}
 
-void uidroptarget::OnDropStop()
-{
-    isDropFocus = false;
-}
+        void DragMoveElement::OnSelectDrag(DragEvent *event)
+        {
+            DragElement::OnSelectDrag(event);
+            
+            if ( !event->element )
+                return;
+            
+            start_location = event->element->getPosition();
+            zorder=event->element->getLocalZOrder();
+            event->element->setLocalZOrder(ZORDER_DRAG);
+            NotifyDragDelegate( event );
+        }
+
+        void DragMoveElement::OnStartDrag(DragEvent* event)
+        {
+            DragElement::OnStartDrag(event);
+            
+            if ( !event->element )
+                return;
+            
+            //start_location = event->element->getPosition();
+            //zorder=event->element->getLocalZOrder();
+            //event->element->setLocalZOrder(ZORDER_DRAG);
+            NotifyDragDelegate( event );
+        }
+
+        void DragMoveElement::OnStopDrag(DragEvent* event)
+        {
+            DragElement::OnStopDrag(event);
+
+            if ( !event->element )
+                return;
+            
+            event->element->setLocalZOrder(zorder);
+            
+            NotifyDragDelegate( event );
+        }
+
+        void DragMoveElement::OnDrag(DragEvent* event)
+        {
+            DragElement::OnDrag(event);
+
+            if ( !event->element )
+                return;
+            
+            Vec2 location = event->element->getPosition();
+            
+            event->element->setPosition( location + drag_amount );
+            
+            NotifyDragDelegate( event );
+            
+        }
+
+        DropTarget::DropTarget() : isDropFocus(false)
+        {
+        }
+
+        void DropTarget::OnDropStart()
+        {
+            isDropFocus = true;
+        }
+
+        void DropTarget::OnDropStop()
+        {
+            isDropFocus = false;
+        }
+
+
+    } // END ui
+} // END chilli

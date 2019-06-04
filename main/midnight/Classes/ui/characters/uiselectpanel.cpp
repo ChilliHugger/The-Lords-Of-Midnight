@@ -15,5 +15,5 @@ uiselectpanel::uiselectpanel()
 
 bool uiselectpanel::init()
 {
-    return uielement::init();
+    return Element::init();
 }

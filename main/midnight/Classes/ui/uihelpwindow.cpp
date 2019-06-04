@@ -15,7 +15,7 @@
 
 
 USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_CC_UI;
 
 uihelpwindow::uihelpwindow() :
       parent(nullptr)
@@ -47,10 +47,10 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     if ( parent == nullptr )
         return false;
     
-    if ( !uielement::init() )
+    if ( !Element::init() )
         return false;
     
-    WidgetClickCallback callback = [&] (Ref* ref ) {
+    chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {
         auto button = static_cast<Widget*>(ref);
         if ( button == nullptr )
             return;
@@ -94,8 +94,8 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     layout->setBackGroundImageScale9Enabled(true);
     uihelper::AddCenter( this,layout ) ;
 
-    auto scrollView = ui::ScrollView::create();
-    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    auto scrollView = ScrollView::create();
+    scrollView->setDirection(ScrollView::Direction::VERTICAL);
     layout->addChild(scrollView);
 
     // add text

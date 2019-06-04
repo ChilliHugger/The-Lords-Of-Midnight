@@ -7,13 +7,9 @@
 //
 
 #pragma once
+#include "../cocos.h"
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
-USING_NS_CC;
-
-class MyButton : public ui::Button
+class MyButton : public cocos2d::ui::Button
 {
 public:
     

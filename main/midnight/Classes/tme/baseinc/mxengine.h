@@ -14,7 +14,7 @@
 
 namespace tme {
 	
-    using namespace tme::collections;
+    //using namespace tme::collections;
     
 	DECLARE_ENUM(arguments) {
 		character	=	128+IDT_CHARACTER,
@@ -36,6 +36,9 @@ namespace tme {
 		u32			arguments[16];
 	} mxcommand_t;
 
+    using collections::entities;
+    using collections::infos;
+        
 	class mxengine
 	{
 	public:
@@ -92,7 +95,7 @@ namespace tme {
 		void CurrentChar ( mxcharacter* character);
 		mxcharacter* CurrentChar ( void ) const;
 		
-		u32 CollectRegiments ( mxgridref loc, entities& collection ) ;
+        u32 CollectRegiments ( mxgridref loc, entities& collection ) ;
 		u32 CollectStrongholds ( mxgridref loc, entities& collection ) ;
 		u32 CollectRoutenodes ( mxgridref loc, entities& collection ) ;
 
@@ -172,9 +175,6 @@ namespace tme {
 #else
 #define MXTRACE		if(0) printf
 #endif
-  
-#define USING_NS_TME	using namespace tme
-
 
 #endif //_CMIDNIGHTX_H_INCLUDED_
 	

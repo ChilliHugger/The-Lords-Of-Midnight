@@ -8,18 +8,21 @@
 #ifndef uipopup_h
 #define uipopup_h
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
 #include "uielement.h"
 #include "uishortcutkeys.h"
 
 using namespace chilli::types;
 
-USING_NS_CC;
-
-
-class uipopup : public uielement, public uishortcutkeys {
-
+class uipopup :
+    public chilli::ui::Element,
+    public uishortcutkeys
+{
+protected:
+    using Layout = cocos2d::ui::Layout;
+    using Scene = cocos2d::Scene;
+    
 private:
     uipopup();
     ~uipopup();
@@ -43,7 +46,7 @@ protected:
     
 protected:
     Scene*  parent;
-    cocos2d::ui::Layout* layout;
+    Layout* layout;
     
 };
 

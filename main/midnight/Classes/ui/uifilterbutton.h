@@ -15,6 +15,8 @@
 
 class uifilterbutton : public cocos2d::ui::Button {
     
+    using WidgetEventCallback = chilli::ui::WidgetEventCallback;
+    
 public:
     CREATE_FUNC( uifilterbutton );
 

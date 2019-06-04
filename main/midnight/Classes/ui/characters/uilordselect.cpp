@@ -5,12 +5,16 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
-
+#include "../uihelper.h"
 #include "uilordselect.h"
 #include "../../tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/moonring.h"
 #include "../../system/resolutionmanager.h"
+
+USING_NS_CC;
+
+using DragEventType = chilli::ui::DragEvent::Type;
 
 uilordselect::uilordselect()
 {
@@ -37,7 +41,7 @@ Vec2 uilordselect::getCenter() const
     return Vec2( rect.getMidX(), rect.getMidY() );
 }
 
-bool uilordselect::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event* event )
+bool uilordselect::onTouchBegan(Touch *touch, Event* event )
 {
     //auto userdata = static_cast<char_data_t*>(getUserData());
     //UIDEBUG("onTouchBegan %s", userdata->symbol.c_str() );
@@ -46,7 +50,7 @@ bool uilordselect::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event* event )
         mouse_down_pos = touch->getLocation();
         mouse_last_position = mouse_down_pos;
         
-        uidragevent    dev(this,touch->getLocation(),uidragevent::select);
+        uidragevent    dev(this,touch->getLocation(), DragEventType::select);
         dev.lastposition = mouse_down_pos;
         dev.time = utils::getTimeInMilliseconds() ;
         OnSelectDrag(&dev);
@@ -57,7 +61,7 @@ bool uilordselect::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event* event )
     return false;
 }
 
-void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
+void uilordselect::onTouchMoved(Touch *touch, Event* event )
 {
     //auto userdata = static_cast<char_data_t*>(getUserData());
     //UIDEBUG("onTouchMoved %s", userdata->symbol.c_str() );
@@ -68,7 +72,7 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
         Vec2 delta = touch->getLocation() - mouse_down_pos;
 
         if ( isDragging() ) {
-            uidragevent    dev(this,touch->getLocation(),uidragevent::drag);
+            uidragevent    dev(this,touch->getLocation(),DragEventType::drag);
             dev.lastposition = mouse_last_position;
             dev.time = utils::getTimeInMilliseconds() ;
             OnDrag(&dev);
@@ -76,7 +80,7 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
             
         }else if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
                 || ABS(delta.y) > MINIMUM_VERTICAL_DRAG_MOVEMENT ) {
-            uidragevent    dev(this,touch->getLocation(),uidragevent::start);
+            uidragevent    dev(this,touch->getLocation(),DragEventType::start);
             dev.lastposition = mouse_down_pos;
             dev.time = utils::getTimeInMilliseconds() ;
             OnStartDrag(&dev);
@@ -92,7 +96,7 @@ void uilordselect::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event* event )
     
 }
 
-void uilordselect::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* event )
+void uilordselect::onTouchEnded(Touch *touch, Event* event )
 {
     //auto userdata = userData();
     //UIDEBUG("onTouchEnded %s", userdata->symbol.c_str() );
@@ -100,7 +104,7 @@ void uilordselect::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* event )
     Widget::onTouchEnded(touch, event);
     
     if ( isDragging() ) {
-        uidragevent    dev(this,touch->getLocation(),uidragevent::stop);
+        uidragevent    dev(this,touch->getLocation(),DragEventType::stop);
         dev.time = utils::getTimeInMilliseconds() ;
         OnStopDrag(&dev);
         event->stopPropagation();
@@ -112,7 +116,7 @@ void uilordselect::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event* event )
     mouse_last_position = touch->getLocation();
 }
 
-void uilordselect::onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event* event)
+void uilordselect::onTouchCancelled(Touch *touch, Event* event)
 {
     //auto userdata = userData();
     //UIDEBUG("onTouchCancelled %s", userdata->symbol.c_str() );
@@ -122,13 +126,13 @@ void uilordselect::onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event* event
 
 void uilordselect::OnStartDrag(uidragevent *event)
 {
-    uidragmoveelement::OnStartDrag(event);
+    DragMoveElement::OnStartDrag(event);
     refreshStatus();
 }
 
 void uilordselect::OnStopDrag(uidragevent* event)
 {
-    uidragmoveelement::OnStopDrag(event);
+    DragMoveElement::OnStopDrag(event);
     
     char_data_t* userdata = static_cast<char_data_t*>( getUserData() );
     if ( userdata != nullptr ) {
@@ -139,13 +143,13 @@ void uilordselect::OnStopDrag(uidragevent* event)
 
 void uilordselect::OnDropStart()
 {
-    uidroptarget::OnDropStart();
+    DropTarget::OnDropStart();
     refreshStatus();
 }
 
 void uilordselect::OnDropStop()
 {
-    uidroptarget::OnDropStop();
+    DropTarget::OnDropStop();
     refreshStatus();
 }
 

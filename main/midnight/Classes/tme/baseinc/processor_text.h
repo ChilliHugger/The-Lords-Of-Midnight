@@ -13,8 +13,7 @@
 namespace tme {
 
     using namespace chilli;
-    using namespace chilli::collections;
-
+    using chilli::collections::c_ptr;
     
 	class CStrBuf;
 	

@@ -5,8 +5,7 @@
 //  Created by Chris Wild on 13/06/2018.
 //
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 #include "../Extensions/CustomDirector.h"
 
 #include "panelmanager.h"

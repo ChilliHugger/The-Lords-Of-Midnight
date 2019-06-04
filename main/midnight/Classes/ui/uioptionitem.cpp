@@ -4,11 +4,9 @@
 //
 //  Created by Chris Wild on 09/12/2017.
 //
-
+#include "uihelper.h"
 #include "uioptionitem.h"
 #include "../system/resolutionmanager.h"
-#include "uihelper.h"
-
 
 USING_NS_CC;
 

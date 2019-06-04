@@ -1,6 +1,5 @@
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
+#include "../cocos.h"
 
 #include "panel_mainmenu.h"
 #include "panel_credits.h"
@@ -115,7 +114,7 @@ void panel_mainmenu::OnNotification( Ref* sender )
     }
 }
 
-void panel_mainmenu::OnMenuNotification( uinotificationinterface* sender, menueventargs* args )
+void panel_mainmenu::OnMenuNotification( const uinotificationinterface* sender, menueventargs* args )
 {
     
     switch (args->menuitem->id)
@@ -263,13 +262,11 @@ void panel_mainmenu::OnEndStory()
     bookmenu->setLocalZOrder(ZORDER_POPUP);
     uihelper::AddCenter(this,bookmenu);
     
-	auto mainmenu = this;
-
-    bookmenu->setNotificationCallback ( [&,mainmenu,bookmenu](uinotificationinterface* s, uieventargs* e) {
+    bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         
         uibookmenu* menu = static_cast<uibookmenu*>(s);
         menu->removeFromParent();
-        
+		
         bookeventargs* event = static_cast<bookeventargs*>(e);
         if ( event != nullptr ) { // null == cancelled
             deleteStory( event->id );

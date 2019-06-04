@@ -8,16 +8,18 @@
 #ifndef LandscapeColour_hpp
 #define LandscapeColour_hpp
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include <stdio.h>
 #include "../tme_interface.h"
-
-USING_NS_CC;
 
 FORWARD_REFERENCE(LandscapeOptions);
 
 class  LandscapeColour
 {
+    using Color4B = cocos2d::Color4B;
+    using Color3B = cocos2d::Color3B;
+    using Color4F = cocos2d::Color4F;
+    using Node = cocos2d::Node;
 public:
     Color4B  CalcCurrentMovementTint ( u32 index );
     Color4B CreateTimeBrightness ( mxtime_t time );

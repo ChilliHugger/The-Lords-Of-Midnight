@@ -88,7 +88,7 @@ LPCSTR moonring::getWritablePath()
 
 void moonring::showPage( panelmode_t mode, mxid object )
 {
-    panels->setPanelMode(mode);
+    panels->setPanelMode(mode,TRANSITION_FADEIN);
     panels->currentPanel()->setObject(object);
 }
 
@@ -217,7 +217,8 @@ bool moonring::look( mxdir_t dir )
 {
     character&    c = TME_CurrentCharacter();
     Character_Look(c, dir);
-    return false;
+    showPage(MODE_LOOK,TME_CurrentCharacter().id);
+    return true;
 }
 
 bool moonring::selectCharacter(mxid id)
@@ -240,8 +241,7 @@ bool moonring::selectCharacter(mxid id)
     TME_RefreshCurrentCharacter();
     TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
 
-    panels->setPanelMode(MODE_LOOK,TRANSITION_FADEIN);
-    panels->currentPanel()->setObject(TME_CurrentCharacter().id);
+    showPage(MODE_LOOK,TME_CurrentCharacter().id);
     
     return true;
 }

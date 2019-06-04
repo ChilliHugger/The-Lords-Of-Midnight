@@ -246,7 +246,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\tme\scenario\units.cpp" />
     <ClCompile Include="..\Classes\ui\characters\uigrouplord.cpp" />
     <ClCompile Include="..\Classes\ui\characters\uilordselect.cpp" />
-    <ClCompile Include="..\Classes\ui\characters\uiselectpanel.cpp" />
     <ClCompile Include="..\Classes\ui\characters\uisinglelord.cpp" />
     <ClCompile Include="..\Classes\ui\MyButton.cpp" />
     <ClCompile Include="..\Classes\ui\uibook.cpp" />
@@ -355,7 +354,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\tme_interface.h" />
     <ClInclude Include="..\Classes\ui\characters\uigrouplord.h" />
     <ClInclude Include="..\Classes\ui\characters\uilordselect.h" />
-    <ClInclude Include="..\Classes\ui\characters\uiselectpanel.h" />
     <ClInclude Include="..\Classes\ui\characters\uisinglelord.h" />
     <ClInclude Include="..\Classes\ui\MyButton.h" />
     <ClInclude Include="..\Classes\ui\uibook.h" />

@@ -6,7 +6,7 @@
 //
 //
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include "tmemanager.h"
 #include <string>
 
@@ -224,12 +224,12 @@ std::string& GetCharacterShield(const character& c)
 
 std::string& GetObjectBig(mxid id)
 {
-    anobject o;
+    object o;
     TME_GetObject(o,id);
     return GetObjectBig(o);
 }
 
-std::string& GetObjectBig(const anobject& o)
+std::string& GetObjectBig(const object& o)
 {
     obj_data_t* d = static_cast<obj_data_t*>(o.userdata);
     return d ? LOAD_IMAGE(d->i_big) : empty_string ;
@@ -238,12 +238,12 @@ std::string& GetObjectBig(const anobject& o)
 
 std::string& GetObjectSmall(mxid id)
 {
-    anobject o;
+    object o;
     TME_GetObject(o,id);
     return GetObjectSmall(o);
 }
 
-std::string& GetObjectSmall(const anobject& o)
+std::string& GetObjectSmall(const object& o)
 {
     obj_data_t* d = static_cast<obj_data_t*>(o.userdata);
     return d ? LOAD_IMAGE(d->i_small) : empty_string ;
@@ -252,12 +252,12 @@ std::string& GetObjectSmall(const anobject& o)
 
 std::string& GetObjectBackground(mxid id)
 {
-    anobject o;
+    object o;
     TME_GetObject(o,id);
     return GetObjectBackground(o);
 }
 
-std::string& GetObjectBackground(const anobject& o)
+std::string& GetObjectBackground(const object& o)
 {
     obj_data_t* d = static_cast<obj_data_t*>(o.userdata);
     return d ? LOAD_IMAGE(d->background) : empty_string ;

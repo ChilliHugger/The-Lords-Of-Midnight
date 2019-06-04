@@ -5,13 +5,12 @@
 //  Created by Chris Wild on 16/10/2018.
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
-
+#include "../ui/uihelper.h"
 #include "uithinkpage.h"
 #include "../system/moonring.h"
 #include "../system/configmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../system/tmemanager.h"
-#include "../ui/uihelper.h"
 #include "../frontend/layout_id.h"
 #include "../frontend/keyboard_id.h"
 
@@ -49,6 +48,7 @@
 
 using namespace tme;
 
+USING_NS_CC;
 
 uithinkpage::uithinkpage()
 {
@@ -206,7 +206,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 
 bool uithinkpage::init()
 {
-    if ( !uielement::init() )
+    if ( !Element::init() )
     {
         return false;
     }
@@ -224,8 +224,8 @@ bool uithinkpage::init()
     addChild(safeArea);
     
 
-    scrollView = ui::ScrollView::create();
-    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    scrollView = ScrollView::create();
+    scrollView->setDirection(ScrollView::Direction::VERTICAL);
 
     // Name
     lblName = Label::createWithTTF( uihelper::font_config_big, "" );
@@ -285,7 +285,7 @@ void uithinkpage::displayCharacter ( const character& c )
     // display character name
     lblName->setString(c.longname);
 
-    imgCharacter->loadTexture(GetCharacterImage(c), Widget::TextureResType::LOCAL);
+    imgCharacter->loadTexture(GetCharacterImage(c), cocos2d::ui::Widget::TextureResType::LOCAL);
     imgCharacter->setTouchEnabled( Character_IsRecruited(c) );
     imgCharacter->setTag(ID_SELECT_CHAR+c.id);
     imgCharacter->addClickEventListener(clickCallback);
@@ -352,7 +352,7 @@ void uithinkpage::displayObject ( mxid objectid )
         return;
     }
     
-    imgObject->loadTexture( GetObjectBig(objectid), Widget::TextureResType::LOCAL );
+    imgObject->loadTexture( GetObjectBig(objectid), cocos2d::ui::Widget::TextureResType::LOCAL );
     imgObject->setVisible(true);
 #endif
     

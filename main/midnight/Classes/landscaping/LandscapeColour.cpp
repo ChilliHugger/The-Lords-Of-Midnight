@@ -10,6 +10,8 @@
 #include "../system/configmanager.h"
 #include "LandscapeView.h"
 
+USING_NS_CC;
+
 static Color4B TimeOfDayColours[32][4];
 
 void LandscapeColour::updateNode( Node* node )

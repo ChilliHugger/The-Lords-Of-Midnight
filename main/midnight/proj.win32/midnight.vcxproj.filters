@@ -159,9 +159,6 @@
     <ClCompile Include="..\Classes\ui\characters\uilordselect.cpp">
       <Filter>src\ui\characters</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ui\characters\uiselectpanel.cpp">
-      <Filter>src\ui\characters</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ui\characters\uisinglelord.cpp">
       <Filter>src\ui\characters</Filter>
     </ClCompile>
@@ -534,9 +531,6 @@
       <Filter>src\ui\characters</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ui\characters\uilordselect.h">
-      <Filter>src\ui\characters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ui\characters\uiselectpanel.h">
       <Filter>src\ui\characters</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ui\characters\uisinglelord.h">

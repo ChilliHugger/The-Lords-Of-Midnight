@@ -10,6 +10,11 @@
 #include "../ui/uielement.h"
 #include "../ui/uieventargs.h"
 
+USING_NS_CC;
+USING_NS_CC_UI;
+
+using chilli::ui::WidgetClickCallback;
+
 Vec2 uihelper::AnchorTopLeft = Vec2(0,1);
 Vec2 uihelper::AnchorTopRight = Vec2(1,1);
 Vec2 uihelper::AnchorTopCenter = Vec2(0.5,1);
@@ -27,6 +32,8 @@ TTFConfig uihelper::font_config_medium;
 TTFConfig uihelper::font_config_small;
 TTFConfig uihelper::font_config_shortcut;
 TTFConfig uihelper::font_config_debug;
+
+
 
 void uihelper::Init()
 {
@@ -296,7 +303,7 @@ void uihelper::PositionCenterAnchor (Node* node, Vec2 anchor, f32 paddingX, f32 
 // Creating
 //
 
-ui::Button* uihelper::CreateImageButton( const std::string& name )
+Button* uihelper::CreateImageButton( const std::string& name )
 {
 ui::Button* button;
     if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
@@ -308,7 +315,7 @@ ui::Button* button;
     return uihelper::setEnabled(button,true);
 }
 
-ui::Button* uihelper::CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback )
+Button* uihelper::CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback )
 {
     auto button = uihelper::CreateImageButton(name);
     button->setTag(id);
@@ -327,7 +334,7 @@ void uihelper::FillParent( Node* node )
     node->setContentSize(r.size);
 }
 
-ui::Button* uihelper::CreateBoxButton( Size size )
+Button* uihelper::CreateBoxButton( Size size )
 {
     auto button = ui::Button::create(BOX_BACKGROUND_FILENAME);
     button->setTitleFontName(FONT_FILENAME);
@@ -343,7 +350,7 @@ ui::Button* uihelper::CreateBoxButton( Size size )
     return button;
 }
 
-ui::Button* uihelper::setEnabled( ui::Button* button, bool enabled )
+Button* uihelper::setEnabled( ui::Button* button, bool enabled )
 {
     if ( button != nullptr ) {
         button->setEnabled(enabled);

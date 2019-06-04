@@ -30,7 +30,7 @@
 #endif
 
 #if defined(COCOS2DX)
-#include "cocos2d.h"
+#include "platform/CCFileUtils.h"
 #endif
 
 

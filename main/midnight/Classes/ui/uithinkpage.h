@@ -12,14 +12,18 @@
 #include "../frontend/panel_id.h"
 #include "../tme_interface.h"
 
-using namespace cocos2d::ui;
-using namespace cocos2d;
 
-class uithinkpage : public uielement
+class uithinkpage : public chilli::ui::Element
             // , public uinotificationdelegate
             // , public uiactioncompletedelegate
             // , public uidragmoveelement
 {
+    using Sprite = cocos2d::Sprite;
+    using ImageView = cocos2d::ui::ImageView;
+    using ScrollView = cocos2d::ui::ScrollView;
+    using Label = cocos2d::Label;
+    using WidgetClickCallback = chilli::ui::WidgetClickCallback;
+
 public:
    
     CREATE_FUNC(uithinkpage);
@@ -56,9 +60,9 @@ protected:
     //character           current_character;
     stronghold          current_stronghold;
     
-    cocos2d::Label*     lblName;
-    cocos2d::Label*     lblDescription;
-    
+    Label*              lblName;
+    Label*              lblDescription;
+
     Sprite*             imgTerrain;
     ImageView*          imgCharacter;
     ImageView*          imgObject;

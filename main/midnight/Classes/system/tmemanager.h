@@ -10,7 +10,7 @@
 
 #include "../tme_interface.h"
 
-//typedef cocos2d::Node mximage;
+using chilli::collections::c_ptr;
 
 FORWARD_REFERENCE(imagearray);
 FORWARD_REFERENCE(mxcellimage);
@@ -112,11 +112,11 @@ std::string& GetCharacterFace(const character& c);
 std::string& GetCharacterShield(mxid id);
 std::string& GetCharacterShield(const character& c);
 std::string& GetObjectBig(mxid id);
-std::string& GetObjectBig(const anobject& o);
+std::string& GetObjectBig(const object& o);
 std::string& GetObjectSmall(mxid id);
-std::string& GetObjectSmall(const anobject& o);
+std::string& GetObjectSmall(const object& o);
 std::string& GetObjectBackground(mxid id);
-std::string& GetObjectBackground(const anobject& o);
+std::string& GetObjectBackground(const object& o);
 std::string& GetRaceImage(mxid id,BOOL horse);
 std::string& GetRaceImage(const raceinfo& r,BOOL horse);
 std::string& GetRaceFace(mxid id);

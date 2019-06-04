@@ -15,27 +15,27 @@ using namespace chilli::types;
 
 FORWARD_REFERENCE( uipanel );
 
-#define BOX_BACKGROUND_FILENAME "misc/box_16.png"
-#define FONT_FILENAME           "fonts/celtic.ttf"
-#define FONT_SIZE_SHORTCUT      25
-#define FONT_SIZE_BIG           30
-#define FONT_SIZE_MEDIUM        20
-#define FONT_SIZE_SMALL         12
-#define FONT_SIZE_DEBUG         8
-#define IMAGE_LOGO              "misc/logo.png"
+constexpr auto BOX_BACKGROUND_FILENAME = "misc/box_16.png";
+constexpr auto FONT_FILENAME           = "fonts/celtic.ttf";
+constexpr auto FONT_SIZE_SHORTCUT      = 25;
+constexpr auto FONT_SIZE_BIG           = 30;
+constexpr auto FONT_SIZE_MEDIUM        = 20;
+constexpr auto FONT_SIZE_SMALL         = 12;
+constexpr auto FONT_SIZE_DEBUG         = 8;
+constexpr auto IMAGE_LOGO              = "misc/logo.png";
 
-using cocos2d::TTFConfig;
-using cocos2d::Vec2;
-using cocos2d::Node;
-using cocos2d::ui::Button;
+
 using cocos2d::Color3B;
-using cocos2d::Size;
-
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
 class uihelper
 {
+    using TTFConfig = cocos2d::TTFConfig;
+    using Node = cocos2d::Node;
+    using Button = cocos2d::ui::Button;
+    using Size = cocos2d::Size;
+	using Vec2 = cocos2d::Vec2;
+	using WidgetClickCallback = chilli::ui::WidgetClickCallback;
+
 public:
     static void Init();
 

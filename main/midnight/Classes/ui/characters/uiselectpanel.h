@@ -8,13 +8,9 @@
 
 #pragma once
 
-#include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "../uielement.h"
 
-
-
-class uiselectpanel : public uielement
+class uiselectpanel : public chilli::ui::Element
 {
 public:
     CREATE_FUNC(uiselectpanel);

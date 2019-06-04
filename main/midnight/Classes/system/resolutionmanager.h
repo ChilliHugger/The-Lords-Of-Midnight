@@ -9,10 +9,8 @@
 #ifndef resolutionmanager_h
 #define resolutionmanager_h
 
-#include "cocos2d.h"
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
-
-USING_NS_CC;
 
 using namespace chilli::types;
 

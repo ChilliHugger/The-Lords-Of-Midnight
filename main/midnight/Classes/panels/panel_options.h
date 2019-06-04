@@ -8,6 +8,7 @@
 #ifndef __PANEL_OPTIONS_H__
 #define __PANEL_OPTIONS_H__
 
+#include "../cocos.h"
 #include "../ui/uipanel.h"
 #include "../ui/uitextmenuitem.h"
 
@@ -34,9 +35,13 @@ typedef struct {
 
 class panel_options : public uipanel
 {
+    using Node = cocos2d::Node;
+    using DrawNode = cocos2d::DrawNode;
+    using Menu = cocos2d::Menu;
+    using uinotificationinterface = chilli::ui::NotificationInterface;
+    template<class T> using Vector = cocos2d::Vector<T>;
 public:
-    //static cocos2d::Scene* createScene();
-    
+
     virtual bool init();
     
     CREATE_FUNC(panel_options);
@@ -47,13 +52,13 @@ protected:
     void SetMenu ( int id );
     void SetMenu( uitextmenuitem items[], int elements);
     
-    void OnMenuNotification( uinotificationinterface*, menueventargs* );
+    void OnMenuNotification( const uinotificationinterface*, menueventargs* );
     
-    cocos2d::DrawNode* menu2_background;
-    cocos2d::Vector<Node*> fields;
-    cocos2d::Menu* menu2;
-    
-    cocos2d::Map<int, uioptionitem*>    optionControls;
+protected:
+    DrawNode*               menu2_background;
+    Vector<Node*>           fields;
+    Menu*                   menu2;
+    cocos2d::Map<int, uioptionitem*> optionControls;
     
 };
 

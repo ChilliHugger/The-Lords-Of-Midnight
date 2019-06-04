@@ -37,7 +37,10 @@ typedef enum floor_t {
 } floor_t ;
 
 
-class LandscapeItem : public Ref {
+class LandscapeItem : public cocos2d::Ref
+{
+    using Vec3 = cocos2d::Vec3;
+
 public:
     tme::loc_t       loc;
     mxterrain_t	terrain;
@@ -49,7 +52,7 @@ public:
     
 };
 
-typedef Vector<LandscapeItem*> LandscapeItems;
+using LandscapeItems = cocos2d::Vector<LandscapeItem*>;
 
 FORWARD_REFERENCE(LandscapeOptions);
 

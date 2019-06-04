@@ -8,8 +8,7 @@
 
 #pragma once
 
-#include "../library/libinc/mxtypes.h"
-#include "uitextmenu.h"
+struct uitextmenuitem;
 
 class uieventargs 
 {    

@@ -1,15 +1,9 @@
 
 #include "resolutionmanager.h"
 
-//#include "2d/CCScene.h"
 #include "base/CCDirector.h"
-//#include "2d/CCCamera.h"
-//#include "base/CCEventDispatcher.h"
-//#include "base/CCEventListenerCustom.h"
-//#include "base/ccUTF8.h"
-//#include "renderer/CCRenderer.h"
-//#include "renderer/CCFrameBuffer.h"
 
+USING_NS_CC;
 
 float safeAreaTopPadding = 0.0f;
 float safeAreaBottomPadding =  0.0f;

@@ -9,18 +9,14 @@
  */
 
 #include "panel_map_overview.h"
-
 #include "../system/moonring.h"
-//#include "../system/configmanager.h"
 #include "../system/resolutionmanager.h"
-//#include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
-
 #include "../frontend/layout_id.h"
 
 USING_NS_CC;
+USING_NS_CC_UI;
 using namespace tme;
-using namespace cocos2d::ui;
 
 bool panel_map_overview::init()
 {
@@ -35,8 +31,8 @@ bool panel_map_overview::init()
     
     f32 layout_padding = RES(20);
     
-    auto scrollView = ui::ScrollView::create();
-    scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    auto scrollView = ScrollView::create();
+    scrollView->setDirection(ScrollView::Direction::VERTICAL);
     scrollView->setBounceEnabled(true);
     scrollView->setScrollBarEnabled(true);
     

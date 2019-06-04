@@ -13,6 +13,12 @@
 
 class uigrouplord : public uisinglelord
 {
+    using Button = cocos2d::ui::Button;
+    using Camera = cocos2d::Camera;
+    using Vec2 = cocos2d::Vec2;
+    using Vec3 = cocos2d::Vec3;
+    template<class T> using Vector = cocos2d::Vector<T>;
+
 public:
     CREATE_FUNC(uigrouplord);
     virtual bool init() override;

@@ -263,7 +263,7 @@ void uipanel::popupHelpWindow ( helpid_t id, MXVoidCallback callback )
     help_window->retain();
     
     help_window->Show( [&,callback] {
-        CC_SAFE_RELEASE_NULL( help_window );
+        //CC_SAFE_RELEASE_NULL( help_window );
         help_visible = HELP_NONE;
         if ( callback != nullptr )
             callback();
