@@ -110,7 +110,8 @@ namespace tme {
         //mxlocinfo* info = character->GetLocInfo();
         
         // current garrison
-        mxstronghold* stronghold =  mx->scenario->StrongholdFromLocation(character->Location());
+        auto scenario = static_cast<ddr_x*>(mx->scenario);
+        mxstronghold* stronghold =  scenario->StrongholdFromLocation(character->Location());
         
         // how many enemies
         u32 enemies=0;

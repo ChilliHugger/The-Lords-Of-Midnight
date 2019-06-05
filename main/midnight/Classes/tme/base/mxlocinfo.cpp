@@ -17,6 +17,9 @@
 
 #include "../baseinc/tme_internal.h"
 
+#if defined(_DDR_)
+#include "../scenarios/ddr/scenario_ddr_internal.h"
+#endif
 
 
 namespace tme {
@@ -173,7 +176,8 @@ namespace tme {
 			mx->CollectRoutenodes ( location, objRoutenodes );
             
 #if defined(_DDR_)
-            object_to_take = mx->scenario->FindObjectAtLocation(location);
+            auto scenario = static_cast<ddr_x*>(mx->scenario);
+            object_to_take = scenario->FindObjectAtLocation(location);
             if ( object_to_take!= NULL )
                 flags.Set(lif_take);
 #endif

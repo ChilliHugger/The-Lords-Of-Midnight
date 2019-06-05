@@ -151,13 +151,119 @@ mxentity* ddr_x::CreateEntity ( id_type_t type )
 			return static_cast<mxentity*>(new ddr_character) ;
         case IDT_STRONGHOLD:
             return static_cast<mxentity*>(new ddr_stronghold);
+        case IDT_OBJECT_POWER:
+            return static_cast<mxentity*>(new mxobjectpower) ;
+        case IDT_OBJECT_TYPE:
+            return static_cast<mxentity*>(new mxobjecttype) ;
         default:
             break;
 	}
 
 	return mxscenario::CreateEntity ( type );
 }
+    
+void ddr_x::MakeMapAreaVisible ( mxgridref l, mxcharacter* character )
+{
+    // in a tunnel?
+    if ( character->IsInTunnel() ) {
 
+        mxloc& current = mx->gamemap->GetAt( l );
+        current.flags|=lf_tunnel_looked_at|lf_tunnel_visited;
+        
+        // check the surrounding locations for tunnels
+        // N E S W
+        // and mark them as seen
+        for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
+            if ( mx->gamemap->IsTunnel(l + (mxdir_t)ii))
+                mx->gamemap->SetTunnelVisible(l + (mxdir_t)ii, true);
+        }
+        
+        return;
+    }
+    
+    mxscenario::MakeMapAreaVisible(l, character);
+}
+
+mxcharacter* ddr_x::WhoHasObject( mxobject* object ) const
+{
+    return static_cast<mxcharacter*>(object->carriedby) ;
+}
+
+
+bool ddr_x::DropObject ( mxgridref loc, mxobject* obj )
+{
+    if ( obj->IsUnique() ) {
+        obj->Location( loc );
+        mx->gamemap->SetObject( loc, true );
+        return true;
+    }
+    return mxscenario::DropObject(loc, obj);
+}
+
+
+mxobject* ddr_x::PickupObject ( mxgridref loc )
+{
+    if ( mx->gamemap->GetAt ( loc ).HasObject() ) {
+        mxobject* object = FindObjectAtLocation(loc);
+        mx->gamemap->SetObject(loc, false);
+        object->Location(mxgridref(0, 0));
+        return object;
+    }
+    return nullptr;
+}
+    
+void ddr_x::PlaceObjectsOnMap ( void )
+{
+    mxobject* object;
+    mxgridref loc;
+    for ( int ii=0; ii<sv_objects; ii++ ) {
+        object = mx->ObjectById(ii+1);
+        if ( object->IsUnique() && object->IsRandomStart() ) {
+            bool found=false;
+            while ( !found ) {
+                loc.x = mxrandom(0,mx->gamemap->Size().cx-1);
+                loc.y = mxrandom(0,mx->gamemap->Size().cy-1);
+                if ( !mx->gamemap->HasObject(loc) && !mx->gamemap->IsLocationBlock(loc)  )
+                    found=true;
+            }
+            object->Location(loc);
+            mx->gamemap->SetObject( loc, true );
+        }
+    }
+}
+
+mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
+{
+    if ( !mx->gamemap->HasObject(loc) )
+        return nullptr;
+    
+    mxobject* object;
+    for ( int ii=0; ii<sv_objects; ii++ ) {
+        object = mx->ObjectById(ii+1);
+        if ( object->IsCarried() )
+            continue;
+        if ( object->Location() == loc )
+            return object;
+    }
+    return nullptr;
+}
+
+mxstronghold* ddr_x::StrongholdFromLocation ( mxgridref loc )
+{
+    mxloc& mapsqr = mx->gamemap->GetAt ( loc );
+    if ( !(mapsqr.flags&lf_stronghold) )
+        return nullptr;
+    
+    mxstronghold* stronghold;
+    for ( int ii=0; ii<sv_strongholds; ii++ ) {
+        stronghold = mx->StrongholdById(ii+1);
+        if ( stronghold->Location() == loc )
+            return stronghold;
+    }
+    return nullptr;
+}
+    
+    
 void ddr_x::NightStop(void)
 {
 }

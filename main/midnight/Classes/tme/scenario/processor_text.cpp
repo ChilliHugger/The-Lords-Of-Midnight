@@ -1086,7 +1086,9 @@ LPSTR mxtext::DescribeCharacterSees ( const mxcharacter* character )
 {
     CStrBuf*	buffer = new CStrBuf ;
 
-    mxobject* object = mx->scenario->FindObjectAtLocation(character->Location());
+    auto scenario = static_cast<ddr_x*>(mx->scenario);
+    
+    mxobject* object = scenario->FindObjectAtLocation(character->Location());
     bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
 
     if ( object== NULL && !entrance )

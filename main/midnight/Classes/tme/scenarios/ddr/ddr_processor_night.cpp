@@ -98,7 +98,9 @@ namespace tme {
                     if ( c->Loyalty() != character->Loyalty() )
                         enemies++;
                 }
-                mxstronghold* stronghold = mx->scenario->StrongholdFromLocation(character->Location());
+                
+                auto scenario = static_cast<ddr_x*>(mx->scenario);
+                mxstronghold* stronghold = scenario->StrongholdFromLocation(character->Location());
                 if ( stronghold && stronghold->Loyalty()!=character->Loyalty())
                     enemies++;
                 if ( enemies == 0 )

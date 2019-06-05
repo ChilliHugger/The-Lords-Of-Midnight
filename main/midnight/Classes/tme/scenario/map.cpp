@@ -15,6 +15,9 @@
  */
 
 #include "../baseinc/tme_internal.h"
+#if defined(_DDR_)
+#include "../scenarios/ddr/scenario_ddr_internal.h"
+#endif
 
 using namespace chilli::lib;
 
@@ -277,7 +280,8 @@ bool mxmap::IsTunnel( mxgridref l )
 bool mxmap::IsTunnelPassageway( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
-    mxterrain_t t = mx->scenario->NormaliseTerrain((mxterrain_t)mapsqr.terrain);
+    auto scenario = static_cast<ddr_x*>(mx->scenario);
+    mxterrain_t t = scenario->NormaliseTerrain((mxterrain_t)mapsqr.terrain);
     return mapsqr.HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
 }
 
@@ -848,7 +852,8 @@ void mxmap::PutThingsOnMap ( void )
             mxterrain_t t = (mxterrain_t)mapsqr.terrain ;
             
             // remap ddr/lom
-            t = mx->scenario->NormaliseTerrain(t);
+            auto scenario = static_cast<ddr_x*>(mx->scenario);
+            t = scenario->NormaliseTerrain(t);
             
             if ( (t >= TN_GATE || (u32)(t-TN_PLAINS2) == r) && t != TN_ICYWASTE ) {
                 mapsqr.flags |= lf_creature ;
@@ -963,7 +968,8 @@ bool mxloc::HasTunnelEntrance() const
 
 bool mxloc::IsTunnelPassageway() const
 {
-    mxterrain_t t = mx->scenario->NormaliseTerrain((mxterrain_t)terrain);
+    auto scenario = static_cast<ddr_x*>(mx->scenario);
+    mxterrain_t t = scenario->NormaliseTerrain((mxterrain_t)terrain);
     return HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
 }
 #endif

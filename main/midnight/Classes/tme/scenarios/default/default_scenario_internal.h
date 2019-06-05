@@ -57,13 +57,6 @@ namespace tme {
 			virtual void ResetMapArmies ( void );
 			virtual void SetMapArmies ( void );
             
-#if defined(_DDR_)
-            virtual void PlaceObjectsOnMap ( void );
-            virtual mxobject* FindObjectAtLocation ( mxgridref loc );
-            virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
-            virtual mxterrain_t NormaliseTerrain( mxterrain_t t) const;
-
-#endif
 			virtual void RemoveMapArmies ( void );
 			virtual void LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel );
 			virtual void SetCharsLooking( void );

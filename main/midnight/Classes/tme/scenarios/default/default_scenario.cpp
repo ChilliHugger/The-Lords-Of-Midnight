@@ -42,19 +42,19 @@ namespace tme {
         "Copyright 1984 - 2017 Mike Singleton & Chris Wild"
     };
 
-	mxscenario* def_scenario = NULL ;
+	mxscenario* def_scenario = nullptr ;
 
 	
 	MXRESULT MXAPI default_scenario::Create ( mxinterface* engine )
 	{
 		variant args;
 		
-		if ( engine == NULL )
+		if ( engine == nullptr )
 			return MX_FAILED ;
 		
 		def_scenario = new mxscenario ;
 		
-		if ( def_scenario == NULL )
+		if ( def_scenario == nullptr )
 			return MX_FAILED ;
 		
 		args = def_scenario ;
@@ -119,7 +119,7 @@ namespace tme {
 			SAFEDELETE ( mx->night ) ;
 			SAFEDELETE ( mx->battle ) ;
 			//mx->scenario = this;
-			//default_scenario=NULL ;
+			//default_scenario=nullptr ;
 			return MX_OK ;
 		}
 		 
@@ -198,16 +198,10 @@ namespace tme {
 					return (mxentity*)new mxarea ;
 				case IDT_COMMANDINFO:
 					return (mxentity*)new mxcommand ;
-#if defined(_DDR_)
-				case IDT_OBJECT_POWER:
-					return (mxentity*)new mxobjectpower ;
-				case IDT_OBJECT_TYPE:
-					return (mxentity*)new mxobjecttype ;
-#endif
                 default:
                     break;
             }
-			return NULL;
+			return nullptr;
 		}
 
 		void mxscenario::NightStart(void)
@@ -406,28 +400,6 @@ namespace tme {
 		mxgridref newdst;
 		mxterrain*	tinfo;
 
-            
-#if defined(_DDR_)
-            mxloc& current = mx->gamemap->GetAt( l );
-
-            // in a tunnel?
-            if ( character->IsInTunnel() ) {
-                current.flags|=lf_tunnel_looked_at|lf_tunnel_visited;
-                
-                // check the surrounding locations for tunnels
-                // N E S W
-                // and mark them as seen
-                for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
-                    if ( mx->gamemap->IsTunnel(l + (mxdir_t)ii))
-                        mx->gamemap->SetTunnelVisible(l + (mxdir_t)ii, true);
-                }
-
-                
-                
-                return;
-            }
-#endif
-			
             mx->gamemap->SetLocationVisible(l, true);
             
 			character->CanSeeLocation( l );
@@ -1668,44 +1640,24 @@ namespace tme {
 
 		mxcharacter* mxscenario::WhoHasObject( mxobject* object ) const
 		{
-#if defined(_DDR_)
-            return (mxcharacter*)object->carriedby ;
-#endif
 			for ( int ii=0; ii<sv_characters; ii++ ) {
 				mxcharacter* character = mx->CharacterById(ii+1);
 				if ( character->carrying == object )
 					return character ;
 			}
-			return NULL ;
+			return nullptr ;
 		}
 
 
 		bool mxscenario::DropObject ( mxgridref loc, mxobject* obj )
 		{
-#if defined(_DDR_)
-            if ( obj->IsUnique() ) {
-                obj->Location( loc );
-                mx->gamemap->SetObject( loc, true );
-                return true;
-            }
-#endif
 			mx->gamemap->GetAt ( loc ).object = obj ? obj->Id() : OB_NONE ;
-			return TRUE ;
+			return true ;
 		}
 
 
 		mxobject* mxscenario::PickupObject ( mxgridref loc )
 		{
-#if defined(_DDR_)
-            if ( mx->gamemap->GetAt ( loc ).HasObject() ) {
-                mxobject* object = FindObjectAtLocation(loc);
-                mx->gamemap->SetObject(loc, false);
-                object->Location(mxgridref(0, 0));
-                return object;
-            }
-            return NULL;
-#endif
-
             mxthing_t oldobject ;
 
 			oldobject = (mxthing_t)mx->gamemap->GetAt ( loc ).object ;
@@ -1909,65 +1861,6 @@ namespace tme {
 
 			return friends+enemies ;
 		}
-
-#if defined(_DDR_)
-        void mxscenario::PlaceObjectsOnMap ( void )
-        {
-            mxobject* object;
-			mxgridref loc;
-            for ( int ii=0; ii<sv_objects; ii++ ) {
-				object = mx->ObjectById(ii+1);
-                if ( object->IsUnique() && object->IsRandomStart() ) {
-                    bool found=false;
-                    while ( !found ) {
-						loc.x = mxrandom(0,mx->gamemap->Size().cx-1);
-						loc.y = mxrandom(0,mx->gamemap->Size().cy-1);
-                        if ( !mx->gamemap->HasObject(loc) && !mx->gamemap->IsLocationBlock(loc)  )
-                            found=true;
-                    }
-                    object->Location(loc);
-                    mx->gamemap->SetObject( loc, true );
-                }
-            }
-        }
-    
-    mxobject* mxscenario::FindObjectAtLocation ( mxgridref loc )
-    {
-        if ( !mx->gamemap->HasObject(loc) )
-            return NULL;
-        
-        mxobject* object;
-        for ( int ii=0; ii<sv_objects; ii++ ) {
-            object = mx->ObjectById(ii+1);
-            if ( object->IsCarried() )
-                continue;
-            if ( object->Location() == loc )
-                return object;
-        }
-        return NULL;
-    }
-    
-    mxstronghold* mxscenario::StrongholdFromLocation ( mxgridref loc )
-    {
-		mxloc& mapsqr = mx->gamemap->GetAt ( loc );
-        if ( !(mapsqr.flags&lf_stronghold) )
-            return NULL;
-        
-        mxstronghold* stronghold;
-        for ( int ii=0; ii<sv_strongholds; ii++ ) {
-            stronghold = mx->StrongholdById(ii+1);
-            if ( stronghold->Location() == loc )
-                return stronghold;
-        }
-        return NULL;
-    }
-    
-    mxterrain_t mxscenario::NormaliseTerrain( mxterrain_t t) const
-    {
-        return t;
-    }
-    
-#endif
 
     
     void mxscenario::initialiseAfterCreate( void )

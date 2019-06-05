@@ -368,8 +368,9 @@ namespace tme {
 		mx->gamemap->SetLocationArmy(Location(),0);
 		mx->gamemap->SetLocationCharacter(Location(),0);
 		
+        auto scenario = static_cast<ddr_x*>(mx->scenario);
 		t = (mxterrain_t)mx->gamemap->GetAt ( location+looking ).terrain ;
-        t = mx->scenario->NormaliseTerrain(t);
+        t = scenario->NormaliseTerrain(t);
         
         if ( IsInTunnel() )
             t=TN_ICYWASTE;
@@ -702,7 +703,8 @@ namespace tme {
             return;
 
         // get stronghold at the location I'm at
-        mxstronghold* stronghold = mx->scenario->StrongholdFromLocation(Location());
+        auto scenario = static_cast<ddr_x*>(mx->scenario);
+        mxstronghold* stronghold = scenario->StrongholdFromLocation(Location());
         
         if ( stronghold == NULL )
             return;

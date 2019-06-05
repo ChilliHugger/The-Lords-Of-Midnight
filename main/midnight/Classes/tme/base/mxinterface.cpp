@@ -16,6 +16,9 @@
  */
 
 #include "../baseinc/tme_internal.h"
+#if defined(_DDR_)
+#include "../scenarios/ddr/scenario_ddr_internal.h"
+#endif
 #include <string.h>
 
 namespace tme {
@@ -237,7 +240,8 @@ namespace tme {
                     out->flags.Set(lf_tunnel_passageway);
                     
                 if ( m.HasObject() ) {
-                    mxobject* obj = mx->scenario->FindObjectAtLocation(loc);
+                    auto scenario = static_cast<ddr_x*>(mx->scenario);
+                    mxobject* obj = scenario->FindObjectAtLocation(loc);
                     if ( obj && obj->IsSpecial() )
                         out->flags.Set(lf_object_special);
                 }

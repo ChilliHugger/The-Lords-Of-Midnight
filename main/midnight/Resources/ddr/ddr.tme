@@ -248,7 +248,7 @@
             <time id="29" fill="#00ffff00" outline="#00940000" tint="#ffffffff" />
             <time id="30" fill="#000000ff" outline="#0000ffff" tint="#ff00ffff" />
             <time id="31" fill="#000000d0" outline="#0000d0d0" tint="#ff00ffff" />
-        </share>
+        </shade>
     
     
 	</uilandscape>

@@ -15,18 +15,27 @@ namespace tme {
 		virtual ~ddr_x();
 
 
-		virtual scenarioinfo_t* GetInfoBlock() const;
-		virtual MXRESULT Register ( mxengine* midnightx );
-		virtual MXRESULT UnRegister ( mxengine* midnightx );	
-		virtual mxentity* CreateEntity ( id_type_t type );
+		virtual scenarioinfo_t* GetInfoBlock() const override;
+		virtual MXRESULT Register ( mxengine* midnightx ) override;
+		virtual MXRESULT UnRegister ( mxengine* midnightx ) override;
+		virtual mxentity* CreateEntity ( id_type_t type ) override;
 
-        virtual void NightStop(void);
+        virtual void NightStop(void) override;
 
-        virtual void initialiseAfterCreate( void );
-        virtual mxterrain_t NormaliseTerrain( mxterrain_t t) const;
-
-        virtual void GiveGuidance(tme::mxcharacter *character, s32 hint);
+        virtual void initialiseAfterCreate( void ) override;
+     
+        virtual void GiveGuidance(mxcharacter *character, s32 hint) override;
         
+        virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character ) override;
+
+        virtual mxcharacter* WhoHasObject( mxobject* object ) const override;
+        virtual bool DropObject ( mxgridref loc, mxobject* obj ) override;
+        virtual mxobject* PickupObject ( mxgridref loc ) override;
+
+        virtual void PlaceObjectsOnMap ( void );
+        virtual mxobject* FindObjectAtLocation ( mxgridref loc );
+        virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
+        virtual mxterrain_t NormaliseTerrain( mxterrain_t t) const;
 	};
 
     
