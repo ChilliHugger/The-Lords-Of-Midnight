@@ -15,6 +15,20 @@
 
 USING_NS_CC;
 
+// TODO: These should should be read from the config file
+// like they used to be tag panel_menu::stories
+//
+static rgb_t bookmark_colours[] = {
+    rgb_t(0xde, 0x00, 0x00),
+    rgb_t(0xde, 0x7e, 0x00),
+    rgb_t(0xcc, 0xcc, 0x00),
+    rgb_t(0x69, 0xa9, 0x00),
+    rgb_t(0x00, 0xb2, 0xa4),
+    rgb_t(0x00, 0x7e, 0xcc),
+    rgb_t(0x84, 0x00, 0xdb),
+    rgb_t(0x96, 0x96, 0x96)
+};
+
 std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) {
     size_t start_pos = 0;
     while((start_pos = str.find(from, start_pos)) != std::string::npos) {
@@ -49,7 +63,7 @@ bool uibook::initWithChapter( storyheader_t* story )
     uihelper::AddCenter(this, bookImage);
     
     auto bookmarkImage = Sprite::createWithSpriteFrameName(BOOKMARK_IMAGE);
-    //bookmarkImage->setColor(story->color);
+    bookmarkImage->setColor(bookmark_colours[story->slot]);
     uihelper::AddTopLeft(bookImage, bookmarkImage, RES(22), RES(22));
     
     auto bookmarkOverlayImage = Sprite::createWithSpriteFrameName(BOOKMARK_OVERLAY_IMAGE);

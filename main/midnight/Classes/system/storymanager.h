@@ -28,7 +28,7 @@ typedef enum savemode_t {
 typedef struct storyheader_t {
     storyid_t           id;
     c_str               description ;
-    //cocos2d::Color3B    color;
+    u32                 slot;
     savemode_t          mode;
 } storyheader_t;
 
