@@ -19,10 +19,6 @@
 #define CONFIG_FILENAME                 "settings.cfg"
 #define CONFIG_VERSION                  7
 
-//#if defined (_DDR_)
-    #define _DAY_NIGHT_SHADER_
-//#endif
-
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
     #define _SHOW_DEDICATION_

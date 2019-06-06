@@ -569,8 +569,8 @@ void moonring::initialise( progressmonitor* monitor )
     UIDEBUG("Global:: _TME_CHEAT_MODE_");
     tme::variables::sv_cheat_armies_noblock = true;
     tme::variables::sv_cheat_nasties_noblock = true;
-    tme::variables::sv_cheat_movement_free = true ;
-    //tme::variables::sv_cheat_movement_cheap = true ;
+    //tme::variables::sv_cheat_movement_free = true ;
+    tme::variables::sv_cheat_movement_cheap = true ;
     //variables::sv_cheat_commands_free = true ;
 #endif
 

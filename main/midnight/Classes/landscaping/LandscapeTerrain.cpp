@@ -48,8 +48,8 @@ bool LandscapeTerrain::initWithOptions( LandscapeOptions* options )
 
 void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
 {
-    auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));
-    auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(2));
+    auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+    auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainFill));
     
     for(auto const& item: *items) {
         

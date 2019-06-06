@@ -206,44 +206,64 @@
 	<uilandscape>
 	
         <day>
-            <time id="0"   shade="#00404040" />
-            <time id="1"   shade="#00453032" />
-            <time id="2"   shade="#00655557" />
-            <time id="3"   shade="#00736365" />
-            <time id="4"   shade="#00807575" />
-            <time id="5"   shade="#00808080" />
-            <time id="6"   shade="#00808080" />
-            <time id="7"   shade="#00808080" />
-            <time id="8"   shade="#00808080" />
-            <time id="9"   shade="#00808080" />
-            <time id="10"  shade="#00808080" />
-            <time id="11"  shade="#00808080" />
-            <time id="12"  shade="#007a7a7a" />
-            <time id="13"  shade="#00747474" />
-            <time id="14"  shade="#006e6e6e" />
-            <time id="15"  shade="#00626262" />
-            <time id="16"  shade="#00565656" />
+            <time id="0"   shade="#404040" />
+            <time id="1"   shade="#453032" />
+            <time id="2"   shade="#655557" />
+            <time id="3"   shade="#736365" />
+            <time id="4"   shade="#807575" />
+            <time id="5"   shade="#808080" />
+            <time id="6"   shade="#808080" />
+            <time id="7"   shade="#808080" />
+            <time id="8"   shade="#808080" />
+            <time id="9"   shade="#808080" />
+            <time id="10"  shade="#808080" />
+            <time id="11"  shade="#808080" />
+            <time id="12"  shade="#7a7a7a" />
+            <time id="13"  shade="#747474" />
+            <time id="14"  shade="#6e6e6e" />
+            <time id="15"  shade="#626262" />
+            <time id="16"  shade="#565656" />
         </day>
+    
+        <people>
+            <time id="0"   normal="#808080" />
+            <time id="1"   normal="#8a6064" />
+            <time id="2"   normal="#caaaae" />
+            <time id="3"   normal="#73c6ca" />
+            <time id="4"   normal="#ffa0a0" />
+            <time id="5"   normal="#ffffff" />
+            <time id="6"   normal="#ffffff" />
+            <time id="7"   normal="#ffffff" />
+            <time id="8"   normal="#ffffff" />
+            <time id="9"   normal="#ffffff" />
+            <time id="10"  normal="#ffffff" />
+            <time id="11"  normal="#ffffff" />
+            <time id="12"  normal="#f4f4f4" />
+            <time id="13"  normal="#e8e8e8" />
+            <time id="14"  normal="#dcdcdc" />
+            <time id="15"  normal="#d4d4d4" />
+            <time id="16"  normal="#acacac" />
+        </people>
         
-        <shade>
-            <time id="0"   fill="#00000000" outline="#00a50000" tint="#ff404040" />
-            <time id="1"   fill="#00ffffff" outline="#00a50000" tint="#ff606060" />
-            <time id="2"   fill="#00ffffff" outline="#00a50000" tint="#ff808080" />
-            <time id="3"   fill="#00ffffff" outline="#00a50000" tint="#ff909090" />
-            <time id="4"   fill="#00ffffff" outline="#00a50000" tint="#ffB0B0B0" />
-            <time id="5"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
-            <time id="6"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
-            <time id="7"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
-            <time id="8"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
-            <time id="9"   fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
-            <time id="10"  fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
-            <time id="11"  fill="#00ffffff" outline="#00a50000" tint="#ffffffff" />
-            <time id="12"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
-            <time id="13"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
-            <time id="14"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
-            <time id="15"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
-            <time id="16"  fill="#00ffffff" outline="#00a50000" tint="#ff00ffff" />
-        </day>
+        <terrain>
+            <time id="0"   fill="#000000" outline="#a50000" />
+            <time id="1"   fill="#ffffff" outline="#a50000" />
+            <time id="2"   fill="#ffffff" outline="#a50000" />
+            <time id="3"   fill="#ffffff" outline="#a50000" />
+            <time id="4"   fill="#ffffff" outline="#a50000" />
+            <time id="5"   fill="#ffffff" outline="#a50000" />
+            <time id="6"   fill="#ffffff" outline="#a50000" />
+            <time id="7"   fill="#ffffff" outline="#a50000" />
+            <time id="8"   fill="#ffffff" outline="#a50000" />
+            <time id="9"   fill="#ffffff" outline="#a50000" />
+            <time id="10"  fill="#ffffff" outline="#a50000" />
+            <time id="11"  fill="#ffffff" outline="#a50000" />
+            <time id="12"  fill="#ffffff" outline="#a50000" />
+            <time id="13"  fill="#ffffff" outline="#a50000" />
+            <time id="14"  fill="#ffffff" outline="#a50000" />
+            <time id="15"  fill="#ffffff" outline="#a50000" />
+            <time id="16"  fill="#ffffff" outline="#a50000" />
+        </terrain>
 
 	</uilandscape>
 

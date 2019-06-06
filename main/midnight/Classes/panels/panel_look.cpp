@@ -538,11 +538,11 @@ void panel_look::UpdateLandscape()
     // LoM's header is affectively part of the background
     // so update the colour to the same as the sky
 #if defined(_LOM_)
-    layHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(1)));
+    layHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
 #endif
 #if defined(_DDR_)
     //options.colour->updateNode(imgHeader);
-    imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(2)));
+    imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
 
 #endif
     

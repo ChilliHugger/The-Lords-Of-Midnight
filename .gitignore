@@ -2,6 +2,8 @@
 /main/midnight/proj.win32/Debug.win32
 /main/midnight/proj.win10/.vs/citadel/v15
 
+.DS_Store
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore

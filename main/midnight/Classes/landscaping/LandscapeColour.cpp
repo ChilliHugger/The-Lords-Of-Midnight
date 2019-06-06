@@ -12,12 +12,27 @@
 
 USING_NS_CC;
 
-static Color4B TimeOfDayColours[32][4];
+
+
+static Color3B TimeOfDayColours[MAX_TIME][MAX_SHADES];
+static const int DefaultWhite = 0xffffffff;
+
+inline Color3B ConvertFromInt( int colour )
+{
+    return Color3B(_RED(colour),_GREEN(colour),_BLUE(colour));
+}
+
+inline Color4B GetTint( mxtime_t time, TINT shade )
+{
+    return Color4B(TimeOfDayColours[time][(int)shade]);
+}
+
+
 
 void LandscapeColour::updateNode( Node* node )
 {
-    auto tint1 = Color4F(CalcCurrentMovementTint(1));
-    auto tint2 = Color4F(CalcCurrentMovementTint(2));
+    auto tint1 = Color4F(CalcCurrentMovementTint(TINT::TerrainOutline));
+    auto tint2 = Color4F(CalcCurrentMovementTint(TINT::TerrainFill));
     node->setGLProgramState( options->programState->clone() );
     node->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
     node->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
@@ -30,26 +45,23 @@ Color4B LandscapeColour::Adjust( Color4B source, Color4F tint )
     return Color4B( source.r * tint.r, source.g * tint.g, source.b * tint.b, source.a );
 }
 
+#define SET_TINT(x,y,z) \
+    x[(int)z] = Adjust(GetTint(y,z),adjust)
+
 void LandscapeColour::SetMovementColour(mxtime_t start,mxtime_t end)
 {
     startTint[0] =  CreateTimeBrightness(start);
     auto adjust = Color4F( startTint[0] );
  
-#if defined(_DAY_NIGHT_SHADER_)
-    startTint[1] =  Adjust(TimeOfDayColours[start][1],adjust);
-    startTint[2] =  Adjust(TimeOfDayColours[start][2],adjust);
-    startTint[3] =  Adjust(TimeOfDayColours[start][3],adjust);
-#endif
-
+    SET_TINT(startTint, start, TINT::TerrainOutline);
+    SET_TINT(startTint, start, TINT::TerrainFill);
+    
     // get time of day for target colour
     endTint[0] = CreateTimeBrightness(end);
     adjust = Color4F( endTint[0] );
-                           
-#if defined(_DAY_NIGHT_SHADER_)
-    endTint[1] =  Adjust(TimeOfDayColours[end][1],adjust);
-    endTint[2] =  Adjust(TimeOfDayColours[end][2],adjust);
-    endTint[3] =  Adjust(TimeOfDayColours[end][3],adjust);
-#endif
+
+    SET_TINT(endTint, end, TINT::TerrainOutline);
+    SET_TINT(endTint, end, TINT::TerrainFill);
 }
 
 void LandscapeColour::SetLookColour(mxtime_t time)
@@ -57,46 +69,20 @@ void LandscapeColour::SetLookColour(mxtime_t time)
     timeofday = time ;
     
     startTint[0]  = CreateTimeBrightness(time);
-    endTint[0] = startTint[0];
     
     auto adjust = Color4F( startTint[0] );
     
+    SET_TINT(startTint, time, TINT::TerrainOutline);
+    SET_TINT(startTint, time, TINT::TerrainFill);
+    SET_TINT(startTint, time, TINT::Person);
+    SET_TINT(startTint, time, TINT::Tunnel);
     
-#if defined(_DAY_NIGHT_SHADER_)
-    startTint[1] =  Adjust(TimeOfDayColours[time][1],adjust);
-    startTint[2] =  Adjust(TimeOfDayColours[time][2],adjust);
-    startTint[3] =  Adjust(TimeOfDayColours[time][3],adjust);
+    endTint[0]=startTint[0];
     endTint[1]=startTint[1];
     endTint[2]=startTint[2];
     endTint[3]=startTint[3];
-#endif
-    
+    endTint[4]=startTint[4];
 }
-
-
-/*
- * Function name    : panel_look::SetTimeOfDay
- *
- * Return type        : void
- *
- * Arguments        : int time
- *
- * Description        :
- *
- */
-
-void LandscapeColour::SetTimeOfDay ( mxtime_t time )
-{
-    timeofday = time ;
-    startTint[0] = CreateTimeBrightness(timeofday);
-#if defined (_DAY_NIGHT_SHADER_)
-    startTint[1] =  TimeOfDayColours[time][1];
-    startTint[2] =  TimeOfDayColours[time][2];
-    startTint[3] =  TimeOfDayColours[time][3];
-#endif
-    
-}
-
 
 /*
  * Function name    : panel_look::CreateTimeBrightness
@@ -109,36 +95,32 @@ void LandscapeColour::SetTimeOfDay ( mxtime_t time )
  *
  */
 
-Color4B ConvertFromInt( int colour )
-{
-    return Color4B(_RED(colour),_GREEN(colour),_BLUE(colour),_ALPHA(colour));
-}
-
 Color4B LandscapeColour::CreateTimeBrightness ( mxtime_t time )
 {
-    Color4B colour = TimeOfDayColours[time][0];
+    Color4B colour = GetTint(time, TINT::Normal);
     
     double red,green,blue;
     int    adjust=0;
-//
-//    variant        days;
-//    mxi->GetProperty( "sv_days", days);
-//
-//    if ( TimeOfDay[timeofday].moon_light ) {
-//        int moonno = ((s32)days%28)/2;
-//        adjust = moonlight[moonno] * 2;
-//    }
-//
+    //
+    //    variant        days;
+    //    mxi->GetProperty( "sv_days", days);
+    //
+    //    if ( TimeOfDay[timeofday].moon_light ) {
+    //        int moonno = ((s32)days%28)/2;
+    //        adjust = moonlight[moonno] * 2;
+    //    }
+    //
     red = (colour.r*2)-1-adjust;
     green = (colour.g*2)-1-adjust;
     blue = (colour.b*2)-1-adjust;
-
-    return Color4B(red,green,blue,255);
     
+    return Color4B(red,green,blue,255);
 }
 
-Color4B LandscapeColour::CalcCurrentMovementTint ( u32 index )
+Color4B LandscapeColour::CalcCurrentMovementTint ( TINT shade )
 {
+    int index = (int)shade;
+    
     if ( !options->isMoving )
         return startTint[index];
     
@@ -169,48 +151,51 @@ Color4B LandscapeColour::CalcCurrentMovementTint ( u32 index )
 
 Color3B LandscapeColour::GetPersonColour()
 {
-    Color3B colour = _clrWhite ;
 #if defined(_DDR_)
-    if ( timeofday >= tme::variables::sv_time_dawn-1 || timeofday <= tme::variables::sv_time_night+4 )
-        colour = Color3B(100,200,100);
-    
     if (options->isInTunnel)
-        colour = Color3B(64,64,64);
+        return Color3B(GetTint(timeofday, TINT::Tunnel));
 #endif
-    
-    return colour;
+    return Color3B(GetTint(timeofday, TINT::Person));
 }
 
 void LandscapeColour::OnXmlInit ( chilli::xml::node* node )
 {
     chilli::lib::xml::node* e = NULL ;
+ 
+#define SET_COLOUR(x,y) \
+    TimeOfDayColours[id][(int)x] = ConvertFromInt(d->ReadColour(y,DefaultWhite))
     
     if ( node == NULL )
         return;
     
     if ( (e = node->Find("day")) ) {
-        
         FOREACHELEMENT(e,d) {
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
                 int id = d->ReadInt("id");
-                TimeOfDayColours[id][0] = ConvertFromInt(d->ReadColour("shade",0)) ;
+                SET_COLOUR(TINT::Normal,"shade") ;
             }
         }
     }
     
-#if defined(_DAY_NIGHT_SHADER_)
-
-    if ( (e = node->Find("shade")) ) {
+    if ( (e = node->Find("people")) ) {
         FOREACHELEMENT(e,d) {
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
                 int id = d->ReadInt("id");
-                TimeOfDayColours[id][2] = ConvertFromInt(d->ReadColour("fill",0)) ;
-                TimeOfDayColours[id][1] = ConvertFromInt(d->ReadColour("outline",0)) ;
-                TimeOfDayColours[id][3] = ConvertFromInt(d->ReadColour("tint",0xffffffff)) ;
+                SET_COLOUR(TINT::Person,"normal") ;
+                SET_COLOUR(TINT::Tunnel,"tunnel") ;
             }
         }
     }
-#endif
+    
+    if ( (e = node->Find("terrain")) ) {
+        FOREACHELEMENT(e,d) {
+            if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
+                int id = d->ReadInt("id");
+                SET_COLOUR(TINT::TerrainFill,"fill") ; //2
+                SET_COLOUR(TINT::TerrainOutline,"outline") ; //1
+            }
+        }
+    }
 
 }
 

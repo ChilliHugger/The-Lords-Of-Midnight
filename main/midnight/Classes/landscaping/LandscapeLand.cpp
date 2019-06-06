@@ -55,8 +55,8 @@ bool LandscapeLand::initWithOptions( LandscapeOptions* options )
     floor->setAnchorPoint( Vec2(0,0) );
     
     if ( options->programState ) {
-        auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(1));
-        auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(2));
+        auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+        auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainFill));
         floor->setGLProgramState( options->programState->clone() );
         floor->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
         floor->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
@@ -253,8 +253,8 @@ Sprite* LandscapeLand::GetFloorImage( floor_t floor )
     //image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     
     if ( options->programState ) {
-        auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(0));
-        auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(1));
+        auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+        auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainFill));
         image->setGLProgramState( options->programState->clone() );
         image->getGLProgramState()->setUniformFloat("p_alpha", 1.0f);                    // alpha
         image->getGLProgramState()->setUniformVec4("p_left", Vec4(tint1.r,tint1.g,tint1.b,tint1.a));      // outline
