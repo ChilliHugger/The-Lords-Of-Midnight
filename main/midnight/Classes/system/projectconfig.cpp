@@ -23,23 +23,18 @@ projectconfig::~projectconfig()
 
 bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 {
-    //char path[MAX_PATH];
-    
-    UIDEBUG("ProjectConfig::LoadXmlConfig - ENTER");
+    UIDEBUG("Frontend: Scenario Config Loading");
     
     auto config = new chilli::lib::xml();
     
-    
-    //sprintf( path, "%s/%s", FrontendDirectory(), scenario );
-    
-    monitor->Update("Loading Config",0);
+    monitor->Update("Loading Scenario Config",0);
     
     if ( !config->Load ( scenario ) ) {
         SAFEDELETE(config);
-        COMPLAIN ( "Cannot load frontend config" );
+        COMPLAIN ( "Cannot load scenario config" );
     }
     
-    monitor->Update("Loaded Config",1);
+    monitor->Update("Loaded Scenario Config",1);
     
     auto base = config->Find("main");
     if ( base == NULL ) {
@@ -244,7 +239,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
     
     SAFEDELETE(config);
     
-    UIDEBUG("Frontend: Config Loaded");
+    UIDEBUG("Frontend: Scenario Config Loaded");
     
     return TRUE ;
 }

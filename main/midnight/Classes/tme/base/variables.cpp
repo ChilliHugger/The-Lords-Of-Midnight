@@ -365,6 +365,25 @@ namespace tme {
 			return MX_FAILED;
 		}
 
+        MXRESULT SetProperty(const c_str& name, const c_str& value)
+        {
+            cvarreg_t* var = NULL ;
+            
+            for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
+                if (c_stricmp( name, var_array[ii].name ) == 0 ) {
+                    var = &var_array[ii];
+                    break;
+                }
+            }
+            
+            if ( var == nullptr )
+                return MX_FAILED;
+            
+            var->string = value;
+            sv_Initialise( var );
+            
+            return MX_OK;
+        }
 
 		CVar::~CVar()
 		{

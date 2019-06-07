@@ -23,7 +23,8 @@ namespace tme {
 
 		MXRESULT GetProperty( const c_str& name, variant& arg) const ;
 		MXRESULT GetProperties ( const c_str& name, variant argv[], u32 argc );
-
+        MXRESULT SetProperty( const c_str& name, const c_str& value);
+        
 		MXRESULT Command ( const c_str& command, variant* argv=NULL, u32 args=0 );
 		MXRESULT Text ( const c_str& command, variant* argv=NULL, u32 args=0 );
 

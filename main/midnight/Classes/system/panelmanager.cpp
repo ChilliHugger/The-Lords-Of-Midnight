@@ -25,7 +25,7 @@
 
 #include "../ui/uioptionitem.h"
 
-#include "configmanager.h"
+#include "settingsmanager.h"
 #include "moonring.h"
 #include "../ui/uipanel.h"
 

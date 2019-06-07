@@ -31,7 +31,7 @@ typedef struct {
 } option_t ;
 
 #define SET_OPTION(x,z) \
-    options[x].var = &mr->config->z;
+    options[x].var = &mr->settings->z;
 
 class panel_options : public uipanel
 {

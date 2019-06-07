@@ -11,7 +11,7 @@
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 #include "../system/helpmanager.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 
@@ -184,7 +184,7 @@ bool uipanel::showHelpWindow ( helpid_t id, BOOL forceImportant, MXVoidCallback 
     
     if ( !help->isAlways(id) ) {
         
-        if ( !mr->config->tutorial ) {
+        if ( !mr->settings->tutorial ) {
             if ( callback != nullptr )
                 callback();
             return true;

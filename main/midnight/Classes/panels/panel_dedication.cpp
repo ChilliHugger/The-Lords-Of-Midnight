@@ -10,7 +10,7 @@
 #include "panel_mainmenu.h"
 
 #include "../system/moonring.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../system/panelmanager.h"
 #include "../ui/uihelper.h"

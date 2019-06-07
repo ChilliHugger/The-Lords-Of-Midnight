@@ -8,7 +8,7 @@
 
 #pragma once
 #include "../cocos.h"
-#include "configmanager.h"
+#include "settingsmanager.h"
 #include "../frontend/keyboard_id.h"
 #include "../frontend/layout_id.h"
 

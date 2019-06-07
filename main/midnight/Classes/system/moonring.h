@@ -25,13 +25,14 @@
 //
 #include <mutex>
 
-FORWARD_REFERENCE(configmanager);
+FORWARD_REFERENCE(settingsmanager);
 FORWARD_REFERENCE(helpmanager);
 //FORWARD_REFERENCE(storymanager);
 FORWARD_REFERENCE(keyboardmanager);
 FORWARD_REFERENCE(tmemanager);
 FORWARD_REFERENCE(progressmonitor);
 FORWARD_REFERENCE(projectconfig);
+FORWARD_REFERENCE(configmanager);
 
 #define RUN_ON_UI_THREAD    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread
 
@@ -112,6 +113,7 @@ protected:
 public:
     
     panelmanager*           panels;
+    settingsmanager*        settings;
     configmanager*          config;
     helpmanager*            help;
     storymanager*           stories;
@@ -128,7 +130,7 @@ public:
     
 };
 
-#define CONFIG(x)   (mr->config->x)
+#define CONFIG(x)   (mr->settings->x)
 
 
 //void _msg (LPCSTR format, ... );

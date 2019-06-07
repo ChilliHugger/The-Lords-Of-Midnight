@@ -14,7 +14,7 @@
 
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/keyboardmanager.h"
 #include "../system/panelmanager.h"
 
@@ -171,7 +171,7 @@ bool panel_options::init()
     SET_OPTION(12, screen_mode);
     SET_OPTION(13, keyboard_mode);
     
-    if ( !mr->config->fullscreensupported )
+    if ( !mr->settings->fullscreensupported )
         options[12].text = values_screen2 ;
     
     
@@ -186,7 +186,7 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
     
     if ( tag == ID_HOME ) {
         Exit();
-        mr->config->Save();
+        mr->settings->Save();
         //gl->SetPanelMode(MODE_MAINMENU,TRANSITION_FADEIN);
         return;
     } else if ( tag == ID_MENU_GAME ) {
@@ -232,7 +232,7 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
     SetValues();
     
     if ( options[index].id == ID_OPTION_TUTORIAL ) {
-        if ( mr->config->tutorial )
+        if ( mr->settings->tutorial )
             showHelpWindow(HELP_TUTORIAL_ON);
         else
             showHelpWindow(HELP_TUTORIAL_OFF);
@@ -268,7 +268,7 @@ void panel_options::SetMenu ( int id )
         
         
 #if defined(_OS_DESKTOP_)
-        mr->config->showmovementindicators=FALSE;
+        mr->settings->showmovementindicators=FALSE;
 #endif
         
         SetValues();
