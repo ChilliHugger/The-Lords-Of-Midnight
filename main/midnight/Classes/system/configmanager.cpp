@@ -79,7 +79,7 @@ bool configmanager::bumpAdvert()
 BOOL configmanager::Save ( void )
 {
     char filename[MAX_PATH]={0};
-    sprintf(filename,"%s%s", mr->getWritablePath(), CONFIG_FILENAME );
+    sprintf(filename,"%s/%s", mr->getWritablePath(), CONFIG_FILENAME );
     
     chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
     if ( pFile == NULL || !pFile->IsOpen() ) {
@@ -131,7 +131,7 @@ BOOL configmanager::Save ( void )
 BOOL configmanager::Load ( void )
 {
     char filename[MAX_PATH]={0};
-    sprintf(filename,"%s%s", mr->getWritablePath(), CONFIG_FILENAME );
+    sprintf(filename,"%s/%s", mr->getWritablePath(), CONFIG_FILENAME );
     
     chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
