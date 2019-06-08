@@ -144,6 +144,9 @@ void moonring::continueStory( storyid_t id )
         character& c = TME_CurrentCharacter();
         auto mode = Character_IsDead(c) ? MODE_THINK : MODE_LOOK;
         
+#if defined(_DEBUG_GAME_PANEL_)
+        mode = _DEBUG_GAME_PANEL_;
+#endif
         panels->setPanelMode(mode,TRANSITION_PUSHUP);
 
         if ( mode == MODE_LOOK ) {

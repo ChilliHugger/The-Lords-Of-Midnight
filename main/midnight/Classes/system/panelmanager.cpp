@@ -296,3 +296,15 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
 
 }
 
+void panelmanager::startMainMenu()
+{
+#if defined(_DEBUG_GAME_PANEL_)
+    storyid_t story = mr->getCurrentStory();
+    if ( story != STORY_NONE ) {
+        mr->continueStory( story );
+    }else
+#endif
+    {
+        mr->panels->setPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
+    }
+}

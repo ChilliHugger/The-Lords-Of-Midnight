@@ -7,9 +7,8 @@
 //
 
 #include "settingsmanager.h"
+#include "configmanager.h"
 #include "moonring.h"
-
-#include <mutex>
 
 using namespace chilli::lib ;
 
@@ -65,13 +64,15 @@ bool settingsmanager::bumpAdvert()
 {
     bool showAdvert = false;
 
-#if defined(ADVERT_FREQUENCY)
-        if (advert_screen_count%ADVERT_FREQUENCY==(ADVERT_FREQUENCY-1) ) {
-            showAdvert = true ;
-        }
-        advert_screen_count++;
-        Save();
-#endif
+    if ( mr->config->skip_adverts ) {
+        return false;
+    }
+    
+    showAdvert = advert_screen_count%ADVERT_FREQUENCY==(ADVERT_FREQUENCY-1);
+
+    advert_screen_count++;
+
+    Save();
     
     return showAdvert;
 }

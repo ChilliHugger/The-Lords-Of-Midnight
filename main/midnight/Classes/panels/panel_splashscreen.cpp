@@ -6,6 +6,7 @@
 #include "../ui/uihelper.h"
 #include "../system/moonring.h"
 #include "../system/settingsmanager.h"
+#include "../system/configmanager.h"
 #include "../system/panelmanager.h"
 #include "../system/progressmonitor.h"
 
@@ -75,16 +76,12 @@ void panel_splashscreen::complete()
     }
     
     this->scheduleOnce( [&](float) {
-#if defined(_SHOW_DEDICATION_)
-        mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
-#else
-//        storyid_t story = mr->getCurrentStory();
-//        if ( story != STORY_NONE ) {
-//            mr->continueStory( story );
-//        }else{
-            mr->panels->setPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
-//        }
-#endif
+
+        if ( !mr->config->skip_dedication ) {
+            mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
+        } else {
+            mr->panels->startMainMenu();
+        }
     }, delay, "show_mainmenu" );
 }
 

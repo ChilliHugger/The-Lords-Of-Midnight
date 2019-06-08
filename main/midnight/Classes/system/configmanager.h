@@ -21,7 +21,8 @@ public:
     bool LoadXmlConfig ( const std::string& scenario );
     
 public:
-    
+    bool skip_dedication;
+    bool skip_adverts;
 };
 
 #endif /* configmanager_h */

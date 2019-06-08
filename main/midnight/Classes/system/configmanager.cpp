@@ -12,7 +12,9 @@
 #include "../library/chilli.h"
 
 
-configmanager::configmanager()
+configmanager::configmanager() :
+    skip_adverts(false),
+    skip_dedication(false)
 {
 }
 
@@ -53,7 +55,7 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
             auto name = t->ReadStr("id");
             auto value = t->ReadBool("value");
             
-            UIDEBUG("VAR %s = '%d'", name, value);
+            UIDEBUG("VAR %s = '%s'", name, t->ReadStr("value"));
             
             if ( IS_VAR("sv_cheat_armies_noblock") ) {
                 tme::variables::sv_cheat_armies_noblock = value;
@@ -75,6 +77,14 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
                 tme::variables::sv_cheat_movement_free = value;
             }
 
+            else if ( IS_VAR("skip_dedication") ) {
+                skip_dedication = value;
+            }
+            
+            else if ( IS_VAR("skip_adverts") ) {
+                skip_adverts = value;
+            }
+            
         }
     }
     

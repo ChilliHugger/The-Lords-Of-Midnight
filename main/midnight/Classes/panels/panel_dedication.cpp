@@ -61,7 +61,7 @@ void panel_dedication::startDedication()
 
 void panel_dedication::nextPanel()
 {
-    mr->panels->setPanelMode(MODE_MAINMENU,TRANSITION_FADEIN);
+    mr->panels->startMainMenu();
 }
 
 

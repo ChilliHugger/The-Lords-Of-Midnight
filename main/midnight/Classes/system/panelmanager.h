@@ -48,6 +48,9 @@ public:
     void returnToPrevious();
     void returnToPrevious( transition_t transition );
     
+    void startMainMenu();
+
+    
     //
     panelmode_t     currentmode;
     panelmode_t     previousmode;
