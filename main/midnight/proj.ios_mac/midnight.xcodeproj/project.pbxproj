@@ -266,10 +266,14 @@
 		83B9BD781FD3114000B4C721 /* uipopup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD751FD3114000B4C721 /* uipopup.cpp */; };
 		83B9BD7C1FD7298D00B4C721 /* uihelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */; };
 		83B9BD7D1FD7298D00B4C721 /* uihelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */; };
-		83B9BD811FD9AE2000B4C721 /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */; };
-		83B9BD821FD9AE2000B4C721 /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */; };
+		83B9BD811FD9AE2000B4C721 /* settingsmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* settingsmanager.cpp */; };
+		83B9BD821FD9AE2000B4C721 /* settingsmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* settingsmanager.cpp */; };
 		83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD881FD9B13900B4C721 /* moonring.cpp */; };
 		83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD881FD9B13900B4C721 /* moonring.cpp */; };
+		83C3D6C122AAA7340040B57D /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C3D6BF22AAA7340040B57D /* configmanager.cpp */; };
+		83C3D6C222AAA7340040B57D /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C3D6BF22AAA7340040B57D /* configmanager.cpp */; };
+		83C3D6C322AAA7340040B57D /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C3D6BF22AAA7340040B57D /* configmanager.cpp */; };
+		83C3D6C422AAA7340040B57D /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C3D6BF22AAA7340040B57D /* configmanager.cpp */; };
 		83D264301F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264311F360724001C6F13 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		83D264321F360724001C6F13 /* mxengine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EA1F360724001C6F13 /* mxengine.cpp */; };
@@ -459,7 +463,7 @@
 		83E301DE21A41BE3005C3F5C /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264A11F36077E001C6F13 /* random.cpp */; };
 		83E301DF21A41BE3005C3F5C /* panel_credits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD671FD2CC9D00B4C721 /* panel_credits.cpp */; };
 		83E301E021A41BE3005C3F5C /* LandscapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFE71F4C1C99009B00A2 /* LandscapeNode.cpp */; };
-		83E301E121A41BE3005C3F5C /* configmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */; };
+		83E301E121A41BE3005C3F5C /* settingsmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B9BD7F1FD9AE2000B4C721 /* settingsmanager.cpp */; };
 		83E301E221A41BE3005C3F5C /* mxmemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263F21F360724001C6F13 /* mxmemory.cpp */; };
 		83E301E321A41BE3005C3F5C /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
 		83E301E421A41BE3005C3F5C /* progressmonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834D04ED20D30776001B07CB /* progressmonitor.cpp */; };
@@ -715,11 +719,13 @@
 		83B9BD791FD316F700B4C721 /* language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
 		83B9BD7A1FD7298D00B4C721 /* uihelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uihelper.cpp; sourceTree = "<group>"; };
 		83B9BD7B1FD7298D00B4C721 /* uihelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uihelper.h; sourceTree = "<group>"; };
-		83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = configmanager.cpp; sourceTree = "<group>"; };
-		83B9BD801FD9AE2000B4C721 /* configmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configmanager.h; sourceTree = "<group>"; };
+		83B9BD7F1FD9AE2000B4C721 /* settingsmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = settingsmanager.cpp; sourceTree = "<group>"; };
+		83B9BD801FD9AE2000B4C721 /* settingsmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settingsmanager.h; sourceTree = "<group>"; };
 		83B9BD871FD9B04D00B4C721 /* keyboard_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyboard_id.h; sourceTree = "<group>"; };
 		83B9BD881FD9B13900B4C721 /* moonring.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moonring.cpp; sourceTree = "<group>"; };
 		83B9BD891FD9B13900B4C721 /* moonring.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = moonring.h; sourceTree = "<group>"; };
+		83C3D6BF22AAA7340040B57D /* configmanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = configmanager.cpp; sourceTree = "<group>"; };
+		83C3D6C022AAA7340040B57D /* configmanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = configmanager.h; sourceTree = "<group>"; };
 		83D263E91F360724001C6F13 /* collections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collections.cpp; sourceTree = "<group>"; };
 		83D263EA1F360724001C6F13 /* mxengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxengine.cpp; sourceTree = "<group>"; };
 		83D263EB1F360724001C6F13 /* mxentity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mxentity.cpp; sourceTree = "<group>"; };
@@ -1238,8 +1244,8 @@
 				8351A5171FDF26D400D9AB57 /* help_ddr.cpp */,
 				8351A51A1FDF2D4100D9AB57 /* helpmanager.h */,
 				8351A51F1FDF398300D9AB57 /* helpmanager.cpp */,
-				83B9BD7F1FD9AE2000B4C721 /* configmanager.cpp */,
-				83B9BD801FD9AE2000B4C721 /* configmanager.h */,
+				83B9BD7F1FD9AE2000B4C721 /* settingsmanager.cpp */,
+				83B9BD801FD9AE2000B4C721 /* settingsmanager.h */,
 				83B9BD881FD9B13900B4C721 /* moonring.cpp */,
 				83B9BD891FD9B13900B4C721 /* moonring.h */,
 				8351A5221FE44B3E00D9AB57 /* storymanager.cpp */,
@@ -1254,6 +1260,8 @@
 				834D04EA20D2FB3C001B07CB /* projectconfig.h */,
 				834D04ED20D30776001B07CB /* progressmonitor.cpp */,
 				834D04EE20D30776001B07CB /* progressmonitor.h */,
+				83C3D6BF22AAA7340040B57D /* configmanager.cpp */,
+				83C3D6C022AAA7340040B57D /* configmanager.h */,
 			);
 			path = system;
 			sourceTree = "<group>";
@@ -1695,6 +1703,7 @@
 				8344EC2C1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,
 				8351A5201FDF398300D9AB57 /* helpmanager.cpp in Sources */,
 				83B9BD731FD30AF700B4C721 /* uipanel.cpp in Sources */,
+				83C3D6C122AAA7340040B57D /* configmanager.cpp in Sources */,
 				83D264801F360724001C6F13 /* default_scenario.cpp in Sources */,
 				8397AFE11F4C1A2E009B00A2 /* LandscapeSky.cpp in Sources */,
 				83D264681F360724001C6F13 /* item_stronghold.cpp in Sources */,
@@ -1711,7 +1720,7 @@
 				83A9ACBA1FEBBEBB00673B66 /* MyButton.cpp in Sources */,
 				83A600052187B98700FBDAFC /* uithinkpage.cpp in Sources */,
 				833172F9219B1E85009A52E7 /* uisinglelord.cpp in Sources */,
-				83B9BD811FD9AE2000B4C721 /* configmanager.cpp in Sources */,
+				83B9BD811FD9AE2000B4C721 /* settingsmanager.cpp in Sources */,
 				83D2645E1F360724001C6F13 /* info_unit.cpp in Sources */,
 				83B5AB6F21760B4100CC29EF /* panel_night.cpp in Sources */,
 				83B668992185EF5700B130FC /* uifilterbutton.cpp in Sources */,
@@ -1886,7 +1895,8 @@
 				83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */,
 				83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */,
 				83733924227C30D5001D61FD /* mapmodel.cpp in Sources */,
-				83B9BD821FD9AE2000B4C721 /* configmanager.cpp in Sources */,
+				83C3D6C222AAA7340040B57D /* configmanager.cpp in Sources */,
+				83B9BD821FD9AE2000B4C721 /* settingsmanager.cpp in Sources */,
 				83D264431F360724001C6F13 /* mxmemory.cpp in Sources */,
 				831AD5831FE58671001108AC /* uibook.cpp in Sources */,
 				8378E3C621BD4FAD0030AE3C /* panelmodel.cpp in Sources */,
@@ -1996,6 +2006,7 @@
 				8344EBFA1FD1E43F0067AAC1 /* info_object.cpp in Sources */,
 				8344EBFB1FD1E43F0067AAC1 /* c_str.cpp in Sources */,
 				8344EBFC1FD1E43F0067AAC1 /* info_terrain.cpp in Sources */,
+				83C3D6C322AAA7340040B57D /* configmanager.cpp in Sources */,
 				8344EBFD1FD1E43F0067AAC1 /* LandscapeDebug.cpp in Sources */,
 				8344EBFE1FD1E43F0067AAC1 /* info_unit.cpp in Sources */,
 				8344EBFF1FD1E43F0067AAC1 /* main.cpp in Sources */,
@@ -2094,7 +2105,8 @@
 				83E301DF21A41BE3005C3F5C /* panel_credits.cpp in Sources */,
 				83E301E021A41BE3005C3F5C /* LandscapeNode.cpp in Sources */,
 				83733926227C30D5001D61FD /* mapmodel.cpp in Sources */,
-				83E301E121A41BE3005C3F5C /* configmanager.cpp in Sources */,
+				83C3D6C422AAA7340040B57D /* configmanager.cpp in Sources */,
+				83E301E121A41BE3005C3F5C /* settingsmanager.cpp in Sources */,
 				83E301E221A41BE3005C3F5C /* mxmemory.cpp in Sources */,
 				83E301E321A41BE3005C3F5C /* uibook.cpp in Sources */,
 				8378E3C721BD4FAD0030AE3C /* panelmodel.cpp in Sources */,

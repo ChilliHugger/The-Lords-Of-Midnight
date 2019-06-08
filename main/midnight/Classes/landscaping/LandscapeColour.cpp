@@ -7,7 +7,7 @@
 
 #include "LandscapeColour.h"
 #include "../ui/uihelper.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "LandscapeView.h"
 
 USING_NS_CC;

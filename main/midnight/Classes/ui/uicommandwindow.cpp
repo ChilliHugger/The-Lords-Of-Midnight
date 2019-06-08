@@ -12,7 +12,7 @@
 #include "../frontend/language.h"
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/keyboardmanager.h"
 
 #include "../frontend/layout_id.h"
@@ -241,7 +241,7 @@ void uicommandwindow::initialiseCommands()
         lord->refreshStatus();
         addItem(lord, CHOOSE_CHAR+ii);
         
-        if ( mr->config->keyboard_mode == CF_KEYBOARD_CLASSIC )
+        if ( mr->settings->keyboard_mode == CF_KEYBOARD_CLASSIC )
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_old));
         else
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
@@ -376,7 +376,7 @@ void uicommandwindow::show( MXVoidCallback callback )
     // and show
     parent->addChild(this);
     
-    if ( mr->config->screentransitions ) {
+    if ( mr->settings->screentransitions ) {
     
         this->setCascadeOpacityEnabled(true);
         this->setOpacity(ALPHA(0.0f));

@@ -19,7 +19,6 @@ using namespace chilli::types;
 //#define _DEFINE_ENUMS_
 //#endif 
 
-//#define _TME_DEMO_MODE_
 //#define _TEST_WINLOSE_CONDITIONS_
 
 // enum control

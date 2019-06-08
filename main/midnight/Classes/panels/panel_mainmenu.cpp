@@ -164,7 +164,7 @@ void panel_mainmenu::OnMenuNotification( const uinotificationinterface* sender, 
 void panel_mainmenu::OnShowManual()
 {
     AreYouSure(_NOVELLA_PROMPT_, [&] {
-        if ( mr->config->novella_pdf ) {
+        if ( mr->settings->novella_pdf ) {
             OpenPDF(_NOVELLA_DOCUMENT_PDF_);
         }else{
             OpenPDF(_NOVELLA_DOCUMENT_);

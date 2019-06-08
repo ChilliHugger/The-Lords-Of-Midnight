@@ -8,7 +8,7 @@
 
 #include "../ui/uihelper.h"
 #include "storymanager.h"
-#include "configmanager.h"
+#include "settingsmanager.h"
 #include "../tme_interface.h"
 #include "moonring.h"
 

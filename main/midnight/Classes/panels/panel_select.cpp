@@ -11,7 +11,7 @@
 #include "panel_select.h"
 
 #include "../system/moonring.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 #include "../frontend/language.h"
@@ -228,7 +228,7 @@ void panel_select::getCharacters()
         
         auto userdata = lord->userData();
         
-        if ( mr->config->keyboard_mode == CF_KEYBOARD_CLASSIC )
+        if ( mr->settings->keyboard_mode == CF_KEYBOARD_CLASSIC )
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(userdata->shortcut_old));
         else
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(userdata->shortcut_new));

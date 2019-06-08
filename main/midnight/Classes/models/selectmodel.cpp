@@ -9,7 +9,7 @@
 
 #include "selectmodel.h"
 #include "../system/tmemanager.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../tme_interface.h"
 
 using namespace chilli::lib;

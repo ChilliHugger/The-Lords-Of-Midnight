@@ -13,7 +13,7 @@
 #include "../ui/uipanel.h"
 #include "../ui/uifilterbutton.h"
 #include "../frontend/layout_id.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../models/selectmodel.h"
 
 class panel_select :

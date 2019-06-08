@@ -10,16 +10,14 @@
 
 #include "moonring.h"
 #include "helpmanager.h"
-#include "configmanager.h"
+#include "settingsmanager.h"
 #include "storymanager.h"
 #include "keyboardmanager.h"
 #include "tmemanager.h"
 #include "panelmanager.h"
 #include "projectconfig.h"
 #include "progressmonitor.h"
-
-
-
+#include "configmanager.h"
 
 USING_NS_CC;
 
@@ -30,15 +28,13 @@ static bool mySerialize ( u32 version, chilli::lib::archive& ar )
     return moonring::mikesingleton()->serialize(version, ar );
 }
 
-
-
 moonring::moonring()
 {
     help = new helpmanager();
     help->InjectMoonRing(this);
     
-    config = new configmanager();
-    config->InjectMoonRing(this);
+    settings = new settingsmanager();
+    settings->InjectMoonRing(this);
 
     stories = new storymanager();
     stories->InjectMoonRing(this);
@@ -52,11 +48,14 @@ moonring::moonring()
     project = new projectconfig();
     project->InjectMoonRing(this);
     
+    config = new configmanager();
+    config->InjectMoonRing(this);
+    
     stories->SetLoadSave(&mySerialize);
     
-    config->Load();
+    settings->Load();
     
-    keyboard->SetKeyboardMode((CONFIG_KEYBOARD_MODE)config->keyboard_mode);
+    keyboard->SetKeyboardMode((CONFIG_KEYBOARD_MODE)settings->keyboard_mode);
 
 }
 
@@ -66,7 +65,7 @@ moonring::~moonring()
 {
     SAFEDELETE(panels);
     SAFEDELETE(help);
-    SAFEDELETE(config);
+    SAFEDELETE(settings);
     SAFEDELETE(stories);
     SAFEDELETE(keyboard);
     SAFEDELETE(tme);
@@ -565,12 +564,14 @@ void moonring::initialise( progressmonitor* monitor )
     // initialise TME
     TME_Init();
     
+    std::string configFilename = std::string( getWritablePath() ) + "/config.cfg";
+    config->LoadXmlConfig( configFilename );
+    
 #ifdef _TME_CHEAT_MODE_
     UIDEBUG("Global:: _TME_CHEAT_MODE_");
     tme::variables::sv_cheat_armies_noblock = true;
     tme::variables::sv_cheat_nasties_noblock = true;
-    //tme::variables::sv_cheat_movement_free = true ;
-    tme::variables::sv_cheat_movement_cheap = true ;
+    tme::variables::sv_cheat_movement_free = true ;
     //variables::sv_cheat_commands_free = true ;
 #endif
 
@@ -578,9 +579,6 @@ void moonring::initialise( progressmonitor* monitor )
     UIDEBUG("Global:: _TME_DEMO_MODE_");
     tme::variables::sv_cheat_armies_noblock = true;
     tme::variables::sv_cheat_nasties_noblock = true;
-    //variables::sv_cheat_movement_free = true ;
-    //tme::variables::sv_cheat_movement_cheap = true ;
-    //tme::variables::sv_cheat_commands_free = true ;
 #endif
     
 #if defined(_LOM_MAP_)

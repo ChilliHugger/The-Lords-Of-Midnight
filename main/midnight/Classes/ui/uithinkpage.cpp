@@ -8,7 +8,7 @@
 #include "../ui/uihelper.h"
 #include "uithinkpage.h"
 #include "../system/moonring.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../system/tmemanager.h"
 #include "../frontend/layout_id.h"

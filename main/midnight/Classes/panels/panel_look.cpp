@@ -4,7 +4,7 @@
 #include "panel_think.h"
 
 #include "../system/moonring.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/helpmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../system/keyboardmanager.h"
@@ -729,7 +729,7 @@ bool panel_look::moveForward ( void )
     // something is in our way that we must fight
     // so check for auto fight
     if ( location_flags&lif_fight ) {
-        if ( mr->config->autofight ) {
+        if ( mr->settings->autofight ) {
             // do we have an army?
             // do we have the correct sword?
             
@@ -747,7 +747,7 @@ bool panel_look::moveForward ( void )
     
     // mr->checkUnhide?
     if ( Character_IsHidden(c) ) {
-        if ( mr->config->autounhide ) {
+        if ( mr->settings->autounhide ) {
             if ( Character_Hide(c) ) {
             }
         }
@@ -943,7 +943,7 @@ void panel_look::hideMenus ( void )
 
 void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
 {
-    if ( !mr->config->screentransitions ) {
+    if ( !mr->settings->screentransitions ) {
         if ( callback != nullptr ) {
             callback();
         }
@@ -973,7 +973,7 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callba
 
 void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
 {
-    if ( !mr->config->screentransitions ) {
+    if ( !mr->settings->screentransitions ) {
         if ( callback != nullptr ) {
             callback();
         }
@@ -1408,21 +1408,21 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     
     auto position =  touch->getLocation();
     
-    if ( mr->config->nav_mode!=CF_NAV_SWIPE ) {
+    if ( mr->settings->nav_mode!=CF_NAV_SWIPE ) {
         
         int move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
         
         // use full centre height if we are only pressing
-        if ( mr->config->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
+        if ( mr->settings->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
             move_press_y = size.height * 0.75 ;
         
-        else if ( mr->config->nav_mode==CF_NAV_PRESS )
+        else if ( mr->settings->nav_mode==CF_NAV_PRESS )
             move_press_y = size.height ;
         
         if ( IsLeftMouseDown  ) {
             
             
-            if ( mr->config->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
+            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
                 if ( position.y > move_press_y
                     && (position.x>RES(MOUSE_LOOK_BLEED)
                         && position.x < imgShield->getPosition().x ) ) {
@@ -1446,7 +1446,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
             if ( currentMovementIndicator == LM_NONE )
                 return true;
             
-            if ( mr->config->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
+            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
                 if ( position.y > move_press_y
                     && (position.x>RES(MOUSE_LOOK_BLEED)
                             && position.x < imgShield->getPosition().x ) ) {
@@ -1473,7 +1473,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
 
 void panel_look::setupMovementIndicators()
 {
-    if ( !mr->config->showmovementindicators )
+    if ( !mr->settings->showmovementindicators )
         return;
     
     f32 scale = 2.5f;
@@ -1502,7 +1502,7 @@ void panel_look::updateMovementIndicators(LANDSCAPE_MOVEMENT movement)
     bool drawArrows = movement != LM_NONE ;
     currentMovementIndicator = movement;
  
-    if ( !mr->config->showmovementindicators )
+    if ( !mr->settings->showmovementindicators )
         return;
 
     for ( int ii=0; ii<NUMELE(movementIndicators); ii++ ) {
@@ -1521,7 +1521,7 @@ void panel_look::updateMovementIndicators(LANDSCAPE_MOVEMENT movement)
 
 bool panel_look::allowDragDownMove()
 {
-    int value = mr->config->nav_mode ;
+    int value = mr->settings->nav_mode ;
     if ( value != CF_NAV_PRESS)
         return  TRUE;
     return FALSE;
@@ -1529,7 +1529,7 @@ bool panel_look::allowDragDownMove()
 
 bool panel_look::allowDragLook()
 {
-    int value = mr->config->nav_mode ;
+    int value = mr->settings->nav_mode ;
     if ( value != CF_NAV_PRESS && value != CF_NAV_SWIPE_MOVE_PRESS_LOOK )
         return  TRUE;
     return FALSE;

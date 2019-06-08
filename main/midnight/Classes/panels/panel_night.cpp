@@ -11,7 +11,7 @@
 #include "panel_night.h"
 
 #include "../system/moonring.h"
-#include "../system/configmanager.h"
+#include "../system/settingsmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 
@@ -65,7 +65,7 @@ bool panel_night::init()
 
 void panel_night::OnShown()
 {
-    variables::sv_collate_battle_areas = !mr->config->night_battle_full ;
+    variables::sv_collate_battle_areas = !mr->settings->night_battle_full ;
     
     // Initialise in a thread
     auto atp = AsyncTaskPool::getInstance();
@@ -116,7 +116,7 @@ void panel_night::OnNightNotification ( callback_t* event )
             setNightText( msg );
         });
 
-        if ( !mr->config->night_display_fast )
+        if ( !mr->settings->night_display_fast )
             std::this_thread::sleep_for(std::chrono::seconds(2));
 
     }else{

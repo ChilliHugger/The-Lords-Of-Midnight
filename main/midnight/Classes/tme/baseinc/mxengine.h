@@ -3,7 +3,8 @@
 
 #include "info.h"
 #include "../baseinc/scenario.h"
-//#include "IwDebug.h"
+
+//#define _TME_DEMO_MODE_
 
 #define ISARG(x)	 c_stricmp( arg, x ) == 0 
 #define COMMAND(x)	static MXRESULT (x)( const c_str& arg, variant argv[], u32 argc)
