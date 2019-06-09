@@ -78,11 +78,9 @@ public:
     virtual ~terrain_data_t();
     
 public:
-    std::string           file;
-    //imagearray*     graphics;
-    //mxcellimage*    mapimage;
-    std::string           mapimage;
-    int             mapcell;
+    std::string file;
+    int         mapcell;
+    bool        mapdensity;
 } ;
 
 

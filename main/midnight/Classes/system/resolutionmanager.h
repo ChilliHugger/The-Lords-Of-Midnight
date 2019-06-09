@@ -16,7 +16,7 @@ using namespace chilli::types;
 
 typedef struct {
     s32     reference;
-    c_str   folder;
+    std::string   folder;
     f32     width;
     f32     height;
     u32     aspect;

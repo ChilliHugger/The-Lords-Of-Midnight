@@ -153,10 +153,11 @@ race_data_t::~race_data_t()
 }
 
 
-terrain_data_t::terrain_data_t()
+terrain_data_t::terrain_data_t() :
+    mapcell(0),
+    mapdensity(false),
+    file("")
 {
-    //graphics = NULL ;
-    //mapimage = NULL ;
 }
 
 terrain_data_t::~terrain_data_t()

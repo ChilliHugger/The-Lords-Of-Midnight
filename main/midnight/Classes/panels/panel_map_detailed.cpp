@@ -18,9 +18,12 @@
 
 #include "../frontend/layout_id.h"
 
+#include "../Extensions/TMXTiledMap.h"
+#include "../Utils/mapbuilder.h"
+
 USING_NS_CC;
+USING_NS_CC_UI;
 using namespace tme;
-using namespace cocos2d::ui;
 
 bool panel_map_detailed::init()
 {
@@ -39,6 +42,47 @@ bool panel_map_detailed::init()
   
     auto map = uihelper::CreateImageButton("i_big_map", ID_MAP_OVERVIEW, clickCallback);
     uihelper::AddBottomRight(this, map, RES(10), RES(10) );
+    
+    std::unique_ptr<mapbuilder> builder( new mapbuilder );
+    
+    builder->build();
+    
+    auto path = FileUtils::getInstance()->fullPathForFilename("all");
+    
+    auto res = resolutionmanager::getInstance();
+    std::string scenario = TME_ScenarioShortName();
+    
+    auto tmxMapInfo = new (std::nothrow) TMXMapInfo();
+    
+    // Map Setup
+    tmxMapInfo->setMapSize( Size(builder->mapsize.cx,builder->mapsize.cy) );
+    tmxMapInfo->setOrientation(TMXOrientationOrtho);
+    tmxMapInfo->setTileSize(Size(RES(64),RES(64)));
+    
+    // Tilesets
+    auto t1 = new (std::nothrow) TMXTilesetInfo();
+    t1->_name = "terrain";
+    t1->_firstGid=1;
+    t1->_tileSize = tmxMapInfo->getTileSize();
+    t1->_originSourceImage = "map_tiles.png";
+    t1->_sourceImage = scenario + "/" + res->current_resolution.folder +  "/terrain/" + t1->_originSourceImage;
+
+    tmxMapInfo->getTilesets().pushBack(t1);
+    t1->release();
+    
+    // Layers
+    auto layer = new (std::nothrow) TMXLayerInfo();
+    layer->_layerSize = tmxMapInfo->getMapSize();
+    layer->_name = "Terrain";
+    layer->_visible = true;
+    layer->_opacity = 255;
+    layer->_tiles = builder->terrain;
+    tmxMapInfo->getLayers().pushBack(layer);
+    layer->release();
+    
+    auto tmxMap = extensions::TMXTiledMap::create(tmxMapInfo);
+    addChild(tmxMap);
+
     
     return true;
 }

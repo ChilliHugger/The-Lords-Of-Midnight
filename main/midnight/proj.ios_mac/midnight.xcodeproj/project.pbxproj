@@ -238,6 +238,14 @@
 		83A9ACBB1FEBBEBB00673B66 /* MyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9ACB81FEBBEBB00673B66 /* MyButton.cpp */; };
 		83A9B892216EA175005D9EE4 /* panel_think.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9B891216EA175005D9EE4 /* panel_think.cpp */; };
 		83A9B893216EA94E005D9EE4 /* panel_think.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A9B891216EA175005D9EE4 /* panel_think.cpp */; };
+		83ADDBEF22AD26150041065F /* mapbuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBED22AD26150041065F /* mapbuilder.cpp */; };
+		83ADDBF022AD26150041065F /* mapbuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBED22AD26150041065F /* mapbuilder.cpp */; };
+		83ADDBF122AD26150041065F /* mapbuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBED22AD26150041065F /* mapbuilder.cpp */; };
+		83ADDBF222AD26150041065F /* mapbuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBED22AD26150041065F /* mapbuilder.cpp */; };
+		83ADDBF522AD26710041065F /* TMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBF322AD26710041065F /* TMXTiledMap.cpp */; };
+		83ADDBF622AD26710041065F /* TMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBF322AD26710041065F /* TMXTiledMap.cpp */; };
+		83ADDBF722AD26710041065F /* TMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBF322AD26710041065F /* TMXTiledMap.cpp */; };
+		83ADDBF822AD26710041065F /* TMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83ADDBF322AD26710041065F /* TMXTiledMap.cpp */; };
 		83B5AB5C2174E16300CC29EF /* uicommandwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */; };
 		83B5AB5D2174E16300CC29EF /* uicommandwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */; };
 		83B5AB6921760B4100CC29EF /* panel_advert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83B5AB6121760B4000CC29EF /* panel_advert.cpp */; };
@@ -688,6 +696,10 @@
 		83A9ACB91FEBBEBB00673B66 /* MyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyButton.h; sourceTree = "<group>"; };
 		83A9B890216EA175005D9EE4 /* panel_think.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = panel_think.h; sourceTree = "<group>"; };
 		83A9B891216EA175005D9EE4 /* panel_think.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = panel_think.cpp; sourceTree = "<group>"; };
+		83ADDBED22AD26150041065F /* mapbuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mapbuilder.cpp; sourceTree = "<group>"; };
+		83ADDBEE22AD26150041065F /* mapbuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mapbuilder.h; sourceTree = "<group>"; };
+		83ADDBF322AD26710041065F /* TMXTiledMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TMXTiledMap.cpp; sourceTree = "<group>"; };
+		83ADDBF422AD26710041065F /* TMXTiledMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMXTiledMap.h; sourceTree = "<group>"; };
 		83B5AB5A2174E16300CC29EF /* uicommandwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uicommandwindow.cpp; sourceTree = "<group>"; };
 		83B5AB5B2174E16300CC29EF /* uicommandwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uicommandwindow.h; sourceTree = "<group>"; };
 		83B5AB5E2174EE7500CC29EF /* choose_id.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = choose_id.h; sourceTree = "<group>"; };
@@ -1012,6 +1024,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				83ADDBE922AD03B30041065F /* Utils */,
 				8378E3C221BD4F680030AE3C /* models */,
 				83B9BD7E1FD9ADE100B4C721 /* system */,
 				83B9BD6B1FD2D35900B4C721 /* Extensions */,
@@ -1225,10 +1238,21 @@
 			name = landscaping;
 			sourceTree = "<group>";
 		};
+		83ADDBE922AD03B30041065F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				83ADDBED22AD26150041065F /* mapbuilder.cpp */,
+				83ADDBEE22AD26150041065F /* mapbuilder.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		83B9BD6B1FD2D35900B4C721 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */,
+				83ADDBF322AD26710041065F /* TMXTiledMap.cpp */,
+				83ADDBF422AD26710041065F /* TMXTiledMap.h */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1738,6 +1762,7 @@
 				83733923227C30D5001D61FD /* mapmodel.cpp in Sources */,
 				8351A52C1FE4633100D9AB57 /* tmemanager.cpp in Sources */,
 				834D04EF20D30776001B07CB /* progressmonitor.cpp in Sources */,
+				83ADDBEF22AD26150041065F /* mapbuilder.cpp in Sources */,
 				8397AFF71F4CCAB2009B00A2 /* LandscapeView.cpp in Sources */,
 				83398A8B20D1A46C007EAE7B /* panelmanager.cpp in Sources */,
 				831AD5861FE58F99001108AC /* uibookmenu.cpp in Sources */,
@@ -1802,6 +1827,7 @@
 				839F9F4321C23E8C00EC5DBB /* TunnelView.cpp in Sources */,
 				83B9BD8A1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				833172FD219B1E85009A52E7 /* uilordselect.cpp in Sources */,
+				83ADDBF522AD26710041065F /* TMXTiledMap.cpp in Sources */,
 				83D264D81F36077E001C6F13 /* c_str.cpp in Sources */,
 				8351A51D1FDF317400D9AB57 /* uihelpwindow.cpp in Sources */,
 				83D264D61F36077E001C6F13 /* crange.cpp in Sources */,
@@ -1842,10 +1868,12 @@
 				83D264D51F36077E001C6F13 /* cflags.cpp in Sources */,
 				83B5AB7A2177892B00CC29EF /* LandscapePeople.cpp in Sources */,
 				83D264CF1F36077E001C6F13 /* carchive.cpp in Sources */,
+				83ADDBF622AD26710041065F /* TMXTiledMap.cpp in Sources */,
 				83E108B31FE5687A00C29042 /* panel_dedication.cpp in Sources */,
 				83D264351F360724001C6F13 /* mxentity.cpp in Sources */,
 				83D264531F360724001C6F13 /* info_gender.cpp in Sources */,
 				83D264831F360724001C6F13 /* lom_scenario.cpp in Sources */,
+				83ADDBF022AD26150041065F /* mapbuilder.cpp in Sources */,
 				8397AFE61F4C1BB6009B00A2 /* LandscapeLand.cpp in Sources */,
 				8397AFF21F4CC579009B00A2 /* LandscapeView.cpp in Sources */,
 				83D264C51F36077E001C6F13 /* cfile_windows.cpp in Sources */,
@@ -1972,6 +2000,7 @@
 				8344EBD71FD1E43F0067AAC1 /* info_gender.cpp in Sources */,
 				8344EBD81FD1E43F0067AAC1 /* lom_scenario.cpp in Sources */,
 				8344EBD91FD1E43F0067AAC1 /* LandscapeLand.cpp in Sources */,
+				83ADDBF722AD26710041065F /* TMXTiledMap.cpp in Sources */,
 				8344EBDA1FD1E43F0067AAC1 /* LandscapeView.cpp in Sources */,
 				8344EBDB1FD1E43F0067AAC1 /* cfile_windows.cpp in Sources */,
 				8344EBDC1FD1E43F0067AAC1 /* tinystr.cpp in Sources */,
@@ -2014,6 +2043,7 @@
 				8344EC011FD1E43F0067AAC1 /* default_scenario.cpp in Sources */,
 				8344EC021FD1E43F0067AAC1 /* item_place.cpp in Sources */,
 				83733925227C30D5001D61FD /* mapmodel.cpp in Sources */,
+				83ADDBF122AD26150041065F /* mapbuilder.cpp in Sources */,
 				8344EC031FD1E43F0067AAC1 /* tinyxml.cpp in Sources */,
 				8344EC041FD1E43F0067AAC1 /* misc.cpp in Sources */,
 				8344EC051FD1E43F0067AAC1 /* info_race.cpp in Sources */,
@@ -2052,10 +2082,12 @@
 				83E301AC21A41BE3005C3F5C /* cflags.cpp in Sources */,
 				83E301AD21A41BE3005C3F5C /* LandscapePeople.cpp in Sources */,
 				83E301AE21A41BE3005C3F5C /* carchive.cpp in Sources */,
+				83ADDBF822AD26710041065F /* TMXTiledMap.cpp in Sources */,
 				83E301AF21A41BE3005C3F5C /* panel_dedication.cpp in Sources */,
 				83E301B021A41BE3005C3F5C /* mxentity.cpp in Sources */,
 				83E301B121A41BE3005C3F5C /* info_gender.cpp in Sources */,
 				83E301B221A41BE3005C3F5C /* lom_scenario.cpp in Sources */,
+				83ADDBF222AD26150041065F /* mapbuilder.cpp in Sources */,
 				83E301B321A41BE3005C3F5C /* LandscapeLand.cpp in Sources */,
 				83E301B421A41BE3005C3F5C /* LandscapeView.cpp in Sources */,
 				83E301B521A41BE3005C3F5C /* cfile_windows.cpp in Sources */,

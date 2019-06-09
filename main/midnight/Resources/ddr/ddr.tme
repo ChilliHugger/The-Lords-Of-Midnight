@@ -78,25 +78,23 @@
     
 	<terrain>
 		<terrain id="ARMY"              file="t_army" />
-		<terrain id="TN_MIST"           file="t_mist"       mapfile="terrain/map_rest.png" mapcell="12" />
-		<terrain id="TN_PLAIN"          file=""             mapfile="terrain/map_rest.png" mapcell="13" />
-		<terrain id="TN_MOUNTAIN2"      file="t_mountain2"  mapfile="terrain/map_mountains.png" />
-		<terrain id="TN_FOREST2"        file="t_forest2"    mapfile="terrain/map_forest.png"/>
-		<terrain id="TN_HILL"           file="t_hills2"     mapfile="terrain/map_hills.png"/>
-		<terrain id="TN_GATE"           file="t_gate"       mapfile="terrain/map_rest.png" mapcell="1"/>
-		<terrain id="TN_TEMPLE"         file="t_temple"     mapfile="terrain/map_rest.png" mapcell="3"/>
-		<terrain id="TN_PIT"            file="t_pit"        mapfile="terrain/map_rest.png" mapcell="11"/>
-		<terrain id="TN_PALACE"         file="t_palace"     mapfile="terrain/map_rest.png" mapcell="9"/>
-		<terrain id="TN_FORTRESS"       file="t_fortress"   mapfile="terrain/map_rest.png" mapcell="6"/>
-		<terrain id="TN_HALL"           file="t_hall"       mapfile="terrain/map_rest.png" mapcell="7"/>
-		<terrain id="TN_HUT"            file="t_hut"        mapfile="terrain/map_rest.png" mapcell="5"/>
-		<terrain id="TN_WATCHTOWER"     file="t_tower2"     mapfile="terrain/map_rest.png" mapcell="4"/>
-		<terrain id="TN_CITY"           file="t_city"       mapfile="terrain/map_rest.png" mapcell="2"/>
-		<terrain id="TN_FOUNTAIN"       file="t_fountain"   mapfile="terrain/map_rest.png" mapcell="8"/>
-		<terrain id="TN_STONE"          file="t_stones"     mapfile="terrain/map_rest.png" mapcell="10"/>
-		<terrain id="TN_ICYWASTE"       file="t_icywaste"   mapfile="terrain/map_frozenwastes.png"/>
-    
-	
+		<terrain id="TN_GATE"           file="t_gate"       mapcell="0"/>
+        <terrain id="TN_CITY"           file="t_city"       mapcell="1"/>
+        <terrain id="TN_TEMPLE"         file="t_temple"     mapcell="2"/>
+        <terrain id="TN_WATCHTOWER"     file="t_tower2"     mapcell="3"/>
+        <terrain id="TN_HUT"            file="t_hut"        mapcell="16"/>
+		<terrain id="TN_FORTRESS"       file="t_fortress"   mapcell="17"/>
+		<terrain id="TN_HALL"           file="t_hall"       mapcell="18"/>
+		<terrain id="TN_FOUNTAIN"       file="t_fountain"   mapcell="19"/>
+        <terrain id="TN_PALACE"         file="t_palace"     mapcell="32"/>
+		<terrain id="TN_STONE"          file="t_stones"     mapcell="33"/>
+        <terrain id="TN_PIT"            file="t_pit"        mapcell="34"/>
+        <terrain id="TN_MIST"           file="t_mist"       mapcell="35" />
+        <terrain id="TN_PLAIN"          file=""             mapcell="48" />
+        <terrain id="TN_FOREST2"        file="t_forest2"    mapcell="64" mapdensity="true"/>
+        <terrain id="TN_ICYWASTE"       file="t_icywaste"   mapcell="68" mapdensity="true"/>
+        <terrain id="TN_HILL"           file="t_hills2"     mapcell="72" mapdensity="true"/>
+        <terrain id="TN_MOUNTAIN2"      file="t_mountain2"  mapcell="76" mapdensity="true"/>
 	</terrain>
 
     <panel_menu>

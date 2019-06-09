@@ -142,19 +142,20 @@ void AppDelegate::InitialisePaths()
     
 
     LPCSTR scenario = TME_ScenarioShortName();
+    LPCSTR resfolder = res->current_resolution.folder.c_str();
 
     char main_path[MAX_PATH];
     
-    sprintf( main_path, "%s/%s", scenario, (LPCSTR)res->current_resolution.folder );
+    sprintf( main_path, "%s/%s", scenario, resfolder );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "%s/%s/screens/%d", scenario, (LPCSTR)res->current_resolution.folder, res->Aspect() );
+    sprintf( main_path, "%s/%s/screens/%d", scenario, resfolder, res->Aspect() );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "all/%s", (LPCSTR)res->current_resolution.folder );
+    sprintf( main_path, "all/%s",resfolder );
     searchPaths.push_back(main_path);
     
-    sprintf( main_path, "all/%s/screens/%d", (LPCSTR)res->current_resolution.folder, res->Aspect() );
+    sprintf( main_path, "all/%s/screens/%d", resfolder, res->Aspect() );
     searchPaths.push_back(main_path);
     
     

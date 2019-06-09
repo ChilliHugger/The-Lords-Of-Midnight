@@ -72,8 +72,8 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     UIDEBUG( "Frontend: Loading TERRAIN... %s", d->symbol.c_str() );
                     mr->tme->terrain.Add(d);
                     
-                    d->mapimage = t->ReadStr("mapfile","");
-                    d->mapcell = t->ReadInt("mapcell",0);
+                    d->mapdensity = t->ReadBool("mapdensity",false);
+                    d->mapcell = t->ReadInt("mapcell",-1) + 1;
                 }
                 monitor->Update("Loading Terrain", 1);
             }
