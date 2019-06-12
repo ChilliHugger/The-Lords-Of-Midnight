@@ -515,13 +515,13 @@ namespace tme {
   	bool ddr_character::CheckRecruitChar ( mxcharacter* character )  const
 	{
 		if ( character == this )
-			return FALSE ;
+			return false ;
 
         if ( character->HasFollowers() )
-            return FALSE;
+            return false;
         
         if ( character->IsFollowing() )
-            return FALSE;
+            return false;
         
         //if (!IsAIControlled())
         //    return true;
@@ -531,13 +531,13 @@ namespace tme {
             return IsSymbol("CH_TARITHEL");
         
         else if ( character->IsSymbol("CH_TARITHEL"))
-            return FALSE;
+            return false;
         else if ( character->IsSymbol("CH_RORTHRON"))
-            return FALSE;
+            return false;
         else if ( character->IsSymbol("CH_LUXOR"))
-            return FALSE;
+            return false;
 		else if ( character->IsSymbol("CH_SHARETH") )
-			return FALSE ;
+			return false ;
 
         u8 us_attribute_good = traits & 0xff ;
         u8 us_attribute_bad =  (traits >> 8 ) & 0xff;
@@ -567,11 +567,12 @@ namespace tme {
         if (character->Liege() == this)
             success+=3;
         
-        if ( this->Carrying()!= NULL && this->Carrying()->CanHelpRecruitment() )
+        auto object = static_cast<ddr_object*>(Carrying());
+        if ( object != nullptr && object->CanHelpRecruitment() )
             success+=2;
         
         if (success < 4) // failed
-            return FALSE;
+            return false;
         // succeeded
         return true;
 

@@ -216,10 +216,10 @@ mxobject* ddr_x::PickupObject ( mxgridref loc )
     
 void ddr_x::PlaceObjectsOnMap ( void )
 {
-    mxobject* object;
+    ddr_object* object;
     mxgridref loc;
     for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = mx->ObjectById(ii+1);
+        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
         if ( object->IsUnique() && object->IsRandomStart() ) {
             bool found=false;
             while ( !found ) {
@@ -239,9 +239,9 @@ mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
     if ( !mx->gamemap->HasObject(loc) )
         return nullptr;
     
-    mxobject* object;
+    ddr_object* object;
     for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = mx->ObjectById(ii+1);
+        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
         if ( object->IsCarried() )
             continue;
         if ( object->Location() == loc )

@@ -1648,11 +1648,11 @@ __obj:
 #if defined(_DDR_)
                 IS_ARG("fullname")  return DescribeObjectWithPower(oinfo);
 				IS_ARG("type")		{
-                                    otinfo = mx->ObjectTypeById( oinfo->type );
+                                    otinfo = mx->ObjectTypeById( static_cast<const ddr_object*>(oinfo)->type );
                                     return otinfo->Name();
                                     }
 				IS_ARG("power")		{
-                                    opinfo = mx->ObjectPowerById( oinfo->power );
+                                    opinfo = mx->ObjectPowerById( static_cast<const ddr_object*>(oinfo)->power );
                                     return opinfo->Name();
                                     }
 #endif

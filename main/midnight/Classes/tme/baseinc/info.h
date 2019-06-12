@@ -804,13 +804,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			FLAG_PROPERTY( IsWeapon,	of_weapon )
 			FLAG_PROPERTY( MapRemove,	of_remove )
 			FLAG_PROPERTY( IsUnique,	of_unique )
-#if defined(_DDR_)
-            FLAG_PROPERTY( CanHelpRecruitment,		of_recruitment )
-			FLAG_PROPERTY( IsRandomStart,	of_randomstart )
-            bool IsCarried() const;
-            bool IsSpecial() const;
-#endif
             
+            bool IsCarried() const ;
+
 			bool CanDestroy ( mxobject* obj ) const ;
             
 			c_str& Name()  		{ return name ; }
@@ -821,12 +817,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			c_str			description;
 			u32				usedescription;
 			mxitem*			carriedby;
-
-#if defined(_DDR_)
-            mxobjtype_t   type;
-            mxobjpower_t  power;
-#endif
-
 		}; // object
 
 
@@ -1144,10 +1134,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxrace_t		loyalty;
 			mxcharacter*	foe;
 			mxcharacter*	liege;
-#if defined(_DDR_)
-            mxgridref       lastlocation;
-#endif
-			//u32			tiredness - energy
+
 			u32				despondency;
 			flags32			traits;
 			//

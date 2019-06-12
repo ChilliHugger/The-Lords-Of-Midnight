@@ -158,6 +158,7 @@ namespace tme {
 				LPSTR			name;
 				LPSTR			description;
 				mxid			usedescription;
+                mxid            carriedby;
 			} object_t ;
 			
 			typedef struct raceinfo_t : public mxinfo_t {

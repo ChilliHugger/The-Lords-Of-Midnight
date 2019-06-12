@@ -171,12 +171,14 @@ namespace tme {
         }
     }
     
-    void ddr_battle::BattleVsCharacter( mxcharacter* attacker )
+    void ddr_battle::BattleVsCharacter( mxcharacter* character )
     {
          s32 success=0;
-         
+         auto attacker = static_cast<ddr_character*>(character);
+        auto object = static_cast<ddr_object*>(attacker->Carrying());
+        
          // check power in battle
-         if ( attacker->Carrying()!= NULL && attacker->Carrying()->power == OP_BATTLE )
+         if ( object != NULL && object->power == OP_BATTLE )
          {
              success=255;
          }
@@ -403,9 +405,9 @@ namespace tme {
     
     void ddr_battle::loseFight ( ddr_character* character, s32 success )
     {
-        
-        if ( character->Carrying() ) {
-            if ( character->Carrying()->power == OP_PROTECTION ) {
+        auto object = static_cast<ddr_object*>(character->Carrying());
+        if (object!=nullptr) {
+            if ( object->power == OP_PROTECTION ) {
                 return;
             }
         }
@@ -422,7 +424,7 @@ namespace tme {
         if ( character->reckless > r )
             return;
         
-        if (character->Carrying() && character->Carrying()->power == OP_BATTLE ) {
+        if (object && object->power == OP_BATTLE ) {
 			if ( mxrandom(255) >= 80 )
                 return;
         }

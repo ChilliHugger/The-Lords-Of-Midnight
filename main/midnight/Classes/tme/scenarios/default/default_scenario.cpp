@@ -16,6 +16,10 @@
 
 #include "../../baseinc/tme_internal.h"
 
+#if defined (_DDR_)
+#include "../../scenarios/ddr/scenario_ddr_internal.h"
+#endif
+
 
 using namespace chilli;
 using namespace chilli::lib;
@@ -1880,7 +1884,7 @@ namespace tme {
         
 #if defined(_DDR_)
         for ( int ii=0; ii<sv_characters; ii++ ) {
-            mxcharacter* c = mx->CharacterById(ii+1);
+            auto c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
             c->lastlocation=c->Location();
         }
 #endif

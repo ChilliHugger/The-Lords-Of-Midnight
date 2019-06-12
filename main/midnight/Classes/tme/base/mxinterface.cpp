@@ -241,7 +241,7 @@ namespace tme {
                     
                 if ( m.HasObject() ) {
                     auto scenario = static_cast<ddr_x*>(mx->scenario);
-                    mxobject* obj = scenario->FindObjectAtLocation(loc);
+                    auto obj = static_cast<ddr_object*>(scenario->FindObjectAtLocation(loc));
                     if ( obj && obj->IsSpecial() )
                         out->flags.Set(lf_object_special);
                 }

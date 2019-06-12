@@ -46,7 +46,16 @@ namespace tme {
         virtual ~ddr_object();
         
         virtual MXRESULT FillExportData ( info_t* data );
+        virtual void Serialize ( archive& ar );
+
+        FLAG_PROPERTY( CanHelpRecruitment,        of_recruitment )
+        FLAG_PROPERTY( IsRandomStart,    of_randomstart )
+    
+        bool IsSpecial() const;
         
+    public:
+        mxobjtype_t   type;
+        mxobjpower_t  power;
     };
     
     class ddr_stronghold : public mxstronghold
@@ -111,6 +120,8 @@ namespace tme {
 
     public:
 
+        mxgridref       lastlocation;
+        
         // not saved
         mxid            targetId;
         mxgridref       targetLocation;
@@ -122,6 +133,8 @@ namespace tme {
         u32             battlelost;
     };
 	
+
+    
 }
 #endif // _DDR_
 

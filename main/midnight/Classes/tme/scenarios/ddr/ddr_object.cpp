@@ -23,7 +23,21 @@ namespace tme {
     ddr_object::~ddr_object()
     {
     }
-    
+        
+    bool ddr_object::IsSpecial() const
+    {
+        if (IsSymbol("OB_CROWN_VARENAND"))
+            return true;
+        if (IsSymbol("OB_CROWN_CARUDRIUM"))
+            return true;
+        if (IsSymbol("OB_SPELL_THIGRORN"))
+            return true;
+        if (IsSymbol("OB_RUNES_FINORN"))
+            return true;
+        if (IsSymbol("OB_CROWN_IMIRIEL"))
+            return true;
+        return FALSE;
+    }
     
     MXRESULT ddr_object::FillExportData ( info_t* data )
     {
@@ -36,12 +50,29 @@ namespace tme {
             auto out = static_cast<export_t*>(data);
             out->type = type;
             out->power = power;
+            //out->isspecial =;
             
             return MX_OK;
         }
         return MX_FAILED;
     }
-
+    
+    void ddr_object::Serialize ( archive& ar )
+    {
+        mxobject::Serialize ( ar );
+        
+        if ( ar.IsStoring() ) {
+            WRITE_ENUM(type);
+            WRITE_ENUM(power);
+        }else{
+            if ( tme::mx->SaveGameVersion() > 10 )
+            {
+                READ_ENUM(type);
+                READ_ENUM(power);
+            }
+        }
+    }
+    
 }
 
 #endif // _DDR_

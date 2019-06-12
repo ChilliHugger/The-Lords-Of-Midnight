@@ -41,26 +41,12 @@ namespace tme {
 				ar << description;
 				WRITE_ENUM( kills );
 				ar << usedescription ;
-                
-#if defined(_DDR_)
-                WRITE_ENUM(type);
-                WRITE_ENUM(power);
-#endif
-                
 			}else{
 				ar >> name;
 				ar >> carriedby;
 				ar >> description;
 				READ_ENUM( kills );
 				ar >> usedescription ;
-
-#if defined(_DDR_)
-                if ( tme::mx->SaveGameVersion() > 10 )
-                {
-                    READ_ENUM(type);
-                    READ_ENUM(power);
-                }
-#endif
 			}
 		}
     
@@ -69,27 +55,6 @@ namespace tme {
 			return (u32)kills == (u32)obj->Id() ;
 		}
 
-#if defined(_DDR_)
-        bool mxobject::IsCarried() const
-        {
-            return carriedby != NULL ;
-        }
-    
-        bool mxobject::IsSpecial() const
-        {
-            if (IsSymbol("OB_CROWN_VARENAND"))
-                return true;
-            if (IsSymbol("OB_CROWN_CARUDRIUM"))
-                return true;
-            if (IsSymbol("OB_SPELL_THIGRORN"))
-                return true;
-            if (IsSymbol("OB_RUNES_FINORN"))
-                return true;
-            if (IsSymbol("OB_CROWN_IMIRIEL"))
-                return true;
-            return FALSE;
-        }
-#endif
         archive& operator<<(archive& ar, mxobject* ptr )
 		{
 			return ar << (u32) ptr->SafeId();
@@ -102,6 +67,11 @@ namespace tme {
 			return ar ;
 		}
 
+        bool mxobject::IsCarried() const
+        {
+            return carriedby != NULL ;
+        }
+    
 		MXRESULT mxobject::FillExportData ( info_t* data )
 		{
 			defaultexport::object_t* out = (defaultexport::object_t*)data;
@@ -109,7 +79,8 @@ namespace tme {
 			out->kills = kills;
 			out->name = name;
 			out->description = description;
-			out->usedescription = MAKE_ID(IDT_STRING,usedescription);            
+			out->usedescription = MAKE_ID(IDT_STRING,usedescription);
+            out->carriedby = carriedby->SafeIdt();
 			return mxitem::FillExportData ( data );
 		}
 
