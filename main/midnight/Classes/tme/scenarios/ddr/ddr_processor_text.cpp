@@ -194,15 +194,17 @@ ddr_text::~ddr_text()
         CStrBuf*	buffer = new CStrBuf ;
         mxterrain*	tinfo;
         
+        auto garrison = static_cast<const ddr_stronghold*>(stronghold);
+        
         mxloc& mapsqr = mx->gamemap->GetAt ( stronghold->Location() );
         
         buffer->sprintf (
                          CookedSystemString(SS_STRONGHOLD3),
-                         DescribeLocation(stronghold->Location()),
-                         DescribeNumber( stronghold->Total() ),
-                         (LPCSTR)mx->RaceById(stronghold->OccupyingRace())->SoldiersName(),
-                         (LPCSTR)mx->UnitById(stronghold->Type())->Name(),
-                         DescribeEnergy(stronghold->Energy())
+                         DescribeLocation(garrison->Location()),
+                         DescribeNumber( garrison->Total() ),
+                         (LPCSTR)mx->RaceById(garrison->OccupyingRace())->SoldiersName(),
+                         (LPCSTR)mx->UnitById(garrison->Type())->Name(),
+                         DescribeEnergy(garrison->Energy())
                          );
         
         //

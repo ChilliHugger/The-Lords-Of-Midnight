@@ -840,11 +840,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			virtual u32 Remove ( mxrace_t race, mxunit_t type, u32 total );
 			virtual u32 Add ( mxrace_t race, mxunit_t type, u32 total );
 			virtual void MakeChangeSides( mxrace_t race, mxcharacter* newoccupier );
-#if defined(_DDR_)
-            virtual void OnRespawn();
-            virtual mxrace_t Loyalty ( void );
-#endif
-            
+
 			void CheckForZero ( void );
 
 			PROPERTY( u32, Total, total );
@@ -861,9 +857,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			PROPERTY ( u32, Min, min )
 			PROPERTY ( u32, Max, max )
 			GET_PROPERTY ( u32, Influence, influence )
-#if defined(_DDR_)
-			PROPERTY ( u32, Energy, energy )
-#endif
 			bool HasFallen() const				{ return race!=occupyingrace; }
 
 		protected:
@@ -883,7 +876,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			mxterrain_t		terrain;
 			u32				killed;
 			u32				lost;
-            u32             energy;
 		};
 		// mxstronghold
 

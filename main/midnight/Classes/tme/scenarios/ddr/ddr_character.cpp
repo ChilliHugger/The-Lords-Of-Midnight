@@ -14,11 +14,12 @@
  * 
  */
 
-#include "../../baseinc/tme_internal.h"
 
 
 #if defined(_DDR_)
 
+#include "../../baseinc/tme_internal.h"
+#include "scenario_ddr.h"
 #include "scenario_ddr_internal.h"
 #include "ddr_processor_battle.h"
 
@@ -26,10 +27,7 @@ using namespace tme::scenarios ;
 
 namespace tme {
 	
-//namespace ddr {
-
-	
-	ddr_character::ddr_character() 
+	ddr_character::ddr_character()
 	{
 	}
 
@@ -37,19 +35,22 @@ namespace tme {
 	{
 	}
 
-    
     void ddr_character::Serialize ( archive& ar )
     {
         mxcharacter::Serialize(ar);
 
         if ( ar.IsStoring() ) {
-            //WRITE_ENUM(armytype);
+            ar << lastlocation ;
             ar << home_stronghold;
             ar << desired_object;
             ar << fighting_against;
             ar << battlelost;
         }else{
-            //READ_ENUM(armytype);
+            if ( tme::mx->SaveGameVersion()> 10 && tme::mx->isSavedGame() )
+                ar >> lastlocation;
+            else
+                lastlocation = Location();
+            
             ar >> home_stronghold;
             ar >> desired_object;
             
@@ -69,9 +70,18 @@ namespace tme {
     
     MXRESULT ddr_character::FillExportData ( info_t* data )
     {
-        if ( mxcharacter::FillExportData(data) ) {
+        using export_t = tme::scenarios::ddr::exports::character_t;
+        
+        if ( mxcharacter::FillExportData(data) == MX_OK ) {
+            
             if ( (u32)ID_TYPE(data->id) != (u32)INFO_ARMY ) {
-                defaultexport::character_t* out = (defaultexport::character_t*)data;
+                
+                auto out = static_cast<export_t*>(data);
+                
+                VALIDATE_INFO_BLOCK(out, INFO_CHARACTER, export_t);
+
+                out->lastlocation = lastlocation ;
+                out->orders = orders ;
                 out->lastlocation = lastlocation;
                 out->targetlocation=targetLocation;
                 if ( home_stronghold )
@@ -704,9 +714,9 @@ namespace tme {
 
         // get stronghold at the location I'm at
         auto scenario = static_cast<ddr_x*>(mx->scenario);
-        mxstronghold* stronghold = scenario->StrongholdFromLocation(Location());
+        auto stronghold = static_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(Location()));
         
-        if ( stronghold == NULL )
+        if ( stronghold == nullptr )
             return;
         
         if ( stronghold->Loyalty() != Loyalty() )
@@ -1060,9 +1070,7 @@ void ddr_character::Turn ( void )
     
 }
 
-    
-    //} // namespace ddr_x
-    
+
 } // namespace tme
 
 #endif // _DDR_

@@ -389,7 +389,7 @@ namespace tme {
 
                     bool isLoyal = stronghold->OccupyingRace() != RA_DOOMGUARD ;
 #if defined(_DDR_)
-                isLoyal = stronghold->Loyalty() == ch_luxor->Loyalty();
+                    isLoyal = static_cast<ddr_stronghold*>(stronghold)->Loyalty() == ch_luxor->Loyalty();
 #endif
                 
 					//if ( stronghold->Owner() && (!stronghold->Owner()->IsFriend(owner)) )  {

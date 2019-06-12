@@ -100,7 +100,7 @@ namespace tme {
                 }
                 
                 auto scenario = static_cast<ddr_x*>(mx->scenario);
-                mxstronghold* stronghold = scenario->StrongholdFromLocation(character->Location());
+                auto stronghold = dynamic_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(character->Location()));
                 if ( stronghold && stronghold->Loyalty()!=character->Loyalty())
                     enemies++;
                 if ( enemies == 0 )
@@ -109,7 +109,7 @@ namespace tme {
 
             // strongholds
             for (ii = 0; ii < sv_strongholds; ii++) {
-                stronghold = mx->StrongholdById(ii+1);
+                auto stronghold = static_cast<ddr_stronghold*>(mx->StrongholdById(ii+1));
                 stronghold->OnRespawn();
             }
 

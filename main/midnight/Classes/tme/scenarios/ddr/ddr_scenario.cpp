@@ -270,36 +270,6 @@ void ddr_x::NightStop(void)
 	//}
 	// namespace scenarios
 
-
-ddr_stronghold::ddr_stronghold()
-{
-}
-
-ddr_stronghold::~ddr_stronghold()
-{
-}
-
-
-void ddr_stronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
-{
-	// if the new occupier is allowed an army then
-	// the stronghold army will be his race
-	if ( newoccupier && newoccupier->IsAllowedArmy() )
-		newrace = newoccupier->Race();
-    
-	if ( newrace != OccupyingRace() )	{
-		occupyingrace = newrace ;
-
-        total = 0 ;//Respawn() ; // respawn will happen at night
-        owner = newoccupier ;
-        
-		occupier = newoccupier ;
-        
-        type = static_cast<ddr_character*>(newoccupier)->getArmyType();
-	}
-    
-}
-
 void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
 {
 	int id = mxrandom(1,sv_characters-1);

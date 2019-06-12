@@ -17,6 +17,9 @@
 #include "../baseinc/tme_internal.h"
 #include <memory>
 
+#if defined(_DDR_)
+#include "../scenarios/ddr/scenario_ddr_internal.h"
+#endif
 
 #define ENABLE_GROUPING 1
 
@@ -69,9 +72,6 @@ namespace tme {
                 
                 ar << following ;
                 ar << followers ;
-#if defined(_DDR_)
-                ar << lastlocation ;
-#endif
                 
 			}else{
 				ar >> longname;
@@ -114,16 +114,9 @@ namespace tme {
                 else
                     followers = 0 ;
                 
-                
                 // temp bug fix
                 if ( (s32)energy < 0 )
                     energy= 0;
-#if defined(_DDR_)
-                if ( tme::mx->SaveGameVersion()> 10 && tme::mx->isSavedGame() )
-                    ar >> lastlocation;
-                else
-                    lastlocation = Location();
-#endif
             }
 
 		}
@@ -229,7 +222,8 @@ namespace tme {
 				if ( stronghold->OccupyingRace() == Race() ) {
 #endif
 #if defined(_DDR_)
-                    if ( stronghold->Loyalty() == Loyalty() && stronghold->OccupyingRace() == Race() ) {
+                    
+                    if ( static_cast<ddr_stronghold*>(stronghold)->Loyalty() == Loyalty() && stronghold->OccupyingRace() == Race() ) {
 #endif
 					// can we recruit men ?
 					// this is not an exact check, a stronghold CAN have less than the minimum
@@ -1833,11 +1827,9 @@ namespace tme {
 			}
 
 			defaultexport::character_t* out = (defaultexport::character_t*)data;
-		//	_MXASSERT_VALID ( this );
 			VALIDATE_INFO_BLOCK(out,INFO_CHARACTER,defaultexport::character_t);
 
-
-			out->looking = looking;
+		out->looking = looking;
 			out->time = Time();
 			out->longname = longname;
 			out->shortname = shortname;
@@ -1884,10 +1876,7 @@ namespace tme {
             
             out->lastcommand = lastcommand ;
             out->lastcommandid = lastcommandid ;
-#if defined(_DDR_)
-            out->lastlocation = lastlocation ;
-            out->orders = orders ;
-#endif
+
 			return mxitem::FillExportData ( data );
 		}
 

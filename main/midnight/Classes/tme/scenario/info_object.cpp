@@ -106,11 +106,10 @@ namespace tme {
 		{
 			defaultexport::object_t* out = (defaultexport::object_t*)data;
 			VALIDATE_INFO_BLOCK(out,INFO_OBJECT,defaultexport::object_t);
-			out->type = (mxthing_t)Id() ;
 			out->kills = kills;
 			out->name = name;
 			out->description = description;
-			out->usedescription = MAKE_ID(IDT_STRING,usedescription);
+			out->usedescription = MAKE_ID(IDT_STRING,usedescription);            
 			return mxitem::FillExportData ( data );
 		}
 

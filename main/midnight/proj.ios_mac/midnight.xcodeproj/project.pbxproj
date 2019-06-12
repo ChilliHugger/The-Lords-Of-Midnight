@@ -56,6 +56,8 @@
 		8306209A1F38855600D017E5 /* lom in Resources */ = {isa = PBXBuildFile; fileRef = 830620981F38855600D017E5 /* lom */; };
 		830620B51F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
 		830620B61F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
+		8310DABF22B04520008449F9 /* ddr_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8310DABE22B04520008449F9 /* ddr_object.cpp */; };
+		8310DAC022B04528008449F9 /* ddr_stronghold.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8310DABC22B04503008449F9 /* ddr_stronghold.cpp */; };
 		831AD5821FE58436001108AC /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
 		831AD5831FE58671001108AC /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
 		831AD5861FE58F99001108AC /* uibookmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5841FE58F99001108AC /* uibookmenu.cpp */; };
@@ -87,7 +89,6 @@
 		8344EBC51FD1E43F0067AAC1 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		8344EBC91FD1E43F0067AAC1 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		8344EBCB1FD1E43F0067AAC1 /* drawing.h in Resources */ = {isa = PBXBuildFile; fileRef = 83D264B51F36077E001C6F13 /* drawing.h */; };
-		8344EBCE1FD1E43F0067AAC1 /* ddr_processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264211F360724001C6F13 /* ddr_processor_text.cpp */; };
 		8344EBCF1FD1E43F0067AAC1 /* processor_battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264161F360724001C6F13 /* processor_battle.cpp */; };
 		8344EBD01FD1E43F0067AAC1 /* mxengine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EA1F360724001C6F13 /* mxengine.cpp */; };
 		8344EBD11FD1E43F0067AAC1 /* mxitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263F01F360724001C6F13 /* mxitem.cpp */; };
@@ -104,7 +105,6 @@
 		8344EBDC1FD1E43F0067AAC1 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264E71F360857001C6F13 /* tinystr.cpp */; };
 		8344EBDD1FD1E43F0067AAC1 /* item_character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640F1F360724001C6F13 /* item_character.cpp */; };
 		8344EBDE1FD1E43F0067AAC1 /* variables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263F31F360724001C6F13 /* variables.cpp */; };
-		8344EBDF1FD1E43F0067AAC1 /* ddr_processor_night.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641F1F360724001C6F13 /* ddr_processor_night.cpp */; };
 		8344EBE01FD1E43F0067AAC1 /* LandscapeGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8397AFDA1F4C18BA009B00A2 /* LandscapeGenerator.cpp */; };
 		8344EBE11FD1E43F0067AAC1 /* cfilemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264931F36077E001C6F13 /* cfilemanager.cpp */; };
 		8344EBE21FD1E43F0067AAC1 /* info_command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264061F360724001C6F13 /* info_command.cpp */; };
@@ -117,7 +117,6 @@
 		8344EBE91FD1E43F0067AAC1 /* xml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2648F1F36077E001C6F13 /* xml.cpp */; };
 		8344EBEB1FD1E43F0067AAC1 /* processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264181F360724001C6F13 /* processor_text.cpp */; };
 		8344EBEC1FD1E43F0067AAC1 /* cfile_common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264941F36077E001C6F13 /* cfile_common.cpp */; };
-		8344EBED1FD1E43F0067AAC1 /* ddr_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264231F360724001C6F13 /* ddr_scenario.cpp */; };
 		8344EBEE1FD1E43F0067AAC1 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264151F360724001C6F13 /* map.cpp */; };
 		8344EBEF1FD1E43F0067AAC1 /* mxfragment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EC1F360724001C6F13 /* mxfragment.cpp */; };
 		8344EBF01FD1E43F0067AAC1 /* cfileList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264921F36077E001C6F13 /* cfileList.cpp */; };
@@ -145,7 +144,6 @@
 		8344EC061FD1E43F0067AAC1 /* item_stronghold.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264131F360724001C6F13 /* item_stronghold.cpp */; };
 		8344EC071FD1E43F0067AAC1 /* crange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2649B1F36077E001C6F13 /* crange.cpp */; };
 		8344EC081FD1E43F0067AAC1 /* citadel_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D895F11F36110400172245 /* citadel_scenario.cpp */; };
-		8344EC091FD1E43F0067AAC1 /* ddr_processor_battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641D1F360724001C6F13 /* ddr_processor_battle.cpp */; };
 		8344EC0A1FD1E43F0067AAC1 /* info_object_type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2640B1F360724001C6F13 /* info_object_type.cpp */; };
 		8344EC0B1FD1E43F0067AAC1 /* mxinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EE1F360724001C6F13 /* mxinfo.cpp */; };
 		8344EC0C1FD1E43F0067AAC1 /* item_routenode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264121F360724001C6F13 /* item_routenode.cpp */; };
@@ -157,7 +155,6 @@
 		8344EC131FD1E43F0067AAC1 /* mxinterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263EF1F360724001C6F13 /* mxinterface.cpp */; };
 		8344EC141FD1E43F0067AAC1 /* collections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D263E91F360724001C6F13 /* collections.cpp */; };
 		8344EC151FD1E43F0067AAC1 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264EB1F360857001C6F13 /* tinyxmlerror.cpp */; };
-		8344EC161FD1E43F0067AAC1 /* ddr_character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641C1F360724001C6F13 /* ddr_character.cpp */; };
 		8344EC181FD1E43F0067AAC1 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DCCBF71FCDF3EB006A1FBD /* libcocos2d Mac.a */; };
 		8344EC191FD1E43F0067AAC1 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
 		8344EC1A1FD1E43F0067AAC1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -350,16 +347,6 @@
 		83D264731F360724001C6F13 /* processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264181F360724001C6F13 /* processor_text.cpp */; };
 		83D264741F360724001C6F13 /* units.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264191F360724001C6F13 /* units.cpp */; };
 		83D264751F360724001C6F13 /* units.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264191F360724001C6F13 /* units.cpp */; };
-		83D264761F360724001C6F13 /* ddr_character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641C1F360724001C6F13 /* ddr_character.cpp */; };
-		83D264771F360724001C6F13 /* ddr_character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641C1F360724001C6F13 /* ddr_character.cpp */; };
-		83D264781F360724001C6F13 /* ddr_processor_battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641D1F360724001C6F13 /* ddr_processor_battle.cpp */; };
-		83D264791F360724001C6F13 /* ddr_processor_battle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641D1F360724001C6F13 /* ddr_processor_battle.cpp */; };
-		83D2647A1F360724001C6F13 /* ddr_processor_night.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641F1F360724001C6F13 /* ddr_processor_night.cpp */; };
-		83D2647B1F360724001C6F13 /* ddr_processor_night.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2641F1F360724001C6F13 /* ddr_processor_night.cpp */; };
-		83D2647C1F360724001C6F13 /* ddr_processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264211F360724001C6F13 /* ddr_processor_text.cpp */; };
-		83D2647D1F360724001C6F13 /* ddr_processor_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264211F360724001C6F13 /* ddr_processor_text.cpp */; };
-		83D2647E1F360724001C6F13 /* ddr_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264231F360724001C6F13 /* ddr_scenario.cpp */; };
-		83D2647F1F360724001C6F13 /* ddr_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264231F360724001C6F13 /* ddr_scenario.cpp */; };
 		83D264801F360724001C6F13 /* default_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264271F360724001C6F13 /* default_scenario.cpp */; };
 		83D264811F360724001C6F13 /* default_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D264271F360724001C6F13 /* default_scenario.cpp */; };
 		83D264821F360724001C6F13 /* lom_scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83D2642B1F360724001C6F13 /* lom_scenario.cpp */; };
@@ -602,6 +589,8 @@
 		830618621F38758800D017E5 /* tme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tme.cpp; sourceTree = "<group>"; };
 		830620981F38855600D017E5 /* lom */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lom; sourceTree = "<group>"; };
 		830620B41F389B1200D017E5 /* terrain */ = {isa = PBXFileReference; lastKnownFileType = folder; path = terrain; sourceTree = "<group>"; };
+		8310DABC22B04503008449F9 /* ddr_stronghold.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ddr_stronghold.cpp; sourceTree = "<group>"; };
+		8310DABE22B04520008449F9 /* ddr_object.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ddr_object.cpp; sourceTree = "<group>"; };
 		831AD5801FE58436001108AC /* uibook.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uibook.cpp; sourceTree = "<group>"; };
 		831AD5811FE58436001108AC /* uibook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uibook.h; sourceTree = "<group>"; };
 		831AD5841FE58F99001108AC /* uibookmenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uibookmenu.cpp; sourceTree = "<group>"; };
@@ -1392,6 +1381,8 @@
 				83D264231F360724001C6F13 /* ddr_scenario.cpp */,
 				83D264241F360724001C6F13 /* scenario_ddr.h */,
 				83D264251F360724001C6F13 /* scenario_ddr_internal.h */,
+				8310DABC22B04503008449F9 /* ddr_stronghold.cpp */,
+				8310DABE22B04520008449F9 /* ddr_object.cpp */,
 			);
 			path = ddr;
 			sourceTree = "<group>";
@@ -1735,7 +1726,6 @@
 				83D264381F360724001C6F13 /* mxgridref.cpp in Sources */,
 				833EA6E222552CE8002AF008 /* uigroupedlord.cpp in Sources */,
 				8397AFF81F4CCAB5009B00A2 /* LandscapeDebug.cpp in Sources */,
-				83D2647A1F360724001C6F13 /* ddr_processor_night.cpp in Sources */,
 				83D2643E1F360724001C6F13 /* mxitem.cpp in Sources */,
 				8397AFF61F4CCAB0009B00A2 /* LandscapeTerrain.cpp in Sources */,
 				8344EC311FD1EC6B0067AAC1 /* resolutionmanager.cpp in Sources */,
@@ -1771,10 +1761,8 @@
 				8352FBD1216DD693009E22E5 /* ILandscape.cpp in Sources */,
 				83D264321F360724001C6F13 /* mxengine.cpp in Sources */,
 				83D264841F360724001C6F13 /* lom_stronghold.cpp in Sources */,
-				83D2647E1F360724001C6F13 /* ddr_scenario.cpp in Sources */,
 				83D264DA1F36077E001C6F13 /* datatypes.cpp in Sources */,
 				83D264641F360724001C6F13 /* item_regiment.cpp in Sources */,
-				83D2647C1F360724001C6F13 /* ddr_processor_text.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				83D264541F360724001C6F13 /* info_object.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
@@ -1782,7 +1770,6 @@
 				83D895F41F36110400172245 /* citadel_scenario.cpp in Sources */,
 				83398A8F20D1ADCB007EAE7B /* ringcontroller.cpp in Sources */,
 				83D264441F360724001C6F13 /* variables.cpp in Sources */,
-				83D264781F360724001C6F13 /* ddr_processor_battle.cpp in Sources */,
 				83D264CE1F36077E001C6F13 /* carchive.cpp in Sources */,
 				839F0D6F1FDBE8B0000E2CC2 /* uioptionitem.cpp in Sources */,
 				83D264C61F36077E001C6F13 /* cfileList.cpp in Sources */,
@@ -1809,7 +1796,6 @@
 				83A9B892216EA175005D9EE4 /* panel_think.cpp in Sources */,
 				83D264E01F36077E001C6F13 /* misc.cpp in Sources */,
 				83E108B21FE5684B00C29042 /* panel_dedication.cpp in Sources */,
-				83D264761F360724001C6F13 /* ddr_character.cpp in Sources */,
 				83D264341F360724001C6F13 /* mxentity.cpp in Sources */,
 				83B9BD6F1FD30A0100B4C721 /* panel_options.cpp in Sources */,
 				83D2643A1F360724001C6F13 /* mxinfo.cpp in Sources */,
@@ -1856,7 +1842,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83D2647D1F360724001C6F13 /* ddr_processor_text.cpp in Sources */,
 				83D2646F1F360724001C6F13 /* processor_battle.cpp in Sources */,
 				83D264331F360724001C6F13 /* mxengine.cpp in Sources */,
 				831AD5871FE5A0FC001108AC /* uibookmenu.cpp in Sources */,
@@ -1881,7 +1866,6 @@
 				83D264EF1F360857001C6F13 /* tinystr.cpp in Sources */,
 				83D264611F360724001C6F13 /* item_character.cpp in Sources */,
 				83D264451F360724001C6F13 /* variables.cpp in Sources */,
-				83D2647B1F360724001C6F13 /* ddr_processor_night.cpp in Sources */,
 				8397AFDD1F4C18BA009B00A2 /* LandscapeGenerator.cpp in Sources */,
 				83D264C91F36077E001C6F13 /* cfilemanager.cpp in Sources */,
 				83B9BD741FD30AF700B4C721 /* uipanel.cpp in Sources */,
@@ -1908,7 +1892,6 @@
 				83A600062187B98700FBDAFC /* uithinkpage.cpp in Sources */,
 				83D264731F360724001C6F13 /* processor_text.cpp in Sources */,
 				83D264CB1F36077E001C6F13 /* cfile_common.cpp in Sources */,
-				83D2647F1F360724001C6F13 /* ddr_scenario.cpp in Sources */,
 				83B5AB6E21760B4100CC29EF /* panel_gameover.cpp in Sources */,
 				8351A5211FDF398300D9AB57 /* helpmanager.cpp in Sources */,
 				83D2646D1F360724001C6F13 /* map.cpp in Sources */,
@@ -1959,7 +1942,6 @@
 				83D264D71F36077E001C6F13 /* crange.cpp in Sources */,
 				833172F8219B1E85009A52E7 /* uiselectpanel.cpp in Sources */,
 				83D895F51F36110400172245 /* citadel_scenario.cpp in Sources */,
-				83D264791F360724001C6F13 /* ddr_processor_battle.cpp in Sources */,
 				83D264591F360724001C6F13 /* info_object_type.cpp in Sources */,
 				83398A9520D1D708007EAE7B /* panel_look.cpp in Sources */,
 				83D2643B1F360724001C6F13 /* mxinfo.cpp in Sources */,
@@ -1974,7 +1956,6 @@
 				83D264311F360724001C6F13 /* collections.cpp in Sources */,
 				83D264F31F360857001C6F13 /* tinyxmlerror.cpp in Sources */,
 				8351A5251FE44B3E00D9AB57 /* storymanager.cpp in Sources */,
-				83D264771F360724001C6F13 /* ddr_character.cpp in Sources */,
 				83B9BD8B1FD9B13900B4C721 /* moonring.cpp in Sources */,
 				8344EC2D1FD1EC2C0067AAC1 /* panel_splashscreen.cpp in Sources */,
 				8378E3CB21BD51190030AE3C /* selectmodel.cpp in Sources */,
@@ -1988,7 +1969,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8344EBCE1FD1E43F0067AAC1 /* ddr_processor_text.cpp in Sources */,
 				8344EBCF1FD1E43F0067AAC1 /* processor_battle.cpp in Sources */,
 				8344EBD01FD1E43F0067AAC1 /* mxengine.cpp in Sources */,
 				8344EBD11FD1E43F0067AAC1 /* mxitem.cpp in Sources */,
@@ -2006,7 +1986,6 @@
 				8344EBDC1FD1E43F0067AAC1 /* tinystr.cpp in Sources */,
 				8344EBDD1FD1E43F0067AAC1 /* item_character.cpp in Sources */,
 				8344EBDE1FD1E43F0067AAC1 /* variables.cpp in Sources */,
-				8344EBDF1FD1E43F0067AAC1 /* ddr_processor_night.cpp in Sources */,
 				8344EBE01FD1E43F0067AAC1 /* LandscapeGenerator.cpp in Sources */,
 				8344EBE11FD1E43F0067AAC1 /* cfilemanager.cpp in Sources */,
 				8344EBE21FD1E43F0067AAC1 /* info_command.cpp in Sources */,
@@ -2019,7 +1998,6 @@
 				8344EBE91FD1E43F0067AAC1 /* xml.cpp in Sources */,
 				8344EBEB1FD1E43F0067AAC1 /* processor_text.cpp in Sources */,
 				8344EBEC1FD1E43F0067AAC1 /* cfile_common.cpp in Sources */,
-				8344EBED1FD1E43F0067AAC1 /* ddr_scenario.cpp in Sources */,
 				8344EBEE1FD1E43F0067AAC1 /* map.cpp in Sources */,
 				8344EBEF1FD1E43F0067AAC1 /* mxfragment.cpp in Sources */,
 				8344EBF01FD1E43F0067AAC1 /* cfileList.cpp in Sources */,
@@ -2050,7 +2028,6 @@
 				8344EC061FD1E43F0067AAC1 /* item_stronghold.cpp in Sources */,
 				8344EC071FD1E43F0067AAC1 /* crange.cpp in Sources */,
 				8344EC081FD1E43F0067AAC1 /* citadel_scenario.cpp in Sources */,
-				8344EC091FD1E43F0067AAC1 /* ddr_processor_battle.cpp in Sources */,
 				8344EC0A1FD1E43F0067AAC1 /* info_object_type.cpp in Sources */,
 				8344EC0B1FD1E43F0067AAC1 /* mxinfo.cpp in Sources */,
 				8344EC0C1FD1E43F0067AAC1 /* item_routenode.cpp in Sources */,
@@ -2062,7 +2039,6 @@
 				8344EC131FD1E43F0067AAC1 /* mxinterface.cpp in Sources */,
 				8344EC141FD1E43F0067AAC1 /* collections.cpp in Sources */,
 				8344EC151FD1E43F0067AAC1 /* tinyxmlerror.cpp in Sources */,
-				8344EC161FD1E43F0067AAC1 /* ddr_character.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2127,6 +2103,7 @@
 				83E301D521A41BE3005C3F5C /* helpmanager.cpp in Sources */,
 				83E301D621A41BE3005C3F5C /* map.cpp in Sources */,
 				83E301D721A41BE3005C3F5C /* mxfragment.cpp in Sources */,
+				8310DABF22B04520008449F9 /* ddr_object.cpp in Sources */,
 				83E301D821A41BE3005C3F5C /* panel_night.cpp in Sources */,
 				83E301D921A41BE3005C3F5C /* cfileList.cpp in Sources */,
 				83E301DA21A41BE3005C3F5C /* panelmanager.cpp in Sources */,
@@ -2161,6 +2138,7 @@
 				83E301F321A41BE3005C3F5C /* item_victories.cpp in Sources */,
 				83E301F421A41BE3005C3F5C /* panel_think.cpp in Sources */,
 				83E301F521A41BE3005C3F5C /* default_scenario.cpp in Sources */,
+				8310DAC022B04528008449F9 /* ddr_stronghold.cpp in Sources */,
 				83E301F621A41BE3005C3F5C /* item_place.cpp in Sources */,
 				83E301F721A41BE3005C3F5C /* resolutionmanager.cpp in Sources */,
 				83E301F821A41BE3005C3F5C /* tinyxml.cpp in Sources */,

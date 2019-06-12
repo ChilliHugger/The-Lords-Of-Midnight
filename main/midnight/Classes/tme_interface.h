@@ -23,10 +23,17 @@
 #endif
 
 namespace tme {
+#if defined(_DDR_)
+    using character     = tme::scenarios::ddr::exports::character_t;
+    using stronghold    = tme::scenarios::ddr::exports::stronghold_t;
+    using object        = tme::scenarios::ddr::exports::object_t;
+#else
     using character     = tme::scenarios::exports::character_t;
-    using regiment      = tme::scenarios::exports::regiment_t;
     using stronghold    = tme::scenarios::exports::stronghold_t;
     using object        = tme::scenarios::exports::object_t;
+#endif
+
+    using regiment      = tme::scenarios::exports::regiment_t;
     using unitinfo      = tme::scenarios::exports::unitinfo_t;
     using maplocation   = tme::scenarios::exports::location_t;
     using terraininfo   = tme::scenarios::exports::terraininfo_t;
