@@ -126,6 +126,7 @@ s32         TME_GetAllStrongholds (c_mxid& collection ) ;
 s32         TME_GetAllRegiments (c_mxid& collection );
 s32			TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited );
 s32         TME_GetAllCharacters (c_mxid& collection );
+s32         TME_GetAllObjects( c_mxid& collection );
 s32         TME_GetFollowers ( mxid id, c_mxid& collection );
 s32			TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel  );
 s32			TME_GetCharactersAtLocation ( tme::loc_t loc, c_mxid& collection, bool showall  );

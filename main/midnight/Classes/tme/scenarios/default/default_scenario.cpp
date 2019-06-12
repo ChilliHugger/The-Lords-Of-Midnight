@@ -991,6 +991,14 @@ namespace tme {
 			//}
 		}
 
+        COMMAND ( PropObjects )
+        {
+            CONVERT_COLLECTION(argv[0],collection);
+            if ( mx->objObjects.CreateIdtCollection(collection) )
+                return MX_OK ;
+            return MX_FAILED ;
+        }
+    
 		COMMAND ( PropCharacters2 )
 		{
 			CONVERT_COLLECTION(argv[0],collection);
@@ -1159,7 +1167,8 @@ namespace tme {
 			{ "MAPINFO",            0, PropMapInfo,             },
 			{ "MAPSIZE",			0, PropMapSize,				},
 
-
+            { "OBJECTS",            1, PropObjects,             {variant::vptr} },
+            
 		};
 
 		MXRESULT mxscenario::GetProperties ( const c_str& arg, variant argv[], u32 argc )

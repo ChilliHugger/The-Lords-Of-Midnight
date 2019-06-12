@@ -147,6 +147,8 @@ MXTRACE("Place Objects On Map");
 mxentity* ddr_x::CreateEntity ( id_type_t type )
 {
 	switch ( type ) {
+        case IDT_OBJECT:
+            return static_cast<mxobject*>(new ddr_object);
 		case IDT_CHARACTER:
 			return static_cast<mxentity*>(new ddr_character) ;
         case IDT_STRONGHOLD:

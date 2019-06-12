@@ -16,6 +16,15 @@ using namespace tme::scenarios ;
 
 namespace tme {
 
+    ddr_object::ddr_object() 
+    {
+    }
+   
+    ddr_object::~ddr_object()
+    {
+    }
+    
+    
     MXRESULT ddr_object::FillExportData ( info_t* data )
     {
         using export_t = tme::scenarios::ddr::exports::object_t;

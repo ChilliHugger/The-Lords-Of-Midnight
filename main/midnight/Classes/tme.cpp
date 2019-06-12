@@ -302,25 +302,32 @@ character& TME_CurrentCharacter ( mxid characterid )
 	return cur_Character; 
 }
 
-s32 TME_GetAllRegiments (c_mxid& collection )
+s32 TME_GetProperties( LPCSTR name, c_mxid& collection )
 {
-	args[0] = &collection ;
-	mxi->GetProperties ( "REGIMENTS", args, 1 );
-	return collection.Count();
+    args[0] = &collection ;
+    mxi->GetProperties ( name, args, 1 );
+    return collection.Count();
+}
+
+s32 TME_GetAllRegiments ( c_mxid& collection )
+{
+	return TME_GetProperties ( "REGIMENTS", collection );
 }
 
 s32 TME_GetAllStrongholds (c_mxid& collection )
 {
-    args[0] = &collection ;
-    mxi->GetProperties ( "STRONGHOLDS", args, 1 );
-    return collection.Count();
+    return TME_GetProperties ( "STRONGHOLDS", collection );
+}
+
+s32 TME_GetAllObjects( c_mxid& collection )
+{
+    return TME_GetProperties ( "OBJECTS", collection );
 }
 
 s32 TME_GetAllCharacters (c_mxid& collection )
 {
-	args[0] = &collection ;
-	mxi->GetProperties ( "CHARACTERS", args, 1 );
-	return collection.Count();
+    return TME_GetProperties ( "CHARACTERS", collection );
+
 }
 
 s32 TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited )
