@@ -236,34 +236,6 @@ std::string& GetObjectBig(const object& o)
     return d ? LOAD_IMAGE(d->i_big) : empty_string ;
 }
 
-
-std::string& GetObjectSmall(mxid id)
-{
-    object o;
-    TME_GetObject(o,id);
-    return GetObjectSmall(o);
-}
-
-std::string& GetObjectSmall(const object& o)
-{
-    obj_data_t* d = static_cast<obj_data_t*>(o.userdata);
-    return d ? LOAD_IMAGE(d->i_small) : empty_string ;
-}
-
-
-std::string& GetObjectBackground(mxid id)
-{
-    object o;
-    TME_GetObject(o,id);
-    return GetObjectBackground(o);
-}
-
-std::string& GetObjectBackground(const object& o)
-{
-    obj_data_t* d = static_cast<obj_data_t*>(o.userdata);
-    return d ? LOAD_IMAGE(d->background) : empty_string ;
-}
-
 std::string& GetRaceImage(mxid id,BOOL horse)
 {
     raceinfo r;

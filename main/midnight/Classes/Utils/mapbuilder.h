@@ -55,10 +55,17 @@ public:
     
     mapbuilder* build( void );
     bool checkFlags( mapflags fields ) { return flags.Is((u32)fields); }
+    void setFlags( mapflags fields ) { flags.Set((u32)fields); }
 
+    loc_t normaliseLocation( loc_t loc );
+    
     mapbuilder* updateTerrain();
     mapbuilder* updateDensityMap();
     mapbuilder* updateLayers();
+    
+#if defined(_DDR_)
+    mapbuilder* updateSpecialObjects();
+#endif
     
 private:
     flags32         flags;

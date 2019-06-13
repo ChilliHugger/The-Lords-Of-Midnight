@@ -363,7 +363,7 @@ void panel_look::delayedSave()
 //{
 //}
 
-void panel_look::getCharacterInfo ( defaultexport::character_t& c, locationinfo_t* info)
+void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
 {
     info->id = c.id;
     info->time = c.time;

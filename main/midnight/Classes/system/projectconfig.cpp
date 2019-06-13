@@ -178,6 +178,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     d->symbol = o->ReadStr("id");
                     UIDEBUG( "Frontend: Loading OBJECTS... %s",d->symbol.c_str() );
                     d->i_big = o->ReadStr("big","") ;
+                    d->mapcell = o->ReadInt("mapcell",0);
                     mr->tme->objects.Add(d);
                 }
                 monitor->Update("Loading Objects", 1);

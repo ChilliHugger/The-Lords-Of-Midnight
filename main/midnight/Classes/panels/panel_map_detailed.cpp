@@ -35,6 +35,10 @@ bool panel_map_detailed::init()
     setBackground(_clrGrey);
     
     
+    auto scrollView = ScrollView::create();
+    scrollView->setContentSize(getContentSize());
+    addChild(scrollView);
+    
     // Command Window
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
@@ -79,10 +83,33 @@ bool panel_map_detailed::init()
     layer->_tiles = builder->terrain;
     tmxMapInfo->getLayers().pushBack(layer);
     layer->release();
+
+    // Layers
+    auto layer2 = new (std::nothrow) TMXLayerInfo();
+    layer2->_layerSize = tmxMapInfo->getMapSize();
+    layer2->_name = "Critters";
+    layer2->_visible = true;
+    layer2->_opacity = 255;
+    layer2->_tiles = builder->critters;
+    tmxMapInfo->getLayers().pushBack(layer2);
+    layer2->release();
+
+    // Layers
+    auto layer3 = new (std::nothrow) TMXLayerInfo();
+    layer3->_layerSize = tmxMapInfo->getMapSize();
+    layer3->_name = "Tunnels";
+    layer3->_visible = true;
+    layer3->_opacity = 255;
+    layer3->_tiles = builder->tunnels;
+    tmxMapInfo->getLayers().pushBack(layer3);
+    layer3->release();
     
     auto tmxMap = extensions::TMXTiledMap::create(tmxMapInfo);
-    addChild(tmxMap);
+    scrollView->addChild(tmxMap);
 
+    scrollView->setInnerContainerSize( tmxMap->getContentSize() );
+    scrollView->setDirection(ScrollView::Direction::BOTH);
+    
     
     return true;
 }

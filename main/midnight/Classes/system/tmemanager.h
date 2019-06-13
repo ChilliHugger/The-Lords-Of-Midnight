@@ -54,9 +54,8 @@ public:
     virtual ~obj_data_t();
     
 public:
-    std::string    background;
-    std::string    i_big;
-    std::string    i_small;
+    std::string i_big;
+    int         mapcell;
 } ;
 
 class race_data_t : public tme_item
