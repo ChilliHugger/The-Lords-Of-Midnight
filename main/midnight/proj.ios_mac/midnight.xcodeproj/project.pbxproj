@@ -56,6 +56,10 @@
 		8306209A1F38855600D017E5 /* lom in Resources */ = {isa = PBXBuildFile; fileRef = 830620981F38855600D017E5 /* lom */; };
 		830620B51F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
 		830620B61F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
+		830FF14722B2C522005D1DBA /* TiledMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FF14522B2C522005D1DBA /* TiledMapper.cpp */; };
+		830FF14822B2C522005D1DBA /* TiledMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FF14522B2C522005D1DBA /* TiledMapper.cpp */; };
+		830FF14922B2C522005D1DBA /* TiledMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FF14522B2C522005D1DBA /* TiledMapper.cpp */; };
+		830FF14A22B2C522005D1DBA /* TiledMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FF14522B2C522005D1DBA /* TiledMapper.cpp */; };
 		8310DABF22B04520008449F9 /* ddr_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8310DABE22B04520008449F9 /* ddr_object.cpp */; };
 		8310DAC022B04528008449F9 /* ddr_stronghold.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8310DABC22B04503008449F9 /* ddr_stronghold.cpp */; };
 		831AD5821FE58436001108AC /* uibook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 831AD5801FE58436001108AC /* uibook.cpp */; };
@@ -589,6 +593,8 @@
 		830618621F38758800D017E5 /* tme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tme.cpp; sourceTree = "<group>"; };
 		830620981F38855600D017E5 /* lom */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lom; sourceTree = "<group>"; };
 		830620B41F389B1200D017E5 /* terrain */ = {isa = PBXFileReference; lastKnownFileType = folder; path = terrain; sourceTree = "<group>"; };
+		830FF14522B2C522005D1DBA /* TiledMapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TiledMapper.cpp; sourceTree = "<group>"; };
+		830FF14622B2C522005D1DBA /* TiledMapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiledMapper.h; sourceTree = "<group>"; };
 		8310DABC22B04503008449F9 /* ddr_stronghold.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ddr_stronghold.cpp; sourceTree = "<group>"; };
 		8310DABE22B04520008449F9 /* ddr_object.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ddr_object.cpp; sourceTree = "<group>"; };
 		831AD5801FE58436001108AC /* uibook.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uibook.cpp; sourceTree = "<group>"; };
@@ -1232,6 +1238,8 @@
 			children = (
 				83ADDBED22AD26150041065F /* mapbuilder.cpp */,
 				83ADDBEE22AD26150041065F /* mapbuilder.h */,
+				830FF14522B2C522005D1DBA /* TiledMapper.cpp */,
+				830FF14622B2C522005D1DBA /* TiledMapper.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1820,6 +1828,7 @@
 				83D264C81F36077E001C6F13 /* cfilemanager.cpp in Sources */,
 				83D264721F360724001C6F13 /* processor_text.cpp in Sources */,
 				83B5AB6D21760B4100CC29EF /* panel_gameover.cpp in Sources */,
+				830FF14722B2C522005D1DBA /* TiledMapper.cpp in Sources */,
 				839F0D7F1FDBFF25000E2CC2 /* uieventargs.cpp in Sources */,
 				83D264401F360724001C6F13 /* mxlocinfo.cpp in Sources */,
 				83D264601F360724001C6F13 /* item_character.cpp in Sources */,
@@ -1843,6 +1852,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83D2646F1F360724001C6F13 /* processor_battle.cpp in Sources */,
+				830FF14822B2C522005D1DBA /* TiledMapper.cpp in Sources */,
 				83D264331F360724001C6F13 /* mxengine.cpp in Sources */,
 				831AD5871FE5A0FC001108AC /* uibookmenu.cpp in Sources */,
 				833172FC219B1E85009A52E7 /* uigrouplord.cpp in Sources */,
@@ -1989,6 +1999,7 @@
 				8344EBE01FD1E43F0067AAC1 /* LandscapeGenerator.cpp in Sources */,
 				8344EBE11FD1E43F0067AAC1 /* cfilemanager.cpp in Sources */,
 				8344EBE21FD1E43F0067AAC1 /* info_command.cpp in Sources */,
+				830FF14922B2C522005D1DBA /* TiledMapper.cpp in Sources */,
 				8344EBE31FD1E43F0067AAC1 /* cbitarray.cpp in Sources */,
 				8344EBE41FD1E43F0067AAC1 /* item_regiment.cpp in Sources */,
 				8344EBE51FD1E43F0067AAC1 /* lom_stronghold.cpp in Sources */,
@@ -2133,6 +2144,7 @@
 				83E301EF21A41BE3005C3F5C /* tmemanager.cpp in Sources */,
 				83E301F021A41BE3005C3F5C /* LandscapeDebug.cpp in Sources */,
 				839F9F4521C23E8C00EC5DBB /* TunnelView.cpp in Sources */,
+				830FF14A22B2C522005D1DBA /* TiledMapper.cpp in Sources */,
 				83E301F121A41BE3005C3F5C /* info_unit.cpp in Sources */,
 				83E301F221A41BE3005C3F5C /* main.cpp in Sources */,
 				83E301F321A41BE3005C3F5C /* item_victories.cpp in Sources */,

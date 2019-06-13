@@ -376,12 +376,16 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
     
 #if defined(_DDR_)
     info->tunnel = Character_IsInTunnel(c);
-    
-    maplocation m;
-    TME_GetLocationInDirection(m, c.location, c.looking);
+    info->lookingdowntunnel = false;
+    info->lookingouttunnel = false;
 
-    info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
-    info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
+    if ( (c.looking&1) == 0 ) {
+        maplocation m;
+        TME_GetLocationInDirection(m, c.location, c.looking);
+
+        info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
+        info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
+    }
     
 #endif
 

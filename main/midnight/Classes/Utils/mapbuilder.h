@@ -46,9 +46,32 @@ enum CELLFLAGS {
 //    MAX_LAYERS
 //};
 
+class map_object : public cocos2d::Ref
+{
+public:
+    mxid        id;
+    loc_t       location;
+    loc_t       lastlocation;
+    loc_t       targetlocation;
+    loc_t       homelocation;
+    u32         soldiers;
+    //std::string image;
+    //std::string name;
+    rect        r;
+    BOOL        selected;
+    BOOL        selectable;
+    BOOL        multiple;
+    BOOL        popup;
+    BOOL        tunnel;
+};
+
 
 class mapbuilder
 {
+public:
+    template<class T> using Vector = cocos2d::Vector<T>;
+    using Vec2 = cocos2d::Vec2;
+    
 public:
     mapbuilder();
     virtual ~mapbuilder();
@@ -58,11 +81,13 @@ public:
     void setFlags( mapflags fields ) { flags.Set((u32)fields); }
 
     loc_t normaliseLocation( loc_t loc );
-    
+    Vec2 convertToPosition( loc_t loc );
+
     mapbuilder* updateTerrain();
     mapbuilder* updateDensityMap();
     mapbuilder* updateLayers();
-    
+    mapbuilder* updateObjects();
+
 #if defined(_DDR_)
     mapbuilder* updateSpecialObjects();
 #endif
@@ -79,10 +104,21 @@ private:
     //u32*            layers[MAX_LAYERS];
     
 public:
-    size            mapsize;
-    u32*            terrain;
-    u32*            tunnels;
-    u32*            critters;
+    size mapsize;
+    u32* terrain;
+    u32* terrain_discovery;
+    u32* tunnels;
+    u32* critters;
+    
+    Vector<map_object*>    objects;
+    
+    //map_object_t*   objects;
+    //u32             objects_count;
+    
+    ssize_t obj_characters;
+    ssize_t obj_regiments;
+    ssize_t obj_strongholds;
+    
 };
 
 

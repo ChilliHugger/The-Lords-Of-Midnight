@@ -11,15 +11,16 @@
 #include "panel_map_detailed.h"
 
 #include "../system/moonring.h"
-//#include "../system/configmanager.h"
 #include "../system/resolutionmanager.h"
-//#include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 
 #include "../frontend/layout_id.h"
 
 #include "../Extensions/TMXTiledMap.h"
 #include "../Utils/mapbuilder.h"
+#include "../Utils/TiledMapper.h"
+
+#include "../ui/characters/uisinglelord.h"
 
 USING_NS_CC;
 USING_NS_CC_UI;
@@ -48,67 +49,35 @@ bool panel_map_detailed::init()
     uihelper::AddBottomRight(this, map, RES(10), RES(10) );
     
     std::unique_ptr<mapbuilder> builder( new mapbuilder );
+    std::unique_ptr<TiledMapper> mapper( new TiledMapper );
+    auto tmxMap = mapper->createTMXMap(builder->build());
     
-    builder->build();
-    
-    auto path = FileUtils::getInstance()->fullPathForFilename("all");
-    
-    auto res = resolutionmanager::getInstance();
-    std::string scenario = TME_ScenarioShortName();
-    
-    auto tmxMapInfo = new (std::nothrow) TMXMapInfo();
-    
-    // Map Setup
-    tmxMapInfo->setMapSize( Size(builder->mapsize.cx,builder->mapsize.cy) );
-    tmxMapInfo->setOrientation(TMXOrientationOrtho);
-    tmxMapInfo->setTileSize(Size(RES(64),RES(64)));
-    
-    // Tilesets
-    auto t1 = new (std::nothrow) TMXTilesetInfo();
-    t1->_name = "terrain";
-    t1->_firstGid=1;
-    t1->_tileSize = tmxMapInfo->getTileSize();
-    t1->_originSourceImage = "map_tiles.png";
-    t1->_sourceImage = scenario + "/" + res->current_resolution.folder +  "/terrain/" + t1->_originSourceImage;
-
-    tmxMapInfo->getTilesets().pushBack(t1);
-    t1->release();
-    
-    // Layers
-    auto layer = new (std::nothrow) TMXLayerInfo();
-    layer->_layerSize = tmxMapInfo->getMapSize();
-    layer->_name = "Terrain";
-    layer->_visible = true;
-    layer->_opacity = 255;
-    layer->_tiles = builder->terrain;
-    tmxMapInfo->getLayers().pushBack(layer);
-    layer->release();
-
-    // Layers
-    auto layer2 = new (std::nothrow) TMXLayerInfo();
-    layer2->_layerSize = tmxMapInfo->getMapSize();
-    layer2->_name = "Critters";
-    layer2->_visible = true;
-    layer2->_opacity = 255;
-    layer2->_tiles = builder->critters;
-    tmxMapInfo->getLayers().pushBack(layer2);
-    layer2->release();
-
-    // Layers
-    auto layer3 = new (std::nothrow) TMXLayerInfo();
-    layer3->_layerSize = tmxMapInfo->getMapSize();
-    layer3->_name = "Tunnels";
-    layer3->_visible = true;
-    layer3->_opacity = 255;
-    layer3->_tiles = builder->tunnels;
-    tmxMapInfo->getLayers().pushBack(layer3);
-    layer3->release();
-    
-    auto tmxMap = extensions::TMXTiledMap::create(tmxMapInfo);
     scrollView->addChild(tmxMap);
-
     scrollView->setInnerContainerSize( tmxMap->getContentSize() );
     scrollView->setDirection(ScrollView::Direction::BOTH);
+    scrollView->setInnerContainerPosition(Vec2::ZERO);
+    
+    character c;
+    
+    for( auto m : builder->objects ) {
+        
+        TME_GetCharacter(c,m->id);
+        auto pos = builder->convertToPosition(c.location);
+        auto lord = uisinglelord::createWithLord(c.id);
+        lord->setAnchorPoint(uihelper::AnchorCenter);
+        lord->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(32))) );
+        lord->addClickEventListener(clickCallback);
+        lord->setTag((layoutid_t) (ID_SELECT_CHAR+c.id));
+        lord->setUserData(c.userdata);
+
+        scrollView->addChild(lord);
+
+    }
+    
+    builder->critters = nullptr;
+    builder->tunnels = nullptr;
+    builder->terrain = nullptr;
+    builder->terrain_discovery = nullptr;
     
     
     return true;

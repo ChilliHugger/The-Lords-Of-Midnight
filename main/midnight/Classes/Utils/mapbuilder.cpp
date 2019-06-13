@@ -8,6 +8,12 @@
 
 #include "mapbuilder.h"
 #include "../system/tmemanager.h"
+#include "../system/resolutionmanager.h"
+#include "../Extensions/TMXTiledMap.h"
+#include "../tme_interface.h"
+
+USING_NS_CC;
+USING_NS_CC_UI;
 
 static int density_mapping[] = { 10, 6, 11, 7, 14, 2, 15, 3, 9, 5, 8, 4, 13, 1, 12, 0 };
 
@@ -16,7 +22,7 @@ const s32 CELL_FIRST_OBJECT             = (8*16) + 4;
 const s32 CELL_FIRST_INCOMPLETE_TUNNEL  = (1*16) + 9;
 const s32 CELL_FIRST_BLANK_TERRAIN      = (8*16) + 0;
 const s32 CELL_FIRST_TUNNEL_END         = (0*16) + 9;
-
+const s32 CELL_BLANK                    = (3*16) + 1;
 
 #define INDEX(x1,y1)        (((y1)*mapsize.cx)+(x1))
 #define CELL(x1,y1)         (mapdata+INDEX(x1,y1))
@@ -26,11 +32,17 @@ const s32 CELL_FIRST_TUNNEL_END         = (0*16) + 9;
 mapbuilder::mapbuilder() :
     tunnels(nullptr),
     terrain(nullptr),
+    terrain_discovery(nullptr),
     critters(nullptr),
     mapdata(nullptr),
+    obj_characters(0),
+    obj_regiments(0),
+    obj_strongholds(0),
     mapsize(0,0)
 {
-    setFlags(mapflags::debug_map);
+    //setFlags(mapflags::debug_map);
+    //setFlags(mapflags::show_all_characters);
+    setFlags(mapflags::show_characters);
     setFlags(mapflags::show_all_critters);
     setFlags(mapflags::show_critters);
     setFlags(mapflags::show_tunnels);
@@ -40,8 +52,10 @@ mapbuilder::~mapbuilder()
 {
     //SAFEFREE(tunnels);
     //SAFEFREE(terrain);
+    //SAFEFREE(terrain_discovery)
     //SAFEFREE(critters);
     SAFEFREE(mapdata);
+    objects.clear();
 }
 
 mapbuilder* mapbuilder::build ( void )
@@ -73,6 +87,7 @@ mapbuilder* mapbuilder::build ( void )
     // we need some memory to store the map
     SAFEFREE(mapdata);
     SAFEFREE(terrain);
+    SAFEFREE(terrain_discovery);
     SAFEFREE(tunnels);
     SAFEFREE(critters);
     
@@ -80,6 +95,7 @@ mapbuilder* mapbuilder::build ( void )
     
     mapdata = static_cast<maplocation*>(malloc(size*sizeof(maplocation)));
     terrain = static_cast<u32*>(malloc(size*sizeof(u32)));
+    terrain_discovery = static_cast<u32*>(malloc(size*sizeof(u32)));
     critters = static_cast<u32*>(malloc(size*sizeof(u32)));
     tunnels = static_cast<u32*>(malloc(size*sizeof(u32)));
     
@@ -88,6 +104,8 @@ mapbuilder* mapbuilder::build ( void )
     updateDensityMap();
     
     updateLayers();
+    
+    updateObjects();
     
     updateSpecialObjects();
     
@@ -292,17 +310,10 @@ mapbuilder* mapbuilder::updateLayers()
     u32 size = mapsize.cx * mapsize.cy;
 
     memset(terrain, 0, size);
+    memset(terrain_discovery,0,size);
     memset(tunnels, 0, size);
     memset(critters, 0, size);
     
-//    for  ( py=0,y=loc_first.y; y<lasty; y++ ) {
-//        for ( px=0,x=loc_first.x; x<lastx; x++ ) {
-//
-//            m = CELL(x,y);
-//
-//        }
-//    }
-
     bool debug_map = checkFlags(mapflags::debug_map);
     bool show_tunnels = checkFlags(mapflags::show_tunnels);
     bool show_critters = checkFlags(mapflags::show_critters);
@@ -365,7 +376,17 @@ mapbuilder* mapbuilder::updateLayers()
             // Terrain
             TME_GetTerrainInfo(t,MAKE_ID(IDT_TERRAININFO,m->terrain));
             terrain_data_t* d = (terrain_data_t*)t.userdata ;
-            terrain[ii] = d->mapdensity ? d->mapcell + m->density : d->mapcell ;
+     
+            u32 cell = d->mapdensity ? d->mapcell + m->density : d->mapcell ;
+            
+            
+            if ( seen )
+                terrain[ii] = cell ;
+            else {
+                terrain_discovery[ii] = cell;
+                terrain[ii] = CELL_BLANK;
+            }
+                
             
         } else {
             terrain[ii] = CELL_FIRST_BLANK_TERRAIN + m->density + 1 ;
@@ -389,7 +410,7 @@ mapbuilder* mapbuilder::updateLayers()
 #endif
         }
         
-        if ( show_thing ) {
+        if ( show_thing && seen ) {
             TME_GetObject(o,MAKE_ID(IDT_OBJECT,show_thing));
             obj_data_t* d = (obj_data_t*)o.userdata ;
             if ( d )
@@ -436,8 +457,6 @@ mapbuilder* mapbuilder::updateLayers()
         m++;
     }
     
-    
-    
     return this;
 }
 
@@ -446,13 +465,18 @@ loc_t mapbuilder::normaliseLocation( loc_t loc )
     return loc_t( loc.x-loc_start.x, loc.y - loc_start.y);
 }
 
-#if defined(_DDR_)
+Vec2 mapbuilder::convertToPosition( loc_t loc )
+{
+    loc = normaliseLocation(loc);
+    return Vec2( loc.x*RES(64), loc.y*RES(64) );
+}
 
+
+#if defined(_DDR_)
 mapbuilder* mapbuilder::updateSpecialObjects()
 {
     character c;
     object o;
-    
     
     c_mxid objects;
     TME_GetAllObjects(objects);
@@ -472,16 +496,135 @@ mapbuilder* mapbuilder::updateSpecialObjects()
         CONTINUE_IF ( loc.x == 0 && loc.y == 0 );
         
         loc = normaliseLocation(loc);
-        u32 cell = CELL_FIRST_OBJECT + o.type;
         
         auto userdata = static_cast<obj_data_t*>(o.userdata) ;
-        if ( userdata!=nullptr )
-            cell = userdata->mapcell ;
+        u32 cell = IS_NOT_NULL(userdata, userdata->mapcell, CELL_FIRST_OBJECT + o.type);
         
-        critters[ INDEX(loc.x,loc.y) ] = cell ;
+        int index = INDEX(loc.x,loc.y);
+        
+        if ( mapdata[index].flags & lf_seen )
+            critters[ index ] = cell ;
     }
     
     
     return this;
 }
 #endif
+
+
+mapbuilder* mapbuilder::updateObjects()
+{
+    character c;
+    regiment r;
+    stronghold s;
+    maplocation m;
+    
+    rect empty_rect(0,0,0,0);
+    
+    bool show_all_characters = checkFlags(mapflags::show_all_characters);
+    bool show_enemy_armies = checkFlags(mapflags::show_enemy_armies);
+    
+    // get lords
+    c_mxid characters;
+    TME_GetAllCharacters(characters);
+    
+    // get armies
+    c_mxid regiments;
+    TME_GetAllRegiments(regiments);
+    
+    // get armies
+    c_mxid strongholds;
+    TME_GetAllStrongholds(strongholds);
+
+    objects.clear();
+    obj_characters = objects.size();
+    
+    for ( auto id : characters ) {
+        TME_GetCharacter(c, id );
+        
+        CONTINUE_IF(!Character_IsAlive(c));
+        
+        TME_GetLocation(m,c.location);
+        
+        CONTINUE_IF ( !show_all_characters && !Character_IsControllable(c.id));
+        
+#if defined(_LOM_)
+        bool visited = (m.flags & ( lf_looked_at|lf_visited))
+#endif
+#if defined(_DDR_)
+        bool seen = show_all_characters || m.flags&lf_seen ;
+        CONTINUE_IF ( !seen && !Character_IsInTunnel(c));
+        bool visited = (m.flags & ( lf_looked_at|lf_visited|lf_tunnel_visited|lf_tunnel_looked_at));
+#endif
+        
+        CONTINUE_IF ( !(show_all_characters || Character_IsRecruited(c) || visited) );
+
+        auto object = new map_object();
+        objects.pushBack(object);
+        
+        object->selectable=FALSE;
+        object->id = c.id ;
+        object->location = c.location ;
+        //object->image = GetCharacterFace(c);
+        object->soldiers = c.warriors+c.riders;
+        //object->name = c.shortname ;
+        object->r = empty_rect ;
+        object->selected = false ;
+        object->selectable=Character_IsRecruited(c) || show_all_characters;
+        object->multiple=false;
+#if defined(_DDR_)
+        object->tunnel=Character_IsInTunnel(c);
+#endif
+        object->lastlocation = c.lastlocation ;
+        object->targetlocation = c.targetlocation;
+        object->homelocation = c.homelocation;
+        
+        loc_t loc = normaliseLocation(c.location);
+        critters[ INDEX(loc.x,loc.y) ] = 7 ;
+        
+    }
+    
+    if ( show_enemy_armies ) {
+        obj_regiments = objects.size();
+        for ( auto id : regiments ) {
+            TME_GetRegiment(r, id );
+            
+            CONTINUE_IF( r.total == 0 );
+
+            auto object = new map_object();
+            objects.pushBack(object);
+            
+            object->id = r.id ;
+            object->location = r.location ;
+            object->soldiers = r.total ;
+            //if ( r.type == UT_WARRIORS )
+            //    object->image = map_warrior ;
+            //else if ( r.type == UT_RIDERS )
+            //    object->image = map_rider ;
+            object->lastlocation = r.lastlocation ;
+            object->selectable = false;
+            object->r = empty_rect ;
+            object->targetlocation = r.targetlocation ;
+    
+        }
+    }
+    
+    if ( 1 ) {
+        obj_strongholds = objects.size();
+        for ( auto id : strongholds ) {
+            TME_GetStronghold(s, id );
+            CONTINUE_IF ( s.loyalty != RA_MOONPRINCE );
+            
+            auto object = new map_object();
+            objects.pushBack(object);
+            
+            object->id = s.id ;
+            object->location = s.location ;
+            object->selectable = false;
+            object->r = empty_rect ;
+            //object->image = map_token_blue ;
+        }
+    }
+ 
+    return this;
+}

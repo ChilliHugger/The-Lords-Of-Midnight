@@ -24,6 +24,9 @@
 
 typedef std::function<void(void)> MXVoidCallback;
 
+#define IS_NOT_NULL(x,y,z) \
+    (x==nullptr) ? z : y
+
 #define IF_NOT_NULL(x) \
     if ( (x) != nullptr ) (x)
 
