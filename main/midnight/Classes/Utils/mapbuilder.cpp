@@ -70,12 +70,30 @@ mapbuilder* mapbuilder::build ( void )
         info.top = loc_t(0,0) ;
         info.bottom = loc_t(mapsize.cx,mapsize.cy);
         info.size = mapsize ;
+    }else{
+
+        if ( info.size.cx < screensize.cx ) {
+            u32 diffx = screensize.cx - info.size.cx;
+            u32 halfx = diffx/2;
+            info.size.cx = screensize.cx;
+            info.bottom.x += halfx;
+            info.top.x -= (diffx-halfx);
+            
+        }
+        if ( info.size.cy < screensize.cy ) {
+            u32 diffy = screensize.cy - info.size.cy;
+            u32 halfy = diffy/2;
+            info.size.cy = screensize.cy;
+            info.bottom.y += halfy;
+            info.top.y -= (diffy-halfy);
+        }
+
     }
     
     loc_start = info.top;
     
-    mapsize.cx = info.bottom.x - loc_start.x;
-    mapsize.cy = info.bottom.y - loc_start.y;
+    mapsize.cx = (info.bottom.x - loc_start.x) ;
+    mapsize.cy = (info.bottom.y - loc_start.y) ;
     
     // we need some memory to store the map
     SAFEFREE(mapdata);
@@ -411,6 +429,9 @@ mapbuilder* mapbuilder::updateLayers()
 #endif
         }
         
+        if ( !debug_map && show_thing > OB_WILDHORSES )
+            show_thing = OB_NONE;
+        
         if ( show_thing && seen ) {
             TME_GetObject(o,MAKE_ID(IDT_OBJECT,show_thing));
             obj_data_t* d = (obj_data_t*)o.userdata ;
@@ -537,7 +558,7 @@ mapbuilder* mapbuilder::updateCharacters()
         TME_GetLocation(m,c.location);
         
 #if defined(_LOM_)
-        bool visited = (m.flags & ( lf_looked_at|lf_visited))
+        bool visited = (m.flags & ( lf_looked_at|lf_visited));
 #endif
 #if defined(_DDR_)
         bool seen = show_all_characters || m.flags&lf_seen ;
@@ -559,10 +580,11 @@ mapbuilder* mapbuilder::updateCharacters()
         object->multiple=false;
 #if defined(_DDR_)
         object->tunnel=Character_IsInTunnel(c);
-#endif
+        object->homelocation = c.homelocation;
         object->lastlocation = c.lastlocation ;
         object->targetlocation = c.targetlocation;
-        object->homelocation = c.homelocation;
+#endif
+
         
         // at the same location
         for( auto o : characters ) {

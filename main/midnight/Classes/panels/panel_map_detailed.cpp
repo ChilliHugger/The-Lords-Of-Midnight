@@ -73,12 +73,13 @@ bool panel_map_detailed::init()
     
     createFilterButton(ID_FILTER_CURRENT_LOC,   (r*1)-adjy, "i_center", map_filters::centre_char);
     createFilterButton(ID_FILTER_CRITTERS,      (r*2)-adjy, "i_critters", map_filters::show_critters);
+    createFilterButton(ID_FILTER_LORDS,         (r*3)-adjy, "i_filter_lords", map_filters::show_lords);
 #if defined(_DDR_)
-    createFilterButton(ID_FILTER_TUNNELS,       (r*3)-adjy, "i_filter_tunnel", map_filters::show_tunnels);
+    createFilterButton(ID_FILTER_TUNNELS,       (r*4)-adjy, "i_filter_tunnel", map_filters::show_tunnels);
 #endif
-    createFilterButton(ID_FILTER_LORDS,         (r*4)-adjy, "i_filter_lords", map_filters::show_lords);
     
     mapBuilder =  new (std::nothrow) mapbuilder();
+    mapBuilder->screensize = size( getContentSize().width/RES(64), getContentSize().height/RES(64));
     
     std::unique_ptr<TiledMapper> mapper( new TiledMapper );
     tmxMap = mapper->createTMXMap(mapBuilder->build());
@@ -158,9 +159,11 @@ void panel_map_detailed::OnNotification( Ref* sender )
         case ID_FILTER_CRITTERS:
             updateFilterButton(sender,map_filters::show_critters);
             break;
+#if defined(_DDR_)
         case ID_FILTER_TUNNELS:
             updateFilterButton(sender,map_filters::show_tunnels);
             break;
+#endif
         case ID_FILTER_LORDS:
             updateFilterButton(sender,map_filters::show_lords);
             break;

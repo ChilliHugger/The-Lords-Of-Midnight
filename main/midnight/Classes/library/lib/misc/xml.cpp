@@ -34,7 +34,7 @@ u32 size=0;
 
 
     data = (u8*)os::filemanager::Load ( filename, &size );
-	if ( data == nullptr )
+	if ( data == nullptr || size == 0 )
 		return false;
 
 	//m_doc = new TiXmlDocument();

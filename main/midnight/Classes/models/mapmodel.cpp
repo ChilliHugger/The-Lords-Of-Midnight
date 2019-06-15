@@ -42,7 +42,6 @@ void mapmodel::serialize( u32 version, lib::archive& ar )
 void mapmodel::setDefaults ()
 {
     filters.Set(map_filters::all);
-    filters.Reset(map_filters::show_critters);
     oldoffset = point::ZERO;
     mapscale=1.0f;
     lastmapscale=0.5f;

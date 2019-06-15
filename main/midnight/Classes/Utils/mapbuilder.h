@@ -54,7 +54,9 @@ public:
     loc_t       location;
     loc_t       lastlocation;
     loc_t       targetlocation;
+#if defined(_DDR_)
     loc_t       homelocation;
+#endif
     u32         soldiers;
     mxunit_t    type;
     rect        r;
@@ -116,6 +118,8 @@ private:
     
 public:
     size mapsize;
+    size screensize;
+    
     u32 max_cells;
     
     u32* terrain;

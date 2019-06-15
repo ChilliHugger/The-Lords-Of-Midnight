@@ -57,6 +57,8 @@ namespace chilli {
 #if defined(COCOS2DX)
             auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(filename);
             *size = (u32)data.getSize();
+            if ( data.getSize() == 0 )
+                return nullptr;
             void* buffer = malloc ( data.getSize() );
             memcpy(buffer, data.getBytes(), data.getSize());
             return buffer;

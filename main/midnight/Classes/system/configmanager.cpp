@@ -25,14 +25,13 @@ configmanager::~configmanager()
 bool configmanager::LoadXmlConfig (const std::string& filename )
 {
     using xml = chilli::lib::xml;
-    //char path[MAX_PATH];
     
     UIDEBUG("configmanager::LoadXmlConfig - ENTER");
     
     std::unique_ptr<xml> config ( new xml() );
 
     if ( !config->Load ( filename.c_str() ) ) {
-        COMPLAIN ( "Cannot load config" );
+        return false;
     }
     
     auto main = config->Find("main");

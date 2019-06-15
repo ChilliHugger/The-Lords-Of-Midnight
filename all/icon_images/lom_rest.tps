@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.10.0</string>
+        <string>5.0.1</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -204,36 +204,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">lom_menu/book.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>128,141,256,281</rect>
-                <key>scale9Paddings</key>
-                <rect>128,141,256,281</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">lom_menu/bookmark.png</key>
-            <key type="filename">lom_menu/bookmark_overlay.png</key>
-            <key type="filename">map/map_current_location.png</key>
-            <key type="filename">misc/background_tile.png</key>
-            <key type="filename">misc/lord_select_circle.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
+            <key type="filename">lom_map/map_lords_many.png</key>
             <key type="filename">lom_menu/i_guide.png</key>
             <key type="filename">lom_menu/i_story.png</key>
             <key type="filename">look/i_tutorial_flash.png</key>
@@ -245,8 +216,8 @@
             <key type="filename">map/i_big_map.png</key>
             <key type="filename">map/i_center.png</key>
             <key type="filename">map/i_critters.png</key>
+            <key type="filename">map/i_filter_lords.png</key>
             <key type="filename">map/i_small_map.png</key>
-            <key type="filename">map/map_lords_many.png</key>
             <key type="filename">map/map_rider.png</key>
             <key type="filename">map/map_scale_down.png</key>
             <key type="filename">map/map_scale_track.png</key>
@@ -279,6 +250,36 @@
                 <rect>32,32,64,64</rect>
                 <key>scale9Paddings</key>
                 <rect>32,32,64,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lom_menu/book.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>128,141,256,281</rect>
+                <key>scale9Paddings</key>
+                <rect>128,141,256,281</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lom_menu/bookmark.png</key>
+            <key type="filename">lom_menu/bookmark_overlay.png</key>
+            <key type="filename">map/map_current_location.png</key>
+            <key type="filename">misc/background_tile.png</key>
+            <key type="filename">misc/lord_select_circle.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9Paddings</key>
+                <rect>64,64,128,128</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -326,20 +327,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">misc/footer.png</key>
-            <key type="filename">misc/header.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>69,16,138,32</rect>
-                <key>scale9Paddings</key>
-                <rect>69,16,138,32</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">select/circle_selector.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -362,6 +349,7 @@
             <filename>select</filename>
             <filename>think</filename>
             <filename>lom_menu</filename>
+            <filename>lom_map</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
