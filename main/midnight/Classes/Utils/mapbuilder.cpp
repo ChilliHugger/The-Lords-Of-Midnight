@@ -35,9 +35,6 @@ mapbuilder::mapbuilder() :
     terrain_discovery(nullptr),
     critters(nullptr),
     mapdata(nullptr),
-    obj_characters(0),
-    obj_regiments(0),
-    obj_strongholds(0),
     mapsize(0,0)
 {
     //setFlags(mapflags::debug_map);
@@ -56,7 +53,10 @@ mapbuilder::~mapbuilder()
     //SAFEFREE(terrain_discovery)
     //SAFEFREE(critters);
     SAFEFREE(mapdata);
-    objects.clear();
+    
+    characters.clear();
+    regiments.clear();
+    strongholds.clear();
 }
 
 mapbuilder* mapbuilder::build ( void )
@@ -66,7 +66,7 @@ mapbuilder* mapbuilder::build ( void )
     if ( !TME_MapInfo(&info) )
         return nullptr;
     
-    if ( checkFlags(mapflags::debug_map) ) {
+    if ( isDebugMap() ) {
         info.top = loc_t(0,0) ;
         info.bottom = loc_t(mapsize.cx,mapsize.cy);
         info.size = mapsize ;
@@ -98,11 +98,16 @@ mapbuilder* mapbuilder::build ( void )
     
     updateLayers();
     
-    updateObjects();
+    updateCharacters();
+    
+    updateRegiments();
+    
+    updateStrongholds();
 
 #if defined(_DDR_)
-    updateSpecialObjects();
-#
+    if ( isDebugMap() )
+        updateSpecialObjects();
+#endif
     
     return this;
 }
@@ -121,7 +126,7 @@ mapbuilder* mapbuilder::updateTerrain()
         lf_tunnel_visited   // 19
      */
     
-    bool debug_map = checkFlags(mapflags::debug_map);
+    bool debug_map = isDebugMap();
     
     u32 reset_discover_mask = (lf_seen|lf_visited|lf_looked_at);
 #if defined(_DDR_)
@@ -161,7 +166,7 @@ mapbuilder* mapbuilder::updateDensityMap()
 
     u8 density=0;
     
-    bool debug_map = checkFlags(mapflags::debug_map);
+    bool debug_map = isDebugMap();
     
     // calculate gfx type
     for  ( int y=0; y<mapsize.cy; y++ ) {
@@ -302,14 +307,14 @@ mapbuilder* mapbuilder::updateLayers()
     int lastx = mapsize.cx+1;
     int lasty = mapsize.cy+1;
     
-    u32 size = mapsize.cx * mapsize.cy;
+    max_cells = mapsize.cx * mapsize.cy;
 
-    memset(terrain, 0, size);
-    memset(terrain_discovery,0,size);
-    memset(tunnels, 0, size);
-    memset(critters, 0, size);
+    memset(terrain, 0, max_cells);
+    memset(terrain_discovery,0,max_cells);
+    memset(tunnels, 0, max_cells);
+    memset(critters, 0, max_cells);
     
-    bool debug_map = checkFlags(mapflags::debug_map);
+    bool debug_map = isDebugMap();
     bool show_tunnels = checkFlags(mapflags::show_tunnels);
     bool show_critters = checkFlags(mapflags::show_critters);
     bool show_all_critters = checkFlags(mapflags::show_all_critters);
@@ -318,7 +323,7 @@ mapbuilder* mapbuilder::updateLayers()
     terraininfo t;
     object o;
     
-    for ( int ii=0; ii<size; ii++ ) {
+    for ( int ii=0; ii<max_cells; ii++ ) {
         terrain[ii] = 0;
         critters[ii] = 0;
         tunnels[ii]=0;
@@ -497,9 +502,10 @@ mapbuilder* mapbuilder::updateSpecialObjects()
         u32 cell = IS_NOT_NULL(userdata, userdata->mapcell, CELL_FIRST_OBJECT + o.type);
         
         int index = INDEX(loc.x,loc.y);
-        
-        if ( mapdata[index].flags & lf_seen )
-            critters[ index ] = cell ;
+        if ( index < max_cells ) {
+            if ( mapdata[index].flags & lf_seen )
+                critters[ index ] = cell ;
+        }
     }
     
     
@@ -508,41 +514,27 @@ mapbuilder* mapbuilder::updateSpecialObjects()
 #endif
 
 
-mapbuilder* mapbuilder::updateObjects()
+mapbuilder* mapbuilder::updateCharacters()
 {
     character c;
-    regiment r;
-    stronghold s;
     maplocation m;
-    
-    rect empty_rect(0,0,0,0);
-    
+
     bool show_all_characters = checkFlags(mapflags::show_all_characters);
-    bool show_enemy_armies = checkFlags(mapflags::show_enemy_armies);
     
     // get lords
-    c_mxid characters;
-    TME_GetAllCharacters(characters);
+    c_mxid tme_characters;
+    TME_GetAllCharacters(tme_characters);
     
-    // get armies
-    c_mxid regiments;
-    TME_GetAllRegiments(regiments);
+    characters.clear();
     
-    // get armies
-    c_mxid strongholds;
-    TME_GetAllStrongholds(strongholds);
-
-    objects.clear();
-    obj_characters = objects.size();
-    
-    for ( auto id : characters ) {
+    for ( auto id : tme_characters ) {
         TME_GetCharacter(c, id );
         
         CONTINUE_IF(!Character_IsAlive(c));
+        CONTINUE_IF ( !show_all_characters && !Character_IsControllable(c.id));
+        CONTINUE_IF ( !show_all_characters && !Character_IsRecruited(c) );
         
         TME_GetLocation(m,c.location);
-        
-        CONTINUE_IF ( !show_all_characters && !Character_IsControllable(c.id));
         
 #if defined(_LOM_)
         bool visited = (m.flags & ( lf_looked_at|lf_visited))
@@ -554,17 +546,14 @@ mapbuilder* mapbuilder::updateObjects()
 #endif
         
         CONTINUE_IF ( !(show_all_characters || Character_IsRecruited(c) || visited) );
-
+        
         auto object = new map_object();
-        objects.pushBack(object);
         
         object->selectable=FALSE;
         object->id = c.id ;
         object->location = c.location ;
-        //object->image = GetCharacterFace(c);
         object->soldiers = c.warriors+c.riders;
-        //object->name = c.shortname ;
-        object->r = empty_rect ;
+        object->r = rect::EMPTY ;
         object->selected = false ;
         object->selectable=Character_IsRecruited(c) || show_all_characters;
         object->multiple=false;
@@ -575,51 +564,80 @@ mapbuilder* mapbuilder::updateObjects()
         object->targetlocation = c.targetlocation;
         object->homelocation = c.homelocation;
         
-        loc_t loc = normaliseLocation(c.location);
-        critters[ INDEX(loc.x,loc.y) ] = 7 ;
+        // at the same location
+        for( auto o : characters ) {
+            if ( o->location == object->location ) {
+                o->here.pushBack(object);
+                object->here.pushBack(o);
+            }
+        }
+        
+        characters.pushBack(object);
         
     }
     
-    if ( show_enemy_armies ) {
-        obj_regiments = objects.size();
-        for ( auto id : regiments ) {
-            TME_GetRegiment(r, id );
-            
-            CONTINUE_IF( r.total == 0 );
+    //
+    
+    
+    return this;
+}
 
-            auto object = new map_object();
-            objects.pushBack(object);
-            
-            object->id = r.id ;
-            object->location = r.location ;
-            object->soldiers = r.total ;
-            //if ( r.type == UT_WARRIORS )
-            //    object->image = map_warrior ;
-            //else if ( r.type == UT_RIDERS )
-            //    object->image = map_rider ;
-            object->lastlocation = r.lastlocation ;
-            object->selectable = false;
-            object->r = empty_rect ;
-            object->targetlocation = r.targetlocation ;
+mapbuilder* mapbuilder::updateRegiments()
+{
+    regiment r;
+    maplocation m;
     
-        }
+    regiments.clear();
+    
+   if  (!checkFlags(mapflags::show_enemy_armies) )
+       return this;
+       
+    // get armies
+    c_mxid tme_regiments;
+    TME_GetAllRegiments(tme_regiments);
+    
+    for ( auto id : tme_regiments ) {
+        TME_GetRegiment(r, id );
+        
+        CONTINUE_IF( r.total == 0 );
+        
+        auto object = new map_object();
+        regiments.pushBack(object);
+        
+        object->id = r.id ;
+        object->location = r.location ;
+        object->soldiers = r.total ;
+        object->type = r.type;
+        object->lastlocation = r.lastlocation ;
+        object->selectable = false;
+        object->r = rect::EMPTY ;
+        object->targetlocation = r.targetlocation ;
+        
     }
+
+    return this;
+}
+
+mapbuilder* mapbuilder::updateStrongholds()
+{
+    stronghold s;
+    maplocation m;
     
-    if ( 1 ) {
-        obj_strongholds = objects.size();
-        for ( auto id : strongholds ) {
-            TME_GetStronghold(s, id );
-            CONTINUE_IF ( s.loyalty != RA_MOONPRINCE );
-            
-            auto object = new map_object();
-            objects.pushBack(object);
-            
-            object->id = s.id ;
-            object->location = s.location ;
-            object->selectable = false;
-            object->r = empty_rect ;
-            //object->image = map_token_blue ;
-        }
+    // get armies
+    c_mxid tme_strongholds;
+    TME_GetAllStrongholds(tme_strongholds);
+
+    for ( auto id : tme_strongholds ) {
+        TME_GetStronghold(s, id );
+        CONTINUE_IF ( s.loyalty != RA_MOONPRINCE );
+        
+        auto object = new map_object();
+        strongholds.pushBack(object);
+        
+        object->id = s.id ;
+        object->location = s.location ;
+        object->selectable = false;
+        object->r = rect::EMPTY ;
     }
  
     return this;

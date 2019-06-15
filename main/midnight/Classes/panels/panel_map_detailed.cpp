@@ -21,6 +21,7 @@
 #include "../Utils/TiledMapper.h"
 
 #include "../ui/characters/uisinglelord.h"
+#include "../ui/characters/uigrouplord.h"
 
 const f32 ScrollToLordTimeInSecs = 1.0f;
 
@@ -34,6 +35,7 @@ panel_map_detailed::panel_map_detailed() :
     characters(nullptr),
     tmxMap(nullptr),
     mapBuilder(nullptr),
+    grouplord(nullptr),
     model(nullptr)
 {
 }
@@ -91,26 +93,7 @@ bool panel_map_detailed::init()
     characters->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(characters);
     
-    character c;
-    
-    for( auto m : mapBuilder->objects ) {
-        
-        TME_GetCharacter(c,m->id);
-        auto pos = mapBuilder->convertToPosition(c.location);
-        auto lord = uisinglelord::createWithLord(c.id);
-        lord->setAnchorPoint(uihelper::AnchorCenter);
-        lord->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(32))) );
-        lord->addClickEventListener(clickCallback);
-        lord->setTag((layoutid_t) (ID_SELECT_CHAR+c.id));
-        lord->setUserData(c.userdata);
-        lord->status.Reset(LORD_STATUS::status_location);
-        lord->refreshStatus();
-
-        characters->addChild(lord);
-
-    }
-    
-    mapBuilder->clearLayers();
+    setupCharacterButtons();
     
     if ( model->filters.Is(map_filters::centre_char) )
         centreOnCurrentCharacter(false);
@@ -118,6 +101,8 @@ bool panel_map_detailed::init()
     updateFilters();
     
     showHelpWindow(HELP_DISCOVERY_MAP);
+    
+    mapBuilder->clearLayers();
     
     return true;
 }
@@ -134,19 +119,36 @@ void panel_map_detailed::OnNotification( Ref* sender )
     
     layoutid_t id = static_cast<layoutid_t>(button->getTag());
     
+    if ( id >= ID_SELECT_CHAR ) {
+        mxid characterId = id-ID_SELECT_CHAR;
+        mr->selectCharacter(characterId);
+        return;
+    }
+    
+    
     switch ( id  )
     {
+        case ID_GROUP_DISBAND:
+            hideGroupLord();
+            break;
+            
+        case ID_SELECT_ALL:
+        {
+            if ( grouplord != nullptr )
+                hideGroupLord();
+            else
+                showGroupLord( button->getPosition(), static_cast<map_object*>(button->getUserData()) );
+            break;
+        }
+            
         case ID_LOOK:
             mr->settings->Save();
             mr->look();
             break;
             
         case ID_MAP_OVERVIEW:
-        {
             mr->showPage(MODE_MAP_OVERVIEW);
             break;
-        }
-            
             
         case ID_FILTER_CURRENT_LOC:
             updateFilterButton(sender,map_filters::centre_char);
@@ -167,6 +169,31 @@ void panel_map_detailed::OnNotification( Ref* sender )
         default:
             break;
     }
+}
+
+void panel_map_detailed::hideGroupLord()
+{
+    grouplord->removeFromParent();
+    grouplord = nullptr;
+}
+
+void panel_map_detailed::showGroupLord(Vec2 position, map_object* object)
+{
+    grouplord = uigrouplord::create();
+    grouplord->setPosition(position);
+    grouplord->setTag(ID_SELECT_ALL);
+    grouplord->setAnchorPoint(uihelper::AnchorCenter);
+    grouplord->addClickEventListener(clickCallback);
+    characters->addChild(grouplord);
+    
+    c_mxid  lords;
+    lords.Add(object->id);
+    for( auto m : object->here ) {
+        lords.Add(m->id);
+    }
+    
+    grouplord->createFollowers(lords);
+    
 }
 
 void panel_map_detailed::centreOnCharacter( character& c, bool animate )
@@ -242,11 +269,60 @@ void panel_map_detailed::updateFilterButton(Ref* sender,map_filters flag)
 void panel_map_detailed::updateFilters()
 {
 #if defined(_DDR_)
-    tmxMap->getLayer("Tunnels")->setVisible( model->filters.Is(map_filters::show_tunnels) );
+    IF_NOT_NULL(tmxMap->getLayer("Tunnels"))
+        ->setVisible( model->filters.Is(map_filters::show_tunnels) );
 #endif
 
-    tmxMap->getLayer("Critters")->setVisible( model->filters.Is(map_filters::show_critters) );
+    IF_NOT_NULL(tmxMap->getLayer("Critters"))
+        ->setVisible( model->filters.Is(map_filters::show_critters) );
     
     characters->setVisible( model->filters.Is(map_filters::show_lords) );
 }
 
+void panel_map_detailed::setupCharacterButtons()
+{
+    character c;
+    
+    // clear the processed flag
+    for( auto m : mapBuilder->characters ) {
+        m->processed = false;
+    }
+    
+    for( auto m : mapBuilder->characters ) {
+        
+        CONTINUE_IF(m->processed);
+        
+        TME_GetCharacter(c,m->id);
+        auto pos = mapBuilder->convertToPosition(c.location);
+        
+        Widget* node = nullptr;
+        
+        // others at this location?
+        if ( m->here.size() > 0 ) {
+            
+            node = uihelper::CreateImageButton("map_lords_many", ID_SELECT_ALL, clickCallback);
+            node->setUserData(m);
+            for ( auto n : m->here ) {
+                n->processed = true;
+            }
+            
+        } else {
+            auto lord = uisinglelord::createWithLord(c.id);
+            lord->status.Reset(LORD_STATUS::status_location);
+            lord->refreshStatus();
+            lord->setUserData(c.userdata);
+            lord->setTag((layoutid_t) (ID_SELECT_CHAR+c.id));
+            node = lord;
+            
+        }
+        
+        node->setAnchorPoint(uihelper::AnchorCenter);
+        node->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(32))) );
+        node->addClickEventListener(clickCallback);
+
+
+        m->processed = true;
+        characters->addChild(node);
+        
+    }
+}

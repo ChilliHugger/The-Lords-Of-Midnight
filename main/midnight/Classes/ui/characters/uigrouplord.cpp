@@ -140,14 +140,14 @@ void uigrouplord::createFollowers()
 {
     c_mxid followers;
     TME_GetFollowers(characterId, followers);
+    createFollowers(followers);
+}
 
+void uigrouplord::createFollowers(const c_mxid& followers)
+{
     for ( int ii=0; ii<followers.Count(); ii++) {
         addFollower(ii,followers[ii]);
     }
-
-//    for ( int ii=0; ii<10; ii++ )
-//        addFollower(ii,followers[0]);
-    
     follower_adjust=0;
     updateFollowers();
 }
@@ -192,6 +192,11 @@ void uigrouplord::addFollower( int pos, mxid id )
     lord->setScale(GROUPED_LORD_SCALE);
     addChild(lord);
     followers.pushBack(lord);
+    
+    if ( drag_delegate == nullptr ) {
+        lord->disableDrag();
+    }
+    
 }
 
 Vec2 uigrouplord::calcCirclePos ( f32 pos )

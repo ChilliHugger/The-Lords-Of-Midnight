@@ -48,6 +48,7 @@ enum CELLFLAGS {
 
 class map_object : public cocos2d::Ref
 {
+    template<class T> using Vector = cocos2d::Vector<T>;
 public:
     mxid        id;
     loc_t       location;
@@ -55,14 +56,16 @@ public:
     loc_t       targetlocation;
     loc_t       homelocation;
     u32         soldiers;
-    //std::string image;
-    //std::string name;
+    mxunit_t    type;
     rect        r;
     BOOL        selected;
     BOOL        selectable;
     BOOL        multiple;
     BOOL        popup;
     BOOL        tunnel;
+    BOOL        processed;
+    
+    Vector<map_object*>   here;
 };
 
 
@@ -80,6 +83,8 @@ public:
     bool checkFlags( mapflags fields ) { return flags.Is((u32)fields); }
     void setFlags( mapflags fields ) { flags.Set((u32)fields); }
 
+    bool isDebugMap() { return checkFlags(mapflags::debug_map); }
+    
     loc_t normaliseLocation( loc_t loc );
     Vec2 convertToPosition( loc_t loc );
 
@@ -91,6 +96,10 @@ public:
 #if defined(_DDR_)
     mapbuilder* updateSpecialObjects();
 #endif
+    
+    mapbuilder* updateCharacters();
+    mapbuilder* updateRegiments();
+    mapbuilder* updateStrongholds();
     
     void clearLayers();
     
@@ -107,20 +116,18 @@ private:
     
 public:
     size mapsize;
+    u32 max_cells;
+    
     u32* terrain;
     u32* terrain_discovery;
     u32* tunnels;
     u32* critters;
     
-    Vector<map_object*>    objects;
+    Vector<map_object*>    characters;
+    Vector<map_object*>    regiments;
+    Vector<map_object*>    strongholds;
     
-    //map_object_t*   objects;
-    //u32             objects_count;
-    
-    ssize_t obj_characters;
-    ssize_t obj_regiments;
-    ssize_t obj_strongholds;
-    
+
 };
 
 

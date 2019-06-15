@@ -204,36 +204,8 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">ddr_menu/book.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>128,141,256,281</rect>
-                <key>scale9Paddings</key>
-                <rect>128,141,256,281</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ddr_menu/bookmark.png</key>
-            <key type="filename">ddr_menu/bookmark_overlay.png</key>
-            <key type="filename">map/map_current_location.png</key>
-            <key type="filename">misc/background_tile.png</key>
-            <key type="filename">misc/lord_select_circle.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
+            <key type="filename">ddr_map/i_filter_tunnel.png</key>
+            <key type="filename">ddr_map/map_lords_many.png</key>
             <key type="filename">ddr_menu/i_guide.png</key>
             <key type="filename">ddr_menu/i_story.png</key>
             <key type="filename">look/i_tutorial_flash.png</key>
@@ -246,9 +218,7 @@
             <key type="filename">map/i_center.png</key>
             <key type="filename">map/i_critters.png</key>
             <key type="filename">map/i_filter_lords.png</key>
-            <key type="filename">map/i_filter_tunnel.png</key>
             <key type="filename">map/i_small_map.png</key>
-            <key type="filename">map/map_lords_many.png</key>
             <key type="filename">map/map_rider.png</key>
             <key type="filename">map/map_scale_down.png</key>
             <key type="filename">map/map_scale_track.png</key>
@@ -281,6 +251,36 @@
                 <rect>32,32,64,64</rect>
                 <key>scale9Paddings</key>
                 <rect>32,32,64,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ddr_menu/book.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>128,141,256,281</rect>
+                <key>scale9Paddings</key>
+                <rect>128,141,256,281</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ddr_menu/bookmark.png</key>
+            <key type="filename">ddr_menu/bookmark_overlay.png</key>
+            <key type="filename">map/map_current_location.png</key>
+            <key type="filename">misc/background_tile.png</key>
+            <key type="filename">misc/lord_select_circle.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>64,64,128,128</rect>
+                <key>scale9Paddings</key>
+                <rect>64,64,128,128</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -350,6 +350,7 @@
             <filename>select</filename>
             <filename>think</filename>
             <filename>ddr_menu</filename>
+            <filename>ddr_map</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

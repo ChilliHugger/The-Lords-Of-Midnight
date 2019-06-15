@@ -244,6 +244,7 @@ namespace chilli {
             friend  archive& operator<<(archive& ar, const rect& );
             friend  archive& operator>>(archive& ar, rect& );
             
+            static const rect EMPTY;
         };
         
         

@@ -16,12 +16,15 @@
 
 
 FORWARD_REFERENCE(mapbuilder);
+FORWARD_REFERENCE(uigrouplord);
+FORWARD_REFERENCE(map_object);
 
 class panel_map_detailed : public uipanel
 {
     using ScrollView = extensions::ScrollView;
     using TMXTiledMap = cocos2d::TMXTiledMap;
     using Node = cocos2d::Node;
+    using Vec2 = cocos2d::Vec2;
     
 public:
     virtual bool init() override;
@@ -42,6 +45,11 @@ protected:
 
     void updateFilters();
     
+    void setupCharacterButtons();
+    
+    void hideGroupLord();
+    void showGroupLord( Vec2 position, map_object* object );
+    
 private:
     
     ScrollView*     scrollView;
@@ -49,5 +57,5 @@ private:
     mapbuilder*     mapBuilder;
     mapmodel*       model;
     Node*           characters;
-    
+    uigrouplord*    grouplord;
 };
