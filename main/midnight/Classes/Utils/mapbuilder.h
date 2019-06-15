@@ -92,6 +92,8 @@ public:
     mapbuilder* updateSpecialObjects();
 #endif
     
+    void clearLayers();
+    
 private:
     flags32         flags;
     MapInfo_t       info;

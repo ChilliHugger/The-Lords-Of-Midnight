@@ -10,19 +10,24 @@
 #include "panelmodel.h"
 
 #include "../tme_interface.h"
+#include "../frontend/panel_id.h"
 
 
 enum class map_filters : u32 {
-    show_critters    = MXBIT(0),
-    centre_char      = MXBIT(1),
-    overview_map     = MXBIT(2),
-//#if defined(_DDR_)
-    show_tunnels     = MXBIT(3),
-//#endif
-    all              = show_critters
+    show_critters   = MXBIT(0),
+    centre_char     = MXBIT(1),
+    overview_map    = MXBIT(2),
+    show_lords      = MXBIT(4),
+#if defined(_DDR_)
+    show_tunnels    = MXBIT(3),
+#endif
+    all             = show_critters
                         | centre_char
+                        | show_lords
                         | overview_map
+#if defined(_DDR_)
                         | show_tunnels
+#endif
 };
 
 
@@ -40,4 +45,7 @@ public:
     f32     mapscale;
     f32     lastmapscale;
     
+    // TODO: Current Map
+    // 
+    panelmode_t currentMapPanel;
 };

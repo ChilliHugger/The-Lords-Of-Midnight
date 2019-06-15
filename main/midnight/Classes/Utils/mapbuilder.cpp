@@ -42,8 +42,9 @@ mapbuilder::mapbuilder() :
 {
     //setFlags(mapflags::debug_map);
     //setFlags(mapflags::show_all_characters);
+    //setFlags(mapflags::show_all_critters);
+    
     setFlags(mapflags::show_characters);
-    setFlags(mapflags::show_all_critters);
     setFlags(mapflags::show_critters);
     setFlags(mapflags::show_tunnels);
 }
@@ -73,14 +74,6 @@ mapbuilder* mapbuilder::build ( void )
     
     loc_start = info.top;
     
-    //loc_start -= loc_t(2,2);
-    //if ( loc_start.x<0 ) loc_start.x=0;
-    //if ( loc_start.y<0 ) loc_start.y=0;
-    
-    //info.bottom += loc_t(2,2);
-    //if ( info.bottom.x>mapsize.cx ) info.bottom.x=mapsize.cx;
-    //if ( info.bottom.y>mapsize.cy ) info.bottom.y=mapsize.cy;
-    
     mapsize.cx = info.bottom.x - loc_start.x;
     mapsize.cy = info.bottom.y - loc_start.y;
     
@@ -106,8 +99,10 @@ mapbuilder* mapbuilder::build ( void )
     updateLayers();
     
     updateObjects();
-    
+
+#if defined(_DDR_)
     updateSpecialObjects();
+#
     
     return this;
 }
@@ -327,6 +322,7 @@ mapbuilder* mapbuilder::updateLayers()
         terrain[ii] = 0;
         critters[ii] = 0;
         tunnels[ii]=0;
+        terrain_discovery[ii]=0;
         
     
         bool seen = m->flags.Is(lf_seen) || debug_map ;
@@ -627,4 +623,12 @@ mapbuilder* mapbuilder::updateObjects()
     }
  
     return this;
+}
+
+void mapbuilder::clearLayers()
+{
+    critters = nullptr;
+    tunnels = nullptr;
+    terrain = nullptr;
+    terrain_discovery = nullptr;
 }

@@ -296,7 +296,7 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
 
 }
 
-void panelmanager::startMainMenu()
+void panelmanager::showMainMenu()
 {
 #if defined(_DEBUG_GAME_PANEL_)
     storyid_t story = mr->getCurrentStory();
@@ -307,4 +307,9 @@ void panelmanager::startMainMenu()
     {
         mr->panels->setPanelMode(MODE_MAINMENU, TRANSITION_FADEIN );
     }
+}
+
+void panelmanager::showMap()
+{
+    mr->showPage( mr->mapmodel.currentMapPanel );
 }

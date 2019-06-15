@@ -56,6 +56,10 @@
 		8306209A1F38855600D017E5 /* lom in Resources */ = {isa = PBXBuildFile; fileRef = 830620981F38855600D017E5 /* lom */; };
 		830620B51F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
 		830620B61F389B1200D017E5 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 830620B41F389B1200D017E5 /* terrain */; };
+		830FD74B22B5081B001A39A8 /* ScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FD74922B5081B001A39A8 /* ScrollView.cpp */; };
+		830FD74C22B5081B001A39A8 /* ScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FD74922B5081B001A39A8 /* ScrollView.cpp */; };
+		830FD74D22B5081B001A39A8 /* ScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FD74922B5081B001A39A8 /* ScrollView.cpp */; };
+		830FD74E22B5081B001A39A8 /* ScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FD74922B5081B001A39A8 /* ScrollView.cpp */; };
 		830FF14722B2C522005D1DBA /* TiledMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FF14522B2C522005D1DBA /* TiledMapper.cpp */; };
 		830FF14822B2C522005D1DBA /* TiledMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FF14522B2C522005D1DBA /* TiledMapper.cpp */; };
 		830FF14922B2C522005D1DBA /* TiledMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 830FF14522B2C522005D1DBA /* TiledMapper.cpp */; };
@@ -593,6 +597,8 @@
 		830618621F38758800D017E5 /* tme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tme.cpp; sourceTree = "<group>"; };
 		830620981F38855600D017E5 /* lom */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lom; sourceTree = "<group>"; };
 		830620B41F389B1200D017E5 /* terrain */ = {isa = PBXFileReference; lastKnownFileType = folder; path = terrain; sourceTree = "<group>"; };
+		830FD74922B5081B001A39A8 /* ScrollView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollView.cpp; sourceTree = "<group>"; };
+		830FD74A22B5081B001A39A8 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		830FF14522B2C522005D1DBA /* TiledMapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TiledMapper.cpp; sourceTree = "<group>"; };
 		830FF14622B2C522005D1DBA /* TiledMapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiledMapper.h; sourceTree = "<group>"; };
 		8310DABC22B04503008449F9 /* ddr_stronghold.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ddr_stronghold.cpp; sourceTree = "<group>"; };
@@ -1250,6 +1256,8 @@
 				83B9BD6C1FD2D38500B4C721 /* CustomDirector.h */,
 				83ADDBF322AD26710041065F /* TMXTiledMap.cpp */,
 				83ADDBF422AD26710041065F /* TMXTiledMap.h */,
+				830FD74922B5081B001A39A8 /* ScrollView.cpp */,
+				830FD74A22B5081B001A39A8 /* ScrollView.h */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1834,6 +1842,7 @@
 				83D264601F360724001C6F13 /* item_character.cpp in Sources */,
 				83D264821F360724001C6F13 /* lom_scenario.cpp in Sources */,
 				83B9BD771FD3114000B4C721 /* uipopup.cpp in Sources */,
+				830FD74B22B5081B001A39A8 /* ScrollView.cpp in Sources */,
 				8378E3CA21BD51190030AE3C /* selectmodel.cpp in Sources */,
 				83398A9420D1D708007EAE7B /* panel_look.cpp in Sources */,
 				83D2645C1F360724001C6F13 /* info_terrain.cpp in Sources */,
@@ -1914,6 +1923,7 @@
 				83D264F51F360857001C6F13 /* tinyxmlparser.cpp in Sources */,
 				83D264E31F36077E001C6F13 /* random.cpp in Sources */,
 				83B9BD6A1FD2CC9D00B4C721 /* panel_credits.cpp in Sources */,
+				830FD74C22B5081B001A39A8 /* ScrollView.cpp in Sources */,
 				83784AC71FCF218D00F5AD66 /* LandscapeNode.cpp in Sources */,
 				83733924227C30D5001D61FD /* mapmodel.cpp in Sources */,
 				83C3D6C222AAA7340040B57D /* configmanager.cpp in Sources */,
@@ -1980,6 +1990,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8344EBCF1FD1E43F0067AAC1 /* processor_battle.cpp in Sources */,
+				830FD74D22B5081B001A39A8 /* ScrollView.cpp in Sources */,
 				8344EBD01FD1E43F0067AAC1 /* mxengine.cpp in Sources */,
 				8344EBD11FD1E43F0067AAC1 /* mxitem.cpp in Sources */,
 				8344EBD21FD1E43F0067AAC1 /* info_area.cpp in Sources */,
@@ -2121,6 +2132,7 @@
 				83E301DB21A41BE3005C3F5C /* panel_mainmenu.cpp in Sources */,
 				83E301DC21A41BE3005C3F5C /* LandscapeTerrain.cpp in Sources */,
 				83E301DD21A41BE3005C3F5C /* tinyxmlparser.cpp in Sources */,
+				830FD74E22B5081B001A39A8 /* ScrollView.cpp in Sources */,
 				83E301DE21A41BE3005C3F5C /* random.cpp in Sources */,
 				83E301DF21A41BE3005C3F5C /* panel_credits.cpp in Sources */,
 				83E301E021A41BE3005C3F5C /* LandscapeNode.cpp in Sources */,

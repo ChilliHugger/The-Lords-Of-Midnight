@@ -1195,7 +1195,7 @@ void panel_look::OnNotification( Ref* sender )
             
         case ID_MAP:
         {
-            mr->showPage(MODE_MAP_OVERVIEW);
+            mr->panels->showMap();
             break;
         }
             

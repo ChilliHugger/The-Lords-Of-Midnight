@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.10.0</string>
+        <string>5.0.1</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -245,6 +245,8 @@
             <key type="filename">map/i_big_map.png</key>
             <key type="filename">map/i_center.png</key>
             <key type="filename">map/i_critters.png</key>
+            <key type="filename">map/i_filter_lords.png</key>
+            <key type="filename">map/i_filter_tunnel.png</key>
             <key type="filename">map/i_small_map.png</key>
             <key type="filename">map/map_lords_many.png</key>
             <key type="filename">map/map_rider.png</key>
@@ -323,20 +325,6 @@
                 <rect>32,8,64,16</rect>
                 <key>scale9Paddings</key>
                 <rect>32,8,64,16</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">misc/footer.png</key>
-            <key type="filename">misc/header.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>69,16,138,32</rect>
-                <key>scale9Paddings</key>
-                <rect>69,16,138,32</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

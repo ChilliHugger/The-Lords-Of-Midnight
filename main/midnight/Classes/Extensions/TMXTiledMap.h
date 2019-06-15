@@ -6,9 +6,7 @@
 //  Copyright © 2019 Chilli Hugger Software. All rights reserved.
 //
 
-#ifndef TMXTiledMap_h
-#define TMXTiledMap_h
-
+#pragma once
 #include "../cocos.h"
 
 namespace extensions {
@@ -25,4 +23,3 @@ namespace extensions {
 
 }
 
-#endif /* TMXTileMap_h */

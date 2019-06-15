@@ -61,7 +61,7 @@ void panel_dedication::startDedication()
 
 void panel_dedication::nextPanel()
 {
-    mr->panels->startMainMenu();
+    mr->panels->showMainMenu();
 }
 
 

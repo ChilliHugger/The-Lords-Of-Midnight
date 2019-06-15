@@ -80,7 +80,7 @@ void panel_splashscreen::complete()
         if ( !mr->config->skip_dedication ) {
             mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
         } else {
-            mr->panels->startMainMenu();
+            mr->panels->showMainMenu();
         }
     }, delay, "show_mainmenu" );
 }
