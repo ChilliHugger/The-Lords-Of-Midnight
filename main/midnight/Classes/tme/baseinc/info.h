@@ -1046,16 +1046,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			virtual mxobject* Cmd_PickupObject ( void );
 			virtual void Cmd_Dead ( void );
             
-#if defined(_DDR_)
-			virtual MXRESULT Cmd_EnterTunnel ( void );
-			virtual MXRESULT Cmd_ExitTunnel ( void );
-            virtual MXRESULT Cmd_Use ( void ) ;
-            virtual MXRESULT Cmd_Take ( void ) ;
-            virtual MXRESULT Cmd_Give ( mxcharacter* character ) ;
-            virtual void Turn ( void );
-            virtual mxcharacter* GetNextFoe() const;
-            virtual mxcharacter* GetNextLiege() const;
-#endif
             virtual MXRESULT EnterBattle ( void );
 
             virtual bool EnterLocation ( mxgridref loc );

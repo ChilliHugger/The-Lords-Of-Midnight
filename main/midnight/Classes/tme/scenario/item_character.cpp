@@ -662,11 +662,8 @@ namespace tme {
 
 		bool mxcharacter::EnterLocation ( mxgridref loc )
 		{
-			//location = loc ;
-			//mx->EnterLocation ( location, this );
-
             mx->scenario->MakeMapAreaVisible ( loc, this );
-            
+
             return TRUE ;
 		}
 
@@ -691,14 +688,12 @@ namespace tme {
 
 			flags.Set(cf_resting);
             
-#if defined(_DDR_)
-            entities followers;
+           entities followers;
             mx->scenario->GetCharacterFollowers(this, followers);
             for ( u32 ii=0; ii<followers.Count(); ii++ ) {
                 mxcharacter* follower = (mxcharacter*) followers[ii];
                 follower->Cmd_Rest();
             }
-#endif
 
 			CommandTakesTime(TRUE);
 
@@ -1112,136 +1107,6 @@ namespace tme {
 			return  oinfo->CanSee() ? thing : OB_NONE ;
 		}
 
-#if defined(_DDR_)
-		MXRESULT mxcharacter::Cmd_EnterTunnel ( void )
-		{
-            if ( IsFollowing() )
-                return MX_FAILED ;
-            
-			if ( IsInTunnel() )
-				return MX_FAILED ;
-
-			mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
-			if ( !mapsqr.HasTunnelEntrance() )
-				return MX_FAILED ;
-
-            // remove army from location
-			mx->gamemap->SetLocationArmy(Location(),0);
-			mx->gamemap->SetLocationCharacter(Location(),0);
-            
-			flags.Set ( cf_tunnel );
-            EnterLocation(Location());
-            
-            
-            
-			// TODO:
-			// we now need to cycle round the locations
-			// looking for the location that connections to us
-			// and drop us in there
-			for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
-				mxdir_t d = (mxdir_t) ii ;
-				loc_t l = Location() + d ;
-				if ( mx->gamemap->GetAt ( l ).HasTunnel() ) {
-					location = l ;
-                    looking=d;
-					break;
-				}
-			
-			}
-            
-            // new location
-            EnterLocation(Location());
-            
-            // group enter tunnel
-            
-            if ( HasFollowers() ) {
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
-                    follower->Flags().Set(cf_tunnel);
-                    follower->looking = Looking();
-                    follower->location = Location();
-                }
-            }
-
-            mx->scenario->SetMapArmies();
-            
-			CommandTakesTime(TRUE);
-
-			return MX_OK ;
-		}
-
-		MXRESULT mxcharacter::Cmd_ExitTunnel ( void )
-		{
-            if ( IsFollowing() )
-                return MX_FAILED ;
-            
-			if ( !IsInTunnel() )	
-				return MX_FAILED ;
-
-			mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
-
-			if ( !mapsqr.HasTunnelExit() )
-				return MX_FAILED ;
-
-			flags.Reset ( cf_tunnel );
-
-            // group exit tunnel
-            
-            if ( HasFollowers() ) {
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
-                    follower->Flags().Reset(cf_tunnel);
-                    follower->looking = Looking();
-                    follower->location = Location();
-                }
-            }
-            
-			CommandTakesTime(TRUE);
-
-			return MX_OK ;
-		}
-    
-        MXRESULT mxcharacter::Cmd_Use ( void )
-        {
-            if ( Carrying() == NULL )
-                return MX_FAILED ;
-            
-            
-			CommandTakesTime(TRUE);
-            return MX_OK ;
-        }
-
-        MXRESULT mxcharacter::Cmd_Take ( void )
-        {
-            return Cmd_PickupObject()==NULL ? MX_FAILED : MX_OK ;
-        }
-
-        MXRESULT mxcharacter::Cmd_Give ( mxcharacter* character )
-        {
-            // no character
-            if ( character == NULL )
-                return MX_FAILED ;
-            
-            // character is already carrying something
-            if ( character->Carrying() )
-                return MX_FAILED ;
-            
-            character->carrying = Carrying();
-            
-            carrying = NULL ;
-            
- 			CommandTakesTime(TRUE);
-            
-            return MX_OK ;
-        }
-
-    
-#endif // _DDR_
-
         MXRESULT mxcharacter::Cmd_Follow ( mxcharacter* c )
         {
             if ( !CanFollow(c) )
@@ -1634,12 +1499,6 @@ namespace tme {
 			return carrying ;
 		}
             
-#if defined(_DDR_)
-        void mxcharacter::Turn ( void )
-        {
-        }
-#endif
-    
 		void mxcharacter::StartDawn ( void )
 		{
 			IncreaseEnergy( Time()/2 );
@@ -1683,36 +1542,6 @@ namespace tme {
 #endif
         }
 
-#if defined(_DDR_)
-        mxcharacter* mxcharacter::GetNextFoe() const
-        {
-            mxcharacter* character = Foe();
-            while ( character!=NULL && character->IsDead() ) {
-                if (character->Liege() == character)  {
-                    //
-                    MXTRACE("GetNextFoe: Error - Circular Liege: %s - breaking out", (LPSTR)character->Longname());
-                    return NULL;
-                }
-                character = character->Liege();
-            }
-            return character;
-        }
-        mxcharacter* mxcharacter::GetNextLiege() const
-        {
-            mxcharacter* character = Liege();
-            while ( character!=NULL && character->IsDead() ) {
-                if (character->Liege() == character)  {
-                    //
-                    MXTRACE("GetNextLiege: Error - Circular Liege: %s - breaking out", (LPSTR)character->Longname());
-                    return NULL;
-                }
-                character = character->Liege();
-            }
-            return character;
-        }
-#endif
-    
-    
 		bool mxcharacter::HasBattleInfo() const
 		{
 			mxgridref loc1 = battleloc ;

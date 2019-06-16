@@ -675,36 +675,36 @@ namespace tme {
 #if defined(_DDR_)
 		COMMAND( OnCharEnterTunnel ) 
 		{
-			CONVERT_CHARACTER_ID( argv[0].vId, character );
+			CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
 			argv[0]=(s32)0;
 			return character->Cmd_EnterTunnel();
 		}
 
 		COMMAND( OnCharExitTunnel ) 
 		{
-			CONVERT_CHARACTER_ID( argv[0].vId, character );
+			CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
 			argv[0]=(s32)0;
 			return character->Cmd_ExitTunnel();
 		}
 
         COMMAND( OnCharGive )
         {
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
-            CONVERT_CHARACTER_ID( argv[1].vId, to );
+            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_DDR_CHARACTER_ID( argv[1].vId, to );
             argv[0]=(s32)0;
             return character->Cmd_Give(to);
         }
 
         COMMAND( OnCharTake )
         {
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
             return character->Cmd_Take();
         }
 
         COMMAND( OnCharUse )
         {
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
             return character->Cmd_Use();
         }

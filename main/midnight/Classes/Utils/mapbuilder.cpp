@@ -165,10 +165,6 @@ mapbuilder* mapbuilder::updateTerrain()
             dst->discovery_flags = m.discovery_flags ;
             dst->discovery_flags.Reset(~reset_discover_mask);
             dst->area = m.area ;
-            
-            if ( dst->flags.Is(lf_seen) || dst->discovery_flags.Is(lf_seen) || debug_map )
-                dst->discovery_flags.Set(cf_visible);
-            
             dst++;
         }
     }
@@ -271,7 +267,7 @@ if ( src->flags.Is(lf_seen) || src->discovery_flags.Is(lf_seen) || debug_map ) \
             //
             density=15;
             
-            if ( dst->flags.Is(lf_tunnel_looked_at) || ( dst->flags.Is(lf_tunnel) && debug_map ) ) {
+            if ( dst->flags.Is(lf_tunnel_looked_at) || dst->discovery_flags.Is(lf_tunnel_visited) || ( dst->flags.Is(lf_tunnel) && debug_map ) ) {
                 
                 int flags=lf_tunnel_visited;
                 if ( dst->flags.Is(lf_tunnel_visited))
@@ -279,7 +275,7 @@ if ( src->flags.Is(lf_seen) || src->discovery_flags.Is(lf_seen) || debug_map ) \
                 
 #define COMPARE(xx,yy,v) \
 src = CELL(xx,yy); \
-if ( src->flags.Is(flags) || (src->flags.Is(lf_tunnel) && debug_map) ) \
+if ( src->flags.Is(flags) || src->discovery_flags.Is(flags) || (src->flags.Is(lf_tunnel) && debug_map) ) \
     density -= v;
                 
                 // check above
@@ -314,16 +310,9 @@ if ( src->flags.Is(flags) || (src->flags.Is(lf_tunnel) && debug_map) ) \
 
 mapbuilder* mapbuilder::updateLayers()
 {
- 
-    
-    int px,py=0;
-    int x,y=0;
-    
+
     loc_first.x = 0 ;
     loc_first.y = 0;
-    
-    int lastx = mapsize.cx+1;
-    int lasty = mapsize.cy+1;
     
     max_cells = mapsize.cx * mapsize.cy;
 
@@ -349,11 +338,11 @@ mapbuilder* mapbuilder::updateLayers()
         
     
         bool seen = m->flags.Is(lf_seen) || debug_map ;
-        bool domain = m->flags.Is(lf_domain);
+        //bool domain = m->flags.Is(lf_domain);
         bool visited = m->flags.Is(lf_visited);
         bool looked_at = m->flags.Is(lf_looked_at);
-        bool displayed_character=false;
-        bool mist = m->flags.Is(lf_mist);
+        //bool displayed_character=false;
+        //bool mist = m->flags.Is(lf_mist);
         //bool showarea = m->area == currentarea ;
         
         bool discovery_seen = m->discovery_flags.Is(lf_seen) ;
@@ -368,20 +357,20 @@ mapbuilder* mapbuilder::updateLayers()
         bool discovery_tunnelvisited = m->discovery_flags.Is(lf_tunnel_visited) ;
         
         bool passageway = m->flags.Is(lf_tunnel_passageway);
-        bool object = m->flags.Is(lf_object);
-        bool object_special = m->flags.Is(lf_object_special);
+        //bool object = m->flags.Is(lf_object);
+        //bool object_special = m->flags.Is(lf_object_special);
 #else
         bool tunnelseen = false;
         bool tunnelvisited = false ;
         bool discovery_tunnelseen = false;
         bool discovery_tunnelvisited = false ;
         bool passageway = false;
-        bool object = false;
-        bool object_special = false;
+        //bool object = false;
+        //bool object_special = false;
 #endif
         bool visible = seen || visited || discovery_seen || discovery_visited || tunnelvisited || tunnelseen || discovery_tunnelseen || discovery_tunnelvisited ;
         
-        bool locationTextAvailable = looked_at || discovery_looked_at || visited || discovery_visited || debug_map ;
+        //bool locationTextAvailable = looked_at || discovery_looked_at || visited || discovery_visited || debug_map ;
         
         mxthing_t thing = (mxthing_t)m->object ;
         
@@ -402,7 +391,8 @@ mapbuilder* mapbuilder::updateLayers()
             if ( seen )
                 terrain[ii] = cell ;
             else {
-                terrain_discovery[ii] = cell;
+                if ( discovery_seen )
+                    terrain_discovery[ii] = cell;
                 terrain[ii] = CELL_BLANK;
             }
                 
@@ -414,20 +404,18 @@ mapbuilder* mapbuilder::updateLayers()
         mxthing_t show_thing = OB_NONE;
         
         // critters
-        if (!displayed_character ) {
 #if defined(_LOM_)
-            if ( ((seen && (visited || looked_at)) || show_all_critters ) && show_critters )  {
-                    show_thing = thing;
-            }
+        if ( ((seen && (visited || looked_at)) || show_all_critters ) && show_critters )  {
+                show_thing = thing;
+        }
 #endif
 #if defined(_DDR_)
-            bool show_critter = ( passageway && tunnelseen ) || (!passageway && (seen && (visited || looked_at))) ;
-            if ( (show_critter || show_all_critters ) && show_critters  )  {
-                    //if ( thing == (mxthing_t)m->object_tunnel )
-                    show_thing = thing;
-            }
-#endif
+        bool show_critter = ( passageway && tunnelseen ) || (!passageway && (seen && (visited || looked_at))) ;
+        if ( (show_critter || show_all_critters ) && show_critters  )  {
+                //if ( thing == (mxthing_t)m->object_tunnel )
+                show_thing = thing;
         }
+#endif
         
         if ( !debug_map && show_thing > OB_WILDHORSES )
             show_thing = OB_NONE;
@@ -441,8 +429,9 @@ mapbuilder* mapbuilder::updateLayers()
         
         
 #if defined(_DDR_)
-        BOOL tunnel_visited = m->flags.Is(lf_tunnel_visited) || ( m->flags.Is(lf_tunnel) && debug_map ) ;
-        BOOL tunnel_looked_at = m->flags.Is(lf_tunnel_looked_at)  ;
+        BOOL tunnel_visited = m->flags.Is(lf_tunnel_visited) || ( m->flags.Is(lf_tunnel) && debug_map ) || discovery_tunnelvisited ;
+        BOOL tunnel_looked_at = m->flags.Is(lf_tunnel_looked_at) | discovery_tunnelseen  ;
+        
         
         if ( (tunnel_visited||tunnel_looked_at) && show_tunnels ) {
             int d=m->tunnel;

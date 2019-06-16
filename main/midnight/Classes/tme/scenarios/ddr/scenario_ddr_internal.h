@@ -88,12 +88,19 @@ namespace tme {
         virtual void IncreaseEnergy ( s32 amount );
         
         virtual MXRESULT Cmd_WalkForward ( bool perform_seek );
-        virtual MXRESULT Cmd_Use ( void );
         virtual mxobject* Cmd_Fight( void );
+        
+        virtual MXRESULT Cmd_EnterTunnel ( void );
+        virtual MXRESULT Cmd_ExitTunnel ( void );
+        virtual MXRESULT Cmd_Use ( void ) ;
+        virtual MXRESULT Cmd_Take ( void ) ;
+        virtual MXRESULT Cmd_Give ( mxcharacter* character ) ;
+        virtual mxcharacter* GetNextFoe() const;
+        virtual mxcharacter* GetNextLiege() const;
         
         virtual void StartDawn ( void );
         virtual void Turn ( void );
-
+        
         virtual void LostFight ( void );
         virtual mxlocinfo* GetLocInfo();
     
