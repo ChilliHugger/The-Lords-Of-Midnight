@@ -57,6 +57,7 @@ mapbuilder::~mapbuilder()
     characters.clear();
     regiments.clear();
     strongholds.clear();
+    places.clear();
 }
 
 mapbuilder* mapbuilder::build ( void )
@@ -121,6 +122,8 @@ mapbuilder* mapbuilder::build ( void )
     updateRegiments();
     
     updateStrongholds();
+    
+    updatePlaces();
 
 #if defined(_DDR_)
     if ( isDebugMap() )
@@ -144,8 +147,6 @@ mapbuilder* mapbuilder::updateTerrain()
         lf_tunnel_visited   // 19
      */
     
-    bool debug_map = isDebugMap();
-    
     u32 reset_discover_mask = (lf_seen|lf_visited|lf_looked_at);
 #if defined(_DDR_)
     reset_discover_mask |= lf_tunnel_looked_at|lf_tunnel_visited;
@@ -154,7 +155,10 @@ mapbuilder* mapbuilder::updateTerrain()
     // grab terrain
     for  ( int y=0; y<mapsize.cy; y++ ) {
         for ( int x=0; x<mapsize.cx; x++ ) {
-            TME_GetLocation(m,mxgridref(loc_start.x+x,loc_start.y+y));
+            
+            loc_t loc(loc_start.x+x,loc_start.y+y);
+            
+            TME_GetLocation(m,loc);
             
             dst->terrain = m.terrain ;
             dst->density=0;
@@ -166,6 +170,14 @@ mapbuilder* mapbuilder::updateTerrain()
             dst->discovery_flags.Reset(~reset_discover_mask);
             dst->area = m.area ;
             dst++;
+            
+            if ( m.flags.Is(lf_looked_at) || m.flags.Is(lf_visited) ) {
+                if ( ( (m.flags.Is(lf_stronghold) && !m.flags.Is(lf_domain)) || (m.terrain == TN_TOWER || m.terrain == TN_WATCHTOWER || m.terrain == TN_GATE ) ) ) {
+                    auto place = new map_object();
+                    place->location = loc;
+                    places.pushBack(place);
+                }
+            }
         }
     }
     
@@ -388,9 +400,9 @@ mapbuilder* mapbuilder::updateLayers()
             u32 cell = d->mapdensity ? d->mapcell + m->density : d->mapcell ;
             
             
-            if ( seen )
+            if ( seen ) {
                 terrain[ii] = cell ;
-            else {
+            }else {
                 if ( discovery_seen )
                     terrain_discovery[ii] = cell;
                 terrain[ii] = CELL_BLANK;
@@ -559,20 +571,20 @@ mapbuilder* mapbuilder::updateCharacters()
         
         auto object = new map_object();
         
-        object->selectable=FALSE;
+        //object->selectable=FALSE;
         object->id = c.id ;
         object->location = c.location ;
-        object->soldiers = c.warriors+c.riders;
-        object->r = rect::EMPTY ;
-        object->selected = false ;
-        object->selectable=Character_IsRecruited(c) || show_all_characters;
-        object->multiple=false;
-#if defined(_DDR_)
-        object->tunnel=Character_IsInTunnel(c);
-        object->homelocation = c.homelocation;
-        object->lastlocation = c.lastlocation ;
-        object->targetlocation = c.targetlocation;
-#endif
+//        object->soldiers = c.warriors+c.riders;
+//        object->r = rect::EMPTY ;
+//        object->selected = false ;
+//        object->selectable=Character_IsRecruited(c) || show_all_characters;
+//        object->multiple=false;
+//#if defined(_DDR_)
+//        object->tunnel=Character_IsInTunnel(c);
+//        object->homelocation = c.homelocation;
+//        object->lastlocation = c.lastlocation ;
+//        object->targetlocation = c.targetlocation;
+//#endif
 
         
         // at the same location
@@ -617,13 +629,13 @@ mapbuilder* mapbuilder::updateRegiments()
         
         object->id = r.id ;
         object->location = r.location ;
-        object->soldiers = r.total ;
-        object->type = r.type;
-        object->lastlocation = r.lastlocation ;
-        object->selectable = false;
-        object->r = rect::EMPTY ;
-        object->targetlocation = r.targetlocation ;
-        
+//        object->soldiers = r.total ;
+//        object->type = r.type;
+//        object->lastlocation = r.lastlocation ;
+//        object->selectable = false;
+//        object->r = rect::EMPTY ;
+//        object->targetlocation = r.targetlocation ;
+//
     }
 
     return this;
@@ -647,10 +659,22 @@ mapbuilder* mapbuilder::updateStrongholds()
         
         object->id = s.id ;
         object->location = s.location ;
-        object->selectable = false;
-        object->r = rect::EMPTY ;
+//        object->selectable = false;
+//        object->r = rect::EMPTY ;
     }
  
+    return this;
+}
+
+mapbuilder* mapbuilder::updatePlaces()
+{
+    for ( auto p : places ) {
+        for( auto o : characters ) {
+            if ( o->location == p->location ) {
+                p->here.pushBack(o);
+            }
+        }
+    }
     return this;
 }
 

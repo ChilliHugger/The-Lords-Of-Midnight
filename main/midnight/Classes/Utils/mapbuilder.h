@@ -52,19 +52,21 @@ class map_object : public cocos2d::Ref
 public:
     mxid        id;
     loc_t       location;
-    loc_t       lastlocation;
-    loc_t       targetlocation;
-#if defined(_DDR_)
-    loc_t       homelocation;
-#endif
-    u32         soldiers;
-    mxunit_t    type;
-    rect        r;
-    BOOL        selected;
-    BOOL        selectable;
-    BOOL        multiple;
-    BOOL        popup;
-    BOOL        tunnel;
+    
+//    loc_t       lastlocation;
+//    loc_t       targetlocation;
+//#if defined(_DDR_)
+//    loc_t       homelocation;
+//#endif
+//    u32         soldiers;
+//    mxunit_t    type;
+//    rect        r;
+    
+//    BOOL        selected;
+//    BOOL        selectable;
+//    BOOL        multiple;
+//    BOOL        popup;
+//    BOOL        tunnel;
     BOOL        processed;
     
     Vector<map_object*>   here;
@@ -102,7 +104,8 @@ public:
     mapbuilder* updateCharacters();
     mapbuilder* updateRegiments();
     mapbuilder* updateStrongholds();
-    
+    mapbuilder* updatePlaces();
+
     void clearLayers();
     
 private:
@@ -127,9 +130,10 @@ public:
     u32* tunnels;
     u32* critters;
     
-    Vector<map_object*>    characters;
-    Vector<map_object*>    regiments;
-    Vector<map_object*>    strongholds;
+    Vector<map_object*>     characters;
+    Vector<map_object*>     regiments;
+    Vector<map_object*>     strongholds;
+    Vector<map_object*>     places;
     
 
 };

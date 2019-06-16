@@ -46,6 +46,8 @@ protected:
     void updateFilters();
     
     void setupCharacterButtons();
+    void setupPlaceLabels();
+    void setupStrongholds();
     
     void hideGroupLord();
     void showGroupLord( Vec2 position, map_object* object );
@@ -57,5 +59,6 @@ private:
     mapbuilder*     mapBuilder;
     mapmodel*       model;
     Node*           characters;
+    Node*           descriptions;
     uigrouplord*    grouplord;
 };

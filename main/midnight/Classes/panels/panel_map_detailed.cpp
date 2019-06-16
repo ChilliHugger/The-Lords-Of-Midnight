@@ -33,6 +33,7 @@ using namespace tme;
 panel_map_detailed::panel_map_detailed() :
     scrollView(nullptr),
     characters(nullptr),
+    descriptions(nullptr),
     tmxMap(nullptr),
     mapBuilder(nullptr),
     grouplord(nullptr),
@@ -90,11 +91,19 @@ bool panel_map_detailed::init()
     
     scrollView->setInnerContainerPosition(Vec2(model->oldoffset.x,model->oldoffset.y));
     
+    descriptions = Node::create();
+    descriptions->setContentSize(tmxMap->getContentSize());
+    scrollView->addChild(descriptions);
+    
     characters = Node::create();
     characters->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(characters);
     
     setupCharacterButtons();
+    
+    setupStrongholds();
+    
+    setupPlaceLabels();
     
     if ( model->filters.Is(map_filters::centre_char) )
         centreOnCurrentCharacter(false);
@@ -328,4 +337,39 @@ void panel_map_detailed::setupCharacterButtons()
         characters->addChild(node);
         
     }
+}
+
+void panel_map_detailed::setupStrongholds()
+{
+    
+}
+
+void panel_map_detailed::setupPlaceLabels()
+{
+    for( auto m : mapBuilder->places )
+    {
+        CONTINUE_IF( m->here.size() >0 );
+        
+        auto pos = mapBuilder->convertToPosition(m->location);
+        
+        auto name = TME_GetLocationText(m->location);
+        
+        // set name label
+        auto title = Label::createWithTTF( uihelper::font_config_small, name );
+        title->setName("title");
+        title->setTextColor(Color4B(_clrWhite));
+        title->enableOutline(Color4B(_clrBlack),RES(1));
+        title->setLineSpacing(DIS(-2));
+        title->setHeight(DIS(32));
+        title->getFontAtlas()->setAntiAliasTexParameters();
+        title->setAnchorPoint(uihelper::AnchorCenter);
+        title->setWidth(DIS(128));
+        title->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(48))) );
+        title->setHorizontalAlignment(TextHAlignment::CENTER);
+        title->setVerticalAlignment(TextVAlignment::BOTTOM);
+      
+        descriptions->addChild(title);
+        //title->setLocalZOrder(ZORDER_NEAR);
+    }
+        
 }
