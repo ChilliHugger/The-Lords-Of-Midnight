@@ -8,6 +8,7 @@
 
 #ifndef TiledMapper_h
 #define TiledMapper_h
+#include "../cocos.h"
 
 #include "../library/libinc/mxtypes.h"
 

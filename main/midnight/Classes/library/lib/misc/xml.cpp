@@ -1,7 +1,7 @@
 #include "../../libinc/mxtypes.h"
-
 #include "../../libinc/misc/xml.h"
 
+#include <string>
 
 #if !defined _MSC_VER
 #pragma clang diagnostic push

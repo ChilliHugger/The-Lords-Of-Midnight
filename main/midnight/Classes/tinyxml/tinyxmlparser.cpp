@@ -48,7 +48,7 @@ const char* TiXmlBase::SkipWhiteSpace( const char* p )
 	}
 	while ( p && *p )
 	{
-		if ( isspace( *p ) || *p == '\n' || *p =='\r' )		// Still using old rules for white space.
+		if ( isspace( (unsigned char)*p ) || *p == '\n' || *p =='\r' )		// Still using old rules for white space.
 			++p;
 		else
 			break;

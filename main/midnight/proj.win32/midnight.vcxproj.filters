@@ -94,6 +94,9 @@
     <Filter Include="src\models">
       <UniqueIdentifier>{6128b096-8db1-415d-8802-76ab60907bd6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{7b2c9793-baff-4bf4-bb29-daffd568b5a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -459,14 +462,35 @@
     <ClCompile Include="..\Classes\models\selectmodel.cpp">
       <Filter>src\models</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\ui\uishortcutkeys.cpp">
+    <ClCompile Include="..\Classes\ui\characters\uigroupedlord.cpp">
+      <Filter>src\ui\characters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\uishortcutkeys.cpp">
       <Filter>src\ui</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\landscaping\TunnelView.cpp">
+    <ClCompile Include="..\Classes\landscaping\TunnelView.cpp">
       <Filter>src\landscaping</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\ui\characters\uigroupedlord.cpp">
-      <Filter>src\ui\characters</Filter>
+    <ClCompile Include="..\Classes\Extensions\ScrollView.cpp">
+      <Filter>src\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Extensions\TMXTiledMap.cpp">
+      <Filter>src\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\system\settingsmanager.cpp">
+      <Filter>src\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Utils\mapbuilder.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Utils\TiledMapper.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_object.cpp">
+      <Filter>src\tme\scenarios\ddr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_stronghold.cpp">
+      <Filter>src\tme\scenarios\ddr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -782,19 +806,41 @@
     <ClInclude Include="..\Classes\models\panelmodel.h">
       <Filter>src\models</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\ui\uishortcutkeys.h">
-      <Filter>src\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\landscaping\TunnelView.h">
-      <Filter>src\landscaping</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\ui\characters\uigroupedlord.h">
+    <ClInclude Include="..\Classes\ui\characters\uigroupedlord.h">
       <Filter>src\ui\characters</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ui\uishortcutkeys.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\landscaping\TunnelView.h">
+      <Filter>src\landscaping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Extensions\ScrollView.h">
+      <Filter>src\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Extensions\TMXTiledMap.h">
+      <Filter>src\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\system\settingsmanager.h">
+      <Filter>src\system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\mapbuilder.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\TiledMapper.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="game.rc">
+    <ResourceCompile Include="midnight.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+    <ResourceCompile Include="revenge.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\ddr.ico" />
   </ItemGroup>
 </Project>

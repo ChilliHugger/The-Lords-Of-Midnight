@@ -64,16 +64,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     
-    auto console = director->getConsole();
-    console->listenOnTCP(1234);
+    //auto console = director->getConsole();
+    //console->listenOnTCP(1234);
     
     
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("midnight", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect(TME_ScenarioName(), cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-        glview = GLViewImpl::create("midnight");
+        glview = GLViewImpl::create(TME_ScenarioName());
 #endif
         director->setOpenGLView(glview);
     }

@@ -45,5 +45,5 @@ void mapmodel::setDefaults ()
     oldoffset = point::ZERO;
     mapscale=1.0f;
     lastmapscale=0.5f;
-    currentMapPanel = MODE_MAP_DETAILED ;
+    currentMapPanel = MODE_MAP_OVERVIEW ;
 }

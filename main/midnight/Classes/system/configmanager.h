@@ -23,6 +23,7 @@ public:
 public:
     bool skip_dedication;
     bool skip_adverts;
+	bool debug_map;
 };
 
 #endif /* configmanager_h */

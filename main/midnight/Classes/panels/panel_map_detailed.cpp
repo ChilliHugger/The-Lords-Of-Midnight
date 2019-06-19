@@ -12,6 +12,7 @@
 
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
+#include "../system/configmanager.h"
 #include "../ui/uihelper.h"
 
 #include "../frontend/layout_id.h"
@@ -82,6 +83,12 @@ bool panel_map_detailed::init()
     mapBuilder =  new (std::nothrow) mapbuilder();
     mapBuilder->screensize = size( getContentSize().width/RES(64), getContentSize().height/RES(64));
     
+	if ( mr->config->debug_map ) {
+		mapBuilder->setFlags(mapflags::debug_map);
+		mapBuilder->setFlags(mapflags::show_all_characters);
+		mapBuilder->setFlags(mapflags::show_all_critters);
+	}
+
     std::unique_ptr<TiledMapper> mapper( new TiledMapper );
     tmxMap = mapper->createTMXMap(mapBuilder->build());
     
@@ -348,7 +355,7 @@ void panel_map_detailed::setupPlaceLabels()
 {
     for( auto m : mapBuilder->places )
     {
-        CONTINUE_IF( m->here.size() >0 );
+        //CONTINUE_IF( m->here.size() >0 );
         
         auto pos = mapBuilder->convertToPosition(m->location);
         

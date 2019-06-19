@@ -12,7 +12,6 @@
 #include "../ui/uioptionitem.h"
 #include "MyButton.h"
 
-
 USING_NS_CC;
 
 
@@ -74,9 +73,9 @@ bool uibookmenu::initWithStory( storyinfo_t* story )
         
 
         menuItem->addClickEventListener( [&,storyid] (Ref* ref ) {
-            bookeventargs args;
-            args.id = storyid;
-            Notify( &args );
+				bookeventargs args;
+				args.id = storyid;
+				Notify(&args);
         });
 
     }

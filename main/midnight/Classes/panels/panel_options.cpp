@@ -277,7 +277,7 @@ void panel_options::SetMenu ( int id )
         SetMenu(items_help,NUMELE(items_help));
         
 #if !defined(_OS_IOS_) && !defined(_OS_OSX_)
-        mr->config->novella_pdf=TRUE;
+        mr->settings->novella_pdf=TRUE;
 #endif
         
         SetValues();

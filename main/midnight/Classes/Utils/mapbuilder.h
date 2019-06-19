@@ -9,6 +9,7 @@
 #ifndef mapbuilder_h
 #define mapbuilder_h
 
+#include "../cocos.h"
 #include "../library/libinc/mxtypes.h"
 #include "../tme_interface.h"
 

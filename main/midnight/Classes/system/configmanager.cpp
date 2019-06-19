@@ -14,7 +14,8 @@
 
 configmanager::configmanager() :
     skip_adverts(false),
-    skip_dedication(false)
+    skip_dedication(false),
+	debug_map(false)
 {
 }
 
@@ -56,23 +57,23 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
             
             UIDEBUG("VAR %s = '%s'", name, t->ReadStr("value"));
             
-            if ( IS_VAR("sv_cheat_armies_noblock") ) {
+            if ( IS_VAR("cheat_armies_noblock") ) {
                 tme::variables::sv_cheat_armies_noblock = value;
             }
             
-            else if ( IS_VAR("sv_cheat_nasties_noblock") ) {
+            else if ( IS_VAR("cheat_nasties_noblock") ) {
                 tme::variables::sv_cheat_nasties_noblock = value;
             }
             
-            else if ( IS_VAR("sv_cheat_commands_free") ) {
+            else if ( IS_VAR("cheat_commands_free") ) {
                 tme::variables::sv_cheat_commands_free = value;
             }
             
-            else if ( IS_VAR("sv_cheat_movement_cheap") ) {
+            else if ( IS_VAR("cheat_movement_cheap") ) {
                 tme::variables::sv_cheat_movement_cheap = value;
             }
             
-            else if ( IS_VAR("sv_cheat_movement_free") ) {
+            else if ( IS_VAR("cheat_movement_free") ) {
                 tme::variables::sv_cheat_movement_free = value;
             }
 
@@ -84,6 +85,9 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
                 skip_adverts = value;
             }
             
+			else if (IS_VAR("debug_map")) {
+				debug_map = value;
+			}
         }
     }
     

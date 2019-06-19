@@ -37,10 +37,6 @@ mapbuilder::mapbuilder() :
     mapdata(nullptr),
     mapsize(0,0)
 {
-    //setFlags(mapflags::debug_map);
-    //setFlags(mapflags::show_all_characters);
-    //setFlags(mapflags::show_all_critters);
-    
     setFlags(mapflags::show_characters);
     setFlags(mapflags::show_critters);
     setFlags(mapflags::show_tunnels);
@@ -147,6 +143,8 @@ mapbuilder* mapbuilder::updateTerrain()
         lf_tunnel_visited   // 19
      */
     
+	bool debug_map = isDebugMap();
+
     u32 reset_discover_mask = (lf_seen|lf_visited|lf_looked_at);
 #if defined(_DDR_)
     reset_discover_mask |= lf_tunnel_looked_at|lf_tunnel_visited;
@@ -171,7 +169,7 @@ mapbuilder* mapbuilder::updateTerrain()
             dst->area = m.area ;
             dst++;
             
-            if ( m.flags.Is(lf_looked_at) || m.flags.Is(lf_visited) ) {
+            if ( m.flags.Is(lf_looked_at) || m.flags.Is(lf_visited) || debug_map ) {
                 if ( ( (m.flags.Is(lf_stronghold) && !m.flags.Is(lf_domain)) || (m.terrain == TN_TOWER || m.terrain == TN_WATCHTOWER || m.terrain == TN_GATE ) ) ) {
                     auto place = new map_object();
                     place->location = loc;
