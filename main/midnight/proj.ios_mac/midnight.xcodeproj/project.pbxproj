@@ -1627,6 +1627,12 @@
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 8K6PYTU8T7;
 					};
+					5087E73D17EB910900C73F5D = {
+						ProvisioningStyle = Automatic;
+					};
+					83E3019B21A41BE3005C3F5C = {
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "midnight" */;
@@ -2232,7 +2238,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.lordsofmidnight;
 				PRODUCT_NAME = "midnight-mobile";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
@@ -2271,7 +2277,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.lordsofmidnight;
 				PRODUCT_NAME = "midnight-mobile";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
@@ -2289,6 +2295,9 @@
 				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K6PYTU8T7;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2313,8 +2322,9 @@
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chilli.midnight;
 				PRODUCT_NAME = "midnight-desktop";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
 			name = Debug;
@@ -2327,6 +2337,9 @@
 				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K6PYTU8T7;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mac/Prefix.pch;
@@ -2351,8 +2364,9 @@
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chilli.midnight;
 				PRODUCT_NAME = "midnight-desktop";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
 			name = Release;
@@ -2436,6 +2450,9 @@
 				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K6PYTU8T7;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2460,8 +2477,9 @@
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chilli.revenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
 			name = Debug;
@@ -2474,6 +2492,9 @@
 				CLANG_ANALYZER_NONNULL = YES_NONAGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K6PYTU8T7;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mac/Prefix.pch;
@@ -2498,8 +2519,9 @@
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.chillihugger.midnight;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chilli.revenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
 			name = Release;

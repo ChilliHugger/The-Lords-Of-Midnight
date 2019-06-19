@@ -13,6 +13,7 @@
 
 #include "../system/resolutionmanager.h"
 #include "../system/panelmanager.h"
+#include "../ui/uihelper.h"
 
 USING_NS_CC;
 

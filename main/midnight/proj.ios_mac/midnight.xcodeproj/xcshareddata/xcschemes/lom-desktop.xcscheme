@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83E3019B21A41BE3005C3F5C"
-               BuildableName = "ddr-desktop.app"
-               BlueprintName = "ddr-desktop"
+               BlueprintIdentifier = "5087E73D17EB910900C73F5D"
+               BuildableName = "midnight-desktop.app"
+               BlueprintName = "lom-desktop"
                ReferencedContainer = "container:midnight.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83E3019B21A41BE3005C3F5C"
-            BuildableName = "ddr-desktop.app"
-            BlueprintName = "ddr-desktop"
+            BlueprintIdentifier = "5087E73D17EB910900C73F5D"
+            BuildableName = "midnight-desktop.app"
+            BlueprintName = "lom-desktop"
             ReferencedContainer = "container:midnight.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83E3019B21A41BE3005C3F5C"
-            BuildableName = "ddr-desktop.app"
-            BlueprintName = "ddr-desktop"
+            BlueprintIdentifier = "5087E73D17EB910900C73F5D"
+            BuildableName = "midnight-desktop.app"
+            BlueprintName = "lom-desktop"
             ReferencedContainer = "container:midnight.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83E3019B21A41BE3005C3F5C"
-            BuildableName = "ddr-desktop.app"
-            BlueprintName = "ddr-desktop"
+            BlueprintIdentifier = "5087E73D17EB910900C73F5D"
+            BuildableName = "midnight-desktop.app"
+            BlueprintName = "lom-desktop"
             ReferencedContainer = "container:midnight.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
