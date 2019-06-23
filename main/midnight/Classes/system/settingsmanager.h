@@ -22,14 +22,12 @@
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
     #define _SHOW_DEDICATION_
-    #define ADVERT_FREQUENCY            16
-    #define _DEBUG_UNDO_HISTORY_        1
+    #define ADVERT_FREQUENCY                16
 #else
     #define _SHOW_SPLASH_
-    #define ADVERT_FREQUENCY            5
+    #define ADVERT_FREQUENCY                5
     #define _USE_DEBUG_MENU_
     #define _SHOW_GAME_VERSION_
-    #define _DEBUG_UNDO_HISTORY_        10
     //#define _DEBUG_LANDSCAPE_
 #endif
 

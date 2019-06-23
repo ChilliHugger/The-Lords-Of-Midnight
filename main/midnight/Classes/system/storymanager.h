@@ -14,9 +14,12 @@
 
 using chilli::collections::c_u32;
 
-#define MAX_STORIES 8
-#define STORY_NONE 0
 typedef u32 storyid_t;
+typedef u32 saveid_t;
+
+constexpr saveid_t SAVE_NONE = 0;
+constexpr storyid_t STORY_NONE = 0;
+constexpr u32 MAX_STORIES = 8;
 
 typedef enum savemode_t {
     savemode_normal=0,
@@ -55,50 +58,49 @@ public:
     LPCSTR getFolder( storyid_t id );
     LPCSTR getPath( storyid_t id );
     
-    LPCSTR getPath(storyid_t id, u32 save);
+    LPCSTR getPath(storyid_t id, saveid_t save);
     
-    storyid_t current_story() const { return current; }
+    storyid_t current_story() const { return currentStory; }
     
-    BOOL save ( savemode_t mode = savemode_normal );
-    BOOL create ( storyid_t id );
-    BOOL save ( storyid_t id, savemode_t mode=savemode_normal );
-    BOOL load ( storyid_t id );
-    BOOL destroy ( storyid_t id );
-    BOOL isUsed ( storyid_t id ) { return used[id-1]; }
-    BOOL getDescription( storyid_t id, c_str& description );
+    bool save ( savemode_t mode = savemode_normal );
+    bool create ( storyid_t id );
+    bool save ( storyid_t id, savemode_t mode=savemode_normal );
+    bool load ( storyid_t id );
+    bool destroy ( storyid_t id );
+    bool isUsed ( storyid_t id ) { return used[id-1]; }
+    bool getDescription( storyid_t id, c_str& description );
     
-    BOOL cleanup ( void );
+    bool cleanup ( void );
     
-    BOOL canUndo ( savemode_t mode );
-    BOOL undo ( savemode_t mode );
+    bool canUndo ( savemode_t mode );
+    bool undo ( savemode_t mode );
     
 #if defined(_DEBUG_EMAIL_)
-    BOOL debug_email ( storyid_t id );
-    BOOL debug_email_all();
-    BOOL isEmailEnabled();
-    BOOL copyToSdCard();
+    bool debug_email ( storyid_t id );
+    bool debug_email_all();
+    bool isEmailEnabled();
+    bool copyToSdCard();
 #endif
 
     
     void SetLoadSave( tme::PFNSERIALIZE function );
-    BOOL Serialize( u32 version, chilli::lib::archive& ar );
+    bool Serialize( u32 version, chilli::lib::archive& ar );
     
     LPCSTR DiscoveryMapFilename();
     
-    u32 lastMorning() const ;
-    u32 lastNight() const ;
+    saveid_t lastMorning() const ;
+    saveid_t lastNight() const ;
     
     
 private:
-    BOOL            used[MAX_STORIES];
-    storyid_t       current;
-    tme::PFNSERIALIZE    loadsave;
-    
-    u32             last_save;
-    c_u32           last_night;
-    c_u32           last_morning;
-    BOOL            undo_last_available;
-    
+    bool                used[MAX_STORIES];
+    storyid_t           currentStory;
+    tme::PFNSERIALIZE   loadsave;
+    saveid_t            last_save;
+    c_u32               last_night;
+    c_u32               last_morning;
+    bool                undo_last_available;
+    storyinfo_t         stories ;
     
 };
 
