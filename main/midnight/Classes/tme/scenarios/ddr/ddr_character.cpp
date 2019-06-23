@@ -159,26 +159,19 @@ namespace tme {
     
     mxobject* ddr_character::Cmd_Fight()
     {
-		mxlocinfo*	info;
-        
-		//mxobject*	oinfo=NULL;
-		mxobject*	fightobject=NULL;
-        
         SetLastCommand ( CMD_FIGHT, IDT_NONE );
         
-        info = GetLocInfo();
+        std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
         
-        fightobject = mx->ObjectById(info->fightthing) ;
-        
-        SAFEDELETE ( info );
+        auto fightobject = static_cast<ddr_object*>(mx->ObjectById(info->fightthing)) ;
         
         // is there anything to fight
-        if ( fightobject == NULL )
-            return NULL ;
+        if ( fightobject == nullptr )
+            return nullptr ;
         
         SetLastCommand ( CMD_FIGHT, fightobject->SafeIdt()) ;
 
-        if ( ! sv_cheat_nasties_noblock )
+        if ( ! sv_cheat_always_win_fight )
         {
             u32 r = mxrandom(255) & 15 ;
             s32 loses = (r/2)*5;
@@ -203,7 +196,7 @@ namespace tme {
         mx->text->oinfo = fightobject;
         c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_FIGHT, this) );
         
-        CommandTakesTime(TRUE);
+        CommandTakesTime(true);
         
         // this does an auto write to the map!
         mx->gamemap->GetAt( Location() ).RemoveObject();

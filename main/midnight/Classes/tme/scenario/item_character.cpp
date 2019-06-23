@@ -1007,40 +1007,32 @@ namespace tme {
 
 		mxobject* mxcharacter::Cmd_Fight ( void )
 		{
-		mxlocinfo*	info;
-		bool		objectautokill = FALSE ;
-		int			message;
-
-		mxobject*	oinfo=NULL;
-		mxobject*	fightobject=NULL;
-		int		friends_armies=0;
+		bool	objectautokill = false ;
+        int		friends_armies=0;
 
 			SetLastCommand ( CMD_FIGHT, IDT_NONE );
 
-			info = GetLocInfo();
+            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
 			
-			fightobject = mx->ObjectById(info->fightthing) ;
+			auto fightobject = mx->ObjectById(info->fightthing) ;
 			friends_armies = info->friends.armies ;
 
 			// are we allowed to fight
 			if ( !info->flags.Is(lif_fight) )
-				fightobject = NULL ;
-
-			SAFEDELETE ( info );
+				fightobject = nullptr ;
 
 			// is there anything to fight
-			if ( fightobject == NULL ) 
-				return NULL ;
-
+			if ( fightobject == nullptr )
+				return nullptr ;
 
 			SetLastCommand ( CMD_FIGHT, fightobject->SafeIdt()) ;
 
-			oinfo = Carrying();
-			objectautokill = oinfo ? oinfo->CanDestroy(fightobject) : FALSE ;
+			auto oinfo = Carrying();
+			objectautokill = oinfo ? oinfo->CanDestroy(fightobject) : false ;
 			
 			// if there is any friends here
 			// then we win by default
-			if (  friends_armies == 0 && !objectautokill ) {
+			if (  friends_armies == 0 && !objectautokill && !sv_cheat_always_win_fight ) {
 
 				LostFight();
 
@@ -1056,15 +1048,11 @@ namespace tme {
 			mx->text->oinfo = fightobject;
 
 			// describe that
-			if ( objectautokill ) {
-				message = oinfo->usedescription ;
-			}else{
-				message = SS_FIGHT ;
-			}
+            u32 message =  objectautokill ? oinfo->usedescription : SS_FIGHT ;
 
 			c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( message, this) );
 
-			CommandTakesTime(TRUE);
+			CommandTakesTime(true);
 
 			// this does an auto write to the map!
 			mx->gamemap->GetAt( Location() ).RemoveObject();
@@ -1278,9 +1266,10 @@ namespace tme {
                 
 		mxobject* mxcharacter::Cmd_Seek ( void )
 		{
-		mxthing_t			newobject;
+		mxthing_t	newobject;
 		mxobject*	oinfo;
 
+            bool removeObject = true;
             bool mikeseek=FALSE;
 			SetLastCommand ( CMD_SEEK, IDT_NONE );
 			CommandTakesTime(TRUE);
@@ -1412,7 +1401,11 @@ namespace tme {
 					if ( oinfo->CanFight() ) {
 						// auto fight?
 #if defined(_DDR_)
-                        Cmd_Fight();
+                        if ( !sv_cheat_nasties_noblock ) {
+                            Cmd_Fight();
+                        } else {
+                            removeObject = false;
+                        }
 #endif  
                     } else
 
@@ -1439,7 +1432,7 @@ namespace tme {
 			
 			
 #if defined(_LOM_)
-			if ( oinfo && oinfo->MapRemove() ) {
+			if ( oinfo && oinfo->MapRemove() && removeObject ) {
 				mapsqr.RemoveObject();
 			}
 #endif
@@ -1449,7 +1442,8 @@ namespace tme {
                 c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
             }
             
-            mapsqr.RemoveObject();
+            if ( removeObject )
+                mapsqr.RemoveObject();
 #endif
 
 			SetLastCommand ( CMD_SEEK, MAKE_ID(IDT_OBJECT,newobject) );

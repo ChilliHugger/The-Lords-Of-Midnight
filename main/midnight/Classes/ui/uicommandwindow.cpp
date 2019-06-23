@@ -150,13 +150,22 @@ void uicommandwindow::initialiseCommands()
 
     auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, callback);
     addItem(unhide,CHOOSE_HIDE);
-    
+
     // FIGHT
     auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
     addItem(fight,CHOOSE_FIGHT);
 #endif
     
+
+    
 #if defined(_DDR_)
+
+    if ( tme::variables::sv_cheat_nasties_noblock ) {
+        // FIGHT
+        auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
+        addItem(fight,CHOOSE_FIGHT);
+    }
+
     auto give = uihelper::CreateImageButton("i_give", ID_GIVE, callback);
     addItem(give,CHOOSE_GIVE);
     
@@ -272,11 +281,10 @@ void uicommandwindow::updateElements()
         showItem(ID_HIDE, true);
         enableItem(ID_HIDE, location_flags.Is(lif_hide));
     }
+#endif
     
     // FIGHT
     enableItem(ID_FIGHT, location_flags.Is(lif_fight) );
-    
-#endif
     
     
 #if defined(_DDR_)

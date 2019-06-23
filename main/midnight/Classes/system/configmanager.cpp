@@ -88,6 +88,10 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
 			else if (IS_VAR("debug_map")) {
 				debug_map = value;
 			}
+            
+            else if ( IS_VAR("cheat_always_win_fight") ) {
+                tme::variables::sv_cheat_always_win_fight = value;
+            }
         }
     }
     

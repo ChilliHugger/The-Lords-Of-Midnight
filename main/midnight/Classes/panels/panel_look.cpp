@@ -1227,6 +1227,7 @@ void panel_look::OnNotification( Ref* sender )
             }
             break;
         }
+#endif
             
         case ID_FIGHT:
         {
@@ -1235,7 +1236,7 @@ void panel_look::OnNotification( Ref* sender )
             }
             break;
         }
-#endif
+
             
 #if defined(_DDR_)
         case ID_GIVE:
