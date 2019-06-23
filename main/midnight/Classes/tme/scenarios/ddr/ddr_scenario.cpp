@@ -147,6 +147,8 @@ MXTRACE("Place Objects On Map");
 mxentity* ddr_x::CreateEntity ( id_type_t type )
 {
 	switch ( type ) {
+        case IDT_OBJECT:
+            return static_cast<mxobject*>(new ddr_object);
 		case IDT_CHARACTER:
 			return static_cast<mxentity*>(new ddr_character) ;
         case IDT_STRONGHOLD:
@@ -214,10 +216,10 @@ mxobject* ddr_x::PickupObject ( mxgridref loc )
     
 void ddr_x::PlaceObjectsOnMap ( void )
 {
-    mxobject* object;
+    ddr_object* object;
     mxgridref loc;
     for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = mx->ObjectById(ii+1);
+        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
         if ( object->IsUnique() && object->IsRandomStart() ) {
             bool found=false;
             while ( !found ) {
@@ -237,9 +239,9 @@ mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
     if ( !mx->gamemap->HasObject(loc) )
         return nullptr;
     
-    mxobject* object;
+    ddr_object* object;
     for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = mx->ObjectById(ii+1);
+        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
         if ( object->IsCarried() )
             continue;
         if ( object->Location() == loc )
@@ -269,36 +271,6 @@ void ddr_x::NightStop(void)
 }
 	//}
 	// namespace scenarios
-
-
-ddr_stronghold::ddr_stronghold()
-{
-}
-
-ddr_stronghold::~ddr_stronghold()
-{
-}
-
-
-void ddr_stronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
-{
-	// if the new occupier is allowed an army then
-	// the stronghold army will be his race
-	if ( newoccupier && newoccupier->IsAllowedArmy() )
-		newrace = newoccupier->Race();
-    
-	if ( newrace != OccupyingRace() )	{
-		occupyingrace = newrace ;
-
-        total = 0 ;//Respawn() ; // respawn will happen at night
-        owner = newoccupier ;
-        
-		occupier = newoccupier ;
-        
-        type = static_cast<ddr_character*>(newoccupier)->getArmyType();
-	}
-    
-}
 
 void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
 {

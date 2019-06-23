@@ -21,7 +21,33 @@ namespace tme {
 		
 		static MXRESULT MXAPI Create ( tme::mxinterface* mx );
 	};
+
+    namespace scenarios {
+        namespace ddr {
+            namespace exports {
+                
+                typedef struct character_t : public scenarios::exports::character_t {
+                    loc_t           lastlocation;
+                    loc_t           targetlocation;
+                    loc_t           homelocation;
+                    mxorders_t      orders;
+                } character_t;
+                
+                typedef struct object_t : public scenarios::exports::object_t {
+                    mxobjtype_t     type;
+                    mxobjpower_t    power;
+                } object_t ;
+                
+                typedef struct stronghold_t : public scenarios::exports::stronghold_t {
+                    u32             energy;
+                } stronghold_t;
+            }
+        }
+    }
+
 }
+
+
 
 #endif // _DDR_
 

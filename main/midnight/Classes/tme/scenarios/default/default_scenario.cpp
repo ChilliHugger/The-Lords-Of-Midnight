@@ -16,6 +16,10 @@
 
 #include "../../baseinc/tme_internal.h"
 
+#if defined (_DDR_)
+#include "../../scenarios/ddr/scenario_ddr_internal.h"
+#endif
+
 
 using namespace chilli;
 using namespace chilli::lib;
@@ -671,36 +675,36 @@ namespace tme {
 #if defined(_DDR_)
 		COMMAND( OnCharEnterTunnel ) 
 		{
-			CONVERT_CHARACTER_ID( argv[0].vId, character );
+			CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
 			argv[0]=(s32)0;
 			return character->Cmd_EnterTunnel();
 		}
 
 		COMMAND( OnCharExitTunnel ) 
 		{
-			CONVERT_CHARACTER_ID( argv[0].vId, character );
+			CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
 			argv[0]=(s32)0;
 			return character->Cmd_ExitTunnel();
 		}
 
         COMMAND( OnCharGive )
         {
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
-            CONVERT_CHARACTER_ID( argv[1].vId, to );
+            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_DDR_CHARACTER_ID( argv[1].vId, to );
             argv[0]=(s32)0;
             return character->Cmd_Give(to);
         }
 
         COMMAND( OnCharTake )
         {
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
             return character->Cmd_Take();
         }
 
         COMMAND( OnCharUse )
         {
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
             return character->Cmd_Use();
         }
@@ -991,6 +995,14 @@ namespace tme {
 			//}
 		}
 
+        COMMAND ( PropObjects )
+        {
+            CONVERT_COLLECTION(argv[0],collection);
+            if ( mx->objObjects.CreateIdtCollection(collection) )
+                return MX_OK ;
+            return MX_FAILED ;
+        }
+    
 		COMMAND ( PropCharacters2 )
 		{
 			CONVERT_COLLECTION(argv[0],collection);
@@ -1159,7 +1171,8 @@ namespace tme {
 			{ "MAPINFO",            0, PropMapInfo,             },
 			{ "MAPSIZE",			0, PropMapSize,				},
 
-
+            { "OBJECTS",            1, PropObjects,             {variant::vptr} },
+            
 		};
 
 		MXRESULT mxscenario::GetProperties ( const c_str& arg, variant argv[], u32 argc )
@@ -1871,7 +1884,7 @@ namespace tme {
         
 #if defined(_DDR_)
         for ( int ii=0; ii<sv_characters; ii++ ) {
-            mxcharacter* c = mx->CharacterById(ii+1);
+            auto c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
             c->lastlocation=c->Location();
         }
 #endif

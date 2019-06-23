@@ -19,6 +19,7 @@ USING_NS_CC;
 
 uipanel::uipanel() :
     popupWindow(nullptr),
+	i_help(nullptr),
     help_window(nullptr),
     help_pending(false),
     help_visible(HELP_NONE),
@@ -143,13 +144,17 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
     popupWindow->retain();
     
     popupWindow->onCancel = [&] {
-        CC_SAFE_RELEASE_NULL(popupWindow);
+		RUN_ON_UI_THREAD([=]() {
+			CC_SAFE_RELEASE_NULL(popupWindow);
+		});
     };
     popupWindow->onOk = [&,ok] {
-        CC_SAFE_RELEASE_NULL(popupWindow);
-        if ( ok != nullptr ) {
-            RUN_EVENT(ok(););
-        }
+		RUN_ON_UI_THREAD([=]() {
+			CC_SAFE_RELEASE_NULL(popupWindow);
+			if (ok != nullptr) {
+				RUN_EVENT(ok(););
+			}
+		});
     };
     popupWindow->Show();
     
@@ -263,10 +268,12 @@ void uipanel::popupHelpWindow ( helpid_t id, MXVoidCallback callback )
     help_window->retain();
     
     help_window->Show( [&,callback] {
-        //CC_SAFE_RELEASE_NULL( help_window );
-        help_visible = HELP_NONE;
-        if ( callback != nullptr )
-            callback();
+		RUN_ON_UI_THREAD([=]() {
+			CC_SAFE_RELEASE_NULL(help_window);
+			help_visible = HELP_NONE;
+			if (callback != nullptr)
+				callback();
+		});
     });
     
 }

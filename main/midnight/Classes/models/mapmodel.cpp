@@ -7,6 +7,7 @@
 //
 
 #include "mapmodel.h"
+#include "../frontend/panel_id.h"
 
 void mapmodel::serialize( u32 version, lib::archive& ar )
 {
@@ -16,6 +17,7 @@ void mapmodel::serialize( u32 version, lib::archive& ar )
         ar << mapscale ;
         ar << lastmapscale;
         ar << oldoffset;
+        ar << currentMapPanel;
 
     }else{
         
@@ -28,6 +30,11 @@ void mapmodel::serialize( u32 version, lib::archive& ar )
             ar >> lastmapscale;
             ar >> oldoffset;
         }
+        
+        if ( version >= 20 ) {
+            int temp;
+            ar >> temp; currentMapPanel = (panelmode_t) temp;
+        }
     }
 }
         
@@ -35,9 +42,8 @@ void mapmodel::serialize( u32 version, lib::archive& ar )
 void mapmodel::setDefaults ()
 {
     filters.Set(map_filters::all);
-    filters.Reset(map_filters::show_critters);
     oldoffset = point::ZERO;
     mapscale=1.0f;
     lastmapscale=0.5f;
-    
+    currentMapPanel = MODE_MAP_OVERVIEW ;
 }

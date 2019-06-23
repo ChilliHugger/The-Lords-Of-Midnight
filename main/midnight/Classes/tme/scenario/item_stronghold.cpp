@@ -23,11 +23,8 @@ mxstronghold::mxstronghold()
 	race=RA_NONE;
 	total=0;
 	owner=NULL;
-#if defined(_DDR_)
     lost=0;
     killed=0;
-#endif
-
 }
 
 mxstronghold::~mxstronghold()
@@ -66,9 +63,6 @@ void mxstronghold::Serialize ( archive& ar )
 		ar << owner;
 		WRITE_ENUM( terrain );
 		ar << killed;
-#if defined(_DDR_)
-        ar << energy;
-#endif
 
 	}else{
 		READ_ENUM ( occupyingrace );
@@ -86,12 +80,6 @@ void mxstronghold::Serialize ( archive& ar )
 		ar >> owner;
 		READ_ENUM ( terrain );
 		ar >> killed;
-#if defined(_DDR_)
-        if ( tme::mx->SaveGameVersion() > 9 )
-            ar >> energy ;
-        else
-            energy = 180 ;
-#endif
 	}
 }
 
@@ -140,21 +128,6 @@ s32 mxstronghold::BattleSuccess ( const mxlocinfo& locinfo )
 #endif
 
     
-#if defined(_DDR_)
-void mxstronghold::OnRespawn ( void )
-{
-    Add(Race(), Type(), respawn);
-}
-
-mxrace_t mxstronghold::Loyalty ( void )
-{
-    if ( Occupier() == NULL )
-        return RA_NONE;
-    return Occupier()->Loyalty();
-}
-#endif
-
-
 /*
  * Function name	: mxstronghold::Remove
  * 

@@ -12,7 +12,10 @@
 #include "../library/chilli.h"
 
 
-configmanager::configmanager()
+configmanager::configmanager() :
+    skip_adverts(false),
+    skip_dedication(false),
+	debug_map(false)
 {
 }
 
@@ -23,14 +26,13 @@ configmanager::~configmanager()
 bool configmanager::LoadXmlConfig (const std::string& filename )
 {
     using xml = chilli::lib::xml;
-    //char path[MAX_PATH];
     
     UIDEBUG("configmanager::LoadXmlConfig - ENTER");
     
     std::unique_ptr<xml> config ( new xml() );
 
     if ( !config->Load ( filename.c_str() ) ) {
-        COMPLAIN ( "Cannot load config" );
+        return false;
     }
     
     auto main = config->Find("main");
@@ -53,28 +55,43 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
             auto name = t->ReadStr("id");
             auto value = t->ReadBool("value");
             
-            UIDEBUG("VAR %s = '%d'", name, value);
+            UIDEBUG("VAR %s = '%s'", name, t->ReadStr("value"));
             
-            if ( IS_VAR("sv_cheat_armies_noblock") ) {
+            if ( IS_VAR("cheat_armies_noblock") ) {
                 tme::variables::sv_cheat_armies_noblock = value;
             }
             
-            else if ( IS_VAR("sv_cheat_nasties_noblock") ) {
+            else if ( IS_VAR("cheat_nasties_noblock") ) {
                 tme::variables::sv_cheat_nasties_noblock = value;
             }
             
-            else if ( IS_VAR("sv_cheat_commands_free") ) {
+            else if ( IS_VAR("cheat_commands_free") ) {
                 tme::variables::sv_cheat_commands_free = value;
             }
             
-            else if ( IS_VAR("sv_cheat_movement_cheap") ) {
+            else if ( IS_VAR("cheat_movement_cheap") ) {
                 tme::variables::sv_cheat_movement_cheap = value;
             }
             
-            else if ( IS_VAR("sv_cheat_movement_free") ) {
+            else if ( IS_VAR("cheat_movement_free") ) {
                 tme::variables::sv_cheat_movement_free = value;
             }
 
+            else if ( IS_VAR("skip_dedication") ) {
+                skip_dedication = value;
+            }
+            
+            else if ( IS_VAR("skip_adverts") ) {
+                skip_adverts = value;
+            }
+            
+			else if (IS_VAR("debug_map")) {
+				debug_map = value;
+			}
+            
+            else if ( IS_VAR("cheat_always_win_fight") ) {
+                tme::variables::sv_cheat_always_win_fight = value;
+            }
         }
     }
     

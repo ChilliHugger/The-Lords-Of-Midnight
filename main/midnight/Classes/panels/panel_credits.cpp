@@ -5,6 +5,7 @@
 //  Created by Chris Wild on 02/12/2017.
 //
 
+#include "../cocos.h"
 #include "../Extensions/CustomDirector.h"
 
 #include "panel_credits.h"
@@ -12,7 +13,9 @@
 
 #include "../system/resolutionmanager.h"
 #include "../system/panelmanager.h"
+#include "../ui/uihelper.h"
 
+USING_NS_CC;
 
 bool panel_credits::init()
 {
@@ -22,6 +25,15 @@ bool panel_credits::init()
     }
     
     setBackgroundToHeight("credits.png");
+
+	std::string version = "Version: " + Application::getInstance()->getVersion();
+
+	auto label = Label::createWithTTF(uihelper::font_config_debug, version);
+	label->getFontAtlas()->setAntiAliasTexParameters();
+	label->setTextColor(Color4B::BLACK);
+	label->setLocalZOrder(ZORDER_DEFAULT);
+	uihelper::AddTopLeft(safeArea, label, RES(32), RES(32));
+
 
     Exit(5.0);
     

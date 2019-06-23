@@ -48,6 +48,11 @@ public:
     void returnToPrevious();
     void returnToPrevious( transition_t transition );
     
+    // Specific pages that have logic
+    void showMainMenu();
+    void showMap();
+    //
+    
     //
     panelmode_t     currentmode;
     panelmode_t     previousmode;

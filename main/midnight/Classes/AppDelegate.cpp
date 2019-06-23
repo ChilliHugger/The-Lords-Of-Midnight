@@ -64,16 +64,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     
-    auto console = director->getConsole();
-    console->listenOnTCP(1234);
+    //auto console = director->getConsole();
+    //console->listenOnTCP(1234);
     
     
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("midnight", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect(TME_ScenarioName(), cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-        glview = GLViewImpl::create("midnight");
+        glview = GLViewImpl::create(TME_ScenarioName());
 #endif
         director->setOpenGLView(glview);
     }
@@ -142,19 +142,20 @@ void AppDelegate::InitialisePaths()
     
 
     LPCSTR scenario = TME_ScenarioShortName();
+    LPCSTR resfolder = res->current_resolution.folder.c_str();
 
     char main_path[MAX_PATH];
     
-    sprintf( main_path, "%s/%s", scenario, (LPCSTR)res->current_resolution.folder );
+    sprintf( main_path, "%s/%s", scenario, resfolder );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "%s/%s/screens/%d", scenario, (LPCSTR)res->current_resolution.folder, res->Aspect() );
+    sprintf( main_path, "%s/%s/screens/%d", scenario, resfolder, res->Aspect() );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "all/%s", (LPCSTR)res->current_resolution.folder );
+    sprintf( main_path, "all/%s",resfolder );
     searchPaths.push_back(main_path);
     
-    sprintf( main_path, "all/%s/screens/%d", (LPCSTR)res->current_resolution.folder, res->Aspect() );
+    sprintf( main_path, "all/%s/screens/%d", resfolder, res->Aspect() );
     searchPaths.push_back(main_path);
     
     

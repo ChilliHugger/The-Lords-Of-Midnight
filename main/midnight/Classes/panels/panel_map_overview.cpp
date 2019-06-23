@@ -25,6 +25,8 @@ bool panel_map_overview::init()
         return false;
     }
     
+    mr->mapmodel.currentMapPanel = mr->panels->currentmode;
+
     auto backgroundColour = Color3B(245,238,228);
     
     setBackground(backgroundColour);
@@ -70,6 +72,11 @@ bool panel_map_overview::init()
   
     auto map = uihelper::CreateImageButton("i_small_map", ID_MAP_DISCOVERY, clickCallback);
     uihelper::AddBottomRight(safeArea, map, RES(10), RES(10) );
+    
+    
+    scrollView->setInnerContainerPosition(Vec2::ZERO);
+    
+    showHelpWindow(HELP_OVERVIEW_MAP);
     
     return true;
 }

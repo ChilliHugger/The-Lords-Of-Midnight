@@ -14,11 +14,12 @@
  * 
  */
 
-#include "../../baseinc/tme_internal.h"
 
 
 #if defined(_DDR_)
 
+#include "../../baseinc/tme_internal.h"
+#include "scenario_ddr.h"
 #include "scenario_ddr_internal.h"
 #include "ddr_processor_battle.h"
 
@@ -26,10 +27,7 @@ using namespace tme::scenarios ;
 
 namespace tme {
 	
-//namespace ddr {
-
-	
-	ddr_character::ddr_character() 
+	ddr_character::ddr_character()
 	{
 	}
 
@@ -37,19 +35,22 @@ namespace tme {
 	{
 	}
 
-    
     void ddr_character::Serialize ( archive& ar )
     {
         mxcharacter::Serialize(ar);
 
         if ( ar.IsStoring() ) {
-            //WRITE_ENUM(armytype);
+            ar << lastlocation ;
             ar << home_stronghold;
             ar << desired_object;
             ar << fighting_against;
             ar << battlelost;
         }else{
-            //READ_ENUM(armytype);
+            if ( tme::mx->SaveGameVersion()> 10 && tme::mx->isSavedGame() )
+                ar >> lastlocation;
+            else
+                lastlocation = Location();
+            
             ar >> home_stronghold;
             ar >> desired_object;
             
@@ -69,9 +70,18 @@ namespace tme {
     
     MXRESULT ddr_character::FillExportData ( info_t* data )
     {
-        if ( mxcharacter::FillExportData(data) ) {
+        using export_t = tme::scenarios::ddr::exports::character_t;
+        
+        if ( mxcharacter::FillExportData(data) == MX_OK ) {
+            
             if ( (u32)ID_TYPE(data->id) != (u32)INFO_ARMY ) {
-                defaultexport::character_t* out = (defaultexport::character_t*)data;
+                
+                auto out = static_cast<export_t*>(data);
+                
+                VALIDATE_INFO_BLOCK(out, INFO_CHARACTER, export_t);
+
+                out->lastlocation = lastlocation ;
+                out->orders = orders ;
                 out->lastlocation = lastlocation;
                 out->targetlocation=targetLocation;
                 if ( home_stronghold )
@@ -149,26 +159,19 @@ namespace tme {
     
     mxobject* ddr_character::Cmd_Fight()
     {
-		mxlocinfo*	info;
-        
-		//mxobject*	oinfo=NULL;
-		mxobject*	fightobject=NULL;
-        
         SetLastCommand ( CMD_FIGHT, IDT_NONE );
         
-        info = GetLocInfo();
+        std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
         
-        fightobject = mx->ObjectById(info->fightthing) ;
-        
-        SAFEDELETE ( info );
+        auto fightobject = static_cast<ddr_object*>(mx->ObjectById(info->fightthing)) ;
         
         // is there anything to fight
-        if ( fightobject == NULL )
-            return NULL ;
+        if ( fightobject == nullptr )
+            return nullptr ;
         
         SetLastCommand ( CMD_FIGHT, fightobject->SafeIdt()) ;
 
-        if ( ! sv_cheat_nasties_noblock )
+        if ( ! sv_cheat_always_win_fight )
         {
             u32 r = mxrandom(255) & 15 ;
             s32 loses = (r/2)*5;
@@ -193,7 +196,7 @@ namespace tme {
         mx->text->oinfo = fightobject;
         c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_FIGHT, this) );
         
-        CommandTakesTime(TRUE);
+        CommandTakesTime(true);
         
         // this does an auto write to the map!
         mx->gamemap->GetAt( Location() ).RemoveObject();
@@ -502,16 +505,159 @@ namespace tme {
 		return MX_OK ;
 	}
     
+    MXRESULT ddr_character::Cmd_EnterTunnel ( void )
+    {
+        if ( IsFollowing() )
+            return MX_FAILED ;
+        
+        if ( IsInTunnel() )
+            return MX_FAILED ;
+        
+        mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
+        if ( !mapsqr.HasTunnelEntrance() )
+            return MX_FAILED ;
+        
+        // remove army from location
+        mx->gamemap->SetLocationArmy(Location(),0);
+        mx->gamemap->SetLocationCharacter(Location(),0);
+        
+        flags.Set ( cf_tunnel );
+        EnterLocation(Location());
+        
+        
+        
+        // TODO:
+        // we now need to cycle round the locations
+        // looking for the location that connections to us
+        // and drop us in there
+        for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
+            mxdir_t d = (mxdir_t) ii ;
+            loc_t l = Location() + d ;
+            if ( mx->gamemap->GetAt ( l ).HasTunnel() ) {
+                location = l ;
+                looking=d;
+                break;
+            }
+            
+        }
+        
+        // new location
+        EnterLocation(Location());
+        
+        // group enter tunnel
+        
+        if ( HasFollowers() ) {
+            entities followers;
+            mx->scenario->GetCharacterFollowers(this, followers);
+            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
+                mxcharacter* follower = (mxcharacter*) followers[ii];
+                follower->Flags().Set(cf_tunnel);
+                follower->looking = Looking();
+                follower->Location(Location());
+            }
+        }
+        
+        mx->scenario->SetMapArmies();
+        
+        CommandTakesTime(TRUE);
+        
+        return MX_OK ;
+    }
+    
+    MXRESULT ddr_character::Cmd_ExitTunnel ( void )
+    {
+        if ( IsFollowing() )
+            return MX_FAILED ;
+        
+        if ( !IsInTunnel() )
+            return MX_FAILED ;
+        
+        mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
+        
+        if ( !mapsqr.HasTunnelExit() )
+            return MX_FAILED ;
+        
+        flags.Reset ( cf_tunnel );
+        
+        // group exit tunnel
+        
+        if ( HasFollowers() ) {
+            entities followers;
+            mx->scenario->GetCharacterFollowers(this, followers);
+            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
+                mxcharacter* follower = (mxcharacter*) followers[ii];
+                follower->Flags().Reset(cf_tunnel);
+                follower->looking = Looking();
+                follower->Location( Location() );
+            }
+        }
+        
+        CommandTakesTime(TRUE);
+        
+        return MX_OK ;
+    }
+    
+    MXRESULT ddr_character::Cmd_Take ( void )
+    {
+        return Cmd_PickupObject()==NULL ? MX_FAILED : MX_OK ;
+    }
+    
+    MXRESULT ddr_character::Cmd_Give ( mxcharacter* character )
+    {
+        // no character
+        if ( character == NULL )
+            return MX_FAILED ;
+        
+        // character is already carrying something
+        if ( character->Carrying() )
+            return MX_FAILED ;
+        
+        character->carrying = Carrying();
+        
+        carrying = NULL ;
+        
+        CommandTakesTime(TRUE);
+        
+        return MX_OK ;
+    }
+
+    mxcharacter* ddr_character::GetNextFoe() const
+    {
+        mxcharacter* character = Foe();
+        while ( character!=NULL && character->IsDead() ) {
+            if (character->Liege() == character)  {
+                //
+                MXTRACE("GetNextFoe: Error - Circular Liege: %s - breaking out", (LPSTR)character->Longname());
+                return NULL;
+            }
+            character = character->Liege();
+        }
+        return character;
+    }
+    mxcharacter* ddr_character::GetNextLiege() const
+    {
+        mxcharacter* character = Liege();
+        while ( character!=NULL && character->IsDead() ) {
+            if (character->Liege() == character)  {
+                //
+                MXTRACE("GetNextLiege: Error - Circular Liege: %s - breaking out", (LPSTR)character->Longname());
+                return NULL;
+            }
+            character = character->Liege();
+        }
+        return character;
+    }
+    
   	bool ddr_character::CheckRecruitChar ( mxcharacter* character )  const
 	{
 		if ( character == this )
-			return FALSE ;
+			return false ;
 
         if ( character->HasFollowers() )
-            return FALSE;
+            return false;
         
         if ( character->IsFollowing() )
-            return FALSE;
+            return false;
         
         //if (!IsAIControlled())
         //    return true;
@@ -521,13 +667,13 @@ namespace tme {
             return IsSymbol("CH_TARITHEL");
         
         else if ( character->IsSymbol("CH_TARITHEL"))
-            return FALSE;
+            return false;
         else if ( character->IsSymbol("CH_RORTHRON"))
-            return FALSE;
+            return false;
         else if ( character->IsSymbol("CH_LUXOR"))
-            return FALSE;
+            return false;
 		else if ( character->IsSymbol("CH_SHARETH") )
-			return FALSE ;
+			return false ;
 
         u8 us_attribute_good = traits & 0xff ;
         u8 us_attribute_bad =  (traits >> 8 ) & 0xff;
@@ -557,11 +703,12 @@ namespace tme {
         if (character->Liege() == this)
             success+=3;
         
-        if ( this->Carrying()!= NULL && this->Carrying()->CanHelpRecruitment() )
+        auto object = static_cast<ddr_object*>(Carrying());
+        if ( object != nullptr && object->CanHelpRecruitment() )
             success+=2;
         
         if (success < 4) // failed
-            return FALSE;
+            return false;
         // succeeded
         return true;
 
@@ -704,9 +851,9 @@ namespace tme {
 
         // get stronghold at the location I'm at
         auto scenario = static_cast<ddr_x*>(mx->scenario);
-        mxstronghold* stronghold = scenario->StrongholdFromLocation(Location());
+        auto stronghold = static_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(Location()));
         
-        if ( stronghold == NULL )
+        if ( stronghold == nullptr )
             return;
         
         if ( stronghold->Loyalty() != Loyalty() )
@@ -1060,9 +1207,7 @@ void ddr_character::Turn ( void )
     
 }
 
-    
-    //} // namespace ddr_x
-    
+
 } // namespace tme
 
 #endif // _DDR_

@@ -169,6 +169,8 @@ namespace tme {
 		extern sv_bool_t	sv_cheat_movement_cheap ;
 		// commands take no time
 		extern sv_bool_t	sv_cheat_commands_free ;
+        
+        extern sv_bool_t    sv_cheat_always_win_fight;
 		
 		
         inline CVar::CVar()

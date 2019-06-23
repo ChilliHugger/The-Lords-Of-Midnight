@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="LOM_Debug|Win32">
+      <Configuration>LOM_Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DDR_Debug|Win32">
+      <Configuration>DDR_Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -14,7 +18,7 @@
     <ProjectGuid>{9028A7BF-7685-4DF4-A0AE-FA3CD4494515}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>midnight</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -26,51 +30,75 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'" Label="PropertySheets">
+    <Import Project="C:\cocos2d-x\cocos\2d\cocos2d_headers.props" />
+    <Import Project="C:\cocos2d-x\cocos\2d\cocos2dx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'" Label="PropertySheets">
     <Import Project="C:\cocos2d-x\cocos\2d\cocos2d_headers.props" />
     <Import Project="C:\cocos2d-x\cocos\2d\cocos2dx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'">$(Configuration).win32\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_lom</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_ddr</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_OS_DESKTOP_;_OS_WINDOWS_;_LOM_;WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_OS_DESKTOP_;_OS_WINDOWS_;_LOM_;WIN32;MX_DEBUG;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -83,8 +111,40 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>libcurl.lib;libcocos2d.lib;librecast.lib;libbullet.lib;libbox2d.lib;libSpine.lib</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>C:\cocos2d-x\prebuilt\Debug.win32;$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(ProjectName)_lom.exe</OutputFile>
+      <AdditionalLibraryDirectories>C:\cocos2d-x\build\Debug.win32;$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_OS_DESKTOP_;_OS_WINDOWS_;_DDR_;WIN32;MX_DEBUG;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcurl.lib;libcocos2d.lib;librecast.lib;libbullet.lib;libbox2d.lib;libSpine.lib</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName)_ddr.exe</OutputFile>
+      <AdditionalLibraryDirectories>C:\cocos2d-x\build\Debug.win32;$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -100,8 +160,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      <Command>rem if not exist "$(OutDir)" mkdir "$(OutDir)"
+rem xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+
       </Command>
       <Outputs>$(TargetName).cab</Outputs>
       <Inputs>$(TargetFileName)</Inputs>
@@ -143,6 +204,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\Extensions\ScrollView.cpp" />
+    <ClCompile Include="..\Classes\Extensions\TMXTiledMap.cpp" />
     <ClCompile Include="..\Classes\landscaping\ILandscape.cpp" />
     <ClCompile Include="..\Classes\landscaping\LandscapeColour.cpp" />
     <ClCompile Include="..\Classes\landscaping\LandscapeDebug.cpp" />
@@ -193,6 +256,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\system\projectconfig.cpp" />
     <ClCompile Include="..\Classes\system\resolutionmanager.cpp" />
     <ClCompile Include="..\Classes\system\ringcontroller.cpp" />
+    <ClCompile Include="..\Classes\system\settingsmanager.cpp" />
     <ClCompile Include="..\Classes\system\storymanager.cpp" />
     <ClCompile Include="..\Classes\system\tmemanager.cpp" />
     <ClCompile Include="..\Classes\tinyxml\tinystr.cpp" />
@@ -214,10 +278,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\tme\base\variables.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\citadel\citadel_scenario.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_character.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_object.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_battle.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_night.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_processor_text.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_scenario.cpp" />
+    <ClCompile Include="..\Classes\tme\scenarios\ddr\ddr_stronghold.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\default\default_scenario.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\lom\lom_scenario.cpp" />
     <ClCompile Include="..\Classes\tme\scenarios\lom\lom_stronghold.cpp" />
@@ -261,15 +327,19 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ui\uipopup.cpp" />
     <ClCompile Include="..\Classes\ui\uitextmenu.cpp" />
     <ClCompile Include="..\Classes\ui\uithinkpage.cpp" />
-    <ClCompile Include="Classes\landscaping\TunnelView.cpp" />
-    <ClCompile Include="Classes\ui\characters\uigroupedlord.cpp" />
-    <ClCompile Include="Classes\ui\uishortcutkeys.cpp" />
+    <ClCompile Include="..\Classes\landscaping\TunnelView.cpp" />
+    <ClCompile Include="..\Classes\ui\characters\uigroupedlord.cpp" />
+    <ClCompile Include="..\Classes\ui\uishortcutkeys.cpp" />
+    <ClCompile Include="..\Classes\Utils\mapbuilder.cpp" />
+    <ClCompile Include="..\Classes\Utils\TiledMapper.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\cocos.h" />
     <ClInclude Include="..\Classes\Extensions\CustomDirector.h" />
+    <ClInclude Include="..\Classes\Extensions\ScrollView.h" />
+    <ClInclude Include="..\Classes\Extensions\TMXTiledMap.h" />
     <ClInclude Include="..\Classes\frontend\choose_id.h" />
     <ClInclude Include="..\Classes\frontend\help_id.h" />
     <ClInclude Include="..\Classes\frontend\keyboard_id.h" />
@@ -323,6 +393,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\system\projectconfig.h" />
     <ClInclude Include="..\Classes\system\resolutionmanager.h" />
     <ClInclude Include="..\Classes\system\ringcontroller.h" />
+    <ClInclude Include="..\Classes\system\settingsmanager.h" />
     <ClInclude Include="..\Classes\system\storymanager.h" />
     <ClInclude Include="..\Classes\system\tmemanager.h" />
     <ClInclude Include="..\Classes\tinyxml\tinystr.h" />
@@ -370,13 +441,24 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ui\uitextmenu.h" />
     <ClInclude Include="..\Classes\ui\uitextmenuitem.h" />
     <ClInclude Include="..\Classes\ui\uithinkpage.h" />
-    <ClInclude Include="Classes\landscaping\TunnelView.h" />
-    <ClInclude Include="Classes\ui\characters\uigroupedlord.h" />
-    <ClInclude Include="Classes\ui\uishortcutkeys.h" />
+    <ClInclude Include="..\Classes\landscaping\TunnelView.h" />
+    <ClInclude Include="..\Classes\ui\characters\uigroupedlord.h" />
+    <ClInclude Include="..\Classes\ui\uishortcutkeys.h" />
+    <ClInclude Include="..\Classes\Utils\mapbuilder.h" />
+    <ClInclude Include="..\Classes\Utils\TiledMapper.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="game.rc" />
+    <ResourceCompile Include="midnight.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DDR_Debug|Win32'">true</ExcludedFromBuild>
+    </ResourceCompile>
+    <ResourceCompile Include="revenge.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='LOM_Debug|Win32'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\ddr.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

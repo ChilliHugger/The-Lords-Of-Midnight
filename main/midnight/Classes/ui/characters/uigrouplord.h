@@ -26,6 +26,7 @@ public:
     static uigrouplord* createWithLord ( mxid characterid );
     
     void createFollowers();
+    void createFollowers(const c_mxid& followers);
     void updateFollowers();
     void clearFollowers();
     

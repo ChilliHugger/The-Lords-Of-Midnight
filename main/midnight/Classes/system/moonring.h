@@ -22,6 +22,8 @@
 #include "../models/selectmodel.h"
 #include "../models/mapmodel.h"
 
+//#define _DEBUG_GAME_PANEL_ MODE_MAP_DETAILED
+
 //
 #include <mutex>
 
@@ -34,9 +36,6 @@ FORWARD_REFERENCE(progressmonitor);
 FORWARD_REFERENCE(projectconfig);
 FORWARD_REFERENCE(configmanager);
 
-#define RUN_ON_UI_THREAD    cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread
-
-#define RUN_EVENT(x)           RUN_ON_UI_THREAD([=](){ x; } )
 
 class moonring
 {

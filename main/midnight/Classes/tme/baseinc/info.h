@@ -804,13 +804,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			FLAG_PROPERTY( IsWeapon,	of_weapon )
 			FLAG_PROPERTY( MapRemove,	of_remove )
 			FLAG_PROPERTY( IsUnique,	of_unique )
-#if defined(_DDR_)
-            FLAG_PROPERTY( CanHelpRecruitment,		of_recruitment )
-			FLAG_PROPERTY( IsRandomStart,	of_randomstart )
-            bool IsCarried() const;
-            bool IsSpecial() const;
-#endif
             
+            bool IsCarried() const ;
+
 			bool CanDestroy ( mxobject* obj ) const ;
             
 			c_str& Name()  		{ return name ; }
@@ -821,12 +817,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			c_str			description;
 			u32				usedescription;
 			mxitem*			carriedby;
-
-#if defined(_DDR_)
-            mxobjtype_t   type;
-            mxobjpower_t  power;
-#endif
-
 		}; // object
 
 
@@ -840,11 +830,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			virtual u32 Remove ( mxrace_t race, mxunit_t type, u32 total );
 			virtual u32 Add ( mxrace_t race, mxunit_t type, u32 total );
 			virtual void MakeChangeSides( mxrace_t race, mxcharacter* newoccupier );
-#if defined(_DDR_)
-            virtual void OnRespawn();
-            virtual mxrace_t Loyalty ( void );
-#endif
-            
+
 			void CheckForZero ( void );
 
 			PROPERTY( u32, Total, total );
@@ -861,9 +847,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			PROPERTY ( u32, Min, min )
 			PROPERTY ( u32, Max, max )
 			GET_PROPERTY ( u32, Influence, influence )
-#if defined(_DDR_)
-			PROPERTY ( u32, Energy, energy )
-#endif
 			bool HasFallen() const				{ return race!=occupyingrace; }
 
 		protected:
@@ -883,7 +866,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			mxterrain_t		terrain;
 			u32				killed;
 			u32				lost;
-            u32             energy;
 		};
 		// mxstronghold
 
@@ -1064,16 +1046,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 			virtual mxobject* Cmd_PickupObject ( void );
 			virtual void Cmd_Dead ( void );
             
-#if defined(_DDR_)
-			virtual MXRESULT Cmd_EnterTunnel ( void );
-			virtual MXRESULT Cmd_ExitTunnel ( void );
-            virtual MXRESULT Cmd_Use ( void ) ;
-            virtual MXRESULT Cmd_Take ( void ) ;
-            virtual MXRESULT Cmd_Give ( mxcharacter* character ) ;
-            virtual void Turn ( void );
-            virtual mxcharacter* GetNextFoe() const;
-            virtual mxcharacter* GetNextLiege() const;
-#endif
             virtual MXRESULT EnterBattle ( void );
 
             virtual bool EnterLocation ( mxgridref loc );
@@ -1152,10 +1124,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxrace_t		loyalty;
 			mxcharacter*	foe;
 			mxcharacter*	liege;
-#if defined(_DDR_)
-            mxgridref       lastlocation;
-#endif
-			//u32			tiredness - energy
+
 			u32				despondency;
 			flags32			traits;
 			//

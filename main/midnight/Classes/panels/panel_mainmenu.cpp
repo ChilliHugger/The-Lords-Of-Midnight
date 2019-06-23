@@ -238,13 +238,16 @@ void panel_mainmenu::OnContinueStory()
     uihelper::AddCenter(this,bookmenu);
  
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
-        uibookmenu* menu = static_cast<uibookmenu*>(s);
-        menu->removeFromParent();
-        
-        bookeventargs* event = static_cast<bookeventargs*>(e);
-        if ( event != nullptr ) { // null == cancelled
-            mr->continueStory( event->id );
-        }
+
+		bookeventargs* event = static_cast<bookeventargs*>(e);
+		if (event != nullptr) { // null == cancelled
+			mr->continueStory(event->id);
+		}
+
+		RUN_ON_UI_THREAD([=]() {
+			uibookmenu* menu = static_cast<uibookmenu*>(s);
+			menu->removeFromParent();
+		});
     });
     
 }
@@ -264,13 +267,15 @@ void panel_mainmenu::OnEndStory()
     
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         
-        uibookmenu* menu = static_cast<uibookmenu*>(s);
-        menu->removeFromParent();
-		
-        bookeventargs* event = static_cast<bookeventargs*>(e);
-        if ( event != nullptr ) { // null == cancelled
-            deleteStory( event->id );
-        }
+		bookeventargs* event = static_cast<bookeventargs*>(e);
+		if (event != nullptr) { // null == cancelled
+			deleteStory(event->id);
+		}
+
+		RUN_ON_UI_THREAD([=]() {
+			uibookmenu* menu = static_cast<uibookmenu*>(s);
+			menu->removeFromParent();
+		});
     });
 }
 

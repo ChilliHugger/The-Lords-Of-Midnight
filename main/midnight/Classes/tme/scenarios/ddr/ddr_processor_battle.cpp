@@ -111,7 +111,7 @@ namespace tme {
         
         // current garrison
         auto scenario = static_cast<ddr_x*>(mx->scenario);
-        mxstronghold* stronghold =  scenario->StrongholdFromLocation(character->Location());
+        auto stronghold =  static_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(character->Location()));
         
         // how many enemies
         u32 enemies=0;
@@ -171,12 +171,14 @@ namespace tme {
         }
     }
     
-    void ddr_battle::BattleVsCharacter( mxcharacter* attacker )
+    void ddr_battle::BattleVsCharacter( mxcharacter* character )
     {
          s32 success=0;
-         
+         auto attacker = static_cast<ddr_character*>(character);
+        auto object = static_cast<ddr_object*>(attacker->Carrying());
+        
          // check power in battle
-         if ( attacker->Carrying()!= NULL && attacker->Carrying()->power == OP_BATTLE )
+         if ( object != NULL && object->power == OP_BATTLE )
          {
              success=255;
          }
@@ -200,7 +202,7 @@ namespace tme {
     void ddr_battle::doBattle ( mxitem* attacker, s32 attackers_success)
     {
         ddr_character* attacker_character=NULL;
-        mxstronghold* attacker_stronghold=NULL;
+        ddr_stronghold* attacker_stronghold=NULL;
         
         u32 rnd = mxrandom(255);
         u32 start = rnd % characters_here.Count();
@@ -215,7 +217,7 @@ namespace tme {
             loyalty = attacker_character->Loyalty();
         }
         else if ( attacker->Type() == IDT_STRONGHOLD ) {
-            attacker_stronghold= static_cast<mxstronghold*>(attacker);
+            attacker_stronghold= static_cast<ddr_stronghold*>(attacker);
             loyalty = attacker_stronghold->Loyalty();
         } else
             return;
@@ -403,9 +405,9 @@ namespace tme {
     
     void ddr_battle::loseFight ( ddr_character* character, s32 success )
     {
-        
-        if ( character->Carrying() ) {
-            if ( character->Carrying()->power == OP_PROTECTION ) {
+        auto object = static_cast<ddr_object*>(character->Carrying());
+        if (object!=nullptr) {
+            if ( object->power == OP_PROTECTION ) {
                 return;
             }
         }
@@ -422,7 +424,7 @@ namespace tme {
         if ( character->reckless > r )
             return;
         
-        if (character->Carrying() && character->Carrying()->power == OP_BATTLE ) {
+        if (object && object->power == OP_BATTLE ) {
 			if ( mxrandom(255) >= 80 )
                 return;
         }
@@ -490,7 +492,7 @@ namespace tme {
         s32 race = 0;
         
         if ( army->Type() == IDT_STRONGHOLD ) {
-            mxstronghold* army_stronghold = static_cast<mxstronghold*>(army);
+            ddr_stronghold* army_stronghold = static_cast<ddr_stronghold*>(army);
             race = army_stronghold->Race()*2;
             if ( army_stronghold->Type() == UT_WARRIORS )
                 race++;

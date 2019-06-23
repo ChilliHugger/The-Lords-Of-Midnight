@@ -65,8 +65,8 @@ void uihelper::Init()
     font_config_shortcut.customGlyphs = nullptr;
     font_config_shortcut.distanceFieldEnabled = false;
     
-    font_config_debug.fontFilePath = FONT_FILENAME;
-    font_config_debug.fontSize = DIS(FONT_SIZE_DEBUG);
+    font_config_debug.fontFilePath = "fonts/arial.ttf";
+    font_config_debug.fontSize = DIS(16);
     font_config_debug.glyphs = GlyphCollection::DYNAMIC;
     font_config_debug.outlineSize = 0;
     font_config_debug.customGlyphs = nullptr;

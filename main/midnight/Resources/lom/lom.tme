@@ -69,21 +69,22 @@
 	</characters>
 
 	<objects>
-		<object id="OB_WOLVES"		    background = "objects/bk_wolf.png"		big="objects/bo_wolf.png"		small = "objects/so_wolf.png"	/>
-		<object id="OB_DRAGONS"		    background = "objects/bk_dragon.png"	big="objects/bo_dragon.png"		small = "objects/so_dragon.png"	/>
-		<object id="OB_ICETROLLS"		background = "objects/bk_troll.png"	    big="objects/bo_troll.png"		small = "objects/so_troll.png"	/>
-		<object id="OB_SKULKRIN"		background = "objects/bk_skulkrin.png"	big="objects/bo_skulkrin.png"	small = "objects/so_skulkrin.png"	/>
-		<object id="OB_WILDHORSES"		background = "objects/bk_horse.png"	    big="objects/bo_horse.png"		small = "objects/so_horse.png"	/>
-		<object id="OB_SHELTER"		    background = "objects/bk_shelter.png" />
-		<object id="OB_GUIDANCE"		background = "objects/bk_guidance.png" />
-		<object id="OB_SHADOWSOFDEATH"	background = "objects/bk_shadowsofdeath.png" />
-		<object id="OB_WATERSOFLIFE"	background = "objects/bk_watersoflife.png" />
-		<object id="OB_HANDOFDARK"		background = "objects/bk_handofdark.png" />
-		<object id="OB_CUPOFDREAMS"		background = "objects/bk_cupofdreams.png" />
-		<object id="OB_WOLFSLAYER"		background = "objects/bk_wolfslayer.png" />
-		<object id="OB_DRAGONSLAYER"	background = "objects/bk_dragonslayer.png" />
-		<object id="OB_ICECROWN"		background = "objects/bk_icecrown.png" />
-		<object id="OB_MOONRING"		background = "objects/bk_moonring.png" />
+		<object id="OB_WOLVES"		    big="objects/bo_wolf.png"		mapcell="5" />
+		<object id="OB_DRAGONS"		    big="objects/bo_dragon.png"		mapcell="6" />
+		<object id="OB_ICETROLLS"		big="objects/bo_troll.png"		mapcell="7" />
+		<object id="OB_SKULKRIN"		big="objects/bo_skulkrin.png"	mapcell="8" />
+		<object id="OB_WILDHORSES"		big="objects/bo_horse.png"		mapcell="21" />
+		<object id="OB_SHELTER"		    mapcell="22" />
+		<object id="OB_GUIDANCE"		mapcell="23" />
+		<object id="OB_SHADOWSOFDEATH"  mapcell="24" />
+		<object id="OB_WATERSOFLIFE"	mapcell="37" />
+		<object id="OB_HANDOFDARK"		mapcell="38" />
+		<object id="OB_CUPOFDREAMS"		mapcell="39" />
+		<object id="OB_WOLFSLAYER"		mapcell="40" />
+		<object id="OB_DRAGONSLAYER"	mapcell="53" />
+		<object id="OB_ICECROWN"		mapcell="54" />
+		<object id="OB_MOONRING"		mapcell="55" />
+        <object id="OB_EYEOFTHEMOON"    mapcell="56" />
 	</objects>
 
 	<races>
@@ -106,21 +107,21 @@
 		<terrain id="ARMY"		file="t_army0" />
 		<terrain id="MIST"		file="" />
 
-		<terrain id="TN_PLAIN"          file=""                  mapfile="terrain/map_rest.png" mapcell="1" />
-		<terrain id="TN_CITADEL"        file="t_citadel0"        mapfile="terrain/map_rest.png" mapcell="2" />
-		<terrain id="TN_FOREST"         file="t_forest0"         mapfile="terrain/map_trees.png" />
-		<terrain id="TN_HENGE"          file="t_henge0"          mapfile="terrain/map_rest.png" mapcell="3" />
-		<terrain id="TN_TOWER"          file="t_tower0"          mapfile="terrain/map_rest.png" mapcell="4" />
-		<terrain id="TN_VILLAGE"        file="t_village0"        mapfile="terrain/map_rest.png" mapcell="5" />
-		<terrain id="TN_DOWN"           file="t_downs0"          mapfile="terrain/map_downs.png" />
-		<terrain id="TN_KEEP"           file="t_keep0"           mapfile="terrain/map_rest.png" mapcell="6" />
-		<terrain id="TN_SNOWHALL"       file="t_snowhall0"       mapfile="terrain/map_rest.png" mapcell="7" />
-		<terrain id="TN_LAKE"           file="t_lake0"           mapfile="terrain/map_rest.png" mapcell="8" />
-		<terrain id="TN_FROZENWASTE"    file="t_frozenwaste0"    mapfile="terrain/map_frozenwastes.png" />
-		<terrain id="TN_RUIN"           file="t_ruin0"           mapfile="terrain/map_rest.png" mapcell="9" />
-		<terrain id="TN_LITH"           file="t_lith0"           mapfile="terrain/map_rest.png" mapcell="10" />
-		<terrain id="TN_CAVERN"         file="t_cavern0"         mapfile="terrain/map_rest.png" mapcell="11" />
-		<terrain id="TN_MOUNTAIN"       file="t_mountain0"       mapfile="terrain/map_mountains.png" />
+		<terrain id="TN_PLAIN"          file=""                  mapcell="48" />
+		<terrain id="TN_CITADEL"        file="t_citadel0"        mapcell="1" />
+		<terrain id="TN_HENGE"          file="t_henge0"          mapcell="2" />
+		<terrain id="TN_TOWER"          file="t_tower0"          mapcell="3" />
+		<terrain id="TN_VILLAGE"        file="t_village0"        mapcell="16" />
+		<terrain id="TN_KEEP"           file="t_keep0"           mapcell="17" />
+		<terrain id="TN_SNOWHALL"       file="t_snowhall0"       mapcell="18" />
+		<terrain id="TN_LAKE"           file="t_lake0"           mapcell="19" />
+		<terrain id="TN_RUIN"           file="t_ruin0"           mapcell="32" />
+		<terrain id="TN_LITH"           file="t_lith0"           mapcell="33" />
+		<terrain id="TN_CAVERN"         file="t_cavern0"         mapcell="34" />
+        <terrain id="TN_FOREST"         file="t_forest0"         mapcell="64" mapdensity="true"/>
+        <terrain id="TN_FROZENWASTE"    file="t_frozenwaste0"    mapcell="68" mapdensity="true"/>
+        <terrain id="TN_DOWN"           file="t_downs0"          mapcell="72" mapdensity="true"/>
+		<terrain id="TN_MOUNTAIN"       file="t_mountain0"       mapcell="76" mapdensity="true"/>
 	
 	</terrain>
 

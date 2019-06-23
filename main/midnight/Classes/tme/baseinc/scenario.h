@@ -64,7 +64,6 @@ namespace tme {
 				mxtime_t		time;
 				mxrace_t		loyalty;
 				
-				//charimages_t	images;
 				battle_t		battle;
 				recruitment_t	recruit;
 				
@@ -90,13 +89,8 @@ namespace tme {
                 
                 command_t       lastcommand;
                 mxid            lastcommandid;
-                
-                loc_t           lastlocation;
-				loc_t           targetlocation;
-                loc_t           homelocation;
-                mxorders_t      orders;
-                
-			} character_t;
+
+            } character_t;
 			
 			typedef struct routenode_t : public mxitem_t {
 				mxid			paths[2];
@@ -160,11 +154,11 @@ namespace tme {
 			} genderinfo_t ;
 			
 			typedef struct object_t : public mxitem_t {
-				mxthing_t		type;
 				mxthing_t		kills;
 				LPSTR			name;
 				LPSTR			description;
 				mxid			usedescription;
+                mxid            carriedby;
 			} object_t ;
 			
 			typedef struct raceinfo_t : public mxinfo_t {

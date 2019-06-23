@@ -293,6 +293,8 @@ void mxmap::SetTunnelVisible( mxgridref l, bool visible )
         CheckVisibleRange(l);
     } else
         mapsqr.flags&=~lf_tunnel_looked_at;
+    
+    IF_NOT_NULL(m_discoverymap)->SetTunnelVisible(l, visible);
 }
     
 bool mxmap::HasObject( mxgridref l )
@@ -361,8 +363,7 @@ void mxmap::SetLocationVisible( mxgridref l, bool visible )
         mapsqr.flags|=lf_seen;
         CheckVisibleRange(l);
         
-        if ( m_discoverymap )
-            m_discoverymap->SetLocationVisible(l, true);
+        IF_NOT_NULL(m_discoverymap)->SetLocationVisible(l, true);
         
     } else
         mapsqr.flags&=~lf_seen;
@@ -374,8 +375,7 @@ void mxmap::SetLocationLookedAt( mxgridref l, bool visible )
     if ( visible ) {
         mapsqr.flags|=lf_looked_at;
         
-        if ( m_discoverymap )
-            m_discoverymap->SetLocationLookedAt(l, true);
+        IF_NOT_NULL(m_discoverymap)->SetLocationLookedAt(l, true);
         
         
     } else
@@ -388,8 +388,7 @@ void mxmap::SetLocationVisited( mxgridref l, bool visible )
     if ( visible ) {
         mapsqr.flags|=lf_visited;
         
-        if ( m_discoverymap )
-            m_discoverymap->SetLocationVisited(l, true);
+        IF_NOT_NULL(m_discoverymap)->SetLocationVisited(l, true);
         
     } else
         mapsqr.flags&=~lf_visited;

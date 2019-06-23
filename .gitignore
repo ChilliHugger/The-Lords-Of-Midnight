@@ -27,3 +27,5 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+/main/midnight/proj.win32/LOM_Debug.win32
+/main/midnight/proj.win32/DDR_Debug.win32

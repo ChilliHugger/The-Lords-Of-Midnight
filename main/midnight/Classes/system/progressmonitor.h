@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <functional>
+#include <string>
 
 typedef std::function<void(int)> MXProgressCallback;
 

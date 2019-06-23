@@ -18,7 +18,7 @@
 	_MXASSERTE ( ID_TYPE(id) == idtype ); \
 	if ( (u32)ID_TYPE(id) != (u32)idtype ) \
 		return MX_INVALID_IDTYPE; \
-	cs * ptr = fn ( GET_ID(id) );  \
+	cs * ptr = static_cast<cs*>(fn ( GET_ID(id) ));  \
 	_MXASSERT_VALID ( ptr ); \
 	if ( ptr == NULL ) \
 		return MX_INVALID_ID;
@@ -41,6 +41,7 @@
 	if ( ptr == NULL ) \
 		return MX_INVALID_ID;
 	
-
+#define CONVERT_DDR_CHARACTER_ID(id,ptr) \
+CONVERT_ID(id,ptr,IDT_CHARACTER,ddr_character,mx->CharacterById)
 
 #endif //_MIDNIGHT_H_INCLUDED_

@@ -357,7 +357,7 @@ namespace tme {
                 GetAt(loc).Set( l.flags & (lf_seen|lf_visited|lf_looked_at) );
                 
 #if defined(_DDR_)
-                //GetAt(loc).Set( l.flags&(lf_tunnel_looked_at|lf_tunnel_visited) ) ;
+                GetAt(loc).Set( l.flags&(lf_tunnel_looked_at|lf_tunnel_visited) ) ;
 #endif
             }
         }

@@ -12,19 +12,20 @@
 enum CHOOSE_INDEX {
     CHOOSE_THINK    = 0,
     
-//#if defined(_LOM_)
+#if defined(_LOM_)
     CHOOSE_SEEK     = 1,
     CHOOSE_HIDE     = 2,
     CHOOSE_FIGHT    = 3,
-//#endif
+#endif
     
-//#if defined(_DDR_)
+#if defined(_DDR_)
     CHOOSE_REST     = 1,
     CHOOSE_TAKE     = 2,
     CHOOSE_GIVE     = 3,
     CHOOSE_TUNNEL   = 8,
     CHOOSE_USE      = 9,
-//#endif
+    CHOOSE_FIGHT    = 12,
+#endif
     
     CHOOSE_APPROACH = 4,
     CHOOSE_BATTLE   = 5,
