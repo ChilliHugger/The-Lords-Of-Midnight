@@ -75,14 +75,6 @@ public:
     bool canUndo ( savemode_t mode );
     bool undo ( savemode_t mode );
     
-#if defined(_DEBUG_EMAIL_)
-    bool debug_email ( storyid_t id );
-    bool debug_email_all();
-    bool isEmailEnabled();
-    bool copyToSdCard();
-#endif
-
-    
     void SetLoadSave( tme::PFNSERIALIZE function );
     bool Serialize( u32 version, chilli::lib::archive& ar );
     
