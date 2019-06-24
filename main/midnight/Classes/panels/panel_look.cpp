@@ -1320,7 +1320,7 @@ void panel_look::OnNotification( Ref* sender )
 
 bool panel_look::OnUndo ( savemode_t mode )
 {
-    fadeOut(_clrBlack, 0.75f, [&](){
+    fadeOut(_clrBlack, 0.75f, [=](){
         mr->undo(mode);
         setObject( TME_CurrentCharacter().id );
         fadeIn(_clrBlack, 1.0f, [&]{

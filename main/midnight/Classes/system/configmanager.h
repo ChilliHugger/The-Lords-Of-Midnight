@@ -24,6 +24,9 @@ public:
     bool skip_dedication;
     bool skip_adverts;
 	bool debug_map;
+    bool keep_full_save_history;
+    bool always_undo;
+    u32 undo_history;
 };
 
 #endif /* configmanager_h */

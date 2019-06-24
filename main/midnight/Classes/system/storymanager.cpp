@@ -9,6 +9,7 @@
 #include "../ui/uihelper.h"
 #include "storymanager.h"
 #include "settingsmanager.h"
+#include "configmanager.h"
 #include "../tme_interface.h"
 #include "moonring.h"
 
@@ -16,16 +17,15 @@
 using namespace chilli::os;
 using namespace chilli::lib;
 
-storymanager::storymanager()
+storymanager::storymanager() :
+    loadsave(nullptr),
+    currentStory(STORY_NONE),
+    last_save(SAVE_NONE),
+    undo_last_available(false)
 {
     CLEARARRAY(used);
-    current=0;
-    last_save=0;
-    
     last_night.Clear();
     last_morning.Clear();
-    
-    loadsave = nullptr;
 }
 
 
@@ -35,7 +35,6 @@ storymanager::~storymanager()
 
 storyinfo_t* storymanager::getStoriesInfo()
 {
-    static storyinfo_t stories ;
     
     int used = 0;
     
@@ -96,7 +95,7 @@ storyid_t storymanager::first_used_story()
 storyid_t storymanager::alloc( void )
 {
     storyid_t id = next_free_story();
-    used[id-1]=TRUE;
+    used[id-1]=true;
     return id;
 }
 
@@ -106,25 +105,22 @@ void storymanager::SetLoadSave( tme::PFNSERIALIZE function )
     loadsave = function;
 }
 
-
-
 LPCSTR storymanager::DiscoveryMapFilename()
 {
     static char filename[MAX_PATH]={0};
     
-
     sprintf(filename, "%s/story/discovery.map", mr->getWritablePath());
     
     return filename;
     
 }
 
-BOOL storymanager::create ( storyid_t id )
+bool storymanager::create ( storyid_t id )
 {
     TME_DeInit();
     TME_Init();
-    current=id;
-    last_save=0;
+    currentStory=id;
+    last_save=SAVE_NONE;
     last_night.Clear();
     last_morning.Clear();
     
@@ -144,7 +140,6 @@ LPCSTR storymanager::getFolder ( storyid_t id )
     return folder;
     
 }
-
 
 LPCSTR storymanager::getPath( storyid_t id )
 {
@@ -166,222 +161,26 @@ LPCSTR storymanager::getPath(storyid_t id, u32 save)
     
 }
 
-#if defined(_DEBUG_EMAIL_)
-BOOL storymanager::debug_email ( storyid_t id )
+bool storymanager::save( savemode_t mode )
 {
-    
-    static char Subject[64];
-    static char Message[64];
-    static char ToAddress[64];
-    static char path[MAX_PATH];
-    
-    
-    if ( s3eEMailAvailable() && s3eEMailCanSendMail() )
-    {
-        lib::strcpy(Message,"") ;
-        lib::strcpy(Subject,"Tester Save Game") ;
-        lib::strcpy(ToAddress,"test@thelordsofmidnight.com") ;
-        
-        
-        s3eEMail *mailz = new s3eEMail();
-        s3eEMailAttachment attachment = {0};
-        
-        const char* _toAddress = ToAddress;
-        mailz->m_toRecipients = &_toAddress ;
-        
-        mailz->m_numToRecipients = 1;
-        mailz->m_subject = Subject;
-        mailz->m_messageBody = Message;
-        
-        strcpy(path, (char*)getPath(id));
-        
-        attachment.m_fileName = strdup(&path[6]) ; // skip RAM:
-        attachment.m_mimeType="application/octet-stream";
-        
-        os::file* file = new os::file( path, os::file::modeRead);
-        attachment.m_dataSize = file->GetLength();
-        void* data = malloc(attachment.m_dataSize);
-        file->Read(data, attachment.m_dataSize);
-        file->Close();
-        
-        attachment.m_data = data ;
-        
-        mailz->m_attachments = &attachment;
-        mailz->m_numAttachments = 1;
-        
-        if (s3eEMailSendMail(mailz) == S3E_RESULT_SUCCESS)
-        {
-        }
-        
-        data = (void*)attachment.m_data;
-        SAFEFREE( data );
-        
-        data = (void*)attachment.m_fileName;
-        SAFEFREE( data );
-        
-        SAFEDELETE(mailz);
-        
-        return TRUE;
-    }
-    
-    return FALSE;
-    
-}
-
-BOOL storymanager::isEmailEnabled()
-{
-    return s3eEMailAvailable() && s3eEMailCanSendMail();
-}
-
-BOOL storymanager::copyToSdCard()
-{
-    UIDEBUG("storymanager::copyToSdCard\n");
-    
-    
-    char path[MAX_PATH];
-    
-    for ( int s=0; s<MAX_STORIES; s++ )
-    {
-        char filename1[MAX_PATH]={0};
-        char filename2[MAX_PATH]={0};
-        char filename3[MAX_PATH]={0};
-        
-        if ( !os::filemanager::Exists(getPath(s+1)) )
-            continue;
-        
-        strcpy(path,getFolder(s+1));
-        
-        UIDEBUG(path);
-        
-        s3eFileList* file = s3eFileListDirectory(path);
-        if ( file != NULL ) {
-            
-            sprintf(filename3,"raw://sdcard/%s/story/%d", TME_ScenarioDirectory() , s+1);
-            if ( IwFileMakeDirs( filename3 ) == S3E_RESULT_SUCCESS ) {
-                
-                while ( s3eFileListNext( file, filename1, MAX_PATH ) == S3E_RESULT_SUCCESS ) {
-                    
-                    sprintf(filename2, "%s/%s", path, filename1); // src
-                    sprintf(filename3,"raw://sdcard/%s/story/%d/%s",TME_ScenarioDirectory(),s+1,filename1); //dst
-                    
-                    UIDEBUG("COPY %s TO %s\n", filename2, filename3 );
-                    
-                    IwFileCopy(filename3, filename2);
-                    
-                }
-            } else {
-                UIDEBUG("Can't create folder %s\n", filename3 );
-            }
-            s3eFileListClose(file);
-            
-        }
-    }
-    
-    return true;
-}
-
-
-
-
-
-BOOL storymanager::debug_email_all()
-{
-    
-    static char Subject[64];
-    static char Message[64];
-    static char ToAddress[64];
-    static char path[MAX_PATH];
-    
-    if ( s3eEMailAvailable() && s3eEMailCanSendMail() )
-    {
-        lib::strcpy(Message,"") ;
-        lib::strcpy(Subject,"Tester Save Game") ;
-        lib::strcpy(ToAddress,"test@thelordsofmidnight.com") ;
-        
-        
-        s3eEMail *mailz = new s3eEMail();
-        s3eEMailAttachment attachment[MAX_STORIES] ;
-        
-        CLEARARRAY(attachment);
-        
-        const char* _toAddress = ToAddress;
-        mailz->m_toRecipients = &_toAddress ;
-        
-        mailz->m_numToRecipients = 1;
-        mailz->m_subject = Subject;
-        mailz->m_messageBody = Message;
-        mailz->m_numAttachments = 0;
-        
-        int count=0;
-        for ( int s=0; s<MAX_STORIES; s++ )
-        {
-            attachment[count].m_fileName = (char*)getPath(s+1) ;
-            if ( os::filemanager::Exists(attachment[count].m_fileName) )
-            {
-                attachment[count].m_mimeType="application/octet-stream";
-                
-                strcpy(path, (char*)getPath(s+1));
-                
-                os::file* file = new os::file( path, os::file::modeRead);
-                attachment[count].m_dataSize = file->GetLength();
-                
-                void* data = malloc(attachment[count].m_dataSize);
-                file->Read(data, attachment[count].m_dataSize);
-                file->Close();
-                
-                attachment[count].m_data = data ;
-                attachment[count].m_fileName = strdup(&path[6]) ; // skip RAM:
-                
-                count++;
-            }
-        }
-        
-        mailz->m_attachments = attachment;
-        mailz->m_numAttachments = count;
-        
-        if (s3eEMailSendMail(mailz) == S3E_RESULT_SUCCESS)
-        {
-        }
-        
-        for ( int s=0; s<MAX_STORIES; s++ ) {
-            void* data = (void*)attachment[s].m_data ;
-            SAFEFREE( data );
-            data = (void*)attachment[s].m_fileName ;
-            SAFEFREE( data );
-            
-            
-        }
-        
-        SAFEDELETE(mailz);
-        
-        return TRUE;
-    }
-    
-    return FALSE;
-}
-#endif
-
-
-BOOL storymanager::save( savemode_t mode )
-{
-    if ( current == 0 )
+    if ( currentStory == STORY_NONE )
         return false;
-    return save(current, mode );
+    return save(currentStory, mode );
 }
 
 
-BOOL storymanager::save ( storyid_t id, savemode_t mode )
+bool storymanager::save ( storyid_t id, savemode_t mode )
 {
-    undo_last_available=TRUE;
+    undo_last_available=true;
     
     if ( mode == savemode_night ) {
         last_night.Add( last_save );
-        undo_last_available=FALSE;
-        return TRUE;
+        undo_last_available=false;
+        return true;
     }
     else if ( mode == savemode_dawn ) {
         last_morning.Add( last_save+1 );
-        undo_last_available=FALSE;
+        undo_last_available=false;
     }
     
     char* file = (char*)getPath(id) ;
@@ -403,48 +202,49 @@ BOOL storymanager::save ( storyid_t id, savemode_t mode )
         
         last_save--;
         
-        return FALSE ;
+        return false ;
     }
     
     TME_SaveDiscoveryMap( (char*)DiscoveryMapFilename() );
     
     cleanup();
     
-    return TRUE;
+    return true;
 }
 
-BOOL storymanager::load ( storyid_t id )
+bool storymanager::load ( storyid_t id )
 {
-    current = id;
-    undo_last_available=FALSE;
+    currentStory = id;
+    undo_last_available=false;
     
     if (!TME_Load( (char*)getPath(id), loadsave ) ){
-        return FALSE ;
+        return false ;
     }
     
     TME_LoadDiscoveryMap( (char*)DiscoveryMapFilename() );
     
-    return TRUE ;
+    return true ;
 }
 
-BOOL storymanager::canUndo ( savemode_t mode )
+bool storymanager::canUndo ( savemode_t mode )
 {
-    u32 save=last_save-1;
+    saveid_t save=last_save-1;
     if ( mode == savemode_dawn ) {
-        save=lastMorning()>0 ? lastMorning() : 1 ;
+        save = lastMorning() ;
+        if ( save == 0 ) save = 1;
     } else if ( mode == savemode_night )
         save=lastNight();
-    else if ( mode == savemode_last && _DEBUG_UNDO_HISTORY_ == 1 )
+    else if ( mode == savemode_last && (mr->config->undo_history == 1 && !mr->config->always_undo))
         return undo_last_available ;
     
-    return filemanager::Exists(getPath(current,save));
+    return filemanager::Exists(getPath(currentStory,save));
     
 }
 
 
-u32 storymanager::lastMorning() const
+saveid_t storymanager::lastMorning() const
 {
-    u32 dawn = 0;
+    saveid_t dawn = STORY_NONE;
     
     if ( last_morning.Count()>0 ) {
         
@@ -460,62 +260,64 @@ u32 storymanager::lastMorning() const
         
         return dawn ;
     }
-    
-    
-    
-    
-    return 0;
+
+    return SAVE_NONE;
 }
 
-u32 storymanager::lastNight() const
+saveid_t storymanager::lastNight() const
 {
     if ( last_night.Count()>0 )
         return last_night.Get(last_night.Count()-1);
-    return 0;
+    return SAVE_NONE;
 }
 
-BOOL storymanager::getDescription( storyid_t id, c_str& description )
+bool storymanager::getDescription( storyid_t id, c_str& description )
 {
     return TME_SaveDescription((char*)getPath(id), description);
 }
 
-BOOL storymanager::undo ( savemode_t mode )
+bool storymanager::undo ( savemode_t mode )
 {
-    u32 save=last_save-1;
+    saveid_t save=last_save-1;
     if ( mode == savemode_dawn )
         save=lastMorning();
     else if ( mode == savemode_night )
         save=lastNight();
     
-    u32 temp_save = last_save ;
+    saveid_t temp_save = last_save ;
     
-    char* file = (char*)getPath(current,save);
+    char* file = (char*)getPath(currentStory,save);
     
     if ( TME_Load( file , loadsave ) ) {
         
-        char* cpy = (char*)getPath(current) ;
+        // copy save entry over the current
+        char* cpy = (char*)getPath(currentStory) ;
         filemanager::Copy( file, cpy );
         
+        // delete all entries above the save entry
         for ( u32 ii=save; ii<temp_save; ii++ )  {
-            LPCSTR file = getPath(current,ii);
+            LPCSTR file = getPath(currentStory,ii);
             if ( filemanager::Exists(file) )
                 filemanager::Remove(file);
         }
         
-        undo_last_available=FALSE;
+        undo_last_available=false;
         
-        return TRUE;
+        return true;
     }
     
-    return FALSE;
+    return false;
 }
 
-BOOL storymanager::cleanup ( void )
+bool storymanager::cleanup ( void )
 {
-    s32 final_save = MAX(0,last_save-_DEBUG_UNDO_HISTORY_);
+    if ( mr->config->keep_full_save_history )
+        return true;
+    
+    s32 final_save = MAX(0,last_save-mr->config->undo_history);
     for ( s32 ii=0; ii<final_save; ii++ ) {
         if ( !last_morning.IsInList(ii) ) {
-            LPCSTR file = getPath(current,ii) ;
+            LPCSTR file = getPath(currentStory,ii) ;
             if ( filemanager::Exists(file) ) {
                 filemanager::Remove(file);
             }
@@ -525,18 +327,13 @@ BOOL storymanager::cleanup ( void )
     return true;
 }
 
-
-BOOL storymanager::destroy( storyid_t id )
+bool storymanager::destroy( storyid_t id )
 {
-    current = 0 ;
-
-    LPCSTR file = getFolder(id) ;
-
-    return filemanager::DestroyDirectory(file) ;
+    currentStory = SAVE_NONE ;
+    return filemanager::DestroyDirectory(getFolder(id)) ;
 }
 
-
-BOOL storymanager::Serialize( u32 version, archive& ar )
+bool storymanager::Serialize( u32 version, archive& ar )
 {
     u32 count = 0;
     u32 value = 0;
@@ -544,7 +341,6 @@ BOOL storymanager::Serialize( u32 version, archive& ar )
     if ( ar.IsStoring() ) {
         
         ar << last_save ;
-        
         
         ar << last_night.Count();
         for ( int i =0; i<last_night.Count(); i++ )
@@ -560,7 +356,6 @@ BOOL storymanager::Serialize( u32 version, archive& ar )
         
         last_night.Clear();
         last_morning.Clear();
-        
         
         if ( version < 13 ) {
             
@@ -586,11 +381,9 @@ BOOL storymanager::Serialize( u32 version, archive& ar )
             
         }
         
-        
-        
     }
     
-    return TRUE;
+    return true;
 }
 
 
