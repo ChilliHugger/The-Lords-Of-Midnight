@@ -18,7 +18,8 @@ class LandscapeNode : public cocos2d::Node
 {
 public:
     static LandscapeNode* create(LandscapeOptions* options);
-
+    
+    virtual void Build();
 
 protected:
     bool initWithOptions(LandscapeOptions* options) ;

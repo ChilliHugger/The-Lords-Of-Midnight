@@ -47,10 +47,8 @@ bool LandscapeLand::initWithOptions( LandscapeOptions* options )
     setContentSize( Size(visibleSize.width,RES(LANDSCAPE_FLOOR_HEIGHT)) );
     
     auto floor = Sprite::createWithSpriteFrameName( "floor" );
+    addChild(floor);
     
-    float scalex = getContentSize().width / floor->getContentSize().width ;
-    
-    floor->setScale(scalex,1.0);
     floor->setPosition(0, 0);
     floor->setAnchorPoint( Vec2(0,0) );
     floor->setName("floor");
@@ -62,18 +60,20 @@ bool LandscapeLand::initWithOptions( LandscapeOptions* options )
     if ( options->debugLand )
         floor->setColor(Color3B::YELLOW);
     
-    addChild(floor);
-    
-    BuildFloors( options->generator->items );
-    
     return true;
 }
 
 
-void LandscapeLand::BuildFloors( LandscapeItems* items )
+void LandscapeLand::Build()
 {
+    auto items = options->generator->items;
+    
     LandscapeItem* loc1=nullptr;
     LandscapeItem* loc2=nullptr;
+    
+    auto floor = getChildByName( "floor" );
+    float scalex = getContentSize().width / floor->getContentSize().width ;
+    floor->setScale(scalex,1.0);
     
     for(auto const& item: *items) {
         

@@ -100,7 +100,7 @@ static cocos2d::Size DesktopLargerText2 = cocos2d::Size(1600, 900);    // 1.7777
 
 
 static cocos2d::Size desktopResolutionSize = iPad3;
-static cocos2d::Size designResolutionSize = desktopResolutionSize; //cocos2d::Size(1024, 768);
+static cocos2d::Size designResolutionSize = mediumResolutionSize;
 
 AppDelegate::AppDelegate()
 {
@@ -160,7 +160,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
-    //glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_HEIGHT);
+    //glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
     
     
     auto res = resolutionmanager::getInstance();

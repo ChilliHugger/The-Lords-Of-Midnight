@@ -24,10 +24,11 @@ public:
     
     static LandscapeTerrain* create( LandscapeOptions* options );
 
+    void Build() override;
+
 protected:
     bool initWithOptions( LandscapeOptions* options );
 
-    void BuildTerrain( LandscapeItems* items );
     Sprite* AddGraphic(Sprite* graphic,f32 x, f32 y, Color4F tint1, Color4F tint2, f32 alpha, f32 scale);
     Sprite* GetTerrainImage( mxterrain_t terrain );
     Sprite* GetImage( std::string& imagename );

@@ -39,17 +39,14 @@ bool LandscapeTerrain::initWithOptions( LandscapeOptions* options )
     if ( !LandscapeNode::initWithOptions(options) )
         return false;
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    setContentSize( visibleSize );
-    
-    BuildTerrain( options->generator->items );
-    
     return true;
 }
 
 
-void LandscapeTerrain::BuildTerrain( LandscapeItems* items )
+void LandscapeTerrain::Build()
 {
+    auto items  = options->generator->items;
+     
     auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));
     auto tint2 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainFill));
     

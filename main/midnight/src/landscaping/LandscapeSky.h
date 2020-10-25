@@ -16,9 +16,11 @@ class LandscapeSky : public LandscapeNode
 {
 public:
     static LandscapeSky* create( LandscapeOptions* options );
-
+    void Build() override;
+    
 protected:
     bool initWithOptions( LandscapeOptions* options );
+
 };
 
 

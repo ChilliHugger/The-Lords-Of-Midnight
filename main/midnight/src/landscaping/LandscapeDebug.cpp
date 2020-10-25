@@ -34,20 +34,16 @@ bool LandscapeDebug::initWithOptions( LandscapeOptions* options )
     if ( !LandscapeNode::initWithOptions(options) )
         return false;
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    setContentSize( visibleSize );
-    
-    BuildDebug(options->generator->items);
-    
     return true;
 }
 
-
-
-
-
-void LandscapeDebug::BuildDebug( LandscapeItems* items )
+void LandscapeDebug::Build()
 {
+    auto items  = options->generator->items;
+    
+    f32 height = getContentSize().height;
+    f32 width = getContentSize().width;
+    
     if ( options->debugMode != 0 ) {
         
         
@@ -63,7 +59,7 @@ void LandscapeDebug::BuildDebug( LandscapeItems* items )
                 // debug
                 auto dot = Sprite::createWithSpriteFrameName( "dot" );
                 dot->setColor(Color3B::RED);
-                dot->setPosition(x, this->getContentSize().height - y);
+                dot->setPosition(x, height - y);
                 dot->setScale(0.1f);
                 dot->setAnchorPoint(Vec2(0.5,0.5));
                 this->addChild(dot);
@@ -96,19 +92,19 @@ void LandscapeDebug::BuildDebug( LandscapeItems* items )
                 label->setColor(Color3B::BLUE);
                 label->setAlignment(TextHAlignment::CENTER);
                 label->setAnchorPoint(Vec2(0.5,0.5));
-                label->setPosition(x, this->getContentSize().height - y - RES(5));
+                label->setPosition(x, height - y - RES(5));
                 this->addChild(label, 1);
                 
                 //        auto dot1 = Sprite::createWithSpriteFrameName( "dot" );
                 //        dot1->setColor(Color3B::BLUE);
-                //        dot1->setPosition(x-(256*scale), this->getContentSize().height - y);
+                //        dot1->setPosition(x-(256*scale), height - y);
                 //        dot1->setScale(0.1f);
                 //        dot1->setAnchorPoint(Vec2(0.5,0.5));
                 //        current_landscape_node->addChild(dot1);
                 //
                 //        auto dot2 = Sprite::createWithSpriteFrameName( "dot" );
                 //        dot2->setColor(Color3B::RED);
-                //        dot2->setPosition(x+(256*scale), this->getContentSize().height - y);
+                //        dot2->setPosition(x+(256*scale), height - y);
                 //        dot2->setScale(0.1f);
                 //        dot2->setAnchorPoint(Vec2(0.5,0.5));
                 //        current_landscape_node->addChild(dot2);
@@ -134,10 +130,10 @@ void LandscapeDebug::BuildDebug( LandscapeItems* items )
     
     auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 20);
     
-    label->setMaxLineWidth(this->getContentSize().width);
+    label->setMaxLineWidth(width);
     label->setAnchorPoint(Vec2(0,0));
     label->setColor(Color3B::WHITE);
-    label->setPosition(RES(10), (this->getContentSize().height - RES(20)));
+    label->setPosition(RES(10), (height - RES(20)));
     this->addChild(label, 1);
     
     

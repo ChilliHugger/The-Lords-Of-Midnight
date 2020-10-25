@@ -19,9 +19,10 @@ class LandscapeLand : public LandscapeNode
 public:
     static LandscapeLand* create( LandscapeOptions* options );
 
+    void Build() override;
+    
 protected:
     bool initWithOptions( LandscapeOptions* options );
-    void BuildFloors( LandscapeItems* items );
     Sprite* GetFloorImage( floor_t floor );
 };
 

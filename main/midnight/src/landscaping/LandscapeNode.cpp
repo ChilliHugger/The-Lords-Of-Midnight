@@ -31,3 +31,7 @@ bool LandscapeNode::initWithOptions(LandscapeOptions* options)
 
     return true;
 }
+
+void LandscapeNode::Build()
+{
+}

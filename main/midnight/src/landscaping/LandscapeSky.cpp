@@ -34,8 +34,6 @@ bool LandscapeSky::initWithOptions( LandscapeOptions* options )
     if ( !LandscapeNode::initWithOptions(options) )
         return false;
     
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-
     // header = 57
     // sky = 55
     // floor = 80
@@ -44,20 +42,24 @@ bool LandscapeSky::initWithOptions( LandscapeOptions* options )
     // TODO: None dithered sky...
         
     auto sky = Sprite::createWithSpriteFrameName( "sky" );
+    addChild(sky);
     
-    setContentSize( Size(visibleSize.width,RES(LANDSCAPE_SKY_HEIGHT)) );
-    
-    float scalex = getContentSize().width / sky->getContentSize().width ;
-
-    sky->setScale(scalex,1.0f);
     sky->setPosition( Vec2::ZERO );
     sky->setAnchorPoint( Vec2::ZERO );
-    
+    sky->setName("sky");
+
     if ( options->shader ) {
         options->colour->updateNode(sky);
     }
-    
-    addChild(sky);
-    
+
     return true;
+}
+
+void LandscapeSky::Build()
+{
+    auto sky = getChildByName("sky");
+    float scalex = getContentSize().width / sky->getContentSize().width ;
+
+    sky->setScale(scalex,1.0f);
+
 }
