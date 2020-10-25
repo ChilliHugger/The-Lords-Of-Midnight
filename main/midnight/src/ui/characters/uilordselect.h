@@ -31,9 +31,9 @@ enum LORD_STATUS {
 #define DISTANCE_SHIELD         RES(40)
 #define DISTANCE_INNER          RES(75)
 #define DISTANCE_OUTER          RES(128)
-#define SELECT_ELEMENT_WIDTH    CONTENT_SCALE(128)
-#define SELECT_ELEMENT_HEIGHT   CONTENT_SCALE(128)
-#define SELECT_IMAGE_HEIGHT     CONTENT_SCALE(72)
+#define SELECT_ELEMENT_WIDTH    RES(128)
+#define SELECT_ELEMENT_HEIGHT   RES(128)
+#define SELECT_IMAGE_HEIGHT     RES(72)
 
 enum class lordwidget {
     select = 0,

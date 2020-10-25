@@ -137,7 +137,7 @@ bool panel_look::init()
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32));
-    lblNameAdjust = CONTENT_SCALE(32) ;
+    lblNameAdjust = RES(32) ;
 #endif
 
     // Location Desction Label

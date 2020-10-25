@@ -64,7 +64,7 @@ bool panel_think::init()
     // TAB ICONS
     f32 scale = resolutionmanager::getInstance()->phoneScale() ;
     int x = RES(10) * scale ;
-    int c = CONTENT_SCALE(100) * scale;
+    int c = RES(100) * scale;
     
     // Person
     auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, clickCallback);

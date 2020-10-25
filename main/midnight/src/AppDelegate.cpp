@@ -99,7 +99,7 @@ static cocos2d::Size DesktopLargerText2 = cocos2d::Size(1600, 900);    // 1.7777
 
 
 
-static cocos2d::Size desktopResolutionSize = iPadPro12Inch;
+static cocos2d::Size desktopResolutionSize = iPad3;
 static cocos2d::Size designResolutionSize = desktopResolutionSize; //cocos2d::Size(1024, 768);
 
 AppDelegate::AppDelegate()
@@ -167,6 +167,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     res->init();
 
     //director->setContentScaleFactor(res->ContentScale());
+    
     
 #if defined(_OS_DESKTOP_) && defined(MX_DEBUG)
     if ( desktopResolutionSize.height >= 1440 ) {

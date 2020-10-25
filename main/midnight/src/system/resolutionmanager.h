@@ -76,11 +76,11 @@ public:
 #define NORES(x)    (x)
 
 //#define ASPECT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->AspectScale())
-//#define CONTENT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
+#define CONTENT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
 //#define SCREEN_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->Scale())
 
 #define SCREEN_SCALE(x) (f32)    (x)
-#define CONTENT_SCALE(x) (f32)    (x)
+//#define CONTENT_SCALE(x) (f32)    (x)
 #define ASPECT_SCALE(x) (f32)    (x)
 
 

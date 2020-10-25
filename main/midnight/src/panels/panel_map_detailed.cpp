@@ -71,7 +71,7 @@ bool panel_map_detailed::init()
   
     
     int adjy=RES(32)*scale;
-    int r = CONTENT_SCALE(64) * scale;
+    int r = RES(64) * scale;
     
     createFilterButton(ID_FILTER_CURRENT_LOC,   (r*1)-adjy, "i_center", map_filters::centre_char);
     createFilterButton(ID_FILTER_CRITTERS,      (r*2)-adjy, "i_critters", map_filters::show_critters);

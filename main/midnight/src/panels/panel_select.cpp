@@ -62,10 +62,7 @@ bool panel_select::init()
     
     setBackground(BACKGROUND_COLOUR);
     
-
-
-    
-    int r = CONTENT_SCALE(64) * scale;
+    int r = RES(64) * scale;
     
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
@@ -138,7 +135,7 @@ void panel_select::createPageView()
     pageView->addProtectedChild(gradientB,ZORDER_UI);
     gradientB->setGlobalZOrder(ZORDER_UI);
     
-    gradientR =  uihelper::createHorizontalGradient( backgroundColour, RIGHT_STRIP_WIDTH, HALF(RIGHT_STRIP_WIDTH), getContentSize().height, -1 );
+    gradientR = uihelper::createHorizontalGradient( backgroundColour, RIGHT_STRIP_WIDTH, HALF(RIGHT_STRIP_WIDTH), getContentSize().height, -1 );
     gradientR->setLocalZOrder(ZORDER_UI-1);
     gradientR->setPosition(Vec2(pageView->getContentSize().width,pageView->getContentSize().height));
     gradientR->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
@@ -326,7 +323,7 @@ void panel_select::checkCollision ( uilordselect* lord, s32 start )
                 continue;
             }
         }
-        
+
         lord->removeFromParent();
         addToPage(lord, page, calcGridLocation(index));
         index++;
@@ -337,39 +334,39 @@ void panel_select::checkCollision ( uilordselect* lord, s32 start )
 uilordselect* panel_select::getOverlappingLord ( page_t page, uilordselect* source )
 {
     character c;
-    
+
     mxid id = getIdFromTag(source);
     TME_GetCharacter(c, id );
 
     int g2= HALF(SELECT_GRID_X);
     int g1 = ( c.followers ) ? SELECT_GRID_X : HALF(SELECT_GRID_X) ;
- 
+
     auto pageNode = pages.at( TO_PAGE_INDEX(page) );
-    
+
     for ( Node* node : pageNode->getChildren() )
     {
         auto target = dynamic_cast<uilordselect*>(node);
-        
+
         CONTINUE_IF_NULL(target);
         CONTINUE_IF( target == source );
         CONTINUE_IF( target->getPage() != page);
-        
+
         auto p2 = target->getPosition();
         auto p1 = source->getPosition();
-        
+
         mxid id2 = getIdFromTag(target);
-        
+
         TME_GetCharacter(c,id2 );
         CONTINUE_IF(c.following);
-        
-        g2 = ( c.followers ) ? SELECT_GRID_X : HALF(SELECT_GRID_X/2) ;
-        
-        int radius_added = RES(g1) + RES(g2) ;
-        
+
+        g2 = ( c.followers ) ? SELECT_GRID_X : HALF(SELECT_GRID_X) ;
+
+        int radius_added = g1 + g2 ;
+
         int dx = ABS(p1.x - p2.x);
         int dy = ABS(p1.y - p2.y);
         int distance = sqrt((dx*dx)+(dy*dy));
-        
+
         if ( distance < radius_added )
             return target;
     }
