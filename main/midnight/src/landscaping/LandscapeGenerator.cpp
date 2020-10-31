@@ -15,6 +15,21 @@ void LandscapeGenerator::Build(LandscapeOptions* options)
 {
     this->options = options;
     
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
+    f32 aspect = 1024.0 / 768.0;
+    f32 newWidth = visibleSize.height * aspect;
+    options->resScale = newWidth / 1024.0;
+
+    HorizonCentreX = LRES( (256*LANDSCAPE_GSCALE)/2  );
+    HorizonCentreY = 0 ; //LRES( -112 );
+    PanoramaWidth =  (float)LRES((800.0f*LANDSCAPE_GSCALE));
+    PanoramaHeight = (float)LRES(38.0f*LANDSCAPE_GSCALE); // 32
+    LocationHeight = (float)LRES(48.0f*LANDSCAPE_GSCALE);
+    horizonAdjust = LRES((5*LANDSCAPE_GSCALE));
+    horizonOffset = LRES( (112*LANDSCAPE_GSCALE) );
+    
+
     loc = options->here;
     looking = 0;
     
@@ -181,7 +196,7 @@ LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item
     
     // We are running a panorama that runs from N to NW along a linear
     // so place all locations to the right
-    //if (item->position.x<=RES(-225))
+    //if (item->position.x<=LRES(-225))
     //    item->position.x += PanoramaWidth;
     
     return item;
@@ -199,12 +214,12 @@ float LandscapeGenerator::RadiansFromFixedPointAngle(s32 fixed)
 //
 f32 LandscapeGenerator::NormaliseXPosition(f32 x)
 {
-    x = x-RES(horizontalOffset) ;
+    x = x-LRES(horizontalOffset) ;
     
     // Boundary in panoramic units
     f32 boundary = LANDSCAPE_DIR_STEPS*3;
-    f32 maxScreenX = RES(1600);
-    f32 minScreenX = RES(-512);
+    f32 maxScreenX = LRES(1600);
+    f32 minScreenX = LRES(-512);
     
     // to the left
     if ( horizontalOffset<boundary && x>maxScreenX )

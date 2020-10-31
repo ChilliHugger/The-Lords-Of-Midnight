@@ -52,7 +52,7 @@ public:
     bool            isLookingDownTunnel;
     bool            isLookingOutTunnel;
     
-    
+    f32             resScale;
     
 };
 

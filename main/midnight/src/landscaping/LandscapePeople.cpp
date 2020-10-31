@@ -20,7 +20,7 @@ USING_NS_CC;
 using namespace tme;
 
 #define TRANSITION_DURATION     0.5f
-#define adjusty                 RES(8)
+#define adjusty                 LRES(8)
 
 LandscapePeople::LandscapePeople()
 {
@@ -192,7 +192,7 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
         auto image = Sprite::create(person);
         auto size = image->getContentSize();
         
-        int x1 = 0 + ( column * RES(CHARACTER_COLUMN_WIDTH) );
+        int x1 = 0 + ( column * LRES(CHARACTER_COLUMN_WIDTH) );
         int y1 = 0; //size.height; //-ASP(person->Height());
         
         image->setAnchorPoint(uihelper::AnchorBottomLeft);
@@ -211,7 +211,7 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
         
         // and see if we have taken the one to the right of us
         if ( column <max_chars ) {
-            //if ( RES(person->Width()) > RES(MAX_ALLOWED_CHARACTER_WIDTH) )
+            //if ( LRES(person->Width()) > LRES(MAX_ALLOWED_CHARACTER_WIDTH) )
             //    m_columns[column+1].used = TRUE;
         }
         
@@ -304,9 +304,9 @@ void LandscapePeople::startFadeOut()
     auto parentSize = getParent()->getContentSize();
     
     f32 startScale=1.0f;
-    f32 height = RES(PEOPLE_WINDOW_HEIGHT)*startScale;
+    f32 height = LRES(PEOPLE_WINDOW_HEIGHT)*startScale;
     f32 width = parentSize.width*startScale;
-    //f32 adjust = 0; //RES(32) * startScale;
+    //f32 adjust = 0; //LRES(32) * startScale;
     f32 startY = 0;
     f32 targetY = -height*1.5f;
     f32 startX = (parentSize.width/2)-(width/2);
@@ -338,9 +338,9 @@ void LandscapePeople::startFadeIn()
     auto parentSize = getParent()->getContentSize();
 
     f32 startScale=0.25f;
-    f32 height = RES(PEOPLE_WINDOW_HEIGHT)*startScale;
+    f32 height = LRES(PEOPLE_WINDOW_HEIGHT)*startScale;
     f32 width = parentSize.width*startScale;
-    f32 adjust = RES(32) * startScale;
+    f32 adjust = LRES(32) * startScale;
     f32 startY = options->generator->PanoramaHeight + options->generator->HorizonCentreY + (height*2) - adjust;
     f32 targetY = 0;
     f32 startX = (parentSize.width/2)-(width/2);

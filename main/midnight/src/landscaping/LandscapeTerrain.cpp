@@ -60,7 +60,7 @@ void LandscapeTerrain::Build()
                 alpha = (item->position.z - options->generator->viewportNear )*2.0f;
             }
             
-            f32 y = item->position.y + horizonOffset ;
+            f32 y = item->position.y + options->generator->horizonOffset ;
             f32 x = item->position.x;
             
             if ( item->position.z >= 8.5f  && y < 0 ) {
@@ -86,14 +86,14 @@ void LandscapeTerrain::Build()
             if ( item->mist ) {
                 
                 std::string mist = "t_mist";
-                AddGraphic(GetImage(mist),x-RES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
-                AddGraphic(GetImage(mist),x+RES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
+                AddGraphic(GetImage(mist),x-LRES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
+                AddGraphic(GetImage(mist),x+LRES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
             }
             else if ( item->army ) {
 #if defined(_DDR_)
                 std::string army = "t_army2";
-                AddGraphic(GetImage(army),x-RES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
-                AddGraphic(GetImage(army),x+RES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
+                AddGraphic(GetImage(army),x-LRES(76)*item->scale,y,tint1,tint2,1.0f, item->scale);
+                AddGraphic(GetImage(army),x+LRES(76+76)*item->scale,y,tint1,tint2,1.0f, item->scale);
 #else
                 std::string army = "t_army0";
                 AddGraphic(GetImage(army),x,y,tint1,tint2,alpha, item->scale);
@@ -143,10 +143,16 @@ Sprite* LandscapeTerrain::GetImage( std::string& imagename )
 {
     if ( imagename.empty() )
         return nullptr;
+ 
+    //auto visibleSize = Director::getInstance()->getVisibleSize();
+    f32 imageScale = 1.0f;
+
+    
     
     auto image = Sprite::createWithSpriteFrameName( imagename );
     if ( image != nullptr ) {
-        image->setScale(1.0f);
+        
+        image->setScale(imageScale);
         image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         
         if ( options->shader ) {

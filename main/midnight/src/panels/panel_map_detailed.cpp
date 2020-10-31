@@ -368,11 +368,11 @@ void panel_map_detailed::setupPlaceLabels()
         title->setName("title");
         title->setTextColor(Color4B(_clrWhite));
         title->enableOutline(Color4B(_clrBlack),RES(1));
-        title->setLineSpacing(SCREEN_SCALE(-2));
-        title->setHeight(SCREEN_SCALE(32));
+        title->setLineSpacing(RES(-2));
+        title->setHeight(RES(32));
         title->getFontAtlas()->setAntiAliasTexParameters();
         title->setAnchorPoint(uihelper::AnchorCenter);
-        title->setWidth(SCREEN_SCALE(128));
+        title->setWidth(RES(128));
         title->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(48))) );
         title->setHorizontalAlignment(TextHAlignment::CENTER);
         title->setVerticalAlignment(TextVAlignment::BOTTOM);

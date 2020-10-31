@@ -92,7 +92,7 @@ void LandscapeDebug::Build()
                 label->setColor(Color3B::BLUE);
                 label->setAlignment(TextHAlignment::CENTER);
                 label->setAnchorPoint(Vec2(0.5,0.5));
-                label->setPosition(x, height - y - RES(5));
+                label->setPosition(x, height - y - LRES(5));
                 this->addChild(label, 1);
                 
                 //        auto dot1 = Sprite::createWithSpriteFrameName( "dot" );
@@ -133,7 +133,7 @@ void LandscapeDebug::Build()
     label->setMaxLineWidth(width);
     label->setAnchorPoint(Vec2(0,0));
     label->setColor(Color3B::WHITE);
-    label->setPosition(RES(10), (height - RES(20)));
+    label->setPosition(LRES(10), (height - LRES(20)));
     this->addChild(label, 1);
     
     

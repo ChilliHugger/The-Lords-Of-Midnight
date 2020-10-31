@@ -60,18 +60,18 @@ class LandscapeGenerator
 {
 public:
     
-    const float	HorizonCentreX = RES( (256*LANDSCAPE_GSCALE)/2  );
-    const float	HorizonCentreY = 0 ; //RES( -112 );
-    
-    const float	PanoramaWidth =  (float)RES((800.0f*LANDSCAPE_GSCALE));
-    const float	PanoramaHeight = (float)RES(38.0f*LANDSCAPE_GSCALE); // 32
-    const float	LocationHeight = (float)RES(48.0f*LANDSCAPE_GSCALE);
+    float HorizonCentreX;
+    float HorizonCentreY;
+    float PanoramaWidth;
+    float PanoramaHeight;
+    float LocationHeight;
     
     const float viewportNear=0.25f;
     const float viewportFar=6.5f;
     
     // adjustment for the furthest of our visible locations being on the horizon
-    const int     horizonAdjust = RES((5*LANDSCAPE_GSCALE));
+    float horizonAdjust;
+    float horizonOffset;
     
 public:
     LandscapeGenerator();

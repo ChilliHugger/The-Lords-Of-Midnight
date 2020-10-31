@@ -44,8 +44,6 @@ bool LandscapeLand::initWithOptions( LandscapeOptions* options )
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
-    setContentSize( Size(visibleSize.width,RES(LANDSCAPE_FLOOR_HEIGHT)) );
-    
     auto floor = Sprite::createWithSpriteFrameName( "floor" );
     addChild(floor);
     

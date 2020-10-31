@@ -217,6 +217,26 @@ bool panel_look::init()
     // Direction movement indicators
     setupMovementIndicators();
     
+    
+    //Node* uihelper::createHorizontalGradient( Color3B& color, f32 width, f32 gradientWidth, f32 height, s32 dir )
+    
+    auto size = getContentSize();
+    f32 landscapeWidth = size.height*1.3333;
+    f32 padding = ((size.width - landscapeWidth)/2)*1.05;
+    
+    auto backgroundColour = _clrBlack;
+    auto gradientR = uihelper::createHorizontalGradient( backgroundColour, padding, padding, getContentSize().height, -1 );
+    gradientR->setLocalZOrder(ZORDER_FAR+1);
+    gradientR->setPosition(Vec2(size.width,0));
+    gradientR->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
+    gradientR->setOpacity(0.5);
+    this->addChild(gradientR);
+    
+    auto gradientL = uihelper::createHorizontalGradient( backgroundColour, padding, padding, getContentSize().height, 1 );
+    gradientL->setLocalZOrder(ZORDER_FAR+1);
+    gradientL->setAnchorPoint(Vec2::ZERO);
+    gradientL->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    this->addChild(gradientL);
    
     return true;
 }

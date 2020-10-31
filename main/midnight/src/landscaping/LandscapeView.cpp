@@ -40,7 +40,6 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
         return false;
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    visibleSize.height = RES( LANDSCAPE_SKY_HEIGHT+LANDSCAPE_FLOOR_HEIGHT ) ;
     setContentSize( visibleSize );
 
     auto clipping = ClippingRectangleNode::create(Rect(Vec2::ZERO,visibleSize));
@@ -48,15 +47,14 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
     
     auto land = LandscapeLand::create(options);
     clipping->addChild(land);
-    land->setContentSize( Size(visibleSize.width,RES(LANDSCAPE_FLOOR_HEIGHT)) );
+    land->setContentSize( Size(visibleSize.width,LRES(LANDSCAPE_FLOOR_HEIGHT)) );
     land->setAnchorPoint(Vec2::ZERO);
     land->setPosition(Vec2::ZERO);
     land->Build();
 
-
     auto sky = LandscapeSky::create(options);
     clipping->addChild(sky);
-    sky->setContentSize( Size(visibleSize.width,RES(LANDSCAPE_SKY_HEIGHT)) );
+    sky->setContentSize( Size(visibleSize.width,LRES(LANDSCAPE_SKY_HEIGHT)) );
     sky->setAnchorPoint(Vec2::ZERO);
     sky->setPosition(0, land->getContentSize().height);
     sky->Build();
@@ -64,10 +62,11 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
     if ( options->showTerrain ) {
         auto terrain = LandscapeTerrain::create(options);
         clipping->addChild(terrain);
-        terrain->setContentSize(Director::getInstance()->getVisibleSize());
-        
-#if defined(_DEBUG_FULL_LANDSCAPE_)
         terrain->setContentSize(Size(options->generator->PanoramaWidth,visibleSize.height));
+        terrain->setAnchorPoint(Vec2::ZERO);
+        terrain->setPosition(0, 0);
+
+#if defined(_DEBUG_FULL_LANDSCAPE_)
         terrain->setScale(visibleSize.width/options->generator->PanoramaWidth);
 #endif
         terrain->Build();
@@ -81,14 +80,12 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
         debug->setPosition(Vec2(0,0));
         debug->Build();
     }
-    
-//    f32 height = Director::getInstance()->getVisibleSize().height;
-//    f32 width = height * 1.3333f;
-    
-//    auto background = LayerColor::create(Color4B(0,255,0,ALPHA(0.50f)));
+
+//    auto size = Size(visibleSize.height*1.3333,visibleSize.height);
+//    auto background = LayerColor::create(Color4B(0,0,0,ALPHA(0.50f)));
+//    background->setContentSize(size);
 //    background->setAnchorPoint(Vec2::ZERO);
-//    background->setContentSize(Size(width,height));
-//    background->setPosition(0,visibleSize.height);
+//    background->setPosition((visibleSize.width-size.width)/2,0);
 //    clipping->addChild(background);
     
     

@@ -28,7 +28,7 @@ TMXTiledMap* TiledMapper::createTMXMap(const mapbuilder* builder)
     tmxMapInfo->setMapSize( Size(builder->mapsize.cx,builder->mapsize.cy) );
     tmxMapInfo->setOrientation(TMXOrientationOrtho);
     
-    tmxMapInfo->setTileSize(Size(64*res->ContentScale(),64*res->ContentScale()));
+    tmxMapInfo->setTileSize(Size(64*res->GraphicsScale(),64*res->GraphicsScale()));
     
     // Tilesets
     auto t1 = new (std::nothrow) TMXTilesetInfo();

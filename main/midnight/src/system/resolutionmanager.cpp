@@ -111,7 +111,7 @@ bool resolutionmanager::calcDisplayInfo ( void )
     
     
     
-    s32 res = findPredefinedResolution(width, height) ;
+    s32 res = 0; //findPredefinedResolution(width, height) ;
     if ( res ) {
         auto resolution = &resolutions[res-1];
         current_resolution.width = width;
@@ -122,14 +122,20 @@ bool resolutionmanager::calcDisplayInfo ( void )
         current_resolution.folder = resolution->folder;
         current_resolution.aspect_scale = (f32)width / resolutions[resolution->reference].width ;
     }else{
-        res = findNearestResolution(width, height);
+        //res = findNearestResolution(width, height);
         s32 aspect = findAspectRatio(width, height);
 
+        res = (width<2048) ? 2 : 1;
+        
         auto resolution = &resolutions[res-1];
         current_resolution.width = width;
         current_resolution.height = height;
-        current_resolution.screen_scale = width / 1024;
-        current_resolution.content_scale = resolution->content_scale;
+        current_resolution.graphics_scale = resolution->content_scale;
+        
+        current_resolution.screen_scale = height / 768;
+        current_resolution.content_scale = (768.0*resolution->content_scale) / height;
+        
+        
         current_resolution.aspect = aspect-1;
         current_resolution.folder = resolution->folder;
         current_resolution.aspect_scale = (f32)width / resolutions[resolution->reference].width ;

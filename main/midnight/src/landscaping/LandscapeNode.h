@@ -29,4 +29,7 @@ public:
 };
 
 
+#define LRES    RES
+//(x) (f32)((x)*options->resScale)
+
 #endif /* LandscapeNode_hpp */

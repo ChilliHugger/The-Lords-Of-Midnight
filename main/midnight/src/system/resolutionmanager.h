@@ -24,6 +24,7 @@ typedef struct {
     f32     screen_scale;
     f32     content_scale;
     f32     aspect_scale;
+    f32     graphics_scale;
 } resolution_support ;
 
 typedef struct {
@@ -56,6 +57,8 @@ public:
     f32 AspectScale() { return current_resolution.aspect_scale; }  ;
     f32 Scale() { return current_resolution.screen_scale; }  ;
     f32 ContentScale() { return current_resolution.content_scale; } ;
+    f32 GraphicsScale() { return current_resolution.graphics_scale; } ;
+  
     f32 phoneScale();
     
     padding getSafeArea();
@@ -74,14 +77,9 @@ public:
 
 #define RES(x) (f32)((x)*resolutionmanager::getInstance()->Scale())
 #define NORES(x)    (x)
-
-//#define ASPECT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->AspectScale())
 #define CONTENT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
-//#define SCREEN_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->Scale())
-
-#define SCREEN_SCALE(x) (f32)    (x)
 //#define CONTENT_SCALE(x) (f32)    (x)
-#define ASPECT_SCALE(x) (f32)    (x)
+
 
 
 
