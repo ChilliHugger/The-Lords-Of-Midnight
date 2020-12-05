@@ -24,6 +24,8 @@
 #include "../ui/characters/uisinglelord.h"
 #include "../ui/characters/uigrouplord.h"
 
+#include <math.h>
+
 const f32 ScrollToLordTimeInSecs = 1.0f;
 
 
@@ -83,7 +85,8 @@ bool panel_map_detailed::init()
     auto contentsize = getContentSize();
     
     mapBuilder =  new (std::nothrow) mapbuilder();
-    mapBuilder->screensize = size( getContentSize().width/RES(64), getContentSize().height/RES(64));
+    mapBuilder->screensize = size(ceil(getContentSize().width/RES(64)),
+                                ceil(getContentSize().height/RES(64)));
     
     if ( mr->config->debug_map ) {
         mapBuilder->setFlags(mapflags::debug_map);
