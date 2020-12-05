@@ -1661,8 +1661,13 @@ void panel_look::stopDragging()
 {
     character&    c = TME_CurrentCharacter();
 
-    mxdir_t dir = (mxdir_t) (int)((options.lookAmount + (LANDSCAPE_DIR_AMOUNT/2)) / (f32)LANDSCAPE_DIR_AMOUNT) ;
-    
+    int offset = (options.lookAmount + LANDSCAPE_DIR_AMOUNT + (LANDSCAPE_DIR_AMOUNT/2)) ;
+    if(offset<0)
+    {
+        offset+=options.generator->PanoramaWidth;
+    }
+    mxdir_t dir = (mxdir_t) (int)(offset / (f32)LANDSCAPE_DIR_AMOUNT);
+
     options.lookAmount = 0;
     options.isLooking = false;
     
