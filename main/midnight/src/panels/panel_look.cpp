@@ -172,6 +172,7 @@ bool panel_look::init()
     for ( int ii=0; ii<3; ii++ ) {
         people[ii] = LandscapePeople::create(&options);
         people[ii]->setLocalZOrder(ZORDER_FAR+1);
+        people[ii]->setContentSize( Size( getContentSize().width, RES(256)) );
         addChild(people[ii]);
     }
 
@@ -217,27 +218,19 @@ bool panel_look::init()
     // Direction movement indicators
     setupMovementIndicators();
     
-    
-    //Node* uihelper::createHorizontalGradient( Color3B& color, f32 width, f32 gradientWidth, f32 height, s32 dir )
-    
     auto size = getContentSize();
     f32 landscapeWidth = size.height*1.3333;
-    f32 padding = ((size.width - landscapeWidth)/2)*1.05;
-    
-    auto backgroundColour = _clrBlack;
-    auto gradientR = uihelper::createHorizontalGradient( backgroundColour, padding, padding, getContentSize().height, -1 );
-    gradientR->setLocalZOrder(ZORDER_FAR+1);
-    gradientR->setPosition(Vec2(size.width,0));
-    gradientR->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
-    gradientR->setOpacity(0.5);
-    this->addChild(gradientR);
-    
-    auto gradientL = uihelper::createHorizontalGradient( backgroundColour, padding, padding, getContentSize().height, 1 );
-    gradientL->setLocalZOrder(ZORDER_FAR+1);
-    gradientL->setAnchorPoint(Vec2::ZERO);
-    gradientL->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-    this->addChild(gradientL);
+    landscapeTramline = ((size.width - landscapeWidth)/2)*1.05;
+    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - landscapeTramline;
    
+    gradientL = DrawNode::create();
+    uihelper::AddBottomLeft(this, gradientL, 0, 0);
+    gradientL->setLocalZOrder(ZORDER_FAR+1);
+
+    gradientR = DrawNode::create();
+    uihelper::AddBottomRight(this, gradientR, 0, 0);
+    gradientR->setLocalZOrder(ZORDER_FAR+1);
+
     return true;
 }
 
@@ -500,7 +493,7 @@ void panel_look::setViewForCurrentCharacter ( void )
 #endif
 
     // TODO: Make this independent of UI
-    options.lookAmount = current_info->looking * LANDSCAPE_DIR_AMOUNT;
+    options.lookAmount = (current_info->looking-1) * LANDSCAPE_DIR_AMOUNT;
     if ( options.lookAmount >= LANDSCAPE_FULL_WIDTH )
     {
         options.lookAmount-=LANDSCAPE_FULL_WIDTH;
@@ -533,7 +526,7 @@ void panel_look::setViewForCurrentCharacter ( void )
     
     if ( prev_people ) {
         prev_people->Initialise( c, PREV_DIRECTION(current_info->looking));
-        prev_people->setPositionX(-width);
+        prev_people->setPositionX(0+width);
     }
     
     UpdateLandscape();
@@ -559,7 +552,7 @@ void panel_look::UpdateLandscape()
     }
 
     current_view->setAnchorPoint(Vec2::ZERO);
-    current_view->setPosition( Vec2::ZERO);
+    current_view->setPosition(Vec2::ZERO);
     current_view->setLocalZOrder(ZORDER_FAR);
     addChild(current_view);
     
@@ -573,7 +566,15 @@ void panel_look::UpdateLandscape()
     imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
 
 #endif
-    
+ 
+    auto size = getContentSize();
+    auto backgroundColour = Color4F(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+    gradientL->clear();
+    gradientL->drawSolidRect(Vec2::ZERO, Vec2(landscapeTramline,size.height),backgroundColour);
+    gradientL->drawSolidRect(Vec2(size.width-landscapeTramline,0), Vec2(size.width,size.height),backgroundColour);
+    gradientL->setOpacity(ALPHA(0.25));
+    //gradientL->drawSolidRect(Vec2(0,0), Vec2(size.width/2,size.height),backgroundColour);
+
 }
 
 void panel_look::addTouchListener()
@@ -1624,9 +1625,9 @@ void panel_look::parallaxCharacters ( void )
     f32 width = getContentSize().width;
     f32 movement = width * distance;
     
-    prev_people->setPositionX( -width + movement  );
-    current_people->setPositionX( 0 + movement  );
-    next_people->setPositionX( width + movement  );
+    prev_people->setPositionX( 0-width + movement );
+    current_people->setPositionX( 0 + movement );
+    next_people->setPositionX( width + movement );
     
 }
 

@@ -48,7 +48,7 @@ bool LandscapePeople::initWithOptions( LandscapeOptions* options )
     setPosition(0,adjusty);
     setCascadeOpacityEnabled(true);
     setOpacity(ALPHA(1.0));
-    
+
     characters=0;
     CLEARARRAY(columns);
     
@@ -72,8 +72,8 @@ void LandscapePeople::Initialise()
 {
     std::string person;
     c_mxid      objects;
-    
-    this->removeAllChildren();
+
+    removeAllChildren();
     
     setOpacity(ALPHA(1.0f));
     setPosition(0,adjusty);
@@ -163,6 +163,9 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
     static int xtable[] = { 3, 4, 2, 5, 6, 1, 7, 0 };
 #endif
     
+    f32 width = getContentSize().width;
+    f32 offsetX = (width - RES(1024))/2;
+    
     //lookhotspot_t*    newhotspot;
     
     if ( person.empty() )
@@ -185,23 +188,19 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
         if ( characters >= max_chars )
             return;
         
-        
         column = xtable[characters] ;
-        
         
         auto image = Sprite::create(person);
         auto size = image->getContentSize();
         
-        int x1 = 0 + ( column * LRES(CHARACTER_COLUMN_WIDTH) );
+        int x1 = offsetX + ( column * LRES(CHARACTER_COLUMN_WIDTH) );
         int y1 = 0; //size.height; //-ASP(person->Height());
         
         image->setAnchorPoint(uihelper::AnchorBottomLeft);
         image->setPosition(x1, y1);
         image->setColor(options->colour->GetPersonColour());
         addChild(image);
-        
-        //uihelper::AddBottomLeft(this, image, x1, y1);
-        
+
         columns[column].used=TRUE;
         columns[column].pos = point(x1,y1);
         columns[column].scale = 1.0f;

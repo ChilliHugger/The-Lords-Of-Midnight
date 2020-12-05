@@ -47,6 +47,7 @@ public:
     
     bool            isLooking;
     f32             lookAmount;
+    f32             lookOffsetAdjustment;
     
     bool            isInTunnel;
     bool            isLookingDownTunnel;

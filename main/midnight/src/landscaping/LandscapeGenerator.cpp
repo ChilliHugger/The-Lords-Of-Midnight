@@ -21,7 +21,7 @@ void LandscapeGenerator::Build(LandscapeOptions* options)
     f32 newWidth = visibleSize.height * aspect;
     options->resScale = newWidth / 1024.0;
 
-    HorizonCentreX = LRES( (256*LANDSCAPE_GSCALE)/2  );
+    HorizonCentreX = LRES( (256*LANDSCAPE_GSCALE)/2  ) - options->lookOffsetAdjustment;
     HorizonCentreY = 0 ; //LRES( -112 );
     PanoramaWidth =  (float)LRES((800.0f*LANDSCAPE_GSCALE));
     PanoramaHeight = (float)LRES(38.0f*LANDSCAPE_GSCALE); // 32

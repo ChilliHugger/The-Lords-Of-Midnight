@@ -74,7 +74,8 @@ class panel_look :
     using Vec2 = cocos2d::Vec2;
     using uidragevent = chilli::ui::DragEvent;
     using Color3B = cocos2d::Color3B;
-    
+    using DrawNode = cocos2d::DrawNode;
+
 public:
     virtual ~panel_look();
     
@@ -166,6 +167,8 @@ protected:
     LayerColor*         layHeader;
     ImageView*          imgHeader;
     uisinglelord*       following;
+    DrawNode*           gradientL;
+    DrawNode*           gradientR;
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
  
@@ -176,6 +179,8 @@ protected:
     LandscapePeople*    current_people;
     LandscapePeople*    next_people;
     LandscapePeople*    prev_people;
+    
+    f32                 landscapeTramline;
     
     Sprite*             movementIndicators[3];
     
