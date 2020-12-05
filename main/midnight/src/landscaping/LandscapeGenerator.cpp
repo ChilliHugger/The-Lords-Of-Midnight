@@ -196,8 +196,8 @@ LandscapeItem* LandscapeGenerator::CalcCylindricalProjection(LandscapeItem* item
     
     // We are running a panorama that runs from N to NW along a linear
     // so place all locations to the right
-    //if (item->position.x<=LRES(-225))
-    //    item->position.x += PanoramaWidth;
+    if (item->position.x<=LRES(-225))
+        item->position.x += PanoramaWidth;
     
     return item;
 }
