@@ -196,7 +196,7 @@ bool uisinglelord::setLord( mxid characterid )
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
     title->setLineSpacing(CONTENT_SCALE(-2));
-    title->setHeight(CONTENT_SCALE(32));
+    //title->setHeight(CONTENT_SCALE(32));
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setAnchorPoint(uihelper::AnchorCenter);
     title->setWidth(width-CONTENT_SCALE(16));
