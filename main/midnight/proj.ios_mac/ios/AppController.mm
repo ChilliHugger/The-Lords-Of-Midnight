@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -34,12 +35,6 @@
 
 #pragma mark -
 #pragma mark Application lifecycle
-
-extern float safeAreaTopPadding;
-extern float safeAreaBottomPadding;
-extern float safeAreaLeftPadding;
-extern float safeAreaRightPadding;
-
 
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
@@ -78,20 +73,15 @@ static AppDelegate s_sharedApplication;
 
     [[UIApplication sharedApplication] setStatusBarHidden:true];
     
+    //Launching the app with the arguments -NSAllowsDefaultLineBreakStrategy NO to force back to the old behavior.
+    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 13.0f)
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSAllowsDefaultLineBreakStrategy"];
+    }
+    
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
-    
-    if (@available(iOS 11.0, *)) {
-        UIWindow *window = UIApplication.sharedApplication.keyWindow;
-        CGFloat screenScale = 1.0f; //[[UIScreen mainScreen] scale];
-        safeAreaTopPadding = window.safeAreaInsets.top * screenScale;
-        safeAreaBottomPadding = window.safeAreaInsets.bottom * screenScale;
-        safeAreaLeftPadding = window.safeAreaInsets.left * screenScale;
-        safeAreaRightPadding = window.safeAreaInsets.right * screenScale;
-    } else {
-        // Fallback on earlier versions
-    }
     
     //run the cocos2d-x game scene
     app->run();

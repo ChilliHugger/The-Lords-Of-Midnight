@@ -1,18 +1,12 @@
-#ifdef GL_ES
-precision mediump float;
-#endif
-
-varying vec2 v_texCoord;
-
-vec4 m = vec4( 0.0, 0.0, 0.0, 0.0 ) ;
 uniform vec4 p_left;
 uniform vec4 p_right  ;
 uniform float p_alpha  ;
 
 void main()
 {
-    vec4 c = texture2D(CC_Texture0, v_texCoord).rgba;
+    vec4 c = texture2D(u_texture, cc_FragTexCoord1).rgba;
     vec4 n;
+    vec4 m = vec4( 0.0, 0.0, 0.0, 0.0 ) ;
     
     //if ( c.a > 0.0 ) {
     

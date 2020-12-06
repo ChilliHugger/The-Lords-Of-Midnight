@@ -1,4 +1,4 @@
-﻿
+
 /main/midnight/proj.win32/Debug.win32
 /main/midnight/proj.win10/.vs/citadel/v15
 
@@ -29,3 +29,6 @@ DerivedData/
 !default.perspectivev3
 /main/midnight/proj.win32/LOM_Debug.win32
 /main/midnight/proj.win32/DDR_Debug.win32
+main/midnight/mac-build
+main/midnight/cocos2d
+main/midnight/cocos2d_new
