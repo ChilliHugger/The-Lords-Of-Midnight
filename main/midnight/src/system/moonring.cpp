@@ -146,8 +146,16 @@ void moonring::continueStory( storyid_t id )
     // start game
     if (!checkGameOverConditions() ) {
         character& c = TME_CurrentCharacter();
-        auto mode = Character_IsDead(c) ? MODE_THINK : MODE_LOOK;
         
+        if ( Character_IsDead(c) ) {
+            TME_SelectChar(c.id);
+            showPage( MODE_THINK );
+            stories->save();
+            return true;
+        }
+     
+        auto mode = MODE_LOOK;
+     
 #if defined(_DEBUG_GAME_PANEL_)
         mode = _DEBUG_GAME_PANEL_;
 #endif
