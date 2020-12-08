@@ -262,7 +262,6 @@ bool uithinkpage::init()
     // Terrain Image
     imgTerrain = Sprite::create();
     imgTerrain->setScale(1.0f);
-    imgTerrain->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     scrollView->addChild(imgTerrain);
     
     return true;

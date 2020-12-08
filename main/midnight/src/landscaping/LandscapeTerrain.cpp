@@ -153,7 +153,6 @@ Sprite* LandscapeTerrain::GetImage( std::string& imagename )
     if ( image != nullptr ) {
         
         image->setScale(imageScale);
-        image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         
         if ( options->shader ) {
              moonring::mikesingleton()->shader->AttachShader(image,options->shader);
