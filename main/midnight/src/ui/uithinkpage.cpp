@@ -74,6 +74,8 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     this->mode = mode;
     this->objectid = objectId;
     
+    imgTerrain->removeAllChildren();
+    
     setupUIElements();
     
     auto size = safeArea->getContentSize();
@@ -161,17 +163,39 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
     uihelper::PositionParentTopRight(imgTerrain,x,y);
     
-    //if ( this->unhide || this->approach ) {
-//    pos=imgTerrain->getPosition();
-//    pos.y-=imgTerrain->getContentSize().height;
-//    pos.x-=imgTerrain->getContentSize().width;
-//    auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
-//    gradientC->setContentSize(Size(imgTerrain->getContentSize().width,RES(64)));
-//    gradientC->setPosition(pos);
-//    scrollView->addChild(gradientC);
-    //}
-
     
+    // Post/Recruit
+    if ( this->recruitMen||this->postMen ) {
+        auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
+        gradientC->setContentSize(Size(imgTerrain->getContentSize().width,RES(64)));
+        imgTerrain->addChild(gradientC);
+        uihelper::PositionParentBottomLeft(gradientC,RES(0),RES(0));
+    }
+    
+    y = RES(TERRAIN_Y) ;
+    x = RES(TERRAIN_X) ;
+   
+    // RECRUIT SOLDIERS
+    auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, clickCallback);
+    recruitMen->setVisible(this->recruitMen||this->postMen);
+    recruitMen->setEnabled(this->recruitMen);
+    recruitMen->setOpacity(this->recruitMen ? ALPHA(1.0) : ALPHA(0.25));
+    recruitMen->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    imgTerrain->addChild(recruitMen);
+    uihelper::PositionParentBottomCenter(recruitMen,
+                                         -(recruitMen->getContentSize().width/2)-RES(8),
+                                         -recruitMen->getContentSize().height/2);
+   
+    // POST SOLDIERS
+    auto postMen = uihelper::CreateImageButton("i_post", ID_POSTMEN, clickCallback);
+    postMen->setVisible(this->recruitMen||this->postMen);
+    postMen->setEnabled(this->postMen);
+    postMen->setOpacity(this->postMen ? ALPHA(1.0) : ALPHA(0.25));
+    imgTerrain->addChild(postMen);
+    uihelper::PositionParentBottomCenter(postMen,
+                                         +(postMen->getContentSize().width/2)+RES(8),
+                                         -(postMen->getContentSize().height/2)-RES(2));
+
     
     // object
 #if defined(_LOM_)
@@ -192,10 +216,8 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
         gradientC->setPosition(pos);
         scrollView->addChild(gradientC);
     }
-
-    
 #endif
-    
+
     uihelper::AddTopLeft(safeArea, scrollView);
     uihelper::FillParent(scrollView);
     
@@ -630,43 +652,17 @@ void uithinkpage::checkPlace ( void )
 
 void uithinkpage::recruitPostOptions ( stronghold& s )
 {
-//    s32 min = (s32)variables::sv_stronghold_default_min ;
-//    s32 max = (s32)variables::sv_stronghold_default_max ;
-//    s32 char_max = 0;
-//    s32 can_recruit = 0;
-//
-//
-//    // RECRUIT SOLDIERS
-//    if ( flags.Is(lif_recruitmen) ||  flags.Is(lif_guardmen) ) {
-//        character&        c = TME_CurrentCharacter();
-//
-//        if ( s.location == c.location ) {
-//
-//            stronghold_updown->Value(s.total);
-//
-//            if ( s.type == UT_WARRIORS ) {
-//                char_max = (s32)sv_character_max_warriors;
-//                Character_Army(c.warriors, army);
-//                stronghold_updown->id = ID_POSTRECRUIT_WARRIORS;
-//            }
-//
-//            if ( s.type == UT_RIDERS ) {
-//                char_max = (s32)sv_character_max_riders;
-//                Character_Army(c.riders, army);
-//                stronghold_updown->id = ID_POSTRECRUIT_RIDERS;
-//            }
-//
-//            can_recruit = char_max - army.total ;
-//            stronghold_updown->Max( MIN((s32)s.total+(s32)army.total,max)  );
-//
-//            s32 min1 = (s32)s.total-can_recruit ;
-//            s32 min2 = MIN(min,(s32)s.total);
-//            s32 min3 = MAX(min1,min2);
-//
-//            stronghold_updown->Min(min3);
-//            stronghold_updown->ShowEnable();
-//        }
-//    }
+    recruitMen = false;
+    postMen = false;
+    
+    // RECRUIT SOLDIERS
+    character&        c = TME_CurrentCharacter();
+
+    if ( s.location == c.location ) {
+        recruitMen = flags.Is(lif_recruitmen);
+        postMen=flags.Is(lif_guardmen);
+    }
+
 }
 
 /*
@@ -779,6 +775,11 @@ void uithinkpage::checkArmy ( void )
             displayCharacter ( c );
             chilli::lib::c_strcat ( text, TME_GetSystemString(c, SS_MESSAGE2 ) );
             displayCharacterTerrain(c);
+          
+            if(c.id == TME_CurrentCharacter().id)
+            {
+                recruitPostOptions(location_stronghold);
+            }
             break;
             
         case IDT_STRONGHOLD:

@@ -394,31 +394,18 @@ void panel_think::OnNotification( Ref* sender )
             break;
         }
             
-//        case ID_POSTRECRUIT_RIDERS:
-//        case ID_POSTRECRUIT_WARRIORS:
-//        {
-//            character& c = TME_CurrentCharacter();
-//
-//            if ( stronghold_updown->Value() < (s32)current_stronghold.total ) {
-//                if ( Character_RecruitMen(c) ) {
-//                    panel_think* panel = (panel_think*)gl->GetPanel(MODE_THINK_RECRUITGUARD);
-//                    panel->SetObject(NONE) ;
-//                    gl->SetPanelMode ( MODE_THINK_RECRUITGUARD );
-//                } else {
-//                    stronghold_updown->Value(current_stronghold.total);
-//                }
-//            }
-//
-//            if ( stronghold_updown->Value() > (s32)current_stronghold.total ) {
-//                if ( Character_PostMen(c) ) {
-//                    panel_think* panel = (panel_think*)gl->GetPanel(MODE_THINK_RECRUITGUARD);
-//                    panel->SetObject(NONE) ;
-//                    gl->SetPanelMode ( MODE_THINK_RECRUITGUARD );
-//                } else {
-//                    stronghold_updown->Value(current_stronghold.total);
-//                }            }
-//            break;
-//        }
+        case ID_RECRUITMEN:
+        {
+            if ( mr->recruitMen() )
+                return;
+            break;
+        }
+        case ID_POSTMEN:
+        {
+            if ( mr->postMen() )
+                return;
+            break;
+        }
             
 #if defined(_LOM_)
         case ID_UNHIDE:

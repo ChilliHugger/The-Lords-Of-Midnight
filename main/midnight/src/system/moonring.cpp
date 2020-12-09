@@ -150,7 +150,6 @@ void moonring::continueStory( storyid_t id )
         if ( Character_IsDead(c) ) {
             TME_SelectChar(c.id);
             showPage( MODE_THINK );
-            stories->save();
             return true;
         }
      
@@ -158,6 +157,13 @@ void moonring::continueStory( storyid_t id )
      
 #if defined(_DEBUG_GAME_PANEL_)
         mode = _DEBUG_GAME_PANEL_;
+        
+        if(mode==MODE_THINK)
+        {
+            TME_SelectChar(c.id);
+            showPage( MODE_THINK );
+            return;
+        }
 #endif
         panels->setPanelMode(mode,TRANSITION_PUSHUP);
 
