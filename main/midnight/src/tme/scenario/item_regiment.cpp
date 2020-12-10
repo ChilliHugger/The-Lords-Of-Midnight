@@ -224,11 +224,11 @@ namespace tme {
                 movement = (int) ((f64)movement * rinfo->RidingMovementMultiplier()) ;
             
             // check for max out
-            movement = std::min ( movement, (s32)rinfo->MovementMax() );
+            movement = std::min<int>( movement, (s32)rinfo->MovementMax() );
             
             s32 temp = turns;
             temp -= movement;
-            turns = std::max(0,temp);
+            turns = std::max<int>(0,temp);
             
             location = targetlocation;
 

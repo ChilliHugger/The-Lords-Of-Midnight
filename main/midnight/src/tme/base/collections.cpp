@@ -63,7 +63,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
         bool entities::Create( u32 count )
         {
             Destroy();
-            m_max = std::max(count,MINIMUM_COLLECTION_SIZE);
+            m_max = std::max<int>(count,MINIMUM_COLLECTION_SIZE);
             m_used=0;
             m_objElements = new mxentity* [ m_max ];
             return TRUE ;
@@ -122,7 +122,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
             mxentity** objElements = new mxentity* [ newsize ];
 
             // copy the original
-            for ( u32 ii=0; ii<std::min(newsize,m_used); ii++ ) {
+            for ( u32 ii=0; ii<std::min<int>(newsize,m_used); ii++ ) {
                 objElements[ii] = m_objElements[ii];
                 m_objElements[ii]=NULL;
             }
@@ -133,7 +133,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
             // new data
             m_objElements = objElements ;
             m_max = newsize;
-            m_used = std::min( m_used, m_max );
+            m_used = std::min<int>( m_used, m_max );
 
         }
 

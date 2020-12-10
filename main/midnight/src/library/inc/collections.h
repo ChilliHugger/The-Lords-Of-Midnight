@@ -181,7 +181,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
                 memset ( elements, 0, sizeof(T)*newsize );
 
                 // copy the original
-                for ( u32 ii=0; ii<std::min(newsize,m_used); ii++ ) {
+                for ( u32 ii=0; ii<std::min<int>(newsize,m_used); ii++ ) {
                     elements[ii] = m_data[ii];
                 }
                 
@@ -191,7 +191,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
                 // new data
                 m_data = elements ;
                 m_max = newsize;
-                m_used = std::min( m_used, m_max );
+                m_used = std::min<int>( m_used, m_max );
 
                 return TRUE;
 

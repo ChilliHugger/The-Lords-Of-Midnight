@@ -6,6 +6,18 @@
 //
 //
 
+// Windows build needs definition upfront
+#ifdef _OS_WINDOWS_BUILD_
+#include "../cocos.h"
+namespace chilli {
+    namespace ui {
+
+        typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+        typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+    }
+}
+#endif
+
 #ifndef __UIELEMENT_H_INCLUDED__
 #define __UIELEMENT_H_INCLUDED__
 
@@ -49,9 +61,11 @@ enum UIMOUSEOVERHINT {
 
 namespace chilli {
     namespace ui {
-        
-    typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-    typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+
+#ifndef _OS_WINDOWS_BUILD_
+        typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+        typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+#endif
 
     class NotificationInterface
     {
