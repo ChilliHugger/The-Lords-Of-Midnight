@@ -231,6 +231,7 @@ char filename[MAX_PATH];
 
     // We need to move the default database into an accessible folder
 #if !defined(_OS_DESKTOP_)
+    char database[MAX_PATH];
     sprintf ( database, "%s/%s", m_szDatabase, "database" );
     sprintf ( filename, "%s/database", cocos2d::FileUtils::getInstance()->getWritablePath().c_str() );
     MXTRACE( "Copying Database '%s' from '%s' to '%s'", m_szDatabase, database, filename);

@@ -38,7 +38,7 @@ project(${APP_NAME})
 
 if(XCODE)
     if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
-        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 8.0)
+        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 13.0)
     endif()
 endif()
 
@@ -195,10 +195,16 @@ if(APPLE)
     elseif(IOS)
         set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/Info.plist")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
+        # force x86_64 architecture for iphonesimulator builds
+        set_target_properties(${APP_NAME} PROPERTIES
+          XCODE_ATTRIBUTE_ARCHS[sdk=iphonesimulator*] x86_64
+          XCODE_ATTRIBUTE_VALID_ARCHS[sdk=iphonesimulator*] x86_64
+          )
+
     endif()
 
     # For code-signing, set the DEVELOPMENT_TEAM:
-    #set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "GRLXXXX2K9")
+    set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "8K6PYTU8T7")
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME})
 endif()
