@@ -33,6 +33,9 @@ class  LandscapeColour
     using Node = cocos2d::Node;
 public:
     Color4B  CalcCurrentMovementTint ( TINT index );
+    f32  CalcCurrentMovementFade ( TINT index );
+    
+    
     Color4B CreateTimeBrightness ( mxtime_t time );
     void SetShaderColour ( void );
     
@@ -44,8 +47,9 @@ public:
     Color4B Adjust( Color4B source, Color4F tint );
     Color3B GetPersonColour();
 
-    void updateNode( Node* node );
-
+    void updateTerrainNode( Node* node );
+    void updateCharacterNode( Node* node );
+    
 public:
     LandscapeOptions*   options;
     

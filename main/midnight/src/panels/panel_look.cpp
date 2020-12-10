@@ -114,7 +114,8 @@ bool panel_look::init()
     options.debugLand=false;
     options.isMoving=false;
     options.isLooking=false;
-    options.shader = mr->shader->GetDayNightShader();
+    options.terrainTimeShader = mr->shader->GetTerrainTimeShader();
+    options.characterTimeShader = mr->shader->GetCharacterTimeShader();
     options.colour->options = &options;
 
     // Header area
@@ -476,6 +477,7 @@ void panel_look::setViewForCurrentCharacter ( void )
     setupLeaderButton();
     
     options.colour->SetLookColour(current_info->time);
+    options.timeofday = current_info->time;
     
     options.here = current_info->location;
     options.here.x *= LANDSCAPE_DIR_STEPS;

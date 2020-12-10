@@ -12,6 +12,10 @@
 #include "ILandscape.h"
 #include "../system/resolutionmanager.h"
 #include "../system/tmemanager.h"
+#include "../system/shadermanager.h"
+
+#include "../system/moonring.h"
+
 #include "../ui/uihelper.h"
 
 #include "../tme/tme_interface.h"
@@ -198,7 +202,11 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
         
         image->setAnchorPoint(uihelper::AnchorBottomLeft);
         image->setPosition(x1, y1);
-        image->setColor(options->colour->GetPersonColour());
+        
+        if(options->characterTimeShader)
+        {
+            options->colour->updateCharacterNode(image);
+        }
         addChild(image);
 
         columns[column].used=TRUE;

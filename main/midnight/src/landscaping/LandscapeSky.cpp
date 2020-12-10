@@ -48,8 +48,8 @@ bool LandscapeSky::initWithOptions( LandscapeOptions* options )
     sky->setAnchorPoint( Vec2::ZERO );
     sky->setName("sky");
 
-    if ( options->shader ) {
-        options->colour->updateNode(sky);
+    if ( options->terrainTimeShader ) {
+        options->colour->updateTerrainNode(sky);
     }
 
     return true;

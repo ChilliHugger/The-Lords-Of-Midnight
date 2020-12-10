@@ -227,23 +227,23 @@
         </day>
     
         <people>
-            <time id="0"   normal="#808080" />
-            <time id="1"   normal="#8a6064" />
-            <time id="2"   normal="#caaaae" />
-            <time id="3"   normal="#73c6ca" />
-            <time id="4"   normal="#ffa0a0" />
-            <time id="5"   normal="#ffffff" />
-            <time id="6"   normal="#ffffff" />
-            <time id="7"   normal="#ffffff" />
-            <time id="8"   normal="#ffffff" />
-            <time id="9"   normal="#ffffff" />
-            <time id="10"  normal="#ffffff" />
-            <time id="11"  normal="#ffffff" />
-            <time id="12"  normal="#f4f4f4" />
-            <time id="13"  normal="#e8e8e8" />
-            <time id="14"  normal="#dcdcdc" />
-            <time id="15"  normal="#d4d4d4" />
-            <time id="16"  normal="#acacac" />
+            <time id="0"   normal="#10808080" />
+            <time id="1"   normal="#408a6064" />
+            <time id="2"   normal="#80caaaae" />
+            <time id="3"   normal="#B073c6ca" />
+            <time id="4"   normal="#f0ffa0a0" />
+            <time id="5"   normal="#ffffffff" />
+            <time id="6"   normal="#ffffffff" />
+            <time id="7"   normal="#ffffffff" />
+            <time id="8"   normal="#ffffffff" />
+            <time id="9"   normal="#ffffffff" />
+            <time id="10"  normal="#ffffffff" />
+            <time id="11"  normal="#ffffffff" />
+            <time id="12"  normal="#f4f4f4f4" />
+            <time id="13"  normal="#e8e8e8e8" />
+            <time id="14"  normal="#dcdcdcdc" />
+            <time id="15"  normal="#d4d4d4d4" />
+            <time id="16"  normal="#acacacac" />
         </people>
         
         <terrain>

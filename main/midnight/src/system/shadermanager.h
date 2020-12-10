@@ -1,6 +1,6 @@
 //
 //  shadermanager.h
-//  midnight
+//  midTime
 //
 //  Created by Chris Wild on 17/04/2020.
 //
@@ -22,7 +22,8 @@ class shadermanager : public ringcontroller
     using Color4F = cocos2d::Color4F;
 
 private:
-    void CreateDayNightShader();
+    void CreateTerrainTimeShader();
+    void CreateCharacterTimeShader();
     
 public:
     
@@ -31,16 +32,22 @@ public:
     Node* AttachShader(Node* node, SimpleShader* state);
 
     //
-    // Day and Night shader
+    // Terrain Day and Time shader
     //
-    void UpdateSpriteDayNightShader(Node* node, f32 alpha, Color4F& outline, Color4F& body);
-    Node* AddDayNightShader(Node* node);
-    SimpleShader* GetDayNightShader();
+    void UpdateTerrainTimeShader(Node* node, f32 alpha, Color4F& outline, Color4F& body);
+    Node* AddTerrainTimeShader(Node* node);
+    SimpleShader* GetTerrainTimeShader();
 
     //
-    
+    // Character Day and Time shader
+    //
+    void UpdateCharacterTimeShader(Node* node, f32 alpha, f32 fade);
+    Node* AddCharacterTimeShader(Node* node);
+    SimpleShader* GetCharacterTimeShader();
+
 protected:
-    SimpleShader*         dayNightShader;
+    SimpleShader*         terrainTimeShader;
+    SimpleShader*         characterTimeShader;
 };
 
 #include <stdio.h>

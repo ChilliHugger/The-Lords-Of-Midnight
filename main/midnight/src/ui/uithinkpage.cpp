@@ -360,8 +360,8 @@ void uithinkpage::setImageColour(Sprite* node)
     auto mr = moonring::mikesingleton();
     auto tint2 = Color4F(_clrWhite);
     auto tint1 = Color4F(TERRAIN_COLOUR);
-    mr->shader->AddDayNightShader(node);
-    mr->shader->UpdateSpriteDayNightShader(node, alpha_normal,tint1,tint2);
+    mr->shader->AddTerrainTimeShader(node);
+    mr->shader->UpdateTerrainTimeShader(node, alpha_normal,tint1,tint2);
 }
 
 

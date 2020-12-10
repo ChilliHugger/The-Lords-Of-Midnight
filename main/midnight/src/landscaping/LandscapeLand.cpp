@@ -51,8 +51,8 @@ bool LandscapeLand::initWithOptions( LandscapeOptions* options )
     floor->setAnchorPoint( Vec2(0,0) );
     floor->setName("floor");
     
-    if ( options->shader ) {
-        options->colour->updateNode(floor);
+    if ( options->terrainTimeShader ) {
+        options->colour->updateTerrainNode(floor);
     }
     
     if ( options->debugLand )
