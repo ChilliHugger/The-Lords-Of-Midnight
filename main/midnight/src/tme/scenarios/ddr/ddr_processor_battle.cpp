@@ -308,7 +308,7 @@ namespace tme {
         s32 killed = (attackerStrength / defenderStrength);
         killed = ((killed/256) & 255)*5 ;
         
-        killed = MIN(killed,defenderSize);
+        killed = std::min<int>(killed,defenderSize);
 
         MXTRACE("      Defender: %-16s lost %d of (%d)", (LPSTR)defender->Symbol(), (int)killed, defenderSize );
         

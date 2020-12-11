@@ -76,6 +76,8 @@ public:
 };
 
 #define RES(x) (f32)((x)*resolutionmanager::getInstance()->Scale())
+// FJAR: what is DIS?
+#define DIS(x) (f32)((x)*resolutionmanager::getInstance()->Scale())
 #define NORES(x)    (x)
 #define CONTENT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
 //#define CONTENT_SCALE(x) (f32)    (x)
