@@ -8,6 +8,10 @@
 #include "../panels/panel_look.h"
 #include "../panels/panel_think.h"
 
+#if defined(_OS_OSX_)
+#include "../platform/apple/FileUtilsExt-apple.h"
+#endif
+
 #include "moonring.h"
 #include "helpmanager.h"
 #include "settingsmanager.h"
@@ -78,15 +82,25 @@ moonring::~moonring()
 
 LPCSTR moonring::getWritablePath()
 {
-    auto path = cocos2d::FileUtils::getInstance()->getWritablePath();
+    if(!writeablepath.IsEmpty())
+    {
+        return writeablepath;
+    }
     
+#if defined(_OS_OSX_)
+    std::string path = FileUtilsExtApple::getApplicationSupportPath();
+    path.append("com.chillihugger.midnight/");
+#else
+    auto path = cocos2d::FileUtils::getInstance()->getWritablePath();
+#endif
+
 #if defined(_OS_DESKTOP_)
     path.append(TME_ScenarioName()).c_str();
 #endif
     
     writeablepath = path.c_str();
     
-    return (LPCSTR)writeablepath;
+    return writeablepath;
 }
 
 void moonring::showPage( panelmode_t mode, mxid object )

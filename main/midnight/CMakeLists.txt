@@ -74,6 +74,7 @@ include(src/tinyxml/CMakeLists.txt)
 include(src/tme/CMakeLists.txt)
 include(src/ui/CMakeLists.txt)
 include(src/utils/CMakeLists.txt)
+include(src/platform/CMakeLists.txt)
 
 set(GAME_HEADER
   src/cocos.h
@@ -89,6 +90,7 @@ set(GAME_HEADER
   ${HDR_TME}
   ${HDR_UI}
   ${HDR_UTILS}
+  ${HDR_PLATFORM}
   )
 
 set(GAME_SOURCE
@@ -104,6 +106,7 @@ set(GAME_SOURCE
   ${SRC_TME}
   ${SRC_UI}
   ${SRC_UTILS}
+  ${SRC_PLATFORM}
   )
 
 list(APPEND GAME_SRC ${GAME_HEADER})
@@ -122,7 +125,7 @@ elseif(LINUX)
          proj.linux/main.cpp
          )
 elseif(WINDOWS)
-    add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_)
+    add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_ -D_OS_WIN32_)
     list(APPEND GAME_HEADER
          proj.win32/main.h
          proj.win32/resource.h
