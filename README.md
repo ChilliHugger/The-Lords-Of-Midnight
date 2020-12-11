@@ -23,10 +23,12 @@ cmake .. -GXcode
 ```
 
 ## Create iOS XCode Project
+```
 cd main/midnight
 mkdir ios-build
 cd ios-build
 cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS
+```
 
 # Building on Windows 
 
