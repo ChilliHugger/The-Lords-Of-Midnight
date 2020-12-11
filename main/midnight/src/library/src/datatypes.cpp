@@ -193,10 +193,10 @@ namespace chilli {
                 return ( FALSE );
 
 
-            left = std::max( lpRect1->left, lpRect2->left );
-            right = std::min( lpRect1->right, lpRect2->right );
-            top = std::max( lpRect1->top, lpRect2->top );
-            bottom = std::min( lpRect1->bottom, lpRect2->bottom );
+            left = std::max<int>( lpRect1->left, lpRect2->left );
+            right = std::min<int>( lpRect1->right, lpRect2->right );
+            top = std::max<int>( lpRect1->top, lpRect2->top );
+            bottom = std::min<int>( lpRect1->bottom, lpRect2->bottom );
 
             return ( TRUE );
         }
@@ -211,10 +211,10 @@ namespace chilli {
             if ( lpRect1->IsRectEmpty() || lpRect2->IsRectEmpty() )
                 return ( FALSE );
 
-            left = std::min( lpRect1->left, lpRect2->left );
-            right = std::max( lpRect1->right, lpRect2->right );
-            top = std::min( lpRect1->top, lpRect2->top );
-            bottom = std::max( lpRect1->bottom, lpRect2->bottom );
+            left = std::min<int>( lpRect1->left, lpRect2->left );
+            right = std::max<int>( lpRect1->right, lpRect2->right );
+            top = std::min<int>( lpRect1->top, lpRect2->top );
+            bottom = std::max<int>( lpRect1->bottom, lpRect2->bottom );
 
             return ( TRUE );
         }

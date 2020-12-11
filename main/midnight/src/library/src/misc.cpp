@@ -481,13 +481,13 @@ namespace chilli {
         u32 BSub(u32 value, u32 amount, u32 min)
         {
         s64 result = (s64)value-amount;
-             return (s32) std::max(result,(s64)min);
+             return (s32) std::max<int>(result,(s64)min);
         }
 
         u32 BAdd(u32 value, u32 amount, u32 max)
         {
         u64 result = (u64)value+amount;
-            return (s32) std::min( result, (u64)max );
+            return (s32) std::min<int>( result, (u64)max );
 
         }
 
