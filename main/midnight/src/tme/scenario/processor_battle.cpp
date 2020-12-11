@@ -220,7 +220,7 @@ u32 mxbattle::Fight ( u32 attacks, u32 success, mxarmy* foes[], u32& nFoes )
 
             if ((u32)mxrandom(0, 255) > (u32)foes[army]->success) {
 
-                int amount  = std::min((u32)5,foes[army]->total);
+                int amount  = std::min<int>((u32)5,foes[army]->total);
 
                 foes[army]->total-=amount;
                 killed+=amount;

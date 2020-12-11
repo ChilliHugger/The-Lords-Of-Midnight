@@ -310,13 +310,13 @@ namespace tme {
     void mxdiscoverymap::CheckVisibleArea( mxgridref l )
     {
         if ( l.x <= m_top_visible.x )
-            m_top_visible.x = std::max(l.x,0);
+            m_top_visible.x = std::max<int>(l.x,0);
         if ( l.x >= m_bottom_visible.x )
-            m_bottom_visible.x = std::min(l.x,m_size.cx);
+            m_bottom_visible.x = std::min<int>(l.x,m_size.cx);
         if ( l.y <= m_top_visible.y )
-            m_top_visible.y = std::max(l.y,0);
+            m_top_visible.y = std::max<int>(l.y,0);
         if ( l.y >= m_bottom_visible.y )
-            m_bottom_visible.y = std::min(l.y,m_size.cy);
+            m_bottom_visible.y = std::min<int>(l.y,m_size.cy);
     }
     
     void mxdiscoverymap::CalculateVisibleArea()

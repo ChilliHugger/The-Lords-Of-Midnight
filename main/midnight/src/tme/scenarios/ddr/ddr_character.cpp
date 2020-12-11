@@ -18,6 +18,7 @@
 
 #if defined(_DDR_)
 
+#include <memory>
 #include "../../baseinc/tme_internal.h"
 #include "scenario_ddr.h"
 #include "scenario_ddr_internal.h"
@@ -884,7 +885,7 @@ namespace tme {
             riders.Total(total);
         
         stronghold_total -= diff ;
-        stronghold->Total(MAX(stronghold_total,0));
+        stronghold->Total(std::max<int>(stronghold_total,0));
         
         //
         

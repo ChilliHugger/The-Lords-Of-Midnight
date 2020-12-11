@@ -125,8 +125,8 @@ namespace tme {
         {
             fear = info->adj_fear ;
             s32 temp  = cowardess-(fear/7);
-            temp = std::max( temp, 0 ) / 8 ;
-            courage = std::min( temp, 7 ) ;
+            temp = std::max<int>( temp, 0 ) / 8 ;
+            courage = std::min<int>( temp, 7 ) ;
         }
 
         void mxcharacter::ForcedVariableRefresh () const
@@ -564,7 +564,7 @@ namespace tme {
             TimeCost += rinfo->TerrainMovementModifier((mxterrain_t)mx->gamemap->GetAt ( location ).terrain);
 
             // check for max out
-            TimeCost = std::min ( TimeCost, (int)rinfo->MovementMax() );
+            TimeCost = std::min<int>( TimeCost, (int)rinfo->MovementMax() );
 
             // ** CHEATS
             if ( sv_cheat_movement_cheap )
@@ -734,11 +734,11 @@ namespace tme {
             // try and recruit upto the RECRUIT_AMOUNT
             if ( stronghold->Type() == UT_RIDERS ) {
                 delta = (s32)sv_character_max_riders - riders.total ;
-                qty = stronghold->Remove( Race(), UT_RIDERS, std::min((s32)qty,delta) );
+                qty = stronghold->Remove( Race(), UT_RIDERS, std::min<int>((s32)qty,delta) );
                 riders.total += qty;
             } else if ( stronghold->Type() == UT_WARRIORS ) {
                 delta = (s32)sv_character_max_warriors - warriors.total ;
-                qty = stronghold->Remove( Race(), UT_WARRIORS, std::min((s32)qty,delta) );
+                qty = stronghold->Remove( Race(), UT_WARRIORS, std::min<int>((s32)qty,delta) );
                 warriors.total += qty;
             }
 
@@ -781,9 +781,9 @@ namespace tme {
                 qty = (u32)sv_character_guard_amount;
             // try and guard upto the GUARD_AMOUNT
             if ( stronghold->Type() == UT_RIDERS )
-                riders.total -= stronghold->Add( Race(), UT_RIDERS, std::min(riders.total,qty) );
+                riders.total -= stronghold->Add( Race(), UT_RIDERS, std::min<int>(riders.total,qty) );
             else if ( stronghold->Type() == UT_WARRIORS )
-                warriors.total -= stronghold->Add( Race(), UT_WARRIORS, std::min(warriors.total,qty));
+                warriors.total -= stronghold->Add( Race(), UT_WARRIORS, std::min<int>(warriors.total,qty));
 
 
             c_strcpy( mx->LastActionMsg(),

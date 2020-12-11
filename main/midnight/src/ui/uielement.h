@@ -49,9 +49,6 @@ enum UIMOUSEOVERHINT {
 
 namespace chilli {
     namespace ui {
-        
-    typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-    typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
 
     class NotificationInterface
     {
@@ -211,4 +208,10 @@ static const f32 alpha_zero = 0.0f;
 
 #endif // __UIELEMENT_H_INCLUDED__
 
-
+// typedef definition can be placed outside #ifndef to be visible on circular dependencies
+namespace chilli {
+    namespace ui {
+        typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+        typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+    }
+}

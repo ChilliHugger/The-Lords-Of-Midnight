@@ -590,6 +590,7 @@ void moonring::initialise( progressmonitor* monitor )
     tme::variables::sv_cheat_armies_noblock = true;
     tme::variables::sv_cheat_nasties_noblock = true;
     tme::variables::sv_cheat_movement_free = true ;
+    tme::variables::sv_cheat_always_win_fight = true;
     //variables::sv_cheat_commands_free = true ;
 #endif
 

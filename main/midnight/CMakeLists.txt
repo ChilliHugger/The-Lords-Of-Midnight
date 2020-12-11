@@ -122,6 +122,7 @@ elseif(LINUX)
          proj.linux/main.cpp
          )
 elseif(WINDOWS)
+    add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_)
     list(APPEND GAME_HEADER
          proj.win32/main.h
          proj.win32/resource.h
