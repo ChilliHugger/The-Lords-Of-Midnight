@@ -99,7 +99,7 @@ static cocos2d::Size DesktopLargerText2 = cocos2d::Size(1600, 900);    // 1.7777
 
 
 
-static cocos2d::Size desktopResolutionSize =  cocos2d::Size(2848, 1536); //cocos2d::Size(1024*3, 768*2);
+static cocos2d::Size desktopResolutionSize =  iPad1; //cocos2d::Size(2848, 1536); //cocos2d::Size(1024*3, 768*2);
 static cocos2d::Size designResolutionSize = mediumResolutionSize;
 
 AppDelegate::AppDelegate()
