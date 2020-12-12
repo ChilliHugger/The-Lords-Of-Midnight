@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_1" orientation="landscape" appearance="light"/>
+    <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <deployment version="4608" identifier="iOS"/>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,28 +12,41 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fm7-M6-edp"/>
-                        <viewControllerLayoutGuide type="bottom" id="uRH-d6-mvd"/>
+                        <viewControllerLayoutGuide type="top" id="zcM-gh-QXA"/>
+                        <viewControllerLayoutGuide type="bottom" id="1GT-JT-c6t"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="YZh-KN-0Xq">
-                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qre-2y-GkV" userLabel="Sky">
-                                        <rect key="frame" x="0.0" y="0.0" width="896" height="251.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1366" height="724"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="227.5" id="uWa-dM-yPu"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ie1-fG-CqH" userLabel="Floor">
-                                        <rect key="frame" x="0.0" y="251.5" width="896" height="162.5"/>
+                                        <rect key="frame" x="0.0" y="724" width="1366" height="300"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Lords of Midnight" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1X-3F-c5F">
+                                                <rect key="frame" x="418" y="121" width="530" height="58"/>
+                                                <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="50"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=compact">
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="30"/>
+                                                </variation>
+                                            </label>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="300" id="2YI-pF-GUe"/>
+                                            <constraint firstItem="D1X-3F-c5F" firstAttribute="centerY" secondItem="ie1-fG-CqH" secondAttribute="centerY" id="UOd-KA-MW0"/>
+                                            <constraint firstItem="D1X-3F-c5F" firstAttribute="centerX" secondItem="ie1-fG-CqH" secondAttribute="centerX" id="phe-B6-3Zo"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -45,13 +58,13 @@
                                 </constraints>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="LaunchScreenBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="cIa-z3-HXZ">
-                                <rect key="frame" x="0.0" y="0.0" width="896" height="271.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1366" height="774"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="cIa-z3-HXZ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2fA-RP-S15"/>
-                            <constraint firstItem="cIa-z3-HXZ" firstAttribute="top" secondItem="fm7-M6-edp" secondAttribute="bottom" id="4Dg-Yq-nbm"/>
+                            <constraint firstItem="cIa-z3-HXZ" firstAttribute="top" secondItem="zcM-gh-QXA" secondAttribute="bottom" id="4Dg-Yq-nbm"/>
                             <constraint firstItem="YZh-KN-0Xq" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="4Xc-IP-Bjj"/>
                             <constraint firstAttribute="bottom" secondItem="YZh-KN-0Xq" secondAttribute="bottom" id="Lhd-Ch-rLI"/>
                             <constraint firstItem="cIa-z3-HXZ" firstAttribute="bottom" secondItem="qre-2y-GkV" secondAttribute="bottom" constant="50" id="Tdq-Kc-RTA">

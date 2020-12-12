@@ -99,7 +99,7 @@ static cocos2d::Size DesktopLargerText2 = cocos2d::Size(1600, 900);    // 1.7777
 
 
 
-static cocos2d::Size desktopResolutionSize =  iPad1; //cocos2d::Size(2848, 1536); //cocos2d::Size(1024*3, 768*2);
+static cocos2d::Size desktopResolutionSize =  cocos2d::Size(2848, 1536); //cocos2d::Size(1024*3, 768*2);
 static cocos2d::Size designResolutionSize = mediumResolutionSize;
 
 AppDelegate::AppDelegate()
@@ -143,9 +143,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect(TME_ScenarioName(), cocos2d::Rect(0, 0, desktopResolutionSize.width, desktopResolutionSize.height));
+        //glview = GLViewImpl::createWithRect(TME_ScenarioName(), cocos2d::Rect(0, 0, desktopResolutionSize.width, desktopResolutionSize.height));
         
-        //glview = GLViewImpl::createWithFullScreen(TME_ScenarioName());
+        glview = GLViewImpl::createWithFullScreen(TME_ScenarioName());
         
 #else
         glview = GLViewImpl::create(TME_ScenarioName());

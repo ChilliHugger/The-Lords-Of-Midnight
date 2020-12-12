@@ -19,10 +19,22 @@ https://docs.cocos.com/cocos2d-x/manual/en/installation/CMake-Guide.html
 cd main/midnight
 mkdir mac-build
 cd mac-build
-cmake .. -GXcode
+cmake .. -GXcode -DTME:string=LOM
 ```
 
-# Building on Windows 
+Replace LOM with DDR for Doomdark's Revenge
+
+## Create iOS XCode Project
+```
+cd main/midnight
+mkdir ios-build
+cd ios-build
+cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DTME:string=LOM
+```
+
+Replace LOM with DDR for Doomdark's Revenge
+
+# Building on Windows
 
 ## For both Lords Of Midnight and Doomdark's Revenge
 
@@ -50,7 +62,7 @@ cmake .. -GXcode
 ### Generate coco2d code
 
 - Create a temporary directory (e.g. 'C:\coco2d-tmp')
-- Run 
+- Run
 ```
   cocos new codebuild -p chilli.codebuild -l cpp -d .
 ```
@@ -58,14 +70,12 @@ cmake .. -GXcode
 
 ## For Lords of Midnight
 
-Start from unchanged code checkout from github
-
 ### Create Windows VS Project
 - From within 'The-Lords-Of-Midnight':
 ```
 cd main\midnight
 mkdir win32-build && cd win32-build
-cmake .. -G"Visual Studio 16 2019" -A Win32
+cmake .. -G"Visual Studio 16 2019" -A Win32 -DTME:string=LOM
 ```
 ### Build Code from Windows VS
 
@@ -78,26 +88,12 @@ cmake .. -G"Visual Studio 16 2019" -A Win32
 
 ## For Doomdark's Revenge
 
-## Change CMakeLists to build DDR
-
-* Edit 'main\midnight\CMakeLists.txt'
-* Tweak the section defining project to build by commenting out 'LOM' section and uncommenting the 'DDR' section:
-```
-#if(_LOM_)
-#  set(APP_BUILD _LOM_)
-#  set(APP_NAME midnight)
-#elseif(_DDR_)
-  set(APP_BUILD _DDR_)
-  set(APP_NAME revenge)
-#endif()
-```
-
 ### Create Windows VS Project
 - From within 'The-Lords-Of-Midnight':
 ```
 cd main\midnight
 mkdir win32-build && cd win32-build
-cmake .. -G"Visual Studio 16 2019" -A Win32
+cmake .. -G"Visual Studio 16 2019" -A Win32  -DTME:string=DDR
 ```
 ### Build Code from Windows VS
 
@@ -106,4 +102,3 @@ cmake .. -G"Visual Studio 16 2019" -A Win32
 - From Solution Explorer, right click on 'revenge' and select 'Set as Startup Project'
 - From Solution Explorer, right click on 'revenge' and select 'Build'
 - You should now have an executable under 'win32-build\bin\midnight\Debug'
-

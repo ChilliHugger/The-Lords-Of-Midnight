@@ -25,20 +25,20 @@
 
 cmake_minimum_required(VERSION 3.6)
 
-#if(_LOM_)
+if(TME STREQUAL "LOM")
   set(APP_BUILD _LOM_)
   set(APP_NAME midnight)
-#elseif(_DDR_)
-#  set(APP_BUILD _DDR_)
-#  set(APP_NAME revenge)
-#endif()
+elseif(TME STREQUAL "DDR")
+  set(APP_BUILD _DDR_)
+  set(APP_NAME revenge)
+endif()
 
 
 project(${APP_NAME})
 
 if(XCODE)
     if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
-        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 13.0)
+        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 12.0)
     endif()
 endif()
 
@@ -143,9 +143,9 @@ elseif(APPLE)
              proj.ios_mac/ios/RootViewController.h
              )
         set(APP_UI_RES
-            proj.ios_mac/ios/LaunchScreen.storyboard
-            proj.ios_mac/ios/LaunchScreenBackground.png
-            proj.ios_mac/ios/Images.xcassets
+            proj.ios_mac/ios/${APP_NAME}/LaunchScreen.storyboard
+            proj.ios_mac/ios/${APP_NAME}/LaunchScreenBackground.png
+            proj.ios_mac/ios/${APP_NAME}/Images.xcassets
             )
         list(APPEND GAME_SOURCE
              proj.ios_mac/ios/main.m
@@ -157,8 +157,8 @@ elseif(APPLE)
     elseif(MACOSX)
         add_compile_options(-D_OS_OSX_ -D_OS_DESKTOP_)
         set(APP_UI_RES
-            proj.ios_mac/mac/Icon.icns
-            proj.ios_mac/mac/Info.plist
+            proj.ios_mac/mac/${APP_NAME}/Images.xcassets
+            proj.ios_mac/mac/${APP_NAME}/Icon.icns
             )
         list(APPEND GAME_SOURCE
              proj.ios_mac/mac/main.cpp
@@ -195,9 +195,11 @@ if(APPLE)
     set_xcode_property(${APP_NAME} INSTALL_PATH "\$(LOCAL_APPS_DIR)")
 
     if(MACOSX)
-        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist")
+        set_target_properties(${APP_NAME} PROPERTIES
+          MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/${APP_NAME}/Info.plist"
+          XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/midnight.entitlements")
     elseif(IOS)
-        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/Info.plist")
+        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/${APP_NAME}/Info.plist")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
         # force x86_64 architecture for iphonesimulator builds
         set_target_properties(${APP_NAME} PROPERTIES

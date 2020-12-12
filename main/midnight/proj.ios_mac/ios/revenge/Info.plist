@@ -5,17 +5,17 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleDisplayName</key>
-    <string>${PROJECT_NAME}</string>
+    <string>Doomdark's Revenge</string>
     <key>CFBundleExecutable</key>
-    <string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
+    <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIconFile</key>
     <string>Icon-57.png</string>
     <key>CFBundleIdentifier</key>
-    <string>com.chillihugger.lordsofmidnight</string>
+    <string>com.chillihugger.doomdarksrevenge</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>${PROJECT_NAME}</string>
+    <string>Doomdark's Revenge</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
     <key>CFBundlePackageType</key>
@@ -40,6 +40,10 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
     </array>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2019. All rights reserved.</string>
+    <string>Copyright © 1984 - 2020. All rights reserved.</string>
+    <key>UIRequiredDeviceCapabilities</key>
+  	<array>
+  		<string>metal</string>
+  	</array>
 </dict>
 </plist>
