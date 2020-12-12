@@ -591,6 +591,7 @@ void panel_look::addTouchListener()
     
     // trigger when you push down
     listener->onTouchBegan = [=](Touch* touch, Event* event){
+        mouse_down_time = utils::getTimeInMilliseconds() ;
         mouse_down_pos = touch->getLocation();
         mouse_last_position = mouse_down_pos;
         UIDEBUG("Mouse Down = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
@@ -601,23 +602,28 @@ void panel_look::addTouchListener()
     // trigger when moving touch
     listener->onTouchMoved = [=](Touch* touch, Event* event){
         
-        Vec2 delta = touch->getLocation() - mouse_down_pos;
-        UIDEBUG("Total Mouse Move = (%f,%f)", delta.x, delta.y );
+        Vec2 delta = touch->getLocation() - mouse_last_position;
+        Vec2 distance = touch->getLocation() - mouse_down_pos;
+       
+        UIDEBUG("Delta Mouse Move = (%f,%f)", delta.x, delta.y );
         
         if ( isDragging() ) {
             uidragevent    dev(nullptr,touch->getLocation(),DragEventType::drag);
+            dev.startposition = mouse_down_pos;
             dev.lastposition = mouse_last_position;
             dev.time = utils::getTimeInMilliseconds() ;
             
             //UIDEBUG("Dragged = (%f,%f)", drag_amount.x, drag_amount.y );
             OnDrag(&dev);
-            return;
+
         }
         
-        if ( ABS(delta.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
-            || ABS(delta.y) > MINIMUM_VERTICAL_DRAG_MOVEMENT ) {
+        else if ( ABS(distance.x) > MINIMUM_HORIZONTAL_DRAG_MOVEMENT
+            || ABS(distance.y) > MINIMUM_VERTICAL_DRAG_MOVEMENT ) {
             uidragevent    dev(nullptr,touch->getLocation(),DragEventType::start);
-            dev.lastposition = mouse_down_pos;
+            dev.startposition = mouse_down_pos;
+            dev.lastposition = mouse_last_position;
+            dev.starttime = mouse_down_time;
             dev.time = utils::getTimeInMilliseconds() ;
             OnStartDrag(&dev);
             //touch_capture = focus;
@@ -633,6 +639,9 @@ void panel_look::addTouchListener()
         
         if ( isDragging() ) {
             uidragevent    dev(nullptr,touch->getLocation(),DragEventType::stop);
+            dev.startposition = mouse_down_pos;
+            dev.lastposition = mouse_last_position;
+            dev.starttime = mouse_down_time;
             dev.time = utils::getTimeInMilliseconds() ;
             OnStopDrag(&dev);
             return;
@@ -668,7 +677,7 @@ bool panel_look::startLookLeft ( void )
     
     options.isLooking = true;
     
-    auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
         options.lookAmount = originalLooking + value;
         
         //UIDEBUG("MovementLeft  %f %f %f", target, options.lookAmount, value);
@@ -718,7 +727,7 @@ bool panel_look::startLookRight ( void )
     
     options.isLooking = true;
     
-    auto actionfloat = ActionFloat::create(0.5, 0, target, [=](float value) {
+    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
         options.lookAmount = originalLooking + value;
         
         //UIDEBUG("MovementRight  %f %f %f", target, options.lookAmount, value);
@@ -857,7 +866,7 @@ bool panel_look::startMoving()
         
         options.isMoving = true;
    
-        auto actionfloat = ActionFloat::create(0.5f, 0, target, [=](float value) {
+        auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
             
             options.here.x = options.moveFrom.x*(LANDSCAPE_DIR_STEPS - value) + options.moveTo.x*value;
             options.here.y = options.moveFrom.y*(LANDSCAPE_DIR_STEPS - value) + options.moveTo.y*value;
@@ -1589,7 +1598,7 @@ void panel_look::OnStopDrag(uidragevent* event)
         return;
     }
 
-    lookPanoramaSnap();
+    lookPanoramaSnap(event);
     
 }
 
@@ -1637,23 +1646,41 @@ void panel_look::parallaxCharacters ( void )
 // we need to snap the view to the nearest look direction
 // we either snap forward or back
 //
-void panel_look::lookPanoramaSnap()
+void panel_look::lookPanoramaSnap(uidragevent* event)
 {
-    f32 amount = (options.lookAmount / LANDSCAPE_DIR_AMOUNT);
-    amount = ((s32)ROUNDFLOAT(amount)) * LANDSCAPE_DIR_AMOUNT ;
+    f32 duration = TRANSITION_DURATION;
+    f32 amount;
 
-    // TODO: Work out time based on total distance to travel
+    f32 distanceDragged = event->position.x - event->startposition.x;
+    f32 timeDragged = (event->time - event->starttime) / 1000.0f;
+    f32 velocity = ABS(distanceDragged) / timeDragged;
+    
+    bool inertiaScroll = (timeDragged < 0.5f && velocity > 500);
+    
+    if(!inertiaScroll)
+    {
+        // normal magnetic scroll
+        amount = (options.lookAmount / LANDSCAPE_DIR_AMOUNT);
+        amount = ((s32)ROUNDFLOAT(amount)) * LANDSCAPE_DIR_AMOUNT ;
+    }else{
+        // Inertia force
+        f32 dir = SIGN(distanceDragged);
+        amount = (ABS(options.lookAmount-startDragLookAmount) > LANDSCAPE_DIR_AMOUNT/2) ? 2 : 1;
+        amount = startDragLookAmount - ((amount*dir)*LANDSCAPE_DIR_AMOUNT);
 
-    auto actionfloat = ActionFloat::create(0.5, options.lookAmount, amount, [=](float value) {
+        f32 distanceRemaining = ABS(amount-options.lookAmount);
+        f32 howFar = (distanceRemaining/LANDSCAPE_DIR_AMOUNT);
+        duration = duration * howFar;
+    }
+    
+    auto actionfloat = ActionFloat::create(duration, options.lookAmount, amount, [=](float value) {
         options.isLooking = true;
         options.lookAmount =  value;
         UpdateLandscape();
         parallaxCharacters();
     });
     
-    runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
-                                             CallFunc::create( [=] { stopDragging(); } )
-                                ));
+    runAction(Sequence::createWithTwoActions( actionfloat, CallFunc::create( [=] { stopDragging(); } )));
 }
 
 //

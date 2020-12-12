@@ -23,7 +23,6 @@
 USING_NS_CC;
 using namespace tme;
 
-#define TRANSITION_DURATION     0.5f
 #define adjusty                 LRES(8)
 
 LandscapePeople::LandscapePeople()

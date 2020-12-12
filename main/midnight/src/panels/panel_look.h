@@ -146,7 +146,7 @@ protected:
     void OnStartDrag(uidragevent* event) override;
     bool allowDragDownMove();
     bool allowDragLook();
-    void lookPanoramaSnap();
+    void lookPanoramaSnap(uidragevent* event);
     void stopDragging();
 
 
@@ -187,7 +187,7 @@ protected:
     // draggin
     //f32                 dragged;
     bool                landscape_dragging;
-    u32                 mouse_down_time;
+    u64                 mouse_down_time;
     bool                mouse_down;
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;
