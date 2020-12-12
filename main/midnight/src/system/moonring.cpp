@@ -164,7 +164,7 @@ void moonring::continueStory( storyid_t id )
         if ( Character_IsDead(c) ) {
             TME_SelectChar(c.id);
             showPage( MODE_THINK );
-            return true;
+            return;
         }
      
         auto mode = MODE_LOOK;

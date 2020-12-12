@@ -175,11 +175,11 @@ void uicommandwindow::initialiseCommands()
     givetext->setTextColor(Color4B(_clrWhite));
     givetext->enableOutline(Color4B(_clrBlack),RES(1));
     givetext->setAnchorPoint(uihelper::AnchorCenter);
-    givetext->setWidth(give->getContentSize().width-DIS(16));
+    givetext->setWidth(give->getContentSize().width-RES(16));
     givetext->setHorizontalAlignment(TextHAlignment::CENTER);
     givetext->setVerticalAlignment(TextVAlignment::BOTTOM);
     givetext->setVisible(false);
-    uihelper::AddBottomCenter(give, givetext, RES(0), DIS(-16));
+    uihelper::AddBottomCenter(give, givetext, RES(0), RES(-16));
     
     auto take = uihelper::CreateImageButton("i_take", ID_TAKE, callback);
     addItem(take,CHOOSE_TAKE);
