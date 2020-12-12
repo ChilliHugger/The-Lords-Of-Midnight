@@ -81,7 +81,9 @@ panel_look::panel_look() :
     landscape_dragging(false),
     current_people(nullptr),
     next_people(nullptr),
-    prev_people(nullptr)
+    next_people1(nullptr),
+    prev_people(nullptr),
+    prev_people1(nullptr)
 {
     CLEARARRAY(people);
     CLEARARRAY(movementIndicators);
@@ -170,7 +172,7 @@ bool panel_look::init()
 #endif
     
     // people in front
-    for ( int ii=0; ii<3; ii++ ) {
+    for ( int ii=0; ii<NUMELE(people); ii++ ) {
         people[ii] = LandscapePeople::create(&options);
         people[ii]->setLocalZOrder(ZORDER_FAR+1);
         people[ii]->setContentSize( Size( getContentSize().width, RES(256)) );
@@ -510,27 +512,29 @@ void panel_look::setViewForCurrentCharacter ( void )
     options.generator->Build(&options);
     
     // Initialise people
-    current_people=people[0];
-    next_people=people[1];
-    prev_people=people[2];
-    
+    prev_people1=people[0];
+    prev_people=people[1];
+    current_people=people[2];
+    next_people=people[3];
+    next_people1=people[4];
+
     auto width = getContentSize().width;
+
+    prev_people1->Initialise( c, PREV_DIRECTION(PREV_DIRECTION(current_info->looking)));
+    prev_people1->setPositionX(0-width-width);
     
-    if ( current_people ) {
-        current_people->Initialise(c, current_info->looking );
-        current_people->setPositionX(0);
-    }
+    prev_people->Initialise( c, PREV_DIRECTION(current_info->looking));
+    prev_people->setPositionX(0-width);
     
-    if ( next_people ) {
-        next_people->Initialise( c, NEXT_DIRECTION(current_info->looking));
-        next_people->setPositionX(width);
-    }
-    
-    if ( prev_people ) {
-        prev_people->Initialise( c, PREV_DIRECTION(current_info->looking));
-        prev_people->setPositionX(0+width);
-    }
-    
+    current_people->Initialise(c, current_info->looking );
+    current_people->setPositionX(0);
+
+    next_people->Initialise( c, NEXT_DIRECTION(current_info->looking));
+    next_people->setPositionX(width);
+
+    next_people1->Initialise( c, NEXT_DIRECTION(NEXT_DIRECTION(current_info->looking)));
+    next_people1->setPositionX(width+width);
+
     UpdateLandscape();
     
     // Add shield if following
@@ -683,11 +687,11 @@ bool panel_look::startLookLeft ( void )
         //UIDEBUG("MovementLeft  %f %f %f", target, options.lookAmount, value);
         
         f32 distance = value / target;
-        if ( current_people )
-            current_people->adjustMovement( distance );
-        if (prev_people)
-            prev_people->adjustMovement( distance );
-        
+  
+        current_people->adjustMovement( distance );
+        prev_people->adjustMovement( distance );
+        prev_people1->adjustMovement( distance );
+
         if ( value <= target) {
             stopRotating(LM_ROTATE_LEFT);
             return;
@@ -697,13 +701,9 @@ bool panel_look::startLookLeft ( void )
     
     this->runAction(EaseSineInOut::create(actionfloat));
     
-    //next_people->Initialise(c, c.looking);
-    prev_people->startSlideFromLeft();
-    
-    //current_people->Initialise(c);
-    current_people->startSlideOffRight();
-
-    
+    prev_people1->startSlideFromLeft(2);
+    prev_people->startSlideFromLeft(1);
+    current_people->startSlideOffRight(0);
     
     return TRUE;
 }
@@ -733,11 +733,10 @@ bool panel_look::startLookRight ( void )
         //UIDEBUG("MovementRight  %f %f %f", target, options.lookAmount, value);
         
         f32 distance = value / target;
-        if ( current_people )
-            current_people->adjustMovement( distance );
-        if (next_people)
-            next_people->adjustMovement( distance );
-        
+        current_people->adjustMovement( distance );
+        next_people->adjustMovement( distance );
+        next_people1->adjustMovement( distance );
+
         if ( value >= target) {
             stopRotating(LM_ROTATE_RIGHT);
             return;
@@ -748,11 +747,9 @@ bool panel_look::startLookRight ( void )
     
     this->runAction(EaseSineInOut::create(actionfloat));
     
-    //next_people->Initialise(c);
-    next_people->startSlideFromRight();
-    
-    //current_people->Initialise(c);
-    current_people->startSlideOffLeft();
+    next_people1->startSlideFromRight(2);
+    next_people->startSlideFromRight(1);
+    current_people->startSlideOffLeft(0);
     
     return TRUE;
     
@@ -890,7 +887,6 @@ bool panel_look::startMoving()
         next_people->Initialise(c, c.looking);
         next_people->startFadeIn();
         
-        //current_people->Initialise(c);
         current_people->startFadeOut();
         
         return true;
@@ -909,19 +905,23 @@ void panel_look::stopRotating(LANDSCAPE_MOVEMENT type)
 {
     options.isLooking = false;
     
-    LandscapePeople* temp = next_people;
-    next_people=current_people;
-    current_people=temp;
-    
-    next_people->clear();
-    current_people->stopAnim();
-    prev_people->clear();
-    
-    setViewForCurrentCharacter();
-    
-    OnMovementComplete(type);
-    
-    Enable();
+    if(type == LM_ROTATE_LEFT)
+    {
+        LandscapePeople* temp = next_people1;
+        next_people1 = next_people;
+        next_people=current_people;
+        current_people=temp;
+    }
+
+    else if(type == LM_ROTATE_RIGHT)
+    {
+        LandscapePeople* temp = prev_people1;
+        prev_people1 = prev_people;
+        prev_people=current_people;
+        current_people=temp;
+    }
+
+    stopMovement(type);
 }
 
 void panel_look::stopMoving()
@@ -933,16 +933,23 @@ void panel_look::stopMoving()
     next_people=current_people;
     current_people=temp;
     
+    stopMovement(LM_MOVE_FORWARD);
+    
+}
+
+void panel_look::stopMovement(LANDSCAPE_MOVEMENT type)
+{
+    next_people1->clear();
     next_people->clear();
     current_people->stopAnim();
     prev_people->clear();
+    prev_people1->clear();
     
     setViewForCurrentCharacter();
     
-    OnMovementComplete(LM_MOVE_FORWARD);
+    OnMovementComplete(type);
     
     Enable();
-    
 }
 
 void panel_look::startInactivity()
@@ -1636,9 +1643,12 @@ void panel_look::parallaxCharacters ( void )
     f32 width = getContentSize().width;
     f32 movement = width * distance;
     
-    prev_people->setPositionX( 0-width + movement );
+    prev_people1->setPositionX( 0 - width - width + movement );
+    prev_people->setPositionX( 0 - width + movement );
+    
     current_people->setPositionX( 0 + movement );
-    next_people->setPositionX( width + movement );
+    next_people->setPositionX( 0 + width + movement );
+    next_people1->setPositionX( 0 + width + width + movement );
     
 }
 

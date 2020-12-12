@@ -102,7 +102,8 @@ protected:
     bool startLookRight ( void );
     bool startLookLeft ( void );
     void stopRotating(LANDSCAPE_MOVEMENT type);
-  
+    void stopMovement(LANDSCAPE_MOVEMENT type);
+
     void startInactivity();
     void stopInactivity();
     void showInactivityHelp();
@@ -175,11 +176,13 @@ protected:
     // Actions and Commands
     uicommandwindow*    i_command_window;
   
-    LandscapePeople*    people[3];
+    LandscapePeople*    people[5];
+
+    LandscapePeople*    prev_people1;
+    LandscapePeople*    prev_people;
     LandscapePeople*    current_people;
     LandscapePeople*    next_people;
-    LandscapePeople*    prev_people;
-    
+    LandscapePeople*    next_people1;
     f32                 landscapeTramline;
     
     Sprite*             movementIndicators[3];

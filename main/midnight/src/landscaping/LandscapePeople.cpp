@@ -252,31 +252,31 @@ void LandscapePeople::stopAnim()
 
 // Animation & Movement
 
-void LandscapePeople::startSlideFromRight()
+void LandscapePeople::startSlideFromRight(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
     
     setScale(1.0f);
     setOpacity(ALPHA(1.0f));
-    setPosition(parentSize.width,0+adjusty);
+    setPosition(parentSize.width*distance,0+adjusty);
     amountmoved=0;
     amountmoving=parentSize.width*-1;
     startlocationx=getPosition().x;
 }
 
-void LandscapePeople::startSlideFromLeft()
+void LandscapePeople::startSlideFromLeft(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
 
     setScale(1.0f);
     setOpacity(ALPHA(1.0f));
-    setPosition(-parentSize.width,0+adjusty);
+    setPosition(-(parentSize.width*distance),0+adjusty);
     amountmoved=0;
     amountmoving=parentSize.width;
     startlocationx=getPosition().x;
 }
 
-void LandscapePeople::startSlideOffLeft()
+void LandscapePeople::startSlideOffLeft(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
 
@@ -286,7 +286,7 @@ void LandscapePeople::startSlideOffLeft()
     startlocationx=getPosition().x;
 }
 
-void LandscapePeople::startSlideOffRight()
+void LandscapePeople::startSlideOffRight(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
 
