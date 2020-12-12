@@ -60,7 +60,7 @@ bool uigroupedlord::setLord(mxid characterid)
     uihelper::AddCenter(this, face, 0, SHIELD_OFFSET_Y);
     
 //    titleBackground = cocos2d::LayerColor::create(Color4B(_clrRed));
-//    titleBackground->setContentSize(Size(getContentSize().width,DIS(16)));
+//    titleBackground->setContentSize(Size(getContentSize().width,RES(16)));
 //    titleBackground->setPosition(-(face->getContentSize().width/2),0);
 //    face->addChild(titleBackground);
     
@@ -68,7 +68,7 @@ bool uigroupedlord::setLord(mxid characterid)
     title = Label::createWithTTF( uihelper::font_config_small, c.shortname );
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
-    //title->setHeight(DIS(16));
+    //title->setHeight(RES(16));
     title->getFontAtlas()->setAntiAliasTexParameters();
     //title->setWidth(getContentSize().width);
     title->setHorizontalAlignment(TextHAlignment::CENTER);
