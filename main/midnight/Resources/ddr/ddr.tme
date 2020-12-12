@@ -221,38 +221,38 @@
         </day>
         
         <people>
-            <time id="0"  normal="#804040" tunnel="#404040" />
-            <time id="1"  normal="#804040" tunnel="#404040" />
-            <time id="2"  normal="#804040" tunnel="#404040" />
-            <time id="3"  normal="#804040" tunnel="#404040" />
-            <time id="4"  normal="#804040" tunnel="#404040" />
-            <time id="5"  normal="#ffffff" tunnel="#404040" />
-            <time id="6"  normal="#ffffff" tunnel="#404040" />
-            <time id="7"  normal="#ffffff" tunnel="#404040" />
-            <time id="8"  normal="#ffffff" tunnel="#404040" />
-            <time id="9"  normal="#ffffff" tunnel="#404040" />
-            <time id="10" normal="#ffffff" tunnel="#404040" />
-            <time id="11" normal="#ffffff" tunnel="#404040" />
-            <time id="12" normal="#ffffff" tunnel="#404040" />
-            <time id="13" normal="#ffffff" tunnel="#404040" />
-            <time id="14" normal="#ffffff" tunnel="#404040" />
-            <time id="15" normal="#ffffff" tunnel="#404040" />
-            <time id="16" normal="#ffffff" tunnel="#404040" />
-            <time id="17" normal="#ffffff" tunnel="#404040" />
-            <time id="18" normal="#ffffff" tunnel="#404040" />
-            <time id="19" normal="#ffffff" tunnel="#404040" />
-            <time id="20" normal="#ffffff" tunnel="#404040" />
-            <time id="21" normal="#ffffff" tunnel="#404040" />
-            <time id="22" normal="#ffffff" tunnel="#404040" />
-            <time id="23" normal="#ffffff" tunnel="#404040" />
-            <time id="24" normal="#ffffff" tunnel="#404040" />
-            <time id="25" normal="#ffffff" tunnel="#404040" />
-            <time id="26" normal="#ffffff" tunnel="#404040" />
-            <time id="27" normal="#ffffff" tunnel="#404040" />
-            <time id="28" normal="#ffffff" tunnel="#404040" />
-            <time id="29" normal="#ffffff" tunnel="#404040" />
-            <time id="30" normal="#00ffff" tunnel="#404040" />
-            <time id="31" normal="#00c8c8" tunnel="#404040" />
+            <time id="0"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="1"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="2"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="3"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="4"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="5"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="6"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="7"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="8"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="9"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="10" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="11" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="12" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="13" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="14" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="15" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="16" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="17" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="18" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="19" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="20" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="21" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="22" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="23" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="24" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="25" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="26" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="27" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="28" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="29" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="30" normal="#ff00ffff" tunnel="#ff404040" />
+            <time id="31" normal="#ff00c8c8" tunnel="#ff404040" />
         </people>
         
         <terrain>
