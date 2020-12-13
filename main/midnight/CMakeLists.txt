@@ -199,7 +199,10 @@ if(APPLE)
           MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/${APP_NAME}/Info.plist"
           XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/midnight.entitlements")
     elseif(IOS)
-        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/${APP_NAME}/Info.plist")
+        set_target_properties(${APP_NAME} PROPERTIES
+          MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/${APP_NAME}/Info.plist"
+          XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
+          )
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
         # force x86_64 architecture for iphonesimulator builds
         set_target_properties(${APP_NAME} PROPERTIES
