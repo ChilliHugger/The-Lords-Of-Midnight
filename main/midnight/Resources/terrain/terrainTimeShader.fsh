@@ -17,13 +17,16 @@ void main()
     // convert to non-PMA
     fragRGB = saturate(fragRGB / c.a);
 
-    m.g = 1.0 - fragRGB.g ;
-    m.a = c.a;
-        
-    n = vec4(
-        (p_right.r*fragRGB.g)+(p_left.r*m.g),
-        (p_right.g*fragRGB.g)+(p_left.g*m.g),
-        (p_right.b*fragRGB.g)+(p_left.b*m.g), c.a * p_alpha) ;
+    if(c.a!=0.0)
+    {
+        m.g = 1.0 - fragRGB.g ;
+        m.a = c.a;
+            
+        n = vec4(
+            (p_right.r*fragRGB.g)+(p_left.r*m.g),
+            (p_right.g*fragRGB.g)+(p_left.g*m.g),
+            (p_right.b*fragRGB.g)+(p_left.b*m.g), c.a * p_alpha) ;
+    }
 
     fragRGB = n.rgb * n.a; // Premultiply alpha
 
