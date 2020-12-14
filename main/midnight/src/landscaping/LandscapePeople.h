@@ -11,8 +11,6 @@
 
 #include <stdio.h>
 
-#include <stdio.h>
-
 #include "LandscapeNode.h"
 #include "LandscapeGenerator.h"
 

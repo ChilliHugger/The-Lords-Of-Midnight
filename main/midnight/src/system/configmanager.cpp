@@ -31,11 +31,32 @@ configmanager::~configmanager()
 {
 }
 
+/*
+ <?xml version="1.0" encoding="ISO-8859-1" ?>
+ <main>
+   <variables>
+     <var id="cheat_armies_noblock" value="true" />
+     <var id="cheat_nasties_noblock" value="true" />
+     <var id="cheat_commands_free" value="true" />
+     <var id="cheat_movement_cheap" value="false" />
+     <var id="cheat_movement_free" value="true" />
+
+     <var id="debug_map" value="false" />
+     <var id="cheat_always_win_fight" value="false" />
+     <var id="keep_full_save_history" value="false" />
+     <var id="cheat_always_undo" value="false" />
+     <var id="undo_history" value="10" />
+     <var id="start_on_panel" value="MODE_THINK" />
+   </variables>
+ </main>
+ */
+
 bool configmanager::LoadXmlConfig (const std::string& filename )
 {
     using xml = chilli::lib::xml;
     
     UIDEBUG("configmanager::LoadXmlConfig - ENTER");
+    UIDEBUG("Loading: %s", filename.c_str());
     
     std::unique_ptr<xml> config ( new xml() );
 
@@ -54,9 +75,10 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
         return false;
     }
     
-#define IS_VAR(x)   c_stricmp(x,name) == 0
-#define BOOL_VALUE  t->ReadBool("value")
-#define INT_VALUE   t->ReadInt("value")
+#define IS_VAR(x)       c_stricmp(x,name) == 0
+#define BOOL_VALUE      t->ReadBool("value")
+#define INT_VALUE       t->ReadInt("value")
+#define STRING_VALUE    t->ReadStr("value")
 
     
     FOREACHELEMENT(variables,t) {
@@ -114,6 +136,9 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
                 undo_history = INT_VALUE;
             }
             
+            else if ( IS_VAR("start_on_panel") ) {
+                start_on_panel = STRING_VALUE;
+            }
             
         }
     }

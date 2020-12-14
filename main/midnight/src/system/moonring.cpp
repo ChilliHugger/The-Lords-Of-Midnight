@@ -170,15 +170,24 @@ void moonring::continueStory( storyid_t id )
         auto mode = MODE_LOOK;
      
 #if defined(_DEBUG_GAME_PANEL_)
-        mode = _DEBUG_GAME_PANEL_;
-        
-        if(mode==MODE_THINK)
+#define IS_DEBUG_PANEL(x)       c_stricmp(config->start_on_panel,x) == 0
+
+        if(!config->start_on_panel.IsEmpty())
         {
-            TME_SelectChar(c.id);
-            showPage( MODE_THINK );
-            return;
+            if(IS_DEBUG_PANEL("MODE_LOOK"))
+                mode = MODE_LOOK;
+            else if(IS_DEBUG_PANEL("MODE_THINK"))
+                mode = MODE_THINK;
+            
+            if(mode==MODE_THINK)
+            {
+                TME_SelectChar(c.id);
+                showPage( MODE_THINK );
+                return;
+            }
         }
 #endif
+        
         panels->setPanelMode(mode,TRANSITION_PUSHUP);
 
         if ( mode == MODE_LOOK ) {
