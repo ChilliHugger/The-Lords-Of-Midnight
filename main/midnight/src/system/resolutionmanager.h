@@ -80,8 +80,9 @@ public:
 #define CONTENT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
 //#define CONTENT_SCALE(x) (f32)    (x)
 
+ //#define TEST_PHONE_SCALE
 
-
+constexpr f32 PhoneScale = 1.75f;
 
 
 

@@ -221,18 +221,18 @@ bool panel_look::init()
     // Direction movement indicators
     setupMovementIndicators();
     
-    auto size = getContentSize();
-    f32 landscapeWidth = size.height*1.3333;
-    landscapeTramline = ((size.width - landscapeWidth)/2)*1.05;
-    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - landscapeTramline;
-   
-    gradientL = DrawNode::create();
-    uihelper::AddBottomLeft(this, gradientL, 0, 0);
-    gradientL->setLocalZOrder(ZORDER_FAR+1);
-
-    gradientR = DrawNode::create();
-    uihelper::AddBottomRight(this, gradientR, 0, 0);
-    gradientR->setLocalZOrder(ZORDER_FAR+1);
+//    auto size = getContentSize();
+//    f32 landscapeWidth = size.height*1.3333;
+//    landscapeTramline = ((size.width - landscapeWidth)/2)*1.05;
+//    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - landscapeTramline;
+//
+//    gradientL = DrawNode::create();
+//    uihelper::AddBottomLeft(this, gradientL, 0, 0);
+//    gradientL->setLocalZOrder(ZORDER_FAR+1);
+//
+//    gradientR = DrawNode::create();
+//    uihelper::AddBottomRight(this, gradientR, 0, 0);
+//    gradientR->setLocalZOrder(ZORDER_FAR+1);
 
     return true;
 }
@@ -573,13 +573,13 @@ void panel_look::UpdateLandscape()
 
 #endif
  
-    auto size = getContentSize();
-    auto backgroundColour = Color4F(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline));
-    gradientL->clear();
-    gradientL->drawSolidRect(Vec2::ZERO, Vec2(landscapeTramline,size.height),backgroundColour);
-    gradientL->drawSolidRect(Vec2(size.width-landscapeTramline,0), Vec2(size.width,size.height),backgroundColour);
-    gradientL->setOpacity(ALPHA(0.25));
-    //gradientL->drawSolidRect(Vec2(0,0), Vec2(size.width/2,size.height),backgroundColour);
+//    auto size = getContentSize();
+//    auto backgroundColour = Color4F(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+//    gradientL->clear();
+//    gradientL->drawSolidRect(Vec2::ZERO, Vec2(landscapeTramline,size.height),backgroundColour);
+//    gradientL->drawSolidRect(Vec2(size.width-landscapeTramline,0), Vec2(size.width,size.height),backgroundColour);
+//    gradientL->setOpacity(ALPHA(0.25));
+//    //gradientL->drawSolidRect(Vec2(0,0), Vec2(size.width/2,size.height),backgroundColour);
 
 }
 

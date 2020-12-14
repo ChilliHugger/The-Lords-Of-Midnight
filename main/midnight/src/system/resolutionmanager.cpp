@@ -2,6 +2,7 @@
 #include "resolutionmanager.h"
 
 #include "base/CCDirector.h"
+#include "../ui/uielement.h"
 
 USING_NS_CC;
 
@@ -217,10 +218,14 @@ padding resolutionmanager::getSafeArea()
 
 f32 resolutionmanager::phoneScale()
 {
-#if !defined(_OS_DESKTOP_)
-    return isTablet ? 1.0f : 1.4f;
+#if defined(TEST_PHONE_SCALE)
+    return PhoneScale;
 #else
-    return 1.0f;
+    #if !defined(_OS_DESKTOP_)
+        return isTablet ? scale_normal : PhoneScale;
+    #else
+        return scale_normal;
+    #endif
 #endif
 
 }
