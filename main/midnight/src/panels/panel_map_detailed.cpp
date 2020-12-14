@@ -208,6 +208,7 @@ void panel_map_detailed::showGroupLord(Vec2 position, map_object* object)
     grouplord->setTag(ID_SELECT_ALL);
     grouplord->setAnchorPoint(uihelper::AnchorCenter);
     grouplord->addClickEventListener(clickCallback);
+    grouplord->setScale(scale_normal);
     characters->addChild(grouplord);
     
     c_mxid  lords;
@@ -326,6 +327,7 @@ void panel_map_detailed::setupCharacterButtons()
             
             node = uihelper::CreateImageButton("map_lords_many", ID_SELECT_ALL, clickCallback);
             node->setUserData(m);
+            node->setScale(scale_normal);
             for ( auto n : m->here ) {
                 n->processed = true;
             }
@@ -336,6 +338,7 @@ void panel_map_detailed::setupCharacterButtons()
             lord->refreshStatus();
             lord->setUserData(c.userdata);
             lord->setTag((layoutid_t) (ID_SELECT_CHAR+c.id));
+            lord->setScale(scale_normal);
             node = lord;
             
         }

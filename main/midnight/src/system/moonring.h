@@ -22,7 +22,7 @@
 #include "../models/selectmodel.h"
 #include "../models/mapmodel.h"
 
-#define _DEBUG_GAME_PANEL_
+//#define _DEBUG_GAME_PANEL_
 
 //
 #include <mutex>

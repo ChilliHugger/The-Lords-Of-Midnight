@@ -81,10 +81,10 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     uihelper::FillParent(background);
     
     //
-    f32 layout_padding = RES(32);
-    f32 border = RES(8);
-    f32 width = RES(800);
-    f32 maxHeight = RES(500);
+    f32 layout_padding = PHONE_SCALE(RES(32));
+    f32 border = PHONE_SCALE(RES(8));
+    f32 width = PHONE_SCALE(RES(800));
+    f32 maxHeight = PHONE_SCALE(RES(500));
     f32 innerWidth = width-(2*layout_padding);
     
     // layout
@@ -99,7 +99,7 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     layout->addChild(scrollView);
 
     // add text
-    auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
+    auto label = Label::createWithTTF(uihelper::font_config_big, text);
     label->setColor(_clrDarkRed);
     label->setAlignment(TextHAlignment::LEFT);
     //label->setLineHeight(RES(FONT_SIZE_BIG));

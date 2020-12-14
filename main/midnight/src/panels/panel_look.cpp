@@ -148,7 +148,7 @@ bool panel_look::init()
     lblDescription->getFontAtlas()->setAntiAliasTexParameters();
     lblDescription->setTextColor(Color4B(DESCRIPTION_COLOUR));
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
-    lblDescription->setWidth(RES(800-64));
+    lblDescription->setWidth(getContentSize().width*0.70f);
     uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(32)+lblNameAdjust);
 
     // Shield

@@ -75,12 +75,19 @@ public:
 
 };
 
-#define RES(x) (f32)((x)*resolutionmanager::getInstance()->Scale())
-#define NORES(x)    (x)
-#define CONTENT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
-//#define CONTENT_SCALE(x) (f32)    (x)
+#define RES(x) \
+    (f32)((x)*resolutionmanager::getInstance()->Scale())
 
- //#define TEST_PHONE_SCALE
+#define NORES(x) \
+    (x)
+
+#define CONTENT_SCALE(x) \
+    (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
+
+#define PHONE_SCALE(x) (f32) \
+    ((x)*resolutionmanager::getInstance()->phoneScale())
+
+#define TEST_PHONE_SCALE
 
 constexpr f32 PhoneScale = 1.75f;
 
