@@ -107,9 +107,18 @@ bool resolutionmanager::calcDisplayInfo ( void )
     float diagonalInches = sqrtf(xInches * xInches + yInches * yInches);
     diagonalInches = roundf(diagonalInches * 100.0f) / 100.0f;
     
-    
+#if !defined(_OS_DESKTOP_)
     isTablet = (diagonalInches >= 7.0f);
+    isPhone = !isTablet;
+#else
+    isTablet = false;
+    isPhone = false;
+#endif
     
+#if defined(TEST_PHONE_SCALE)
+    isPhone = true;
+    isTablet = false;
+#endif
     
     
     s32 res = 0; //findPredefinedResolution(width, height) ;

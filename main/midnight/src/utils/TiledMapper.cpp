@@ -36,7 +36,7 @@ TMXTiledMap* TiledMapper::createTMXMap(const mapbuilder* builder)
     t1->_firstGid=1;
     t1->_tileSize = tmxMapInfo->getTileSize();
     t1->_originSourceImage = "map_tiles.png";
-    t1->_sourceImage = scenario + "/" + res->current_resolution.folder +  "/terrain/" + t1->_originSourceImage;
+    t1->_sourceImage = scenario + "/" + res->Folder() +  "/terrain/" + t1->_originSourceImage;
     
     tmxMapInfo->getTilesets().pushBack(t1);
     t1->release();
