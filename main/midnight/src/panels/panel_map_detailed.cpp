@@ -66,14 +66,14 @@ bool panel_map_detailed::init()
     // Command Window
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
-    uihelper::AddBottomLeft(this, look, RES(10), RES(10) );
+    uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
   
     auto map = uihelper::CreateImageButton("i_big_map", ID_MAP_OVERVIEW, clickCallback);
-    uihelper::AddBottomRight(this, map, RES(10), RES(10) );
+    uihelper::AddBottomRight(safeArea, map, RES(10), RES(10) );
   
     
-    int adjy=RES(32)*scale;
-    int r = RES(64) * scale;
+    int adjy=RES(32); //*scale;
+    int r = RES(64); // * scale;
     
     createFilterButton(ID_FILTER_CURRENT_LOC,   (r*1)-adjy, "i_center", map_filters::centre_char);
     createFilterButton(ID_FILTER_CRITTERS,      (r*2)-adjy, "i_critters", map_filters::show_critters);
@@ -271,7 +271,8 @@ uifilterbutton* panel_map_detailed::createFilterButton( layoutid_t id, s32 y, co
 {
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
-    button->setScale(resolutionmanager::getInstance()->phoneScale());
+    // #40 temporary fix
+    //button->setScale(resolutionmanager::getInstance()->phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
     uihelper::AddTopRight(safeArea, button, RES(32), y );
