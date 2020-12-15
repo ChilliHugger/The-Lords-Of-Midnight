@@ -42,6 +42,8 @@ uihelpwindow* uihelpwindow::create(uipanel* parent, helpid_t id)
     return nullptr;
 }
 
+std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) ;
+
 bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
 {
     if ( parent == nullptr )
@@ -71,7 +73,10 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     this->id = id;
     this->parent->retain();
     
-    auto text = parent->GetMoonring()->help->Get(id);
+    std::string text = parent->GetMoonring()->help->Get(id);
+    
+    text = ReplaceAll( text, "\t", "    ");
+    
     
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );
@@ -83,8 +88,8 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     //
     f32 layout_padding = PHONE_SCALE(RES(32));
     f32 border = PHONE_SCALE(RES(8));
-    f32 width = PHONE_SCALE(RES(800));
-    f32 maxHeight = PHONE_SCALE(RES(500));
+    f32 width = std::min<f32>( this->getContentSize().width-RES(128), PHONE_SCALE(RES(800)));
+    f32 maxHeight = std::min<f32>( this->getContentSize().height-RES(128), PHONE_SCALE(RES(500)));
     f32 innerWidth = width-(2*layout_padding);
     
     // layout
@@ -102,7 +107,6 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     auto label = Label::createWithTTF(uihelper::font_config_big, text);
     label->setColor(_clrDarkRed);
     label->setAlignment(TextHAlignment::LEFT);
-    //label->setLineHeight(RES(FONT_SIZE_BIG));
     label->setLineSpacing(0);
     label->setMaxLineWidth(innerWidth);
     label->enableWrap(true);
