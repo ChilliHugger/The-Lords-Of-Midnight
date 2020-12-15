@@ -218,7 +218,7 @@ f32 LandscapeGenerator::NormaliseXPosition(f32 x)
     
     // Boundary in panoramic units
     f32 boundary = LANDSCAPE_DIR_STEPS*3;
-    f32 maxScreenX = LRES(1600);
+    f32 maxScreenX = landscapeScreenWidth+LRES(512);
     f32 minScreenX = LRES(-512);
     
     // to the left

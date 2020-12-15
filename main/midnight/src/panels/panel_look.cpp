@@ -49,6 +49,8 @@ enum tagid_t {
     TAG_EXIT_TUNNEL_DONE=8,
 };
 
+//#define _SHOW_LANDSCAPE_TRAMLINES_
+
 
 #define SHIELD_WIDTH    RES(192)
 #define SHIELD_HEIGHT   RES(224)
@@ -220,20 +222,20 @@ bool panel_look::init()
     
     // Direction movement indicators
     setupMovementIndicators();
-    
-//    auto size = getContentSize();
-//    f32 landscapeWidth = size.height*1.3333;
-//    landscapeTramline = ((size.width - landscapeWidth)/2)*1.05;
-//    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - landscapeTramline;
-//
-//    gradientL = DrawNode::create();
-//    uihelper::AddBottomLeft(this, gradientL, 0, 0);
-//    gradientL->setLocalZOrder(ZORDER_FAR+1);
-//
-//    gradientR = DrawNode::create();
-//    uihelper::AddBottomRight(this, gradientR, 0, 0);
-//    gradientR->setLocalZOrder(ZORDER_FAR+1);
 
+
+    auto size = getContentSize();
+    f32 landscapeWidth = size.height*1.3333;
+    landscapeTramline = ((size.width - landscapeWidth)/2)*1.05;
+    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - landscapeTramline;
+
+#if defined(_SHOW_LANDSCAPE_TRAMLINES_)
+    gradientL = DrawNode::create();
+    gradientL->setContentSize(size);
+    uihelper::AddBottomLeft(this, gradientL, 0, 0);
+    gradientL->setLocalZOrder(ZORDER_FAR+1);
+#endif
+    
     return true;
 }
 
@@ -550,6 +552,8 @@ void panel_look::UpdateLandscape()
     }
     
     options.generator->horizontalOffset = options.lookAmount;
+    options.generator->landscapeScreenWidth = getContentSize().width ;
+
     
     if ( current_info->tunnel ) {
         current_view = TunnelView::create(&options);
@@ -570,17 +574,17 @@ void panel_look::UpdateLandscape()
 #if defined(_DDR_)
     //options.colour->updateNode(imgHeader);
     imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
-
 #endif
  
-//    auto size = getContentSize();
-//    auto backgroundColour = Color4F(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline));
-//    gradientL->clear();
-//    gradientL->drawSolidRect(Vec2::ZERO, Vec2(landscapeTramline,size.height),backgroundColour);
-//    gradientL->drawSolidRect(Vec2(size.width-landscapeTramline,0), Vec2(size.width,size.height),backgroundColour);
-//    gradientL->setOpacity(ALPHA(0.25));
-//    //gradientL->drawSolidRect(Vec2(0,0), Vec2(size.width/2,size.height),backgroundColour);
-
+#if defined(_SHOW_LANDSCAPE_TRAMLINES_)
+    auto size = getContentSize();
+    auto backgroundColour = Color4F(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+    gradientL->clear();
+    gradientL->drawSolidRect(Vec2::ZERO, Vec2(landscapeTramline,size.height),backgroundColour);
+    gradientL->drawSolidRect(Vec2(size.width-landscapeTramline,0), Vec2(size.width,size.height),backgroundColour);
+    gradientL->setOpacity(ALPHA(alpha_1qtr));
+#endif
+    
 }
 
 void panel_look::addTouchListener()
