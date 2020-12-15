@@ -340,7 +340,7 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     f32 width = RES(512);
     if(resolutionmanager::getInstance()->IsPhoneScaleEnabled())
     {
-        width+=RES(128);
+        width+=RES(128+64);
     }
     
     f32 contentWidth = safeArea->getContentSize().width;

@@ -57,7 +57,7 @@ enum tagid_t {
 
 #if defined(_LOM_)
 #define DESCRIPTION_COLOUR  _clrWhite
-#define SHIELD_X        RES(0)
+#define SHIELD_X        RES(8)
 #define SHIELD_Y        RES(16)
 #define SHIELD_SCALE    1.0f
 #endif
@@ -140,7 +140,7 @@ bool panel_look::init()
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32));
-    lblNameAdjust = RES(32) ;
+    lblNameAdjust = PHONE_SCALE(RES(32)) ;
 #endif
 
     // Location Desction Label
@@ -197,9 +197,9 @@ bool panel_look::init()
     i_help = uihelper::CreateImageButton("i_tutorial_flash", ID_HELP, clickCallback);
     i_help->setVisible(false);
 #if defined(_DDR_)
-    uihelper::AddTopRight(safeArea, i_help, RES(10), HEADER_HEIGHT-RES(32) );
+    uihelper::AddTopRight(safeArea, i_help, RES(8), HEADER_HEIGHT-RES(32) );
 #else
-    uihelper::AddTopRight(safeArea, i_help, RES(10), RES(10) );
+    uihelper::AddTopRight(safeArea, i_help, RES(0), RES(8) );
 #endif
     
     

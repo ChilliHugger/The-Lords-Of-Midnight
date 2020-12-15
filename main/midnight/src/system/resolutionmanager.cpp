@@ -215,13 +215,13 @@ s32 resolutionmanager::findAspectRatio(f32 width, f32 height)
 padding resolutionmanager::getSafeArea()
 {
     padding result;
-    result.left = safeAreaLeftPadding;
-    result.top = safeAreaTopPadding;
-    result.right = safeAreaRightPadding;
-    result.bottom = safeAreaBottomPadding;
+
+    auto r = Director::getInstance()->getSafeAreaRect();
     
-    //auto r = Director::getInstance()->getSafeAreaRect();
+    auto director = Director::getInstance();
     
+    result.left = result.right = r.origin.x /  director->getOpenGLView()->getContentScaleFactor();
+
     return result;
 }
 
