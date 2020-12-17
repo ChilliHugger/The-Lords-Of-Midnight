@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_0" orientation="landscape" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,24 +16,33 @@
                         <viewControllerLayoutGuide type="bottom" id="1GT-JT-c6t"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="YZh-KN-0Xq">
-                                <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qre-2y-GkV" userLabel="Sky">
-                                        <rect key="frame" x="0.0" y="0.0" width="1366" height="724"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="226"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenBackground2.png" translatesAutoresizingMaskIntoConstraints="NO" id="QWJ-Ti-yyi">
+                                                <rect key="frame" x="0.0" y="0.0" width="568" height="226"/>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="227.5" id="uWa-dM-yPu"/>
+                                            <constraint firstAttribute="bottom" secondItem="QWJ-Ti-yyi" secondAttribute="bottom" id="4Sn-FG-rgn"/>
+                                            <constraint firstItem="QWJ-Ti-yyi" firstAttribute="leading" secondItem="qre-2y-GkV" secondAttribute="leading" id="BM2-Rk-1Jo"/>
+                                            <constraint firstAttribute="trailing" secondItem="QWJ-Ti-yyi" secondAttribute="trailing" id="PGI-BL-8sd"/>
+                                            <constraint firstItem="QWJ-Ti-yyi" firstAttribute="top" secondItem="qre-2y-GkV" secondAttribute="top" id="mNX-QT-XPM"/>
+                                            <constraint firstAttribute="height" constant="200" id="uWa-dM-yPu"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ie1-fG-CqH" userLabel="Floor">
-                                        <rect key="frame" x="0.0" y="724" width="1366" height="300"/>
+                                        <rect key="frame" x="0.0" y="226" width="568" height="94"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doomdark's Revenge" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1X-3F-c5F">
-                                                <rect key="frame" x="432" y="121" width="502" height="58"/>
+                                                <rect key="frame" x="133.5" y="29.5" width="301" height="35"/>
                                                 <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="50"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -43,7 +53,7 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.12941176470588234" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="300" id="2YI-pF-GUe"/>
+                                            <constraint firstAttribute="height" constant="200" id="2YI-pF-GUe"/>
                                             <constraint firstItem="D1X-3F-c5F" firstAttribute="centerY" secondItem="ie1-fG-CqH" secondAttribute="centerY" id="UOd-KA-MW0"/>
                                             <constraint firstItem="D1X-3F-c5F" firstAttribute="centerX" secondItem="ie1-fG-CqH" secondAttribute="centerX" id="phe-B6-3Zo"/>
                                         </constraints>
@@ -57,7 +67,7 @@
                                 </constraints>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="LaunchScreenBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="cIa-z3-HXZ">
-                                <rect key="frame" x="0.0" y="0.0" width="1366" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="246"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -82,6 +92,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenBackground.png" width="2048" height="2028"/>
+        <image name="LaunchScreenBackground.png" width="2000" height="2000"/>
+        <image name="LaunchScreenBackground2.png" width="64" height="203"/>
     </resources>
 </document>
