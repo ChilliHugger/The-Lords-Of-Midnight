@@ -213,6 +213,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1C78D38B8FEA4E8181FA855EA5523B1E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1C83F7B43A2741938482168A0376CB78"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1341,12 +1347,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D41DC715F9A842F2A6A31FD0018B8CE2"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_D5DA1ACCF6F744EE90B8B10A796B8D70"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -2396,6 +2396,26 @@
             "TargetName" = "8:f_korinel.png"
             "Tag" = "8:"
             "Folder" = "8:_7A7170459D2846FD9BD387ABDAB78B9E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1C78D38B8FEA4E8181FA855EA5523B1E"
+            {
+            "SourcePath" = "8:..\\..\\..\\proj.win32\\midnight\\icon.ico"
+            "TargetName" = "8:icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_DD31610A2FED40B9AAC85824305B2084"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -6170,26 +6190,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D41DC715F9A842F2A6A31FD0018B8CE2"
-            {
-            "SourcePath" = "8:..\\..\\..\\proj.win32\\res\\icon.ico"
-            "TargetName" = "8:icon.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_DD31610A2FED40B9AAC85824305B2084"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5DA1ACCF6F744EE90B8B10A796B8D70"
             {
             "SourcePath" = "8:..\\vs_project\\bin\\midnight\\Release\\Resources\\lom\\gfx_m\\shields\\s_athoril.png"
@@ -7714,7 +7714,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Lords of Midnight"
         "ProductCode" = "8:{65A7EDE6-0E27-41C6-A9AD-8D8E05418742}"
-        "PackageCode" = "8:{22ECD492-7EFE-453C-9A6C-D015E999C581}"
+        "PackageCode" = "8:{81F71884-0286-490D-A6DF-67730032F6DD}"
         "UpgradeCode" = "8:{50C10DF9-F125-49C5-948D-A546D0DB5861}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -7722,16 +7722,16 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:ChilliHugger"
+        "Manufacturer" = "8:Chilli Hugger Software Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:lords_of_midnight"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:ChiiliHugger"
+        "ARPCONTACT" = "8:Chilli Hugger Software Ltd"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_D41DC715F9A842F2A6A31FD0018B8CE2"
+        "ARPPRODUCTICON" = "8:_1C78D38B8FEA4E8181FA855EA5523B1E"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -7845,7 +7845,7 @@
             "Target" = "8:_86E270CEC85A470FB2DF5EBAC5E02475"
             "Folder" = "8:_FAF2EF475D514918B331C247306FAFE6"
             "WorkingFolder" = "8:_DD31610A2FED40B9AAC85824305B2084"
-            "Icon" = "8:_D41DC715F9A842F2A6A31FD0018B8CE2"
+            "Icon" = "8:_1C78D38B8FEA4E8181FA855EA5523B1E"
             "Feature" = "8:"
             }
         }

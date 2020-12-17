@@ -992,6 +992,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -1016,6 +1024,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -4660,7 +4676,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Doomdark's Revenge"
         "ProductCode" = "8:{9FA3280D-3830-4D5D-93F4-3C0784FFBEE2}"
-        "PackageCode" = "8:{DB8DA681-5712-473C-A231-13B564A43E4F}"
+        "PackageCode" = "8:{5AAA293D-0F6C-4879-8D9D-9ACDBA91A354}"
         "UpgradeCode" = "8:{775E658D-8EC9-46F1-A4DE-A554CDE21F51}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -4668,12 +4684,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:ChilliHugger"
+        "Manufacturer" = "8:Chilli Hugger Software Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:doomdarks_revenge"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:ChilliHugger"
+        "ARPCONTACT" = "8:Chilli Hugger Software Ltd"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
