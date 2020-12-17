@@ -28,23 +28,18 @@ bool uisinglelord::init()
 {
     if ( uilordselect::init() ) {
         
-        f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+        f32 scale = scale_normal;
         f32 width = SELECT_ELEMENT_WIDTH*scale;
         f32 height = SELECT_ELEMENT_HEIGHT*scale;
         
         setContentSize(Size(width,height));
 
-//        bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
-//        bg->setContentSize(this->getContentSize());
-//        bg->setAnchorPoint(uihelper::AnchorCenter);
-//        bg->setPosition(Vec2(0,0));
-//        addChild(bg);
-        
         selectedNode = Sprite::createWithSpriteFrameName("lord_select_circle");
         selectedNode->setColor(_clrBlue);
         selectedNode->setAnchorPoint(uihelper::AnchorCenter);
         selectedNode->setPosition(Vec2(width/2,height/2));
         selectedNode->setVisible(false);
+        selectedNode->setScale(scale);
         addChild(selectedNode);
         
         locationNode = Sprite::createWithSpriteFrameName("map_current_location");
@@ -62,11 +57,7 @@ bool uisinglelord::init()
         innerCircle->setVisible(true);
         addChild(innerCircle);
         
-        //        auto outer_circle = DrawNode::create();
-        //        outer_circle->setContentSize( this->getContentSize() );
-        //        outer_circle->drawSolidCircle(Vec2(width/2,height/2), width/2 , 0, 64, 1.0, 1.0, Color4F(0,0,0, 0.25f));
-        //        addChild(outer_circle);
-        
+
         setTouchEnabled(true);
         
         return true;
@@ -121,8 +112,10 @@ void uisinglelord::updateStatus(character& c)
 
 void uisinglelord::refreshStatus()
 {
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    
     innerCircle->setVisible( isDropFocus );
-    setScale( isDropFocus ? 1.25 : 1.0 );
+    setScale( (isDropFocus ? (scale_normal + scale_1qtr) : scale_normal) * scale );
 
     locationNode->setVisible( status.Is(LORD_STATUS::status_location) && !isDragging() && statusVisible );
     selectedNode->setVisible( status.Is(LORD_STATUS::status_selected) && !isDragging() && statusVisible );
@@ -195,21 +188,21 @@ bool uisinglelord::setLord( mxid characterid )
     title->setName("title");
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
-    title->setLineSpacing(CONTENT_SCALE(-2));
-    //title->setHeight(CONTENT_SCALE(32));
+    title->setLineSpacing(CONTENT_SCALE(0));
+    title->setHeight(RES(FONT_SIZE_SMALL)*2); // two lines
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setAnchorPoint(uihelper::AnchorCenter);
     title->setWidth(width-CONTENT_SCALE(16));
 
     title->setHorizontalAlignment(TextHAlignment::CENTER);
-    title->setVerticalAlignment(TextVAlignment::BOTTOM);
-    uihelper::AddBottomCenter(face, title, RES(0), CONTENT_SCALE(-16));
+    title->setVerticalAlignment(TextVAlignment::TOP);
+    uihelper::AddBottomCenter(face, title, RES(0), CONTENT_SCALE(0));
     
 
     // Add status image
     statusNode = getStatusImage();
     if ( statusNode!= nullptr ) {
-        statusNode->setScale(0.5f);
+        statusNode->setScale(scale_half);
         face->addChild(statusNode);
         uihelper::PositionCenterAnchor(statusNode, uihelper::AnchorTopLeft);
     }
@@ -230,7 +223,7 @@ void uisinglelord::setStatusImageVisible( bool visible )
 void uisinglelord::onPressStateChangedToNormal()
 {
     if ( buttonNode ) {
-        buttonNode->setScale(1.0f);
+        buttonNode->setScale(scale_normal);
         buttonNode->setOpacity(ALPHA(1.0f));
         if ( statusNode )
             statusNode->setOpacity(ALPHA(1.0f));
@@ -240,7 +233,7 @@ void uisinglelord::onPressStateChangedToNormal()
 void uisinglelord::onPressStateChangedToPressed()
 {
     if ( buttonNode ) {
-        buttonNode->setScale(0.75f);
+        buttonNode->setScale(scale_3qtr);
         buttonNode->setOpacity(ALPHA(1.0f));
         if ( statusNode )
             statusNode->setOpacity(ALPHA(1.0f));
@@ -250,7 +243,7 @@ void uisinglelord::onPressStateChangedToPressed()
 void uisinglelord::onPressStateChangedToDisabled()
 {
     if ( buttonNode ) {
-        buttonNode->setScale(1.0f);
+        buttonNode->setScale(scale_normal);
         buttonNode->setOpacity(ALPHA(0.25f));
         if ( statusNode )
             statusNode->setOpacity(ALPHA(0.0f));

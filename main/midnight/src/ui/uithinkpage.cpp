@@ -26,7 +26,7 @@
 #define CHARACTER_X         384
 #define CHARACTER_Y         352 //332
 #define OBJECT_Y            352 //332
-#define OBJECT_X            128
+#define OBJECT_X            (128+32)
 #define BACKGROUND_COLOUR   _clrWhite
 #define NAME_TEXT_COLOUR    _clrDarkRed
 #define TERRAIN_COLOUR      Color3B(0x00,0x00,0xA5)
@@ -42,7 +42,7 @@
 #define CHARACTER_X         190
 #define CHARACTER_Y         (768-96)
 #define OBJECT_Y            352 //332
-#define OBJECT_X            128
+#define OBJECT_X            (128+32)
 #define BACKGROUND_COLOUR   _clrCyan
 #define NAME_TEXT_COLOUR    _clrBlue
 #define TERRAIN_COLOUR      _clrBlack
@@ -153,7 +153,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
        pos = imgCharacter->getPosition();
        pos.y -= imgCharacter->getContentSize().height;
        auto color = _clrWhite ;
-       auto gradientB = uihelper::createVerticalGradient(color, RES(64), RES(56), RES(128), 1);
+       auto gradientB = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), PHONE_SCALE(RES(128)), 1);
        gradientB->setPosition(pos);
        scrollView->addChild(gradientB);
     }
@@ -166,8 +166,10 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     // Post/Recruit
     if ( this->recruitMen||this->postMen ) {
-        auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
-        gradientC->setContentSize(Size(imgTerrain->getContentSize().width,RES(64)));
+        auto color = _clrWhite ;
+        //auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(alpha_zero)), Color4B(_clrWhite,ALPHA(alpha_normal)) );
+        auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), imgTerrain->getContentSize().width, 1);
+        //gradientC->setContentSize(Size(imgTerrain->getContentSize().width,PHONE_SCALE(RES(64))));
         imgTerrain->addChild(gradientC);
         uihelper::PositionParentBottomLeft(gradientC,RES(0),RES(0));
     }
@@ -175,25 +177,27 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     y = RES(TERRAIN_Y) ;
     x = RES(TERRAIN_X) ;
    
+    s32 adjust = resolutionmanager::getInstance()->IsPhoneScaleEnabled() ? RES(32) : 0 ;
+    
     // RECRUIT SOLDIERS
     auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, clickCallback);
     recruitMen->setVisible(this->recruitMen||this->postMen);
     recruitMen->setEnabled(this->recruitMen);
-    recruitMen->setOpacity(this->recruitMen ? ALPHA(1.0) : ALPHA(0.25));
+    recruitMen->setOpacity(this->recruitMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
     recruitMen->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     imgTerrain->addChild(recruitMen);
     uihelper::PositionParentBottomCenter(recruitMen,
-                                         -(recruitMen->getContentSize().width/2)-RES(8),
+                                         -(recruitMen->getContentSize().width/2)-PHONE_SCALE(RES(8))-adjust,
                                          -recruitMen->getContentSize().height/2);
    
     // POST SOLDIERS
     auto postMen = uihelper::CreateImageButton("i_post", ID_POSTMEN, clickCallback);
     postMen->setVisible(this->recruitMen||this->postMen);
     postMen->setEnabled(this->postMen);
-    postMen->setOpacity(this->postMen ? ALPHA(1.0) : ALPHA(0.25));
+    postMen->setOpacity(this->postMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
     imgTerrain->addChild(postMen);
     uihelper::PositionParentBottomCenter(postMen,
-                                         +(postMen->getContentSize().width/2)+RES(8),
+                                         +(postMen->getContentSize().width/2)+PHONE_SCALE(RES(8))+adjust,
                                          -(postMen->getContentSize().height/2)-RES(2));
 
     
@@ -201,18 +205,28 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 #if defined(_LOM_)
     y = RES(OBJECT_Y) - imgObject->getContentSize().height;
     x = RES(OBJECT_X) - (imgObject->getContentSize().width/2);
+  
+    if (resolutionmanager::getInstance()->IsPhoneScaleEnabled())
+    {
+        y -= RES(16);
+    }
+    
     uihelper::PositionParentTopLeft(imgObject,x,y);
 
     auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
     pos = imgObject->getPosition();
     pos.y -= imgObject->getContentSize().height;
+    
     fight->setPosition(pos);
     fight->setVisible(this->fight);
     scrollView->addChild(fight);
     
     if ( this->fight ) {
-        auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
-        gradientC->setContentSize(Size(RES(128),RES(64)));
+        auto color = _clrWhite ;
+        auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), PHONE_SCALE(RES(128)), 1);
+    
+        //auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(alpha_zero)), Color4B(_clrWhite,ALPHA(alpha_normal)) );
+        //gradientC->setContentSize(Size(RES(128),RES(64)));
         gradientC->setPosition(pos);
         scrollView->addChild(gradientC);
     }

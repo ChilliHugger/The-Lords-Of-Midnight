@@ -252,7 +252,7 @@ const helpitem_t help_messages[] = {
         "\tThere are two distinct ways of winning a victory over Doomdark. The first is by war, by sending armies north to the Plains of Despair and seizing the Citadel of Ushgarak from whence Doomdark commands his foul hordes. In such a strategy, Luxor himself will play a major part as a commander in the field.\n\n"
         "\tThe second way of winning is by quest, by guiding Morkin, Luxor's son, to the Tower of Doom to destroy the Ice Crown, the source of Doomdark's power. Morkin can have no army to help him on his journey, for the Ice Crown sends forth the icefear which withers men's minds. By virtue of his birth, halfhuman, halffey, only Morkin can resist the utter coldness of the Ice Crown's power.\n\n"
         "\tIf you prefer a pure adventure just concentrate on the quest of Morkin. The armies of Doomdark will still march south to conquer Midnight but the armies of the Free will defend themselves without your guidance, even though they will not make any countermoves.\n\n"
-        "\tIf you prefer a pure war game, ignore the quest of Morkin and concentrate on the assault of Ushgarak.\n"
+        "\tIf you prefer a pure war game, ignore the quest of Morkin and concentrate on the assault of Ushgarak.\n\n"
         "\tTo play the complete epic, however, you should place equal importance on the war that Luxor directs and the quest that Morkin journeys on. Naturally enough, the complete epic takes the longest to play. Of the other options, you will find the quest the quicker game."
     }
     

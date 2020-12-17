@@ -233,11 +233,12 @@ void panel_think::createPageView()
     pageView->setBounceEnabled(true);
     pageView->setIndicatorEnabled(true);
     pageView->setCurrentPageIndex(0);
+    
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f)*scale);
+    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(1))*scale);
     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
-    
-    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f));
-    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(-5));
     
     uihelper::AddBottomLeft(this, pageView);
     uihelper::FillParent(pageView);

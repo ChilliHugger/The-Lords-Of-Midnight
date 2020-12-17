@@ -49,6 +49,8 @@ enum tagid_t {
     TAG_EXIT_TUNNEL_DONE=8,
 };
 
+//#define _SHOW_LANDSCAPE_TRAMLINES_
+
 
 #define SHIELD_WIDTH    RES(192)
 #define SHIELD_HEIGHT   RES(224)
@@ -57,7 +59,7 @@ enum tagid_t {
 
 #if defined(_LOM_)
 #define DESCRIPTION_COLOUR  _clrWhite
-#define SHIELD_X        RES(0)
+#define SHIELD_X        RES(8)
 #define SHIELD_Y        RES(16)
 #define SHIELD_SCALE    1.0f
 #endif
@@ -140,7 +142,7 @@ bool panel_look::init()
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32));
-    lblNameAdjust = RES(32) ;
+    lblNameAdjust = PHONE_SCALE(RES(32)) ;
 #endif
 
     // Location Desction Label
@@ -148,7 +150,7 @@ bool panel_look::init()
     lblDescription->getFontAtlas()->setAntiAliasTexParameters();
     lblDescription->setTextColor(Color4B(DESCRIPTION_COLOUR));
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
-    lblDescription->setWidth(RES(800-64));
+    lblDescription->setWidth(getContentSize().width*0.70f);
     uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(32)+lblNameAdjust);
 
     // Shield
@@ -197,9 +199,9 @@ bool panel_look::init()
     i_help = uihelper::CreateImageButton("i_tutorial_flash", ID_HELP, clickCallback);
     i_help->setVisible(false);
 #if defined(_DDR_)
-    uihelper::AddTopRight(safeArea, i_help, RES(10), HEADER_HEIGHT-RES(32) );
+    uihelper::AddTopRight(safeArea, i_help, RES(8), HEADER_HEIGHT-RES(32) );
 #else
-    uihelper::AddTopRight(safeArea, i_help, RES(10), RES(10) );
+    uihelper::AddTopRight(safeArea, i_help, RES(0), RES(8) );
 #endif
     
     
@@ -220,20 +222,20 @@ bool panel_look::init()
     
     // Direction movement indicators
     setupMovementIndicators();
-    
+
+
     auto size = getContentSize();
     f32 landscapeWidth = size.height*1.3333;
     landscapeTramline = ((size.width - landscapeWidth)/2)*1.05;
     options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - landscapeTramline;
-   
+
+#if defined(_SHOW_LANDSCAPE_TRAMLINES_)
     gradientL = DrawNode::create();
+    gradientL->setContentSize(size);
     uihelper::AddBottomLeft(this, gradientL, 0, 0);
     gradientL->setLocalZOrder(ZORDER_FAR+1);
-
-    gradientR = DrawNode::create();
-    uihelper::AddBottomRight(this, gradientR, 0, 0);
-    gradientR->setLocalZOrder(ZORDER_FAR+1);
-
+#endif
+    
     return true;
 }
 
@@ -550,6 +552,8 @@ void panel_look::UpdateLandscape()
     }
     
     options.generator->horizontalOffset = options.lookAmount;
+    options.generator->landscapeScreenWidth = getContentSize().width ;
+
     
     if ( current_info->tunnel ) {
         current_view = TunnelView::create(&options);
@@ -570,17 +574,17 @@ void panel_look::UpdateLandscape()
 #if defined(_DDR_)
     //options.colour->updateNode(imgHeader);
     imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
-
 #endif
  
+#if defined(_SHOW_LANDSCAPE_TRAMLINES_)
     auto size = getContentSize();
     auto backgroundColour = Color4F(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline));
     gradientL->clear();
     gradientL->drawSolidRect(Vec2::ZERO, Vec2(landscapeTramline,size.height),backgroundColour);
     gradientL->drawSolidRect(Vec2(size.width-landscapeTramline,0), Vec2(size.width,size.height),backgroundColour);
-    gradientL->setOpacity(ALPHA(0.25));
-    //gradientL->drawSolidRect(Vec2(0,0), Vec2(size.width/2,size.height),backgroundColour);
-
+    gradientL->setOpacity(ALPHA(alpha_1qtr));
+#endif
+    
 }
 
 void panel_look::addTouchListener()

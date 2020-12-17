@@ -26,6 +26,7 @@
 #include "../ui/uioptionitem.h"
 
 #include "settingsmanager.h"
+#include "configmanager.h"
 #include "moonring.h"
 #include "../ui/uipanel.h"
 
@@ -299,9 +300,12 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
 void panelmanager::showMainMenu()
 {
 #if defined(_DEBUG_GAME_PANEL_)
-    storyid_t story = mr->getCurrentStory();
-    if ( story != STORY_NONE ) {
-        mr->continueStory( story );
+    if(!mr->config->start_on_panel.IsEmpty())
+    {
+        storyid_t story = mr->getCurrentStory();
+        if ( story != STORY_NONE ) {
+            mr->continueStory( story );
+        }
     }else
 #endif
     {

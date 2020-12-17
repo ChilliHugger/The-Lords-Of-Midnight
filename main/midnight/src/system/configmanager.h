@@ -9,6 +9,8 @@
 #ifndef configmanager_hpp
 #define configmanager_hpp
 
+#include <stdio.h>
+
 #include "../library/inc/mxtypes.h"
 #include "ringcontroller.h"
 
@@ -27,6 +29,8 @@ public:
     bool keep_full_save_history;
     bool always_undo;
     u32 undo_history;
+    
+    c_str start_on_panel;
 };
 
 #endif /* configmanager_h */

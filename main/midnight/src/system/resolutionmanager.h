@@ -51,15 +51,29 @@ public:
     
     bool calcDisplayInfo();
 
-    f32 Width() { return current_resolution.width; } ;
-    f32 Height() { return current_resolution.height; } ;
-    u32 Aspect() { return current_resolution.aspect; } ;
-    f32 AspectScale() { return current_resolution.aspect_scale; }  ;
-    f32 Scale() { return current_resolution.screen_scale; }  ;
-    f32 ContentScale() { return current_resolution.content_scale; } ;
-    f32 GraphicsScale() { return current_resolution.graphics_scale; } ;
+    f32 Width() { return current_resolution.width; }
+    f32 Height() { return current_resolution.height; }
+    u32 Aspect() { return current_resolution.aspect; }
+    f32 AspectScale() { return current_resolution.aspect_scale; }
+    f32 Scale() { return current_resolution.screen_scale; }
+    f32 ContentScale() { return current_resolution.content_scale; }
+    f32 GraphicsScale() { return current_resolution.graphics_scale; }
+    std::string& Folder() { return current_resolution.folder; }
   
     f32 phoneScale();
+
+
+    
+#if defined(_OS_DESKTOP_)
+    bool IsDesktop() { return true; }
+#else
+    bool IsDesktop() { return false; }
+#endif
+
+    bool IsPhone() { return isPhone; }
+    bool IsTablet() { return isTablet; }
+    bool IsPhoneScaleEnabled() { return isPhone && phoneScale() != 1.0f; }
+
     
     padding getSafeArea();
     
@@ -68,20 +82,29 @@ protected:
     s32 findNearestResolution(f32 width, f32 height);
     s32 findAspectRatio(f32 width, f32 height);
 
-public:
+private:
     
     resolution_support current_resolution;
+    
     bool isTablet;
-
+    bool isPhone;
 };
 
-#define RES(x) (f32)((x)*resolutionmanager::getInstance()->Scale())
-#define NORES(x)    (x)
-#define CONTENT_SCALE(x) (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
-//#define CONTENT_SCALE(x) (f32)    (x)
+#define RES(x) \
+    (f32)((x)*resolutionmanager::getInstance()->Scale())
 
+#define NORES(x) \
+    (x)
 
+#define CONTENT_SCALE(x) \
+    (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
 
+#define PHONE_SCALE(x) (f32) \
+    ((x)*resolutionmanager::getInstance()->phoneScale())
+
+//#define TEST_PHONE_SCALE
+
+constexpr f32 PhoneScale = 1.75f;
 
 
 

@@ -29,22 +29,33 @@ uitextmenu* uitextmenu::create( f32 width, uitextmenuitem* items, u32 count )
 
 
 
-bool uitextmenu::initWithItems( f32 width, uitextmenuitem* items, u32 count )
+bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count )
 {
     if ( count == 0 || items == nullptr )
         return false;
     
     if ( !initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
         return false;
+ 
+    auto rm = resolutionmanager::getInstance();
+    
+    f32 phoneYPadding = RES(0);
     
     this->items = items;
     this->items_count = count;
     
-    paddingY = RES(30);
-    this->width = width;
-    this->setContentSize(Size(width, RES(128)) );
+    paddingY = PHONE_SCALE(RES(20));
+    this->width = menuwidth;
+
+    if(rm->IsPhoneScaleEnabled())
+    {
+        width+=RES(64);
+        phoneYPadding = RES(16);
+    }
+    
+    this->setContentSize(Size(width, PHONE_SCALE(RES(128))) );
     this->setColor(Color3B::BLACK);
-    this->setOpacity(ALPHA(0.25));
+    this->setOpacity(ALPHA(alpha_1qtr));
     
     // menu
     mainmenu = Menu::create();
@@ -62,7 +73,7 @@ bool uitextmenu::initWithItems( f32 width, uitextmenuitem* items, u32 count )
         auto menuItem = MenuItemLabel::create(label);
         menuItem->setTag(item->id);
         mainmenu->addChild(menuItem);
-    
+                
         auto r = menuItem->getBoundingBox();
         height += r.size.height;
         
@@ -73,6 +84,8 @@ bool uitextmenu::initWithItems( f32 width, uitextmenuitem* items, u32 count )
         } );
 
     }
+
+    height += (phoneYPadding*(items_count-1));
     
     // resize background based on content
     this->setContentSize(Size(width,height+(2*paddingY)) );
@@ -92,7 +105,7 @@ bool uitextmenu::initWithItems( f32 width, uitextmenuitem* items, u32 count )
 
         item->setAnchorPoint( uihelper::AnchorTopCenter );
         item->setPosition(offset);
-        offset.y -= item->getBoundingBox().size.height;
+        offset.y -= item->getBoundingBox().size.height+phoneYPadding;
     }
 
     return true;

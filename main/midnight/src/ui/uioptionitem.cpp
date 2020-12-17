@@ -31,29 +31,28 @@ bool uioptionitem::initWithItem(f32 width, uitextmenuitem* item)
         return false;
     
     //f32 itemHeight = uihelper::font_config_big.fontSize;
-    f32 paddingY = RES(10);
+    f32 paddingY = PHONE_SCALE(RES(8));
     f32 height=0;
     
     title = Label::createWithTTF( uihelper::font_config_big, item->type.text );
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setTextColor(Color4B(_clrBlue));
-    //title->setLineHeight(itemHeight);
     addChild(title);
     height += title->getBoundingBox().size.height;
     
     value = Label::createWithTTF(uihelper::font_config_big, "OPTION" );
     value->getFontAtlas()->setAntiAliasTexParameters();
     value->setTextColor(Color4B(_clrRed));
-    //value->setLineHeight(itemHeight);
     addChild(value);
-    height += value->getBoundingBox().size.height;
+    f32 y = PHONE_SCALE(RES(4));
+    height += value->getBoundingBox().size.height + y;
     
     this->setContentSize(Size(width,height+(2*paddingY)) );
 
-    uihelper::PositionParentCenter(title, 0, 0 );
+    uihelper::PositionParentCenter(title, 0, (y/2) );
     title->setAnchorPoint( uihelper::AnchorBottomCenter );
     
-    uihelper::PositionParentCenter(value, 0, 0 );
+    uihelper::PositionParentCenter(value, 0, -(y/2) );
     value->setAnchorPoint( uihelper::AnchorTopCenter );
     
     return true;

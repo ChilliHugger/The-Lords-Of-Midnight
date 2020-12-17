@@ -95,6 +95,7 @@ public:
     tme::loc_t	loc;
     f32     looking;
     f32     horizontalOffset;
+    f32     landscapeScreenWidth;
 
     
 };
