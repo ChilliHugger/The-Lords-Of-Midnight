@@ -1,6 +1,6 @@
 # Building on OSX
 
-[TOC]
+
 
 ## Install CMake
 

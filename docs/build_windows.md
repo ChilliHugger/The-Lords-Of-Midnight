@@ -1,6 +1,6 @@
 # Building on Windows
 
-[TOC]
+
 
 ## For both Lords Of Midnight and Doomdark's Revenge
 
@@ -53,23 +53,23 @@ cmake ..\..\.. -G"Visual Studio 16 2019" -A Win32 -DTME:string=LOM
 - Open Visual Studio solution 'midnight.sln' from within 'main\midnight\build.win32\midnight\vs_project'
 - Change target to 'Release':
 
-![Change target to Release](images\build_windows_release.png)
+![Change target to Release](images/build_windows_release.png)
 
 - From Solution Explorer expand 'CMakePredefinedTargets', expand 'ALL_BUILD', right click on 'CMakeLists.txt' and select 'Properties':
 
-  ![Edit ALL_BUILD CMakelist.txt](images\build_windows_all_build_cmakelists.png)
+  ![Edit ALL_BUILD CMakelist.txt](images/build_windows_all_build_cmakelists.png)
 
 - From 'Properties' dialog, select 'Custom Build Tool\General', edit 'Command Line':
 
-  ![Edit Command Line](images\build_windows_all_build_cmakelists_edit.png)
+  ![Edit Command Line](images/build_windows_all_build_cmakelists_edit.png)
 
 - Add '-DTME=LOM' to 'Command Line':
 
-  ![Add TME property](images\build_windows_all_build_cmakelists_edit_tme.png)
+  ![Add TME property](images/build_windows_all_build_cmakelists_edit_tme.png)
 
 - From Solution Explorer expand 'CMakePredefinedTargets', right click on 'ALL_BUILD' and select 'Build'. Wait for build to complete.
 
-![Build 'ALL_BUILD'](images\build_windows_all_build.png)
+![Build 'ALL_BUILD'](images/build_windows_all_build.png)
 
 - From Solution Explorer, right click on 'midnight' and select 'Set as Startup Project'.
 
@@ -81,7 +81,7 @@ cmake ..\..\.. -G"Visual Studio 16 2019" -A Win32 -DTME:string=LOM
 
 - If needing to debug code, change target to 'Debug', click on 'Local Windows Debugger':
 
-  ![Debugging](images\build_windows_debug.png)
+  ![Debugging](images/build_windows_debug.png)
 
 
 
@@ -93,7 +93,7 @@ A pre-defined project is built already present to support building installer fro
 - Open solution 'lords_of_midnight.sln' from 'main\midnight\build.win32\midnight\installer'.
 - Change target to 'Release', from 'Solution Explorer' right-click on 'lords_of_midnight' and click on 'Build':
 
-![Create installer](images\installer_windows_build.png)
+![Create installer](images/installer_windows_build.png)
 
 - Your installer can now be found under 'main\midnight\build.win32\midnight\installer\Release\'
 
