@@ -54,7 +54,7 @@ Node* shadermanager::AddCharacterTimeShader(Node* node)
 
 void shadermanager::CreateTerrainTimeShader()
 {
-    terrainTimeShader = SimpleShader::createWithFragmentShader("terrain/terrainTimeShader.fsh");
+    terrainTimeShader = SimpleShader::createWithFragmentShader("shaders/terrainTimeShader.fsh");
     terrainTimeShader->setUniform("p_left", Vec4(0,0,(165.0f/255.0f),alpha_normal));   // Outline
     terrainTimeShader->setUniform("p_right", Vec4(1,1,1,alpha_normal));                // Body
     terrainTimeShader->setUniform("p_alpha", alpha_normal);                            // Alpha
