@@ -12,7 +12,7 @@
 ### Install Visual Studio 19
 
 - Download Visual Studio 19 community edition from: https://visualstudio.microsoft.com/
-- Install making sure that you select "Game development with C++" from Workloads tab.
+- Install making sure that you select "Game development with C++" and "Microsoft Visual Studio Installer Projects" from Workloads tab.
 
 ### Install coco2d
 

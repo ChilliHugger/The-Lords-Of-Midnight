@@ -5,8 +5,8 @@
 #include "../platform/mac/DeviceExt-mac.h"
 #endif
 
-#if defined(_OS_WINDOWS_)
-#include "../platform/win32/DeviceExt-win.h"
+#if defined(_OS_WIN32_)
+#include "../platform/win32/DeviceExt-win32.h"
 #endif
 
 #include "base/CCDirector.h"
