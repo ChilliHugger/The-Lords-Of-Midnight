@@ -15,6 +15,10 @@
 #include <string>
 #endif
 
+#ifdef __ANDROID__
+#define _UNIX_
+#endif
+
 #include <functional>
 
 typedef std::function<void(void)> MXVoidCallback;
@@ -138,11 +142,15 @@ namespace chilli {
         typedef unsigned short        u16;
         typedef signed int            s32;
         typedef unsigned int        u32;
+
         // define int64 signed and unsigned
         #if defined(_UNIX_) || defined(_LINUX_)
             typedef signed long long    s64;
             typedef unsigned long long    u64;
         #else
+//            typedef uint64_t u64;
+//            typedef int64_t s64;
+
             typedef unsigned __int64    u64;
             typedef signed __int64        s64;
         #endif

@@ -51,7 +51,6 @@ namespace chilli {
         u32 BSub(u32 value, u32 amount, u32 min);
         u32 BAdd(u32 value, u32 amount, u32 max);
 
-        bool isNumber( LPCSTR string );
         long atol( LPCSTR text );
 
     }

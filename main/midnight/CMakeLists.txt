@@ -31,6 +31,9 @@ if(TME STREQUAL "LOM")
 elseif(TME STREQUAL "DDR")
   set(APP_BUILD _DDR_)
   set(APP_NAME revenge)
+else()
+  set(APP_BUILD _LOM_)
+  set(APP_NAME midnight)
 endif()
 
 
@@ -118,7 +121,6 @@ add_compile_options("-D${APP_BUILD}")
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-    set(APP_NAME MyGame)
     list(APPEND GAME_SOURCE
          proj.android/app/jni/hellocpp/main.cpp
          )

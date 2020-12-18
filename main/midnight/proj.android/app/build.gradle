@@ -4,18 +4,19 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
+    ndkVersion "22.0.7026061"
 
     defaultConfig {
-        applicationId "com.chillihugger.lordsofmidnight"
+        applicationId "com.chillihugger.midnight"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 1
-        versionName "1.0"
+        versionCode 20
+        versionName "2.0"
 
         externalNativeBuild {
             cmake {
-                targets 'MyGame'
-                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                targets 'midnight'
+                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=LOM"
                 cppFlags "-frtti -fexceptions -fsigned-char"
             }
         }
@@ -80,7 +81,7 @@ android.applicationVariants.all { variant ->
     delete dest_assets_folder
     def targetName = variant.name.capitalize()
     def copyTaskName = "copy${targetName}ResourcesToAssets"
-    
+
     tasks.register(copyTaskName) {
         copy {
             from "${buildDir}/../../../Resources"
