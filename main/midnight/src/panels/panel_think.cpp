@@ -155,7 +155,13 @@ void panel_think::setObject(mxid id)
     
     // build this list
     u32 index=0;
+    u32 currentIndex=0;
     for( uithinkpage* page : pages ) {
+        
+        if(page->Id() == id)
+        {
+            currentIndex=index;
+        }
         
         auto layout = Layout::create();
         layout->setContentSize(pageView->getContentSize());
@@ -188,16 +194,6 @@ void panel_think::setObject(mxid id)
         showButton(ID_THINK_PLACE, false );
     }
     
-//    CLEARARRAY( enabled_tabs );
-//    if ( i_army->isEnabled() )
-//        enabled_tabs[1]=MODE_THINK_ARMY;
-//    if ( i_person->isEnabled() )
-//        enabled_tabs[3]=MODE_THINK_PERSON;
-//    if ( i_place->isEnabled() )
-//        enabled_tabs[2]=MODE_THINK_PLACE;
-//    if ( i_battle->isEnabled() )
-//        enabled_tabs[0]=MODE_THINK_BATTLE;
-
     current_tab=0;
  
     switch ( currentmode ) {
@@ -207,7 +203,8 @@ void panel_think::setObject(mxid id)
             return;
         case MODE_THINK_PERSON:
         case MODE_THINK_APPROACH:
-            current_tab=3;
+            current_tab=3;// find current page index
+            pageView->setCurrentPageIndex(currentIndex);
             tintButton(ID_THINK_PERSON, _clrYellow);
             return;
         case MODE_THINK_PLACE:
@@ -221,8 +218,6 @@ void panel_think::setObject(mxid id)
         default:
             break;
     }
-    
-    
 }
 
 void panel_think::createPageView()

@@ -365,7 +365,7 @@ void panel_look::delayedSave()
     
     if ( (mr->panels->currentmode == this->currentmode)
         && recruitable_characters.Count() ) {
-        mr->showPage ( MODE_THINK_APPROACH );
+        mr->showPage ( MODE_THINK_APPROACH, recruitable_characters[0] );
     }
 }
 
