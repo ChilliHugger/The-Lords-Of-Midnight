@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 #include <ftw.h>
 
@@ -10,12 +11,17 @@
 #define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
 
 
-std::string FileUtilsExtApple::getApplicationSupportPath()
+namespace chilli
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    std::string strRet = [documentsDirectory UTF8String];
-    strRet.append("/");
-    return strRet;
+    namespace extensions
+    {
+        std::string getApplicationSupportPath()
+        {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            std::string strRet = [documentsDirectory UTF8String];
+            strRet.append("/");
+            return strRet;
+        }
+    }
 }
-

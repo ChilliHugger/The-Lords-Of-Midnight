@@ -88,7 +88,7 @@ LPCSTR moonring::getWritablePath()
     }
     
 #if defined(_OS_OSX_)
-    std::string path = FileUtilsExtApple::getApplicationSupportPath();
+    std::string path = chilli::extensions::getApplicationSupportPath();
     path.append("com.chillihugger.midnight/");
 #else
     auto path = cocos2d::FileUtils::getInstance()->getWritablePath();

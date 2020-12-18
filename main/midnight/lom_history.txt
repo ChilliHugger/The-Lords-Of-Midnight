@@ -1,0 +1,230 @@
+The Lords of Midnight
+
+Version 2.0 (20)
+1. Wider camera view dependent on device
+2. New night shader for terrain and Characters
+3. Added 'fight' option to think screen
+4. Added 'hide' option to think screen
+5. Added 'approach' option to think screen
+6. Added 'post' and 'recruit' to think screen
+7. Added 'disband' and 'leave' group to think screen
+7. Think screen now scrolls vertically
+8. Think screen now has scrolling pages
+
+Version 1.1.20
+1. Added discovery map
+2. Added 'tooltip' info on map
+3. Added cleanup button for lords on select screen
+4. Change to undo system ready for difficulty modes
+5. Added ability to UNDO from the gameover screen!
+6. Ability to undo multiple dawns
+7. Handle new screen resolutions
+8. Built for latest IOS SDK
+9. Support 64 bit devices
+10. Cosmetic changes on scrolling views - dithered
+11. Update of engine to align with Doomdark's Revenge
+12. Misc minor engine fixes ported from Doomdark's Revenge'
+
+Version 1.12
+1. FIXED: Graphic line glitch under certain terrain and various sizes
+2. FIXED: Poor quality of distant terrain
+3. FIXED ANDROID: Fixed back and home button not working correctly
+4. FIXED: Random action selection when dragging main view. ( eg. Suddenly asking, do you want night? )
+5. FIXED: Double army display
+6. FIXED ANDROID: Keep Awake not consistently working
+7. FIXED: Approach screen not appearing when entering a location with a recruitable character
+
+Version 1.11
+1. CHANGED: When fullscreen mode not supported windows modes are now still available.
+2. FIXED: Removed duplicate icon on select screen
+3. FIXED: Uses correct database - fixes missing words in text messages. eg. Night screen.
+4. ADDED: New group controls on the lord select screen.
+5. ADDED: Disband group on the lord select screen.
+6. ADDED: Leave group on think screen
+7. ADDED: Disband Group on think screen
+8. ADDED: Text on think screen to show group status
+9: ADDED: Merge group on select screen
+10. ADDED: Swap group leader on select screen
+11. ADDED: You can now move from one group to another in one movement
+12. FIXED: incorrect reporting of morkin's death when luxor dies after morkin
+13. FIXED: Scaling problems with critters on the map
+14. ADDED: Mouse Wheel scale up/down on map
+15. ADDED: Mouse Wheel page up/page down on think screen
+16. ADDED: Cleaner lord names on shields
+17. ADDED: Keys Up/Down Page Up/Page down on think screen
+18. ADDED: Keyboard shortcut to map scaler
+19. ADDED: Select lord from think screen
+20. ADDED: Multiple lord select on map screen
+21. ADDED: Non recruited characters are removed from multiple lords at the same location
+22. ADDED: Novella and Guide now prompt before starting a download
+23. ADDED: iOS/OSX option for eBook Novella or PDF Novella
+24. ADDED: Characters can be selected from the think
+
+Version 1.10
+1. ADDED: desktop support
+2. ADDED: keyboard shortcuts
+3. ADDED: Option for classic or new keyboard shortcuts
+4. ADDED: Map Zooming Pinch & spread
+5. FIXED: compass now changes location text
+6. DESKTOP: Added fullscreen and 3 window size options
+7. DESKTOP: Added mouse pointer
+8. DESKTOP: Added context to mouse pointer
+9. DESKTOP: Added zoom control on map screen
+10. DESKTOP: Added exit button
+11. FIXED: You can no longer select lords from map when not carrying the moonring
+12. FIXED: Armies no longer fight double at night
+13. FIXED: Tutorial option no longer toggled autofight
+
+Version 1.06
+1. FIXED: Cleanup of undo files sometimes caused slow down
+2. FIXED: Grouped lords actions were constrained by the leading lord
+3. FIXED: Finding a new weapon should have dropped the old weapon
+4. FIXED: Win/Lose conditions are now checked at the start of night and not and the end of it
+5. FIXED: Display of Win/Lose conditions has been tidied up on smaller resolutions
+6. FIXED: Cropped shield on main view on smaller resolutions
+7. FIXED: Position of group leader shield on main view
+8. ADDED: Grouped moving now reports the suttborn lord blocking the movement
+9. ADDED: Grouped attack now reports the suttborn lord blocking the attack
+10. ADDED: Little description of a story in the continue/end selector. Will update after a story has been loaded after the update.
+11. Tidied up tutorial window
+12. Compass has been increased in size
+13. FIXED: "Less the 1 hours of the day remain"
+14. FIXED: "utterly tired and cannot continue"
+15. FIXED: "and none riders"
+16. ADDED: Swipe left and right on think screen for next and previous
+17. ADDED: Pinch Zoom on map. ** REMOVED
+18. ADDED: Option for normal, short, long hold delays on compass.
+19. ADDED: Save select lord screen filter info per game
+20. ADDED: Save map critters filter info per game
+21. ADDED: Save overview map setting per game
+22. ADDED: Pressing screen on think for next
+23. ADDED: Swipe down on think to return to look screen
+24. ADDED: think swipe option for press/swipe
+25. ADDED: Option for slow night battle reports
+26. ADDED: Option to collate battles areas or display repeated areas
+
+Version 1.05
+1. FIXED – Lords are now displaced correctly after losing a battle
+2. FIXED – affect of Ice Fear on courage – not reducing it correctly
+3. OPTION ADDED – Auto Fight
+4. OPTION ADDED – Auto Unhide
+5. OPTION ADDED – Toggle Movement indicators
+6. ADDED – hold screen to bring up quick look compass
+7. FIXED – Armies no longer recovery too quickly
+8. FIXED – Doomdark’s armies no longer ignore lords on plains in front of their very eyes.
+9. FIXED – Lord can no longer seek when hidden.
+10. CHANGE – Alteration to what you are allowed to do when Doomguard are at the same location.
+11. CHANGE – Now allowed to fight critters at night, as long as no Doomguard there.
+12. FIXED – If Luxor dies during the night, control now goes to Morkin in the morning if controlling another lord.
+13. FIXED – If Luxor dies and Morkin hasn’t recovered the Moonring, then recruited lords no longer disappear from the game fully!
+14. CHANGED – Moved action icons around to avoid conflict between night and undo
+15. FIXED – daytime game completion scenarios being triggered by Ice Crown destruction
+16. FIXED – game over typo mistake.
+17. FIXED – Think Screen – Place option not always available
+18. FIXED – Select Screen – Small resolutions Utarg sometimes gets stuck under look icon.
+19. FIXED – Save Game / Undo – Temporary storage not being cleared down results in app storage growing overly large.
+20. CHANGE – Swipe to bring up map from look screen is now 2 fingered swipe up, and return from map screen is 2 fingered swipe down.
+21. CHANGED – Tighten hit box on shield.
+22. FIXED – stray line on certain images
+23. Cached the overview map, so to make the transition to the map screen quicker.
+24. ADDED – Undo Transition
+
+Version 1.02
+1. Names of characters using small font no longer wrap on small devices.
+3. Text after recruiting/posting soldiers has been trimmed.
+4. Number of soldiers on recruiting/posting is now correctly upper cased.
+5. Typo on Farflame destroying ice the crown message has been corrected.
+8. Minor change to help text box sizing.
+9. Minor change to help text.
+10. Tweaked positioning of names on map.
+11. Remove lag that occurred at the end of move, caused by save game.
+12. Corrected colour brightness occurring when looking left/right
+13. Tweaks to the swiping/moving on the small devices, iPhone/Touch etc…
+14. Visual indicator that the screen has been pressed for looking/movement has been added.
+15. Discovery Map display has been sped up when large portions of the map have been visited.
+16. Accuracy of the Discovery map has been tweaked. Lords and Names of places no longer appear just because they are on the map, you have to have looked at them. ( from new gameplay only )
+17. Horses, Dragons, Skulkrin, Trolls, and Wolves are now recorded on Discovery Map if you have looked at them. ( from new gameplay only )
+18. Filter to turn off item 17!
+19. Undo option added. You can perform a single undo of your last command.
+20. Undo to dawn has been added for the first day.
+21. Night button added to the Select screen.
+22. View icon changed to Look – sorry being pedantic!
+23. Pressing the choose icon when the choose options is visible, now closes the choose window.
+24. Slightly not hitting a choose icon, no longer closes the window.
+25. Removed left over AI difficulty code that would have Doomdark generating new armies that track down Morkin, Luxor, or head to Xajorkith.
+26. Progress bar added to splash screen for loading assets.
+27. Fixed downs map terrain not showing correctly over multiple locations.
+
+Version 1.01
+1. Fixed tutorial bug that causes some screens to hang after 30 seconds of inactivity
+2. Fixed selection screen from becoming erratic with too many lords
+3. Changed 3GS to have larger overview map
+4. Full iPhone5 resolution support
+5. Changed Novella to ePub format
+
+
+// TODO:
+1. Add option dialog to manual and novella. Choose iBooks or Pdf.
+3. Lakes above horizon line
+4. Map zoom on mouse wheel?
+
+FIXES
+------
+
+
+
+FEATURES
+
+
+Next Version 1.06
+2. Tweak button sizes for small devices
+3. Enlarge move button press area
+
+
+
+
+Accepted
+
+3. Difficulty Levels
+4. Option – Difficulty – Impassable Mountains
+5. Option – Difficulty – Recruited Lord starts at night
+6. Option – Difficulty – Randomise critters and objects
+7. Option – Difficulty – Replenish Lakes
+
+[easy]
+5 Undo
+10 Undo dawn
+
+[medium]
+1 undo
+5 undo dawn
+
+[hard]
+0 undo
+0 undo dawn
+
+
+Look Screen
+Add gesture for seek on look screen.
+Add gesture for next/previous lord on look screen.
+
+Graphics
+Alternate Graphic Set.
+Original Spectrum Graphic Set.
+Snow fall animation
+
+Misc
+New scenarios / campaigns
+
+Map
+Indicate stronghold ownership on map.
+
+Under Consideration
+
+The following changes are being considered for addition to a later version.
+
+Expand lords on map for same location
+Game Centre Achievements
+Information Screen for Lords/Armies/Citadels
+Soundtrack
+Sound Effects

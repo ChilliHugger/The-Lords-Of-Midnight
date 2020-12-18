@@ -1,6 +1,14 @@
 
 #include "resolutionmanager.h"
 
+#if defined(_OS_OSX_)
+#include "../platform/mac/DeviceExt-mac.h"
+#endif
+
+#if defined(_OS_WINDOWS_)
+#include "../platform/win32/DeviceExt-win.h"
+#endif
+
 #include "base/CCDirector.h"
 #include "../ui/uielement.h"
 
@@ -238,6 +246,15 @@ f32 resolutionmanager::phoneScale()
 #endif
 
 }
+
+#if defined(_OS_DESKTOP_)
+size resolutionmanager::getDesktopSize()
+{
+    s32 width,height;
+    chilli::extensions::getDesktopSize(width,height);
+    return size(width,height);
+}
+#endif
 
 
 

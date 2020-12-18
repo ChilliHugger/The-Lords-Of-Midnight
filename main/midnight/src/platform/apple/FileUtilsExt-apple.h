@@ -1,18 +1,14 @@
-#ifndef __FILEUTILS_EXT_APPLE_H__
-#define __FILEUTILS_EXT_APPLE_H__
+#pragma once
 
 #include <memory>
 #include <string>
 #include <vector>
 
-class FileUtilsExtApple
+namespace chilli
 {
-public:
-    FileUtilsExtApple();
-    virtual ~FileUtilsExtApple();
+    namespace extensions
+    {
+        std::string getApplicationSupportPath();
+    }
+}
 
-    std::string static getApplicationSupportPath();
-
-};
-
-#endif    // __FILEUTILS_EXT_APPLE_H__
