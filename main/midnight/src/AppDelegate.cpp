@@ -22,10 +22,10 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-constexpr bool IsDesktopFullScreen = true;
+constexpr bool IsDesktopFullScreen = false;
 constexpr f32 DesktopAspectRatio = 1.7777; // 16:9
 constexpr f32 DesktopWindowSizeScale = 0.75;
-//#define DesktopDebugResolution iPhoneXR
+//#define DesktopDebugResolution GooglePixel3XL
 
 static cocos2d::Size desktopResolutionSize =  iPhoneXR; //cocos2d::Size(2848, 1536); //cocos2d::Size(1024*3, 768*2);
 

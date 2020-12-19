@@ -37,3 +37,9 @@ main/midnight/ios-build
 main/midnight/proj.android/app/.cxx
 main/midnight/proj.android/.idea
 main/midnight/proj.android/app/release
+main/midnight/proj.android_ddr/.idea
+main/midnight/proj.android_ddr/app/.cxx
+main/midnight/proj.android_ddr/app/release
+main/midnight/proj.android_lom/.idea
+main/midnight/proj.android_lom/app/.cxx
+main/midnight/proj.android_lom/app/release

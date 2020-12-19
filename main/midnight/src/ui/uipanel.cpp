@@ -90,7 +90,7 @@ Node* uipanel::setBackgroundCentered( LPCSTR background )
     return image;
 }
 
-Node* uipanel::setBackgroundToHeight( LPCSTR background )
+Node* uipanel::setBackgroundToHeight( LPCSTR background, bool checkWidth )
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto p = Sprite::create((LPCSTR)background);
@@ -99,9 +99,11 @@ Node* uipanel::setBackgroundToHeight( LPCSTR background )
     f32 width = p->getContentSize().width;
     f32 height = p->getContentSize().height;
     
-    f32 w = p->getContentSize().width * scale;
-    if ( w < visibleSize.width ) {
-        scale = visibleSize.width / p->getContentSize().width ;
+    if(checkWidth){
+        f32 w = p->getContentSize().width * scale;
+        if ( w < visibleSize.width ) {
+            scale = visibleSize.width / p->getContentSize().width ;
+        }
     }
     
     p->setScale(scale, scale );
