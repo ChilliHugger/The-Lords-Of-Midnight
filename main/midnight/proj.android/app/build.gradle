@@ -7,7 +7,7 @@ android {
     ndkVersion "22.0.7026061"
 
     defaultConfig {
-        applicationId "com.chillihugger.midnight"
+        applicationId "com.chilli.midnight"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 20
