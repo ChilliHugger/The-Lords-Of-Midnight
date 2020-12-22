@@ -676,7 +676,8 @@ bool panel_look::startLookLeft ( void )
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
-    if ( options.isInTunnel ) {
+    if(mr->settings->flipscreen || options.isInTunnel)
+    {
         stopRotating(LM_ROTATE_LEFT);
         return true;
     }
@@ -722,7 +723,8 @@ bool panel_look::startLookRight ( void )
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
     
-    if ( options.isInTunnel ) {
+    if(mr->settings->flipscreen || options.isInTunnel)
+    {
         stopRotating(LM_ROTATE_RIGHT);
         return true;
     }
@@ -858,7 +860,7 @@ bool panel_look::startMoving()
     
     if ( Character_Move(c) ) {
         
-        if ( options.isInTunnel ) {
+        if ( mr->settings->flipscreen || options.isInTunnel ) {
             stopMoving();
             return true;
         }
@@ -1468,7 +1470,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     
     auto position =  touch->getLocation();
     
-    if ( mr->settings->nav_mode!=CF_NAV_SWIPE ) {
+    if ( mr->settings->nav_mode!=CF_NAV_SWIPE || mr->settings->flipscreen ) {
         
         int move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
         
@@ -1476,13 +1478,13 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
         if ( mr->settings->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
             move_press_y = size.height * 0.75 ;
         
-        else if ( mr->settings->nav_mode==CF_NAV_PRESS )
-            move_press_y = size.height ;
+        else if ( mr->settings->nav_mode==CF_NAV_PRESS || mr->settings->flipscreen)
+            move_press_y = 0; //size.height ;
         
         if ( IsLeftMouseDown  ) {
             
             
-            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
+            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
                 if ( position.y > move_press_y
                     && (position.x>RES(MOUSE_LOOK_BLEED)
                         && position.x < imgShield->getPosition().x ) ) {
@@ -1506,7 +1508,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
             if ( currentMovementIndicator == LM_NONE )
                 return true;
             
-            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK) {
+            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
                 if ( position.y > move_press_y
                     && (position.x>RES(MOUSE_LOOK_BLEED)
                             && position.x < imgShield->getPosition().x ) ) {
@@ -1590,9 +1592,9 @@ bool panel_look::allowDragDownMove()
 bool panel_look::allowDragLook()
 {
     int value = mr->settings->nav_mode ;
-    if ( value != CF_NAV_PRESS && value != CF_NAV_SWIPE_MOVE_PRESS_LOOK )
-        return  TRUE;
-    return FALSE;
+    if ( value != CF_NAV_PRESS && value != CF_NAV_SWIPE_MOVE_PRESS_LOOK && !mr->settings->flipscreen )
+        return  true;
+    return false;
 }
 
 void panel_look::OnSelectDrag(uidragevent* event)

@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  7
+#define CONFIG_VERSION                  8
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -126,4 +126,6 @@ public:
     int     advert_screen_count;
     BOOL    novella_pdf ;
     
+    // Version 8
+    BOOL    flipscreen;
 };
