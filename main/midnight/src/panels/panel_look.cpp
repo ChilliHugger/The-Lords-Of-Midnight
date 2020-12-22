@@ -1132,12 +1132,8 @@ bool panel_look::OnKeyboardEvent( uikeyboardevent* event )
     //
     if ( event->getKey() >= KEYCODE(1) && event->getKey() <= KEYCODE(8) ) {
         if ( event->isShift() ) {
-            mxdir_t dir = (mxdir_t)((u32)event->getKey() - (u32)KEYCODE(0));
+            mxdir_t dir = (mxdir_t)((u32)event->getKey() - (u32)KEYCODE(0) -1);
             return mr->look(dir);
-            //getCurrentLocationInfo();
-            //setViewForCurrentCharacter();
-            //startInactivity();
-            //return true;
         }
     }
     
