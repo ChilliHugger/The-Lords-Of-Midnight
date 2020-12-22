@@ -1,5 +1,6 @@
 
 #include "resolutionmanager.h"
+#include "../extensions/CustomDirector.h"
 
 #if defined(_OS_OSX_)
 #include "../platform/mac/DeviceExt-mac.h"
@@ -83,12 +84,6 @@ bool resolutionmanager::init ( void )
 
 bool resolutionmanager::calcDisplayInfo ( void )
 {
-    //uimanager* ui = uimanager::singleton();
-    
-//#if defined(_OS_DESKTOP_) || defined(_OS_ANDROID_) || defined(_OS_WINDOWS_PHONE_)
-//    t_global* gl = t_global::singleton();
-//#endif
-    
     auto director = Director::getInstance();
     
     auto size = director->getOpenGLView()->getFrameSize();
@@ -99,15 +94,11 @@ bool resolutionmanager::calcDisplayInfo ( void )
     // landscape
     if ( height > width )
         std::swap(height, width);
-    
-    //UIDEBUG( "Height %d", (int)height);
-    //UIDEBUG( "Width %d", (int)width);
-    
+        
     // too big aspect ratio?
-    if ( (width/height) > 2.5 ) {
-        width = height*1.8;
-    }
-    
+    //if ( (width/height) > 2.5 ) {
+    //    width = height*1.8;
+    //}
     
     int dpi = Device::getDPI();
     float xInches = director->getWinSize().width / dpi;
@@ -129,21 +120,25 @@ bool resolutionmanager::calcDisplayInfo ( void )
 #endif
     
     
-    s32 res = 0; //findPredefinedResolution(width, height) ;
-    if ( res ) {
-        auto resolution = &resolutions[res-1];
-        current_resolution.width = width;
-        current_resolution.height = height;
-        current_resolution.screen_scale = resolution->screen_scale;
-        current_resolution.content_scale = resolution->content_scale;
-        current_resolution.aspect = resolution->aspect;
-        current_resolution.folder = resolution->folder;
-        current_resolution.aspect_scale = (f32)width / resolutions[resolution->reference].width ;
-    }else{
-        //res = findNearestResolution(width, height);
+    s32 res = 1;
+// s32 res = findPredefinedResolution(width, height) ;
+//    if ( res ) {
+//        auto resolution = &resolutions[res-1];
+//        current_resolution.width = width;
+//        current_resolution.height = height;
+//        current_resolution.screen_scale = resolution->screen_scale;
+//        current_resolution.content_scale = resolution->content_scale;
+//        current_resolution.aspect = resolution->aspect;
+//        current_resolution.folder = resolution->folder;
+//        current_resolution.aspect_scale = (f32)width / resolutions[resolution->reference].width ;
+//    }
+//    else
+    {
         s32 aspect = findAspectRatio(width, height);
 
+#if !defined(_OS_DESKTOP_)
         res = (width<2048) ? 2 : 1;
+#endif
         
         auto resolution = &resolutions[res-1];
         current_resolution.width = width;
@@ -196,7 +191,7 @@ s32 resolutionmanager::findNearestResolution(f32 width, f32 height)
 
 s32 resolutionmanager::findAspectRatio(f32 width, f32 height)
 {
-    s32 aspect=-1;
+    s32 aspect=0;
     s32 best_width=99999;
 
     for  ( u32 ii=0; ii<NUMELE(aspect_scales); ii++ )
@@ -254,6 +249,74 @@ size resolutionmanager::getDesktopSize()
     chilli::extensions::getDesktopSize(width,height);
     return size(width,height);
 }
+
+GLView* resolutionmanager::setWindowedMode(cocos2d::Size size)
+{
+    return GLViewImpl::createWithRect(TME_ScenarioName(), cocos2d::Rect(0, 0, size.width, size.height));
+}
+
+GLView* resolutionmanager::setWindowedMode(f32 scale, f32 aspect)
+{
+    cocos2d::Size desktopResolutionSize;
+
+    auto desktopSize = getDesktopSize();
+
+    desktopResolutionSize.height = desktopSize.cy * scale;
+    desktopResolutionSize.width = desktopResolutionSize.height * aspect;
+
+    return setWindowedMode(desktopResolutionSize);
+}
+
+bool resolutionmanager::setDisplayMode(CONFIG_SCREEN_MODE mode)
+{
+#if defined(_SWITCH_VIDEO_IMPLEMENTED_)
+    f32 scale = 0.75;
+    f32 aspect = 1.7777;
+
+    auto oldGLview = Director::getInstance()->getOpenGLView();
+    GLView* glview = nullptr;
+    
+    switch(mode)
+    {
+        case CONFIG_SCREEN_MODE::CF_FULLSCREEN:
+            glview = GLViewImpl::createWithFullScreen(TME_ScenarioName());
+            break;
+        
+        case CONFIG_SCREEN_MODE::CF_WINDOW_SMALL:
+            glview = setWindowedMode(0.25,aspect);
+            break;
+            
+        case CONFIG_SCREEN_MODE::CF_WINDOW_MEDIUM:
+            glview = setWindowedMode(0.5,aspect);
+            break;
+            
+        case CONFIG_SCREEN_MODE::CF_WINDOW_LARGE:
+            glview = setWindowedMode(0.75,aspect);
+            break;
+    }
+    
+//    static EventListenerCustom* s_captureScreenListener;
+//
+//    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [glview,oldGLview](EventCustom* /*event*/) {
+//
+//        auto director = Director::getInstance();
+//
+//        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+//
+//        s_captureScreenListener = nullptr;
+//
+    Director::getInstance()->setOpenGLView(glview);
+//        Director::getInstance()->restart();
+//
+//        delete oldGLview;
+//
+//    });
+#endif
+    
+    return true;
+}
+
+
 #endif
 
 

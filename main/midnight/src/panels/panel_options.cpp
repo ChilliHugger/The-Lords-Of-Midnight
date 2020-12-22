@@ -238,7 +238,31 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
             showHelpWindow(HELP_TUTORIAL_OFF);
     }
     
-    
+#if defined(_OS_DESKTOP_)
+    if ( options[index].id == ID_OPTION_SCREENMODE ) {
+        
+        resolutionmanager* rm = resolutionmanager::getInstance();
+
+        //ui->SetFocus(NULL);
+        
+        if ( rm->setDisplayMode( (CONFIG_SCREEN_MODE)mr->settings->screen_mode ) ) {
+            
+            mr->settings->Save();
+            
+            rm->calcDisplayInfo();
+            //rm->UnloadFonts();
+            //rm->LoadFonts();
+            
+            //gl->adjustScreenDisplay();
+            
+            //UPDATE_DISPLAY;
+            //gl->SetPanelMode( MODE_MAINMENU, TRANSITION_PUSHDOWN );
+
+        }
+        
+        return;
+    }
+#endif
 }
 
 void panel_options::SetMenu ( int id )

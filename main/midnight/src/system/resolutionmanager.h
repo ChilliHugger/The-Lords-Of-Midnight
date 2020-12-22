@@ -12,6 +12,8 @@
 #include "../cocos.h"
 #include "../library/inc/mxtypes.h"
 
+#include "settingsmanager.h"
+
 using namespace chilli::types;
 
 typedef struct {
@@ -49,6 +51,7 @@ public:
     bool init();
     bool deinit();
     
+
     bool calcDisplayInfo();
 
     f32 Width() { return current_resolution.width; }
@@ -67,6 +70,10 @@ public:
 #if defined(_OS_DESKTOP_)
     bool IsDesktop() { return true; }
     size getDesktopSize();
+    bool setDisplayMode(CONFIG_SCREEN_MODE mode);
+    cocos2d::GLView* setWindowedMode(cocos2d::Size size);
+    cocos2d::GLView* setWindowedMode(f32 scale, f32 aspect);
+    
 #else
     bool IsDesktop() { return false; }
 #endif
