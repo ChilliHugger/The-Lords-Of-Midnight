@@ -217,6 +217,11 @@ namespace tme {
 
         void sv_Initialise ( cvarreg_t* variable ) 
         {
+            if( c_stricmp(variable->name,"ENERGY_SCALE") == 0 )
+            {
+                int a = 100;
+            }
+            
             LPCSTR stringValue =  (variable->currentValue == nullptr)
                                 ? variable->defaultValue
                                 : variable->currentValue ;
