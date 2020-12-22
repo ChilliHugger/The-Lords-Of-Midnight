@@ -547,6 +547,9 @@ void panel_look::setViewForCurrentCharacter ( void )
 
 void panel_look::UpdateLandscape()
 {
+    //UIDEBUG("UpdateLandscape: Offset: %f", options.lookAmount);
+ 
+    
     if ( current_view ) {
         removeChild(current_view);
     }
@@ -602,7 +605,7 @@ void panel_look::addTouchListener()
         mouse_down_time = utils::getTimeInMilliseconds() ;
         mouse_down_pos = touch->getLocation();
         mouse_last_position = mouse_down_pos;
-        UIDEBUG("Mouse Down = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+        //UIDEBUG("Mouse Down = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
         OnMouseEvent(touch,event,true);
         return true;
     };
@@ -613,7 +616,7 @@ void panel_look::addTouchListener()
         Vec2 delta = touch->getLocation() - mouse_last_position;
         Vec2 distance = touch->getLocation() - mouse_down_pos;
        
-        UIDEBUG("Delta Mouse Move = (%f,%f)", delta.x, delta.y );
+        //UIDEBUG("Delta Mouse Move = (%f,%f)", delta.x, delta.y );
         
         if ( isDragging() ) {
             uidragevent    dev(nullptr,touch->getLocation(),DragEventType::drag);
@@ -638,7 +641,7 @@ void panel_look::addTouchListener()
         }
         
         mouse_last_position = touch->getLocation();
-        UIDEBUG("Mouse Move = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+        //UIDEBUG("Mouse Move = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
         
     };
     
@@ -656,7 +659,7 @@ void panel_look::addTouchListener()
         }
         
         mouse_last_position = touch->getLocation();
-        UIDEBUG("Mouse Up = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
+        //UIDEBUG("Mouse Up = (%f,%f)", mouse_last_position.x, mouse_last_position.y );
         OnMouseEvent(touch,event,false);
     };
     
@@ -1443,6 +1446,11 @@ void panel_look::OnSetupIcons ( void )
 
 bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
 {
+    if(options.isLooking)
+    {
+        return false;
+    }
+    
     f32 MOUSE_MOVE_BLEED = 256;
     f32 MOUSE_LOOK_BLEED = 256;
     
@@ -1669,24 +1677,39 @@ void panel_look::lookPanoramaSnap(uidragevent* event)
     f32 timeDragged = (event->time - event->starttime) / 1000.0f;
     f32 velocity = ABS(distanceDragged) / timeDragged;
     
-    bool inertiaScroll = (timeDragged < 0.5f && velocity > 500);
+    bool inertiaScroll = (timeDragged < 0.5f && velocity > 500)  && (ABS(distanceDragged) < (getContentSize().width/2));
+    int locationAdjustment=0;
     
+//    UIDEBUG("Time %f, Velocity %f, Distance %f, Inertia: %s",
+//            timeDragged, velocity, distanceDragged,
+//            inertiaScroll ? "TRUE":"FALSE");
+        
     if(!inertiaScroll)
     {
         // normal magnetic scroll
         amount = (options.lookAmount / LANDSCAPE_DIR_AMOUNT);
         amount = ((s32)ROUNDFLOAT(amount)) * LANDSCAPE_DIR_AMOUNT ;
+        locationAdjustment = ROUNDFLOAT(ABS((options.lookAmount-startDragLookAmount) / (f32)LANDSCAPE_DIR_AMOUNT) * SIGN(distanceDragged));
+          
     }else{
         // Inertia force
         f32 dir = SIGN(distanceDragged);
         amount = (ABS(options.lookAmount-startDragLookAmount) > LANDSCAPE_DIR_AMOUNT/2) ? 2 : 1;
-        amount = startDragLookAmount - ((amount*dir)*LANDSCAPE_DIR_AMOUNT);
+        locationAdjustment = amount*dir;
+        amount = startDragLookAmount - (locationAdjustment*LANDSCAPE_DIR_AMOUNT);
 
         f32 distanceRemaining = ABS(amount-options.lookAmount);
         f32 howFar = (distanceRemaining/LANDSCAPE_DIR_AMOUNT);
         duration = duration * howFar;
     }
     
+    //UIDEBUG("Panning: Direction=%d from %f to %f diff %f : Inertia=%s",
+    //        options.currentDirection, options.lookAmount, amount, (options.lookAmount-amount), inertiaScroll ? "TRUE":"FALSE");
+  
+    //UIDEBUG("Panning: Current Direction=%d Adjustment %d Final Direction %d",
+    //        options.currentDirection, locationAdjustment, options.currentDirection + locationAdjustment );
+
+
     auto actionfloat = ActionFloat::create(duration, options.lookAmount, amount, [=](float value) {
         options.isLooking = true;
         options.lookAmount =  value;
@@ -1694,23 +1717,18 @@ void panel_look::lookPanoramaSnap(uidragevent* event)
         parallaxCharacters();
     });
     
-    runAction(Sequence::createWithTwoActions( actionfloat, CallFunc::create( [=] { stopDragging(); } )));
+    runAction(Sequence::createWithTwoActions( actionfloat, CallFunc::create( [=] { stopDragging(locationAdjustment); } )));
 }
 
 //
 // Reset the view after dragging and snap back
 //
-void panel_look::stopDragging()
+void panel_look::stopDragging(s32 adjustment)
 {
     character&    c = TME_CurrentCharacter();
 
-    int offset = (options.lookAmount + LANDSCAPE_DIR_AMOUNT + (LANDSCAPE_DIR_AMOUNT/2)) ;
-    if(offset<0)
-    {
-        offset+=options.generator->PanoramaWidth;
-    }
-    mxdir_t dir = (mxdir_t) (int)(offset / (f32)LANDSCAPE_DIR_AMOUNT);
-
+    mxdir_t dir = (mxdir_t) ((int)c.looking - adjustment);
+    
     options.lookAmount = 0;
     options.isLooking = false;
     

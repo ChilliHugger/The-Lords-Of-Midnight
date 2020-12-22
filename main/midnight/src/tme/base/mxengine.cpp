@@ -1162,14 +1162,15 @@ MXRESULT mxengine::LoadDiscoveryMap ( const c_str& filename )
 
 void mxengine::debug (LPCSTR format, ... )
 {
-     char msg_buffer[1024];
+char msg_buffer[1024];
+    
     va_list arglist ;
+
+    va_start( arglist, format ) ;
+    vsprintf( msg_buffer, format, arglist );
+    va_end( arglist ) ;
     
-      va_start( arglist, format ) ;
-      vsprintf( msg_buffer, format, arglist );
-      va_end( arglist ) ;
-    
-    CCLOG("TME: %s",msg_buffer);
+    cocos2d::log("TME: %s",msg_buffer);
 
 }
 

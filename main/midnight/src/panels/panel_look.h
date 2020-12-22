@@ -148,7 +148,7 @@ protected:
     bool allowDragDownMove();
     bool allowDragLook();
     void lookPanoramaSnap(uidragevent* event);
-    void stopDragging();
+    void stopDragging(s32 adjustment);
 
 
 protected:
