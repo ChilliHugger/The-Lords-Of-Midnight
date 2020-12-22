@@ -25,7 +25,7 @@
 #define LANDSCAPE_GSCALE        4.0f
 #define LANDSCAPE_FULL_WIDTH    (LANDSCAPE_DIR_AMOUNT*8)
 
-
+constexpr f32 TRANSITION_DURATION = 0.25f;
 
 typedef enum floor_t {
       floor_normal = 0
@@ -95,6 +95,7 @@ public:
     tme::loc_t	loc;
     f32     looking;
     f32     horizontalOffset;
+    f32     landscapeScreenWidth;
 
     
 };

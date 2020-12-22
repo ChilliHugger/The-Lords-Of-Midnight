@@ -8,6 +8,10 @@
 #include "../panels/panel_look.h"
 #include "../panels/panel_think.h"
 
+#if defined(_OS_OSX_)
+#include "../platform/apple/FileUtilsExt-apple.h"
+#endif
+
 #include "moonring.h"
 #include "helpmanager.h"
 #include "settingsmanager.h"
@@ -78,15 +82,25 @@ moonring::~moonring()
 
 LPCSTR moonring::getWritablePath()
 {
-    auto path = cocos2d::FileUtils::getInstance()->getWritablePath();
+    if(!writeablepath.IsEmpty())
+    {
+        return writeablepath;
+    }
     
+#if defined(_OS_OSX_)
+    std::string path = chilli::extensions::getApplicationSupportPath();
+    path.append("com.chillihugger.midnight/");
+#else
+    auto path = cocos2d::FileUtils::getInstance()->getWritablePath();
+#endif
+
 #if defined(_OS_DESKTOP_)
     path.append(TME_ScenarioName()).c_str();
 #endif
     
     writeablepath = path.c_str();
     
-    return (LPCSTR)writeablepath;
+    return writeablepath;
 }
 
 void moonring::showPage( panelmode_t mode, mxid object )
@@ -146,11 +160,34 @@ void moonring::continueStory( storyid_t id )
     // start game
     if (!checkGameOverConditions() ) {
         character& c = TME_CurrentCharacter();
-        auto mode = Character_IsDead(c) ? MODE_THINK : MODE_LOOK;
         
+        if ( Character_IsDead(c) ) {
+            TME_SelectChar(c.id);
+            showPage( MODE_THINK );
+            return;
+        }
+     
+        auto mode = MODE_LOOK;
+     
 #if defined(_DEBUG_GAME_PANEL_)
-        mode = _DEBUG_GAME_PANEL_;
+#define IS_DEBUG_PANEL(x)       c_stricmp(config->start_on_panel,x) == 0
+
+        if(!config->start_on_panel.IsEmpty())
+        {
+            if(IS_DEBUG_PANEL("MODE_LOOK"))
+                mode = MODE_LOOK;
+            else if(IS_DEBUG_PANEL("MODE_THINK"))
+                mode = MODE_THINK;
+            
+            if(mode==MODE_THINK)
+            {
+                TME_SelectChar(c.id);
+                showPage( MODE_THINK );
+                return;
+            }
+        }
 #endif
+        
         panels->setPanelMode(mode,TRANSITION_PUSHUP);
 
         if ( mode == MODE_LOOK ) {

@@ -22,8 +22,10 @@ class LandscapeOptions : cocos2d::Ref
 public:
     LandscapeGenerator*     generator;
     LandscapeColour*        colour;
-    SimpleShader*           shader;
     
+    SimpleShader*           terrainTimeShader;
+    SimpleShader*           characterTimeShader;
+
     bool            showWater;
     bool            showLand;
     bool            showTerrain;
@@ -52,6 +54,8 @@ public:
     bool            isInTunnel;
     bool            isLookingDownTunnel;
     bool            isLookingOutTunnel;
+    
+    mxtime_t        timeofday;
     
     f32             resScale;
     

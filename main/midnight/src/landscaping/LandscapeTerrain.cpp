@@ -114,7 +114,7 @@ Sprite* LandscapeTerrain::AddGraphic(Sprite* graphic, f32 x, f32 y, Color4F tint
     graphic->setPosition(options->generator->NormaliseXPosition(x), getContentSize().height - y);
     graphic->setAnchorPoint(Vec2(0.5,0)); // bottom center
 
-    moonring::mikesingleton()->shader->UpdateSpriteDayNightShader(graphic,alpha,tint1,tint2);
+    moonring::mikesingleton()->shader->UpdateTerrainTimeShader(graphic,alpha,tint1,tint2);
     
     addChild(graphic);
     return graphic;
@@ -144,19 +144,15 @@ Sprite* LandscapeTerrain::GetImage( std::string& imagename )
     if ( imagename.empty() )
         return nullptr;
  
-    //auto visibleSize = Director::getInstance()->getVisibleSize();
     f32 imageScale = 1.0f;
 
-    
-    
     auto image = Sprite::createWithSpriteFrameName( imagename );
     if ( image != nullptr ) {
         
         image->setScale(imageScale);
-        image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         
-        if ( options->shader ) {
-             moonring::mikesingleton()->shader->AttachShader(image,options->shader);
+        if ( options->terrainTimeShader ) {
+            moonring::mikesingleton()->shader->AttachShader(image,options->terrainTimeShader);
         }
     }
     return image;

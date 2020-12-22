@@ -102,7 +102,8 @@ protected:
     bool startLookRight ( void );
     bool startLookLeft ( void );
     void stopRotating(LANDSCAPE_MOVEMENT type);
-  
+    void stopMovement(LANDSCAPE_MOVEMENT type);
+
     void startInactivity();
     void stopInactivity();
     void showInactivityHelp();
@@ -146,7 +147,7 @@ protected:
     void OnStartDrag(uidragevent* event) override;
     bool allowDragDownMove();
     bool allowDragLook();
-    void lookPanoramaSnap();
+    void lookPanoramaSnap(uidragevent* event);
     void stopDragging();
 
 
@@ -175,11 +176,13 @@ protected:
     // Actions and Commands
     uicommandwindow*    i_command_window;
   
-    LandscapePeople*    people[3];
+    LandscapePeople*    people[5];
+
+    LandscapePeople*    prev_people1;
+    LandscapePeople*    prev_people;
     LandscapePeople*    current_people;
     LandscapePeople*    next_people;
-    LandscapePeople*    prev_people;
-    
+    LandscapePeople*    next_people1;
     f32                 landscapeTramline;
     
     Sprite*             movementIndicators[3];
@@ -187,7 +190,7 @@ protected:
     // draggin
     //f32                 dragged;
     bool                landscape_dragging;
-    u32                 mouse_down_time;
+    u64                 mouse_down_time;
     bool                mouse_down;
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;

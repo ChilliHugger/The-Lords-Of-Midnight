@@ -12,6 +12,10 @@
 #include "ILandscape.h"
 #include "../system/resolutionmanager.h"
 #include "../system/tmemanager.h"
+#include "../system/shadermanager.h"
+
+#include "../system/moonring.h"
+
 #include "../ui/uihelper.h"
 
 #include "../tme/tme_interface.h"
@@ -19,7 +23,6 @@
 USING_NS_CC;
 using namespace tme;
 
-#define TRANSITION_DURATION     0.5f
 #define adjusty                 LRES(8)
 
 LandscapePeople::LandscapePeople()
@@ -198,7 +201,11 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
         
         image->setAnchorPoint(uihelper::AnchorBottomLeft);
         image->setPosition(x1, y1);
-        image->setColor(options->colour->GetPersonColour());
+        
+        if(options->characterTimeShader)
+        {
+            options->colour->updateCharacterNode(image);
+        }
         addChild(image);
 
         columns[column].used=TRUE;
@@ -245,31 +252,31 @@ void LandscapePeople::stopAnim()
 
 // Animation & Movement
 
-void LandscapePeople::startSlideFromRight()
+void LandscapePeople::startSlideFromRight(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
     
     setScale(1.0f);
     setOpacity(ALPHA(1.0f));
-    setPosition(parentSize.width,0+adjusty);
+    setPosition(parentSize.width*distance,0+adjusty);
     amountmoved=0;
     amountmoving=parentSize.width*-1;
     startlocationx=getPosition().x;
 }
 
-void LandscapePeople::startSlideFromLeft()
+void LandscapePeople::startSlideFromLeft(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
 
     setScale(1.0f);
     setOpacity(ALPHA(1.0f));
-    setPosition(-parentSize.width,0+adjusty);
+    setPosition(-(parentSize.width*distance),0+adjusty);
     amountmoved=0;
     amountmoving=parentSize.width;
     startlocationx=getPosition().x;
 }
 
-void LandscapePeople::startSlideOffLeft()
+void LandscapePeople::startSlideOffLeft(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
 
@@ -279,7 +286,7 @@ void LandscapePeople::startSlideOffLeft()
     startlocationx=getPosition().x;
 }
 
-void LandscapePeople::startSlideOffRight()
+void LandscapePeople::startSlideOffRight(s32 distance)
 {
     auto parentSize = getParent()->getContentSize();
 

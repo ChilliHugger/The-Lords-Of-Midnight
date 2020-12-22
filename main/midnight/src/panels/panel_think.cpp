@@ -155,7 +155,13 @@ void panel_think::setObject(mxid id)
     
     // build this list
     u32 index=0;
+    u32 currentIndex=0;
     for( uithinkpage* page : pages ) {
+        
+        if(page->Id() == id)
+        {
+            currentIndex=index;
+        }
         
         auto layout = Layout::create();
         layout->setContentSize(pageView->getContentSize());
@@ -188,16 +194,6 @@ void panel_think::setObject(mxid id)
         showButton(ID_THINK_PLACE, false );
     }
     
-//    CLEARARRAY( enabled_tabs );
-//    if ( i_army->isEnabled() )
-//        enabled_tabs[1]=MODE_THINK_ARMY;
-//    if ( i_person->isEnabled() )
-//        enabled_tabs[3]=MODE_THINK_PERSON;
-//    if ( i_place->isEnabled() )
-//        enabled_tabs[2]=MODE_THINK_PLACE;
-//    if ( i_battle->isEnabled() )
-//        enabled_tabs[0]=MODE_THINK_BATTLE;
-
     current_tab=0;
  
     switch ( currentmode ) {
@@ -207,7 +203,8 @@ void panel_think::setObject(mxid id)
             return;
         case MODE_THINK_PERSON:
         case MODE_THINK_APPROACH:
-            current_tab=3;
+            current_tab=3;// find current page index
+            pageView->setCurrentPageIndex(currentIndex);
             tintButton(ID_THINK_PERSON, _clrYellow);
             return;
         case MODE_THINK_PLACE:
@@ -221,8 +218,6 @@ void panel_think::setObject(mxid id)
         default:
             break;
     }
-    
-    
 }
 
 void panel_think::createPageView()
@@ -233,11 +228,12 @@ void panel_think::createPageView()
     pageView->setBounceEnabled(true);
     pageView->setIndicatorEnabled(true);
     pageView->setCurrentPageIndex(0);
+    
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f)*scale);
+    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(1))*scale);
     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
-    
-    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f));
-    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(-5));
     
     uihelper::AddBottomLeft(this, pageView);
     uihelper::FillParent(pageView);
@@ -394,31 +390,18 @@ void panel_think::OnNotification( Ref* sender )
             break;
         }
             
-//        case ID_POSTRECRUIT_RIDERS:
-//        case ID_POSTRECRUIT_WARRIORS:
-//        {
-//            character& c = TME_CurrentCharacter();
-//
-//            if ( stronghold_updown->Value() < (s32)current_stronghold.total ) {
-//                if ( Character_RecruitMen(c) ) {
-//                    panel_think* panel = (panel_think*)gl->GetPanel(MODE_THINK_RECRUITGUARD);
-//                    panel->SetObject(NONE) ;
-//                    gl->SetPanelMode ( MODE_THINK_RECRUITGUARD );
-//                } else {
-//                    stronghold_updown->Value(current_stronghold.total);
-//                }
-//            }
-//
-//            if ( stronghold_updown->Value() > (s32)current_stronghold.total ) {
-//                if ( Character_PostMen(c) ) {
-//                    panel_think* panel = (panel_think*)gl->GetPanel(MODE_THINK_RECRUITGUARD);
-//                    panel->SetObject(NONE) ;
-//                    gl->SetPanelMode ( MODE_THINK_RECRUITGUARD );
-//                } else {
-//                    stronghold_updown->Value(current_stronghold.total);
-//                }            }
-//            break;
-//        }
+        case ID_RECRUITMEN:
+        {
+            if ( mr->recruitMen() )
+                return;
+            break;
+        }
+        case ID_POSTMEN:
+        {
+            if ( mr->postMen() )
+                return;
+            break;
+        }
             
 #if defined(_LOM_)
         case ID_UNHIDE:

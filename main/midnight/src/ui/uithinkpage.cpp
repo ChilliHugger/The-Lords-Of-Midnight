@@ -26,7 +26,7 @@
 #define CHARACTER_X         384
 #define CHARACTER_Y         352 //332
 #define OBJECT_Y            352 //332
-#define OBJECT_X            128
+#define OBJECT_X            (128+32)
 #define BACKGROUND_COLOUR   _clrWhite
 #define NAME_TEXT_COLOUR    _clrDarkRed
 #define TERRAIN_COLOUR      Color3B(0x00,0x00,0xA5)
@@ -42,7 +42,7 @@
 #define CHARACTER_X         190
 #define CHARACTER_Y         (768-96)
 #define OBJECT_Y            352 //332
-#define OBJECT_X            128
+#define OBJECT_X            (128+32)
 #define BACKGROUND_COLOUR   _clrCyan
 #define NAME_TEXT_COLOUR    _clrBlue
 #define TERRAIN_COLOUR      _clrBlack
@@ -73,6 +73,8 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     this->id = id;
     this->mode = mode;
     this->objectid = objectId;
+    
+    imgTerrain->removeAllChildren();
     
     setupUIElements();
     
@@ -151,7 +153,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
        pos = imgCharacter->getPosition();
        pos.y -= imgCharacter->getContentSize().height;
        auto color = _clrWhite ;
-       auto gradientB = uihelper::createVerticalGradient(color, RES(64), RES(56), RES(128), 1);
+       auto gradientB = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), PHONE_SCALE(RES(128)), 1);
        gradientB->setPosition(pos);
        scrollView->addChild(gradientB);
     }
@@ -161,41 +163,75 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
     uihelper::PositionParentTopRight(imgTerrain,x,y);
     
-    //if ( this->unhide || this->approach ) {
-//    pos=imgTerrain->getPosition();
-//    pos.y-=imgTerrain->getContentSize().height;
-//    pos.x-=imgTerrain->getContentSize().width;
-//    auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
-//    gradientC->setContentSize(Size(imgTerrain->getContentSize().width,RES(64)));
-//    gradientC->setPosition(pos);
-//    scrollView->addChild(gradientC);
-    //}
-
     
+    // Post/Recruit
+    if ( this->recruitMen||this->postMen ) {
+        auto color = _clrWhite ;
+        //auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(alpha_zero)), Color4B(_clrWhite,ALPHA(alpha_normal)) );
+        auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), imgTerrain->getContentSize().width, 1);
+        //gradientC->setContentSize(Size(imgTerrain->getContentSize().width,PHONE_SCALE(RES(64))));
+        imgTerrain->addChild(gradientC);
+        uihelper::PositionParentBottomLeft(gradientC,RES(0),RES(0));
+    }
+    
+    y = RES(TERRAIN_Y) ;
+    x = RES(TERRAIN_X) ;
+   
+    s32 adjust = resolutionmanager::getInstance()->IsPhoneScaleEnabled() ? RES(32) : 0 ;
+    
+    // RECRUIT SOLDIERS
+    auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, clickCallback);
+    recruitMen->setVisible(this->recruitMen||this->postMen);
+    recruitMen->setEnabled(this->recruitMen);
+    recruitMen->setOpacity(this->recruitMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
+    recruitMen->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    imgTerrain->addChild(recruitMen);
+    uihelper::PositionParentBottomCenter(recruitMen,
+                                         -(recruitMen->getContentSize().width/2)-PHONE_SCALE(RES(8))-adjust,
+                                         -recruitMen->getContentSize().height/2);
+   
+    // POST SOLDIERS
+    auto postMen = uihelper::CreateImageButton("i_post", ID_POSTMEN, clickCallback);
+    postMen->setVisible(this->recruitMen||this->postMen);
+    postMen->setEnabled(this->postMen);
+    postMen->setOpacity(this->postMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
+    imgTerrain->addChild(postMen);
+    uihelper::PositionParentBottomCenter(postMen,
+                                         +(postMen->getContentSize().width/2)+PHONE_SCALE(RES(8))+adjust,
+                                         -(postMen->getContentSize().height/2)-RES(2));
+
     
     // object
 #if defined(_LOM_)
     y = RES(OBJECT_Y) - imgObject->getContentSize().height;
     x = RES(OBJECT_X) - (imgObject->getContentSize().width/2);
+  
+    if (resolutionmanager::getInstance()->IsPhoneScaleEnabled())
+    {
+        y -= RES(16);
+    }
+    
     uihelper::PositionParentTopLeft(imgObject,x,y);
 
     auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
     pos = imgObject->getPosition();
     pos.y -= imgObject->getContentSize().height;
+    
     fight->setPosition(pos);
     fight->setVisible(this->fight);
     scrollView->addChild(fight);
     
     if ( this->fight ) {
-        auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(0.0f)), Color4B(_clrWhite,ALPHA(1.0f)) );
-        gradientC->setContentSize(Size(RES(128),RES(64)));
+        auto color = _clrWhite ;
+        auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), PHONE_SCALE(RES(128)), 1);
+    
+        //auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(alpha_zero)), Color4B(_clrWhite,ALPHA(alpha_normal)) );
+        //gradientC->setContentSize(Size(RES(128),RES(64)));
         gradientC->setPosition(pos);
         scrollView->addChild(gradientC);
     }
-
-    
 #endif
-    
+
     uihelper::AddTopLeft(safeArea, scrollView);
     uihelper::FillParent(scrollView);
     
@@ -262,7 +298,6 @@ bool uithinkpage::init()
     // Terrain Image
     imgTerrain = Sprite::create();
     imgTerrain->setScale(1.0f);
-    imgTerrain->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     scrollView->addChild(imgTerrain);
     
     return true;
@@ -339,8 +374,8 @@ void uithinkpage::setImageColour(Sprite* node)
     auto mr = moonring::mikesingleton();
     auto tint2 = Color4F(_clrWhite);
     auto tint1 = Color4F(TERRAIN_COLOUR);
-    mr->shader->AddDayNightShader(node);
-    mr->shader->UpdateSpriteDayNightShader(node, alpha_normal,tint1,tint2);
+    mr->shader->AddTerrainTimeShader(node);
+    mr->shader->UpdateTerrainTimeShader(node, alpha_normal,tint1,tint2);
 }
 
 
@@ -631,43 +666,17 @@ void uithinkpage::checkPlace ( void )
 
 void uithinkpage::recruitPostOptions ( stronghold& s )
 {
-//    s32 min = (s32)variables::sv_stronghold_default_min ;
-//    s32 max = (s32)variables::sv_stronghold_default_max ;
-//    s32 char_max = 0;
-//    s32 can_recruit = 0;
-//
-//
-//    // RECRUIT SOLDIERS
-//    if ( flags.Is(lif_recruitmen) ||  flags.Is(lif_guardmen) ) {
-//        character&        c = TME_CurrentCharacter();
-//
-//        if ( s.location == c.location ) {
-//
-//            stronghold_updown->Value(s.total);
-//
-//            if ( s.type == UT_WARRIORS ) {
-//                char_max = (s32)sv_character_max_warriors;
-//                Character_Army(c.warriors, army);
-//                stronghold_updown->id = ID_POSTRECRUIT_WARRIORS;
-//            }
-//
-//            if ( s.type == UT_RIDERS ) {
-//                char_max = (s32)sv_character_max_riders;
-//                Character_Army(c.riders, army);
-//                stronghold_updown->id = ID_POSTRECRUIT_RIDERS;
-//            }
-//
-//            can_recruit = char_max - army.total ;
-//            stronghold_updown->Max( MIN((s32)s.total+(s32)army.total,max)  );
-//
-//            s32 min1 = (s32)s.total-can_recruit ;
-//            s32 min2 = MIN(min,(s32)s.total);
-//            s32 min3 = MAX(min1,min2);
-//
-//            stronghold_updown->Min(min3);
-//            stronghold_updown->ShowEnable();
-//        }
-//    }
+    recruitMen = false;
+    postMen = false;
+    
+    // RECRUIT SOLDIERS
+    character&        c = TME_CurrentCharacter();
+
+    if ( s.location == c.location ) {
+        recruitMen = flags.Is(lif_recruitmen);
+        postMen=flags.Is(lif_guardmen);
+    }
+
 }
 
 /*
@@ -780,6 +789,11 @@ void uithinkpage::checkArmy ( void )
             displayCharacter ( c );
             chilli::lib::c_strcat ( text, TME_GetSystemString(c, SS_MESSAGE2 ) );
             displayCharacterTerrain(c);
+          
+            if(c.id == TME_CurrentCharacter().id)
+            {
+                recruitPostOptions(location_stronghold);
+            }
             break;
             
         case IDT_STRONGHOLD:

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<main>
+
+	<scenario id="ddr" directory="./ddr" />
+
+	<mouse>
+		<imagelist id="gfx">
+			<image file="new/mouse_normal_up.png" />
+			<image file="new/mouse_look_left_up.png" />
+			<image file="new/mouse_look_right_up.png" />
+			<image file="new/mouse_move_up.png" />
+		</imagelist>
+        <hotspots>
+            <point value="30,16" />
+            <point value="64,20" />
+            <point value="110,60" />
+            <point value="20,60" />
+        </hotspots>
+	</mouse>
+
+	<compass>
+		<imagelist id="gfx">
+			<image file="misc/compass_N.png" />
+			<image file="misc/compass_NE.png" />
+			<image file="misc/compass_E.png" />
+			<image file="misc/compass_SE.png" />
+			<image file="misc/compass_S.png" />
+			<image file="misc/compass_SW.png" />
+			<image file="misc/compass_W.png" />
+			<image file="misc/compass_NW.png" />
+			<image file="misc/compass_back.png" />
+		</imagelist>
+	</compass>
+
+	<characters>
+		<character id="CH_LUXOR"	face="faces/p_free.png"		shield = ""   shortcut="C" shortcut2="1" />
+		<character id="CH_MORKIN"	face="faces/p_morkin.png"	shield = ""   shortcut="V" shortcut2="2" />
+		<character id="CH_RORTHRON" face="faces/p_wise.png"		shield = ""   shortcut="N" shortcut2="4" />
+		<character id="CH_TARITHEL" face="faces/p_tarithel.png"	shield = ""   shortcut="B" shortcut2="3" />
+		<character id="CH_MIDWINTER" face=""                    shield = ""   />
+	</characters>
+
+	<objects>
+		<object id="OB_WOLVES"		    big="objects/bo_wolf.png"		mapcell = "5"	/>
+		<object id="OB_DRAGONS"		    big="objects/bo_dragon.png"		mapcell = "6"	/>
+		<object id="OB_ICETROLLS"		big="objects/bo_troll.png"		mapcell = "7"	/>
+		<object id="OB_SKULKRIN"		big="objects/bo_skulkrin.png"	mapcell = "8"	/>
+		<object id="OB_WILDHORSES"		big="objects/bo_horse.png"		mapcell = "21"	/>
+		<object id="OB_SHELTER"		    mapcell="22" />
+		<object id="OB_GUIDANCE"		mapcell="23" />
+		<object id="OB_SHADOWSOFDEATH"	mapcell="24" />
+		<object id="OB_WATERSOFLIFE"	mapcell="37" />
+		<object id="OB_HANDOFDARK"		mapcell="38" />
+		<object id="OB_CUPOFDREAMS"		mapcell="39" />
+		<object id="OB_WOLFSLAYER"		mapcell="40" />
+		<object id="OB_DRAGONSLAYER"	mapcell="53" />
+		<object id="OB_ICECROWN"		mapcell="54" />
+		<object id="OB_MOONRING2"		mapcell="55" />
+        <object id="OB_EYEOFTHEMOON"    mapcell="56" />
+        <object id="OB_CLAWS"           mapcell="41" />
+        <object id="OB_FLAMES"          mapcell="42" />
+        <object id="OB_THORNS"          mapcell="43" />
+        <object id="OB_BLOOD"           mapcell="44" />
+        <object id="OB_LANGUOR"         mapcell="57" />
+        <object id="OB_SPRINGS"         mapcell="58" />
+	</objects>
+
+	<races>
+        <race id="RA_DOOMGUARD"     body = "people/c_icelord.png"       horse = "people/c_icelordh.png"     face="faces/p_icelord.png" />
+        <race id="RA_FREE"          body = "people/c_free.png"          horse = "people/c_freeh.png"        face="faces/p_free.png" />
+		<race id="RA_FEY"           body = "people/c_fey.png"           horse = "people/c_feyh.png"         face="faces/p_fey.png" />
+		<race id="RA_WISE"          body = "people/c_wise.png"          horse = "people/c_wiseh.png"        face="faces/p_wise.png" />
+		<race id="RA_MORKIN"		body = "people/c_morkin.png"        horse = "people/c_morkinh.png"      face="faces/p_morkin.png" />
+		<race id="RA_MOONPRINCE"	body = "people/c_free.png"          horse = "people/c_luxorh.png"       face="faces/p_free.png" />
+		<race id="RA_BARBARIAN"     body = "people/c_barbarian.png"		horse = "people/c_barbarianh.png"   face="faces/p_barbarian.png" />
+		<race id="RA_ICELORD"       body = "people/c_icelord.png"		horse = "people/c_icelordh.png"     face="faces/p_icelord.png" />
+		<race id="RA_GIANT"         body = "people/c_giant.png"                                             face="faces/p_giant.png" />
+		<race id="RA_HEARTSTEALER"	body = "people/c_shareth.png"		horse = "people/c_shareth.png"      face="faces/p_shareth.png" />
+		<race id="RA_DWARF"         body = "people/c_dwarf.png"                                             face="faces/p_dwarf.png" />
+		<race id="RA_TARITHEL"      body = "people/c_tarithel.png"		horse = "people/c_tarithel.png"     face="faces/p_tarithel.png" />
+		<race id="RA_MIDWINTER"     body = "people/c_midwinterh.png"	horse = "people/c_midwinterh.png" />
+	</races>
+    
+    
+    
+	<terrain>
+		<terrain id="ARMY"              file="t_army" />
+		<terrain id="TN_GATE"           file="t_gate"       mapcell="0"/>
+        <terrain id="TN_CITY"           file="t_city"       mapcell="1"/>
+        <terrain id="TN_TEMPLE"         file="t_temple"     mapcell="2"/>
+        <terrain id="TN_WATCHTOWER"     file="t_tower2"     mapcell="3"/>
+        <terrain id="TN_HUT"            file="t_hut"        mapcell="16"/>
+		<terrain id="TN_FORTRESS"       file="t_fortress"   mapcell="17"/>
+		<terrain id="TN_HALL"           file="t_hall"       mapcell="18"/>
+		<terrain id="TN_FOUNTAIN"       file="t_fountain"   mapcell="19"/>
+        <terrain id="TN_PALACE"         file="t_palace"     mapcell="32"/>
+		<terrain id="TN_STONE"          file="t_stones"     mapcell="33"/>
+        <terrain id="TN_PIT"            file="t_pit"        mapcell="34"/>
+        <terrain id="TN_MIST"           file="t_mist"       mapcell="35" />
+        <terrain id="TN_PLAIN"          file=""             mapcell="48" />
+        <terrain id="TN_FOREST2"        file="t_forest2"    mapcell="64" mapdensity="true"/>
+        <terrain id="TN_ICYWASTE"       file="t_icywaste"   mapcell="68" mapdensity="true"/>
+        <terrain id="TN_HILL"           file="t_hills2"     mapcell="72" mapdensity="true"/>
+        <terrain id="TN_MOUNTAIN2"      file="t_mountain2"  mapcell="76" mapdensity="true"/>
+	</terrain>
+
+    <panel_menu>
+        
+        <integer    id="MAX_STORIES"                value="8" />
+        <point      id="BOOKMARK_OVERLAY_OFFSET"    value="20,20" />
+        <float      id="BOOKMARK_SCALE"             value="0.75" />
+        <rgb        id="BOOKMARK_OVERLAY_COLOUR"    value="#ff000000" />
+        
+        <stories>
+            <rgb>#ff0000ff</rgb>
+            <rgb>#ff00ff00</rgb>
+            <rgb>#ffff0000</rgb>
+            <rgb>#ff808080</rgb>
+            <rgb>#ffff00ff</rgb>
+            <rgb>#ff00ffff</rgb>
+            <rgb>#ffffffff</rgb>
+            <rgb>#ff646464</rgb>
+            <rgb>#ff640064</rgb>
+        </stories>
+        
+    </panel_menu>
+    
+    
+	<panel_map>
+		<zoom_levels>0.24,0.40,0.50,0.75,1.0</zoom_levels>
+		<integer id="DEFAULT_ZOOM_LEVEL" value="4" />
+	</panel_map>
+
+	<panel_main>
+		<string id="REST_TOOLTIP"		value="rest : %s" />
+		<string id="RECRUIT_TOOLTIP"	value="recruit %s"  />
+		<string id="GUARD_TOOLTIP"		value="place %s on guard"  />
+		<string id="FIGHT_TOOLTIP"		value="fight %s"  />
+		<string id="APPROACH_TOOLTIP"	value="approach %s"  />
+		<string id="TEXT_UNHIDE"		value="unhide"  />
+		<string id="TEXT_HIDE"			value="hide"  />
+		<integer id="FIRST_FACE_ICON"	value="16"  />
+	</panel_main>
+
+	<panel_look>
+	
+		<compassoffsets>0,-2,2,-2,2,0,2,2,0,2,-2,2,-2,0,-2,-2,4,4,-2,0,2,0</compassoffsets>;
+		
+		<integer id="MOUSE_MOVE_BLEED"			value = "250" />
+		<integer id="MOUSE_LOOK_BLEED"			value = "250" />
+		<integer id="ARMY_IMAGE"				value = "33" />
+		<integer id="MIST_IMAGE"				value = "32" />					
+
+		<integer id="MAX_LOOKHOTSPOTS"			value = "128" />
+		
+		<integer id="SHIELD_X"					value = "844" />
+		<integer id="SHIELD_Y"					value = "-28" />
+		<float   id="SHIELD_SCALE"				value = "1.0" />
+		
+		<integer id="COMPASS_X"					value = "490" />
+		<integer id="COMPASS_Y"					value = "330" />
+        
+        <integer id="SELECT_MODE"               value = "2" />
+        <integer id="ACTIONS_MODE"              value = "2" />
+	</panel_look>
+		
+	<panel_loadsave>
+		<integer id="FILES_PER_COLUMN"			value = "19" />
+		<integer id="COLUMN_WIDTH"				value = "170" />
+		<integer id="COLUMN_DISPLAY_WIDTH"		value = "150" />
+		<integer id="COLUMN_HEIGHT"				value = "16" />
+	</panel_loadsave>
+
+	<panel_select>
+		<integer id="MAX_CHAR_PER_PAGE"			value = "140" />
+		<integer id="MAX_COLUMNS"				value = "7" />
+		<integer id="MAX_ROWS"					value = "4" />
+		<integer id="SELECT_GRID_X"				value = "128" />
+		<integer id="SELECT_GRID_Y"				value = "128" />
+		<integer id="START_X"                   value = "64" />
+		<integer id="START_Y"                   value = "64" />
+        <integer id="SELECT_GRID_LEADING"       value = "0" />
+	</panel_select>
+	
+	
+	<uilandscape>
+        
+        <day>
+            <time id="0"  shade="#ffffff" />
+            <time id="1"  shade="#ffffff" />
+            <time id="2"  shade="#ffffff" />
+            <time id="3"  shade="#ffffff" />
+            <time id="4"  shade="#ffffff" />
+            <time id="5"  shade="#ffffff" />
+            <time id="6"  shade="#ffffff" />
+            <time id="7"  shade="#ffffff" />
+            <time id="8"  shade="#ffffff" />
+            <time id="9"  shade="#ffffff" />
+            <time id="10" shade="#ffffff" />
+            <time id="11" shade="#ffffff" />
+            <time id="12" shade="#ffffff" />
+            <time id="13" shade="#ffffff" />
+            <time id="14" shade="#ffffff" />
+            <time id="15" shade="#ffffff" />
+            <time id="16" shade="#ffffff" />
+            <time id="17" shade="#ffffff" />
+            <time id="18" shade="#ffffff" />
+            <time id="19" shade="#ffffff" />
+            <time id="20" shade="#ffffff" />
+            <time id="21" shade="#ffffff" />
+            <time id="22" shade="#ffffff" />
+            <time id="23" shade="#ffffff" />
+            <time id="24" shade="#ffffff" />
+            <time id="25" shade="#ffffff" />
+            <time id="26" shade="#ffffff" />
+            <time id="27" shade="#ffffff" />
+            <time id="28" shade="#ffffff" />
+            <time id="29" shade="#ffffff" />
+            <time id="30" shade="#ffffff" />
+            <time id="31" shade="#ffffff" />
+        </day>
+        
+        <people>
+            <time id="0"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="1"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="2"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="3"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="4"  normal="#ff804040" tunnel="#ff404040" />
+            <time id="5"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="6"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="7"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="8"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="9"  normal="#ffffffff" tunnel="#ff404040" />
+            <time id="10" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="11" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="12" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="13" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="14" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="15" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="16" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="17" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="18" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="19" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="20" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="21" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="22" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="23" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="24" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="25" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="26" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="27" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="28" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="29" normal="#ffffffff" tunnel="#ff404040" />
+            <time id="30" normal="#ff00ffff" tunnel="#ff404040" />
+            <time id="31" normal="#ff00c8c8" tunnel="#ff404040" />
+        </people>
+        
+        <terrain>
+            <time id="0"  fill="#940000" outline="#000000" />
+            <time id="1"  fill="#ff2000" outline="#100000" />
+            <time id="2"  fill="#ff4000" outline="#200000" />
+            <time id="3"  fill="#ff8000" outline="#400000" />
+            <time id="4"  fill="#ffd000" outline="#800000" />
+            <time id="5"  fill="#ffff00" outline="#940000" />
+            <time id="6"  fill="#ffff00" outline="#940000" />
+            <time id="7"  fill="#ffff00" outline="#940000" />
+            <time id="8"  fill="#ffff00" outline="#940000" />
+            <time id="9"  fill="#ffff00" outline="#940000" />
+            <time id="10" fill="#ffff00" outline="#940000" />
+            <time id="11" fill="#ffff00" outline="#940000" />
+            <time id="12" fill="#ffff00" outline="#940000" />
+            <time id="13" fill="#ffff00" outline="#940000" />
+            <time id="14" fill="#ffff00" outline="#940000" />
+            <time id="15" fill="#ffff00" outline="#940000" />
+            <time id="16" fill="#ffff00" outline="#940000" />
+            <time id="17" fill="#ffff00" outline="#940000" />
+            <time id="18" fill="#ffff00" outline="#940000" />
+            <time id="19" fill="#ffff00" outline="#940000" />
+            <time id="20" fill="#ffff00" outline="#940000" />
+            <time id="21" fill="#ffff00" outline="#940000" />
+            <time id="22" fill="#ffff00" outline="#940000" />
+            <time id="23" fill="#ffff00" outline="#940000" />
+            <time id="24" fill="#ffff00" outline="#940000" />
+            <time id="25" fill="#ffff00" outline="#940000" />
+            <time id="26" fill="#ffff00" outline="#940000" />
+            <time id="27" fill="#ffff00" outline="#940000" />
+            <time id="28" fill="#ffff00" outline="#940000" />
+            <time id="29" fill="#ffff00" outline="#940000" />
+            <time id="30" fill="#0000ff" outline="#00ffff" />
+            <time id="31" fill="#0000d0" outline="#00d0d0" />
+        </terrain>
+    
+	</uilandscape>
+
+	
+
+</main>

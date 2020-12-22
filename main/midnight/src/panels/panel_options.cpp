@@ -317,9 +317,8 @@ void panel_options::SetValues ( void )
 
 void panel_options::CreateMenu1()
 {
+    f32 width = RES(512);
     
-    f32 width = RES(512-40);
-
     f32 contentWidth = safeArea->getContentSize().width;
     f32 contentHeight = safeArea->getContentSize().height;
     
@@ -331,8 +330,6 @@ void panel_options::CreateMenu1()
     menu->setNotificationCallback ( [&](const uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
     });
-
-
     
 }
 
@@ -340,7 +337,11 @@ void panel_options::CreateMenu1()
 
 void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
-    f32 width = RES(512-40);
+    f32 width = RES(512);
+    if(resolutionmanager::getInstance()->IsPhoneScaleEnabled())
+    {
+        width+=RES(128+64);
+    }
     
     f32 contentWidth = safeArea->getContentSize().width;
     
@@ -351,7 +352,7 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
 
     menu2 = Menu::create();
 
-    u32 gapY = RES(5);
+    u32 gapY = PHONE_SCALE(RES(5));
     
     this->addChild(menu2);
     
@@ -384,9 +385,7 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     }
     
     menu2->setContentSize(Size(width,height) );
-    //menu2->setAnchorPoint(uihelper::AnchorCenter);
-    //menu2->setPosition(Vec2(contentWidth/2,contentHeight/2));
-    
+  
     uihelper::PositionParentCenterLeft(menu2,contentWidth/2);
     
     // refresh positions

@@ -1,7 +1,16 @@
 
 #include "resolutionmanager.h"
 
+#if defined(_OS_OSX_)
+#include "../platform/mac/DeviceExt-mac.h"
+#endif
+
+#if defined(_OS_WIN32_)
+#include "../platform/win32/DeviceExt-win32.h"
+#endif
+
 #include "base/CCDirector.h"
+#include "../ui/uielement.h"
 
 USING_NS_CC;
 
@@ -106,9 +115,18 @@ bool resolutionmanager::calcDisplayInfo ( void )
     float diagonalInches = sqrtf(xInches * xInches + yInches * yInches);
     diagonalInches = roundf(diagonalInches * 100.0f) / 100.0f;
     
-    
+#if !defined(_OS_DESKTOP_)
     isTablet = (diagonalInches >= 7.0f);
+    isPhone = !isTablet;
+#else
+    isTablet = false;
+    isPhone = false;
+#endif
     
+#if defined(TEST_PHONE_SCALE)
+    isPhone = true;
+    isTablet = false;
+#endif
     
     
     s32 res = 0; //findPredefinedResolution(width, height) ;
@@ -205,25 +223,38 @@ s32 resolutionmanager::findAspectRatio(f32 width, f32 height)
 padding resolutionmanager::getSafeArea()
 {
     padding result;
-    result.left = safeAreaLeftPadding;
-    result.top = safeAreaTopPadding;
-    result.right = safeAreaRightPadding;
-    result.bottom = safeAreaBottomPadding;
+
+    auto r = Director::getInstance()->getSafeAreaRect();
     
-    //auto r = Director::getInstance()->getSafeAreaRect();
+    auto director = Director::getInstance();
     
+    result.left = result.right = r.origin.x /  director->getOpenGLView()->getContentScaleFactor();
+    result.top = result.bottom = 0;
     return result;
 }
 
 f32 resolutionmanager::phoneScale()
 {
-#if !defined(_OS_DESKTOP_)
-    return isTablet ? 1.0f : 1.4f;
+#if defined(TEST_PHONE_SCALE)
+    return PhoneScale;
 #else
-    return 1.0f;
+    #if !defined(_OS_DESKTOP_)
+        return isTablet ? scale_normal : PhoneScale;
+    #else
+        return scale_normal;
+    #endif
 #endif
 
 }
+
+#if defined(_OS_DESKTOP_)
+size resolutionmanager::getDesktopSize()
+{
+    s32 width,height;
+    chilli::extensions::getDesktopSize(width,height);
+    return size(width,height);
+}
+#endif
 
 
 

@@ -62,7 +62,7 @@ bool panel_select::init()
     
     setBackground(BACKGROUND_COLOUR);
     
-    int r = RES(64) * scale;
+    int r = RES(64) ; // * scale;
     
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
@@ -72,7 +72,7 @@ bool panel_select::init()
     auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, clickCallback);
     uihelper::AddBottomRight(safeArea, night, RES(0), RES(10) );
     
-    int adjy=RES(32)*scale;
+    int adjy=RES(32); // *scale;
 
     createFilterButton(ID_FILTER_DAWN,          (r*1)-adjy, "lord_dawn",    select_filters::show_dawn);
     createFilterButton(ID_FILTER_NIGHT,         (r*2)-adjy, "lord_night",   select_filters::show_night);
@@ -81,6 +81,7 @@ bool panel_select::init()
     createFilterButton(ID_FILTER_CURRENT_LOC,   (r*5)-adjy, "i_center",     select_filters::show_current);
     
     auto cleanup = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
+    cleanup->setScale(scale_normal);
     uihelper::AddTopRight(safeArea, cleanup, RES(32), (r*6)-adjy );
 
     createPageView();
@@ -111,12 +112,14 @@ void panel_select::createPageView()
     pageView->setBounceEnabled(true);
     pageView->setIndicatorEnabled(true);
     pageView->setCurrentPageIndex(0);
+    
+    
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f)*scale);
+    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(1))*scale);
     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
-    
-    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f));
-    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(-5));
-    
+
     uihelper::AddBottomLeft(safeArea, pageView);
     uihelper::FillParent(pageView);
     
@@ -221,6 +224,7 @@ void panel_select::getCharacters()
         lord->enableDrag();
         lord->enableDrop();
         lord->drag_delegate = this;
+        lord->setScale(resolutionmanager::getInstance()->phoneScale());
         lords.pushBack(lord);
         
         auto userdata = lord->userData();
@@ -446,7 +450,8 @@ uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const st
 {
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
-    button->setScale(resolutionmanager::getInstance()->phoneScale());
+    // #40 Temporary fix
+    //button->setScale(resolutionmanager::getInstance()->phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
     uihelper::AddTopRight(safeArea, button, RES(32), y );
@@ -674,10 +679,12 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
 {
     using DragEventType = chilli::ui::DragEvent::Type;
     
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    
     auto lord = static_cast<uilordselect*>(event->element);
 
     mxid draggedLordId = getIdFromTag(lord);
-    
+
     character        c;
     Vec2 droppedAt;
 
@@ -707,8 +714,10 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             this->addChild(draggedLord);
             if ( currentlyFollowing ) {
                 draggedLord->setPosition(event->position);
-                draggedLord->setScale(scale_normal);
             }
+            
+            draggedLord->setScale(scale_normal*scale);
+            
             
             break;
 
@@ -717,6 +726,8 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             // enable scrolling after dragging
             enableUI();
         
+            draggedLord->setScale(scale_normal*scale);
+            
             // remove lord from panel
             draggedLord->removeFromParent();
             
@@ -858,9 +869,11 @@ bool panel_select::checkValidDropLocation()
 {
     bool valid = true;
     
+    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+  
     if ( dropTarget == nullptr
-        && (draggedLord->getPosition().x > getContentSize().width - RIGHT_STRIP_WIDTH
-            || draggedLord->getPosition().y < BOTTOM_STRIP_HEIGHT) ) {
+        && (draggedLord->getPosition().x > getContentSize().width - (RIGHT_STRIP_WIDTH*scale)
+            || draggedLord->getPosition().y < (BOTTOM_STRIP_HEIGHT*scale)) ) {
             
             valid = false;
         }
@@ -962,7 +975,7 @@ void panel_select::storeLordPosition( uilordselect* lord )
 }
 
 void panel_select::checkPageFlip()
-    {
+{
     
     if ( !pageFlipAllowed ) {
         return;
@@ -975,8 +988,9 @@ void panel_select::checkPageFlip()
     auto position = draggedLord->getPosition();
     auto size = getContentSize();
     auto index = pageView->getCurrentPageIndex();
+    f32 scale = resolutionmanager::getInstance()->phoneScale();
     
-    if (position.x > size.width - (RIGHT_STRIP_WIDTH*0.75) ) {
+    if (position.x > size.width - ((RIGHT_STRIP_WIDTH*0.75)*scale) ) {
     
         if ( index == pages.size()-1 && index < MaxPages ) {
             addNewPage(index+1);

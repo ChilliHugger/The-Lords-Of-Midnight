@@ -79,11 +79,11 @@ bool uibook::initWithChapter( storyheader_t* story )
     
     auto line = ReplaceAll( (LPCSTR)story->description, "\n", "\n\r");
     
-    auto title1 = Label::createWithTTF( uihelper::font_config_big, line );
+    auto title1 = Label::createWithTTF( uihelper::font_config_medium, line );
     //title1->enableOutline(outlineColor,RES(1));
     title1->getFontAtlas()->setAntiAliasTexParameters();
     title1->setTextColor(textColor);
-    title1->setLineHeight(itemHeight);
+    //title1->setLineHeight(itemHeight);
     title1->setHorizontalAlignment(TextHAlignment::CENTER);
     
     uihelper::AddBottomCenter(this, title1, RES(0), RES(16));

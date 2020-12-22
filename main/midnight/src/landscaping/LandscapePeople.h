@@ -11,8 +11,6 @@
 
 #include <stdio.h>
 
-#include <stdio.h>
-
 #include "LandscapeNode.h"
 #include "LandscapeGenerator.h"
 
@@ -59,10 +57,10 @@ public:
     void clear();
     void stopAnim();
     
-    void startSlideFromRight();
-    void startSlideFromLeft();
-    void startSlideOffLeft();
-    void startSlideOffRight();
+    void startSlideFromRight(s32 distance);
+    void startSlideFromLeft(s32 distance);
+    void startSlideOffLeft(s32 distance);
+    void startSlideOffRight(s32 distance);
     void adjustMovement( f32 amount );
 
     void startFadeIn();

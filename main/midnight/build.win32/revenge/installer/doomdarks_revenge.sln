@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "doomdarks_revenge", "doomdarks_revenge.vdproj", "{4341F9E3-98F7-4F37-AA11-3B8C859F6DEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4341F9E3-98F7-4F37-AA11-3B8C859F6DEA}.Debug|Default.ActiveCfg = Debug
+		{4341F9E3-98F7-4F37-AA11-3B8C859F6DEA}.Debug|Default.Build.0 = Debug
+		{4341F9E3-98F7-4F37-AA11-3B8C859F6DEA}.Release|Default.ActiveCfg = Release
+		{4341F9E3-98F7-4F37-AA11-3B8C859F6DEA}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B79B298-85ED-452F-8BB3-FD86818135B3}
+	EndGlobalSection
+EndGlobal

@@ -16,12 +16,12 @@
 USING_NS_CC;
 
 
-static Color3B TimeOfDayColours[MAX_TIME][MAX_SHADES];
+static Color4B TimeOfDayColours[MAX_TIME][MAX_SHADES];
 static const int DefaultWhite = 0xffffffff;
 
-inline Color3B ConvertFromInt( int colour )
+inline Color4B ConvertFromInt( int colour )
 {
-    return Color3B(_RED(colour),_GREEN(colour),_BLUE(colour));
+    return Color4B(_RED(colour),_GREEN(colour),_BLUE(colour), _ALPHA(colour));
 }
 
 inline Color4B GetTint( mxtime_t time, TINT shade )
@@ -29,14 +29,26 @@ inline Color4B GetTint( mxtime_t time, TINT shade )
     return Color4B(TimeOfDayColours[time][(int)shade]);
 }
 
-void LandscapeColour::updateNode( Node* node )
+void LandscapeColour::updateTerrainNode( Node* node )
 {
     auto tint1 = Color4F(CalcCurrentMovementTint(TINT::TerrainOutline));
     auto tint2 = Color4F(CalcCurrentMovementTint(TINT::TerrainFill));
     auto shader = moonring::mikesingleton()->shader;
-    shader->AttachShader(node, options->shader);
-    shader->UpdateSpriteDayNightShader(node, alpha_normal, tint1, tint2);
+    
+    shader->AttachShader(node, options->terrainTimeShader);
+    shader->UpdateTerrainTimeShader(node, alpha_normal, tint1, tint2);
 }
+
+void LandscapeColour::updateCharacterNode( Node* node )
+{
+    auto fade = CalcCurrentMovementFade(TINT::Person);
+    auto shader = moonring::mikesingleton()->shader;
+    
+    shader->AttachShader(node, options->characterTimeShader);
+    shader->UpdateCharacterTimeShader(node, alpha_normal, fade);
+}
+
+
 
 Color4B LandscapeColour::Adjust( Color4B source, Color4F tint )
 {
@@ -48,18 +60,25 @@ Color4B LandscapeColour::Adjust( Color4B source, Color4F tint )
 
 void LandscapeColour::SetMovementColour(mxtime_t start,mxtime_t end)
 {
+    // TINT::Normal
     startTint[0] =  CreateTimeBrightness(start);
     auto adjust = Color4F( startTint[0] );
  
     SET_TINT(startTint, start, TINT::TerrainOutline);
     SET_TINT(startTint, start, TINT::TerrainFill);
+    SET_TINT(startTint, start, TINT::Person);
+    SET_TINT(startTint, start, TINT::Tunnel);
     
+    
+    // TINT::Normal
     // get time of day for target colour
     endTint[0] = CreateTimeBrightness(end);
     adjust = Color4F( endTint[0] );
 
     SET_TINT(endTint, end, TINT::TerrainOutline);
     SET_TINT(endTint, end, TINT::TerrainFill);
+    SET_TINT(endTint, end, TINT::Person);
+    SET_TINT(endTint, end, TINT::Tunnel);
 }
 
 void LandscapeColour::SetLookColour(mxtime_t time)
@@ -114,6 +133,27 @@ Color4B LandscapeColour::CreateTimeBrightness ( mxtime_t time )
     
     return Color4B(red,green,blue,255);
 }
+
+f32 LandscapeColour::CalcCurrentMovementFade ( TINT shade )
+{
+    int index = (int)shade;
+    if ( !options->isMoving )
+    {
+#if defined(_DDR_)
+        if (options->isInTunnel)
+            return FROM_ALPHA(GetTint(timeofday, TINT::Tunnel).a);
+#endif
+        return FROM_ALPHA(startTint[index].a);
+    }
+    
+    f32 a1 = FROM_ALPHA(startTint[index].a);
+    f32 a2 = FROM_ALPHA(endTint[index].a);
+    f32 a3 = a2-a1;
+    a1 += a3*options->movementAmount;
+    
+    return a1;
+}
+
 
 Color4B LandscapeColour::CalcCurrentMovementTint ( TINT shade )
 {

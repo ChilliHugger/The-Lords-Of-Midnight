@@ -84,7 +84,7 @@ bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
     uihelper::AddCenter( this, layout ) ;
     
     // add text
-    auto label = Label::createWithTTF(text, FONT_FILENAME, FONT_SIZE_BIG);
+    auto label = Label::createWithTTF(uihelper::font_config_big, text);
     label->setColor(_clrBlue);
     label->setAlignment(TextHAlignment::CENTER);
     //label->setLineHeight(RES(FONT_SIZE_BIG));
@@ -95,7 +95,7 @@ bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
     label->setAnchorPoint( uihelper::AnchorTopCenter );
     
     // calc label height
-    auto h = label->getContentSize().height + (3*layout_padding) + button_height;
+    auto h = label->getContentSize().height + (3*layout_padding) + PHONE_SCALE(button_height);
     layout->setContentSize(Size(width,h));
     uihelper::PositionParentTopCenter( label, 0, layout_padding ) ;
     

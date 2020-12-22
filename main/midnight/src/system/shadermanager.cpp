@@ -1,6 +1,6 @@
 //
 //  shadermanager.cpp
-//  midnight
+//  midTime
 //
 //  Created by Chris Wild on 17/04/2020.
 //
@@ -13,7 +13,8 @@ USING_NS_CC;
 
 void shadermanager::Init()
 {
-    CreateDayNightShader();
+    CreateCharacterTimeShader();
+    CreateTerrainTimeShader();
 }
 
 template<typename T>
@@ -23,20 +24,43 @@ void setUniform(cocos2d::backend::ProgramState* state, std::string uniform, T va
     state->setUniform(uniformLocation, &value, sizeof(value));
 }
 
-void shadermanager::CreateDayNightShader()
+void shadermanager::CreateCharacterTimeShader()
 {
-    dayNightShader = SimpleShader::createWithFragmentShader("terrain/dayNight.fsh");
-    dayNightShader->setUniform("p_left", Vec4(0,0,(165.0f/255.0f),alpha_normal));   // Outline
-    dayNightShader->setUniform("p_right", Vec4(1,1,1,alpha_normal));                // Body
-    dayNightShader->setUniform("p_alpha", alpha_normal);                            // Alpha
+    characterTimeShader = SimpleShader::createWithFragmentShader("shaders/characterTimeShader.fsh");
+    characterTimeShader->setUniform("p_colour", Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal));
+    characterTimeShader->setUniform("p_alpha", alpha_normal);
+    characterTimeShader->setUniform("p_fade", 0.25f);
+
 }
 
-SimpleShader* shadermanager::GetDayNightShader()
+void shadermanager::UpdateCharacterTimeShader(Node* node, f32 alpha, f32 fade)
 {
-    return dayNightShader;
+    auto state = node->getProgramState();
+    setUniform(state,"p_alpha", alpha);
+    setUniform(state,"p_fade", fade);
 }
 
-void shadermanager::UpdateSpriteDayNightShader(Node* node, f32 alpha, Color4F& outline, Color4F& body)
+SimpleShader* shadermanager::GetCharacterTimeShader()
+{
+    return characterTimeShader;
+}
+
+Node* shadermanager::AddCharacterTimeShader(Node* node)
+{
+    return AttachShader(node, characterTimeShader);
+}
+
+
+
+void shadermanager::CreateTerrainTimeShader()
+{
+    terrainTimeShader = SimpleShader::createWithFragmentShader("shaders/terrainTimeShader.fsh");
+    terrainTimeShader->setUniform("p_left", Vec4(0,0,(165.0f/255.0f),alpha_normal));   // Outline
+    terrainTimeShader->setUniform("p_right", Vec4(1,1,1,alpha_normal));                // Body
+    terrainTimeShader->setUniform("p_alpha", alpha_normal);                            // Alpha
+}
+
+void shadermanager::UpdateTerrainTimeShader(Node* node, f32 alpha, Color4F& outline, Color4F& body)
 {
     auto state = node->getProgramState();
     setUniform(state,"p_alpha", alpha);                                             // alpha
@@ -44,9 +68,14 @@ void shadermanager::UpdateSpriteDayNightShader(Node* node, f32 alpha, Color4F& o
     setUniform(state,"p_right", Vec4(body.r,body.g,body.b,body.a));                 // body
 }
 
-Node* shadermanager::AddDayNightShader(Node* node)
+SimpleShader* shadermanager::GetTerrainTimeShader()
 {
-    return AttachShader(node, dayNightShader);
+    return terrainTimeShader;
+}
+
+Node* shadermanager::AddTerrainTimeShader(Node* node)
+{
+    return AttachShader(node, terrainTimeShader);
 }
 
 Node* shadermanager::AttachShader(Node* node, SimpleShader* shader)

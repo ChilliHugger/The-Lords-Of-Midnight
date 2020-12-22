@@ -100,12 +100,13 @@ namespace chilli {
         DragEvent(Node* element, Vec2 p, Type type );
         
     public:
-        Node*  element;
-        Vec2   lastposition;
-        Vec2   position;
-        Type   type;
-        u64    time;
-        
+        Node*   element;
+        Vec2    startposition;
+        Vec2    lastposition;
+        Vec2    position;
+        Type    type;
+        u64     starttime;
+        u64     time;   
     };
 
     class DragElement;

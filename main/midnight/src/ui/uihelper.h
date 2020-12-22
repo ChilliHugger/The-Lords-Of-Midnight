@@ -16,7 +16,7 @@ using namespace chilli::types;
 FORWARD_REFERENCE( uipanel );
 
 constexpr auto BOX_BACKGROUND_FILENAME = "misc/box_16.png";
-constexpr auto FONT_FILENAME           = "fonts/celtic.ttf";
+constexpr auto FONT_FILENAME           = "fonts/Midnight.ttf";
 constexpr auto FONT_SIZE_SHORTCUT      = 25;
 constexpr auto FONT_SIZE_BIG           = 30;
 constexpr auto FONT_SIZE_MEDIUM        = 20;

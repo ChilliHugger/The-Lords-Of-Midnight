@@ -12,7 +12,9 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
-#define ALPHA(x)                (f32)((x)*255)
+#define ALPHA(x)                (f32)((x)*255.0)
+#define FROM_ALPHA(x)           (f32)((x)/255.0)
+
 #define USING_NS_CC_UI          using namespace cocos2d::ui
 
 #define RUN_ON_UI_THREAD        cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread

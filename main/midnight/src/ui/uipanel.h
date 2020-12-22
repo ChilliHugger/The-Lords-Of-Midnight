@@ -66,7 +66,7 @@ public:
 protected:
     uipanel();
     
-    Node* setBackgroundToHeight( LPCSTR background );
+    Node* setBackgroundToHeight( LPCSTR background, bool checkWidth = true );
     Node* setBackgroundToWidth( LPCSTR background );
     Node* setBackground( Color3B color );
     Node* setBackgroundCentered( LPCSTR background );

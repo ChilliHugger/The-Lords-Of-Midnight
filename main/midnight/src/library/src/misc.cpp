@@ -158,7 +158,7 @@ namespace chilli {
         {
             if ( c>='a' && c<='z' )
                 c = mkupper(c);
-            //else if ( c>='à' && c<='ý' )
+            //else if ( c>='ï¿½' && c<='ï¿½' )
             //    c = mkupper(c);
             return c;
         }
@@ -167,7 +167,7 @@ namespace chilli {
         {
             if ( c>='A' &&  c<='Z' )
                 c=mklower(c);
-            //else if ( c>='À' &&  c<='Ý' )
+            //else if ( c>='ï¿½' &&  c<='ï¿½' )
             //    c=mklower(c);
             return c;
         }
@@ -181,7 +181,7 @@ namespace chilli {
                 c = *text;
                 if ( c>='a' && c<='z' )
                     *text = mkupper(c);
-                //else if ( c>='à' && c<='ý' )
+                //else if ( c>='ï¿½' && c<='ï¿½' )
                 //    *text = mkupper(c);
                 text++;
             }
@@ -196,7 +196,7 @@ namespace chilli {
                 c = *text;
                 if ( c>='A' &&  c<='Z' )
                     *text=mklower(c);
-                //else if ( c>='À' &&  c<='Ý' )
+                //else if ( c>='ï¿½' &&  c<='ï¿½' )
                 //    *text=mklower(c);
                 text++;
             }
@@ -496,25 +496,6 @@ namespace chilli {
             if ( text == NULL ) return 0;
             return ::atol(text);
         }
-        // takes null terminated string 
-        // returns true if the string is a number, false otherwise
-        bool isNumber( LPCSTR string )
-        {
-            if( !string )
-                return FALSE;
-
-            int count=0;
-            size_t max = c_strlen( string );
-            while( count < max )
-            {
-                if( !isdigit(string[count]) )
-                    return FALSE;
-                count++;
-            };
-
-            return TRUE;
-        };
-
 
     }
     // namespace lib

@@ -31,6 +31,9 @@ public:
     void setObject( mxid id, mxid objectId, panelmode_t mode );
     void setCallback( WidgetClickCallback callback ) { clickCallback = callback;}
     
+    mxid Id() const { return id; }
+    mxid ObjectId() const { return objectid; }
+    
 protected:
 
     uithinkpage();

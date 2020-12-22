@@ -37,15 +37,20 @@ TTFConfig uihelper::font_config_debug;
 
 void uihelper::Init()
 {
+    f32 scale = scale_normal;
+    if(PHONE_SCALE(scale_normal)!=scale_normal) {
+        scale = scale_normal+scale_half;
+    }
+    
     font_config_big.fontFilePath = FONT_FILENAME;
-    font_config_big.fontSize = RES(FONT_SIZE_BIG);
+    font_config_big.fontSize = RES(FONT_SIZE_BIG)*scale;
     font_config_big.glyphs = GlyphCollection::DYNAMIC;
     font_config_big.outlineSize = 0;
     font_config_big.customGlyphs = nullptr;
     font_config_big.distanceFieldEnabled = false;
 
     font_config_medium.fontFilePath = FONT_FILENAME;
-    font_config_medium.fontSize = RES(FONT_SIZE_MEDIUM);
+    font_config_medium.fontSize = RES(FONT_SIZE_MEDIUM)*scale;
     font_config_medium.glyphs = GlyphCollection::DYNAMIC;
     font_config_medium.outlineSize = 0;
     font_config_medium.customGlyphs = nullptr;
@@ -66,7 +71,7 @@ void uihelper::Init()
     font_config_shortcut.distanceFieldEnabled = false;
     
     font_config_debug.fontFilePath = "fonts/arial.ttf";
-    font_config_debug.fontSize = RES(16);
+    font_config_debug.fontSize = RES(16)*scale;
     font_config_debug.glyphs = GlyphCollection::DYNAMIC;
     font_config_debug.outlineSize = 0;
     font_config_debug.customGlyphs = nullptr;
@@ -336,9 +341,13 @@ void uihelper::FillParent( Node* node )
 
 Button* uihelper::CreateBoxButton( Size size )
 {
+    size.width = PHONE_SCALE(size.width);
+    size.height = PHONE_SCALE(size.height);
+    
+    
     auto button = ui::Button::create(BOX_BACKGROUND_FILENAME);
     button->setTitleFontName(FONT_FILENAME);
-    button->setTitleFontSize(RES(FONT_SIZE_BIG));
+    button->setTitleFontSize(PHONE_SCALE(RES(FONT_SIZE_BIG)));
     button->setTitleColor(Color3B::BLUE);
     button->setTouchEnabled(true);
     button->setScale9Enabled(true);
@@ -346,7 +355,7 @@ Button* uihelper::CreateBoxButton( Size size )
     button->setLocalZOrder(ZORDER_UI);
     uihelper::setEnabled(button,true);
     // Adjust for centreY without trailing character
-    button->getTitleRenderer()->setLineHeight(RES(25));
+    button->getTitleRenderer()->setLineHeight(PHONE_SCALE(RES(25)));
     return button;
 }
 

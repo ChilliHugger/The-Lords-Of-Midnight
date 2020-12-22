@@ -25,20 +25,23 @@
 
 cmake_minimum_required(VERSION 3.6)
 
-#if(_LOM_)
+if(TME STREQUAL "LOM")
   set(APP_BUILD _LOM_)
   set(APP_NAME midnight)
-#elseif(_DDR_)
-#  set(APP_BUILD _DDR_)
-#  set(APP_NAME revenge)
-#endif()
+elseif(TME STREQUAL "DDR")
+  set(APP_BUILD _DDR_)
+  set(APP_NAME revenge)
+else()
+  set(APP_BUILD _LOM_)
+  set(APP_NAME midnight)
+endif()
 
 
 project(${APP_NAME})
 
 if(XCODE)
     if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
-        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 8.0)
+        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 12.0)
     endif()
 endif()
 
@@ -56,7 +59,9 @@ set(GAME_HEADER)
 
 set(GAME_RES_FOLDER
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources-${APP_NAME}"
     )
+
 if(APPLE OR WINDOWS)
     cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
@@ -74,6 +79,7 @@ include(src/tinyxml/CMakeLists.txt)
 include(src/tme/CMakeLists.txt)
 include(src/ui/CMakeLists.txt)
 include(src/utils/CMakeLists.txt)
+include(src/platform/CMakeLists.txt)
 
 set(GAME_HEADER
   src/cocos.h
@@ -89,6 +95,7 @@ set(GAME_HEADER
   ${HDR_TME}
   ${HDR_UI}
   ${HDR_UTILS}
+  ${HDR_PLATFORM}
   )
 
 set(GAME_SOURCE
@@ -104,6 +111,7 @@ set(GAME_SOURCE
   ${SRC_TME}
   ${SRC_UI}
   ${SRC_UTILS}
+  ${SRC_PLATFORM}
   )
 
 list(APPEND GAME_SRC ${GAME_HEADER})
@@ -113,7 +121,6 @@ add_compile_options("-D${APP_BUILD}")
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-    set(APP_NAME MyGame)
     list(APPEND GAME_SOURCE
          proj.android/app/jni/hellocpp/main.cpp
          )
@@ -122,7 +129,7 @@ elseif(LINUX)
          proj.linux/main.cpp
          )
 elseif(WINDOWS)
-    add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_)
+    add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_ -D_OS_WIN32_)
     list(APPEND GAME_HEADER
          proj.win32/main.h
          proj.win32/resource.h
@@ -140,9 +147,9 @@ elseif(APPLE)
              proj.ios_mac/ios/RootViewController.h
              )
         set(APP_UI_RES
-            proj.ios_mac/ios/LaunchScreen.storyboard
-            proj.ios_mac/ios/LaunchScreenBackground.png
-            proj.ios_mac/ios/Images.xcassets
+            proj.ios_mac/ios/${APP_NAME}/LaunchScreen.storyboard
+            proj.ios_mac/ios/${APP_NAME}/LaunchScreenBackground.png
+            proj.ios_mac/ios/${APP_NAME}/Images.xcassets
             )
         list(APPEND GAME_SOURCE
              proj.ios_mac/ios/main.m
@@ -154,8 +161,8 @@ elseif(APPLE)
     elseif(MACOSX)
         add_compile_options(-D_OS_OSX_ -D_OS_DESKTOP_)
         set(APP_UI_RES
-            proj.ios_mac/mac/Icon.icns
-            proj.ios_mac/mac/Info.plist
+            proj.ios_mac/mac/${APP_NAME}/Images.xcassets
+            proj.ios_mac/mac/${APP_NAME}/Icon.icns
             )
         list(APPEND GAME_SOURCE
              proj.ios_mac/mac/main.cpp
@@ -192,14 +199,25 @@ if(APPLE)
     set_xcode_property(${APP_NAME} INSTALL_PATH "\$(LOCAL_APPS_DIR)")
 
     if(MACOSX)
-        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist")
+        set_target_properties(${APP_NAME} PROPERTIES
+          MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/${APP_NAME}/Info.plist"
+          XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/midnight.entitlements")
     elseif(IOS)
-        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/Info.plist")
+        set_target_properties(${APP_NAME} PROPERTIES
+          MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/${APP_NAME}/Info.plist"
+          XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
+          )
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
+        # force x86_64 architecture for iphonesimulator builds
+        set_target_properties(${APP_NAME} PROPERTIES
+          XCODE_ATTRIBUTE_ARCHS[sdk=iphonesimulator*] x86_64
+          XCODE_ATTRIBUTE_VALID_ARCHS[sdk=iphonesimulator*] x86_64
+          )
+
     endif()
 
     # For code-signing, set the DEVELOPMENT_TEAM:
-    #set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "GRLXXXX2K9")
+    set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "8K6PYTU8T7")
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME})
 endif()
