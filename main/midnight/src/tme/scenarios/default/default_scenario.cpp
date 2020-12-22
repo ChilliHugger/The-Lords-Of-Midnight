@@ -560,7 +560,7 @@ namespace tme {
             CONVERT_CHARACTER_ID( argv[1].vId, recruit );
             mxcharacter* recruited = character->Cmd_Approach(recruit);
             if ( recruited ) {
-                argv[1] = recruited->SafeIdt();
+                argv[1] = mxentity::SafeIdt(recruited);
                 argv[0] = (s32)1;
                 return MX_OK ;
             }
@@ -614,7 +614,7 @@ namespace tme {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
             mxobject* object = character->Cmd_Fight();
             if ( object != NULL ) {
-                argv[1] = object->SafeIdt();
+                argv[1] = mxentity::SafeIdt(object);
                 argv[0] = (s32)1;
                 return MX_OK ;
             }
@@ -627,7 +627,7 @@ namespace tme {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
             mxobject* object = character->Cmd_Seek();
             if ( object != NULL ) {
-                argv[1] = object->SafeIdt();
+                argv[1] = mxentity::SafeIdt(object);
                 argv[0] = (s32)1;
                 return MX_OK ;
             }
@@ -642,7 +642,7 @@ namespace tme {
             // TODO Check return Type
             mxobject* object  = character->Cmd_PickupObject();
             if ( object != NULL ) {
-                argv[1] = object->SafeIdt();
+                argv[1] = mxentity::SafeIdt(object);
                 argv[0] = (s32)1;
                 return MX_OK ;
             }
@@ -725,7 +725,7 @@ namespace tme {
             CONVERT_REGIMENT_ID( argv[0].vId, regiment );
             CONVERT_ENTITY_ID( argv[1].vId, dst );
             regiment->Orders( OD_GOTO );
-            regiment->TargetId( dst->SafeIdt() );
+            regiment->TargetId( mxentity::SafeIdt(dst) );
             argv[0]=(s32)0;
             return MX_OK ;
         }
@@ -743,7 +743,7 @@ namespace tme {
             CONVERT_REGIMENT_ID( argv[0].vId, regiment );
             CONVERT_ENTITY_ID( argv[1].vId, dst );
             regiment->Orders( OD_FOLLOW );
-            regiment->TargetId( dst->SafeIdt() );
+            regiment->TargetId( mxentity::SafeIdt(dst) );
             argv[0]=(s32)0;
             return MX_OK ;
         }
@@ -753,7 +753,7 @@ namespace tme {
             CONVERT_REGIMENT_ID( argv[0].vId, regiment );
             CONVERT_ENTITY_ID( argv[1].vId, dst );
             regiment->Orders( OD_ROUTE );
-            regiment->TargetId( dst->SafeIdt() );
+            regiment->TargetId( mxentity::SafeIdt(dst) );
             argv[0]=(s32)0;
             return MX_OK ;
         }
@@ -949,7 +949,7 @@ namespace tme {
             for ( u32 ii=0; ii<mx->objCharacters.Count(); ii++ ) {
                 mxcharacter* c = (mxcharacter*)mx->objCharacters[ii] ;
                 if ( c!=doomdark )
-                    collection.Add(c->SafeIdt());
+                    collection.Add(mxentity::SafeIdt(c));
             }
             return MX_OK ;
             
@@ -1043,7 +1043,7 @@ namespace tme {
             for ( u32 ii=0; ii<locinfo->nArmies; ii++ ) {
                 mxarmy* army = &locinfo->armies[ii] ;
                 int type = army->armytype == AT_CHARACTER ? (128|army->type) : army->armytype ;
-                collection[ii] = MAKE_ARMYID(type,army->parent->SafeId() );
+                collection[ii] = MAKE_ARMYID(type,mxentity::SafeId(army->parent) );
             }
             argv[0] = (s32)8 ;
             argv[1] = locinfo->foe.warriors ;
