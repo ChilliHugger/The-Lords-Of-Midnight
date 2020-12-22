@@ -32,86 +32,89 @@ bool xml::Load ( LPCSTR filename )
 u8* data = NULL ;
 u32 size=0;
 
-
     data = (u8*)os::filemanager::Load ( filename, &size );
     if ( data == nullptr || size == 0 )
         return false;
 
-    //m_doc = new TiXmlDocument();
-    Parse((const char*)data);
+    Parse((const char*)data, size);
 
     SAFEDELETE ( data );
 
     return true ;
 }
 
-xml::node* xml::Find ( LPCSTR section )
+XmlNode* xml::Find ( LPCSTR section )
 {
     if ( this == nullptr)
         return nullptr;
-    return (xml::node*)FirstChild(section)->ToElement();
+    return FirstChildElement(section)->ToElement();
 }
 
-xml::node* xml::node::Find ( LPCSTR section )
+    
+    
+    
+XmlNode* xml::Find ( XmlNode* node, LPCSTR section )
 {
-    if ( this == nullptr)
+    if ( node == nullptr)
         return nullptr;
-    return (xml::node*)FirstChild(section)->ToElement();
+    return (XmlNode*)node->FirstChildElement(section)->ToElement();
 }
 
-bool xml::node::IsType(LPCSTR name) const
+bool xml::IsType(XmlNode* node, LPCSTR name)
 {
-    return c_stricmp(Value(),name) == 0;
+    if(node==nullptr)
+        return false;
+    return c_stricmp(node->Value(),name) == 0;
 }
 
-int xml::node::Count ()
+int xml::Count (XmlNode* node)
 {
-    if ( this == nullptr)
+    if ( node == nullptr)
         return 0;
 
     int count=0;
-    FOREACHELEMENT(this,e) {
+    FOREACHELEMENT(node,e) {
         count++;
     }
     return count;
 }
 
-xml::node* xml::node::Find( LPCSTR element, LPCSTR id )
+XmlNode* xml::Find( XmlNode* node, LPCSTR element, LPCSTR id )
 {
-    FOREACHELEMENT(this,e){
-        if ( e->IsType(element) ) {
-            if ( c_stricmp(e->ReadStr("id"), id) == 0 ) {
+    FOREACHELEMENT(node,e){
+        if ( IsType(e,element) ) {
+            if ( c_stricmp(ReadStr(e,"id"), id) == 0 ) {
                 return e;
             }
         }
     }
-    return NULL ;
+    return nullptr ;
 }
 
-LPCSTR xml::node::ReadElement( LPCSTR element, LPCSTR id, LPCSTR tag )
+LPCSTR xml::ReadElement( XmlNode* node, LPCSTR element, LPCSTR id, LPCSTR tag )
 {
-    FOREACHELEMENT(this,e){
-        if ( e->IsType(element) ) {
-            if (c_stricmp(e->ReadStr("id"), id) == 0 ) {
-                return e->ReadStr(tag);
+    FOREACHELEMENT(node,e){
+        if ( IsType(e,element) ) {
+            if (c_stricmp(ReadStr(e,"id"), id) == 0 ) {
+                return ReadStr(e,tag);
             }
         }
     }
     return strNull ;
 }
 
-LPCSTR xml::node::ReadItemEx ( LPCSTR name )
+LPCSTR xml::ReadItemEx ( XmlNode* node, LPCSTR name )
 {
-    if ( this == nullptr)
+    if ( node == nullptr)
         return nullptr;
 
     // read an attribute first
-    LPCSTR value = this->Attribute(name);
+    LPCSTR value = ((TiXmlElement*)node)->Attribute(name);
 
     // try this
     if ( value == nullptr) {
-        if ( IsType(name) ) {
-            TiXmlText* m1 = FirstChild()->ToText();
+        if ( IsType(node,name) ) {
+            TiXmlText* m1 = node->FirstChild()->ToText();
             if ( m1 )
                 value = m1->Value();
         }
@@ -119,8 +122,8 @@ LPCSTR xml::node::ReadItemEx ( LPCSTR name )
 
     // try element
     if ( value == nullptr) {
-        FOREACHELEMENT(this,e){
-            if ( e->IsType(name) ) {
+        FOREACHELEMENT(node,e){
+            if ( IsType(e,name) ) {
                 TiXmlText* m1 = e->FirstChild()->ToText();
                 if ( m1 )
                     value = m1->Value();
@@ -132,75 +135,67 @@ LPCSTR xml::node::ReadItemEx ( LPCSTR name )
     return value ;
 }
 
-LPCSTR xml::node::ReadItem ( LPCSTR name, LPCSTR defaultvalue )
+LPCSTR xml::ReadItem ( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
 {
-    LPCSTR value = ReadItemEx(name);
+    LPCSTR value = ReadItemEx(node,name);
     if ( value == nullptr)
         return defaultvalue;
     return value;
 }
 
-LPCSTR  xml::node::ReadStr( LPCSTR name, LPCSTR defaultvalue )
+LPCSTR  xml::ReadStr( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
 {
-    return ReadItem ( name, defaultvalue );
+    return ReadItem ( node, name, defaultvalue );
 }
 
-char  xml::node::ReadChar( LPCSTR name, char defaultvalue )
+char  xml::ReadChar( XmlNode* node, LPCSTR name, char defaultvalue )
 {
-    std::string item = ReadItem ( name, "" );
+    std::string item = ReadItem ( node, name, "" );
     if ( item.empty() ) {
         return defaultvalue;
     }
     return item[0];
 }
 
-f32 xml::node::ReadItem ( LPCSTR name, f32 defaultvalue )
+f32 xml::ReadItem ( XmlNode* node, LPCSTR name, f32 defaultvalue )
 {
-    LPCSTR value = ReadItemEx(name);
+    LPCSTR value = ReadItemEx(node,name);
     if ( value == nullptr)
         return defaultvalue;
     return (f32) atof ( value );
 }
 
-    f32 xml::node::ReadFloat ( LPCSTR name, f32 defaultvalue )
-    {
-        return ReadItem(name,defaultvalue) ;
-    }
-
-int xml::node::ReadItem ( LPCSTR name, int defaultvalue )
+f32 xml::ReadFloat ( XmlNode* node, LPCSTR name, f32 defaultvalue )
 {
-    LPCSTR value = ReadItemEx(name);
+    return ReadItem( node,name,defaultvalue) ;
+}
+
+int xml::ReadItem ( XmlNode* node, LPCSTR name, int defaultvalue )
+{
+    LPCSTR value = ReadItemEx(node,name);
     if ( value == nullptr)
         return defaultvalue;
     return atoi ( value );
 }
 
-    int xml::node::ReadInt( LPCSTR name, int defaultvalue )
-    {
-        return ReadItem(name,defaultvalue) ;
-    }
-
-
-bool xml::node::Exists( LPCSTR name )
+int xml::ReadInt( XmlNode* node, LPCSTR name, int defaultvalue )
 {
-    if ( this == NULL )
-        return FALSE;
-
-    if ( this->Attribute(name) == nullptr)
-        return FALSE;
-
-    return TRUE;
+    return ReadItem(node,name,defaultvalue) ;
 }
 
-//int xml::node::ReadValue( LPCSTR name, int defaultvalue )
-//{
-//    xml::node* newelement = (xml::node*)this->FirstChildElement(name);
-//    return newelement->ReadItem("value",defaultvalue);
-//}
 
+bool xml::Exists( XmlNode* node, LPCSTR name )
+{
+    if ( node == NULL )
+        return false;
 
+    if ( ((TiXmlElement*)node)->Attribute(name) == nullptr)
+        return false;
 
-size xml::node::ReadSize( LPCSTR name, size& s1 )
+    return true;
+}
+
+size xml::ReadSize( XmlNode* node, LPCSTR name, size& s1 )
 {
     size s;
     collections::c_s32 c;
@@ -208,13 +203,14 @@ size xml::node::ReadSize( LPCSTR name, size& s1 )
     s.cx = s1.cx;
     s.cy = s1.cy;
 
-    if ( ReadArray ( name, c ) ) {
+    if ( ReadArray ( node,name, c ) ) {
         s.cx = c[0];
         s.cy = c[1];
     }
     return s;
 }
-point xml::node::ReadPoint( LPCSTR name, point& p1 )
+    
+point xml::ReadPoint( XmlNode* node, LPCSTR name, point& p1 )
 {
     point p;
     collections::c_s32 c;
@@ -222,18 +218,19 @@ point xml::node::ReadPoint( LPCSTR name, point& p1 )
     p.x = p1.x;
     p.y = p1.y;
 
-    if ( ReadArray ( name, c ) ) {
+    if ( ReadArray ( node, name, c ) ) {
         p.x = c[0];
         p.y = c[1];
     }
     return p;
 }
 
-int xml::node::ReadColour( LPCSTR name, int defaultvalue )
+int xml::ReadColour( XmlNode* node, LPCSTR name, int defaultvalue )
 {
 int value=0;
 
-LPCSTR    val = ReadStr(name);
+    LPCSTR val = ReadStr(node, name);
+    
     if ( val == NULL )
         return defaultvalue;
 
@@ -262,12 +259,9 @@ LPCSTR    val = ReadStr(name);
 }
 
 
-int xml::node::ReadToken( LPCSTR token, token_t array[], int max, int defaultvalue )
+int xml::ReadToken( XmlNode* node, LPCSTR token, token_t array[], int max, int defaultvalue )
 {
-    //if ( !Exists(token) )
-    //    return defaultvalue;
-
-    LPCSTR     val = ReadStr(token, nullptr);
+    LPCSTR val = ReadStr(node,token, nullptr);
     if ( val == nullptr)
         return defaultvalue;
 
@@ -276,9 +270,9 @@ int xml::node::ReadToken( LPCSTR token, token_t array[], int max, int defaultval
     return atoi(val);
 }
 
-bool xml::node::ReadBool( LPCSTR name, bool defaultvalue )
+bool xml::ReadBool( XmlNode* node, LPCSTR name, bool defaultvalue )
 {
-    return (bool)ReadToken( name, token_Bool, NUMELE(token_Bool), defaultvalue );
+    return (bool)ReadToken( node, name, token_Bool, NUMELE(token_Bool), defaultvalue );
 }
 
 int ConvertArray ( LPSTR value, collections::c_s32& c, LPCSTR delim )
@@ -303,32 +297,23 @@ int ConvertArray ( LPSTR value, collections::c_float& c, LPCSTR delim )
     return c.Count();
 }
 
-int xml::node::ReadArray ( LPCSTR name, collections::c_s32& c, LPCSTR delim )
+int xml::ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c, LPCSTR delim )
 {
-    //if ( IsType(name) ) {
-    //    TiXmlText* m1 = FirstChild()->ToText();
-    //    string value = m1->Value();
-    //    if ( value.IsNull() )
-    //        return 0;
-    //    return ConvertArray(value,c,delim);
-    //}
-
-
-    c_str value = ReadStr( name );
+    c_str value = ReadStr( node, name );
     if ( value.IsNull() )
         return 0;
     return ConvertArray(value,c,delim);
 
 }
 
-int xml::node::ReadArray ( LPCSTR  name, collections::c_s32& c )
+int xml::ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c )
 {
-    return ReadArray(name,c,",");
+    return ReadArray(node,name,c,",");
 }
 
-LPCSTR xml::node::ReadValue ( LPCSTR name )
+LPCSTR xml::ReadValue ( XmlNode* node, LPCSTR name )
 {
-    xml::node* m = Find(name);
+    XmlNode* m = Find(node,name);
     if ( m ) {
         TiXmlText* m1 = m->FirstChild()->ToText();
         if ( m1 )
@@ -338,50 +323,50 @@ LPCSTR xml::node::ReadValue ( LPCSTR name )
 
 }
 
-int xml::node::ReadValueArray ( LPCSTR  name, collections::c_s32& c )
+int xml::ReadValueArray ( XmlNode* node, LPCSTR name, collections::c_s32& c )
 {
-    c_str s = ReadValue(name);
+    c_str s = ReadValue(node,name);
     return ConvertArray(s,c,",");
 }
 
-int xml::node::ReadValueArray ( LPCSTR  name, collections::c_float& c )
+int xml::ReadValueArray ( XmlNode* node, LPCSTR name, collections::c_float& c )
 {
-    c_str s = ReadValue(name);
+    c_str s = ReadValue(node,name);
     return ConvertArray(s,c,",");
 }
 
-int xml::node::ReadIntProperty ( LPCSTR  name, int defaultvalue )
+int xml::ReadIntProperty ( XmlNode* node, LPCSTR name, int defaultvalue )
 {
-    xml::node* e = nullptr;
-    if ( (e = Find( "integer", name )) ) {
-        return e->ReadInt("value",defaultvalue);
+    XmlNode* e = nullptr;
+    if ( (e = Find( node, "integer", name )) ) {
+        return ReadInt(e, "value",defaultvalue);
     }
     return defaultvalue ;
 }
 
-bool xml::node::ReadBoolProperty ( LPCSTR  name, bool defaultvalue )
+bool xml::ReadBoolProperty ( XmlNode* node, LPCSTR name, bool defaultvalue )
 {
-    xml::node* e = nullptr;
-    if ( (e = Find( "bool", name )) ) {
-        return e->ReadBool("value",defaultvalue);
+    XmlNode* e = nullptr;
+    if ( (e = Find( node, "bool", name )) ) {
+        return ReadBool(e,"value",defaultvalue);
     }
     return defaultvalue ;
 }
 
-LPCSTR xml::node::ReadStrProperty ( LPCSTR  name, LPCSTR defaultvalue )
+LPCSTR xml::ReadStrProperty ( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
 {
-    xml::node* e = nullptr;
-    if ( (e = Find( "string", name )) ) {
-        return e->ReadStr("value",defaultvalue);
+    XmlNode* e = nullptr;
+    if ( (e = Find( node, "string", name )) ) {
+        return ReadStr(e,"value",defaultvalue);
     }
     return defaultvalue ;
 }
 
-f32 xml::node::ReadFloatProperty ( LPCSTR  name, f32 defaultvalue )
+f32 xml::ReadFloatProperty ( XmlNode* node, LPCSTR  name, f32 defaultvalue )
 {
-    xml::node* e = nullptr;
-    if ( (e = Find( "float", name )) ) {
-        return e->ReadFloat("value",defaultvalue);
+    XmlNode* e = nullptr;
+    if ( (e = Find( node, "float", name )) ) {
+        return ReadFloat(e,"value",defaultvalue);
     }
     return defaultvalue ;
 }
@@ -391,13 +376,5 @@ f32 xml::node::ReadFloatProperty ( LPCSTR  name, f32 defaultvalue )
 #pragma clang diagnostic pop
 #endif
         
-//
-//CDate xml::ReadDate ( TiXmlElement* element, LPCSTR name )
-//{
-//CCollection collection;
-//    ReadXml_Array(element,name,collection,"/");
-//    return CDate( collection[2],collection[1], collection[0] );
-//}
-
     } // namespace lib
 } // namespace tme

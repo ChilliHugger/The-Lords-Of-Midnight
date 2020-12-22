@@ -75,7 +75,6 @@ include(src/library/CMakeLists.txt)
 include(src/models/CMakeLists.txt)
 include(src/panels/CMakeLists.txt)
 include(src/system/CMakeLists.txt)
-include(src/tinyxml/CMakeLists.txt)
 include(src/tme/CMakeLists.txt)
 include(src/ui/CMakeLists.txt)
 include(src/utils/CMakeLists.txt)
@@ -91,7 +90,6 @@ set(GAME_HEADER
   ${HDR_MODELS}
   ${HDR_PANELS}
   ${HDR_SYSTEM}
-  ${HDR_TINYXML}
   ${HDR_TME}
   ${HDR_UI}
   ${HDR_UTILS}
@@ -107,7 +105,6 @@ set(GAME_SOURCE
   ${SRC_MODELS}
   ${SRC_PANELS}
   ${SRC_SYSTEM}
-  ${SRC_TINYXML}
   ${SRC_TME}
   ${SRC_UI}
   ${SRC_UTILS}

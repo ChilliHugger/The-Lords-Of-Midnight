@@ -69,24 +69,24 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
         COMPLAIN ( "invalid config file: <main>" );
     }
     
-    auto variables = main->Find("variables");
+    auto variables = xml::Find(main,"variables");
     if ( variables == nullptr ) {
         UIDEBUG ( "missing tag: <variables>" );
         return false;
     }
     
 #define IS_VAR(x)       c_stricmp(x,name) == 0
-#define BOOL_VALUE      t->ReadBool("value")
-#define INT_VALUE       t->ReadInt("value")
-#define STRING_VALUE    t->ReadStr("value")
+#define BOOL_VALUE      xml::ReadBool(t,"value")
+#define INT_VALUE       xml::ReadInt(t,"value")
+#define STRING_VALUE    xml::ReadStr(t,"value")
 
     
     FOREACHELEMENT(variables,t) {
-        if ( t->IsType("var") ) {
+        if ( config->IsType(t,"var") ) {
             
-            auto name = t->ReadStr("id");
+            auto name = xml::ReadStr(t,"id");
             
-            UIDEBUG("VAR %s = '%s'", name, t->ReadStr("value"));
+            UIDEBUG("VAR %s = '%s'", name, xml::ReadStr(t,"value"));
             
             if ( IS_VAR("cheat_armies_noblock") ) {
                 tme::variables::sv_cheat_armies_noblock = BOOL_VALUE;

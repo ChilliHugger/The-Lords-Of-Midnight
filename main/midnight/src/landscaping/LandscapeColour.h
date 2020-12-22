@@ -39,7 +39,7 @@ public:
     Color4B CreateTimeBrightness ( mxtime_t time );
     void SetShaderColour ( void );
     
-    static void OnXmlInit( chilli::xml::node* node );
+    static void OnXmlInit( XmlNode* node );
   
     void SetMovementColour(mxtime_t start, mxtime_t end);
     void SetLookColour(mxtime_t time);

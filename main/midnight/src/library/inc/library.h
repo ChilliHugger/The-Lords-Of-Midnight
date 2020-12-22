@@ -12,14 +12,14 @@
 #define __MACOSX__
 #endif
 
-        #include "mxtypes.h"
-        #include "../../tinyxml/tinyxml.h"
-        #include "collections.h"
-        #include "cfile.h"
-        #include "carchive.h"
-        #include "misc.h"
-        #include "os.h"
-        #include "xml.h"
+    #include "mxtypes.h"
+    #include "tinyxml2/tinyxml2.h"
+    #include "collections.h"
+    #include "cfile.h"
+    #include "carchive.h"
+    #include "misc.h"
+    #include "os.h"
+    #include "xml.h"
     #include "cflags.h"
 
 #endif //_LIBRARY_H_INCLUDED_
