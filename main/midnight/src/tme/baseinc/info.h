@@ -125,8 +125,8 @@ namespace tme {
 
         DEFAULT_IMPLEMENTATION(mxentity);
 
-        u32 SafeId() const ;
-        mxid SafeIdt() const ;
+        static u32 SafeId(const mxentity* entity) ;
+        static mxid SafeIdt(const mxentity* entity);
 
         PROPERTY( id_type_t, Type, type );
         PROPERTY( u32, Id, id );
@@ -151,6 +151,8 @@ namespace tme {
         const void*        user_data ;
 
     };
+
+
     // class entity
 
     

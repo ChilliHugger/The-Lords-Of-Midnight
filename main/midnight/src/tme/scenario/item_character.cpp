@@ -863,7 +863,7 @@ namespace tme {
                 
                 if ( will_perform_recruit ) {
                     if ( character->Recruited ( will_perform_recruit ) ) {
-                        SetLastCommand ( CMD_APPROACH, character->SafeIdt() );
+                        SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
                         CommandTakesTime(TRUE);
                         return character;
                     }
@@ -877,7 +877,7 @@ namespace tme {
                 // attempt to recruit
                 if ( will_perform_recruit ) {
                     if ( character->Recruited ( will_perform_recruit ) ) {
-                        SetLastCommand ( CMD_APPROACH, character->SafeIdt() );
+                        SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
                         CommandTakesTime(TRUE);
                         return character ;
                     }else{
@@ -1025,7 +1025,7 @@ namespace tme {
             if ( fightobject == nullptr )
                 return nullptr ;
 
-            SetLastCommand ( CMD_FIGHT, fightobject->SafeIdt()) ;
+            SetLastCommand ( CMD_FIGHT,SafeIdt(fightobject)) ;
 
             auto oinfo = Carrying();
             objectautokill = oinfo ? oinfo->CanDestroy(fightobject) : false ;
@@ -1453,7 +1453,7 @@ namespace tme {
 
         MXRESULT mxcharacter::Cmd_DropObject ( void )
         {
-            SetLastCommand ( CMD_DROPOBJECT, carrying->SafeIdt() );
+            SetLastCommand ( CMD_DROPOBJECT, mxentity::SafeIdt(carrying) );
 
             mx->scenario->DropObject ( Location(), carrying );
 #if defined(_DDR_)
@@ -1488,7 +1488,7 @@ namespace tme {
 #endif
             
 
-            SetLastCommand ( CMD_TAKEOBJECT, carrying->SafeIdt() );
+            SetLastCommand ( CMD_TAKEOBJECT, mxentity::SafeIdt(carrying) );
 
             return carrying ;
         }
@@ -1578,7 +1578,7 @@ namespace tme {
 
         archive& operator<<(archive& ar, mxcharacter* ptr )
         {
-            return ar << (u32) ptr->SafeId();
+            return ar << (u32) mxentity::SafeId(ptr);
         }
 
         archive& operator>>( archive& ar, mxcharacter*& ptr )
@@ -1637,7 +1637,7 @@ namespace tme {
             // army
             if ( (u32)ID_TYPE(data->id) == (u32)INFO_ARMY ) {
                 defaultexport::army_t* out = (defaultexport::army_t*)data;
-                out->parent = SafeIdt();
+                out->parent = SafeIdt(this);
                 out->race = Race();
                 out->type = AT_CHARACTER ;
 
@@ -1645,7 +1645,7 @@ namespace tme {
                 out->total = unit->Total() ;
                 out->energy = unit->Energy();
                 out->lost = unit->Lost();
-                out->killed = unit->Killed();        
+                out->killed = unit->Killed();
                 return MX_OK ;
             }
 
@@ -1659,8 +1659,8 @@ namespace tme {
 //            out->images =  images;
 
 #if defined(_LOM_)
-            out->warriors = MAKE_ARMYID(UT_WARRIORS,SafeId());
-            out->riders = MAKE_ARMYID(UT_RIDERS,SafeId());
+            out->warriors = MAKE_ARMYID(UT_WARRIORS,SafeId(this));
+            out->riders = MAKE_ARMYID(UT_RIDERS,SafeId(this));
 #endif
 #if defined(_DDR_)
             out->warriors =  MAKE_ARMYID((128|UT_WARRIORS),SafeId()) ;
@@ -1681,20 +1681,20 @@ namespace tme {
             out->fear = fear;
             
             out->loyalty = loyalty;
-            out->foe = foe->SafeIdt();
-            out->liege = liege->SafeIdt();
+            out->foe = SafeIdt(foe);
+            out->liege = SafeIdt(liege);
 
             out->traits = traits;
             out->recruit.group = RecruitingKey;
             out->recruit.by = RecruitedBy;
 
             out->race = race;
-            out->object = carrying->SafeIdt();        
-            out->killedby = killedbyobject->SafeIdt();
+            out->object = SafeIdt(carrying);
+            out->killedby = SafeIdt(killedbyobject);
             out->gender = gender;
             out->wait = wait;
             
-            out->following = following->SafeIdt();
+            out->following = SafeIdt(following);
             out->followers = followers ;
             
             out->lastcommand = lastcommand ;

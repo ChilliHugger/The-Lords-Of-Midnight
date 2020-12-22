@@ -56,7 +56,7 @@ namespace tme {
 
             //VALIDATE_INFO_BLOCK(out,INFO_AREAINFO,tme::areainfo_t);
 
-            out->id = SafeIdt();
+            out->id = SafeIdt(this);
             out->flags = flags ;
             out->location.x = location.x ;
             out->location.y = location.y ;
@@ -67,17 +67,14 @@ namespace tme {
 
         archive& operator<<(archive& ar, mxitem* item)
         {
-            return ar << ((u32)item->SafeIdt());
+            return ar << ((u32)mxentity::SafeIdt(item));
         }
 
         archive& operator>>( archive& ar, mxitem*& item)
         {
         u32 temp;
-        ar >> temp ; 
+            ar >> temp ; 
             item = (mxitem*)mx->EntityByIdt(temp);
-            //if ( item == NULL ) {
-            //    item = (item::base*)mx->EntityByIdt(temp);
-            //}
             return ar ;
         }
     //}
