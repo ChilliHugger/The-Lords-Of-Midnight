@@ -1663,8 +1663,8 @@ namespace tme {
             out->riders = MAKE_ARMYID(UT_RIDERS,SafeId(this));
 #endif
 #if defined(_DDR_)
-            out->warriors =  MAKE_ARMYID((128|UT_WARRIORS),SafeId()) ;
-            out->riders = MAKE_ARMYID((128|UT_RIDERS),SafeId()) ;
+            out->warriors =  MAKE_ARMYID((128|UT_WARRIORS),SafeId(this)) ;
+            out->riders = MAKE_ARMYID((128|UT_RIDERS),SafeId(this)) ;
 #endif
             
             
