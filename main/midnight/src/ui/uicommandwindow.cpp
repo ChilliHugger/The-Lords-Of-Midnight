@@ -70,7 +70,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );
     
-    auto background = LayerColor::create(Color4B(0,0,0,ALPHA(0.75f)));
+    auto background = LayerColor::create(Color4B(0,0,0,ALPHA(alpha_3qtr)));
     uihelper::AddBottomLeft(this, background);
     uihelper::FillParent(background);
     
@@ -387,14 +387,16 @@ void uicommandwindow::show( MXVoidCallback callback )
     if ( mr->settings->screentransitions ) {
     
         this->setCascadeOpacityEnabled(true);
-        this->setOpacity(ALPHA(0.0f));
+        this->setOpacity(ALPHA(alpha_zero));
         this->runAction(FadeIn::create(0.25f));
         
-        layout->setOpacity(ALPHA(0.0f));
+        layout->setOpacity(ALPHA(alpha_zero));
         layout->setCascadeOpacityEnabled(true);
-        layout->runAction(ActionFloat::create(0.25f,0.0f,0.75f, [&](f32 value){
+        layout->runAction(ActionFloat::create(0.25f,alpha_zero,alpha_3qtr, [&](f32 value){
             layout->setOpacity(ALPHA(value));
         }));
+    }else{
+        layout->setOpacity(ALPHA(alpha_3qtr));
     }
 
 }
@@ -436,7 +438,7 @@ void uicommandwindow::enableItem( layoutid_t id, bool enable )
     auto button = findItemById(id);
     if ( button != nullptr ) {
         button->setEnabled(enable);
-        button->setOpacity( enable ? ALPHA(1.0) : ALPHA(0.25) );
+        button->setOpacity( enable ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr) );
     }
 }
 
