@@ -50,7 +50,7 @@ namespace tme {
 
             //VALIDATE_INFO_BLOCK(out,INFO_AREAINFO,areainfo_t);
 
-            out->id = SafeIdt();
+            out->id = SafeIdt(this);
             out->flags = flags ;
             out->name = name ;
             out->userdata = (void*)user_data ;

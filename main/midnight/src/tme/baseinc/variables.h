@@ -64,10 +64,11 @@ namespace tme {
         };
 
         typedef struct cvarreg_t {
-            void*        memory;
+            void*         memory;
             LPCSTR        name;
             CVar::type    type;
-            LPCSTR        string;
+            LPCSTR        defaultValue;
+            LPCSTR        currentValue;
         } cvarreg_t ;
 
 

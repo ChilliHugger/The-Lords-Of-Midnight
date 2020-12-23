@@ -361,11 +361,11 @@ MXTRACE( "Loading Variables");
     for ( ii=0; ii<sv_variables; ii++ ) {
         variables[ii].memory=NULL;
         variables[ii].name=NULL;
-        variables[ii].string=NULL;
+        variables[ii].currentValue=NULL;
         variables[ii].type=CVar::VNONE;
 
         ar >> (char**)&variables[ii].name;
-        ar >> (char**)&variables[ii].string;
+        ar >> (char**)&variables[ii].currentValue;
         ar >> id;
         variables[ii].type = (CVar::type)id ;
     }
@@ -488,10 +488,10 @@ MXRESULT mxengine::UnloadDatabase ( void )
     for ( int ii=0; ii<sv_variables; ii++ ) {
         void* temp = (void*)variables[ii].name ;
         SAFEFREE(temp);
-        temp = (void*)variables[ii].string;
+        temp = (void*)variables[ii].currentValue;
         SAFEFREE(temp);
         variables[ii].name=NULL;
-        variables[ii].string=NULL;
+        variables[ii].currentValue=NULL;
     }
      
     variables::DeInit();
@@ -571,7 +571,7 @@ void mxengine::CurrentChar ( mxcharacter* character )
 {
     m_CurrentCharacter = character ;
     character->Cmd_LookDir(character->Looking());
-    sv_controlled_character = MAKE_ID(IDT_CHARACTER,character->SafeId());
+    sv_controlled_character = MAKE_ID(IDT_CHARACTER,mxentity::SafeId(character));
 
 }
 

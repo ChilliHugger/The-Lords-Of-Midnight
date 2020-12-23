@@ -233,7 +233,7 @@ void mxstronghold::CheckForZero ( void )
 
 archive& operator<<(archive& ar, mxstronghold* ptr )
 {
-    return ar << (u32) ptr->SafeId();
+    return ar << (u32) mxentity::SafeId(ptr);
 }
 
 archive& operator>>( archive& ar, mxstronghold*& ptr )
@@ -249,7 +249,7 @@ MXRESULT mxstronghold::FillExportData ( info_t* data )
     // army
     if ( (u32)ID_TYPE(data->id) == (u32)INFO_ARMY ) {
         defaultexport::army_t* out = (defaultexport::army_t*)data;
-        out->parent = SafeIdt();
+        out->parent = SafeIdt(this);
         out->race = OccupyingRace();
         out->type = AT_STRONGHOLD ;
         out->total = Total() ;
@@ -278,8 +278,8 @@ MXRESULT mxstronghold::FillExportData ( info_t* data )
     out->owner_success = owner_success;
     out->enemy_success = enemy_success;
     out->respawn = respawn;
-    out->occupier = Occupier()->SafeIdt();
-    out->owner = Owner()->SafeIdt();
+    out->occupier = SafeIdt(Occupier());
+    out->owner = SafeIdt(Owner());
     out->loyalty = Owner() != NULL ? Owner()->Loyalty() : RA_NONE ;
 
     return mxitem::FillExportData ( data );

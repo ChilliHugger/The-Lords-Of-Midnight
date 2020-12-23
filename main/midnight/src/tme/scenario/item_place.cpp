@@ -37,7 +37,7 @@ namespace tme {
 
         archive& operator<<(archive& ar, mxplace* node)
         {
-            return ar << ((u32)node->SafeId());
+            return ar << ((u32)mxentity::SafeId(node));
         }
 
         archive& operator>>( archive& ar, mxplace*& node)

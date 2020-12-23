@@ -57,7 +57,7 @@ namespace tme {
 
         archive& operator<<(archive& ar, mxobject* ptr )
         {
-            return ar << (u32) ptr->SafeId();
+            return ar << (u32) mxentity::SafeId(ptr);
         }
 
         archive& operator>>( archive& ar, mxobject*& ptr )
@@ -80,7 +80,7 @@ namespace tme {
             out->name = name;
             out->description = description;
             out->usedescription = MAKE_ID(IDT_STRING,usedescription);
-            out->carriedby = carriedby->SafeIdt();
+            out->carriedby = SafeIdt(carriedby);
             return mxitem::FillExportData ( data );
         }
 
