@@ -117,7 +117,7 @@ public:
     int     compass_feedback;
     
     // version 5
-    int     screen_mode;
+    CONFIG_SCREEN_MODE     screen_mode;
     
     // version 6
     int     keyboard_mode;

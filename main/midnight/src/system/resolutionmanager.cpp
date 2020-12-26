@@ -1,6 +1,7 @@
 
 #include "resolutionmanager.h"
-#include "../extensions/CustomDirector.h"
+#include "moonring.h"
+#include "settingsmanager.h"
 
 #if defined(_OS_OSX_)
 #include "../platform/mac/DeviceExt-mac.h"
@@ -68,24 +69,16 @@ void resolutionmanager::release()
 
 resolutionmanager::resolutionmanager ( void )
 {
+    director = static_cast<CustomDirector*>(Director::getInstance());
+   
 }
 
 resolutionmanager::~resolutionmanager ( void )
 {
 }
 
-bool resolutionmanager::init ( void )
-{
-    calcDisplayInfo();
-    
-    return true ;
-}
-
-
 bool resolutionmanager::calcDisplayInfo ( void )
 {
-    auto director = Director::getInstance();
-    
     auto size = director->getOpenGLView()->getFrameSize();
     
     float height = size.width;
@@ -219,9 +212,7 @@ padding resolutionmanager::getSafeArea()
 {
     padding result;
 
-    auto r = Director::getInstance()->getSafeAreaRect();
-    
-    auto director = Director::getInstance();
+    auto r = director->getSafeAreaRect();
     
     result.left = result.right = r.origin.x /  director->getOpenGLView()->getContentScaleFactor();
     result.top = result.bottom = 0;
@@ -242,6 +233,48 @@ f32 resolutionmanager::phoneScale()
 
 }
 
+bool resolutionmanager::init()
+{
+    auto glview = director->getOpenGLView();
+    auto mr = moonring::mikesingleton();
+    
+    if(!glview)
+    {
+        
+#if (_OS_DESKTOP_)
+        
+#if defined(DesktopDebugResolution)
+        glview = setWindowedMode(DesktopDebugResolution);
+#elseif defined(DesktopDebugScreenMode)
+        glview = setDisplayMode(DesktopDebugScreenMode);
+#else
+        glview = setDisplayMode(mr->settings->screen_mode);
+#endif
+        //glview->setCursorVisible(false);
+#else
+        glview = GLViewImpl::create(TME_ScenarioName());
+#endif
+        director->setOpenGLView(glview);
+    }
+
+    // turn on display FPS
+    director->setDisplayStats(false);
+
+    // set FPS. the default value is 1.0/60 if you don't call this
+    director->setAnimationInterval(1.0f / 60);
+    
+    calcDisplayInfo();
+
+    auto windowSize = director->getOpenGLView()->getFrameSize();
+   
+    glview->setDesignResolutionSize(windowSize.width, windowSize.height, ResolutionPolicy::EXACT_FIT);
+    
+    director->setContentScaleFactor(ContentScale());
+}
+
+
+
+
 #if defined(_OS_DESKTOP_)
 size resolutionmanager::getDesktopSize()
 {
@@ -255,67 +288,87 @@ GLView* resolutionmanager::setWindowedMode(cocos2d::Size size)
     return GLViewImpl::createWithRect(TME_ScenarioName(), cocos2d::Rect(0, 0, size.width, size.height));
 }
 
-GLView* resolutionmanager::setWindowedMode(f32 scale, f32 aspect)
+Size resolutionmanager::calcWindowSize(f32 scale, f32 aspect)
 {
-    cocos2d::Size desktopResolutionSize;
-
     auto desktopSize = getDesktopSize();
 
-    desktopResolutionSize.height = desktopSize.cy * scale;
-    desktopResolutionSize.width = desktopResolutionSize.height * aspect;
+    f32 height = desktopSize.cy * scale;
+    f32 width = height * aspect;
 
-    return setWindowedMode(desktopResolutionSize);
+    return cocos2d::Size(width,height);
 }
 
-bool resolutionmanager::setDisplayMode(CONFIG_SCREEN_MODE mode)
+GLView* resolutionmanager::setDisplayMode(CONFIG_SCREEN_MODE mode)
 {
-#if defined(_SWITCH_VIDEO_IMPLEMENTED_)
     f32 scale = 0.75;
     f32 aspect = 1.7777;
 
-    auto oldGLview = Director::getInstance()->getOpenGLView();
-    GLView* glview = nullptr;
+    switch(mode)
+    {
+        case CONFIG_SCREEN_MODE::CF_FULLSCREEN:
+            return GLViewImpl::createWithFullScreen(TME_ScenarioName());
+            break;
+        
+        case CONFIG_SCREEN_MODE::CF_WINDOW_SMALL:
+            scale = 0.25f;
+            break;
+            
+        case CONFIG_SCREEN_MODE::CF_WINDOW_MEDIUM:
+            scale = 0.50f;
+            break;
+            
+        case CONFIG_SCREEN_MODE::CF_WINDOW_LARGE:
+            scale=0.75f;
+            break;
+    }
+ 
+    auto windowSize = calcWindowSize(scale, aspect);
+
+    return setWindowedMode(windowSize);
+
+}
+
+bool resolutionmanager::changeDisplayMode(CONFIG_SCREEN_MODE mode)
+{
+    f32 scale = 0.75;
+    f32 aspect = 1.7777;
+
+    auto glView = dynamic_cast<GLViewImpl*>(director->getOpenGLView());
     
     switch(mode)
     {
         case CONFIG_SCREEN_MODE::CF_FULLSCREEN:
-            glview = GLViewImpl::createWithFullScreen(TME_ScenarioName());
-            break;
-        
+            glView->setFullscreen();
+            return true;
+
         case CONFIG_SCREEN_MODE::CF_WINDOW_SMALL:
-            glview = setWindowedMode(0.25,aspect);
+            scale = 0.25f;
             break;
             
         case CONFIG_SCREEN_MODE::CF_WINDOW_MEDIUM:
-            glview = setWindowedMode(0.5,aspect);
+            scale = 0.50f;
             break;
             
         case CONFIG_SCREEN_MODE::CF_WINDOW_LARGE:
-            glview = setWindowedMode(0.75,aspect);
+            scale=0.75f;
             break;
     }
+
     
-//    static EventListenerCustom* s_captureScreenListener;
-//
-//    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [glview,oldGLview](EventCustom* /*event*/) {
-//
-//        auto director = Director::getInstance();
-//
-//        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
-//
-//        s_captureScreenListener = nullptr;
-//
-    Director::getInstance()->setOpenGLView(glview);
-//        Director::getInstance()->restart();
-//
-//        delete oldGLview;
-//
-//    });
-#endif
+    auto windowSize = calcWindowSize(scale, aspect);
+
+    glView->setWindowed(windowSize.width,windowSize.height);
+
+    glView->setDesignResolutionSize(windowSize.width, windowSize.height, ResolutionPolicy::EXACT_FIT);
     
+    director->resetOpenGLView();
+    
+    calcDisplayInfo();
+    
+    director->setContentScaleFactor(ContentScale());
+   
     return true;
 }
-
 
 #endif
 

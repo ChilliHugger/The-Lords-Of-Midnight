@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
 #include "system/resolutionmanager.h"
-
+#include "system/moonring.h"
 #include "panels/panel_splashscreen.h"
 
 #include "tme/tme_interface.h"
@@ -21,13 +21,6 @@ using namespace CocosDenshion;
 #endif
 
 USING_NS_CC;
-
-constexpr bool IsDesktopFullScreen = false;
-constexpr f32 DesktopAspectRatio = 1.7777; // 16:9
-constexpr f32 DesktopWindowSizeScale = 0.75;
-//#define DesktopDebugResolution GooglePixel3XL
-
-static cocos2d::Size desktopResolutionSize =  iPhoneXR; //cocos2d::Size(2848, 1536); //cocos2d::Size(1024*3, 768*2);
 
 AppDelegate::AppDelegate()
 {
@@ -59,52 +52,19 @@ static int register_all_packages()
     return 0; //flag for packages manager
 }
 
-bool AppDelegate::applicationDidFinishLaunching() {
+bool AppDelegate::applicationDidFinishLaunching()
+{
     // initialize director
     auto director = Director::getInstance();
     auto res = resolutionmanager::getInstance();
-  
+ 
+    auto mr = moonring::mikesingleton();
+    
+    
     //auto console = director->getConsole();
     //console->listenOnTCP(1234);
 
-    auto glview = director->getOpenGLView();
-    if(!glview) {
-        
-#if (_OS_DESKTOP_)
-        if(IsDesktopFullScreen)
-        {
-            res->setDisplayMode(CONFIG_SCREEN_MODE::CF_FULLSCREEN);
-        }
-        else
-        {
-#if defined(DesktopDebugResolution)
-            glview = res->setWindowedMode(DesktopDebugResolution);
-#else
-            glview = res->setWindowedMode(DesktopWindowSizeScale, DesktopAspectRatio);
-#endif
-        }
-        //glview->setCursorVisible(false);
-#else
-        glview = GLViewImpl::create(TME_ScenarioName());
-#endif
-        director->setOpenGLView(glview);
-    }
-
-    // turn on display FPS
-    director->setDisplayStats(false);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0f / 60);
-    
     res->init();
-
-    director->setContentScaleFactor(res->ContentScale());
-       
-#if defined(_OS_DESKTOP_) && defined(MX_DEBUG)
-    if ( desktopResolutionSize.height >= 1440 ) {
-    //    glview->setFrameZoomFactor(0.5);
-    }
-#endif
     
     InitialisePaths();
     

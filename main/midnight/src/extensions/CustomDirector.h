@@ -10,10 +10,9 @@
 
 #include "cocos2d.h"
 
-NS_CC_BEGIN
-
-class CustomDirector : public Director
+class CustomDirector : public cocos2d::Director
 {
+    using Scene = cocos2d::Scene;
 public:
     template<class T>  void popSceneWithTransition(float duration)
     {
@@ -34,9 +33,27 @@ public:
             _nextScene = (Scene*)_scenesStack.at(c - 1);
         }
     }
-};
+    
+    void resetOpenGLView()
+    {
+        // set size
+        _winSizeInPoints = _openGLView->getDesignResolutionSize();
 
-NS_CC_END
+        //_isStatusLabelUpdated = true;
+
+        if (_openGLView)
+        {
+            setGLDefaultValues();
+        }
+
+       //_renderer->init();
+
+        //if (_eventDispatcher)
+       //{
+       //     _eventDispatcher->setEnabled(true);
+       // }
+    }
+};
 
 
 #endif /* CustomDirector_h */

@@ -169,7 +169,10 @@ bool panel_options::init()
     SET_OPTION(11,night_battle_full);
     
     SET_OPTION(12, screen_mode);
+    
     SET_OPTION(13, keyboard_mode);
+    
+    mr->settings->fullscreensupported = false;
     
     if ( !mr->settings->fullscreensupported )
         options[12].text = values_screen2 ;
@@ -187,7 +190,6 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
     if ( tag == ID_HOME ) {
         Exit();
         mr->settings->Save();
-        //gl->SetPanelMode(MODE_MAINMENU,TRANSITION_FADEIN);
         return;
     } else if ( tag == ID_MENU_GAME ) {
         SetMenu(tag);
@@ -241,22 +243,31 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
 #if defined(_OS_DESKTOP_)
     if ( options[index].id == ID_OPTION_SCREENMODE ) {
         
+        auto screenMode = (CONFIG_SCREEN_MODE)mr->settings->screen_mode ;
+        
+        if ( !mr->settings->fullscreensupported
+            && screenMode == CONFIG_SCREEN_MODE::CF_FULLSCREEN)
+        {
+            return;
+        }
+
         resolutionmanager* rm = resolutionmanager::getInstance();
 
         //ui->SetFocus(NULL);
         
-        if ( rm->setDisplayMode( (CONFIG_SCREEN_MODE)mr->settings->screen_mode ) ) {
+        if ( rm->changeDisplayMode( screenMode ) ) {
             
             mr->settings->Save();
             
             rm->calcDisplayInfo();
+            
             //rm->UnloadFonts();
             //rm->LoadFonts();
-            
             //gl->adjustScreenDisplay();
             
             //UPDATE_DISPLAY;
-            //gl->SetPanelMode( MODE_MAINMENU, TRANSITION_PUSHDOWN );
+            //Exit();
+            mr->panels->showMainMenu();
 
         }
         

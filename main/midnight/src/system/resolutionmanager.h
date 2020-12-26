@@ -11,10 +11,19 @@
 
 #include "../cocos.h"
 #include "../library/inc/mxtypes.h"
+#include "../extensions/CustomDirector.h"
 
 #include "settingsmanager.h"
 
 using namespace chilli::types;
+
+#if defined(_OS_DESKTOP_)
+//#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::CF_WINDOW_LARGE
+//#define DesktopDebugResolution GooglePixel3XL
+#define _SWITCH_VIDEO_IMPLEMENTED_
+#endif
+
+
 
 typedef struct {
     s32     reference;
@@ -70,9 +79,10 @@ public:
 #if defined(_OS_DESKTOP_)
     bool IsDesktop() { return true; }
     size getDesktopSize();
-    bool setDisplayMode(CONFIG_SCREEN_MODE mode);
+    bool changeDisplayMode(CONFIG_SCREEN_MODE mode);
+    cocos2d::GLView* setDisplayMode(CONFIG_SCREEN_MODE mode);
     cocos2d::GLView* setWindowedMode(cocos2d::Size size);
-    cocos2d::GLView* setWindowedMode(f32 scale, f32 aspect);
+    cocos2d::Size calcWindowSize(f32 scale, f32 aspect);
     
 #else
     bool IsDesktop() { return false; }
@@ -92,10 +102,14 @@ protected:
 
 private:
     
+    CustomDirector* director;
     resolution_support current_resolution;
     
     bool isTablet;
     bool isPhone;
+  
+    CONFIG_SCREEN_MODE currentMode;
+    
 };
 
 #define RES(x) \
