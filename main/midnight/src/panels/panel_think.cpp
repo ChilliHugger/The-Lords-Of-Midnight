@@ -337,12 +337,12 @@ void panel_think::setupPages()
         
         // armies here
         if ( location_armies.regiment_warriors+location_armies.regiment_riders ) {
-            addPage(1);
+            addPage(SpecialId::ArmiesHere);
         }
         
         // armies ahead
         if ( location_infront_armies.regiment_warriors+location_infront_armies.regiment_riders ) {
-            addPage(2);
+            addPage(SpecialId::ArmiesAhead);
         }
         
     }
