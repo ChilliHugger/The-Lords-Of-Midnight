@@ -273,14 +273,11 @@ bool moonring::selectCharacter(mxid id)
     if ( Character_IsDead(c) ) {
         TME_SelectChar(c.id);
         showPage( MODE_THINK );
-        stories->save();
         return true;
     }
     
     // change the current character
     TME_SelectChar(id);
-    stories->save();
-    
     TME_RefreshCurrentCharacter();
     TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
 
