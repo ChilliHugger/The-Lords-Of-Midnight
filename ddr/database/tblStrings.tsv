@@ -1,0 +1,125 @@
+ID	Code	Value	Description
+0	SS_ADVERBS	utterly|extremely|very|quite|somewhat|slightly|not|not at all	Quantity for description token
+1	SS_NUMBERS	one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|score	 Number Tokens
+2	SS_ENERGYTOKENS	tired|tired	Energy Description Tokens
+3	SS_FEARTOKENS	cold|cold	Ice Fear Tokens
+4	SS_COURAGETOKEN	afraid|afraid	Courage Tokens
+5	SS_DEFAULT_TERRAIN	the {terrain:plural} of {area:text}	"Default Terrain Description: ""The Citadel of Xajorkith"""
+6	SS_LOCATION_DOMAIN	{terrain:single} in the Domain of {area:text}	Description of minor domain Location
+7	SS_LOCATION_NOTDOMAIN	{terrain:text}	Description of major location
+8	SS_DAWN	.\n\n§§Dawn breaks.§	Dawn Message
+9	SS_NIGHT	§§It is {special:days} {plural:day:days} since the Moonprince rode forth into the Icemark.	Night Message
+10	SS_THINGATLOCATION	{case:first}{char:loc:obj:name} are abroad.§	Wild horses are abroad
+11	SS_RECRUITMEN	{char:name} has recruited {number:%d} %s from {char:loc:name}.§{case:first}{number:%d} %s now guard the {char:loc:terrain:name}.§{char:text:army}	Character recruiting solfiers
+12	SS_POSTMEN	{char:name} has placed {number:%d} %s on guard at {char:loc:name}.§{case:first}{number:%d} %s now guard the {char:loc:terrain:name}.§{char:text:army}	Character posting soldiers
+13	SS_ITISNIGHT	It is night	Time component: exactly night
+14	SS_ITISDAWN	It is dawn	Time component: exactly dawn
+15	SS_LESSTHAN	Less than {char:time} {plural:hour:hours} of the day {plural:remains:remain}	Time component: half hour
+16	SS_HOURSOFDAY	{case:first}{char:time} {plural:hour:hours} of the day {plural:remains:remain}	Time component: on the hour
+17	SS_CHARACTER_ENERGY	{char:name} is {char:energy}	"Characters Energy: ""Luxor is utterly invigorated"""
+18	SS_CHARACTER_FEAR	The ice fear is {char:fear}	"Characters Ice Fear: ""The Ice Fear is quite cold"""
+19	SS_CHARACTER_COURAGE	{char:name} is {char:courage}	"Characters Courage: ""Luxor is bold"""
+20	SS_CARRYNOTHING	{char:name} carries nothing	"Character is carrying nothing: ""Tarithel carries nothing"""
+21	SS_CARRYING	{char:name} carries the {char:obj:fullname}	"Character is carrying object: ""Tarithel carries ..."""
+22	SS_KILLED_OBJECT	"{char:longname} is dead, slain by {case:lower}{char:battle:obj:name}.§§"	"Character Killed by nasties: ""Wolves killed him"""
+23	SS_KILLED_BATTLE	{case:first}{char:gender:heshe} was killed in battle. %s	Character Killed in Battle
+24	SS_HIDDEN	{case:first}{char:name} is hidden.§	Character is Hidden
+25	SS_MUSTFIGHT	{case:first}{char:loc:obj:name} are abroad and {char:gender:heshe} must fight or hide.§	Nasties need to be killed
+26	SS_MESSAGE1	"{char:text:time}.§{char:text:sees}Here {char:loc:text}, {char:longname} has found nothing. {char:text:obj}.§{char:text:group} {char:text:inbattle}"	Think_Place: It is Dawn: He has found nothing. Luxor carries an object.
+27	SS_MESSAGE2	{char:loc:text} stands {char:longname}.§{char:text:army}	Think_Army: Describe character and army
+28	SS_MESSAGE3	{char:longname} is {char:text:traits} and {char:reckless}.§{char:name} is {char:despondency} and {char:energy}.§{char:text:liege}§{char:text:foe}§{char:text:group}§	Think_Person: Current character
+29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}{char:text:loyalty}.§{str:28}	Think_Person: Someone else
+30	SS_MESSAGE5	§§{char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.§	Character look message when not looking at something
+31	SS_MESSAGE6	§§{char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.§	Character look message when looking at something
+32	SS_SEEK	"{char:text:time}.§{char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text}.§{char:text:obj}.§{char:text:group}"	Character finds object
+33	SS_FIGHT	"{char:text:time}.§{char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text} and slain them.§{char:text:obj}.§{char:text:group}"	Character kills nasty
+34	SS_GUIDANCE1	"{char:text:time}.§{char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text}"	Guidance for Finding Person
+35	SS_GUIDANCE2	§{char:text:obj}.§{char:text:group}	Guidance for Finding Ice Crown destoryer ( person )
+36	SS_SEEK_NOTHING	{case:first}{char:gender:heshe} has found nothing.§	Character Finds Nothing
+37	SS_BATTLE1	"In battle against %s, {char:name}§"	Battle Component
+38	SS_BATTLE_NONE	"In battle, {char:name}§"	Character lost no one in battle
+39	SS_BATTLE_WARRIORS	{char:name} lost %s warriors.§	Character lost warriors in battle
+40	SS_BATTLE_RIDERS	{char:name} lost %s riders.§	Character lost riders in battle
+41	SS_BATTLE_WARRIORS_RIDERS	{char:name} lost %s warriors and %s riders.§	Character lost warriors and riders in battle
+42	SS_BATTLE_CHARACTER_SLEW	{char:name} slew %s.§	Character killed soldiers in battle
+43	SS_BATTLE_WARRIORS_SLEW	{case:first}{char:gender:hisher} warriors slew %s of the foe.§	Characters Warriors killed soldiers in battle
+44	SS_BATTLE_RIDERS_SLEW	{case:first}{char:gender:hisher} riders slew %s of the foe.§	Characters riders killed soldiers in battle
+45	SS_BATTLE_VICTORY_FREE	won a victory.§	Character won the battle
+46	SS_BATTLE_VICTORY_ENEMY	was defeated.§	The enemy won the battle
+47	SS_BATTLE_VICTORY_NONE	won no victory.§	The battle continues
+48	SS_ARMY_CHARACTER_COMMANDS	{char:longname} commands	"Army Component: ""Luxor the Moonprince commands"""
+49	SS_ARMY_CHARACTER_WARRIORS	They are %s.§	"Army Component: ""His warriors are utterly invigorated"""
+50	SS_ARMY_CHARACTER_RIDERS	They are %s.§	"Army Component: ""His riderss are utterly invigorated"""
+51	SS_ARMY_NONE	{str:48} no army.§	Character has no army
+52	SS_ARMY_WARRIORS	{str:48} %s {char:race:soldiers} warriors.§{str:49}	Character commands just warriors
+53	SS_ARMY_RIDERS	{str:48} %s {char:race:soldiers} riders.§{str:50}	Charactes commands just riders
+54	SS_ARMY_WARRIORS_RIDERS	{str:48} %s warriors and %s riders.§{str:49}{str:50}	Character commands warriors and riders
+55	SS_TERRAIN_PLURAL	{terrain:name}s	Plural Terrain
+56	SS_TERRAIN_SINGLE	a {terrain:name}	Singular terrain
+57	SS_AREA_PREFIXED	{area:prefix} {area:name}	Area with prefix
+58	SS_DEFEAT1	§The evil Shareth has won victory!	Game Over: You have Lost
+59	SS_DEFEAT2	"§{char:longname} is dead, {char:text:death2}\n{str:58}"	Game Over: All Moonring wearers are dead
+60	SS_DEFEAT3	** UNUSED **	Game Over: All important Citadels have fallen and there is no one destroy the ice crown
+61	SS_VICTORY1	\n\nVictory to the Free!§	Game Over: You have Won
+62	SS_VICTORY2	After {special:days} {plural:day:days} the warriors of Midnight return to the frozen gates.§	Game Over: You have taken all your citadels
+63	SS_VICTORY3	** UNUSED **	Game Over: Someone has destroyed the Ice Crown
+64	SS_VICTORY4	\n\nThe Victory of the Moonprince is %s.§	Game Over: Someplace has destroyed the Ice Crown
+65	SS_VICTORY5	"\n\nThe Watchwords of Midnight are revealed!\n\n'The brave and the free fear no foe.\nForth, mighty hosts of Midnight!\nUnto death or victory we go!'"	Game Over: You take all the citadels and Someone has destroyed the Ice Crown
+66	SS_VICTORY6	** UNUSED **	Game Over: You take all the citadels and Someplace has destroyed the Ice Crown
+67	SS_ZEROTOKENS	|no|none|zero	
+68	SS_WARRIORS_RIDERS	{char:longname} has an army of %s warriors and %s riders.§	
+69	SS_MESSAGE7	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}{char:text:loyalty}.§{str:28}	Check Person: Not recruited
+70	SS_BATTLE2	.\n\n§§The bloody sword of battle brings death in the Domain of {loc:area:text}	
+71	SS_BATTLE3	§and of {loc:area:text}	
+72	SS_PLURALTOKENS	has|have|day|days	
+73	SS_STRONGHOLD1	The %s is owned by {char:longname}.§	
+74	SS_STRONGHOLD2	The %s is owned by {char:longname}{char:text:loyalty}.§	
+75	SS_STRONGHOLD3	%s holds %s %s %s. They are %s.§	
+76	SS_FIGHT2	** UNUSED **	
+77	SS_FIGHT3	** UNUSED **	
+78	SS_FIGHT4	** UNUSED **	
+79	SS_PREFIX_HERE	§§Here	
+80	SS_PREFIX_AHEAD	§§Ahead	
+81	SS_PREFIX_DIRECTION	§§To the {char:dir:name}	
+82	SS_SEEK_MSG1	",§""{char:longname} stands {char:loc:terrain:prep} {char:loc:name}.""§"	
+83	SS_SEEK_MSG2	",§""The %s, can be found %s.""§"	
+84	SS_SEEK_MSG3	",§""The %s, can be found in the hands of {char:longname}.""§"	
+85	SS_SEEK_MSG4	** UNUSED **	
+86	SS_OBJECT_NAME	{obj:type} of {obj:name}	
+87	SS_OBJECT_POWER	whose power is in {obj:power}	
+88	SS_OBJECT_FULL_DESCRIPTION	the {str:86} {str:87}.§	
+89	SS_VICTORY7	** UNUSED **	Game Over: Someone has destroyed the Ice Crown
+90	SS_MESSAGE8	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}.§{char:text:energy}.§{char:text:courage}.§{char:text:obj}.§	
+91	SS_CHARACTER_CANNOT_CONTINUE	%s and cannot continue	
+92	SS_TOKENS_DESPONDENT	despondent|despondent	
+93	SS_TOKENS_RECKLESS	reckless|reckless	
+94	SS_CHAR_DESPONDENCY_TIRED	{char:name} is {char:despondency} and {char:energy}.	
+95	SS_CHAR_LIEGE	{char:name}'s liege is {char:liege:longname}.	
+96	SS_CHAR_FOE	{char:name}'s foe is {char:foe:longname}.	
+97	SS_TOKENS_TRAITS	good|strong|forceful|generous|stubborn|brave|swift|loyal|evil|weak|reticent|greedy|fawning|cowardly|slow|treacherous|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-	
+98	SS_TUNNEL	{char:longname} stands in a tunnel looking {char:dir:name}.§{char:text:time}.	
+99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.	
+100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.	
+101	SS_LOYAL_TO	§who is loyal to the {char:loyalty:name}	
+102	SS_BATTLE_PREPARES_BATTLE	{char:longname} prepares to do battle. . .§	
+103	SS_KILLED_BY	§killed in battle by {char:battle:fighting:longname}.§	
+104	SS_KILLED_IN_BATTLE	§killed in battle.§	
+105	SS_SPARE_1		
+106	SS_SPARE_2		
+107	SS_SPARE_3		
+108	SS_SPARE_4		
+109	SS_SPARE_5		
+110	SS_SEES_1	{char:shortname} sees the %s and an underground entrance.§	
+111	SS_SEES_2	{char:shortname} sees the %s.§	
+112	SS_SEES_3	{char:shortname} sees an underground entrance.§	
+113	SS_LOCATION_PREP_1	in the tunnel	
+114	SS_LOCATION_PREP_2	{loc:terrain:prep} {loc:name}	
+115	SS_CHARACTER_DEAD	"\n§§{char:longname} is dead, {char:text:death2}"	
+116	SS_CHARACTER_HERE	{char:name} is here.§	
+117	SS_SHARETH_DEAD	{char:name} is dead.§	
+118	SS_OBJECT_USE_1	"{char:longname} places the {obj:text} on {char:gender:hisher} head, the power contained within brings all lords loyal to the Moonprince to {char:gender:himher}."	
+119	SS_OBJECT_USE_2	{char:longname} casts the {obj:text} and {char:gender:heshe} is magically transported to be with Morkin.	
+120	SS_OBJECT_USE_3	"{char:longname} throws the {obj:text}, all lords loyal to the Moonprince are refreshed and envigorated."	
+121	SS_OBJECT_USE_4	{char:longname} uses the {obj:text} and {char:gender:heshe} now feels refreshed and envigorated.	
+122	SS_MESSAGE_MIST	§§{char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} into the mist.§	
+123	SS_TOKENS_VICTORY	none|worthy|noble|overwhelming	

@@ -1,0 +1,11 @@
+Id	Code	Description
+0	MC_NONE	No Condition
+1	MC_STRONGHOLD_TAKEN	Has stronghold been taken by character or race?
+2	MC_DESTROY_OBJECT	Has object been destroyed?
+3	MC_CHARACTER_DEAD	Is Character Dead?
+4	MC_MISSION_COMPLETE	Is Mission Complete?
+5	MC_STRONGHOLD_FALLEN	Has stronghold fallen?
+6	MC_SAME_LOCATION	Are items in the same location?
+7	MC_SCORE_EQUAL	
+8	MC_SCORE_LESSTHAN	
+9	MC_SCORE_GREATERTHAN	
