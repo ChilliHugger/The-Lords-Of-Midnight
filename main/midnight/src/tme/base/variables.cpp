@@ -281,7 +281,7 @@ namespace tme {
                             token = chilli::lib::c_strtok_r( s, "|", &saveptr1 );
                             while ( token!=NULL ) {
                                 if (c_strlen(token)==1 && token[0]=='-' )
-                                    c->Add(NULL);
+                                    c->Add(IDT_NONE);
                                 else {
                                     mxid id = mxentity::SafeIdt(mx->EntityByName(token));
                                     if ( id == IDT_NONE )

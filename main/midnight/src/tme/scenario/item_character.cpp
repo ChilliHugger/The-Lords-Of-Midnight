@@ -1590,7 +1590,7 @@ namespace tme {
 
         bool mxcharacter::IsFriend( const mxcharacter* c ) const
         {
-            if ( c == NULL ) return NULL ;
+            if ( c == nullptr ) return false ;
             return loyalty == c->loyalty ;
         }
 
