@@ -294,7 +294,7 @@ namespace tme {
 
         void mxregiment::Target ( const mxitem* newtarget )
         {
-            targetid = newtarget->SafeIdt();
+            targetid = SafeIdt(newtarget);
             targetlocation = newtarget->Location();
         }
 
@@ -376,7 +376,7 @@ namespace tme {
             // army
             if ( (u32)ID_TYPE(data->id) == (u32)INFO_ARMY ) {
                 defaultexport::army_t* out = (defaultexport::army_t*)data;
-                out->parent = SafeIdt();
+                out->parent = SafeIdt(this);
                 out->race = Race();
                 out->type = AT_REGIMENT ;
                 out->total = Total() ;
@@ -403,7 +403,7 @@ namespace tme {
             out->orders = Orders();
             out->success = success;
             out->killed = Killed();
-            out->loyalty = loyalty->SafeIdt();
+            out->loyalty = SafeIdt(loyalty);
 
             out->lastlocation = lastlocation ;
             

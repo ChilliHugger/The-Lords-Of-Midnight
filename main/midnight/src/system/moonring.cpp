@@ -279,14 +279,11 @@ bool moonring::selectCharacter(mxid id)
     if ( Character_IsDead(c) ) {
         TME_SelectChar(c.id);
         showPage( MODE_THINK );
-        stories->save();
         return true;
     }
     
     // change the current character
     TME_SelectChar(id);
-    stories->save();
-    
     TME_RefreshCurrentCharacter();
     TME_GetCharacterLocationInfo ( TME_CurrentCharacter() );
 
@@ -694,7 +691,7 @@ void moonring::complain (LPCSTR format, ... )
     vsprintf( msg_buffer, format, arglist );
     va_end( arglist ) ;
     
-    CCLOG("%s",msg_buffer);
+    cocos2d::log("%s",msg_buffer);
     
     exit(-1);
 }
@@ -710,6 +707,6 @@ void  moonring::log(LPCSTR format, ...)
     vsprintf(msg_buffer, format, arglist);
     va_end(arglist);
 
-    CCLOG("UI: %s", msg_buffer);
-
+    //CCLOG("UI: %s", msg_buffer);
+    cocos2d::log("UI: %s", msg_buffer);
 }

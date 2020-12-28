@@ -89,7 +89,7 @@ namespace tme {
     {
         mxentity* obj  = mx->EntityByName( name, type );
         if ( obj ) {
-            return obj->SafeIdt();
+            return mxentity::SafeIdt(obj);
         }
         return mx->text->StringByName(name);
     }
@@ -583,8 +583,8 @@ namespace tme {
             if ( ISARG("ARMIES") ) {
                 c_mxid& collection= (c_mxid&) *((c_mxid*)argv.vPtr) ;
                 collection.Create(2);
-                collection[0] =  MAKE_ARMYID((128|UT_WARRIORS),character->SafeId()) ;
-                collection[1] =  MAKE_ARMYID((128|UT_RIDERS),character->SafeId()) ;
+                collection[0] =  MAKE_ARMYID((128|UT_WARRIORS),mxentity::SafeId(character)) ;
+                collection[1] =  MAKE_ARMYID((128|UT_RIDERS),mxentity::SafeId(character)) ;
                 return MX_OK ;
             }
 
@@ -649,10 +649,10 @@ namespace tme {
                 argv[10] = locinfo->doomdark.warriors ;
                 argv[11] = locinfo->doomdark.riders ;
 
-                argv[13] = locinfo->stubborn_follower_battle->SafeIdt() ;
-                argv[14] = locinfo->stubborn_follower_move->SafeIdt() ;
+                argv[13] = mxentity::SafeIdt(locinfo->stubborn_follower_battle) ;
+                argv[14] = mxentity::SafeIdt(locinfo->stubborn_follower_move) ;
 #if defined(_DDR_)
-                argv[16] = locinfo->someone_to_give_to->SafeIdt() ;
+                argv[16] = mxentity::SafeIdt(locinfo->someone_to_give_to) ;
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;

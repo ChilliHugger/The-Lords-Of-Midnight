@@ -12,24 +12,22 @@
 
 using namespace chilli::lib ;
 
-settingsmanager::settingsmanager()
-{    
-    tutorial=TRUE;
-    autofight=FALSE;
-    autounhide=FALSE;
-    nav_mode=CF_NAV_BOTH;
-    screentransitions=TRUE;
- 
-    compass_delay = CF_COMPASS_NORMAL ;
-    compass_feedback = CF_COMPASS_MEDIUM ;
-    think_paging_mode = CF_THINK_SWIPE ;
-    
-    night_display_fast = FALSE ;
-    night_battle_full = TRUE;
-    
-    screen_mode = CF_FULLSCREEN;
-    keyboard_mode = CF_KEYBOARD_CLASSIC;
-    fullscreensupported=TRUE;
+settingsmanager::settingsmanager() :
+    tutorial(true),
+    autofight(false),
+    autounhide(false),
+    nav_mode(CF_NAV_BOTH),
+    screentransitions(true),
+    flipscreen(false),
+    compass_delay(CF_COMPASS_NORMAL),
+    compass_feedback(CF_COMPASS_MEDIUM),
+    think_paging_mode(CF_THINK_SWIPE),
+    night_display_fast(false),
+    night_battle_full(true),
+    screen_mode(CF_FULLSCREEN),
+    keyboard_mode(CF_KEYBOARD_CLASSIC),
+    fullscreensupported(true)
+{
     
 #if defined(_OS_DESKTOP_)
     showmovementindicators=FALSE;
@@ -121,6 +119,9 @@ BOOL settingsmanager::Save ( void )
     // version 7
     ar << advert_screen_count;
     ar << novella_pdf ;
+    
+    // version 8
+    ar << flipscreen;
 
     ar.Close();
 
@@ -179,6 +180,10 @@ BOOL settingsmanager::Load ( void )
         ar >> novella_pdf ;
     }
 
+    if ( version >= 8 ) {
+        ar >> flipscreen ;
+    }
+    
     ar.Close();
 
     SAFEDELETE ( pFile );

@@ -81,7 +81,7 @@ namespace chilli {
                 for(  i = 0; i < max-1; i++ ) {
                     if( (array[i] == 0) && array[i+1] ) {
                         array[i] = array[i+1];
-                        array[i+1] = NULL;
+                        array[i+1] = 0;
                         Done = FALSE;
                     };
                 };

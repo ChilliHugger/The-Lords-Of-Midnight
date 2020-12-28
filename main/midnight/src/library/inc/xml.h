@@ -3,6 +3,12 @@
 
 #include "../chilli.h"
 
+
+#define TiXmlDocument tinyxml2::XMLDocument
+#define TiXmlElement tinyxml2::XMLElement
+#define TiXmlText tinyxml2::XMLText
+#define XmlNode tinyxml2::XMLNode
+
 namespace chilli  {
 
     namespace lib {
@@ -15,66 +21,54 @@ namespace chilli  {
             ~xml();
 
             bool Load ( LPCSTR filename );
+            XmlNode* Find ( LPCSTR section );
 
-            class node : public TiXmlElement
-            {
-            public:
-                node* Find ( LPCSTR section );
-                node* Find( LPCSTR element, LPCSTR id );
+            static XmlNode* Find ( XmlNode* node, LPCSTR section );
+            static XmlNode* Find( XmlNode* node, LPCSTR element, LPCSTR id );
 
-                bool IsType(LPCSTR name) const ;
+            static bool IsType( XmlNode* node, LPCSTR name) ;
 
-                LPCSTR ReadValue ( LPCSTR name );
+            static LPCSTR ReadValue ( XmlNode* node, LPCSTR name );
 
-                int ReadValueArray ( LPCSTR name, collections::c_s32& c );
-                int ReadValueArray ( LPCSTR  name, collections::c_float& c );
+            static int ReadValueArray ( XmlNode* node, LPCSTR name, collections::c_s32& c );
+            static int ReadValueArray ( XmlNode* node, LPCSTR  name, collections::c_float& c );
 
-                int ReadIntProperty ( LPCSTR  name, int defaultvalue=0 );
-                bool ReadBoolProperty ( LPCSTR  name, bool defaultvalue=FALSE );
-                f32 ReadFloatProperty ( LPCSTR  name, f32 defaultvalue=0 );
-                LPCSTR ReadStrProperty ( LPCSTR  name, LPCSTR defaultvalue=NULL );
+            static int ReadIntProperty ( XmlNode* node, LPCSTR  name, int defaultvalue=0 );
+            static bool ReadBoolProperty ( XmlNode* node, LPCSTR  name, bool defaultvalue=FALSE );
+            static f32 ReadFloatProperty ( XmlNode* node, LPCSTR  name, f32 defaultvalue=0 );
+            static LPCSTR ReadStrProperty ( XmlNode* node, LPCSTR  name, LPCSTR defaultvalue=NULL );
 
+            static int ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c );
+            static int ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c, LPCSTR delim );
 
-                int ReadArray ( LPCSTR name, collections::c_s32& c );
-                int ReadArray ( LPCSTR name, collections::c_s32& c, LPCSTR delim );
+            static int ReadToken( XmlNode* node, LPCSTR token, token_t array[], int max, int defaultvalue=0 );
+            static f32 ReadFloat ( XmlNode* node, LPCSTR name, f32 defaultvalue=0 );
+            static bool ReadBool( XmlNode* node, LPCSTR name, bool defaultvalue=FALSE );
+            static int ReadInt( XmlNode* node, LPCSTR name, int defaultvalue=0 );
+            static LPCSTR ReadStr( XmlNode* node, LPCSTR name, LPCSTR defaultvalue = NULL );
 
-                int ReadToken( LPCSTR token, token_t array[], int max, int defaultvalue=0 );
-                f32 ReadFloat ( LPCSTR name, f32 defaultvalue=0 );
-                bool ReadBool( LPCSTR name, bool defaultvalue=FALSE );
-                int ReadInt( LPCSTR name, int defaultvalue=0 );
-                LPCSTR ReadStr( LPCSTR name, LPCSTR defaultvalue = NULL );
+            static LPCSTR ReadItemEx ( XmlNode* node, LPCSTR name );
+            static LPCSTR ReadItem ( XmlNode* node, LPCSTR name, LPCSTR defaultvalue= NULL  );
+            static int ReadItem ( XmlNode* node, LPCSTR name, int defaultvalue=0 );
+            static f32 ReadItem (XmlNode* node,  LPCSTR name, f32 defaultvalue=0 );
 
-                LPCSTR ReadItemEx ( LPCSTR name );
-                    LPCSTR ReadItem ( LPCSTR name, LPCSTR defaultvalue= NULL  );
-                    int ReadItem ( LPCSTR name, int defaultvalue=0 );
-                    f32 ReadItem ( LPCSTR name, f32 defaultvalue=0 );
+            static bool Exists( XmlNode* node, LPCSTR name );
+            static int Count (XmlNode* node);
 
-                bool Exists( LPCSTR name );
-                int Count ();
+            static LPCSTR ReadElement( XmlNode* node, LPCSTR element, LPCSTR id, LPCSTR tag );
+            static point ReadPoint( XmlNode* node, LPCSTR name, point& po );
+            static size ReadSize( XmlNode* node, LPCSTR name, size& s1 );
 
-                LPCSTR ReadElement( LPCSTR element, LPCSTR id, LPCSTR tag );
-                point ReadPoint( LPCSTR name, point& po );
-                size ReadSize( LPCSTR name, size& s1 );
-
-                int ReadColour( LPCSTR name, int defaultvalue );
-                
-                char ReadChar( LPCSTR name, char defaultvalue );
-
-            };
-
-            node* Find ( LPCSTR section );
-
-
-            //CDate ReadXml_Date ( TiXmlElement* element, LPCSTR name );
-            //TiXmlDocument* Doc() const { return m_doc; }
-
+            static int ReadColour( XmlNode* node, LPCSTR name, int defaultvalue );
+            
+            static char ReadChar( XmlNode* node, LPCSTR name, char defaultvalue );
 
         };
     }
 }
 
 #define FOREACHELEMENT( parent,element ) \
-    for( chilli::lib::xml::node* element=(chilli::lib::xml::node*)parent->FirstChildElement(); element; element = (chilli::lib::xml::node*)element->NextSiblingElement() )
+    for( auto element = parent->FirstChildElement(); element; element = element->NextSiblingElement() )
 
 
 #endif //_XML_H_INCLUDED_

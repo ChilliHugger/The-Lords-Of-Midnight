@@ -34,30 +34,20 @@ namespace tme {
         return MX_FAILED ;
     }
     
-
-#if !defined _MSC_VER
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wtautological-undefined-compare"
-#endif
-    
-    u32 mxentity::SafeId() const
+    u32 mxentity::SafeId(const mxentity* entity)
     {
-        if ( this==NULL )
+        if ( entity==nullptr )
             return 0;
-        return Id();
+        return entity->Id();
     }
 
-    mxid mxentity::SafeIdt() const
+    mxid mxentity::SafeIdt(const mxentity* entity)
     {
-        if ( this==NULL )
+        if ( entity==nullptr )
             return IDT_NONE;
-        return MAKE_ID(type,Id());
+        return MAKE_ID(entity->type,entity->Id());
     }
 
-#if !defined _MSC_VER
-    #pragma clang diagnostic pop
-#endif
-    
     void mxentity::Serialize ( archive& ar )
     {
         if ( ar.IsStoring() ) {
@@ -71,17 +61,14 @@ namespace tme {
 
     archive& operator<<(archive& ar, mxentity* item)
     {
-        return ar << ((u32)item->SafeIdt());
+        return ar << ((u32)mxentity::SafeIdt(item));
     }
 
     archive& operator>>( archive& ar, mxentity*& item)
     {
     u32 temp;
-    ar >> temp ; 
+        ar >> temp ; 
         item = (mxentity*)mx->EntityByIdt(temp);
-        //if ( item == NULL ) {
-        //    item = (entity*)mx->entityByIdt(temp);
-        //}
         return ar ;
     }
 

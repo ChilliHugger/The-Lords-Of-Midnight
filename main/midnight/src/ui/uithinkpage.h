@@ -12,6 +12,13 @@
 #include "../frontend/panel_id.h"
 #include "../tme/tme_interface.h"
 
+enum SpecialId
+{
+    None,
+    ArmiesHere,
+    ArmiesAhead
+};
+
 
 class uithinkpage : public chilli::ui::Element
             // , public uinotificationdelegate

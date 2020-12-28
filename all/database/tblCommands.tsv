@@ -1,0 +1,15 @@
+Id	Code	Name	SuccessTime	FailureTime
+0	CMD_NONE	None	0	0
+1	CMD_MOVE	Move	0	0
+2	CMD_APPROACH	Approach	0	0
+3	CMD_RECRUITMEN	RecruitMen	0	0
+4	CMD_POSTMEN	PostMen	0	0
+5	CMD_ATTACK	Attack	0	0
+6	CMD_FIGHT	Fight	0	0
+7	CMD_REST	Rest	0	0
+8	CMD_HIDE	Hide	0	0
+9	CMD_UNHIDE	UnHide	0	0
+10	CMD_SEEK	Seek	0	0
+11	CMD_TAKEOBJECT	TakeObject	0	0
+12	CMD_DROPOBJECT	DropObject	0	0
+13	CMD_WAIT	Wait	0	0

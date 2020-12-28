@@ -217,6 +217,15 @@ namespace tme {
 
         void sv_Initialise ( cvarreg_t* variable ) 
         {
+            if( c_stricmp(variable->name,"ENERGY_SCALE") == 0 )
+            {
+                int a = 100;
+            }
+            
+            LPCSTR stringValue =  (variable->currentValue == nullptr)
+                                ? variable->defaultValue
+                                : variable->currentValue ;
+
             switch ( variable->type    ) {
 
                 case CVar::VNONE:
@@ -229,31 +238,31 @@ namespace tme {
                     break;
                     
                 case CVar::NUMBER:
-                    *((sv_num_t*)variable->memory) = (f32)chilli::lib::atol(variable->string);
+                    *((sv_num_t*)variable->memory) = (f32)chilli::lib::atol(stringValue);
                     break;
 
                 case CVar::YESNO:
                     *((sv_bool_t*)variable->memory) = 0;
 
-                    if (c_stricmp(variable->string,"TRUE") == 0
-                        || c_stricmp(variable->string,"YES") == 0 )
+                    if (c_stricmp(stringValue,"TRUE") == 0
+                        || c_stricmp(stringValue,"YES") == 0 )
                         *((sv_bool_t*)variable->memory) = 1;
 
                     break;
 
                 case CVar::INT:
-                    *((sv_int_t*)variable->memory) = (s32)chilli::lib::atol(variable->string);
+                    *((sv_int_t*)variable->memory) = (s32)chilli::lib::atol(stringValue);
                     break;
 
                 case CVar::STRING:
-                    *((sv_str_t*)variable->memory) = (char*)variable->string;
+                    *((sv_str_t*)variable->memory) = (char*)stringValue;
                     break;
 
                 case CVar::IDT:
                 {
-                    mxid id = mx->EntityByName(variable->string)->SafeIdt();
+                    mxid id = mxentity::SafeIdt(mx->EntityByName(stringValue));
                     if ( id == IDT_NONE )
-                        id = mx->text->StringByName(variable->string);
+                        id = mx->text->StringByName(stringValue);
                     *((sv_mxid_t*)variable->memory) = id;
                 }
                     break;
@@ -263,7 +272,7 @@ namespace tme {
                         sv_c_mxid_t* c = (sv_c_mxid_t*)variable->memory ;
                         char *saveptr1;
                         
-                        c_str s = variable->string ;
+                        c_str s = stringValue ;
                         c->Clear();
                         LPSTR    token;
                         int        count;
@@ -272,9 +281,9 @@ namespace tme {
                             token = chilli::lib::c_strtok_r( s, "|", &saveptr1 );
                             while ( token!=NULL ) {
                                 if (c_strlen(token)==1 && token[0]=='-' )
-                                    c->Add(NULL);
+                                    c->Add(IDT_NONE);
                                 else {
-                                    mxid id = mx->EntityByName(token)->SafeIdt();
+                                    mxid id = mxentity::SafeIdt(mx->EntityByName(token));
                                     if ( id == IDT_NONE )
                                         id = mx->text->StringByName(token);
                                     c->Add( id );
@@ -316,7 +325,7 @@ namespace tme {
             for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
                 cvarreg_t* var = mx->FindDBVariable( var_array[ii].name );
                 if ( var ) {
-                    var_array[ii].string = var->string;
+                    var_array[ii].currentValue = var->currentValue;
                     sv_Initialise( &var_array[ii] );
                 }
             }
@@ -380,7 +389,7 @@ namespace tme {
             if ( var == nullptr )
                 return MX_FAILED;
             
-            var->string = value;
+            var->currentValue = value;
             sv_Initialise( var );
             
             return MX_OK;

@@ -44,7 +44,7 @@ namespace tme {
 
         archive& operator<<(archive& ar, mxroutenode* node)
         {
-            return ar << ((u32)node->SafeId());
+            return ar << ((u32)mxentity::SafeId(node));
         }
 
         archive& operator>>( archive& ar, mxroutenode*& node)
@@ -61,7 +61,7 @@ namespace tme {
             VALIDATE_INFO_BLOCK(out,INFO_ROUTENODE,defaultexport::routenode_t);
             
             for ( u32 ii=0; ii<NUMELE(paths); ii++ )
-                out->paths[ii] = paths[ii]->SafeIdt();
+                out->paths[ii] = SafeIdt(paths[ii]);
 
             return mxitem::FillExportData ( data );
         }

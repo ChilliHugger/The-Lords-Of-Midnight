@@ -55,7 +55,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
         {
             obj.Create( Count() );
             for ( u32 ii=0; ii<Count(); ii++ )
-                obj[ii] = m_objElements[ii]->SafeIdt();
+                obj[ii] = mxentity::SafeIdt(m_objElements[ii]);
 
             return TRUE;
         }

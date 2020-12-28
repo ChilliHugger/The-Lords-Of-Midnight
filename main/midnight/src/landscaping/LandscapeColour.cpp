@@ -196,39 +196,39 @@ Color3B LandscapeColour::GetPersonColour()
     return Color3B(GetTint(timeofday, TINT::Person));
 }
 
-void LandscapeColour::OnXmlInit ( chilli::xml::node* node )
+void LandscapeColour::OnXmlInit ( XmlNode* node )
 {
-    chilli::lib::xml::node* e = NULL ;
+    XmlNode* e = nullptr ;
  
 #define SET_COLOUR(x,y) \
-    TimeOfDayColours[id][(int)x] = ConvertFromInt(d->ReadColour(y,DefaultWhite))
+    TimeOfDayColours[id][(int)x] = ConvertFromInt(xml::ReadColour(d,y,DefaultWhite))
     
     if ( node == NULL )
         return;
     
-    if ( (e = node->Find("day")) ) {
+    if ( (e = xml::Find(node,"day")) ) {
         FOREACHELEMENT(e,d) {
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
-                int id = d->ReadInt("id");
+                int id = xml::ReadInt(d,"id");
                 SET_COLOUR(TINT::Normal,"shade") ;
             }
         }
     }
     
-    if ( (e = node->Find("people")) ) {
+    if ( (e = xml::Find(node,"people")) ) {
         FOREACHELEMENT(e,d) {
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
-                int id = d->ReadInt("id");
+                int id = xml::ReadInt(d,"id");
                 SET_COLOUR(TINT::Person,"normal") ;
                 SET_COLOUR(TINT::Tunnel,"tunnel") ;
             }
         }
     }
     
-    if ( (e = node->Find("terrain")) ) {
+    if ( (e = xml::Find(node,"terrain")) ) {
         FOREACHELEMENT(e,d) {
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
-                int id = d->ReadInt("id");
+                int id = xml::ReadInt(d,"id");
                 SET_COLOUR(TINT::TerrainFill,"fill") ; //2
                 SET_COLOUR(TINT::TerrainOutline,"outline") ; //1
             }

@@ -643,7 +643,7 @@ void uithinkpage::checkPlace ( void )
 #endif
     
     
-    if ( id == 1 || id == 2 ) {
+    if ( id == SpecialId::ArmiesHere || id == SpecialId::ArmiesAhead ) {
         checkArmy();
         return;
     }
@@ -657,7 +657,7 @@ void uithinkpage::checkPlace ( void )
     
     // seems a bit odd, not in the normal style of using an SS_ text token
     LPCSTR mytext = TME_GetText("Stronghold",args,1);
-    sprintf ( text.End(), " %s", mytext );
+    sprintf ( text.End(), "%s", mytext );
     lblDescription->setString((LPCSTR)text);
     
     recruitPostOptions(current_stronghold);
@@ -749,14 +749,13 @@ void uithinkpage::checkArmy ( void )
     
     LPSTR text = buffer.GetAt();
     
-    if ( id == 1 || id == 2 ) {
+    if ( id == SpecialId::ArmiesHere || id == SpecialId::ArmiesAhead ) {
         int warriors,riders;
         
+        mxid idt = mxi->EntityByName( "CH_DOOMDARK", IDT_CHARACTER );
+        TME_GetCharacter(c,idt);
         
-        mxid id = mxi->EntityByName( "CH_DOOMDARK", IDT_CHARACTER );
-        TME_GetCharacter(c,id);
-        
-        if ( id == 1) {
+        if ( id == SpecialId::ArmiesHere) {
             sprintf ( buffer.End(), "%s ", TME_GetSystemString(c, SS_PREFIX_HERE ) );
             displayArmy();
             warriors = location_armies.regiment_warriors;

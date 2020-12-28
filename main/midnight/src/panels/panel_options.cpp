@@ -80,6 +80,7 @@ static uitextmenuitem items_display[] = {
     { ID_OPTION_SCREENMODE,             {"SCREEN MODE"},        KEYCODE(1), "1", TB_DOUBLE, },
 #endif
     { ID_OPTION_TRANSITIONS,            {"SCREEN TRANSITIONS"}, KEYCODE(2), "2", TB_DOUBLE },
+    { ID_OPTION_FLIPSCREEN,             {"FLIP SCREEN"},        KEYCODE(3), "3", TB_DOUBLE },
 };
 
 static uitextmenuitem items_game[] = {
@@ -115,6 +116,8 @@ static option_t options[] = {
     {   ID_OPTION_TUTORIAL,         OPT_BOOL,    0, values_onoff, NULL },
     {   ID_OPTION_NAVIGATION,       OPT_NUMBER,  4, values_movement, NULL },
     {   ID_OPTION_TRANSITIONS,      OPT_BOOL,    0, values_onoff, NULL },
+    {   ID_OPTION_FLIPSCREEN,       OPT_BOOL,    0, values_onoff, NULL },
+    
     {   ID_OPTION_NOVELLA,          OPT_BOOL,    0, values_novella, NULL },
     
     {   ID_OPTION_COMPASS_DELAY,    OPT_NUMBER,  4, values_compass_delay, NULL },
@@ -157,20 +160,22 @@ bool panel_options::init()
     SET_OPTION(3,tutorial);
     SET_OPTION(4,nav_mode);
     SET_OPTION(5,screentransitions);
-    SET_OPTION(6,novella_pdf);
+    SET_OPTION(6,flipscreen);
     
-    SET_OPTION(7,compass_delay);
-    SET_OPTION(8,compass_feedback);
-    SET_OPTION(9,think_paging_mode);
-    SET_OPTION(10,night_display_fast);
-    SET_OPTION(11,night_battle_full);
+    SET_OPTION(7,novella_pdf);
     
-    SET_OPTION(12, screen_mode);
+    SET_OPTION(8,compass_delay);
+    SET_OPTION(9,compass_feedback);
+    SET_OPTION(10,think_paging_mode);
+    SET_OPTION(11,night_display_fast);
+    SET_OPTION(12,night_battle_full);
     
-    SET_OPTION(13, keyboard_mode);
+    SET_OPTION(13, screen_mode);
+    SET_OPTION(14, keyboard_mode);
+    
 
     if ( !mr->settings->fullscreensupported )
-        options[12].text = values_screen2 ;
+        options[13].text = values_screen2 ;
     
     
     SetMenu(ID_MENU_DISPLAY);

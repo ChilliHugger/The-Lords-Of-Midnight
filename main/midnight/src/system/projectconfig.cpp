@@ -12,7 +12,6 @@
 #include "tmemanager.h"
 #include "../library/chilli.h"
 
-
 projectconfig::projectconfig()
 {
 }
@@ -23,6 +22,8 @@ projectconfig::~projectconfig()
 
 bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 {
+    using xml = chilli::lib::xml;
+    
     UIDEBUG("Frontend: Scenario Config Loading");
     
     auto config = new chilli::lib::xml();
@@ -42,7 +43,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
         COMPLAIN ( "invalid config file: <main>" );
     }
 
-    chilli::lib::xml::node* e = NULL ;
+    XmlNode* e = nullptr ;
 //
 //    if ( pass == 1 ) {
 //        // scenario
@@ -63,17 +64,17 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //    if ( pass == 1 ) {
 //        // terrain
         UIDEBUG( "Frontend: Loading TERRAIN..." );
-        if ( (e = base->Find( "terrain")) ) {
+        if ( (e = xml::Find( base,"terrain")) ) {
             FOREACHELEMENT(e,t) {
-                if ( t->IsType("terrain") ) {
+                if ( xml::IsType(t,"terrain") ) {
                     terrain_data_t* d = new terrain_data_t ;
-                    d->symbol = t->ReadStr("id");
-                    d->file = t->ReadStr("file");
+                    d->symbol = xml::ReadStr(t,"id");
+                    d->file = xml::ReadStr(t,"file");
                     UIDEBUG( "Frontend: Loading TERRAIN... %s", d->symbol.c_str() );
                     mr->tme->terrain.Add(d);
                     
-                    d->mapdensity = t->ReadBool("mapdensity",false);
-                    d->mapcell = t->ReadInt("mapcell",-1) + 1;
+                    d->mapdensity = xml::ReadBool(t,"mapdensity",false);
+                    d->mapcell = xml::ReadInt(t,"mapcell",-1) + 1;
                 }
                 monitor->Update("Loading Terrain", 1);
             }
@@ -150,17 +151,17 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //        // characters
         UIDEBUG( "Frontend: Loading CHARACTERS..." );
         monitor->Update("Loading Characters", 0);
-        if ( (e = base->Find( "characters")) ) {
+        if ( (e = xml::Find(base, "characters")) ) {
             FOREACHELEMENT(e,c) {
-                if ( c->IsType("character") ) {
+                if ( xml::IsType(c,"character") ) {
                     char_data_t* d = new char_data_t ;
-                    d->symbol = c->ReadStr("id");
+                    d->symbol = xml::ReadStr(c,"id");
                     UIDEBUG( "Frontend: Loading CHARACTERS... %s", d->symbol.c_str() );
                     
-                    d->face = c->ReadStr("face","") ;
-                    d->shield = c->ReadStr("shield","") ;
-                    d->shortcut_old = c->ReadChar("shortcut",0);
-                    d->shortcut_new = c->ReadChar("shortcut2",0);
+                    d->face = xml::ReadStr(c,"face","") ;
+                    d->shield = xml::ReadStr(c,"shield","") ;
+                    d->shortcut_old = xml::ReadChar(c,"shortcut",0);
+                    d->shortcut_new = xml::ReadChar(c,"shortcut2",0);
                     mr->tme->characters.Add(d);
                 }
                 monitor->Update("Loading Characters", 1);
@@ -171,14 +172,14 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //    if ( pass == 1 ) {
         // objects
         UIDEBUG( "Frontend: Loading OBJECTS..." );
-        if ( (e = base->Find( "objects") ) ) {
+        if ( (e = xml::Find( base,"objects") ) ) {
             FOREACHELEMENT(e,o) {
-                if ( o->IsType("object") ) {
+                if ( xml::IsType(o,"object") ) {
                     obj_data_t* d = new obj_data_t ;
-                    d->symbol = o->ReadStr("id");
+                    d->symbol = xml::ReadStr(o,"id");
                     UIDEBUG( "Frontend: Loading OBJECTS... %s",d->symbol.c_str() );
-                    d->i_big = o->ReadStr("big","") ;
-                    d->mapcell = o->ReadInt("mapcell",0);
+                    d->i_big = xml::ReadStr(o,"big","") ;
+                    d->mapcell = xml::ReadInt(o,"mapcell",0);
                     mr->tme->objects.Add(d);
                 }
                 monitor->Update("Loading Objects", 1);
@@ -189,15 +190,15 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //    if ( pass == 1 ) {
         // race
         UIDEBUG( "Frontend: Loading RACES..." );
-        if ( (e = base->Find( "races")) ) {
+        if ( (e = xml::Find(base, "races")) ) {
             FOREACHELEMENT(e,r) {
-                if ( r->IsType("race") ) {
+                if ( xml::IsType(r,"race") ) {
                     race_data_t* d = new race_data_t ;
-                    d->symbol = r->ReadStr("id","");
+                    d->symbol = xml::ReadStr(r,"id","");
                     UIDEBUG( "Frontend: Loading RACES... %s",d->symbol.c_str() );
-                    d->face = r->ReadStr("face","") ;
-                    d->body = r->ReadStr("body","") ;
-                    d->horse = r->ReadStr("horse","") ;
+                    d->face = xml::ReadStr(r,"face","") ;
+                    d->body = xml::ReadStr(r,"body","") ;
+                    d->horse = xml::ReadStr(r,"horse","") ;
                     mr->tme->races.Add(d);
                 }
                 monitor->Update("Loading Races", 1);
@@ -235,7 +236,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //    }
     
     
-    LandscapeColour::OnXmlInit( base->Find("uilandscape") );
+    LandscapeColour::OnXmlInit( xml::Find(base,"uilandscape") );
     
     
     SAFEDELETE(config);

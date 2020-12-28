@@ -170,7 +170,7 @@ namespace tme {
         if ( fightobject == nullptr )
             return nullptr ;
         
-        SetLastCommand ( CMD_FIGHT, fightobject->SafeIdt()) ;
+        SetLastCommand ( CMD_FIGHT, mxentity::SafeIdt(fightobject)) ;
 
         if ( ! sv_cheat_always_win_fight )
         {
@@ -898,7 +898,7 @@ void ddr_character::Target ( const mxitem* newtarget )
         //MXTRACE("NULL Target from %s", Longname());
         newtarget=this;
     }
-    targetId = newtarget->SafeIdt();
+    targetId = mxentity::SafeIdt(newtarget);
     targetLocation = newtarget->Location();
 }
 

@@ -364,7 +364,7 @@ void panel_map_detailed::setupPlaceLabels()
 {
     for( auto m : mapBuilder->places )
     {
-        //CONTINUE_IF( m->here.size() >0 );
+        CONTINUE_IF( m->here.size() >0 );
         
         auto pos = mapBuilder->convertToPosition(m->location);
         
