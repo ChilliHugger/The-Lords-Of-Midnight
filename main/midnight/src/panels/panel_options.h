@@ -54,12 +54,17 @@ protected:
     
     void OnMenuNotification( const uinotificationinterface*, menueventargs* );
     
+#if defined(_OS_DESKTOP_)
+    void changeDisplayMode();
+#endif
+
+    
 protected:
     DrawNode*               menu2_background;
     Vector<Node*>           fields;
     Menu*                   menu2;
     cocos2d::Map<int, uioptionitem*> optionControls;
-    
+    CONFIG_SCREEN_MODE      initialScreenMode;
 };
 
 

@@ -75,7 +75,7 @@ protected:
     void FadeExit( f32 delay = 0);
     void Exit( f32 delay = 0);
     
-    void AreYouSure ( LPCSTR text, MXVoidCallback ok );
+    void AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok = nullptr );
     void OpenPDF(LPCSTR pdf);
     void FillBackground();
 

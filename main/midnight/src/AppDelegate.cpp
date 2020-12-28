@@ -56,15 +56,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-    auto res = resolutionmanager::getInstance();
- 
+  
     auto mr = moonring::mikesingleton();
-    
-    
+  
     //auto console = director->getConsole();
     //console->listenOnTCP(1234);
 
-    res->init();
+    mr->resolution->init();
     
     InitialisePaths();
     

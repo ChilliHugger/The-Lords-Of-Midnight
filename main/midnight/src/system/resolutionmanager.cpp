@@ -13,6 +13,7 @@
 
 #include "base/CCDirector.h"
 #include "../ui/uielement.h"
+#include "../ui/uihelper.h"
 
 USING_NS_CC;
 
@@ -87,11 +88,6 @@ bool resolutionmanager::calcDisplayInfo ( void )
     // landscape
     if ( height > width )
         std::swap(height, width);
-        
-    // too big aspect ratio?
-    //if ( (width/height) > 2.5 ) {
-    //    width = height*1.8;
-    //}
     
     int dpi = Device::getDPI();
     float xInches = director->getWinSize().width / dpi;
@@ -114,18 +110,7 @@ bool resolutionmanager::calcDisplayInfo ( void )
     
     
     s32 res = 1;
-// s32 res = findPredefinedResolution(width, height) ;
-//    if ( res ) {
-//        auto resolution = &resolutions[res-1];
-//        current_resolution.width = width;
-//        current_resolution.height = height;
-//        current_resolution.screen_scale = resolution->screen_scale;
-//        current_resolution.content_scale = resolution->content_scale;
-//        current_resolution.aspect = resolution->aspect;
-//        current_resolution.folder = resolution->folder;
-//        current_resolution.aspect_scale = (f32)width / resolutions[resolution->reference].width ;
-//    }
-//    else
+
     {
         s32 aspect = findAspectRatio(width, height);
 
@@ -236,8 +221,7 @@ f32 resolutionmanager::phoneScale()
 bool resolutionmanager::init()
 {
     auto glview = director->getOpenGLView();
-    auto mr = moonring::mikesingleton();
-    
+
     if(!glview)
     {
         
@@ -270,6 +254,8 @@ bool resolutionmanager::init()
     glview->setDesignResolutionSize(windowSize.width, windowSize.height, ResolutionPolicy::EXACT_FIT);
     
     director->setContentScaleFactor(ContentScale());
+    
+    uihelper::initialiseFonts();
 }
 
 
@@ -330,7 +316,8 @@ GLView* resolutionmanager::setDisplayMode(CONFIG_SCREEN_MODE mode)
 
 bool resolutionmanager::changeDisplayMode(CONFIG_SCREEN_MODE mode)
 {
-    f32 scale = 0.75;
+    Size windowSize;
+    f32 scale = 0.0;
     f32 aspect = 1.7777;
 
     auto glView = dynamic_cast<GLViewImpl*>(director->getOpenGLView());
@@ -339,7 +326,8 @@ bool resolutionmanager::changeDisplayMode(CONFIG_SCREEN_MODE mode)
     {
         case CONFIG_SCREEN_MODE::CF_FULLSCREEN:
             glView->setFullscreen();
-            return true;
+            windowSize = director->getOpenGLView()->getFrameSize();
+            break;
 
         case CONFIG_SCREEN_MODE::CF_WINDOW_SMALL:
             scale = 0.25f;
@@ -355,18 +343,26 @@ bool resolutionmanager::changeDisplayMode(CONFIG_SCREEN_MODE mode)
     }
 
     
-    auto windowSize = calcWindowSize(scale, aspect);
-
-    glView->setWindowed(windowSize.width,windowSize.height);
-
+    if(mode!=CONFIG_SCREEN_MODE::CF_FULLSCREEN)
+    {
+        windowSize = calcWindowSize(scale, aspect);
+        glView->setWindowed(windowSize.width,windowSize.height);
+    }
+    
     glView->setDesignResolutionSize(windowSize.width, windowSize.height, ResolutionPolicy::EXACT_FIT);
     
-    director->resetOpenGLView();
-    
+    // calculate scales, aspect ratios, and assets
     calcDisplayInfo();
     
     director->setContentScaleFactor(ContentScale());
    
+    director->purgeCachedData();
+
+    mr->reloadAssets();
+  
+    // Setup fonts
+    uihelper::initialiseFonts();
+
     return true;
 }
 

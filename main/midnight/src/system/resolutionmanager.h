@@ -46,14 +46,15 @@ typedef struct {
 } padding;
 
 
-class resolutionmanager
+class resolutionmanager : public ringcontroller
 {
 private:
     resolutionmanager();
     ~resolutionmanager();
-    
+
 public:
     
+
     static resolutionmanager* getInstance();
     static void release();
     

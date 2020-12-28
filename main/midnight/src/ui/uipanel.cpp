@@ -138,7 +138,7 @@ void uipanel::Exit(f32 delay )
 }
 
 
-void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
+void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok )
 {
     if ( popupWindow != nullptr ) {
         popupWindow->Close();
@@ -150,6 +150,9 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok )
     popupWindow->onCancel = [&] {
         RUN_ON_UI_THREAD([=]() {
             CC_SAFE_RELEASE_NULL(popupWindow);
+            if (notok != nullptr) {
+                RUN_EVENT(notok(););
+            }
         });
     };
     popupWindow->onOk = [&,ok] {

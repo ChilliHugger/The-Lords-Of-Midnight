@@ -33,26 +33,7 @@ public:
             _nextScene = (Scene*)_scenesStack.at(c - 1);
         }
     }
-    
-    void resetOpenGLView()
-    {
-        // set size
-        _winSizeInPoints = _openGLView->getDesignResolutionSize();
 
-        //_isStatusLabelUpdated = true;
-
-        if (_openGLView)
-        {
-            setGLDefaultValues();
-        }
-
-       //_renderer->init();
-
-        //if (_eventDispatcher)
-       //{
-       //     _eventDispatcher->setEnabled(true);
-       // }
-    }
 };
 
 

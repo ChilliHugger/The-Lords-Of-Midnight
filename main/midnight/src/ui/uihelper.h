@@ -37,7 +37,7 @@ class uihelper
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
 
 public:
-    static void Init();
+    static void initialiseFonts();
 
     // Fonts
     static TTFConfig font_config_big;

@@ -29,8 +29,6 @@ bool panel_splashscreen::init()
         return false;
     }
     
-    uihelper::Init();
-    
     setBackgroundToHeight("splash.png");
     
     loading_width = RES(512);

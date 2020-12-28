@@ -23,6 +23,8 @@
 #include "../ui/uitextmenu.h"
 #include "../ui/uioptionitem.h"
 
+#include "../frontend/language.h"
+
 USING_NS_CC;
 USING_NS_CC_UI;
 
@@ -137,7 +139,6 @@ bool panel_options::init()
     menu2_background = NULL;
     fields.clear();
     
-    //FillBackground();
     setBackgroundToHeight("screens/misc/main_menu.png");
 
     auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
@@ -147,10 +148,6 @@ bool panel_options::init()
 #if defined(_DDR_)
     uihelper::AddTopCenter(safeArea,logo,0,RES(32));
 #endif
-    
-    
-    //auto p2 = Sprite::create("screens/misc/corleth.png");
-    //uihelper::AddBottomLeft(safeArea,p2);
     
     CreateMenu1();
     
@@ -171,15 +168,15 @@ bool panel_options::init()
     SET_OPTION(12, screen_mode);
     
     SET_OPTION(13, keyboard_mode);
-    
-    mr->settings->fullscreensupported = false;
-    
+
     if ( !mr->settings->fullscreensupported )
         options[12].text = values_screen2 ;
     
     
     SetMenu(ID_MENU_DISPLAY);
     
+    initialScreenMode = mr->settings->screen_mode ;
+  
     return true;
 }
 
@@ -187,7 +184,15 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
 {
     int tag = args->menuitem->id;
     
-    if ( tag == ID_HOME ) {
+    if ( tag == ID_HOME )
+    {
+#if defined(_OS_DESKTOP_)
+        if(initialScreenMode != mr->settings->screen_mode)
+        {
+            changeDisplayMode();
+            return;
+        }
+#endif
         Exit();
         mr->settings->Save();
         return;
@@ -240,40 +245,6 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
             showHelpWindow(HELP_TUTORIAL_OFF);
     }
     
-#if defined(_OS_DESKTOP_)
-    if ( options[index].id == ID_OPTION_SCREENMODE ) {
-        
-        auto screenMode = (CONFIG_SCREEN_MODE)mr->settings->screen_mode ;
-        
-        if ( !mr->settings->fullscreensupported
-            && screenMode == CONFIG_SCREEN_MODE::CF_FULLSCREEN)
-        {
-            return;
-        }
-
-        resolutionmanager* rm = resolutionmanager::getInstance();
-
-        //ui->SetFocus(NULL);
-        
-        if ( rm->changeDisplayMode( screenMode ) ) {
-            
-            mr->settings->Save();
-            
-            rm->calcDisplayInfo();
-            
-            //rm->UnloadFonts();
-            //rm->LoadFonts();
-            //gl->adjustScreenDisplay();
-            
-            //UPDATE_DISPLAY;
-            //Exit();
-            mr->panels->showMainMenu();
-
-        }
-        
-        return;
-    }
-#endif
 }
 
 void panel_options::SetMenu ( int id )
@@ -320,8 +291,6 @@ void panel_options::SetMenu ( int id )
     }
 }
 
-
-
 void panel_options::SetValues ( void )
 {
     for ( u32 ii=0; ii<NUMELE(options); ii++ ) {
@@ -346,10 +315,6 @@ void panel_options::SetValues ( void )
     }
 }
 
-
-
-
-
 void panel_options::CreateMenu1()
 {
     f32 width = RES(512);
@@ -367,8 +332,6 @@ void panel_options::CreateMenu1()
     });
     
 }
-
-
 
 void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
@@ -435,5 +398,22 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     
 }
 
+#if defined(_OS_DESKTOP_)
+void panel_options::changeDisplayMode()
+{
+    
+    AreYouSure(CHANGE_DISPLAY_MSG,
+        [&] {
+            // yes
+            mr->changeDisplayMode();
+        },
+        [&] {
+            // no
+            Exit();
+            mr->settings->Save();
+        });
 
+    
+#endif
+}
 
