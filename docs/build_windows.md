@@ -136,3 +136,17 @@ A pre-defined project is built already present to support building installer fro
 - Open solution 'doomdarks_revenge.sln' from 'main\midnight\build.win32\revenge\installer'.
 - Change target to 'Release', from 'Solution Explorer' right-click on 'lords_of_midnight' and click on 'Build'.
 - Your installer can now be found under 'main\midnight\build.win32\revenge\installer\Release\'
+
+## About icons
+
+To refresh icon cache (in case you do not see an updated icon for your final executable) do:
+
+```
+ie4uinit.exe -ClearIconCache
+```
+
+On Windows 10 do instead:
+
+```
+ie4uinit.exe -show
+```
