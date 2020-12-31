@@ -11,4 +11,3 @@ namespace chilli
         std::string getApplicationSupportPath();
     }
 }
-

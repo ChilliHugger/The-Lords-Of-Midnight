@@ -1,15 +1,10 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
-
 #include <ftw.h>
-
 #include <string>
 #include <stack>
 
-#include "FileUtilsExt-apple.h"
-
-#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
-
+#include "FileUtilsExt-mac.h"
 
 namespace chilli
 {
