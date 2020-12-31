@@ -256,6 +256,8 @@ bool resolutionmanager::init()
     director->setContentScaleFactor(ContentScale());
     
     uihelper::initialiseFonts();
+
+    return true;
 }
 
 

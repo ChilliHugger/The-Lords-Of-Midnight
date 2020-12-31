@@ -406,7 +406,6 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
 #if defined(_OS_DESKTOP_)
 void panel_options::changeDisplayMode()
 {
-    
     AreYouSure(CHANGE_DISPLAY_MSG,
         [&] {
             // yes
@@ -417,8 +416,7 @@ void panel_options::changeDisplayMode()
             Exit();
             mr->settings->Save();
         });
-
-    
-#endif
 }
+#endif
+
 

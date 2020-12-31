@@ -28,15 +28,15 @@ cmake_minimum_required(VERSION 3.6)
 if(TME STREQUAL "LOM")
   set(APP_BUILD _LOM_)
   set(APP_NAME midnight)
-  add_compile_definitions(ICON_LOM)
+  if(WINDOWS)
+    add_compile_definitions(ICON_LOM)
+  endif()
 elseif(TME STREQUAL "DDR")
   set(APP_BUILD _DDR_)
   set(APP_NAME revenge)
+  if(WINDOWS)
     add_compile_definitions(ICON_DDR)
-else()
-  set(APP_BUILD _LOM_)
-  set(APP_NAME midnight)
-  add_compile_definitions(ICON_LOM)
+  endif()
 endif()
 
 
@@ -121,9 +121,11 @@ add_compile_options("-D${APP_BUILD}")
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-    list(APPEND GAME_SOURCE
-         proj.android/app/jni/hellocpp/main.cpp
-         )
+    if(TME STREQUAL "LOM")
+      list(APPEND GAME_SOURCE proj.android_lom/app/jni/hellocpp/main.cpp )
+    elseif(TME STREQUAL "DDR")
+      list(APPEND GAME_SOURCE proj.android_ddr/app/jni/hellocpp/main.cpp )
+    endif()
 elseif(LINUX)
     list(APPEND GAME_SOURCE
          proj.linux/main.cpp
