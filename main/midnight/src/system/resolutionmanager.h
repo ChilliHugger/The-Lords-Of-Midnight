@@ -11,8 +11,19 @@
 
 #include "../cocos.h"
 #include "../library/inc/mxtypes.h"
+#include "../extensions/CustomDirector.h"
+
+#include "settingsmanager.h"
 
 using namespace chilli::types;
+
+#if defined(_OS_DESKTOP_)
+//#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::CF_WINDOW_LARGE
+//#define DesktopDebugResolution GooglePixel3XL
+#define _SWITCH_VIDEO_IMPLEMENTED_
+#endif
+
+
 
 typedef struct {
     s32     reference;
@@ -35,20 +46,22 @@ typedef struct {
 } padding;
 
 
-class resolutionmanager
+class resolutionmanager : public ringcontroller
 {
 private:
     resolutionmanager();
     ~resolutionmanager();
-    
+
 public:
     
+
     static resolutionmanager* getInstance();
     static void release();
     
     bool init();
     bool deinit();
     
+
     bool calcDisplayInfo();
 
     f32 Width() { return current_resolution.width; }
@@ -67,6 +80,11 @@ public:
 #if defined(_OS_DESKTOP_)
     bool IsDesktop() { return true; }
     size getDesktopSize();
+    bool changeDisplayMode(CONFIG_SCREEN_MODE mode);
+    cocos2d::GLView* setDisplayMode(CONFIG_SCREEN_MODE mode);
+    cocos2d::GLView* setWindowedMode(cocos2d::Size size);
+    cocos2d::Size calcWindowSize(f32 scale, f32 aspect);
+    
 #else
     bool IsDesktop() { return false; }
 #endif
@@ -85,10 +103,14 @@ protected:
 
 private:
     
+    CustomDirector* director;
     resolution_support current_resolution;
     
     bool isTablet;
     bool isPhone;
+  
+    CONFIG_SCREEN_MODE currentMode;
+    
 };
 
 #define RES(x) \

@@ -39,17 +39,14 @@
 #endif
 #endif
 
-#define CLOSE_STORY_MSG "Are you sure that you wish to close this story?"
-#define NIGHT_MSG       "Are you sure that you are ready to end the day?"
-#define UNDO_NIGHT_MSG  "Are you sure that you wish to return to night?"
-#define UNDO_DAWN_MSG   "Are you sure that you wish to return to dawn?"
+#define CLOSE_STORY_MSG         "Are you sure that you wish to close this story?"
+#define NIGHT_MSG               "Are you sure that you are ready to end the day?"
+#define UNDO_NIGHT_MSG          "Are you sure that you wish to return to night?"
+#define UNDO_DAWN_MSG           "Are you sure that you wish to return to dawn?"
+#define CHANGE_DISPLAY_MSG      "Are you sure that you wish to change your game resolution?"
 
 #define BUTTON_YES      "YES"
 #define BUTTON_NO       "NO"
 #define BUTTON_OK       "OK"
-
-
-
-
 
 #endif /* language_h */

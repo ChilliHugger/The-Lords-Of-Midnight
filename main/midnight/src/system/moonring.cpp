@@ -35,6 +35,9 @@ static bool mySerialize ( u32 version, chilli::lib::archive& ar )
 
 moonring::moonring()
 {
+    resolution = resolutionmanager::getInstance();
+    resolution->InjectMoonRing(this);
+    
     shader = new shadermanager();
     shader->InjectMoonRing(this);
     
@@ -77,6 +80,9 @@ moonring::~moonring()
     SAFEDELETE(stories);
     SAFEDELETE(keyboard);
     SAFEDELETE(tme);
+    
+    resolutionmanager::release();
+    resolution = nullptr;
 }
 
 
@@ -538,6 +544,23 @@ bool moonring::serialize( u32 version, archive& ar )
 }
 
 
+// TODO: Move these to a resource manager
+
+std::string imageFiles[] = {"rest-0", "rest-1", "language-0", "terrain/terrain-0", "terrain/terrain-1" };
+
+
+#if defined(_OS_DESKTOP_)
+void moonring::reloadAssets()
+{
+    auto cache = SpriteFrameCache::getInstance();
+    for (std::string file_name : imageFiles )
+    {
+        auto plist = file_name + ".plist";
+        cache->removeSpriteFramesFromFile(plist);
+        cache->addSpriteFramesWithFile(plist);
+    }
+}
+#endif
 
 void moonring::initialise( progressmonitor* monitor )
 {
@@ -549,7 +572,7 @@ void moonring::initialise( progressmonitor* monitor )
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     // load images
-    for (std::string file_name : {"rest-0", "rest-1", "language-0", "terrain/terrain-0", "terrain/terrain-1" }) {
+    for (std::string file_name : imageFiles ) {
         Director::getInstance()->getTextureCache()->addImageAsync(file_name + ".png", [&,file_name](Texture2D* loaded_texture) {
                    
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file_name + ".plist", loaded_texture);
@@ -634,6 +657,27 @@ void moonring::initialise( progressmonitor* monitor )
     
 }
 
+#if defined(_OS_DESKTOP_)
+void moonring::changeDisplayMode()
+{
+    auto screenMode = settings->screen_mode ;
+    
+    if ( !settings->fullscreensupported
+        && screenMode == CONFIG_SCREEN_MODE::CF_FULLSCREEN)
+    {
+        return;
+    }
+
+    if ( resolution->changeDisplayMode( screenMode ) )
+    {
+        settings->Save();
+        
+        resolution->calcDisplayInfo();
+        
+        panels->setPanelMode(MODE_MAINMENU);
+    }
+}
+#endif
 
 
 

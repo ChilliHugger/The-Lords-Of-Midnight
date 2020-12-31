@@ -196,7 +196,7 @@ void panel_mainmenu::OnCredits()
 void panel_mainmenu::OnExit()
 {
     AreYouSure(EXIT_MSG, [&] {
-        Director::getInstance()->popScene();
+        Director::getInstance()->end();
     });
     
 }

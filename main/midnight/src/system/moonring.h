@@ -36,6 +36,7 @@ FORWARD_REFERENCE(progressmonitor);
 FORWARD_REFERENCE(projectconfig);
 FORWARD_REFERENCE(configmanager);
 FORWARD_REFERENCE(shadermanager);
+FORWARD_REFERENCE(resolutionmanager);
 
 class moonring
 {
@@ -55,6 +56,12 @@ public:
     void initialise( progressmonitor* monitor );
     LPCSTR getWritablePath();
     bool serialize( u32 version, chilli::lib::archive& ar );
+    
+    // assets
+#if defined(_OS_DESKTOP_)
+    void changeDisplayMode();
+    void reloadAssets();
+#endif
     
     // Stories
     storyid_t startNewStory();
@@ -108,6 +115,7 @@ protected:
     
 public:
     
+    resolutionmanager*      resolution;
     shadermanager*          shader;
     panelmanager*           panels;
     settingsmanager*        settings;

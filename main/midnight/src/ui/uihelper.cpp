@@ -35,7 +35,7 @@ TTFConfig uihelper::font_config_debug;
 
 
 
-void uihelper::Init()
+void uihelper::initialiseFonts()
 {
     f32 scale = scale_normal;
     if(PHONE_SCALE(scale_normal)!=scale_normal) {

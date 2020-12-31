@@ -10,10 +10,9 @@
 
 #include "cocos2d.h"
 
-NS_CC_BEGIN
-
-class CustomDirector : public Director
+class CustomDirector : public cocos2d::Director
 {
+    using Scene = cocos2d::Scene;
 public:
     template<class T>  void popSceneWithTransition(float duration)
     {
@@ -34,9 +33,8 @@ public:
             _nextScene = (Scene*)_scenesStack.at(c - 1);
         }
     }
-};
 
-NS_CC_END
+};
 
 
 #endif /* CustomDirector_h */

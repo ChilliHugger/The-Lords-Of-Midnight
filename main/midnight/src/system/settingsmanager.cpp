@@ -111,7 +111,7 @@ BOOL settingsmanager::Save ( void )
     ar << compass_feedback ;
 
     // version 5
-    ar << screen_mode ;
+    ar << (int)screen_mode ;
 
     // version 5
     ar << keyboard_mode;
@@ -144,6 +144,7 @@ BOOL settingsmanager::Load ( void )
     archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
     u32 version=CONFIG_VERSION;
+    int temp;
 
     ar >> version ;
     ar >> tutorial ;
@@ -165,7 +166,9 @@ BOOL settingsmanager::Load ( void )
 
     if ( version>=5 ) {
         ar >> compass_feedback ;
-        ar >> screen_mode ;
+        
+        ar >> temp;
+        screen_mode = (CONFIG_SCREEN_MODE)temp;
     }
 
     if ( version >= 6 ) {

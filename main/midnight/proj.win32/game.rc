@@ -42,7 +42,13 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-GLFW_ICON           ICON                    "res\\game.ico"
+#ifdef ICON_LOM
+GLFW_ICON           ICON                    "midnight\icon.ico"
+#endif
+
+#ifdef ICON_DDR
+GLFW_ICON           ICON                    "revenge\icon.ico"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 //
