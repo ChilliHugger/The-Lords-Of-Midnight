@@ -9,7 +9,7 @@
 #include "../panels/panel_think.h"
 
 #if defined(_OS_OSX_)
-#include "../platform/apple/FileUtilsExt-apple.h"
+#include "../platform/mac/FileUtilsExt-mac.h"
 #endif
 
 #include "moonring.h"

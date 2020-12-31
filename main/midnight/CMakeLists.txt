@@ -39,7 +39,6 @@ elseif(TME STREQUAL "DDR")
   endif()
 endif()
 
-
 project(${APP_NAME})
 
 if(XCODE)
@@ -202,6 +201,7 @@ if(APPLE)
 
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
+          XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
           MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/${APP_NAME}/Info.plist"
           XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/midnight.entitlements")
     elseif(IOS)

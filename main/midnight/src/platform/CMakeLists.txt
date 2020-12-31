@@ -6,11 +6,11 @@ elseif(WINDOWS)
 elseif(APPLE)
     if(MACOSX)
       set(HDR_PLATFORM
-          src/platform/apple/FileUtilsExt-mac.h
+          src/platform/mac/FileUtilsExt-mac.h
           src/platform/mac/DeviceExt-mac.h
           )
       set(SRC_PLATFORM
-          src/platform/apple/FileUtilsExt-mac.mm
+          src/platform/mac/FileUtilsExt-mac.mm
           src/platform/mac/DeviceExt-mac.mm
           )
     elseif(IOS)
