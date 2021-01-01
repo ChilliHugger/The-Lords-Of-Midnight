@@ -147,7 +147,7 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok 
     popupWindow = uipopup::create( this, point(0,0), RES(600), text );
     popupWindow->retain();
     
-    popupWindow->onCancel = [&] {
+    popupWindow->onCancel = [&,notok] {
         RUN_ON_UI_THREAD([=]() {
             CC_SAFE_RELEASE_NULL(popupWindow);
             if (notok != nullptr) {
