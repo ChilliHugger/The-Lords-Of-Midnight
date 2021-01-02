@@ -7,10 +7,7 @@
 
 #include "../panels/panel_look.h"
 #include "../panels/panel_think.h"
-
-#if defined(_OS_OSX_)
-#include "../platform/mac/FileUtilsExt-mac.h"
-#endif
+#include "../platform/Extensions.h"
 
 #include "moonring.h"
 #include "helpmanager.h"
@@ -757,7 +754,7 @@ void moonring::getVersion(const GetVersionCallback& callback)
                 UIDEBUG("Version Check: %s (%s)",lines[0].c_str(), lines[1].c_str());
                
                 auto availableBuildNo = std::atoi(lines[1].c_str());
-                auto currentBuildNo =  std::atoi(Application::getInstance()->getBuildNo().c_str());
+                auto currentBuildNo =  std::atoi(chilli::extensions::getBuildNo().c_str());
                 
                 isUpdateAvailable = currentBuildNo<availableBuildNo;
                 updateUrl = lines[2];

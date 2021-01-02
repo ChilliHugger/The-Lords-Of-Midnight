@@ -54,7 +54,8 @@ namespace chilli {
         long atol( LPCSTR text );
 
         std::vector<std::string> split_string_by_newline(const std::string& str);
-  
+        std::string right(std::string& input, int amount);
+
     }
 }
 

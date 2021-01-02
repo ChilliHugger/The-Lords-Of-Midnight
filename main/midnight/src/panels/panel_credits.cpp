@@ -7,6 +7,7 @@
 
 #include "../cocos.h"
 #include "../extensions/CustomDirector.h"
+#include "../platform/Extensions.h"
 
 #include "panel_credits.h"
 #include "panel_mainmenu.h"
@@ -28,8 +29,9 @@ bool panel_credits::init()
 
     std::string version = "Version: "
         + Application::getInstance()->getVersion()
-        + " (" + Application::getInstance()->getBuildNo() + ")";
-    
+        + " (" + chilli::extensions::getBuildNo() + ")";
+
+
     auto label = Label::createWithTTF(uihelper::font_config_debug, version);
     label->getFontAtlas()->setAntiAliasTexParameters();
     label->setTextColor(Color4B::BLACK);

@@ -510,6 +510,12 @@ namespace chilli {
             return result;
         }
 
+        std::string right(std::string& input, int amount)
+        {
+            int inputSize = input.size();
+            return (amount > 0 && inputSize > amount) ? input.substr(inputSize - amount) : input;
+        }
+
     }
     // namespace lib
 
