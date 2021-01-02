@@ -30,7 +30,7 @@
 #if defined(_LOM_)
 #ifdef _MSC_VER
 #if defined(_OS_DESKTOP_)
-    //#define _USE_VERSION_CHECK_
+    #define _USE_VERSION_CHECK_
     #define _VERSION_URL    "https://thelordsofmidnight.com/version/lom_v2.0_win.cfg"
 #endif
 #endif
