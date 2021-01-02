@@ -17,6 +17,7 @@
 #include "storymanager.h"
 #include "../library/inc/mxtypes.h"
 #include "panelmanager.h"
+#include "../frontend/version_check.h"
 
 // models
 #include "../models/selectmodel.h"
@@ -37,6 +38,10 @@ FORWARD_REFERENCE(projectconfig);
 FORWARD_REFERENCE(configmanager);
 FORWARD_REFERENCE(shadermanager);
 FORWARD_REFERENCE(resolutionmanager);
+
+typedef std::function<void(bool updateAvailable, std::string& url)> GetVersionCallback;
+
+
 
 class moonring
 {
@@ -105,6 +110,12 @@ public:
     void showPage( panelmode_t mode, mxid object = IDT_NONE );
 
     bool checkGameOverConditions ( void );
+    
+    // Version
+#if defined(_USE_VERSION_CHECK_)
+    void getVersion(const GetVersionCallback& callback);
+#endif
+    
 protected:
     
 
@@ -112,6 +123,12 @@ protected:
     std::mutex              mutex;
     std::condition_variable condition;
     bool                    isDataLoaded;
+    
+#if defined(_USE_VERSION_CHECK_)
+    bool                    versionCheckCompleted;
+    bool                    isUpdateAvailable;
+    std::string             updateUrl;
+#endif
     
 public:
     

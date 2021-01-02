@@ -26,14 +26,15 @@ bool panel_credits::init()
     
     setBackgroundToHeight("credits.png");
 
-    std::string version = "Version: " + Application::getInstance()->getVersion();
-
+    std::string version = "Version: "
+        + Application::getInstance()->getVersion()
+        + " (" + Application::getInstance()->getBuildNo() + ")";
+    
     auto label = Label::createWithTTF(uihelper::font_config_debug, version);
     label->getFontAtlas()->setAntiAliasTexParameters();
     label->setTextColor(Color4B::BLACK);
     label->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(safeArea, label, RES(32), RES(32));
-
 
     Exit(5.0);
     

@@ -2,8 +2,10 @@
 #include "../inc/collections.h"
 #include "../inc/misc.h"
 
+#include <stdio.h>
 #include <string.h>
 #include <algorithm>
+#include <sstream>
 
 namespace chilli {
 
@@ -495,6 +497,17 @@ namespace chilli {
         {
             if ( text == NULL ) return 0;
             return ::atol(text);
+        }
+        
+        std::vector<std::string> split_string_by_newline(const std::string& str)
+        {
+            auto result = std::vector<std::string>{};
+            auto ss = std::stringstream{str};
+
+            for (std::string line; std::getline(ss, line, '\n');)
+                result.push_back(line);
+
+            return result;
         }
 
     }
