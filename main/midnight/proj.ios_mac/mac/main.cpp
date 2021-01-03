@@ -23,13 +23,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "../../../src/AppDelegate.h"
+#include "../../src/AppDelegate.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
 
 int main(int argc, char *argv[])
 {
+#if !defined(_UNIT_TESTS_)
     AppDelegate app;
     return Application::getInstance()->run();
+#else
+    extern int tests_main(int argc, char *argv[]);
+    return tests_main(argc,argv);
+#endif
 }

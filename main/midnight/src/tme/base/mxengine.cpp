@@ -239,13 +239,13 @@ char filename[MAX_PATH];
 #else
     sprintf ( filename, "%s/%s", m_szDatabase, "database" );
 #endif
-    
+
 MXTRACE( "Loading Database '%s'", m_szDatabase);
 
    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
-        //COMPLAIN( "Cannot Load data file %s", filename );
+        MXTRACE( "Cannot Load data file %s", filename );
         return MX_FAILED;
     }
 
