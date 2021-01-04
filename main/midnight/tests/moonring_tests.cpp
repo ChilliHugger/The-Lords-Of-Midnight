@@ -180,11 +180,49 @@ SCENARIO("Selecting the Look Screen for a alive lord should show the Look screen
     }
 }
 
+SCENARIO("Add a lord to a group should make them follow their new leader")
+{
+    TMEStep::NewStory();
+    mocks::reset();
+  
+    GIVEN("that Rorthron is with Luxor")
+    {
+        TMEStep::LordAtLocation(ch_rorthron, ch_luxor);
+        
+        WHEN("Rorthron joins Luxor's group")
+        {
+            UIStep::PlayerAddsLordToAGroup(ch_rorthron,ch_luxor);
+        
+            THEN("Rorthron should be following Luxor")
+            {
+                auto rorthron = GetCharacter(ch_rorthron);
+                auto luxor = GetCharacter(ch_luxor);
+                
+                REQUIRE( rorthron->Following() == luxor );
+                
+                AND_THEN("Luxor's group should include Rorthron")
+                {
+                    REQUIRE( luxor->followers == 1 );
+                    
+                    c_mxid collection;
+                    TME_GetFollowers ( mxentity::SafeIdt(luxor), collection );
+
+                    REQUIRE( collection[0] == mxentity::SafeIdt(rorthron) );
+                    
+                    AND_THEN("the current story should be saved")
+                    {
+                        REQUIRE( mocks::storyHasBeenSaved() == true );
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 // Scenario mr->swapGroupLeader
-// Scenario mr->joinGroup
 // Scenario mr->leaveGroup
 // Scenario mr->disbandGroup
-// Scenario mr->look
 // Scenario mr->selectCharacter
 // Scenario mr->undo
 // Scenario mr->night
@@ -204,16 +242,4 @@ SCENARIO("Selecting the Look Screen for a alive lord should show the Look screen
 // Scenario mr->use
 // Scenario mr->rest
 // Scenario mr->entertunnel
-
-
-
-
-
-
-
-
-
-
-
-
 

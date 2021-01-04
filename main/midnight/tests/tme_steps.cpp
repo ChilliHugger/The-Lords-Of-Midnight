@@ -40,3 +40,15 @@ void TMEStep::GameLost()
         LOMStep::GameLost();
 #endif
 }
+
+void TMEStep::LordCarryingObject(LPCSTR name, mxthing_t thing)
+{
+    auto lord = GetCharacter(name);
+    lord->carrying = tme::mx->ObjectById(thing);
+ }
+
+void TMEStep::LordAtLocation(LPCSTR name, LPCSTR location)
+{
+    auto lord = GetCharacter(name);
+    lord->Location( GetEntity<mxitem>(location)->Location() );
+}

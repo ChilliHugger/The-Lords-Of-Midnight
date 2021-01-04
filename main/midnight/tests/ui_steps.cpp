@@ -6,6 +6,8 @@
 //
 
 #include "ui_steps.h"
+#include "tme_steps.h"
+
 
 void UIStep::PlayerTapsLook()
 {
@@ -32,4 +34,11 @@ bool UIStep::CurrentPanelObjectIs(mxid id)
 void UIStep::PlayerClosesTheCurrentStory()
 {
     moonring::mikesingleton()->closeStory();
+}
+
+bool UIStep::PlayerAddsLordToAGroup(LPCSTR lord, LPCSTR leader)
+{
+    auto id = mxentity::SafeIdt( GetCharacter(lord) );
+    auto leaderid = mxentity::SafeIdt( GetCharacter(leader) );
+    return moonring::mikesingleton()->joinGroup(id, leaderid);
 }

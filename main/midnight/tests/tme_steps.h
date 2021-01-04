@@ -25,6 +25,10 @@ public:
     static void CurrentLordIsDead();
     static void GameLost();
     static void GameWon();
+    
+    static void LordCarryingObject(LPCSTR name, mxthing_t thing);
+    static void LordAtLocation(LPCSTR name, LPCSTR location);
+
 };
 
 
@@ -42,3 +46,8 @@ inline mxstronghold* GetStronghold(LPCSTR name)
 {
     return GetEntity<mxstronghold>(name);
 }
+
+
+constexpr LPCSTR ch_morkin = "CH_MORKIN";
+constexpr LPCSTR ch_luxor = "CH_LUXOR";
+constexpr LPCSTR ch_rorthron = "CH_RORTHRON";

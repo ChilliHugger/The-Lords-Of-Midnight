@@ -15,5 +15,8 @@ public:
     static void PlayerContinuesAStory();
     static void PlayerClosesTheCurrentStory();
     static bool CurrentPanelObjectIs(mxid id);
+
+    static bool PlayerAddsLordToAGroup(LPCSTR lord, LPCSTR leader);
+
 };
 
