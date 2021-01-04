@@ -7,40 +7,16 @@
 
 #pragma once
 
-#include "catch2/catch.hpp"
-#include "../../src/system/moonring.h"
-#include "../../src/tme/tme_interface.h"
-#include "../../src/tme/baseinc/tme_internal.h"
+#include "../tme_steps.h"
 
-#include <stdio.h>
-
-
-using namespace tme;
-extern mxengine* mx;
-
-class TMEStep
+class LOMStep
 {
 public:
-    static void NightFalls();
     static void UshgarakHasFallenInBattle();
     static void XajorkithHasFallenInBattle();
     static void MorkinIsDead();
     static void LuxorIsDead();
     static void IceCrownHasBeenDestroyed();
+    static void GameWon();
+    static void GameLost();
 };
-
-
-template <typename T> T* GetEntity(LPCSTR name)
-{
-    return static_cast<T*>(tme::mx->EntityByName(name));
-}
-
-inline mxcharacter* GetCharacter(LPCSTR name)
-{
-    return GetEntity<mxcharacter>(name);
-}
-
-inline mxstronghold* GetStronghold(LPCSTR name)
-{
-    return GetEntity<mxstronghold>(name);
-}

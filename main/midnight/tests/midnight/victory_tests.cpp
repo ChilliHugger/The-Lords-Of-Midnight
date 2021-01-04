@@ -15,207 +15,179 @@
 
 SCENARIO("Morkin and his friends can destroy the ice crown")
 {
-    TME_Init();
-    auto morkin = GetCharacter("CH_MORKIN");
+    TMEStep::NewStory();
 
-    GIVEN("Farmflame the Dragonlord is at the same location as the ice crown ")
+    GIVEN("Morkin is carrying the ice crown ")
+    {
+        auto morkin = GetCharacter("CH_MORKIN");
+        morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
+     
+        AND_GIVEN("that Farmflame the Dragonlord is with Morkin")
+        {
+            GetCharacter("CH_FARFLAME")->Location( morkin->Location() ) ;
+
+            WHEN("night falls")
+            {
+                TMEStep::NightFalls();
+
+                THEN("the ice crown should be destroyed by Farflame")
+                {
+                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
+                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Farflame the Dragonlord has destroyed the Ice Crown"));
+                }
+            }
+        }
+        
+        AND_GIVEN("that Lorgrim the Wise is with Morkin")
+        {
+            GetCharacter("CH_LORGRIM")->Location( morkin->Location() ) ;
+            
+            WHEN("night falls")
+            {
+                TMEStep::NightFalls();
+                
+                THEN("the ice crown should be destroyed by Lorgrim")
+                {
+                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
+                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Lorgrim the Wise has destroyed the Ice Crown"));
+                }
+            }
+        }
+        
+        AND_GIVEN("that Fawkrin the Skulkrin is with Morkin")
+        {
+            GetCharacter("CH_FAWKRIN")->Location( morkin->Location() ) ;
+
+            WHEN("night falls")
+            {
+                TMEStep::NightFalls();
+                
+                THEN("the ice crown should be destroyed by Fawkrin")
+                {
+                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
+                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Fawkrin the Skulkrin has destroyed the Ice Crown"));
+                }
+            }
+        }
+
+        AND_GIVEN("that Morkin is at Lake Mirrow ")
+        {
+            morkin->Location( GetEntity<mxplace>("PL_LAKE_MIRROW")->Location() ) ;
+               
+            WHEN("night falls")
+            {
+                TMEStep::NightFalls();
+                
+                THEN("the ice crown should be destroyed in the Lake")
+                {
+                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
+                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Morkin cast the Ice Crown into Lake Mirrow and destroyed it"));
+                }
+            }
+        }
+    
+    }
+}
+
+SCENARIO("The Ice Crown can only be destroyed when Morkinn is carrying it")
+{
+    TMEStep::NewStory();
+  
+    GIVEN("Farmflame the Dragonlord is at the Tower of Doom ")
     {
         auto towerOfDoom = GetEntity<mxplace>("PL_TOWER_OF_DOOM");
-        auto iceCrown = GetEntity<mxobject>("OB_ICECROWN");
-
-        // Morkin is not carrying anything and is at the Tower of Doom
-        morkin->carrying = nullptr;
-        morkin->Location( towerOfDoom->Location() ) ;
-
-        // And the Ice Crown is at the Tower of Doom
-        tme::mx->scenario->DropObject(towerOfDoom->Location(), iceCrown);
-        
-        // And Farflame is at the Tower of Doom
         GetCharacter("CH_FARFLAME")->Location( towerOfDoom->Location() ) ;
 
-        WHEN("night falls")
+        AND_GIVEN("that Morkin is not carrying anything and is at the Tower of Doom")
         {
-            TMEStep::NightFalls();
+            auto morkin = GetCharacter("CH_MORKIN");
+            morkin->carrying = nullptr;
+            morkin->Location( towerOfDoom->Location() ) ;
 
-            THEN("the ice crown should not be destroyed by Farflame")
+            AND_GIVEN("that the Ice Crown is at the Tower of Doom")
             {
-              REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_NONE );
-            }
-        }
-    }
-
-
-    GIVEN("Morkin is carrying the ice crown and Farmflame the Dragonlord is at the same location ")
-    {
-        morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
-        GetCharacter("CH_FARFLAME")->Location( morkin->Location() ) ;
-
-        WHEN("night falls")
-        {
-            TMEStep::NightFalls();
-
-            THEN("the ice crown should be destroyed by Farflame")
-            {
-              REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-              REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Farflame the Dragonlord has destroyed the Ice Crown"));
-            }
-        }
-    }
-
-    GIVEN("Morkin is carrying the ice crown and Lorgrim the Wise is at the same location ")
-    {
-        morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
-        GetCharacter("CH_LORGRIM")->Location( morkin->Location() ) ;
-
-        WHEN("night falls")
-        {
-            TMEStep::NightFalls();
+                auto iceCrown = GetEntity<mxobject>("OB_ICECROWN");
+                tme::mx->scenario->DropObject(towerOfDoom->Location(), iceCrown);
             
-            THEN("the ice crown should be destroyed by Lorgrim")
-            {
-              REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-              REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Lorgrim the Wise has destroyed the Ice Crown"));
+                WHEN("night falls")
+                {
+                    TMEStep::NightFalls();
+
+                    THEN("the ice crown should not be destroyed by Farflame")
+                    {
+                        REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_NONE );
+                    }
+                }
             }
         }
     }
-
-    GIVEN("Morkin is carrying the ice crown Fawkrin the Skulkrin is at the same location ")
-    {
-        morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
-        GetCharacter("CH_FAWKRIN")->Location( morkin->Location() ) ;
-
-        WHEN("night falls")
-        {
-            TMEStep::NightFalls();
-            
-            THEN("the ice crown should be destroyed by Fawkrin")
-            {
-              REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-              REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Fawkrin the Skulkrin has destroyed the Ice Crown"));
-            }
-        }
-    }
-
-    GIVEN("Morkin is carrying the ice crown and is at Lake Mirrow ")
-    {
-        morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
-        morkin->Location( GetEntity<mxplace>("PL_LAKE_MIRROW")->Location() ) ;
-           
-        WHEN("night falls")
-        {
-            TMEStep::NightFalls();
-            
-            THEN("the ice crown should be destroyed by the Lake")
-            {
-              REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-              REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Morkin cast the Ice Crown into Lake Mirrow and destroyed it"));
-            }
-        }
-    }
-
 }
 
-SCENARIO("Only Morkin can destroy the ice crown")
+SCENARIO("Victory to the Free when The Citadel of Ushgarak has fallen in battle")
 {
-    TME_Init();
-    auto morkin = GetCharacter("CH_MORKIN");
+    TMEStep::NewStory();
 
-    GIVEN("Farmflame the Dragonlord is at the same location as the ice crown ")
+    GIVEN("that the Citadel of Ushgarak falls in battle")
     {
-        auto towerOfDoom = GetEntity<mxplace>("PL_TOWER_OF_DOOM");
-        auto iceCrown = GetEntity<mxobject>("OB_ICECROWN");
-
-        // Morkin is not carrying anything and is at the Tower of Doom
-        morkin->carrying = nullptr;
-        morkin->Location( towerOfDoom->Location() ) ;
-
-        // And the Ice Crown is at the Tower of Doom
-        tme::mx->scenario->DropObject(towerOfDoom->Location(), iceCrown);
+        LOMStep::UshgarakHasFallenInBattle();
         
-        // And Farflame is at the Tower of Doom
-        GetCharacter("CH_FARFLAME")->Location( towerOfDoom->Location() ) ;
-
-        WHEN("night falls")
+        AND_GIVEN("that the Ice Crown has not been destroyed")
         {
-            TMEStep::NightFalls();
-            
-            THEN("the ice crown should not be destroyed by Farflame")
+            WHEN("night falls")
             {
-              REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_NONE );
+                TMEStep::NightFalls();
+                
+                THEN("Ushgark should have fallen and Victory to the Free")
+                {
+                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Ushgarak has fallen."));
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to the Free!"));
+                }
             }
         }
-    }
-}
-
-SCENARIO("Ushgarak has fallen in battle")
-{
-    TME_Init();
-
-    GIVEN("Victory to the Free when the Citadel of Ushgarak falls in battle")
-    {
-        TMEStep::UshgarakHasFallenInBattle();
         
-        WHEN("night falls")
+        AND_GIVEN("that the Ice Crown has been destroyed")
         {
-            TMEStep::NightFalls();
-            
-            THEN("Ushgark should have fallen and Victory to the Free")
+            LOMStep::IceCrownHasBeenDestroyed();
+
+            WHEN("night falls")
             {
-                REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Ushgarak has fallen."));
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to the Free!"));
+                TMEStep::NightFalls();
+
+                THEN("Ushgarak should have fallen and the Ice Crown has been destroyed and Victory to the Free")
+                {
+                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Ushgarak has fallen and the Ice Crown has been destroyed."));
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to the Free!"));
+                }
             }
         }
-    }
-}
 
-SCENARIO("Victory to the Free when Ushgarak has fallen in battle and the Ice Crown is destroyed")
-{
-    TME_Init();
-
-    GIVEN("Luxor the Moonprince takes the Citadel of Ushgarak in battle")
-    {
-        // Given
-        TMEStep::UshgarakHasFallenInBattle();
-
-        // And
-        TMEStep::IceCrownHasBeenDestroyed();
-
-        WHEN("night falls")
-        {
-            TMEStep::NightFalls();
-
-            THEN("Ushgarak should have fallen and the Ice Crown has been destroyed and Victory to the Free")
-            {
-                REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Ushgarak has fallen and the Ice Crown has been destroyed."));
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to the Free!"));
-            }
-        }
     }
 }
 
 SCENARIO("Xajorkith has fallen in battle and Morkin is Dead then victory to Doomdark")
 {
-    TME_Init();
+    TMEStep::NewStory();
 
-    GIVEN("That Xajorkith has fallen in battle and Morkin is Dead")
+    GIVEN("That Xajorkith has fallen in battle")
     {
-        // Given
-        TMEStep::XajorkithHasFallenInBattle();
+        LOMStep::XajorkithHasFallenInBattle();
         
-        // And
-        TMEStep::MorkinIsDead();
-        
-        WHEN("night falls")
+        AND_GIVEN("that Morkin is dead")
         {
-            TMEStep::NightFalls();
+            LOMStep::MorkinIsDead();
             
-            THEN("Xajorkith should have fallen and Victory to Doomdark")
+            WHEN("night falls")
             {
-                REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_LOSE );
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Xajorkith has fallen and Morkin is dead!"));
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to Doomdark!"));
+                TMEStep::NightFalls();
+                
+                THEN("Xajorkith should have fallen and Victory to Doomdark")
+                {
+                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_LOSE );
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Xajorkith has fallen and Morkin is dead!"));
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to Doomdark!"));
+                }
             }
         }
     }
@@ -223,25 +195,26 @@ SCENARIO("Xajorkith has fallen in battle and Morkin is Dead then victory to Doom
 
 SCENARIO("Luxor and Morkin are dead victory should be to Doomdark")
 {
-    TME_Init();
+    TMEStep::NewStory();
 
-    GIVEN("Luxor and Morkin are dead")
+    GIVEN("that Luxor is dead")
     {
-        // Given
-        TMEStep::MorkinIsDead();
+        LOMStep::LuxorIsDead();
         
-        // And
-        TMEStep::LuxorIsDead();
-        
-        WHEN("night falls")
+        AND_GIVEN("that Morkin is also dead")
         {
-            TMEStep::NightFalls();
-            
-            THEN("Victory to Doomdark")
+            LOMStep::MorkinIsDead();
+        
+            WHEN("night falls")
             {
-                REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_LOSE );
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Luxor and Morkin are dead!"));
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to Doomdark!"));
+                TMEStep::NightFalls();
+                
+                THEN("Victory to Doomdark")
+                {
+                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_LOSE );
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Luxor and Morkin are dead!"));
+                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to Doomdark!"));
+                }
             }
         }
     }

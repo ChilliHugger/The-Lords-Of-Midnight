@@ -7,7 +7,8 @@
 
 #include "common_steps.h"
 
-TEST_CASE( "Lom Scenario has been setup corretly", "[TME]" ) {
+TEST_CASE( "Lom Scenario has been setup corretly" )
+{
     REQUIRE_THAT( TME_ScenarioDirectory(),  Catch::Matchers::EndsWith("/lom") );
     REQUIRE_THAT( TME_ScenarioName(),  Catch::Matchers::Equals("The Lords of Midnight") );
     REQUIRE_THAT( TME_ScenarioShortName(),  Catch::Matchers::Equals("lom") );
@@ -46,14 +47,13 @@ SCENARIO("For a new story Luxor should be the initial lord")
 
             THEN("the story creation should be successfull")
             {
-              REQUIRE( created == true );
+                REQUIRE( created == true );
+               
+                AND_THEN("the selected lord should be luxor")
+                {
+                    REQUIRE_THAT( std::string(TME_CurrentCharacter().shortname), Catch::Matchers::Equals("Luxor") );
+                }
             }
-
-            AND_THEN("the selected lord should be luxor")
-            {
-              REQUIRE_THAT( std::string(TME_CurrentCharacter().shortname), Catch::Matchers::Equals("Luxor") );
-            }
-
         }
     }
 }

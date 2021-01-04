@@ -10,12 +10,7 @@
 
 #include "common_steps.h"
 
-void TMEStep::NightFalls()
-{
-    TME_Night(nullptr);
-}
-
-void TMEStep::UshgarakHasFallenInBattle()
+void LOMStep::UshgarakHasFallenInBattle()
 {
     tme::mx->battle->ResetBattlesFought();
 
@@ -37,7 +32,7 @@ void TMEStep::UshgarakHasFallenInBattle()
     tme::mx->battle->KickOffAtLocation(luxor->Location());
 }
 
-void TMEStep::XajorkithHasFallenInBattle()
+void LOMStep::XajorkithHasFallenInBattle()
 {
     tme::mx->battle->ResetBattlesFought();
 
@@ -58,19 +53,31 @@ void TMEStep::XajorkithHasFallenInBattle()
     tme::mx->battle->KickOffAtLocation(xajorkith->Location());
 }
 
-void TMEStep::MorkinIsDead()
+void LOMStep::MorkinIsDead()
 {
     GetCharacter("CH_MORKIN")->Cmd_Dead();
 }
 
-void TMEStep::LuxorIsDead()
+void LOMStep::LuxorIsDead()
 {
     GetCharacter("CH_LUXOR")->Cmd_Dead();
 }
 
-void TMEStep::IceCrownHasBeenDestroyed()
+void LOMStep::IceCrownHasBeenDestroyed()
 {
     auto morkin = GetCharacter("CH_MORKIN");
     morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
     GetCharacter("CH_FARFLAME")->Location( morkin->Location() ) ;
+}
+void LOMStep::GameWon()
+{
+    IceCrownHasBeenDestroyed();
+    TMEStep::NightFalls();
+}
+
+void LOMStep::GameLost()
+{
+    MorkinIsDead();
+    LuxorIsDead();
+    TMEStep::NightFalls();
 }

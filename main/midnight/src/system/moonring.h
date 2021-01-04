@@ -124,7 +124,7 @@ public:
     storymanager*           stories;
     keyboardmanager*        keyboard;
     tmemanager*             tme;
-    c_str                   writeablepath;
+    std::string             writeablepath;
     projectconfig*          project;
     
 
