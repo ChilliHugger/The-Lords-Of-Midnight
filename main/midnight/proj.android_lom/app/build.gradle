@@ -95,4 +95,5 @@ android.applicationVariants.all { variant ->
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':libcocos2dx')
+    implementation project(path: ':libcocos2dx')
 }

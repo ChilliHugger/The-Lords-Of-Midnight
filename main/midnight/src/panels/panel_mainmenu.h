@@ -3,6 +3,7 @@
 
 #include "../ui/uipanel.h"
 #include "../frontend/layout_id.h"
+#include "../frontend/version_check.h"
 
 FORWARD_REFERENCE(menueventargs);
 FORWARD_REFERENCE(uinotificationinterface);
@@ -28,7 +29,6 @@ protected:
     void OnOptions();
     void OnCredits();
     void OnExit();
-    void OnUpdate();
     void OnNewStory();
     void OnContinueStory();
     void OnEndStory();
@@ -36,8 +36,14 @@ protected:
     void deleteStory( storyid_t id );
     void refreshStories( void );
     
+#if defined(_USE_VERSION_CHECK_)
+    void OnUpdate();
+    void getVersion();
+#endif
+    
 private:
     uitextmenu* menu;
+    std::string versionUrl;
 };
 
 #endif // __panel_mainmenu_h__

@@ -2,14 +2,7 @@
 #include "resolutionmanager.h"
 #include "moonring.h"
 #include "settingsmanager.h"
-
-#if defined(_OS_OSX_)
-#include "../platform/mac/DeviceExt-mac.h"
-#endif
-
-#if defined(_OS_WIN32_)
-#include "../platform/win32/DeviceExt-win32.h"
-#endif
+#include "../platform/Extensions.h"
 
 #include "base/CCDirector.h"
 #include "../ui/uielement.h"

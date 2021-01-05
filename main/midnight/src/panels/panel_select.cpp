@@ -784,10 +784,12 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
             
         case DragEventType::drag:
         {
-            checkValidDropTarget();
+            if(draggedLord!=nullptr)
+            {
+                checkValidDropTarget();
             
-            checkPageFlip();
-  
+                checkPageFlip();
+            }
             break;
         }
             
@@ -921,6 +923,11 @@ mxid panel_select::getIdFromTag(uilordselect* lord)
 
 uilordselect* panel_select::getDropTarget( uilordselect* lord, UIMOUSEOVER where, UIMOUSEOVER& result )
 {
+    if(lord==nullptr)
+    {
+        return nullptr;
+    }
+
     auto pos = lord->getCenter();
     auto currentPage = pageView->getCurrentPageIndex()+1;
     

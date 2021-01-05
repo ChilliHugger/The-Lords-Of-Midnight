@@ -7,10 +7,7 @@
 
 #include "../panels/panel_look.h"
 #include "../panels/panel_think.h"
-
-#if defined(_OS_OSX_)
-#include "../platform/mac/FileUtilsExt-mac.h"
-#endif
+#include "../platform/Extensions.h"
 
 #include "moonring.h"
 #include "helpmanager.h"
@@ -24,6 +21,12 @@
 #include "configmanager.h"
 #include "shadermanager.h"
 
+#if defined(_USE_VERSION_CHECK_)
+    #include "network/HttpClient.h"
+    #include "network/HttpRequest.h"
+    using namespace cocos2d::network;
+#endif
+
 USING_NS_CC;
 
 using namespace chilli::lib;
@@ -34,7 +37,13 @@ static bool mySerialize ( u32 version, chilli::lib::archive& ar )
 }
 
 moonring::moonring() :
-    writeablepath("")
+#if defined(_USE_VERSION_CHECK_)
+    isUpdateAvailable(false),
+    versionCheckCompleted(false),
+    updateUrl(""),
+#endif
+    writeablepath(""),
+    isDataLoaded(false)
 {
     resolution = resolutionmanager::getInstance();
     resolution->InjectMoonRing(this);
@@ -124,6 +133,10 @@ storyid_t moonring::startNewStory()
     mapmodel.setDefaults();
     
     storyid_t id = stories->alloc();
+    if(id == STORY_NONE)
+    {
+        return id;
+    }
     
     stories->create(id);
     
@@ -703,3 +716,53 @@ void  moonring::log(LPCSTR format, ...)
     //CCLOG("UI: %s", msg_buffer);
     cocos2d::log("UI: %s", msg_buffer);
 }
+
+
+#if defined(_USE_VERSION_CHECK_)
+void moonring::getVersion(const GetVersionCallback& callback)
+{
+    if(callback==nullptr)
+    {
+        return;
+    }
+
+    if(versionCheckCompleted)
+    {
+        callback(isUpdateAvailable,updateUrl);
+        return;
+    }
+
+    // TODO:
+    // Ideally this should be cached and maybe only downloaded
+    // once a day etc...
+
+    auto request = new HttpRequest();
+    request->setRequestType(HttpRequest::Type::GET);
+    request->setUrl(_VERSION_URL);
+    request->setResponseCallback([&,callback](HttpClient* client, HttpResponse* response)
+    {
+        try
+        {
+            if(response->isSucceed())
+            {
+                auto data = response->getResponseData();
+                auto input = std::string( data->begin(), data->end() );
+                auto lines = split_string_by_newline(input);
+                UIDEBUG("Version Check: %s (%s)",lines[0].c_str(), lines[1].c_str());
+               
+                auto availableBuildNo = std::atoi(lines[1].c_str());
+                auto currentBuildNo =  std::atoi(chilli::extensions::getBuildNo().c_str());
+                
+                isUpdateAvailable = currentBuildNo<availableBuildNo;
+                updateUrl = lines[2];
+                versionCheckCompleted = true;
+                callback(isUpdateAvailable,updateUrl);
+            }
+        } catch (const std::exception& e) {
+        }
+    });
+
+    HttpClient::getInstance()->send(request);
+    request->release();
+}
+#endif
