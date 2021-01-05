@@ -95,7 +95,10 @@ storyid_t storymanager::first_used_story()
 storyid_t storymanager::alloc( void )
 {
     storyid_t id = next_free_story();
-    used[id-1]=true;
+    if(id!=STORY_NONE)
+    {
+        used[id-1]=true;
+    }
     return id;
 }
 
