@@ -42,6 +42,7 @@ moonring::moonring() :
     versionCheckCompleted(false),
     updateUrl(""),
 #endif
+    writeablepath(""),
     isDataLoaded(false)
 {
     resolution = resolutionmanager::getInstance();
@@ -97,9 +98,9 @@ moonring::~moonring()
 
 LPCSTR moonring::getWritablePath()
 {
-    if(!writeablepath.IsEmpty())
+    if(!writeablepath.empty())
     {
-        return writeablepath;
+        return writeablepath.c_str();
     }
     
 #if defined(_OS_OSX_)
@@ -113,9 +114,9 @@ LPCSTR moonring::getWritablePath()
     path.append(TME_ScenarioName()).c_str();
 #endif
     
-    writeablepath = path.c_str();
+    writeablepath = path;
     
-    return writeablepath;
+    return writeablepath.c_str();
 }
 
 void moonring::showPage( panelmode_t mode, mxid object )
@@ -128,8 +129,6 @@ void moonring::showPage( panelmode_t mode, mxid object )
 
 storyid_t moonring::startNewStory()
 {
-    //destroyGamePanels();
-
     selectmodel.setDefaults();
     mapmodel.setDefaults();
     
@@ -145,8 +144,6 @@ storyid_t moonring::startNewStory()
     
     tme->ResolveTMEData();
     tme->resetTMEData();
-    
-    //createGamePanels();
     
     help->Load( id );
     
@@ -167,12 +164,8 @@ storyid_t moonring::getCurrentStory()
 
 void moonring::continueStory( storyid_t id )
 {
-    //destroyGamePanels();
-    
     stories->load(id);
     help->Load( id );
-    
-    //createGamePanels();
     
     TME_CurrentCharacter( TME_CurrentCharacter().id );
     

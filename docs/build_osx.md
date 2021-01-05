@@ -24,6 +24,15 @@ cd mac-build
 cmake .. -GXcode -DTME:string=LOM
 ```
 
+## Create OSX XCode Project for Tests
+
+```
+cd main/midnight
+mkdir mac-tests-build
+cd mac-tests-build
+cmake .. -GXcode -DTME:string=LOM -DTESTS=YES
+```
+
 Replace LOM with DDR for Doomdark's Revenge
 
 ## Create iOS XCode Project

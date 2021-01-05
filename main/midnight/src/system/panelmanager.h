@@ -40,8 +40,9 @@ class panelmanager : public ringcontroller
 public:
     
     // ** PANEL STUFF
-    void setPanelMode ( panelmode_t mode, bool history = false);
-    void setPanelMode ( panelmode_t mode, transition_t transition, bool history = false );
+    virtual void setPanelMode ( panelmode_t mode, bool history = false);
+    virtual void setPanelMode ( panelmode_t mode, transition_t transition, bool history = false );
+    
     uipanel* currentPanel();
     uipanel* getPanel( panelmode_t mode);
 

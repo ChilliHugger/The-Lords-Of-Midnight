@@ -41,50 +41,47 @@ typedef struct storyinfo_t
     storyheader_t       chapter[MAX_STORIES];
 } storyinfo_t ;
 
+
 class storymanager : public ringcontroller
 {
 public:
     storymanager();
     virtual ~storymanager();
     
-    void checkStories(void);
-    storyinfo_t* getStoriesInfo();
+    virtual void checkStories(void);
+    virtual storyinfo_t* getStoriesInfo();
     
-    int stories_used()  ;
-    storyid_t next_free_story()  ;
-    storyid_t first_used_story() ;
-    storyid_t alloc();
+    virtual int stories_used()  ;
+    virtual storyid_t next_free_story()  ;
+    virtual storyid_t first_used_story() ;
+    virtual storyid_t alloc();
+    virtual saveid_t lastMorning() const ;
+    virtual saveid_t lastNight() const ;
     
+    virtual bool save ( savemode_t mode = savemode_normal );
+    virtual bool create ( storyid_t id );
+    virtual bool save ( storyid_t id, savemode_t mode=savemode_normal );
+    virtual bool load ( storyid_t id );
+    virtual bool destroy ( storyid_t id );
+    virtual bool cleanup ( void );
+    virtual bool canUndo ( savemode_t mode );
+    virtual bool undo ( savemode_t mode );
+
     LPCSTR getFolder( storyid_t id );
     LPCSTR getPath( storyid_t id );
-    
     LPCSTR getPath(storyid_t id, saveid_t save);
-    
+
     storyid_t current_story() const { return currentStory; }
     
-    bool save ( savemode_t mode = savemode_normal );
-    bool create ( storyid_t id );
-    bool save ( storyid_t id, savemode_t mode=savemode_normal );
-    bool load ( storyid_t id );
-    bool destroy ( storyid_t id );
     bool isUsed ( storyid_t id ) { return used[id-1]; }
     bool getDescription( storyid_t id, c_str& description );
-    
-    bool cleanup ( void );
-    
-    bool canUndo ( savemode_t mode );
-    bool undo ( savemode_t mode );
-    
-    void SetLoadSave( tme::PFNSERIALIZE function );
+        
+    virtual void SetLoadSave( tme::PFNSERIALIZE function );
     bool Serialize( u32 version, chilli::lib::archive& ar );
     
     LPCSTR DiscoveryMapFilename();
     
-    saveid_t lastMorning() const ;
-    saveid_t lastNight() const ;
-    
-    
-private:
+protected:
     bool                used[MAX_STORIES];
     storyid_t           currentStory;
     tme::PFNSERIALIZE   loadsave;

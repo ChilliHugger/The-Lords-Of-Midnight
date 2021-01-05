@@ -115,7 +115,12 @@ set(GAME_SOURCE
 
 list(APPEND GAME_SRC ${GAME_HEADER})
 
-add_compile_options("$<$<CONFIG:DEBUG>:-DMX_DEBUG>")
+if(TESTS)
+  include(tests/CMakeLists.txt)
+else()
+  add_compile_options("$<$<CONFIG:DEBUG>:-DMX_DEBUG>")
+endif()
+
 add_compile_options("-D${APP_BUILD}")
 
 if(ANDROID)
@@ -187,9 +192,16 @@ else()
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+if(TESTS)
+  target_link_libraries(${APP_NAME}
+    cocos2d
+    Catch2::Catch2
+  )
+else()
+  target_link_libraries(${APP_NAME} cocos2d)
+endif()
+
 target_include_directories(${APP_NAME}
-        PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 )
 
