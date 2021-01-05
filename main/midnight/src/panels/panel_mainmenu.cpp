@@ -223,6 +223,10 @@ void panel_mainmenu::OnUpdate()
 void panel_mainmenu::OnNewStory()
 {
     storyid_t id = mr->startNewStory();
+    if(id == STORY_NONE)
+    {
+        return;
+    }
     
     // if the help window is shown, then we must wait
     // for the user to close it
@@ -307,10 +311,11 @@ void panel_mainmenu::refreshStories( void )
 {
     int count = mr->stories->stories_used();
     
-    //storyid_t id =
-    mr->stories->next_free_story();
+    storyid_t id = mr->stories->next_free_story();
+    
     // add bookmark to menu
     
+    menu->enableItem(ID_NEW_STORY, id != STORY_NONE );
     menu->enableItem(ID_CONTINUE_STORY, count > 0);
     menu->enableItem(ID_END_STORY, count > 0);
 }

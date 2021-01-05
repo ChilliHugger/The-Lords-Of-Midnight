@@ -134,6 +134,10 @@ storyid_t moonring::startNewStory()
     mapmodel.setDefaults();
     
     storyid_t id = stories->alloc();
+    if(id == STORY_NONE)
+    {
+        return id;
+    }
     
     stories->create(id);
     
