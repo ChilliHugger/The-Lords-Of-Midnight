@@ -39,7 +39,7 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
  
     auto rm = resolutionmanager::getInstance();
     
-    f32 phoneYPadding = RES(0);
+    phoneYPadding = RES(0);
     
     this->items = items;
     this->items_count = count;
@@ -76,7 +76,7 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
                 
         auto r = menuItem->getBoundingBox();
         height += r.size.height;
-        
+
         menuItem->setCallback([&,item](cocos2d::Ref *sender) {
             menueventargs args;
             args.menuitem = item;
@@ -96,22 +96,45 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     mainmenu->setAnchorPoint(uihelper::AnchorTopLeft);
     mainmenu->setIgnoreAnchorPointForPosition(true);
     
-    auto r1 = this->getBoundingBox();
-    auto r2 = mainmenu->getBoundingBox();
-    
-    // refresh positions
-    auto offset = Vec2( width/2, height + paddingY );
-    for ( auto item : mainmenu->getChildren() ) {
-
-        item->setAnchorPoint( uihelper::AnchorTopCenter );
-        item->setPosition(offset);
-        offset.y -= item->getBoundingBox().size.height+phoneYPadding;
-    }
+    refresh();
 
     return true;
 }
 
-void uitextmenu::EnableItem( u32 id, bool enabled )
+void uitextmenu::refresh()
+{
+    auto r1 = this->getBoundingBox();
+    auto r2 = mainmenu->getBoundingBox();
+    
+    s32 height=0;
+    s32 visibleItems=0;
+    for ( auto item : mainmenu->getChildren() )
+    {
+        if(item->isVisible())
+        {
+            height += item->getBoundingBox().size.height;
+            visibleItems++;
+        }
+    }
+    height += (phoneYPadding*(visibleItems-1));
+
+    setContentSize(Size(width,height+(2*paddingY)) );
+    mainmenu->setContentSize(Size(width,height+(2*paddingY)) );
+        
+    // refresh positions
+    auto offset = Vec2( width/2, height + paddingY );
+    for ( auto item : mainmenu->getChildren() )
+    {
+        if(item->isVisible())
+        {
+            item->setAnchorPoint( uihelper::AnchorTopCenter );
+            item->setPosition(offset);
+            offset.y -= item->getBoundingBox().size.height+phoneYPadding;
+        }
+    }
+}
+
+void uitextmenu::enableItem( u32 id, bool enabled )
 {
     for ( auto item : mainmenu->getChildren() ) {
         if ( item->getTag() == id ) {
@@ -122,3 +145,14 @@ void uitextmenu::EnableItem( u32 id, bool enabled )
     }
 }
 
+void uitextmenu::showItem( u32 id, bool visible )
+{
+    for ( auto item : mainmenu->getChildren() ) {
+        if ( item->getTag() == id ) {
+            auto menuitem = static_cast<MenuItem*>(item);
+            menuitem->setVisible(visible);
+            break;
+        }
+    }
+    refresh();
+}

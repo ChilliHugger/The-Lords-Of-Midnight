@@ -7,6 +7,7 @@
 
 #include "../cocos.h"
 #include "../extensions/CustomDirector.h"
+#include "../platform/Extensions.h"
 
 #include "panel_credits.h"
 #include "panel_mainmenu.h"
@@ -26,14 +27,16 @@ bool panel_credits::init()
     
     setBackgroundToHeight("credits.png");
 
-    std::string version = "Version: " + Application::getInstance()->getVersion();
+    std::string version = "Version: "
+        + Application::getInstance()->getVersion()
+        + " (" + chilli::extensions::getBuildNo() + ")";
+
 
     auto label = Label::createWithTTF(uihelper::font_config_debug, version);
     label->getFontAtlas()->setAntiAliasTexParameters();
     label->setTextColor(Color4B::BLACK);
     label->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(safeArea, label, RES(32), RES(32));
-
 
     Exit(5.0);
     

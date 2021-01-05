@@ -12,7 +12,6 @@
 #include "../system/helpmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../system/panelmanager.h"
-#include "../frontend/layout_id.h"
 #include "../frontend/language.h"
 
 #include "../ui/uitextmenu.h"
@@ -24,7 +23,6 @@
 
 USING_NS_CC;
 using namespace cocos2d::ui;
-
 
 
 static uitextmenuitem items[] = {
@@ -81,6 +79,18 @@ bool panel_mainmenu::init()
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
     });
+
+#if defined(_USE_VERSION_CHECK_)
+    menu->showItem(ID_UPDATE, false);
+    mr->getVersion([&](bool updateAvailable, std::string& url)
+    {
+        if(updateAvailable)
+        {
+            versionUrl = url;
+            menu->showItem(ID_UPDATE, true);
+        }
+    });
+#endif
 
     //
     // Guide and Manual
@@ -201,9 +211,14 @@ void panel_mainmenu::OnExit()
     
 }
 
+#if defined(_USE_VERSION_CHECK_)
 void panel_mainmenu::OnUpdate()
 {
+    AreYouSure(_UPDATE_PROMPT_, [&] {
+        Application::getInstance()->openURL(versionUrl);
+    });
 }
+#endif
 
 void panel_mainmenu::OnNewStory()
 {
@@ -291,6 +306,7 @@ void panel_mainmenu::deleteStory( storyid_t id )
     });
 }
 
+
 void panel_mainmenu::refreshStories( void )
 {
     int count = mr->stories->stories_used();
@@ -299,8 +315,7 @@ void panel_mainmenu::refreshStories( void )
     
     // add bookmark to menu
     
-    menu->EnableItem(ID_NEW_STORY, id != STORY_NONE );
-    menu->EnableItem(ID_CONTINUE_STORY, count > 0);
-    menu->EnableItem(ID_END_STORY, count > 0);
-
+    menu->enableItem(ID_NEW_STORY, id != STORY_NONE );
+    menu->enableItem(ID_CONTINUE_STORY, count > 0);
+    menu->enableItem(ID_END_STORY, count > 0);
 }

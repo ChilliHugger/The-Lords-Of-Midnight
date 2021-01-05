@@ -1,5 +1,5 @@
 //
-//  DeviceExt-win32.m
+//  Extensions-win32.m
 //  midnight
 //
 //  Created by Chris Wild on 17/12/2020.
@@ -24,6 +24,11 @@ namespace chilli
             // (horizontal, vertical)
           	width=desktop.right;
           	height=desktop.bottom;
+        }
+
+        std::string getBuildNo()
+        {
+            return "";
         }
     }
 }

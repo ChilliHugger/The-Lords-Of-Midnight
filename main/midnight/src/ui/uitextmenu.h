@@ -26,18 +26,21 @@ private:
     
 public:
     static uitextmenu* create( f32 width, uitextmenuitem* items, u32 count );
-    void EnableItem( u32 id, bool enabled );
+    void enableItem( u32 id, bool enabled );
+    void showItem( u32 id, bool enabled );
     
 
 protected:
 
     bool initWithItems( f32 width, uitextmenuitem* items, u32 count );
 
+    void refresh();
 
 protected:
     uitextmenuitem*     items;
     u32                 items_count;
     f32                 paddingY;
+    f32                 phoneYPadding;
     f32                 width;
     Menu*               mainmenu;
 };
