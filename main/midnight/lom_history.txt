@@ -1,18 +1,26 @@
 The Lords of Midnight
 
+Version 2.0 (26)
+1. Fixed: Selecting a different character leaves a black box on the look screen for a few seconds.
+2. Fixed: Game crashes selecting New Story when there are no available slots.
+3. Added [ios]: Saves games are now available through iTunes file browser.
+4. Fixed: Corret build number now shown on credits screen
+5. Added [Desktop]: Version checking
+6. Built with more debug info
+
 Version 2.0 (25)
 1. Fixed: Crash after responding no to “Are you Sure”
 
 Version 2.0 (21,22,23,24)
 1. Fixed: Can’t undo correctly after switching lord
 2. Fixed: Swipe to move not working
-3. Fixed: [Desktop] Direction keys on numbers not mapped correctly (SHIFT 1-8)
+3. Fixed [Desktop]: Direction keys on numbers not mapped correctly (SHIFT 1-8)
 4. Added: new flip screen option
 5. Fixed: Names on the map screen collide
 6. Fixed: View does not drag rotate correctly from N to NW
 7. Fixed: Speculative changes for possible crash
 8. Fixed: Doomdark’s armies reported incorrectly as ahead and with incorrect numbers
-9. [Desktop] Added Resolution switcher
+9. Added [Desktop]: Resolution switcher
 
 Version 2.0 (20)
 1. Wider camera view dependent on device
