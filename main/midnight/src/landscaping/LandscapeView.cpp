@@ -42,8 +42,10 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
     auto visibleSize = Director::getInstance()->getVisibleSize();
     setContentSize( visibleSize );
 
-    auto clipping = ClippingRectangleNode::create(Rect(Vec2::ZERO,visibleSize));
-    this->addChild(clipping);
+    auto clipping = this;
+    // Temporarily remove clipping https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/51
+    //ClippingRectangleNode::create(Rect(Vec2::ZERO,visibleSize));
+    //this->addChild(clipping);
     
     auto land = LandscapeLand::create(options);
     clipping->addChild(land);
