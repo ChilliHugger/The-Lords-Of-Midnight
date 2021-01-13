@@ -12,7 +12,8 @@
 #include <stdio.h>
 #include "../tme/tme_interface.h"
 
-class LandscapeOptions;
+FORWARD_REFERENCE(LandscapeOptions);
+FORWARD_REFERENCE(moonring);
 
 class LandscapeNode : public cocos2d::Node
 {
@@ -26,6 +27,7 @@ protected:
     
 public:
     LandscapeOptions*   options;
+    moonring*           mr;
 };
 
 

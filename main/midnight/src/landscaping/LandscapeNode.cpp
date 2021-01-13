@@ -7,6 +7,7 @@
 //
 
 #include "LandscapeNode.h"
+#include "ILandscape.h"
 
 
 LandscapeNode* LandscapeNode::create( LandscapeOptions* options )
@@ -28,6 +29,7 @@ bool LandscapeNode::initWithOptions(LandscapeOptions* options)
         return false;
 
     this->options = options;
+    this->mr = options->mr;
 
     return true;
 }

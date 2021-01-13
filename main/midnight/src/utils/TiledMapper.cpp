@@ -8,6 +8,7 @@
 
 #include "TiledMapper.h"
 
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "../extensions/TMXTiledMap.h"
 #include "../utils/mapbuilder.h"
@@ -15,14 +16,24 @@
 USING_NS_CC;
 //USING_NS_CC_UI;
 
+TiledMapper::TiledMapper() :
+    tmxMapInfo(nullptr)
+{
+}
+    
+TiledMapper::~TiledMapper()
+{
+    CC_SAFE_RELEASE_NULL(tmxMapInfo);
+}
+
 
 TMXTiledMap* TiledMapper::createTMXMap(const mapbuilder* builder)
 {
-    auto res = resolutionmanager::getInstance();
+    auto res = moonring::mikesingleton()->resolution;
     
     std::string scenario = TME_ScenarioShortName();
     
-    auto tmxMapInfo = new (std::nothrow) TMXMapInfo();
+    tmxMapInfo = new (std::nothrow) TMXMapInfo();
     
     // Map Setup
     tmxMapInfo->setMapSize( Size(builder->mapsize.cx,builder->mapsize.cy) );

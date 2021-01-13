@@ -15,6 +15,7 @@
 #include "LandscapeTerrain.h"
 #include "LandscapeDebug.h"
 #include "LandscapeColour.h"
+#include "../system/moonring.h"
 #include "../ui/uihelper.h"
 
 LandscapeView::LandscapeView()

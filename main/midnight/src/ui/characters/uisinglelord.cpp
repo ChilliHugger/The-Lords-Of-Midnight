@@ -9,6 +9,7 @@
 #include "uisinglelord.h"
 #include "../../tme/tme_interface.h"
 #include "../../system/tmemanager.h"
+#include "../../system/moonring.h"
 #include "../../system/resolutionmanager.h"
 
 USING_NS_CC;
@@ -112,7 +113,7 @@ void uisinglelord::updateStatus(character& c)
 
 void uisinglelord::refreshStatus()
 {
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = PHONE_SCALE(1.0f) ;
     
     innerCircle->setVisible( isDropFocus );
     setScale( (isDropFocus ? (scale_normal + scale_1qtr) : scale_normal) * scale );

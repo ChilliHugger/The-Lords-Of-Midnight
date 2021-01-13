@@ -91,9 +91,12 @@ panel_look::panel_look() :
     CLEARARRAY(movementIndicators);
 }
 
-
 panel_look::~panel_look()
 {
+    options.terrainTimeShader = nullptr;
+    options.characterTimeShader = nullptr;
+    SAFEDELETE(options.colour);
+    SAFEDELETE(options.generator);
     CC_SAFE_RELEASE_NULL(i_command_window);
 }
 
@@ -107,8 +110,9 @@ bool panel_look::init()
     // TODO: DDR Tunnel view
     
     // TODO: DDR TunnelGenerator
+    options.mr = GetMoonring();
     options.generator = new LandscapeGenerator();
-    options.colour = new LandscapeColour();
+    options.colour = new LandscapeColour(&options);
     options.showWater = false;
     options.showLand  = false;
     options.showTerrain = true ;
@@ -120,7 +124,6 @@ bool panel_look::init()
     options.isLooking=false;
     options.terrainTimeShader = mr->shader->GetTerrainTimeShader();
     options.characterTimeShader = mr->shader->GetCharacterTimeShader();
-    options.colour->options = &options;
 
     // Header area
     layHeader = LayerColor::create(Color4B(_clrWhite), getContentSize().width, HEADER_HEIGHT );

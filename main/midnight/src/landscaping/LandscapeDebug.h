@@ -16,7 +16,6 @@
 class LandscapeDebug : public LandscapeNode
 {
 public:
-    const float	horizonOffset = RES( (112*LANDSCAPE_GSCALE) );
     static LandscapeDebug* create( LandscapeOptions* options );
     void Build() override;
     

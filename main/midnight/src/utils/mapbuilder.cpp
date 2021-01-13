@@ -6,6 +6,8 @@
 //  Copyright © 2019 Chilli Hugger Software. All rights reserved.
 //
 
+#include "../system/moonring.h"
+
 #include "mapbuilder.h"
 #include "../system/tmemanager.h"
 #include "../system/resolutionmanager.h"
@@ -29,6 +31,12 @@ const s32 CELL_BLANK                    = (3*16) + 1;
 #define REMAP_DENSITY(x)    ((x/4) * 16 ) + (x%4)
 
 
+map_object::~map_object()
+{
+    here.clear();
+}
+
+
 mapbuilder::mapbuilder() :
     tunnels(nullptr),
     terrain(nullptr),
@@ -42,19 +50,46 @@ mapbuilder::mapbuilder() :
     setFlags(mapflags::show_tunnels);
 }
 
+//void checkLeak(Vector<map_object*> &objects)
+//{
+//    for( auto o : objects)
+//    {
+//        if(o->getReferenceCount() > 1)
+//        {
+//            UIDEBUG("[LEAK] %x : %s = %d", o->id, TME_GetSymbol(o->id), o->getReferenceCount());
+//        }
+//    }
+//
+//}
+
 mapbuilder::~mapbuilder()
 {
-    //SAFEFREE(tunnels);
-    //SAFEFREE(terrain);
-    //SAFEFREE(terrain_discovery)
-    //SAFEFREE(critters);
     SAFEFREE(mapdata);
+    SAFEFREE(terrain);
+    SAFEFREE(terrain_discovery);
+    SAFEFREE(tunnels);
+    SAFEFREE(critters);
     
-    characters.clear();
-    regiments.clear();
-    strongholds.clear();
-    places.clear();
+    drainCollection(characters);
+    drainCollection(regiments);
+    drainCollection(strongholds);
+    drainCollection(places);
+    
+//    checkLeak(characters);
+//    checkLeak(regiments);
+//    checkLeak(strongholds);
+//    checkLeak(places);
 }
+
+void mapbuilder::drainCollection(Vector<map_object*> &objects)
+{
+    for( auto o : objects)
+    {
+        o->here.clear();
+    }
+    objects.clear();
+}
+
 
 mapbuilder* mapbuilder::build ( void )
 {
@@ -172,8 +207,10 @@ mapbuilder* mapbuilder::updateTerrain()
             if ( m.flags.Is(lf_looked_at) || m.flags.Is(lf_visited) || debug_map ) {
                 if ( ( (m.flags.Is(lf_stronghold) && !m.flags.Is(lf_domain)) || (m.terrain == TN_TOWER || m.terrain == TN_WATCHTOWER || m.terrain == TN_GATE ) ) ) {
                     auto place = new map_object();
+                    place->id = IDT_LOCATION;
                     place->location = loc;
                     places.pushBack(place);
+                    place->release();
                 }
             }
         }
@@ -594,6 +631,7 @@ mapbuilder* mapbuilder::updateCharacters()
         }
         
         characters.pushBack(object);
+        object->release();
         
     }
     
@@ -624,6 +662,7 @@ mapbuilder* mapbuilder::updateRegiments()
         
         auto object = new map_object();
         regiments.pushBack(object);
+        object->release();
         
         object->id = r.id ;
         object->location = r.location ;
@@ -654,6 +693,7 @@ mapbuilder* mapbuilder::updateStrongholds()
         
         auto object = new map_object();
         strongholds.pushBack(object);
+        object->release();
         
         object->id = s.id ;
         object->location = s.location ;

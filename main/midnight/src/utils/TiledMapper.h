@@ -14,11 +14,19 @@
 
 FORWARD_REFERENCE(mapbuilder);
 
-class TiledMapper
+class TiledMapper : public cocos2d::Ref
 {
     using TMXTiledMap = cocos2d::TMXTiledMap;
+    using TMXMapInfo = cocos2d::TMXMapInfo;
+
 public:
+    TiledMapper();
+    virtual ~TiledMapper() override;
+
     TMXTiledMap* createTMXMap(const mapbuilder* builder);
+    
+protected:
+    TMXMapInfo* tmxMapInfo;
 };
 
 #endif /* TiledMapper_h */

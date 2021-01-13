@@ -22,6 +22,7 @@ uihelpwindow::uihelpwindow() :
     , layout(nullptr)
     , id(HELP_NONE)
     , closeCallback(nullptr)
+    , mr(nullptr)
 {
 }
 
@@ -69,6 +70,7 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     
     auto rect = parent->getBoundingBox();
     
+    this->mr = parent->GetMoonring();
     this->parent = parent;
     this->id = id;
     this->parent->retain();
@@ -193,7 +195,6 @@ void uihelpwindow::Show( MXVoidCallback callback )
 void uihelpwindow::OnClose()
 {
     // Flsg this particular help event as having been shown
-    auto mr = moonring::mikesingleton();
     mr->help->Shown( id );
     mr->help->Save( mr->stories->current_story() );
     

@@ -36,6 +36,22 @@ static bool mySerialize ( u32 version, chilli::lib::archive& ar )
     return moonring::mikesingleton()->serialize(version, ar );
 }
 
+static moonring* singleton_mr = nullptr ;
+
+moonring* moonring::mikesingleton()
+{
+    if ( singleton_mr == nullptr ) {
+        singleton_mr = new moonring() ;
+    }
+    return singleton_mr;
+}
+
+void moonring::release()
+{
+   SAFEDELETE(singleton_mr);
+}
+
+
 moonring::moonring() :
 #if defined(_USE_VERSION_CHECK_)
     isUpdateAvailable(false),
@@ -45,7 +61,7 @@ moonring::moonring() :
     writeablepath(""),
     isDataLoaded(false)
 {
-    resolution = resolutionmanager::getInstance();
+    resolution = new resolutionmanager();
     resolution->InjectMoonRing(this);
     
     shader = new shadermanager();
@@ -90,9 +106,7 @@ moonring::~moonring()
     SAFEDELETE(stories);
     SAFEDELETE(keyboard);
     SAFEDELETE(tme);
-    
-    resolutionmanager::release();
-    resolution = nullptr;
+    SAFEDELETE(resolution);
 }
 
 

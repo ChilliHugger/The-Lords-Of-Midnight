@@ -341,7 +341,7 @@ void panel_options::CreateMenu1()
 void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
     f32 width = RES(512);
-    if(resolutionmanager::getInstance()->IsPhoneScaleEnabled())
+    if(isPhoneScaleEnabled())
     {
         width+=RES(128+64);
     }

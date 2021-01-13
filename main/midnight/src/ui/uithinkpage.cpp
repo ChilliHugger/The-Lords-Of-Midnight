@@ -177,7 +177,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     y = RES(TERRAIN_Y) ;
     x = RES(TERRAIN_X) ;
    
-    s32 adjust = resolutionmanager::getInstance()->IsPhoneScaleEnabled() ? RES(32) : 0 ;
+    s32 adjust = mr->resolution->IsPhoneScaleEnabled() ? RES(32) : 0 ;
     
     // RECRUIT SOLDIERS
     auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, clickCallback);
@@ -206,7 +206,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     y = RES(OBJECT_Y) - imgObject->getContentSize().height;
     x = RES(OBJECT_X) - (imgObject->getContentSize().width/2);
   
-    if (resolutionmanager::getInstance()->IsPhoneScaleEnabled())
+    if (mr->resolution->IsPhoneScaleEnabled())
     {
         y -= RES(16);
     }
@@ -249,10 +249,12 @@ bool uithinkpage::init()
         return false;
     }
 
+    mr = moonring::mikesingleton();
+
     auto size = Director::getInstance()->getVisibleSize();
     setContentSize(size);
     
-    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    auto padding = mr->resolution->getSafeArea();
     size.width -= padding.left+padding.right;
     size.height -= padding.top+padding.bottom;
     safeArea = cocos2d::Layer::create();
@@ -358,7 +360,6 @@ void uithinkpage::displayTerrain ( mxterrain_t terrain )
 
 void uithinkpage::displayArmy ( void )
 {
-    auto* mr = moonring::mikesingleton();
     terrain_data_t* d = static_cast<terrain_data_t*>(mr->tme->terrain[0]);
     if ( d == nullptr || d->file.empty() ) {
         return;
@@ -371,7 +372,6 @@ void uithinkpage::displayArmy ( void )
 
 void uithinkpage::setImageColour(Sprite* node)
 {
-    auto mr = moonring::mikesingleton();
     auto tint2 = Color4F(_clrWhite);
     auto tint1 = Color4F(TERRAIN_COLOUR);
     mr->shader->AddTerrainTimeShader(node);

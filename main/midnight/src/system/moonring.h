@@ -50,11 +50,9 @@ private:
 public:
     virtual ~moonring();
     
-    static moonring* mikesingleton(){
-        static moonring singleton;
-        return &singleton;
-    }
-    
+    static moonring* mikesingleton();
+    static void release();
+        
     static void complain(LPCSTR format, ...);
     static void log(LPCSTR format, ...);
 

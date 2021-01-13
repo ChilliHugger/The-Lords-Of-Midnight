@@ -15,12 +15,13 @@ class panel_mainmenu : public uipanel
     
 public:
     
-    virtual bool init();
-    
+    virtual bool init() override;
+    virtual ~panel_mainmenu() override;
+
     CREATE_FUNC(panel_mainmenu);
     
     void OnMenuNotification( const uinotificationinterface*, menueventargs* );
-    virtual void OnNotification( Ref* element );
+    virtual void OnNotification( Ref* element ) override;
     
 protected:
     void OnShowManual();

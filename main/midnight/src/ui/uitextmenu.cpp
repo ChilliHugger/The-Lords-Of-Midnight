@@ -7,6 +7,7 @@
 //
 #include "uihelper.h"
 #include "uitextmenu.h"
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "uitextmenu.h"
 
@@ -37,7 +38,7 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     if ( !initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
         return false;
  
-    auto rm = resolutionmanager::getInstance();
+    auto rm = moonring::mikesingleton()->resolution;
     
     phoneYPadding = RES(0);
     

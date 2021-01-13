@@ -6,6 +6,7 @@
 //
 #include "uihelper.h"
 #include "uioptionitem.h"
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 
 USING_NS_CC;

@@ -44,6 +44,13 @@ panel_map_detailed::panel_map_detailed() :
 {
 }
 
+panel_map_detailed::~panel_map_detailed()
+{
+    CC_SAFE_RELEASE_NULL(mapBuilder);
+    //CC_SAFE_RELEASE_NULL(tmxMap);
+}
+
+
 bool panel_map_detailed::init()
 {
     if ( !uipanel::init() )
@@ -51,7 +58,7 @@ bool panel_map_detailed::init()
         return false;
     }
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = phoneScale();
     
     model = &mr->mapmodel;
     
@@ -272,7 +279,7 @@ uifilterbutton* panel_map_detailed::createFilterButton( layoutid_t id, s32 y, co
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
     // #40 temporary fix
-    //button->setScale(resolutionmanager::getInstance()->phoneScale());
+    //button->setScale(phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
     uihelper::AddTopRight(safeArea, button, RES(32), y );

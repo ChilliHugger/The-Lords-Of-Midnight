@@ -29,7 +29,4 @@ protected:
 
 };
 
-//#define LRES(x) (f32)((x)*resolutionmanager::getInstance()->Scale())
-
-
 #endif /* LandscapeView_hpp */

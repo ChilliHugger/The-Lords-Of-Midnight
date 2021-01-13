@@ -36,6 +36,11 @@ using namespace cocos2d::ui;
 static const f32 defaultDuration = 1.0;
 
 
+panelmanager::~panelmanager()
+{
+    CC_SAFE_RELEASE(currentpanel);
+}
+
 uipanel* panelmanager::currentPanel()
 {
     return currentpanel;
@@ -58,7 +63,6 @@ void panelmanager::setPanelMode ( panelmode_t mode, transition_t transition, boo
     this->currentmode = mode;
 
     uipanel* panel = getPanel(mode);
-
 
     if ( history )
         pushCurrentPanel(panel,transition);
@@ -99,6 +103,7 @@ uipanel* panelmanager::getPanel( panelmode_t mode )
     
     if ( panel != nullptr ) {
         panel->currentmode = mode;
+        panel->retain();
     }
     
     return panel;
@@ -222,6 +227,9 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
         }
         
     }
+
+    CC_SAFE_RELEASE(outgoing_panel);
+
 }
 
 void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
@@ -294,6 +302,7 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
         }
     }
     
+    CC_SAFE_RELEASE(outgoing_panel);
 
 }
 

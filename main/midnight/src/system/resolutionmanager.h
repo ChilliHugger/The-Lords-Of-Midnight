@@ -48,15 +48,9 @@ typedef struct {
 
 class resolutionmanager : public ringcontroller
 {
-private:
-    resolutionmanager();
-    ~resolutionmanager();
-
 public:
-    
-
-    static resolutionmanager* getInstance();
-    static void release();
+    resolutionmanager();
+    virtual ~resolutionmanager();
     
     bool init();
     bool deinit();
@@ -114,16 +108,16 @@ private:
 };
 
 #define RES(x) \
-    (f32)((x)*resolutionmanager::getInstance()->Scale())
+    (f32)((x)*moonring::mikesingleton()->resolution->Scale())
 
 #define NORES(x) \
     (x)
 
 #define CONTENT_SCALE(x) \
-    (f32)    ((x)*resolutionmanager::getInstance()->ContentScale())
+    (f32)    ((x)*moonring::mikesingleton()->resolution->ContentScale())
 
 #define PHONE_SCALE(x) (f32) \
-    ((x)*resolutionmanager::getInstance()->phoneScale())
+    ((x)*moonring::mikesingleton()->resolution->phoneScale())
 
 //#define TEST_PHONE_SCALE
 

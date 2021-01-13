@@ -29,11 +29,17 @@ inline Color4B GetTint( mxtime_t time, TINT shade )
     return Color4B(TimeOfDayColours[time][(int)shade]);
 }
 
+LandscapeColour::LandscapeColour(LandscapeOptions* options) :
+    mr(options->mr),
+    options(options)
+{
+}
+
 void LandscapeColour::updateTerrainNode( Node* node )
 {
     auto tint1 = Color4F(CalcCurrentMovementTint(TINT::TerrainOutline));
     auto tint2 = Color4F(CalcCurrentMovementTint(TINT::TerrainFill));
-    auto shader = moonring::mikesingleton()->shader;
+    auto shader = mr->shader;
     
     shader->AttachShader(node, options->terrainTimeShader);
     shader->UpdateTerrainTimeShader(node, alpha_normal, tint1, tint2);
@@ -42,7 +48,7 @@ void LandscapeColour::updateTerrainNode( Node* node )
 void LandscapeColour::updateCharacterNode( Node* node )
 {
     auto fade = CalcCurrentMovementFade(TINT::Person);
-    auto shader = moonring::mikesingleton()->shader;
+    auto shader = mr->shader;
     
     shader->AttachShader(node, options->characterTimeShader);
     shader->UpdateCharacterTimeShader(node, alpha_normal, fade);

@@ -7,6 +7,8 @@
 //
 #include "uihelper.h"
 #include "uibook.h"
+
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 
 #define BOOK_IMAGE              "book"

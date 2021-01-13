@@ -16,7 +16,9 @@ FORWARD_REFERENCE( moonring );
 class ringcontroller
 {
 public:
+    virtual ~ringcontroller() {};
     void InjectMoonRing( moonring* mr) { this->mr = mr; }
+    
     
 protected:
     moonring* mr;

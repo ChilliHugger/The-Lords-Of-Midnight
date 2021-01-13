@@ -42,7 +42,7 @@ bool uipanel::init()
     
     
     mr = moonring::mikesingleton();
-    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    auto padding = mr->resolution->getSafeArea();
     
     // create a safe layout panel for icons etc
     size.width -= padding.left+padding.right;
@@ -72,6 +72,21 @@ bool uipanel::init()
 
 void uipanel::OnNotification( Ref* element )
 {
+}
+
+f32 uipanel::phoneScale() const
+{
+    return mr->resolution->phoneScale();
+}
+
+padding uipanel::getSafeArea() const
+{
+    return mr->resolution->getSafeArea();
+}
+
+bool uipanel::isPhoneScaleEnabled() const
+{
+    return mr->resolution->IsPhoneScaleEnabled();
 }
 
 Node* uipanel::setBackground( Color3B color )

@@ -62,7 +62,7 @@ bool panel_think::init()
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     
     // TAB ICONS
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = phoneScale() ;
     int x = RES(10) * scale ;
     int c = RES(100) * scale;
     
@@ -229,7 +229,7 @@ void panel_think::createPageView()
     pageView->setIndicatorEnabled(true);
     pageView->setCurrentPageIndex(0);
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = phoneScale() ;
     pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f)*scale);
     pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(1))*scale);
     pageView->setIndicatorIndexNodesColor(_clrBlack);
@@ -238,7 +238,7 @@ void panel_think::createPageView()
     uihelper::AddBottomLeft(this, pageView);
     uihelper::FillParent(pageView);
     
-    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    auto padding = getSafeArea();
     pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
     
     pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
@@ -253,6 +253,7 @@ void panel_think::createPageView()
 void panel_think::addPage( mxid id )
 {
     uithinkpage* page = uithinkpage::create();
+    page->mr = GetMoonring();
     page->setCallback(clickCallback);
     page->setObject(id, objectId, currentmode);
     pages.pushBack(page);

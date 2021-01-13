@@ -11,6 +11,7 @@
 #include "../cocos.h"
 
 #include "../system/helpmanager.h"
+#include "../system/resolutionmanager.h"
 #include "../frontend/panel_id.h"
 #include "../ui/uielement.h"
 #include "../ui/uishortcutkeys.h"
@@ -22,7 +23,6 @@ FORWARD_REFERENCE( uipopup );
 FORWARD_REFERENCE( uihelpwindow );
 FORWARD_REFERENCE( moonring );
 FORWARD_REFERENCE( uieventargs );
-//FORWARD_REFERENCE( uielement );
 
 class uipanel :
     public cocos2d::Scene,
@@ -55,6 +55,9 @@ public:
     //
     
     moonring* GetMoonring() { return mr; }
+    f32 phoneScale() const;
+    bool isPhoneScaleEnabled() const;
+    padding getSafeArea() const;
     
     void Enable() { setEnabled(true); }
     void Disable() { setEnabled(false); }
@@ -92,21 +95,21 @@ protected:
     void addKeyboardListener();
     
 protected:
-    uipopup*        popupWindow;
-    moonring*       mr;
+    uipopup*            popupWindow;
+    moonring*           mr;
     
-    helpid_t        help_pending_id;
-    bool            help_pending;
-    helpid_t        help_visible;
-    uihelpwindow*   help_window;
-    Button*         i_help;
+    helpid_t            help_pending_id;
+    bool                help_pending;
+    helpid_t            help_visible;
+    uihelpwindow*       help_window;
+    Button*             i_help;
     
-    bool            enabled;
+    bool                enabled;
     
     WidgetClickCallback clickCallback;
     WidgetEventCallback eventCallback;
     
-    Layer*         safeArea;
+    Layer*              safeArea;
     
     
 public:

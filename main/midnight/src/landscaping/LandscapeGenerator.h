@@ -55,6 +55,7 @@ public:
 using LandscapeItems = cocos2d::Vector<LandscapeItem*>;
 
 FORWARD_REFERENCE(LandscapeOptions);
+FORWARD_REFERENCE(moonring);
 
 class LandscapeGenerator
 {
@@ -75,6 +76,8 @@ public:
     
 public:
     LandscapeGenerator();
+    virtual ~LandscapeGenerator();
+    
     
     void Build(LandscapeOptions* options);
     void BuildPanorama();
@@ -86,16 +89,14 @@ public:
     f32 NormaliseXPosition(f32 x);
     
 public:
+    moonring*           mr;
     LandscapeItems*     items;
     LandscapeOptions*   options;
-
-    
-    s32     location_infront_y;
-    
-    tme::loc_t	loc;
-    f32     looking;
-    f32     horizontalOffset;
-    f32     landscapeScreenWidth;
+    s32                 location_infront_y;
+    tme::loc_t	        loc;
+    f32                 looking;
+    f32                 horizontalOffset;
+    f32                 landscapeScreenWidth;
 
     
 };

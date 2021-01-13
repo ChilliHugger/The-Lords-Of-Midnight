@@ -9,8 +9,10 @@ class panel_splashscreen : public uipanel
 {
     using DrawNode = cocos2d::DrawNode;
 public:
-    
-    virtual bool init();
+    panel_splashscreen();
+
+    virtual bool init() override;
+    virtual ~panel_splashscreen() override;
     
     CREATE_FUNC(panel_splashscreen);
 

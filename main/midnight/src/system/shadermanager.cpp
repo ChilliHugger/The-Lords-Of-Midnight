@@ -80,6 +80,8 @@ Node* shadermanager::AddTerrainTimeShader(Node* node)
 
 Node* shadermanager::AttachShader(Node* node, SimpleShader* shader)
 {
-    node->setProgramState(shader->programState->clone());
+    auto ref = shader->programState->clone();
+    node->setProgramState(ref);
+    ref->release();
     return node;
 }

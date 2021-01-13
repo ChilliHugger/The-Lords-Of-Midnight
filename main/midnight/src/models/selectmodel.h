@@ -39,7 +39,7 @@ public:
 
 public:
     c_mxid          characters;
-    flags<select_filters>         filters;
+    ::flags<select_filters>         filters;
     tme::loc_t      loc;
     s32             page;
     bool            upgraded;

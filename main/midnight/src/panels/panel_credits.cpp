@@ -12,6 +12,7 @@
 #include "panel_credits.h"
 #include "panel_mainmenu.h"
 
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "../system/panelmanager.h"
 #include "../ui/uihelper.h"

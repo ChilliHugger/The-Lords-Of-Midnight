@@ -9,6 +9,7 @@
 #include "../system/resolutionmanager.h"
 #include "../ui/uielement.h"
 #include "../ui/uieventargs.h"
+#include "../system/moonring.h"
 
 USING_NS_CC;
 USING_NS_CC_UI;
@@ -310,11 +311,11 @@ void uihelper::PositionCenterAnchor (Node* node, Vec2 anchor, f32 paddingX, f32 
 
 Button* uihelper::CreateImageButton( const std::string& name )
 {
-ui::Button* button;
+cocos2d::ui::Button* button;
     if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
-        button=ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
+        button=cocos2d::ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
     }else{
-        button=ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::PLIST);
+        button=cocos2d::ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::PLIST);
     }
     button->setLocalZOrder(ZORDER_UI);
     return uihelper::setEnabled(button,true);
@@ -325,7 +326,7 @@ Button* uihelper::CreateImageButton( const std::string& name, u32 id, const Widg
     auto button = uihelper::CreateImageButton(name);
     button->setTag(id);
     button->addClickEventListener(callback);
-    button->setScale(resolutionmanager::getInstance()->phoneScale());
+    button->setScale(PHONE_SCALE(scale_normal));
     return button;
     
 }
@@ -345,7 +346,7 @@ Button* uihelper::CreateBoxButton( Size size )
     size.height = PHONE_SCALE(size.height);
     
     
-    auto button = ui::Button::create(BOX_BACKGROUND_FILENAME);
+    auto button = cocos2d::ui::Button::create(BOX_BACKGROUND_FILENAME);
     button->setTitleFontName(FONT_FILENAME);
     button->setTitleFontSize(PHONE_SCALE(RES(FONT_SIZE_BIG)));
     button->setTitleColor(Color3B::BLUE);
@@ -359,7 +360,7 @@ Button* uihelper::CreateBoxButton( Size size )
     return button;
 }
 
-Button* uihelper::setEnabled( ui::Button* button, bool enabled )
+Button* uihelper::setEnabled( cocos2d::ui::Button* button, bool enabled )
 {
     if ( button != nullptr ) {
         button->setEnabled(enabled);

@@ -8,6 +8,7 @@
 #include "uihelper.h"
 #include "uibookmenu.h"
 #include "uibook.h"
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "../ui/uioptionitem.h"
 #include "MyButton.h"
@@ -47,8 +48,8 @@ bool uibookmenu::initWithStory( storyinfo_t* story )
      this->setOpacity(ALPHA(0.75));
     this->setAnchorPoint(uihelper::AnchorCenter);
     
-    auto scrollview = ui::ScrollView::create();
-    scrollview->setDirection(ui::ScrollView::Direction::HORIZONTAL);
+    auto scrollview = cocos2d::ui::ScrollView::create();
+    scrollview->setDirection(cocos2d::ui::ScrollView::Direction::HORIZONTAL);
     this->addChild(scrollview);
 
 

@@ -45,26 +45,9 @@ resolution_support  resolutions[] = {
 // TODO:: 1.25/0.8
 f32 aspect_scales[] = { 1.3337f, 1.5f, 1.8f, 1.6665f };
 
-static resolutionmanager* singleton_rm = NULL ;
-
-
-resolutionmanager* resolutionmanager::getInstance()
-{
-    if ( singleton_rm == NULL ) {
-        singleton_rm = new resolutionmanager() ;
-    }
-    return singleton_rm;
-}
-
-void resolutionmanager::release()
-{
-   SAFEDELETE(singleton_rm);
-}
-
 resolutionmanager::resolutionmanager ( void )
 {
     director = static_cast<CustomDirector*>(Director::getInstance());
-   
 }
 
 resolutionmanager::~resolutionmanager ( void )

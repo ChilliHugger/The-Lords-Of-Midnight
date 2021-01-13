@@ -112,6 +112,10 @@ bool panel_mainmenu::init()
     return true;
 }
 
+panel_mainmenu::~panel_mainmenu()
+{
+}
+
 void panel_mainmenu::OnNotification( Ref* sender )
 {
     switch ( ((Button*)sender)->getTag() ) {

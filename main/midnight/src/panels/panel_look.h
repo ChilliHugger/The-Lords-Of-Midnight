@@ -77,7 +77,7 @@ class panel_look :
     using DrawNode = cocos2d::DrawNode;
 
 public:
-    virtual ~panel_look();
+    virtual ~panel_look() override;
     
     bool init() override;
     CREATE_FUNC(panel_look);

@@ -9,6 +9,7 @@
 #include "../cocos.h"
 #include "uifilterbutton.h"
 #include "uihelper.h"
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 
 USING_NS_CC;

@@ -14,6 +14,7 @@
 #include "LandscapeTerrain.h"
 #include "LandscapeDebug.h"
 #include "LandscapeColour.h"
+#include "../system/moonring.h"
 
 
 LandscapeDebug* LandscapeDebug::create( LandscapeOptions* options )
@@ -39,6 +40,8 @@ bool LandscapeDebug::initWithOptions( LandscapeOptions* options )
 
 void LandscapeDebug::Build()
 {
+    const float	horizonOffset = RES( (112*LANDSCAPE_GSCALE) );
+
     auto items  = options->generator->items;
     
     f32 height = getContentSize().height;

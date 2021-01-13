@@ -12,6 +12,7 @@
 #include "LandscapeGenerator.h"
 #include "LandscapeNode.h"
 
+#include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 

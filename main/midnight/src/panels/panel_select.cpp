@@ -45,7 +45,7 @@ bool panel_select::init()
     
     uishortcutkeys::init(safeArea, clickCallback);
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = mr->resolution->phoneScale() ;
     
     RIGHT_STRIP_WIDTH = RES(128);
     BOTTOM_STRIP_HEIGHT = RES(128);
@@ -114,7 +114,7 @@ void panel_select::createPageView()
     pageView->setCurrentPageIndex(0);
     
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = phoneScale() ;
     pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f)*scale);
     pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(1))*scale);
     pageView->setIndicatorIndexNodesColor(_clrBlack);
@@ -123,7 +123,7 @@ void panel_select::createPageView()
     uihelper::AddBottomLeft(safeArea, pageView);
     uihelper::FillParent(pageView);
     
-    auto padding = resolutionmanager::getInstance()->getSafeArea();
+    auto padding = getSafeArea();
     pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
     
     pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
@@ -224,7 +224,7 @@ void panel_select::getCharacters()
         lord->enableDrag();
         lord->enableDrop();
         lord->drag_delegate = this;
-        lord->setScale(resolutionmanager::getInstance()->phoneScale());
+        lord->setScale(phoneScale());
         lords.pushBack(lord);
         
         auto userdata = lord->userData();
@@ -451,7 +451,7 @@ uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const st
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
     // #40 Temporary fix
-    //button->setScale(resolutionmanager::getInstance()->phoneScale());
+    //button->setScale(phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
     uihelper::AddTopRight(safeArea, button, RES(32), y );
@@ -679,7 +679,7 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
 {
     using DragEventType = chilli::ui::DragEvent::Type;
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = phoneScale() ;
     
     auto lord = static_cast<uilordselect*>(event->element);
 
@@ -871,7 +871,7 @@ bool panel_select::checkValidDropLocation()
 {
     bool valid = true;
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = phoneScale() ;
   
     if ( dropTarget == nullptr
         && (draggedLord->getPosition().x > getContentSize().width - (RIGHT_STRIP_WIDTH*scale)
@@ -995,7 +995,7 @@ void panel_select::checkPageFlip()
     auto position = draggedLord->getPosition();
     auto size = getContentSize();
     auto index = pageView->getCurrentPageIndex();
-    f32 scale = resolutionmanager::getInstance()->phoneScale();
+    f32 scale = phoneScale();
     
     if (position.x > size.width - ((RIGHT_STRIP_WIDTH*0.75)*scale) ) {
     

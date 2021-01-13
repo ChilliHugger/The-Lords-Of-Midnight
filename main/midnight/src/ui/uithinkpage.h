@@ -12,6 +12,8 @@
 #include "../frontend/panel_id.h"
 #include "../tme/tme_interface.h"
 
+FORWARD_REFERENCE(moonring);
+
 enum SpecialId
 {
     None,
@@ -83,6 +85,7 @@ protected:
     WidgetClickCallback clickCallback;
     
 public:
+    moonring*           mr;
     bool                approach;
     bool                fight;
     bool                unhide;

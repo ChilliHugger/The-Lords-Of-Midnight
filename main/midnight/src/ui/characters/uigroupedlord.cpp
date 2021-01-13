@@ -10,6 +10,7 @@
 #include "uisinglelord.h"
 #include "../../tme/tme_interface.h"
 #include "../../system/tmemanager.h"
+#include "../../system/moonring.h"
 #include "../../system/resolutionmanager.h"
 
 USING_NS_CC;

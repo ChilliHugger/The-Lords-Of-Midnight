@@ -28,6 +28,7 @@ class panel_map_detailed : public uipanel
     
 public:
     virtual bool init() override;
+    virtual ~panel_map_detailed() override;
     
     CREATE_FUNC(panel_map_detailed);
     

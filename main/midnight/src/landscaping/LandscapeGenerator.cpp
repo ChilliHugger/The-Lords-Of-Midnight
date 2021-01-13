@@ -1,19 +1,33 @@
 
 #include "LandscapeGenerator.h"
 #include "ILandscape.h"
+#include "../system/moonring.h"
 
 USING_NS_CC;
 
 using namespace tme;
 
-LandscapeGenerator::LandscapeGenerator()
+LandscapeGenerator::LandscapeGenerator() :
+    options(nullptr),
+    items(new Vector<LandscapeItem*>()),
+    mr(nullptr)
 {
-	items = new Vector<LandscapeItem*>();
 }
+
+LandscapeGenerator::~LandscapeGenerator()
+{
+    if(items!=nullptr)
+    {
+        items->clear();
+        SAFEDELETE(items);
+    }
+}
+
 
 void LandscapeGenerator::Build(LandscapeOptions* options)
 {
     this->options = options;
+    this->mr = options->mr;
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     

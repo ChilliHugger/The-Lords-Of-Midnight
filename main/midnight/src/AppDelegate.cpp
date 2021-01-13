@@ -91,7 +91,7 @@ void AppDelegate::InitialisePaths()
     fileutils->setDefaultResourceRootPath(path);
 #endif
 
-    auto res = resolutionmanager::getInstance();
+    auto res = moonring::mikesingleton()->resolution;
     
 
     LPCSTR scenario = TME_ScenarioShortName();

@@ -13,6 +13,7 @@
 #include "../tme/tme_interface.h"
 
 FORWARD_REFERENCE(LandscapeOptions);
+FORWARD_REFERENCE(moonring);
 
 enum class TINT {
     Normal = 0,
@@ -32,6 +33,8 @@ class  LandscapeColour
     using Color4F = cocos2d::Color4F;
     using Node = cocos2d::Node;
 public:
+    LandscapeColour(LandscapeOptions* options);
+
     Color4B  CalcCurrentMovementTint ( TINT index );
     f32  CalcCurrentMovementFade ( TINT index );
     
@@ -52,6 +55,7 @@ public:
     
 public:
     LandscapeOptions*   options;
+    moonring*           mr;
     
 protected:
     mxtime_t    timeofday;

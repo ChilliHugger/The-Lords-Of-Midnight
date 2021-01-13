@@ -43,6 +43,7 @@ protected:
     void OnClose();
     
 protected:
+    moonring*       mr;
     Scene*          parent;
     helpid_t        id;
     MXVoidCallback  closeCallback;

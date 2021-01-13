@@ -50,6 +50,10 @@ enum CELLFLAGS {
 class map_object : public cocos2d::Ref
 {
     template<class T> using Vector = cocos2d::Vector<T>;
+    
+public:
+    virtual ~map_object() override;
+    
 public:
     mxid        id;
     loc_t       location;
@@ -74,7 +78,7 @@ public:
 };
 
 
-class mapbuilder
+class mapbuilder : public cocos2d::Ref
 {
 public:
     template<class T> using Vector = cocos2d::Vector<T>;
@@ -82,7 +86,7 @@ public:
     
 public:
     mapbuilder();
-    virtual ~mapbuilder();
+    virtual ~mapbuilder() override;
     
     mapbuilder* build( void );
     bool checkFlags( mapflags fields ) { return flags.Is((u32)fields); }
@@ -109,6 +113,8 @@ public:
 
     void clearLayers();
     
+    void drainCollection(Vector<map_object*> &objects);
+    
 private:
     flags32         flags;
     MapInfo_t       info;
@@ -117,8 +123,6 @@ private:
     loc_t           loc_first;
     
     maplocation*    mapdata;
-    
-    //u32*            layers[MAX_LAYERS];
     
 public:
     size mapsize;

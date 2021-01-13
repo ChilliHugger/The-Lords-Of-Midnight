@@ -22,6 +22,17 @@ USING_NS_CC;
 #define TRANSITION_TIME         2.0
 #define MAX_PROGESS             40.0f
 
+panel_splashscreen::panel_splashscreen() :
+    progress(nullptr),
+    loading_progress(nullptr)
+{
+}
+
+panel_splashscreen::~panel_splashscreen()
+{
+    SAFEDELETE(progress);
+}
+
 bool panel_splashscreen::init()
 {
     if ( !uipanel::init() )
@@ -53,8 +64,6 @@ bool panel_splashscreen::init()
         SAFEDELETE(progress);
         complete();
     });
-    
-    
     
     return true;
 }

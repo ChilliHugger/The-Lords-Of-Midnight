@@ -27,13 +27,14 @@ USING_NS_CC;
 USING_NS_CC_UI;
 
 uicommandwindow::uicommandwindow() :
-    parent(nullptr)
+      parent(nullptr)
+    , mr(nullptr)
 {
 }
 
 uicommandwindow::~uicommandwindow()
 {
-    CC_SAFE_RELEASE_NULL(parent);
+    //CC_SAFE_RELEASE_NULL(parent);
 }
 
 uicommandwindow* uicommandwindow::create( uipanel* parent )
@@ -56,16 +57,18 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     if ( !Element::init() )
         return false;
     
+    mr = parent->GetMoonring();
+    
     auto rect = parent->getBoundingBox();
     
-    f32 scale = resolutionmanager::getInstance()->phoneScale() ;
+    f32 scale = mr->resolution->phoneScale() ;
     
     grid=size(RES(128)*scale,RES(80)*scale);
     padding = size( RES(32)*scale, RES(24)*scale );
     
     this->parent = parent;
     // this->id = id;
-    parent->retain();
+    //parent->retain();
     
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );
@@ -231,8 +234,6 @@ void uicommandwindow::initialiseCommands()
     
     // CHARACTERS
     
-    auto mr = moonring::mikesingleton();
-    
     // get the default faces
     for ( u32 ii=0; ii<default_characters.Count(); ii++ ) {
         char_data_t* data = (char_data_t*)TME_GetEntityUserData( default_characters[ii] );
@@ -255,15 +256,11 @@ void uicommandwindow::initialiseCommands()
         else
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
         
-
-        
     }
 }
 
 void uicommandwindow::updateElements()
 {
-    moonring* mr = moonring::mikesingleton();
-    
     character& c = TME_CurrentCharacter();
     TME_GetCharacterLocationInfo(c);
     
@@ -369,8 +366,6 @@ void uicommandwindow::addTouchListener()
 
 void uicommandwindow::show( MXVoidCallback callback )
 {
-    moonring* mr = moonring::mikesingleton();
-    
     closeCallback = callback ;
     
     // stop the underlying parent

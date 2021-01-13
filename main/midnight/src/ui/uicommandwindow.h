@@ -59,13 +59,13 @@ protected:
 #endif
     
 protected:
+    moonring*       mr;
     uipanel*        parent;
     helpid_t        id;
     MXVoidCallback  closeCallback;
     Layout*         layout;
     size            grid;
     size            padding;
-    
     Vector<Widget*> elements;
 
 };

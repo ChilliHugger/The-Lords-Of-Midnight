@@ -38,14 +38,14 @@ enum transition_t {
 class panelmanager : public ringcontroller
 {
 public:
+    virtual ~panelmanager() override;
     
     // ** PANEL STUFF
     virtual void setPanelMode ( panelmode_t mode, bool history = false);
     virtual void setPanelMode ( panelmode_t mode, transition_t transition, bool history = false );
     
     uipanel* currentPanel();
-    uipanel* getPanel( panelmode_t mode);
-
+ 
     void returnToPrevious();
     void returnToPrevious( transition_t transition );
     
@@ -61,6 +61,7 @@ public:
     uipanel*        outgoing_panel;
     
 protected:
+    uipanel* getPanel( panelmode_t mode);
     void setCurrentPanel( uipanel* panel, transition_t transition );
     void pushCurrentPanel( uipanel* panel, transition_t transition );
 
