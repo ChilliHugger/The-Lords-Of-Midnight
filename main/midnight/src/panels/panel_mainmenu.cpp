@@ -24,6 +24,20 @@
 USING_NS_CC;
 using namespace cocos2d::ui;
 
+//#define BOOKMARK_IMAGE          "bookmark"
+//#define BOOKMARK_OVERLAY_IMAGE  "bookmark_overlay"
+//
+//static rgb_t bookmark_colours[] = {
+//    rgb_t(0xde, 0x00, 0x00),
+//    rgb_t(0xde, 0x7e, 0x00),
+//    rgb_t(0xcc, 0xcc, 0x00),
+//    rgb_t(0x69, 0xa9, 0x00),
+//    rgb_t(0x00, 0xb2, 0xa4),
+//    rgb_t(0x00, 0x7e, 0xcc),
+//    rgb_t(0x84, 0x00, 0xdb),
+//    rgb_t(0x96, 0x96, 0x96)
+//};
+
 
 static uitextmenuitem items[] = {
     { ID_NEW_STORY,         {"NEW STORY"},     KEYCODE(N), "N" },
@@ -63,12 +77,7 @@ bool panel_mainmenu::init()
     // Logo
     //
     auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
-#if defined(_LOM_)
-    uihelper::AddTopLeft(safeArea,logo);
-#endif
-#if defined(_DDR_)
     uihelper::AddTopCenter(safeArea,logo,0,RES(32));
-#endif
     
     //
     // Menu
@@ -91,6 +100,25 @@ bool panel_mainmenu::init()
         }
     });
 #endif
+
+    // Bookmark
+    
+//    if ( mr->stories->stories_used()== 1 ) {
+//        auto slot = mr->stories->first_used_story()-1;
+//
+//        auto bookmarkImage = Sprite::createWithSpriteFrameName(BOOKMARK_IMAGE);
+//        bookmarkImage->setColor(bookmark_colours[slot]);
+//        uihelper::AddTopRight(menu, bookmarkImage, RES(22), RES(8));
+//
+//        auto bookmarkOverlayImage = Sprite::createWithSpriteFrameName(BOOKMARK_OVERLAY_IMAGE);
+//        bookmarkOverlayImage->setColor(_clrBlack);
+//        uihelper::AddCenter(bookmarkImage, bookmarkOverlayImage);
+//
+//        bookmarkImage->setRotation(16);
+//        bookmarkImage->setLocalZOrder(ZORDER_FAR);
+//    }
+  
+
 
     //
     // Guide and Manual
@@ -320,7 +348,8 @@ void panel_mainmenu::refreshStories( void )
     
     // add bookmark to menu
     
-    menu->enableItem(ID_NEW_STORY, id != STORY_NONE );
-    menu->enableItem(ID_CONTINUE_STORY, count > 0);
-    menu->enableItem(ID_END_STORY, count > 0);
+    menu->showItem(ID_NEW_STORY, id != STORY_NONE );
+    menu->showItem(ID_CONTINUE_STORY, count > 0);
+    menu->showItem(ID_END_STORY, count > 0);
+    //menu->refresh();
 }

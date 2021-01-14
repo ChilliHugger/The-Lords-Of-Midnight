@@ -1,5 +1,8 @@
 The Lords of Midnight
 
+Version 2.0 (27)
+1. Fixed: Misc memory leaks - potential random crashes
+
 Version 2.0 (26)
 1. Fixed: Selecting a different character leaves a black box on the look screen for a few seconds.
 2. Fixed: Game crashes selecting New Story when there are no available slots.

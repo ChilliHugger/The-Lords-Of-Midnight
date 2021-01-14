@@ -17,14 +17,6 @@
 
 using namespace chilli::types;
 
-#if defined(_OS_DESKTOP_)
-//#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::CF_WINDOW_LARGE
-//#define DesktopDebugResolution GooglePixel3XL
-#define _SWITCH_VIDEO_IMPLEMENTED_
-#endif
-
-
-
 typedef struct {
     s32     reference;
     std::string   folder;
@@ -187,5 +179,13 @@ static cocos2d::Size DesktopModeSpace1 = cocos2d::Size(2880, 1620);    // 1.7777
 static cocos2d::Size DesktopModeSpace2 = cocos2d::Size(3200, 1800);    // 1.7777
 static cocos2d::Size DesktopLargerText1 = cocos2d::Size(2048, 1152);    // 1.7777
 static cocos2d::Size DesktopLargerText2 = cocos2d::Size(1600, 900);    // 1.7777
+
+#if defined(_OS_DESKTOP_)
+//#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::CF_WINDOW_LARGE
+//#define DesktopDebugResolution iPad3
+#define _SWITCH_VIDEO_IMPLEMENTED_
+#endif
+
+
 
 #endif /* resolutionmanager_h */

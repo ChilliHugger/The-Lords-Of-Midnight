@@ -40,7 +40,47 @@ bool panel_splashscreen::init()
         return false;
     }
     
-    setBackgroundToHeight("splash.png");
+    setBackgroundToHeight("screens/misc/splash.png");
+    
+#if defined(_LOM_)
+    TTFConfig font_config_splash;
+
+    font_config_splash.fontFilePath = FONT_FILENAME;
+    font_config_splash.fontSize = RES(35);
+    font_config_splash.glyphs = GlyphCollection::DYNAMIC;
+    font_config_splash.outlineSize = 0;
+    font_config_splash.customGlyphs = nullptr;
+    font_config_splash.distanceFieldEnabled = false;
+    
+    f32 lineHeight = RES(40);
+    f32 x = (getContentSize().width/2) - RES(476);
+    f32 y = RES(32);
+    
+    auto label1 = Label::createWithTTF( font_config_splash, "Now explore the epic world of" );
+    //label1->getFontAtlas()->setAntiAliasTexParameters();
+    label1->setTextColor( Color4B(0,255,0,255) );
+    label1->setLocalZOrder(ZORDER_DEFAULT);
+    uihelper::AddTopLeft(this,label1,x,y);
+
+    auto label2 = Label::createWithTTF( font_config_splash, "THE LORDS OF MIDNIGHT" );
+    //label2->getFontAtlas()->setAntiAliasTexParameters();
+    label2->setTextColor( Color4B(253,253,0,255) );
+    label2->setLocalZOrder(ZORDER_DEFAULT);
+    uihelper::AddTopLeft(this,label2,x,y+(lineHeight*1));
+
+    auto label3 = Label::createWithTTF( font_config_splash, "         by" );
+    //label3->getFontAtlas()->setAntiAliasTexParameters();
+    label3->setTextColor( Color4B(205,0,205,255) );
+    label3->setLocalZOrder(ZORDER_DEFAULT);
+    uihelper::AddTopLeft(this,label3,x,y+(lineHeight*2));
+
+    auto label4 = Label::createWithTTF( font_config_splash, "Mike Singleton" );
+    //label4->getFontAtlas()->setAntiAliasTexParameters();
+    label4->setTextColor( Color4B(0,255,255,255) );
+    label4->setLocalZOrder(ZORDER_DEFAULT);
+    uihelper::AddTopLeft(this,label4,x,y+(lineHeight*3));
+#endif
+    
     
     loading_width = RES(512);
     loading_height = RES(16);
@@ -54,7 +94,7 @@ bool panel_splashscreen::init()
     progress->Start();
     
     StartTime = utils::getTimeInMilliseconds();
-    
+
     // Initialise in a thread
     auto atp = AsyncTaskPool::getInstance();
     atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]() {
