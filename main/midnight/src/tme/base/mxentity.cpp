@@ -18,10 +18,11 @@
 
 namespace tme {
 
-    mxentity::mxentity(void)
+    mxentity::mxentity(void) :
+        user_data(nullptr),
+        type(IDT_NONE),
+        id(0)
     {
-        type = IDT_NONE ;
-        id = 0 ;
     }
 
     mxentity::~mxentity(void)
