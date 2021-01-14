@@ -145,12 +145,8 @@ bool panel_options::init()
     setBackgroundToHeight("screens/misc/main_menu.png");
 
     auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
-#if defined(_LOM_)
-    uihelper::AddTopLeft(safeArea,logo);
-#endif
-#if defined(_DDR_)
+    logo->setLocalZOrder(ZORDER_FAR+1);
     uihelper::AddTopCenter(safeArea,logo,0,RES(32));
-#endif
     
     CreateMenu1();
     
@@ -322,7 +318,7 @@ void panel_options::SetValues ( void )
 
 void panel_options::CreateMenu1()
 {
-    f32 width = RES(512);
+    f32 width = RES(512-32);
     
     f32 contentWidth = safeArea->getContentSize().width;
     f32 contentHeight = safeArea->getContentSize().height;
@@ -330,6 +326,7 @@ void panel_options::CreateMenu1()
     auto menu = uitextmenu::create(width, items_main, NUMELE(items_main) );
     menu->setAnchorPoint(uihelper::AnchorCenter);
     menu->setPosition(Vec2(contentWidth/4,contentHeight/2));
+    menu->setLocalZOrder(ZORDER_UI);
     safeArea->addChild(menu);
 
     menu->setNotificationCallback ( [&](const uinotificationinterface* s, uieventargs* e) {
@@ -340,7 +337,7 @@ void panel_options::CreateMenu1()
 
 void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
-    f32 width = RES(512);
+    f32 width = RES(512-32);
     if(isPhoneScaleEnabled())
     {
         width+=RES(128+64);
@@ -354,7 +351,8 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     }
 
     menu2 = Menu::create();
-
+    menu2->setLocalZOrder(ZORDER_UI);
+    
     u32 gapY = PHONE_SCALE(RES(5));
     
     this->addChild(menu2);

@@ -28,6 +28,7 @@ Vec2 uihelper::AnchorBottomLeft = Vec2(0,0);
 Vec2 uihelper::AnchorBottomRight = Vec2(1,0);
 Vec2 uihelper::AnchorBottomCenter = Vec2(0.5,0);
 
+
 TTFConfig uihelper::font_config_big;
 TTFConfig uihelper::font_config_medium;
 TTFConfig uihelper::font_config_small;
@@ -42,7 +43,7 @@ void uihelper::initialiseFonts()
     if(PHONE_SCALE(scale_normal)!=scale_normal) {
         scale = scale_normal+scale_half;
     }
-    
+
     font_config_big.fontFilePath = FONT_FILENAME;
     font_config_big.fontSize = RES(FONT_SIZE_BIG)*scale;
     font_config_big.glyphs = GlyphCollection::DYNAMIC;

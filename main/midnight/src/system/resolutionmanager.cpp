@@ -205,7 +205,7 @@ bool resolutionmanager::init()
         
 #if defined(DesktopDebugResolution)
         glview = setWindowedMode(DesktopDebugResolution);
-#elseif defined(DesktopDebugScreenMode)
+#elif defined(DesktopDebugScreenMode)
         glview = setDisplayMode(DesktopDebugScreenMode);
 #else
         glview = setDisplayMode(mr->settings->screen_mode);

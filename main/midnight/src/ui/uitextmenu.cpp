@@ -40,7 +40,7 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
  
     auto rm = moonring::mikesingleton()->resolution;
     
-    phoneYPadding = RES(0);
+    phoneYPadding = RES(12);
     
     this->items = items;
     this->items_count = count;
@@ -51,7 +51,7 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     if(rm->IsPhoneScaleEnabled())
     {
         width+=RES(64);
-        phoneYPadding = RES(16);
+        phoneYPadding = RES(20);
     }
     
     this->setContentSize(Size(width, PHONE_SCALE(RES(128))) );
