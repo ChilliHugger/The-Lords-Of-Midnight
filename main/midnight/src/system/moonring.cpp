@@ -204,6 +204,8 @@ void moonring::continueStory( storyid_t id )
                 mode = MODE_LOOK;
             else if(IS_DEBUG_PANEL("MODE_THINK"))
                 mode = MODE_THINK;
+            else if(IS_DEBUG_PANEL("MODE_MAP_DETAILED"))
+                mode = MODE_MAP_DETAILED;
             
             if(mode==MODE_THINK)
             {

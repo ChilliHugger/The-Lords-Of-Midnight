@@ -77,8 +77,27 @@ bool panel_map_detailed::init()
   
     auto map = uihelper::CreateImageButton("i_big_map", ID_MAP_OVERVIEW, clickCallback);
     uihelper::AddBottomRight(safeArea, map, RES(10), RES(10) );
+
+    auto circle1 = Sprite::createWithSpriteFrameName("circle_selector");
+    circle1->setScale(0.25f);
+    circle1->setLocalZOrder(ZORDER_FAR);
+    uihelper::AddTopLeft(safeArea, circle1, RES(48), RES(48) );
+    circle1->setAnchorPoint(uihelper::AnchorCenter);
+
+    auto circle2 = Sprite::createWithSpriteFrameName("circle_selector");
+    circle2->setScale(0.25f);
+    circle2->setLocalZOrder(ZORDER_FAR);
+    uihelper::AddTopLeft(safeArea, circle2, RES(48), RES(48+64) );
+    circle2->setAnchorPoint(uihelper::AnchorCenter);
+
+    auto map_down = uihelper::CreateImageButton("map_scale_down_button", ID_DOWN, clickCallback);
+    uihelper::AddTopLeft(safeArea, map_down, RES(48), RES(48) );
+    map_down->setAnchorPoint(uihelper::AnchorCenter);
   
-    
+    auto map_up = uihelper::CreateImageButton("map_scale_up_button", ID_UP, clickCallback);
+    uihelper::AddTopLeft(safeArea, map_up, RES(48), RES(48+64) );
+    map_up->setAnchorPoint(uihelper::AnchorCenter);
+  
     int adjy=RES(32); //*scale;
     int r = RES(64); // * scale;
     
@@ -107,7 +126,6 @@ bool panel_map_detailed::init()
     scrollView->addChild(tmxMap);
     scrollView->setInnerContainerSize( tmxMap->getContentSize() );
     scrollView->setDirection(ScrollView::Direction::BOTH);
-    
     scrollView->setInnerContainerPosition(Vec2(model->oldoffset.x,model->oldoffset.y));
     
     descriptions = Node::create();
@@ -118,24 +136,45 @@ bool panel_map_detailed::init()
     characters->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(characters);
     
+//    uihelper::font_config_debug.outlineSize = 10;
+//    debug_label = Label::createWithTTF(uihelper::font_config_debug, "Debug Text");
+//    debug_label->getFontAtlas()->setAntiAliasTexParameters();
+//    debug_label->setTextColor(Color4B::BLACK);
+//    debug_label->enableOutline(Color4B(255,255,255,255));\
+//    debug_label->setLocalZOrder(ZORDER_DEFAULT);
+//    uihelper::AddTopCenter(safeArea, debug_label, RES(0), RES(32));
+    
+    
     setupCharacterButtons();
     
     setupStrongholds();
     
     setupPlaceLabels();
-    
-    if ( model->filters.Is(map_filters::centre_char) )
-        centreOnCurrentCharacter(false);
-    
+      
     updateFilters();
+    
+    model->mapscale = 1.0f;
+    updateScale();
     
     showHelpWindow(HELP_DISCOVERY_MAP);
     
     mapBuilder->clearLayers();
     
+    //scheduleUpdate();
+    
     return true;
 }
 
+//void panel_map_detailed::update(float delta)
+//{
+//char debug_output[256];
+//
+//    auto pos = scrollView->getInnerContainerPosition();
+//    sprintf(debug_output, "Offets (%f,%f)", pos.x,pos.y);
+//    debug_label->setString(debug_output);
+//
+//    uipanel::update(delta);
+//}
 
 void panel_map_detailed::OnNotification( Ref* sender )
 {
@@ -195,11 +234,44 @@ void panel_map_detailed::OnNotification( Ref* sender )
         case ID_FILTER_LORDS:
             updateFilterButton(sender,map_filters::show_lords);
             break;
- 
+    
+        case ID_UP:
+            if ( model->mapscale < MAP_SCALE_MAX)
+            {
+                model->lastmapscale = model->mapscale;
+                model->mapscale += MAP_SCALE_CLICK_DELTA;
+                model->mapscale = std::min(MAP_SCALE_MAX, model->mapscale);
+                updateScale();
+            }
+            break;
             
+        case ID_DOWN:
+            if ( model->mapscale > MAP_SCALE_MIN)
+            {
+                model->lastmapscale = model->mapscale;
+                model->mapscale -= MAP_SCALE_CLICK_DELTA;
+                model->mapscale = std::max(MAP_SCALE_MIN, model->mapscale);
+                updateScale();
+            }
+            break;
+        
+        
         default:
             break;
     }
+}
+
+
+void panel_map_detailed::updateScale()
+{
+    tmxMap->setScale(model->mapscale);
+    descriptions->setScale(model->mapscale);
+    characters->setScale(model->mapscale);
+    scrollView->setInnerContainerSize( tmxMap->getContentSize() * model->mapscale );
+    
+    if ( model->filters.Is(map_filters::centre_char))
+        centreOnCurrentCharacter(false);
+
 }
 
 void panel_map_detailed::hideGroupLord()
@@ -230,14 +302,16 @@ void panel_map_detailed::showGroupLord(Vec2 position, map_object* object)
 
 void panel_map_detailed::centreOnCharacter( character& c, bool animate )
 {
-    auto mapsize = tmxMap->getContentSize();
+    auto mapsize = tmxMap->getContentSize() * model->mapscale;
     auto size = getContentSize();
+    
+    f32 adjust = RES(32) * model->mapscale;
     
     // Calculate pixel position for centre of the lord
     // icon, and invert for y axis. This places the map
     // in the bottom left corner
-    auto pos = mapBuilder->convertToPosition(c.location);
-    auto offset = Vec2(((pos.x+RES(32))),(mapsize.height - (pos.y+RES(32)))) ;
+    auto pos = mapBuilder->convertToPosition(c.location) * model->mapscale;
+    auto offset = Vec2(((pos.x+adjust)),(mapsize.height - (pos.y+adjust))) ;
     
     // Now pull the map up so that the middle of the icon is in
     // the centre of the screen

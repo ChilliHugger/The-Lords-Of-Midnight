@@ -19,12 +19,17 @@ FORWARD_REFERENCE(mapbuilder);
 FORWARD_REFERENCE(uigrouplord);
 FORWARD_REFERENCE(map_object);
 
+constexpr f32 MAP_SCALE_MIN = 0.5f;
+constexpr f32 MAP_SCALE_MAX = 2.0f;
+constexpr f32 MAP_SCALE_CLICK_DELTA = 0.1f;
+
 class panel_map_detailed : public uipanel
 {
     using ScrollView = extensions::ScrollView;
     using TMXTiledMap = cocos2d::TMXTiledMap;
     using Node = cocos2d::Node;
     using Vec2 = cocos2d::Vec2;
+    using Label = cocos2d::Label;
     
 public:
     virtual bool init() override;
@@ -53,6 +58,10 @@ protected:
     void hideGroupLord();
     void showGroupLord( Vec2 position, map_object* object );
     
+    void updateScale();
+    
+    //virtual void update(float delta) override;
+    
 private:
     
     ScrollView*     scrollView;
@@ -62,4 +71,5 @@ private:
     Node*           characters;
     Node*           descriptions;
     uigrouplord*    grouplord;
+    //Label*          debug_label;
 };
