@@ -53,10 +53,10 @@ void panelmanager::setPanelMode ( panelmode_t mode, bool history )
 
 void panelmanager::setPanelMode ( panelmode_t mode, transition_t transition, bool history )
 {
-    if ( mode == MODE_MAINMENU ) {
-        if ( CONFIG(bumpAdvert()) )
-            mode = MODE_ADVERT;
-    }
+//    if ( mode == MODE_MAINMENU ) {
+//        if ( CONFIG(bumpAdvert()) )
+//            mode = MODE_ADVERT;
+//    }
 
     previousmode = this->currentmode ;
 
