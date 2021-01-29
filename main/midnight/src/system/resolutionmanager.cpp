@@ -257,7 +257,7 @@ Size resolutionmanager::calcWindowSize(f32 scale, f32 aspect)
     auto desktopSize = getDesktopSize();
 
     f32 height = desktopSize.cy * scale;
-    f32 width = height * aspect;
+    f32 width = (int)ROUNDFLOAT(height * aspect);
 
     return cocos2d::Size(width,height);
 }
