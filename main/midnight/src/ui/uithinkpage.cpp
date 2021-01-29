@@ -29,7 +29,7 @@
 #define OBJECT_X            (128+32)
 #define BACKGROUND_COLOUR   _clrWhite
 #define NAME_TEXT_COLOUR    _clrDarkRed
-#define TERRAIN_COLOUR      Color3B(0x00,0x00,0xA5)
+#define TERRAIN_COLOUR      _clrBlack
 
 #endif
 #if defined(_DDR_)
