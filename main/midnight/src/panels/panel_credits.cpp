@@ -19,6 +19,26 @@
 
 USING_NS_CC;
 
+   
+LPCSTR text[] = {
+    "Original game by", "Mike Singleton",
+    "Programming", "Chris Wild",
+    "Graphics redrawn by", "Jure Rogelj",
+    "Testing by", "Scott Gibbens"
+};
+
+/*
+Alasdair Allan, Chris Booker, Timothy Bromige, Iain Brown, Basem Chbaklo,
+Richard Clements, Menno Everaarts, Scott Gibbens, Martin Graaskov,
+Ross Harris, Bill Hoggett, Thanos Koukoulis, Harvey Lodder, Gary Mcdonald,
+Fergus Mcneill, Jordan Myers, Kai Panholzer, Guy Preston, Gemma Rigby,
+Julian Rigby, Tam Rigby, Jean-Yves Rouffiac, David Ivan Perez Salazar,
+Andrew Smart, Stuart Voice, Seamus Waldron, Chris Webster, Jason Webster,
+David West, and all the members of midnight/mu
+*/
+
+
+
 bool panel_credits::init()
 {
     if ( !uipanel::init() )
@@ -34,8 +54,6 @@ bool panel_credits::init()
     setBackground(Color3B(194,182,213));
 #endif
 
-
-    
     std::string version = "Version: "
         + Application::getInstance()->getVersion()
         + " (" + chilli::extensions::getBuildNo() + ")";
@@ -48,6 +66,41 @@ bool panel_credits::init()
 
     auto image = Sprite::create("screens/misc/credits.png");
     uihelper::AddBottomCenter(safeArea, image);
+
+
+    TTFConfig font_config_splash;
+
+    font_config_splash.fontFilePath = FONT_FILENAME;
+    font_config_splash.fontSize = RES(35);
+    font_config_splash.glyphs = GlyphCollection::DYNAMIC;
+    font_config_splash.outlineSize = 0;
+    font_config_splash.customGlyphs = nullptr;
+    font_config_splash.distanceFieldEnabled = false;
+    
+    f32 lineHeight = RES(40);
+    f32 x = 0;
+    f32 y = RES(64);
+
+   
+    for(int ii=0; ii<NUMELE(text); ii+=2)
+    {
+        auto label1 = Label::createWithTTF( font_config_splash, text[ii] );
+        label1->getFontAtlas()->setAntiAliasTexParameters();
+        label1->setTextColor( Color4B(71,76,105,255) );
+        label1->setLocalZOrder(ZORDER_DEFAULT);
+        label1->setScale(scale_3qtr);
+        uihelper::AddTopCenter(safeArea,label1,x,y);
+        y+=lineHeight*label1->getScale();
+
+        auto label2 = Label::createWithTTF( font_config_splash, text[ii+1] );
+        label2->getFontAtlas()->setAntiAliasTexParameters();
+        label2->setTextColor( Color4B(_clrWhite) );
+        label2->setLocalZOrder(ZORDER_DEFAULT);
+        label2->setScale(scale_normal+scale_1qtr);
+        uihelper::AddTopCenter(safeArea,label2,x,y);
+        y+=(lineHeight*2);
+    }
+
 
 
     Exit(5.0);
