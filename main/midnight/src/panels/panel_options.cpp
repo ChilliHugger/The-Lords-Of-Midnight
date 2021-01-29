@@ -93,9 +93,8 @@ static uitextmenuitem items_game[] = {
 static uitextmenuitem items_control[] = {
     { ID_OPTION_COMPASS_DELAY,          {"COMPASS DELAY"},      KEYCODE(1), "1", TB_DOUBLE },
     { ID_OPTION_COMPASS_FEEDBACK,       {"COMPASS VIBRATE"},    KEYCODE(2), "2", TB_DOUBLE },
-    { ID_OPTION_THINK_PAGING,           {"THINK PAGING"},       KEYCODE(3), "3", TB_DOUBLE },
-    { ID_OPTION_NAVIGATION,             {"NAVIGATION STYLE"},   KEYCODE(4), "4", TB_DOUBLE },
-    { ID_OPTION_KEYBOARD_STYLE,         {"KEYBOARD STYLE"},     KEYCODE(5), "5", TB_DOUBLE },
+    { ID_OPTION_NAVIGATION,             {"NAVIGATION STYLE"},   KEYCODE(3), "3", TB_DOUBLE },
+    { ID_OPTION_KEYBOARD_STYLE,         {"KEYBOARD STYLE"},     KEYCODE(4), "4", TB_DOUBLE },
 };
 
 static uitextmenuitem items_help[] = {
@@ -110,26 +109,26 @@ static uitextmenuitem items_help[] = {
 
 static option_t options[] = {
     
-    {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff, NULL },
-    {   ID_OPTION_AUTO_UNHIDE,      OPT_BOOL,    0, values_onoff, NULL },
-    {   ID_OPTION_MOVE_INDICATORS,  OPT_BOOL,    0, values_yesno, NULL },
-    {   ID_OPTION_TUTORIAL,         OPT_BOOL,    0, values_onoff, NULL },
-    {   ID_OPTION_NAVIGATION,       OPT_NUMBER,  4, values_movement, NULL },
-    {   ID_OPTION_TRANSITIONS,      OPT_BOOL,    0, values_onoff, NULL },
-    {   ID_OPTION_FLIPSCREEN,       OPT_BOOL,    0, values_onoff, NULL },
+    {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_AUTO_UNHIDE,      OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_MOVE_INDICATORS,  OPT_BOOL,    0, values_yesno,               nullptr, false },
+    {   ID_OPTION_TUTORIAL,         OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_NAVIGATION,       OPT_NUMBER,  4, values_movement,            nullptr, false },
+    {   ID_OPTION_TRANSITIONS,      OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_FLIPSCREEN,       OPT_BOOL,    0, values_onoff,               nullptr, false },
     
-    {   ID_OPTION_NOVELLA,          OPT_BOOL,    0, values_novella, NULL },
+    {   ID_OPTION_NOVELLA,          OPT_BOOL,    0, values_novella,             nullptr, false },
     
-    {   ID_OPTION_COMPASS_DELAY,    OPT_NUMBER,  4, values_compass_delay, NULL },
-    {   ID_OPTION_COMPASS_FEEDBACK, OPT_NUMBER,  4, values_compass_feedback, NULL },
-    {   ID_OPTION_THINK_PAGING,     OPT_NUMBER,  3, values_think, NULL },
-    {   ID_OPTION_NIGHT_DISPLAY,    OPT_BOOL,    0, values_slowfast, NULL },
-    {   ID_OPTION_BATTLE_FULL,      OPT_BOOL,    0, values_fullbrief, NULL },
+    {   ID_OPTION_COMPASS_DELAY,    OPT_NUMBER,  4, values_compass_delay,       nullptr, false },
+    {   ID_OPTION_COMPASS_FEEDBACK, OPT_NUMBER,  4, values_compass_feedback,    nullptr, false },
+    {   ID_OPTION_NIGHT_DISPLAY,    OPT_BOOL,    0, values_slowfast,            nullptr, false },
+    {   ID_OPTION_BATTLE_FULL,      OPT_BOOL,    0, values_fullbrief,           nullptr, false },
     
-    {   ID_OPTION_SCREENMODE,       OPT_NUMBER,  4, values_screen, NULL }, // 11
-    {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER,  2, values_keyboard, NULL },
+    {   ID_OPTION_SCREENMODE,       OPT_NUMBER,  4, values_screen,              nullptr, false },
+
+    {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER,  2, values_keyboard,            nullptr, false },
     
-    {   ID_HOME,                    OPT_NONE,    0, NULL, NULL },
+    {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
 bool panel_options::init()
@@ -150,29 +149,28 @@ bool panel_options::init()
     
     CreateMenu1();
     
-    SET_OPTION(0,autofight);
-    SET_OPTION(1,autounhide);
-    SET_OPTION(2,showmovementindicators);
-    SET_OPTION(3,tutorial);
-    SET_OPTION(4,nav_mode);
-    SET_OPTION(5,screentransitions);
-    SET_OPTION(6,flipscreen);
+    SET_OPTION(ID_OPTION_AUTO_FIGHT,autofight);
+    SET_OPTION(ID_OPTION_AUTO_UNHIDE,autounhide);
+    SET_OPTION(ID_OPTION_MOVE_INDICATORS,showmovementindicators);
+    SET_OPTION(ID_OPTION_TUTORIAL,tutorial);
+    SET_OPTION(ID_OPTION_NAVIGATION,nav_mode);
+    SET_OPTION(ID_OPTION_TRANSITIONS,screentransitions);
+    SET_OPTION(ID_OPTION_FLIPSCREEN,flipscreen);
     
-    SET_OPTION(7,novella_pdf);
+    SET_OPTION(ID_OPTION_NOVELLA,novella_pdf);
     
-    SET_OPTION(8,compass_delay);
-    SET_OPTION(9,compass_feedback);
-    SET_OPTION(10,think_paging_mode);
-    SET_OPTION(11,night_display_fast);
-    SET_OPTION(12,night_battle_full);
+    SET_OPTION(ID_OPTION_COMPASS_DELAY,compass_delay);
+    SET_OPTION(ID_OPTION_COMPASS_FEEDBACK,compass_feedback);
+    SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast);
+    SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full);
     
-    SET_OPTION(13, screen_mode);
-    SET_OPTION(14, keyboard_mode);
+    SET_OPTION(ID_OPTION_SCREENMODE, screen_mode);
+    SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode);
     
-
     if ( !mr->settings->fullscreensupported )
-        options[13].text = values_screen2 ;
-    
+    {
+        findOption(ID_OPTION_SCREENMODE)->text = values_screen2;
+    }
     
     SetMenu(ID_MENU_DISPLAY);
     
@@ -213,33 +211,25 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
         return;
     }
     
-    int index=-1;
-    for ( int ii=0; ii<NUMELE(options); ii++ ) {
-        if ( options[ii].id == tag ) {
-            index = ii;
-            break;
-        }
-    }
+    auto option = findOption(tag);
+    if(option==nullptr)
+        return;;
 
-    if ( index == -1 )
-        return;
-
-    
-    if ( options[index].type == OPT_BOOL ) {
-        BOOL* value = (BOOL*) options[index].var;
+    if ( option->type == OPT_BOOL ) {
+        BOOL* value = (BOOL*) option->var;
         *value = ! *value;
     }
     
-    if ( options[index].type == OPT_NUMBER ) {
-        int* value = (int*) options[index].var;
+    else if ( option->type == OPT_NUMBER ) {
+        int* value = (int*) option->var;
         *value = *value +1;
-        if ( *value >= options[index].max )
+        if ( *value >= option->max )
             *value=0;
     }
     
     SetValues();
     
-    if ( options[index].id == ID_OPTION_TUTORIAL ) {
+    if ( option->id == ID_OPTION_TUTORIAL ) {
         if ( mr->settings->tutorial )
             showHelpWindow(HELP_TUTORIAL_ON);
         else
@@ -248,9 +238,29 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
     
 }
 
+option_t* panel_options::findOption(int id)
+{
+    for ( int ii=0; ii<NUMELE(options); ii++ )
+    {
+        if ( options[ii].id == id )
+        {
+            return &options[ii];
+        }
+    }
+    return nullptr;
+}
+
+void panel_options::disableOption(int id)
+{
+    auto option = findOption(id);
+    if(option!=nullptr)
+    {
+        option->disabled = true;
+    }
+}
+
 void panel_options::SetMenu ( int id )
 {
-    
     if ( id == ID_MENU_GAME ) {
         SetMenu(items_game,NUMELE(items_game));
         SetValues();
@@ -260,19 +270,21 @@ void panel_options::SetMenu ( int id )
         SetValues();
         return;
     } else if ( id == ID_MENU_CONTROL ) {
-        SetMenu(items_control,NUMELE(items_control));
-        
+
+        // check if keyboard available
+        //if ( !ui->IsKeyboardAvailable() )
+        {
+            disableOption(ID_OPTION_KEYBOARD_STYLE);
+        }
+
         // check if compass feedback available
 //        if ( !ui->IsVibrationAvailable()) {
 //            menu2->DisableButton(ID_OPTION_COMPASS_FEEDBACK);
 //            gl->settings.compass_feedback=CF_COMPASS_OFF;
 //        }
 //
-//        // check if keyboard available
-//        if ( !ui->IsKeyboardAvailable() ) {
-//            menu2->DisableButton(ID_OPTION_KEYBOARD_STYLE);
-//        }
-        
+
+        SetMenu(items_control,NUMELE(items_control));
         
 #if defined(_OS_DESKTOP_)
         mr->settings->showmovementindicators=FALSE;
@@ -364,6 +376,12 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     for ( int ii=0; ii<elements; ii++ ) {
         
         uitextmenuitem* item = &items[ii];
+        
+        auto option = findOption(item->id);
+        if(option->disabled)
+        {
+            continue;
+        }
         
         auto button = uioptionitem::create( width, item );
         button->setTag(item->id);

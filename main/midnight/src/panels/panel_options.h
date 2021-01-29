@@ -28,10 +28,11 @@ typedef struct {
     int             max;
     const char**    text;
     void*           var;
+    bool            disabled;    
 } option_t ;
 
 #define SET_OPTION(x,z) \
-    options[x].var = &mr->settings->z;
+    findOption(x)->var = &mr->settings->z;
 
 class panel_options : public uipanel
 {
@@ -58,6 +59,8 @@ protected:
     void changeDisplayMode();
 #endif
 
+    option_t* findOption(int id);
+    void disableOption(int id);
     
 protected:
     DrawNode*               menu2_background;
