@@ -812,6 +812,7 @@ bool panel_look::moveForward ( void )
             // switch to the stubborn character
             // and think
             setObject(location_stubborn_lord_move);
+            mr->showPage(MODE_THINK);
             return true;
         }
         
