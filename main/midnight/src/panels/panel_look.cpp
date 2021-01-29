@@ -173,7 +173,7 @@ bool panel_look::init()
 #if defined(_DDR_)
     uihelper::AddTopRight(safeArea, following, SHIELD_X+RES(96),HEADER_HEIGHT-RES(128));
 #else
-    uihelper::AddTopRight(safeArea, following, SHIELD_X+RES(128)+RES(32),SHIELD_Y-RES(48));
+    uihelper::AddTopRight(safeArea, following, SHIELD_X+RES(32),SHIELD_Y+RES(128+48));
 #endif
     
     // people in front
