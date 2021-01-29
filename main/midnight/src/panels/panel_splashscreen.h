@@ -8,6 +8,8 @@ FORWARD_REFERENCE(progressmonitor);
 class panel_splashscreen : public uipanel
 {
     using DrawNode = cocos2d::DrawNode;
+    template<class T> using Vector = cocos2d::Vector<T>;
+    using LayerColor = cocos2d::LayerColor;
 public:
     panel_splashscreen();
 
@@ -17,6 +19,11 @@ public:
     CREATE_FUNC(panel_splashscreen);
 
 protected:
+    virtual void update(float delta) override;
+    virtual void onExit() override;
+    
+    void removeLoadingBars();
+
     void updateProgress( f32 percent );
     void complete();
     
@@ -26,7 +33,8 @@ protected:
     DrawNode*           loading_progress;
     long                StartTime;
     progressmonitor*    progress;
-    
+    Vector<LayerColor*> loading_bars;
+    bool                loading_complete;
 };
 
 #endif // __PANEL_SPLASHSCREEN_H__

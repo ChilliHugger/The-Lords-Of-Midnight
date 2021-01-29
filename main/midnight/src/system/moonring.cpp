@@ -589,9 +589,10 @@ void moonring::initialise( progressmonitor* monitor )
 
     isDataLoaded = false;
     int count=0;
+    int delay=100;
     
     // let's give up some time to the ui Immediatley
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
     // load images
     for (std::string file_name : imageFiles ) {
@@ -606,7 +607,7 @@ void moonring::initialise( progressmonitor* monitor )
                 condition.notify_one();
             }
         });
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
     }
     
@@ -615,7 +616,7 @@ void moonring::initialise( progressmonitor* monitor )
     condition.wait(mlock, std::bind(&moonring::isDataLoaded, this));
     isDataLoaded=false;
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
     
     RUN_ON_UI_THREAD([=](){

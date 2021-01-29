@@ -24,7 +24,8 @@ USING_NS_CC;
 
 panel_splashscreen::panel_splashscreen() :
     progress(nullptr),
-    loading_progress(nullptr)
+    loading_progress(nullptr),
+    loading_complete(false)
 {
 }
 
@@ -39,9 +40,12 @@ bool panel_splashscreen::init()
     {
         return false;
     }
-    
-    setBackgroundToHeight("screens/misc/splash.png");
-    
+     
+    auto backgroundColor = setBackground(_clrDarkYellow);
+    backgroundColor->setLocalZOrder(ZORDER_FAR-2);
+     
+    auto background = setBackgroundToHeight("screens/0/splash.png",false);
+
 #if defined(_LOM_)
     TTFConfig font_config_splash;
 
@@ -53,32 +57,32 @@ bool panel_splashscreen::init()
     font_config_splash.distanceFieldEnabled = false;
     
     f32 lineHeight = RES(40);
-    f32 x = (getContentSize().width/2) - RES(476);
+    f32 x = RES(32); //(getContentSize().width/2) - RES(476);
     f32 y = RES(32);
     
     auto label1 = Label::createWithTTF( font_config_splash, "Now explore the epic world of" );
     //label1->getFontAtlas()->setAntiAliasTexParameters();
     label1->setTextColor( Color4B(0,255,0,255) );
     label1->setLocalZOrder(ZORDER_DEFAULT);
-    uihelper::AddTopLeft(this,label1,x,y);
+    uihelper::AddTopLeft(background,label1,x,y);
 
     auto label2 = Label::createWithTTF( font_config_splash, "THE LORDS OF MIDNIGHT" );
     //label2->getFontAtlas()->setAntiAliasTexParameters();
     label2->setTextColor( Color4B(253,253,0,255) );
     label2->setLocalZOrder(ZORDER_DEFAULT);
-    uihelper::AddTopLeft(this,label2,x,y+(lineHeight*1));
+    uihelper::AddTopLeft(background,label2,x,y+(lineHeight*1));
 
     auto label3 = Label::createWithTTF( font_config_splash, "         by" );
     //label3->getFontAtlas()->setAntiAliasTexParameters();
     label3->setTextColor( Color4B(205,0,205,255) );
     label3->setLocalZOrder(ZORDER_DEFAULT);
-    uihelper::AddTopLeft(this,label3,x,y+(lineHeight*2));
+    uihelper::AddTopLeft(background,label3,x,y+(lineHeight*2));
 
     auto label4 = Label::createWithTTF( font_config_splash, "Mike Singleton" );
     //label4->getFontAtlas()->setAntiAliasTexParameters();
     label4->setTextColor( Color4B(0,255,255,255) );
     label4->setLocalZOrder(ZORDER_DEFAULT);
-    uihelper::AddTopLeft(this,label4,x,y+(lineHeight*3));
+    uihelper::AddTopLeft(background,label4,x,y+(lineHeight*3));
 #endif
     
     
@@ -86,7 +90,11 @@ bool panel_splashscreen::init()
     loading_height = RES(16);
     
     loading_progress = DrawNode::create();
-    uihelper::AddBottomLeft(this, loading_progress, RES(8), RES(8));
+    uihelper::AddBottomLeft(background, loading_progress, RES(8), RES(8));
+    
+    loading_complete=false;
+    scheduleUpdate();
+    
     
     progress = new progressmonitor([&](int value) {
         updateProgress( (f32)value / MAX_PROGESS );
@@ -100,16 +108,79 @@ bool panel_splashscreen::init()
     atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]() {
         mr->initialise( progress );
         progress->Stop();
+        loading_complete=true;
+        //unscheduleUpdate();
         UIDEBUG("MAX_PROGESS=%d",progress->current);
         SAFEDELETE(progress);
         complete();
     });
     
+
+
     return true;
 }
 
+void panel_splashscreen::onExit()
+{
+    uipanel:uipanel::onExit();
+    removeLoadingBars();
+}
+
+void panel_splashscreen::update(float delta)
+{
+    uipanel::update(delta);
+
+    if(chilli::randomno::instance.chance(0.5) || loading_complete)
+    {
+        return;
+    }
+
+    removeLoadingBars();
+ 
+    auto barColor = Color4B(_clrDarkBlue);
+ 
+    int c=chilli::randomno::instance.get()&1;
+    f32 y=0;
+    f32 width = getContentSize().width;
+    while(true)
+    {
+        f32 height = chilli::randomno::instance.get(RES(2), RES(20));
+
+        if(c==0)
+        {
+            auto layer = LayerColor::create(barColor, width, height);
+            layer->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+            layer->setPosition(0, y);
+            layer->setLocalZOrder(ZORDER_FAR-1);
+            uihelper::AddTopLeft(this,layer,0,y);
+            loading_bars.pushBack(layer);
+        }
+        c = (c+1)&1;
+
+        y+=height;
+        if(y>getContentSize().height)
+        {
+            break;
+        }
+    }
+
+}
+
+void panel_splashscreen::removeLoadingBars()
+{
+    for(auto c : loading_bars)
+    {
+        removeChild(c);
+    }
+    
+    loading_bars.clear();
+}
+
+
 void panel_splashscreen::complete()
 {
+    removeLoadingBars();
+
     auto Duration = utils::getTimeInMilliseconds() - StartTime;
     
     // we want at least 3 seconds of splash screen
@@ -136,8 +207,8 @@ void panel_splashscreen::updateProgress(f32 percent)
 {
     RUN_ON_UI_THREAD([=](){
         loading_progress->clear();
-        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width,loading_height), Color4F(_clrBlue) );
-        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width*MIN(1.0,percent),loading_height), Color4F(_clrRed) );
+        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width,loading_height), Color4F(_clrDarkYellow) );
+        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width*MIN(1.0,percent),loading_height), Color4F(_clrDarkBlue) );
     });
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
