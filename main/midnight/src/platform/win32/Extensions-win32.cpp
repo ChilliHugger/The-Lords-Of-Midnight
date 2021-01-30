@@ -6,7 +6,7 @@
 //
 
 #pragma comment(lib,"user32.lib")
-#include "DeviceExt-win32.h"
+#include "Extensions-win32.h"
 
 namespace chilli
 {
