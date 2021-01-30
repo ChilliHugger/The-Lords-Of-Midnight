@@ -179,7 +179,9 @@ void panel_splashscreen::removeLoadingBars()
 
 void panel_splashscreen::complete()
 {
-    removeLoadingBars();
+    RUN_ON_UI_THREAD([=](){
+        removeLoadingBars();
+        });
 
     auto Duration = utils::getTimeInMilliseconds() - StartTime;
     

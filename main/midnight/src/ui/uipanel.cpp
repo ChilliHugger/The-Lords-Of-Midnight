@@ -48,6 +48,8 @@ bool uipanel::init()
     size.width -= padding.left+padding.right;
     size.height -= padding.top+padding.bottom;
     safeArea = cocos2d::Layer::create();
+    //safeArea = cocos2d::LayerColor::create(Color4B(_clrRed), size.width, size.height);
+    //safeArea->setOpacity(ALPHA(alpha_1qtr));
     safeArea->setContentSize(size);
     safeArea->setLocalZOrder(ZORDER_FAR+500);
     safeArea->setPosition(padding.left,padding.bottom);
