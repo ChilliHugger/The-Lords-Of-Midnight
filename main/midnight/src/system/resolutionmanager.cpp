@@ -175,7 +175,7 @@ padding resolutionmanager::getSafeArea()
 
     auto r = director->getSafeAreaRect();
     
-    result.left = result.right = r.origin.x /  director->getOpenGLView()->getContentScaleFactor();
+    result.left = result.right = r.origin.x; 
     result.top = result.bottom = 0;
     return result;
 }

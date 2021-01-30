@@ -79,23 +79,23 @@ bool panel_map_detailed::init()
     uihelper::AddBottomRight(safeArea, map, RES(10), RES(10) );
 
     auto circle1 = Sprite::createWithSpriteFrameName("circle_selector");
-    circle1->setScale(0.25f);
+    circle1->setScale(PHONE_SCALE(0.25f));
     circle1->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(safeArea, circle1, RES(48), RES(48) );
+    uihelper::AddTopLeft(safeArea, circle1, RES(48), RES(PHONE_SCALE(48)) );
     circle1->setAnchorPoint(uihelper::AnchorCenter);
 
     auto circle2 = Sprite::createWithSpriteFrameName("circle_selector");
-    circle2->setScale(0.25f);
+    circle2->setScale(PHONE_SCALE(0.25f));
     circle2->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(safeArea, circle2, RES(48), RES(48+64) );
+    uihelper::AddTopLeft(safeArea, circle2, RES(48), RES(PHONE_SCALE(48+64)) );
     circle2->setAnchorPoint(uihelper::AnchorCenter);
 
     auto map_down = uihelper::CreateImageButton("map_scale_down_button", ID_DOWN, clickCallback);
-    uihelper::AddTopLeft(safeArea, map_down, RES(48), RES(48) );
+    uihelper::AddTopLeft(safeArea, map_down, RES(48), RES(PHONE_SCALE(48)) );
     map_down->setAnchorPoint(uihelper::AnchorCenter);
   
     auto map_up = uihelper::CreateImageButton("map_scale_up_button", ID_UP, clickCallback);
-    uihelper::AddTopLeft(safeArea, map_up, RES(48), RES(48+64) );
+    uihelper::AddTopLeft(safeArea, map_up, RES(48), RES(PHONE_SCALE(48+64)) );
     map_up->setAnchorPoint(uihelper::AnchorCenter);
   
     int adjy=RES(32); //*scale;
