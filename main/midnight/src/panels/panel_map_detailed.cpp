@@ -153,7 +153,6 @@ bool panel_map_detailed::init()
       
     updateFilters();
     
-    model->mapscale = 1.0f;
     updateScale();
     
     showHelpWindow(HELP_DISCOVERY_MAP);
