@@ -1,5 +1,18 @@
 The Lords of Midnight
 
+Version 2.0 (28)
+1. Added: panel_map_detailed: Simple zoom gadget
+2. Fixed: panel_look: Failed move for group now thinks for correct lord
+3. Fixed: [mobile] panel_options: removed 'Keyboard Style'
+4. Fixed: panel_options: removed 'Think Paging'
+5. Fixed: panel_think: Terrain is now shown black
+6. Updated splash screen for wide views
+7. Updated credits screen for wide views
+8. Fixed: [Desktop] Round window width calculation
+9. panel_look: reposition group leader shield
+10. Misc cosmetic menu tweaks
+11. Fixed: [ios] correct safe area calculation for notch 
+
 Version 2.0 (27)
 1. Fixed: Misc memory leaks - potential random crashes
 
