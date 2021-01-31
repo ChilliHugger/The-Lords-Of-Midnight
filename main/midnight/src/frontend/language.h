@@ -25,6 +25,7 @@
 
 #if defined(_DDR_)
     #define EXIT_MSG            "Do you want to exit\nDoomdark's Revenge?"
+    #define _UPDATE_PROMPT_     "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?"
     #define _NOVELLA_PROMPT_    "You are about to open a browser window to read the Doomdark's Revenge Novella\n\nAre you sure that you wish to continue?"
     #define _GUIDE_PROMPT_      "You are about to open a browser window to read the Doomdark's Revenge Playing Guide\n\nAre you sure that you wish to continue?"
     #define _NOVELLA_DOCUMENT_PDF_  "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.pdf"
