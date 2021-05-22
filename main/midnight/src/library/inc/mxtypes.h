@@ -35,6 +35,9 @@ typedef std::function<void(void)> MXVoidCallback;
 #define CONTINUE_IF_NULL( x ) \
     CONTINUE_IF( (x) == nullptr )
 
+#define RETURN_IF_NULL( x )  \
+    if ( (x) == null ) return
+
 #define BREAK_IF( x )  \
     if ( (x) ) break
 

@@ -23,6 +23,8 @@ protected:
     virtual void onExit() override;
     
     void removeLoadingBars();
+    void hideLoadingBars();
+
 
     void updateProgress( f32 percent );
     void complete();

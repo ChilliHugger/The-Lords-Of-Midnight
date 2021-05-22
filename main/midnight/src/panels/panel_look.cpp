@@ -302,12 +302,8 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
             mr->showPage(MODE_THINK_SEEK, c.lastcommandid);
 
         }
-        
-        this->scheduleOnce( [&](float) {
-            delayedSave();
-        }, 0.1f, "DelayedSave" );
-        
-        
+                
+        delayedSave();
     }
     
     // get the current location
@@ -370,6 +366,7 @@ void panel_look::delayedSave()
         && recruitable_characters.Count() ) {
         mr->showPage ( MODE_THINK_APPROACH, recruitable_characters[0] );
     }
+    mr->showPage ( MODE_THINK );
 }
 
 //void panel_look::OnActionComplete( uiaction* sender, s32 value )
@@ -967,7 +964,8 @@ void panel_look::stopMovement(LANDSCAPE_MOVEMENT type)
 
 void panel_look::startInactivity()
 {
-    this->scheduleOnce( [&](float) {
+    this->scheduleOnce( [&](float)
+    {
         showInactivityHelp();
     }, NONE_ACTIVTY_DURATION, "NonActivityTimer" );
 }

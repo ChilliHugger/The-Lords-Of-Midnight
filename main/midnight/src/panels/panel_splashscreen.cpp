@@ -105,18 +105,16 @@ bool panel_splashscreen::init()
 
     // Initialise in a thread
     auto atp = AsyncTaskPool::getInstance();
-    atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]() {
+    atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]()
+    {
         mr->initialise( progress );
         progress->Stop();
         loading_complete=true;
-        //unscheduleUpdate();
         UIDEBUG("MAX_PROGESS=%d",progress->current);
         SAFEDELETE(progress);
         complete();
     });
     
-
-
     return true;
 }
 
@@ -166,6 +164,14 @@ void panel_splashscreen::update(float delta)
 
 }
 
+void panel_splashscreen::hideLoadingBars()
+{
+    for(auto c : loading_bars)
+    {
+        c->setVisible(false);
+    }
+}
+
 void panel_splashscreen::removeLoadingBars()
 {
     for(auto c : loading_bars)
@@ -179,9 +185,10 @@ void panel_splashscreen::removeLoadingBars()
 
 void panel_splashscreen::complete()
 {
-    RUN_ON_UI_THREAD([=](){
-        removeLoadingBars();
-        });
+    RUN_ON_UI_THREAD([=]()
+    {
+        hideLoadingBars();
+    });
 
     auto Duration = utils::getTimeInMilliseconds() - StartTime;
     
@@ -195,8 +202,8 @@ void panel_splashscreen::complete()
         delay = 1;
     }
     
-    this->scheduleOnce( [&](float) {
-
+    this->scheduleOnce([&](float)
+    {
         if ( !mr->config->skip_dedication ) {
             mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
         } else {
