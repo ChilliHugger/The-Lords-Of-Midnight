@@ -15,9 +15,11 @@ class panel_advert : public uipanel
 {
     
 public:
-    virtual bool init();
+    virtual bool init() override;
     
     CREATE_FUNC(panel_advert);
+    
+    virtual void OnActivate() override;
     
 protected:    
 };

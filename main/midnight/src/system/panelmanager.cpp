@@ -53,10 +53,10 @@ void panelmanager::setPanelMode ( panelmode_t mode, bool history )
 
 void panelmanager::setPanelMode ( panelmode_t mode, transition_t transition, bool history )
 {
-//    if ( mode == MODE_MAINMENU ) {
-//        if ( CONFIG(bumpAdvert()) )
-//            mode = MODE_ADVERT;
-//    }
+    if ( mode == MODE_MAINMENU && currentmode != MODE_ADVERT) {
+        if ( CONFIG(bumpAdvert()) )
+            mode = MODE_ADVERT;
+    }
 
     previousmode = this->currentmode ;
 
@@ -228,8 +228,10 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
         
     }
 
-    CC_SAFE_RELEASE(outgoing_panel);
-
+    if(transition != TRANSITION_NONE)
+    {
+        CC_SAFE_RELEASE(outgoing_panel);
+    }
 }
 
 void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
