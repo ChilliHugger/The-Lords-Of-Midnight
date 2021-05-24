@@ -366,7 +366,7 @@ void panel_look::delayedSave()
         && recruitable_characters.Count() ) {
         mr->showPage ( MODE_THINK_APPROACH, recruitable_characters[0] );
     }
-    mr->showPage ( MODE_THINK );
+    //mr->showPage ( MODE_THINK );
 }
 
 //void panel_look::OnActionComplete( uiaction* sender, s32 value )

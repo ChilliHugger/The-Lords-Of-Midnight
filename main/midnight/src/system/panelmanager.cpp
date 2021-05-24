@@ -174,14 +174,16 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
         transition=TRANSITION_NONE;
     
     outgoing_panel = currentPanel();
-    
+        
     if ( outgoing_panel == incomming )
         transition = TRANSITION_NONE ;
     
     currentpanel = incomming;
     
     if ( incomming ) {
-        
+    
+        currentpanel->retain();
+    
         Director* director = Director::getInstance();
         
         if ( transition == TRANSITION_NONE ) {
@@ -228,10 +230,7 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
         
     }
 
-    if(transition != TRANSITION_NONE)
-    {
-        CC_SAFE_RELEASE(outgoing_panel);
-    }
+    CC_SAFE_RELEASE(outgoing_panel);
 }
 
 void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
@@ -249,6 +248,8 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
     currentpanel = incomming;
     
     if ( incomming ) {
+        
+        currentpanel->retain();
         
         Director* director = Director::getInstance();
         

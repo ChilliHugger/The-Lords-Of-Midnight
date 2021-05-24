@@ -1,5 +1,15 @@
 The Lords of Midnight
 
+Version 2.0 (30)
+1. Fixed: panel_look: Think page on move
+2. Fixed: crashes when returning from adverts with transitions turned on
+
+
+Version 2.0 (29)
+1. Fixed: crashes when returning from adverts with transitions turned off
+2. Fixed: panel_splash: Attempted fix for crash on loading screens
+3. Fixed: panel_look: Attempted fix for crash after movement
+
 Version 2.0 (28)
 1. Added: panel_map_detailed: Simple zoom gadget
 2. Fixed: panel_look: Failed move for group now thinks for correct lord
@@ -11,7 +21,7 @@ Version 2.0 (28)
 8. Fixed: [Desktop] Round window width calculation
 9. panel_look: reposition group leader shield
 10. Misc cosmetic menu tweaks
-11. Fixed: [ios] correct safe area calculation for notch 
+11. Fixed: [ios] correct safe area calculation for notch
 
 Version 2.0 (27)
 1. Fixed: Misc memory leaks - potential random crashes

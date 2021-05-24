@@ -25,7 +25,7 @@
     #define ADVERT_FREQUENCY                16
 #else
     #define _SHOW_SPLASH_
-    #define ADVERT_FREQUENCY                5
+    #define ADVERT_FREQUENCY                16
     #define _USE_DEBUG_MENU_
     #define _SHOW_GAME_VERSION_
     //#define _DEBUG_LANDSCAPE_
