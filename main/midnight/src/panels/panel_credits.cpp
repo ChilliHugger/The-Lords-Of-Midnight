@@ -11,7 +11,7 @@
 
 #include "panel_credits.h"
 #include "panel_mainmenu.h"
-
+#include "../frontend/language.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "../system/panelmanager.h"
@@ -21,10 +21,10 @@ USING_NS_CC;
 
    
 LPCSTR text[] = {
-    "Original game by", "Mike Singleton",
-    "Programming", "Chris Wild",
-    "Graphics redrawn by", "Jure Rogelj",
-    "Testing by", "Scott Gibbens"
+    CREDITS_ORIGINAL_GAME,  CREDITS_MIKE,
+    CREDITS_PROGRAMMING,    CREDITS_PROGRAMMERS,
+    CREDITS_GRAPHICS,       CREDITS_ARTISTS,
+    CREDITS_TESTING,        CREDITS_TESTERS
 };
 
 /*
@@ -37,7 +37,7 @@ Andrew Smart, Stuart Voice, Seamus Waldron, Chris Webster, Jason Webster,
 David West, and all the members of midnight/mu
 */
 
-
+constexpr f32 CREDIT_SCREEN_DELAY = 5.0f;
 
 bool panel_credits::init()
 {
@@ -54,7 +54,7 @@ bool panel_credits::init()
     setBackground(Color3B(194,182,213));
 #endif
 
-    std::string version = "Version: "
+    std::string version = CREDITS_VERSION
         + Application::getInstance()->getVersion()
         + " (" + chilli::extensions::getBuildNo() + ")";
 
@@ -66,7 +66,6 @@ bool panel_credits::init()
 
     auto image = Sprite::create("screens/misc/credits.png");
     uihelper::AddBottomCenter(safeArea, image);
-
 
     TTFConfig font_config_splash;
 
@@ -80,7 +79,6 @@ bool panel_credits::init()
     f32 lineHeight = RES(40);
     f32 x = 0;
     f32 y = RES(64);
-
    
     for(int ii=0; ii<NUMELE(text); ii+=2)
     {
@@ -101,9 +99,7 @@ bool panel_credits::init()
         y+=(lineHeight*2);
     }
 
-
-
-    Exit(5.0);
+    Exit(CREDIT_SCREEN_DELAY);
     
     return true;
 }

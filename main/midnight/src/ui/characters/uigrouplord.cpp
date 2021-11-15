@@ -36,7 +36,7 @@ bool uigrouplord::init()
         addChild(circle);
         
 //        auto box = DrawNode::create();
-//        box->drawRect(Vec2(0,0), Vec2(getContentSize().width,getContentSize().height), Color4F(_clrBlack) );
+//        box->drawRect(Vec2::ZERO, Vec2(getContentSize().width,getContentSize().height), Color4F(_clrBlack) );
 //        addChild(box);
         //        Vec2 pos2 = Vec2(getContentSize().width/4,getContentSize().height/4);
         //        bg->setPosition(pos2);

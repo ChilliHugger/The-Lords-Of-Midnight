@@ -47,8 +47,8 @@ bool LandscapeLand::initWithOptions( LandscapeOptions* options )
     auto floor = Sprite::createWithSpriteFrameName( "floor" );
     addChild(floor);
     
-    floor->setPosition(0, 0);
-    floor->setAnchorPoint( Vec2(0,0) );
+    floor->setPosition(Vec2::ZERO);
+    floor->setAnchorPoint(Vec2::ZERO);
     floor->setName("floor");
     
     if ( options->terrainTimeShader ) {

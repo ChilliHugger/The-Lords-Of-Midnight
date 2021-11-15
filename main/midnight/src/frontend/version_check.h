@@ -13,14 +13,14 @@
 #ifdef _MSC_VER
 #if defined(_OS_DESKTOP_)
     #define _USE_VERSION_CHECK_
-    #define _VERSION_URL    "https://doomdarksrevenge.com/version/ddr_v2.0_win.cfg"
+    constexpr LPCSTR _VERSION_URL   = "https://doomdarksrevenge.com/version/ddr_v2.0_win.cfg";
 #endif
 #endif
 
 #if defined(_OS_OSX_)
 #if !defined(_OS_MAC_APPSTORE_)
-#define _USE_VERSION_CHECK_
-#define _VERSION_URL    "https://doomdarksrevenge.com/version/ddr_v2.0_osx.cfg"
+    #define _USE_VERSION_CHECK_
+    constexpr LPCSTR _VERSION_URL   = "https://doomdarksrevenge.com/version/ddr_v2.0_osx.cfg";
 #endif
 #endif
 
@@ -31,14 +31,14 @@
 #ifdef _MSC_VER
 #if defined(_OS_DESKTOP_)
     #define _USE_VERSION_CHECK_
-    #define _VERSION_URL    "https://thelordsofmidnight.com/version/lom_v2.0_win.cfg"
+    constexpr LPCSTR _VERSION_URL   = "https://thelordsofmidnight.com/version/lom_v2.0_win.cfg";
 #endif
 #endif
 
 #if defined(_OS_OSX_)
 #if !defined(_OS_MAC_APPSTORE_)
     #define _USE_VERSION_CHECK_
-    #define _VERSION_URL    "https://thelordsofmidnight.com/version/lom_v2.0_osx.cfg"
+    constexpr LPCSTR _VERSION_URL   = "https://thelordsofmidnight.com/version/lom_v2.0_osx.cfg";
 #endif
 #endif
 

@@ -1,6 +1,7 @@
 #include "panel_splashscreen.h"
 #include "panel_dedication.h"
 #include "panel_mainmenu.h"
+#include "../frontend/language.h"
 
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
@@ -18,9 +19,9 @@
 
 USING_NS_CC;
 
-#define MAX_SPLASHSCREEN_TIME   3000
-#define TRANSITION_TIME         2.0
-#define MAX_PROGESS             40.0f
+constexpr s32 MAX_SPLASHSCREEN_TIME = 3000;
+constexpr f32 TRANSITION_TIME = 2.0;
+constexpr f32 MAX_PROGESS = 40.0f;
 
 panel_splashscreen::panel_splashscreen() :
     progress(nullptr),
@@ -57,29 +58,25 @@ bool panel_splashscreen::init()
     font_config_splash.distanceFieldEnabled = false;
     
     f32 lineHeight = RES(40);
-    f32 x = RES(32); //(getContentSize().width/2) - RES(476);
+    f32 x = RES(32);
     f32 y = RES(32);
     
-    auto label1 = Label::createWithTTF( font_config_splash, "Now explore the epic world of" );
-    //label1->getFontAtlas()->setAntiAliasTexParameters();
+    auto label1 = Label::createWithTTF( font_config_splash, SPLASH_SCREEN_EXPLORE );
     label1->setTextColor( Color4B(0,255,0,255) );
     label1->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(background,label1,x,y);
 
-    auto label2 = Label::createWithTTF( font_config_splash, "THE LORDS OF MIDNIGHT" );
-    //label2->getFontAtlas()->setAntiAliasTexParameters();
+    auto label2 = Label::createWithTTF( font_config_splash, SPLASH_SCREEN_TITLE );
     label2->setTextColor( Color4B(253,253,0,255) );
     label2->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(background,label2,x,y+(lineHeight*1));
 
-    auto label3 = Label::createWithTTF( font_config_splash, "         by" );
-    //label3->getFontAtlas()->setAntiAliasTexParameters();
+    auto label3 = Label::createWithTTF( font_config_splash, SPLASH_SCREEN_BY );
     label3->setTextColor( Color4B(205,0,205,255) );
     label3->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(background,label3,x,y+(lineHeight*2));
 
-    auto label4 = Label::createWithTTF( font_config_splash, "Mike Singleton" );
-    //label4->getFontAtlas()->setAntiAliasTexParameters();
+    auto label4 = Label::createWithTTF( font_config_splash, SPLASH_SCREEN_MIKE );
     label4->setTextColor( Color4B(0,255,255,255) );
     label4->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(background,label4,x,y+(lineHeight*3));
@@ -216,8 +213,8 @@ void panel_splashscreen::updateProgress(f32 percent)
 {
     RUN_ON_UI_THREAD([=](){
         loading_progress->clear();
-        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width,loading_height), Color4F(_clrDarkYellow) );
-        loading_progress->drawSolidRect(Vec2(0,0), Vec2(loading_width*MIN(1.0,percent),loading_height), Color4F(_clrDarkBlue) );
+        loading_progress->drawSolidRect(Vec2::ZERO, Vec2(loading_width,loading_height), Color4F(_clrDarkYellow) );
+        loading_progress->drawSolidRect(Vec2::ZERO, Vec2(loading_width*MIN(1.0,percent),loading_height), Color4F(_clrDarkBlue) );
     });
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
