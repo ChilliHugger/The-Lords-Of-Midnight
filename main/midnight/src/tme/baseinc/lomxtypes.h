@@ -38,20 +38,20 @@ using namespace chilli::types;
 //#endif
 
         enum mxresult_t {
-            MX_OK                    =    1,
-            MX_FAILED                =    0,
-            MX_UNKNOWN                =    -1,
-            MX_NULL_STRUCT_PTR        =    -2,
-            MX_INVALID_INFO_TYPE    =    -3,
-            MX_INVALID_INFO_SIZE    =    -4,
-            MX_INVALID_IDTYPE        =    -5,
-            MX_INVALID_ID            =    -6,
-            MX_NOT_IMPLEMENTED        =    -7,
-            MX_INVALID_ARGUMENT_COUNT        =    -8,
-            MX_INVALID_ARGUMENT        =    -9,
+            MX_OK                       =    1,
+            MX_FAILED                   =    0,
+            MX_UNKNOWN                  =    -1,
+            MX_NULL_STRUCT_PTR          =    -2,
+            MX_INVALID_INFO_TYPE        =    -3,
+            MX_INVALID_INFO_SIZE        =    -4,
+            MX_INVALID_IDTYPE           =    -5,
+            MX_INVALID_ID               =    -6,
+            MX_NOT_IMPLEMENTED          =    -7,
+            MX_INVALID_ARGUMENT_COUNT   =    -8,
+            MX_INVALID_ARGUMENT         =    -9,
 
-            MX_INCORRECT_VERSION    =    -10,
-            MX_UNKNOWN_FILE            =    -11,
+            MX_INCORRECT_VERSION        =    -10,
+            MX_UNKNOWN_FILE             =    -11,
         };
 
         enum mxgender_t {
@@ -170,74 +170,74 @@ using namespace chilli::types;
         enum mxterrain_t {
             
             // lom
-            TN_PLAINS        =    0,
-            TN_CITADEL        =    1,
-            TN_FOREST        =    2,
-            TN_HENGE        =    3,
-            TN_TOWER        =    4,
-            TN_VILLAGE        =    5,
-            TN_DOWNS        =    6,
-            TN_KEEP            =    7,
-            TN_SNOWHALL        =    8,
-            TN_LAKE            =    9,
-            TN_FROZENWASTE    =    10,
-            TN_RUIN            =    11,
-            TN_LITH            =    12,
-            TN_CAVERN        =    13,
-            TN_MOUNTAIN        =    14,
-            TN_UNUSED_15    =   15, // Used to be ARMY
+            TN_PLAINS           =    0,
+            TN_CITADEL          =    1,
+            TN_FOREST           =    2,
+            TN_HENGE            =    3,
+            TN_TOWER            =    4,
+            TN_VILLAGE          =    5,
+            TN_DOWNS            =    6,
+            TN_KEEP             =    7,
+            TN_SNOWHALL         =    8,
+            TN_LAKE             =    9,
+            TN_FROZENWASTE      =    10,
+            TN_RUIN             =    11,
+            TN_LITH             =    12,
+            TN_CAVERN           =    13,
+            TN_MOUNTAIN         =    14,
+            TN_UNUSED_15        =    15, // Used to be ARMY
             
             // NOTE: There is a mapping problem here between tiled and TME
             // this needs to be resolved and may need to deal
             // with backward compatability issues
             
             // ddr
-            TN_PLAINS2        =    16,
+            TN_PLAINS2          =    16,
             
-            TN_MOUNTAIN2    =    17,
-            TN_FOREST2        =    18,
-            TN_HILLS        =    19,
-            TN_GATE            =    20, // tunnel exit/entrance
-            TN_TEMPLE        =    21, // tunnel exit/entrance
-            TN_PIT            =    22, // tunnel exit/entrance
-            TN_PALACE        =    23, // tunnel exit/entrance
-            TN_FORTRESS        =    24,
-            TN_HALL            =    25,
-            TN_HUT            =    26,
-            TN_WATCHTOWER    =    27,
-            TN_CITY            =    28,
-            TN_FOUNTAIN        =    29,
-            TN_STONES        =    30,
-            TN_ICYWASTE     =    31,
-            TN_UNUSED_32    =   32,
+            TN_MOUNTAIN2        =    17,
+            TN_FOREST2          =    18,
+            TN_HILLS            =    19,
+            TN_GATE             =    20, // tunnel exit/entrance
+            TN_TEMPLE           =    21, // tunnel exit/entrance
+            TN_PIT              =    22, // tunnel exit/entrance
+            TN_PALACE           =    23, // tunnel exit/entrance
+            TN_FORTRESS         =    24,
+            TN_HALL             =    25,
+            TN_HUT              =    26,
+            TN_WATCHTOWER       =    27,
+            TN_CITY             =    28,
+            TN_FOUNTAIN         =    29,
+            TN_STONES           =    30,
+            TN_ICYWASTE         =    31,
+            TN_UNUSED_32        =    32,
             
             // citadel
-            TN_LAND         =   33,
-            TN_ISLE         =   34,
-            TN_LAKELAND     =   35,
-            TN_PLAIN        =   36,
-            TN_PLAINS3      =   37,
-            TN_FOREST3      =   38,
-            TN_UNUSED_39    =   39,
-            TN_TREES        =   40,
-            TN_MOUNTAIN3    =   41,
-            TN_ICY_MOUNTAIN =   42,
-            TN_DOWNS3       =   43,
-            TN_HILLS3       =   44,
-            TN_FOOTHILLS    =   45,
-            TN_VALLEY       =   46,
-            TN_BAY          =   47,
-            TN_SEA          =   48,
-            TN_RIVER        =   49,
-            TN_MARSH        =   50,
-            TN_LAKE3        =   51,
-            TN_UNUSED_52    =   52,
-            TN_UNUSED_53    =   53,
-            TN_UNUSED_54    =   54,
-            TN_MIST         =   55,
-            TN_UNUSED_56    =   56,
+            TN_LAND             =    33,
+            TN_ISLE             =    34,
+            TN_LAKELAND         =    35,
+            TN_PLAIN            =    36,
+            TN_PLAINS3          =    37,
+            TN_FOREST3          =    38,
+            TN_UNUSED_39        =    39,
+            TN_TREES            =    40,
+            TN_MOUNTAIN3        =    41,
+            TN_ICY_MOUNTAIN     =    42,
+            TN_DOWNS3           =    43,
+            TN_HILLS3           =    44,
+            TN_FOOTHILLS        =    45,
+            TN_VALLEY           =    46,
+            TN_BAY              =    47,
+            TN_SEA              =    48,
+            TN_RIVER            =    49,
+            TN_MARSH            =    50,
+            TN_LAKE3            =    51,
+            TN_UNUSED_52        =    52,
+            TN_UNUSED_53        =    53,
+            TN_UNUSED_54        =    54,
+            TN_MIST             =    55,
+            TN_UNUSED_56        =    56,
 
-            TN_NONE=127,
+            TN_NONE             =    127,
 
         };
 
@@ -287,50 +287,50 @@ using namespace chilli::types;
         };
 
         enum mxorders_t {
-            OD_NONE                        =    0,
+            OD_NONE                     =    0,
             // regiment
-            OD_GOTO                        =    1,
-            OD_WANDER                    =    2,
-            OD_FOLLOW                    =    3,
+            OD_GOTO                     =    1,
+            OD_WANDER                   =    2,
+            OD_FOLLOW                   =    3,
             OD_ROUTE                    =    4,
-            OD_DELAYED_WANDER           =   5,
-            OD_HOLD                        =    6,
+            OD_DELAYED_WANDER           =    5,
+            OD_HOLD                     =    6,
 #if defined(_DDR_)
             // character
-            OD_FOLLOW_LIEGE             =   7,  // 0
-            OD_FOLLOW_FOE               =   8,  // 1
-            OD_FIND_OBJECT              =   9,  // 2
-            OD_HOME                     =   10, // 3
+            OD_FOLLOW_LIEGE             =    7,  // 0
+            OD_FOLLOW_FOE               =    8,  // 1
+            OD_FIND_OBJECT              =    9,  // 2
+            OD_HOME                     =    10, // 3
 #endif
         };
 
         enum m_objective_t    {
-            MO_NONE                        =    0,
+            MO_NONE                     =    0,
             MO_MINOR                    =    1,
             MO_MAJOR                    =    2,
-            MO_FLAG                        =    3,
+            MO_FLAG                     =    3,
         };
 
         enum m_condition_t {
-            MC_NONE                        =    0,
-            MC_STRONGHOLD_TAKEN            =    1,
-            MC_DESTROY_OBJECT            =    2,
-            MC_CHARACTER_DEAD            =    3,
-            MC_MISSION_COMPLETE            =    4,
+            MC_NONE                     =    0,
+            MC_STRONGHOLD_TAKEN         =    1,
+            MC_DESTROY_OBJECT           =    2,
+            MC_CHARACTER_DEAD           =    3,
+            MC_MISSION_COMPLETE         =    4,
             MC_STRONGHOLD_FALLEN        =    5,
             MC_SAME_LOCATION            =    6,
         };
 
         enum m_action_t {
-            MA_NONE                        =    0,
-            MA_DISABLE                    =    1,
-            MA_ENABLE                    =    2,
+            MA_NONE                     =    0,
+            MA_DISABLE                  =    1,
+            MA_ENABLE                   =    2,
         };
 
         enum m_gameover_t {
-            MG_NONE                     =   0,
-            MG_WIN                      =   1,
-            MG_LOSE                     =   2
+            MG_NONE                     =    0,
+            MG_WIN                      =    1,
+            MG_LOSE                     =    2
         };
 
 #if defined(_DDR_)
@@ -377,64 +377,64 @@ using namespace chilli::types;
 #endif
 
         enum infotype_t {
-            INFO_NONE                    =    0,
-            INFO_AREAINFO                =    1,
-            INFO_ATTRIBUTEINFO            =    2,
-            INFO_DIRECTIONINFO            =    3,
-            INFO_GENDERINFO                =    4,
-            INFO_OBJECT                    =    5,
-            INFO_RACEINFO                =    6,
+            INFO_NONE                   =    0,
+            INFO_AREAINFO               =    1,
+            INFO_ATTRIBUTEINFO          =    2,
+            INFO_DIRECTIONINFO          =    3,
+            INFO_GENDERINFO             =    4,
+            INFO_OBJECT                 =    5,
+            INFO_RACEINFO               =    6,
             INFO_TERRAININFO            =    7,
-            INFO_UNITINFO                =    8,
-            INFO_ARMY                    =    9,
-            INFO_CHARACTER                =    10,
-            INFO_LOCATIONINFO            =    11,
-            INFO_REGIMENT                =    12,
-            INFO_ROUTENODE                =    13,
-            INFO_STRONGHOLD                =    14,
-            //INFO_OBJECT                    =    15,
-            INFO_UNIT                    =    16,
-            INFO_ARMYTOTAL                =    17,
+            INFO_UNITINFO               =    8,
+            INFO_ARMY                   =    9,
+            INFO_CHARACTER              =    10,
+            INFO_LOCATIONINFO           =    11,
+            INFO_REGIMENT               =    12,
+            INFO_ROUTENODE              =    13,
+            INFO_STRONGHOLD             =    14,
+            //INFO_OBJECT               =    15,
+            INFO_UNIT                   =    16,
+            INFO_ARMYTOTAL              =    17,
             INFO_MAPLOCATION            =    18,
-            INFO_STRING                    =    19,
-            INFO_MEMORYITEM                =    20,
+            INFO_STRING                 =    19,
+            INFO_MEMORYITEM             =    20,
             INFO_COMMANDINFO            =    21,
-            INFO_PLACE                    =    22,
+            INFO_PLACE                  =    22,
             // skip 23
             // skip 24
             // skip 25
 #if defined(_DDR_)
-            INFO_OBJECT_POWER            =   26,
-            INFO_OBJECT_TYPE             =   27,
+            INFO_OBJECT_POWER           =    26,
+            INFO_OBJECT_TYPE            =    27,
 #endif
 };
 
         enum id_type_t {
             IDT_NONE                    =    0,
             IDT_AREAINFO                =    1,
-            IDT_ATTRIBUTEINFO            =    2,
-            IDT_DIRECTIONINFO            =    3,
-            IDT_GENDERINFO                =    4,
-            IDT_OBJECT                    =    5,
+            IDT_ATTRIBUTEINFO           =    2,
+            IDT_DIRECTIONINFO           =    3,
+            IDT_GENDERINFO              =    4,
+            IDT_OBJECT                  =    5,
             IDT_RACEINFO                =    6,
-            IDT_TERRAININFO                =    7,
+            IDT_TERRAININFO             =    7,
             IDT_UNITINFO                =    8,
             IDT_ARMY                    =    9,
-            IDT_CHARACTER                =    10,
+            IDT_CHARACTER               =    10,
             IDT_LOCATIONINFO            =    11,
             IDT_REGIMENT                =    12,
-            IDT_ROUTENODE                =    13,
-            IDT_STRONGHOLD                =    14,
-            //IDT_OBJECT                    =    15,
+            IDT_ROUTENODE               =    13,
+            IDT_STRONGHOLD              =    14,
+            //IDT_OBJECT                =    15,
             IDT_UNIT                    =    16,
-            IDT_ARMYTOTAL                =    17,
+            IDT_ARMYTOTAL               =    17,
             IDT_LOCATION                =    18,
-            IDT_STRING                    =    19,
-            IDT_MEMORYITEM                =    20,
-            IDT_COMMANDINFO                =    21,
-            IDT_PLACE                    =    22,
-            IDT_MISSION                    =    23,
-            IDT_VICTORY                    =    24,
+            IDT_STRING                  =    19,
+            IDT_MEMORYITEM              =    20,
+            IDT_COMMANDINFO             =    21,
+            IDT_PLACE                   =    22,
+            IDT_MISSION                 =    23,
+            IDT_VICTORY                 =    24,
             IDT_MAPLOCATION             =   25,
             
 #if defined(_DDR_)
@@ -625,18 +625,6 @@ using namespace chilli::types;
 #endif
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 namespace tme {
 
 // Foward Prototypes
@@ -647,30 +635,39 @@ namespace tme {
     s16 GetLocY(mxid id);
     
 
-#define MXSUCCESS(x)                (x > 0)
-#define MXFAILED(x)                    (x <= 0)
+#define MXSUCCESS(x)                    (x > 0)
+#define MXFAILED(x)                     (x <= 0)
 
 // normal idt
-#define MAKE_ID(type,id)            (mxid)(((type)<<24)|id)
-#define ID_TYPE(id)                 (id_type_t)((id>>24)&0xff)
-#define GET_ID(id)                     (id&0x00ffffff)
+#define MAKE_ID(type,id)                (mxid)(((type)<<24)|id)
+#define ID_TYPE(id)                     (id_type_t)((id>>24)&0xff)
+#define GET_ID(id)                      (id&0x00ffffff)
 // army idt
-#define MAKE_ARMYID(x,y)            MAKE_ID(IDT_ARMY,((x<<16)|y))
-#define GET_ARMYIDTYPE(id)            ((id>>16)&0xff)
-#define GET_ARMYID(id)                (id&0xffff)
+#define MAKE_ARMYID(x,y)                MAKE_ID(IDT_ARMY,((x<<16)|y))
+#define GET_ARMYIDTYPE(id)              ((id>>16)&0xff)
+#define GET_ARMYID(id)                  (id&0xffff)
 // location idt
 
-#define PREV_DIRECTION(x)            ((mxdir_t)((x-1)&7)) 
-#define NEXT_DIRECTION(x)            ((mxdir_t)((x+1)&7))
+#define PREV_DIRECTION(x)               ((mxdir_t)((x-1)&7))
+#define NEXT_DIRECTION(x)               ((mxdir_t)((x+1)&7))
 
-#define MAKE_MAPLOCID(x,y)            MakeMapLocId((s16)x,(s16)y)
-#define MAKE_LOCID(x,y)                MakeLocId((s16)x,(s16)y)
-#define GET_LOCIDX(id)                GetLocX(id)
-#define GET_LOCIDY(id)                GetLocY(id)
+#define MAKE_MAPLOCID(x,y)              MakeMapLocId((s16)x,(s16)y)
+#define MAKE_LOCID(x,y)                 MakeLocId((s16)x,(s16)y)
+#define GET_LOCIDX(id)                  GetLocX(id)
+#define GET_LOCIDY(id)                  GetLocY(id)
 
-#define CLEARINFOSTRUCT(x,t)         CLEARSTRUCT(x); x.id = MAKE_ID(t,0); x.size = sizeof(x);
-#define CLEARINFOSTRUCTPTR(ptr,t,s) memset(ptr,0,sizeof(s)); ptr->id = MAKE_ID(t,0); ptr->size = sizeof(s);
-#define ID_4CC(ch0,ch1,ch2,ch3)        (u32)((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) | ((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
+#define CLEARINFOSTRUCT(x,t)            CLEARSTRUCT(x); x.id = MAKE_ID(t,0); x.size = sizeof(x);
+#define CLEARINFOSTRUCTPTR(ptr,t,s) \
+        memset(ptr,0,sizeof(s)); \
+        ptr->id = MAKE_ID(t,0); \
+        ptr->size = sizeof(s);
+    
+#define ID_4CC(ch0,ch1,ch2,ch3) \
+        (u32)((DWORD)(BYTE)(ch0) \
+        | ((DWORD)(BYTE)(ch1) << 8) \
+        | ((DWORD)(BYTE)(ch2) << 16) \
+        | ((DWORD)(BYTE)(ch3) << 24 ))
+        
 #define TERRAIN_VARIANT(x,y)            (x|(y*<<6))
 
     typedef struct callback_t {
@@ -713,42 +710,42 @@ namespace tme {
         s32                x;
         s32                y;
         
-        loc_t() { this->x=0; this->y=0; }
-        loc_t(s32 x, s32 y ) { this->x=x; this->y=y; }
+        loc_t()                             { this->x=0; this->y=0; }
+        loc_t(s32 x, s32 y )                { this->x=x; this->y=y; }
     
-         void operator+=(loc_t value)                { x += value.x; y += value.y; }
-        void operator-=(loc_t value)                { x -= value.x; y -= value.y; }
+        void operator+=(loc_t value)        { x += value.x; y += value.y; }
+        void operator-=(loc_t value)        { x -= value.x; y -= value.y; }
         
-        loc_t operator+(loc_t value) const            { return loc_t(x + value.x, y + value.y); }
-        loc_t operator-(loc_t value) const            { return loc_t(x - value.x, y - value.y); }
+        loc_t operator+(loc_t value) const  { return loc_t(x + value.x, y + value.y); }
+        loc_t operator-(loc_t value) const  { return loc_t(x - value.x, y - value.y); }
 
-        bool operator==(loc_t value) const            { return (x == value.x && y == value.y); }
+        bool operator==(loc_t value) const  { return (x == value.x && y == value.y); }
 
     
     } loc_t ;
 
     typedef struct panloc_t {
-        loc_t    location;        // location
-        u32        size;            // size of location 0-7
-        f32        scale;            // float scaling version of size based on 1.0 = 128x128
-        point    screen;            // screen position when rendered in a 512x384 screen
+        loc_t               location;        // location
+        u32                 size;            // size of location 0-7
+        f32                 scale;           // float scaling version of size based on 1.0 = 128x128
+        point               screen;          // screen position when rendered in a 512x384 screen
     } panloc_t ;
 
     typedef struct info_t {
-        size_t            size;                            // size of structure 
-        mxid            id;                                // 
-    } info_t ;                                
+        size_t              size;           // size of structure
+        mxid                id;             //
+    } info_t ;
 
     typedef struct mxinfo_t : public tme::info_t {
-        flags32            flags;
-        LPSTR            name;
-        void*            userdata;
+        flags32             flags;
+        LPSTR               name;
+        void*               userdata;
     } mxinfo_t ;
 
     typedef struct mxitem_t : public tme::info_t {
-        loc_t            location;
-        flags32            flags;
-        void*            userdata;
+        loc_t               location;
+        flags32             flags;
+        void*               userdata;
     } mxitem_t ;
 
     //typedef struct charimages_t {
@@ -758,8 +755,8 @@ namespace tme {
     //} charimages_t ;
 
     typedef struct battle_t {
-        loc_t            location;
-        u32                killed;
+        loc_t               location;
+        u32                 killed;
         mxbattlestatus_t    status;
     } battle_t ;
 
@@ -772,170 +769,170 @@ namespace tme {
 
         // interface flags
         enum SELECTIONFLAGS {
-            slf_none                =    0,
-            slf_all                    =    MXBIT(1),
-            slf_tunnel                =    MXBIT(2),
+            slf_none            = 0,
+            slf_all             = MXBIT(1),
+            slf_tunnel          = MXBIT(2),
         };
 
         enum ENTITYFLAGS {
-            et_disabled                    = MXBIT(31),
+            et_disabled         = MXBIT(31),
         };
 
         enum MISSIONFLAGS {
-            mf_complete                    = MXBIT(0),        // this score has been completed
-            //mf_enabled                = MXBIT(1),        // this score is enabled
-            mf_any                        = MXBIT(2),        // any reference will do
+            mf_complete         = MXBIT(0),     // this score has been completed
+            //mf_enabled        = MXBIT(1),     // this score is enabled
+            mf_any              = MXBIT(2),     // any reference will do
         };
         enum VICTORYFLAGS {
-            vf_gameover                    = MXBIT(0),        // this victory condition triggers game over
-            //vf_enabled                = MXBIT(1),        // this victory condition is enabled
-            vf_complete                    = MXBIT(2),
+            vf_gameover         = MXBIT(0),     // this victory condition triggers game over
+            //vf_enabled        = MXBIT(1),     // this victory condition is enabled
+            vf_complete         = MXBIT(2),
         };
 
         enum LOCATIONINFOFLAGS {
-            lif_moveforward                = MXBIT(0),        // can we move into the location we are looking at?
-            lif_seek                    = MXBIT(1),        // can we do a search - always true at present
-            lif_hide                    = MXBIT(2),        // can the character hide here?
-            lif_fight                    = MXBIT(3),        // is there anything to fight, and can the <character> do it?
-            lif_recruitchar                = MXBIT(4),        // is there a lord to fight?
-            lif_recruitmen                = MXBIT(5),        // are there any soldiers to recruit, and can the <character> do it
-            lif_guardmen                = MXBIT(6),        // could the <character> place and men on guard
-            lif_enterbattle                = MXBIT(7),        // can we enter into battle?
-            lif_enter_tunnel            = MXBIT(8),        // can we enter tunnel
-            lif_exit_tunnel                = MXBIT(9),        // can we exit tunnel
-            lif_rest                    = MXBIT(10),    // can we rest
-            lif_give                    = MXBIT(11),    // can we give
-            lif_take                    = MXBIT(12),    // can we take
-            lif_use                        = MXBIT(13),    // can we use
-            lif_blocked                 = MXBIT(14),    // way forward is blocked
+            lif_moveforward     = MXBIT(0),     // can we move into the location we are looking at?
+            lif_seek            = MXBIT(1),     // can we do a search - always true at present
+            lif_hide            = MXBIT(2),     // can the character hide here?
+            lif_fight           = MXBIT(3),     // is there anything to fight, and can the <character> do it?
+            lif_recruitchar     = MXBIT(4),     // is there a lord to fight?
+            lif_recruitmen      = MXBIT(5),     // are there any soldiers to recruit, and can the <character> do it
+            lif_guardmen        = MXBIT(6),     // could the <character> place and men on guard
+            lif_enterbattle     = MXBIT(7),     // can we enter into battle?
+            lif_enter_tunnel    = MXBIT(8),     // can we enter tunnel
+            lif_exit_tunnel     = MXBIT(9),     // can we exit tunnel
+            lif_rest            = MXBIT(10),    // can we rest
+            lif_give            = MXBIT(11),    // can we give
+            lif_take            = MXBIT(12),    // can we take
+            lif_use             = MXBIT(13),    // can we use
+            lif_blocked         = MXBIT(14),    // way forward is blocked
         };
 
         enum LOCATIONFLAGS { // 28 bits
-            lf_mist                        = MXBIT(0),     // DDR Scenario, currently not used
-            lf_tunnel                    = MXBIT(1),     // DDR Scenario, currently not used
-            lf_creature                    = MXBIT(2),     // DDR Scenario, currently not used
-            lf_character                = MXBIT(3),     // character in location
-            lf_army                        = MXBIT(4),     // army at location
-            lf_seen                        = MXBIT(5),     // has been seen by the mapper
-            lf_domain                    = MXBIT(6),     // special domain
-            lf_special                    = MXBIT(7),     // is interesting
-            lf_building                    = MXBIT(8),     // currently not used
-            lf_stronghold                = MXBIT(9),     // stronghold at location
-            lf_routenode                = MXBIT(10),    // routenode at location
-            lf_terrain_custom            = MXBIT(11),    // terrain is custom stored
-            lf_object_custom            = MXBIT(12),    // object is custom stored
-            lf_area_custom                = MXBIT(13),    // area is custom stored
+            lf_mist             = MXBIT(0),     // DDR Scenario, currently not used
+            lf_tunnel           = MXBIT(1),     // DDR Scenario, currently not used
+            lf_creature         = MXBIT(2),     // DDR Scenario, currently not used
+            lf_character        = MXBIT(3),     // character in location
+            lf_army             = MXBIT(4),     // army at location
+            lf_seen             = MXBIT(5),     // has been seen by the mapper
+            lf_domain           = MXBIT(6),     // special domain
+            lf_special          = MXBIT(7),     // is interesting
+            lf_building         = MXBIT(8),     // currently not used
+            lf_stronghold       = MXBIT(9),     // stronghold at location
+            lf_routenode        = MXBIT(10),    // routenode at location
+            lf_terrain_custom   = MXBIT(11),    // terrain is custom stored
+            lf_object_custom    = MXBIT(12),    // object is custom stored
+            lf_area_custom      = MXBIT(13),    // area is custom stored
 #if defined(_DDR_)
-            lf_tunnel_exit                = MXBIT(14),    // can exit tunnel here
-            lf_tunnel_entrance            = MXBIT(15),    // can enter tunnel here
+            lf_tunnel_exit      = MXBIT(14),    // can exit tunnel here
+            lf_tunnel_entrance  = MXBIT(15),    // can enter tunnel here
 #endif
-            lf_looked_at                = MXBIT(16),    // has been stood in front of
-            lf_visited                  = MXBIT(17),    // player has visited this location
+            lf_looked_at        = MXBIT(16),    // has been stood in front of
+            lf_visited          = MXBIT(17),    // player has visited this location
 #if defined(_DDR_)
-            lf_tunnel_looked_at         = MXBIT(18),    // player has seen the tunnel
-            lf_tunnel_visited           = MXBIT(19),    // played has visited the tunnel location
-            lf_tunnel_passageway        = MXBIT(20),    // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
-            lf_object                   = MXBIT(21),    // object to take
-            lf_object_special           = MXBIT(22),    // the object to take is one of the special objects
+            lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
+            lf_tunnel_visited   = MXBIT(19),    // played has visited the tunnel location
+            lf_tunnel_passageway    = MXBIT(20),    // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
+            lf_object           = MXBIT(21),    // object to take
+            lf_object_special   = MXBIT(22),    // the object to take is one of the special objects
 #endif
 
         };
 
         enum CHARACTERFLAGS {
-            cf_hidden                    = MXBIT(0),        // currently hiding
-            cf_riding                    = MXBIT(1),        // currently riding
-            cf_alive                    = MXBIT(2),        // alive
-            cf_recruited                = MXBIT(3),        // currently recruited
-            cf_army                        = MXBIT(4),        // allowed an army
-            cf_hide                        = MXBIT(5),        // allowed to hide
-            cf_horse                    = MXBIT(6),        // allowed a horse
-            cf_moonring                    = MXBIT(7),        // allowed the moonring
+            cf_hidden           = MXBIT(0),     // currently hiding
+            cf_riding           = MXBIT(1),     // currently riding
+            cf_alive            = MXBIT(2),     // alive
+            cf_recruited        = MXBIT(3),     // currently recruited
+            cf_army             = MXBIT(4),     // allowed an army
+            cf_hide             = MXBIT(5),     // allowed to hide
+            cf_horse            = MXBIT(6),     // allowed a horse
+            cf_moonring         = MXBIT(7),     // allowed the moonring
 
             // these should be user defined for the scenario
             // lom
-            cf_icecrown                    = MXBIT(8),        // allowed the icecrown
-            cf_destroyicecrown            = MXBIT(9),        // can destroy the ice crown
+            cf_icecrown         = MXBIT(8),     // allowed the icecrown
+            cf_destroyicecrown  = MXBIT(9),     // can destroy the ice crown
             // lom
             
             // ddr
-            cf_allowedwarriors            = MXBIT(10),    // can have warriors
-            cf_allowedriders            = MXBIT(11),    // can have riders
+            cf_allowedwarriors  = MXBIT(10),    // can have warriors
+            cf_allowedriders    = MXBIT(11),    // can have riders
             // ddr
 
-            cf_ai                       = MXBIT(12),    // character is an AI character
-            cf_killed_foe               = MXBIT(13),    // character killed his foe
+            cf_ai               = MXBIT(12),    // character is an AI character
+            cf_killed_foe       = MXBIT(13),    // character killed his foe
             
             // TODO: Resolve these
             // Do we need to be backward compatible?
 #if defined(_LOM_)
-            cf_resting                    = MXBIT(16),    // currently resting
-            cf_inbattle                    = MXBIT(17),    // currently in battle
-            cf_wonbattle                = MXBIT(18),    // just won a battle
-            cf_tunnel                    = MXBIT(19),    // currently in a tunnel (DDR)
-            cf_usedobject                = MXBIT(20),    // has used his special object (DDR)
-            cf_followers                = MXBIT(21),    // has followers
-            cf_preparesbattle           = MXBIT(22),    // prepares to do battle
-            cf_approaching              = MXBIT(23),    // we are approaching a lord (DDR)
+            cf_resting          = MXBIT(16),    // currently resting
+            cf_inbattle         = MXBIT(17),    // currently in battle
+            cf_wonbattle        = MXBIT(18),    // just won a battle
+            cf_tunnel           = MXBIT(19),    // currently in a tunnel (DDR)
+            cf_usedobject       = MXBIT(20),    // has used his special object (DDR)
+            cf_followers        = MXBIT(21),    // has followers
+            cf_preparesbattle   = MXBIT(22),    // prepares to do battle
+            cf_approaching      = MXBIT(23),    // we are approaching a lord (DDR)
 #endif
 #if defined(_DDR_)
-            cf_resting                    = MXBIT(14),    // currently resting
-            cf_inbattle                    = MXBIT(15),    // currently in battle
-            cf_wonbattle                = MXBIT(16),    // just won a battle
-            cf_tunnel                    = MXBIT(17),    // currently in a tunnel (DDR)
-            cf_usedobject                = MXBIT(18),    // has used his special object (DDR)
-            cf_followers                = MXBIT(19),    // has followers
-            cf_preparesbattle           = MXBIT(20),    // prepares to do battle
-            cf_approaching              = MXBIT(21),    // we are approaching a lord (DDR)
+            cf_resting          = MXBIT(14),    // currently resting
+            cf_inbattle         = MXBIT(15),    // currently in battle
+            cf_wonbattle        = MXBIT(16),    // just won a battle
+            cf_tunnel           = MXBIT(17),    // currently in a tunnel (DDR)
+            cf_usedobject       = MXBIT(18),    // has used his special object (DDR)
+            cf_followers        = MXBIT(19),    // has followers
+            cf_preparesbattle   = MXBIT(20),    // prepares to do battle
+            cf_approaching      = MXBIT(21),    // we are approaching a lord (DDR)
 #endif
             
         };
 
         enum CHARACTERTRAITS {
-            ct_good                        = MXBIT(0),
-            ct_strong                    = MXBIT(1),
-            ct_forceful                    = MXBIT(2),
-            ct_generous                    = MXBIT(3),
-            ct_stubborn                    = MXBIT(4),
-            ct_brave                    = MXBIT(5),
-            ct_swift                    = MXBIT(6),
-            ct_loyal                    = MXBIT(7),
+            ct_good             = MXBIT(0),
+            ct_strong           = MXBIT(1),
+            ct_forceful         = MXBIT(2),
+            ct_generous         = MXBIT(3),
+            ct_stubborn         = MXBIT(4),
+            ct_brave            = MXBIT(5),
+            ct_swift            = MXBIT(6),
+            ct_loyal            = MXBIT(7),
             
-            ct_evil                        = MXBIT(8),
-            ct_weak                        = MXBIT(9),
-            ct_reticent                    = MXBIT(10),
-            ct_greedy                    = MXBIT(11),
-            ct_fawning                    = MXBIT(12),
-            ct_coward                    = MXBIT(13),
-            ct_slow                        = MXBIT(14),
-            ct_treacherous                = MXBIT(15),
+            ct_evil             = MXBIT(8),
+            ct_weak             = MXBIT(9),
+            ct_reticent         = MXBIT(10),
+            ct_greedy           = MXBIT(11),
+            ct_fawning          = MXBIT(12),
+            ct_coward           = MXBIT(13),
+            ct_slow             = MXBIT(14),
+            ct_treacherous      = MXBIT(15),
         };
 
         enum REGIMENTFLAGS {
-            rf_direct                    = MXBIT(0),        // regiment will directly do their command
-            rf_inbattle                    = MXBIT(17),    // currently in battle
-            rf_tunnel                    = MXBIT(19),    // currently in a tunnel (DDR)
+            rf_direct           = MXBIT(0),     // regiment will directly do their command
+            rf_inbattle         = MXBIT(17),    // currently in battle
+            rf_tunnel           = MXBIT(19),    // currently in a tunnel (DDR)
         };
 
         enum OBJECTFLAGS {
-            of_fight                    = MXBIT(0),        // object can be fought
-            of_pickup                    = MXBIT(1),        // object can be picked up
-            of_drop                        = MXBIT(2),        // object can be dropped
-            of_weapon                    = MXBIT(3),        // object is a weapon
-            of_see                        = MXBIT(4),        // object can be seen
-            of_remove                    = MXBIT(5),        // object is removed from map when found
-            of_unique                    = MXBIT(6),        // object is unique
-            of_enabled                    = MXBIT(7),        // object is enabled
+            of_fight            = MXBIT(0),     // object can be fought
+            of_pickup           = MXBIT(1),     // object can be picked up
+            of_drop             = MXBIT(2),     // object can be dropped
+            of_weapon           = MXBIT(3),     // object is a weapon
+            of_see              = MXBIT(4),     // object can be seen
+            of_remove           = MXBIT(5),     // object is removed from map when found
+            of_unique           = MXBIT(6),     // object is unique
+            of_enabled          = MXBIT(7),     // object is enabled
 #if defined(_DDR_)
-            of_recruitment              = MXBIT(8),     // object can help with recruitment
-            of_randomstart              = MXBIT(9),     // object starts randomly on map
+            of_recruitment      = MXBIT(8),     // object can help with recruitment
+            of_randomstart      = MXBIT(9),     // object starts randomly on map
 #endif
         };
 
         enum TERRAININFOFLAGS {
-            tif_plural                    = MXBIT(0),        // terrain has plural
-            tif_block                    = MXBIT(1),        // terrain blocks movement? ( not implemented )
-            tif_interesting                = MXBIT(2),        // terrain is interesting
-            tif_army                    = MXBIT(3),        // army is visible at terrain
+            tif_plural          = MXBIT(0),     // terrain has plural
+            tif_block           = MXBIT(1),     // terrain blocks movement? ( not implemented )
+            tif_interesting     = MXBIT(2),     // terrain is interesting
+            tif_army            = MXBIT(3),     // army is visible at terrain
         };
     }
     // namespace flags

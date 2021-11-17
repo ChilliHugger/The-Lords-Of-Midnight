@@ -19,13 +19,14 @@
 
 namespace tme {
 
-        mxregiment::mxregiment()
+        mxregiment::mxregiment() :
+            targetlocation(),
+            targetid(0),
+            total(0),
+            orders(OD_NONE),
+            lost(0)
         {
             mxentity::type = IDT_REGIMENT ;
-            targetid=0;
-            total=0;
-            orders=OD_NONE;
-            lost=0;
         }
 
         mxregiment::~mxregiment()
@@ -59,11 +60,10 @@ namespace tme {
                 lost=0;
                 lastlocation = Location();
                 delay=0;
+                targetlocation = Location();
                 
                 if ( tme::mx->SaveGameVersion() > 3 )
                     ar >> lastlocation ;
-                //else
-                //    lastlocation = Location();
 
                 if ( tme::mx->SaveGameVersion() > 6 )
                     ar >> delay ;

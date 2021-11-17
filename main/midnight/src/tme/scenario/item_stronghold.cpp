@@ -17,19 +17,29 @@
 
 namespace tme {
 
-mxstronghold::mxstronghold()
+mxstronghold::mxstronghold() :
+    race(RA_NONE),
+    occupyingrace(RA_NONE),
+    type(UT_NONE),
+    terrain(TN_NONE),
+    owner(nullptr),
+    occupier(nullptr),
+    total(0),
+    lost(0),
+    killed(0),
+    min(0),
+    max(0),
+    strategical_success(0),
+    owner_success(0),
+    enemy_success(0),
+    respawn(0),
+    influence(0)
 {
     mxentity::type = IDT_STRONGHOLD ;
-    race=RA_NONE;
-    total=0;
-    owner=NULL;
-    lost=0;
-    killed=0;
 }
 
 mxstronghold::~mxstronghold()
 {
-
 }
 
 
@@ -80,6 +90,7 @@ void mxstronghold::Serialize ( archive& ar )
         ar >> owner;
         READ_ENUM ( terrain );
         ar >> killed;
+        lost = 0;
     }
 }
 
