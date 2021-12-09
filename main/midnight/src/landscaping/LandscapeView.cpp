@@ -79,8 +79,8 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
         auto debug = LandscapeDebug::create(options);
         clipping->addChild(debug);
         debug->setContentSize(visibleSize);
-        debug->setAnchorPoint(Vec2(0, 0) );
-        debug->setPosition(Vec2(0,0));
+        debug->setAnchorPoint(Vec2::ZERO);
+        debug->setPosition(Vec2::ZERO);
         debug->Build();
     }
 

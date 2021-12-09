@@ -21,6 +21,8 @@ USING_NS_CC;
 USING_NS_CC_UI;
 using namespace tme;
 
+constexpr s32 NIGHT_DISPLAY_SLOW_DELAY_SECONDS = 2;
+
 bool panel_night::init()
 {
     if ( !uipanel::init() )
@@ -117,7 +119,7 @@ void panel_night::OnNightNotification ( callback_t* event )
         });
 
         if ( !mr->settings->night_display_fast )
-            std::this_thread::sleep_for(std::chrono::seconds(2));
+            std::this_thread::sleep_for(std::chrono::seconds(NIGHT_DISPLAY_SLOW_DELAY_SECONDS));
 
     }else{
         if ( event->type == callback_t::gameover ) {

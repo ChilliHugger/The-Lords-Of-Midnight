@@ -40,23 +40,20 @@ using namespace cocos2d::ui;
 
 
 static uitextmenuitem items[] = {
-    { ID_NEW_STORY,         {"NEW STORY"},     KEYCODE(N), "N" },
-    { ID_CONTINUE_STORY,    {"CONTINUE STORY"},KEYCODE(C), "C" },
-    { ID_END_STORY,         {"END STORY"},     KEYCODE(E), "E" },
+    { ID_NEW_STORY,         {MAINMENU_NEW_STORY},       KEYCODE(N), KEYBOARD_KEY_N },
+    { ID_CONTINUE_STORY,    {MAINMENU_CONTINUE_STORY},  KEYCODE(C), KEYBOARD_KEY_C },
+    { ID_END_STORY,         {MAINMENU_END_STORY},       KEYCODE(E), KEYBOARD_KEY_E },
     //#ifdef _USE_DEBUG_MENU_
-    //    { ID_DEBUG_EMAIL,         {"TO SDCARD"},        KEYCODE(Z), "Z"},
+    //    { ID_DEBUG_EMAIL, {"TO SDCARD"},              KEYCODE(Z), "Z"},
     //#else
-    { ID_CREDITS,           {"CREDITS"},        KEYCODE(Z), "Z"},
+    { ID_CREDITS,           {MAINMENU_CREDITS},         KEYCODE(Z), KEYBOARD_KEY_Z},
     //#endif
- 
-    { ID_OPTIONS,           {"OPTIONS"},        KEYCODE(O), "O"},
-
+    { ID_OPTIONS,           {MAINMENU_OPTIONS},         KEYCODE(O), KEYBOARD_KEY_O},
 #if defined(_OS_DESKTOP_)
-    { ID_EXIT,              {"EXIT" },          KEYCODE(ESCAPE), "ESC"},
+    { ID_EXIT,              {MAINMENU_EXIT},            KEYCODE(ESCAPE), KEYBOARD_KEY_ESC},
 #endif
-    
 #if defined(_USE_VERSION_CHECK_)
-    { ID_UPDATE,            {"UPDATE" },        KEYCODE(U), "U"},
+    { ID_UPDATE,            {MAINMENU_UPDATE},          KEYCODE(U), KEYBOARD_KEY_U},
 #endif
     
 };
@@ -118,7 +115,6 @@ bool panel_mainmenu::init()
 //        bookmarkImage->setLocalZOrder(ZORDER_FAR);
 //    }
   
-
 
     //
     // Guide and Manual

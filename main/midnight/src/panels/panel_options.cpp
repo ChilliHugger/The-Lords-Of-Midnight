@@ -28,20 +28,18 @@
 USING_NS_CC;
 USING_NS_CC_UI;
 
-static const char* values_onoff[]               = {"OFF","ON"};
-static const char* values_yesno[]               = {"NO","YES"};
-static const char* values_movement[]            = {"SWIPE & PUSH","PUSH","SWIPE","PRESS LOOK/SWIPE MOVE"};
-static const char* values_think[]               = {"SWIPE LEFT/RIGHT","PUSH","ARROWS ONLY"};
-static const char* values_compass_delay[]       = {"OFF","NORMAL PRESS","SHORT PRESS","LONG PRESS"};
-static const char* values_compass_feedback[]    = {"OFF","LOW","MEDIUM","HIGH"};
-static const char* values_slowfast[]            = {"SLOW","FAST"};
-static const char* values_fullbrief[]           = {"BRIEF","FULL"};
-static const char* values_keyboard[]            = {"CLASSIC","NEW"};
-static const char* values_novella[]             = {"EBOOK","PDF"};
-static const char* values_screen[]              = {"FULLSCREEN","SMALL","MEDIUM","LARGE"};
-static const char* values_screen2[]             = {"FULLSCREEN - NOT SUPPORTED","SMALL","MEDIUM","LARGE"};
-
-
+static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
+static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
+static const char* values_movement[]            = {OPTIONS_MOVEMENT_SWIPE_PUSH,OPTIONS_MOVEMENT_PUSH,OPTIONS_MOVEMENT_SWIPE,OPTIONS_MOVEMENT_SWIPE};
+static const char* values_think[]               = {OPTIONS_THINK_SWIPE,OPTIONS_THINK_SWIPE,OPTIONS_THINK_ARROWS};
+static const char* values_compass_delay[]       = {OPTIONS_COMPASS_DELAY_OFF,OPTIONS_COMPASS_DELAY_NORMAL,OPTIONS_COMPASS_DELAY_SHORT,OPTIONS_COMPASS_DELAY_LONG};
+static const char* values_compass_feedback[]    = {OPTIONS_COMPASS_FEEDBACK_OFF,OPTIONS_COMPASS_FEEDBACK_LOW,OPTIONS_COMPASS_FEEDBACK_MEDIUM,OPTIONS_COMPASS_FEEDBACK_HIGH};
+static const char* values_slowfast[]            = {OPTIONS_SLOW,OPTIONS_FAST};
+static const char* values_fullbrief[]           = {OPTIONS_BRIEF,OPTIONS_FULL};
+static const char* values_keyboard[]            = {OPTIONS_KEYBOARD_CLASSIC,OPTIONS_KEYBOARD_NEW};
+static const char* values_novella[]             = {OPTIONS_NOVELLA_EBOOK,OPTIONS_NOVELLA_PDF};
+static const char* values_screen[]              = {OPTIONS_SCREEN_FULLSCREEN,OPTIONS_SCREEN_SMALL,OPTIONS_SCREEN_MEDIUM,OPTIONS_SCREEN_LARGE};
+static const char* values_screen2[]             = {OPTIONS_SCREEN_NOTSUPPORTED,OPTIONS_SCREEN_SMALL,OPTIONS_SCREEN_MEDIUM,OPTIONS_SCREEN_LARGE};
 
 /*
  DISPLAY
@@ -68,42 +66,42 @@ static const char* values_screen2[]             = {"FULLSCREEN - NOT SUPPORTED",
  
  */
 static uitextmenuitem items_main[] = {
-    { ID_MENU_DISPLAY,                  {"DISPLAY"},            KEYCODE(D), "D" },
-    { ID_MENU_GAME,                     {"GAME"},               KEYCODE(G), "G" },
-    { ID_MENU_CONTROL,                  {"CONTROL"},            KEYCODE(C), "C" },
-    { ID_MENU_HELP,                     {"HELP"},               KEYCODE(H), "H" },
-    { ID_HOME,                          {"MAIN MENU"},          KEYCODE(ESCAPE), "ESC" }
+    { ID_MENU_DISPLAY,                  {OPTIONS_SCREEN_DISPLAY},               KEYCODE(D), KEYBOARD_KEY_D },
+    { ID_MENU_GAME,                     {OPTIONS_SCREEN_GAME},                  KEYCODE(G), KEYBOARD_KEY_G },
+    { ID_MENU_CONTROL,                  {OPTIONS_SCREEN_CONTROL},               KEYCODE(C), KEYBOARD_KEY_C },
+    { ID_MENU_HELP,                     {OPTIONS_SCREEN_HELP},                  KEYCODE(H), KEYBOARD_KEY_H },
+    { ID_HOME,                          {OPTIONS_SCREEN_MAINMENU},              KEYCODE(ESCAPE), KEYBOARD_KEY_ESC }
 };
 
 static uitextmenuitem items_display[] = {
 #if defined(_OS_DESKTOP_)
-    { ID_OPTION_SCREENMODE,             {"SCREEN MODE"},        KEYCODE(1), "1", TB_DOUBLE, },
+    { ID_OPTION_SCREENMODE,             {OPTIONS_SCREEN_SCREENMODE},            KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE, },
 #endif
-    { ID_OPTION_TRANSITIONS,            {"SCREEN TRANSITIONS"}, KEYCODE(2), "2", TB_DOUBLE },
-    { ID_OPTION_FLIPSCREEN,             {"FLIP SCREEN"},        KEYCODE(3), "3", TB_DOUBLE },
+    { ID_OPTION_TRANSITIONS,            {OPTIONS_SCREEN_TRANSITIONS},           KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_FLIPSCREEN,             {OPTIONS_SCREEN_FLIPSCREEN},            KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
 };
-
+    
 static uitextmenuitem items_game[] = {
-    { ID_OPTION_AUTO_FIGHT,             {"AUTO FIGHT"},         KEYCODE(1), "1", TB_DOUBLE },
-    { ID_OPTION_AUTO_UNHIDE,            {"AUTO UNHIDE"},        KEYCODE(2), "2", TB_DOUBLE },
-    { ID_OPTION_NIGHT_DISPLAY,          {"NIGHT DISPLAY"},      KEYCODE(3), "3", TB_DOUBLE },
-    { ID_OPTION_BATTLE_FULL,            {"BATTLE REPORT "},     KEYCODE(4), "4", TB_DOUBLE },
+    { ID_OPTION_AUTO_FIGHT,             {OPTIONS_SCREEN_AUTOFIGHT},             KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_AUTO_UNHIDE,            {OPTIONS_SCREEN_AUTOUNHIDE},            KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_NIGHT_DISPLAY,          {OPTIONS_SCREEN_NIGHTDISPLAY},          KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_BATTLE_FULL,            {OPTIONS_SCREEN_BATTLEREPORT},          KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
 };
 
 static uitextmenuitem items_control[] = {
-    { ID_OPTION_COMPASS_DELAY,          {"COMPASS DELAY"},      KEYCODE(1), "1", TB_DOUBLE },
-    { ID_OPTION_COMPASS_FEEDBACK,       {"COMPASS VIBRATE"},    KEYCODE(2), "2", TB_DOUBLE },
-    { ID_OPTION_NAVIGATION,             {"NAVIGATION STYLE"},   KEYCODE(3), "3", TB_DOUBLE },
-    { ID_OPTION_KEYBOARD_STYLE,         {"KEYBOARD STYLE"},     KEYCODE(4), "4", TB_DOUBLE },
+    { ID_OPTION_COMPASS_DELAY,          {OPTIONS_SCREEN_COMPASSDELAY},          KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_COMPASS_FEEDBACK,       {OPTIONS_SCREEN_COMPASSVIBRATE},        KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_NAVIGATION,             {OPTIONS_SCREEN_NAVIGATIONSTYLE},       KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_KEYBOARD_STYLE,         {OPTIONS_SCREEN_KEYBOARDSTYLE},         KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
 };
 
 static uitextmenuitem items_help[] = {
-    { ID_OPTION_TUTORIAL,               {"TUTORIAL"},           KEYCODE(1), "1", TB_DOUBLE },
+    { ID_OPTION_TUTORIAL,               {OPTIONS_SCREEN_TUTORIAL},              KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
 #if !defined(_OS_DESKTOP_)
-    { ID_OPTION_MOVE_INDICATORS,        {"MOVEMENT INDICATORS"},KEYCODE(2), "2", TB_DOUBLE },
+    { ID_OPTION_MOVE_INDICATORS,        {OPTIONS_SCREEN_MOVEMENTINDICATORS},    KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
 #endif
 #if defined(_OS_IOS_) || defined(_OS_OSX_)
-    { ID_OPTION_NOVELLA,                {"NOVELLA"},            KEYCODE(3), "3", TB_DOUBLE },
+    { ID_OPTION_NOVELLA,                {OPTIONS_SCREEN_NOVELLA},               KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
 #endif
 };
 

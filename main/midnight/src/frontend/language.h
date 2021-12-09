@@ -8,46 +8,148 @@
 #ifndef language_h
 #define language_h
 
+    constexpr LPCSTR CREDITS_ORIGINAL_GAME              = "Original game by";
+    constexpr LPCSTR CREDITS_PROGRAMMING                = "Programming";
+    constexpr LPCSTR CREDITS_GRAPHICS                   = "Graphics redrawn by";
+    constexpr LPCSTR CREDITS_TESTING                    = "Testing by";
+    constexpr LPCSTR CREDITS_MIKE                       = "Mike Singleton";
+    constexpr LPCSTR CREDITS_PROGRAMMERS                = "Chris Wild";
+    constexpr LPCSTR CREDITS_ARTISTS                    = "Jure Rogelj";
+    constexpr LPCSTR CREDITS_TESTERS                    = "Scott Gibbens";
+    constexpr LPCSTR CREDITS_VERSION                    = "Version" ;
+        
+    constexpr LPCSTR MAINMENU_NEW_STORY                 = "NEW STORY";
+    constexpr LPCSTR MAINMENU_CONTINUE_STORY            = "CONTINUE STORY";
+    constexpr LPCSTR MAINMENU_END_STORY                 = "END STORY";
+    constexpr LPCSTR MAINMENU_CREDITS                   = "CREDITS";
+    constexpr LPCSTR MAINMENU_OPTIONS                   = "OPTIONS";
+    constexpr LPCSTR MAINMENU_EXIT                      = "EXIT";
+    constexpr LPCSTR MAINMENU_UPDATE                    = "UPDATE";
+
+    constexpr LPCSTR KEYBOARD_KEY_1                     = "1";
+    constexpr LPCSTR KEYBOARD_KEY_2                     = "2";
+    constexpr LPCSTR KEYBOARD_KEY_3                     = "3";
+    constexpr LPCSTR KEYBOARD_KEY_4                     = "4";
+
+    constexpr LPCSTR KEYBOARD_KEY_C                     = "C";
+    constexpr LPCSTR KEYBOARD_KEY_D                     = "D";
+    constexpr LPCSTR KEYBOARD_KEY_E                     = "E";
+    constexpr LPCSTR KEYBOARD_KEY_G                     = "G";
+    constexpr LPCSTR KEYBOARD_KEY_H                     = "H";
+    constexpr LPCSTR KEYBOARD_KEY_N                     = "N";
+    constexpr LPCSTR KEYBOARD_KEY_O                     = "O";
+    constexpr LPCSTR KEYBOARD_KEY_U                     = "U";
+    constexpr LPCSTR KEYBOARD_KEY_Z                     = "Z";
+    constexpr LPCSTR KEYBOARD_KEY_ESC                   = "ESC";
+        
+    constexpr LPCSTR OPTIONS_ONOFF_OFF                  = "OFF";
+    constexpr LPCSTR OPTIONS_ONOFF_ON                   = "ON";
+    constexpr LPCSTR OPTIONS_YESNO_NO                   = "NO";
+    constexpr LPCSTR OPTIONS_YESNO_YES                  = "YES";
+    
+    constexpr LPCSTR OPTIONS_MOVEMENT_SWIPE_PUSH        = "SWIPE & PUSH";
+    constexpr LPCSTR OPTIONS_MOVEMENT_PUSH              = "PUSH";
+    constexpr LPCSTR OPTIONS_MOVEMENT_SWIPE             = "SWIPE";
+    constexpr LPCSTR OPTIONS_MOVEMENT_PRESS_SWIPE       = "PRESS LOOK/SWIPE MOVE";
+    
+    constexpr LPCSTR OPTIONS_THINK_SWIPE                = "SWIPE LEFT/RIGHT";
+    constexpr LPCSTR OPTIONS_THINK_PUSH                 = "PUSH";
+    constexpr LPCSTR OPTIONS_THINK_ARROWS               = "ARROWS ONLY";
+    
+    constexpr LPCSTR OPTIONS_COMPASS_DELAY_OFF          = "OFF";
+    constexpr LPCSTR OPTIONS_COMPASS_DELAY_NORMAL       = "NORMAL PRESS";
+    constexpr LPCSTR OPTIONS_COMPASS_DELAY_SHORT        = "SHORT PRESS";
+    constexpr LPCSTR OPTIONS_COMPASS_DELAY_LONG         = "LONG PRESS";
+
+    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_OFF       = "OFF";
+    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_LOW       = "LOW";
+    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_MEDIUM    = "MEDIUM";
+    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_HIGH      = "HIGH";
+
+    constexpr LPCSTR OPTIONS_SLOW                       = "SLOW";
+    constexpr LPCSTR OPTIONS_FAST                       = "FAST";
+    
+    constexpr LPCSTR OPTIONS_BRIEF                      = "BRIEF";
+    constexpr LPCSTR OPTIONS_FULL                       = "FULL";
+    
+    constexpr LPCSTR OPTIONS_KEYBOARD_CLASSIC           = "CLASSIC";
+    constexpr LPCSTR OPTIONS_KEYBOARD_NEW               = "NEW";
+    
+    constexpr LPCSTR OPTIONS_NOVELLA_EBOOK              = "EBOOK";
+    constexpr LPCSTR OPTIONS_NOVELLA_PDF                = "PDF";
+    
+    constexpr LPCSTR OPTIONS_SCREEN_FULLSCREEN          = "FULLSCREEN";
+    constexpr LPCSTR OPTIONS_SCREEN_SMALL               = "SMALL";
+    constexpr LPCSTR OPTIONS_SCREEN_MEDIUM              = "MEDIUM";
+    constexpr LPCSTR OPTIONS_SCREEN_LARGE               = "LARGE";
+    constexpr LPCSTR OPTIONS_SCREEN_NOTSUPPORTED        = "FULLSCREEN - NOT SUPPORTED";
+    
+    constexpr LPCSTR OPTIONS_SCREEN_DISPLAY             = "DISPLAY";
+    constexpr LPCSTR OPTIONS_SCREEN_GAME                = "GAME";
+    constexpr LPCSTR OPTIONS_SCREEN_CONTROL             = "CONTROL";
+    constexpr LPCSTR OPTIONS_SCREEN_HELP                = "HELP";
+    constexpr LPCSTR OPTIONS_SCREEN_MAINMENU            = "MAIN MENU";
+    constexpr LPCSTR OPTIONS_SCREEN_SCREENMODE          = "SCREEN MODE";
+    constexpr LPCSTR OPTIONS_SCREEN_TRANSITIONS         = "SCREEN TRANSITIONS";
+    constexpr LPCSTR OPTIONS_SCREEN_FLIPSCREEN          = "FLIP SCREEN";
+    constexpr LPCSTR OPTIONS_SCREEN_AUTOFIGHT           = "AUTO FIGHT";
+    constexpr LPCSTR OPTIONS_SCREEN_AUTOUNHIDE          = "AUTO UNHIDE";
+    constexpr LPCSTR OPTIONS_SCREEN_NIGHTDISPLAY        = "NIGHT DISPLAY";
+    constexpr LPCSTR OPTIONS_SCREEN_BATTLEREPORT        = "BATTLE REPORT";
+    constexpr LPCSTR OPTIONS_SCREEN_COMPASSDELAY        = "COMPASS DELAY";
+    constexpr LPCSTR OPTIONS_SCREEN_COMPASSVIBRATE      = "COMPASS VIBRATE";
+    constexpr LPCSTR OPTIONS_SCREEN_NAVIGATIONSTYLE     = "NAVIGATION STYLE";
+    constexpr LPCSTR OPTIONS_SCREEN_KEYBOARDSTYLE       = "KEYBOARD STYLE";
+    constexpr LPCSTR OPTIONS_SCREEN_TUTORIAL            = "TUTORIAL";
+    constexpr LPCSTR OPTIONS_SCREEN_MOVEMENTINDICATORS  = "MOVEMENT INDICATORS";
+    constexpr LPCSTR OPTIONS_SCREEN_NOVELLA             = "NOVELLA";
+ 
 #if defined(_LOM_)
-    #define EXIT_MSG            "Do you want to exit\nThe Lords of Midnight?"
-    #define _UPDATE_PROMPT_     "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?"
-    #define _NOVELLA_PROMPT_    "You are about to open a browser window to read the Lords of Midnight Novella\n\nAre you sure that you wish to continue?"
-    #define _GUIDE_PROMPT_      "You are about to open a browser window to read the Lords of Midnight Playing Guide\n\nAre you sure that you wish to continue?"
-    #define _GUIDE_DOCUMENT_    "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight_guide.pdf"
-    #define _NOVELLA_DOCUMENT_PDF_  "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.pdf"
+
+    constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the epic world of";
+    constexpr LPCSTR SPLASH_SCREEN_TITLE                = "THE LORDS OF MIDNIGHT";
+    constexpr LPCSTR SPLASH_SCREEN_BY                   = "         by";
+    constexpr LPCSTR SPLASH_SCREEN_MIKE                 = "Mike Singleton";
+        
+    constexpr LPCSTR EXIT_MSG                           = "Do you want to exit\nThe Lords of Midnight?";
+    constexpr LPCSTR _UPDATE_PROMPT_                    = "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?";
+    constexpr LPCSTR _NOVELLA_PROMPT_                   = "You are about to open a browser window to read the Lords of Midnight Novella\n\nAre you sure that you wish to continue?";
+    constexpr LPCSTR _GUIDE_PROMPT_                     = "You are about to open a browser window to read the Lords of Midnight Playing Guide\n\nAre you sure that you wish to continue?";
+    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight_guide.pdf";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.pdf";
     #if defined(_OS_IOS_) || defined(_OS_OSX_)
-        #define _NOVELLA_DOCUMENT_  "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.epub"
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.epub";
     #else
-        #define _NOVELLA_DOCUMENT_  _NOVELLA_DOCUMENT_PDF_
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
 
 #else
 
 #if defined(_DDR_)
-    #define EXIT_MSG            "Do you want to exit\nDoomdark's Revenge?"
-    #define _UPDATE_PROMPT_     "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?"
-    #define _NOVELLA_PROMPT_    "You are about to open a browser window to read the Doomdark's Revenge Novella\n\nAre you sure that you wish to continue?"
-    #define _GUIDE_PROMPT_      "You are about to open a browser window to read the Doomdark's Revenge Playing Guide\n\nAre you sure that you wish to continue?"
-    #define _NOVELLA_DOCUMENT_PDF_  "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.pdf"
-    #define _GUIDE_DOCUMENT_    "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge_guide.pdf"
+    constexpr LPCSTR EXIT_MSG                           = "Do you want to exit\nDoomdark's Revenge?";
+    constexpr LPCSTR _UPDATE_PROMPT_                    = "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?";
+    constexpr LPCSTR _NOVELLA_PROMPT_                   = "You are about to open a browser window to read the Doomdark's Revenge Novella\n\nAre you sure that you wish to continue?";
+    constexpr LPCSTR _GUIDE_PROMPT_                     = "You are about to open a browser window to read the Doomdark's Revenge Playing Guide\n\nAre you sure that you wish to continue?";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.pdf";
+    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge_guide.pdf";
     #if defined(_OS_IOS_) || defined(_OS_OSX_)
-        #define _NOVELLA_DOCUMENT_  "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.epub"
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.epub";
     #else
-        #define _NOVELLA_DOCUMENT_  _NOVELLA_DOCUMENT_PDF_
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
 #else
-    #define EXIT_MSG            "Do you want to exit?"
+    constexpr LPCSTR EXIT_MSG                           = "Do you want to exit?";
 #endif
 #endif
 
-#define CLOSE_STORY_MSG         "Are you sure that you wish to close this story?"
-#define NIGHT_MSG               "Are you sure that you are ready to end the day?"
-#define UNDO_NIGHT_MSG          "Are you sure that you wish to return to night?"
-#define UNDO_DAWN_MSG           "Are you sure that you wish to return to dawn?"
-#define CHANGE_DISPLAY_MSG      "Are you sure that you wish to change your game resolution?"
-
-#define BUTTON_YES      "YES"
-#define BUTTON_NO       "NO"
-#define BUTTON_OK       "OK"
+    constexpr LPCSTR CLOSE_STORY_MSG                    = "Are you sure that you wish to close this story?";
+    constexpr LPCSTR NIGHT_MSG                          = "Are you sure that you are ready to end the day?";
+    constexpr LPCSTR UNDO_NIGHT_MSG                     = "Are you sure that you wish to return to night?";
+    constexpr LPCSTR UNDO_DAWN_MSG                      = "Are you sure that you wish to return to dawn?";
+    constexpr LPCSTR CHANGE_DISPLAY_MSG                 = "Are you sure that you wish to change your game resolution?";
+        
+    constexpr LPCSTR BUTTON_YES                         = "YES";
+    constexpr LPCSTR BUTTON_NO                          = "NO";
+    constexpr LPCSTR BUTTON_OK                          = "OK";
 
 #endif /* language_h */

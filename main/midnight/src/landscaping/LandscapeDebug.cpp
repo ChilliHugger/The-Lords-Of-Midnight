@@ -134,7 +134,7 @@ void LandscapeDebug::Build()
     auto label = Label::createWithTTF( buffer, "fonts/arial.ttf", 20);
     
     label->setMaxLineWidth(width);
-    label->setAnchorPoint(Vec2(0,0));
+    label->setAnchorPoint(Vec2::ZERO);
     label->setColor(Color3B::WHITE);
     label->setPosition(LRES(10), (height - LRES(20)));
     this->addChild(label, 1);

@@ -56,6 +56,9 @@ enum tagid_t {
 #define SHIELD_HEIGHT   RES(224)
 #define HEADER_HEIGHT   RES(228)
 
+constexpr f32 FADE_IN_SPEED = 1.0f;
+constexpr f32 FADE_OUT_SPEED = 1.0f;
+
 
 #if defined(_LOM_)
 #define DESCRIPTION_COLOUR  _clrWhite
@@ -1010,7 +1013,7 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callba
     
     auto rect = this->getBoundingBox();
     auto fade_panel = DrawNode::create();
-    fade_panel->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
+    fade_panel->drawSolidRect(Vec2::ZERO, Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
     fade_panel->setOpacity(ALPHA(initialAlpha));
     fade_panel->setLocalZOrder(ZORDER_POPUP);
     addChild(fade_panel);
@@ -1023,7 +1026,7 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callba
         //fade_panel = nullptr;
     });
     
-    auto action = FadeOut::create(3.0f);
+    auto action = FadeOut::create(FADE_IN_SPEED);
     auto sequence = Sequence::createWithTwoActions(action, callbackAction);
     fade_panel->runAction(sequence);
     
@@ -1040,7 +1043,7 @@ void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callb
     
     auto rect = this->getBoundingBox();
     auto fade_panel = DrawNode::create();
-    fade_panel->drawSolidRect(Vec2(0,0), Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
+    fade_panel->drawSolidRect(Vec2::ZERO, Vec2( rect.getMaxX(), rect.getMaxY()), Color4F(colour) );
     fade_panel->setLocalZOrder(ZORDER_POPUP);
     fade_panel->setOpacity(ALPHA(initialAlpha));
     addChild(fade_panel);
@@ -1053,7 +1056,7 @@ void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callb
         //fade_panel = nullptr;
     });
     
-    auto action = FadeIn::create(3.0f);
+    auto action = FadeIn::create(FADE_OUT_SPEED);
     auto sequence = Sequence::createWithTwoActions(action, callbackAction);
     fade_panel->runAction(sequence);
 }

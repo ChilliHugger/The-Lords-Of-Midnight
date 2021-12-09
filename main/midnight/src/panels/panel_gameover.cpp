@@ -11,9 +11,7 @@
 #include "panel_gameover.h"
 
 #include "../system/moonring.h"
-//#include "../system/configmanager.h"
 #include "../system/resolutionmanager.h"
-//#include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 #include "../frontend/layout_id.h"
 
@@ -42,7 +40,6 @@ bool panel_gameover::init()
 void panel_gameover::OnShown()
 {
     auto size = safeArea->getContentSize();
-//    setContentSize(size);
     
     // Description
     auto lblDescription = Label::createWithTTF( uihelper::font_config_big, TME_LastActionMsg() );

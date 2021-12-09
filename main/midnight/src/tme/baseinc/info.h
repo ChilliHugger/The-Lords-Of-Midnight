@@ -131,7 +131,7 @@ namespace tme {
         PROPERTY( id_type_t, Type, type );
         PROPERTY( u32, Id, id );
 
-        c_str& Symbol()         { return symbol ; }
+        c_str& Symbol() { return symbol ; }
         bool IsSymbol(LPCSTR s) const { return c_stricmp(symbol,s) == 0; }
 
         virtual int Compare ( mxentity* o, int hint ) const;
@@ -139,16 +139,16 @@ namespace tme {
         void SetUserData(const void* data) { user_data = data; }
         const void* GetUserData() { return user_data; }
 
-        flags32& Flags()            { return flags; } 
-        bool IsFlags(u32 f)            { return flags.Is(f); }
+        flags32& Flags() { return flags; }
+        bool IsFlags(u32 f) { return flags.Is(f); }
         FLAG_PROPERTY( IsDisabled,    et_disabled )
 
     protected:
-        id_type_t    type;
-        u32            id;
-        c_str        symbol;
-        flags32        flags;
-        const void*        user_data ;
+        id_type_t               type;
+        u32                     id;
+        c_str                   symbol;
+        flags32                 flags;
+        const void*             user_data ;
 
     };
 
@@ -168,12 +168,12 @@ namespace tme {
         u32 Age() const;
         
     public:
-        mxfragment*        m_Prev;
-        mxfragment*        m_Next;
-        u32                m_day;
-        mxentity*        m_data;
-        mxgridref        m_location;
-        mxrace_t            m_race;
+        mxfragment*             m_Prev;
+        mxfragment*             m_Next;
+        u32                     m_day;
+        mxentity*               m_data;
+        mxgridref               m_location;
+        mxrace_t                m_race;
         
     };
     // class mxfragment
@@ -195,7 +195,7 @@ namespace tme {
         void DeleteFragment ( mxfragment* item );
 
     private:
-        mxfragment*    m_first;
+        mxfragment*             m_first;
 
     };
     
@@ -226,11 +226,11 @@ namespace tme {
 
         protected:
             friend class    mxcharacter ;
-            mxunit_t        type;
-            u32                total;
-            u32                energy;
-            u32                lost;
-            u32                slew;
+            mxunit_t            type;
+            u32                 total;
+            u32                 energy;
+            u32                 lost;
+            u32                 slew;
         };
         // class mxunit
 
@@ -276,18 +276,18 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         ~mxloc();
         
         void RemoveObject()                 { object = 0; }
-        MAP_FLAG_PROPERTY( IsInDomain,        lf_domain)
-        MAP_FLAG_PROPERTY( IsSpecial,        lf_special)
-        MAP_FLAG_PROPERTY( IsVisible,        lf_seen)
-        MAP_FLAG_PROPERTY( IsMisty,            lf_mist)
+        MAP_FLAG_PROPERTY( IsInDomain,      lf_domain)
+        MAP_FLAG_PROPERTY( IsSpecial,       lf_special)
+        MAP_FLAG_PROPERTY( IsVisible,       lf_seen)
+        MAP_FLAG_PROPERTY( IsMisty,         lf_mist)
         MAP_FLAG_PROPERTY( IsStronghold,    lf_stronghold)
-        MAP_FLAG_PROPERTY( IsRouteNode,        lf_routenode)
+        MAP_FLAG_PROPERTY( IsRouteNode,     lf_routenode)
 #if defined(_DDR_)
-        MAP_FLAG_PROPERTY( IsTunnelVisible,    lf_tunnel_looked_at)
-        MAP_FLAG_PROPERTY( HasTunnel,        lf_tunnel)
-        MAP_FLAG_PROPERTY( HasObject,        lf_object)
+        MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
+        MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
+        MAP_FLAG_PROPERTY( HasObject,       lf_object)
 #endif
-        MAP_FLAG_PROPERTY( HasArmy,            lf_army)
+        MAP_FLAG_PROPERTY( HasArmy,         lf_army)
         MAP_FLAG_PROPERTY( HasCharacter,    lf_character)
         bool IsInteresting() const ;
         void Serialize ( chilli::lib::archive& ar ) ;
@@ -299,12 +299,12 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 #endif
         
     public:
-        u64 terrain        : 7 ; // 128 ( 16x8 )
-        u64 variant        : 3 ; // 8 ( 8 )
-        u64 climate        : 7 ; // 128 ( 16x8 )
-        u64 object        : 9 ; // 512 ( 16x8 )
-        u64 area        : 10 ; // 1024 ( 64x16 )
-        u64 flags        : 28 ; // ( lf_domain|lf_mist|lf_tunnel )
+        u64 terrain             : 7 ; // 128 ( 16x8 )
+        u64 variant             : 3 ; // 8 ( 8 )
+        u64 climate             : 7 ; // 128 ( 16x8 )
+        u64 object              : 9 ; // 512 ( 16x8 )
+        u64 area                : 10 ; // 1024 ( 64x16 )
+        u64 flags               : 28 ; // ( lf_domain|lf_mist|lf_tunnel )
     };
     // class mxloc
 //#pragma pop
@@ -318,11 +318,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         // landscaping info table structure
         typedef struct landscape_t{
-            s8        dy;
-            s8        dx;
-            s16        xadj;
-            u8        y;
-            u8        size;
+            s8                  dy;
+            s8                  dx;
+            s16                 xadj;
+            u8                  y;
+            u8                  size;
         } landscape_t;
 
 
@@ -368,7 +368,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         u32 GetPanoramic ( mxgridref loc, mxdir_t dir, panloc_t** locations );
 
         mxloc& GetAt ( const mxgridref& loc );
-        mxloc& operator[] ( mxgridref loc )        { return GetAt(loc); }
+        mxloc& operator[] ( mxgridref loc ) { return GetAt(loc); }
 
         GET_PROPERTY ( size, Size, m_size );
         GET_PROPERTY ( loc_t, Top, m_top_visible );
@@ -386,17 +386,12 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
     
     public:
-
-        
-        
-        size    m_size;
-        mxloc*    m_data;
-        
-        loc_t   m_top_visible;
-        loc_t   m_bottom_visible;
-        
+        size                    m_size;
+        mxloc*                  m_data;
+        loc_t                   m_top_visible;
+        loc_t                   m_bottom_visible;
         // ptr to the current discovery map
-        mxdiscoverymap* m_discoverymap;
+        mxdiscoverymap*         m_discoverymap;
 
     }; // class mxmap
 
@@ -441,10 +436,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         GET_PROPERTY ( loc_t, Bottom, m_bottom_visible );
         
     public:
-        size        m_size;
-        flags32*    m_data;
-        loc_t       m_top_visible;
-        loc_t       m_bottom_visible;
+        size                    m_size;
+        flags32*                m_data;
+        loc_t                   m_top_visible;
+        loc_t                   m_bottom_visible;
         
     }; // class mxdiscoverymap
     
@@ -480,10 +475,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             s32 IndexOf ( mxentity* entity );
 
         protected:
-            u32                m_max;
-            u32                m_used;
-            mxentity**        m_objElements;
-            bool            m_bOwner;
+            u32                 m_max;
+            u32                 m_used;
+            mxentity**          m_objElements;
+            bool                m_bOwner;
         };
         // class entities collection
 
@@ -500,8 +495,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
     // namespace collections
 
 
-
-
     // namespace info
     //namespace info {
 
@@ -511,12 +504,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             DEFAULT_IMPLEMENTATION(mxinfo);
 
-            //flags32& Flags()    { return flags; } 
-            c_str& Name()         { return name ; }
+            c_str& Name() { return name ; }
 
         protected:
-            //u32        id;
-            //flags32    flags;
             c_str    name;
 
         }; // base
@@ -529,8 +519,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             DEFAULT_IMPLEMENTATION(mxcommand);
 
         public:
-            s32        successtime;
-            s32        failuretime;
+            s32                 successtime;
+            s32                 failuretime;
         }; // command
 
 
@@ -541,7 +531,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             DEFAULT_IMPLEMENTATION(mxarea);
 
         public:
-            c_str    prefix;
+            c_str               prefix;
         }; // area
 
         // direction
@@ -561,9 +551,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             DEFAULT_IMPLEMENTATION(mxgender);
 
         public:
-            c_str    pronoun1;
-            c_str    pronoun2;
-            c_str    pronoun3;
+            c_str               pronoun1;
+            c_str               pronoun2;
+            c_str               pronoun3;
         };
 
         // race
@@ -591,19 +581,19 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             c_str& SoldiersName();
 
         protected:
-            c_str    soldiersname;
-            u32        success;
-            u32        initialmovement;
-            s32        diagonalmodifier;
-            s32        ridingmultiplier;
-            u32        movementmax;
-            u32        baserestamount;
-            u32        strongholdstartups;
+            c_str               soldiersname;
+            u32                 success;
+            u32                 initialmovement;
+            s32                 diagonalmodifier;
+            s32                 ridingmultiplier;
+            u32                 movementmax;
+            u32                 baserestamount;
+            u32                 strongholdstartups;
 
-            s32        misttimeaffect ;
-            s32        mistdespondecyaffect ;
-            s32        baseenergycost ;
-            s32        baseenergycosthorse ;
+            s32                 misttimeaffect ;
+            s32                 mistdespondecyaffect ;
+            s32                 baseenergycost ;
+            s32                 baseenergycosthorse ;
         }; // race
 
         // terrain
@@ -624,17 +614,17 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             GET_PROPERTY ( u32, Obstruction, obstruction )
             GET_PROPERTY ( s32, MovementCost, movementcost )
 
-            c_str& Preposition()                     { return preposition; }
-            c_str& Description()                     { return description; }
+            c_str& Preposition() { return preposition; }
+            c_str& Description() { return description; }
 
 
         public:
-            c_str    preposition;
-            c_str    description;
-            u32        success;
-            u32        visibility;
-            u32        obstruction;
-            s32        movementcost;
+            c_str               preposition;
+            c_str               description;
+            u32                 success;
+            u32                 visibility;
+            u32                 obstruction;
+            s32                 movementcost;
         }; // terrain
 
         // unit
@@ -647,8 +637,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             GET_PROPERTY ( u32, BaseRestModifier, baserestmodifier )
 
         protected:
-            u32        success;
-            u32        baserestmodifier;
+            u32                 success;
+            u32                 baserestmodifier;
         };
     
 #if defined(_DDR_)
@@ -690,16 +680,14 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         class mxarmytotal;
         class mxobject;
 
+
         // victory
         class mxvictory : public mxentity
         {
         public:
             DEFAULT_IMPLEMENTATION(mxvictory);
 
-            //flags32& Flags()    { return flags; } 
-
             FLAG_PROPERTY ( IsGameOver, vf_gameover );
-            //FLAG_PROPERTY ( IsEnabled, vf_enabled );
             FLAG_PROPERTY ( IsComplete, vf_complete );
 
             GET_PROPERTY ( u32, Message, string );
@@ -708,14 +696,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual bool CheckComplete ( void );
             virtual int Compare ( mxentity* o, int hint ) const;
 
-
         protected:
-            //flags32            flags;
-            s32                priority;
-            mxid            mission;
-            u32                string;
+            s32                 priority;
+            mxid                mission;
+            u32                 string;
         };
         // victory
+
 
         // mission
         class mxmission : public mxentity
@@ -723,10 +710,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             DEFAULT_IMPLEMENTATION(mxmission);
 
-            //flags32& Flags()    { return flags; } 
-
             FLAG_PROPERTY ( IsComplete, mf_complete );
-            //FLAG_PROPERTY ( IsEnabled, mf_enabled );
             FLAG_PROPERTY ( IsAny, mf_any );
             GET_PROPERTY ( s32, Priority, priority );
             GET_PROPERTY ( m_condition_t, Condition, condition );
@@ -738,14 +722,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
 
         protected:
-            //flags32            flags;
-            s32                    priority;
-            m_objective_t        objective;
-            m_condition_t        condition;
+            s32                 priority;
+            m_objective_t       objective;
+            m_condition_t       condition;
             mxid                reference[5];
-            s32                    points;
+            s32                 points;
             mxid                scorer;
-            m_action_t            action;
+            m_action_t          action;
             mxid                actionid;
         };
         // mission
@@ -759,14 +742,14 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             ~mxarmy();
 
         public:
-            mxitem*            parent;
-            mxarmytype_t    armytype;
-            mxrace_t        race;
-            mxunit_t        type;
-            u32                total;
-            u32                success;
-            u32                killed;
-            mxrace_t        loyalto;
+            mxitem*             parent;
+            mxarmytype_t        armytype;
+            mxrace_t            race;
+            mxunit_t            type;
+            u32                 total;
+            u32                 success;
+            u32                 killed;
+            mxrace_t            loyalto;
         };
         // mxarmy
 
@@ -779,16 +762,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             mxitem( mxgridref loc );
 
-            //flags32& Flags()    { return flags; } 
-
             PROPERTY( mxgridref, Location, location );
-
-
 
         protected:
             mxgridref            location;
-            //flags32            flags;
-
         };
         // base
 
@@ -800,11 +777,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             DEFAULT_IMPLEMENTATION(mxobject);
 
             FLAG_PROPERTY( CanFight,    of_fight )
-            FLAG_PROPERTY( CanPickup,    of_pickup )
-            FLAG_PROPERTY( CanDrop,        of_drop )
-            FLAG_PROPERTY( CanSee,        of_see )
+            FLAG_PROPERTY( CanPickup,   of_pickup )
+            FLAG_PROPERTY( CanDrop,     of_drop )
+            FLAG_PROPERTY( CanSee,      of_see )
             FLAG_PROPERTY( IsWeapon,    of_weapon )
-            FLAG_PROPERTY( MapRemove,    of_remove )
+            FLAG_PROPERTY( MapRemove,   of_remove )
             FLAG_PROPERTY( IsUnique,    of_unique )
             
             bool IsCarried() const ;
@@ -814,11 +791,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             c_str& Name()          { return name ; }
 
         public:
-            mxthing_t        kills;
-            c_str            name;
-            c_str            description;
-            u32                usedescription;
-            mxitem*            carriedby;
+            mxthing_t           kills;
+            c_str               name;
+            c_str               description;
+            u32                 usedescription;
+            mxitem*             carriedby;
         }; // object
 
 
@@ -849,25 +826,25 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             PROPERTY ( u32, Min, min )
             PROPERTY ( u32, Max, max )
             GET_PROPERTY ( u32, Influence, influence )
-            bool HasFallen() const                { return race!=occupyingrace; }
+            bool HasFallen() const { return race!=occupyingrace; }
 
         protected:
-            mxrace_t        occupyingrace;
-            mxrace_t        race;
-            mxunit_t        type;
-            u32                total;
-            u32                min;
-            u32                max;
-            u32                strategical_success;
-            u32                owner_success;
-            u32                enemy_success;
-            u32                influence;
-            u32                respawn;
-            mxcharacter*    occupier;
-            mxcharacter*    owner;
-            mxterrain_t        terrain;
-            u32                killed;
-            u32                lost;
+            mxrace_t            occupyingrace;
+            mxrace_t            race;
+            mxunit_t            type;
+            u32                 total;
+            u32                 min;
+            u32                 max;
+            u32                 strategical_success;
+            u32                 owner_success;
+            u32                 enemy_success;
+            u32                 influence;
+            u32                 respawn;
+            mxcharacter*        occupier;
+            mxcharacter*        owner;
+            mxterrain_t         terrain;
+            u32                 killed;
+            u32                 lost;
         };
         // mxstronghold
 
@@ -936,22 +913,21 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxgridref TargetLocation() const ;
 
         protected:
-            mxrace_t        race;
-            mxunit_t        type;
-            u32                total;
-            mxid            targetid;
-            mxorders_t        orders;
-            u32             delay;
-            u32                success;
-            u32                killed;
-            u32                lost;
-            mxcharacter*    loyalty;
-            
-            mxgridref       lastlocation;
+            mxrace_t            race;
+            mxunit_t            type;
+            u32                 total;
+            mxid                targetid;
+            mxorders_t          orders;
+            u32                 delay;
+            u32                 success;
+            u32                 killed;
+            u32                 lost;
+            mxcharacter*        loyalty;
+            mxgridref           lastlocation;
 
         // night processing and thus not required for storage
-            u32             turns;
-            mxgridref        targetlocation;
+            u32                 turns;
+            mxgridref           targetlocation;
         //
 
         };
@@ -1011,10 +987,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY ( HasFollowers, cf_followers )
             
             
-            bool HasArmy() const                { return ((riders.total+warriors.total) > 0); }
-            bool IsDead() const                    { return !flags.Is(cf_alive); }
-            const c_str& Longname() const        { return longname; }
-            const c_str& Shortname() const        { return shortname; }
+            bool HasArmy() const { return ((riders.total+warriors.total) > 0); }
+            bool IsDead() const { return !flags.Is(cf_alive); }
+            const c_str& Longname() const { return longname; }
+            const c_str& Shortname() const { return shortname; }
 
             void SetLastCommand ( command_t cmd, mxid id );
             void CommandTakesTime ( bool success );
@@ -1083,52 +1059,52 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         public:
 
-            mxdir_t            looking;
-            mxtime_t        time;
-            c_str            longname;
-            c_str            shortname;
+            mxdir_t             looking;
+            mxtime_t            time;
+            c_str               longname;
+            c_str               shortname;
             //charimages_t images;
             
-            mxgridref        battleloc;    // change this to CBattle
-            u32                battleslew;
+            mxgridref           battleloc;    // change this to CBattle
+            u32                 battleslew;
 
-            u32                energy;
-            u32                reckless;    // READ ONLY
+            u32                 energy;
+            u32                 reckless;    // READ ONLY
 
             // lom
-            u32                strength;    // READ ONLY
-            u32                cowardess;    // READ ONLY
-            u32                courage;
-            u32                fear;
-            u32                RecruitingKey;    // change this to CRecruit
-            u32                RecruitedBy;
+            u32                 strength;    // READ ONLY
+            u32                 cowardess;    // READ ONLY
+            u32                 courage;
+            u32                 fear;
+            u32                 RecruitingKey;    // change this to CRecruit
+            u32                 RecruitedBy;
             // lom
 
-            mxrace_t        race;
-            mxobject*        carrying;
-            mxobject*        killedbyobject;
-            mxgender_t        gender;
-            mxwait_t        wait;
-            mxmemory        memory;
+            mxrace_t            race;
+            mxobject*           carrying;
+            mxobject*           killedbyobject;
+            mxgender_t          gender;
+            mxwait_t            wait;
+            mxmemory            memory;
 
-            mxid            lastcommandid;
-            command_t        lastcommand;
+            mxid                lastcommandid;
+            command_t           lastcommand;
 
             // this should be a list of units
-            mxwarriors        warriors;
-            mxriders        riders;        
+            mxwarriors          warriors;
+            mxriders            riders;
 
-            mxcharacter*    following;
-            u32             followers;
+            mxcharacter*        following;
+            u32                 followers;
             
             // ddr
-            mxorders_t      orders;
-            mxrace_t        loyalty;
-            mxcharacter*    foe;
-            mxcharacter*    liege;
+            mxorders_t          orders;
+            mxrace_t            loyalty;
+            mxcharacter*        foe;
+            mxcharacter*        liege;
 
-            u32                despondency;
-            flags32            traits;
+            u32                 despondency;
+            flags32             traits;
             //
 
         };
@@ -1144,11 +1120,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             void Clear() { warriors=riders=armies=adjustment=0; character=NULL;}
             
         public:
-            u32            warriors ; 
-            u32            riders ;
-            u32            armies ;
-            u32            adjustment ;
-            mxcharacter*    character;
+            u32                 warriors ;
+            u32                 riders ;
+            u32                 armies ;
+            u32                 adjustment ;
+            mxcharacter*        character;
         };
         // mxarmytotal
 
@@ -1179,45 +1155,45 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             //loyalty_t
             //friendorfoe
 
-            mxcharacter*        owner ;                                    // the <character> from whom this info block was created for
-            flags32                sel_flags ;                                // selection flags
+            mxcharacter*        owner ;         // the <character> from whom this info block was created for
+            flags32             sel_flags ;     // selection flags
 
-            mxdir_t                looking ;                                // for what direction? If DR_NONE then the next two vars are not valid
-            mxgridref            loc_lookingat ;                            // where is the item of interest in the distance?
-            mxgridref            loc_infront ;                            // location directly infront
+            mxdir_t             looking ;       // for what direction? If DR_NONE then the next two vars are not valid
+            mxgridref           loc_lookingat ; // where is the item of interest in the distance?
+            mxgridref           loc_infront ;   // location directly infront
             
-            mxlocinfo*            infront;                                // info block for the location in front
+            mxlocinfo*          infront;        // info block for the location in front
             
-            mxloc               mapsqr;                                    // a copy of the location we are on
+            mxloc               mapsqr;         // a copy of the location we are on
             
             // <character> conditionals
             // these are only valid when the <character> != NULL
-            flags32                flags;
+            flags32             flags;
 
             // character info
-            mxthing_t            fightthing;                                // what object is available for fighting
+            mxthing_t           fightthing;     // what object is available for fighting
 
             // scenario specific adjusters
-            s32                    adj_fear ;                                // general fear adjuster
-            s32                    adj_moral ;                                // general moral adjuster
-            s32                    adj_stronghold ;                        // general stronghold adjuster
-            u32                    nArmies ;                                // total armies in this location
+            s32                 adj_fear ;      // general fear adjuster
+            s32                 adj_moral ;     // general moral adjuster
+            s32                 adj_stronghold ;// general stronghold adjuster
+            u32                 nArmies ;       // total armies in this location
 
-            u32                    nRecruited ;                            // total number of characters in this location already recruited
+            u32                 nRecruited ;    // total number of characters in this location already recruited
             
-            mxarmytotal            friends;                                // info block for friend. ie: Currently NOT doomdark
-            mxarmytotal            foe;                                    // info block for foes ie: Currently IS doomdark
-            mxarmytotal            doomdark;                                // info block for doomdark's regiments, does not include strongolds
-            mxarmy                armies[MAX_ARMIES_INLOCATION];            // list of armies here
+            mxarmytotal         friends;        // info block for friend. ie: Currently NOT doomdark
+            mxarmytotal         foe;            // info block for foes ie: Currently IS doomdark
+            mxarmytotal         doomdark;       // info block for doomdark's regiments, does not include strongolds
+            mxarmy              armies[MAX_ARMIES_INLOCATION];  // list of armies here
 
-            collections::entities            objStrongholds;                            // list of strongholds here
-            collections::entities            objRoutenodes;                            // list of routenodes here
-            collections::entities            objCharacters;                            // list of characters here
-            collections::entities            objRegiments;                            // list of regiments here
-            collections::entities            objRecruit;                                // list of characters that <character> can recruit
+            collections::entities   objStrongholds;         // list of strongholds here
+            collections::entities   objRoutenodes;          // list of routenodes here
+            collections::entities   objCharacters;          // list of characters here
+            collections::entities   objRegiments;           // list of regiments here
+            collections::entities   objRecruit;             // list of characters that <character> can recruit
 
-            mxcharacter*        stubborn_follower_move;                 // which character is stopping us moving
-            mxcharacter*        stubborn_follower_battle;               // which character is stopping us attacking
+            mxcharacter*        stubborn_follower_move;     // which character is stopping us moving
+            mxcharacter*        stubborn_follower_battle;   // which character is stopping us attacking
 
 #if defined(_DDR_)
             mxobject*           object_to_take;
