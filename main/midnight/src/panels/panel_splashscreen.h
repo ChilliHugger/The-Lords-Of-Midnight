@@ -20,11 +20,8 @@ public:
 
 protected:
     virtual void update(float delta) override;
-    virtual void onExit() override;
     
     void removeLoadingBars();
-    void hideLoadingBars();
-
 
     void updateProgress( f32 percent );
     void complete();

@@ -108,26 +108,20 @@ bool panel_splashscreen::init()
     atp->enqueue(AsyncTaskPool::TaskType::TASK_IO, [&]()
     {
         mr->initialise( progress );
-        progress->Stop();
-        loading_complete=true;
-        UIDEBUG("MAX_PROGESS=%d",progress->current);
-        SAFEDELETE(progress);
-        complete();
+        
+        this->scheduleOnce( [&](float) {
+            complete();
+        }, 0.1, "delayed_complete" );
+        
     });
     
     return true;
 }
 
-void panel_splashscreen::onExit()
-{
-    uipanel:uipanel::onExit();
-    removeLoadingBars();
-}
-
 void panel_splashscreen::update(float delta)
 {
     uipanel::update(delta);
-
+    
     if(chilli::randomno::instance.chance(0.5) || loading_complete)
     {
         return;
@@ -164,14 +158,6 @@ void panel_splashscreen::update(float delta)
 
 }
 
-void panel_splashscreen::hideLoadingBars()
-{
-    for(auto c : loading_bars)
-    {
-        c->setVisible(false);
-    }
-}
-
 void panel_splashscreen::removeLoadingBars()
 {
     for(auto c : loading_bars)
@@ -182,13 +168,12 @@ void panel_splashscreen::removeLoadingBars()
     loading_bars.clear();
 }
 
-
 void panel_splashscreen::complete()
 {
-    RUN_ON_UI_THREAD([=]()
-    {
-        hideLoadingBars();
-    });
+    progress->Stop();
+    loading_complete=true;
+    UIDEBUG("MAX_PROGESS=%d",progress->current);
+    SAFEDELETE(progress);
 
     auto Duration = utils::getTimeInMilliseconds() - StartTime;
     
@@ -221,7 +206,3 @@ void panel_splashscreen::updateProgress(f32 percent)
     });
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
-
-
-
-
