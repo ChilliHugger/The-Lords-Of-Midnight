@@ -37,6 +37,12 @@ public:
     
     
     void InitialisePaths();
+
+#if defined(_OS_IOS_)
+    virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
+#endif
+
+
 };
 
 #endif // _APP_DELEGATE_H_

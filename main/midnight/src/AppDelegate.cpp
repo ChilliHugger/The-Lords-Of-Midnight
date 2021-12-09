@@ -140,3 +140,10 @@ void AppDelegate::applicationWillEnterForeground() {
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 #endif
 }
+
+#if defined(_OS_IOS_)
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+    cocos2d::Application::applicationScreenSizeChanged(newWidth, newHeight);
+}
+#endif

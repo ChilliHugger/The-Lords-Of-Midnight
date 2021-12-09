@@ -173,10 +173,24 @@ padding resolutionmanager::getSafeArea()
 {
     padding result;
 
+    int orientation = 0;
+    
+#if defined(_OS_IOS_)
+    orientation = chilli::extensions::getOrientation();
+#endif
+
     auto r = director->getSafeAreaRect();
     
-    result.left = result.right = r.origin.x; 
+    result.left = (result.right = r.origin.x) / Scale();
     result.top = result.bottom = 0;
+    
+    if(orientation == 1) {
+        result.right = 8;
+    }
+    if(orientation == 2) {
+        result.left = 8;
+    }
+    
     return result;
 }
 
