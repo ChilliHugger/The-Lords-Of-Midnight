@@ -13,8 +13,14 @@
 8. Distribute
   - App Store Connect
   - Upload
-  - Upload Symbols
+  - Upload Symbols / Manage Version and Build Number
   - Automatically Manage Signing
+
+## Add testers
+1. When ready to submit - select and and Test Details
+2. Add individual testers
+3. TestFlight | iOS | External Testers | Builds
+4. Add new build
 
 ## OS X
 1. Make sure there is no LOM/DDR folder in resources (after Android build)

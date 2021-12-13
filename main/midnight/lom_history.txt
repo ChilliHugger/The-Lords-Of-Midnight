@@ -1,9 +1,29 @@
 The Lords of Midnight
+Version 2.0
+
+First rebuilt release to support latest models of iOS Devices.
+Including:
+
+1. Wider camera view dependent on device
+2. New night shader for terrain and Characters
+3. Added 'fight', 'hide', 'approach', 'post', 'recruit', 'disband', and 'leave' options to think screen
+4. Think screen now scrolls vertically
+5. Think screen now has scrolling pages
+6. Handles notch safe area
+7. New flip screen option
+
+Note: Some old features have been temporarily removed while they are reworked 
+
+
+
+Version 2.0 (31)
+1. Fixed: panel_splash: Attempted fix for crash on loading screens
+2. Adjusted [ios] Safe Area
+3. Misc code tidy
 
 Version 2.0 (30)
 1. Fixed: panel_look: Think page on move
 2. Fixed: crashes when returning from adverts with transitions turned on
-
 
 Version 2.0 (29)
 1. Fixed: crashes when returning from adverts with transitions turned off
