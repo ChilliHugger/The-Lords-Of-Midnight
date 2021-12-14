@@ -1474,30 +1474,30 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     if ( mr->settings->nav_mode!=CF_NAV_SWIPE || mr->settings->flipscreen ) {
         
         int move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
+        int move_press_left = RES(MOUSE_MOVE_BLEED) ;
+        int move_press_right = size.width - RES(MOUSE_MOVE_BLEED) ;
         
         // use full centre height if we are only pressing
         if ( mr->settings->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
             move_press_y = size.height * 0.75 ;
         
         else if ( mr->settings->nav_mode==CF_NAV_PRESS || mr->settings->flipscreen)
-            move_press_y = 0; //size.height ;
+            move_press_y = 0;
         
-        if ( IsLeftMouseDown  ) {
-            
+        if ( IsLeftMouseDown ) {
             
             if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
                 if ( position.y > move_press_y
-                    && (position.x>RES(MOUSE_LOOK_BLEED)
-                        && position.x < imgShield->getPosition().x ) ) {
+                    && (position.x>move_press_left && position.x < move_press_right ) ) {
                     updateMovementIndicators(LM_MOVE_FORWARD);
                     return true;
                 }
             }
             
-            if ( position.x > size.width-RES(MOUSE_LOOK_BLEED) ) {
+            if ( position.x > move_press_right ) {
                 updateMovementIndicators(LM_ROTATE_RIGHT);
                 return true;
-            } else if ( position.x < RES(MOUSE_LOOK_BLEED) ) {
+            } else if ( position.x < move_press_left ) {
                 updateMovementIndicators(LM_ROTATE_LEFT);
                 return true;
             }
@@ -1511,19 +1511,18 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
             
             if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
                 if ( position.y > move_press_y
-                    && (position.x>RES(MOUSE_LOOK_BLEED)
-                            && position.x < imgShield->getPosition().x ) ) {
+                    && (position.x>move_press_left && position.x < move_press_right ) ) {
                     updateMovementIndicators(LM_NONE);
                     moveForward();
                     return true;
                 }
             }
             
-            if ( position.x > size.width-RES(MOUSE_LOOK_BLEED) ) {
+            if ( position.x > move_press_right ) {
                 updateMovementIndicators(LM_NONE);
                 startLookRight();
                 return true;
-            } else if ( position.x < RES(MOUSE_LOOK_BLEED) ) {
+            } else if ( position.x < move_press_left ) {
                 updateMovementIndicators(LM_NONE);
                 startLookLeft();
                 return true;
