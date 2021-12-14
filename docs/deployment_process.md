@@ -54,3 +54,38 @@
   - Upload
 2. Wait until "Ready to distribute"
 3. Export Notarized App as 'The Lords of Midnight'
+
+## Android - Google Play store
+1. Make sure there is a or LOM/DDR folder in resources 
+2. Open proj.android_lom or proj.android_ddr in Android Studio
+3. Update versionName / versionCode in build.gradle
+4. Check correct applicationId in build.gradle
+5. Clean and ReBuild project 
+    - Build | Clean
+    - Build | Rebuild
+    - Build | Build Bundle(s) / APK(s) | Build Bundle(s)
+8. Sign Bundle
+    - Build | Generate Signed Bundle / APK
+    - Android App Bundle
+    - Next
+    - Check Keystore path / Key Alias / Key password
+    - Android Signing Keys/chillihugger.keystore
+    - Next
+    - Release
+    - Finish
+9. Locate Bundle - press locate on popup when signing finishes
+    - midnight-release.aab
+    - check size (should be about 24mb otherwise you've forgotten the resources!)
+10. Google Play Store
+    - Internal Testing
+    - Create New Release
+    - Version name - Version 2.0 (20000xx)
+    - Release Notes
+<en-GB>
+Version 2.0 (xx)
+</en-GB>
+    - Save
+    - Review Release
+    - Start roll-out to Internal Testing
+    - Promote to Alpha
+    - Start roll-out to Alpha
