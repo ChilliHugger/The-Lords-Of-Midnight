@@ -17,7 +17,7 @@ void main()
     // convert to non-PMA
     fragRGB = saturate(fragRGB / c.a);
 
-    if(c.a!=0.0)
+    //if(c.a!=0.0)
     {
         m.g = 1.0 - fragRGB.g ;
         m.a = c.a;
