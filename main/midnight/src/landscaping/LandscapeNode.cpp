@@ -37,3 +37,8 @@ bool LandscapeNode::initWithOptions(LandscapeOptions* options)
 void LandscapeNode::Build()
 {
 }
+
+void LandscapeNode::RefreshPositions()
+{
+}
+

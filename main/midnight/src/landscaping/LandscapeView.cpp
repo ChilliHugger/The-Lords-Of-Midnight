@@ -68,6 +68,7 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
         terrain->setContentSize(Size(options->generator->PanoramaWidth,visibleSize.height));
         terrain->setAnchorPoint(Vec2::ZERO);
         terrain->setPosition(0, 0);
+        terrain->setName("terrain");
 
 #if defined(_DEBUG_FULL_LANDSCAPE_)
         terrain->setScale(visibleSize.width/options->generator->PanoramaWidth);
@@ -93,4 +94,14 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
     
     
     return true;
+}
+
+void LandscapeView::RefreshPositions()
+{
+    if ( options->showTerrain ) {
+        auto terrain = static_cast<LandscapeTerrain*>(this->getChildByName("terrain"));
+        if(terrain != nullptr) {
+            terrain->RefreshPositions();
+        }
+    }
 }

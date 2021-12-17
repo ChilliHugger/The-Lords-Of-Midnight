@@ -128,6 +128,7 @@ protected:
     void setupLeaderButton();
     
     void UpdateLandscape();
+    void UpdatePanningLandscape();
     
     // Actions and Commands
     bool OnUndo ( savemode_t mode );

@@ -58,7 +58,7 @@ class ILandscape : public LandscapeNode
 public:
 	ILandscape();
     virtual ~ILandscape() {};
-    
+        
 protected:
     bool initWithOptions( LandscapeOptions* options );
 };

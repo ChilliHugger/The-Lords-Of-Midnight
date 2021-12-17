@@ -96,6 +96,7 @@ void LandscapeLand::Build()
                 
                 graphic->setScaleX( graphic->getScaleX() * item->scale*adjustX );
                 graphic->setScaleY( graphic->getScaleY() * item->scale*adjustY );
+                graphic->setUserObject(item);
                 
                 this->addChild(graphic);
                 

@@ -23,10 +23,11 @@ private:
     
 public:
     static LandscapeView* create( LandscapeOptions* options );
+    
+    void RefreshPositions() override;
 
 protected:
     bool initWithOptions( LandscapeOptions* options );
-
 };
 
 #endif /* LandscapeView_hpp */

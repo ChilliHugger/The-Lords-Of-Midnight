@@ -21,6 +21,7 @@ public:
     static LandscapeNode* create(LandscapeOptions* options);
     
     virtual void Build();
+    virtual void RefreshPositions();
 
 protected:
     bool initWithOptions(LandscapeOptions* options) ;

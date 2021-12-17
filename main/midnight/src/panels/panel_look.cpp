@@ -707,7 +707,7 @@ bool panel_look::startLookLeft ( void )
             stopRotating(LM_ROTATE_LEFT);
             return;
         }
-        UpdateLandscape();
+        UpdatePanningLandscape();
     });
     
     this->runAction(EaseSineInOut::create(actionfloat));
@@ -754,7 +754,7 @@ bool panel_look::startLookRight ( void )
             return;
         }
         
-        UpdateLandscape();
+        UpdatePanningLandscape();
     });
     
     this->runAction(EaseSineInOut::create(actionfloat));
@@ -1638,10 +1638,15 @@ void panel_look::OnDrag(uidragevent* event)
     options.isMoving=false;
     options.lookAmount = startDragLookAmount + ((LANDSCAPE_DIR_AMOUNT*2) * dx);
     
-    UpdateLandscape();
-
+    UpdatePanningLandscape();
     parallaxCharacters();
+}
 
+void panel_look::UpdatePanningLandscape()
+{
+    options.generator->horizontalOffset = options.lookAmount;
+    options.generator->landscapeScreenWidth = getContentSize().width ;
+    current_view->RefreshPositions();
 }
 
 //
@@ -1715,7 +1720,7 @@ void panel_look::lookPanoramaSnap(uidragevent* event)
     auto actionfloat = ActionFloat::create(duration, options.lookAmount, amount, [=](float value) {
         options.isLooking = true;
         options.lookAmount =  value;
-        UpdateLandscape();
+        UpdatePanningLandscape();
         parallaxCharacters();
     });
     
