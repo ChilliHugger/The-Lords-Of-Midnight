@@ -38,22 +38,20 @@ using namespace tme;
 using namespace cocos2d::ui;
 
 enum tagid_t {
-    TAG_NONE            = 0,
-    TAG_MENU_COLLAPSE   = 1,
-    TAG_DELAYED_SAVE    = 2,
-    TAG_UNDO            = 3,
-    TAG_UNDO_DONE       = 4,
-    TAG_ENTER_TUNNEL    = 5,
-    TAG_ENTER_TUNNEL_DONE=6,
-    TAG_EXIT_TUNNEL     =7,
-    TAG_EXIT_TUNNEL_DONE=8,
+    TAG_NONE                = 0,
+    TAG_UNDO                = 1,
+    TAG_UNDO_DONE           = 2,
+    TAG_MENU_COLLAPSE       __unused = 3,
+    TAG_DELAYED_SAVE        __unused = 4,
+    TAG_ENTER_TUNNEL        __unused = 5,
+    TAG_ENTER_TUNNEL_DONE   __unused = 6,
+    TAG_EXIT_TUNNEL         __unused = 7,
+    TAG_EXIT_TUNNEL_DONE    __unused = 8,
 };
 
 //#define _SHOW_LANDSCAPE_TRAMLINES_
-
-
-#define SHIELD_WIDTH    RES(192)
-#define SHIELD_HEIGHT   RES(224)
+//#define SHIELD_WIDTH    RES(192)
+//#define SHIELD_HEIGHT   RES(224)
 #define HEADER_HEIGHT   RES(228)
 
 constexpr f32 FADE_IN_SPEED = 1.0f;
@@ -88,7 +86,8 @@ panel_look::panel_look() :
     next_people(nullptr),
     next_people1(nullptr),
     prev_people(nullptr),
-    prev_people1(nullptr)
+    prev_people1(nullptr),
+    currentMovementIndicator(LM_NONE)
 {
     CLEARARRAY(people);
     CLEARARRAY(movementIndicators);
@@ -98,8 +97,8 @@ panel_look::~panel_look()
 {
     options.terrainTimeShader = nullptr;
     options.characterTimeShader = nullptr;
-    SAFEDELETE(options.colour);
-    SAFEDELETE(options.generator);
+    SAFEDELETE(options.colour)
+    SAFEDELETE(options.generator)
     CC_SAFE_RELEASE_NULL(i_command_window);
 }
 
@@ -137,10 +136,9 @@ bool panel_look::init()
     imgHeader = ImageView::create(IMAGE_HEADER);
     imgHeader->setColor(_clrBlack);
     uihelper::AddBottomLeft(layHeader,imgHeader,RES(0), RES(0));
-#endif
-    
     f32 lblNameAdjust = 0;
-    
+#endif
+
     // Name Label
 #if defined(_LOM_)
     lblName = Label::createWithTTF( uihelper::font_config_big, "" );
@@ -148,10 +146,10 @@ bool panel_look::init()
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32));
-    lblNameAdjust = PHONE_SCALE(RES(32)) ;
+    f32 lblNameAdjust = PHONE_SCALE(RES(32)) ;
 #endif
 
-    // Location Desction Label
+    // Location Description Label
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
     lblDescription->getFontAtlas()->setAntiAliasTexParameters();
     lblDescription->setTextColor(Color4B(DESCRIPTION_COLOUR));
@@ -180,11 +178,11 @@ bool panel_look::init()
 #endif
     
     // people in front
-    for ( int ii=0; ii<NUMELE(people); ii++ ) {
-        people[ii] = LandscapePeople::create(&options);
-        people[ii]->setLocalZOrder(ZORDER_FAR+1);
-        people[ii]->setContentSize( Size( getContentSize().width, RES(256)) );
-        addChild(people[ii]);
+    for (auto &person : people) {
+        person = LandscapePeople::create(&options);
+        person->setLocalZOrder(ZORDER_FAR+1);
+        person->setContentSize( Size( getContentSize().width, RES(256)) );
+        addChild(person);
     }
 
     //
@@ -433,7 +431,7 @@ void panel_look::setObject ( mxid c )
 }
 
 
-void panel_look::getCurrentLocationInfo ( void )
+void panel_look::getCurrentLocationInfo()
 {
     character&    c = TME_CurrentCharacter();
     getCharacterInfo(c, current_info);
@@ -453,7 +451,7 @@ void panel_look::setupLeaderButton()
     character c;
     TME_GetCharacter(c, current_info->following);
     
-    layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
+    auto tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
     following->setLord( c.id );
     following->setTag(tag);
     following->setUserData(static_cast<char_data_t*>(c.userdata));
@@ -464,7 +462,7 @@ void panel_look::setupLeaderButton()
 
 }
 
-void panel_look::setViewForCurrentCharacter ( void )
+void panel_look::setViewForCurrentCharacter()
 {
     character&    c = TME_CurrentCharacter();
     
@@ -502,7 +500,7 @@ void panel_look::setViewForCurrentCharacter ( void )
 #endif
 
     // TODO: Make this independent of UI
-    options.lookAmount = (current_info->looking-1) * LANDSCAPE_DIR_AMOUNT;
+    options.lookAmount = (f32)(current_info->looking-1) * LANDSCAPE_DIR_AMOUNT;
     if ( options.lookAmount >= LANDSCAPE_FULL_WIDTH )
     {
         options.lookAmount-=LANDSCAPE_FULL_WIDTH;
@@ -672,7 +670,7 @@ void panel_look::addTouchListener()
 }
 
 
-bool panel_look::startLookLeft ( void )
+bool panel_look::startLookLeft()
 {
     Disable();
     
@@ -719,7 +717,7 @@ bool panel_look::startLookLeft ( void )
     return TRUE;
 }
 
-bool panel_look::startLookRight ( void )
+bool panel_look::startLookRight()
 {
     Disable();
     
@@ -768,7 +766,7 @@ bool panel_look::startLookRight ( void )
 }
 
 
-bool panel_look::moveForward ( void )
+bool panel_look::moveForward()
 {
     character& c = TME_CurrentCharacter();
     
@@ -804,7 +802,7 @@ bool panel_look::moveForward ( void )
     
     if ( !startMoving() ) {
         
-        character& c = TME_CurrentCharacter();
+        c = TME_CurrentCharacter();
         
         TME_GetCharacterLocationInfo(c);
         
@@ -984,15 +982,15 @@ void panel_look::showInactivityHelp()
     
     if ( isEnabled() ) {
         if ( !isHelpVisible() ) {
-            for ( u32 ii=0; ii<NUMELE(help_options); ii++ ) {
-                if ( !showHelpWindow( help_options[ii] ) )
+            for (auto & help_option : help_options) {
+                if ( !showHelpWindow( help_option ) )
                     break;
             }
         }
     }
 }
 
-void panel_look::hideMenus ( void )
+void panel_look::hideMenus()
 {
     // TODO: Hide Menus
 //    if ( actions )
@@ -1002,7 +1000,7 @@ void panel_look::hideMenus ( void )
 }
 
 
-void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
+void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback& callback )
 {
     if ( !mr->settings->screentransitions ) {
         if ( callback != nullptr ) {
@@ -1032,7 +1030,7 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callba
     
 }
 
-void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  MXVoidCallback callback )
+void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback& callback )
 {
     if ( !mr->settings->screentransitions ) {
         if ( callback != nullptr ) {
@@ -1101,7 +1099,7 @@ void panel_look::OnShown()
 #endif
 }
 
-void panel_look::OnActivate( void )
+void panel_look::OnActivate()
 {
     uipanel::OnActivate();
     
@@ -1121,7 +1119,7 @@ void panel_look::OnActivate( void )
 
 }
 
-void panel_look::OnDeActivate( void )
+void panel_look::OnDeActivate()
 {
     uipanel::OnDeActivate();
 }
@@ -1137,7 +1135,7 @@ bool panel_look::OnKeyboardEvent( uikeyboardevent* event )
     //
     if ( event->getKey() >= KEYCODE(1) && event->getKey() <= KEYCODE(8) ) {
         if ( event->isShift() ) {
-            mxdir_t dir = (mxdir_t)((u32)event->getKey() - (u32)KEYCODE(0) -1);
+            auto dir = (mxdir_t)((u32)event->getKey() - (u32)KEYCODE(0) -1);
             return mr->look(dir);
         }
     }
@@ -1178,17 +1176,17 @@ void panel_look::OnNotification( Ref* sender )
 {
     stopInactivity();
     
-    auto button = static_cast<Widget*>(sender);
+    auto button = dynamic_cast<Widget*>(sender);
     if ( button == nullptr )
         return;
     
-    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    auto id = static_cast<layoutid_t>(button->getTag());
     
     hideMenus();
     
     if ( id >= ID_SELECT_CHAR ) {
-        mxid characterId = id-ID_SELECT_CHAR;
-        mr->selectCharacter(characterId);
+        mxid selectId = id-ID_SELECT_CHAR;
+        mr->selectCharacter(selectId);
         return;
     }
     
@@ -1218,7 +1216,6 @@ void panel_look::OnNotification( Ref* sender )
             });
 
             return;
-            break;
         }
             
         case ID_UNDO_DAWN:
@@ -1228,7 +1225,6 @@ void panel_look::OnNotification( Ref* sender )
             });
             
             return;
-            break;
         }
             
         case ID_UNDO:
@@ -1352,8 +1348,7 @@ void panel_look::OnNotification( Ref* sender )
         // check for character selection
         case ID_SHOW_LEADER:
         {
-            char_data_t* data = static_cast<char_data_t*>(button->getUserData());
-            
+            auto data = static_cast<char_data_t*>(button->getUserData());
             if ( mr->selectCharacter(data->id) )
                 return;
  
@@ -1419,7 +1414,7 @@ bool panel_look::OnExitTunnel()
 #endif // _DDR_
 
 
-void panel_look::OnSetupIcons ( void )
+void panel_look::OnSetupIcons()
 {
 
 // TODO: Debug menu
@@ -1440,7 +1435,7 @@ void panel_look::OnSetupIcons ( void )
 //    }
     
     
-    if ( i_command_window==NULL )
+    if ( i_command_window==nullptr )
         return;
     
     i_command_window->updateElements();
@@ -1455,8 +1450,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     }
     
     f32 MOUSE_MOVE_BLEED = 256;
-    f32 MOUSE_LOOK_BLEED = 256;
-    
+
     auto size = getContentSize();
     
     bool IsLeftMouseDown = false;
@@ -1473,9 +1467,9 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     
     if ( mr->settings->nav_mode!=CF_NAV_SWIPE || mr->settings->flipscreen ) {
         
-        int move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
-        int move_press_left = RES(MOUSE_MOVE_BLEED) ;
-        int move_press_right = size.width - RES(MOUSE_MOVE_BLEED) ;
+        f32 move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
+        f32 move_press_left = RES(MOUSE_MOVE_BLEED) ;
+        f32 move_press_right = size.width - RES(MOUSE_MOVE_BLEED) ;
         
         // use full centre height if we are only pressing
         if ( mr->settings->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
@@ -1584,9 +1578,7 @@ void panel_look::updateMovementIndicators(LANDSCAPE_MOVEMENT movement)
 bool panel_look::allowDragDownMove()
 {
     int value = mr->settings->nav_mode ;
-    if ( value != CF_NAV_PRESS)
-        return  TRUE;
-    return FALSE;
+    return ( value != CF_NAV_PRESS);
 }
 
 bool panel_look::allowDragLook()
@@ -1655,7 +1647,7 @@ void panel_look::UpdatePanningLandscape()
 // they are going to move 1024 pixels
 // in the time it takes the main view to move 512 ( maybe 400 )
 //
-void panel_look::parallaxCharacters ( void )
+void panel_look::parallaxCharacters ()
 {
     f32 distance = (startDragLookAmount - options.lookAmount) / LANDSCAPE_DIR_AMOUNT;
 
@@ -1681,11 +1673,11 @@ void panel_look::lookPanoramaSnap(uidragevent* event)
     f32 amount;
 
     f32 distanceDragged = event->position.x - event->startposition.x;
-    f32 timeDragged = (event->time - event->starttime) / 1000.0f;
+    f32 timeDragged = (f32)(event->time - event->starttime) / 1000.0f;
     f32 velocity = ABS(distanceDragged) / timeDragged;
     
     bool inertiaScroll = (timeDragged < 0.5f && velocity > 500)  && (ABS(distanceDragged) < (getContentSize().width/2));
-    int locationAdjustment=0;
+    int locationAdjustment;
     
 //    UIDEBUG("Time %f, Velocity %f, Distance %f, Inertia: %s",
 //            timeDragged, velocity, distanceDragged,
@@ -1702,8 +1694,8 @@ void panel_look::lookPanoramaSnap(uidragevent* event)
         // Inertia force
         f32 dir = SIGN(distanceDragged);
         amount = (ABS(options.lookAmount-startDragLookAmount) > LANDSCAPE_DIR_AMOUNT/2) ? 2 : 1;
-        locationAdjustment = amount*dir;
-        amount = startDragLookAmount - (locationAdjustment*LANDSCAPE_DIR_AMOUNT);
+        locationAdjustment = (int)(amount*dir);
+        amount = startDragLookAmount - ((f32)locationAdjustment*LANDSCAPE_DIR_AMOUNT);
 
         f32 distanceRemaining = ABS(amount-options.lookAmount);
         f32 howFar = (distanceRemaining/LANDSCAPE_DIR_AMOUNT);
@@ -1734,7 +1726,7 @@ void panel_look::stopDragging(s32 adjustment)
 {
     character&    c = TME_CurrentCharacter();
 
-    mxdir_t dir = (mxdir_t) ((int)c.looking - adjustment);
+    auto dir = (mxdir_t) ((int)c.looking - adjustment);
     
     options.lookAmount = 0;
     options.isLooking = false;

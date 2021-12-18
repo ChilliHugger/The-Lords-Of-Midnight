@@ -28,7 +28,7 @@ public:
 protected:
     
     virtual void OnNotification( Ref* sender ) override;
-    virtual void setObject(mxid id) override;
+    virtual void setObject(mxid targetObjectId) override;
 
     void createPageView();
     void setupPages();

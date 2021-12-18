@@ -104,22 +104,22 @@ bool panel_think::init()
     return true;
 }
 
-void panel_think::showButton(layoutid_t id, bool enabled)
+void panel_think::showButton(layoutid_t buttonId, bool enabled)
 {
-    auto button = safeArea->getChildByTag<Button*>(id);
+    auto button = safeArea->getChildByTag<Button*>(buttonId);
     if ( button )
         button->setVisible(enabled);
 }
 
-void panel_think::enableButton(layoutid_t id, bool enabled)
+void panel_think::enableButton(layoutid_t buttonId, bool enabled)
 {
-    auto button = safeArea->getChildByTag<Button*>(id);
+    auto button = safeArea->getChildByTag<Button*>(buttonId);
     uihelper::setEnabled(button, enabled);
 }
 
-void panel_think::tintButton(layoutid_t id,Color3B colour)
+void panel_think::tintButton(layoutid_t buttonId,Color3B colour)
 {
-    auto button = safeArea->getChildByTag<Button*>(id);
+    auto button = safeArea->getChildByTag<Button*>(buttonId);
     if ( button ) {
         button->setEnabled(false);
         button->setBright(true);
@@ -142,14 +142,14 @@ void panel_think::enableButtons()
     
 }
 
-void panel_think::setObject(mxid id)
+void panel_think::setObject(mxid targetObjectId)
 {
     // Add a page
     
     character& c = TME_CurrentCharacter();
     
     this->id = c.id;
-    this->objectId = id;
+    this->objectId = targetObjectId;
     
     setupPages();
     
@@ -158,7 +158,7 @@ void panel_think::setObject(mxid id)
     u32 currentIndex=0;
     for( uithinkpage* page : pages ) {
         
-        if(page->Id() == id)
+        if(page->Id() == targetObjectId)
         {
             currentIndex=index;
         }
@@ -250,12 +250,12 @@ void panel_think::createPageView()
 
 }
 
-void panel_think::addPage( mxid id )
+void panel_think::addPage( mxid pageId )
 {
     uithinkpage* page = uithinkpage::create();
     page->mr = GetMoonring();
     page->setCallback(clickCallback);
-    page->setObject(id, objectId, currentmode);
+    page->setObject(pageId, objectId, currentmode);
     pages.pushBack(page);
 }
 
@@ -349,27 +349,26 @@ void panel_think::setupPages()
     }
     
     //SetupUIElements();
-    if ( pages.size() == 0  ) {
+    if ( pages.empty()  ) {
         addPage(c.id);
     }
 }
 
 void panel_think::OnNotification( Ref* sender )
 {
-    auto button = static_cast<Button*>(sender);
+    auto button = dynamic_cast<Widget*>(sender);
     if ( button == nullptr )
         return;
     
-    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    auto buttonId = static_cast<layoutid_t>(button->getTag());
     
-    if ( id >= ID_SELECT_CHAR ) {
-        mxid characterId = id-ID_SELECT_CHAR;
+    if (buttonId >= ID_SELECT_CHAR ) {
+        mxid characterId = buttonId - ID_SELECT_CHAR;
         mr->selectCharacter(characterId);
         return;
     }
-    
-    
-    switch ( id  )
+
+    switch ( buttonId  )
     {
         case ID_LOOK:
             mr->look();

@@ -31,7 +31,7 @@ USING_NS_CC_UI;
 static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
 static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
 static const char* values_movement[]            = {OPTIONS_MOVEMENT_SWIPE_PUSH,OPTIONS_MOVEMENT_PUSH,OPTIONS_MOVEMENT_SWIPE,OPTIONS_MOVEMENT_PRESS_SWIPE};
-static const char* values_think[]               = {OPTIONS_THINK_SWIPE,OPTIONS_THINK_SWIPE,OPTIONS_THINK_ARROWS};
+//static const char* values_think[]               = {OPTIONS_THINK_SWIPE,OPTIONS_THINK_SWIPE,OPTIONS_THINK_ARROWS};
 static const char* values_compass_delay[]       = {OPTIONS_COMPASS_DELAY_OFF,OPTIONS_COMPASS_DELAY_NORMAL,OPTIONS_COMPASS_DELAY_SHORT,OPTIONS_COMPASS_DELAY_LONG};
 static const char* values_compass_feedback[]    = {OPTIONS_COMPASS_FEEDBACK_OFF,OPTIONS_COMPASS_FEEDBACK_LOW,OPTIONS_COMPASS_FEEDBACK_MEDIUM,OPTIONS_COMPASS_FEEDBACK_HIGH};
 static const char* values_slowfast[]            = {OPTIONS_SLOW,OPTIONS_FAST};
@@ -129,6 +129,27 @@ static option_t options[] = {
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
+
+option_t* findOption(int id)
+{
+    for (auto & option : options){
+        if ( option.id == id ){
+            return &option;
+        }
+    }
+    return nullptr;
+}
+
+void disableOption(int id)
+{
+    auto option = findOption(id);
+    if(option!=nullptr)
+    {
+        option->disabled = true;
+    }
+}
+
+
 bool panel_options::init()
 {
     if ( !uipanel::init() )
@@ -136,7 +157,7 @@ bool panel_options::init()
         return false;
     }
 
-    menu2_background = NULL;
+    menu2_background = nullptr;
     fields.clear();
     
     setBackgroundToHeight("screens/misc/main_menu.png");
@@ -147,23 +168,23 @@ bool panel_options::init()
     
     CreateMenu1();
     
-    SET_OPTION(ID_OPTION_AUTO_FIGHT,autofight);
-    SET_OPTION(ID_OPTION_AUTO_UNHIDE,autounhide);
-    SET_OPTION(ID_OPTION_MOVE_INDICATORS,showmovementindicators);
-    SET_OPTION(ID_OPTION_TUTORIAL,tutorial);
-    SET_OPTION(ID_OPTION_NAVIGATION,nav_mode);
-    SET_OPTION(ID_OPTION_TRANSITIONS,screentransitions);
-    SET_OPTION(ID_OPTION_FLIPSCREEN,flipscreen);
+    SET_OPTION(ID_OPTION_AUTO_FIGHT,autofight)
+    SET_OPTION(ID_OPTION_AUTO_UNHIDE,autounhide)
+    SET_OPTION(ID_OPTION_MOVE_INDICATORS,showmovementindicators)
+    SET_OPTION(ID_OPTION_TUTORIAL,tutorial)
+    SET_OPTION(ID_OPTION_NAVIGATION,nav_mode)
+    SET_OPTION(ID_OPTION_TRANSITIONS,screentransitions)
+    SET_OPTION(ID_OPTION_FLIPSCREEN,flipscreen)
     
-    SET_OPTION(ID_OPTION_NOVELLA,novella_pdf);
+    SET_OPTION(ID_OPTION_NOVELLA,novella_pdf)
     
-    SET_OPTION(ID_OPTION_COMPASS_DELAY,compass_delay);
-    SET_OPTION(ID_OPTION_COMPASS_FEEDBACK,compass_feedback);
-    SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast);
-    SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full);
+    SET_OPTION(ID_OPTION_COMPASS_DELAY,compass_delay)
+    SET_OPTION(ID_OPTION_COMPASS_FEEDBACK,compass_feedback)
+    SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast)
+    SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full)
     
-    SET_OPTION(ID_OPTION_SCREENMODE, screen_mode);
-    SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode);
+    SET_OPTION(ID_OPTION_SCREENMODE, screen_mode)
+    SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode)
     
     if ( !mr->settings->fullscreensupported )
     {
@@ -177,41 +198,45 @@ bool panel_options::init()
     return true;
 }
 
-void panel_options::OnMenuNotification( const uinotificationinterface* sender, menueventargs* args )
+void panel_options::OnMenuNotification(
+    __unused const uinotificationinterface* sender,
+    menueventargs* args )
 {
     int tag = args->menuitem->id;
     
-    if ( tag == ID_HOME )
-    {
-#if defined(_OS_DESKTOP_)
-        if(initialScreenMode != mr->settings->screen_mode)
+    switch (tag){
+        case ID_HOME:
         {
-            changeDisplayMode();
+#if defined(_OS_DESKTOP_)
+            if(initialScreenMode != mr->settings->screen_mode)
+            {
+                changeDisplayMode();
+                return;
+            }
+#endif
+            Exit();
+            mr->settings->Save();
             return;
         }
-#endif
-        Exit();
-        mr->settings->Save();
-        return;
-    } else if ( tag == ID_MENU_GAME ) {
-        SetMenu(tag);
-        return;
-    }else if ( tag == ID_MENU_DISPLAY ) {
-        SetMenu(tag);
-        return;
-    } else if ( tag == ID_MENU_CONTROL ) {
-        SetMenu(tag);
-        return;
-    } else if ( tag == ID_MENU_HELP ) {
-        SetMenu(tag);
-        return;
-    } else if ( tag == ID_CLOSE || tag == ID_HELP_CLOSE ) {
-        return;
+
+        case ID_MENU_GAME:
+        case ID_MENU_DISPLAY:
+        case ID_MENU_CONTROL:
+        case ID_MENU_HELP:
+            SetMenu(tag);
+            return;
+
+        case ID_CLOSE:
+        case ID_HELP_CLOSE:
+            return;
+
+        default:
+            break;
     }
     
     auto option = findOption(tag);
     if(option==nullptr)
-        return;;
+        return;
 
     if ( option->type == OPT_BOOL ) {
         BOOL* value = (BOOL*) option->var;
@@ -234,27 +259,6 @@ void panel_options::OnMenuNotification( const uinotificationinterface* sender, m
             showHelpWindow(HELP_TUTORIAL_OFF);
     }
     
-}
-
-option_t* panel_options::findOption(int id)
-{
-    for ( int ii=0; ii<NUMELE(options); ii++ )
-    {
-        if ( options[ii].id == id )
-        {
-            return &options[ii];
-        }
-    }
-    return nullptr;
-}
-
-void panel_options::disableOption(int id)
-{
-    auto option = findOption(id);
-    if(option!=nullptr)
-    {
-        option->disabled = true;
-    }
 }
 
 void panel_options::SetMenu ( int id )
@@ -302,25 +306,25 @@ void panel_options::SetMenu ( int id )
     }
 }
 
-void panel_options::SetValues ( void )
+void panel_options::SetValues()
 {
-    for ( u32 ii=0; ii<NUMELE(options); ii++ ) {
+    for (auto & option : options) {
 
         int item=0;
-        if ( options[ii].type == OPT_BOOL ) {
-            BOOL* value = (BOOL*) options[ii].var ;
+        if ( option.type == OPT_BOOL ) {
+            bool* value = (bool*) option.var ;
             item = *value ? 1 : 0 ;
         }
-        if ( options[ii].type == OPT_NUMBER ) {
-            int* value = (int*) options[ii].var ;
+        if ( option.type == OPT_NUMBER ) {
+            int* value = (int*) option.var ;
             item = *value ;
         }
         
-        if ( options[ii].type != OPT_NONE ) {
+        if ( option.type != OPT_NONE ) {
 
-            auto field = optionControls.at(options[ii].id);
+            auto field = optionControls.at(option.id);
             if ( field != nullptr  )
-                field->setValue(options[ii].text[item]);
+                field->setValue(option.text[item]);
         }
         
     }
@@ -408,11 +412,11 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     // refresh positions
     auto offset = Vec2( width/2, height );
     for ( auto item : fields ) {
-        f32 height = item->getBoundingBox().size.height;
-        offset.y -= height/2;
+        f32 itemHeight = item->getBoundingBox().size.height;
+        offset.y -= itemHeight / 2;
         item->setAnchorPoint( uihelper::AnchorCenter );
         item->setPosition(offset);
-        offset.y -=  (height/2) + gapY;
+        offset.y -= (itemHeight / 2) + gapY;
     }
     
 }

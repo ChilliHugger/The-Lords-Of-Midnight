@@ -59,9 +59,6 @@ protected:
     void changeDisplayMode();
 #endif
 
-    option_t* findOption(int id);
-    void disableOption(int id);
-    
 protected:
     DrawNode*               menu2_background;
     Vector<Node*>           fields;

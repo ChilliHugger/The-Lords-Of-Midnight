@@ -13,6 +13,7 @@ struct uitextmenuitem;
 class uieventargs 
 {    
 public:
+    virtual ~uieventargs() {}
 
 private:
     

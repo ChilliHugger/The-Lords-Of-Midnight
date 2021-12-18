@@ -20,7 +20,7 @@ public:
 
     CREATE_FUNC(panel_mainmenu);
     
-    void OnMenuNotification( const uinotificationinterface*, menueventargs* );
+    void OnMenuNotification(__unused const uinotificationinterface*, menueventargs* );
     virtual void OnNotification( Ref* element ) override;
     
 protected:
@@ -29,7 +29,7 @@ protected:
     void OnHelpClose();
     void OnOptions();
     void OnCredits();
-    void OnExit();
+    void OnExitGame();
     void OnNewStory();
     void OnContinueStory();
     void OnEndStory();

@@ -24,7 +24,7 @@
 #include "../ui/characters/uisinglelord.h"
 #include "../ui/characters/uigrouplord.h"
 
-#include <math.h>
+#include <cmath>
 
 const f32 ScrollToLordTimeInSecs = 1.0f;
 
@@ -47,7 +47,6 @@ panel_map_detailed::panel_map_detailed() :
 panel_map_detailed::~panel_map_detailed()
 {
     CC_SAFE_RELEASE_NULL(mapBuilder);
-    //CC_SAFE_RELEASE_NULL(tmxMap);
 }
 
 
@@ -57,8 +56,6 @@ bool panel_map_detailed::init()
     {
         return false;
     }
-    
-    f32 scale = phoneScale();
     
     model = &mr->mapmodel;
     
@@ -177,14 +174,14 @@ bool panel_map_detailed::init()
 
 void panel_map_detailed::OnNotification( Ref* sender )
 {
-    auto button = static_cast<Button*>(sender);
+    auto button = dynamic_cast<Widget*>(sender);
     if ( button == nullptr )
         return;
 
     auto pos = scrollView->getInnerContainerPosition();
-    model->oldoffset = point( pos.x, pos.y);
+    model->oldoffset = point( (int)pos.x, (int)pos.y);
     
-    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    auto id = static_cast<layoutid_t>(button->getTag());
     
     if ( id >= ID_SELECT_CHAR ) {
         mxid characterId = id-ID_SELECT_CHAR;
@@ -401,10 +398,10 @@ void panel_map_detailed::setupCharacterButtons()
         TME_GetCharacter(c,m->id);
         auto pos = mapBuilder->convertToPosition(c.location);
         
-        Widget* node = nullptr;
+        Widget* node;
         
         // others at this location?
-        if ( m->here.size() > 0 ) {
+        if ( !m->here.empty() ) {
             
             node = uihelper::CreateImageButton("map_lords_many", ID_SELECT_ALL, clickCallback);
             node->setUserData(m);
@@ -444,7 +441,7 @@ void panel_map_detailed::setupPlaceLabels()
 {
     for( auto m : mapBuilder->places )
     {
-        CONTINUE_IF( m->here.size() >0 );
+        CONTINUE_IF( !m->here.empty() );
         
         auto pos = mapBuilder->convertToPosition(m->location);
         

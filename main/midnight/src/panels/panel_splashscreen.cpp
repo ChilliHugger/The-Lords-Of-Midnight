@@ -20,19 +20,22 @@
 USING_NS_CC;
 
 constexpr s32 MAX_SPLASHSCREEN_TIME = 3000;
-constexpr f32 TRANSITION_TIME = 2.0;
-constexpr f32 MAX_PROGESS = 40.0f;
+constexpr f32 TRANSITION_TIME = 2.0f;
+constexpr f32 MAX_PROGRESS = 40.0f;
 
 panel_splashscreen::panel_splashscreen() :
     progress(nullptr),
     loading_progress(nullptr),
-    loading_complete(false)
+    loading_complete(false),
+    loading_height(0),
+    loading_width(0),
+    StartTime(0)
 {
 }
 
 panel_splashscreen::~panel_splashscreen()
 {
-    SAFEDELETE(progress);
+    SAFEDELETE(progress)
 }
 
 bool panel_splashscreen::init()
@@ -82,10 +85,10 @@ bool panel_splashscreen::init()
     uihelper::AddTopLeft(background,label4,x,y+(lineHeight*3));
 #endif
     
-    
+
     loading_width = RES(512);
     loading_height = RES(16);
-    
+
     loading_progress = DrawNode::create();
     uihelper::AddBottomLeft(background, loading_progress, RES(8), RES(8));
     
@@ -94,7 +97,7 @@ bool panel_splashscreen::init()
     
     
     progress = new progressmonitor([&](int value) {
-        updateProgress( (f32)value / MAX_PROGESS );
+        updateProgress((f32)value / MAX_PROGRESS );
     });
     progress->Start();
     
@@ -169,8 +172,8 @@ void panel_splashscreen::complete()
 {
     progress->Stop();
     loading_complete=true;
-    UIDEBUG("MAX_PROGESS=%d",progress->current);
-    SAFEDELETE(progress);
+    UIDEBUG("MAX_PROGRESS=%d",progress->current);
+    SAFEDELETE(progress)
 
     auto Duration = utils::getTimeInMilliseconds() - StartTime;
     
@@ -199,7 +202,7 @@ void panel_splashscreen::updateProgress(f32 percent)
     RUN_ON_UI_THREAD([=](){
         loading_progress->clear();
         loading_progress->drawSolidRect(Vec2::ZERO, Vec2(loading_width,loading_height), Color4F(_clrDarkYellow) );
-        loading_progress->drawSolidRect(Vec2::ZERO, Vec2(loading_width*MIN(1.0,percent),loading_height), Color4F(_clrDarkBlue) );
+        loading_progress->drawSolidRect(Vec2::ZERO, Vec2(loading_width*MIN(1.0f,percent),loading_height), Color4F(_clrDarkBlue) );
     });
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }

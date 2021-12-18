@@ -1,4 +1,4 @@
-
+#include <__bit_reference>
 #include "../cocos.h"
 
 #include "panel_mainmenu.h"
@@ -57,6 +57,8 @@ static uitextmenuitem items[] = {
 #endif
     
 };
+
+panel_mainmenu::~panel_mainmenu() = default;
 
 bool panel_mainmenu::init()
 {
@@ -137,10 +139,6 @@ bool panel_mainmenu::init()
     return true;
 }
 
-panel_mainmenu::~panel_mainmenu()
-{
-}
-
 void panel_mainmenu::OnNotification( Ref* sender )
 {
     switch ( ((Button*)sender)->getTag() ) {
@@ -153,14 +151,16 @@ void panel_mainmenu::OnNotification( Ref* sender )
     }
 }
 
-void panel_mainmenu::OnMenuNotification( const uinotificationinterface* sender, menueventargs* args )
+void panel_mainmenu::OnMenuNotification(
+        __unused const uinotificationinterface* sender,
+        menueventargs* args )
 {
     
     switch (args->menuitem->id)
     {
 #if defined(_OS_DESKTOP_)
         case ID_EXIT:
-            OnExit();
+            OnExitGame();
             break;
 #endif
 #ifdef _USE_DEBUG_MENU_
@@ -232,7 +232,7 @@ void panel_mainmenu::OnCredits()
     mr->panels->setPanelMode(MODE_CREDITS, TRANSITION_FADEIN, true);
 }
 
-void panel_mainmenu::OnExit()
+void panel_mainmenu::OnExitGame()
 {
     AreYouSure(EXIT_MSG, [&] {
         Director::getInstance()->end();
@@ -287,14 +287,14 @@ void panel_mainmenu::OnContinueStory()
  
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
 
-        bookeventargs* event = static_cast<bookeventargs*>(e);
+        auto event = dynamic_cast<bookeventargs*>(e);
         if (event != nullptr) { // null == cancelled
             mr->continueStory(event->id);
         }
 
         RUN_ON_UI_THREAD([=]() {
-            uibookmenu* menu = static_cast<uibookmenu*>(s);
-            menu->removeFromParent();
+            auto item = dynamic_cast<uibookmenu*>(s);
+            item->removeFromParent();
         });
     });
     
@@ -315,14 +315,14 @@ void panel_mainmenu::OnEndStory()
     
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         
-        bookeventargs* event = static_cast<bookeventargs*>(e);
+        auto event = dynamic_cast<bookeventargs*>(e);
         if (event != nullptr) { // null == cancelled
             deleteStory(event->id);
         }
 
         RUN_ON_UI_THREAD([=]() {
-            uibookmenu* menu = static_cast<uibookmenu*>(s);
-            menu->removeFromParent();
+            auto item = dynamic_cast<uibookmenu*>(s);
+            item->removeFromParent();
         });
     });
 }
@@ -336,7 +336,7 @@ void panel_mainmenu::deleteStory( storyid_t id )
 }
 
 
-void panel_mainmenu::refreshStories( void )
+void panel_mainmenu::refreshStories()
 {
     int count = mr->stories->stories_used();
     

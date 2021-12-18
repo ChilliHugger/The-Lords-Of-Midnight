@@ -42,7 +42,7 @@ protected:
     void getCharacters();
 
     Vec2 calcGridLocation ( u32 index );
-    page_t calcPage( u32 index );
+    page_t calcPage( u32 index ) const;
     void addToPage( uilordselect* lord, page_t page, Vec2 pos);
     void checkPageFlip() ;
 
@@ -57,7 +57,6 @@ protected:
     void showCharacterPositions();
     void refreshCharacters();
 
-    mxid getIdFromTag( uilordselect* lord );
     void storeLordPosition( uilordselect* lord );
 
     void createPageView();
@@ -69,7 +68,6 @@ protected:
 
     void disableUI();
     void enableUI();
-    void showNewLordPosition( uilordselect* lord );
 
     void checkValidDropTarget();
     void placeDraggedLordOnCurrentPage();

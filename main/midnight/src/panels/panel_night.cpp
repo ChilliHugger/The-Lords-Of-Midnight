@@ -91,26 +91,20 @@ void panel_night::OnShown()
 
 void panel_night::OnNotification( Ref* sender )
 {
-    auto button = static_cast<Button*>(sender);
+    auto button = dynamic_cast<Widget*>(sender);
     if ( button == nullptr )
         return;
     
-    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    auto id = static_cast<layoutid_t>(button->getTag());
     
-    switch ( id  )
-    {
-        case ID_DAWN:
-            mr->dawn();
-            break;
-            
-        default:
-            break;
+    if ( id == ID_DAWN ) {
+        mr->dawn();
     }
 }
 
 void panel_night::OnNightNotification ( callback_t* event )
 {
-    if ( event == NULL ) {
+    if ( event == nullptr ) {
 
         std::string msg = TME_LastActionMsg();
  
@@ -123,9 +117,7 @@ void panel_night::OnNightNotification ( callback_t* event )
 
     }else{
         if ( event->type == callback_t::gameover ) {
-            auto gameover = static_cast<gameover_callback_t*>(event)->condition;
-            
-            RUN_ON_UI_THREAD([&,gameover](){
+            RUN_ON_UI_THREAD([&](){
                 mr->stories->save(savemode_dawn);
                 mr->checkGameOverConditions();
             });
@@ -145,7 +137,7 @@ void panel_night::setNightText( const std::string& text )
     f32 padding = RES(64);
     f32 textY = RES(32);
     f32 height = textY+textSize.height;
-    bool enabled = true;
+    bool enabled;
     
     if ( height >= size.height ) {
         height+=padding;

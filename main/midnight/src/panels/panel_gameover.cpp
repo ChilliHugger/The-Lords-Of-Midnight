@@ -88,19 +88,13 @@ void panel_gameover::OnShown()
 
 void panel_gameover::OnNotification( Ref* sender )
 {
-    auto button = static_cast<Button*>(sender);
+    auto button = dynamic_cast<Widget*>(sender);
     if ( button == nullptr )
         return;
     
-    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    auto id = static_cast<layoutid_t>(button->getTag());
     
-    switch ( id  )
-    {
-        case ID_HOME:
-            mr->showPage(MODE_MAINMENU);
-            break;
-            
-        default:
-            break;
+    if ( id == ID_HOME ) {
+        mr->showPage(MODE_MAINMENU);
     }
 }

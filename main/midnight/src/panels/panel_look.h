@@ -89,7 +89,7 @@ protected:
     panel_look();
     virtual void OnNotification( Ref* element ) override;
     
-    void getCharacterInfo ( character& c, locationinfo_t* info);
+    static void getCharacterInfo ( character& c, locationinfo_t* info);
     void getCurrentLocationInfo ( void );
     void setViewForCurrentCharacter ( void );
     
@@ -111,8 +111,8 @@ protected:
     void delayedSave();
 
     void hideMenus ( void );
-    void fadeIn ( Color3B colour, f32 initialAlpha, MXVoidCallback callback );
-    void fadeOut ( Color3B colour, f32 initialAlpha, MXVoidCallback callback );
+    void fadeIn ( Color3B colour, f32 initialAlpha, const MXVoidCallback& callback );
+    void fadeOut ( Color3B colour, f32 initialAlpha, const MXVoidCallback& callback );
 
     
     void OnMovementComplete( /*uiview* sender, */ LANDSCAPE_MOVEMENT type );
@@ -153,7 +153,7 @@ protected:
 
 
 protected:
-    mxid                characterId;
+    mxid                characterId{};
     
     ILandscape*         current_view;
     
@@ -167,36 +167,36 @@ protected:
     Label*              lblName;
     ImageView*          imgShield;
     LayerColor*         layHeader;
-    ImageView*          imgHeader;
-    uisinglelord*       following;
-    DrawNode*           gradientL;
-    DrawNode*           gradientR;
+    ImageView*          imgHeader{};
+    uisinglelord*       following{};
+    DrawNode*           gradientL{};
+    DrawNode*           gradientR{};
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
  
     // Actions and Commands
     uicommandwindow*    i_command_window;
   
-    LandscapePeople*    people[5];
+    LandscapePeople*    people[5]{};
 
     LandscapePeople*    prev_people1;
     LandscapePeople*    prev_people;
     LandscapePeople*    current_people;
     LandscapePeople*    next_people;
     LandscapePeople*    next_people1;
-    f32                 landscapeTramline;
+    f32                 landscapeTramline{};
     
-    Sprite*             movementIndicators[3];
+    Sprite*             movementIndicators[3]{};
     
     // draggin
     //f32                 dragged;
     bool                landscape_dragging;
-    u64                 mouse_down_time;
-    bool                mouse_down;
+    u64                 mouse_down_time{};
+    bool                mouse_down{};
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;
 
-    f32                 startDragLookAmount;
+    f32                 startDragLookAmount{};
     
 };
 

@@ -31,6 +31,19 @@ using namespace tme;
 
 static const u32 MaxPages = 10;
 
+mxid getIdFromTag(uilordselect* lord)
+{
+    return lord->getTag() - ID_SELECT_CHAR ;
+}
+
+void showNewLordPosition( uilordselect* lord )
+{
+    lord->setCascadeOpacityEnabled(true);
+    lord->setOpacity(alpha_zero);
+    lord->runAction(FadeIn::create(1.00f));
+}
+
+
 bool panel_select::init()
 {
     if ( !uipanel::init() )
@@ -183,13 +196,6 @@ void panel_select::disableUI()
     }
 }
 
-void panel_select::showNewLordPosition( uilordselect* lord )
-{
-    lord->setCascadeOpacityEnabled(true);
-    lord->setOpacity(alpha_zero);
-    lord->runAction(FadeIn::create(1.00f));
-}
-
 void panel_select::getCharacters()
 {
     s32 usedIndex=0;
@@ -206,9 +212,9 @@ void panel_select::getCharacters()
         
         CONTINUE_IF ( c.following );
         
-        layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
+        auto tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
         
-        uilordselect* lord = nullptr;
+        uilordselect* lord;
         
         if ( c.followers ) {
             lord = uigrouplord::createWithLord(c.id);
@@ -246,7 +252,7 @@ void panel_select::getCharacters()
         }
         
         if ( c.followers ) {
-            static_cast<uigrouplord*>(lord)->createFollowers();
+            dynamic_cast<uigrouplord*>(lord)->createFollowers();
         }
         
         applyFilters( lord, c );
@@ -301,16 +307,13 @@ void panel_select::addToPage( uilordselect* lord, page_t page, Vec2 pos)
 
 void panel_select::checkCollision ( uilordselect* lord, s32 start )
 {
-    uilordselect* overlap;
-    
     auto page = lord->getPage();
     
     s32 index = start;
-    bool looped = false;
-    
+
     for(;;) {
     
-        if ( (overlap=getOverlappingLord(page,lord)) == nullptr )
+        if ( getOverlappingLord(page,lord) == nullptr )
             break;
         
         page = calcPage(index);
@@ -318,10 +321,6 @@ void panel_select::checkCollision ( uilordselect* lord, s32 start )
             if ( page < MaxPages ) {
                 addNewPage(page);
             }else{
-                if ( looped == true ) {
-                    addToPage(lord, 0, calcGridLocation(0));
-                    break;
-                }
                 page=1;
                 index=0;
                 continue;
@@ -378,7 +377,7 @@ uilordselect* panel_select::getOverlappingLord ( page_t page, uilordselect* sour
     return nullptr ;
 }
 
-page_t panel_select::calcPage( u32 index )
+page_t panel_select::calcPage( u32 index ) const
 {
     return (index / MAX_LORDS_PER_PAGE) +1 ;
 }
@@ -392,12 +391,12 @@ Vec2 panel_select::calcGridLocation ( u32 index )
     auto page = calcPage(index);
     
     index = index - (((s32)page-1) * MAX_LORDS_PER_PAGE);
+
+    u32 r = index / MAX_COLUMNS ;
+    u32 c = index % MAX_COLUMNS ;
     
-    int r = index / MAX_COLUMNS ;
-    int c = index % MAX_COLUMNS ;
-    
-    pos.x = (c * (SELECT_GRID_X+SELECT_GRID_X_LEADING)) + START_X;
-    pos.y = (r * (SELECT_GRID_Y+SELECT_GRID_Y_LEADING)) + START_Y;
+    pos.x = (f32)(c * (SELECT_GRID_X+SELECT_GRID_X_LEADING)) + START_X;
+    pos.y = (f32)(r * (SELECT_GRID_Y+SELECT_GRID_Y_LEADING)) + START_Y;
     pos.y = this->getContentSize().height-pos.y;
     
     return pos;
@@ -472,11 +471,11 @@ void panel_select::updateFilterButton(Ref* sender,select_filters flag)
 
 void panel_select::OnNotification( Ref* sender )
 {
-    auto button = static_cast<Button*>(sender);
+    auto button = dynamic_cast<Widget*>(sender);
     if ( button == nullptr )
         return;
     
-    layoutid_t id = static_cast<layoutid_t>(button->getTag());
+    auto id = static_cast<layoutid_t>(button->getTag());
     
     if ( id >= ID_SELECT_CHAR ) {
         gradientB->setVisible(false);
@@ -527,13 +526,13 @@ void panel_select::OnNotification( Ref* sender )
             
         case ID_GROUP_DISBAND:
         {
-            auto parent = static_cast<Button*>(sender)->getParent();
-            auto leader = static_cast<uigrouplord*>(parent);
+            auto parent = dynamic_cast<Widget*>(sender)->getParent();
+            auto leader = dynamic_cast<uigrouplord*>(parent);
             
             storeAllLordsPositions();
             
-            layoutid_t id = static_cast<layoutid_t>(leader->getTag()-ID_SELECT_CHAR);
-            mr->disbandGroup(id);
+            auto selectId = static_cast<layoutid_t>(leader->getTag()-ID_SELECT_CHAR);
+            mr->disbandGroup(selectId);
             
             refreshCharacters();
             break;
@@ -591,20 +590,20 @@ void panel_select::OnDeActivate()
 
 void panel_select::showCharacterPositions()
 {
+#if _SHOW_CHARACTER_POSITIONS_
     for( auto e : lords ) {
-        
         auto ud = e->userData();
         UIDEBUG( "%d %s = (%f,%f) %d", ud->id, ud->symbol.c_str(), e->getPosition().x, e->getPosition().y, e->getPage());
         
         if ( e->lordtype == lordwidget::group ) {
-            auto parent = static_cast<uigrouplord*>(e);
+            auto parent = dynamic_cast<uigrouplord*>(e);
             for( auto c : parent->followers ) {
                 auto u = c->userData();
                 UIDEBUG( "    %d %s = (%f,%f) %d", u->id, u->symbol.c_str(), c->getPosition().x, c->getPosition().y, c->getPage());
             }
         }
-        
     }
+#endif
 }
 
 void panel_select::placeDraggedLordOnCurrentPage()
@@ -681,7 +680,7 @@ void panel_select::OnDragDropNotification( uidragelement* sender, uidragevent* e
     
     f32 scale = phoneScale() ;
     
-    auto lord = static_cast<uilordselect*>(event->element);
+    auto lord = dynamic_cast<uilordselect*>(event->element);
 
     mxid draggedLordId = getIdFromTag(lord);
 
@@ -803,7 +802,7 @@ void panel_select::checkValidDropTarget()
     character c;
     
     if ( dropTarget && dropTarget->lordtype == lordwidget::group ) {
-        static_cast<uigrouplord*>(dropTarget)->possibleSwap = false;
+        dynamic_cast<uigrouplord*>(dropTarget)->possibleSwap = false;
         dropTarget->refreshStatus();
     }
     
@@ -811,7 +810,7 @@ void panel_select::checkValidDropTarget()
     
     if ( newTarget && newTarget->lordtype == lordwidget::group ) {
         if ( currentlyFollowing && currentlyFollowing == potentialLeader ) {
-            static_cast<uigrouplord*>(newTarget)->possibleSwap = lordDropResult != MOUSE_OVER_OUTER;
+            dynamic_cast<uigrouplord*>(newTarget)->possibleSwap = lordDropResult != MOUSE_OVER_OUTER;
             newTarget->refreshStatus();
         }
     }
@@ -825,7 +824,7 @@ void panel_select::checkValidDropTarget()
             dropTarget->endDropTarget();
         }
         
-        if ( newTarget != NULL ) {
+        if ( newTarget != nullptr ) {
             
             potentialLeader = getIdFromTag(newTarget);
             
@@ -905,7 +904,7 @@ void panel_select::refreshCharacters() {
             lord->removeFromParent();
             // store children
             if ( lord->lordtype == lordwidget::group ) {
-                static_cast<uigrouplord*>(lord)->clearFollowers();
+                dynamic_cast<uigrouplord*>(lord)->clearFollowers();
             }
         }
         getCharacters();
@@ -913,12 +912,6 @@ void panel_select::refreshCharacters() {
     }, 0, "delayed_refreshCharacters" );
     
 
-}
-
-
-mxid panel_select::getIdFromTag(uilordselect* lord)
-{
-    return lord->getTag() - ID_SELECT_CHAR ;
 }
 
 uilordselect* panel_select::getDropTarget( uilordselect* lord, UIMOUSEOVER where, UIMOUSEOVER& result )
@@ -974,7 +967,7 @@ void panel_select::storeLordPosition( uilordselect* lord )
     
     // store children
     if ( lord->lordtype == lordwidget::group ) {
-        for( auto child : static_cast<uigrouplord*>(lord)->followers ) {
+        for( auto child : dynamic_cast<uigrouplord*>(lord)->followers ) {
             storeLordPosition(child);
         }
     }
@@ -1025,15 +1018,15 @@ void panel_select::checkPageFlip()
 
 void panel_select::removeEmptyEndPages()
 {
-    if ( pages.size() == 0)
+    if ( pages.empty())
         return;
     
     for (;;) {
-        BREAK_IF(pages.size() == 0);
+        BREAK_IF(pages.empty());
         
         auto page = pages.at( pages.size()-1 );
         
-        BREAK_IF ( page->getChildren().size() != 0 ) ;
+        BREAK_IF ( !page->getChildren().empty() ) ;
         
         pages.popBack();
         pageView->removePage(page);
