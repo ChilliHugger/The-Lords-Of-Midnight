@@ -76,7 +76,7 @@
 9. Locate Bundle - press locate on popup when signing finishes
     - midnight-release.aab
     - check size (should be about 24mb otherwise you've forgotten the resources!)
-10. Google Play Store
+10. Google Play Store - https://play.google.com/console/u/0/developers/5865908633896374109/
     - Internal Testing
     - Create New Release
     - Version name - Version 2.0 (20000xx)
