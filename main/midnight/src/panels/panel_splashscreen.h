@@ -21,19 +21,18 @@ public:
 protected:
     virtual void update(float delta) override;
     
-    void removeLoadingBars();
-
     void updateProgress( f32 percent );
     void complete();
     
 protected:
-    f32                 loading_width;
-    f32                 loading_height;
-    DrawNode*           loading_progress;
-    long                StartTime;
+    f32                 loadingWidth;
+    f32                 loadingHeight;
+    DrawNode*           loadingProgress;
+    f32                 currentProgress;
+    long                startTime;
     progressmonitor*    progress;
-    Vector<LayerColor*> loading_bars;
-    bool                loading_complete;
+    DrawNode*           loadingBars;
+    bool                loadingComplete;
 };
 
 #endif // __PANEL_SPLASHSCREEN_H__

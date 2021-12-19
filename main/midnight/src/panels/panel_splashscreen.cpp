@@ -25,17 +25,20 @@ constexpr f32 MAX_PROGRESS = 40.0f;
 
 panel_splashscreen::panel_splashscreen() :
     progress(nullptr),
-    loading_progress(nullptr),
-    loading_complete(false),
-    loading_height(0),
-    loading_width(0),
-    StartTime(0)
+    loadingProgress(nullptr),
+    loadingBars(nullptr),
+    loadingComplete(false),
+    loadingHeight(0),
+    loadingWidth(0),
+    startTime(0)
 {
 }
 
 panel_splashscreen::~panel_splashscreen()
 {
     SAFEDELETE(progress)
+    //CC_SAFE_RELEASE(loadingProgress);
+    //CC_SAFE_RELEASE(loadingBars);
 }
 
 bool panel_splashscreen::init()
@@ -86,13 +89,19 @@ bool panel_splashscreen::init()
 #endif
     
 
-    loading_width = RES(512);
-    loading_height = RES(16);
+    loadingWidth = RES(512);
+    loadingHeight = RES(16);
 
-    loading_progress = DrawNode::create();
-    uihelper::AddBottomLeft(background, loading_progress, RES(8), RES(8));
+    loadingProgress = DrawNode::create();
+    uihelper::AddBottomLeft(background, loadingProgress, RES(8), RES(8));
+
+    loadingBars = DrawNode::create();
+    loadingBars->setContentSize(getContentSize());
+    loadingBars->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    loadingBars->setLocalZOrder(ZORDER_FAR-1);
+    uihelper::AddTopLeft(this,loadingBars);
     
-    loading_complete=false;
+    loadingComplete=false;
     scheduleUpdate();
     
     
@@ -101,7 +110,7 @@ bool panel_splashscreen::init()
     });
     progress->Start();
     
-    StartTime = utils::getTimeInMilliseconds();
+    startTime = utils::getTimeInMilliseconds();
 
     // Initialise in a thread
     auto atp = AsyncTaskPool::getInstance();
@@ -120,70 +129,58 @@ bool panel_splashscreen::init()
 
 void panel_splashscreen::update(float delta)
 {
+    f32 y=0;
+    f32 width = getContentSize().width;
+    int c=chilli::randomno::instance.get()&1;
+
     uipanel::update(delta);
+
+    loadingProgress->clear();
+
+    if(loadingProgress->isVisible()) {
+        loadingProgress->drawSolidRect(Vec2::ZERO, Vec2(loadingWidth,loadingHeight), Color4F(_clrDarkYellow) );
+        loadingProgress->drawSolidRect(Vec2::ZERO, Vec2(loadingWidth*MIN(1.0f,currentProgress),loadingHeight), Color4F(_clrDarkBlue) );
+    }
+
+    if(chilli::randomno::instance.chance(0.5)) {
+        return;
+    }
     
-    if(chilli::randomno::instance.chance(0.5) || loading_complete)
-    {
+    loadingBars->clear();
+    
+    if(loadingComplete) {
         return;
     }
 
-    removeLoadingBars();
- 
-    auto barColor = Color4B(_clrDarkBlue);
- 
-    int c=chilli::randomno::instance.get()&1;
-    f32 y=0;
-    f32 width = getContentSize().width;
-    while(true)
+    while(y<getContentSize().height)
     {
         f32 height = chilli::randomno::instance.get(RES(2), RES(20));
 
-        if(c==0)
-        {
-            auto layer = LayerColor::create(barColor, width, height);
-            layer->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-            layer->setPosition(0, y);
-            layer->setLocalZOrder(ZORDER_FAR-1);
-            uihelper::AddTopLeft(this,layer,0,y);
-            loading_bars.pushBack(layer);
+        if(c==0) {
+            loadingBars->drawSolidRect(Vec2(0,y), Vec2(0+width, y+height), Color4F(_clrDarkBlue) );
         }
         c = (c+1)&1;
 
         y+=height;
-        if(y>getContentSize().height)
-        {
-            break;
-        }
     }
-
-}
-
-void panel_splashscreen::removeLoadingBars()
-{
-    for(auto c : loading_bars)
-    {
-        removeChild(c);
-    }
-    
-    loading_bars.clear();
 }
 
 void panel_splashscreen::complete()
 {
     progress->Stop();
-    loading_complete=true;
+    loadingComplete=true;
     UIDEBUG("MAX_PROGRESS=%d",progress->current);
     SAFEDELETE(progress)
 
-    auto Duration = utils::getTimeInMilliseconds() - StartTime;
+    auto Duration = utils::getTimeInMilliseconds() - startTime;
     
     // we want at least 3 seconds of splash screen
     f32 delay = MAX(0,(f32)(MAX_SPLASHSCREEN_TIME-Duration) / 1000.0f);
     
     if ( CONFIG(screentransitions) ) {
-        loading_progress->runAction( FadeOut::create(1.0) );
+        loadingProgress->runAction( FadeOut::create(1.0) );
     }else{
-        loading_progress->setVisible(false);
+        loadingProgress->setVisible(false);
         delay = 1;
     }
     
@@ -199,10 +196,6 @@ void panel_splashscreen::complete()
 
 void panel_splashscreen::updateProgress(f32 percent)
 {
-    RUN_ON_UI_THREAD([=](){
-        loading_progress->clear();
-        loading_progress->drawSolidRect(Vec2::ZERO, Vec2(loading_width,loading_height), Color4F(_clrDarkYellow) );
-        loading_progress->drawSolidRect(Vec2::ZERO, Vec2(loading_width*MIN(1.0f,percent),loading_height), Color4F(_clrDarkBlue) );
-    });
+    currentProgress = percent;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
