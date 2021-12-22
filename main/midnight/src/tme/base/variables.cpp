@@ -120,108 +120,97 @@ namespace tme {
         
         sv_int_t    sv_energy_cannot_continue;
         
+#define VARIABLE(a,b,c,d) { &a, b, c, d, nullptr }
+        
         cvarreg_t var_array [] = {
 
-            { &sv_database_version,                    "DATABASE_VERSION",                    CVar::NUMBER,    "1.00" },    
-            { &sv_battle_default_energy_drain,        "BATTLE_DEFAULT_ENERGY_DRAIN",        CVar::NUMBER,    "24" },        
-            { &sv_battle_default_char_energy_drain,    "BATTLE_DEFAULT_CHAR_ENERGY_DRAIN",    CVar::NUMBER,    "20" },
-            { &sv_battle_success_regiment_warriors,    "BATTLE_SUCCESS_REGIMENT_WARRIORS",    CVar::NUMBER,    "5" },
-            { &sv_battle_success_regiment_riders,    "BATTLE_SUCCESS_REGIMENT_RIDERS",    CVar::NUMBER,    "4" },
-            { &sv_character_default_energy_inc,        "CHARACTER_DEFAULT_ENERGY_INC",        CVar::NUMBER,    "9" },
-            { &sv_character_recruit_amount,            "CHARACTER_RECRUIT_AMOUNT",            CVar::NUMBER,    "100" },
-            { &sv_character_guard_amount,            "CHARACTER_GUARD_AMOUNT",            CVar::NUMBER,    "100" },
-            { &sv_character_max_riders,                "CHARACTER_MAX_RIDERS",                CVar::NUMBER,    "1200" },
-            { &sv_character_max_warriors,            "CHARACTER_MAX_WARRIORS",            CVar::NUMBER,    "1200" },
-            { &sv_character_max_energy,                "CHARACTER_MAX_ENERGY",                CVar::NUMBER,    "127" },
-            { &sv_warriors_max_energy,                "WARRIORS_MAX_ENERGY",                CVar::NUMBER,    "127" },
-            { &sv_warriors_default_energy_inc,        "WARRIORS_DEFAULT_ENERGY_INC",        CVar::NUMBER,    "4" },
-            { &sv_riders_default_energy_inc,        "RIDERS_DEFAULT_ENERGY_INC",        CVar::NUMBER,    "6" },
-            { &sv_riders_max_energy,                "RIDERS_MAX_ENERGY",                CVar::NUMBER,    "127" },
-            { &sv_object_energy_shelter,            "OBJECT_ENERGY_SHELTER",            CVar::NUMBER,    "10" },
-            { &sv_object_energy_shadowsofdeath,        "OBJECT_ENERGY_SHADOWSOFDEATH",        CVar::NUMBER,    "0" },
-            { &sv_object_energy_watersoflife,        "OBJECT_ENERGY_WATERSOFLIFE",        CVar::NUMBER,    "120" },
-            { &sv_lookforwarddistance,                "LOOKFORWARDDISTANCE",                CVar::NUMBER,    "3" },
-            { &sv_regiment_default_moves,            "REGIMENT_DEFAULT_MOVES",            CVar::NUMBER,    "6" },
-            { &sv_stronghold_default_empty,            "STRONGHOLD_DEFAULT_EMPTY",            CVar::NUMBER,    "20" },
-            { &sv_stronghold_default_min,            "STRONGHOLD_DEFAULT_MIN",            CVar::NUMBER,    "100" },
-            { &sv_stronghold_default_max,            "STRONGHOLD_DEFAULT_MAX",            CVar::NUMBER,    "1200" },
-            { &sv_stronghold_default_allow_respawn,    "STRONGHOLD_DEFAULT_ALLOW_RESPAWN",    CVar::YESNO,    "NO" },
-            { &sv_stronghold_default_respawn_amount,"STRONGHOLD_DEFAULT_RESPAWN_AMOUNT",CVar::NUMBER,    "50" },
-            { &sv_success_fey_on_horse_adjuster,    "SUCCESS_FEY_ON_HORSE_ADJUSTER",    CVar::NUMBER,    "64" },
-            { &sv_success_base_level,                "SUCCESS_BASE_LEVEL",                CVar::NUMBER,    "24" },
-            { &sv_success_riders_energy_mountain,    "SUCCESS_RIDERS_ENERGY_MOUNTAIN",    CVar::NUMBER,    "32" },
-            { &sv_success_riders_energy_other,        "SUCCESS_RIDERS_ENERGY_OTHER",        CVar::NUMBER,    "64" },
-            { &sv_always_attempt_recruit,            "ALWAYS_ATTEMPT_RECRUIT",            CVar::YESNO,    "FALSE" },
+            VARIABLE( sv_database_version,                      "DATABASE_VERSION",                     CVar::NUMBER,   "1.00" ),
+            VARIABLE( sv_battle_default_energy_drain,           "BATTLE_DEFAULT_ENERGY_DRAIN",          CVar::NUMBER,   "24" ),
+            VARIABLE( sv_battle_default_char_energy_drain,      "BATTLE_DEFAULT_CHAR_ENERGY_DRAIN",     CVar::NUMBER,   "20" ),
+            VARIABLE( sv_battle_success_regiment_warriors,      "BATTLE_SUCCESS_REGIMENT_WARRIORS",     CVar::NUMBER,   "5" ),
+            VARIABLE( sv_battle_success_regiment_riders,        "BATTLE_SUCCESS_REGIMENT_RIDERS",       CVar::NUMBER,   "4" ),
+            VARIABLE( sv_character_default_energy_inc,          "CHARACTER_DEFAULT_ENERGY_INC",         CVar::NUMBER,   "9" ),
+            VARIABLE( sv_character_recruit_amount,              "CHARACTER_RECRUIT_AMOUNT",             CVar::NUMBER,   "100" ),
+            VARIABLE( sv_character_guard_amount,                "CHARACTER_GUARD_AMOUNT",               CVar::NUMBER,   "100" ),
+            VARIABLE( sv_character_max_riders,                  "CHARACTER_MAX_RIDERS",                 CVar::NUMBER,   "1200" ),
+            VARIABLE( sv_character_max_warriors,                "CHARACTER_MAX_WARRIORS",               CVar::NUMBER,   "1200" ),
+            VARIABLE( sv_character_max_energy,                  "CHARACTER_MAX_ENERGY",                 CVar::NUMBER,   "127" ),
+            VARIABLE( sv_warriors_max_energy,                   "WARRIORS_MAX_ENERGY",                  CVar::NUMBER,   "127" ),
+            VARIABLE( sv_warriors_default_energy_inc,           "WARRIORS_DEFAULT_ENERGY_INC",          CVar::NUMBER,   "4" ),
+            VARIABLE( sv_riders_default_energy_inc,             "RIDERS_DEFAULT_ENERGY_INC",            CVar::NUMBER,   "6" ),
+            VARIABLE( sv_riders_max_energy,                     "RIDERS_MAX_ENERGY",                    CVar::NUMBER,   "127" ),
+            VARIABLE( sv_object_energy_shelter,                 "OBJECT_ENERGY_SHELTER",                CVar::NUMBER,   "10" ),
+            VARIABLE( sv_object_energy_shadowsofdeath,          "OBJECT_ENERGY_SHADOWSOFDEATH",         CVar::NUMBER,   "0" ),
+            VARIABLE( sv_object_energy_watersoflife,            "OBJECT_ENERGY_WATERSOFLIFE",           CVar::NUMBER,   "120" ),
+            VARIABLE( sv_lookforwarddistance,                   "LOOKFORWARDDISTANCE",                  CVar::NUMBER,   "3" ),
+            VARIABLE( sv_regiment_default_moves,                "REGIMENT_DEFAULT_MOVES",               CVar::NUMBER,   "6" ),
+            VARIABLE( sv_stronghold_default_empty,              "STRONGHOLD_DEFAULT_EMPTY",             CVar::NUMBER,   "20" ),
+            VARIABLE( sv_stronghold_default_min,                "STRONGHOLD_DEFAULT_MIN",               CVar::NUMBER,   "100" ),
+            VARIABLE( sv_stronghold_default_max,                "STRONGHOLD_DEFAULT_MAX",               CVar::NUMBER,   "1200" ),
+            VARIABLE( sv_stronghold_default_allow_respawn,      "STRONGHOLD_DEFAULT_ALLOW_RESPAWN",     CVar::YESNO,    "NO" ),
+            VARIABLE( sv_stronghold_default_respawn_amount,     "STRONGHOLD_DEFAULT_RESPAWN_AMOUNT",    CVar::NUMBER,   "50" ),
+            VARIABLE( sv_success_fey_on_horse_adjuster,         "SUCCESS_FEY_ON_HORSE_ADJUSTER",        CVar::NUMBER,   "64" ),
+            VARIABLE( sv_success_base_level,                    "SUCCESS_BASE_LEVEL",                   CVar::NUMBER,   "24" ),
+            VARIABLE( sv_success_riders_energy_mountain,        "SUCCESS_RIDERS_ENERGY_MOUNTAIN",       CVar::NUMBER,   "32" ),
+            VARIABLE( sv_success_riders_energy_other,           "SUCCESS_RIDERS_ENERGY_OTHER",          CVar::NUMBER,   "64" ),
+            VARIABLE( sv_always_attempt_recruit,                "ALWAYS_ATTEMPT_RECRUIT",               CVar::YESNO,    "FALSE" ),
 
-            { &sv_map_file,                            "MAP_FILE",                            CVar::STRING,    "map" },
-            { &sv_map_width,                        "MAP_WIDTH",                        CVar::NUMBER,    "66" },
-            { &sv_map_height,                        "MAP_HEIGHT",                        CVar::NUMBER,    "62" },
+            VARIABLE( sv_map_file,                              "MAP_FILE",                             CVar::STRING,   "map" ),
+            VARIABLE( sv_map_width,                             "MAP_WIDTH",                            CVar::NUMBER,   "66" ),
+            VARIABLE( sv_map_height,                            "MAP_HEIGHT",                           CVar::NUMBER,   "62" ),
 
-            { &sv_auto_unhide,                        "CHARACTER_AUTO_UNHIDE",            CVar::YESNO,    "NO" },
-            { &sv_auto_seek,                        "CHARACTER_AUTO_SEEK",                CVar::YESNO,    "NO" },
-            { &sv_character_default_memory_age,        "CHARACTER_DEFAULT_MEMORY_AGE",        CVar::NUMBER,    "10" },
+            VARIABLE( sv_auto_unhide,                           "CHARACTER_AUTO_UNHIDE",                CVar::YESNO,    "NO" ),
+            VARIABLE( sv_auto_seek,                             "CHARACTER_AUTO_SEEK",                  CVar::YESNO,    "NO" ),
+            VARIABLE( sv_character_default_memory_age,          "CHARACTER_DEFAULT_MEMORY_AGE",         CVar::NUMBER,   "10" ),
 
 
-//            { &sv_use_cowardess,                    "USE_COWARDESS",                    CVar::YESNO,    "YES" } ,
-//            { &sv_use_despondency,                    "USE_DESPONDENCY",                    CVar::YESNO,    "NO" } ,
+//          VARIABLE( sv_use_cowardess,                         "USE_COWARDESS",                        CVar::YESNO,    "YES" } ,
+//          VARIABLE( sv_use_despondency,                       "USE_DESPONDENCY",                      CVar::YESNO,    "NO" } ,
 
-            { &sv_time_night,                        "TIME_NIGHT",                        CVar::INT,        "0" },
-            { &sv_time_dawn,                        "TIME_DAWN",                        CVar::INT,        "16" }, // lords 16 ddr 31
-            { &sv_time_scale,                        "TIME_SCALE",                        CVar::INT,        "2" }, // lords 2 ddr 4
-
-            { &sv_energy_max,                        "ENERGY_MAX",                        CVar::INT,        "127" } ,
-            { &sv_strength_max,                        "STRENGTH_MAX",                        CVar::INT,        "100" } ,
-
-            { &sv_fear_scale,                        "FEAR_SCALE",                        CVar::INT,        "64" }, 
-            { &sv_courage_scale,                    "COURAGE_SCALE",                    CVar::INT,        "1" }, 
-            { &sv_energy_scale,                        "ENERGY_SCALE",                        CVar::INT,        "16" }, // lom  16 ddr 32
-            { &sv_despondent_scale,                    "DESPONDENT_SCALE",                    CVar::INT,        "32" }, 
-            { &sv_reckless_scale,                    "RECKLESS_SCALE",                    CVar::INT,        "32" },
-
-            { &sv_collate_battle_areas,                "COLLATE_BATTLE_AREAS",             CVar::YESNO,    "NO" },
-
-            { &sv_character_friend,                    "CHARACTER_FRIEND",                    CVar::IDT,        "CH_LUXOR" },
-            { &sv_character_foe,                    "CHARACTER_FOE",                    CVar::IDT,        "CH_DOOMDARK" },
-            { &sv_character_default,                "CHARACTER_DEFAULT",                CVar::IDARRAY,    "CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_RORTHRON" },
-            { &sv_guidance,                            "SEEK_MESSAGES",                    CVar::IDARRAY,    "" },
-
-            
-            
-        //
-            { &sv_characters,                        "CHARACTERS",                        CVar::INT,        "0" },
-            { &sv_routenodes,                        "ROUTENODES",                        CVar::INT,        "0" },
-            { &sv_strongholds,                        "STRONGHOLDS",                        CVar::INT,        "0" },
-            { &sv_regiments,                        "REGIMENTS",                        CVar::INT,        "0" },
-            { &sv_places,                            "PLACES",                            CVar::INT,        "0" },
-            { &sv_directions,                        "DIRECTIONS",                        CVar::INT,        "0" },
-            { &sv_objects,                            "OBJECTS",                            CVar::INT,        "0" },
-            { &sv_units,                            "UNITS",                            CVar::INT,        "0" },
-            { &sv_races,                            "RACES",                            CVar::INT,        "0" },
-            { &sv_genders,                            "GENDERS",                            CVar::INT,        "0" },
-            { &sv_terrains,                            "TERRAINS",                            CVar::INT,        "0" },
-            { &sv_areas,                            "AREAS",                            CVar::INT,        "0" },
-            { &sv_commands,                            "COMMANDS",                            CVar::INT,        "0" },
-            { &sv_missions,                            "MISSIONS",                            CVar::INT,        "0" },
-            { &sv_victories,                        "VICTORIES",                        CVar::INT,        "0" },
-            { &sv_attributes,                        "ATTRIBUTES",                        CVar::INT,        "0" },
-            { &sv_variables,                        "VARIABLES",                        CVar::INT,        "0" },
-            { &sv_days,                                "DAYS",                                CVar::INT,        "0" },
-            { &sv_strongholdadjuster,                "STRONGHOLD_ADJUSTER",                CVar::INT,        "0" },
-            { &sv_controlled_character,                "CONTROLLED_CHARACTER",                CVar::INT,        "0" },
-            { &sv_energy_cannot_continue,           "ENERGY_CANNOT_CONTINUE",           CVar::INT,      "0" },
+            VARIABLE( sv_time_night,                            "TIME_NIGHT",                           CVar::INT,      "0" ),
+            VARIABLE( sv_time_dawn,                             "TIME_DAWN",                            CVar::INT,      "16" ), // lords 16 ddr 31
+            VARIABLE( sv_time_scale,                            "TIME_SCALE",                           CVar::INT,      "2" ), // lords 2 ddr 4
+            VARIABLE( sv_energy_max,                            "ENERGY_MAX",                           CVar::INT,      "127" ),
+            VARIABLE( sv_strength_max,                          "STRENGTH_MAX",                         CVar::INT,      "100" ) ,
+            VARIABLE( sv_fear_scale,                            "FEAR_SCALE",                           CVar::INT,      "64" ),
+            VARIABLE( sv_courage_scale,                         "COURAGE_SCALE",                        CVar::INT,      "1" ),
+            VARIABLE( sv_energy_scale,                          "ENERGY_SCALE",                         CVar::INT,      "16" ), // lom  16 ddr 32
+            VARIABLE( sv_despondent_scale,                      "DESPONDENT_SCALE",                     CVar::INT,      "32" ),
+            VARIABLE( sv_reckless_scale,                        "RECKLESS_SCALE",                       CVar::INT,      "32" ),
+            VARIABLE( sv_collate_battle_areas,                  "COLLATE_BATTLE_AREAS",                 CVar::YESNO,    "NO" ),
+            VARIABLE( sv_character_friend,                      "CHARACTER_FRIEND",                     CVar::IDT,      "CH_LUXOR" ),
+            VARIABLE( sv_character_foe,                         "CHARACTER_FOE",                        CVar::IDT,      "CH_DOOMDARK" ),
+            VARIABLE( sv_character_default,                     "CHARACTER_DEFAULT",                    CVar::IDARRAY,  "CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_RORTHRON" ),
+            VARIABLE( sv_guidance,                              "SEEK_MESSAGES",                        CVar::IDARRAY,  "" ),
+            VARIABLE( sv_characters,                            "CHARACTERS",                           CVar::INT,      "0" ),
+            VARIABLE( sv_routenodes,                            "ROUTENODES",                           CVar::INT,      "0" ),
+            VARIABLE( sv_strongholds,                           "STRONGHOLDS",                          CVar::INT,      "0" ),
+            VARIABLE( sv_regiments,                             "REGIMENTS",                            CVar::INT,      "0" ),
+            VARIABLE( sv_places,                                "PLACES",                               CVar::INT,      "0" ),
+            VARIABLE( sv_directions,                            "DIRECTIONS",                           CVar::INT,      "0" ),
+            VARIABLE( sv_objects,                               "OBJECTS",                              CVar::INT,      "0" ),
+            VARIABLE( sv_units,                                 "UNITS",                                CVar::INT,      "0" ),
+            VARIABLE( sv_races,                                 "RACES",                                CVar::INT,      "0" ),
+            VARIABLE( sv_genders,                               "GENDERS",                              CVar::INT,      "0" ),
+            VARIABLE( sv_terrains,                              "TERRAINS",                             CVar::INT,      "0" ),
+            VARIABLE( sv_areas,                                 "AREAS",                                CVar::INT,      "0" ),
+            VARIABLE( sv_commands,                              "COMMANDS",                             CVar::INT,      "0" ),
+            VARIABLE( sv_missions,                              "MISSIONS",                             CVar::INT,      "0" ),
+            VARIABLE( sv_victories,                             "VICTORIES",                            CVar::INT,      "0" ),
+            VARIABLE( sv_attributes,                            "ATTRIBUTES",                           CVar::INT,      "0" ),
+            VARIABLE( sv_variables,                             "VARIABLES",                            CVar::INT,      "0" ),
+            VARIABLE( sv_days,                                  "DAYS",                                 CVar::INT,      "0" ),
+            VARIABLE( sv_strongholdadjuster,                    "STRONGHOLD_ADJUSTER",                  CVar::INT,      "0" ),
+            VARIABLE( sv_controlled_character,                  "CONTROLLED_CHARACTER",                 CVar::INT,      "0" ),
+            VARIABLE( sv_energy_cannot_continue,                "ENERGY_CANNOT_CONTINUE",               CVar::INT,      "0" ),
 #if defined(_DDR_)
-            { &sv_object_powers,                    "OBJECT_POWERS",                    CVar::INT,        "0" },
-            { &sv_object_types,                     "OBJECT_TYPES",                        CVar::INT,        "0" },
+            VARIABLE( sv_object_powers,                         "OBJECT_POWERS",                        CVar::INT,      "0" ),
+            VARIABLE( sv_object_types,                          "OBJECT_TYPES",                         CVar::INT,      "0" ),
 #endif
         };
 
         void sv_Initialise ( cvarreg_t* variable ) 
         {
-            if( c_stricmp(variable->name,"ENERGY_SCALE") == 0 )
-            {
-                int a = 100;
-            }
-            
             LPCSTR stringValue =  (variable->currentValue == nullptr)
                                 ? variable->defaultValue
                                 : variable->currentValue ;
@@ -304,6 +293,7 @@ namespace tme {
                     sv_c_mxid_t* c = (sv_c_mxid_t*) var_array[ii].memory ;
                         c->Clear();
                 }
+                var_array[ii].currentValue = nullptr;
             }
         }
 
@@ -311,6 +301,7 @@ namespace tme {
         {
             for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
                 if ( pass == 1 ) {
+                    var_array[ii].currentValue = nullptr;
                     if ( var_array[ii].type != CVar::IDARRAY && var_array[ii].type != CVar::IDT)
                         sv_Initialise( &var_array[ii] );
                 }else if ( pass == 2 ) {

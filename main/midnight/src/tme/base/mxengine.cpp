@@ -359,9 +359,9 @@ MXTRACE( "Loading Variables");
     
 // load variables
     for ( ii=0; ii<sv_variables; ii++ ) {
-        variables[ii].memory=NULL;
-        variables[ii].name=NULL;
-        variables[ii].currentValue=NULL;
+        variables[ii].memory=nullptr;
+        variables[ii].name=nullptr;
+        variables[ii].currentValue=nullptr;
         variables[ii].type=CVar::VNONE;
 
         ar >> (char**)&variables[ii].name;
