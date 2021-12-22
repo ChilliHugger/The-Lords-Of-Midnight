@@ -9,12 +9,15 @@
 5. Check Build Version
   - Project 'Midnight' | General | Build
 6. Build / Archive
-7. Validate
-8. Distribute
+7. Copy midnight.app.dsym from main/midnight/ios-build/bin/midnight/RelWithDebInfo to main/midnight/dsym files/ios/2.0.x.(xx) and compress
+8. Add dsym file to archive
+9. Validate
+10. Distribute
   - App Store Connect
   - Upload
   - Upload Symbols / Manage Version and Build Number
   - Automatically Manage Signing
+
 
 ## Add testers
 1. When ready to submit - select and and Test Details
@@ -89,3 +92,7 @@ Version 2.0 (xx)
     - Start roll-out to Internal Testing
     - Promote to Alpha
     - Start roll-out to Alpha
+
+
+##Debug DSYM files
+atos -o midnight.app.dSYM -l 0x1000b4000 0x0000000100100008

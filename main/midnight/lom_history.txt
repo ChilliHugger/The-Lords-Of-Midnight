@@ -15,6 +15,13 @@ Including:
 Note: Some old features have been temporarily removed while they are reworked 
 
 
+Version 2.0.1 (33)
+1. panel_splashscreen - rewritten spectrum loading bars
+2. panel_look - rewritten landscaping panning
+3. Built with more debug info
+
+Version 2.0.1 (32)
+Test only upload
 
 Version 2.0 (31)
 1. Fixed: panel_splash: Attempted fix for crash on loading screens
