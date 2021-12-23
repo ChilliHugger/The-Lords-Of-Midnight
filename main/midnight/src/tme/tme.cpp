@@ -39,49 +39,52 @@ mxid            location_object_tunnel;
 mxid            location_someone_to_give_to;
 #endif
 
-c_str            tme_text ;
-std::string          tme_path;
+//std::string            tme_text ;
+//std::string          tme_path;
 static            variant args[20];
 
 
 #if defined(_LOM_)
-LPCSTR TME_ScenarioDirectory ( void )
+std::string TME_ScenarioDirectory ( void )
 {
-    tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
-    return tme_path.c_str();
+    return cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
 }
 
-LPCSTR TME_ScenarioName ( void )
+std::string TME_ScenarioName ( void )
 {
-    return "The Lords of Midnight" ; 
+    std::string scenarioName("The Lords of Midnight") ;
+    return scenarioName;
 }
 
-LPCSTR TME_ScenarioShortName ( void )
+std::string TME_ScenarioShortName ( void )
 {
-    return "lom" ;
+    std::string shortName("lom");
+    return shortName ;
 }
 
 #endif
 
 #if defined(_DDR_)
-LPCSTR TME_ScenarioDirectory ( void )
+std::string& TME_ScenarioDirectory ( void )
 {
-    tme_path = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
+    return cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
     return tme_path.c_str();
 }
 
-LPCSTR TME_ScenarioName ( void )
+std::string TME_ScenarioName ( void )
 {
-    return "Doomdark's Revenge" ;
+    std::string scenarioName("Doomdark's Revenge") ;
+    return scenarioName;
 }
 
-LPCSTR TME_ScenarioShortName ( void )
+std::string TME_ScenarioShortName ( void )
 {
-    return "ddr" ;
+    std::string shortName("ddr");
+    return shortName ;
 }
 #endif
 
-LPCSTR TME_GetSymbol( mxid id )
+std::string TME_GetSymbol( mxid id )
 {
     return mxi->EntitySymbolById(id);
 }
@@ -129,49 +132,48 @@ void TME_PurgeTextCache()
     }
 }
 
-LPCSTR TME_GetNumber(int number)
+std::string TME_GetNumber(int number)
 {
     args[0] = (s32)number ;
     return TME_GetText("NumberPart",args,1);
 }
 
-LPCSTR TME_LastActionMsg()
+std::string TME_LastActionMsg()
 {
     return TME_GetText("LastActionMsg");
 }
 
-LPCSTR TME_GetCharacterText ( const character& c, const c_str& command )
+std::string TME_GetCharacterText ( const character& c, const std::string& command )
 {
     args[0] = c.id ;
     return TME_GetText(command,args,1);
 }
 
-LPCSTR TME_GetSystemString ( const character& c, int msg ) 
+std::string TME_GetSystemString ( const character& c, int msg )
 {
     args[0] = MAKE_ID(IDT_STRING,msg) ;
     args[1] = c.id ;
     return TME_GetText("SpecialStrings",args,2);
 }
 
-LPCSTR TME_GetText ( const c_str& command )
+std::string TME_GetText ( const std::string& command )
 {
     return TME_GetText(command,args,0);
 }
 
-LPCSTR TME_GetText ( const c_str& command, variant args[], int count )
+std::string TME_GetText ( const std::string& command, variant args[], int count )
 {
-    CStrBuf cache;
-    
-    if ( MXSUCCESS( mxi->Text( command, args, count ) ) ) {
-        tme_text = (LPSTR)args[1];
+    std::string text;
+
+    if ( MXSUCCESS( mxi->Text( command.c_str(), args, count ) ) ) {
+        text = (LPSTR)args[1].vString;
     }else
-        tme_text = "";
+        text = "";
     
-    _MXASSERTE(CDebug::CheckMemory());
-    return tme_text ;
+    return text ;
 }
 
-LPCSTR TME_GetLocationText ( mxgridref loc )
+std::string TME_GetLocationText ( mxgridref loc )
 {
     args[0] = MAKE_LOCID(loc.x,loc.y) ;
     return TME_GetText( "Location", args, 1 );
@@ -198,7 +200,7 @@ bool TME_GetLocationInDirection( maplocation& out, loc_t loc, mxdir_t dir )
 }
 
 
-LPCSTR TME_GetMapLocationText ( mxgridref loc )
+std::string TME_GetMapLocationText ( mxgridref loc )
 {
     args[0] = MAKE_MAPLOCID(loc.x,loc.y) ;
     return TME_GetText( "MapLocation", args, 1 );
@@ -552,7 +554,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     return TRUE;
 }
 
-LPCSTR TME_GetUnitTypeName(mxunit_t type )
+std::string TME_GetUnitTypeName(mxunit_t type )
 {
     defaultexport::unitinfo_t unit;
     
@@ -627,15 +629,12 @@ bool TME_Load ( LPSTR filespec, PFNSERIALIZE function )
     return TRUE;
 }
 
-bool TME_SaveDescription ( LPSTR filespec, c_str& description )
+std::string TME_SaveDescription ( LPSTR filespec )
 {
     args[0] = filespec ;
-    args[1] = (void*) &description ;
-    if ( MXFAILED(mxi->Command( "@DESCRIPTION", args, 2 ) ) ) {
-        return FALSE;
-    }
-    
-    return TRUE;
+    mxi->Command( "@DESCRIPTION", args, 1 );
+    std::string description = (LPCSTR)args[1].vString;
+    return description;
 }
 
 bool TME_LoadDiscoveryMap ( LPSTR filespec )
@@ -1018,15 +1017,16 @@ bool TME_Init ( void )
     randomno::instance.randomize();
     
     // Tell the engine where to find its data
-    args[0] = (LPSTR)TME_ScenarioDirectory() ;
+    auto directory = TME_ScenarioDirectory();
+    args[0] = (LPSTR)directory.c_str() ;
     if ( MXFAILED ( mxi->Command("@SETDATABASEDIRECTORY",args,1) ) ) {
-        return FALSE ;
+        return false ;
     }
     
     
     // initialise the engine
     if ( MXFAILED ( mxi->Command("@INIT") ) ) {
-        return FALSE ;
+        return false ;
     }
     
     
@@ -1051,9 +1051,6 @@ bool TME_DeInit ( void )
         
     }
     
-    tme_text = NULL ;
-
-
     default_characters.Clear() ;
     recruitable_characters.Clear();
     location_characters.Clear();

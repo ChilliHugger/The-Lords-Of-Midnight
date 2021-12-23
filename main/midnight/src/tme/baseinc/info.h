@@ -409,8 +409,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         
         void ClearVisibleArea();
         void ResetVisibleArea();
-        bool Load ( LPCSTR filename );
-        bool Save ( LPCSTR filename );
+        bool Load ( const std::string& filename );
+        bool Save ( const std::string& filename );
         
         bool IsLocationVisible( mxgridref l );
         flags32& GetAt ( const mxgridref& mxloc );
@@ -466,7 +466,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             void Destroy( void );
             virtual void Serialize( chilli::lib::archive& ar );
-            mxentity* FindSymbol ( const c_str& name ) ;
+            mxentity* FindSymbol ( const std::string& name ) ;
             void Sort ( int hint ) ; // not thread safe
 
             bool Add ( mxentity* );

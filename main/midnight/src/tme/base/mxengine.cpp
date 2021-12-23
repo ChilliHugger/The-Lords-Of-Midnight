@@ -102,7 +102,7 @@ mxengine::~mxengine()
  * 
  */
 /*
-bool mxengine::InstallScenario ( const c_str& filename )
+bool mxengine::InstallScenario ( const std::string& filename )
 {
 FUNCADDRESS            func;
 FNSCENARIOREGISTER    ScenarioRegister;
@@ -193,13 +193,13 @@ MXRESULT mxengine::UnloadScenario ()
  * 
  */
 
-MXRESULT mxengine::SetDatabaseDirectory ( const c_str& directory )
+MXRESULT mxengine::SetDatabaseDirectory ( std::string directory )
 {
 //char    file[MAX_PATH];
 
     MX_REGISTER_SELF;
 
-    c_strcpy ( m_szDatabase, directory );
+    c_strcpy ( m_szDatabase, directory.c_str() );
 /*
     sprintf ( file,"%s/config", m_szDatabase );
     if ( (m_config = new os::config(file)) == NULL ) {
@@ -612,9 +612,9 @@ void mxengine::NightCallback( callback_t* ptr)
  * 
  */
 
-MXRESULT mxengine::LoadGame ( const c_str& filename, PFNSERIALIZE function )
+MXRESULT mxengine::LoadGame ( const std::string& filename, PFNSERIALIZE function )
 {
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         //COMPLAIN( "Cannot Load data file %s", filename );
@@ -742,9 +742,9 @@ c_str  description;
 }
 
 
-MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& description )
+MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::string& description )
 {
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return MX_FAILED;
@@ -782,12 +782,13 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
     if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
     
+    c_str temp;
     if ( SaveGameVersion()>8 ) {
-        ar >>  description;
+        ar >>  temp;
     }else{
-        description="";
+        temp="";
     }
-
+    description = temp;
     
     ar.Close();
     
@@ -809,7 +810,7 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
  * 
  */
 
-MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
+MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function )
 {
 
 /* what needs to be saved?
@@ -834,7 +835,7 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
 
 */
 
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
     if ( pFile == NULL || !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         //COMPLAIN( "Cannot Save data file %s", filename );
@@ -866,7 +867,7 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
     sprintf( buffer, "Day %d\n%s\n%s\n%d %s"
             , (int)sv_days+1
             , (char*)m_CurrentCharacter->Longname()
-            , mx->text->DescribeLocation(m_CurrentCharacter->Location() )
+            , mx->text->DescribeLocation(m_CurrentCharacter->Location()).c_str()
             , lords
             , lords==1 ? "lord" : "lords"
             );
@@ -1020,10 +1021,10 @@ int ii;
 
 
 
-cvarreg_t* mxengine::FindDBVariable ( const c_str& name ) const
+cvarreg_t* mxengine::FindDBVariable ( const std::string& name ) const
 {
     for ( int ii=0; ii<sv_variables; ii++ ) {
-        if (c_stricmp( name, variables[ii].name ) == 0 )
+        if (c_stricmp( name.c_str(), variables[ii].name ) == 0 )
             return &variables[ii];
     }
     return NULL ;
@@ -1038,7 +1039,7 @@ LPCSTR mxengine::EntitySymbolById ( mxid id )
     return entity->Symbol();
 }
 
-mxentity* mxengine::EntityByName( const c_str& name, id_type_t type )
+mxentity* mxengine::EntityByName( const std::string& name, id_type_t type )
 {
 mxentity* obj;
     
@@ -1131,24 +1132,24 @@ MXRESULT mxengine::EntityLinkData( mxid id, const void* data )
     return MX_FAILED ;
 }
 
-MXRESULT mxengine::SaveDiscoveryMap ( const c_str& filename )
+MXRESULT mxengine::SaveDiscoveryMap ( const std::string& filename )
 {
     if ( discoverymap ) {
-        if ( !discoverymap->Save( filename) )
+        if ( !discoverymap->Save(filename) )
             return MX_FAILED ;
     }
     
     return MX_OK ;
 }
 
-MXRESULT mxengine::LoadDiscoveryMap ( const c_str& filename )
+MXRESULT mxengine::LoadDiscoveryMap ( const std::string& filename )
 {
     if ( discoverymap == NULL ) {
         discoverymap = new mxdiscoverymap();
         gamemap->m_discoverymap = discoverymap ;
     }
     
-    if ( !discoverymap->Load( filename) ) {
+    if ( !discoverymap->Load(filename) ) {
         discoverymap->Create( gamemap->Size() ) ;
     }
     

@@ -17,16 +17,16 @@ namespace tme {
         MXRESULT EntityLinkData( mxid id, const void* data );
         
 
-        mxid EntityByName( const c_str& name, id_type_t type=IDT_NONE );
-        MXRESULT GetEntityProperty( mxid id, const c_str& name, variant& arg) const ;
-        MXRESULT GetEntityProperties ( mxid id, const c_str& name, variant argv[], u32 argc );
+        mxid EntityByName( const std::string& name, id_type_t type=IDT_NONE );
+        MXRESULT GetEntityProperty( mxid id, const std::string& name, variant& arg) const ;
+        MXRESULT GetEntityProperties ( mxid id, const std::string& name, variant argv[], u32 argc );
 
-        MXRESULT GetProperty( const c_str& name, variant& arg) const ;
-        MXRESULT GetProperties ( const c_str& name, variant argv[], u32 argc );
-        MXRESULT SetProperty( const c_str& name, const c_str& value);
+        MXRESULT GetProperty( const std::string& name, variant& arg) const ;
+        MXRESULT GetProperties ( const std::string& name, variant argv[], u32 argc );
+        MXRESULT SetProperty( const std::string& name, const std::string& value);
         
-        MXRESULT Command ( const c_str& command, variant* argv=NULL, u32 args=0 );
-        MXRESULT Text ( const c_str& command, variant* argv=NULL, u32 args=0 );
+        MXRESULT Command ( const std::string& command, variant* argv=NULL, u32 args=0 );
+        MXRESULT Text ( const std::string& command, variant* argv=NULL, u32 args=0 );
 
         void* EntityUserData ( mxid id );
         

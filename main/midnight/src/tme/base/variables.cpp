@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 
 
 namespace tme {
@@ -324,7 +325,7 @@ namespace tme {
             //
         }
 
-        MXRESULT GetProperty(const c_str& name, variant& arg)
+        MXRESULT GetProperty(const std::string& name, variant& arg)
         {
             arg.vType = variant::none ;
             arg.vInt = 0 ;
@@ -332,7 +333,7 @@ namespace tme {
             cvarreg_t* var = NULL ;
 
             for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
-                if (c_stricmp( name, var_array[ii].name ) == 0 ) {
+                if ( c_stricmp(name.c_str(), var_array[ii].name) == 0 ) {
                     var = &var_array[ii];
                     break;
                 }
@@ -366,12 +367,12 @@ namespace tme {
             return MX_FAILED;
         }
 
-        MXRESULT SetProperty(const c_str& name, const c_str& value)
+        MXRESULT SetProperty(const std::string& name, const std::string& value)
         {
             cvarreg_t* var = NULL ;
             
             for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
-                if (c_stricmp( name, var_array[ii].name ) == 0 ) {
+                if (c_stricmp( name.c_str(), var_array[ii].name ) == 0 ) {
                     var = &var_array[ii];
                     break;
                 }
@@ -380,7 +381,7 @@ namespace tme {
             if ( var == nullptr )
                 return MX_FAILED;
             
-            var->currentValue = value;
+            var->currentValue = value.c_str();
             sv_Initialise( var );
             
             return MX_OK;

@@ -16,6 +16,7 @@
 
 #include "../baseinc/tme_internal.h"
 #include <memory>
+#include <string>
 
 #if defined(_DDR_)
 #include "../scenarios/ddr/scenario_ddr_internal.h"
@@ -742,8 +743,9 @@ namespace tme {
                 warriors.total += qty;
             }
 
-            c_strcpy( mx->LastActionMsg(),
-                mx->text->DescribeCharacterRecruitMen ( this, stronghold, qty ) );
+            c_strcpy(
+                mx->LastActionMsg(),
+                mx->text->DescribeCharacterRecruitMen ( this, stronghold, qty ).c_str() );
 
             CommandTakesTime(TRUE);
 
@@ -786,8 +788,9 @@ namespace tme {
                 warriors.total -= stronghold->Add( Race(), UT_WARRIORS, std::min<int>(warriors.total,qty));
 
 
-            c_strcpy( mx->LastActionMsg(),
-            mx->text->DescribeCharacterPostMen ( this, stronghold, qty ) );
+            c_strcpy(
+                mx->LastActionMsg(),
+                mx->text->DescribeCharacterPostMen ( this, stronghold, qty ).c_str() );
             
             CommandTakesTime(TRUE);
 
@@ -1050,7 +1053,9 @@ namespace tme {
             // describe that
             u32 message =  objectautokill ? oinfo->usedescription : SS_FIGHT ;
 
-            c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( message, this) );
+            c_strcpy (
+                mx->LastActionMsg(),
+                mx->text->CookedSystemString( message, this).c_str() );
 
             CommandTakesTime(true);
 
@@ -1291,7 +1296,9 @@ namespace tme {
             oinfo = mx->ObjectById ( newobject );
 
             if ( oinfo == NULL ) {
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK_NOTHING, this) );
+                c_strcpy (
+                    mx->LastActionMsg(),
+                    mx->text->CookedSystemString( SS_SEEK_NOTHING, this).c_str() );
                 return NULL;
             }
 
@@ -1304,7 +1311,9 @@ namespace tme {
                 c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_GUIDANCE1, this) );
             else
 #endif
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
+                c_strcpy (
+                    mx->LastActionMsg(),
+                    mx->text->CookedSystemString( SS_SEEK, this).c_str() );
             
             switch ( newobject ) {
 

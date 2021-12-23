@@ -57,7 +57,7 @@ protected:
     void displayObject ( mxid objectid );
     void displayArmy ( void );
     
-    void aheadOrHere( LPSTR text, tme::loc_t location, bool aheaddir );
+    void aheadOrHere( std::string& text, tme::loc_t location, bool aheaddir );
     void checkPerson(void);
     void checkPlace(void);
     void checkBattle(void);

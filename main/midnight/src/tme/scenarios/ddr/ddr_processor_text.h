@@ -25,23 +25,23 @@ namespace tme {
             virtual void Serialize ( archive& ar );
 
             
-            virtual LPSTR HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 );
-            virtual LPSTR DescribeNumberPart ( int number, ZERO_MODE zeromode=ZERO_NO )  ;
-            virtual LPSTR DescribeCharacterTime( const mxcharacter* character );
-            virtual LPSTR DescribeTime ( u32 time );
-            virtual LPSTR DescribeCharacterDeath2 ( const mxcharacter* character );
-            //virtual LPSTR DescribeEnergy ( u32 energy );
+            virtual std::string HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 );
+            virtual std::string DescribeNumberPart ( int number, ZERO_MODE zeromode=ZERO_NO )  ;
+            virtual std::string DescribeCharacterTime( const mxcharacter* character );
+            virtual std::string DescribeTime ( u32 time );
+            virtual std::string DescribeCharacterDeath2 ( const mxcharacter* character );
+            //virtual std::string DescribeEnergy ( u32 energy );
             
             // battles
-            virtual LPSTR DescribeCharacterBattle ( const mxcharacter* character );
+            virtual std::string DescribeCharacterBattle ( const mxcharacter* character );
 
-            virtual LPSTR DescribeVictory ( u32 victory, s32 value );
-            LPSTR DescribeCharacterLocation( const mxcharacter* character );
+            virtual std::string DescribeVictory ( u32 victory, s32 value );
+            std::string DescribeCharacterLocation( const mxcharacter* character );
 
             
             // strongholds
 
-            virtual LPSTR DescribeStronghold (const mxstronghold* stronghold) ;
+            virtual std::string DescribeStronghold (const mxstronghold* stronghold) ;
 
         public:
             LPSTR            victory_token[4];

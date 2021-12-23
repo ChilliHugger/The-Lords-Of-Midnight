@@ -21,6 +21,7 @@
 #include "../baseinc/variables.h"
 
 #include <algorithm>
+#include <string>
 
 namespace tme {
 
@@ -391,10 +392,10 @@ mxunit*        unit;
     //mx->text->ainfo = mx->AreaById(area);
     mx->text->loc = info->Location();
     if ( battlesfought==0 )
-        c_strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE2) );
+        c_strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE2).c_str() );
     else {
         if ( !battleareas[area] )
-            c_strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE3) );
+            c_strcpy ( EOS(mx->LastActionMsg()),mx->text->CookedSystemString(SS_BATTLE3).c_str() );
     }
 
 

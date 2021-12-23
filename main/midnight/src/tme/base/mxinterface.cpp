@@ -20,6 +20,8 @@
 #include "../scenarios/ddr/scenario_ddr_internal.h"
 #endif
 #include <string.h>
+#include <string>
+
 
 namespace tme {
 
@@ -69,7 +71,7 @@ namespace tme {
     //
     // RETURNS:    MXRESULT
     //
-    MXRESULT mxinterface::GetProperty( const c_str& name, variant& arg) const
+    MXRESULT mxinterface::GetProperty( const std::string& name, variant& arg) const
     {
         return variables::GetProperty(name, arg);
     }
@@ -85,7 +87,7 @@ namespace tme {
     //
     // RETURNS:    idt
     //
-    mxid mxinterface::EntityByName( const c_str& name, id_type_t type )
+    mxid mxinterface::EntityByName( const std::string& name, id_type_t type )
     {
         mxentity* obj  = mx->EntityByName( name, type );
         if ( obj ) {
@@ -275,7 +277,7 @@ namespace tme {
     //
     // RETURNS:    MXRESULT
     //
-    MXRESULT mxinterface::GetProperties ( const c_str& arg, variant argv[], u32 argc )
+    MXRESULT mxinterface::GetProperties ( const std::string& arg, variant argv[], u32 argc )
     {
         return mx->scenario->GetProperties(arg,argv,argc);
     }
@@ -293,7 +295,7 @@ namespace tme {
     //
     // RETURNS:    MXRESULT
     //    
-    MXRESULT mxinterface::Text ( const c_str& arg, variant* argv, u32 argc )
+    MXRESULT mxinterface::Text ( const std::string& arg, variant* argv, u32 argc )
     {
         return mx->scenario->Text(arg,argv,argc);
     }
@@ -312,11 +314,11 @@ namespace tme {
     //
     // RETURNS:    MXRESULT
     //
-    MXRESULT mxengine::ProcessCommand ( mxcommand_t tblCommand[], u32 max, const c_str& arg, variant argv[], u32 argc )
+    MXRESULT mxengine::ProcessCommand ( mxcommand_t tblCommand[], u32 max, const std::string& arg, variant argv[], u32 argc )
     {
     MXRESULT    status = MX_UNKNOWN;
 
-        if ( arg.Length() == 0 ) {
+        if ( arg.empty() ) {
             argc=0;
             return MX_FAILED ;
         }
@@ -374,7 +376,11 @@ namespace tme {
     //
     COMMAND( OnSetDatabaseDirectory ) 
     {
-        MXRESULT result = mx->SetDatabaseDirectory(argv[0]);
+        std::string directory;
+        directory = (LPCSTR)argv[0] ;
+//        std::string directory("lom") ;
+
+        MXRESULT result = mx->SetDatabaseDirectory(directory);
         //argv[0]=0;
         return result;
     }
@@ -402,8 +408,8 @@ namespace tme {
     //
     COMMAND( OnSaveGame ) 
     {
-        //argv[0]=0;
-        return mx->SaveGame ( argv[0], (PFNSERIALIZE)((void*)argv[1]));
+        std::string filename = (LPCSTR)argv[0];
+        return mx->SaveGame ( filename, (PFNSERIALIZE)((void*)argv[1]));
     }
     
     // COMMAND: @LOADGAME
@@ -411,8 +417,8 @@ namespace tme {
     //
     COMMAND( OnLoadGame ) 
     {
-        //argv[0]=0;
-        return mx->LoadGame ( argv[0],  (PFNSERIALIZE)((void*)argv[1]) );
+        std::string filename = (LPCSTR)argv[0];
+        return mx->LoadGame ( filename,  (PFNSERIALIZE)((void*)argv[1]) );
     }
 
     // COMMAND: @DESCRIPTION
@@ -420,19 +426,23 @@ namespace tme {
     //
     COMMAND( OnGameDescription )
     {
-        //argv[0]=0;
-        c_str& temp = *((c_str*)argv[1].vPtr) ;
-        return mx->SaveGameDescription(argv[0], temp );
+        static std::string descripton;
+        std::string filename = (LPCSTR)argv[0];
+        mx->SaveGameDescription(filename, descripton );
+        argv[1].vString = (LPSTR)descripton.c_str();
+        return MX_OK;
     }
 
     COMMAND( OnLoadDiscoveryMap )
     {
-        return mx->LoadDiscoveryMap ( argv[0] );
+        std::string filename = (LPCSTR)argv[0];
+        return mx->LoadDiscoveryMap ( filename );
     }
     
     COMMAND( OnSaveDiscoveryMap )
     {
-        return mx->SaveDiscoveryMap ( argv[0] );
+        std::string filename = (LPCSTR)argv[0];
+        return mx->SaveDiscoveryMap ( filename );
     }
 
     // COMMAND: @SETSCENARIO
@@ -464,7 +474,7 @@ namespace tme {
         {"@DEINIT",                    0, OnDeInit },
         {"@LOAD",                    2, OnLoadGame,                {variant::vstring,variant::vptr} },
         {"@SAVE",                    2, OnSaveGame,                {variant::vstring,variant::vptr} },
-        {"@DESCRIPTION",            2, OnGameDescription,        {variant::vstring,variant::vptr} },
+        {"@DESCRIPTION",            1, OnGameDescription,        {variant::vstring,variant::vptr} },
         {"@LOADDISCOVERYMAP",       1, OnLoadDiscoveryMap,      {variant::vstring} },
         {"@SAVEDISCOVERYMAP",       1, OnSaveDiscoveryMap,      {variant::vstring} },
         
@@ -482,7 +492,7 @@ namespace tme {
     //
     // RETURNS:    MXRESULT
     //
-    MXRESULT mxinterface::Command ( const c_str& arg, variant* argv, u32 argc )
+    MXRESULT mxinterface::Command ( const std::string& arg, variant* argv, u32 argc )
     {
         MXRESULT result = mx->ProcessCommand ( mx_commands, NUMELE(mx_commands), arg, argv, argc );
         if ( result != MX_UNKNOWN )
@@ -508,7 +518,7 @@ namespace tme {
     // RETURNS    MXRESULT
     //
     
-    MXRESULT mxinterface::GetEntityProperty( mxid id, const c_str& arg, variant& argv) const
+    MXRESULT mxinterface::GetEntityProperty( mxid id, const std::string& arg, variant& argv) const
     {
         //character
         if ( ID_TYPE(id) == IDT_CHARACTER ) {
@@ -615,7 +625,7 @@ namespace tme {
     //
     // RETURNS:    MXRESULT
     //
-    MXRESULT mxinterface::GetEntityProperties ( mxid id, const c_str& arg, variant argv[], u32 argc )
+    MXRESULT mxinterface::GetEntityProperties ( mxid id, const std::string& arg, variant argv[], u32 argc )
     {
         if ( ID_TYPE(id) == IDT_CHARACTER ) {
 

@@ -702,7 +702,7 @@ namespace tme {
     
     typedef void (*PFNNIGHTCALLBACK)( callback_t* );
     typedef bool (*PFNSERIALIZE)( u32 version, chilli::lib::archive& ar );
-    typedef MXRESULT (*PFNCOMMAND)( const c_str& arg, variant argv[], u32 argc);
+    typedef MXRESULT (*PFNCOMMAND)( const std::string& arg, variant argv[], u32 argc);
     
     
 //

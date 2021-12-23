@@ -47,7 +47,7 @@ namespace chilli {
         {
             c_str    token = source;
             
-            char *saveptr1;
+            char *saveptr1=nullptr;
             tokens.Clear();
             LPSTR t = c_strtok_r(token,delim,&saveptr1);
             while ( t ) {

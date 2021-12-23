@@ -69,69 +69,68 @@ public:
     virtual void OnNightNotification( tme::callback_t* event ) = 0 ;
 };
 
-LPCSTR  TME_ScenarioDirectory ( void );
-LPCSTR  TME_ScenarioName ( void );
-LPCSTR  TME_ScenarioShortName ( void );
+std::string TME_ScenarioDirectory ( void );
+std::string TME_ScenarioName ( void );
+std::string TME_ScenarioShortName ( void );
 
-
-bool        TME_Init ( void );
-bool        TME_DeInit ( void );
-void        TME_PurgeTextCache();
-LPCSTR    TME_GetCharacterText ( const character& c, const c_str& command ) ;
-LPCSTR  TME_GetText ( const c_str& command ) ;
-LPCSTR  TME_GetText ( const c_str& command, variant args[], int count ) ;
-LPCSTR  TME_GetSystemString ( const character& c, int msg ) ;
-LPCSTR  TME_LastActionMsg();
-LPCSTR  TME_GetNumber(int number);
-LPCSTR  TME_GetLocationText ( tme::mxgridref loc );
+bool TME_Init ( void );
+bool TME_DeInit ( void );
+void TME_PurgeTextCache();
+std::string TME_GetCharacterText ( const character& c, const std::string& command ) ;
+std::string TME_GetText ( const std::string& command ) ;
+std::string TME_GetText ( const std::string& command, variant args[], int count ) ;
+std::string TME_GetSystemString ( const character& c, int msg ) ;
+std::string TME_LastActionMsg();
+std::string TME_GetNumber(int number);
+std::string TME_GetLocationText ( tme::mxgridref loc );
 
 character&    TME_CurrentCharacter ( void );
 character&    TME_CurrentCharacter ( mxid characterid );
 character&    TME_RefreshCurrentCharacter ( void );
 
-bool        TME_GetCharacter( character& out, mxid id );
-bool        TME_GetStronghold( stronghold& out, mxid id );
-bool        TME_GetTerrainInfo( terraininfo& out, mxid id );
-bool        TME_GetRaceInfo( raceinfo& out, mxid id );
-bool        TME_GetObject( object& out, mxid id );
-bool        TME_GetUnitInfo( unitinfo& out, mxid id );
-bool        TME_GetLocation( maplocation& out, mxid id );
-bool        TME_GetLocation( maplocation& out, tme::loc_t loc );
-bool    TME_GetLocationInDirection( maplocation& out, tme::loc_t loc, mxdir_t dir );
+bool TME_GetCharacter( character& out, mxid id );
+bool TME_GetStronghold( stronghold& out, mxid id );
+bool TME_GetTerrainInfo( terraininfo& out, mxid id );
+bool TME_GetRaceInfo( raceinfo& out, mxid id );
+bool TME_GetObject( object& out, mxid id );
+bool TME_GetUnitInfo( unitinfo& out, mxid id );
+bool TME_GetLocation( maplocation& out, mxid id );
+bool TME_GetLocation( maplocation& out, tme::loc_t loc );
+bool TME_GetLocationInDirection( maplocation& out, tme::loc_t loc, mxdir_t dir );
 
-bool        TME_GetMapLocation( maplocation& out, mxid id );
-bool        TME_GetMapLocation( maplocation& out, tme::loc_t loc );
+bool TME_GetMapLocation( maplocation& out, mxid id );
+bool TME_GetMapLocation( maplocation& out, tme::loc_t loc );
 
-bool    TME_GetRegiment( regiment& out, mxid id );
+bool TME_GetRegiment( regiment& out, mxid id );
 
-bool        TME_GetLocationInfo( tme::loc_t loc );
-bool        TME_GetCharacterLocationInfo ( const character& c );
-LPCSTR  TME_GetUnitTypeName(mxunit_t type );
+bool TME_GetLocationInfo( tme::loc_t loc );
+bool TME_GetCharacterLocationInfo ( const character& c );
+std::string TME_GetUnitTypeName(mxunit_t type );
 
 m_gameover_t TME_CheckWinLose (void);
-bool        TME_Night ( NightNotificationDelegate* delegate );
-bool        TME_Save ( LPSTR filespec, tme::PFNSERIALIZE function );
-bool        TME_Load ( LPSTR filespec, tme::PFNSERIALIZE function );
-bool    TME_SaveDescription ( LPSTR filespec, c_str& description );
-bool        TME_SaveDiscoveryMap ( LPSTR filespec );
-bool        TME_LoadDiscoveryMap ( LPSTR filespec );
-void        TME_SelectChar ( mxid newid );
-size        TME_MapSize ( void );
-void        TME_GetArmies ( mxid loc, loc_armyinfo_t* army );
-s32     TME_GetAllStrongholds (c_mxid& collection ) ;
-s32     TME_GetAllRegiments (c_mxid& collection );
-s32            TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited );
-s32     TME_GetAllCharacters (c_mxid& collection );
-s32     TME_GetAllObjects( c_mxid& collection );
-s32     TME_GetFollowers ( mxid id, c_mxid& collection );
-s32            TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel  );
-s32            TME_GetCharactersAtLocation ( tme::loc_t loc, c_mxid& collection, bool showall  );
-MXRESULT    TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends );
-MXRESULT    TME_GetArmiesAtLocation( tme::loc_t loc, u32& enemies, u32& friends );
-LPCSTR  TME_GetSymbol( mxid id );
-mxid        TME_LinkData ( LPCSTR symbol, void* data );
-void*        TME_GetEntityUserData ( mxid );
-mxid        TME_GetId( LPCSTR symbol, id_type_t type );
+bool TME_Night ( NightNotificationDelegate* delegate );
+bool TME_Save ( LPSTR filespec, tme::PFNSERIALIZE function );
+bool TME_Load ( LPSTR filespec, tme::PFNSERIALIZE function );
+std::string TME_SaveDescription ( LPSTR filespec );
+bool TME_SaveDiscoveryMap ( LPSTR filespec );
+bool TME_LoadDiscoveryMap ( LPSTR filespec );
+void TME_SelectChar ( mxid newid );
+size TME_MapSize ( void );
+void TME_GetArmies ( mxid loc, loc_armyinfo_t* army );
+s32 TME_GetAllStrongholds (c_mxid& collection ) ;
+s32 TME_GetAllRegiments (c_mxid& collection );
+s32 TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited );
+s32 TME_GetAllCharacters (c_mxid& collection );
+s32 TME_GetAllObjects( c_mxid& collection );
+s32 TME_GetFollowers ( mxid id, c_mxid& collection );
+s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel  );
+s32 TME_GetCharactersAtLocation ( tme::loc_t loc, c_mxid& collection, bool showall  );
+MXRESULT TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends );
+MXRESULT TME_GetArmiesAtLocation( tme::loc_t loc, u32& enemies, u32& friends );
+std::string TME_GetSymbol( mxid id );
+mxid TME_LinkData ( LPCSTR symbol, void* data );
+void* TME_GetEntityUserData ( mxid );
+mxid TME_GetId( LPCSTR symbol, id_type_t type );
 
 typedef struct MapInfo_t {
     tme::loc_t   top;
@@ -224,7 +223,7 @@ inline bool Location_HasTunnelEntrance(const maplocation& l)        { return l.f
 void Vars_Init ( void );
 void Vars_DeInit ( void );
 void Vars_EmptyCache ( void );
-tme::info_t* Vars_GetVar( mxid id, const c_str& varname, tme::variables::CVar var );
+tme::info_t* Vars_GetVar( mxid id, const std::string& varname, tme::variables::CVar var );
 
 
 // Debug!!

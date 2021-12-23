@@ -74,7 +74,7 @@ public:
     storyid_t current_story() const { return currentStory; }
     
     bool isUsed ( storyid_t id ) { return used[id-1]; }
-    bool getDescription( storyid_t id, c_str& description );
+    std::string getDescription( storyid_t id );
         
     virtual void SetLoadSave( tme::PFNSERIALIZE function );
     bool Serialize( u32 version, chilli::lib::archive& ar );

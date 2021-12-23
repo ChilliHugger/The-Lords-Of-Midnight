@@ -121,6 +121,8 @@ typedef const CHAR            *LPCSTR;
 #define MXAPI 
 //#define MXAPI __stdcall
 
+#include <string>
+
 namespace chilli {
     namespace lib {
         class archive;
@@ -436,6 +438,12 @@ namespace chilli {
                 { vType=vstring;vString = value ; return vString; }
             LPSTR& operator = ( c_str value )
                 { vType=vstring;vString = (LPSTR)value ; return vString; }
+            LPSTR& operator = ( std::string value )
+                {
+                    vType=vstring;
+                    vString = (LPSTR)value.c_str()
+                    ; return vString; }
+                    
             void*& operator = ( void* value )
                 { vType=vptr;
             vPtr = value ; 
@@ -456,7 +464,7 @@ namespace chilli {
                 { return vString; }
             operator void*() const
                 { return vPtr; }
-
+                
         public:
             var_t                vType;
             union {

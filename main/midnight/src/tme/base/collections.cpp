@@ -17,6 +17,7 @@
 #include "../baseinc/tme_internal.h"
 
 #include <algorithm>
+#include <string>
 
 using namespace chilli;
 using namespace chilli::lib;
@@ -80,10 +81,10 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
             return TRUE ;
         }
 
-        mxentity* entities::FindSymbol ( const c_str& name )
+        mxentity* entities::FindSymbol ( const std::string& name )
         {
             for ( u32 ii=0; ii<Count(); ii++ )
-                if (c_stricmp( m_objElements[ii]->Symbol(), name ) == 0 )
+                if ( c_stricmp(name.c_str(), m_objElements[ii]->Symbol()) == 0 )
                     return m_objElements[ii] ;
             return NULL ;
         }

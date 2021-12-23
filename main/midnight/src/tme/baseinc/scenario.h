@@ -36,9 +36,9 @@ namespace tme {
         public:
 
             virtual scenarioinfo_t* GetInfoBlock() const =0;
-            virtual MXRESULT Command ( const c_str& arg, variant argv[], u32 argc )=0;
-            virtual MXRESULT GetProperties ( const c_str& arg, variant argv[], u32 argc )=0;
-            virtual MXRESULT Text ( const c_str& command, variant* argv=NULL, u32 args=0 )=0;
+            virtual MXRESULT Command ( const std::string& arg, variant argv[], u32 argc )=0;
+            virtual MXRESULT GetProperties ( const std::string& arg, variant argv[], u32 argc )=0;
+            virtual MXRESULT Text ( const std::string& command, variant* argv=NULL, u32 args=0 )=0;
             
             //virtual MXRESULT Register ( mxengine* midnightx ) =0;
             //virtual MXRESULT UnRegister ( mxengine* midnightx )=0;

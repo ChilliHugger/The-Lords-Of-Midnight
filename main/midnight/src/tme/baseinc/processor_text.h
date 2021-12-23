@@ -39,93 +39,90 @@ namespace tme {
             mxtext();
             virtual ~mxtext();
 
+            std::string Format ( LPCSTR format, ... );
+
             LPCSTR SystemString ( u32 id );
             LPCSTR SystemStringById ( mxid id );
-            mxid StringByName ( LPCSTR name ) const;
+            mxid StringByName ( const std::string& name ) const;
 
-            LPSTR CookedSystemString ( u32 id, const mxcharacter* character=NULL );
-            LPSTR CookText ( LPSTR input, const mxcharacter* character=NULL );
-            LPSTR DescribePlural( u32 single, int number );
-            LPSTR DescribeNumber ( int number, ZERO_MODE zeromode=ZERO_NO );
+            std::string CookedSystemString ( u32 id, const mxcharacter* character=NULL );
+            std::string CookText ( std::string& input, const mxcharacter* character=NULL );
+            std::string DescribePlural( u32 single, int number );
+            std::string DescribeNumber ( int number, ZERO_MODE zeromode=ZERO_NO );
 
-            LPSTR PurgeCache( CStrBuf* string=NULL );
-            void RememberStringBuffer ( CStrBuf* string );
-            void ForgetStringBuffer ( const CStrBuf* string );
             virtual void Serialize ( chilli::lib::archive& ar );
 
-            virtual LPSTR DecodeToken ( LPSTR token, const mxcharacter* character=NULL );
-            virtual LPSTR HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 ) ;
-            virtual LPSTR DescribeNumberPart ( int number, ZERO_MODE zeromode=ZERO_NO )  ;
-            virtual LPSTR DescribeEnergy ( u32 energy );
-            virtual LPSTR DescribeFear ( u32 fear );
-            virtual LPSTR DescribeCourage ( u32 courage );
-            virtual LPSTR DescribeDespondent ( u32 despondent );
-            virtual LPSTR DescribeReckless ( u32 reckless );
+            virtual std::string DecodeToken ( LPSTR token, const mxcharacter* character=NULL );
+            virtual std::string HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 ) ;
+            virtual std::string DescribeNumberPart ( int number, ZERO_MODE zeromode=ZERO_NO )  ;
+            virtual std::string DescribeEnergy ( u32 energy );
+            virtual std::string DescribeFear ( u32 fear );
+            virtual std::string DescribeCourage ( u32 courage );
+            virtual std::string DescribeDespondent ( u32 despondent );
+            virtual std::string DescribeReckless ( u32 reckless );
 #if defined(_DDR_)
-            virtual LPSTR DescribeTime ( u32 time );
+            virtual std::string DescribeTime ( u32 time );
 #endif
             
             // character descriptions
-            virtual LPSTR DescribeCharacterRecruitMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )  ;
-            virtual LPSTR DescribeCharacterPostMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )  ;
+            virtual std::string DescribeCharacterRecruitMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )  ;
+            virtual std::string DescribeCharacterPostMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )  ;
 
-            virtual LPSTR DescribeCharacterTime( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterEnergy ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterCourage ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterFear ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterTime( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterEnergy ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterCourage ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterFear ( const mxcharacter* character ) ;
 
-            virtual LPSTR DescribeCharacterObject ( const mxcharacter* character )  ;
-            virtual LPSTR DescribeCharacterDeath ( const mxcharacter* character )  ;
+            virtual std::string DescribeCharacterObject ( const mxcharacter* character )  ;
+            virtual std::string DescribeCharacterDeath ( const mxcharacter* character )  ;
 #if defined(_DDR_)
-            virtual LPSTR DescribeCharacterDeath2 ( const mxcharacter* character )  ;
+            virtual std::string DescribeCharacterDeath2 ( const mxcharacter* character )  ;
 #endif
-            virtual LPSTR DescribeCharacterBattle ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterArmy ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterTraits ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterFoe ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterLiege ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterLocation( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterGroup ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterBattle ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterArmy ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterTraits ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterFoe ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterLiege ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterLocation( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterGroup ( const mxcharacter* character ) ;
 #if defined(_DDR_)
-            virtual LPSTR DescribeCharacterLoyalty ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterSees ( const mxcharacter* character ) ;
-            virtual LPSTR DescribeCharacterInBattle ( const mxcharacter* character );
+            virtual std::string DescribeCharacterLoyalty ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterSees ( const mxcharacter* character ) ;
+            virtual std::string DescribeCharacterInBattle ( const mxcharacter* character );
 #endif
 
             // strongholds
 
-            virtual LPSTR DescribeStronghold (const mxstronghold* stronghold) ;
+            virtual std::string DescribeStronghold (const mxstronghold* stronghold) ;
 
             // army totals
-            virtual LPSTR DescribeArmyTotal(const mxarmytotal* army) ;
+            virtual std::string DescribeArmyTotal(const mxarmytotal* army) ;
 
             // location
-            virtual LPSTR DescribeLocation( mxgridref loc) ;
+            virtual std::string DescribeLocation( mxgridref loc) ;
 #if defined(_DDR_)
-            virtual LPSTR DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character );
+            virtual std::string DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character );
 #endif
-            virtual LPSTR DescribeArea(u32 area) ;
-            virtual LPSTR DescribeTerrainPlural(mxterrain_t terrain);
-            virtual LPSTR DescribeTerrainSingularPlural(mxterrain_t terrain);
+            virtual std::string DescribeArea(u32 area) ;
+            virtual std::string DescribeTerrainPlural(mxterrain_t terrain);
+            virtual std::string DescribeTerrainSingularPlural(mxterrain_t terrain);
 
             // objects
-            virtual LPSTR DescribeObject ( const mxobject* object );
+            virtual std::string DescribeObject ( const mxobject* object );
 #if defined(_DDR_)
-            virtual LPSTR DescribeObjectLocation( mxobject* object);
-            virtual LPSTR DescribeObjectWithPower ( const mxobject* object );
+            virtual std::string DescribeObjectLocation( mxobject* object);
+            virtual std::string DescribeObjectWithPower ( const mxobject* object );
 #endif
 
 
             // special strings
-            virtual LPSTR SpecialStrings ( LPCSTR token, const mxcharacter* character );
+            virtual std::string SpecialStrings ( LPCSTR token, const mxcharacter* character );
 
         protected:
             void FillArrayFromSystemString( LPSTR array[], u32 id );
             void FillArrayFromSystemString( c_ptr& array, u32 id );
 
         public:
-            CStrBuf*        stringbuffers[MAX_STRING_BUFFERS];
-            int                currentbuffer;
             mxgridref        loc;
 
             mxrace*            rinfo;
@@ -167,9 +164,10 @@ namespace tme {
             
             int             last_number;
         protected:
-            u32                m_cSystemStrings;
-            c_str*            systemstrings;
-            c_str*            systemcodes;
+            u32             m_cSystemStrings;
+            c_str*          systemstrings;
+            c_str*          systemcodes;
+            c_str           emptyString;
         };
     //}
 }

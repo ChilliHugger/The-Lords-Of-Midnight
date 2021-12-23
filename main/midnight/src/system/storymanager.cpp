@@ -14,6 +14,8 @@
 #include "moonring.h"
 
 
+#include <string>
+
 using namespace chilli::os;
 using namespace chilli::lib;
 
@@ -40,9 +42,9 @@ storyinfo_t* storymanager::getStoriesInfo()
     
     for ( u32 ii=0; ii<MAX_STORIES; ii++ ) {
         if ( filemanager::Exists( getPath(ii+1) ) ) {
-            getDescription(ii+1, stories.chapter[used].description);
             stories.chapter[used].id = ii + 1;
             stories.chapter[used].slot = ii;
+            stories.chapter[used].description = getDescription(ii+1).c_str();
             used++;
         }
     }
@@ -274,9 +276,9 @@ saveid_t storymanager::lastNight() const
     return SAVE_NONE;
 }
 
-bool storymanager::getDescription( storyid_t id, c_str& description )
+std::string storymanager::getDescription( storyid_t id )
 {
-    return TME_SaveDescription((char*)getPath(id), description);
+    return TME_SaveDescription((char*)getPath(id));
 }
 
 bool storymanager::undo ( savemode_t mode )

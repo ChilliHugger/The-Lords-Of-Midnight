@@ -17,6 +17,7 @@
 #include "../../baseinc/tme_internal.h"
 #include "scenario_lom.h"
 #include "scenario_lom_internal.h"
+#include <string>
 
 namespace tme {
 
@@ -59,17 +60,17 @@ scenarioinfo_t* lom::GetInfoBlock() const
         return lom_scenario->GetInfoBlock();
     }
     
-MXRESULT lom::Command ( const c_str& arg, variant argv[], u32 argc )
+MXRESULT lom::Command ( const std::string& arg, variant argv[], u32 argc )
     {
         return lom_scenario->Command(arg, argv, argc);
     }
     
-MXRESULT lom::GetProperties ( const c_str& arg, variant argv[], u32 argc )
+MXRESULT lom::GetProperties ( const std::string& arg, variant argv[], u32 argc )
     {
         return lom_scenario->GetProperties(arg, argv, argc);
     }
     
-MXRESULT lom::Text ( const c_str& command, variant* argv, u32 args )
+MXRESULT lom::Text ( const std::string& command, variant* argv, u32 args )
     {
         return lom_scenario->Text(command, argv, args);
     }

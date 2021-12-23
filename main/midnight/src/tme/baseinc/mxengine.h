@@ -6,8 +6,8 @@
 
 //#define _TME_DEMO_MODE_
 
-#define ISARG(x)     c_stricmp( arg, x ) == 0 
-#define COMMAND(x)    static MXRESULT (x)( const c_str& arg, variant argv[], u32 argc)
+#define ISARG(x)     c_stricmp( arg.c_str(), x ) == 0
+#define COMMAND(x)    static MXRESULT (x)( const std::string& arg, variant argv[], u32 argc)
 #define mxrandom    randomno::instance.get
 #define mxchance    randomno::instance.chance
 #define EOS(x)        x+c_strlen(x)
@@ -46,17 +46,17 @@ namespace tme {
         mxengine();
         virtual ~mxengine();
 
-        virtual MXRESULT SetDatabaseDirectory ( const c_str& directory ) ;
+        virtual MXRESULT SetDatabaseDirectory ( std::string directory ) ;
         virtual MXRESULT LoadDatabase ( void ) ;
         virtual MXRESULT UnloadDatabase ( void ) ;
         //virtual MXRESULT LoadDefaultScenario ( void ) ;
         virtual MXRESULT LoadScenario ( mxscenario* scenario ) ;
         virtual MXRESULT UnloadScenario () ;
-        virtual MXRESULT SaveGame ( const c_str& filename, PFNSERIALIZE function ) ;
-        virtual MXRESULT LoadGame ( const c_str& filename, PFNSERIALIZE function ) ;
-        virtual MXRESULT SaveGameDescription ( const c_str& filename, c_str& description );
+        virtual MXRESULT SaveGame ( const std::string& filename, PFNSERIALIZE function ) ;
+        virtual MXRESULT LoadGame ( const std::string& filename, PFNSERIALIZE function ) ;
+        virtual MXRESULT SaveGameDescription ( const std::string& filename, std::string& description );
 
-        virtual MXRESULT ProcessCommand ( mxcommand_t tblCommand[], u32 max, const c_str& arg, variant argv[], u32 argc )  ;
+        virtual MXRESULT ProcessCommand ( mxcommand_t tblCommand[], u32 max, const std::string& arg, variant argv[], u32 argc )  ;
 
         virtual void NightCallback( callback_t* )  ;
 
@@ -65,8 +65,8 @@ namespace tme {
         virtual u32 Error () const   ;
         
         //
-        MXRESULT LoadDiscoveryMap ( const c_str& filename );
-        MXRESULT SaveDiscoveryMap ( const c_str& filename );
+        MXRESULT LoadDiscoveryMap ( const std::string& filename );
+        MXRESULT SaveDiscoveryMap ( const std::string& filename );
         
         static void debug (LPCSTR format, ... );
         
@@ -100,8 +100,8 @@ namespace tme {
         u32 CollectStrongholds ( mxgridref loc, entities& collection ) ;
         u32 CollectRoutenodes ( mxgridref loc, entities& collection ) ;
 
-        cvarreg_t* FindDBVariable ( const c_str& name ) const;
-        mxentity* EntityByName( const c_str& name, id_type_t type=IDT_NONE );
+        cvarreg_t* FindDBVariable ( const std::string& name ) const;
+        mxentity* EntityByName( const std::string& name, id_type_t type=IDT_NONE );
         mxentity* EntityByIdt( mxid id );
         LPCSTR EntitySymbolById ( mxid id );
         MXRESULT EntityLinkData( mxid id, const void* data );
