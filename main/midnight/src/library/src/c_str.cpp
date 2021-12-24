@@ -83,6 +83,25 @@ namespace chilli {
             return ar; 
         }
 
+
+        archive& c_str::SerializeString ( archive& ar, std::string& string )
+        {
+        LPSTR temp = nullptr;
+
+            if ( ar.IsStoring() ) {
+                ar << (char*)string.c_str() ;
+            }else{
+                string.clear();
+                ar >> &temp ;
+                if(temp!=nullptr) {
+                    string = temp;
+                }
+            }
+
+            SAFEFREE ( temp );
+            return ar;
+        }
+
     }
     // namespace types
 

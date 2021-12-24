@@ -16,7 +16,6 @@
 
 #include "../baseinc/tme_internal.h"
 
-
 namespace tme {
 
 
@@ -123,9 +122,9 @@ namespace tme {
 //    DB TERRAIN_FROZENWASTE                    ;dwarf
 #endif
 
-        c_str& mxrace::SoldiersName()
+        std::string& mxrace::SoldiersName()
         {
-            if ( ((LPSTR)soldiersname!=NULL) && c_strlen(soldiersname) )
+            if ( !soldiersname.empty() )
                 return soldiersname; 
             return Name();
 

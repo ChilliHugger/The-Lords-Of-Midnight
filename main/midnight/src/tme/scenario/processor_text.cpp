@@ -433,9 +433,9 @@ std::string mxtext::DescribeCharacterRecruitMen ( const mxcharacter* character, 
     auto buffer = Format (
         SystemString(SS_RECRUITMEN),
         qty,
-        (LPCSTR)uinfo->Name(),
+        uinfo->Name().c_str(),
         stronghold->Total(),
-        (LPCSTR)uinfo->Name()
+        uinfo->Name().c_str()
         );
 
     return CookText(buffer,character);
@@ -481,9 +481,9 @@ std::string mxtext::DescribeCharacterPostMen ( const mxcharacter* character, con
     auto buffer = Format (
         SystemString(SS_POSTMEN),
         qty,
-        (LPCSTR)uinfo->Name(),
+        uinfo->Name().c_str(),
         stronghold->Total(),
-        (LPCSTR)uinfo->Name()
+        uinfo->Name().c_str()
         );
 
     return CookText(buffer,character);
@@ -587,7 +587,7 @@ std::string mxtext::DescribeCharacterObject ( const mxcharacter* character )
 
 std::string mxtext::DescribeObject ( const mxobject* object )
 {
-    std::string description = oinfo->description.GetAt();
+    std::string description = oinfo->description;
     const mxobject* temp = oinfo;
     oinfo = object;
     auto text = CookText(description,nullptr);
@@ -970,7 +970,7 @@ std::string mxtext::DescribeTerrainPlural(mxterrain_t terrain)
     tinfo = mx->TerrainById( terrain );
     return tinfo->IsPlural()
         ? CookedSystemString(SS_TERRAIN_PLURAL).c_str()
-        : (LPCSTR)tinfo->Name();
+        : tinfo->Name().c_str();
 
 }
 
@@ -1009,9 +1009,9 @@ std::string mxtext::DescribeTerrainSingularPlural(mxterrain_t terrain)
 std::string mxtext::DescribeArea(u32 area)
 {
     ainfo = mx->AreaById( area );
-    if ( (LPSTR)ainfo->prefix )
+    if ( !ainfo->prefix.empty() )
         return CookedSystemString(SS_AREA_PREFIXED);
-    return (LPCSTR)ainfo->Name();
+    return ainfo->Name();
 }
 
 /*
@@ -1046,8 +1046,8 @@ mxterrain*    tinfo;
         CookedSystemString(SS_STRONGHOLD3).c_str(),
         DescribeLocation(stronghold->Location()).c_str(),
         DescribeNumber( stronghold->Total()).c_str(),
-        (LPCSTR)mx->UnitById(stronghold->Type())->Name(),
-        (LPCSTR)mx->RaceById(stronghold->OccupyingRace())->SoldiersName() );
+        mx->UnitById(stronghold->Type())->Name().c_str(),
+        mx->RaceById(stronghold->OccupyingRace())->SoldiersName().c_str() );
 
     if ( stronghold->Owner() ) {
         tinfo = mx->TerrainById( mapsqr.terrain );
@@ -1062,8 +1062,8 @@ mxterrain*    tinfo;
 
         buffer += Format (
             CookedSystemString(message).c_str(),
-            (LPCSTR)tinfo->Name(),
-            (LPCSTR)character->Longname()
+            tinfo->Name().c_str(),
+            character->Longname().c_str()
             );
     }
         
@@ -1286,8 +1286,8 @@ c_ptr            tokens;
             IS_ARG("char") {
 __char:
                 is++;
-                IS_ARG("name")          return (LPCSTR)character->Shortname();
-                IS_ARG("longname")      return (LPCSTR)character->Longname();
+                IS_ARG("name")          return character->Shortname().c_str();
+                IS_ARG("longname")      return character->Longname().c_str();
 #if defined(_DDR_)
                 IS_ARG("time")          return DescribeTime(character->Time());
 #else
@@ -1394,41 +1394,41 @@ __char:
             IS_ARG("race") {
 __race:
                 is++;
-                IS_ARG("name")          return (LPCSTR)rinfo->Name();
-                IS_ARG("soldiers")      return (LPCSTR)rinfo->SoldiersName();
+                IS_ARG("name")          return rinfo->Name().c_str();
+                IS_ARG("soldiers")      return rinfo->SoldiersName().c_str();
             }else
 // AREA
             IS_ARG("area") {
 __area:
                 is++;
-                IS_ARG("name")          return (LPCSTR)ainfo->Name();
-                IS_ARG("prefix")        return (LPCSTR)ainfo->prefix;
+                IS_ARG("name")          return ainfo->Name().c_str();
+                IS_ARG("prefix")        return ainfo->prefix.c_str();
                 IS_ARG("text")          return DescribeArea(ainfo->Id());
             }else
 // GENDER
             IS_ARG("gender") {
 __gender:
                 is++;
-                IS_ARG("name")          return (LPCSTR)ginfo->Name();
-                IS_ARG("heshe")         return (LPCSTR)ginfo->pronoun1;
-                IS_ARG("hisher")        return (LPCSTR)ginfo->pronoun2;
-                IS_ARG("himher")        return (LPCSTR)ginfo->pronoun3;
+                IS_ARG("name")          return ginfo->Name();
+                IS_ARG("heshe")         return ginfo->pronoun1.c_str();
+                IS_ARG("hisher")        return ginfo->pronoun2.c_str();
+                IS_ARG("himher")        return ginfo->pronoun3.c_str();
             }else
 // direction
             IS_ARG("dir") {
 __dir:
                 is++;
-                IS_ARG("name")          return (LPCSTR)dinfo->Name();
+                IS_ARG("name")          return dinfo->Name().c_str();
             }else
 //OBJECT
             IS_ARG("obj") {
 __obj:
                 is++;
-                IS_ARG("name")          return (LPCSTR)oinfo->name;
+                IS_ARG("name")          return oinfo->name.c_str();
                         // if oinfo->description == NULL
                         // SS_OBJECT_FULL_DESCRIPTION
                 IS_ARG("text")      {
-                                        std::string description = oinfo->description.GetAt();
+                                        std::string description = oinfo->description;
                                         return CookText(description,character);
                                     }
 #if defined(_DDR_)
@@ -1469,11 +1469,11 @@ __loc:
             IS_ARG("terrain") {
 __terrain:
                 is++;
-                IS_ARG("name")      return (LPCSTR)tinfo->Name();
+                IS_ARG("name")      return tinfo->Name().c_str();
                 IS_ARG("plural")    return DescribeTerrainPlural((mxterrain_t)tinfo->Id());
-                IS_ARG("prep")      return (LPCSTR)tinfo->preposition;
+                IS_ARG("prep")      return tinfo->preposition.c_str();
                 IS_ARG("text")      {
-                                        std::string description = (LPCSTR)tinfo->description;
+                                        std::string description = tinfo->description;
                                         return CookText(description,character);
                                     }
                 IS_ARG("single")    return DescribeTerrainSingularPlural((mxterrain_t)tinfo->Id());

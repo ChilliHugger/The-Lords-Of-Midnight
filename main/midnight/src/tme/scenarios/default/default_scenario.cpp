@@ -1887,7 +1887,7 @@ namespace tme {
                 collections::entities collection;
                 
                 mx->scenario->GetDefaultCharacters ( collection );
-                if ( collection.FindSymbol(c->Symbol().GetAt()) == NULL ) {
+                if ( collection.FindSymbol(c->Symbol()) == NULL ) {
                     std::string guidance = mx->text->SystemString(SS_GUIDANCE1);
                     c_strcat (
                         mx->LastActionMsg(),

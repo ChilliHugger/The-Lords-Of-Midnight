@@ -866,7 +866,7 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     
     sprintf( buffer, "Day %d\n%s\n%s\n%d %s"
             , (int)sv_days+1
-            , (char*)m_CurrentCharacter->Longname()
+            , m_CurrentCharacter->Longname().c_str()
             , mx->text->DescribeLocation(m_CurrentCharacter->Location()).c_str()
             , lords
             , lords==1 ? "lord" : "lords"
@@ -1036,7 +1036,7 @@ LPCSTR mxengine::EntitySymbolById ( mxid id )
     if ( entity == NULL )
         return "";
     
-    return entity->Symbol();
+    return entity->Symbol().c_str();
 }
 
 mxentity* mxengine::EntityByName( const std::string& name, id_type_t type )

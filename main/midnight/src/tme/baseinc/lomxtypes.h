@@ -738,7 +738,7 @@ namespace tme {
 
     typedef struct mxinfo_t : public tme::info_t {
         flags32             flags;
-        LPSTR               name;
+        std::string         name;
         void*               userdata;
     } mxinfo_t ;
 

@@ -30,7 +30,7 @@ public:
     bool always_undo;
     u32 undo_history;
     
-    c_str start_on_panel;
+    std::string start_on_panel;
 };
 
 #endif /* configmanager_h */

@@ -32,7 +32,7 @@ namespace tme {
         {
         }
 
-        const c_str& mxunit::Name() const
+        const std::string& mxunit::Name() const
         { 
             return mx->UnitById(Type())->Name() ;
         }

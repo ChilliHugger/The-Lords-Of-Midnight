@@ -361,6 +361,8 @@ namespace chilli {
             friend  archive& operator<<( archive& ar, c_str& value );
             friend  archive& operator>>( archive& ar, c_str& value );
 
+            static archive& SerializeString ( archive& ar, std::string& string );
+
             bool IsNull() const;
             bool IsEmpty() const;
 
@@ -372,8 +374,12 @@ namespace chilli {
 
         extern c_str    strNull;
         
+        
         MXINLINE archive& operator<<( archive& ar, c_str& s )        { return s.Serialize(ar); }
         MXINLINE archive& operator>>( archive& ar, c_str& s )        { return s.Serialize(ar); }
+        MXINLINE archive& operator<<( archive& ar, std::string& s )  { return c_str::SerializeString(ar, s); }
+        MXINLINE archive& operator>>( archive& ar, std::string& s )  { return c_str::SerializeString(ar, s); }
+
         MXINLINE c_str::operator LPSTR() const                              { return m_pchData; }
         MXINLINE c_str::operator LPCSTR() const                             { return m_pchData; }
 
@@ -439,10 +445,7 @@ namespace chilli {
             LPSTR& operator = ( c_str value )
                 { vType=vstring;vString = (LPSTR)value ; return vString; }
             LPSTR& operator = ( std::string value )
-                {
-                    vType=vstring;
-                    vString = (LPSTR)value.c_str()
-                    ; return vString; }
+                {vType=vstring;vString = (LPSTR)value.c_str(); return vString; }
                     
             void*& operator = ( void* value )
                 { vType=vptr;
@@ -647,5 +650,6 @@ namespace chilli {
 // can't imagine any case where you would include this file
 // and not want the namespace
 using namespace chilli::types;
+
 
 

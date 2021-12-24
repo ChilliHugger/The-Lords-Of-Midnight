@@ -84,7 +84,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
         mxentity* entities::FindSymbol ( const std::string& name )
         {
             for ( u32 ii=0; ii<Count(); ii++ )
-                if ( c_stricmp(name.c_str(), m_objElements[ii]->Symbol()) == 0 )
+                if ( name == m_objElements[ii]->Symbol() )
                     return m_objElements[ii] ;
             return NULL ;
         }
