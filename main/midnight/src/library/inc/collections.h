@@ -294,25 +294,6 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
                 SAFEDELETEARRAY(m_data);
             }
 
-            //template <class T>
-            //void base<T>::Serialize( archive& ar )
-            //{
-            //int ii;
-
-            //    if ( ar.IsStoring() ) {
-            //        ar << Count();
-            //        for ( ii=0; ii<Count(); ii++ ) {
-            //            ar << m_data[ii];
-            //        }
-            //    }else{
-            //        ar >> ii;
-            //        Create(ii);
-            //        for ( ii=0; ii<Count(); ii++ ) {
-            //            ar >> m_data[ii];
-            //        }
-            //    }
-            //}
-
             template <class T>
             void base<T>::Destroy( )
             {
@@ -335,81 +316,11 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
                 qsort ( m_data, Count(), sizeof(m_data), sort );
             }
 
-
-
-        //class c_ptr :    public base
-        //{
-        //public:
-        //    c_ptr(void);
-        //    ~c_ptr(void);
-        //    virtual void Serialize( lib::archive& ar );
-        //    void* Get( u32 nSubscript )                    { return (void*)base::Get(nSubscript); }
-        //    void*& GetAt( u32 nSubscript )                { return (void*&)base::GetAt(nSubscript); }
-        //    void*& operator[]( u32 nSubscript )            { return (void*&)base::GetAt(nSubscript); }
-        //    void operator += ( void* o )                { base::Add((u32)o); }
-        //    void operator += ( const c_ptr& c )            { base::Add((base&)c); }
-        //    bool Add ( void* o )                        { return base::Add((u32)o); }
-        //    bool Insert ( u32 nSubscript, void* o )        { return base::Insert(nSubscript,(u32)o); }
-        //    bool Remove ( void* o )                        { return base::Remove((u32)o); }
-
-        //};
-
-        //// 
-        //class c_float :    public base
-        //{
-        //public:
-        //    c_float(void);
-        //    ~c_float(void);
-        //    virtual void Serialize( lib::archive& ar );
-        //    f32& GetAt( u32 nSubscript )                { return (f32&)base::GetAt(nSubscript); }
-        //    f32& operator[]( u32 nSubscript )            { return (f32&)base::GetAt(nSubscript); }
-        //    void operator += ( const c_float& c )        { base::Add((base&)c); }
-        //    f32 Get( u32 nSubscript );
-        //    void operator += ( f32 o )                    { Add(o); }
-        //    bool Add ( f32 o );
-        //    bool Insert ( u32 nSubscript, f32 o );
-        //    bool Remove ( f32 o );
-        //    int IsInList( f32 type ) const;
-
-        //};
-
-        //class c_point :    public base
-        //{
-        //public:
-        //    c_point(void);
-        //    ~c_point(void);
-        //    virtual void Serialize( lib::archive& ar );
-        //    void* Get( u32 nSubscript )                    { return (void*)base::Get(nSubscript); }
-        //    void*& GetAt( u32 nSubscript )                { return (void*&)base::GetAt(nSubscript); }
-        //    void*& operator[]( u32 nSubscript )            { return (void*&)base::GetAt(nSubscript); }
-        //    void operator += ( void* o )                { base::Add((u32)o); }
-        //    void operator += ( const c_point& c )            { base::Add((base&)c); }
-        //    bool Add ( void* o )                        { return base::Add((u32)o); }
-        //    bool Insert ( u32 nSubscript, void* o )        { return base::Insert(nSubscript,(u32)o); }
-        //    bool Remove ( void* o )                        { return base::Remove((u32)o); }
-
-        //};
-
-        // idt collection
-        //class c_idt :    public base
-        //{
-        //public:
-        //    c_idt(void);
-        //    ~c_idt(void);
-        //    virtual void Serialize( lib::archive& ar );
-        //};
-        // class Idt collection
-
-        typedef base<point>        c_point ;
-        typedef base<f32>        c_float ;
-        typedef base<void*>        c_ptr ;
-        typedef base<c_str>     c_string ;
-        typedef base<u32>        c_u32 ;
-        typedef base<s32>        c_s32 ;
-        
-        
-        
-        
+        typedef base<point>     c_point ;
+        typedef base<f32>       c_float ;
+        typedef base<void*>     c_ptr ;
+        typedef base<u32>       c_u32 ;
+        typedef base<s32>       c_s32 ;
         
         template <class T>
         class myvector : public std::vector<T>
@@ -421,8 +332,9 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
             void Create( u32 size ) { std::vector<T>::resize(size); }
         };
         
-        typedef myvector<mxid>        c_mxid ;
-
+        typedef myvector<mxid>          c_mxid ;
+        typedef myvector<std::string>   c_string ;
+        
     }
 
 }

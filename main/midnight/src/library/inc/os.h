@@ -41,60 +41,6 @@ namespace chilli {
         };
         // class filemanager
 
-
-
-        // class fileentry
-        class  fileentry
-        {
-        public:
-            fileentry();
-            virtual ~fileentry();
-
-        public:
-            c_str m_filename;
-        };
-        // class fileentry
-
-        // class filelist
-        class  filelist
-        {
-        public:
-
-            enum { // see io.h
-                NORMAL    =0x00, /* _A_NORMAL    Normal file - No read/write restrictions */
-                RDONLY    =0x01, /* _A_RDONLY    Read only file */
-                HIDDEN    =0x02, /* _A_HIDDEN    Hidden file */
-                SYSTEM    =0x04, /* _A_SYSTEM    System file */
-                SUBDIR    =0x10, /* _A_SUBDIR    Subdirectory */
-                ARCH    =0x20, /* _A_ARCH       Archive file */
-            };
-
-            filelist();
-            filelist( c_str filespec, u32 attribs=NORMAL );
-            virtual ~filelist();
-
-            bool CreateDir ( c_str filespec, u32 attribs=NORMAL );
-            bool Destroy();
-
-            int Count() const    { return m_count; };
-            void Sort ( void );
-
-            fileentry& GetAt ( u32 index ) const ;
-            fileentry& operator[] ( u32 index ) const    { return GetAt(index); }
-
-        protected:
-            void MakeDirFileList ( void );
-            u32 CountDirFiles ();
-
-        protected:
-            c_str        m_filespec;
-            u32            m_count;
-            fileentry*    m_dir;
-            u32            m_attribs;
-
-        };
-        // filelist
-
     }
 }
 

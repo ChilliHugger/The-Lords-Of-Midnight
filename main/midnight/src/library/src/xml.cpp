@@ -239,22 +239,6 @@ int value=0;
         return value;
     }
 
-    // find a global colour variable
-    //if ( val[0] == '@' ) {
-    //    var_t* var = FindGlobalVariable ( &val[1] );
-    //    if ( var ) {
-    //        if ( var->type == V_RGB ) {
-    //            CRgb* rgb = (CRgb*)var->ptr ;
-    //            return rgb->rgba;
-    //        }
-    //        if ( var->type == V_INT ) {
-    //            int* integer = (int*)var->ptr ;
-    //            return *integer;
-    //        }
-    //    }
-    //    return 0;
-    //}
-
     return atoi(val) ;
 }
 
@@ -275,32 +259,40 @@ bool xml::ReadBool( XmlNode* node, LPCSTR name, bool defaultvalue )
     return (bool)ReadToken( node, name, token_Bool, NUMELE(token_Bool), defaultvalue );
 }
 
-int ConvertArray ( LPSTR value, collections::c_s32& c, LPCSTR delim )
+int ConvertArray ( const std::string value, collections::c_s32& c, char delim )
 {
-    if ( value == NULL ) return 0;
-    LPCSTR token = strtok( value, delim );
-    while( token != NULL )   {
-        c.Add( (s32)atol(token) ) ;
-        token = strtok( NULL, delim );
+ c_string values;
+ 
+    if (value.empty()) return 0;
+ 
+    SplitString(value, delim, values);
+ 
+    for( auto v : values) {
+        c.Add( (f32)atol(v.c_str()) ) ;
     }
+ 
     return c.Count();
 }
 
-int ConvertArray ( LPSTR value, collections::c_float& c, LPCSTR delim )
+int ConvertArray ( const std::string value, collections::c_float& c, char delim )
 {
-    if ( value == nullptr) return 0;
-    LPCSTR token = strtok( value, delim );
-    while( token != nullptr)   {
-        c.Add( (f32)atof(token) ) ;
-        token = strtok( NULL, delim );
+ c_string values;
+ 
+    if (value.empty()) return 0;
+ 
+    SplitString(value, delim, values);
+ 
+    for( auto v : values) {
+        c.Add( (f32)atof(v.c_str()) ) ;
     }
+ 
     return c.Count();
 }
 
-int xml::ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c, LPCSTR delim )
+int xml::ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c, char delim )
 {
-    c_str value = ReadStr( node, name );
-    if ( value.IsNull() )
+    std::string value = ReadStr( node, name );
+    if ( value.empty() )
         return 0;
     return ConvertArray(value,c,delim);
 
@@ -308,7 +300,7 @@ int xml::ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c, LPCSTR d
 
 int xml::ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c )
 {
-    return ReadArray(node,name,c,",");
+    return ReadArray(node,name,c,',');
 }
 
 LPCSTR xml::ReadValue ( XmlNode* node, LPCSTR name )
@@ -325,14 +317,14 @@ LPCSTR xml::ReadValue ( XmlNode* node, LPCSTR name )
 
 int xml::ReadValueArray ( XmlNode* node, LPCSTR name, collections::c_s32& c )
 {
-    c_str s = ReadValue(node,name);
-    return ConvertArray(s,c,",");
+    std::string s = ReadValue(node,name);
+    return ConvertArray(s,c,',');
 }
 
 int xml::ReadValueArray ( XmlNode* node, LPCSTR name, collections::c_float& c )
 {
-    c_str s = ReadValue(node,name);
-    return ConvertArray(s,c,",");
+    std::string s = ReadValue(node,name);
+    return ConvertArray(s,c,',');
 }
 
 int xml::ReadIntProperty ( XmlNode* node, LPCSTR name, int defaultvalue )

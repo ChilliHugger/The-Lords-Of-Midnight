@@ -5,57 +5,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <algorithm>
+
 #include <sstream>
+#include <iostream>
+#include <vector>
+#include <string>
+
 
 namespace chilli {
 
     namespace lib {
 
         using namespace chilli::collections;
-        
-        LPSTR c_strtok_r(LPSTR str, LPCSTR delim, char **nextp)
-        {
-            char *ret;
-
-            if (str == NULL)
-            {
-                str = *nextp;
-            }
-
-            str += strspn(str, delim);
-
-            if (*str == '\0')
-            {
-                return NULL;
-            }
-
-            ret = str;
-
-            str += strcspn(str, delim);
-
-            if (*str)
-            {
-                *str++ = '\0';
-            }
-
-            *nextp = str;
-
-            return ret;
-        }
-
-        int SplitString ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) 
-        {
-            c_str    token = source;
-            
-            char *saveptr1=nullptr;
-            tokens.Clear();
-            LPSTR t = c_strtok_r(token,delim,&saveptr1);
-            while ( t ) {
-                tokens.Add(t);
-                t = c_strtok_r(NULL,delim,&saveptr1);
-            }
-            return tokens.Count();
-        }
 
         void JumbleArray ( int* array, int max )
         {
@@ -499,9 +460,23 @@ namespace chilli {
             return ::atol(text);
         }
         
-        std::vector<std::string> split_string_by_newline(const std::string& str)
+        
+        int SplitString ( const std::string& source, char delim, c_string& tokens )
         {
+            tokens.clear();
+            
             auto result = std::vector<std::string>{};
+            auto ss = std::stringstream{source};
+
+            for (std::string line; std::getline(ss, line, delim);)
+                tokens.push_back(line);
+
+            return tokens.size();
+        }
+        
+        c_string split_string_by_newline(const std::string& str)
+        {
+            auto result = c_string{};
             auto ss = std::stringstream{str};
 
             for (std::string line; std::getline(ss, line, '\n');)

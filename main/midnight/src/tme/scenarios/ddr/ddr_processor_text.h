@@ -25,7 +25,7 @@ namespace tme {
             virtual void Serialize ( archive& ar );
 
             
-            virtual std::string HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 );
+            virtual std::string HowMuchOfText( u32 number, const c_string& tokens );
             virtual std::string DescribeNumberPart ( int number, ZERO_MODE zeromode=ZERO_NO )  ;
             virtual std::string DescribeCharacterTime( const mxcharacter* character );
             virtual std::string DescribeTime ( u32 time );

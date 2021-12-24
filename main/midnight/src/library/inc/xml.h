@@ -39,7 +39,7 @@ namespace chilli  {
             static LPCSTR ReadStrProperty ( XmlNode* node, LPCSTR  name, LPCSTR defaultvalue=NULL );
 
             static int ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c );
-            static int ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c, LPCSTR delim );
+            static int ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c, char delim );
 
             static int ReadToken( XmlNode* node, LPCSTR token, token_t array[], int max, int defaultvalue=0 );
             static f32 ReadFloat ( XmlNode* node, LPCSTR name, f32 defaultvalue=0 );

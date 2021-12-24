@@ -25,7 +25,7 @@
 #include <stdarg.h>
 #include <string>
 #include <string.h>
-
+#include <algorithm>
 
 namespace tme {
 
@@ -94,38 +94,15 @@ va_list arglist ;
  * 
  */
 
-void mxtext::FillArrayFromSystemString( LPSTR array[], u32 id )
+c_string mxtext::FillArrayFromSystemString( u32 id )
 {
-LPCSTR  token;
-char*   ptr=nullptr;
-int     count=0;
-
-    //set up arrays
-    token = chilli::lib::c_strtok_r( (LPSTR)SystemString(id), "|", &ptr );
-    while ( token!=NULL ) {
-        if (c_strlen(token)==1 && token[0]=='-' )
-            array[count++] = nullptr;
-        else
-            array[count++] = (LPSTR)token;
-        token=chilli::lib::c_strtok_r(nullptr,"|", &ptr);
-    }
-}
-
-void mxtext::FillArrayFromSystemString( c_ptr& array, u32 id )
-{
-LPCSTR  token;
-char*   ptr=nullptr;
-int     count=0;
-
-    //set up arrays
-    token = chilli::lib::c_strtok_r( (LPSTR)SystemString(id), "|", &ptr );
-    while ( token!=nullptr ) {
-        if (c_strlen(token)==1 && token[0]=='-' )
-            array.Add(nullptr);
-        else
-            array.Add((LPSTR)token);
-        token=chilli::lib::c_strtok_r(nullptr,"|", &ptr);
-    }
+c_string values;
+    std::string value = SystemString(id);
+    chilli::lib::SplitString(value, '|', values);
+    std::string oldString = "-";
+    std::string newString = "";
+    std::replace (values.begin(), values.end(), oldString, newString);
+    return values;
 }
 
 
@@ -166,19 +143,16 @@ int id;
             ar >> systemstrings[id];
         }
 
-        FillArrayFromSystemString( adverb_token, SS_ADVERBS );
-        FillArrayFromSystemString( number_token, SS_NUMBERS );
-        FillArrayFromSystemString( fear_token, SS_FEARTOKENS );
-        FillArrayFromSystemString( courage_token, SS_COURAGETOKENS );
-        FillArrayFromSystemString( energy_token, SS_ENERGYTOKENS );
-        FillArrayFromSystemString( zero_token, SS_ZEROTOKENS );
-
-        FillArrayFromSystemString( despondent_token, SS_DESPONDENTTOKENS );
-        FillArrayFromSystemString( reckless_token, SS_RECKLESSTOKENS );
-
-        FillArrayFromSystemString( traits_token, SS_TRAITS );
-
-        FillArrayFromSystemString( plural_tokens, SS_PLURALTOKENS );
+        adverb_token = FillArrayFromSystemString( SS_ADVERBS );
+        number_token = FillArrayFromSystemString( SS_NUMBERS );
+        fear_token = FillArrayFromSystemString( SS_FEARTOKENS );
+        courage_token = FillArrayFromSystemString( SS_COURAGETOKENS );
+        energy_token = FillArrayFromSystemString( SS_ENERGYTOKENS );
+        zero_token = FillArrayFromSystemString( SS_ZEROTOKENS );
+        despondent_token = FillArrayFromSystemString( SS_DESPONDENTTOKENS );
+        reckless_token = FillArrayFromSystemString( SS_RECKLESSTOKENS );
+        traits_token = FillArrayFromSystemString( SS_TRAITS );
+        plural_tokens = FillArrayFromSystemString( SS_PLURALTOKENS );
 
     }
 }
@@ -284,20 +258,19 @@ std::string text;
  * 
  */
 
-std::string mxtext::HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 )
+std::string mxtext::HowMuchOfText( u32 number, const c_string& tokens )
 {
 std::string buffer;
 
     if ( number> NUMELE(adverb_token) )
         number=0;
     
-    if (number < 5 ) text1 = text2;
+    auto token = number < 5 ? 1 : 0;
 
-    if ( adverb_token[number] )
-        buffer += adverb_token[ number ] ;
+    if ( !adverb_token.at(number).empty())
+        buffer += adverb_token.at(number) ;
 
-    buffer += text1 ;
-    return buffer;
+    return buffer + tokens.at(token);
 }
 
 
@@ -388,7 +361,7 @@ std::string& mxtext::DescribeTime ( u32 time )
     
 std::string mxtext::DescribeEnergy ( u32 energy )
 {
-    auto txtEnergy = HowMuchOfText ( energy/sv_energy_scale, energy_token[0], energy_token[1] );
+    auto txtEnergy = HowMuchOfText ( energy/sv_energy_scale, energy_token );
     if ( energy<=sv_energy_cannot_continue) {
         return Format ( SystemString(SS_CHARACTER_CANNOT_CONTINUE), txtEnergy.c_str());
     }
@@ -398,22 +371,22 @@ std::string mxtext::DescribeEnergy ( u32 energy )
 
 std::string mxtext::DescribeDespondent ( u32 despondent )
 {
-    return HowMuchOfText ( despondent/sv_despondent_scale, despondent_token[0], despondent_token[1] );
+    return HowMuchOfText ( despondent/sv_despondent_scale, despondent_token );
 }
 
 std::string mxtext::DescribeReckless ( u32 reckless )
 {
-    return HowMuchOfText ( reckless/sv_reckless_scale, reckless_token[0], reckless_token[1] );
+    return HowMuchOfText ( reckless/sv_reckless_scale, reckless_token );
 }
 
 std::string mxtext::DescribeFear ( u32 fear )
 {
-    return HowMuchOfText ( 7-(fear/sv_fear_scale), fear_token[0], fear_token[1] );
+    return HowMuchOfText ( 7-(fear/sv_fear_scale), fear_token );
 }
 
 std::string mxtext::DescribeCourage ( u32 courage )
 {
-    return HowMuchOfText ( courage/sv_courage_scale, courage_token[0], courage_token[1] );
+    return HowMuchOfText ( courage/sv_courage_scale, courage_token );
 }
 /*
  *
@@ -815,13 +788,13 @@ std::string buffer;
     for ( int ii=0; ii<32; ii++ ) {
         int i = f&1;
 
-        if ( traits_token[ii] ) {
+        if ( !traits_token.at(ii).empty() ) {
 
             if ( i ) {
                 if ( !first ) 
                     buffer += ", ";
 
-                buffer += (LPSTR)traits_token[ii] ;
+                buffer += traits_token.at(ii) ;
                 first = false ;
             }
 

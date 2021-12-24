@@ -11,11 +11,9 @@ namespace chilli {
        
         using collections::c_string;
         
-        int SplitString ( LPCSTR source, LPCSTR delim, c_string& tokens ) ;
+        int SplitString ( const std::string& source, char delim, c_string& tokens ) ;
         void JumbleArray ( int* array, int max );
         int ConcatArray( int* array, int max );
-
-        LPSTR    c_strtok_r(LPSTR str, LPCSTR delim, char **nextp);
 
         int        c_stricmp(LPCSTR dst, LPCSTR src);
         int        c_strnicmp ( LPCSTR first, LPCSTR last, size_t count );
@@ -53,7 +51,7 @@ namespace chilli {
 
         long atol( LPCSTR text );
 
-        std::vector<std::string> split_string_by_newline(const std::string& str);
+        c_string split_string_by_newline(const std::string& str);
         std::string right(std::string& input, int amount);
 
     }

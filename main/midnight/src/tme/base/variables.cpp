@@ -260,27 +260,22 @@ namespace tme {
                 case CVar::IDARRAY:
                     {
                         sv_c_mxid_t* c = (sv_c_mxid_t*)variable->memory ;
-                        char *saveptr1;
                         
-                        c_str s = stringValue ;
-                        c->Clear();
-                        LPSTR    token;
-                        int        count;
-                            //set up arrays
-                            count=0;
-                            token = chilli::lib::c_strtok_r( s, "|", &saveptr1 );
-                            while ( token!=NULL ) {
-                                if (c_strlen(token)==1 && token[0]=='-' )
-                                    c->Add(IDT_NONE);
-                                else {
-                                    mxid id = mxentity::SafeIdt(mx->EntityByName(token));
-                                    if ( id == IDT_NONE )
-                                        id = mx->text->StringByName(token);
-                                    c->Add( id );
-                                }
-                                token=chilli::lib::c_strtok_r(NULL,"|", &saveptr1);
-                            }
+                        c_string values;
+                        std::string value = stringValue;
+                        chilli::lib::SplitString(value, '|', values);
 
+                        c->Clear();
+                        for( auto token : values) {
+                            if(token == "-") {
+                                c->Add(IDT_NONE);
+                            }else{
+                                mxid id = mxentity::SafeIdt(mx->EntityByName(token));
+                                if ( id == IDT_NONE )
+                                    id = mx->text->StringByName(token);
+                                c->Add( id );
+                            }
+                        }
                     }
                     break;
             }

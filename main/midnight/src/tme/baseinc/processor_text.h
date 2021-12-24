@@ -53,7 +53,7 @@ namespace tme {
             virtual void Serialize ( chilli::lib::archive& ar );
 
             virtual std::string DecodeToken ( LPSTR token, const mxcharacter* character=NULL );
-            virtual std::string HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 ) ;
+            virtual std::string HowMuchOfText( u32 number, const c_string& tokens ) ;
             virtual std::string DescribeNumberPart ( int number, ZERO_MODE zeromode=ZERO_NO )  ;
             virtual std::string DescribeEnergy ( u32 energy );
             virtual std::string DescribeFear ( u32 fear );
@@ -119,49 +119,35 @@ namespace tme {
             virtual std::string SpecialStrings ( LPCSTR token, const mxcharacter* character );
 
         protected:
-            void FillArrayFromSystemString( LPSTR array[], u32 id );
-            void FillArrayFromSystemString( c_ptr& array, u32 id );
+            c_string FillArrayFromSystemString(u32 id);
 
         public:
-            mxgridref        loc;
+            mxgridref       loc;
 
-            mxrace*            rinfo;
-            mxgender*        ginfo;
+            mxrace*         rinfo;
+            mxgender*       ginfo;
             mxdirection*    dinfo;
-            mxarea*            ainfo;
-            mxterrain*        tinfo;
+            mxarea*         ainfo;
+            mxterrain*      tinfo;
 #if defined(_DDR_)
             mxobjectpower*  opinfo;
             mxobjecttype*   otinfo;
 #endif
             const           mxobject*    oinfo;
 
-#if defined(_DDR_)
-            LPSTR            adverb_token[8];
-#else
-            LPSTR            adverb_token[9];
-#endif
-            LPSTR            number_token[30];
-            LPSTR            fear_token[2];
-            LPSTR            courage_token[2];
-            LPSTR            energy_token[2];
-            LPSTR            reckless_token[2];
-            LPSTR            despondent_token[2];
-#if defined(_DDR_)
-            LPSTR            zero_token[3];
-#endif
-#if defined(_LOM_)
-            LPSTR            zero_token[10];
-#endif
-            LPSTR            plural_tokens[4];
-
-            c_ptr            traits_token;
-            
-            //u32                m_zerotype;
+            c_string        adverb_token;
+            c_string        number_token;
+            c_string        fear_token;
+            c_string        courage_token;
+            c_string        energy_token;
+            c_string        reckless_token;
+            c_string        despondent_token;
+            c_string        zero_token;
+            c_string        plural_tokens;
+            c_string        traits_token;
             
             MODE_CASE       m_case;
 
-            
             int             last_number;
         protected:
             u32             m_cSystemStrings;
