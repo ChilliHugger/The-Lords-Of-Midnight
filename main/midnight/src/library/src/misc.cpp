@@ -460,37 +460,6 @@ namespace chilli {
             return ::atol(text);
         }
         
-        
-        int SplitString ( const std::string& source, char delim, c_string& tokens )
-        {
-            tokens.clear();
-            
-            auto result = std::vector<std::string>{};
-            auto ss = std::stringstream{source};
-
-            for (std::string line; std::getline(ss, line, delim);)
-                tokens.push_back(line);
-
-            return tokens.size();
-        }
-        
-        c_string split_string_by_newline(const std::string& str)
-        {
-            auto result = c_string{};
-            auto ss = std::stringstream{str};
-
-            for (std::string line; std::getline(ss, line, '\n');)
-                result.push_back(line);
-
-            return result;
-        }
-
-        std::string right(std::string& input, int amount)
-        {
-            int inputSize = input.size();
-            return (amount > 0 && inputSize > amount) ? input.substr(inputSize - amount) : input;
-        }
-
     }
     // namespace lib
 

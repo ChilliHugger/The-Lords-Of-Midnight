@@ -100,7 +100,7 @@ LPCSTR xml::ReadElement( XmlNode* node, LPCSTR element, LPCSTR id, LPCSTR tag )
             }
         }
     }
-    return strNull ;
+    return "" ;
 }
 
 LPCSTR xml::ReadItemEx ( XmlNode* node, LPCSTR name )
@@ -265,10 +265,10 @@ int ConvertArray ( const std::string value, collections::c_s32& c, char delim )
  
     if (value.empty()) return 0;
  
-    SplitString(value, delim, values);
+    StringExtensions::split(value, delim, values);
  
     for( auto v : values) {
-        c.Add( (f32)atol(v.c_str()) ) ;
+        c.Add( StringExtensions::atoi(v) ) ;
     }
  
     return c.Count();
@@ -280,10 +280,10 @@ int ConvertArray ( const std::string value, collections::c_float& c, char delim 
  
     if (value.empty()) return 0;
  
-    SplitString(value, delim, values);
+    StringExtensions::split(value, delim, values);
  
     for( auto v : values) {
-        c.Add( (f32)atof(v.c_str()) ) ;
+        c.Add( StringExtensions::atof(v) ) ;
     }
  
     return c.Count();

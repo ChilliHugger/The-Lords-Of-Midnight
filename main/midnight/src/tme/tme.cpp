@@ -39,8 +39,6 @@ mxid            location_object_tunnel;
 mxid            location_someone_to_give_to;
 #endif
 
-//std::string            tme_text ;
-//std::string          tme_path;
 static            variant args[20];
 
 

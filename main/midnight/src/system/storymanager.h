@@ -30,7 +30,7 @@ typedef enum savemode_t {
 
 typedef struct storyheader_t {
     storyid_t           id;
-    c_str               description ;
+    std::string         description ;
     u32                 slot;
     savemode_t          mode;
 } storyheader_t;

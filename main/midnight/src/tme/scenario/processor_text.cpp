@@ -46,8 +46,6 @@ namespace tme {
  */
 
 mxtext::mxtext() :
-    systemcodes(nullptr),
-    systemstrings(nullptr),
     m_case(CASE_NONE),
     last_number(0)
 {
@@ -67,8 +65,6 @@ mxtext::mxtext() :
 
 mxtext::~mxtext()
 {
-    delete [] systemstrings ;
-    delete [] systemcodes ;
 }
 
 std::string mxtext::Format ( LPCSTR format, ... )
@@ -98,7 +94,7 @@ c_string mxtext::FillArrayFromSystemString( u32 id )
 {
 c_string values;
     std::string value = SystemString(id);
-    chilli::lib::SplitString(value, '|', values);
+    StringExtensions::split(value, '|', values);
     std::string oldString = "-";
     std::string newString = "";
     std::replace (values.begin(), values.end(), oldString, newString);
@@ -131,15 +127,17 @@ int id;
         }
     }else{
         
-        if ( systemstrings )
-            delete [] systemstrings ;
-
+        std::string empty = "";
+        systemstrings.Clear();
+        
         ar >> m_cSystemStrings;
-        systemstrings = new c_str[m_cSystemStrings];
-        systemcodes = new c_str[m_cSystemStrings];
+    
+        systemcodes.resize(m_cSystemStrings, empty);
+        systemstrings.resize(m_cSystemStrings, empty);
+        
         for ( ii=0; ii<m_cSystemStrings; ii++ ) {
             ar >> id;
-            ar >> systemcodes[id] ;
+            ar >> systemcodes[id];
             ar >> systemstrings[id];
         }
 
@@ -161,7 +159,7 @@ int id;
 mxid mxtext::StringByName ( const std::string& name ) const
 {
     for ( u32 ii=0; ii<m_cSystemStrings; ii++ ) {
-        if ( c_stricmp(name.c_str(), systemcodes[ii]) == 0) {
+        if (name == systemcodes[ii]) {
             return MAKE_ID(IDT_STRING,(ii+1));
         }
     }
@@ -172,7 +170,7 @@ mxid mxtext::StringByName ( const std::string& name ) const
 LPCSTR mxtext::SystemStringById ( mxid id )
 {
     if ( ID_TYPE(id) != IDT_STRING )
-        return emptyString ;
+        return emptyString.c_str() ;
     return SystemString(GET_ID(id)-1);
 }
 
@@ -191,8 +189,8 @@ LPCSTR mxtext::SystemStringById ( mxid id )
 LPCSTR mxtext::SystemString ( u32 id )
 {
     //_MXASSERTE ( id>=0 && id<m_cSystemStrings );
-    if ( /*id<0 ||*/ id>=m_cSystemStrings ) return emptyString ;
-    return systemstrings[id].GetAt();
+    if ( /*id<0 ||*/ id>=m_cSystemStrings ) return emptyString.c_str() ;
+    return systemstrings[id].c_str();
 }
 
 
@@ -388,10 +386,6 @@ std::string mxtext::DescribeCourage ( u32 courage )
 {
     return HowMuchOfText ( courage/sv_courage_scale, courage_token );
 }
-/*
- *
- *
- */
 
 
 /*
@@ -1223,8 +1217,8 @@ char        l;
 
 std::string mxtext::DecodeToken ( LPSTR token, const mxcharacter* character )
 {
-int                is=0;
-c_ptr            tokens;
+int         is=0;
+c_string    tokens;
 
     LPSTR t = strtok(token,"{:}");
     while ( t ) {
@@ -1250,44 +1244,41 @@ c_ptr            tokens;
     is=0;
 
 #define GET_ARG    \
-    (LPCSTR)tokens[is]
+    tokens.at(is)
     
 #define IS_ARG(x)    \
-     if ( c_stricmp(x,GET_ARG) == 0 )
+     if ( c_stricmp(x,GET_ARG.c_str()) == 0 )
 
     while (TRUE) {
-        if ( tokens[is] == NULL )
-            return (LPSTR)"";
+        if ( tokens.at(is).empty() )
+            return "";
 
-        
-        
-// case
             IS_ARG("case") {
                 is++;
-                IS_ARG("first")     { m_case=CASE_FIRST; return (LPSTR)""; }
-                IS_ARG("upper")     { m_case=CASE_UPPER; return (LPSTR)""; }
-                IS_ARG("lower")     { m_case=CASE_LOWER; return (LPSTR)""; }
-                IS_ARG("none")      { m_case=CASE_NONE; return (LPSTR)""; }
+                IS_ARG("first")     { m_case=CASE_FIRST; return ""; }
+                IS_ARG("upper")     { m_case=CASE_UPPER; return ""; }
+                IS_ARG("lower")     { m_case=CASE_LOWER; return ""; }
+                IS_ARG("none")      { m_case=CASE_NONE; return ""; }
             }else
             IS_ARG("plural") {
                 is++;
                 if ( ABS(last_number)==1 ) {
-                    return (LPSTR)GET_ARG;
+                    return GET_ARG;
                 }
                 is++;
-                return (LPSTR)GET_ARG;
+                return GET_ARG;
             }else
                 
             IS_ARG("number") {
                 is++;
-                return DescribeNumber(atoi(GET_ARG));
+                return DescribeNumber(atoi(GET_ARG.c_str()));
             }else
  // Character
             IS_ARG("char") {
 __char:
                 is++;
-                IS_ARG("name")          return character->Shortname().c_str();
-                IS_ARG("longname")      return character->Longname().c_str();
+                IS_ARG("name")          return character->Shortname();
+                IS_ARG("longname")      return character->Longname();
 #if defined(_DDR_)
                 IS_ARG("time")          return DescribeTime(character->Time());
 #else
@@ -1394,15 +1385,15 @@ __char:
             IS_ARG("race") {
 __race:
                 is++;
-                IS_ARG("name")          return rinfo->Name().c_str();
-                IS_ARG("soldiers")      return rinfo->SoldiersName().c_str();
+                IS_ARG("name")          return rinfo->Name();
+                IS_ARG("soldiers")      return rinfo->SoldiersName();
             }else
 // AREA
             IS_ARG("area") {
 __area:
                 is++;
-                IS_ARG("name")          return ainfo->Name().c_str();
-                IS_ARG("prefix")        return ainfo->prefix.c_str();
+                IS_ARG("name")          return ainfo->Name();
+                IS_ARG("prefix")        return ainfo->prefix;
                 IS_ARG("text")          return DescribeArea(ainfo->Id());
             }else
 // GENDER
@@ -1410,21 +1401,21 @@ __area:
 __gender:
                 is++;
                 IS_ARG("name")          return ginfo->Name();
-                IS_ARG("heshe")         return ginfo->pronoun1.c_str();
-                IS_ARG("hisher")        return ginfo->pronoun2.c_str();
-                IS_ARG("himher")        return ginfo->pronoun3.c_str();
+                IS_ARG("heshe")         return ginfo->pronoun1;
+                IS_ARG("hisher")        return ginfo->pronoun2;
+                IS_ARG("himher")        return ginfo->pronoun3;
             }else
 // direction
             IS_ARG("dir") {
 __dir:
                 is++;
-                IS_ARG("name")          return dinfo->Name().c_str();
+                IS_ARG("name")          return dinfo->Name();
             }else
 //OBJECT
             IS_ARG("obj") {
 __obj:
                 is++;
-                IS_ARG("name")          return oinfo->name.c_str();
+                IS_ARG("name")          return oinfo->name;
                         // if oinfo->description == NULL
                         // SS_OBJECT_FULL_DESCRIPTION
                 IS_ARG("text")      {
@@ -1469,9 +1460,9 @@ __loc:
             IS_ARG("terrain") {
 __terrain:
                 is++;
-                IS_ARG("name")      return tinfo->Name().c_str();
+                IS_ARG("name")      return tinfo->Name();
                 IS_ARG("plural")    return DescribeTerrainPlural((mxterrain_t)tinfo->Id());
-                IS_ARG("prep")      return tinfo->preposition.c_str();
+                IS_ARG("prep")      return tinfo->preposition;
                 IS_ARG("text")      {
                                         std::string description = tinfo->description;
                                         return CookText(description,character);
@@ -1480,11 +1471,11 @@ __terrain:
             }else
 // SYSTEM STRING
             IS_ARG("str") {
-                return CookedSystemString((u32)chilli::lib::atol((LPCSTR)tokens[is+1]),character);
+                return CookedSystemString(StringExtensions::atol(tokens.at(is+1)),character);
             }else
 // SPECIAL
             IS_ARG("special") {
-                return SpecialStrings((LPCSTR)tokens[is+1],character);
+                return SpecialStrings(tokens.at(is+1).c_str(),character);
             }
         is++;
     }

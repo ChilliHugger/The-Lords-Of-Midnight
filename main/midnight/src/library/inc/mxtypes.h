@@ -339,51 +339,6 @@ namespace chilli {
         MXINLINE archive& operator<<( archive& ar, flags16& f )        { return f.Serialize(ar); }
         MXINLINE archive& operator>>( archive& ar, flags16& f )        { return f.Serialize(ar); }
 
-        // str
-        class  c_str
-        {
-        public:
-            c_str();
-            c_str ( LPSTR str );
-            c_str ( LPCSTR str );
-
-            ~c_str();
-
-            operator LPSTR() const;
-            operator LPCSTR() const;
-
-            size_t Length() const ;
-
-            const c_str&  operator= ( LPCSTR value );
-            const c_str&  operator= ( const c_str& str );
-
-            archive& Serialize ( archive& ar );
-            friend  archive& operator<<( archive& ar, c_str& value );
-            friend  archive& operator>>( archive& ar, c_str& value );
-
-            static archive& SerializeString ( archive& ar, std::string& string );
-
-            bool IsNull() const;
-            bool IsEmpty() const;
-
-            LPCSTR GetAt() const { return m_pchData; }
-
-        private:
-            LPSTR    m_pchData;
-        };
-
-        extern c_str    strNull;
-        
-        
-        MXINLINE archive& operator<<( archive& ar, c_str& s )        { return s.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, c_str& s )        { return s.Serialize(ar); }
-        MXINLINE archive& operator<<( archive& ar, std::string& s )  { return c_str::SerializeString(ar, s); }
-        MXINLINE archive& operator>>( archive& ar, std::string& s )  { return c_str::SerializeString(ar, s); }
-
-        MXINLINE c_str::operator LPSTR() const                              { return m_pchData; }
-        MXINLINE c_str::operator LPCSTR() const                             { return m_pchData; }
-
-
         // random
         class randomno
         {
@@ -442,8 +397,8 @@ namespace chilli {
                 { vType=vdouble;vDouble = value ; return vDouble; }
             LPSTR& operator = ( LPSTR value )
                 { vType=vstring;vString = value ; return vString; }
-            LPSTR& operator = ( c_str value )
-                { vType=vstring;vString = (LPSTR)value ; return vString; }
+            //LPSTR& operator = ( c_str value )
+            //    { vType=vstring;vString = (LPSTR)value ; return vString; }
             LPSTR& operator = ( std::string value )
                 {vType=vstring;vString = (LPSTR)value.c_str(); return vString; }
                     
@@ -463,8 +418,8 @@ namespace chilli {
                 { return vDouble; }
             operator char*() const
                 { return vString; }
-            operator c_str() const
-                { return vString; }
+            //operator c_str() const
+            //    { return vString; }
             operator void*() const
                 { return vPtr; }
                 

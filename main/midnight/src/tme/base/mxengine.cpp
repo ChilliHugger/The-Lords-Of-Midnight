@@ -257,7 +257,7 @@ MXTRACE( "Loading Database '%s'", m_szDatabase);
 u32        magicno;
 u32        scenarioid;
 //u32        versionno;
-c_str    header;
+std::string    header;
 
     // magic no
     ar >> magicno ;
@@ -290,9 +290,9 @@ MXTRACE( "Version=%d", (int)savegameversion);
     
     
     ar >> header ;
-MXTRACE( "Header='%s'", (LPSTR)header);
+MXTRACE( "Header='%s'", header.c_str());
     
-    if (c_stricmp( header, DATABASEHEADER ) != 0 ) {
+    if (c_stricmp( header.c_str(), DATABASEHEADER ) != 0 ) {
         MXTRACE("Invalid DATABASE Header");
         return MX_UNKNOWN_FILE;
     }
@@ -629,8 +629,8 @@ MXRESULT mxengine::LoadGame ( const std::string& filename, PFNSERIALIZE function
 u32        magicno;
 u32        scenarioid;
 u16        temp16;
-c_str    header;
-c_str  description;
+std::string    header;
+std::string  description;
 
     // magic no
     ar >> magicno;
@@ -654,7 +654,7 @@ c_str  description;
     savegameversion = m_versionno ;
 
     ar >> header ;
-    if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
+    if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
 
     if ( SaveGameVersion()>8 ) {
@@ -757,7 +757,7 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     
     u32        magicno;
     u32        scenarioid;
-    c_str    header;
+    std::string    header;
     
     // magic no
     ar >> magicno;
@@ -779,10 +779,10 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     savegameversion = m_versionno ;
     
     ar >> header ;
-    if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
+    if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
     
-    c_str temp;
+    std::string temp;
     if ( SaveGameVersion()>8 ) {
         ar >>  temp;
     }else{

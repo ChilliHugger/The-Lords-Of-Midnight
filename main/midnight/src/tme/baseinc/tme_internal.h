@@ -21,8 +21,8 @@
 #include "../scenarios/default/default_scenario_internal.h"
 
 namespace tme {
-    MXINLINE archive& operator<<( archive& ar, std::string& s )  { return c_str::SerializeString(ar, s); }
-    MXINLINE archive& operator>>( archive& ar, std::string& s )  { return c_str::SerializeString(ar, s); }
+    MXINLINE archive& operator<<( archive& ar, std::string& s )  { return StringExtensions::SerializeString(ar, s); }
+    MXINLINE archive& operator>>( archive& ar, std::string& s )  { return StringExtensions::SerializeString(ar, s); }
 }
 
 #endif // _TMEINTERNAL_H_INCLUDED_

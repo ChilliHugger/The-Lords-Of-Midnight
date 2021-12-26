@@ -9,9 +9,7 @@ namespace chilli {
 
         using namespace types;
        
-        using collections::c_string;
         
-        int SplitString ( const std::string& source, char delim, c_string& tokens ) ;
         void JumbleArray ( int* array, int max );
         int ConcatArray( int* array, int max );
 
@@ -48,12 +46,24 @@ namespace chilli {
 
         u32 BSub(u32 value, u32 amount, u32 min);
         u32 BAdd(u32 value, u32 amount, u32 max);
-
         long atol( LPCSTR text );
 
-        c_string split_string_by_newline(const std::string& str);
-        std::string right(std::string& input, int amount);
-
+        // std::string extensions
+        using chilli::collections::c_string;
+ 
+        class StringExtensions {
+        public:
+            static archive& SerializeString ( archive& ar, std::string& string );
+            static long atol( std::string& value );
+            static f32 atof( std::string& value );
+            static s32 atoi( std::string& value );
+            static int split ( const std::string& source, char delim, c_string& lines );
+            static c_string split_by_newline(const std::string& str);
+            static std::string right(std::string& input, int amount);
+            static std::string replaceAll(const std::string& str, const std::string& from, const std::string& to);
+            static std::string toUpper(const std::string& value);
+    
+        };
     }
 }
 

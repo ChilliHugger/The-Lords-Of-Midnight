@@ -263,7 +263,7 @@ namespace tme {
                         
                         c_string values;
                         std::string value = stringValue;
-                        chilli::lib::SplitString(value, '|', values);
+                        StringExtensions::split(value, '|', values);
 
                         c->Clear();
                         for( auto token : values) {

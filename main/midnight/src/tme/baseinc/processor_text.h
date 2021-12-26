@@ -13,10 +13,8 @@
 namespace tme {
 
     using namespace chilli;
-    using chilli::collections::c_ptr;
-    
-    class CStrBuf;
-    
+
+
     //namespace processors {
 
         class mxtext
@@ -151,9 +149,9 @@ namespace tme {
             int             last_number;
         protected:
             u32             m_cSystemStrings;
-            c_str*          systemstrings;
-            c_str*          systemcodes;
-            c_str           emptyString;
+            c_string        systemstrings;
+            c_string        systemcodes;
+            std::string     emptyString;
         };
     //}
 }

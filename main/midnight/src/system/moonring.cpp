@@ -20,6 +20,7 @@
 #include "progressmonitor.h"
 #include "configmanager.h"
 #include "shadermanager.h"
+#include <string>
 
 #if defined(_USE_VERSION_CHECK_)
     #include "network/HttpClient.h"
@@ -764,11 +765,12 @@ void moonring::getVersion(const GetVersionCallback& callback)
             {
                 auto data = response->getResponseData();
                 auto input = std::string( data->begin(), data->end() );
-                auto lines = split_string_by_newline(input);
+                auto lines = StringExtensions::split_by_newline(input);
                 UIDEBUG("Version Check: %s (%s)",lines[0].c_str(), lines[1].c_str());
                
-                auto availableBuildNo = std::atoi(lines[1].c_str());
-                auto currentBuildNo =  std::atoi(chilli::extensions::getBuildNo().c_str());
+                auto buildNo = chilli::extensions::getBuildNo();
+                auto availableBuildNo = StringExtensions::atoi(lines[1]);
+                auto currentBuildNo =  StringExtensions::atoi(buildNo);
                 
                 isUpdateAvailable = currentBuildNo<availableBuildNo;
                 updateUrl = lines[2];
