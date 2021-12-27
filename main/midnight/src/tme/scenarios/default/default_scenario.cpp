@@ -762,9 +762,8 @@ namespace tme {
 
         COMMAND ( OnNight )
         {
-
             mx->pfnNightCallback = nullptr ;
-            mx->LastActionMsg()[0] = '\0';
+            mx->SetLastActionMsg("");
             
 #if defined(_DDR_)
             sv_days++;
@@ -772,7 +771,7 @@ namespace tme {
             
 #ifdef _TEST_WINLOSE_CONDITIONS_
             mx->night->testWinLoseConditions();
-            mx->LastActionMsg()[0] = '\0';
+            mx->SetLastActionMsg("");
 #endif
 
             mx->pfnNightCallback = (PFNNIGHTCALLBACK)argv[0].vPtr ;
@@ -793,9 +792,7 @@ namespace tme {
 #endif
             mx->scenario->DeadCharactersDropObjects();
 
-            c_strcat (
-                mx->LastActionMsg(),
-                mx->text->CookedSystemString(SS_NIGHT).c_str() );
+            mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_NIGHT));
             
             mx->NightCallback(NULL);
 
@@ -809,9 +806,7 @@ namespace tme {
 
             mx->scenario->SetCharsLooking();
 
-            c_strcat (
-                mx->LastActionMsg(),
-                mx->text->CookedSystemString(SS_DAWN).c_str() );
+            mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_DAWN));
             
             argv[1] = (s32)FALSE;
 
@@ -1889,10 +1884,7 @@ namespace tme {
                 mx->scenario->GetDefaultCharacters ( collection );
                 if ( collection.FindSymbol(c->Symbol()) == NULL ) {
                     std::string guidance = mx->text->SystemString(SS_GUIDANCE1);
-                    c_strcat (
-                        mx->LastActionMsg(),
-                        mx->text->CookText(guidance,c).c_str()
-                        );
+                    mx->SetLastActionMsg(mx->text->CookText(guidance,c));
                     found=TRUE;
                 }
                 
@@ -1904,10 +1896,7 @@ namespace tme {
         if ( !found ) {
             int msg = mxrandom(0, sv_guidance.Count() - 1);
             std::string guidance = mx->text->SystemStringById(sv_guidance[msg]);
-            c_strcat (
-                mx->LastActionMsg(),
-                mx->text->CookText(guidance).c_str()
-                ) ;
+            mx->SetLastActionMsg(mx->text->CookText(guidance));
         }
 
     }

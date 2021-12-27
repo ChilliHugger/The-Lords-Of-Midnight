@@ -173,37 +173,37 @@ namespace tme {
             
             // SS_VICTORY2
             // After {special:days} {plural:day:days} the warriors of Midnight return to the frozen gates.
-            c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_VICTORY2) );
+            mx->SetLastActionMsg( mx->text->CookedSystemString(SS_VICTORY2) );
 
             if (victoryFlags.Is(wf_luxor_home)) {
                 // luxor is here
-                c_strcat( mx->LastActionMsg(), mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_luxor) );
+                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_luxor) );
             }
       
             if (victoryFlags.Is(wf_morkin_home)) {
                 // morkin is here
-                c_strcat( mx->LastActionMsg(), mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_morkin) );
+                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_morkin) );
             }
 
             if (victoryFlags.Is(wf_tarithel_home)) {
                 // tarithel is here
-                c_strcat( mx->LastActionMsg(), mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_tarithel) );
+                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_tarithel) );
             }
             
             if (victoryFlags.Is(wf_rorthron_home)) {
                 // and rorthron is here
-                c_strcat( mx->LastActionMsg(), mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_rorthron) );
+                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_rorthron) );
             }
             
             if (victoryFlags.Is(wf_shareth_dead)) {
                 // shareth is dead
-                c_strcat( mx->LastActionMsg(), mx->text->CookedSystemString(SS_SHARETH_DEAD,ch_shareth) );
+                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_SHARETH_DEAD,ch_shareth) );
 
             }
             
             // describe victory
             ddr_text* text = static_cast<ddr_text*>(mx->text);
-            c_strcat( mx->LastActionMsg(), text->DescribeVictory(victoryTargets, victoryMode) );
+            mx->SetLastActionMsg( mx->LastActionMsg(), text->DescribeVictory(victoryTargets, victoryMode) );
             
             if ( victoryMode == WIN_NOBLE ) {
                 // the victory is noble
@@ -217,7 +217,7 @@ namespace tme {
                 // the victory is overwhelming
                 // SS_VICTORY4
                 // SS_VICTORY5
-                c_strcat( mx->LastActionMsg(),mx->text->CookedSystemString(SS_VICTORY5));
+                mx->SetLastActionMsg( mx->LastActionMsg(),mx->text->CookedSystemString(SS_VICTORY5));
             }
             
             
@@ -246,7 +246,7 @@ namespace tme {
             mxcharacter* ch_shareth =  static_cast<mxcharacter*>(mx->EntityByName("CH_SHARETH"));
 
             if ( ch_luxor->IsDead() ) {
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_DEFEAT2,ch_luxor) );
+                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString( SS_DEFEAT2, ch_luxor) );
                 return MG_LOSE;
             }
             

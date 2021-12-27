@@ -193,13 +193,11 @@ MXRESULT mxengine::UnloadScenario ()
  * 
  */
 
-MXRESULT mxengine::SetDatabaseDirectory ( std::string directory )
+MXRESULT mxengine::SetDatabaseDirectory ( const std::string& directory )
 {
-//char    file[MAX_PATH];
-
     MX_REGISTER_SELF;
 
-    c_strcpy ( m_szDatabase, directory.c_str() );
+    m_szDatabase =  directory;
 /*
     sprintf ( file,"%s/config", m_szDatabase );
     if ( (m_config = new os::config(file)) == NULL ) {
@@ -223,7 +221,7 @@ MXRESULT mxengine::LoadDatabase ( void )
 {
 int ii;
 int id;
-char filename[MAX_PATH];
+std::string filename = m_szDatabase + "/database";
 
     MX_REGISTER_SELF;
 
@@ -231,21 +229,24 @@ char filename[MAX_PATH];
 
     // We need to move the default database into an accessible folder
 #if !defined(_OS_DESKTOP_)
-    char database[MAX_PATH];
-    sprintf ( database, "%s/%s", m_szDatabase, "database" );
-    sprintf ( filename, "%s/database", cocos2d::FileUtils::getInstance()->getWritablePath().c_str() );
-    MXTRACE( "Copying Database '%s' from '%s' to '%s'", m_szDatabase, database, filename);
-    chilli::os::filemanager::Copy(database, filename);
-#else
-    sprintf ( filename, "%s/%s", m_szDatabase, "database" );
+
+    auto database = filename ;
+    filename = cocos2d::FileUtils::getInstance()->getWritablePath() + "/database" ;
+    
+    MXTRACE( "Copying Database '%s' from '%s' to '%s'",
+        m_szDatabase.c_str(),
+        database.c_str(),
+        filename.c_str());
+        
+    chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
-MXTRACE( "Loading Database '%s'", m_szDatabase);
+MXTRACE( "Loading Database '%s'", m_szDatabase.c_str());
 
-   chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+   chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
-        MXTRACE( "Cannot Load data file %s", filename );
+        MXTRACE( "Cannot Load data file %s", filename.c_str() );
         return MX_FAILED;
     }
 
@@ -402,13 +403,17 @@ MXTRACE( "Update Variables");
 
 MXTRACE("Loading MAP");
 
+    filename = m_szDatabase + "/" + sv_map_file;
+
 #if !defined(_OS_DESKTOP_)
-    sprintf ( database, "%s/%s", m_szDatabase, sv_map_file );
-    sprintf ( filename, "%s/%s", cocos2d::FileUtils::getInstance()->getWritablePath().c_str(), sv_map_file );
-    MXTRACE( "Copying Map '%s' from '%s' to '%s'", sv_map_file, database, filename);
-    chilli::os::filemanager::Copy(database, filename);
-#else
-    sprintf ( filename, "%s/%s", m_szDatabase, sv_map_file );
+    auto database = filename;
+    filename = cocos2d::FileUtils::getInstance()->getWritablePath() "/" + sv_map_file;
+    MXTRACE( "Copying Map '%s' from '%s' to '%s'",
+        sv_map_file,
+        database.c_str(),
+        filename.c_str());
+        
+    chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
     
@@ -416,7 +421,7 @@ MXTRACE("Loading MAP");
     //sv_map_height = 63;
     gamemap = new mxmap() ;
 
-    if ( !gamemap->Load ( filename ) ) {
+    if ( !gamemap->Load ( filename.c_str() ) ) {
         SAFEDELETE ( gamemap );
         return MX_FAILED;
     }

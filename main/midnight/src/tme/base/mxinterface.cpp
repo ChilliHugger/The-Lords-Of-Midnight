@@ -429,7 +429,7 @@ namespace tme {
         static std::string descripton;
         std::string filename = (LPCSTR)argv[0];
         mx->SaveGameDescription(filename, descripton );
-        argv[1].vString = (LPSTR)descripton.c_str();
+        argv[1] = descripton;
         return MX_OK;
     }
 
@@ -474,7 +474,7 @@ namespace tme {
         {"@DEINIT",                    0, OnDeInit },
         {"@LOAD",                    2, OnLoadGame,                {variant::vstring,variant::vptr} },
         {"@SAVE",                    2, OnSaveGame,                {variant::vstring,variant::vptr} },
-        {"@DESCRIPTION",            1, OnGameDescription,        {variant::vstring,variant::vptr} },
+        {"@DESCRIPTION",            1, OnGameDescription,       {variant::vstring} },
         {"@LOADDISCOVERYMAP",       1, OnLoadDiscoveryMap,      {variant::vstring} },
         {"@SAVEDISCOVERYMAP",       1, OnSaveDiscoveryMap,      {variant::vstring} },
         

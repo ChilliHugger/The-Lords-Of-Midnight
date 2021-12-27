@@ -103,12 +103,12 @@ void mxmap::ResetVisibleRange()
  * 
  */
 
-bool mxmap::Load ( LPCSTR filename )
+bool mxmap::Load ( const std::string& filename )
 {
     
-MXTRACE( "Loading Map '%s'", filename);
+MXTRACE( "Loading Map '%s'", filename.c_str());
 
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;

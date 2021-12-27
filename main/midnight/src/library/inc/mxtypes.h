@@ -397,10 +397,12 @@ namespace chilli {
                 { vType=vdouble;vDouble = value ; return vDouble; }
             LPSTR& operator = ( LPSTR value )
                 { vType=vstring;vString = value ; return vString; }
-            //LPSTR& operator = ( c_str value )
-            //    { vType=vstring;vString = (LPSTR)value ; return vString; }
-            LPSTR& operator = ( std::string value )
-                {vType=vstring;vString = (LPSTR)value.c_str(); return vString; }
+            //LPSTR& operator = ( std::string value )
+            //    { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
+            LPSTR& operator = ( std::string& value )
+                { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
+            LPSTR& operator = ( const std::string& value )
+                { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
                     
             void*& operator = ( void* value )
                 { vType=vptr;

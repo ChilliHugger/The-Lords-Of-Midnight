@@ -59,17 +59,6 @@ namespace chilli {
             return count;
         };
 
-        int GetToken ( LPCSTR token, token_t array[], int max )
-        {
-            if ( token ) {
-                for ( int ii=0; ii<max; ii++ ) {
-                    if (c_stricmp( array[ii].token, token ) == 0 )
-                        return array[ii].value;
-                }
-            }
-            return 0 ;
-        }
-
         LPSTR c_strdup ( LPCSTR s )
         {
             char *memory;

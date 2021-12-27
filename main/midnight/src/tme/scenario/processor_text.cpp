@@ -27,6 +27,9 @@
 #include <string.h>
 #include <algorithm>
 
+using namespace chilli::lib::StringExtensions;
+
+
 namespace tme {
 
 //namespace processors {
@@ -65,17 +68,6 @@ mxtext::mxtext() :
 
 mxtext::~mxtext()
 {
-}
-
-std::string mxtext::Format ( LPCSTR format, ... )
-{
-const size_t BufferSize = 1024;
-char buffer[BufferSize];
-va_list arglist ;
-      va_start( arglist, format ) ;
-      vsnprintf( buffer, BufferSize-3, format, arglist );
-      va_end( arglist ) ;
-    return buffer;
 }
 
 /*

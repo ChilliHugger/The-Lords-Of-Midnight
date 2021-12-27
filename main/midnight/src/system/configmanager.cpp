@@ -75,7 +75,7 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
         return false;
     }
     
-#define IS_VAR(x)       c_stricmp(x,name) == 0
+#define IS_VAR(x)       chilli::lib::StringExtensions::stringicompare(x,name)
 #define BOOL_VALUE      xml::ReadBool(t,"value")
 #define INT_VALUE       xml::ReadInt(t,"value")
 #define STRING_VALUE    xml::ReadStr(t,"value")
@@ -86,7 +86,7 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
             
             auto name = xml::ReadStr(t,"id");
             
-            UIDEBUG("VAR %s = '%s'", name, xml::ReadStr(t,"value"));
+            UIDEBUG("VAR %s = '%s'", name.c_str(), xml::ReadStr(t,"value").c_str());
             
             if ( IS_VAR("cheat_armies_noblock") ) {
                 tme::variables::sv_cheat_armies_noblock = BOOL_VALUE;

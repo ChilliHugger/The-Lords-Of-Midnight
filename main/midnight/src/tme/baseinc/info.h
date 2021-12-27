@@ -333,8 +333,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         virtual void Serialize ( chilli::lib::archive& ar ) ;
 
-        bool Load ( LPCSTR filename );
-        bool Save ( LPCSTR filename );
+        bool Load ( const std::string& filename );
+        bool Save ( const std::string& filename );
         bool IsLocationSpecial( mxgridref loc );
         bool IsLocationBlock( mxgridref loc ) ;
         bool IsLocOnMap ( mxgridref loc ) const ;

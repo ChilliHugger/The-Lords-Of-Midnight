@@ -15,27 +15,27 @@ namespace chilli {
         {
         public:
             
-            static char* Fullpath ( char *UserBuf, const char *path, u32 maxlen );
+            static std::string Fullpath ( char *UserBuf, LPCSTR path, u32 maxlen );
         
-            static bool Exists ( LPCSTR lpFileName ) ;
-            static bool ExistsDir ( LPCSTR lpFileName ) ;
-            static bool Get ( LPCSTR filename, void* lpBuffer, u32 maxSize) ;
-            static void* Load ( LPCSTR filename, u32* size=NULL ) ;
-            static u32 Size ( LPCSTR filename ) ;
+            static bool Exists ( const std::string& lpFileName ) ;
+            static bool ExistsDir ( const std::string& lpFileName ) ;
+            static bool Get ( const std::string& filename, void* lpBuffer, u32 maxSize) ;
+            static void* Load ( const std::string& filename, u32* size=NULL ) ;
+            static u32 Size ( const std::string& filename ) ;
             static void Unload ( u8** ptr ) ;
-            static bool Save( LPCSTR filename, const void* lpBuffer, u32 size ) ;
-            static bool Remove(LPCSTR lpszFileName) ;
-            static bool Rename(LPCSTR lpszOldName, LPCSTR lpszNewName) ;
+            static bool Save( const std::string& filename, const void* lpBuffer, u32 size ) ;
+            static bool Remove(const std::string& lpszFileName) ;
+            static bool Rename(const std::string& lpszOldName, const std::string& lpszNewName) ;
 
-            static bool CreateDirectory(LPCSTR path);
-            static bool DestroyDirectory ( LPCSTR path );
+            static bool CreateDirectory(const std::string& path);
+            static bool DestroyDirectory ( const std::string& path );
             
-            static LPSTR GetCurrentDirectory ( int max, LPSTR dir );
-            static void SetCurrentDirectory ( LPCSTR dir );
+            static std::string GetCurrentDirectory ( int max, const std::string& dir );
+            static void SetCurrentDirectory ( const std::string& dir );
             
-            static bool Copy ( LPCSTR lpszSrcName, LPCSTR lpszDstName );
+            static bool Copy ( const std::string& lpszSrcName, const std::string& lpszDstName );
 
-            static s64 DateTime(LPCSTR lpFileName);
+            static s64 DateTime(const std::string& lpFileName);
     
 
         };

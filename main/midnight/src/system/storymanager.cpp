@@ -13,11 +13,11 @@
 #include "../tme/tme_interface.h"
 #include "moonring.h"
 
-
 #include <string>
 
 using namespace chilli::os;
 using namespace chilli::lib;
+using namespace chilli::lib::StringExtensions;
 
 storymanager::storymanager() :
     loadsave(nullptr),
@@ -44,7 +44,7 @@ storyinfo_t* storymanager::getStoriesInfo()
         if ( filemanager::Exists( getPath(ii+1) ) ) {
             stories.chapter[used].id = ii + 1;
             stories.chapter[used].slot = ii;
-            stories.chapter[used].description = getDescription(ii+1).c_str();
+            stories.chapter[used].description = getDescription(ii+1);
             used++;
         }
     }
@@ -110,14 +110,9 @@ void storymanager::SetLoadSave( tme::PFNSERIALIZE function )
     loadsave = function;
 }
 
-LPCSTR storymanager::DiscoveryMapFilename()
+std::string storymanager::DiscoveryMapFilename()
 {
-    static char filename[MAX_PATH]={0};
-    
-    sprintf(filename, "%s/story/discovery.map", mr->getWritablePath());
-    
-    return filename;
-    
+    return mr->getWritablePath() + "/story/discovery.map";
 }
 
 bool storymanager::create ( storyid_t id )
@@ -131,39 +126,25 @@ bool storymanager::create ( storyid_t id )
     
     cocos2d::FileUtils::getInstance()->createDirectory(getFolder(id));
     
-    TME_LoadDiscoveryMap( (char*)DiscoveryMapFilename() );
+    TME_LoadDiscoveryMap( DiscoveryMapFilename() );
     
     return save(id,savemode_dawn);
 }
 
-LPCSTR storymanager::getFolder ( storyid_t id )
+std::string storymanager::getFolder ( storyid_t id )
 {
-    static char folder[MAX_PATH]={0};
-    
-    sprintf(folder, "%s/story/%d", mr->getWritablePath(), (int)id);
-
-    return folder;
+    return Format( "%s/story/%d", mr->getWritablePath().c_str(), (int)id);
     
 }
 
-LPCSTR storymanager::getPath( storyid_t id )
+std::string storymanager::getPath( storyid_t id )
 {
-    static char filename[MAX_PATH]={0};
-    
-    sprintf(filename, "%s/current", getFolder(id) );
-    
-    return filename;
-    
+    return Format("%s/current", getFolder(id).c_str() );
 }
 
-LPCSTR storymanager::getPath(storyid_t id, u32 save)
+std::string storymanager::getPath(storyid_t id, u32 save)
 {
-    static char filename[MAX_PATH]={0};
-    
-    sprintf(filename, "%s/%03d", getFolder(id), (int)save );
-    
-    return filename;
-    
+    return Format("%s/%03d", getFolder(id).c_str(), (int)save );
 }
 
 bool storymanager::save( savemode_t mode )
@@ -188,11 +169,11 @@ bool storymanager::save ( storyid_t id, savemode_t mode )
         undo_last_available=false;
     }
     
-    char* file = (char*)getPath(id) ;
+    auto file = getPath(id) ;
     
     // copy save file to last
     if ( last_save  ) {
-        char* cpy = (char*)getPath(id, last_save);
+        auto cpy = getPath(id, last_save);
         if ( !filemanager::Copy( file, cpy ) ) {
             UIDEBUG("Unable to create undo file");
         }
@@ -203,14 +184,14 @@ bool storymanager::save ( storyid_t id, savemode_t mode )
     if ( filemanager::Exists(file) )
         filemanager::Remove(file);
     
-    if ( !TME_Save( file,loadsave ) ) {
+    if ( !TME_Save( file, loadsave ) ) {
         
         last_save--;
         
         return false ;
     }
     
-    TME_SaveDiscoveryMap( (char*)DiscoveryMapFilename() );
+    TME_SaveDiscoveryMap( DiscoveryMapFilename() );
     
     cleanup();
     
@@ -222,11 +203,11 @@ bool storymanager::load ( storyid_t id )
     currentStory = id;
     undo_last_available=false;
     
-    if (!TME_Load( (char*)getPath(id), loadsave ) ){
+    if (!TME_Load( getPath(id), loadsave ) ){
         return false ;
     }
     
-    TME_LoadDiscoveryMap( (char*)DiscoveryMapFilename() );
+    TME_LoadDiscoveryMap( DiscoveryMapFilename() );
     
     return true ;
 }
@@ -278,7 +259,7 @@ saveid_t storymanager::lastNight() const
 
 std::string storymanager::getDescription( storyid_t id )
 {
-    return TME_SaveDescription((char*)getPath(id));
+    return TME_SaveDescription(getPath(id));
 }
 
 bool storymanager::undo ( savemode_t mode )
@@ -291,17 +272,17 @@ bool storymanager::undo ( savemode_t mode )
     
     saveid_t temp_save = last_save ;
     
-    char* file = (char*)getPath(currentStory,save);
+    auto file = getPath(currentStory,save);
     
     if ( TME_Load( file , loadsave ) ) {
         
         // copy save entry over the current
-        char* cpy = (char*)getPath(currentStory) ;
+        auto cpy = getPath(currentStory) ;
         filemanager::Copy( file, cpy );
         
         // delete all entries above the save entry
         for ( u32 ii=save; ii<temp_save; ii++ )  {
-            LPCSTR file = getPath(currentStory,ii);
+            auto file = getPath(currentStory,ii);
             if ( filemanager::Exists(file) )
                 filemanager::Remove(file);
         }
@@ -322,7 +303,7 @@ bool storymanager::cleanup ( void )
     s32 final_save = MAX(0,last_save-mr->config->undo_history);
     for ( s32 ii=0; ii<final_save; ii++ ) {
         if ( !last_morning.IsInList(ii) ) {
-            LPCSTR file = getPath(currentStory,ii) ;
+            auto file = getPath(currentStory,ii) ;
             if ( filemanager::Exists(file) ) {
                 filemanager::Remove(file);
             }

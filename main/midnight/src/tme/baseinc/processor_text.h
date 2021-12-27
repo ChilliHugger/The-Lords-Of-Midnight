@@ -37,8 +37,6 @@ namespace tme {
             mxtext();
             virtual ~mxtext();
 
-            std::string Format ( LPCSTR format, ... );
-
             LPCSTR SystemString ( u32 id );
             LPCSTR SystemStringById ( mxid id );
             mxid StringByName ( const std::string& name ) const;

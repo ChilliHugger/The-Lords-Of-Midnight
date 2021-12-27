@@ -46,7 +46,7 @@ namespace tme {
         mxengine();
         virtual ~mxengine();
 
-        virtual MXRESULT SetDatabaseDirectory ( std::string directory ) ;
+        virtual MXRESULT SetDatabaseDirectory ( const std::string& directory ) ;
         virtual MXRESULT LoadDatabase ( void ) ;
         virtual MXRESULT UnloadDatabase ( void ) ;
         //virtual MXRESULT LoadDefaultScenario ( void ) ;
@@ -60,7 +60,9 @@ namespace tme {
 
         virtual void NightCallback( callback_t* )  ;
 
-        virtual LPSTR LastActionMsg() ;
+        std::string LastActionMsg() ;
+        void SetLastActionMsg(const std::string& text) ;
+  
         virtual void Error ( u32 errorcode )  ;
         virtual u32 Error () const   ;
         
@@ -73,21 +75,21 @@ namespace tme {
         // tme::item
         mxroutenode*    RouteNodeById(u32 id) ;
         mxcharacter*    CharacterById(u32 id) ;
-        mxstronghold*    StrongholdById(u32 id) ;
-        mxregiment*        RegimentById(u32 id) ;
+        mxstronghold*   StrongholdById(u32 id) ;
+        mxregiment*     RegimentById(u32 id) ;
         mxplace*        PlaceById(u32 id) ;
-        mxobject*        ObjectById(u32 id) ;
-        mxvictory*        VictoryById(u32 id) ;
-        mxmission*        MissionById(u32 id) ;
+        mxobject*       ObjectById(u32 id) ;
+        mxvictory*      VictoryById(u32 id) ;
+        mxmission*      MissionById(u32 id) ;
 
         // tme::info
         mxdirection*    DirectionById(u32 id) ;
-        mxunitinfo*        UnitById(u32 id) ;
-        mxrace*            RaceById(u32 id) ;
-        mxgender*        GenderById(u32 id) ;
-        mxterrain*        TerrainById(u32 id) ;
-        mxarea*            AreaById(u32 id) ;
-        mxcommand*        CommandById(u32 id) ;
+        mxunitinfo*     UnitById(u32 id) ;
+        mxrace*         RaceById(u32 id) ;
+        mxgender*       GenderById(u32 id) ;
+        mxterrain*      TerrainById(u32 id) ;
+        mxarea*         AreaById(u32 id) ;
+        mxcommand*      CommandById(u32 id) ;
 #if defined(_DDR_)
         mxobjectpower*  ObjectPowerById(u32 id);
         mxobjecttype*   ObjectTypeById(u32 id);
@@ -150,17 +152,20 @@ namespace tme {
         cvarreg_t*                variables ;
     //os::config*                m_config;
         bool                    defaultscenario;
-        u32                        m_errorcode;
+        u32                     m_errorcode;
         mxcharacter*            m_CurrentCharacter;
-        char                    m_szDatabase[MAX_PATH];            
-        char                    lastactiontext[1024];
+        std::string             m_szDatabase;
+        std::string             lastactiontext;
         
         u32                     savegameversion;
 
     };
 
-    inline LPSTR mxengine::LastActionMsg()
+    inline std::string mxengine::LastActionMsg()
         { return lastactiontext; }
+
+    inline void mxengine::SetLastActionMsg(const std::string& text)
+        { lastactiontext = text; }
 
     extern mxengine* mx;
 

@@ -195,7 +195,7 @@ namespace tme {
         // we have killed the enemy
         //
         mx->text->oinfo = fightobject;
-        c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_FIGHT, this) );
+        mx->SetLastActionMsg( mx->text->CookedSystemString( SS_FIGHT, this) );
         
         CommandTakesTime(true);
         
@@ -787,7 +787,8 @@ namespace tme {
                     }
                 }
                 // luxor the moonprince places the crown of carudrium on his head, the power contained within brings all lords loyal to him.
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_1, this) );
+                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_1, this) );
+
                 break;
                 
             //case OB_CROWN_IMIRIEL: //4
@@ -807,7 +808,7 @@ namespace tme {
                 
                 // Tarithel the fey casts the Spell of Thigor, Morkin is transported to be with her.
             }
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_2, this) );
+                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_2, this) );
                 break;
                 
             case OB_RUNES_FINORN: //3
@@ -822,16 +823,14 @@ namespace tme {
                     }
                 }
                 // rorthron throws the runes of finorn, all lords loyal to the moon prince are refreshed and envigorated
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_3, this) );
-
+                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_3, this) );
                 break;
                 
             default:
                 despondency=MAX_DESPONDENCY;
                 energy=MAX_ENERGY;
                 // rorthron uses the %s, he now feels refreshed and envigorated.
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
-
+                mx->SetLastActionMsg mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
                 break;
         }
         

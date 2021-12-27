@@ -84,9 +84,9 @@ std::string TME_LastActionMsg();
 std::string TME_GetNumber(int number);
 std::string TME_GetLocationText ( tme::mxgridref loc );
 
-character&    TME_CurrentCharacter ( void );
-character&    TME_CurrentCharacter ( mxid characterid );
-character&    TME_RefreshCurrentCharacter ( void );
+character&  TME_CurrentCharacter ( void );
+character&  TME_CurrentCharacter ( mxid characterid );
+character&  TME_RefreshCurrentCharacter ( void );
 
 bool TME_GetCharacter( character& out, mxid id );
 bool TME_GetStronghold( stronghold& out, mxid id );
@@ -109,11 +109,11 @@ std::string TME_GetUnitTypeName(mxunit_t type );
 
 m_gameover_t TME_CheckWinLose (void);
 bool TME_Night ( NightNotificationDelegate* delegate );
-bool TME_Save ( LPSTR filespec, tme::PFNSERIALIZE function );
-bool TME_Load ( LPSTR filespec, tme::PFNSERIALIZE function );
-std::string TME_SaveDescription ( LPSTR filespec );
-bool TME_SaveDiscoveryMap ( LPSTR filespec );
-bool TME_LoadDiscoveryMap ( LPSTR filespec );
+bool TME_Save ( const std::string& filespec, tme::PFNSERIALIZE function );
+bool TME_Load ( const std::string& filespec, tme::PFNSERIALIZE function );
+std::string TME_SaveDescription ( const std::string& filespec );
+bool TME_SaveDiscoveryMap ( const std::string& filespec );
+bool TME_LoadDiscoveryMap ( const std::string& filespec );
 void TME_SelectChar ( mxid newid );
 size TME_MapSize ( void );
 void TME_GetArmies ( mxid loc, loc_armyinfo_t* army );

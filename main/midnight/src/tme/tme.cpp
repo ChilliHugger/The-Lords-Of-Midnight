@@ -66,7 +66,6 @@ std::string TME_ScenarioShortName ( void )
 std::string& TME_ScenarioDirectory ( void )
 {
     return cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
-    return tme_path.c_str();
 }
 
 std::string TME_ScenarioName ( void )
@@ -163,8 +162,8 @@ std::string TME_GetText ( const std::string& command, variant args[], int count 
 {
     std::string text;
 
-    if ( MXSUCCESS( mxi->Text( command.c_str(), args, count ) ) ) {
-        text = (LPSTR)args[1].vString;
+    if ( MXSUCCESS( mxi->Text( command, args, count ) ) ) {
+        text = args[1].vString;
     }else
         text = "";
     
@@ -599,9 +598,9 @@ m_gameover_t TME_CheckWinLose (void)
 }
 
 
-bool TME_Save ( LPSTR filespec, PFNSERIALIZE function )
+bool TME_Save ( const std::string& filespec, PFNSERIALIZE function )
 {
-    UIDEBUG( "Save: %s", filespec );
+    UIDEBUG( "Save: %s", filespec.c_str() );
     
     args[0] = filespec ;
     args[1] = (void*)function ;
@@ -611,9 +610,9 @@ bool TME_Save ( LPSTR filespec, PFNSERIALIZE function )
     return TRUE;
 }
 
-bool TME_Load ( LPSTR filespec, PFNSERIALIZE function )
+bool TME_Load ( const std::string& filespec, PFNSERIALIZE function )
 {
-    UIDEBUG( "Load: %s", filespec );
+    UIDEBUG( "Load: %s", filespec.c_str() );
     
     args[0] = filespec ;
     args[1] = (void*)function ;
@@ -627,15 +626,15 @@ bool TME_Load ( LPSTR filespec, PFNSERIALIZE function )
     return TRUE;
 }
 
-std::string TME_SaveDescription ( LPSTR filespec )
+std::string TME_SaveDescription ( const std::string& filespec )
 {
     args[0] = filespec ;
     mxi->Command( "@DESCRIPTION", args, 1 );
-    std::string description = (LPCSTR)args[1].vString;
+    std::string description = args[1].vString;
     return description;
 }
 
-bool TME_LoadDiscoveryMap ( LPSTR filespec )
+bool TME_LoadDiscoveryMap ( const std::string& filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@LOADDISCOVERYMAP", args, 1 ) ) ) {
@@ -644,7 +643,7 @@ bool TME_LoadDiscoveryMap ( LPSTR filespec )
     return TRUE;
 }
 
-bool TME_SaveDiscoveryMap ( LPSTR filespec )
+bool TME_SaveDiscoveryMap ( const std::string&  filespec )
 {
     args[0] = filespec ;
     if ( MXFAILED(mxi->Command( "@SAVEDISCOVERYMAP", args, 1 ) ) ) {
@@ -1016,7 +1015,7 @@ bool TME_Init ( void )
     
     // Tell the engine where to find its data
     auto directory = TME_ScenarioDirectory();
-    args[0] = (LPSTR)directory.c_str() ;
+    args[0] = directory ;
     if ( MXFAILED ( mxi->Command("@SETDATABASEDIRECTORY",args,1) ) ) {
         return false ;
     }

@@ -113,10 +113,8 @@ namespace tme {
                 mxvictory* v = (mxvictory*)collection[ii];
                 if ( v->CheckComplete() ) {
                     // display message
-                    c_strcpy (
-                        (LPSTR)mx->LastActionMsg(),
-                        (LPCSTR)mx->text->CookedSystemString(v->Message()).c_str()
-                        );
+                    mx->SetLastActionMsg(mx->text->CookedSystemString(v->Message()));
+     
                     // game over?
                     m_gameover_t gameover = MG_NONE ;
                     if ( v->IsGameOver() ) {

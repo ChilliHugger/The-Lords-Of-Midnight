@@ -1,5 +1,6 @@
 #include "../inc/mxtypes.h"
 #include "../inc/xml.h"
+#include "../inc/misc.h"
 
 #include <string>
 
@@ -8,14 +9,16 @@
 #pragma clang diagnostic ignored "-Wtautological-undefined-compare"
 #endif
 
+using namespace chilli::lib::StringExtensions;
+
 namespace chilli {
     namespace lib {
 
 token_t token_Bool[] = {
     { "yes",    true },
-    { "true",    true },
-    { "no",        false },
-    { "false",    false },
+    { "true",   true },
+    { "no",     false },
+    { "false",  false },
     };
 
 
@@ -50,9 +53,6 @@ XmlNode* xml::Find ( LPCSTR section )
     return FirstChildElement(section)->ToElement();
 }
 
-    
-    
-    
 XmlNode* xml::Find ( XmlNode* node, LPCSTR section )
 {
     if ( node == nullptr)
@@ -60,11 +60,11 @@ XmlNode* xml::Find ( XmlNode* node, LPCSTR section )
     return (XmlNode*)node->FirstChildElement(section)->ToElement();
 }
 
-bool xml::IsType(XmlNode* node, LPCSTR name)
+bool xml::IsType(XmlNode* node, const std::string& name)
 {
     if(node==nullptr)
         return false;
-    return c_stricmp(node->Value(),name) == 0;
+    return stringicompare(node->Value(),name);
 }
 
 int xml::Count (XmlNode* node)
@@ -83,7 +83,7 @@ XmlNode* xml::Find( XmlNode* node, LPCSTR element, LPCSTR id )
 {
     FOREACHELEMENT(node,e){
         if ( IsType(e,element) ) {
-            if ( c_stricmp(ReadStr(e,"id"), id) == 0 ) {
+            if ( stringicompare(ReadStr(e,"id"), id) ) {
                 return e;
             }
         }
@@ -91,11 +91,11 @@ XmlNode* xml::Find( XmlNode* node, LPCSTR element, LPCSTR id )
     return nullptr ;
 }
 
-LPCSTR xml::ReadElement( XmlNode* node, LPCSTR element, LPCSTR id, LPCSTR tag )
+std::string xml::ReadElement( XmlNode* node, LPCSTR element, const std::string& id, LPCSTR tag )
 {
     FOREACHELEMENT(node,e){
         if ( IsType(e,element) ) {
-            if (c_stricmp(ReadStr(e,"id"), id) == 0 ) {
+            if (stringicompare(ReadStr(e,"id"), id)) {
                 return ReadStr(e,tag);
             }
         }
@@ -103,13 +103,13 @@ LPCSTR xml::ReadElement( XmlNode* node, LPCSTR element, LPCSTR id, LPCSTR tag )
     return "" ;
 }
 
-LPCSTR xml::ReadItemEx ( XmlNode* node, LPCSTR name )
+std::string xml::ReadItemEx ( XmlNode* node, LPCSTR name )
 {
     if ( node == nullptr)
-        return nullptr;
+        return "";
 
     // read an attribute first
-    LPCSTR value = ((TiXmlElement*)node)->Attribute(name);
+    auto value = ((TiXmlElement*)node)->Attribute(name);
 
     // try this
     if ( value == nullptr) {
@@ -132,18 +132,22 @@ LPCSTR xml::ReadItemEx ( XmlNode* node, LPCSTR name )
         }
     }
 
+    if(value==nullptr) {
+        return "";
+    }
+
     return value ;
 }
 
-LPCSTR xml::ReadItem ( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
+std::string xml::ReadItem ( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
 {
-    LPCSTR value = ReadItemEx(node,name);
-    if ( value == nullptr)
+    auto value = ReadItemEx(node,name);
+    if ( value.empty())
         return defaultvalue;
     return value;
 }
 
-LPCSTR  xml::ReadStr( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
+std::string xml::ReadStr( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
 {
     return ReadItem ( node, name, defaultvalue );
 }
@@ -159,8 +163,8 @@ char  xml::ReadChar( XmlNode* node, LPCSTR name, char defaultvalue )
 
 f32 xml::ReadItem ( XmlNode* node, LPCSTR name, f32 defaultvalue )
 {
-    LPCSTR value = ReadItemEx(node,name);
-    if ( value == nullptr)
+    auto value = ReadItemEx(node,name);
+    if ( value.empty())
         return defaultvalue;
     return (f32) atof ( value );
 }
@@ -172,8 +176,8 @@ f32 xml::ReadFloat ( XmlNode* node, LPCSTR name, f32 defaultvalue )
 
 int xml::ReadItem ( XmlNode* node, LPCSTR name, int defaultvalue )
 {
-    LPCSTR value = ReadItemEx(node,name);
-    if ( value == nullptr)
+    auto value = ReadItemEx(node,name);
+    if ( value.empty() )
         return defaultvalue;
     return atoi ( value );
 }
@@ -229,9 +233,9 @@ int xml::ReadColour( XmlNode* node, LPCSTR name, int defaultvalue )
 {
 int value=0;
 
-    LPCSTR val = ReadStr(node, name);
+    auto val = ReadStr(node, name);
     
-    if ( val == NULL )
+    if ( val.empty() )
         return defaultvalue;
 
     if ( val[0] == '#' ) {
@@ -245,8 +249,8 @@ int value=0;
 
 int xml::ReadToken( XmlNode* node, LPCSTR token, token_t array[], int max, int defaultvalue )
 {
-    LPCSTR val = ReadStr(node,token, nullptr);
-    if ( val == nullptr)
+    auto val = ReadStr(node,token);
+    if ( val.empty() )
         return defaultvalue;
 
     int temp =  GetToken ( val, array, max );
@@ -303,7 +307,7 @@ int xml::ReadArray ( XmlNode* node, LPCSTR name, collections::c_s32& c )
     return ReadArray(node,name,c,',');
 }
 
-LPCSTR xml::ReadValue ( XmlNode* node, LPCSTR name )
+std::string xml::ReadValue ( XmlNode* node, LPCSTR name )
 {
     XmlNode* m = Find(node,name);
     if ( m ) {
@@ -345,7 +349,7 @@ bool xml::ReadBoolProperty ( XmlNode* node, LPCSTR name, bool defaultvalue )
     return defaultvalue ;
 }
 
-LPCSTR xml::ReadStrProperty ( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
+std::string xml::ReadStrProperty ( XmlNode* node, LPCSTR name, LPCSTR defaultvalue )
 {
     XmlNode* e = nullptr;
     if ( (e = Find( node, "string", name )) ) {

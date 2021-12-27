@@ -459,8 +459,9 @@ void uithinkpage::setupUIElements()
             
         case MODE_THINK_SEEK:
         case MODE_THINK_FIGHT:
+            text = TME_LastActionMsg();
 #if defined(_DDR_)
-            lblDescription->setString(TME_LastActionMsg());
+            lblDescription->setString(text);
             return;
 #endif
             break;
@@ -471,7 +472,7 @@ void uithinkpage::setupUIElements()
     
     // TODO display entrance to tunnel
     
-    text += TME_LastActionMsg();
+    text += TME_GetSystemString(c,SS_MESSAGE1);
     
     lblDescription->setString(text);
     
