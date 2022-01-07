@@ -406,8 +406,8 @@ MXTRACE("Loading MAP");
     filename = m_szDatabase + "/" + sv_map_file;
 
 #if !defined(_OS_DESKTOP_)
-    auto database = filename;
-    filename = cocos2d::FileUtils::getInstance()->getWritablePath() "/" + sv_map_file;
+    database = filename;
+    filename = cocos2d::FileUtils::getInstance()->getWritablePath() + "/" + sv_map_file;
     MXTRACE( "Copying Map '%s' from '%s' to '%s'",
         sv_map_file,
         database.c_str(),
