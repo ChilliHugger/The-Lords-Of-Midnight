@@ -64,11 +64,11 @@ mapbuilder::mapbuilder() :
 
 mapbuilder::~mapbuilder()
 {
-    SAFEFREE(mapdata);
+    SAFEFREE(tunnels);
     SAFEFREE(terrain);
     SAFEFREE(terrain_discovery);
-    SAFEFREE(tunnels);
     SAFEFREE(critters);
+    SAFEFREE(mapdata);
     
     drainCollection(characters);
     drainCollection(regiments);
@@ -222,8 +222,8 @@ mapbuilder* mapbuilder::updateTerrain()
 
 mapbuilder* mapbuilder::updateDensityMap()
 {
-    maplocation* dst = mapdata ;
-    maplocation* src=NULL;
+    maplocation* dst = nullptr ;
+    maplocation* src = nullptr;
 
     u8 density=0;
     
@@ -369,7 +369,7 @@ mapbuilder* mapbuilder::updateLayers()
     memset(critters, 0, max_cells);
     
     bool debug_map = isDebugMap();
-    bool show_tunnels = checkFlags(mapflags::show_tunnels);
+    //bool show_tunnels = checkFlags(mapflags::show_tunnels);
     bool show_critters = checkFlags(mapflags::show_critters);
     bool show_all_critters = checkFlags(mapflags::show_all_critters);
     
@@ -394,7 +394,7 @@ mapbuilder* mapbuilder::updateLayers()
         
         bool discovery_seen = m->discovery_flags.Is(lf_seen) ;
         bool discovery_visited = m->discovery_flags.Is(lf_visited);
-        bool discovery_looked_at = m->discovery_flags.Is(lf_looked_at);
+        //bool discovery_looked_at = m->discovery_flags.Is(lf_looked_at);
         
 #if defined(_DDR_)
         bool tunnelseen = m->flags.Is(lf_tunnel_looked_at) || debug_map;
@@ -573,8 +573,6 @@ mapbuilder* mapbuilder::updateSpecialObjects()
 
 mapbuilder* mapbuilder::updateCharacters()
 {
-    character c;
-    maplocation m;
 
     bool show_all_characters = checkFlags(mapflags::show_all_characters);
     
@@ -585,6 +583,9 @@ mapbuilder* mapbuilder::updateCharacters()
     characters.clear();
     
     for ( auto id : tme_characters ) {
+        maplocation m;
+        character c;
+        
         TME_GetCharacter(c, id );
         
         CONTINUE_IF(!Character_IsAlive(c));
@@ -634,9 +635,6 @@ mapbuilder* mapbuilder::updateCharacters()
         object->release();
         
     }
-    
-    //
-    
     
     return this;
 }

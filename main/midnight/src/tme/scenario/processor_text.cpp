@@ -489,6 +489,8 @@ std::string mxtext::DescribeCharacterPostMen ( const mxcharacter* character, con
 
 std::string mxtext::DescribeCharacterTime( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+    
     int time = character->Time();
 
     if ( time == sv_time_night )
@@ -566,6 +568,8 @@ std::string mxtext::DescribeCharacterFear ( const mxcharacter* character )
 
 std::string mxtext::DescribeCharacterObject ( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+
     if ( character->carrying == nullptr )
         return CookedSystemString(SS_CARRYNOTHING,character);
     return CookedSystemString(SS_CARRYING,character);
@@ -609,7 +613,9 @@ std::string mxtext::DescribeObjectWithPower ( const mxobject* object )
 
 std::string mxtext::DescribeCharacterDeath ( const mxcharacter* character )
 {
-    if ( character->killedbyobject )
+    RETURN_IF_NULL(character) "";
+        
+    if ( character->killedbyobject != nullptr )
         return CookedSystemString(SS_KILLED_OBJECT,character);
     return Format (
         CookedSystemString(SS_KILLED_BATTLE,character).c_str(),
@@ -620,7 +626,9 @@ std::string mxtext::DescribeCharacterDeath ( const mxcharacter* character )
 #if defined(_DDR_)
 std::string mxtext::DescribeCharacterDeath2 ( const mxcharacter* character )
 {
-    if ( character->killedbyobject )
+    RETURN_IF_NULL(character) "";
+        
+    if ( character->killedbyobject != nullptr )
         return CookedSystemString(SS_KILLED_OBJECT,character);
     return CookedSystemString(SS_KILLED_BY,character);
 }
@@ -647,7 +655,9 @@ std::string mxtext::DescribeCharacterDeath2 ( const mxcharacter* character )
 std::string mxtext::DescribeCharacterBattle ( const mxcharacter* character )
 {
 std::string buffer;
-
+    
+    RETURN_IF_NULL(character) "";
+        
     int temp=0;
     temp += character->warriors.Lost() ? 1 : 0 ;
     temp += character->riders.Lost() ? 2 : 0 ;
@@ -719,6 +729,8 @@ std::string buffer;
 
 std::string mxtext::DescribeCharacterArmy ( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+        
     int temp=0;
     temp += character->warriors.Total() ? 1 : 0 ;
     temp += character->riders.Total() ? 2 : 0 ;
@@ -767,7 +779,9 @@ std::string mxtext::DescribeCharacterArmy ( const mxcharacter* character )
 std::string mxtext::DescribeCharacterTraits ( const mxcharacter* character )
 {
 std::string buffer;
-
+    
+    RETURN_IF_NULL(character) "";
+    
     u32 f = character->traits ;
     bool first = true;
 
@@ -795,6 +809,8 @@ std::string buffer;
 
 std::string mxtext::DescribeCharacterFoe ( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+    
     return character->foe
         ? CookedSystemString(SS_FOE,character)
         : "";
@@ -802,6 +818,8 @@ std::string mxtext::DescribeCharacterFoe ( const mxcharacter* character )
 
 std::string mxtext::DescribeCharacterLiege ( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+    
     return character->liege
         ? CookedSystemString(SS_LIEGE,character)
         : "";
@@ -811,6 +829,8 @@ std::string mxtext::DescribeCharacterLiege ( const mxcharacter* character )
     
 std::string mxtext::DescribeCharacterInBattle ( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+    
     return character->IsPreparingForBattle()
         ? CookedSystemString(SS_BATTLE_PREPARES_BATTLE,character)
         : "";
@@ -818,6 +838,8 @@ std::string mxtext::DescribeCharacterInBattle ( const mxcharacter* character )
     
 std::string mxtext::DescribeCharacterLoyalty ( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+    
     return character->loyalty
         ? CookedSystemString(SS_LOYAL_TO,character)
         : "";
@@ -827,6 +849,8 @@ std::string mxtext::DescribeCharacterLoyalty ( const mxcharacter* character )
     
 std::string mxtext::DescribeCharacterGroup ( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+    
     if ( character->following )
         return CookedSystemString(SS_GROUP_FOLLOWER,character);
     else if ( character->followers )
@@ -849,6 +873,8 @@ std::string mxtext::DescribeCharacterGroup ( const mxcharacter* character )
     
 std::string mxtext::DescribeCharacterLocation( const mxcharacter* character )
 {
+    RETURN_IF_NULL(character) "";
+    
     mxloc& here = mx->gamemap->GetAt ( character->Location() );
     mxgridref loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
     mxloc& there = mx->gamemap->GetAt ( loc );
@@ -876,6 +902,9 @@ std::string mxtext::DescribeCharacterLocation( const mxcharacter* character )
 std::string mxtext::DescribeCharacterSees ( const mxcharacter* character )
 {
 std::string buffer;
+
+    RETURN_IF_NULL(character) "";
+ 
     auto scenario = static_cast<ddr_x*>(mx->scenario);
     
     mxobject* object = scenario->FindObjectAtLocation(character->Location());
@@ -1106,10 +1135,8 @@ char        buffer[1024] ;
 char        token[64];
 LPSTR       is;
 LPSTR       os;
-int         t;
 char        l;
 
-    t=0;
     is = (LPSTR)input.c_str();
     os = buffer;
     *os='\0';
@@ -1120,7 +1147,7 @@ char        l;
         l = *is++;
         // start of special token
         if ( l == '{' ) {
-            t=0;
+            int t=0;
             while(*is!='}') {token[t++]=*is++;};
             token[t]='\0';
             is++;
@@ -1269,6 +1296,8 @@ c_string    tokens;
             IS_ARG("char") {
 __char:
                 is++;
+                RETURN_IF_NULL(character) "";
+                
                 IS_ARG("name")          return character->Shortname();
                 IS_ARG("longname")      return character->Longname();
 #if defined(_DDR_)

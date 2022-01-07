@@ -50,8 +50,6 @@ bool uibook::initWithChapter( storyheader_t* story )
     
     this->setContentSize(Size(RES(512), RES(400)) );
     
-    f32 itemHeight = RES(28);
-    
     auto bookImage = Sprite::createWithSpriteFrameName(BOOK_IMAGE);
     uihelper::AddCenter(this, bookImage);
     

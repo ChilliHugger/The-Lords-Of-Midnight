@@ -1030,8 +1030,11 @@ namespace tme {
         COMMAND ( PropArmies )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
+            mxlocinfo* locinfo = nullptr;
             mx->scenario->GetLocInfo ( argv[1], locinfo );
+            if(locinfo == nullptr) {
+                return MX_FAILED;
+            }
 
             //if ( ISARG("ARMIES") ) {
             collection.Create( locinfo->nArmies );
@@ -1050,7 +1053,6 @@ namespace tme {
             argv[7] = locinfo->friends.armies;
             argv[8] = locinfo->foe.armies;
 
-
             SAFEDELETE ( locinfo );
             return MX_OK ;
             //}
@@ -1059,27 +1061,19 @@ namespace tme {
         COMMAND ( PropStrongholds2 )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
+            mxlocinfo* locinfo = nullptr;
             mx->scenario->GetLocInfo ( argv[1], locinfo );
+            if(locinfo == nullptr) {
+                return MX_FAILED;
+            }
+            
             //if ( ISARG("STRONGHOLDS") ) {
             locinfo->objStrongholds.CreateIdtCollection(collection);
             SAFEDELETE ( locinfo );
             return MX_OK ;
             //}
         }
-        /*
-        COMMAND ( PropRouteNodes2 )
-        {
-            CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
-            mx->scenario->GetLocInfo ( argv[1], locinfo );
-            //if ( ISARG("ROUTENODES") ) {
-            locinfo->objRoutenodes.CreateIdtCollection(collection);
-            SAFEDELETE ( locinfo );
-            return MX_OK ;
-            //}
-        }
-         */
+
         COMMAND ( PropCharsForCommand )
         {
             CONVERT_COLLECTION(argv[0],collection);
@@ -1829,33 +1823,36 @@ namespace tme {
 
         
         // let's add some Terrain Info
-#define ADD_TERRAIN(x) \
-        mx->objTerrainInfos.Add( new mxterrain( x, #x ) )
+//#define ADD_TERRAIN(x) \
+//        mx->objTerrainInfos.Add( new mxterrain( x, #x ) )
     
-        ADD_TERRAIN(TN_LAND);
-        ADD_TERRAIN(TN_ISLE);
-        ADD_TERRAIN(TN_LAKELAND);
-        ADD_TERRAIN(TN_PLAIN);
-        ADD_TERRAIN(TN_PLAINS3);
-        ADD_TERRAIN(TN_FOREST3);
-        ADD_TERRAIN(TN_UNUSED_39);
-        ADD_TERRAIN(TN_TREES);
-        ADD_TERRAIN(TN_MOUNTAIN3);
-        ADD_TERRAIN(TN_ICY_MOUNTAIN);
-        ADD_TERRAIN(TN_DOWNS3);
-        ADD_TERRAIN(TN_HILLS3);
-        ADD_TERRAIN(TN_FOOTHILLS);
-        ADD_TERRAIN(TN_VALLEY);
-        ADD_TERRAIN(TN_BAY);
-        ADD_TERRAIN(TN_SEA);
-        ADD_TERRAIN(TN_RIVER);
-        ADD_TERRAIN(TN_MARSH);
-        ADD_TERRAIN(TN_LAKE3);
-        ADD_TERRAIN(TN_UNUSED_52);
-        ADD_TERRAIN(TN_UNUSED_53);
-        ADD_TERRAIN(TN_UNUSED_54);
-        ADD_TERRAIN(TN_MIST);
-        ADD_TERRAIN(TN_UNUSED_56);
+// NOTE: These can not be added to the container
+// because the container is owned by itself
+// this was temp hack for Citadel testing
+//        ADD_TERRAIN(TN_LAND);
+//        ADD_TERRAIN(TN_ISLE);
+//        ADD_TERRAIN(TN_LAKELAND);
+//        ADD_TERRAIN(TN_PLAIN);
+//        ADD_TERRAIN(TN_PLAINS3);
+//        ADD_TERRAIN(TN_FOREST3);
+//        ADD_TERRAIN(TN_UNUSED_39);
+//        ADD_TERRAIN(TN_TREES);
+//        ADD_TERRAIN(TN_MOUNTAIN3);
+//        ADD_TERRAIN(TN_ICY_MOUNTAIN);
+//        ADD_TERRAIN(TN_DOWNS3);
+//        ADD_TERRAIN(TN_HILLS3);
+//        ADD_TERRAIN(TN_FOOTHILLS);
+//        ADD_TERRAIN(TN_VALLEY);
+//        ADD_TERRAIN(TN_BAY);
+//        ADD_TERRAIN(TN_SEA);
+//        ADD_TERRAIN(TN_RIVER);
+//        ADD_TERRAIN(TN_MARSH);
+//        ADD_TERRAIN(TN_LAKE3);
+//        ADD_TERRAIN(TN_UNUSED_52);
+//        ADD_TERRAIN(TN_UNUSED_53);
+//        ADD_TERRAIN(TN_UNUSED_54);
+//        ADD_TERRAIN(TN_MIST);
+//        ADD_TERRAIN(TN_UNUSED_56);
         
         
     }

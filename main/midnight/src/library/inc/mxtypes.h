@@ -36,7 +36,7 @@ typedef std::function<void(void)> MXVoidCallback;
     CONTINUE_IF( (x) == nullptr )
 
 #define RETURN_IF_NULL( x )  \
-    if ( (x) == null ) return
+    if ( (x) == nullptr ) return
 
 #define BREAK_IF( x )  \
     if ( (x) ) break
@@ -310,34 +310,34 @@ namespace chilli {
         
         
         /* flags32 */
-        MXINLINE flags32::flags32()                                    { m_flags = 0 ; }
+        MXINLINE flags32::flags32()                                 { m_flags = 0 ; }
         MXINLINE void flags32::Set ( u32 f )                        { m_flags |= f ; }
-        MXINLINE void flags32::Reset ( u32 f )                        { m_flags &= ~f ; }
+        MXINLINE void flags32::Reset ( u32 f )                      { m_flags &= ~f ; }
         MXINLINE void flags32::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags32::Is ( u32 f) const                    { return (m_flags&f)==f ? TRUE : FALSE  ; }
-        MXINLINE flags32::operator u32() const                        { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags32& f )        { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags32& f )        { return f.Serialize(ar); }
+        MXINLINE bool flags32::Is ( u32 f) const                    { return (m_flags&f)==f; }
+        MXINLINE flags32::operator u32() const                      { return m_flags; }
+        MXINLINE archive& operator<<( archive& ar, flags32& f )     { return f.Serialize(ar); }
+        MXINLINE archive& operator>>( archive& ar, flags32& f )     { return f.Serialize(ar); }
         
         /* flags8 */
-        MXINLINE flags8::flags8()                                    { m_flags = 0 ; }
-        MXINLINE void flags8::Set ( u8 f )                            { m_flags |= f ; }
+        MXINLINE flags8::flags8()                                   { m_flags = 0 ; }
+        MXINLINE void flags8::Set ( u8 f )                          { m_flags |= f ; }
         MXINLINE void flags8::Reset ( u8 f )                        { m_flags &= ~f ; }
         MXINLINE void flags8::Toggle ( u32 f )                      { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags8::Is ( u8 f ) const                        { return (m_flags&f)==f ? TRUE : FALSE  ; }
+        MXINLINE bool flags8::Is ( u8 f ) const                     { return (m_flags&f)==f; }
         MXINLINE flags8::operator u8() const                        { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags8& f )        { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags8& f )        { return f.Serialize(ar); }
+        MXINLINE archive& operator<<( archive& ar, flags8& f )      { return f.Serialize(ar); }
+        MXINLINE archive& operator>>( archive& ar, flags8& f )      { return f.Serialize(ar); }
         
         /* flags16 */
-        MXINLINE flags16::flags16()                                    { m_flags = 0 ; }
+        MXINLINE flags16::flags16()                                 { m_flags = 0 ; }
         MXINLINE void flags16::Set ( u16 f )                        { m_flags |= f ; }
-        MXINLINE void flags16::Reset ( u16 f )                        { m_flags &= ~f ; }
+        MXINLINE void flags16::Reset ( u16 f )                      { m_flags &= ~f ; }
         MXINLINE void flags16::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags16::Is ( u16 f ) const                    { return (m_flags&f)==f ? TRUE : FALSE  ; }
-        MXINLINE flags16::operator u16() const                        { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags16& f )        { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags16& f )        { return f.Serialize(ar); }
+        MXINLINE bool flags16::Is ( u16 f ) const                   { return (m_flags&f)==f; }
+        MXINLINE flags16::operator u16() const                      { return m_flags; }
+        MXINLINE archive& operator<<( archive& ar, flags16& f )     { return f.Serialize(ar); }
+        MXINLINE archive& operator>>( archive& ar, flags16& f )     { return f.Serialize(ar); }
 
         // random
         class randomno

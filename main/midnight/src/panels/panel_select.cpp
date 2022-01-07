@@ -635,6 +635,8 @@ void panel_select::draggedLordLeavesGroup( uidragevent *event)
 
 void panel_select::draggedLordMovesGroup()
 {
+    RETURN_IF_NULL(dropTarget);
+    
     mxid draggedLordId = getIdFromTag(draggedLord);
     if ( mr->leaveGroup(draggedLordId) ) {
         draggedLord->setPage(InvalidPage);
@@ -650,6 +652,8 @@ void panel_select::draggedLordMovesGroup()
 
 void panel_select::draggedLordBecomesLeader()
 {
+    RETURN_IF_NULL(dropTarget);
+    
     mxid draggedLordId = getIdFromTag(draggedLord);
     if ( mr->swapGroupLeader(draggedLordId) ) {
         draggedLord->setPage( FROM_PAGE_INDEX(pageView->getCurrentPageIndex()) );
