@@ -30,9 +30,15 @@ protected:
     virtual void OnNotification ( Ref* sender ) override ;
     virtual void OnNightNotification ( tme::callback_t* event ) override;
     
+    virtual void update(float delta) override;
+    
     void setNightText( const std::string& text );
     
 private:
-    Label*     lblDescription;
-    ScrollView* scrollView;
+    Label*                          lblDescription;
+    ScrollView*                     scrollView;
+    std::string                     message;
+    bool                            complete;
+    m_gameover_t                    gameover;
+    mutable std::recursive_mutex    _mutex;
 };
