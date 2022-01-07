@@ -26,13 +26,14 @@ bool panel_dedication::init()
     
     // Background White
     setBackground(_clrWhite);
-    
+
+    auto alpha = CONFIG(screentransitions) ? alpha_zero : alpha_normal ;
+    f32 delay = CONFIG(screentransitions) ? 1.0f : 3.0f ;
+
     // Dedication Image
     image = Sprite::create("misc/in-memory-of.png");
-    image->setOpacity(0);
+    image->setOpacity(ALPHA(alpha));
     uihelper::AddCenter(this, image);
-    
-    f32 delay = CONFIG(screentransitions) ? 3.0f : 1.0f ;
     
     // wait for a moment then start the dedication fade
     this->scheduleOnce( [&](float) {
