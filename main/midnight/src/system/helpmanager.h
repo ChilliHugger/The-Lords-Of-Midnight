@@ -47,7 +47,7 @@ public:
     
     void Shown ( helpid_t id );
     
-    LPCSTR Get( helpid_t id );
+    std::string Get( helpid_t id );
     
 public:
     BOOL displayed[ HELP_MAX ];

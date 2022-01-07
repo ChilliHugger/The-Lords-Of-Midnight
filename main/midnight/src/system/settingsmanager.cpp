@@ -77,10 +77,9 @@ bool settingsmanager::bumpAdvert()
 
 BOOL settingsmanager::Save ( void )
 {
-    char filename[MAX_PATH]={0};
-    sprintf(filename,"%s/%s", mr->getWritablePath(), CONFIG_FILENAME );
+    auto filename = StringExtensions::Format("%s/%s", mr->getWritablePath().c_str(), CONFIG_FILENAME );
     
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
     if ( pFile == NULL || !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;
@@ -132,10 +131,9 @@ BOOL settingsmanager::Save ( void )
 
 BOOL settingsmanager::Load ( void )
 {
-    char filename[MAX_PATH]={0};
-    sprintf(filename,"%s/%s", mr->getWritablePath(), CONFIG_FILENAME );
+    auto filename = StringExtensions::Format("%s/%s", mr->getWritablePath().c_str(), CONFIG_FILENAME );
     
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;

@@ -16,6 +16,7 @@
 
 #include "../baseinc/tme_internal.h"
 #include <memory>
+#include <string>
 
 #if defined(_DDR_)
 #include "../scenarios/ddr/scenario_ddr_internal.h"
@@ -742,8 +743,7 @@ namespace tme {
                 warriors.total += qty;
             }
 
-            c_strcpy( mx->LastActionMsg(),
-                mx->text->DescribeCharacterRecruitMen ( this, stronghold, qty ) );
+            mx->SetLastActionMsg(mx->text->DescribeCharacterRecruitMen( this, stronghold, qty ));
 
             CommandTakesTime(TRUE);
 
@@ -786,8 +786,7 @@ namespace tme {
                 warriors.total -= stronghold->Add( Race(), UT_WARRIORS, std::min<int>(warriors.total,qty));
 
 
-            c_strcpy( mx->LastActionMsg(),
-            mx->text->DescribeCharacterPostMen ( this, stronghold, qty ) );
+            mx->SetLastActionMsg(mx->text->DescribeCharacterPostMen( this, stronghold, qty ));
             
             CommandTakesTime(TRUE);
 
@@ -1050,7 +1049,7 @@ namespace tme {
             // describe that
             u32 message =  objectautokill ? oinfo->usedescription : SS_FIGHT ;
 
-            c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( message, this) );
+            mx->SetLastActionMsg(mx->text->CookedSystemString(message, this));
 
             CommandTakesTime(true);
 
@@ -1290,9 +1289,9 @@ namespace tme {
         top:
             oinfo = mx->ObjectById ( newobject );
 
-            if ( oinfo == NULL ) {
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK_NOTHING, this) );
-                return NULL;
+            if ( oinfo == nullptr ) {
+                mx->SetLastActionMsg(mx->text->CookedSystemString(SS_SEEK_NOTHING, this));
+                return oinfo;
             }
 
             //
@@ -1301,10 +1300,10 @@ namespace tme {
 
 #if defined(_DDR_)
             if ( newobject == OB_GUIDANCE )
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_GUIDANCE1, this) );
+                mx->SetLastActionMsg(mx->text->CookedSystemString(SS_GUIDANCE1, this));
             else
 #endif
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
+                mx->SetLastActionMsg(mx->text->CookedSystemString(SS_SEEK, this));
             
             switch ( newobject ) {
 
@@ -1439,7 +1438,7 @@ namespace tme {
 #if defined(_DDR_)
             if ( reset_msg ) {
                 mx->text->oinfo = oinfo ;
-                c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString( SS_SEEK, this) );
+                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_SEEK, this) );
             }
             
             if ( removeObject )
@@ -1608,17 +1607,17 @@ namespace tme {
 
 
 
-        const c_str& mxcharacter::HeOrShe() const
+        const std::string& mxcharacter::HeOrShe() const
         { 
             return mx->GenderById ( gender )->pronoun1; 
         }
 
-        const c_str& mxcharacter::HisOrHer() const
+        const std::string& mxcharacter::HisOrHer() const
         { 
             return mx->GenderById ( gender )->pronoun2; 
         }
 
-        const c_str& mxcharacter::HimOrHer() const
+        const std::string& mxcharacter::HimOrHer() const
         { 
             return mx->GenderById ( gender )->pronoun3; 
         }

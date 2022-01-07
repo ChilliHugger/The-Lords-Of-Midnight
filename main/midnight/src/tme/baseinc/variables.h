@@ -10,7 +10,7 @@ namespace tme {
         void Init(int pass);
         void Update ( void );
         void DeInit ( void );
-        MXRESULT GetProperty(const c_str& name, variant& arg);
+        MXRESULT GetProperty(const std::string& name, variant& arg);
 
         typedef f32        sv_num_t;
         typedef s32        sv_int_t;

@@ -36,9 +36,9 @@ namespace tme {
         public:
 
             virtual scenarioinfo_t* GetInfoBlock() const =0;
-            virtual MXRESULT Command ( const c_str& arg, variant argv[], u32 argc )=0;
-            virtual MXRESULT GetProperties ( const c_str& arg, variant argv[], u32 argc )=0;
-            virtual MXRESULT Text ( const c_str& command, variant* argv=NULL, u32 args=0 )=0;
+            virtual MXRESULT Command ( const std::string& arg, variant argv[], u32 argc )=0;
+            virtual MXRESULT GetProperties ( const std::string& arg, variant argv[], u32 argc )=0;
+            virtual MXRESULT Text ( const std::string& command, variant* argv=NULL, u32 args=0 )=0;
             
             //virtual MXRESULT Register ( mxengine* midnightx ) =0;
             //virtual MXRESULT UnRegister ( mxengine* midnightx )=0;
@@ -53,8 +53,8 @@ namespace tme {
             
             typedef struct character_t : public mxitem_t {
                 
-                LPSTR            longname;
-                LPSTR            shortname;
+                std::string            longname;
+                std::string            shortname;
                 
                 flags32            traits;
                 
@@ -141,7 +141,7 @@ namespace tme {
             // infos
             //
             typedef struct areainfo_t : public mxinfo_t {
-                LPSTR            prefix;
+                std::string            prefix;
             } areainfo_t ;
             
             typedef struct directioninfo_t : public mxinfo_t {
@@ -150,20 +150,20 @@ namespace tme {
             
             typedef struct genderinfo_t : public mxinfo_t {
                 mxgender_t        type;
-                LPSTR            pronoun[3];
+                std::string            pronoun[3];
             } genderinfo_t ;
             
             typedef struct object_t : public mxitem_t {
                 mxthing_t        kills;
-                LPSTR            name;
-                LPSTR            description;
+                std::string            name;
+                std::string            description;
                 mxid            usedescription;
                 mxid            carriedby;
             } object_t ;
             
             typedef struct raceinfo_t : public mxinfo_t {
                 mxrace_t            type;
-                LPSTR            soldiersname;
+                std::string            soldiersname;
                 u32                success;
                 u32                initialmovement;
                 s32                diagonalmodifier;
@@ -179,8 +179,8 @@ namespace tme {
             
             typedef struct terraininfo_t : public mxinfo_t {
                 mxterrain_t        type;
-                LPSTR            preposition;
-                LPSTR            description;
+                std::string            preposition;
+                std::string            description;
                 u32                success;
                 u32                visibility;
                 u32                obstruction;

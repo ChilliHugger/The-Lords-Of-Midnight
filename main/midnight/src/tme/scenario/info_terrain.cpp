@@ -15,7 +15,7 @@
  */
 
 #include "../baseinc/tme_internal.h"
-
+#include <string>
 
 namespace tme {
 

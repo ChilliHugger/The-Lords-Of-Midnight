@@ -74,7 +74,7 @@ namespace chilli {
         
     protected:
         u32                         id;
-        c_str                       name;
+        std::string                 name;
         flags32                     flags;
 
     };

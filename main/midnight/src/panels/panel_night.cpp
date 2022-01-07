@@ -21,6 +21,10 @@ USING_NS_CC;
 USING_NS_CC_UI;
 using namespace tme;
 
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
+#define WITH_GUARD(x) { DECLARE_GUARD; x }
+    
+
 constexpr s32 NIGHT_DISPLAY_SLOW_DELAY_SECONDS = 2;
 
 bool panel_night::init()
@@ -62,7 +66,42 @@ bool panel_night::init()
     uishortcutkeys::init(safeArea, clickCallback);
     addShortcutKey(ID_DAWN, K_DAWN );
     
+    complete = false;
+    gameover = MG_NONE;
+    
+    scheduleUpdate();
+        
     return true;
+}
+
+void panel_night::update(float delta)
+{
+    std::string     nextMessage;
+    m_gameover_t    state;
+    auto            dawn = false;
+
+    WITH_GUARD(
+        nextMessage = message;
+        state = gameover;
+        dawn = complete;
+    );
+
+    setNightText(nextMessage);
+    
+    if(state!=MG_NONE) {
+        mr->stories->save(savemode_dawn);
+        if(mr->checkGameOverConditions()) {
+            unscheduleUpdate();
+            return;
+        }
+    }
+    
+    if(dawn) {
+        unscheduleUpdate();
+        auto button = safeArea->getChildByTag<Button*>(ID_DAWN);
+        uihelper::setEnabled(button, true);
+    }
+
 }
 
 void panel_night::OnShown()
@@ -74,19 +113,12 @@ void panel_night::OnShown()
     atp->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, [&]() {
 
         TME_Night(this);
-        std::string msg = TME_LastActionMsg();
-        
-        RUN_ON_UI_THREAD([&,msg](){
-            setNightText( msg );
-            
-            auto button = safeArea->getChildByTag<Button*>(ID_DAWN);
-            uihelper::setEnabled(button, true);
-            
-        });
-
+  
+        WITH_GUARD(
+            message = TME_LastActionMsg();
+            complete = true;
+        );
     });
-    
-    
 }
 
 void panel_night::OnNotification( Ref* sender )
@@ -105,23 +137,18 @@ void panel_night::OnNotification( Ref* sender )
 void panel_night::OnNightNotification ( callback_t* event )
 {
     if ( event == nullptr ) {
-
-        std::string msg = TME_LastActionMsg();
- 
-        RUN_ON_UI_THREAD([&,msg](){
-            setNightText( msg );
-        });
-
+        WITH_GUARD(
+            message = TME_LastActionMsg();
+        );
+        
         if ( !mr->settings->night_display_fast )
             std::this_thread::sleep_for(std::chrono::seconds(NIGHT_DISPLAY_SLOW_DELAY_SECONDS));
 
     }else{
         if ( event->type == callback_t::gameover ) {
-            RUN_ON_UI_THREAD([&](){
-                mr->stories->save(savemode_dawn);
-                mr->checkGameOverConditions();
-            });
-            return;
+            WITH_GUARD(
+                gameover = static_cast<gameover_callback_t*>(event)->condition;
+            );
         }
     }
 }

@@ -102,7 +102,7 @@ mxengine::~mxengine()
  * 
  */
 /*
-bool mxengine::InstallScenario ( const c_str& filename )
+bool mxengine::InstallScenario ( const std::string& filename )
 {
 FUNCADDRESS            func;
 FNSCENARIOREGISTER    ScenarioRegister;
@@ -193,13 +193,11 @@ MXRESULT mxengine::UnloadScenario ()
  * 
  */
 
-MXRESULT mxengine::SetDatabaseDirectory ( const c_str& directory )
+MXRESULT mxengine::SetDatabaseDirectory ( const std::string& directory )
 {
-//char    file[MAX_PATH];
-
     MX_REGISTER_SELF;
 
-    c_strcpy ( m_szDatabase, directory );
+    m_szDatabase =  directory;
 /*
     sprintf ( file,"%s/config", m_szDatabase );
     if ( (m_config = new os::config(file)) == NULL ) {
@@ -223,7 +221,7 @@ MXRESULT mxengine::LoadDatabase ( void )
 {
 int ii;
 int id;
-char filename[MAX_PATH];
+std::string filename = m_szDatabase + "/database";
 
     MX_REGISTER_SELF;
 
@@ -231,21 +229,24 @@ char filename[MAX_PATH];
 
     // We need to move the default database into an accessible folder
 #if !defined(_OS_DESKTOP_)
-    char database[MAX_PATH];
-    sprintf ( database, "%s/%s", m_szDatabase, "database" );
-    sprintf ( filename, "%s/database", cocos2d::FileUtils::getInstance()->getWritablePath().c_str() );
-    MXTRACE( "Copying Database '%s' from '%s' to '%s'", m_szDatabase, database, filename);
-    chilli::os::filemanager::Copy(database, filename);
-#else
-    sprintf ( filename, "%s/%s", m_szDatabase, "database" );
+
+    auto database = filename ;
+    filename = cocos2d::FileUtils::getInstance()->getWritablePath() + "/database" ;
+    
+    MXTRACE( "Copying Database '%s' from '%s' to '%s'",
+        m_szDatabase.c_str(),
+        database.c_str(),
+        filename.c_str());
+        
+    chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
-MXTRACE( "Loading Database '%s'", m_szDatabase);
+MXTRACE( "Loading Database '%s'", m_szDatabase.c_str());
 
-   chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+   chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
-        MXTRACE( "Cannot Load data file %s", filename );
+        MXTRACE( "Cannot Load data file %s", filename.c_str() );
         return MX_FAILED;
     }
 
@@ -257,7 +258,7 @@ MXTRACE( "Loading Database '%s'", m_szDatabase);
 u32        magicno;
 u32        scenarioid;
 //u32        versionno;
-c_str    header;
+std::string    header;
 
     // magic no
     ar >> magicno ;
@@ -290,9 +291,9 @@ MXTRACE( "Version=%d", (int)savegameversion);
     
     
     ar >> header ;
-MXTRACE( "Header='%s'", (LPSTR)header);
+MXTRACE( "Header='%s'", header.c_str());
     
-    if (c_stricmp( header, DATABASEHEADER ) != 0 ) {
+    if (c_stricmp( header.c_str(), DATABASEHEADER ) != 0 ) {
         MXTRACE("Invalid DATABASE Header");
         return MX_UNKNOWN_FILE;
     }
@@ -402,13 +403,17 @@ MXTRACE( "Update Variables");
 
 MXTRACE("Loading MAP");
 
+    filename = m_szDatabase + "/" + sv_map_file;
+
 #if !defined(_OS_DESKTOP_)
-    sprintf ( database, "%s/%s", m_szDatabase, sv_map_file );
-    sprintf ( filename, "%s/%s", cocos2d::FileUtils::getInstance()->getWritablePath().c_str(), sv_map_file );
-    MXTRACE( "Copying Map '%s' from '%s' to '%s'", sv_map_file, database, filename);
-    chilli::os::filemanager::Copy(database, filename);
-#else
-    sprintf ( filename, "%s/%s", m_szDatabase, sv_map_file );
+    database = filename;
+    filename = cocos2d::FileUtils::getInstance()->getWritablePath() + "/" + sv_map_file;
+    MXTRACE( "Copying Map '%s' from '%s' to '%s'",
+        sv_map_file,
+        database.c_str(),
+        filename.c_str());
+        
+    chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
     
@@ -416,7 +421,7 @@ MXTRACE("Loading MAP");
     //sv_map_height = 63;
     gamemap = new mxmap() ;
 
-    if ( !gamemap->Load ( filename ) ) {
+    if ( !gamemap->Load ( filename.c_str() ) ) {
         SAFEDELETE ( gamemap );
         return MX_FAILED;
     }
@@ -612,9 +617,9 @@ void mxengine::NightCallback( callback_t* ptr)
  * 
  */
 
-MXRESULT mxengine::LoadGame ( const c_str& filename, PFNSERIALIZE function )
+MXRESULT mxengine::LoadGame ( const std::string& filename, PFNSERIALIZE function )
 {
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         //COMPLAIN( "Cannot Load data file %s", filename );
@@ -629,8 +634,8 @@ MXRESULT mxengine::LoadGame ( const c_str& filename, PFNSERIALIZE function )
 u32        magicno;
 u32        scenarioid;
 u16        temp16;
-c_str    header;
-c_str  description;
+std::string    header;
+std::string  description;
 
     // magic no
     ar >> magicno;
@@ -654,7 +659,7 @@ c_str  description;
     savegameversion = m_versionno ;
 
     ar >> header ;
-    if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
+    if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
 
     if ( SaveGameVersion()>8 ) {
@@ -742,9 +747,9 @@ c_str  description;
 }
 
 
-MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& description )
+MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::string& description )
 {
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return MX_FAILED;
@@ -757,7 +762,7 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
     
     u32        magicno;
     u32        scenarioid;
-    c_str    header;
+    std::string    header;
     
     // magic no
     ar >> magicno;
@@ -779,15 +784,16 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
     savegameversion = m_versionno ;
     
     ar >> header ;
-    if ( strcmp( header, SAVEGAMEHEADER ) != 0 )
+    if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
     
+    std::string temp;
     if ( SaveGameVersion()>8 ) {
-        ar >>  description;
+        ar >>  temp;
     }else{
-        description="";
+        temp="";
     }
-
+    description = temp;
     
     ar.Close();
     
@@ -809,7 +815,7 @@ MXRESULT mxengine::SaveGameDescription ( const c_str& filename, c_str& descripti
  * 
  */
 
-MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
+MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function )
 {
 
 /* what needs to be saved?
@@ -834,7 +840,7 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
 
 */
 
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
     if ( pFile == NULL || !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         //COMPLAIN( "Cannot Save data file %s", filename );
@@ -865,8 +871,8 @@ MXRESULT mxengine::SaveGame ( const c_str& filename, PFNSERIALIZE function )
     
     sprintf( buffer, "Day %d\n%s\n%s\n%d %s"
             , (int)sv_days+1
-            , (char*)m_CurrentCharacter->Longname()
-            , mx->text->DescribeLocation(m_CurrentCharacter->Location() )
+            , m_CurrentCharacter->Longname().c_str()
+            , mx->text->DescribeLocation(m_CurrentCharacter->Location()).c_str()
             , lords
             , lords==1 ? "lord" : "lords"
             );
@@ -1020,10 +1026,10 @@ int ii;
 
 
 
-cvarreg_t* mxengine::FindDBVariable ( const c_str& name ) const
+cvarreg_t* mxengine::FindDBVariable ( const std::string& name ) const
 {
     for ( int ii=0; ii<sv_variables; ii++ ) {
-        if (c_stricmp( name, variables[ii].name ) == 0 )
+        if (c_stricmp( name.c_str(), variables[ii].name ) == 0 )
             return &variables[ii];
     }
     return NULL ;
@@ -1035,10 +1041,10 @@ LPCSTR mxengine::EntitySymbolById ( mxid id )
     if ( entity == NULL )
         return "";
     
-    return entity->Symbol();
+    return entity->Symbol().c_str();
 }
 
-mxentity* mxengine::EntityByName( const c_str& name, id_type_t type )
+mxentity* mxengine::EntityByName( const std::string& name, id_type_t type )
 {
 mxentity* obj;
     
@@ -1131,24 +1137,24 @@ MXRESULT mxengine::EntityLinkData( mxid id, const void* data )
     return MX_FAILED ;
 }
 
-MXRESULT mxengine::SaveDiscoveryMap ( const c_str& filename )
+MXRESULT mxengine::SaveDiscoveryMap ( const std::string& filename )
 {
     if ( discoverymap ) {
-        if ( !discoverymap->Save( filename) )
+        if ( !discoverymap->Save(filename) )
             return MX_FAILED ;
     }
     
     return MX_OK ;
 }
 
-MXRESULT mxengine::LoadDiscoveryMap ( const c_str& filename )
+MXRESULT mxengine::LoadDiscoveryMap ( const std::string& filename )
 {
     if ( discoverymap == NULL ) {
         discoverymap = new mxdiscoverymap();
         gamemap->m_discoverymap = discoverymap ;
     }
     
-    if ( !discoverymap->Load( filename) ) {
+    if ( !discoverymap->Load(filename) ) {
         discoverymap->Create( gamemap->Size() ) ;
     }
     

@@ -14,6 +14,10 @@ Including:
 
 Note: Some old features have been temporarily removed while they are reworked 
 
+Version 2.0.1 (34)
+1. panel_dedication - tweak times and fix when transitions disabled
+2. panel_night - made night processing thread safe
+3. Rewritten all text handling to resolve memory issues
 
 Version 2.0.1 (33)
 1. panel_splashscreen - rewritten spectrum loading bars

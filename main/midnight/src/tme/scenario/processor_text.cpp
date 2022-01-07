@@ -23,89 +23,19 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <string>
+#include <string.h>
+#include <algorithm>
+
+using namespace chilli::lib::StringExtensions;
+
 
 namespace tme {
 
-CStrBuf::CStrBuf()
-{
-    cBytes=0;
-    buffer=NULL;
-    Resize(MAX_STRING_SIZE);
-    mx->text->RememberStringBuffer( this );
-    buffer[0]='\0';
-}
-
-CStrBuf::CStrBuf( u32 size )
-{
-    cBytes=0;
-    buffer=NULL;
-    Resize(size);
-    mx->text->RememberStringBuffer( this );
-    buffer[0]='\0';
-}
-
-
-CStrBuf::~CStrBuf()
-{
-    mx->text->ForgetStringBuffer( this );
-    SAFEFREE(buffer);
-    cBytes=0;
-}
-
-void CStrBuf::sprintf ( LPSTR format, ... )
-{
-va_list arglist ;
-      va_start( arglist, format ) ;
-      vsprintf( buffer, format, arglist );
-      va_end( arglist ) ;
-}
-
-void CStrBuf::sprintf ( CStrBuf* format, ... )
-{
-va_list arglist ;
-      va_start( arglist, format ) ;
-      vsprintf( buffer, format->GetAt(), arglist );
-      va_end( arglist ) ;
-}
-
-void CStrBuf::CheckSize ( size_t size )
-{
-    size_t newsize = Length() + size ;
-    if ( newsize > cBytes ) {
-        Resize(newsize+1);
-    }
-}
-
-void CStrBuf::strcat ( LPCSTR input )        
-{ 
-    CheckSize(Length() + c_strlen(input));
-    c_strcat( buffer, input );
-}
-
-void CStrBuf::strcpy ( LPCSTR input )        
-{ 
-    CheckSize(c_strlen(input));
-    c_strcpy( buffer, input );
-}
-void CStrBuf::Append ( CStrBuf* input )    
-{ 
-    CheckSize(Length() + input->Length());
-    c_strcat( buffer, input->GetAt() );
-}
-void CStrBuf::Copy ( CStrBuf* input )
-{ 
-    CheckSize(input->Length());
-    c_strcpy( buffer, input->GetAt() );
-}
-
-void CStrBuf::Resize ( size_t size )
-{
-    buffer = (LPSTR)realloc(buffer, size ); 
-    cBytes = size ;
-}
-
-
 //namespace processors {
+
+
+
 
 /*
  * Function name    : text::text
@@ -118,15 +48,10 @@ void CStrBuf::Resize ( size_t size )
  * 
  */
 
-mxtext::mxtext()
+mxtext::mxtext() :
+    m_case(CASE_NONE),
+    last_number(0)
 {
-    CLEARARRAY( stringbuffers );
-    currentbuffer=0;
-    systemstrings=NULL;
-    systemcodes=NULL;
-    m_case=CASE_NONE;
-    last_number=0;
-
 }
 
 
@@ -143,82 +68,7 @@ mxtext::mxtext()
 
 mxtext::~mxtext()
 {
-    PurgeCache(NULL);
-    delete [] systemstrings ;
-    delete [] systemcodes ;
 }
-
-
-
-/*
- * Function name    : text::PurgeCache
- * 
- * Return type        : LPSTR
- * 
- * Arguments        : CStrBuf* string
- * 
- * Description        : 
- * 
- */
-
-LPSTR mxtext::PurgeCache( CStrBuf* string )
-{
-    if ( string==NULL ) {
-        SAFEDELETE ( stringbuffers[0] );
-        return NULL ;
-    }
-
-    SAFEDELETE ( stringbuffers[string->Id()+1] );
-    return string->GetAt();
-}
-
-
-/*
- * Function name    : text::RememberStringBuffer
- * 
- * Return type        : void
- * 
- * Arguments        : CStrBuf* string
- * 
- * Description        : 
- * 
- */
-
-void mxtext::RememberStringBuffer ( CStrBuf* string )
-{
-    _MXASSERTE ( currentbuffer<NUMELE(stringbuffers) );
-    stringbuffers[currentbuffer]=string;
-    string->Id(currentbuffer);
-    currentbuffer++;
-}
-
-
-/*
- * Function name    : text::ForgetStringBuffer
- * 
- * Return type        : void
- * 
- * Arguments        : const CStrBuf* string
- * 
- * Description        : 
- * 
- */
-
-void mxtext::ForgetStringBuffer ( const CStrBuf* string )
-{
-//int id = string->Id();
-int ii;
-    for ( ii=currentbuffer-1;ii>string->Id(); ii-- ) {
-        CStrBuf* temp = stringbuffers[ii] ;
-        if ( temp ) {
-            stringbuffers[ii] = NULL ;
-            SAFEDELETE ( temp );
-        }
-    }
-    currentbuffer=string->Id();
-    stringbuffers[string->Id()]=NULL;
-}
-
 
 /*
  * Function name    : text::FillArrayFromSystemString
@@ -232,36 +82,15 @@ int ii;
  * 
  */
 
-void mxtext::FillArrayFromSystemString( LPSTR array[], u32 id )
+c_string mxtext::FillArrayFromSystemString( u32 id )
 {
-LPCSTR    token;
-int        count;
-    //set up arrays
-    count=0;
-    token = (LPCSTR)strtok( (LPSTR)SystemString(id), "|" );
-    while ( token!=NULL ) {
-        if (c_strlen(token)==1 && token[0]=='-' )
-            array[count++] = NULL;
-        else
-            array[count++] = (LPSTR)token;
-        token=strtok(NULL,"|");
-    }
-}
-
-void mxtext::FillArrayFromSystemString( c_ptr& array, u32 id )
-{
-LPCSTR    token;
-int        count;
-    //set up arrays
-    count=0;
-    token = strtok( (LPSTR)SystemString(id), "|" );
-    while ( token!=NULL ) {
-        if (c_strlen(token)==1 && token[0]=='-' )
-            array.Add(NULL);
-        else
-            array.Add((LPSTR)token);
-        token=strtok(NULL,"|");
-    }
+c_string values;
+    std::string value = SystemString(id);
+    StringExtensions::split(value, '|', values);
+    std::string oldString = "-";
+    std::string newString = "";
+    std::replace (values.begin(), values.end(), oldString, newString);
+    return values;
 }
 
 
@@ -290,40 +119,39 @@ int id;
         }
     }else{
         
-        if ( systemstrings )
-            delete [] systemstrings ;
-
+        std::string empty = "";
+        systemstrings.Clear();
+        
         ar >> m_cSystemStrings;
-        systemstrings = new c_str[m_cSystemStrings];
-        systemcodes = new c_str[m_cSystemStrings];
+    
+        systemcodes.resize(m_cSystemStrings, empty);
+        systemstrings.resize(m_cSystemStrings, empty);
+        
         for ( ii=0; ii<m_cSystemStrings; ii++ ) {
             ar >> id;
-            ar >> systemcodes[id] ;
+            ar >> systemcodes[id];
             ar >> systemstrings[id];
         }
 
-        FillArrayFromSystemString( adverb_token, SS_ADVERBS );
-        FillArrayFromSystemString( number_token, SS_NUMBERS );
-        FillArrayFromSystemString( fear_token, SS_FEARTOKENS );
-        FillArrayFromSystemString( courage_token, SS_COURAGETOKENS );
-        FillArrayFromSystemString( energy_token, SS_ENERGYTOKENS );
-        FillArrayFromSystemString( zero_token, SS_ZEROTOKENS );
-
-        FillArrayFromSystemString( despondent_token, SS_DESPONDENTTOKENS );
-        FillArrayFromSystemString( reckless_token, SS_RECKLESSTOKENS );
-
-        FillArrayFromSystemString( traits_token, SS_TRAITS );
-
-        FillArrayFromSystemString( plural_tokens, SS_PLURALTOKENS );
+        adverb_token = FillArrayFromSystemString( SS_ADVERBS );
+        number_token = FillArrayFromSystemString( SS_NUMBERS );
+        fear_token = FillArrayFromSystemString( SS_FEARTOKENS );
+        courage_token = FillArrayFromSystemString( SS_COURAGETOKENS );
+        energy_token = FillArrayFromSystemString( SS_ENERGYTOKENS );
+        zero_token = FillArrayFromSystemString( SS_ZEROTOKENS );
+        despondent_token = FillArrayFromSystemString( SS_DESPONDENTTOKENS );
+        reckless_token = FillArrayFromSystemString( SS_RECKLESSTOKENS );
+        traits_token = FillArrayFromSystemString( SS_TRAITS );
+        plural_tokens = FillArrayFromSystemString( SS_PLURALTOKENS );
 
     }
 }
 
 
-mxid mxtext::StringByName ( LPCSTR name ) const
+mxid mxtext::StringByName ( const std::string& name ) const
 {
     for ( u32 ii=0; ii<m_cSystemStrings; ii++ ) {
-        if (c_stricmp(systemcodes[ii],name) == 0 ) {
+        if (name == systemcodes[ii]) {
             return MAKE_ID(IDT_STRING,(ii+1));
         }
     }
@@ -334,7 +162,7 @@ mxid mxtext::StringByName ( LPCSTR name ) const
 LPCSTR mxtext::SystemStringById ( mxid id )
 {
     if ( ID_TYPE(id) != IDT_STRING )
-        return "" ;
+        return emptyString.c_str() ;
     return SystemString(GET_ID(id)-1);
 }
 
@@ -353,8 +181,8 @@ LPCSTR mxtext::SystemStringById ( mxid id )
 LPCSTR mxtext::SystemString ( u32 id )
 {
     //_MXASSERTE ( id>=0 && id<m_cSystemStrings );
-    if ( /*id<0 ||*/ id>=m_cSystemStrings ) return "" ;
-    return systemstrings[id];
+    if ( /*id<0 ||*/ id>=m_cSystemStrings ) return emptyString.c_str() ;
+    return systemstrings[id].c_str();
 }
 
 
@@ -370,9 +198,11 @@ LPCSTR mxtext::SystemString ( u32 id )
  * 
  */
 
-LPSTR mxtext::CookedSystemString ( u32 id, const mxcharacter* character )
+std::string mxtext::CookedSystemString ( u32 id, const mxcharacter* character )
 {
-    return CookText((LPSTR)SystemString(id),character) ;
+    std::string text = SystemString(id);
+    auto result =  CookText(text,character) ;
+    return result;
 }
 
 
@@ -389,21 +219,20 @@ LPSTR mxtext::CookedSystemString ( u32 id, const mxcharacter* character )
  * 
  */
 
-LPSTR mxtext::SpecialStrings ( LPCSTR token, const mxcharacter* character )
+std::string mxtext::SpecialStrings ( LPCSTR token, const mxcharacter* character )
 {
+std::string text;
+
     if (c_stricmp(token,"days") == 0 ) {
-        
-        CStrBuf*    buffer = new CStrBuf ;
-        
         if ( sv_days > 999 ) {
-            buffer->strcpy( "countless");
+            text = "countless";
             last_number=sv_days;
         }else{
-            buffer->sprintf ((LPSTR)"%s", DescribeNumber(sv_days));
+            text = DescribeNumber(sv_days);
         }
-        return PurgeCache(buffer);
+        return text;
     }
-    return (LPSTR)"{NONE}" ;
+    return "{NONE}" ;
 }
 
 /*
@@ -419,17 +248,19 @@ LPSTR mxtext::SpecialStrings ( LPCSTR token, const mxcharacter* character )
  * 
  */
 
-LPSTR mxtext::HowMuchOfText( u32 number, LPSTR text1, LPSTR text2 )
+std::string mxtext::HowMuchOfText( u32 number, const c_string& tokens )
 {
-CStrBuf*    buffer = new CStrBuf ;
+std::string buffer;
+
     if ( number> NUMELE(adverb_token) )
         number=0;
     
-    if (number < 5 ) text1 = text2;
-    if ( adverb_token[number] ) 
-        buffer->strcpy ( adverb_token[ number ] );
-    buffer->strcat ( text1 );
-    return buffer->GetAt();
+    auto token = number < 5 ? 1 : 0;
+
+    if ( !adverb_token.at(number).empty())
+        buffer += adverb_token.at(number) ;
+
+    return buffer + tokens.at(token);
 }
 
 
@@ -444,12 +275,10 @@ CStrBuf*    buffer = new CStrBuf ;
  * 
  */
 
-LPSTR mxtext::DescribeNumber ( int number, ZERO_MODE zerotype )
+std::string mxtext::DescribeNumber ( int number, ZERO_MODE zerotype )
 {
-CStrBuf*    buffer = new CStrBuf ;
     last_number=number;
-    buffer->strcpy ( DescribeNumberPart(number,zerotype) );
-    return PurgeCache(buffer);
+    return DescribeNumberPart(number,zerotype);
 }
 
 
@@ -464,12 +293,12 @@ CStrBuf*    buffer = new CStrBuf ;
  * 
  */
 
-LPSTR mxtext::DescribeNumberPart ( int number, ZERO_MODE zeromode )
+std::string mxtext::DescribeNumberPart ( int number, ZERO_MODE zeromode )
 {
 bool    useand;
-CStrBuf*    buffer = new CStrBuf ;
+std::string buffer;
 
-    useand = FALSE ;
+    useand = false ;
     int thousands = number / 1000 ;
     number %= 1000 ;
     int hundreds = number / 100 ;
@@ -478,40 +307,34 @@ CStrBuf*    buffer = new CStrBuf ;
     number %= 10 ;
 
     if ( thousands ) {
-        buffer->strcpy ( DescribeNumberPart ( thousands,zeromode ) );
-        buffer->strcat ( (LPSTR)" " );
-        buffer->strcat ( number_token[28] );
-        useand = TRUE ;
+        buffer += DescribeNumberPart ( thousands,zeromode ) + " " + number_token[28];
+        useand = true ;
     }
 
     if ( hundreds ) {
-        if ( useand ) buffer->strcat ( (LPSTR)" " );
-        buffer->strcat ( DescribeNumberPart ( hundreds,zeromode ) );
-        buffer->strcat ( (LPSTR)" " );
-        buffer->strcat ( number_token[27] );
+        if ( useand ) buffer += " ";
+        buffer += DescribeNumberPart ( hundreds,zeromode ) + " " + number_token[27];
         useand = TRUE ;
     }
 
     if ( tens>1 ) {
-        if ( useand ) buffer->strcat ( (LPSTR)" and " );
-        buffer->strcat ( number_token[19+tens-2] );
-        useand = FALSE ;
-        if ( number == 0 )
-            return buffer->GetAt() ;
-        buffer->strcat ( (LPSTR)" " );
+        if ( useand ) buffer += " and " ;
+        buffer += number_token[19+tens-2] ;
+        useand = false ;
+        if ( number == 0 ) return buffer ;
+        buffer += " " ;
     }else if ( tens == 1 ) 
         number+=10;
 
     if ( useand ) {
-        if ( number == 0 )
-            return buffer->GetAt();
-        buffer->strcat ( (LPSTR)" and " );
+        if ( number == 0 ) return buffer;
+        buffer += " and " ;
     }
     if ( number == 0 )
-        buffer->strcat ( zero_token[zeromode] );
+        buffer += zero_token[zeromode];
         else
-        buffer->strcat ( number_token[number-1] );
-    return buffer->GetAt() ;
+        buffer += number_token[number-1];
+    return buffer ;
 }
 
 #if defined(_DDR_)
@@ -520,49 +343,41 @@ CStrBuf*    buffer = new CStrBuf ;
  *
  */
 
-LPSTR mxtext::DescribeTime ( u32 time )
+std::string& mxtext::DescribeTime ( u32 time )
 {
     return DescribeNumber((time+1)/2);
 }
 #endif
     
-LPSTR mxtext::DescribeEnergy ( u32 energy )
+std::string mxtext::DescribeEnergy ( u32 energy )
 {
-    LPSTR txtEnergy=HowMuchOfText ( energy/sv_energy_scale, energy_token[0], energy_token[1] );
+    auto txtEnergy = HowMuchOfText ( energy/sv_energy_scale, energy_token );
     if ( energy<=sv_energy_cannot_continue) {
-        CStrBuf*    buffer = new CStrBuf ;
-       buffer->sprintf ( (LPSTR)SystemString(SS_CHARACTER_CANNOT_CONTINUE)
-                         , txtEnergy
-                         );
-        return PurgeCache(buffer);
+        return Format ( SystemString(SS_CHARACTER_CANNOT_CONTINUE), txtEnergy.c_str());
     }
     
     return txtEnergy;
 }
 
-LPSTR mxtext::DescribeDespondent ( u32 despondent )
+std::string mxtext::DescribeDespondent ( u32 despondent )
 {
-    return HowMuchOfText ( despondent/sv_despondent_scale, despondent_token[0], despondent_token[1] );
+    return HowMuchOfText ( despondent/sv_despondent_scale, despondent_token );
 }
 
-LPSTR mxtext::DescribeReckless ( u32 reckless )
+std::string mxtext::DescribeReckless ( u32 reckless )
 {
-    return HowMuchOfText ( reckless/sv_reckless_scale, reckless_token[0], reckless_token[1] );
+    return HowMuchOfText ( reckless/sv_reckless_scale, reckless_token );
 }
 
-LPSTR mxtext::DescribeFear ( u32 fear )
+std::string mxtext::DescribeFear ( u32 fear )
 {
-    return HowMuchOfText ( 7-(fear/sv_fear_scale), fear_token[0], fear_token[1] );
+    return HowMuchOfText ( 7-(fear/sv_fear_scale), fear_token );
 }
 
-LPSTR mxtext::DescribeCourage ( u32 courage )
+std::string mxtext::DescribeCourage ( u32 courage )
 {
-    return HowMuchOfText ( courage/sv_courage_scale, courage_token[0], courage_token[1] );
+    return HowMuchOfText ( courage/sv_courage_scale, courage_token );
 }
-/*
- *
- *
- */
 
 
 /*
@@ -578,12 +393,10 @@ LPSTR mxtext::DescribeCourage ( u32 courage )
  * 
  */
 
-LPSTR mxtext::DescribePlural( u32 token, int number )
+std::string mxtext::DescribePlural( u32 token, int number )
 {
-
     if ( ABS(number) > 1 ) 
         token++;
-
     return plural_tokens[token];
 }
 
@@ -600,43 +413,38 @@ LPSTR mxtext::DescribePlural( u32 token, int number )
  * 
  */
 
-LPSTR mxtext::DescribeCharacterRecruitMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )
+std::string mxtext::DescribeCharacterRecruitMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )
 {
-CStrBuf*    buffer = new CStrBuf ;
-
     mxunitinfo* uinfo = mx->UnitById(stronghold->Type());
-    buffer->sprintf (
-        (LPSTR)SystemString(SS_RECRUITMEN),
-        qty,(LPCSTR)uinfo->Name(),
-        stronghold->Total(), (LPCSTR)uinfo->Name()
+    auto buffer = Format (
+        SystemString(SS_RECRUITMEN),
+        qty,
+        uinfo->Name().c_str(),
+        stronghold->Total(),
+        uinfo->Name().c_str()
         );
 
-    buffer->strcpy ( CookText(buffer->GetAt(),character) );
-    return PurgeCache(buffer);
+    return CookText(buffer,character);
 }
 
 #if defined(_DDR_)
-LPSTR mxtext::DescribeObjectLocation(mxobject* object)
+std::string mxtext::DescribeObjectLocation(mxobject* object)
 {
-    CStrBuf*    buffer = new CStrBuf ;
     mxcharacter* c = mx->scenario->WhoHasObject(object) ;
     
     // object not carried
-    if ( c == NULL ) {
-        buffer->sprintf (
-                         (LPSTR)SystemString(SS_SEEK_MSG2),
-                         DescribeObjectWithPower(object),
-                         DescribeLocationWithPrep(object->Location(),NULL)
+    if ( c == nullptr ) {
+        return Format ( SystemString(SS_SEEK_MSG2),
+                         DescribeObjectWithPower(object).c_str(),
+                         DescribeLocationWithPrep(object->Location(),nullptr).c_str()
                          );
     }else{
-        buffer->sprintf (
-                         (LPSTR)SystemString(SS_SEEK_MSG3),
-                         DescribeObjectWithPower(object)
+        auto buffer = Format (
+                         SystemString(SS_SEEK_MSG3),
+                         DescribeObjectWithPower(object).c_str()
                          );
-        buffer->strcpy ( CookText(buffer->GetAt(),c) );
+        return CookText(buffer,c);
     }
-
-    return PurgeCache(buffer);
 }
 #endif
     
@@ -653,18 +461,18 @@ LPSTR mxtext::DescribeObjectLocation(mxobject* object)
  * 
  */
 
-LPSTR mxtext::DescribeCharacterPostMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )
+std::string mxtext::DescribeCharacterPostMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )
 {
-CStrBuf*    buffer = new CStrBuf ;
     mxunitinfo* uinfo = mx->UnitById(stronghold->Type());
-    buffer->sprintf (
-        (LPSTR)SystemString(SS_POSTMEN),
-        qty,(LPCSTR)uinfo->Name(),
-        stronghold->Total(),(LPCSTR)uinfo->Name()
+    auto buffer = Format (
+        SystemString(SS_POSTMEN),
+        qty,
+        uinfo->Name().c_str(),
+        stronghold->Total(),
+        uinfo->Name().c_str()
         );
 
-    buffer->strcpy ( CookText(buffer->GetAt(),character) );
-    return PurgeCache(buffer);
+    return CookText(buffer,character);
 }
 
 
@@ -679,22 +487,22 @@ CStrBuf*    buffer = new CStrBuf ;
  * 
  */
 
-LPSTR mxtext::DescribeCharacterTime( const mxcharacter* character )
+std::string mxtext::DescribeCharacterTime( const mxcharacter* character )
 {
-CStrBuf*    buffer = new CStrBuf ;
+    RETURN_IF_NULL(character) "";
+    
     int time = character->Time();
 
     if ( time == sv_time_night )
-        buffer->strcpy ( SystemString(SS_ITISNIGHT) );
+        return SystemString(SS_ITISNIGHT);
     else if ( time == sv_time_dawn )
-        buffer->strcpy ( SystemString(SS_ITISDAWN) );
+       return SystemString(SS_ITISDAWN);
     else {
         if ( time&1 )
-            buffer->strcpy ( CookedSystemString(SS_LESSTHAN, character) );
+            return CookedSystemString(SS_LESSTHAN, character);
         else
-            buffer->strcpy ( CookedSystemString(SS_HOURSOFDAY,character) );
+            return CookedSystemString(SS_HOURSOFDAY,character);
     }
-    return PurgeCache(buffer);
 }
 
 
@@ -709,7 +517,7 @@ CStrBuf*    buffer = new CStrBuf ;
  * 
  */
 
-LPSTR mxtext::DescribeCharacterEnergy ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterEnergy ( const mxcharacter* character )
 {
     return CookedSystemString(SS_CHARACTER_ENERGY,character);
 }
@@ -725,7 +533,7 @@ LPSTR mxtext::DescribeCharacterEnergy ( const mxcharacter* character )
  * 
  */
 
-LPSTR mxtext::DescribeCharacterCourage ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterCourage ( const mxcharacter* character )
 {
     return CookedSystemString(SS_CHARACTER_COURAGE,character);
 }
@@ -741,7 +549,7 @@ LPSTR mxtext::DescribeCharacterCourage ( const mxcharacter* character )
  * 
  */
 
-LPSTR mxtext::DescribeCharacterFear ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterFear ( const mxcharacter* character )
 {
     return CookedSystemString(SS_CHARACTER_FEAR,character);
 }
@@ -758,31 +566,34 @@ LPSTR mxtext::DescribeCharacterFear ( const mxcharacter* character )
  * 
  */
 
-LPSTR mxtext::DescribeCharacterObject ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterObject ( const mxcharacter* character )
 {
-    if ( character->carrying == NULL )
+    RETURN_IF_NULL(character) "";
+
+    if ( character->carrying == nullptr )
         return CookedSystemString(SS_CARRYNOTHING,character);
     return CookedSystemString(SS_CARRYING,character);
 }
 
-LPSTR mxtext::DescribeObject ( const mxobject* object )
+std::string mxtext::DescribeObject ( const mxobject* object )
 {
+    std::string description = oinfo->description;
     const mxobject* temp = oinfo;
     oinfo = object;
-    LPSTR text= CookText(oinfo->description,NULL);
+    auto text = CookText(description,nullptr);
     oinfo = temp ;
     return text;
 }
     
 #if defined(_DDR_)
-LPSTR mxtext::DescribeObjectWithPower ( const mxobject* object )
+std::string mxtext::DescribeObjectWithPower ( const mxobject* object )
 {
+    std::string description = "{obj:text}, whose power is in {case:lower}{obj:power}";
     const mxobject* temp = oinfo;
     oinfo = object;
-    CStrBuf*    buffer = new CStrBuf ;
-    buffer->sprintf ( CookText((LPSTR)"{obj:text}, whose power is in {case:lower}{obj:power}")  );
+    auto buffer = CookText(description, nullptr);
     oinfo = temp ;
-    return PurgeCache(buffer);
+    return buffer;
 }
 #endif
 
@@ -800,19 +611,24 @@ LPSTR mxtext::DescribeObjectWithPower ( const mxobject* object )
  *        He was killed in battle.
  */
 
-LPSTR mxtext::DescribeCharacterDeath ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterDeath ( const mxcharacter* character )
 {
-    if ( character->killedbyobject )
+    RETURN_IF_NULL(character) "";
+        
+    if ( character->killedbyobject != nullptr )
         return CookedSystemString(SS_KILLED_OBJECT,character);
-    CStrBuf*    buffer = new CStrBuf ;
-    buffer->sprintf ( CookedSystemString(SS_KILLED_BATTLE,character), DescribeCharacterBattle(character) );
-    return PurgeCache(buffer);
+    return Format (
+        CookedSystemString(SS_KILLED_BATTLE,character).c_str(),
+        DescribeCharacterBattle(character).c_str()
+        );
 }
 
 #if defined(_DDR_)
-LPSTR mxtext::DescribeCharacterDeath2 ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterDeath2 ( const mxcharacter* character )
 {
-    if ( character->killedbyobject )
+    RETURN_IF_NULL(character) "";
+        
+    if ( character->killedbyobject != nullptr )
         return CookedSystemString(SS_KILLED_OBJECT,character);
     return CookedSystemString(SS_KILLED_BY,character);
 }
@@ -836,56 +652,63 @@ LPSTR mxtext::DescribeCharacterDeath2 ( const mxcharacter* character )
  *        The battle continues.
  *        Victory went to the free!
  */
-LPSTR mxtext::DescribeCharacterBattle ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterBattle ( const mxcharacter* character )
 {
-CStrBuf*    buffer = new CStrBuf ;
-
+std::string buffer;
+    
+    RETURN_IF_NULL(character) "";
+        
     int temp=0;
     temp += character->warriors.Lost() ? 1 : 0 ;
     temp += character->riders.Lost() ? 2 : 0 ;
     
     switch ( temp ) {
         case 0:
-            buffer->strcpy ( CookedSystemString(SS_BATTLE_NONE,character) );
+            buffer = CookedSystemString(SS_BATTLE_NONE,character);
             break;
         case 1:
-            sprintf ( buffer->End(), CookedSystemString(SS_BATTLE_WARRIORS,character), 
-                DescribeNumber(character->warriors.Lost()) );
+            buffer = Format (
+                CookedSystemString(SS_BATTLE_WARRIORS,character).c_str(),
+                DescribeNumber(character->warriors.Lost()).c_str() );
             break;
         case 2:
-            sprintf ( buffer->End(), CookedSystemString(SS_BATTLE_RIDERS,character), 
-                DescribeNumber(character->riders.Lost()) );
+            buffer = Format (
+                CookedSystemString(SS_BATTLE_RIDERS,character).c_str(),
+                DescribeNumber(character->riders.Lost()).c_str() );
             break;
         case 3:
-            sprintf ( buffer->End(), CookedSystemString(SS_BATTLE_WARRIORS_RIDERS,character),  
-                DescribeNumber(character->warriors.Lost(),ZERO_NO),
-                DescribeNumber(character->riders.Lost(),ZERO_NO) );
+            buffer = Format (
+                CookedSystemString(SS_BATTLE_WARRIORS_RIDERS,character).c_str(),
+                DescribeNumber(character->warriors.Lost(),ZERO_NO).c_str(),
+                DescribeNumber(character->riders.Lost(),ZERO_NO).c_str());
             break;
     }
 
-    sprintf ( buffer->End(), 
-        CookedSystemString(SS_BATTLE_CHARACTER_SLEW,character),
-        DescribeNumber(character->battleslew,ZERO_NONE) );
+    buffer += Format (
+        CookedSystemString(SS_BATTLE_CHARACTER_SLEW,character).c_str(),
+        DescribeNumber(character->battleslew,ZERO_NONE).c_str() );
 
-    if ( character->warriors.Killed() )
-        sprintf ( buffer->End(), 
-            CookedSystemString(SS_BATTLE_WARRIORS_SLEW,character), 
-            DescribeNumber(character->warriors.Killed(),ZERO_NONE) );
+    if ( character->warriors.Killed() ) {
+        buffer += Format (
+            CookedSystemString(SS_BATTLE_WARRIORS_SLEW,character).c_str(),
+            DescribeNumber(character->warriors.Killed(),ZERO_NONE).c_str() );
+    }
 
-    if ( character->riders.Killed() )
-        sprintf ( buffer->End(), 
-            CookedSystemString(SS_BATTLE_RIDERS_SLEW,character),         
-            DescribeNumber(character->riders.Killed(),ZERO_NONE) );
+    if ( character->riders.Killed() ) {
+        buffer += Format (
+            CookedSystemString(SS_BATTLE_RIDERS_SLEW,character).c_str(),
+            DescribeNumber(character->riders.Killed(),ZERO_NONE).c_str() );
+    }
 
     if ( !character->IsInBattle() ) {
         if ( character->HasWonBattle() )
-            buffer->strcat ( CookedSystemString(SS_BATTLE_VICTORY_FREE,character) );
+            buffer += CookedSystemString(SS_BATTLE_VICTORY_FREE,character);
         else
-            buffer->strcat ( CookedSystemString(SS_BATTLE_VICTORY_ENEMY,character) );
+            buffer += CookedSystemString(SS_BATTLE_VICTORY_ENEMY,character);
     } else
-        buffer->strcat ( CookedSystemString(SS_BATTLE_VICTORY_NONE,character) );
+        buffer += CookedSystemString(SS_BATTLE_VICTORY_NONE,character);
 
-    return PurgeCache(buffer);
+    return buffer;
 }
 
 
@@ -904,10 +727,10 @@ CStrBuf*    buffer = new CStrBuf ;
  */
 
 
-LPSTR mxtext::DescribeCharacterArmy ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterArmy ( const mxcharacter* character )
 {
-CStrBuf*    buffer = new CStrBuf ;
-
+    RETURN_IF_NULL(character) "";
+        
     int temp=0;
     temp += character->warriors.Total() ? 1 : 0 ;
     temp += character->riders.Total() ? 2 : 0 ;
@@ -915,35 +738,28 @@ CStrBuf*    buffer = new CStrBuf ;
 
     switch ( temp ) {
         case 0:
-            buffer->strcat ( CookedSystemString(SS_ARMY_NONE,character) );
-            break;
+            return CookedSystemString(SS_ARMY_NONE,character);
         case 1:
-            sprintf ( buffer->End(), 
-                CookedSystemString(SS_ARMY_WARRIORS,character),
-                DescribeNumber(character->warriors.Total()),
-                DescribeEnergy( character->warriors.Energy() )
+            return Format (
+                CookedSystemString(SS_ARMY_WARRIORS,character).c_str(),
+                DescribeNumber(character->warriors.Total()).c_str(),
+                DescribeEnergy( character->warriors.Energy()).c_str()
                 );
-
-            break;
         case 2:
-            sprintf ( buffer->End(), 
-                CookedSystemString(SS_ARMY_RIDERS,character),
-                DescribeNumber(character->riders.Total()),
-                DescribeEnergy ( character->riders.Energy() )
+            return Format (
+                CookedSystemString(SS_ARMY_RIDERS,character).c_str(),
+                DescribeNumber(character->riders.Total()).c_str(),
+                DescribeEnergy ( character->riders.Energy()).c_str()
                 );
-            break;
         case 3:
-            sprintf ( buffer->End(), 
-                CookedSystemString(SS_ARMY_WARRIORS_RIDERS,character),
-                DescribeNumber(character->warriors.Total()),
-                DescribeNumber(character->riders.Total()),
-                DescribeEnergy ( character->warriors.Energy() ),
-                DescribeEnergy ( character->riders.Energy() )
+            return Format (
+                CookedSystemString(SS_ARMY_WARRIORS_RIDERS,character).c_str(),
+                DescribeNumber(character->warriors.Total()).c_str(),
+                DescribeNumber(character->riders.Total()).c_str(),
+                DescribeEnergy ( character->warriors.Energy()).c_str(),
+                DescribeEnergy ( character->riders.Energy()).c_str()
                 );
-            break;
     }
-
-    return PurgeCache(buffer);
 }
 
 
@@ -960,24 +776,26 @@ CStrBuf*    buffer = new CStrBuf ;
  * 
  */
 
-LPSTR mxtext::DescribeCharacterTraits ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterTraits ( const mxcharacter* character )
 {
-CStrBuf*    buffer = new CStrBuf(1024) ;
-
+std::string buffer;
+    
+    RETURN_IF_NULL(character) "";
+    
     u32 f = character->traits ;
-    bool first = TRUE;
+    bool first = true;
 
     for ( int ii=0; ii<32; ii++ ) {
         int i = f&1;
 
-        if ( traits_token[ii] ) {
+        if ( !traits_token.at(ii).empty() ) {
 
             if ( i ) {
                 if ( !first ) 
-                    buffer->strcat( ", " );
+                    buffer += ", ";
 
-                buffer->strcat( (LPSTR)traits_token[ii] );
-                first = FALSE ;
+                buffer += traits_token.at(ii) ;
+                first = false ;
             }
 
         }
@@ -986,59 +804,58 @@ CStrBuf*    buffer = new CStrBuf(1024) ;
 
     }
 
-    return PurgeCache(buffer);
+    return buffer;
 }
 
-LPSTR mxtext::DescribeCharacterFoe ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterFoe ( const mxcharacter* character )
 {
-CStrBuf*    buffer = new CStrBuf ;
-    if ( character->foe )
-            buffer->strcat ( CookedSystemString(SS_FOE,character) );
-    return PurgeCache(buffer);
+    RETURN_IF_NULL(character) "";
+    
+    return character->foe
+        ? CookedSystemString(SS_FOE,character)
+        : "";
 }
 
-LPSTR mxtext::DescribeCharacterLiege ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterLiege ( const mxcharacter* character )
 {
-CStrBuf*    buffer = new CStrBuf ;
-    if ( character->liege )
-            buffer->strcat ( CookedSystemString(SS_LIEGE,character) );
-    return PurgeCache(buffer);
+    RETURN_IF_NULL(character) "";
+    
+    return character->liege
+        ? CookedSystemString(SS_LIEGE,character)
+        : "";
 }
 
 #if defined(_DDR_)
     
-LPSTR mxtext::DescribeCharacterInBattle ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterInBattle ( const mxcharacter* character )
 {
-    CStrBuf*    buffer = new CStrBuf ;
+    RETURN_IF_NULL(character) "";
     
-    if ( character->IsPreparingForBattle() )
-        buffer->strcat ( CookedSystemString(SS_BATTLE_PREPARES_BATTLE,character) );
-    
-    return PurgeCache(buffer);
+    return character->IsPreparingForBattle()
+        ? CookedSystemString(SS_BATTLE_PREPARES_BATTLE,character)
+        : "";
 }
     
-LPSTR mxtext::DescribeCharacterLoyalty ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterLoyalty ( const mxcharacter* character )
 {
-    CStrBuf*    buffer = new CStrBuf ;
+    RETURN_IF_NULL(character) "";
     
-    if ( character->loyalty )
-        buffer->strcat ( CookedSystemString(SS_LOYAL_TO,character) );
-    
-    return PurgeCache(buffer);
+    return character->loyalty
+        ? CookedSystemString(SS_LOYAL_TO,character)
+        : "";
 }
     
 #endif
     
-LPSTR mxtext::DescribeCharacterGroup ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterGroup ( const mxcharacter* character )
 {
-    CStrBuf*    buffer = new CStrBuf ;
+    RETURN_IF_NULL(character) "";
     
     if ( character->following )
-        buffer->strcat ( CookedSystemString(SS_GROUP_FOLLOWER,character) );
+        return CookedSystemString(SS_GROUP_FOLLOWER,character);
     else if ( character->followers )
-        buffer->strcat ( CookedSystemString(SS_GROUP_LEADER,character) );
-    
-    return PurgeCache(buffer);
+        return CookedSystemString(SS_GROUP_LEADER,character);
+    return "";
 }
 
  
@@ -1054,10 +871,10 @@ LPSTR mxtext::DescribeCharacterGroup ( const mxcharacter* character )
  * 
  */
     
-LPSTR mxtext::DescribeCharacterLocation( const mxcharacter* character )
+std::string mxtext::DescribeCharacterLocation( const mxcharacter* character )
 {
-CStrBuf*    buffer = new CStrBuf ;
-
+    RETURN_IF_NULL(character) "";
+    
     mxloc& here = mx->gamemap->GetAt ( character->Location() );
     mxgridref loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
     mxloc& there = mx->gamemap->GetAt ( loc );
@@ -1066,12 +883,12 @@ CStrBuf*    buffer = new CStrBuf ;
         (here.IsInDomain()!=there.IsInDomain()) ||
         (here.terrain!=there.terrain) )
         {
-            buffer->strcpy ( CookedSystemString(SS_MESSAGE6,character) );
+            return CookedSystemString(SS_MESSAGE6,character);
         }else{
-            buffer->strcpy ( CookedSystemString(SS_MESSAGE5,character) );
+            return CookedSystemString(SS_MESSAGE5,character);
         }
     
-    return PurgeCache(buffer);
+    return "";
 }
 
 #if defined(_DDR_)
@@ -1082,53 +899,49 @@ CStrBuf*    buffer = new CStrBuf ;
 // and
 // and underground entrance
 // .
-LPSTR mxtext::DescribeCharacterSees ( const mxcharacter* character )
+std::string mxtext::DescribeCharacterSees ( const mxcharacter* character )
 {
-    CStrBuf*    buffer = new CStrBuf ;
+std::string buffer;
 
+    RETURN_IF_NULL(character) "";
+ 
     auto scenario = static_cast<ddr_x*>(mx->scenario);
     
     mxobject* object = scenario->FindObjectAtLocation(character->Location());
     bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
 
-    if ( object== NULL && !entrance )
-        return PurgeCache(buffer);
+    if ( object== nullptr && !entrance )
+        return "";
     
-    buffer->strcat( character->Shortname() );
-    buffer->strcat(" sees ");
+    byffer = character->Shortname() + " sees ";
     if ( object ) {
-        buffer->strcat("the ");
-        buffer->strcat( DescribeObjectWithPower(object) );
+        buffer += "the " + DescribeObjectWithPower(object) ;
     }
     if ( entrance ) {
         if ( object )
-            buffer->strcat("and ");
-        buffer->strcat("an underground entrance");
+            buffer += "and ";
+        buffer += "an underground entrance";
     }
-    buffer->strcat(". ");
+    buffer += ". ";
     
-    return PurgeCache(buffer);
+    return buffer;
 }
 
-LPSTR mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character )
+std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character )
 {
-    CStrBuf*    buffer = new CStrBuf ;
-    
     mxgridref oldLoc = this->loc;
     
     this->loc = loc ;
     
     if ( character && character->IsInTunnel() ) {
-        buffer->strcat("in the tunnel");
-        return PurgeCache(buffer);
+        return "in the tunnel";
     }
     
-    buffer->strcat( CookText((LPSTR)"{loc:terrain:prep} "));
-    buffer->strcat( DescribeLocation(loc));
+    auto buffer = CookText("{loc:terrain:prep} ") + DescribeLocation(loc);
     
     this->loc = oldLoc ;
     
-    return PurgeCache(buffer);
+    return buffer;
 }
 #endif
     
@@ -1145,13 +958,13 @@ LPSTR mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* chara
  * 
  */
 
-LPSTR mxtext::DescribeLocation(mxgridref loc )
+std::string mxtext::DescribeLocation(mxgridref loc )
 {
 mxloc&    mapsqr = mx->gamemap->GetAt(loc);
     this->loc = loc ;
-    if ( mapsqr.IsInDomain() )
-        return CookedSystemString(SS_LOCATION_DOMAIN);
-    return CookedSystemString(SS_LOCATION_NOTDOMAIN);
+    return mapsqr.IsInDomain()
+        ? CookedSystemString(SS_LOCATION_DOMAIN)
+        : CookedSystemString(SS_LOCATION_NOTDOMAIN);
 }
 
 
@@ -1167,15 +980,13 @@ mxloc&    mapsqr = mx->gamemap->GetAt(loc);
  * 
  */
 
-LPSTR mxtext::DescribeTerrainPlural(mxterrain_t terrain)
+std::string mxtext::DescribeTerrainPlural(mxterrain_t terrain)
 {
-CStrBuf*    buffer = new CStrBuf ;
     tinfo = mx->TerrainById( terrain );
-    if ( !tinfo->IsPlural() )
-        buffer->strcpy ( tinfo->Name() );
-    else
-        buffer->strcpy ( CookedSystemString(SS_TERRAIN_PLURAL) );
-    return PurgeCache(buffer);
+    return tinfo->IsPlural()
+        ? CookedSystemString(SS_TERRAIN_PLURAL).c_str()
+        : tinfo->Name().c_str();
+
 }
 
 
@@ -1190,15 +1001,12 @@ CStrBuf*    buffer = new CStrBuf ;
  * 
  */
 
-LPSTR mxtext::DescribeTerrainSingularPlural(mxterrain_t terrain)
+std::string mxtext::DescribeTerrainSingularPlural(mxterrain_t terrain)
 {
-CStrBuf*    buffer = new CStrBuf ;
     tinfo = mx->TerrainById( terrain );
-    if ( !tinfo->IsPlural() )
-        buffer->strcpy ( CookedSystemString(SS_TERRAIN_SINGLE) );
-    else
-        buffer->strcpy ( CookedSystemString(SS_TERRAIN_PLURAL) );
-    return PurgeCache(buffer);
+    return tinfo->IsPlural()
+        ? CookedSystemString(SS_TERRAIN_PLURAL)
+        : CookedSystemString(SS_TERRAIN_SINGLE);
 }
 
 
@@ -1213,16 +1021,12 @@ CStrBuf*    buffer = new CStrBuf ;
  * 
  */
 
-LPSTR mxtext::DescribeArea(u32 area)
+std::string mxtext::DescribeArea(u32 area)
 {
-CStrBuf*    buffer = new CStrBuf ;
-mxarea*        ainfo;
     ainfo = mx->AreaById( area );
-    if ( (LPSTR)ainfo->prefix )
-        buffer->strcpy ( CookedSystemString(SS_AREA_PREFIXED) );
-    else
-        buffer->strcpy( ainfo->Name() );
-    return PurgeCache(buffer);
+    if ( !ainfo->prefix.empty() )
+        return CookedSystemString(SS_AREA_PREFIXED);
+    return ainfo->Name();
 }
 
 /*
@@ -1247,19 +1051,18 @@ mxarea*        ainfo;
  *  The fortress is owned by x who is loyal to they fey.
  */
 
-LPSTR mxtext::DescribeStronghold(const mxstronghold* stronghold)
+std::string mxtext::DescribeStronghold(const mxstronghold* stronghold)
 {
-CStrBuf*    buffer = new CStrBuf ;
 mxterrain*    tinfo;
 
     mxloc& mapsqr = mx->gamemap->GetAt ( stronghold->Location() );
 
-    buffer->sprintf ( 
-        CookedSystemString(SS_STRONGHOLD3),
-        DescribeLocation(stronghold->Location()),
-        DescribeNumber( stronghold->Total() ),
-        (LPCSTR)mx->UnitById(stronghold->Type())->Name(),
-        (LPCSTR)mx->RaceById(stronghold->OccupyingRace())->SoldiersName() );
+    auto buffer = Format (
+        CookedSystemString(SS_STRONGHOLD3).c_str(),
+        DescribeLocation(stronghold->Location()).c_str(),
+        DescribeNumber( stronghold->Total()).c_str(),
+        mx->UnitById(stronghold->Type())->Name().c_str(),
+        mx->RaceById(stronghold->OccupyingRace())->SoldiersName().c_str() );
 
     if ( stronghold->Owner() ) {
         tinfo = mx->TerrainById( mapsqr.terrain );
@@ -1272,26 +1075,24 @@ mxterrain*    tinfo;
             character=stronghold->Occupier();
         }
 
-        sprintf ( buffer->End(), CookedSystemString(message), (LPCSTR)tinfo->Name(), (LPCSTR)character->Longname() );
+        buffer += Format (
+            CookedSystemString(message).c_str(),
+            tinfo->Name().c_str(),
+            character->Longname().c_str()
+            );
     }
         
-    return PurgeCache(buffer);
+    return buffer;
 }
 
 
-LPSTR mxtext::DescribeArmyTotal(const mxarmytotal* army)
+std::string mxtext::DescribeArmyTotal(const mxarmytotal* army)
 {
-CStrBuf*    buffer = new CStrBuf ;
-
-            sprintf ( buffer->End(), 
-                CookedSystemString(SS_WARRIORS_RIDERS,army->character),
-                DescribeNumber(army->warriors),
-                DescribeNumber(army->riders)
-                );
-
-
-    return PurgeCache(buffer);
-
+    return Format (
+        CookedSystemString(SS_WARRIORS_RIDERS,army->character).c_str(),
+        DescribeNumber(army->warriors).c_str(),
+        DescribeNumber(army->riders).c_str()
+        );
 }
 
 
@@ -1328,48 +1129,44 @@ CStrBuf*    buffer = new CStrBuf ;
         
     }
     
-LPSTR mxtext::CookText ( LPSTR input, const mxcharacter* character )
+std::string mxtext::CookText ( std::string& input, const mxcharacter* character )
 {
-CStrBuf*    final = new CStrBuf ;
-CStrBuf*    buffer = new CStrBuf(1024) ;
+char        buffer[1024] ;
 char        token[64];
-LPSTR        is;
-LPSTR        os;
-int            t;
+LPSTR       is;
+LPSTR       os;
 char        l;
 
-    t=0;
-    is = input;
-    os = buffer->GetAt();
+    is = (LPSTR)input.c_str();
+    os = buffer;
     *os='\0';
 
     
-    if ( input!= NULL ) {
+    if ( !input.empty() ) {
     for(;;) {
         l = *is++;
         // start of special token
         if ( l == '{' ) {
-            t=0;
+            int t=0;
             while(*is!='}') {token[t++]=*is++;};
             token[t]='\0';
             is++;
             *os='\0';
+
+            std::string result = DecodeToken(token,character) ;
             
-            // NOTE: not size safe!!!!
-            LPSTR result = DecodeToken(token,character) ;
-            
-            if (c_strlen(result)!=0  ) {
+            if (!result.empty()) {
             
                 if ( m_case == CASE_NONE ) {
-                    c_strcat ( os, result  );
+                    c_strcat ( os, result.c_str()  );
                 } else if ( m_case == CASE_FIRST ) {
-                    os[0] = toupper(result[0]);
+                    os[0] = toupper(result.at(0));
                     os[1] = '\0';
-                    strcat_lower ( os+1, result+1  );
+                    strcat_lower ( os+1, result.substr(1).c_str()  );
                 } else if ( m_case == CASE_UPPER ) {
-                    strcat_upper ( os, result  );
+                    strcat_upper ( os, result.c_str()  );
                 } else if ( m_case == CASE_LOWER ) {
-                    strcat_lower ( os, result  );
+                    strcat_lower ( os, result.c_str()  );
                 }
                 
                 os+= c_strlen(os);
@@ -1386,9 +1183,8 @@ char        l;
         }
     }
     }
-    final->Copy ( buffer );
-    SAFEDELETE(buffer);
-    return PurgeCache(final);
+
+    return buffer;
 }
 
 /*
@@ -1438,10 +1234,10 @@ char        l;
 //};
 
 
-LPSTR mxtext::DecodeToken ( LPSTR token, const mxcharacter* character )
+std::string mxtext::DecodeToken ( LPSTR token, const mxcharacter* character )
 {
-int                is=0;
-c_ptr            tokens;
+int         is=0;
+c_string    tokens;
 
     LPSTR t = strtok(token,"{:}");
     while ( t ) {
@@ -1467,52 +1263,51 @@ c_ptr            tokens;
     is=0;
 
 #define GET_ARG    \
-    (LPCSTR)tokens[is]
+    tokens.at(is)
     
 #define IS_ARG(x)    \
-     if ( c_stricmp(x,GET_ARG) == 0 )
+     if ( c_stricmp(x,GET_ARG.c_str()) == 0 )
 
     while (TRUE) {
-        if ( tokens[is] == NULL )
-            return (LPSTR)"";
+        if ( tokens.at(is).empty() )
+            return "";
 
-        
-        
-// case
             IS_ARG("case") {
                 is++;
-                IS_ARG("first")     { m_case=CASE_FIRST; return (LPSTR)""; }
-                IS_ARG("upper")     { m_case=CASE_UPPER; return (LPSTR)""; }
-                IS_ARG("lower")     { m_case=CASE_LOWER; return (LPSTR)""; }
-                IS_ARG("none")      { m_case=CASE_NONE; return (LPSTR)""; }
+                IS_ARG("first")     { m_case=CASE_FIRST; return ""; }
+                IS_ARG("upper")     { m_case=CASE_UPPER; return ""; }
+                IS_ARG("lower")     { m_case=CASE_LOWER; return ""; }
+                IS_ARG("none")      { m_case=CASE_NONE; return ""; }
             }else
             IS_ARG("plural") {
                 is++;
                 if ( ABS(last_number)==1 ) {
-                    return (LPSTR)GET_ARG;
+                    return GET_ARG;
                 }
                 is++;
-                return (LPSTR)GET_ARG;
+                return GET_ARG;
             }else
                 
             IS_ARG("number") {
                 is++;
-                return DescribeNumber(atoi(GET_ARG));
+                return DescribeNumber(atoi(GET_ARG.c_str()));
             }else
  // Character
             IS_ARG("char") {
 __char:
                 is++;
-                IS_ARG("name")        return character->Shortname();
-                IS_ARG("longname")    return character->Longname();
+                RETURN_IF_NULL(character) "";
+                
+                IS_ARG("name")          return character->Shortname();
+                IS_ARG("longname")      return character->Longname();
 #if defined(_DDR_)
-                IS_ARG("time")        return DescribeTime(character->Time());
+                IS_ARG("time")          return DescribeTime(character->Time());
 #else
-                IS_ARG("time")        return DescribeNumber((character->Time()+1)/2);
+                IS_ARG("time")          return DescribeNumber((character->Time()+1)/2);
 #endif
-                IS_ARG("energy")    return DescribeEnergy(character->energy);
-                IS_ARG("despondency")    return DescribeDespondent ( character->despondency );
-                IS_ARG("reckless")        return DescribeReckless ( character->reckless );
+                IS_ARG("energy")        return DescribeEnergy(character->energy);
+                IS_ARG("despondency")   return DescribeDespondent ( character->despondency );
+                IS_ARG("reckless")      return DescribeReckless ( character->reckless );
 
                 IS_ARG("fear")        {  
                                     character->ForcedVariableRefresh();
@@ -1543,23 +1338,23 @@ __char:
 #endif
                 IS_ARG("text")        {
                     is++;
-                    IS_ARG("liege")        return DescribeCharacterLiege( character );
-                    IS_ARG("foe")        return DescribeCharacterFoe( character );
+                    IS_ARG("liege")     return DescribeCharacterLiege( character );
+                    IS_ARG("foe")       return DescribeCharacterFoe( character );
                     IS_ARG("traits")    return DescribeCharacterTraits( character );
-                    IS_ARG("time")        return DescribeCharacterTime( character );
+                    IS_ARG("time")      return DescribeCharacterTime( character );
                     IS_ARG("energy")    return DescribeCharacterEnergy ( character );
-                    IS_ARG("courage")    return DescribeCharacterCourage ( character );
-                    IS_ARG("fear")        return DescribeCharacterFear ( character );
-                    IS_ARG("obj")        return DescribeCharacterObject ( character );
-                    IS_ARG("death")        return DescribeCharacterDeath ( character );
+                    IS_ARG("courage")   return DescribeCharacterCourage ( character );
+                    IS_ARG("fear")      return DescribeCharacterFear ( character );
+                    IS_ARG("obj")       return DescribeCharacterObject ( character );
+                    IS_ARG("death")     return DescribeCharacterDeath ( character );
                     IS_ARG("battle")    return DescribeCharacterBattle ( character );
-                    IS_ARG("army")        return DescribeCharacterArmy ( character );
-                    IS_ARG("loc")        return DescribeCharacterLocation( character );
-                    IS_ARG("group")        return DescribeCharacterGroup( character );
+                    IS_ARG("army")      return DescribeCharacterArmy ( character );
+                    IS_ARG("loc")       return DescribeCharacterLocation( character );
+                    IS_ARG("group")     return DescribeCharacterGroup( character );
 #if defined(_DDR_)
                     IS_ARG("death2")    return DescribeCharacterDeath2 ( character );
-                    IS_ARG("loyalty")    return DescribeCharacterLoyalty( character );
-                    IS_ARG("sees")        return DescribeCharacterSees( character );
+                    IS_ARG("loyalty")   return DescribeCharacterLoyalty( character );
+                    IS_ARG("sees")      return DescribeCharacterSees( character );
                     IS_ARG("inbattle")  return DescribeCharacterInBattle( character );
 #endif
                 }
@@ -1611,49 +1406,52 @@ __char:
             IS_ARG("race") {
 __race:
                 is++;
-                IS_ARG("name")        return rinfo->Name();
-                IS_ARG("soldiers")    return rinfo->SoldiersName();
+                IS_ARG("name")          return rinfo->Name();
+                IS_ARG("soldiers")      return rinfo->SoldiersName();
             }else
 // AREA
             IS_ARG("area") {
 __area:
                 is++;
-                IS_ARG("name")        return ainfo->Name();
-                IS_ARG("prefix")    return ainfo->prefix;
-                IS_ARG("text")        return DescribeArea(ainfo->Id());
+                IS_ARG("name")          return ainfo->Name();
+                IS_ARG("prefix")        return ainfo->prefix;
+                IS_ARG("text")          return DescribeArea(ainfo->Id());
             }else
 // GENDER
             IS_ARG("gender") {
 __gender:
                 is++;
-                IS_ARG("name")        return ginfo->Name();
-                IS_ARG("heshe")        return ginfo->pronoun1;
-                IS_ARG("hisher")    return ginfo->pronoun2;
-                IS_ARG("himher")    return ginfo->pronoun3;
+                IS_ARG("name")          return ginfo->Name();
+                IS_ARG("heshe")         return ginfo->pronoun1;
+                IS_ARG("hisher")        return ginfo->pronoun2;
+                IS_ARG("himher")        return ginfo->pronoun3;
             }else
 // direction
             IS_ARG("dir") {
 __dir:
                 is++;
-                IS_ARG("name")        return dinfo->Name();
+                IS_ARG("name")          return dinfo->Name();
             }else
 //OBJECT
             IS_ARG("obj") {
 __obj:
                 is++;
-                IS_ARG("name")        return oinfo->name;
+                IS_ARG("name")          return oinfo->name;
                         // if oinfo->description == NULL
                         // SS_OBJECT_FULL_DESCRIPTION
-                IS_ARG("text")        return CookText(oinfo->description,character);
+                IS_ARG("text")      {
+                                        std::string description = oinfo->description;
+                                        return CookText(description,character);
+                                    }
 #if defined(_DDR_)
                 IS_ARG("fullname")  return DescribeObjectWithPower(oinfo);
-                IS_ARG("type")        {
-                                    otinfo = mx->ObjectTypeById( static_cast<const ddr_object*>(oinfo)->type );
-                                    return otinfo->Name();
+                IS_ARG("type")      {
+                                        otinfo = mx->ObjectTypeById( static_cast<const ddr_object*>(oinfo)->type );
+                                        return otinfo->Name();
                                     }
-                IS_ARG("power")        {
-                                    opinfo = mx->ObjectPowerById( static_cast<const ddr_object*>(oinfo)->power );
-                                    return opinfo->Name();
+                IS_ARG("power")     {
+                                        opinfo = mx->ObjectPowerById( static_cast<const ddr_object*>(oinfo)->power );
+                                        return opinfo->Name();
                                     }
 #endif
             }else
@@ -1683,19 +1481,22 @@ __loc:
             IS_ARG("terrain") {
 __terrain:
                 is++;
-                IS_ARG("name")        return tinfo->Name();
+                IS_ARG("name")      return tinfo->Name();
                 IS_ARG("plural")    return DescribeTerrainPlural((mxterrain_t)tinfo->Id());
-                IS_ARG("prep")        return tinfo->preposition;
-                IS_ARG("text")        return CookText(tinfo->description,character);
+                IS_ARG("prep")      return tinfo->preposition;
+                IS_ARG("text")      {
+                                        std::string description = tinfo->description;
+                                        return CookText(description,character);
+                                    }
                 IS_ARG("single")    return DescribeTerrainSingularPlural((mxterrain_t)tinfo->Id());
             }else
 // SYSTEM STRING
             IS_ARG("str") {
-                return CookedSystemString((u32)chilli::lib::atol((LPCSTR)tokens[is+1]),character);
+                return CookedSystemString(StringExtensions::atol(tokens.at(is+1)),character);
             }else
 // SPECIAL
             IS_ARG("special") {
-                return SpecialStrings((LPCSTR)tokens[is+1],character);
+                return SpecialStrings(tokens.at(is+1).c_str(),character);
             }
         is++;
     }

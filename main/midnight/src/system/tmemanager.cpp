@@ -25,8 +25,8 @@ void tmemanager::ResolveTMEData ()
     c_mxid all;
     TME_GetAllCharacters(all);
     
-    character c;
     for ( auto id: all) {
+        character c;
         TME_GetCharacter(c, id);
         if ( c.userdata == nullptr ) {
             auto u = new char_data_t;

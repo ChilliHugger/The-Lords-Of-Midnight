@@ -5,57 +5,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <algorithm>
+
 #include <sstream>
+#include <iostream>
+#include <vector>
+#include <string>
+
 
 namespace chilli {
 
     namespace lib {
 
         using namespace chilli::collections;
-        
-        LPSTR c_strtok_r(LPSTR str, LPCSTR delim, char **nextp)
-        {
-            char *ret;
-
-            if (str == NULL)
-            {
-                str = *nextp;
-            }
-
-            str += strspn(str, delim);
-
-            if (*str == '\0')
-            {
-                return NULL;
-            }
-
-            ret = str;
-
-            str += strcspn(str, delim);
-
-            if (*str)
-            {
-                *str++ = '\0';
-            }
-
-            *nextp = str;
-
-            return ret;
-        }
-
-        int SplitString ( LPCSTR source, LPCSTR delim, collections::c_string& tokens ) 
-        {
-            c_str    token = source;
-            
-            char *saveptr1;
-            tokens.Clear();
-            LPSTR t = c_strtok_r(token,delim,&saveptr1);
-            while ( t ) {
-                tokens.Add(t);
-                t = c_strtok_r(NULL,delim,&saveptr1);
-            }
-            return tokens.Count();
-        }
 
         void JumbleArray ( int* array, int max )
         {
@@ -97,17 +58,6 @@ namespace chilli {
 
             return count;
         };
-
-        int GetToken ( LPCSTR token, token_t array[], int max )
-        {
-            if ( token ) {
-                for ( int ii=0; ii<max; ii++ ) {
-                    if (c_stricmp( array[ii].token, token ) == 0 )
-                        return array[ii].value;
-                }
-            }
-            return 0 ;
-        }
 
         LPSTR c_strdup ( LPCSTR s )
         {
@@ -499,23 +449,6 @@ namespace chilli {
             return ::atol(text);
         }
         
-        std::vector<std::string> split_string_by_newline(const std::string& str)
-        {
-            auto result = std::vector<std::string>{};
-            auto ss = std::stringstream{str};
-
-            for (std::string line; std::getline(ss, line, '\n');)
-                result.push_back(line);
-
-            return result;
-        }
-
-        std::string right(std::string& input, int amount)
-        {
-            int inputSize = input.size();
-            return (amount > 0 && inputSize > amount) ? input.substr(inputSize - amount) : input;
-        }
-
     }
     // namespace lib
 

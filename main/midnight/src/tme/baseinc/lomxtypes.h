@@ -702,7 +702,7 @@ namespace tme {
     
     typedef void (*PFNNIGHTCALLBACK)( callback_t* );
     typedef bool (*PFNSERIALIZE)( u32 version, chilli::lib::archive& ar );
-    typedef MXRESULT (*PFNCOMMAND)( const c_str& arg, variant argv[], u32 argc);
+    typedef MXRESULT (*PFNCOMMAND)( const std::string& arg, variant argv[], u32 argc);
     
     
 //
@@ -738,7 +738,7 @@ namespace tme {
 
     typedef struct mxinfo_t : public tme::info_t {
         flags32             flags;
-        LPSTR               name;
+        std::string         name;
         void*               userdata;
     } mxinfo_t ;
 
@@ -966,38 +966,7 @@ namespace tme {
     // mxgridref
 
 
-    //namespace types {
-    
-    class CStrBuf
-    {
-    public:
-        CStrBuf();
-        CStrBuf( u32 size );
-        ~CStrBuf();
-        void sprintf ( LPSTR input, ... );
-        void sprintf ( CStrBuf* input, ... );
-        
-        size_t Length () const            { return chilli::lib::c_strlen(buffer); }
-        LPSTR End ()                    { return GetAt()+Length(); }
-        LPSTR GetAt ()                    { return buffer; }
-        operator LPSTR() const            { return buffer; }
-        operator LPCSTR() const            { return buffer; }
-        void strcat ( LPCSTR input );
-        void strcpy ( LPCSTR input );
-        void Append (  CStrBuf* input );
-        void Copy (  CStrBuf* input );
-        void Resize ( size_t size );
-        void CheckSize ( size_t size );
-        int Id() const                    { return id; }
-        void Id( u32 value )            { id = value; }
-    private:
-        //    friend class tme::processors::text;
-        LPSTR    buffer;
-        u32        id;
-        size_t    cBytes;
-    };
-    
-
+    //namespace types
 
 }
 // namespace tme

@@ -31,15 +31,6 @@ static rgb_t bookmark_colours[] = {
     rgb_t(0x96, 0x96, 0x96)
 };
 
-std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) {
-    size_t start_pos = 0;
-    while((start_pos = str.find(from, start_pos)) != std::string::npos) {
-        str.replace(start_pos, from.length(), to);
-        start_pos += to.length();
-    }
-    return str;
-}
-
 uibook* uibook::createWithChapter( storyheader_t* story )
 {
     uibook* node = new (std::nothrow) uibook();
@@ -59,8 +50,6 @@ bool uibook::initWithChapter( storyheader_t* story )
     
     this->setContentSize(Size(RES(512), RES(400)) );
     
-    f32 itemHeight = RES(28);
-    
     auto bookImage = Sprite::createWithSpriteFrameName(BOOK_IMAGE);
     uihelper::AddCenter(this, bookImage);
     
@@ -76,16 +65,11 @@ bool uibook::initWithChapter( storyheader_t* story )
     gradient->setContentSize(Size(RES(504), RES(198)));
     uihelper::AddBottomLeft(this, gradient, RES(4), RES(4));
     
-    //auto outlineColor = Color4B(_clrBlack); //Color4B(0x3b,0x3d,0xa8,0xff); // 3b3da8
     auto textColor = Color4B(_clrWhite);
-    
-    auto line = ReplaceAll( (LPCSTR)story->description, "\n", "\n\r");
-    
+    auto line = chilli::lib::StringExtensions::replaceAll( story->description, "\n", "\n\r");
     auto title1 = Label::createWithTTF( uihelper::font_config_medium, line );
-    //title1->enableOutline(outlineColor,RES(1));
     title1->getFontAtlas()->setAntiAliasTexParameters();
     title1->setTextColor(textColor);
-    //title1->setLineHeight(itemHeight);
     title1->setHorizontalAlignment(TextHAlignment::CENTER);
     
     uihelper::AddBottomCenter(this, title1, RES(0), RES(16));

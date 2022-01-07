@@ -396,8 +396,7 @@ void uithinkpage::displayObject ( mxid objectid )
 
 void uithinkpage::setupUIElements()
 {
-    tme::CStrBuf     buffer(1024);
-    LPCSTR      text=NULL;
+    std::string text;
     
     character& c = TME_CurrentCharacter();
     
@@ -429,12 +428,10 @@ void uithinkpage::setupUIElements()
     // completely different if dead!
     if ( Character_IsDead(c) ) {
         objectid = c.killedby;
-        text = TME_GetCharacterText(c,"CharDeath");
-        lblDescription->setString(text);
+        lblDescription->setString(TME_GetCharacterText(c,"CharDeath"));
         return;
     }
     
-    text = NULL ;
     switch ( mode ) {
             
         case MODE_THINK:
@@ -455,14 +452,10 @@ void uithinkpage::setupUIElements()
             break;
             
         case MODE_THINK_RECRUITGUARD:
-            text = TME_LastActionMsg();
-            
             TME_GetStronghold(current_stronghold, location_strongholds[0]);
             recruitPostOptions(current_stronghold);
-            lblDescription->setString(text);
+            lblDescription->setString(TME_LastActionMsg());
             return;
-            
-            break;
             
         case MODE_THINK_SEEK:
         case MODE_THINK_FIGHT:
@@ -474,24 +467,12 @@ void uithinkpage::setupUIElements()
             break;
             
         default:
-            text = NULL;
             break;
     }
     
     // TODO display entrance to tunnel
     
-    if ( text ) {
-        buffer.strcpy ( text );
-    }
-    
-    chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(c,SS_MESSAGE1) );
-    
-   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
-   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
-   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
-   // chilli::lib::c_strcat ( buffer.GetAt(), TME_GetSystemString(current_character,SS_MESSAGE1) );
-    
-    text = buffer.GetAt();
+    text += TME_GetSystemString(c,SS_MESSAGE1);
     
     lblDescription->setString(text);
     
@@ -510,18 +491,17 @@ void uithinkpage::setupUIElements()
  *
  */
 
-void uithinkpage::aheadOrHere ( LPSTR text, tme::loc_t location, bool aheaddir )
+void uithinkpage::aheadOrHere ( std::string& text, tme::loc_t location, bool aheaddir )
 {
     character& c = TME_CurrentCharacter();
     
     if ( location.x == c.location.x && location.y == c.location.y) {
-        sprintf ( text, "%s ", TME_GetSystemString(c, SS_PREFIX_HERE ) );
+        text += std::string(TME_GetSystemString(c, SS_PREFIX_HERE )) + " ";
     }else{
         if ( aheaddir )
-            sprintf ( text, "%s ", TME_GetSystemString(c, SS_PREFIX_AHEAD ) );
+            text += std::string(TME_GetSystemString(c, SS_PREFIX_AHEAD )) + " ";
         else {
-            sprintf ( text, "%s ", TME_GetSystemString(c, SS_PREFIX_DIRECTION ) );
-            
+            text += std::string(TME_GetSystemString(c, SS_PREFIX_DIRECTION )) + " ";
         }
     }
     
@@ -559,15 +539,14 @@ void uithinkpage::aheadOrHere ( LPSTR text, tme::loc_t location, bool aheaddir )
 
 void uithinkpage::checkPerson ( void )
 {
-    character        c;
-    tme::CStrBuf            text(512);
-    int                msg=0;
-    
+    character   c;
+    int         msg=0;
+    std::string text;
     
     TME_GetCharacter(c,id) ;
     
 #if defined(_LOM_)
-    aheadOrHere ( text, c.location, TRUE );
+    aheadOrHere ( text, c.location, true );
 #endif
     
     displayCharacterTerrain(c);
@@ -578,20 +557,20 @@ void uithinkpage::checkPerson ( void )
     }else{
         
 #if defined(_DDR_)
-        aheadOrHere ( text, c.location, TRUE );
+        aheadOrHere ( text, c.location, true );
 #endif
         
         msg = Character_IsRecruited(c) ? SS_MESSAGE4 : SS_MESSAGE7 ;
         
 #if defined(_LOM_)
         if ( c.id == TME_GetId("CH_MIDWINTER", IDT_CHARACTER))
-            msg=SS_MESSAGE8;
+            msg = SS_MESSAGE8;
 #endif
         bool isInBattle = Character_IsInBattle(c) ;
         
 #if defined(_DDR_)
         if ( Character_IsPreparingForBattle(c) )
-            isInBattle = TRUE ;
+            isInBattle = true ;
 #endif
         
         // not recruited but we could recruit
@@ -602,7 +581,7 @@ void uithinkpage::checkPerson ( void )
         }
     }
     
-    chilli::lib::c_strcat ( text, TME_GetSystemString(c, msg ) );
+    text.append(TME_GetSystemString(c, msg ));
     
     
     if ( c.id == TME_CurrentCharacter().id ) {
@@ -615,7 +594,7 @@ void uithinkpage::checkPerson ( void )
         }
     }
     
-    lblDescription->setString((LPCSTR)text);
+    lblDescription->setString(text);
     
 }
 
@@ -633,7 +612,7 @@ void uithinkpage::checkPerson ( void )
 
 void uithinkpage::checkPlace ( void )
 {
-    CStrBuf            text(512);
+    std::string text;
     
 #if defined(_DDR_)
     if ( ID_TYPE(id) ==  IDT_CHARACTER ) {
@@ -656,9 +635,10 @@ void uithinkpage::checkPlace ( void )
     args[0] = id;
     
     // seems a bit odd, not in the normal style of using an SS_ text token
-    LPCSTR mytext = TME_GetText("Stronghold",args,1);
-    sprintf ( text.End(), "%s", mytext );
-    lblDescription->setString((LPCSTR)text);
+    
+    text.append(TME_GetText("Stronghold",args,1));
+    
+    lblDescription->setString(text);
     
     recruitPostOptions(current_stronghold);
     
@@ -692,15 +672,12 @@ void uithinkpage::recruitPostOptions ( stronghold& s )
 
 void uithinkpage::checkBattle ( void )
 {
-    CStrBuf            text(512);
     character&        c = TME_CurrentCharacter();
     
     displayCharacter ( c );
     displayCharacterTerrain(c);
     
-    chilli::lib::c_strcat ( text, TME_GetCharacterText ( c, "CharBattle" ) );
-    
-    lblDescription->setString((LPCSTR)text);
+    lblDescription->setString(TME_GetCharacterText ( c, "CharBattle" ));
     
 }
 
@@ -716,14 +693,11 @@ void uithinkpage::checkBattle ( void )
 
 void uithinkpage::checkNormal ( void )
 {
-    CStrBuf            text(512);
     character        c;
     
     TME_GetCharacter(c,id) ;
     
-    chilli::lib::c_strcat ( text, TME_GetSystemString(c,SS_MESSAGE1) );
-    
-    lblDescription->setString((LPCSTR)text);
+    lblDescription->setString(TME_GetSystemString(c,SS_MESSAGE1));
 
 }
 
@@ -744,10 +718,8 @@ void uithinkpage::checkNormal ( void )
 
 void uithinkpage::checkArmy ( void )
 {
-    CStrBuf            buffer(512);
-    character        c;
-    
-    LPSTR text = buffer.GetAt();
+    std::string text;
+    character c;
     
     if ( id == SpecialId::ArmiesHere || id == SpecialId::ArmiesAhead ) {
         int warriors,riders;
@@ -756,26 +728,23 @@ void uithinkpage::checkArmy ( void )
         TME_GetCharacter(c,idt);
         
         if ( id == SpecialId::ArmiesHere) {
-            sprintf ( buffer.End(), "%s ", TME_GetSystemString(c, SS_PREFIX_HERE ) );
+            text += TME_GetSystemString(c, SS_PREFIX_HERE ) + " ";
             displayArmy();
             warriors = location_armies.regiment_warriors;
             riders = location_armies.regiment_riders;
         }else{
-            sprintf ( buffer.End(), "%s ", TME_GetSystemString(c, SS_PREFIX_AHEAD ) );
+            text += TME_GetSystemString(c, SS_PREFIX_AHEAD ) + " ";
             warriors = location_infront_armies.regiment_warriors;
             riders = location_infront_armies.regiment_riders;
             displayArmy();
         }
         
+        text +=
+            TME_GetSystemString(c,SS_WARRIORS_RIDERS) +
+            TME_GetNumber(warriors) +
+            TME_GetNumber(riders);
         
-        std::string strWarriors = TME_GetNumber(warriors);
-        std::string strRiders = TME_GetNumber(riders);
-        sprintf ( buffer.End(),
-                 TME_GetSystemString(c,SS_WARRIORS_RIDERS),
-                 strWarriors.c_str(),
-                 strRiders.c_str()
-                 );
-        lblDescription->setString((LPSTR)text);
+        lblDescription->setString(text);
         return;
     }
     
@@ -784,9 +753,9 @@ void uithinkpage::checkArmy ( void )
         case IDT_CHARACTER:
             
             TME_GetCharacter(c,id) ;
-            aheadOrHere(text,c.location,TRUE);
+            aheadOrHere(text,c.location,true);
             displayCharacter ( c );
-            chilli::lib::c_strcat ( text, TME_GetSystemString(c, SS_MESSAGE2 ) );
+            text += TME_GetSystemString(c, SS_MESSAGE2 ) ;
             displayCharacterTerrain(c);
           
             if(c.id == TME_CurrentCharacter().id)
@@ -802,7 +771,7 @@ void uithinkpage::checkArmy ( void )
             displayTerrain ( current_stronghold.terrain );
             variant args[2];
             args[0] = current_stronghold.id ;
-            chilli::lib::c_strcat( text, TME_GetText("Stronghold", args, 1 ) );
+            text += TME_GetText("Stronghold", args, 1 ) ;
             
             recruitPostOptions(current_stronghold);
             
@@ -812,6 +781,6 @@ void uithinkpage::checkArmy ( void )
             break;
     }
     
-    lblDescription->setString((LPCSTR)text);
+    lblDescription->setString(text);
     
 }

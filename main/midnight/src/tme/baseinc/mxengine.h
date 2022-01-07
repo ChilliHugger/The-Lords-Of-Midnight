@@ -6,8 +6,8 @@
 
 //#define _TME_DEMO_MODE_
 
-#define ISARG(x)     c_stricmp( arg, x ) == 0 
-#define COMMAND(x)    static MXRESULT (x)( const c_str& arg, variant argv[], u32 argc)
+#define ISARG(x)     c_stricmp( arg.c_str(), x ) == 0
+#define COMMAND(x)    static MXRESULT (x)( const std::string& arg, variant argv[], u32 argc)
 #define mxrandom    randomno::instance.get
 #define mxchance    randomno::instance.chance
 #define EOS(x)        x+c_strlen(x)
@@ -46,48 +46,50 @@ namespace tme {
         mxengine();
         virtual ~mxengine();
 
-        virtual MXRESULT SetDatabaseDirectory ( const c_str& directory ) ;
+        virtual MXRESULT SetDatabaseDirectory ( const std::string& directory ) ;
         virtual MXRESULT LoadDatabase ( void ) ;
         virtual MXRESULT UnloadDatabase ( void ) ;
         //virtual MXRESULT LoadDefaultScenario ( void ) ;
         virtual MXRESULT LoadScenario ( mxscenario* scenario ) ;
         virtual MXRESULT UnloadScenario () ;
-        virtual MXRESULT SaveGame ( const c_str& filename, PFNSERIALIZE function ) ;
-        virtual MXRESULT LoadGame ( const c_str& filename, PFNSERIALIZE function ) ;
-        virtual MXRESULT SaveGameDescription ( const c_str& filename, c_str& description );
+        virtual MXRESULT SaveGame ( const std::string& filename, PFNSERIALIZE function ) ;
+        virtual MXRESULT LoadGame ( const std::string& filename, PFNSERIALIZE function ) ;
+        virtual MXRESULT SaveGameDescription ( const std::string& filename, std::string& description );
 
-        virtual MXRESULT ProcessCommand ( mxcommand_t tblCommand[], u32 max, const c_str& arg, variant argv[], u32 argc )  ;
+        virtual MXRESULT ProcessCommand ( mxcommand_t tblCommand[], u32 max, const std::string& arg, variant argv[], u32 argc )  ;
 
         virtual void NightCallback( callback_t* )  ;
 
-        virtual LPSTR LastActionMsg() ;
+        std::string LastActionMsg() ;
+        void SetLastActionMsg(const std::string& text) ;
+  
         virtual void Error ( u32 errorcode )  ;
         virtual u32 Error () const   ;
         
         //
-        MXRESULT LoadDiscoveryMap ( const c_str& filename );
-        MXRESULT SaveDiscoveryMap ( const c_str& filename );
+        MXRESULT LoadDiscoveryMap ( const std::string& filename );
+        MXRESULT SaveDiscoveryMap ( const std::string& filename );
         
         static void debug (LPCSTR format, ... );
         
         // tme::item
         mxroutenode*    RouteNodeById(u32 id) ;
         mxcharacter*    CharacterById(u32 id) ;
-        mxstronghold*    StrongholdById(u32 id) ;
-        mxregiment*        RegimentById(u32 id) ;
+        mxstronghold*   StrongholdById(u32 id) ;
+        mxregiment*     RegimentById(u32 id) ;
         mxplace*        PlaceById(u32 id) ;
-        mxobject*        ObjectById(u32 id) ;
-        mxvictory*        VictoryById(u32 id) ;
-        mxmission*        MissionById(u32 id) ;
+        mxobject*       ObjectById(u32 id) ;
+        mxvictory*      VictoryById(u32 id) ;
+        mxmission*      MissionById(u32 id) ;
 
         // tme::info
         mxdirection*    DirectionById(u32 id) ;
-        mxunitinfo*        UnitById(u32 id) ;
-        mxrace*            RaceById(u32 id) ;
-        mxgender*        GenderById(u32 id) ;
-        mxterrain*        TerrainById(u32 id) ;
-        mxarea*            AreaById(u32 id) ;
-        mxcommand*        CommandById(u32 id) ;
+        mxunitinfo*     UnitById(u32 id) ;
+        mxrace*         RaceById(u32 id) ;
+        mxgender*       GenderById(u32 id) ;
+        mxterrain*      TerrainById(u32 id) ;
+        mxarea*         AreaById(u32 id) ;
+        mxcommand*      CommandById(u32 id) ;
 #if defined(_DDR_)
         mxobjectpower*  ObjectPowerById(u32 id);
         mxobjecttype*   ObjectTypeById(u32 id);
@@ -100,8 +102,8 @@ namespace tme {
         u32 CollectStrongholds ( mxgridref loc, entities& collection ) ;
         u32 CollectRoutenodes ( mxgridref loc, entities& collection ) ;
 
-        cvarreg_t* FindDBVariable ( const c_str& name ) const;
-        mxentity* EntityByName( const c_str& name, id_type_t type=IDT_NONE );
+        cvarreg_t* FindDBVariable ( const std::string& name ) const;
+        mxentity* EntityByName( const std::string& name, id_type_t type=IDT_NONE );
         mxentity* EntityByIdt( mxid id );
         LPCSTR EntitySymbolById ( mxid id );
         MXRESULT EntityLinkData( mxid id, const void* data );
@@ -150,17 +152,20 @@ namespace tme {
         cvarreg_t*                variables ;
     //os::config*                m_config;
         bool                    defaultscenario;
-        u32                        m_errorcode;
+        u32                     m_errorcode;
         mxcharacter*            m_CurrentCharacter;
-        char                    m_szDatabase[MAX_PATH];            
-        char                    lastactiontext[1024];
+        std::string             m_szDatabase;
+        std::string             lastactiontext;
         
         u32                     savegameversion;
 
     };
 
-    inline LPSTR mxengine::LastActionMsg()
+    inline std::string mxengine::LastActionMsg()
         { return lastactiontext; }
+
+    inline void mxengine::SetLastActionMsg(const std::string& text)
+        { lastactiontext = text; }
 
     extern mxengine* mx;
 

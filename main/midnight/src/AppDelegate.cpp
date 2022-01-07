@@ -94,21 +94,21 @@ void AppDelegate::InitialisePaths()
     auto res = moonring::mikesingleton()->resolution;
     
 
-    LPCSTR scenario = TME_ScenarioShortName();
-    LPCSTR resfolder = res->Folder().c_str();
+    auto scenario = TME_ScenarioShortName();
+    auto resfolder = res->Folder();
 
     char main_path[MAX_PATH];
     
-    sprintf( main_path, "%s/%s", scenario, resfolder );
+    sprintf( main_path, "%s/%s", scenario.c_str(), resfolder.c_str() );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "%s/%s/screens/%d", scenario, resfolder, res->Aspect() );
+    sprintf( main_path, "%s/%s/screens/%d", scenario.c_str(), resfolder.c_str(), res->Aspect() );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "all/%s",resfolder );
+    sprintf( main_path, "all/%s",resfolder.c_str() );
     searchPaths.push_back(main_path);
     
-    sprintf( main_path, "all/%s/screens/%d", resfolder, res->Aspect() );
+    sprintf( main_path, "all/%s/screens/%d", resfolder.c_str(), res->Aspect() );
     searchPaths.push_back(main_path);
     
     

@@ -36,7 +36,7 @@ typedef std::function<void(void)> MXVoidCallback;
     CONTINUE_IF( (x) == nullptr )
 
 #define RETURN_IF_NULL( x )  \
-    if ( (x) == null ) return
+    if ( (x) == nullptr ) return
 
 #define BREAK_IF( x )  \
     if ( (x) ) break
@@ -120,6 +120,8 @@ typedef const CHAR            *LPCSTR;
 
 #define MXAPI 
 //#define MXAPI __stdcall
+
+#include <string>
 
 namespace chilli {
     namespace lib {
@@ -308,73 +310,34 @@ namespace chilli {
         
         
         /* flags32 */
-        MXINLINE flags32::flags32()                                    { m_flags = 0 ; }
+        MXINLINE flags32::flags32()                                 { m_flags = 0 ; }
         MXINLINE void flags32::Set ( u32 f )                        { m_flags |= f ; }
-        MXINLINE void flags32::Reset ( u32 f )                        { m_flags &= ~f ; }
+        MXINLINE void flags32::Reset ( u32 f )                      { m_flags &= ~f ; }
         MXINLINE void flags32::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags32::Is ( u32 f) const                    { return (m_flags&f)==f ? TRUE : FALSE  ; }
-        MXINLINE flags32::operator u32() const                        { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags32& f )        { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags32& f )        { return f.Serialize(ar); }
+        MXINLINE bool flags32::Is ( u32 f) const                    { return (m_flags&f)==f; }
+        MXINLINE flags32::operator u32() const                      { return m_flags; }
+        MXINLINE archive& operator<<( archive& ar, flags32& f )     { return f.Serialize(ar); }
+        MXINLINE archive& operator>>( archive& ar, flags32& f )     { return f.Serialize(ar); }
         
         /* flags8 */
-        MXINLINE flags8::flags8()                                    { m_flags = 0 ; }
-        MXINLINE void flags8::Set ( u8 f )                            { m_flags |= f ; }
+        MXINLINE flags8::flags8()                                   { m_flags = 0 ; }
+        MXINLINE void flags8::Set ( u8 f )                          { m_flags |= f ; }
         MXINLINE void flags8::Reset ( u8 f )                        { m_flags &= ~f ; }
         MXINLINE void flags8::Toggle ( u32 f )                      { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags8::Is ( u8 f ) const                        { return (m_flags&f)==f ? TRUE : FALSE  ; }
+        MXINLINE bool flags8::Is ( u8 f ) const                     { return (m_flags&f)==f; }
         MXINLINE flags8::operator u8() const                        { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags8& f )        { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags8& f )        { return f.Serialize(ar); }
+        MXINLINE archive& operator<<( archive& ar, flags8& f )      { return f.Serialize(ar); }
+        MXINLINE archive& operator>>( archive& ar, flags8& f )      { return f.Serialize(ar); }
         
         /* flags16 */
-        MXINLINE flags16::flags16()                                    { m_flags = 0 ; }
+        MXINLINE flags16::flags16()                                 { m_flags = 0 ; }
         MXINLINE void flags16::Set ( u16 f )                        { m_flags |= f ; }
-        MXINLINE void flags16::Reset ( u16 f )                        { m_flags &= ~f ; }
+        MXINLINE void flags16::Reset ( u16 f )                      { m_flags &= ~f ; }
         MXINLINE void flags16::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags16::Is ( u16 f ) const                    { return (m_flags&f)==f ? TRUE : FALSE  ; }
-        MXINLINE flags16::operator u16() const                        { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags16& f )        { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags16& f )        { return f.Serialize(ar); }
-
-        // str
-        class  c_str
-        {
-        public:
-            c_str();
-            c_str ( LPSTR str );
-            c_str ( LPCSTR str );
-
-            ~c_str();
-
-            operator LPSTR() const;
-            operator LPCSTR() const;
-
-            size_t Length() const ;
-
-            const c_str&  operator= ( LPCSTR value );
-            const c_str&  operator= ( const c_str& str );
-
-            archive& Serialize ( archive& ar );
-            friend  archive& operator<<( archive& ar, c_str& value );
-            friend  archive& operator>>( archive& ar, c_str& value );
-
-            bool IsNull() const;
-            bool IsEmpty() const;
-
-            LPCSTR GetAt() const { return m_pchData; }
-
-        private:
-            LPSTR    m_pchData;
-        };
-
-        extern c_str    strNull;
-        
-        MXINLINE archive& operator<<( archive& ar, c_str& s )        { return s.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, c_str& s )        { return s.Serialize(ar); }
-        MXINLINE c_str::operator LPSTR() const                              { return m_pchData; }
-        MXINLINE c_str::operator LPCSTR() const                             { return m_pchData; }
-
+        MXINLINE bool flags16::Is ( u16 f ) const                   { return (m_flags&f)==f; }
+        MXINLINE flags16::operator u16() const                      { return m_flags; }
+        MXINLINE archive& operator<<( archive& ar, flags16& f )     { return f.Serialize(ar); }
+        MXINLINE archive& operator>>( archive& ar, flags16& f )     { return f.Serialize(ar); }
 
         // random
         class randomno
@@ -434,8 +397,13 @@ namespace chilli {
                 { vType=vdouble;vDouble = value ; return vDouble; }
             LPSTR& operator = ( LPSTR value )
                 { vType=vstring;vString = value ; return vString; }
-            LPSTR& operator = ( c_str value )
-                { vType=vstring;vString = (LPSTR)value ; return vString; }
+            //LPSTR& operator = ( std::string value )
+            //    { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
+            LPSTR& operator = ( std::string& value )
+                { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
+            LPSTR& operator = ( const std::string& value )
+                { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
+                    
             void*& operator = ( void* value )
                 { vType=vptr;
             vPtr = value ; 
@@ -452,11 +420,11 @@ namespace chilli {
                 { return vDouble; }
             operator char*() const
                 { return vString; }
-            operator c_str() const
-                { return vString; }
+            //operator c_str() const
+            //    { return vString; }
             operator void*() const
                 { return vPtr; }
-
+                
         public:
             var_t                vType;
             union {
@@ -639,5 +607,6 @@ namespace chilli {
 // can't imagine any case where you would include this file
 // and not want the namespace
 using namespace chilli::types;
+
 
 

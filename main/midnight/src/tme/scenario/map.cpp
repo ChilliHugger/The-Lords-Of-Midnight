@@ -103,12 +103,12 @@ void mxmap::ResetVisibleRange()
  * 
  */
 
-bool mxmap::Load ( LPCSTR filename )
+bool mxmap::Load ( const std::string& filename )
 {
     
-MXTRACE( "Loading Map '%s'", filename);
+MXTRACE( "Loading Map '%s'", filename.c_str());
 
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;
@@ -118,7 +118,7 @@ MXTRACE( "Loading Map '%s'", filename);
 
 u32 magicno;
 u32 versionno;
-c_str header;
+std::string header;
 
     ar >> magicno;
 MXTRACE( "MagicNo=%x", (unsigned int)magicno);
@@ -143,9 +143,9 @@ MXTRACE( "Version=%d", (int)versionno);
     }
     
     ar >> header;
-MXTRACE( "Header='%s'", (LPSTR)header);
+MXTRACE( "Header='%s'", header.c_str());
 
-    if (c_stricmp(header,MAPHEADER) != 0 ) {
+    if (c_stricmp(header.c_str(),MAPHEADER) != 0 ) {
         MXTRACE("Invalid MAP Header");
         return FALSE;
     }

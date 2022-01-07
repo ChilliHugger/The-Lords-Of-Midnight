@@ -14,6 +14,7 @@
 #include "help_ddr.cpp"
 #include "help_lom.cpp"
 
+
 helpmanager::helpmanager()
 {
     CLEARARRAY(displayed);
@@ -23,7 +24,7 @@ helpmanager::~helpmanager()
 {
 }
 
-LPCSTR helpmanager::Get( helpid_t id )
+std::string helpmanager::Get( helpid_t id )
 {
     return help_messages[ id ].text;
 }
@@ -56,10 +57,9 @@ void helpmanager::Shown( helpid_t id )
 
 BOOL helpmanager::Save ( storyid_t id )
 {
-    char filename[MAX_PATH]={0};
-    sprintf(filename, "%s/help", mr->stories->getFolder(id) );
+    auto filename = StringExtensions::Format("%s/help", mr->stories->getFolder(id).c_str() );
 
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
     if ( pFile == NULL || !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;
@@ -87,11 +87,9 @@ BOOL helpmanager::Load ( storyid_t id )
     
     CLEARARRAY(displayed);
 
-    char filename[MAX_PATH]={0};
-    sprintf(filename, "%s/help", mr->stories->getFolder(id) );
+    auto filename = StringExtensions::Format( "%s/help", mr->stories->getFolder(id).c_str() );
 
-
-    chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
         return FALSE;

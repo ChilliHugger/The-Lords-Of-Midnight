@@ -131,8 +131,8 @@ namespace tme {
         PROPERTY( id_type_t, Type, type );
         PROPERTY( u32, Id, id );
 
-        c_str& Symbol() { return symbol ; }
-        bool IsSymbol(LPCSTR s) const { return c_stricmp(symbol,s) == 0; }
+        std::string& Symbol() { return symbol ; }
+        bool IsSymbol(LPCSTR s) const { return c_stricmp(symbol.c_str(),s) == 0; }
 
         virtual int Compare ( mxentity* o, int hint ) const;
 
@@ -146,7 +146,7 @@ namespace tme {
     protected:
         id_type_t               type;
         u32                     id;
-        c_str                   symbol;
+        std::string             symbol;
         flags32                 flags;
         const void*             user_data ;
 
@@ -222,7 +222,7 @@ namespace tme {
 #if defined(_DDR_)
             void Loses ( s32 value ) { total = BSub(total, value,0); }
 #endif
-            const c_str& Name() const;
+            const std::string& Name() const;
 
         protected:
             friend class    mxcharacter ;
@@ -333,8 +333,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         virtual void Serialize ( chilli::lib::archive& ar ) ;
 
-        bool Load ( LPCSTR filename );
-        bool Save ( LPCSTR filename );
+        bool Load ( const std::string& filename );
+        bool Save ( const std::string& filename );
         bool IsLocationSpecial( mxgridref loc );
         bool IsLocationBlock( mxgridref loc ) ;
         bool IsLocOnMap ( mxgridref loc ) const ;
@@ -409,8 +409,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         
         void ClearVisibleArea();
         void ResetVisibleArea();
-        bool Load ( LPCSTR filename );
-        bool Save ( LPCSTR filename );
+        bool Load ( const std::string& filename );
+        bool Save ( const std::string& filename );
         
         bool IsLocationVisible( mxgridref l );
         flags32& GetAt ( const mxgridref& mxloc );
@@ -466,7 +466,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             void Destroy( void );
             virtual void Serialize( chilli::lib::archive& ar );
-            mxentity* FindSymbol ( const c_str& name ) ;
+            mxentity* FindSymbol ( const std::string& name ) ;
             void Sort ( int hint ) ; // not thread safe
 
             bool Add ( mxentity* );
@@ -504,10 +504,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             DEFAULT_IMPLEMENTATION(mxinfo);
 
-            c_str& Name() { return name ; }
+            std::string& Name() { return name ; }
 
         protected:
-            c_str    name;
+            std::string    name;
 
         }; // base
 
@@ -531,7 +531,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             DEFAULT_IMPLEMENTATION(mxarea);
 
         public:
-            c_str               prefix;
+            std::string               prefix;
         }; // area
 
         // direction
@@ -551,9 +551,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             DEFAULT_IMPLEMENTATION(mxgender);
 
         public:
-            c_str               pronoun1;
-            c_str               pronoun2;
-            c_str               pronoun3;
+            std::string         pronoun1;
+            std::string         pronoun2;
+            std::string         pronoun3;
         };
 
         // race
@@ -578,10 +578,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             f64 RidingMovementMultiplier() const    { return (f64)ridingmultiplier/10000.0; }
             
-            c_str& SoldiersName();
+            std::string& SoldiersName();
 
         protected:
-            c_str               soldiersname;
+            std::string         soldiersname;
             u32                 success;
             u32                 initialmovement;
             s32                 diagonalmodifier;
@@ -614,13 +614,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             GET_PROPERTY ( u32, Obstruction, obstruction )
             GET_PROPERTY ( s32, MovementCost, movementcost )
 
-            c_str& Preposition() { return preposition; }
-            c_str& Description() { return description; }
+            std::string& Preposition() { return preposition; }
+            std::string& Description() { return description; }
 
 
         public:
-            c_str               preposition;
-            c_str               description;
+            std::string         preposition;
+            std::string         description;
             u32                 success;
             u32                 visibility;
             u32                 obstruction;
@@ -788,12 +788,12 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             bool CanDestroy ( mxobject* obj ) const ;
             
-            c_str& Name()          { return name ; }
+            std::string& Name()          { return name ; }
 
         public:
             mxthing_t           kills;
-            c_str               name;
-            c_str               description;
+            std::string         name;
+            std::string         description;
             u32                 usedescription;
             mxitem*             carriedby;
         }; // object
@@ -989,8 +989,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
             bool HasArmy() const { return ((riders.total+warriors.total) > 0); }
             bool IsDead() const { return !flags.Is(cf_alive); }
-            const c_str& Longname() const { return longname; }
-            const c_str& Shortname() const { return shortname; }
+            const std::string& Longname() const { return longname; }
+            const std::string& Shortname() const { return shortname; }
 
             void SetLastCommand ( command_t cmd, mxid id );
             void CommandTakesTime ( bool success );
@@ -1052,17 +1052,17 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             void ForcedVariableRefresh() const;
 
-            const c_str& HeOrShe() const ;
-            const c_str& HisOrHer() const ;
-            const c_str& HimOrHer() const ;
+            const std::string& HeOrShe() const ;
+            const std::string& HisOrHer() const ;
+            const std::string& HimOrHer() const ;
 
 
         public:
 
             mxdir_t             looking;
             mxtime_t            time;
-            c_str               longname;
-            c_str               shortname;
+            std::string         longname;
+            std::string         shortname;
             //charimages_t images;
             
             mxgridref           battleloc;    // change this to CBattle

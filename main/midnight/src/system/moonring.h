@@ -57,7 +57,7 @@ public:
     static void log(LPCSTR format, ...);
 
     void initialise( progressmonitor* monitor );
-    LPCSTR getWritablePath();
+    std::string getWritablePath();
     bool serialize( u32 version, chilli::lib::archive& ar );
     
     // assets
@@ -151,8 +151,6 @@ public:
 
 #define CONFIG(x)   (mr->settings->x)
 
-
-//void _msg (LPCSTR format, ... );
 
 #define COMPLAIN    moonring::complain
 

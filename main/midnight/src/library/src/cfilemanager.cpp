@@ -52,7 +52,7 @@ namespace chilli {
          *
          */
         
-        void* filemanager::Load ( LPCSTR filename, u32* size )
+        void* filemanager::Load ( const std::string& filename, u32* size )
         {
 #if defined(COCOS2DX)
             auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(filename);
@@ -76,7 +76,7 @@ namespace chilli {
             }
             
             PFILE pFile = new file ();
-            if ( !pFile->Open( filename, file::modeRead ) ) {
+            if ( !pFile->Open( filename.c_str(), file::modeRead ) ) {
                 //        DEBUG("ERROR Open\n");
                 if ( pFile ) delete pFile;
                 return ( NULL );
@@ -137,7 +137,7 @@ namespace chilli {
             SAFEFREE( *lpMem );
         }
         
-        u32 filemanager::Size ( LPCSTR filename )
+        u32 filemanager::Size ( const std::string& filename )
         {
 #if defined(COCOS2DX)
             return (u32)cocos2d::FileUtils::getInstance()->getFileSize(filename);
@@ -145,7 +145,7 @@ namespace chilli {
             DWORD    dwSize;
             
             PFILE pFile = new file ( );
-            if ( !pFile->Open(  filename, file::modeRead|file::shareCompat) ){
+            if ( !pFile->Open( filename.c_str(), file::modeRead|file::shareCompat) ){
                 if ( pFile ) delete pFile;
                 return ( 0 );
             }
@@ -172,7 +172,7 @@ namespace chilli {
          *
          */
         
-        bool filemanager::Save( LPCSTR filename, const void* lpBuffer, u32 dwSize )
+        bool filemanager::Save( const std::string& filename, const void* lpBuffer, u32 dwSize )
         {
 #if defined(COCOS2DX)
             cocos2d::Data data;
@@ -180,7 +180,7 @@ namespace chilli {
             return cocos2d::FileUtils::getInstance()->writeDataToFile(data, filename);
 #else
             PFILE pFile = new file (  );
-            if ( !pFile->Open(filename, file::modeWrite|file::modeCreate) ) {
+            if ( !pFile->Open(filename.c_str(), file::modeWrite|file::modeCreate) ) {
                 //        DEBUG("ERROR Open\n");
                 if ( pFile ) delete pFile;
                 return ( FALSE );
@@ -218,17 +218,17 @@ namespace chilli {
          *
          */
         
-        bool filemanager::Exists ( LPCSTR lpFileName )
+        bool filemanager::Exists ( const std::string& fileName )
         {
 #ifdef _MARMALADE_
-            return IwFileCheckExists(lpFileName);
+            return IwFileCheckExists(fileName);
             
 #elif defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->isFileExist(lpFileName);
+            return cocos2d::FileUtils::getInstance()->isFileExist(fileName);
             
 #elif defined(_UNIX_) || defined(_LINUX_)
             filelist files;
-            files.CreateDir ( (LPSTR)lpFileName );
+            files.CreateDir ( fileName.c_str() );
             return files.Count() > 0 ;
 #else
             
@@ -246,10 +246,10 @@ namespace chilli {
 #endif            
         }
         
-        s64 filemanager::DateTime(LPCSTR lpFileName)
+        s64 filemanager::DateTime(const std::string& fileName)
         {
 #ifdef _MARMALADE_
-            int64 value = s3eFileGetFileInt(lpFileName, S3E_FILE_MODIFIED_DATE);
+            int64 value = s3eFileGetFileInt(fileName, S3E_FILE_MODIFIED_DATE);
             return value ;
 #endif
             return 0;
@@ -257,50 +257,50 @@ namespace chilli {
         
         
         
-        bool filemanager::ExistsDir(LPCSTR lpFileName)
+        bool filemanager::ExistsDir(const std::string& fileName)
         {
 #if defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->isDirectoryExist(lpFileName);
+            return cocos2d::FileUtils::getInstance()->isDirectoryExist(fileName);
 #endif
             //S3E_API s3eFileList* s3eFileListDirectory(const char* dirName);
             return FALSE;
         }
         
-        bool filemanager::Rename(LPCSTR lpszOldName, LPCSTR lpszNewName)
+        bool filemanager::Rename(const std::string& oldName, const std::string& newName)
         {
 #ifdef _MARMALADE_
-            return s3eFileRename(lpszOldName, lpszNewName ) == S3E_RESULT_SUCCESS ;
+            return s3eFileRename(oldName, newName ) == S3E_RESULT_SUCCESS ;
 #elif defined(COCOS2DX)
-            cocos2d::FileUtils::getInstance()->renameFile(lpszOldName,lpszNewName);
+            cocos2d::FileUtils::getInstance()->renameFile(oldName,newName);
 #else
-            return rename((LPSTR)lpszOldName, (LPSTR)lpszNewName) == 0;
+            return rename(oldName.c_str(), newName.c_str()) == 0;
 #endif
             return false;
         }
         
-        bool filemanager::Remove(LPCSTR lpszFileName)
+        bool filemanager::Remove(const std::string& fileName)
         {
 #if defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->removeFile(lpszFileName);
+            return cocos2d::FileUtils::getInstance()->removeFile(fileName);
 #else
-            return remove((LPSTR)lpszFileName) == 0;
+            return remove(fileName.c_str()) == 0;
 #endif
         }
         
-        bool filemanager::Copy ( LPCSTR lpszSrcName, LPCSTR lpszDstName )
+        bool filemanager::Copy ( const std::string& srcName, const std::string& dstName )
         {
 #ifdef _MARMALADE_
-            return IwFileCopy( lpszDstName, lpszSrcName ) == S3E_RESULT_SUCCESS ;
+            return IwFileCopy( dstName, srcName ) == S3E_RESULT_SUCCESS ;
 #elif defined(COCOS2DX)
-            auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(lpszSrcName);
-            return cocos2d::FileUtils::getInstance()->writeDataToFile(data, lpszDstName);
+            auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(srcName);
+            return cocos2d::FileUtils::getInstance()->writeDataToFile(data, dstName);
 #else
 
 #endif
             return false;
         }
         
-        bool filemanager::CreateDirectory(LPCSTR path)
+        bool filemanager::CreateDirectory(const std::string& path)
         {
 #ifdef WIN32
 //            return ::CreateDirectory(path,NULL);
@@ -319,25 +319,8 @@ namespace chilli {
             return FALSE ;
         }
         
-        bool filemanager::DestroyDirectory ( LPCSTR path )
+        bool filemanager::DestroyDirectory ( const std::string& path )
         {
-#ifdef _MARMALADE_
-            char filename[MAX_PATH]={0};
-            char filename2[MAX_PATH]={0};
-            
-            s3eFileList* file = s3eFileListDirectory(path);
-            if ( file == NULL )
-                return TRUE ;
-            
-            while ( s3eFileListNext( file, filename, MAX_PATH ) == S3E_RESULT_SUCCESS ) {
-                sprintf(filename2, "%s/%s", path, filename);
-                filemanager::Remove(filename2);
-                CLEARARRAY(filename2);
-            }
-            
-            s3eFileListClose(file);
-#endif
-            
 #if defined(COCOS2DX)
             return cocos2d::FileUtils::getInstance()->removeDirectory(path);
 #endif
@@ -358,7 +341,7 @@ namespace chilli {
          * 
          */
         
-        LPSTR filemanager::GetCurrentDirectory ( int max, LPSTR dir )
+        std::string filemanager::GetCurrentDirectory ( int max, const std::string& dir )
         {
 #ifdef WIN32
             ::GetCurrentDirectoryA( max, dir );
@@ -368,7 +351,7 @@ namespace chilli {
             return dir ;
         }
         
-        void filemanager::SetCurrentDirectory (LPCSTR dir )
+        void filemanager::SetCurrentDirectory (const std::string& dir )
         {
 #ifdef WIN32
             ::SetCurrentDirectoryA( dir );
@@ -377,13 +360,13 @@ namespace chilli {
 #endif
         }
     
-        char* filemanager::Fullpath ( char *UserBuf, const char *path, u32 maxlen )
+        std::string filemanager::Fullpath ( char *UserBuf, LPCSTR path, u32 maxlen )
         {
             char    *buf;
             size_t   cbPath;
             
             if( !path || !*path )
-                return( (char*)GetCurrentDirectory( maxlen, UserBuf ) );
+                return( GetCurrentDirectory( maxlen, UserBuf ) );
             
             if (UserBuf && (strlen(path) > maxlen))
                 return NULL;
@@ -428,7 +411,7 @@ namespace chilli {
                 (strstr(path, ":") == NULL) )
             {
                 //partial path
-                if (GetCurrentDirectory( maxlen,buf ) != NULL)
+                if (!GetCurrentDirectory( maxlen,buf ).empty())
                 {
                     if (*path == ':')
                     {
@@ -445,7 +428,7 @@ namespace chilli {
                     {
                         free(buf);
                     }
-                    return( NULL);
+                    return "";
                 }
             }
             else

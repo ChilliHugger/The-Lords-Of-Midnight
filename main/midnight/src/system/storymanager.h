@@ -30,7 +30,7 @@ typedef enum savemode_t {
 
 typedef struct storyheader_t {
     storyid_t           id;
-    c_str               description ;
+    std::string         description ;
     u32                 slot;
     savemode_t          mode;
 } storyheader_t;
@@ -67,19 +67,19 @@ public:
     virtual bool canUndo ( savemode_t mode );
     virtual bool undo ( savemode_t mode );
 
-    LPCSTR getFolder( storyid_t id );
-    LPCSTR getPath( storyid_t id );
-    LPCSTR getPath(storyid_t id, saveid_t save);
+    std::string getFolder( storyid_t id );
+    std::string getPath( storyid_t id );
+    std::string getPath(storyid_t id, saveid_t save);
 
     storyid_t current_story() const { return currentStory; }
     
     bool isUsed ( storyid_t id ) { return used[id-1]; }
-    bool getDescription( storyid_t id, c_str& description );
+    std::string getDescription( storyid_t id );
         
     virtual void SetLoadSave( tme::PFNSERIALIZE function );
     bool Serialize( u32 version, chilli::lib::archive& ar );
     
-    LPCSTR DiscoveryMapFilename();
+    std::string DiscoveryMapFilename();
     
 protected:
     bool                used[MAX_STORIES];
@@ -90,6 +90,5 @@ protected:
     c_u32               last_morning;
     bool                undo_last_available;
     storyinfo_t         stories ;
-    
 };
 

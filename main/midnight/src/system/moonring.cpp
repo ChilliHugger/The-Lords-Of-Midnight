@@ -20,6 +20,7 @@
 #include "progressmonitor.h"
 #include "configmanager.h"
 #include "shadermanager.h"
+#include <string>
 
 #if defined(_USE_VERSION_CHECK_)
     #include "network/HttpClient.h"
@@ -110,27 +111,29 @@ moonring::~moonring()
 }
 
 
-LPCSTR moonring::getWritablePath()
+std::string moonring::getWritablePath()
 {
     if(!writeablepath.empty())
     {
-        return writeablepath.c_str();
+        return writeablepath;
     }
     
+    std::string path;
+    
 #if defined(_OS_OSX_)
-    std::string path = chilli::extensions::getApplicationSupportPath();
-    path.append("com.chillihugger.midnight/");
+    path = chilli::extensions::getApplicationSupportPath();
+    path += "com.chillihugger.midnight/";
 #else
-    auto path = cocos2d::FileUtils::getInstance()->getWritablePath();
+    path = cocos2d::FileUtils::getInstance()->getWritablePath();
 #endif
 
 #if defined(_OS_DESKTOP_)
-    path.append(TME_ScenarioName()).c_str();
+    path += TME_ScenarioName();
 #endif
     
     writeablepath = path;
     
-    return writeablepath.c_str();
+    return writeablepath;
 }
 
 void moonring::showPage( panelmode_t mode, mxid object )
@@ -764,11 +767,12 @@ void moonring::getVersion(const GetVersionCallback& callback)
             {
                 auto data = response->getResponseData();
                 auto input = std::string( data->begin(), data->end() );
-                auto lines = split_string_by_newline(input);
+                auto lines = StringExtensions::split_by_newline(input);
                 UIDEBUG("Version Check: %s (%s)",lines[0].c_str(), lines[1].c_str());
                
-                auto availableBuildNo = std::atoi(lines[1].c_str());
-                auto currentBuildNo =  std::atoi(chilli::extensions::getBuildNo().c_str());
+                auto buildNo = chilli::extensions::getBuildNo();
+                auto availableBuildNo = StringExtensions::atoi(lines[1]);
+                auto currentBuildNo =  StringExtensions::atoi(buildNo);
                 
                 isUpdateAvailable = currentBuildNo<availableBuildNo;
                 updateUrl = lines[2];

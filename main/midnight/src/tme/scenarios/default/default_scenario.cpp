@@ -20,6 +20,7 @@
 #include "../../scenarios/ddr/scenario_ddr_internal.h"
 #endif
 
+#include <string>
 
 using namespace chilli;
 using namespace chilli::lib;
@@ -82,17 +83,17 @@ namespace tme {
         return def_scenario->UnRegister(midnightx);
     }
     
-    MXRESULT default_scenario::Command ( const c_str& arg, variant argv[], u32 argc )
+    MXRESULT default_scenario::Command ( const std::string& arg, variant argv[], u32 argc )
     {
         return def_scenario->Command(arg, argv, argc);
     }
     
-    MXRESULT default_scenario::GetProperties ( const c_str& arg, variant argv[], u32 argc )
+    MXRESULT default_scenario::GetProperties ( const std::string& arg, variant argv[], u32 argc )
     {
         return def_scenario->GetProperties(arg, argv, argc);
     }
     
-    MXRESULT default_scenario::Text ( const c_str& command, variant* argv, u32 args )
+    MXRESULT default_scenario::Text ( const std::string& command, variant* argv, u32 args )
     {
         return def_scenario->Text(command, argv, args);
     }
@@ -761,9 +762,8 @@ namespace tme {
 
         COMMAND ( OnNight )
         {
-
             mx->pfnNightCallback = nullptr ;
-            mx->LastActionMsg()[0] = '\0';
+            mx->SetLastActionMsg("");
             
 #if defined(_DDR_)
             sv_days++;
@@ -771,7 +771,7 @@ namespace tme {
             
 #ifdef _TEST_WINLOSE_CONDITIONS_
             mx->night->testWinLoseConditions();
-            mx->LastActionMsg()[0] = '\0';
+            mx->SetLastActionMsg("");
 #endif
 
             mx->pfnNightCallback = (PFNNIGHTCALLBACK)argv[0].vPtr ;
@@ -783,7 +783,6 @@ namespace tme {
                 event.type = callback_t::gameover ;
                 event.condition = win ;
                 mx->NightCallback(&event);
-                mx->text->PurgeCache();
                 argv[1] = (s32)FALSE;
                 return MX_OK ;
             }
@@ -793,7 +792,7 @@ namespace tme {
 #endif
             mx->scenario->DeadCharactersDropObjects();
 
-            c_strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_NIGHT) );
+            mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_NIGHT));
             
             mx->NightCallback(NULL);
 
@@ -807,10 +806,8 @@ namespace tme {
 
             mx->scenario->SetCharsLooking();
 
-            c_strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_DAWN) );
+            mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_DAWN));
             
-            mx->text->PurgeCache();
-
             argv[1] = (s32)FALSE;
 
             return MX_OK ;
@@ -823,8 +820,6 @@ namespace tme {
             mx->LastActionMsg()[0] = '\0';
             
             m_gameover_t win = mx->night->CheckWinLoseConditions(FALSE);
-            
-            mx->text->PurgeCache();
             
             argv[1] = (u32)win;
             
@@ -905,7 +900,7 @@ namespace tme {
 
         };
 
-        MXRESULT mxscenario::Command ( const c_str& arg, variant argv[], u32 argc )
+        MXRESULT mxscenario::Command ( const std::string& arg, variant argv[], u32 argc )
         {
             return mx->ProcessCommand ( mx_commands, NUMELE(mx_commands), arg, argv, argc );
         }
@@ -1035,8 +1030,11 @@ namespace tme {
         COMMAND ( PropArmies )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
+            mxlocinfo* locinfo = nullptr;
             mx->scenario->GetLocInfo ( argv[1], locinfo );
+            if(locinfo == nullptr) {
+                return MX_FAILED;
+            }
 
             //if ( ISARG("ARMIES") ) {
             collection.Create( locinfo->nArmies );
@@ -1055,7 +1053,6 @@ namespace tme {
             argv[7] = locinfo->friends.armies;
             argv[8] = locinfo->foe.armies;
 
-
             SAFEDELETE ( locinfo );
             return MX_OK ;
             //}
@@ -1064,27 +1061,19 @@ namespace tme {
         COMMAND ( PropStrongholds2 )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
+            mxlocinfo* locinfo = nullptr;
             mx->scenario->GetLocInfo ( argv[1], locinfo );
+            if(locinfo == nullptr) {
+                return MX_FAILED;
+            }
+            
             //if ( ISARG("STRONGHOLDS") ) {
             locinfo->objStrongholds.CreateIdtCollection(collection);
             SAFEDELETE ( locinfo );
             return MX_OK ;
             //}
         }
-        /*
-        COMMAND ( PropRouteNodes2 )
-        {
-            CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
-            mx->scenario->GetLocInfo ( argv[1], locinfo );
-            //if ( ISARG("ROUTENODES") ) {
-            locinfo->objRoutenodes.CreateIdtCollection(collection);
-            SAFEDELETE ( locinfo );
-            return MX_OK ;
-            //}
-        }
-         */
+
         COMMAND ( PropCharsForCommand )
         {
             CONVERT_COLLECTION(argv[0],collection);
@@ -1175,235 +1164,162 @@ namespace tme {
             
         };
 
-        MXRESULT mxscenario::GetProperties ( const c_str& arg, variant argv[], u32 argc )
+        MXRESULT mxscenario::GetProperties ( const std::string& arg, variant argv[], u32 argc )
         {
             return mx->ProcessCommand ( mx_properties, NUMELE(mx_properties), arg, argv, argc );
         }
 
+        std::string  stringBuffer;
+        
+        #define RETURN_STRING(x) \
+            stringBuffer = x; \
+            argv[0] = (s32)1 ; \
+            argv[1].vString = (LPSTR)stringBuffer.c_str(); \
+            return MX_OK
+        
 
         COMMAND ( OnTextNumberPart ) 
         {
-            argv[1] = mx->text->DescribeNumberPart ( (s32)argv[0] )  ;
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeNumberPart ( (s32)argv[0] ))  ;
         }
                 
         COMMAND ( OnTextEnergy ) 
         {
-            argv[1] = mx->text->DescribeEnergy ( argv[0] );
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeEnergy ( argv[0] ));
         }
                     
         COMMAND ( OnTextFear ) 
         {
-            argv[1] = mx->text->DescribeFear ( argv[0] );
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeFear ( argv[0] ));
         }
                         
         COMMAND ( OnTextCourage ) 
         {
-            argv[1] = mx->text->DescribeCourage ( argv[0] );
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCourage ( argv[0] ));
         }
                     
         COMMAND ( OnTextCharRecruitMen ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
             CONVERT_STRONGHOLD_ID( argv[1].vId, stronghold );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterRecruitMen ( character, stronghold, argv[2] )  ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterRecruitMen ( character, stronghold, argv[2] ));
         }
             
         COMMAND ( OnTextCharPostMen ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
             CONVERT_STRONGHOLD_ID( argv[1].vId, stronghold );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterPostMen ( character, stronghold, argv[2] )  ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterPostMen ( character, stronghold, argv[2] ));
         }
                 
         COMMAND ( OnTextCharTime ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterTime( character ) ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterTime( character ));
         }
                     
         COMMAND ( OnTextCharEnergy ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterEnergy ( character ) ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterEnergy ( character )) ;
         }
                 
         COMMAND ( OnTextCharCourage ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterCourage ( character ) ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterCourage ( character )) ;
         }
                 
         COMMAND ( OnTextCharFear ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterFear ( character ) ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterFear ( character ));
         }
                     
         COMMAND ( OnTextCharObject ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterObject ( character )  ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterObject ( character ));
         }
                 
         COMMAND ( OnTextCharDeath ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterDeath ( character )  ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterDeath ( character ));
         }
                     
         COMMAND ( OnTextCharBattle ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterBattle ( character ) ;
-            return MX_OK;
+            RETURN_STRING( mx->text->DescribeCharacterBattle ( character ));
         }
                 
         COMMAND ( OnTextCharArmy ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterArmy ( character ) ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterArmy ( character ));
         }
-                    
-        //COMMAND ( OnTextCharAttributes ) 
-        //{
-        //    CONVERT_CHARACTER_ID( argv[0].vIdt, character );
-        //    argv[0] = 1 ;
-        //    argv[1] = mx->text->DescribeCharacterAttributes ( character ) ;
-        //    return MX_OK;
-        //}
-            
-        //COMMAND ( OnTextCharFoe ) 
-        //{
-        //    CONVERT_CHARACTER_ID( argv[0].vIdt, character );
-        //    argv[0] = 1 ;
-        //    argv[1] = mx->text->DescribeCharacterFoe ( character ) ;
-        //    return MX_OK;
-        //}
-        //            
-        //COMMAND ( OnTextCharLiege ) 
-        //{
-        //    CONVERT_CHARACTER_ID( argv[0].vIdt, character );
-        //    argv[0] = 1 ;
-        //    argv[1] = mx->text->DescribeCharacterLiege ( character ) ;
-        //    return MX_OK;
-        //}
-                    
+       
         COMMAND ( OnTextCharLocation ) 
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
             mx->CurrentChar(character);
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeCharacterLocation( character ) ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeCharacterLocation( character ));
         }
                 
         COMMAND ( OnTextStronghold ) 
         {
             CONVERT_STRONGHOLD_ID( argv[0].vId, stronghold );
-            argv[0] = (s32)1 ;
-            argv[1] = mx->text->DescribeStronghold (stronghold) ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeStronghold (stronghold)) ;
         }
-        /*
-        COMMAND ( OnTextArmyTotal ) 
-        {
-            argv[0] = (s32)1 ;
-            //argv[1] = mx->text->
-            return MX_FAILED;
-        }
-        */
     
         COMMAND ( OnTextLocation ) 
         {
             mxgridref loc = mxgridref( GET_LOCIDX(argv[0].vId),GET_LOCIDY(argv[0].vId) );
-            argv[1] = mx->text->DescribeLocation(loc) ;
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeLocation(loc));
         }
                     
         COMMAND ( OnTextArea ) 
         {
-            argv[1] = mx->text->DescribeArea(GET_ID(argv[0].vId)) ;
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeArea(GET_ID(argv[0].vId)));
         }
 
         COMMAND ( OnTextObject ) 
         {
             CONVERT_OBJECT_ID(argv[0].vId,object);
-            argv[1] = mx->text->DescribeObject(object) ;
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeObject(object));
         }
                         
         COMMAND ( OnTextTerrainPlural ) 
         {
-            argv[1] = mx->text->DescribeTerrainPlural((mxterrain_t)GET_ID(argv[0].vId));
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeTerrainPlural((mxterrain_t)GET_ID(argv[0].vId)));
         }
                 
         COMMAND ( OnTextTerrain ) 
         {
-            argv[1] = mx->text->DescribeTerrainSingularPlural((mxterrain_t)GET_ID(argv[0].vId));
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeTerrainSingularPlural((mxterrain_t)GET_ID(argv[0].vId)));
         }
                     
         COMMAND ( OnTextNumber )
         {
-            argv[1] = mx->text->DescribeNumber ( (s32)argv[0], (mxtext::ZERO_MODE)(s32)argv[1] )  ;
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->DescribeNumber ( (s32)argv[0], (mxtext::ZERO_MODE)(s32)argv[1] ));
         }
 
         COMMAND ( OnTextSpecialStrings )
         {
             CONVERT_CHARACTER_ID( argv[1].vId, character );
-            argv[1] = mx->text->CookedSystemString(GET_ID(argv[0].vId), character );
-            argv[0] = (s32)1 ;
-            return MX_OK;
+            RETURN_STRING(mx->text->CookedSystemString(GET_ID(argv[0].vId), character ));
         }
 
         COMMAND ( OnTextPurge )
         {
-            mx->text->PurgeCache(NULL);
-            argv[0] = (s32)0 ;                                                                    
+            argv[0] = (s32)0 ;
             return MX_OK;
         }
 
         COMMAND ( OnLastActionMsg )
         {
-            argv[1] = mx->LastActionMsg();
-            argv[0] = (s32)1 ;                                                                    
-            return MX_OK;
+            RETURN_STRING(mx->LastActionMsg());
         }
 
     
@@ -1440,7 +1356,7 @@ namespace tme {
         };
 
 
-        MXRESULT mxscenario::Text ( const c_str& arg, variant* argv, u32 argc )
+        MXRESULT mxscenario::Text ( const std::string& arg, variant* argv, u32 argc )
         {
             return mx->ProcessCommand ( mx_text, NUMELE(mx_text), arg, argv, argc );
         }
@@ -1907,33 +1823,36 @@ namespace tme {
 
         
         // let's add some Terrain Info
-#define ADD_TERRAIN(x) \
-        mx->objTerrainInfos.Add( new mxterrain( x, #x ) )
+//#define ADD_TERRAIN(x) \
+//        mx->objTerrainInfos.Add( new mxterrain( x, #x ) )
     
-        ADD_TERRAIN(TN_LAND);
-        ADD_TERRAIN(TN_ISLE);
-        ADD_TERRAIN(TN_LAKELAND);
-        ADD_TERRAIN(TN_PLAIN);
-        ADD_TERRAIN(TN_PLAINS3);
-        ADD_TERRAIN(TN_FOREST3);
-        ADD_TERRAIN(TN_UNUSED_39);
-        ADD_TERRAIN(TN_TREES);
-        ADD_TERRAIN(TN_MOUNTAIN3);
-        ADD_TERRAIN(TN_ICY_MOUNTAIN);
-        ADD_TERRAIN(TN_DOWNS3);
-        ADD_TERRAIN(TN_HILLS3);
-        ADD_TERRAIN(TN_FOOTHILLS);
-        ADD_TERRAIN(TN_VALLEY);
-        ADD_TERRAIN(TN_BAY);
-        ADD_TERRAIN(TN_SEA);
-        ADD_TERRAIN(TN_RIVER);
-        ADD_TERRAIN(TN_MARSH);
-        ADD_TERRAIN(TN_LAKE3);
-        ADD_TERRAIN(TN_UNUSED_52);
-        ADD_TERRAIN(TN_UNUSED_53);
-        ADD_TERRAIN(TN_UNUSED_54);
-        ADD_TERRAIN(TN_MIST);
-        ADD_TERRAIN(TN_UNUSED_56);
+// NOTE: These can not be added to the container
+// because the container is owned by itself
+// this was temp hack for Citadel testing
+//        ADD_TERRAIN(TN_LAND);
+//        ADD_TERRAIN(TN_ISLE);
+//        ADD_TERRAIN(TN_LAKELAND);
+//        ADD_TERRAIN(TN_PLAIN);
+//        ADD_TERRAIN(TN_PLAINS3);
+//        ADD_TERRAIN(TN_FOREST3);
+//        ADD_TERRAIN(TN_UNUSED_39);
+//        ADD_TERRAIN(TN_TREES);
+//        ADD_TERRAIN(TN_MOUNTAIN3);
+//        ADD_TERRAIN(TN_ICY_MOUNTAIN);
+//        ADD_TERRAIN(TN_DOWNS3);
+//        ADD_TERRAIN(TN_HILLS3);
+//        ADD_TERRAIN(TN_FOOTHILLS);
+//        ADD_TERRAIN(TN_VALLEY);
+//        ADD_TERRAIN(TN_BAY);
+//        ADD_TERRAIN(TN_SEA);
+//        ADD_TERRAIN(TN_RIVER);
+//        ADD_TERRAIN(TN_MARSH);
+//        ADD_TERRAIN(TN_LAKE3);
+//        ADD_TERRAIN(TN_UNUSED_52);
+//        ADD_TERRAIN(TN_UNUSED_53);
+//        ADD_TERRAIN(TN_UNUSED_54);
+//        ADD_TERRAIN(TN_MIST);
+//        ADD_TERRAIN(TN_UNUSED_56);
         
         
     }
@@ -1961,8 +1880,8 @@ namespace tme {
                 
                 mx->scenario->GetDefaultCharacters ( collection );
                 if ( collection.FindSymbol(c->Symbol()) == NULL ) {
-                    c_strcat ( (LPSTR)mx->LastActionMsg(),
-                                         mx->text->CookText((LPSTR)mx->text->SystemString(SS_GUIDANCE1),c) );
+                    std::string guidance = mx->text->SystemString(SS_GUIDANCE1);
+                    mx->SetLastActionMsg(mx->text->CookText(guidance,c));
                     found=TRUE;
                 }
                 
@@ -1973,8 +1892,8 @@ namespace tme {
         }
         if ( !found ) {
             int msg = mxrandom(0, sv_guidance.Count() - 1);
-            c_strcat ( mx->LastActionMsg(),
-                                 mx->text->CookText((LPSTR)mx->text->SystemStringById(sv_guidance[msg]))) ;
+            std::string guidance = mx->text->SystemStringById(sv_guidance[msg]);
+            mx->SetLastActionMsg(mx->text->CookText(guidance));
         }
 
     }

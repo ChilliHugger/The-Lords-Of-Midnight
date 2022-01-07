@@ -12,7 +12,7 @@
 #include "../frontend/language.h"
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
-
+#include <string>
 
 USING_NS_CC;
 USING_NS_CC_UI;
@@ -42,8 +42,6 @@ uihelpwindow* uihelpwindow::create(uipanel* parent, helpid_t id)
     CC_SAFE_DELETE(node);
     return nullptr;
 }
-
-std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) ;
 
 bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
 {
@@ -77,8 +75,7 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     
     std::string text = parent->GetMoonring()->help->Get(id);
     
-    text = ReplaceAll( text, "\t", "    ");
-    
+    text = StringExtensions::replaceAll( text, "\t", "    ");
     
     this->setContentSize( rect.size );
     this->setPosition( Vec2::ZERO );

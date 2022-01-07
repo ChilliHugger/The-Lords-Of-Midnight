@@ -409,10 +409,8 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
     
 #endif
 
-    info->name = c.longname ;
-    std::transform(info->name.begin(), info->name.end(), info->name.begin(), ::toupper);
+    info->name = StringExtensions::toUpper(c.longname) ;
     
-    //lib::c_strupr ( info->name.c_str() );
     info->locationtext = TME_GetCharacterText ( c, "CharLocation" );
     
 }

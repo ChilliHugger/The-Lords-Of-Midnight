@@ -36,10 +36,8 @@ namespace tme {
             mxentity::Serialize(ar);
             // ID will always be done elsewhere
             if ( ar.IsStoring() ) {
-                //ar << id;
                 ar << name;
             }else{
-                //ar >> id;
                 ar >> name;
             }
         }

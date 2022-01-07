@@ -15,6 +15,7 @@
  */
 
 #include "../baseinc/tme_internal.h"
+#include <string>
 
 namespace tme {
 
@@ -112,7 +113,8 @@ namespace tme {
                 mxvictory* v = (mxvictory*)collection[ii];
                 if ( v->CheckComplete() ) {
                     // display message
-                    c_strcpy ( mx->LastActionMsg(), mx->text->CookedSystemString(v->Message()) );
+                    mx->SetLastActionMsg(mx->text->CookedSystemString(v->Message()));
+     
                     // game over?
                     m_gameover_t gameover = MG_NONE ;
                     if ( v->IsGameOver() ) {

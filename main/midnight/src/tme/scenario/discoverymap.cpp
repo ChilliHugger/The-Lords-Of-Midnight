@@ -16,6 +16,7 @@
 
 
 #include "../baseinc/tme_internal.h"
+#include <string>
 
 using namespace chilli::lib;
 
@@ -93,11 +94,11 @@ namespace tme {
      *
      */
     
-    bool mxdiscoverymap::Load ( LPCSTR filename )
+    bool mxdiscoverymap::Load ( const std::string& filename )
     {
-        MXTRACE("Loading Discovery Map '%s'", filename);
+        MXTRACE("Loading Discovery Map '%s'", filename.c_str());
 
-        chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeRead );
+        chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
         if ( !pFile->IsOpen() ) {
             if ( pFile ) delete pFile;
             return FALSE;
@@ -107,7 +108,7 @@ namespace tme {
 
         u32 magicno;
         u32 versionno;
-        c_str header;
+        std::string header;
 
         ar >> magicno;
         MXTRACE("MagicNo=%x", (unsigned int)magicno);
@@ -132,9 +133,9 @@ namespace tme {
         }
 
         ar >> header;
-        MXTRACE("Header='%s'", (LPSTR)header);
+        MXTRACE("Header='%s'", header.c_str());
 
-        if (c_stricmp(header,DISCOVERYHEADER) != 0 ) {
+        if (c_stricmp(header.c_str(),DISCOVERYHEADER) != 0 ) {
             MXTRACE("Invalid DISCOVERYMAP Header");
             return FALSE;
         }
@@ -150,9 +151,9 @@ namespace tme {
         return TRUE ;
     }
     
-    bool mxdiscoverymap::Save ( LPCSTR filename )
+    bool mxdiscoverymap::Save ( const std::string& filename )
     {
-        chilli::os::file* pFile = new chilli::os::file ( filename, chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
+        chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
         if ( pFile == NULL || !pFile->IsOpen() ) {
             if ( pFile ) delete pFile;
             //COMPLAIN( "Cannot Save data file %s", filename );

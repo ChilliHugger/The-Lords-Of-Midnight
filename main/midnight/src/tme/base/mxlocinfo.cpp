@@ -21,6 +21,8 @@
 #include "../scenarios/ddr/scenario_ddr_internal.h"
 #endif
 
+#include <string>
+
 
 namespace tme {
 

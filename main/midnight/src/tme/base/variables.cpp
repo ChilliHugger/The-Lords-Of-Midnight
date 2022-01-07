@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 
 
 namespace tme {
@@ -259,27 +260,22 @@ namespace tme {
                 case CVar::IDARRAY:
                     {
                         sv_c_mxid_t* c = (sv_c_mxid_t*)variable->memory ;
-                        char *saveptr1;
                         
-                        c_str s = stringValue ;
-                        c->Clear();
-                        LPSTR    token;
-                        int        count;
-                            //set up arrays
-                            count=0;
-                            token = chilli::lib::c_strtok_r( s, "|", &saveptr1 );
-                            while ( token!=NULL ) {
-                                if (c_strlen(token)==1 && token[0]=='-' )
-                                    c->Add(IDT_NONE);
-                                else {
-                                    mxid id = mxentity::SafeIdt(mx->EntityByName(token));
-                                    if ( id == IDT_NONE )
-                                        id = mx->text->StringByName(token);
-                                    c->Add( id );
-                                }
-                                token=chilli::lib::c_strtok_r(NULL,"|", &saveptr1);
-                            }
+                        c_string values;
+                        std::string value = stringValue;
+                        StringExtensions::split(value, '|', values);
 
+                        c->Clear();
+                        for( auto token : values) {
+                            if(token == "-") {
+                                c->Add(IDT_NONE);
+                            }else{
+                                mxid id = mxentity::SafeIdt(mx->EntityByName(token));
+                                if ( id == IDT_NONE )
+                                    id = mx->text->StringByName(token);
+                                c->Add( id );
+                            }
+                        }
                     }
                     break;
             }
@@ -324,7 +320,7 @@ namespace tme {
             //
         }
 
-        MXRESULT GetProperty(const c_str& name, variant& arg)
+        MXRESULT GetProperty(const std::string& name, variant& arg)
         {
             arg.vType = variant::none ;
             arg.vInt = 0 ;
@@ -332,7 +328,7 @@ namespace tme {
             cvarreg_t* var = NULL ;
 
             for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
-                if (c_stricmp( name, var_array[ii].name ) == 0 ) {
+                if ( c_stricmp(name.c_str(), var_array[ii].name) == 0 ) {
                     var = &var_array[ii];
                     break;
                 }
@@ -366,12 +362,12 @@ namespace tme {
             return MX_FAILED;
         }
 
-        MXRESULT SetProperty(const c_str& name, const c_str& value)
+        MXRESULT SetProperty(const std::string& name, const std::string& value)
         {
             cvarreg_t* var = NULL ;
             
             for ( u32 ii=0; ii<NUMELE(var_array); ii++ ) {
-                if (c_stricmp( name, var_array[ii].name ) == 0 ) {
+                if (c_stricmp( name.c_str(), var_array[ii].name ) == 0 ) {
                     var = &var_array[ii];
                     break;
                 }
@@ -380,7 +376,7 @@ namespace tme {
             if ( var == nullptr )
                 return MX_FAILED;
             
-            var->currentValue = value;
+            var->currentValue = value.c_str();
             sv_Initialise( var );
             
             return MX_OK;
