@@ -12,6 +12,10 @@
 
 class panel_credits : public uipanel
 {
+protected:
+    using Label = cocos2d::Label;
+    using ScrollView = cocos2d::ui::ScrollView;
+    
 public:
     
     virtual bool init();

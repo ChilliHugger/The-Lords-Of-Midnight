@@ -12,11 +12,19 @@
     constexpr LPCSTR CREDITS_PROGRAMMING                = "Programming";
     constexpr LPCSTR CREDITS_GRAPHICS                   = "Graphics redrawn by";
     constexpr LPCSTR CREDITS_TESTING                    = "Testing by";
+    constexpr LPCSTR CREDITS_SPECIAL_THANKS             = "Special thanks to";
+    constexpr LPCSTR CREDITS_WEBSITE                    = "Website";
+
     constexpr LPCSTR CREDITS_MIKE                       = "Mike Singleton";
     constexpr LPCSTR CREDITS_PROGRAMMERS                = "Chris Wild";
     constexpr LPCSTR CREDITS_ARTISTS                    = "Jure Rogelj";
-    constexpr LPCSTR CREDITS_TESTERS                    = "Scott Gibbens";
-    constexpr LPCSTR CREDITS_VERSION                    = "Version" ;
+    constexpr LPCSTR CREDITS_TESTERS                    = "Scott Gibbens & Nicholas Muge";
+
+    constexpr LPCSTR CREDITS_THANKS                     = R"(Alasdair Allan, Chris Booker, Timothy Bromige, Iain Brown, Basem Chbaklo, Richard Clements, Menno Everaarts, Martin Graaskov, Ross Harris, Bill Hoggett, Thanos Koukoulis, Harvey Lodder, Gary Mcdonald, Fergus Mcneill, Jordan Myers, Kai Panholzer, Guy Preston, Gemma Rigby, Julian Rigby, Tam Rigby, Francisco Assis Rosa, Jean-Yves Rouffiac, David Ivan Perez Salazar, Andrew Smart, Stuart Voice, Seamus Waldron, Chris Webster, Jason Webster, David West,
+and all the members of midnight/mu - www.midnightmu.com)";
+ 
+
+    constexpr LPCSTR CREDITS_VERSION                    = "Version: " ;
         
     constexpr LPCSTR MAINMENU_NEW_STORY                 = "NEW STORY";
     constexpr LPCSTR MAINMENU_CONTINUE_STORY            = "CONTINUE STORY";
@@ -123,6 +131,7 @@
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
 
+    constexpr LPCSTR CREDITS_WEBSITE_ADDRESS            = "www.thelordsofmidnight.com";
 #else
 
 #if defined(_DDR_)
@@ -137,6 +146,7 @@
     #else
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
+    constexpr LPCSTR CREDITS_WEBSITE_ADDRESS            = "www.doomdarksrevenge.com";
 #else
     constexpr LPCSTR EXIT_MSG                           = "Do you want to exit?";
 #endif
