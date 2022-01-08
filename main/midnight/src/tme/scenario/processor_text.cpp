@@ -252,7 +252,7 @@ std::string mxtext::HowMuchOfText( u32 number, const c_string& tokens )
 {
 std::string buffer;
 
-    if ( number> NUMELE(adverb_token) )
+    if ( number >= adverb_token.Count() )
         number=0;
     
     auto token = number < 5 ? 1 : 0;
