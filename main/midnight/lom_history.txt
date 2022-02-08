@@ -14,6 +14,9 @@ Including:
 
 Note: Some old features have been temporarily removed while they are reworked 
 
+Version 2.0.2 (36)
+1. panel_think: Fix army numbers text
+
 Version 2.0.2 (35)
 1. New credits screen
 2. Fix courage, ice fear, and energy description.
