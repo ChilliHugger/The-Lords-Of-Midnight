@@ -739,10 +739,10 @@ void uithinkpage::checkArmy ( void )
             displayArmy();
         }
         
-        text +=
-            TME_GetSystemString(c,SS_WARRIORS_RIDERS) +
-            TME_GetNumber(warriors) +
-            TME_GetNumber(riders);
+        text += chilli::lib::StringExtensions::Format(
+            TME_GetSystemString(c,SS_WARRIORS_RIDERS).c_str(),
+            TME_GetNumber(warriors).c_str(),
+            TME_GetNumber(riders).c_str());
         
         lblDescription->setString(text);
         return;

@@ -331,7 +331,7 @@ std::string buffer;
         buffer += " and " ;
     }
     if ( number == 0 )
-        buffer += zero_token[zeromode];
+        buffer += zero_token[zeromode+1];
         else
         buffer += number_token[number-1];
     return buffer ;
