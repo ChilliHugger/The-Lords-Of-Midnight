@@ -10,8 +10,8 @@ android {
         applicationId "com.chilli.midnight"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 2000032
-        versionName "2.0.1"
+        versionCode 2000036
+        versionName "2.0.2"
 
         externalNativeBuild {
             cmake {

@@ -759,6 +759,8 @@ std::string mxtext::DescribeCharacterArmy ( const mxcharacter* character )
                 DescribeEnergy ( character->warriors.Energy()).c_str(),
                 DescribeEnergy ( character->riders.Energy()).c_str()
                 );
+        default:
+            return "";
     }
 }
 

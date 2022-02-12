@@ -14,13 +14,13 @@ namespace chilli
 {
     namespace extensions
     {
-        static const std::string utilsClassName = "com.chillihugger.extensions.Utils";
+        const std::string utilsClassName = "com.chillihugger.extensions.Utils";
 
         std::string getBuildNo()
         {
             // Build is xyyyzzz, where xxx=major, yyy=minor, zzz=build
             auto version =  JniHelper::callStaticStringMethod(utilsClassName, "getBuildNo");
-            return right(version,3);
+            return version.substr(version.size() - 3);
         }
     }
 }
