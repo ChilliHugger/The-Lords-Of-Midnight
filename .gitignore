@@ -47,3 +47,6 @@ main/midnight/tests-build
 main/midnight/mac-tests-build
 main/midnight/Releases
 main/midnight/dsym files
+main/midnight/ios-build-ddr
+main/midnight/mac-build-ddr
+main/midnight/mac-tests-build-ddr
