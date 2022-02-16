@@ -105,7 +105,7 @@ namespace tme {
         if ( character->IsInTunnel())
             return;
         
-        MXTRACE("BATTLE: [%3d] %-16s", (int)character->Id(), character->Symbol().GetAt() );
+        MXTRACE("BATTLE: [%3d] %-16s", (int)character->Id(), character->Symbol().c_str() );
 
         //mxlocinfo* info = character->GetLocInfo();
         
@@ -146,7 +146,7 @@ namespace tme {
         for ( u32 ii=0; ii<characters_here.Count(); ii++ )
         {
             mxcharacter* attacker = static_cast<mxcharacter*>(characters_here[ii]);
-            MXTRACE("  [%d:%d] %-16s", (int)ii, (int)attacker->Id(), attacker->Symbol().GetAt());
+            MXTRACE("  [%d:%d] %-16s", (int)ii, (int)attacker->Id(), attacker->Symbol().c_str());
         }
         
         // give all the bad guys first hit
@@ -160,13 +160,13 @@ namespace tme {
             //attacker->Flags().Set(cf_inbattle);
             //attacker->battleloc = attacker->Location();
             
-            MXTRACE("  skirmish: %-16s", attacker->Symbol().GetAt() );
+            MXTRACE("  skirmish: %-16s", attacker->Symbol().c_str() );
             BattleVsCharacter(attacker);
         }
         
         
         if ( stronghold ) {
-            MXTRACE("Stronghold=%-16s", stronghold->Symbol().GetAt());
+            MXTRACE("Stronghold=%-16s", stronghold->Symbol().c_str());
             doBattle(stronghold,0);
         }
     }
@@ -241,7 +241,7 @@ namespace tme {
         defender->Flags().Set(cf_inbattle);
         defender->battleloc = defender->Location();
         
-        MXTRACE("    Attacker = %-16s, Defender = %-16s", attacker->Symbol().GetAt(), defender->Symbol().GetAt());
+        MXTRACE("    Attacker = %-16s, Defender = %-16s", attacker->Symbol().c_str(), defender->Symbol().c_str());
         
         if ( attacker_character ) {
             
@@ -255,17 +255,17 @@ namespace tme {
             s32 defenders_success = mxrandom(255);
             
             
-            MXTRACE("    %-16s (%d) vs %-16s (%d)", attacker->Symbol().GetAt(), (int)attackers_success
-                                                    , defender->Symbol().GetAt(), (int)defenders_success);
+            MXTRACE("    %-16s (%d) vs %-16s (%d)", attacker->Symbol().c_str(), (int)attackers_success
+                                                    , defender->Symbol().c_str(), (int)defenders_success);
             
             if ( attackers_success > defenders_success  ) {
-                MXTRACE("    Defender: %-16s lost fight", (LPSTR)defender->Symbol() );
+                MXTRACE("    Defender: %-16s lost fight", defender->Symbol().c_str() );
                 
                 loseFight( defender, defenders_success );
                 if ( defender->IsDead() ) {
                     attacker_character->Flags().Set(cf_wonbattle|cf_killed_foe);
                     attacker_character->fighting_against=defender;
-                    MXTRACE("    Defender: %-16s is dead killed by %s", (LPSTR)defender->Symbol(), (LPSTR)attacker->Symbol() );
+                    MXTRACE("    Defender: %-16s is dead killed by %s", defender->Symbol().c_str(), attacker->Symbol().c_str() );
                 }
             }
         
@@ -310,7 +310,7 @@ namespace tme {
         
         killed = std::min<int>(killed,defenderSize);
 
-        MXTRACE("      Defender: %-16s lost %d of (%d)", (LPSTR)defender->Symbol(), (int)killed, defenderSize );
+        MXTRACE("      Defender: %-16s lost %d of (%d)", defender->Symbol().c_str(), (int)killed, defenderSize );
         
         defenderSize = BSub(defenderSize, killed, 0);
         setArmySize( defender, defenderSize );
@@ -333,7 +333,7 @@ namespace tme {
                 } while ( mapsqr.terrain==TN_FROZENWASTE || mapsqr.terrain==TN_ICYWASTE );
                 defender_character->Location(loc);
                 
-                MXTRACE("      Defender: %-16s is displaced", (LPSTR)defender->Symbol() );
+                MXTRACE("      Defender: %-16s is displaced", defender->Symbol().c_str() );
 
                 
                 // if we are a member of the group, then we need to leave the group
@@ -349,7 +349,7 @@ namespace tme {
                 
                 loseFight(defender_character, 0);
                 if ( defender_character->IsDead() ) {
-                    MXTRACE("      Defender: %-16s is dead, killed by soldiers.", (LPSTR)defender->Symbol() );
+                    MXTRACE("      Defender: %-16s is dead, killed by soldiers.", defender->Symbol().c_str() );
                     // FIX: 30/9/2014 - don't clear the fighting_against flag if the lord dying killed their foe
                     if ( !defender_character->Flags().Is(cf_killed_foe))
                         defender_character->fighting_against=NULL;
@@ -359,7 +359,7 @@ namespace tme {
             
             if ( attacker->Type() == IDT_CHARACTER ) {
                 attacker->Flags().Set(cf_wonbattle);
-                MXTRACE("      Attacker: %-16s won battle", (LPSTR)attacker->Symbol() );
+                MXTRACE("      Attacker: %-16s won battle", attacker->Symbol().c_str() );
             }
             
             if ( defender->Type() == IDT_STRONGHOLD ) {
@@ -369,7 +369,7 @@ namespace tme {
                 // change sides
                 mxstronghold* defender_stronghold = static_cast<mxstronghold*>(defender);
                 defender_stronghold->MakeChangeSides(attacker_character->Race(), attacker_character);
-                MXTRACE("      Stronghold Changes Sides: %-16s", (LPSTR)defender->Symbol() );
+                MXTRACE("      Stronghold Changes Sides: %-16s",defender->Symbol().c_str() );
 
             }
         }

@@ -24,6 +24,8 @@
 #include "ddr_processor_night.h"
 #include "ddr_processor_battle.h"
 
+using namespace chilli::lib::StringExtensions;
+
 namespace tme {
 
 //    namespace scenarios {
@@ -274,37 +276,44 @@ void ddr_x::NightStop(void)
 
 void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
 {
+std::string buffer = mx->LastActionMsg();
+
+    RETURN_IF_NULL(character);
+
     int id = mxrandom(1,sv_characters-1);
     
     mxcharacter* c = mx->CharacterById(id);
-    
+   
+    RETURN_IF_NULL(c);
+   
     if ( (c->Loyalty() != character->Loyalty() && c->IsAlive()) ) {
-        c_strcat ( (LPSTR)mx->LastActionMsg(),
-                             mx->text->CookText((LPSTR)mx->text->SystemString(SS_SEEK_MSG1),c) );
+    
+        std::string seek = mx->text->SystemString(SS_SEEK_MSG1);
+        buffer += mx->text->CookText(seek,c);
+    
     } else {
-        
-        //int firstObject = mx->EntityByName("OB_CROWN_VARENAND")->Id();
-        //id =  mxrandom(firstObject,sv_objects-1);
-        //mxobject* o = mx->ObjectById(id);
         
         ddr_character* ddr = static_cast<ddr_character*>(character);
         mxobject* o = ddr->desired_object ;
-        
+ 
+        std::string guidance = mx->text->SystemString(SS_GUIDANCE2);
+ 
         if ( (character->Carrying() == o) || o==NULL ) {
             c = (mxcharacter*)mx->EntityByName("CH_SHARETH");
-            c_strcat ( (LPSTR)mx->LastActionMsg(),
-                                 mx->text->CookText((LPSTR)mx->text->SystemString(SS_SEEK_MSG1),c) );
-            c_strcat ( (LPSTR)mx->LastActionMsg(),
-                                 mx->text->CookText((LPSTR)mx->text->SystemString(SS_GUIDANCE2),character) );
-            return;
+            
+            std::string seek = mx->text->SystemString(SS_SEEK_MSG1);
+ 
+            buffer += mx->text->CookText(seek,c);
+            buffer += mx->text->CookText(guidance,character);
+            
+        } else {
+        
+            buffer += mx->text->DescribeObjectLocation(o);
+            buffer += mx->text->CookText(guidance,character);
         }
-        
-        c_strcat ( (LPSTR)mx->LastActionMsg(),
-                             mx->text->DescribeObjectLocation(o) );
-        c_strcat ( (LPSTR)mx->LastActionMsg(),
-                             mx->text->CookText((LPSTR)mx->text->SystemString(SS_GUIDANCE2),character) );
-        
     }
+    
+    mx->SetLastActionMsg(buffer);
 }
 
 mxterrain_t ddr_x::NormaliseTerrain( mxterrain_t t) const

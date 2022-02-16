@@ -628,7 +628,7 @@ namespace tme {
         while ( character!=NULL && character->IsDead() ) {
             if (character->Liege() == character)  {
                 //
-                MXTRACE("GetNextFoe: Error - Circular Liege: %s - breaking out", (LPSTR)character->Longname());
+                MXTRACE("GetNextFoe: Error - Circular Liege: %s - breaking out", character->Longname().c_str());
                 return NULL;
             }
             character = character->Liege();
@@ -641,7 +641,7 @@ namespace tme {
         while ( character!=NULL && character->IsDead() ) {
             if (character->Liege() == character)  {
                 //
-                MXTRACE("GetNextLiege: Error - Circular Liege: %s - breaking out", (LPSTR)character->Longname());
+                MXTRACE("GetNextLiege: Error - Circular Liege: %s - breaking out", character->Longname().c_str());
                 return NULL;
             }
             character = character->Liege();
@@ -830,7 +830,7 @@ namespace tme {
                 despondency=MAX_DESPONDENCY;
                 energy=MAX_ENERGY;
                 // rorthron uses the %s, he now feels refreshed and envigorated.
-                mx->SetLastActionMsg mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
+                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
                 break;
         }
         
@@ -940,7 +940,7 @@ void ddr_character::whatIsCharacterDoing ( void )
     
     // stay here
     if ( new_orders == OD_NONE ) {
-        MXTRACE("%s is doing nothing.", (LPCSTR)Longname());
+        MXTRACE("%s is doing nothing.", Longname().c_str());
         Target(this);
         return;
     }
@@ -976,9 +976,9 @@ void ddr_character::whatIsCharacterDoing ( void )
             
 #ifdef MX_DEBUG_ON
             if ( Liege() == follow_character ) {
-                MXTRACE("%s is following liege %s%s.", (LPCSTR)Longname(), (LPCSTR)follow_character->Longname(), commanded);
+                MXTRACE("%s is following liege %s%s.", Longname().c_str(), follow_character->Longname().c_str(), commanded);
             }else{
-                MXTRACE("%s is following %s%s.", (LPCSTR)Longname(), (LPCSTR)follow_character->Longname(), commanded);
+                MXTRACE("%s is following %s%s.", Longname().c_str(), follow_character->Longname().c_str(), commanded);
             }
 #endif
             
@@ -998,14 +998,14 @@ void ddr_character::whatIsCharacterDoing ( void )
                         foe=follow_character;
                 }
             }
-            MXTRACE("%s is following foe %s.", (LPCSTR)Longname(), (LPCSTR)follow_character->Longname());
+            MXTRACE("%s is following foe %s.", Longname().c_str(), follow_character->Longname().c_str());
             Target(follow_character);
             break;
         
         case OD_FIND_OBJECT:
             // object
             if ( !desired_object->IsCarried() ) {
-                MXTRACE("%s is looking for %s", (LPCSTR)Longname(), mx->text->DescribeObject(desired_object));
+                MXTRACE("%s is looking for %s", Longname().c_str(), mx->text->DescribeObject(desired_object).c_str());
                 Target(desired_object);
                 break;
             }
@@ -1019,7 +1019,7 @@ void ddr_character::whatIsCharacterDoing ( void )
             }else{
                 Target(home_stronghold);
             }
-            MXTRACE("%s is heading home.", (LPCSTR)Longname());
+            MXTRACE("%s is heading home.", Longname().c_str());
 
             break;
             
@@ -1070,17 +1070,17 @@ mxdir_t calcDirection ( mxgridref loc1, mxgridref loc2 )
 void ddr_character::moveCharacterSomewhere ( void )
 {
     if ( !IsAIControlled() ) {
-        MXTRACE("NOT Processing %s - NOT AI", (LPCSTR)Longname());
+        MXTRACE("NOT Processing %s - NOT AI", Longname().c_str());
         return;
     }
     
     if ( IsDead() ) {
-        MXTRACE("NOT Processing %s - DEAD", (LPCSTR)Longname());
+        MXTRACE("NOT Processing %s - DEAD", Longname().c_str());
         return;
     }
     
     
-    MXTRACE("Processing %s", (LPCSTR)Longname());
+    MXTRACE("Processing %s", Longname().c_str());
     
     whatIsCharacterDoing();
     
@@ -1156,11 +1156,11 @@ mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )
 {
     if ( CheckRecruitChar( character ) ) {
         if ( character->Recruited ( this ) ) {
-            MXTRACE("%s has recruited %s", (LPCSTR)Longname(),  (LPCSTR)character->Longname());
+            MXTRACE("%s has recruited %s", Longname().c_str(),  character->Longname().c_str());
             return character ;
         }
     }
-    MXTRACE("%s has failed to recruit %s", (LPCSTR)Longname(),  (LPCSTR)character->Longname());
+    MXTRACE("%s has failed to recruit %s", Longname().c_str(),  character->Longname().c_str());
     return NULL ;
 }
 

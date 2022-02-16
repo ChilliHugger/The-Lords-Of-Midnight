@@ -125,12 +125,14 @@ namespace tme {
     
         void ddr_night::checkImportantCharactersDead(void)
         {
+        std::string buffer = mx->LastActionMsg();
+        
             ddr_character* ch_shareth = static_cast<ddr_character*>( mx->EntityByName("CH_SHARETH") );
             //ch_shareth->Cmd_Dead();
             //ch_shareth->killedbyobject = (mxobject*)mx->EntityByName("OB_WOLVES");
             
             if ( ch_shareth->IsDead() ) {
-                c_strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_shareth) );
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_shareth);
                 mx->NightCallback(NULL);
             }
             
@@ -138,9 +140,10 @@ namespace tme {
             //ch_morkin->Cmd_Dead();
             //ch_morkin->fighting_against=ch_shareth;
             if ( ch_morkin->IsDead() ) {
-                c_strcat ( mx->LastActionMsg(), mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_morkin) );
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_morkin);
                 mx->NightCallback(NULL);
             }
+            mx->SetLastActionMsg(buffer);
         }
     
     
@@ -173,37 +176,39 @@ namespace tme {
             
             // SS_VICTORY2
             // After {special:days} {plural:day:days} the warriors of Midnight return to the frozen gates.
-            mx->SetLastActionMsg( mx->text->CookedSystemString(SS_VICTORY2) );
+            
+            auto buffer = mx->LastActionMsg();
+            
+            buffer += mx->text->CookedSystemString(SS_VICTORY2);
 
             if (victoryFlags.Is(wf_luxor_home)) {
                 // luxor is here
-                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_luxor) );
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_luxor);
             }
       
             if (victoryFlags.Is(wf_morkin_home)) {
                 // morkin is here
-                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_morkin) );
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_morkin);
             }
 
             if (victoryFlags.Is(wf_tarithel_home)) {
                 // tarithel is here
-                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_tarithel) );
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_tarithel);
             }
             
             if (victoryFlags.Is(wf_rorthron_home)) {
                 // and rorthron is here
-                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_rorthron) );
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_rorthron);
             }
             
             if (victoryFlags.Is(wf_shareth_dead)) {
                 // shareth is dead
-                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString(SS_SHARETH_DEAD,ch_shareth) );
-
+                buffer += mx->text->CookedSystemString(SS_SHARETH_DEAD,ch_shareth);
             }
             
             // describe victory
             ddr_text* text = static_cast<ddr_text*>(mx->text);
-            mx->SetLastActionMsg( mx->LastActionMsg(), text->DescribeVictory(victoryTargets, victoryMode) );
+            buffer += text->DescribeVictory(victoryTargets, victoryMode);
             
             if ( victoryMode == WIN_NOBLE ) {
                 // the victory is noble
@@ -217,9 +222,10 @@ namespace tme {
                 // the victory is overwhelming
                 // SS_VICTORY4
                 // SS_VICTORY5
-                mx->SetLastActionMsg( mx->LastActionMsg(),mx->text->CookedSystemString(SS_VICTORY5));
+                buffer += mx->text->CookedSystemString(SS_VICTORY5);
             }
             
+            mx->SetLastActionMsg(buffer);
             
         }
     
@@ -244,20 +250,19 @@ namespace tme {
             mxcharacter* ch_tarithel =  static_cast<mxcharacter*>(mx->EntityByName("CH_TARITHEL"));
             mxcharacter* ch_rorthron =  static_cast<mxcharacter*>(mx->EntityByName("CH_RORTHRON"));
             mxcharacter* ch_shareth =  static_cast<mxcharacter*>(mx->EntityByName("CH_SHARETH"));
-
+            
             if ( ch_luxor->IsDead() ) {
-                mx->SetLastActionMsg( mx->LastActionMsg() + mx->text->CookedSystemString( SS_DEFEAT2, ch_luxor) );
+                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_DEFEAT2, ch_luxor) );
                 return MG_LOSE;
             }
             
-            
-            c_ptr characters;
+            chilli::collections::c_ptr characters;
             characters.Add(ch_luxor);             // bit 4
             characters.Add(ch_morkin);            // bit 3
             characters.Add(ch_tarithel);          // bit 2
             characters.Add(ch_rorthron);          // bit 1
             
-            c_ptr objects;
+            chilli::collections::c_ptr objects;
             objects.Add( mx->EntityByName("OB_CROWN_VARENAND"));
             objects.Add( mx->EntityByName("OB_CROWN_CARUDRIUM"));
             objects.Add( mx->EntityByName("OB_SPELL_THIGRORN"));

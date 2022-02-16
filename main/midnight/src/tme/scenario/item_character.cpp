@@ -907,7 +907,7 @@ namespace tme {
 
             // 2. our liege becomes the recruiting character
             if ( c == this ) {
-                MXTRACE("Recruited: Error Setting Liege to self! %s", (LPSTR) Longname());
+                MXTRACE("Recruited: Error Setting Liege to self! %s", Longname().c_str());
             }
             liege = c; //->Liege() ;
             

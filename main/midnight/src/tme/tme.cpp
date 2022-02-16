@@ -63,7 +63,7 @@ std::string TME_ScenarioShortName ( void )
 #endif
 
 #if defined(_DDR_)
-std::string& TME_ScenarioDirectory ( void )
+std::string TME_ScenarioDirectory ( void )
 {
     return cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
 }

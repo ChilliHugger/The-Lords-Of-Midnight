@@ -369,7 +369,9 @@ mapbuilder* mapbuilder::updateLayers()
     memset(critters, 0, max_cells);
     
     bool debug_map = isDebugMap();
-    //bool show_tunnels = checkFlags(mapflags::show_tunnels);
+#if defined(_DDR_)
+    bool show_tunnels = checkFlags(mapflags::show_tunnels);
+#endif
     bool show_critters = checkFlags(mapflags::show_critters);
     bool show_all_critters = checkFlags(mapflags::show_all_critters);
     

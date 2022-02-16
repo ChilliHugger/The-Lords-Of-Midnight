@@ -343,7 +343,7 @@ std::string buffer;
  *
  */
 
-std::string& mxtext::DescribeTime ( u32 time )
+std::string mxtext::DescribeTime ( u32 time )
 {
     return DescribeNumber((time+1)/2);
 }
@@ -577,7 +577,9 @@ std::string mxtext::DescribeCharacterObject ( const mxcharacter* character )
 
 std::string mxtext::DescribeObject ( const mxobject* object )
 {
-    std::string description = oinfo->description;
+    RETURN_IF_NULL(object) "";
+    
+    std::string description = object->description;
     const mxobject* temp = oinfo;
     oinfo = object;
     auto text = CookText(description,nullptr);
@@ -588,6 +590,8 @@ std::string mxtext::DescribeObject ( const mxobject* object )
 #if defined(_DDR_)
 std::string mxtext::DescribeObjectWithPower ( const mxobject* object )
 {
+    RETURN_IF_NULL(object) "";
+    
     std::string description = "{obj:text}, whose power is in {case:lower}{obj:power}";
     const mxobject* temp = oinfo;
     oinfo = object;
@@ -915,7 +919,7 @@ std::string buffer;
     if ( object== nullptr && !entrance )
         return "";
     
-    byffer = character->Shortname() + " sees ";
+    buffer = character->Shortname() + " sees ";
     if ( object ) {
         buffer += "the " + DescribeObjectWithPower(object) ;
     }
@@ -939,7 +943,8 @@ std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter*
         return "in the tunnel";
     }
     
-    auto buffer = CookText("{loc:terrain:prep} ") + DescribeLocation(loc);
+    std::string msg = "{loc:terrain:prep} ";
+    auto buffer = CookText(msg) + DescribeLocation(loc);
     
     this->loc = oldLoc ;
     
