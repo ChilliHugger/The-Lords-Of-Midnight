@@ -71,8 +71,11 @@ bool TunnelView::initWithOptions( LandscapeOptions* options )
 
 void TunnelView::createColumns()
 {
-    createColumn(RES(0), flames_left, NUMELE(flames_left));
-    createColumn(RES(892), flames_right, NUMELE(flames_right));
+    auto padding = std::max<int>(0,(getContentSize().width - RES(1024))/2);
+   
+
+    createColumn(padding, flames_left, NUMELE(flames_left));
+    createColumn(getContentSize().width-RES(132)-padding, flames_right, NUMELE(flames_right));
 }
 
 void TunnelView::createColumn(f32 x, LPCSTR images[], u32 count)
@@ -99,6 +102,7 @@ void TunnelView::createColumn(f32 x, LPCSTR images[], u32 count)
 void TunnelView::createSteps()
 {
     auto steps = Sprite::createWithSpriteFrameName("t_steps");
-    uihelper::AddBottomLeft(clipping, steps, RES(415), RES(60));
-    
+    steps->setAnchorPoint(uihelper::AnchorBottomCenter);
+    int x = getContentSize().width / 2;
+    uihelper::AddBottomCenter(clipping, steps, x, RES(60));
 }

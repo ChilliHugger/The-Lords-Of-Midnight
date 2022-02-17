@@ -68,7 +68,7 @@ constexpr f32 FADE_OUT_SPEED = 1.0f;
 #if defined(_DDR_)
 #define DESCRIPTION_COLOUR  _clrRed
 #define SHIELD_X        RES(32)
-#define SHIELD_Y        RES(-16)
+#define SHIELD_Y        RES(16)
 #define SHIELD_SCALE    0.9f
 #define IMAGE_HEADER    "misc/header.png"
 #endif
@@ -574,8 +574,9 @@ void panel_look::UpdateLandscape()
     layHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
 #endif
 #if defined(_DDR_)
-    //options.colour->updateNode(imgHeader);
-    imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
+    if(!current_info->tunnel){
+        imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
+    }
 #endif
  
 #if defined(_SHOW_LANDSCAPE_TRAMLINES_)
