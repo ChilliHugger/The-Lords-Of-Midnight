@@ -95,22 +95,22 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     
     initialiseCommands();
     
-    addShortcutKey(ID_THINK,     K_THINK);
-    addShortcutKey(ID_NIGHT,     K_NIGHT);
-    addShortcutKey(ID_HOME,      K_ESC);
-    addShortcutKey(ID_MAP,       K_MAP);
+    addShortcutKey(ID_THINK,        K_THINK);
+    addShortcutKey(ID_NIGHT,        K_NIGHT);
+    addShortcutKey(ID_HOME,         K_ESC);
+    addShortcutKey(ID_MAP,          K_MAP);
 #if defined(_LOM_)
-    addShortcutKey(ID_SEEK,      K_SEEK);
-    addShortcutKey(ID_HIDE,      K_HIDE);
-    addShortcutKey(ID_UNHIDE,    K_UNHIDE);
-    addShortcutKey(ID_FIGHT,     K_FIGHT);
+    addShortcutKey(ID_SEEK,         K_SEEK);
+    addShortcutKey(ID_HIDE,         K_HIDE);
+    addShortcutKey(ID_UNHIDE,       K_UNHIDE);
+    addShortcutKey(ID_FIGHT,        K_FIGHT);
 #endif
 #if defined(_DDR_)
-    addShortcutKey(ID_GIVE,      K_GIVE);
-    addShortcutKey(ID_TAKE,      K_TAKE);
-    addShortcutKey(ID_USE,       K_USE);
-    addShortcutKey(ID_ENTER_TUNNEL,    K_TUNNEL);
-    addShortcutKey(ID_REST,      K_REST);
+    addShortcutKey(ID_GIVE,         K_GIVE);
+    addShortcutKey(ID_TAKE,         K_TAKE);
+    addShortcutKey(ID_USE,          K_USE);
+    addShortcutKey(ID_ENTER_TUNNEL, K_TUNNEL);
+    addShortcutKey(ID_REST,         K_REST);
 #endif
     addShortcutKey(ID_APPROACH,   K_APPROACH);
     addShortcutKey(ID_RECRUITMEN, K_RECRUIT);

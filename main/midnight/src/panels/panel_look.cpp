@@ -165,7 +165,7 @@ bool panel_look::init()
     imgShield->addClickEventListener(clickCallback);
     imgShield->setTag(ID_THINK);
     uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
-    
+
     // Leader Shield
     following = uisinglelord::create();
     following->setLocalZOrder(ZORDER_DEFAULT+1);
@@ -1323,7 +1323,7 @@ void panel_look::OnNotification( Ref* sender )
             if ( mr->think() )
                 return;
         }
-            
+
         case ID_RECRUITMEN:
         {
             if ( mr->recruitMen() )

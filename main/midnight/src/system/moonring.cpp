@@ -389,8 +389,12 @@ bool moonring::fight()
 
 bool moonring::think()
 {
+#if defined(_DDR_)
+    showPage(MODE_THINK_PLACE);
+#else
     character& c = TME_CurrentCharacter();
     showPage(MODE_THINK_PERSON, Character_LocationObject(c));
+#endif
     return true;
 }
 
