@@ -420,7 +420,7 @@ std::string mxtext::DescribeCharacterRecruitMen ( const mxcharacter* character, 
         SystemString(SS_RECRUITMEN),
         qty,
         uinfo->Name().c_str(),
-        stronghold->Total(),
+        stronghold->TotalTroops(),
         uinfo->Name().c_str()
         );
 
@@ -468,7 +468,7 @@ std::string mxtext::DescribeCharacterPostMen ( const mxcharacter* character, con
         SystemString(SS_POSTMEN),
         qty,
         uinfo->Name().c_str(),
-        stronghold->Total(),
+        stronghold->TotalTroops(),
         uinfo->Name().c_str()
         );
 
@@ -1062,7 +1062,7 @@ mxterrain*    tinfo;
     auto buffer = Format (
         CookedSystemString(SS_STRONGHOLD3).c_str(),
         DescribeLocation(stronghold->Location()).c_str(),
-        DescribeNumber( stronghold->Total()).c_str(),
+        DescribeNumber( stronghold->TotalTroops()).c_str(),
         mx->UnitById(stronghold->Type())->Name().c_str(),
         mx->RaceById(stronghold->OccupyingRace())->SoldiersName().c_str() );
 

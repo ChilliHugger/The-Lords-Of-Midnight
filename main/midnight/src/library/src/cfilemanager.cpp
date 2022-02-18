@@ -344,7 +344,7 @@ namespace chilli {
         std::string filemanager::GetCurrentDirectory ( int max, const std::string& dir )
         {
 #ifdef WIN32
-            ::GetCurrentDirectoryA( max, dir );
+            ::GetCurrentDirectoryA( max, const_cast<char*>(dir.c_str()) );
 #else
             //getcwd ( dir, max );
 #endif
@@ -354,7 +354,7 @@ namespace chilli {
         void filemanager::SetCurrentDirectory (const std::string& dir )
         {
 #ifdef WIN32
-            ::SetCurrentDirectoryA( dir );
+            ::SetCurrentDirectoryA(const_cast<char*>(dir.c_str()));
 #else
             //    setcwd ( dir );
 #endif

@@ -28,7 +28,7 @@ namespace tme {
     {
         mxentity::type = IDT_STRONGHOLD ;
         race=RA_NONE;
-        total=0;
+        totaltroops=0;
         owner=NULL;
 
     }
@@ -62,7 +62,7 @@ namespace tme {
     //    if ( (Total()-amount) < Min() )
     //        amount = Total()-Min();
     //
-        total-= amount;
+        totaltroops-= amount;
         return amount;
     }
 

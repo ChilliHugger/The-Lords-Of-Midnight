@@ -199,7 +199,7 @@ bool panel_options::init()
 }
 
 void panel_options::OnMenuNotification(
-    __unused const uinotificationinterface* sender,
+    _UNUSED_ const uinotificationinterface* sender,
     menueventargs* args )
 {
     int tag = args->menuitem->id;

@@ -20,7 +20,7 @@ public:
 
     CREATE_FUNC(panel_mainmenu);
     
-    void OnMenuNotification(__unused const uinotificationinterface*, menueventargs* );
+    void OnMenuNotification(_UNUSED_ const uinotificationinterface*, menueventargs* );
     virtual void OnNotification( Ref* element ) override;
     
 protected:

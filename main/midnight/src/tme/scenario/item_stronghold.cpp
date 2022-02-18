@@ -24,11 +24,11 @@ mxstronghold::mxstronghold() :
     terrain(TN_NONE),
     owner(nullptr),
     occupier(nullptr),
-    total(0),
+    totaltroops(0),
     lost(0),
     killed(0),
-    min(0),
-    max(0),
+    mintroops(0),
+    maxtroops(0),
     strategical_success(0),
     owner_success(0),
     enemy_success(0),
@@ -61,9 +61,9 @@ void mxstronghold::Serialize ( archive& ar )
         WRITE_ENUM( occupyingrace );
         WRITE_ENUM( race );
         WRITE_ENUM( type );
-        ar << total;
-        ar << min;
-        ar << max;
+        ar << totaltroops;
+        ar << mintroops;
+        ar << maxtroops;
         ar << strategical_success;
         ar << owner_success;
         ar << enemy_success;
@@ -78,9 +78,9 @@ void mxstronghold::Serialize ( archive& ar )
         READ_ENUM ( occupyingrace );
         READ_ENUM ( race );
         READ_ENUM ( type );
-        ar >> total;
-        ar >> min;
-        ar >> max;
+        ar >> totaltroops;
+        ar >> mintroops;
+        ar >> maxtroops;
         ar >> strategical_success;
         ar >> owner_success;
         ar >> enemy_success;
@@ -158,9 +158,9 @@ u32 mxstronghold::Remove ( mxrace_t race, mxunit_t type, u32 amount )
     if ( OccupyingRace() != race || Type() != type )
         return 0;
 #endif
-    if ( (Total()-amount) < Min() )
-        amount = Total()-Min();
-    total-= amount;
+    if ( (TotalTroops()-amount) < MinTroops() )
+        amount = TotalTroops()- MinTroops();
+    totaltroops-= amount;
     return amount;
 }
 
@@ -184,9 +184,9 @@ u32 mxstronghold::Add ( mxrace_t race, mxunit_t type, u32 amount )
     if ( OccupyingRace() != race || Type() != type )
         return 0;
 #endif
-    if ( (Total()+amount) > Max() )
-        amount = Max()-Total();
-    total += amount;
+    if ( (TotalTroops()+amount) > MaxTroops() )
+        amount = MaxTroops()- TotalTroops();
+    totaltroops += amount;
     return amount;
 }
 
@@ -223,7 +223,7 @@ void mxstronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
 
     if ( newrace != OccupyingRace() )    {
         occupyingrace = newrace ;
-        total = mx->RaceById(newrace)->StrongholdStartups();
+        totaltroops = mx->RaceById(newrace)->StrongholdStartups();
 
         occupier = newoccupier ;
         // TODO if the owner is dead and the new occupier is on the same
@@ -238,8 +238,8 @@ void mxstronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
 
 void mxstronghold::CheckForZero ( void )
 {
-    if ( total <= 0  )
-        total = (u32)sv_stronghold_default_empty;
+    if ( totaltroops <= 0  )
+        totaltroops = (u32)sv_stronghold_default_empty;
 }
 
 archive& operator<<(archive& ar, mxstronghold* ptr )
@@ -263,7 +263,7 @@ MXRESULT mxstronghold::FillExportData ( info_t* data )
         out->parent = SafeIdt(this);
         out->race = OccupyingRace();
         out->type = AT_STRONGHOLD ;
-        out->total = Total() ;
+        out->total = TotalTroops() ;
         out->energy = 0 ;    //unit->Energy();
         out->lost = 0;        //unit->Lost();
         out->killed = Killed();        
@@ -279,9 +279,9 @@ MXRESULT mxstronghold::FillExportData ( info_t* data )
     out->type = Type();
     out->occupyingrace = OccupyingRace();
     out->race = Race();
-    out->total = Total();
-    out->min = Min();
-    out->max = Max();
+    out->totaltroops = TotalTroops();
+    out->mintroops = MinTroops();
+    out->maxtroops = MaxTroops();
     out->influence = Influence();
     out->terrain = Terrain();
     out->killed = Killed();
