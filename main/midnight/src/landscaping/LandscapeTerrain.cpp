@@ -87,14 +87,12 @@ void LandscapeTerrain::Build()
             if ( item->mist ) {
                 
                 std::string mist = "t_mist";
-                AddGraphic(GetImage(mist),x-LRES(76)*scale,y,tint1,tint2,1.0f,scale,item);
-                AddGraphic(GetImage(mist),x+LRES(76+76)*scale,y,tint1,tint2,1.0f,scale,item);
+                AddDoubleGraphic(mist,x,y,tint1,tint2,alpha,scale,item);
             }
             else if ( item->army ) {
 #if defined(_DDR_)
                 std::string army = "t_army2";
-                AddGraphic(GetImage(army),x-LRES(76)*scale,y,tint1,tint2,1.0f,scale,item);
-                AddGraphic(GetImage(army),x+LRES(76+76)*scale,y,tint1,tint2,1.0f,scale,item);
+                AddDoubleGraphic(army,x,y,tint1,tint2,alpha,scale,item);
 #else
                 std::string army = "t_army0";
                 AddGraphic(GetImage(army),x,y,tint1,tint2,alpha,scale,item);
@@ -106,17 +104,33 @@ void LandscapeTerrain::Build()
     
 }
 
-Sprite* LandscapeTerrain::AddGraphic(Sprite* graphic, f32 x, f32 y, Color4F tint1, Color4F tint2, f32 alpha, f32 scale, LandscapeItem* item)
+void LandscapeTerrain::AddDoubleGraphic(
+    std::string& name,
+    f32 x, f32 y,
+    Color4F tint1, Color4F tint2, f32 alpha, f32 scale,
+    LandscapeItem* item)
+{
+    AddGraphic(GetImage(name),x,y,tint1,tint2,alpha,scale,item, -LRES(76)*scale);
+    AddGraphic(GetImage(name),x,y,tint1,tint2,alpha,scale,item, +LRES(76+76)*scale);
+}
+
+Sprite* LandscapeTerrain::AddGraphic(
+    Sprite* graphic, f32 x, f32 y,
+    Color4F tint1, Color4F tint2, f32 alpha, f32 scale,
+    LandscapeItem* item,
+    f32 horizontalOffset)
 {
     if ( graphic == nullptr )
         return nullptr;
+    
+    x+= horizontalOffset;
     
     graphic->setScale( graphic->getScale() * scale);
     graphic->setPosition(options->generator->NormaliseXPosition(x), getContentSize().height - y);
     graphic->setAnchorPoint(Vec2(0.5,0)); // bottom center
 
     mr->shader->UpdateTerrainTimeShader(graphic,alpha,tint1,tint2);
-    graphic->setUserObject(item);
+    graphic->setUserObject(new ImageItem(item,horizontalOffset));
     addChild(graphic);
     return graphic;
 }
@@ -161,16 +175,10 @@ Sprite* LandscapeTerrain::GetImage( std::string& imagename )
 
 void LandscapeTerrain::RefreshPositions()
 {
-// TODO: Army and mists currently draw offset +- 76 because they are doubled
-// this needs to be taken in to account for DDR, either change userObject to stored a different
-// object that can hold the adjustment, or store the value somewhere else
-// it could go in to userData, but offsetPosition might be available - or even adjust the AnchorPoint
-// when the image is originally added to the node
-
     for ( auto node : getChildren() ) {
-        auto item = static_cast<LandscapeItem*>(node->getUserObject());
-        if (item!=nullptr) {
-            f32 x = item->position.x;
+        auto imageItem = static_cast<ImageItem*>(node->getUserObject());
+        if (imageItem->landscapeItem!=nullptr) {
+            f32 x = imageItem->landscapeItem->position.x+imageItem->horizontalOffset;
             node->setPositionX(options->generator->NormaliseXPosition(x));
         }
         node->setTag(0);
