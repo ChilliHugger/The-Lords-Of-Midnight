@@ -417,10 +417,8 @@ mapbuilder* mapbuilder::updateLayers()
         //bool object = false;
         //bool object_special = false;
 #endif
-        bool visible = seen || visited || discovery_seen || discovery_visited || tunnelvisited || tunnelseen || discovery_tunnelseen || discovery_tunnelvisited ;
-        
-        //bool locationTextAvailable = looked_at || discovery_looked_at || visited || discovery_visited || debug_map ;
-        
+        bool visible = seen || visited || discovery_seen || discovery_visited;
+              
         mxthing_t thing = (mxthing_t)m->object ;
         
 #if defined(_DDR_)
