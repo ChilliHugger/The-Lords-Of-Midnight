@@ -812,7 +812,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             void CheckForZero ( void );
 
-            PROPERTY( u32, Total, total );
+            PROPERTY( u32, TotalTroops, totaltroops );
             PROPERTY( u32, Killed, killed );
             PROPERTY( u32, Lost, lost );
             PROPERTY( u32, Respawn, respawn );
@@ -823,8 +823,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             GET_PROPERTY ( mxterrain_t, Terrain, terrain )
             GET_PROPERTY ( mxcharacter*, Owner, owner )
             GET_PROPERTY ( mxcharacter*, Occupier, occupier )
-            PROPERTY ( u32, Min, min )
-            PROPERTY ( u32, Max, max )
+            PROPERTY ( u32, MinTroops, mintroops )
+            PROPERTY ( u32, MaxTroops, maxtroops )
             GET_PROPERTY ( u32, Influence, influence )
             bool HasFallen() const { return race!=occupyingrace; }
 
@@ -832,9 +832,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxrace_t            occupyingrace;
             mxrace_t            race;
             mxunit_t            type;
-            u32                 total;
-            u32                 min;
-            u32                 max;
+            u32                 totaltroops;
+            u32                 mintroops;
+            u32                 maxtroops;
             u32                 strategical_success;
             u32                 owner_success;
             u32                 enemy_success;

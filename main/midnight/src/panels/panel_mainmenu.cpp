@@ -1,4 +1,7 @@
+#ifndef WIN32
 #include <__bit_reference>
+#endif
+
 #include "../cocos.h"
 
 #include "panel_mainmenu.h"
@@ -152,7 +155,7 @@ void panel_mainmenu::OnNotification( Ref* sender )
 }
 
 void panel_mainmenu::OnMenuNotification(
-        __unused const uinotificationinterface* sender,
+        _UNUSED_ const uinotificationinterface* sender,
         menueventargs* args )
 {
     

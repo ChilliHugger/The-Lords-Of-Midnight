@@ -88,6 +88,10 @@ typedef std::function<void(void)> MXVoidCallback;
     GET_PROPERTY(t,n,m)\
     SET_PROPERTY(t,n,m)
 
+#ifndef _UNUSED_
+#define _UNUSED_ [[maybe_unused]]
+#endif
+
 #define _USEINLINE_
 #ifndef _USEINLINE_
     #define    MXINLINE

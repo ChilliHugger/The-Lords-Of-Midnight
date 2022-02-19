@@ -1478,7 +1478,7 @@ namespace tme {
             mxstronghold*    stronghold;
             for (ii = 0; ii < sv_strongholds; ii++) {
                 stronghold=mx->StrongholdById(ii+1);
-                if ( stronghold->Total() )
+                if ( stronghold->TotalTroops() )
                     mx->gamemap->SetLocationArmy(stronghold->Location(),1);
             }
 #endif

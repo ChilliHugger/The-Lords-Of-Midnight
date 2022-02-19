@@ -113,9 +113,9 @@ namespace tme {
                 mxrace_t        occupyingrace;
                 mxrace_t        race;
                 mxunit_t        type;
-                u32                total;
-                u32                min;
-                u32                max;
+                u32                totaltroops;
+                u32                mintroops;
+                u32                maxtroops;
                 u32                strategical_success;
                 u32                owner_success;
                 u32                enemy_success;

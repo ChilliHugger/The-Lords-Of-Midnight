@@ -229,7 +229,7 @@ namespace tme {
                     // can we recruit men ?
                     // this is not an exact check, a stronghold CAN have less than the minimum
                     // in, however you can no longer recruit after the min has been reached
-                    if ( IsAllowedArmy() && stronghold->Total() > stronghold->Min() ) {
+                    if ( IsAllowedArmy() && stronghold->TotalTroops() > stronghold->MinTroops() ) {
 #if defined(_DDR_)
                         if ( IsAllowedWarriors() )
 #endif
@@ -245,7 +245,7 @@ namespace tme {
                     }
 
                     // can we guard men ?
-                    if ( stronghold->Total() + sv_character_guard_amount <= stronghold->Max() ) {
+                    if ( stronghold->TotalTroops() + sv_character_guard_amount <= stronghold->MaxTroops() ) {
                         if ( (stronghold->Type()==UT_WARRIORS) && (warriors.total >= sv_character_guard_amount ) )
                             info->flags.Set(lif_guardmen); // = TRUE ;
                         if ( (stronghold->Type()==UT_RIDERS) && (riders.total >= sv_character_guard_amount ) )

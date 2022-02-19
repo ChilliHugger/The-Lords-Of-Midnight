@@ -399,23 +399,23 @@ namespace tme {
                         foe.adjustment = success ;
                         foe.armies++;
                         if ( stronghold->Type() == UT_WARRIORS )
-                            foe.warriors+=stronghold->Total();
+                            foe.warriors+=stronghold->TotalTroops();
                         else if ( stronghold->Type() == UT_RIDERS )
-                            foe.riders+=stronghold->Total();
+                            foe.riders+=stronghold->TotalTroops();
                     } else {
                         friends.adjustment = success ;
                         friends.armies++;
                         if ( stronghold->Type() == UT_WARRIORS )
-                            friends.warriors+=stronghold->Total();
+                            friends.warriors+=stronghold->TotalTroops();
                         else if ( stronghold->Type() == UT_RIDERS )
-                            friends.riders+=stronghold->Total();
+                            friends.riders+=stronghold->TotalTroops();
                     }
 
                     army->parent = stronghold ;
                     army->armytype = AT_STRONGHOLD ;
                     army->race = stronghold->OccupyingRace();
                     army->type = stronghold->Type();
-                    army->total = stronghold->Total();
+                    army->total = stronghold->TotalTroops();
                     army->success = stronghold->BattleSuccess((mxlocinfo&)*this);
                     army->killed = 0;
                     army->loyalto = stronghold->Owner() ? stronghold->Owner()->loyalty : RA_NONE ;

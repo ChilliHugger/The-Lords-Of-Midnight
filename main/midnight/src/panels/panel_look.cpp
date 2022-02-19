@@ -41,12 +41,12 @@ enum tagid_t {
     TAG_NONE                = 0,
     TAG_UNDO                = 1,
     TAG_UNDO_DONE           = 2,
-    TAG_MENU_COLLAPSE       __unused = 3,
-    TAG_DELAYED_SAVE        __unused = 4,
-    TAG_ENTER_TUNNEL        __unused = 5,
-    TAG_ENTER_TUNNEL_DONE   __unused = 6,
-    TAG_EXIT_TUNNEL         __unused = 7,
-    TAG_EXIT_TUNNEL_DONE    __unused = 8,
+    TAG_MENU_COLLAPSE       _UNUSED_ = 3,
+    TAG_DELAYED_SAVE        _UNUSED_ = 4,
+    TAG_ENTER_TUNNEL        _UNUSED_ = 5,
+    TAG_ENTER_TUNNEL_DONE   _UNUSED_ = 6,
+    TAG_EXIT_TUNNEL         _UNUSED_ = 7,
+    TAG_EXIT_TUNNEL_DONE    _UNUSED_ = 8,
 };
 
 //#define _SHOW_LANDSCAPE_TRAMLINES_

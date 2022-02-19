@@ -282,8 +282,8 @@ mxunit*        unit;
 
                 // loses a stronghold
                 stronghold = (mxstronghold*)army->parent;
-                stronghold->Lost(stronghold->Total()-army->total);            // TMP: Added !
-                stronghold->Total(army->total) ;
+                stronghold->Lost(stronghold->TotalTroops()-army->total);            // TMP: Added !
+                stronghold->TotalTroops(army->total) ;
                 stronghold->Killed(army->killed);
                 stronghold->CheckForZero();
 
