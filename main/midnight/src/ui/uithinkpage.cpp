@@ -105,8 +105,11 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     // text
     uihelper::AddTopLeft(scrollView,lblDescription, RES(TEXT_X),textY);
 
+    s32 yAdjust = mr->resolution->IsPhoneScaleEnabled() ? RES(32) : 0 ;
+ 
+
     // character
-    y = RES(CHARACTER_Y) - imgCharacter->getContentSize().height;
+    y = RES(CHARACTER_Y) - imgCharacter->getContentSize().height - yAdjust;
     x = RES(CHARACTER_X) - (imgCharacter->getContentSize().width/2);
     uihelper::PositionParentTopLeft(imgCharacter,x,y);
   
@@ -159,7 +162,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     }
     
     // terrain
-    y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height;
+    y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height - yAdjust;
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
     uihelper::PositionParentTopRight(imgTerrain,x,y);
     
@@ -177,7 +180,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     y = RES(TERRAIN_Y) ;
     x = RES(TERRAIN_X) ;
    
-    s32 adjust = mr->resolution->IsPhoneScaleEnabled() ? RES(32) : 0 ;
+    s32 xAdjust = mr->resolution->IsPhoneScaleEnabled() ? RES(32) : 0 ;
     
     // RECRUIT SOLDIERS
     auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, clickCallback);
@@ -187,7 +190,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     recruitMen->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     imgTerrain->addChild(recruitMen);
     uihelper::PositionParentBottomCenter(recruitMen,
-                                         -(recruitMen->getContentSize().width/2)-PHONE_SCALE(RES(8))-adjust,
+                                         -(recruitMen->getContentSize().width/2)-PHONE_SCALE(RES(8))-xAdjust,
                                          -recruitMen->getContentSize().height/2);
    
     // POST SOLDIERS
@@ -197,7 +200,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     postMen->setOpacity(this->postMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
     imgTerrain->addChild(postMen);
     uihelper::PositionParentBottomCenter(postMen,
-                                         +(postMen->getContentSize().width/2)+PHONE_SCALE(RES(8))+adjust,
+                                         +(postMen->getContentSize().width/2)+PHONE_SCALE(RES(8))+xAdjust,
                                          -(postMen->getContentSize().height/2)-RES(2));
 
     
