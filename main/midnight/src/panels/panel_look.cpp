@@ -326,7 +326,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     TME_GetMapLocation(loc, location_infrontid );
     
 #if defined(_DDR_)
-    if ( loc.flags.Is(lf_mist) ) {
+    if ( loc.flags.Is(lf_mist) && !tme::variables::sv_display_no_mist) {
         if ( !showHelpWindow( HELP_TN_MISTS ) )
             return;
     }

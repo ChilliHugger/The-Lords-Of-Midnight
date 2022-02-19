@@ -172,7 +172,9 @@ namespace tme {
         extern sv_bool_t    sv_cheat_commands_free ;
         
         extern sv_bool_t    sv_cheat_always_win_fight;
-        
+
+        // do not show mist in DDR
+        extern sv_bool_t    sv_display_no_mist;
         
         inline CVar::CVar()
         { vInt=0; vType=CVar::VNONE; }
