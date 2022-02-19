@@ -49,7 +49,6 @@ enum tagid_t {
     TAG_EXIT_TUNNEL_DONE    _UNUSED_ = 8,
 };
 
-//#define _SHOW_LANDSCAPE_TRAMLINES_
 //#define SHIELD_WIDTH    RES(192)
 //#define SHIELD_HEIGHT   RES(224)
 #define HEADER_HEIGHT   RES(228)
@@ -203,7 +202,7 @@ bool panel_look::init()
     i_help = uihelper::CreateImageButton("i_tutorial_flash", ID_HELP, clickCallback);
     i_help->setVisible(false);
 #if defined(_DDR_)
-    uihelper::AddTopRight(safeArea, i_help, RES(8), HEADER_HEIGHT-RES(32) );
+    uihelper::AddTopRight(safeArea, i_help, RES(8), HEADER_HEIGHT );
 #else
     uihelper::AddTopRight(safeArea, i_help, RES(0), RES(8) );
 #endif
@@ -230,15 +229,7 @@ bool panel_look::init()
 
     auto size = getContentSize();
     f32 landscapeWidth = size.height*1.3333;
-    landscapeTramline = ((size.width - landscapeWidth)/2)*1.05;
-    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - landscapeTramline;
-
-#if defined(_SHOW_LANDSCAPE_TRAMLINES_)
-    gradientL = DrawNode::create();
-    gradientL->setContentSize(size);
-    uihelper::AddBottomLeft(this, gradientL, 0, 0);
-    gradientL->setLocalZOrder(ZORDER_FAR+1);
-#endif
+    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT);
     
     return true;
 }
@@ -578,16 +569,6 @@ void panel_look::UpdateLandscape()
         imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
     }
 #endif
- 
-#if defined(_SHOW_LANDSCAPE_TRAMLINES_)
-    auto size = getContentSize();
-    auto backgroundColour = Color4F(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline));
-    gradientL->clear();
-    gradientL->drawSolidRect(Vec2::ZERO, Vec2(landscapeTramline,size.height),backgroundColour);
-    gradientL->drawSolidRect(Vec2(size.width-landscapeTramline,0), Vec2(size.width,size.height),backgroundColour);
-    gradientL->setOpacity(ALPHA(alpha_1qtr));
-#endif
-    
 }
 
 void panel_look::addTouchListener()

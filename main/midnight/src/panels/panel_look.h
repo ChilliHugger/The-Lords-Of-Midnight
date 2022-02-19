@@ -177,16 +177,15 @@ protected:
     // Actions and Commands
     uicommandwindow*    i_command_window;
   
-    LandscapePeople*    people[5]{};
+    LandscapePeople*    people[5];
 
     LandscapePeople*    prev_people1;
     LandscapePeople*    prev_people;
     LandscapePeople*    current_people;
     LandscapePeople*    next_people;
     LandscapePeople*    next_people1;
-    f32                 landscapeTramline{};
-    
-    Sprite*             movementIndicators[3]{};
+ 
+    Sprite*             movementIndicators[3];
     
     // draggin
     //f32                 dragged;
@@ -196,13 +195,6 @@ protected:
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;
 
-    f32                 startDragLookAmount{};
+    f32                 startDragLookAmount;
     
 };
-
-
-
-
-
-
-
