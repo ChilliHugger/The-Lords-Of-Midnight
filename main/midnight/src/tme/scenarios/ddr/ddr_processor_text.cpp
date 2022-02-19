@@ -360,7 +360,7 @@ c_string tokens;
 
 std::string ddr_text::DescribeCharacterLocation( const mxcharacter* character )
 {
-    RETURN_VALUE_IF_NULL(character, "");
+    RETURN_IF_NULL(character) "";
     
     mxloc& here = mx->gamemap->GetAt ( character->Location() );
     mxgridref loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
