@@ -229,7 +229,8 @@ bool panel_look::init()
 
     auto size = getContentSize();
     f32 landscapeWidth = size.height*1.3333;
-    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT);
+    f32 centerLandscapeViewAdjustment = ((size.width - landscapeWidth)/2)*1.05;
+    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - centerLandscapeViewAdjustment;
     
     return true;
 }
