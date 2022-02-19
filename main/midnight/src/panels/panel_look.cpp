@@ -67,8 +67,8 @@ constexpr f32 FADE_OUT_SPEED = 1.0f;
 #if defined(_DDR_)
 #define DESCRIPTION_COLOUR  _clrRed
 #define SHIELD_X        RES(32)
-#define SHIELD_Y        RES(16)
-#define SHIELD_SCALE    0.9f
+#define SHIELD_Y        RES(0)
+#define SHIELD_SCALE    1.0f
 #define IMAGE_HEADER    "misc/header.png"
 #endif
 
@@ -163,7 +163,15 @@ bool panel_look::init()
     imgShield->setTouchEnabled(true);
     imgShield->addClickEventListener(clickCallback);
     imgShield->setTag(ID_THINK);
+    
+#if defined(_DDR_)
+    imgShield->setAnchorPoint(uihelper::AnchorBottomRight);
+    imgShield->setPosition(Vec2(getContentSize().width-SHIELD_X, getContentSize().height-SHIELD_Y-HEADER_HEIGHT));
+    safeArea->addChild(imgShield);
+#else
     uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
+#endif
+    
 
     // Leader Shield
     following = uisinglelord::create();
@@ -466,9 +474,7 @@ void panel_look::setViewForCurrentCharacter()
     
     lblDescription->setString(current_info->locationtext);
     imgShield->loadTexture(shieldImage, Widget::TextureResType::LOCAL);
-    imgShield->setAnchorPoint(uihelper::AnchorTopRight);
-    imgShield->setIgnoreAnchorPointForPosition(false);
-    
+
     setupLeaderButton();
     
     options.colour->SetLookColour(current_info->time);
