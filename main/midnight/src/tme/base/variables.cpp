@@ -118,7 +118,8 @@ namespace tme {
         sv_bool_t    sv_cheat_movement_cheap ;
         sv_bool_t    sv_cheat_commands_free ;
         sv_bool_t    sv_cheat_always_win_fight ;
-        sv_bool_t    sv_cheat_no_mist ;
+
+        sv_bool_t    sv_display_no_mist ;
 
         sv_int_t    sv_energy_cannot_continue;
         

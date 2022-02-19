@@ -40,7 +40,8 @@ configmanager::~configmanager()
      <var id="cheat_commands_free" value="true" />
      <var id="cheat_movement_cheap" value="false" />
      <var id="cheat_movement_free" value="true" />
-     <var id="cheat_no_mist" value="true" />
+
+     <var id="display_no_mist" value="true" />
 
      <var id="debug_map" value="false" />
      <var id="cheat_always_win_fight" value="false" />
@@ -125,8 +126,8 @@ bool configmanager::LoadXmlConfig (const std::string& filename )
                 tme::variables::sv_cheat_always_win_fight = BOOL_VALUE;
             }
 
-            else if (IS_VAR("cheat_no_mist")) {
-                tme::variables::sv_cheat_no_mist = BOOL_VALUE;
+            else if (IS_VAR("display_no_mist")) {
+                tme::variables::sv_display_no_mist = BOOL_VALUE;
             }
             else if ( IS_VAR("keep_full_save_history") ) {
                 keep_full_save_history = BOOL_VALUE;
