@@ -135,8 +135,8 @@ MXTRACE("Place Objects On Map");
     
     for ( int ii=0; ii < sv_strongholds; ii++ ) {
         mxstronghold* s = static_cast<mxstronghold*>(mx->StrongholdById(ii+1));
-        s->Max(sv_stronghold_default_max);
-        s->Min(sv_stronghold_default_min);
+        s->MaxTroops(sv_stronghold_default_max);
+        s->MinTroops(sv_stronghold_default_min);
     }
     
     mxterrain* tinfo = mx->TerrainById(TN_ICYWASTE);

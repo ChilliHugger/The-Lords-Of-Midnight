@@ -37,7 +37,7 @@ namespace tme {
         if ( newrace != OccupyingRace() )    {
             occupyingrace = newrace ;
             
-            total = 0 ;//Respawn() ; // respawn will happen at night
+            totaltroops = 0 ;//Respawn() ; // respawn will happen at night
             owner = newoccupier ;
             
             occupier = newoccupier ;

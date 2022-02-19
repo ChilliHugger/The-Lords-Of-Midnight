@@ -866,7 +866,7 @@ namespace tme {
         u32 total = armytype==UT_WARRIORS ? warriors.Total() : riders.Total() ;
         
         // 20 soldiers at a time
-        int stronghold_total = stronghold->Total() ;
+        int stronghold_total = stronghold->TotalTroops() ;
         
         int diff = stronghold_total - total ;
         if ( diff <= 0 )
@@ -884,7 +884,7 @@ namespace tme {
             riders.Total(total);
         
         stronghold_total -= diff ;
-        stronghold->Total(std::max<int>(stronghold_total,0));
+        stronghold->TotalTroops(std::max<int>(stronghold_total,0));
         
         //
         

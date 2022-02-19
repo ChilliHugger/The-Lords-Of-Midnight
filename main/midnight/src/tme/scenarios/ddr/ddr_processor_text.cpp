@@ -190,7 +190,7 @@ std::string ddr_text::DescribeStronghold(const mxstronghold* stronghold)
     auto buffer = Format (
                      CookedSystemString(SS_STRONGHOLD3).c_str(),
                      DescribeLocation(garrison->Location()).c_str(),
-                     DescribeNumber( garrison->Total() ).c_str(),
+                     DescribeNumber( garrison->TotalTroops() ).c_str(),
                      mx->RaceById(garrison->OccupyingRace())->SoldiersName().c_str(),
                      mx->UnitById(garrison->Type())->Name().c_str(),
                      DescribeEnergy(garrison->Energy()).c_str()

@@ -278,7 +278,7 @@ namespace tme {
     s32 ddr_battle::getArmySize( mxitem* item )
     {
         if ( item->Type() == IDT_STRONGHOLD ) {
-            return static_cast<mxstronghold*>(item)->Total();
+            return static_cast<mxstronghold*>(item)->TotalTroops();
         } else if ( item->Type() == IDT_CHARACTER ) {
             return static_cast<ddr_character*>(item)->getArmySize();
         }
@@ -288,7 +288,7 @@ namespace tme {
     void ddr_battle::setArmySize(mxitem* item, s32 size)
     {
         if ( item->Type() == IDT_STRONGHOLD ) {
-            static_cast<mxstronghold*>(item)->Total(size);
+            static_cast<mxstronghold*>(item)->TotalTroops(size);
         } else if ( item->Type() == IDT_CHARACTER ) {
             static_cast<ddr_character*>(item)->setArmySize(size);
         }
