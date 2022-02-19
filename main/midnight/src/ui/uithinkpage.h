@@ -93,7 +93,7 @@ public:
     bool                disband;
     bool                postMen;
     bool                recruitMen;
-    
+    bool                enterTunnel;
 };
 
 

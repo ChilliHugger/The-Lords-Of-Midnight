@@ -52,17 +52,18 @@ using namespace tme;
 
 USING_NS_CC;
 
-uithinkpage::uithinkpage()
+uithinkpage::uithinkpage() :
+    approach(false),
+    disband(false),
+    enterTunnel(false),
+    fight(false),
+    leave(false),
+    postMen(false),
+    recruitMen(false),
+    unhide(false),
+    id(IDT_NONE),
+    objectid(IDT_NONE)
 {
-    approach = false;
-    fight = false;
-    unhide = false;
-    leave = false;
-    disband = false;
-    postMen = false;
-    recruitMen = false;
-    id = IDT_NONE;
-    objectid = IDT_NONE;
 }
 
 void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
@@ -138,7 +139,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     unhide->setVisible(this->unhide);
     scrollView->addChild(unhide);
 #endif
-    
+        
     // Leave
     auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEAVE, clickCallback);
     leave->setPosition(pos);
@@ -170,9 +171,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     // Post/Recruit
     if ( this->recruitMen||this->postMen ) {
         auto color = _clrWhite ;
-        //auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(alpha_zero)), Color4B(_clrWhite,ALPHA(alpha_normal)) );
         auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), imgTerrain->getContentSize().width, 1);
-        //gradientC->setContentSize(Size(imgTerrain->getContentSize().width,PHONE_SCALE(RES(64))));
         imgTerrain->addChild(gradientC);
         uihelper::PositionParentBottomLeft(gradientC,RES(0),RES(0));
     }
@@ -233,6 +232,14 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
         gradientC->setPosition(pos);
         scrollView->addChild(gradientC);
     }
+#endif
+
+#if defined(_DDR_)
+    // Enter Tunnel
+    auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
+    enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
+    enterTunnel->setVisible(this->enterTunnel);
+    imgTerrain->addChild(enterTunnel);
 #endif
 
     uihelper::AddTopLeft(safeArea, scrollView);
@@ -547,7 +554,7 @@ void uithinkpage::checkPerson ( void )
     std::string text;
     
     TME_GetCharacter(c,id) ;
-    
+        
 #if defined(_LOM_)
     aheadOrHere ( text, c.location, true );
 #endif
@@ -618,6 +625,12 @@ void uithinkpage::checkPlace ( void )
     std::string text;
     
 #if defined(_DDR_)
+    
+    auto c = TME_CurrentCharacter();
+    TME_GetCharacterLocationInfo(c);
+    
+    enterTunnel = location_flags.Is(lif_enter_tunnel);
+    
     if ( ID_TYPE(id) ==  IDT_CHARACTER ) {
         checkNormal();
         return;

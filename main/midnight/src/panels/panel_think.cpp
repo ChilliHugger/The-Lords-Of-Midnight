@@ -415,7 +415,15 @@ void panel_think::OnNotification( Ref* sender )
             break;
         }
 #endif
-            
+
+#if defined(_DDR_)
+        case ID_ENTER_TUNNEL:
+        {
+            mr->enterTunnel();
+            break;
+        }
+#endif
+
         case ID_APPROACH:
         {
             mr->approach();

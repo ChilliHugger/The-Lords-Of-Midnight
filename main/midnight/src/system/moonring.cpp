@@ -489,6 +489,7 @@ bool moonring::enterTunnel()
     character& c = TME_CurrentCharacter();
     Character_EnterTunnel(c);
     stories->save();
+    look();
     return true;
 }
 
