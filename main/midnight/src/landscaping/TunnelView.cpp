@@ -47,8 +47,10 @@ bool TunnelView::initWithOptions( LandscapeOptions* options )
     visibleSize.height = RES( LANDSCAPE_SKY_HEIGHT+LANDSCAPE_FLOOR_HEIGHT ) ;
     setContentSize( visibleSize );
     
-    clipping = ClippingRectangleNode::create( Rect(0, 0, getContentSize().width, getContentSize().height));
-    this->addChild(clipping);
+    clipping = this;
+    // Temporarily remove clipping https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/51
+    //clipping = ClippingRectangleNode::create( Rect(0, 0, getContentSize().width, getContentSize().height));
+    //this->addChild(clipping);
     
     auto background = LayerColor::create(Color4B(_clrBlack), visibleSize.width, visibleSize.height);
     clipping->addChild(background);
@@ -103,6 +105,6 @@ void TunnelView::createSteps()
 {
     auto steps = Sprite::createWithSpriteFrameName("t_steps");
     steps->setAnchorPoint(uihelper::AnchorBottomCenter);
-    int x = getContentSize().width / 2;
-    uihelper::AddBottomCenter(clipping, steps, x, RES(60));
+    steps->setPosition(getContentSize().width / 2, RES(60));
+    clipping->addChild(steps);
 }
