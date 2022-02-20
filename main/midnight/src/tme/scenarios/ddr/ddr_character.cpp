@@ -1064,7 +1064,52 @@ mxdir_t calcDirection ( mxgridref loc1, mxgridref loc2 )
     return directions[ direction-1 ];
 
 }
+/*
+1. Decide what the lord should do
+  If there is no liege then choose new orders
+  else if the liege is following his liege or foe then follow liege
+  else pick new orders
+2. Check if can pickup object
+3. Choose Direction
+  If can't move forward
+    Way forward is blocked and it's not dawn then stop turn
+    else 50% chance to stop turn (8)
+  If reached target the stop turn (8)
+4. Walk forward
+5. If night then stop turn (8)
+6. If tired then stop turn (8)
+7. repeat from [2]
+8. If there is just one enemy at the current location, and me, then approach
 
+[Pick new orders]
+    Pick random number between 0 and 15
+    if 0 then FOLLOW_LIEGE
+    if 1 then FOLLOW_FOE
+    if 2 then FOLLOW_OBJECT
+    if 3 then HOME
+    if 4 then temporarily DO NOTHING
+    else do whatever they were doing
+
+[FOLLOW_LIEGE]
+    If no liege then follow luxor
+    else if liege is alive then follow
+    else if liege is dead then get their liege
+      if still no liege then  follow luxor
+      else become loyal to and follow new liege
+
+[FOLLOW_FOE]
+    If no foe then follow luxor
+    else if foe is alive then follow
+    else if foe is dead then get their foe
+      if still no foe then follow luxor
+      else become foe and follow new foe
+    
+[FOLLOW_OBJECT]
+    Goto object location
+    
+[HOME]
+    Goto home location
+ */
 
 
 void ddr_character::moveCharacterSomewhere ( void )
@@ -1080,10 +1125,13 @@ void ddr_character::moveCharacterSomewhere ( void )
     }
     
     
-    MXTRACE("Processing %s", Longname().c_str());
+    MXTRACE("Processing %s at location [%d,%d]", Longname().c_str(), location.x, location.y);
+    MXTRACE("  START");
     
     whatIsCharacterDoing();
     
+    MXTRACE("  Target Location is [%d,%d]", targetLocation.x, targetLocation.y);
+
     bool reachedTarget = false;
     
     for (;;) {
@@ -1093,33 +1141,46 @@ void ddr_character::moveCharacterSomewhere ( void )
         mxdir_t direction = calcDirection(Location(),targetLocation);
     
         if ( direction==DR_NONE ) {
+            MXTRACE("  No Direction.");
             break;
         }
+        
+        auto dinfo = mx->DirectionById(direction);
+        MXTRACE("  Heading: %s", dinfo->Name().c_str());
         
         looking = direction;
         
         mxlocinfo* info = this->GetLocInfo();
         if ( !(info->flags&lif_moveforward) ) {
-            if ( !IsDawn() || info->flags&lif_blocked )
+            if ( !IsDawn() || info->flags&lif_blocked ) {
+                MXTRACE("  Blocked (not dawn).");
                 reachedTarget=true;
-            else{
+            }else{
                 if ( mxrandom(255)&1 ) {
+                    MXTRACE("  Decided to stop for a turn.");
                     reachedTarget=true;
                 }
             }
         }
         SAFEDELETE(info);
 
-        if ( reachedTarget )
+        if ( reachedTarget ) {
+            MXTRACE("  Reached Target.");
             break;
+        }
         
         Cmd_WalkForward(false);
-        
-        if ( Time()==(mxtime_t)sv_time_night )
-            break;
+        MXTRACE("  Moved to [%d,%d]", location.x, location.y);
 
-        if (energy<MIN_AI_MOVEMENT_ENERGY)
+        if ( Time()==(mxtime_t)sv_time_night ) {
+            MXTRACE("Stopping for the day.");
             break;
+        }
+
+        if (energy<MIN_AI_MOVEMENT_ENERGY) {
+            MXTRACE("Stopping because tired.");
+            break;
+        }
         
     }
     
@@ -1145,11 +1206,17 @@ void ddr_character::moveCharacterSomewhere ( void )
             }
         }
         
-        if ( (enemies==1) && (info->objCharacters.Count()==2) )
+        MXTRACE("  At location with %d enemies and %d lords.", enemies, info->objCharacters.Count());
+
+        
+        if ( (enemies==1) && (info->objCharacters.Count()==2) ) {
+            MXTRACE("  Approaching %s", recruit->Longname().c_str());
             AI_Approach(recruit);
+        }
     }
     
     SAFEDELETE(info);
+    MXTRACE("  END");
 }
 
 mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )

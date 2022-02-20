@@ -1468,8 +1468,12 @@ namespace tme {
         mxobject* oldobject=carrying;
 
             carrying = mx->scenario->PickupObject( Location() ) ;
+            if(carrying!=nullptr) {
+                MXTRACE("%s picks up object %s", Longname().c_str(), carrying->name.c_str());
+            }
+
 #if defined(_DDR_)
-            if ( carrying==NULL) {
+            if ( carrying==nullptr) {
                 carrying = oldobject;
                 return NULL;
             }
@@ -1477,12 +1481,14 @@ namespace tme {
             carrying->carriedby=this;
             
             if ( oldobject ) {
+                MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
                 mx->scenario->DropObject ( Location(), oldobject );
-                oldobject->carriedby=NULL;
+                oldobject->carriedby=nullptr;
             }
 #endif
             
 #if defined(_LOM_)
+            MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
             mx->scenario->DropObject ( Location(), oldobject );
 #endif
             
