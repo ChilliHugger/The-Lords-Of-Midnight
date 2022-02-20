@@ -51,7 +51,19 @@ void LandscapeColour::updateCharacterNode( Node* node )
     auto shader = mr->shader;
     
     shader->AttachShader(node, options->characterTimeShader);
-    shader->UpdateCharacterTimeShader(node, alpha_normal, fade);
+
+#if defined(_LOM_)
+    auto colour = Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal);
+#endif
+
+#if defined(_DDR_)
+    auto colour = options->isInTunnel
+        ? Vec4((80.0f/255.0f),0,0,alpha_normal)
+        : Vec4(0,0,0,alpha_normal);
+#endif
+
+    
+    shader->UpdateCharacterTimeShader(node, alpha_normal, fade, colour);
 }
 
 

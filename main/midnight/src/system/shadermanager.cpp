@@ -27,15 +27,17 @@ void setUniform(cocos2d::backend::ProgramState* state, std::string uniform, T va
 void shadermanager::CreateCharacterTimeShader()
 {
     characterTimeShader = SimpleShader::createWithFragmentShader("shaders/characterTimeShader.fsh");
+
     characterTimeShader->setUniform("p_colour", Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal));
     characterTimeShader->setUniform("p_alpha", alpha_normal);
     characterTimeShader->setUniform("p_fade", 0.25f);
 
 }
 
-void shadermanager::UpdateCharacterTimeShader(Node* node, f32 alpha, f32 fade)
+void shadermanager::UpdateCharacterTimeShader(Node* node, f32 alpha, f32 fade, Vec4 colour)
 {
     auto state = node->getProgramState();
+    setUniform(state,"p_colour", colour);
     setUniform(state,"p_alpha", alpha);
     setUniform(state,"p_fade", fade);
 }

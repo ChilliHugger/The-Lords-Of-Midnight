@@ -41,7 +41,7 @@ public:
     //
     // Character Day and Time shader
     //
-    void UpdateCharacterTimeShader(Node* node, f32 alpha, f32 fade);
+    void UpdateCharacterTimeShader(Node* node, f32 alpha, f32 fade, Vec4 colour);
     Node* AddCharacterTimeShader(Node* node);
     SimpleShader* GetCharacterTimeShader();
 
