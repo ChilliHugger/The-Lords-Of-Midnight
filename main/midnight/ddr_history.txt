@@ -1,7 +1,18 @@
 Doomdark's Revenge
 
-v2.0 (20)
+v2.0.2 (37)
+Version 2.0
 
+First rebuilt release to support latest models of iOS Devices.
+Including:
+
+1. Wider camera view dependent on device
+2. New night shader for terrain and Characters
+3. Added 'fight', 'hide', 'approach', 'post', 'recruit', 'disband', and 'leave' options to think screen
+4. Think screen now scrolls vertically
+5. Think screen now has scrolling pages
+6. Handles notch safe area
+7. New flip screen option
 
 
 Version 1.4.0
