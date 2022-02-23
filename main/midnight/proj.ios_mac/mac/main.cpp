@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
 #if !defined(_UNIT_TESTS_)
     AppDelegate app;
     auto ret = Application::getInstance()->run();
-    moonring::release();
 #if CC_REF_LEAK_DETECTION
     Ref::printLeaks();
 #endif

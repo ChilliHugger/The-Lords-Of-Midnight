@@ -35,6 +35,10 @@ LandscapeColour::LandscapeColour(LandscapeOptions* options) :
 {
 }
 
+LandscapeColour::~LandscapeColour()
+{
+}
+
 void LandscapeColour::updateTerrainNode( Node* node )
 {
     auto tint1 = Color4F(CalcCurrentMovementTint(TINT::TerrainOutline));

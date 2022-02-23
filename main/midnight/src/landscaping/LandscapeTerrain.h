@@ -46,7 +46,13 @@ public:
     {
         this->landscapeItem = landscapeItem;
         this->horizontalOffset = horizontalOffset;
+        landscapeItem->retain();
     }
+    virtual ~ImageItem()
+    {
+        CC_SAFE_RELEASE_NULL(landscapeItem);
+    }
+
 
 public:
     LandscapeItem*  landscapeItem;

@@ -18,6 +18,7 @@ LandscapeGenerator::~LandscapeGenerator()
 {
     if(items!=nullptr)
     {
+        UIDEBUG("LandscapeGenerator: Clear Items");
         items->clear();
         SAFEDELETE(items);
     }
@@ -59,6 +60,8 @@ void LandscapeGenerator::Build(LandscapeOptions* options)
 	
 void LandscapeGenerator::BuildPanorama()
 {
+    UIDEBUG("LandscapeGenerator: BuildPanorama");
+
     s32	qDim;
     
     s32 x = loc.x/LANDSCAPE_DIR_STEPS;
@@ -70,8 +73,9 @@ void LandscapeGenerator::BuildPanorama()
         for ( int x1=x-qDim; x1<=x+qDim; x1++ ) {
 
             auto cell = ProcessLocation(x1, y1);
-            if ( cell!= nullptr )
+            if ( cell!= nullptr ) {
                 items->pushBack(cell);
+            }
         }
     }
  
@@ -83,31 +87,32 @@ void LandscapeGenerator::BuildPanorama()
 }
 
 
-void LandscapeGenerator::ProcessQuadrant(s32 x, s32 y, s32 dx, s32 dy, s32 qDim)
-{
-    s32	qx1, qy1, qx2, qy2;
-    
-    qDim = qDim>>1;
-    
-    if (qDim)
-    {
-        qx1 = x + dx*qDim;
-        qx2 = x + (1 - dx)*qDim;
-        qy1 = y + dy*qDim;
-        qy2 = y + (1 - dy)*qDim;
-        
-        ProcessQuadrant( qx1, qy1, dx, dy, qDim);
-        ProcessQuadrant( qx2, qy1, dx, dy, qDim);
-        ProcessQuadrant( qx1, qy2, dx, dy, qDim);
-        ProcessQuadrant( qx2, qy2, dx, dy, qDim);
-    }
-    else
-    {
-        auto cell = ProcessLocation(x, y);
-		if ( cell!= nullptr )
-			items->pushBack(cell);
-    }
-}
+//void LandscapeGenerator::ProcessQuadrant(s32 x, s32 y, s32 dx, s32 dy, s32 qDim)
+//{
+//    s32	qx1, qy1, qx2, qy2;
+//    
+//    qDim = qDim>>1;
+//    
+//    if (qDim)
+//    {
+//        qx1 = x + dx*qDim;
+//        qx2 = x + (1 - dx)*qDim;
+//        qy1 = y + dy*qDim;
+//        qy2 = y + (1 - dy)*qDim;
+//        
+//        ProcessQuadrant( qx1, qy1, dx, dy, qDim);
+//        ProcessQuadrant( qx2, qy1, dx, dy, qDim);
+//        ProcessQuadrant( qx1, qy2, dx, dy, qDim);
+//        ProcessQuadrant( qx2, qy2, dx, dy, qDim);
+//    }
+//    else
+//    {
+//        auto cell = ProcessLocation(x, y);
+//        if ( cell!= nullptr ) {
+//            items->pushBack(cell);
+//        }
+//    }
+//}
 
 LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 {

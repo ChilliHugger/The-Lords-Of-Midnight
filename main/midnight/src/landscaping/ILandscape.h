@@ -15,9 +15,12 @@ FORWARD_REFERENCE(LandscapeGenerator);
 FORWARD_REFERENCE(LandscapeColour);
 FORWARD_REFERENCE(SimpleShader);
 
-class LandscapeOptions : cocos2d::Ref
+class LandscapeOptions
 {
     using ProgramState = cocos2d::backend::ProgramState;
+public:
+    LandscapeOptions();
+    virtual ~LandscapeOptions();
     
 public:
     moonring*               mr;

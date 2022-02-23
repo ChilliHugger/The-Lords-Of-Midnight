@@ -39,6 +39,7 @@ static const f32 defaultDuration = 1.0;
 panelmanager::~panelmanager()
 {
     CC_SAFE_RELEASE(currentpanel);
+    CC_SAFE_RELEASE(outgoing_panel);
 }
 
 uipanel* panelmanager::currentPanel()
@@ -103,7 +104,7 @@ uipanel* panelmanager::getPanel( panelmode_t mode )
     
     if ( panel != nullptr ) {
         panel->currentmode = mode;
-        panel->retain();
+        //panel->retain();
     }
     
     return panel;
@@ -182,8 +183,6 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
     
     if ( incomming ) {
     
-        currentpanel->retain();
-    
         Director* director = Director::getInstance();
         
         if ( transition == TRANSITION_NONE ) {
@@ -230,7 +229,7 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
         
     }
 
-    CC_SAFE_RELEASE(outgoing_panel);
+    //CC_SAFE_RELEASE_NULL(outgoing_panel);
 }
 
 void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
@@ -248,9 +247,7 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
     currentpanel = incomming;
     
     if ( incomming ) {
-        
-        currentpanel->retain();
-        
+            
         Director* director = Director::getInstance();
         
         if ( transition == TRANSITION_NONE ) {
@@ -305,7 +302,7 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
         }
     }
     
-    CC_SAFE_RELEASE(outgoing_panel);
+    //CC_SAFE_RELEASE_NULL(outgoing_panel);
 
 }
 

@@ -86,18 +86,26 @@ panel_look::panel_look() :
     next_people1(nullptr),
     prev_people(nullptr),
     prev_people1(nullptr),
+    options(nullptr),
     currentMovementIndicator(LM_NONE)
 {
     CLEARARRAY(people);
     CLEARARRAY(movementIndicators);
+    
 }
 
 panel_look::~panel_look()
 {
-    options.terrainTimeShader = nullptr;
-    options.characterTimeShader = nullptr;
-    SAFEDELETE(options.colour)
-    SAFEDELETE(options.generator)
+    if(options!=nullptr)
+    {
+        UIDEBUG("panel_look: Delete Landscape options");
+        options->terrainTimeShader = nullptr;
+        options->characterTimeShader = nullptr;
+        SAFEDELETE(options->colour)
+        SAFEDELETE(options->generator)
+        SAFEDELETE(options);
+    }
+    
     CC_SAFE_RELEASE_NULL(i_command_window);
 }
 
@@ -111,20 +119,22 @@ bool panel_look::init()
     // TODO: DDR Tunnel view
     
     // TODO: DDR TunnelGenerator
-    options.mr = GetMoonring();
-    options.generator = new LandscapeGenerator();
-    options.colour = new LandscapeColour(&options);
-    options.showWater = false;
-    options.showLand  = false;
-    options.showTerrain = true ;
-    options.debugMode = 0;
-    options.landScaleX = 1.6f;
-    options.landScaleY = 2.15f;
-    options.debugLand=false;
-    options.isMoving=false;
-    options.isLooking=false;
-    options.terrainTimeShader = mr->shader->GetTerrainTimeShader();
-    options.characterTimeShader = mr->shader->GetCharacterTimeShader();
+    UIDEBUG("panel_look: Alloc Landscape options");
+    options = new LandscapeOptions();
+    options->mr = GetMoonring();
+    options->generator = new LandscapeGenerator();
+    options->colour = new LandscapeColour(options);
+    options->showWater = false;
+    options->showLand  = false;
+    options->showTerrain = true ;
+    options->debugMode = 0;
+    options->landScaleX = 1.6f;
+    options->landScaleY = 2.15f;
+    options->debugLand=false;
+    options->isMoving=false;
+    options->isLooking=false;
+    options->terrainTimeShader = mr->shader->GetTerrainTimeShader();
+    options->characterTimeShader = mr->shader->GetCharacterTimeShader();
 
     // Header area
     layHeader = LayerColor::create(Color4B(_clrWhite), getContentSize().width, HEADER_HEIGHT );
@@ -186,7 +196,7 @@ bool panel_look::init()
     
     // people in front
     for (auto &person : people) {
-        person = LandscapePeople::create(&options);
+        person = LandscapePeople::create(options);
         person->setLocalZOrder(ZORDER_FAR+1);
         person->setContentSize( Size( getContentSize().width, RES(256)) );
         addChild(person);
@@ -238,7 +248,7 @@ bool panel_look::init()
     auto size = getContentSize();
     f32 landscapeWidth = size.height*1.3333;
     f32 centerLandscapeViewAdjustment = ((size.width - landscapeWidth)/2)*1.05;
-    options.lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - centerLandscapeViewAdjustment;
+    options->lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - centerLandscapeViewAdjustment;
     
     return true;
 }
@@ -477,38 +487,39 @@ void panel_look::setViewForCurrentCharacter()
 
     setupLeaderButton();
     
-    options.colour->SetLookColour(current_info->time);
-    options.timeofday = current_info->time;
+    options->colour->SetLookColour(current_info->time);
+    options->timeofday = current_info->time;
     
-    options.here = current_info->location;
-    options.here.x *= LANDSCAPE_DIR_STEPS;
-    options.here.y *= LANDSCAPE_DIR_STEPS;
-    options.isMoving = false;
-    options.isLooking = false;
-    options.isInTunnel = false;
-    options.isLookingDownTunnel = false;
-    options.isLookingOutTunnel = false;
+    options->here = current_info->location;
+    options->here.x *= LANDSCAPE_DIR_STEPS;
+    options->here.y *= LANDSCAPE_DIR_STEPS;
+    options->isMoving = false;
+    options->isLooking = false;
+    options->isInTunnel = false;
+    options->isLookingDownTunnel = false;
+    options->isLookingOutTunnel = false;
 
 #if defined(_DDR_)
-    options.isInTunnel = current_info->tunnel;
-    options.isLookingDownTunnel = current_info->lookingdowntunnel;
-    options.isLookingOutTunnel = current_info->lookingouttunnel;
+    options->isInTunnel = current_info->tunnel;
+    options->isLookingDownTunnel = current_info->lookingdowntunnel;
+    options->isLookingOutTunnel = current_info->lookingouttunnel;
 #endif
 
     // TODO: Make this independent of UI
-    options.lookAmount = (f32)(current_info->looking-1) * LANDSCAPE_DIR_AMOUNT;
-    if ( options.lookAmount >= LANDSCAPE_FULL_WIDTH )
+    options->lookAmount = (f32)(current_info->looking-1) * LANDSCAPE_DIR_AMOUNT;
+    if ( options->lookAmount >= LANDSCAPE_FULL_WIDTH )
     {
-        options.lookAmount-=LANDSCAPE_FULL_WIDTH;
+        options->lookAmount-=LANDSCAPE_FULL_WIDTH;
     }
     
-    options.currentLocation = current_info->location;
-    options.currentDirection = current_info->looking;
+    options->currentLocation = current_info->location;
+    options->currentDirection = current_info->looking;
     
-    options.aheadLocation.x = options.currentLocation.x + mxgridref::DirectionLookTable[options.currentDirection*2];
-    options.aheadLocation.y = options.currentLocation.y + mxgridref::DirectionLookTable[(options.currentDirection*2)+1];
+    options->aheadLocation.x = options->currentLocation.x + mxgridref::DirectionLookTable[options->currentDirection*2];
+    options->aheadLocation.y = options->currentLocation.y + mxgridref::DirectionLookTable[(options->currentDirection*2)+1];
     
-    options.generator->Build(&options);
+    UIDEBUG("setViewForCurrentCharacter: Build Landscape");
+    options->generator->Build(options);
     
     // Initialise people
     prev_people1=people[0];
@@ -544,36 +555,40 @@ void panel_look::setViewForCurrentCharacter()
 
 void panel_look::UpdateLandscape()
 {
-    //UIDEBUG("UpdateLandscape: Offset: %f", options.lookAmount);
+    //UIDEBUG("UpdateLandscape: Offset: %f", options->lookAmount);
  
     
     if ( current_view ) {
+        UIDEBUG("UpdateLandscape: Remove Current View");
         removeChild(current_view);
     }
     
-    options.generator->horizontalOffset = options.lookAmount;
-    options.generator->landscapeScreenWidth = getContentSize().width ;
+    options->generator->horizontalOffset = options->lookAmount;
+    options->generator->landscapeScreenWidth = getContentSize().width ;
 
-    
     if ( current_info->tunnel ) {
-        current_view = TunnelView::create(&options);
+        UIDEBUG("UpdateLandscape: Create Tunnel View");
+        current_view = TunnelView::create(options);
     }else{
-        current_view = LandscapeView::create(&options);
+        UIDEBUG("UpdateLandscape: Create Landscape View");
+        current_view = LandscapeView::create(options);
     }
 
     current_view->setAnchorPoint(Vec2::ZERO);
     current_view->setPosition(Vec2::ZERO);
     current_view->setLocalZOrder(ZORDER_FAR);
+    
+    UIDEBUG("UpdateLandscape: Add Current View");
     addChild(current_view);
     
     // LoM's header is affectively part of the background
     // so update the colour to the same as the sky
 #if defined(_LOM_)
-    layHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
+    layHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
 #endif
 #if defined(_DDR_)
     if(!current_info->tunnel){
-        imgHeader->setColor(Color3B(options.colour->CalcCurrentMovementTint(TINT::TerrainFill)));
+        imgHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainFill)));
     }
 #endif
 }
@@ -664,23 +679,23 @@ bool panel_look::startLookLeft()
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
-    if(mr->settings->flipscreen || options.isInTunnel)
+    if(mr->settings->flipscreen || options->isInTunnel)
     {
         stopRotating(LM_ROTATE_LEFT);
         return true;
     }
     
-    options.colour->SetLookColour(c.time);
+    options->colour->SetLookColour(c.time);
     
-    f32 originalLooking = options.lookAmount;
+    f32 originalLooking = options->lookAmount;
     f32 target = -LANDSCAPE_DIR_AMOUNT ;
     
-    options.isLooking = true;
+    options->isLooking = true;
     
     auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
-        options.lookAmount = originalLooking + value;
+        options->lookAmount = originalLooking + value;
         
-        //UIDEBUG("MovementLeft  %f %f %f", target, options.lookAmount, value);
+        //UIDEBUG("MovementLeft  %f %f %f", target, options->lookAmount, value);
         
         f32 distance = value / target;
   
@@ -711,23 +726,23 @@ bool panel_look::startLookRight()
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
     
-    if(mr->settings->flipscreen || options.isInTunnel)
+    if(mr->settings->flipscreen || options->isInTunnel)
     {
         stopRotating(LM_ROTATE_RIGHT);
         return true;
     }
     
-    options.colour->SetLookColour(c.time);
+    options->colour->SetLookColour(c.time);
     
-    f32 originalLooking = options.lookAmount;
+    f32 originalLooking = options->lookAmount;
     f32 target = LANDSCAPE_DIR_AMOUNT ;
     
-    options.isLooking = true;
+    options->isLooking = true;
     
     auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
-        options.lookAmount = originalLooking + value;
+        options->lookAmount = originalLooking + value;
         
-        //UIDEBUG("MovementRight  %f %f %f", target, options.lookAmount, value);
+        //UIDEBUG("MovementRight  %f %f %f", target, options->lookAmount, value);
         
         f32 distance = value / target;
         current_people->adjustMovement( distance );
@@ -844,27 +859,27 @@ bool panel_look::startMoving()
     key = MAKE_LOCID(location_infront.x, location_infront.y);
     TME_GetLocation( map, key );
     
-    options.moveLocationHasArmy = map.flags&lf_army ;
-    options.moveFrom = c.location;
+    options->moveLocationHasArmy = map.flags&lf_army ;
+    options->moveFrom = c.location;
     
     if ( Character_Move(c) ) {
         
-        if ( mr->settings->flipscreen || options.isInTunnel ) {
+        if ( mr->settings->flipscreen || options->isInTunnel ) {
             stopMoving();
             return true;
         }
         
-        options.colour->SetMovementColour(startTime,c.time);
+        options->colour->SetMovementColour(startTime,c.time);
         
-        options.moveTo = c.location;
+        options->moveTo = c.location;
         f32 target = LANDSCAPE_DIR_STEPS ;
         
-        options.isMoving = true;
+        options->isMoving = true;
    
         auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
             
-            options.here.x = options.moveFrom.x*(LANDSCAPE_DIR_STEPS - value) + options.moveTo.x*value;
-            options.here.y = options.moveFrom.y*(LANDSCAPE_DIR_STEPS - value) + options.moveTo.y*value;
+            options->here.x = options->moveFrom.x*(LANDSCAPE_DIR_STEPS - value) + options->moveTo.x*value;
+            options->here.y = options->moveFrom.y*(LANDSCAPE_DIR_STEPS - value) + options->moveTo.y*value;
             
             if ( value >= target ) {
                 stopMoving();
@@ -872,9 +887,9 @@ bool panel_look::startMoving()
             }
         
             f32 result = value / target ;
-            options.movementAmount = result;
+            options->movementAmount = result;
             
-            options.generator->Build(&options);
+            options->generator->Build(options);
             UpdateLandscape();
             
             
@@ -901,7 +916,7 @@ bool panel_look::startMoving()
 
 void panel_look::stopRotating(LANDSCAPE_MOVEMENT type)
 {
-    options.isLooking = false;
+    options->isLooking = false;
     
     if(type == LM_ROTATE_LEFT)
     {
@@ -924,7 +939,7 @@ void panel_look::stopRotating(LANDSCAPE_MOVEMENT type)
 
 void panel_look::stopMoving()
 {
-    options.isMoving = false;
+    options->isMoving = false;
     
     // swap info
     LandscapePeople* temp = next_people;
@@ -1103,7 +1118,6 @@ void panel_look::OnActivate()
     }
     
     OnSetupIcons();
-
 }
 
 void panel_look::OnDeActivate()
@@ -1116,7 +1130,7 @@ bool panel_look::OnKeyboardEvent( uikeyboardevent* event )
     if ( !event->isUp() )
         return false;
     
-    if ( options.isMoving || options.isLooking )
+    if ( options->isMoving || options->isLooking )
         return false;
     
     //
@@ -1431,7 +1445,7 @@ void panel_look::OnSetupIcons()
 
 bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
 {
-    if(options.isLooking)
+    if(options->isLooking)
     {
         return false;
     }
@@ -1587,7 +1601,7 @@ void panel_look::OnStartDrag(uidragevent* event)
     
     OnMovementComplete(LM_DRAG_START);
 
-    startDragLookAmount = options.lookAmount;
+    startDragLookAmount = options->lookAmount;
 }
 
 void panel_look::OnStopDrag(uidragevent* event)
@@ -1613,9 +1627,9 @@ void panel_look::OnDrag(uidragevent* event)
     Vec2 delta = drag_start - drag_current;
     f32 dx = delta.x / size.width ;
 
-    options.isLooking = true;
-    options.isMoving=false;
-    options.lookAmount = startDragLookAmount + ((LANDSCAPE_DIR_AMOUNT*2) * dx);
+    options->isLooking = true;
+    options->isMoving=false;
+    options->lookAmount = startDragLookAmount + ((LANDSCAPE_DIR_AMOUNT*2) * dx);
     
     UpdatePanningLandscape();
     parallaxCharacters();
@@ -1623,8 +1637,8 @@ void panel_look::OnDrag(uidragevent* event)
 
 void panel_look::UpdatePanningLandscape()
 {
-    options.generator->horizontalOffset = options.lookAmount;
-    options.generator->landscapeScreenWidth = getContentSize().width ;
+    options->generator->horizontalOffset = options->lookAmount;
+    options->generator->landscapeScreenWidth = getContentSize().width ;
     current_view->RefreshPositions();
 }
 
@@ -1636,7 +1650,7 @@ void panel_look::UpdatePanningLandscape()
 //
 void panel_look::parallaxCharacters ()
 {
-    f32 distance = (startDragLookAmount - options.lookAmount) / LANDSCAPE_DIR_AMOUNT;
+    f32 distance = (startDragLookAmount - options->lookAmount) / LANDSCAPE_DIR_AMOUNT;
 
     f32 width = getContentSize().width;
     f32 movement = width * distance;
@@ -1673,32 +1687,32 @@ void panel_look::lookPanoramaSnap(uidragevent* event)
     if(!inertiaScroll)
     {
         // normal magnetic scroll
-        amount = (options.lookAmount / LANDSCAPE_DIR_AMOUNT);
+        amount = (options->lookAmount / LANDSCAPE_DIR_AMOUNT);
         amount = ((s32)ROUNDFLOAT(amount)) * LANDSCAPE_DIR_AMOUNT ;
-        locationAdjustment = ROUNDFLOAT(ABS((options.lookAmount-startDragLookAmount) / (f32)LANDSCAPE_DIR_AMOUNT) * SIGN(distanceDragged));
+        locationAdjustment = ROUNDFLOAT(ABS((options->lookAmount-startDragLookAmount) / (f32)LANDSCAPE_DIR_AMOUNT) * SIGN(distanceDragged));
           
     }else{
         // Inertia force
         f32 dir = SIGN(distanceDragged);
-        amount = (ABS(options.lookAmount-startDragLookAmount) > LANDSCAPE_DIR_AMOUNT/2) ? 2 : 1;
+        amount = (ABS(options->lookAmount-startDragLookAmount) > LANDSCAPE_DIR_AMOUNT/2) ? 2 : 1;
         locationAdjustment = (int)(amount*dir);
         amount = startDragLookAmount - ((f32)locationAdjustment*LANDSCAPE_DIR_AMOUNT);
 
-        f32 distanceRemaining = ABS(amount-options.lookAmount);
+        f32 distanceRemaining = ABS(amount-options->lookAmount);
         f32 howFar = (distanceRemaining/LANDSCAPE_DIR_AMOUNT);
         duration = duration * howFar;
     }
     
     //UIDEBUG("Panning: Direction=%d from %f to %f diff %f : Inertia=%s",
-    //        options.currentDirection, options.lookAmount, amount, (options.lookAmount-amount), inertiaScroll ? "TRUE":"FALSE");
+    //        options->currentDirection, options->lookAmount, amount, (options->lookAmount-amount), inertiaScroll ? "TRUE":"FALSE");
   
     //UIDEBUG("Panning: Current Direction=%d Adjustment %d Final Direction %d",
-    //        options.currentDirection, locationAdjustment, options.currentDirection + locationAdjustment );
+    //        options->currentDirection, locationAdjustment, options->currentDirection + locationAdjustment );
 
 
-    auto actionfloat = ActionFloat::create(duration, options.lookAmount, amount, [=](float value) {
-        options.isLooking = true;
-        options.lookAmount =  value;
+    auto actionfloat = ActionFloat::create(duration, options->lookAmount, amount, [=](float value) {
+        options->isLooking = true;
+        options->lookAmount =  value;
         UpdatePanningLandscape();
         parallaxCharacters();
     });
@@ -1715,8 +1729,8 @@ void panel_look::stopDragging(s32 adjustment)
 
     auto dir = (mxdir_t) ((int)c.looking - adjustment);
     
-    options.lookAmount = 0;
-    options.isLooking = false;
+    options->lookAmount = 0;
+    options->isLooking = false;
     
     if ( c.looking != dir ) {
         Character_Look( c, dir );

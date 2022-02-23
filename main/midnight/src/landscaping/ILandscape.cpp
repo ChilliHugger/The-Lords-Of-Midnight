@@ -19,3 +19,16 @@ bool ILandscape::initWithOptions( LandscapeOptions* options )
 {
     return LandscapeNode::initWithOptions(options) ;
 }
+
+LandscapeOptions::LandscapeOptions() :
+    mr(nullptr),
+    generator(nullptr),
+    colour(nullptr),
+    terrainTimeShader(nullptr),
+    characterTimeShader(nullptr)
+{
+}
+
+LandscapeOptions::~LandscapeOptions()
+{
+}

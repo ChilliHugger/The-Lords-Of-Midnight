@@ -101,12 +101,15 @@ moonring::moonring() :
 
 moonring::~moonring()
 {
+    SAFEDELETE(config);
+    SAFEDELETE(project);
     SAFEDELETE(panels);
-    SAFEDELETE(help);
-    SAFEDELETE(settings);
-    SAFEDELETE(stories);
-    SAFEDELETE(keyboard);
     SAFEDELETE(tme);
+    SAFEDELETE(keyboard);
+    SAFEDELETE(stories);
+    SAFEDELETE(settings);
+    SAFEDELETE(help);
+    SAFEDELETE(shader);
     SAFEDELETE(resolution);
 }
 

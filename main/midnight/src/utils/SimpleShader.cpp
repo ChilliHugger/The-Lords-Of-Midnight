@@ -53,8 +53,8 @@ SimpleShader::SimpleShader(const std::string& vertSource, const std::string& fra
 SimpleShader::~SimpleShader()
 {
     //cleanup
-    delete programState;
-    delete program;
+    CC_SAFE_RELEASE_NULL(programState);
+    CC_SAFE_RELEASE_NULL(program);
 
     auto& vec = SimpleShaderManager::getInstance()->shaders;
     vec.erase(std::remove(vec.begin(), vec.end(), this), vec.end());

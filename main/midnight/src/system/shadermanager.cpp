@@ -11,6 +11,18 @@
 
 USING_NS_CC;
 
+shadermanager::shadermanager() :
+    terrainTimeShader(nullptr),
+    characterTimeShader(nullptr)
+{
+}
+
+shadermanager::~shadermanager()
+{
+    SAFEDELETE(terrainTimeShader);
+    SAFEDELETE(characterTimeShader);
+}
+
 void shadermanager::Init()
 {
     CreateCharacterTimeShader();

@@ -157,7 +157,7 @@ protected:
     
     ILandscape*         current_view;
     
-    LandscapeOptions    options;
+    LandscapeOptions*   options;
     //bool                isLooking;
     //bool                isMoving;
     

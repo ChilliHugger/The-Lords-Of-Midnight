@@ -27,6 +27,8 @@ protected:
     bool initWithOptions(LandscapeOptions* options) ;
     
 public:
+    virtual ~LandscapeNode();
+    
     LandscapeOptions*   options;
     moonring*           mr;
 };

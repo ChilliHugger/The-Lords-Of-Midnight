@@ -26,6 +26,8 @@ private:
     void CreateCharacterTimeShader();
     
 public:
+    shadermanager();
+    virtual ~shadermanager();
     
     void Init();
     

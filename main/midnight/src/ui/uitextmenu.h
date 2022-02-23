@@ -25,6 +25,8 @@ private:
     uitextmenu() {};
     
 public:
+    ~uitextmenu();
+    
     static uitextmenu* create( f32 width, uitextmenuitem* items, u32 count );
     void enableItem( u32 id, bool enabled );
     void showItem( u32 id, bool enabled );

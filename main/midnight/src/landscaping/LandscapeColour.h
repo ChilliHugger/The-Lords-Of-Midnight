@@ -34,6 +34,7 @@ class  LandscapeColour
     using Node = cocos2d::Node;
 public:
     LandscapeColour(LandscapeOptions* options);
+    virtual ~LandscapeColour();
 
     Color4B  CalcCurrentMovementTint ( TINT index );
     f32  CalcCurrentMovementFade ( TINT index );

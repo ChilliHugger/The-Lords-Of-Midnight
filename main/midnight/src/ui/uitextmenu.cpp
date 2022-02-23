@@ -28,7 +28,9 @@ uitextmenu* uitextmenu::create( f32 width, uitextmenuitem* items, u32 count )
     return nullptr;
 }
 
-
+uitextmenu::~uitextmenu()
+{
+}
 
 bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count )
 {

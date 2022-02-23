@@ -9,6 +9,10 @@
 #include "LandscapeNode.h"
 #include "ILandscape.h"
 
+LandscapeNode::~LandscapeNode()
+{
+    removeAllChildrenWithCleanup(true);
+}
 
 LandscapeNode* LandscapeNode::create( LandscapeOptions* options )
 {

@@ -130,8 +130,13 @@ Sprite* LandscapeTerrain::AddGraphic(
     graphic->setAnchorPoint(Vec2(0.5,0)); // bottom center
 
     mr->shader->UpdateTerrainTimeShader(graphic,alpha,tint1,tint2);
-    graphic->setUserObject(new ImageItem(item,horizontalOffset));
+    
+    auto imageItem = new ImageItem(item,horizontalOffset);
+    imageItem->autorelease();
+    
+    graphic->setUserObject(imageItem);
     addChild(graphic);
+    
     return graphic;
 }
 

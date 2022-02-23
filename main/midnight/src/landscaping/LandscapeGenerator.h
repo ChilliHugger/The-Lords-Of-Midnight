@@ -42,14 +42,13 @@ class LandscapeItem : public cocos2d::Ref
     using Vec3 = cocos2d::Vec3;
 
 public:
-    tme::loc_t       loc;
-    mxterrain_t	terrain;
-    floor_t		floor;
-    bool		army;
-    bool		mist;
-    Vec3		position;
+    tme::loc_t  loc;
+    mxterrain_t terrain;
+    floor_t     floor;
+    bool        army;
+    bool        mist;
+    Vec3        position;
     f32         scale;
-    
 };
 
 using LandscapeItems = cocos2d::Vector<LandscapeItem*>;
@@ -82,7 +81,7 @@ public:
     void Build(LandscapeOptions* options);
     void BuildPanorama();
     
-    void ProcessQuadrant(s32 x, s32 y, s32 dx, s32 dy, s32 qDim);
+    //void ProcessQuadrant(s32 x, s32 y, s32 dx, s32 dy, s32 qDim);
     LandscapeItem* ProcessLocation(s32 x, s32 y);
     LandscapeItem* CalcCylindricalProjection(LandscapeItem* item);
     float RadiansFromFixedPointAngle(s32 fixed);
