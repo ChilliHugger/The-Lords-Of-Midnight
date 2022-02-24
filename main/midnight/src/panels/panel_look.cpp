@@ -175,8 +175,11 @@ bool panel_look::init()
     imgShield->setTag(ID_THINK);
     
 #if defined(_DDR_)
+    // Take account of notch
+    // It's been removed from the right, so utilsise the left side
+    auto adjustX = mr->resolution->getSafeArea().left;
     imgShield->setAnchorPoint(uihelper::AnchorBottomRight);
-    imgShield->setPosition(Vec2(getContentSize().width-SHIELD_X, getContentSize().height-SHIELD_Y-HEADER_HEIGHT));
+    imgShield->setPosition(Vec2(getContentSize().width-SHIELD_X-adjustX, getContentSize().height-SHIELD_Y-HEADER_HEIGHT));
     safeArea->addChild(imgShield);
 #else
     uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
