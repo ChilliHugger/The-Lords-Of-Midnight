@@ -24,6 +24,7 @@ namespace tme {
         virtual void NightStart(void);
         mxregiment* FindEmptyRegiment();
         
+        virtual void initialiseAfterCreate(u32 version);
 
     private:
         bool    luxorAlive;

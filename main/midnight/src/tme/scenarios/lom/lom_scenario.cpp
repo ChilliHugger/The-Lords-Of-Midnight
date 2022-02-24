@@ -192,54 +192,65 @@ mxplace*        TowerOfDoom;
 }
 
 
-    
-    mxregiment* lom_x::FindEmptyRegiment()
-    {
-        for (int ii = 0; ii < sv_regiments; ii++) {
-            mxregiment* r = mx->RegimentById(ii+1);
-            if ( r->Total() == 0 ) return r ;
-        }
-        return NULL ;
+void lom_x::initialiseAfterCreate(u32 version)
+{
+    // FIX: Database has warriors and riders success the wrong way around
+    if(version<9999){
+        auto warriors = mx->UnitById(1);
+        auto riders = mx->UnitById(2);
+        swap(riders->success, warriors->success);
     }
     
-    void lom_x::NightStart(void)
-    {
-        mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-        luxorAlive = luxor->IsAlive();
-        
+    mxscenario::initialiseAfterCreate(version);
+}
+    
+mxregiment* lom_x::FindEmptyRegiment()
+{
+    for (int ii = 0; ii < sv_regiments; ii++) {
+        mxregiment* r = mx->RegimentById(ii+1);
+        if ( r->Total() == 0 ) return r ;
+    }
+    return NULL ;
+}
+
+void lom_x::NightStart(void)
+{
+    mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
+    luxorAlive = luxor->IsAlive();
+    
+    mxcharacter* morkin = (mxcharacter*)mx->EntityByName("CH_MORKIN");
+    morkinAlive = morkin->IsAlive();
+}
+
+
+void lom_x::NightStop(void)
+{
+    
+    mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
+    if ( luxor->IsDead() ) {
         mxcharacter* morkin = (mxcharacter*)mx->EntityByName("CH_MORKIN");
-        morkinAlive = morkin->IsAlive();
-    }
-    
-    
-    void lom_x::NightStop(void)
-    {
         
-        mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-        if ( luxor->IsDead() ) {
-            mxcharacter* morkin = (mxcharacter*)mx->EntityByName("CH_MORKIN");
-            
-            // if luxor is dead and the moonring has not been found
-            // the morkin should be the current character
-            // unless we were looking at luxor already
-            mxcharacter* moonringcarrier = CurrentMoonringWearer();
-            if ( moonringcarrier==NULL ) {
-                if ( mx->CurrentChar()!=luxor ) {
-                    mx->CurrentChar(morkin);
-                }
-            }
-            
-            // if morkin is also dead
-            // check if he was alive at the start of the night
-            // if he was then he stays the current character
-            // otherwise report on luxor
-            if (morkin->IsDead()) {
-                if ( morkinAlive )
-                    mx->CurrentChar(morkin);
-                else
-                    mx->CurrentChar(luxor);
+        // if luxor is dead and the moonring has not been found
+        // the morkin should be the current character
+        // unless we were looking at luxor already
+        mxcharacter* moonringcarrier = CurrentMoonringWearer();
+        if ( moonringcarrier==NULL ) {
+            if ( mx->CurrentChar()!=luxor ) {
+                mx->CurrentChar(morkin);
             }
         }
+        
+        // if morkin is also dead
+        // check if he was alive at the start of the night
+        // if he was then he stays the current character
+        // otherwise report on luxor
+        if (morkin->IsDead()) {
+            if ( morkinAlive )
+                mx->CurrentChar(morkin);
+            else
+                mx->CurrentChar(luxor);
+        }
+    }
 
         
         /*

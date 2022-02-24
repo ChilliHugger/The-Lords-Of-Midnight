@@ -22,7 +22,7 @@ namespace tme {
 
         virtual void NightStop(void) override;
 
-        virtual void initialiseAfterCreate( void ) override;
+        virtual void initialiseAfterCreate( u32 version ) override;
      
         virtual void GiveGuidance(mxcharacter *character, s32 hint) override;
         

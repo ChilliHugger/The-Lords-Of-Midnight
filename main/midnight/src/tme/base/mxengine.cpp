@@ -436,9 +436,7 @@ MXTRACE( "Init Variables");
     sv_days = 0;
     sv_strongholdadjuster = 0;
 
-    scenario->initialiseAfterCreate();
-    
-    
+    scenario->initialiseAfterCreate(m_versionno);
     
     CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0]) ) ;
    

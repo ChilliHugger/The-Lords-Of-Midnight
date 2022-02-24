@@ -111,7 +111,7 @@ MXRESULT ddr_x::UnRegister ( mxengine* midnightx )
 }
     
     
-void ddr_x::initialiseAfterCreate( void )
+void ddr_x::initialiseAfterCreate( u32 version )
 {
     
     //sv_riders_max_energy=255;
@@ -142,7 +142,7 @@ MXTRACE("Place Objects On Map");
     mxterrain* tinfo = mx->TerrainById(TN_ICYWASTE);
     tinfo->movementcost=2;
     
-    mxscenario::initialiseAfterCreate();
+    mxscenario::initialiseAfterCreate(version);
 
 }
     

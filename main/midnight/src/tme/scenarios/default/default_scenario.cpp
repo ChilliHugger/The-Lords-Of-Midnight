@@ -1792,7 +1792,7 @@ namespace tme {
         }
 
     
-    void mxscenario::initialiseAfterCreate( void )
+    void mxscenario::initialiseAfterCreate( u32 version )
     {
         MXTRACE( "Init Map" );
         SetMapArmies();

@@ -639,6 +639,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         protected:
             u32                 success;
             u32                 baserestmodifier;
+                        
+            friend class lom_x;
         };
     
 #if defined(_DDR_)
