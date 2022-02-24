@@ -1,19 +1,19 @@
 Doomdark's Revenge
 
-v2.0.2 (37)
-Version 2.0
+Version 2.0.2 (38)
+1. Fixed: panel_look - Fix black rectangle when transition from tunnel views
+2. Fixed: panel_think - adjust UI on phone
+3. panel_look - tidy character in header
+4. Fixed: panel_look - adjust colours of characters according to time
+5. Fixed: potential memory leaks that could be causing crashes
+6. Added: panel_think - Icon for Enter Tunnel
 
-First rebuilt release to support latest models of iOS Devices.
-Including:
-
-1. Wider camera view dependent on device
-2. New night shader for terrain and Characters
-3. Added 'fight', 'hide', 'approach', 'post', 'recruit', 'disband', and 'leave' options to think screen
-4. Think screen now scrolls vertically
-5. Think screen now has scrolling pages
-6. Handles notch safe area
-7. New flip screen option
-
+Version 2.0.2 (37)
+1. First release of rebuild - see lom_history.txt for details
+2. panel_look - Center tunnel view
+3. Make think start with THINK_PLACE
+4. Fixed: panel_look - correct panning of double landscape feature - mist & army
+5. Fixed: panel_map - Background behind tunnel always white when location not seen
 
 Version 1.4.0
 1. Added discovery map
@@ -112,7 +112,7 @@ Version v1.2
 19. Stronghold is owned by description has been corrected.
 20. You can now move after recruiting Morkin!
 
-Version 1.1 
+Version 1.1
 1. Fixed Android memory issue
 
 Version 1.0 Initial Release
