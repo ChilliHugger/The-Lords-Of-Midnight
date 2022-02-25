@@ -444,116 +444,91 @@ using namespace chilli::types;
         };
 
         enum SYSTEMSTRING {
+        
+        
+        
             SS_ADVERBS,             //0
             SS_NUMBERS,
             SS_ENERGYTOKENS,
             SS_FEARTOKENS,
             SS_COURAGETOKENS,
-
             SS_DEFAULT_TERRAIN,
             SS_LOCATION_DOMAIN,
             SS_LOCATION_NOTDOMAIN,
-
             SS_DAWN,
             SS_NIGHT,
             SS_THINGATLOCATION,     // 10
-
             SS_RECRUITMEN,
             SS_POSTMEN,
-            
             SS_ITISNIGHT,
             SS_ITISDAWN,
             SS_LESSTHAN,
             SS_HOURSOFDAY,
-
             SS_CHARACTER_ENERGY,
             SS_CHARACTER_FEAR,
             SS_CHARACTER_COURAGE,
-
-            SS_CARRYNOTHING,
-            SS_CARRYING,            // 20
-
+            SS_CARRYNOTHING,        // 20
+            SS_CARRYING,
             SS_KILLED_OBJECT,
             SS_KILLED_BATTLE,
-
             SS_HIDDEN,
             SS_MUSTFIGHT,
-
             SS_MESSAGE1,
             SS_MESSAGE2,
             SS_MESSAGE3,
             SS_MESSAGE4,
-
-            SS_MESSAGE5,
-            SS_MESSAGE6,            // 30
-
+            SS_MESSAGE5,            // 30
+            SS_MESSAGE6,
             SS_SEEK,
             SS_FIGHT,
-
             SS_GUIDANCE1,
             SS_GUIDANCE2,
             SS_SEEK_NOTHING,
-
             SS_BATTLE1,
             SS_BATTLE_NONE,
             SS_BATTLE_WARRIORS,
-            SS_BATTLE_RIDERS,
-            SS_BATTLE_WARRIORS_RIDERS,  // 40
-
+            SS_BATTLE_RIDERS,           // 40
+            SS_BATTLE_WARRIORS_RIDERS,
             SS_BATTLE_CHARACTER_SLEW,
             SS_BATTLE_WARRIORS_SLEW,
             SS_BATTLE_RIDERS_SLEW,
-
             SS_BATTLE_VICTORY_FREE,
             SS_BATTLE_VICTORY_ENEMY,
             SS_BATTLE_VICTORY_NONE,
-
             SS_ARMY_CHARACTER_COMMANDS,
             SS_ARMY_CHARACTER_WARRIORS,
-            SS_ARMY_CHARACTER_RIDERS,
-            
-            SS_ARMY_NONE,               // 50
+            SS_ARMY_CHARACTER_RIDERS,   // 50
+            SS_ARMY_NONE,
             SS_ARMY_WARRIORS,
             SS_ARMY_RIDERS,
             SS_ARMY_WARRIORS_RIDERS,
-
             SS_TERRAIN_PLURAL,
             SS_TERRAIN_SINGLE,
-
             SS_AREA_PREFIXED,
-
             SS_DEFEAT1,
             SS_DEFEAT2,
-            SS_DEFEAT3,
-
-            SS_VICTORY1,                // 60
+            SS_DEFEAT3,                 // 60
+            SS_VICTORY1,
             SS_VICTORY2,
             SS_VICTORY3,
             SS_VICTORY4,
             SS_VICTORY5,
             SS_VICTORY6,
-
             SS_ZEROTOKENS,
             SS_WARRIORS_RIDERS,
-
             SS_MESSAGE7,
-
-            SS_BATTLE2,
-            SS_BATTLE3,                 // 70
-
+            SS_BATTLE2,                 // 70
+            SS_BATTLE3,
             SS_PLURALTOKENS,
             SS_STRONGHOLD1,
             SS_STRONGHOLD2,
             SS_STRONGHOLD3,
-
             SS_FIGHT2,
             SS_FIGHT3,
             SS_FIGHT4,
-            
             SS_PREFIX_HERE,
-            SS_PREFIX_AHEAD,
-            SS_PREFIX_DIRECTION,        // 80
-
+            SS_PREFIX_AHEAD,        // 80
+            SS_PREFIX_DIRECTION,
             SS_SEEK_MSG1,
             SS_SEEK_MSG2,
             SS_SEEK_MSG3,
@@ -561,12 +536,7 @@ using namespace chilli::types;
         //    SS_SEEK_MSG5,
         //    SS_SEEK_MSG6,
         //    SS_SEEK_MSG7,
-        //    SS_SEEK_MSG8,
-        //    SS_SEEK_MSG9,
-        //    SS_SEEK_MSG10,
-           
             SS_VICTORY7=89,
-
             SS_MESSAGE8,
             SS_CHARACTER_CANNOT_CONTINUE,
             
@@ -574,34 +544,27 @@ using namespace chilli::types;
             SS_DESPONDENTTOKENS=92,
             SS_RECKLESSTOKENS=93,
             SS_CHAR_DESPONDENCY_TIRED=94,
-            
             SS_LIEGE=95,
             SS_FOE=96,
             SS_TRAITS=97,
             SS_TUNNEL=98,
-            //
-            
             SS_GROUP_LEADER=99,
             SS_GROUP_FOLLOWER=100,
             SS_LOYAL_TO=101,
-            
             SS_BATTLE_PREPARES_BATTLE=102,
             SS_KILLED_BY=103,
             SS_KILLED_IN_BATTLE=104,
-            
-            SS_SPARE_1=105,
+            SS_KILLED_BY_OBJECT=105,
             SS_SPARE_2=106,
             SS_SPARE_3=107,
             SS_SPARE_4=108,
             SS_SPARE_5=109,
-
             SS_SEES_1=110,
             SS_SEES_2=111,
             SS_SEES_3=112,
             SS_LOCATION_PREP_1=113,
             SS_LOCATION_PREP_2=114,
             SS_CHARACTER_DEAD=115,
-            
             SS_CHARACTER_HERE=116,
             SS_SHARETH_DEAD=117,
             SS_OBJECT_USE_1=118,

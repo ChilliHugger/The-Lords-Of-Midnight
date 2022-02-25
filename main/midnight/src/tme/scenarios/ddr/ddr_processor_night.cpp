@@ -177,9 +177,7 @@ namespace tme {
             // SS_VICTORY2
             // After {special:days} {plural:day:days} the warriors of Midnight return to the frozen gates.
             
-            auto buffer = mx->LastActionMsg();
-            
-            buffer += mx->text->CookedSystemString(SS_VICTORY2);
+            auto buffer = mx->text->CookedSystemString(SS_VICTORY2);
 
             if (victoryFlags.Is(wf_luxor_home)) {
                 // luxor is here
@@ -297,7 +295,7 @@ namespace tme {
             // we want shareth dead
             if ( ch_shareth->IsDead() ) {
                 victoryTargets--;
-                victoryFlags.Set(1);
+                victoryFlags.Set(wf_shareth_dead);
                 victoryMode=WIN_NOBLE; // noble
             }
             
@@ -320,7 +318,7 @@ namespace tme {
             }
 
             // is morkin not home, shareth alive
-            if ( !victoryFlags.Is(wf_morkin_home|wf_shareth_dead) ) {
+            if ( !victoryFlags.Is(wf_morkin_home) && !victoryFlags.Is(wf_shareth_dead) ) {
                 victoryMode=WIN_NONE;
                 return MG_NONE;
             }
@@ -442,6 +440,20 @@ namespace tme {
                     ch_morkin->Location(mxgridref(0,0));
                     ch_tarithel->Location(gate_varenorn);
                     ch_rorthron->Location(gate_varenorn);
+                    break;
+                }
+                
+                case 9:
+                {
+                    // luxor home
+                    // morkin home
+                    // shareth alive
+                  
+                    ch_morkin->Recruited(ch_tarithel);
+                    ch_luxor->Location(gate_varenorn);
+                    ch_morkin->Location(gate_varenorn);
+                    ch_tarithel->Location(mxgridref(0,0));
+                    ch_rorthron->Location(mxgridref(0,0));
                     break;
                 }
             }

@@ -44,7 +44,7 @@ namespace tme {
             virtual std::string DescribeStronghold (const mxstronghold* stronghold) ;
 
         public:
-            LPSTR            victory_token[4];
+            c_string    victory_token;
 
             
             

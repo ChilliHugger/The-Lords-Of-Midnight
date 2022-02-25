@@ -633,7 +633,7 @@ std::string mxtext::DescribeCharacterDeath2 ( const mxcharacter* character )
     RETURN_IF_NULL(character) "";
         
     if ( character->killedbyobject != nullptr )
-        return CookedSystemString(SS_KILLED_OBJECT,character);
+        return CookedSystemString(SS_KILLED_BY_OBJECT,character);
     return CookedSystemString(SS_KILLED_BY,character);
 }
 #endif

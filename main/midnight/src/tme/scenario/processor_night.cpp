@@ -210,7 +210,7 @@ namespace tme {
                 luxor->riders.Total(1200);
                 luxor->Location( sh_ushgarak->Location() );
                 
-                sh_ushgarak->Total(10);
+                sh_ushgarak->TotalTroops(10);
                 
                 mx->battle->KickOffAtLocation(luxor->Location());
                 
@@ -231,7 +231,7 @@ namespace tme {
                 //luxor->riders.Total(1200);
                 //luxor->Location( ushgarak->Location() );
                 
-                sh_xajorkith->Total(10);
+                sh_xajorkith->TotalTroops(10);
 
                 morkin->Cmd_Dead();
                 

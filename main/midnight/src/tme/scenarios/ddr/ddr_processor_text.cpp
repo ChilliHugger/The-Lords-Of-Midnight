@@ -333,7 +333,7 @@ std::string ddr_text::DescribeCharacterDeath2 ( const mxcharacter* character )
     const ddr_character* ddr_c = static_cast<const ddr_character*>(character);
     
     if ( character->killedbyobject )
-        return CookedSystemString(SS_KILLED_OBJECT,character);
+        return CookedSystemString(SS_KILLED_BY_OBJECT,character);
     
     if ( ddr_c->fighting_against )
         return CookedSystemString(SS_KILLED_BY,character);
@@ -390,6 +390,14 @@ void ddr_text::Serialize ( archive& ar )
     mxtext::Serialize(ar);
     if ( ar.IsStoring() )
         return;
+        
+    plural_tokens = FillArrayFromSystemString( SS_PLURALTOKENS );
+
+        
+    systemstrings[SS_KILLED_BY_OBJECT] = "slain by {case:lower}{char:battle:obj:name}. ";
+    
+    victory_token = FillArrayFromSystemString( SS_TOKENS_VICTORY );
+
 }
     
 } // namespace:tme
