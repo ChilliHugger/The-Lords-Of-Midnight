@@ -347,7 +347,7 @@ namespace tme {
 
             mxgridref gate_varenorn = mxgridref(6,92);
             
-            int test = 1;
+            int test = 10;
             
             mx->battle->ResetBattlesFought();
             
@@ -452,6 +452,20 @@ namespace tme {
                     ch_morkin->Recruited(ch_tarithel);
                     ch_luxor->Location(gate_varenorn);
                     ch_morkin->Location(gate_varenorn);
+                    ch_tarithel->Location(mxgridref(0,0));
+                    ch_rorthron->Location(mxgridref(0,0));
+                    break;
+                }
+                
+                case 10:
+                {
+                    // luxor home
+                    // shareth dead
+                    ch_shareth->Cmd_Dead();
+                    ch_shareth->killedbyobject = static_cast<mxobject*>(mx->EntityByName("OB_WOLVES"));
+    
+                    ch_luxor->Location(gate_varenorn);
+                    ch_morkin->Location(mxgridref(0,0));
                     ch_tarithel->Location(mxgridref(0,0));
                     ch_rorthron->Location(mxgridref(0,0));
                     break;
