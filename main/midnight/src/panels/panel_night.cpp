@@ -63,7 +63,7 @@ bool panel_night::init()
     
     setBackgroundToWidth("screens/misc/night.png");
     
-    uishortcutkeys::init(safeArea, clickCallback);
+    uishortcutkeys::registerCallback(safeArea, clickCallback);
     addShortcutKey(ID_DAWN, K_DAWN );
     
     complete = false;

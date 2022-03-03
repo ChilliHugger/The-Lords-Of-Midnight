@@ -165,8 +165,8 @@ bool panel_options::init()
     auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
     logo->setLocalZOrder(ZORDER_FAR+1);
     uihelper::AddTopCenter(safeArea,logo,0,RES(32));
-    
-    CreateMenu1();
+         
+    CreateMainMenu();
     
     SET_OPTION(ID_OPTION_AUTO_FIGHT,autofight)
     SET_OPTION(ID_OPTION_AUTO_UNHIDE,autounhide)
@@ -330,20 +330,20 @@ void panel_options::SetValues()
     }
 }
 
-void panel_options::CreateMenu1()
+void panel_options::CreateMainMenu()
 {
     f32 width = RES(512-32);
     
     f32 contentWidth = safeArea->getContentSize().width;
     f32 contentHeight = safeArea->getContentSize().height;
     
-    auto menu = uitextmenu::create(width, items_main, NUMELE(items_main) );
-    menu->setAnchorPoint(uihelper::AnchorCenter);
-    menu->setPosition(Vec2(contentWidth/4,contentHeight/2));
-    menu->setLocalZOrder(ZORDER_UI);
-    safeArea->addChild(menu);
+    mainMenu = uitextmenu::create(width, items_main, NUMELE(items_main) );
+    mainMenu->setAnchorPoint(uihelper::AnchorCenter);
+    mainMenu->setPosition(Vec2(contentWidth/4,contentHeight/2));
+    mainMenu->setLocalZOrder(ZORDER_UI);
+    safeArea->addChild(mainMenu);
 
-    menu->setNotificationCallback ( [&](const uinotificationinterface* s, uieventargs* e) {
+    mainMenu->setNotificationCallback ( [&](const uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
     });
     
@@ -351,6 +351,9 @@ void panel_options::CreateMenu1()
 
 void panel_options::SetMenu( uitextmenuitem items[], int elements )
 {
+    // map keyboard shortcut keys to layout children
+    uishortcutkeys::registerCallback(safeArea, clickCallback);
+ 
     f32 width = RES(512-32);
     if(isPhoneScaleEnabled())
     {
@@ -359,17 +362,17 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     
     f32 contentWidth = safeArea->getContentSize().width;
     
-    if ( menu2 != nullptr )  {
-        menu2->removeAllChildren();
-        menu2->removeFromParent();
+    if ( subMenu != nullptr )  {
+        subMenu->removeAllChildren();
+        subMenu->removeFromParent();
     }
 
-    menu2 = Menu::create();
-    menu2->setLocalZOrder(ZORDER_UI);
+    subMenu = Menu::create();
+    subMenu->setLocalZOrder(ZORDER_UI);
     
     u32 gapY = PHONE_SCALE(RES(5));
     
-    this->addChild(menu2);
+    safeArea->addChild(subMenu);
     
     fields.clear();
     optionControls.clear();
@@ -387,7 +390,10 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         
         auto button = uioptionitem::create( width, item );
         button->setTag(item->id);
+        button->setUserData(item);
         
+        addShortcutKey(button, item->id, item->keyboard_shortcut);
+
         // find the options
         optionControls.insert(item->id, button);
         
@@ -401,13 +407,13 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
             OnMenuNotification( nullptr, &args );
         } );
         
-        menu2->addChild(menuItem);
+        subMenu->addChild(menuItem);
         fields.pushBack(menuItem);
     }
     
-    menu2->setContentSize(Size(width,height) );
+    subMenu->setContentSize(Size(width,height) );
   
-    uihelper::PositionParentCenterLeft(menu2,contentWidth/2);
+    uihelper::PositionParentCenterLeft(subMenu,contentWidth/2);
     
     // refresh positions
     auto offset = Vec2( width/2, height );
@@ -417,8 +423,9 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         item->setAnchorPoint( uihelper::AnchorCenter );
         item->setPosition(offset);
         offset.y -= (itemHeight / 2) + gapY;
+
     }
-    
+
 }
 
 #if defined(_OS_DESKTOP_)
@@ -437,4 +444,36 @@ void panel_options::changeDisplayMode()
 }
 #endif
 
+bool panel_options::OnKeyboardEvent( uikeyboardevent* event )
+{
+    if ( !event->isUp() ) {
+        return false;
+    }
+    
+    if ( mainMenu != nullptr ) {
+        if( mainMenu->dispatchShortcutKey(event->getKey()) )
+        return true;
+    }
+
+    if ( uipanel::OnKeyboardEvent(event) ) {
+        return true;
+    }
+
+    if (mainMenu!=nullptr) {
+        mainMenu->displayShortcuts();
+    }
+    displayShortcuts();
+    return false;
+}
+
+void panel_options::OnNotification( Ref* sender )
+{
+    auto menuItem = dynamic_cast<uioptionitem*>(sender);
+    if ( menuItem == nullptr )
+        return;
+    
+    menueventargs args;
+    args.menuitem = static_cast<uitextmenuitem*>(menuItem->getUserData());
+    OnMenuNotification( nullptr, &args );
+}
 

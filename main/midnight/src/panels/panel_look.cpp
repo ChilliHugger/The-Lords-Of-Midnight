@@ -230,7 +230,7 @@ bool panel_look::init()
     
     
     // map keyboard shortcut keys to layout children
-    uishortcutkeys::init(safeArea, clickCallback);
+    uishortcutkeys::registerCallback(safeArea, clickCallback);
     
     addTouchListener();
     

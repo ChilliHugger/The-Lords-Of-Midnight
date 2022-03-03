@@ -22,6 +22,8 @@ public:
     
     void OnMenuNotification(_UNUSED_ const uinotificationinterface*, menueventargs* );
     virtual void OnNotification( Ref* element ) override;
+    virtual bool OnKeyboardEvent( uikeyboardevent* event ) override;
+
     
 protected:
     void OnShowManual();

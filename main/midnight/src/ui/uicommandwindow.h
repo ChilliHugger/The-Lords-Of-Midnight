@@ -67,6 +67,5 @@ protected:
     size            grid;
     size            padding;
     Vector<Widget*> elements;
-
 };
 

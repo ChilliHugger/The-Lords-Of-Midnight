@@ -134,7 +134,7 @@ void uicommandwindow::initialiseCommands()
     };
     
     // map keyboard shortcut keys to layout children
-    uishortcutkeys::init(layout, callback);
+    uishortcutkeys::registerCallback(layout, callback);
     
     // THINK
     auto think = uihelper::CreateImageButton("i_think", ID_THINK, callback);
@@ -257,6 +257,8 @@ void uicommandwindow::initialiseCommands()
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
         
     }
+    
+    setVisible(false);
 }
 
 void uicommandwindow::updateElements()
@@ -378,6 +380,7 @@ void uicommandwindow::show( MXVoidCallback callback )
     
     // and show
     parent->addChild(this);
+    setVisible(true);
     
     if ( mr->settings->screentransitions ) {
     
@@ -405,6 +408,8 @@ void uicommandwindow::OnClose()
 
 void uicommandwindow::close()
 {
+    setVisible(false);
+    
     //
     parent->removeChild(this);
     

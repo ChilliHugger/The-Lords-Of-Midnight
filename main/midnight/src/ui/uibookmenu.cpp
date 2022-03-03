@@ -7,6 +7,7 @@
 //
 #include "uihelper.h"
 #include "uibookmenu.h"
+#include "uipanel.h"
 #include "uibook.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
@@ -16,11 +17,15 @@
 USING_NS_CC;
 
 
+uibookmenu::uibookmenu() :
+    parent(nullptr)
+{
+}
 
-uibookmenu* uibookmenu::createWithStory( storyinfo_t* story )
+uibookmenu* uibookmenu::createWithStory( uipanel* parent, storyinfo_t* story )
 {
     uibookmenu* node = new (std::nothrow) uibookmenu();
-    if (node && node->initWithStory(story))
+    if (node && node->initWithStory(parent,story))
     {
         node->autorelease();
         return node;
@@ -30,10 +35,12 @@ uibookmenu* uibookmenu::createWithStory( storyinfo_t* story )
 }
 
 
-bool uibookmenu::initWithStory( storyinfo_t* story )
+bool uibookmenu::initWithStory( uipanel* parent, storyinfo_t* story )
 {
     if ( story == nullptr || story->count == 0 )
         return false;
+ 
+    this->parent = parent;
  
     auto visibleSize = Director::getInstance()->getVisibleSize();
     f32 menuHeight = visibleSize.height;
@@ -43,9 +50,23 @@ bool uibookmenu::initWithStory( storyinfo_t* story )
     if ( !initWithColor(Color4B(_clrBlack), menuWidth, menuHeight) )
         return false;
     
+    chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {
+        auto button = static_cast<Widget*>(ref);
+        if ( button == nullptr )
+            return;
+        
+        layoutid_t id = static_cast<layoutid_t>(button->getTag());
+        
+        switch ( id ) {
+            case ID_CLOSE: Notify(nullptr); break;
+            default: break;
+        }
+        
+    };
+        
     f32 scrollWidth = menuWidth/2;
     
-     this->setOpacity(ALPHA(0.75));
+    this->setOpacity(ALPHA(0.75));
     this->setAnchorPoint(uihelper::AnchorCenter);
     
     auto scrollview = cocos2d::ui::ScrollView::create();
@@ -72,7 +93,6 @@ bool uibookmenu::initWithStory( storyinfo_t* story )
 
         auto storyid = story->chapter[ii].id;
         
-
         menuItem->addClickEventListener( [&,storyid] (Ref* ref ) {
                 bookeventargs args;
                 args.id = storyid;
@@ -90,13 +110,40 @@ bool uibookmenu::initWithStory( storyinfo_t* story )
     scrollview->setScrollBarEnabled( scrollingEnabled );
     scrollview->setPosition(Vec2::ZERO);
     scrollview->setAnchorPoint(Vec2::ZERO);
-
+    
     // Close Button in top left corner
-    auto close = uihelper::CreateImageButton("close", 0, [&](Ref* ref) {
-                                                    Notify( nullptr );
-                                             });
+    auto close = uihelper::CreateImageButton("close", ID_CLOSE, callback ) ;
     uihelper::AddTopLeft(this,close, RES(8), RES(8) );
+
+    uishortcutkeys::registerCallback(this,callback);
+    addShortcutKey(ID_CLOSE, K_ESC);
 
     return true;
 }
 
+
+void uibookmenu::Show()
+{    
+    // stop the underlying parent
+    // from getting any of the events
+    parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);
+    
+    //addTouchListener();
+    
+    uishortcutkeys::addKeyboardListener(this);
+
+    // and show
+    setLocalZOrder(ZORDER_POPUP);
+    uihelper::AddCenter(parent,this);
+    
+}
+
+void uibookmenu::Close()
+{
+    //
+    parent->removeChild(this);
+    
+    // give the parent events back
+    parent->getEventDispatcher()->resumeEventListenersForTarget(parent,true);
+    
+}

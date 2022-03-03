@@ -375,8 +375,6 @@ bool uipanel::OnKeyboardEvent( uikeyboardevent* event )
         displayShortcuts();
     }
     
-
-    
     return false;
 }
 

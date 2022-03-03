@@ -56,7 +56,7 @@ bool panel_select::init()
     draggedLord = nullptr;
     pageFlipAllowed = true;
     
-    uishortcutkeys::init(safeArea, clickCallback);
+    uishortcutkeys::registerCallback(safeArea, clickCallback);
     
     f32 scale = mr->resolution->phoneScale() ;
     

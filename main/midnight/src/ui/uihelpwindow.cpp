@@ -151,7 +151,7 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
     this->setLocalZOrder(ZORDER_POPUP);
     
     // map keyboard shortcut keys to layout children
-    uishortcutkeys::init(layout,callback);
+    uishortcutkeys::registerCallback(layout,callback);
     addShortcutKey(ID_CLOSE, K_ESC);
     
     return true;

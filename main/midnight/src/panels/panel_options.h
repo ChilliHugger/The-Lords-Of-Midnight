@@ -11,6 +11,7 @@
 #include "../cocos.h"
 #include "../ui/uipanel.h"
 #include "../ui/uitextmenuitem.h"
+#include "../ui/uitextmenu.h"
 
 FORWARD_REFERENCE(menueventargs);
 FORWARD_REFERENCE(uinotificationinterface);
@@ -43,17 +44,19 @@ class panel_options : public uipanel
     template<class T> using Vector = cocos2d::Vector<T>;
 public:
 
-    virtual bool init();
+    virtual bool init() override;
     
     CREATE_FUNC(panel_options);
 
 protected:
-    void CreateMenu1();
+    void CreateMainMenu();
     void SetValues ( void );
     void SetMenu ( int id );
     void SetMenu( uitextmenuitem items[], int elements);
     
     void OnMenuNotification( const uinotificationinterface*, menueventargs* );
+    virtual bool OnKeyboardEvent( uikeyboardevent* event ) override;
+    virtual void OnNotification( Ref* sender ) override;
     
 #if defined(_OS_DESKTOP_)
     void changeDisplayMode();
@@ -62,7 +65,8 @@ protected:
 protected:
     DrawNode*               menu2_background;
     Vector<Node*>           fields;
-    Menu*                   menu2;
+    Menu*                   subMenu;
+    uitextmenu*             mainMenu;
     cocos2d::Map<int, uioptionitem*> optionControls;
     CONFIG_SCREEN_MODE      initialScreenMode;
 };

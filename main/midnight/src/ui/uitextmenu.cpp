@@ -40,6 +40,13 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     if ( !initWithFile(Rect::ZERO, BOX_BACKGROUND_FILENAME) )
         return false;
  
+    auto clickCallback = [&] (Ref* sender ) {
+        notifyItem(sender);
+    };
+     
+ // map keyboard shortcut keys to layout children
+    uishortcutkeys::registerCallback(this, clickCallback);
+
     auto rm = moonring::mikesingleton()->resolution;
     
     phoneYPadding = RES(12);
@@ -62,7 +69,8 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     
     // menu
     mainmenu = Menu::create();
-
+    
+    
     // add items
     f32 height=0;
     for ( int ii=0; ii<items_count; ii++ ) {
@@ -72,20 +80,20 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
         auto label = Label::createWithTTF( uihelper::font_config_big, item->type.text );
         label->getFontAtlas()->setAntiAliasTexParameters();
         label->setTextColor(Color4B::WHITE);
+        label->setWidth(width);
+        label->setAlignment(TextHAlignment::CENTER);
 
         auto menuItem = MenuItemLabel::create(label);
         menuItem->setTag(item->id);
+        menuItem->setUserData(item);
         mainmenu->addChild(menuItem);
-                
+      
+        addShortcutKey(menuItem, item->id, item->keyboard_shortcut);
+
         auto r = menuItem->getBoundingBox();
         height += r.size.height;
 
-        menuItem->setCallback([&,item](cocos2d::Ref *sender) {
-            menueventargs args;
-            args.menuitem = item;
-            Notify( &args );
-        } );
-
+        menuItem->setCallback(clickCallback);
     }
 
     height += (phoneYPadding*(items_count-1));
@@ -137,25 +145,40 @@ void uitextmenu::refresh()
     }
 }
 
-void uitextmenu::enableItem( u32 id, bool enabled )
+MenuItem* uitextmenu::getItem( u32 id )
 {
     for ( auto item : mainmenu->getChildren() ) {
         if ( item->getTag() == id ) {
-            auto menuitem = static_cast<MenuItem*>(item);
-            menuitem->setEnabled(enabled);
-            break;
+            return static_cast<MenuItem*>(item);
         }
+    }
+    return nullptr;
+}
+
+
+void uitextmenu::enableItem( u32 id, bool enabled )
+{
+    auto menuitem = getItem(id);
+    if (menuitem!=nullptr) {
+        menuitem->setEnabled(enabled);
     }
 }
 
 void uitextmenu::showItem( u32 id, bool visible )
 {
-    for ( auto item : mainmenu->getChildren() ) {
-        if ( item->getTag() == id ) {
-            auto menuitem = static_cast<MenuItem*>(item);
-            menuitem->setVisible(visible);
-            break;
-        }
+    auto menuitem = getItem(id);
+    if (menuitem!=nullptr) {
+        menuitem->setVisible(visible);
     }
     refresh();
+}
+
+void uitextmenu::notifyItem(Ref* sender)
+{
+    auto menuItem = dynamic_cast<MenuItemLabel*>(sender);
+    if ( menuItem!= nullptr ) {
+        menueventargs args;
+        args.menuitem = static_cast<uitextmenuitem*>(menuItem->getUserData());
+        Notify( &args );
+    }
 }

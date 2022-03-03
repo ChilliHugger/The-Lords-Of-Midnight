@@ -8,6 +8,8 @@
 #ifndef uitextmenuitem_h
 #define uitextmenuitem_h
 
+#include "../frontend/layout_id.h"
+
 enum eTextButton {
     TB_NORMAL=0,
     TB_DOUBLE=1,
@@ -15,7 +17,7 @@ enum eTextButton {
 
 typedef struct uitextmenuitem
 {
-    u32     id;
+    layoutid_t     id;
     union {
         const char*     text;
       //  uioptionitem*   element;

@@ -203,6 +203,29 @@ void panel_mainmenu::OnMenuNotification(
     
 }
 
+
+bool panel_mainmenu::OnKeyboardEvent( uikeyboardevent* event )
+{
+    if ( !event->isUp() ) {
+        return false;
+    }
+
+    if ( menu != nullptr ) {
+        if( menu->dispatchShortcutKey(event->getKey()) )
+            return true;
+    }
+
+    if ( uipanel::OnKeyboardEvent(event) ) {
+        return true;
+    }
+
+    if (menu!=nullptr) {
+        menu->displayShortcuts();
+    }
+    displayShortcuts();
+    return false;
+}
+
 void panel_mainmenu::OnShowManual()
 {
     AreYouSure(_NOVELLA_PROMPT_, [&] {
@@ -281,13 +304,10 @@ void panel_mainmenu::OnContinueStory()
     // Otherwise we need a chouce
     //
     
-    auto bookmenu = uibookmenu::createWithStory( mr->stories->getStoriesInfo() );
+    auto bookmenu = uibookmenu::createWithStory( this, mr->stories->getStoriesInfo() );
     if ( bookmenu == nullptr )
         return;
     
-    bookmenu->setLocalZOrder(ZORDER_POPUP);
-    uihelper::AddCenter(this,bookmenu);
- 
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
 
         auto event = dynamic_cast<bookeventargs*>(e);
@@ -297,10 +317,11 @@ void panel_mainmenu::OnContinueStory()
 
         RUN_ON_UI_THREAD([=]() {
             auto item = dynamic_cast<uibookmenu*>(s);
-            item->removeFromParent();
+            item->Close();
         });
     });
     
+    bookmenu->Show();
 }
 
 void panel_mainmenu::OnEndStory()
@@ -309,12 +330,9 @@ void panel_mainmenu::OnEndStory()
     // Otherwise we need a choice
     //
     
-    auto bookmenu = uibookmenu::createWithStory( mr->stories->getStoriesInfo() );
+    auto bookmenu = uibookmenu::createWithStory( this, mr->stories->getStoriesInfo() );
     if ( bookmenu == nullptr )
         return;
-    
-    bookmenu->setLocalZOrder(ZORDER_POPUP);
-    uihelper::AddCenter(this,bookmenu);
     
     bookmenu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         
@@ -325,9 +343,11 @@ void panel_mainmenu::OnEndStory()
 
         RUN_ON_UI_THREAD([=]() {
             auto item = dynamic_cast<uibookmenu*>(s);
-            item->removeFromParent();
+            item->Close();
         });
     });
+    
+    bookmenu->Show();
 }
 
 void panel_mainmenu::deleteStory( storyid_t id )

@@ -122,7 +122,7 @@ bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
     no->addClickEventListener(callback);
     
     // map keyboard shortcut keys to layout children
-    uishortcutkeys::init(layout,callback);
+    uishortcutkeys::registerCallback(layout,callback);
     addShortcutKey(ID_YES, K_YES);
     addShortcutKey(ID_NO, K_NO);
     addShortcutKey(ID_NO, K_ESC);

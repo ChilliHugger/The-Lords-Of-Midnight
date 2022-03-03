@@ -11,15 +11,18 @@
 #include "uielement.h"
 #include "../ui/uitextmenuitem.h"
 #include "../ui/uieventargs.h"
+#include "uishortcutkeys.h"
 
 using namespace chilli::types;
 
 class uitextmenu :
     public cocos2d::ui::Scale9Sprite,
+    public uishortcutkeys,
     public chilli::ui::NotificationInterface
 {
 protected:
     using Menu = cocos2d::Menu;
+    using MenuItem = cocos2d::MenuItem;
     
 private:
     uitextmenu() {};
@@ -30,11 +33,12 @@ public:
     static uitextmenu* create( f32 width, uitextmenuitem* items, u32 count );
     void enableItem( u32 id, bool enabled );
     void showItem( u32 id, bool enabled );
-    
 
 protected:
 
     bool initWithItems( f32 width, uitextmenuitem* items, u32 count );
+    MenuItem* getItem( u32 id );
+    void notifyItem(Ref* ref);
 
     void refresh();
 

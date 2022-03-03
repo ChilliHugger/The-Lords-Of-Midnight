@@ -14,7 +14,7 @@
 USING_NS_CC;
 USING_NS_CC_UI;
 
-void uishortcutkeys::init( Node* node, chilli::ui::WidgetClickCallback callback )
+void uishortcutkeys::registerCallback( Node* node, chilli::ui::WidgetClickCallback callback )
 {
     this->dispatchNode = node;
     this->callback = callback;
@@ -26,7 +26,7 @@ Node* uishortcutkeys::checkValidTarget( layoutid_t id )
     if ( dispatchNode == nullptr )
         return nullptr;
     
-    return uihelper::getChildByTagRecursively<Widget*>(id,dispatchNode);
+    return uihelper::getChildByTagRecursively<Node*>(id,dispatchNode);
 }
 
 void uishortcutkeys::addShortcutKey( layoutid_t id, KEY_MAP key)
@@ -56,6 +56,14 @@ void uishortcutkeys::addShortcutKey( layoutid_t id, keycode_t key)
     addShortcutLabel(node, d);
 }
 
+void uishortcutkeys::addShortcutKey( Node* node, layoutid_t id, keycode_t key)
+{
+    auto keyboard = moonring::mikesingleton()->keyboard;
+    auto d = keyboard->getKeyboardDescription(key);
+    keys.pushBack( new keyinfo( d, key, id) );
+    addShortcutLabel(node, d);
+}
+
 
 keyinfo* uishortcutkeys::getKeyboardShortcut( keycode_t key)
 {
@@ -73,8 +81,8 @@ bool uishortcutkeys::dispatchShortcutKey( keycode_t keyCode )
     
     auto key = getKeyboardShortcut(keyCode);
     if ( key != nullptr ) {
-        auto sender = uihelper::getChildByTagRecursively<Widget*>(key->id,dispatchNode);
-        if ( sender != nullptr && sender->isEnabled() ) {
+        auto sender = uihelper::getChildByTagRecursively<Node*>(key->id,dispatchNode);
+        if ( sender != nullptr /*&& sender->isEnabled()*/ ) {
             
             callback(sender);
             return true;
@@ -131,8 +139,8 @@ void uishortcutkeys::displayShortcuts()
 {
     for( auto k : keys ) {
 
-        auto sender = uihelper::getChildByTagRecursively<Widget*>(k->id,dispatchNode);
-        if ( sender && sender->isVisible() && sender->isEnabled() ) {
+        auto sender = uihelper::getChildByTagRecursively<Node*>(k->id,dispatchNode);
+        if ( sender && sender->isVisible() /*&& sender->isEnabled()*/ ) {
             auto shortcut = sender->getChildByName<Label*>("shortcut_label");
             if ( shortcut == nullptr )
                 continue;

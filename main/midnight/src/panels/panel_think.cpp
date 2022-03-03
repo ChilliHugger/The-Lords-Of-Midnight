@@ -86,7 +86,7 @@ bool panel_think::init()
     // Postmen
     // Recruitmen
     
-    uishortcutkeys::init(safeArea, clickCallback);
+    uishortcutkeys::registerCallback(safeArea, clickCallback);
     addShortcutKey(ID_LOOK          ,K_LOOK);
     addShortcutKey(ID_THINK_PERSON  ,K_PERSON);
     addShortcutKey(ID_THINK_PLACE   ,K_PLACE);

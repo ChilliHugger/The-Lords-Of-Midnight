@@ -11,6 +11,7 @@
 #include "uielement.h"
 #include "../system/storymanager.h"
 #include "../ui/uieventargs.h"
+#include "../ui/uishortcutkeys.h"
 
 class bookeventargs : public uieventargs
 {
@@ -22,13 +23,19 @@ public:
 
 class uibookmenu :
     public cocos2d::LayerColor,
-    public chilli::ui::NotificationInterface
+    public chilli::ui::NotificationInterface,
+    public uishortcutkeys
 {
+    using Widget = cocos2d::ui::Widget;
 public:
+    uibookmenu();
     
-    CREATE_FUNC(uibookmenu);
-    static uibookmenu* createWithStory( storyinfo_t* stories );
+    static uibookmenu* createWithStory( uipanel* parent, storyinfo_t* stories );
+    void Show();
+    void Close();
     
 protected:
-    bool initWithStory( storyinfo_t* stories );
+    bool initWithStory( uipanel* parent, storyinfo_t* stories );
+    
+    uipanel* parent;
 };
