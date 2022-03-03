@@ -8,9 +8,10 @@
 
 #pragma once
 
-#include "../ui/uielement.h"
+#include "uielement.h"
 #include "../frontend/panel_id.h"
 #include "../tme/tme_interface.h"
+#include "uishortcutkeys.h"
 
 FORWARD_REFERENCE(moonring);
 
@@ -22,7 +23,9 @@ enum SpecialId
 };
 
 
-class uithinkpage : public chilli::ui::Element
+class uithinkpage :
+    public chilli::ui::Element,
+    public uishortcutkeys
             // , public uinotificationdelegate
             // , public uiactioncompletedelegate
             // , public uidragmoveelement

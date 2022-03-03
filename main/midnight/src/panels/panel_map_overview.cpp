@@ -25,6 +25,8 @@ bool panel_map_overview::init()
         return false;
     }
     
+    uishortcutkeys::registerCallback(safeArea, clickCallback);
+       
     mr->mapmodel.currentMapPanel = mr->panels->currentmode;
 
     auto backgroundColour = Color3B(245,238,228);
@@ -75,6 +77,9 @@ bool panel_map_overview::init()
     
     
     scrollView->setInnerContainerPosition(Vec2::ZERO);
+    
+    addShortcutKey(ID_LOOK,              K_LOOK);
+    //addShortcutKey(ID_MAP_DISCOVERY,             K_NIGHT);
     
     showHelpWindow(HELP_OVERVIEW_MAP);
     

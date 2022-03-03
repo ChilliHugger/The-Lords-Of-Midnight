@@ -1156,6 +1156,8 @@ bool panel_look::OnKeyboardEvent( uikeyboardevent* event )
             startLookRight();
             return true;
         }
+
+        case KEYCODE(Q):
         case KEYCODE(UP_ARROW):
         {
             moveForward();

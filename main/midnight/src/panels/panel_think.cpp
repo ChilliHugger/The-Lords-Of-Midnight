@@ -86,21 +86,14 @@ bool panel_think::init()
     // Postmen
     // Recruitmen
     
-    uishortcutkeys::registerCallback(safeArea, clickCallback);
+    uishortcutkeys::registerCallback(this, clickCallback);
+    
     addShortcutKey(ID_LOOK          ,K_LOOK);
     addShortcutKey(ID_THINK_PERSON  ,K_PERSON);
     addShortcutKey(ID_THINK_PLACE   ,K_PLACE);
     addShortcutKey(ID_THINK_ARMY    ,K_ARMY);
     addShortcutKey(ID_THINK_BATTLE  ,K_BATTLE);
-    
-//    addShortcutKey(ID_APPROACH      ,K_APPROACH);
-//#if defined(_LOM_)
-//    addShortcutKey(ID_FIGHT         ,K_FIGHT);
-//    addShortcutKey(ID_UNHIDE        ,K_UNHIDE);
-//#endif
-//    addShortcutKey(ID_GROUP_LEAVE   ,K_LEAVE);
-//    addShortcutKey(ID_GROUP_DISBAND ,K_DISBAND);
-    
+             
     return true;
 }
 
@@ -135,9 +128,18 @@ void panel_think::enableButtons()
     
     showButton(ID_GROUP_DISBAND, page->disband );
     showButton(ID_GROUP_LEAVE, page->leave );
-    
-    // postmen
-    // recruitmen
+        
+#if defined(_LOM_)
+    showButton(ID_UNHIDE,       page->unhide);
+    showButton(ID_FIGHT,        page->fight);
+#endif
+#if defined(_DDR_)
+    showButton(ID_ENTER_TUNNEL, page->enterTunnel);
+#endif
+    showButton(ID_APPROACH,   page->approach);
+    showButton(ID_RECRUITMEN, page->recruitMen);
+    showButton(ID_POSTMEN,    page->postMen);
+ 
     
     
 }
@@ -352,6 +354,7 @@ void panel_think::setupPages()
     if ( pages.empty()  ) {
         addPage(c.id);
     }
+        
 }
 
 void panel_think::OnNotification( Ref* sender )
@@ -460,4 +463,25 @@ void panel_think::OnNotification( Ref* sender )
     
     uipanel::OnNotification(sender);
     
+}
+
+bool panel_think::OnKeyboardEvent( uikeyboardevent* event )
+{
+    if ( !event->isUp() ) {
+        return false;
+    }
+
+    auto index = pageView->getCurrentPageIndex();
+    auto page = pages.at(index);
+    
+    if( page->dispatchShortcutKey(event->getKey()) )
+        return true;
+
+    if ( uipanel::OnKeyboardEvent(event) ) {
+        return true;
+    }
+
+    page->displayShortcuts();
+    displayShortcuts();
+    return false;
 }

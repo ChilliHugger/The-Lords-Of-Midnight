@@ -129,6 +129,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, clickCallback);
     approach->setPosition(pos);
     approach->setVisible(this->approach);
+    approach->setEnabled(this->approach);
     scrollView->addChild(approach);
     
 #if defined(_LOM_)
@@ -136,6 +137,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, clickCallback);
     unhide->setPosition(pos);
     unhide->setVisible(this->unhide);
+    unhide->setEnabled(this->unhide);
     scrollView->addChild(unhide);
 #endif
         
@@ -143,12 +145,14 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     auto leave = uihelper::CreateImageButton("i_leave_group", ID_GROUP_LEAVE, clickCallback);
     leave->setPosition(pos);
     leave->setVisible(this->leave);
+    leave->setEnabled(this->leave);
     scrollView->addChild(leave);
     
     // Disband
     auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);
     disband->setPosition(pos);
     disband->setVisible(this->disband);
+    disband->setEnabled(this->disband);
     scrollView->addChild(disband);
     
     // bottom gradient on character
@@ -201,7 +205,6 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
                                          +(postMen->getContentSize().width/2)+PHONE_SCALE(RES(8))+xAdjust,
                                          -(postMen->getContentSize().height/2)-RES(2));
 
-    
     // object
 #if defined(_LOM_)
     y = RES(OBJECT_Y) - imgObject->getContentSize().height;
@@ -220,6 +223,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     fight->setPosition(pos);
     fight->setVisible(this->fight);
+    fight->setEnabled(this->fight);
     scrollView->addChild(fight);
     
     if ( this->fight ) {
@@ -238,16 +242,30 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
     enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
     enterTunnel->setVisible(this->enterTunnel);
+    enterTunnel->setEnabled(this->enterTunnel);
     imgTerrain->addChild(enterTunnel);
 #endif
 
     uihelper::AddTopLeft(safeArea, scrollView);
     uihelper::FillParent(scrollView);
     
-//#if defined(_LOM_)
-//    addShortcutKey(ID_FIGHT         ,K_FIGHT);
-//    addShortcutKey(ID_UNHIDE        ,K_UNHIDE);
-//#endif
+     
+ // map keyboard shortcut keys to layout children
+    uishortcutkeys::registerCallback(this, clickCallback);
+
+#if defined(_LOM_)
+    addShortcutKey(unhide, ID_UNHIDE,       K_UNHIDE);
+    addShortcutKey(fight, ID_FIGHT,        K_FIGHT);
+#endif
+#if defined(_DDR_)
+    addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
+#endif
+    addShortcutKey(approach, ID_APPROACH,   K_APPROACH);
+    addShortcutKey(recruitMen, ID_RECRUITMEN, K_RECRUIT);
+    addShortcutKey(postMen, ID_POSTMEN,    K_POST);
+
+    addShortcutKey(leave, ID_GROUP_LEAVE   ,K_LEAVE);
+    addShortcutKey(disband, ID_GROUP_DISBAND ,K_DISBAND);
     
 }
 

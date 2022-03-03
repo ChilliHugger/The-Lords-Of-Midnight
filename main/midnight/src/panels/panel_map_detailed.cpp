@@ -57,6 +57,8 @@ bool panel_map_detailed::init()
         return false;
     }
     
+    uishortcutkeys::registerCallback(safeArea, clickCallback);
+    
     model = &mr->mapmodel;
     
     model->currentMapPanel = mr->panels->currentmode;
@@ -152,6 +154,15 @@ bool panel_map_detailed::init()
     
     updateScale();
     
+    addShortcutKey(ID_FILTER_CURRENT_LOC,   KEYCODE(F1));
+    addShortcutKey(ID_FILTER_CRITTERS,      KEYCODE(F2));
+    addShortcutKey(ID_FILTER_LORDS,         KEYCODE(F3));
+    addShortcutKey(ID_FILTER_TUNNELS,       KEYCODE(F4));
+    
+    addShortcutKey(ID_LOOK,                 K_LOOK);
+    addShortcutKey(ID_DOWN,                 KEYCODE(DOWN_ARROW));
+    addShortcutKey(ID_UP,                   KEYCODE(UP_ARROW));
+       
     showHelpWindow(HELP_DISCOVERY_MAP);
     
     mapBuilder->clearLayers();

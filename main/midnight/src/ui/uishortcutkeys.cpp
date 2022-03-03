@@ -56,6 +56,15 @@ void uishortcutkeys::addShortcutKey( layoutid_t id, keycode_t key)
     addShortcutLabel(node, d);
 }
 
+void uishortcutkeys::addShortcutKey( Node* node, layoutid_t id, KEY_MAP key)
+{
+    auto keyboard = moonring::mikesingleton()->keyboard;
+    auto k = keyboard->getKeycode(key);
+    auto d = keyboard->getKeyboardDescription(k);
+    keys.pushBack( new keyinfo( d, k, id) );
+    addShortcutLabel(node, d);
+}
+
 void uishortcutkeys::addShortcutKey( Node* node, layoutid_t id, keycode_t key)
 {
     auto keyboard = moonring::mikesingleton()->keyboard;
@@ -63,7 +72,6 @@ void uishortcutkeys::addShortcutKey( Node* node, layoutid_t id, keycode_t key)
     keys.pushBack( new keyinfo( d, key, id) );
     addShortcutLabel(node, d);
 }
-
 
 keyinfo* uishortcutkeys::getKeyboardShortcut( keycode_t key)
 {
@@ -82,8 +90,7 @@ bool uishortcutkeys::dispatchShortcutKey( keycode_t keyCode )
     auto key = getKeyboardShortcut(keyCode);
     if ( key != nullptr ) {
         auto sender = uihelper::getChildByTagRecursively<Node*>(key->id,dispatchNode);
-        if ( sender != nullptr /*&& sender->isEnabled()*/ ) {
-            
+        if ( isEnabled(sender) ) {
             callback(sender);
             return true;
         }
@@ -91,6 +98,20 @@ bool uishortcutkeys::dispatchShortcutKey( keycode_t keyCode )
     }
     
     return false;
+}
+
+bool uishortcutkeys::isEnabled(Node* node)
+{
+    if(node==nullptr)
+        return false;
+    
+    auto widget = dynamic_cast<Widget*>(node);
+    if(widget!=nullptr) {
+        if(!widget->isEnabled()) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void uishortcutkeys::addKeyboardListener(Node* node)
@@ -140,7 +161,7 @@ void uishortcutkeys::displayShortcuts()
     for( auto k : keys ) {
 
         auto sender = uihelper::getChildByTagRecursively<Node*>(k->id,dispatchNode);
-        if ( sender && sender->isVisible() /*&& sender->isEnabled()*/ ) {
+        if ( sender && sender->isVisible() && isEnabled(sender) ) {
             auto shortcut = sender->getChildByName<Label*>("shortcut_label");
             if ( shortcut == nullptr )
                 continue;

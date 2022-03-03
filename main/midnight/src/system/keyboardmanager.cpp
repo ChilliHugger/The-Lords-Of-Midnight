@@ -42,7 +42,7 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(3) // K_GIVE
         , KEYCODE(2) // K_TAKE
         , KEYCODE(1) // K_REST
-        , KEYCODE(4) // K_TUNNEL
+        , KEYCODE(8) // K_TUNNEL
         , KEYCODE(9) // K_USE
 #endif
         , KEYCODE(4) // K_APPROACH,
@@ -77,7 +77,7 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(3) // K_GIVE
         , KEYCODE(2) // K_TAKE
         , KEYCODE(1) // K_REST
-        , KEYCODE(4) // K_TUNNEL
+        , KEYCODE(8) // K_TUNNEL
         , KEYCODE(9) // K_USE
 #endif
         , KEYCODE(P) // K_APPROACH,

@@ -31,10 +31,12 @@ protected:
     void addKeyboardListener(Node* node);
     void addShortcutKey( layoutid_t id, KEY_MAP key);
     void addShortcutKey( layoutid_t id, keycode_t key);
+    void addShortcutKey( Node* node, layoutid_t id, KEY_MAP key);
     void addShortcutKey( Node* node, layoutid_t id, keycode_t key);
     void registerCallback( Node* node, WidgetClickCallback callback );
     void addShortcutLabel(Node* node, LPCSTR text);
     Node* checkValidTarget( layoutid_t id );
+    bool isEnabled(Node* node);
 
 protected:
     Vector<keyinfo*>   keys;

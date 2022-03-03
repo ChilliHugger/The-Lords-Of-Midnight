@@ -27,6 +27,7 @@ public:
     
 protected:
     
+    virtual bool OnKeyboardEvent( uikeyboardevent* event ) override;
     virtual void OnNotification( Ref* sender ) override;
     virtual void setObject(mxid targetObjectId) override;
 
