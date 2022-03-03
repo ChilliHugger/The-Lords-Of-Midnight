@@ -1587,6 +1587,10 @@ bool panel_look::allowDragDownMove()
 
 bool panel_look::allowDragLook()
 {
+    if(current_info->tunnel) {
+        return false;
+    }
+
     int value = mr->settings->nav_mode ;
     if ( value != CF_NAV_PRESS && value != CF_NAV_SWIPE_MOVE_PRESS_LOOK && !mr->settings->flipscreen )
         return  true;
