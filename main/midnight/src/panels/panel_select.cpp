@@ -75,7 +75,6 @@ bool panel_select::init()
     
     setBackground(BACKGROUND_COLOUR);
     
-    int r = RES(64) ; // * scale;
     
     // Look Icon
     auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
@@ -85,17 +84,18 @@ bool panel_select::init()
     auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, clickCallback);
     uihelper::AddBottomRight(safeArea, night, RES(0), RES(10) );
     
-    int adjy=RES(32); // *scale;
+    int adjy=RES(-16);
+    int r = RES(PHONE_SCALE(64));
 
-    createFilterButton(ID_FILTER_DAWN,          (r*1)-adjy, "lord_dawn",    select_filters::show_dawn);
-    createFilterButton(ID_FILTER_NIGHT,         (r*2)-adjy, "lord_night",   select_filters::show_night);
-    createFilterButton(ID_FILTER_BATTLE,        (r*3)-adjy, "lord_battle",  select_filters::show_battle);
-    createFilterButton(ID_FILTER_DEAD,          (r*4)-adjy, "f_dead!",      select_filters::show_dead);
-    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*5)-adjy, "i_center",     select_filters::show_current);
+    createFilterButton(ID_FILTER_DAWN,          (r*0)-adjy, "lord_dawn",    select_filters::show_dawn);
+    createFilterButton(ID_FILTER_NIGHT,         (r*1)-adjy, "lord_night",   select_filters::show_night);
+    createFilterButton(ID_FILTER_BATTLE,        (r*2)-adjy, "lord_battle",  select_filters::show_battle);
+    createFilterButton(ID_FILTER_DEAD,          (r*3)-adjy, "f_dead!",      select_filters::show_dead);
+    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*4)-adjy, "i_center",     select_filters::show_current);
     
     auto cleanup = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
-    cleanup->setScale(scale_normal);
-    uihelper::AddTopRight(safeArea, cleanup, RES(32), (r*6)-adjy );
+    //cleanup->setScale(scale_normal);
+    uihelper::AddTopRight(safeArea, cleanup, RES(PHONE_SCALE(12)*0.9), (r*5)-adjy );
 
     createPageView();
     
@@ -450,10 +450,10 @@ uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const st
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
     // #40 Temporary fix
-    //button->setScale(phoneScale());
+    button->setScale(phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
-    uihelper::AddTopRight(safeArea, button, RES(32), y );
+    uihelper::AddTopRight(safeArea, button, RES(PHONE_SCALE(16)), y );
     return button;
 }
 

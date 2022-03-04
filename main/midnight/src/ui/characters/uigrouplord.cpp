@@ -57,6 +57,7 @@ bool uigrouplord::init()
         });
         
         i_group_left->setPosition( calcCirclePos(LEFT_BUTTON_POSITION) );
+        i_group_left->setScale(scale_normal);
         addChild(i_group_left);
 
         // Right Button
@@ -67,6 +68,7 @@ bool uigrouplord::init()
             }
         });
         i_group_right->setPosition( calcCirclePos(RIGHT_BUTTON_POSITION) );
+        i_group_right->setScale(scale_normal);
         addChild(i_group_right);
         
         // Disband
@@ -75,6 +77,7 @@ bool uigrouplord::init()
         });
         
         disband->setPosition( calcCirclePos(DISBAND_BUTTON_POSITION) );
+        disband->setScale(scale_normal);
         addChild(disband);
         
         return true;

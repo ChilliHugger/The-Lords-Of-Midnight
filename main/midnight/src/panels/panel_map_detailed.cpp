@@ -80,31 +80,31 @@ bool panel_map_detailed::init()
     auto circle1 = Sprite::createWithSpriteFrameName("circle_selector");
     circle1->setScale(PHONE_SCALE(0.25f));
     circle1->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(safeArea, circle1, RES(48), RES(PHONE_SCALE(48)) );
+    uihelper::AddTopLeft(safeArea, circle1, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48)) );
     circle1->setAnchorPoint(uihelper::AnchorCenter);
 
     auto circle2 = Sprite::createWithSpriteFrameName("circle_selector");
     circle2->setScale(PHONE_SCALE(0.25f));
     circle2->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(safeArea, circle2, RES(48), RES(PHONE_SCALE(48+64)) );
+    uihelper::AddTopLeft(safeArea, circle2, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48+64)) );
     circle2->setAnchorPoint(uihelper::AnchorCenter);
 
     auto map_down = uihelper::CreateImageButton("map_scale_down_button", ID_DOWN, clickCallback);
-    uihelper::AddTopLeft(safeArea, map_down, RES(48), RES(PHONE_SCALE(48)) );
+    uihelper::AddTopLeft(safeArea, map_down, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48)) );
     map_down->setAnchorPoint(uihelper::AnchorCenter);
   
     auto map_up = uihelper::CreateImageButton("map_scale_up_button", ID_UP, clickCallback);
-    uihelper::AddTopLeft(safeArea, map_up, RES(48), RES(PHONE_SCALE(48+64)) );
+    uihelper::AddTopLeft(safeArea, map_up, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48+64)) );
     map_up->setAnchorPoint(uihelper::AnchorCenter);
   
-    int adjy=RES(32); //*scale;
-    int r = RES(64); // * scale;
+    int adjy=RES(-16); 
+    int r = RES(PHONE_SCALE(64));
     
-    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*1)-adjy, "i_center", map_filters::centre_char);
-    createFilterButton(ID_FILTER_CRITTERS,      (r*2)-adjy, "i_critters", map_filters::show_critters);
-    createFilterButton(ID_FILTER_LORDS,         (r*3)-adjy, "i_filter_lords", map_filters::show_lords);
+    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*0)-adjy, "i_center", map_filters::centre_char);
+    createFilterButton(ID_FILTER_CRITTERS,      (r*1)-adjy, "i_critters", map_filters::show_critters);
+    createFilterButton(ID_FILTER_LORDS,         (r*2)-adjy, "i_filter_lords", map_filters::show_lords);
 #if defined(_DDR_)
-    createFilterButton(ID_FILTER_TUNNELS,       (r*4)-adjy, "i_filter_tunnel", map_filters::show_tunnels);
+    createFilterButton(ID_FILTER_TUNNELS,       (r*3)-adjy, "i_filter_tunnel", map_filters::show_tunnels);
 #endif
     
     auto contentsize = getContentSize();
@@ -294,7 +294,7 @@ void panel_map_detailed::showGroupLord(Vec2 position, map_object* object)
     grouplord->setTag(ID_SELECT_ALL);
     grouplord->setAnchorPoint(uihelper::AnchorCenter);
     grouplord->addClickEventListener(clickCallback);
-    grouplord->setScale(scale_normal);
+    grouplord->setScale(PHONE_SCALE(scale_normal));
     characters->addChild(grouplord);
     
     c_mxid  lords;
@@ -360,10 +360,10 @@ uifilterbutton* panel_map_detailed::createFilterButton( layoutid_t id, s32 y, co
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
     // #40 temporary fix
-    //button->setScale(phoneScale());
+    button->setScale(phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
-    uihelper::AddTopRight(safeArea, button, RES(32), y );
+    uihelper::AddTopRight(safeArea, button, RES(PHONE_SCALE(16)), y );
     return button;
 }
 
