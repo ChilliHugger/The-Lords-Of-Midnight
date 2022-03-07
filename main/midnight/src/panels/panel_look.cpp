@@ -1621,11 +1621,29 @@ void panel_look::OnStopDrag(uidragevent* event)
 {
     DragElement::OnStopDrag(event);
 
-    if ( ! allowDragLook() ) {
+    // vertical or horizontal
+    auto size = getContentSize();
+    Vec2 delta = drag_start - drag_stop;
+    f32 dx = delta.x / size.width ;
+    f32 dy = delta.y / size.height ;
+
+    // GESTURE Move Forward
+    if( allowDragDownMove()) {
+        if( abs(dx) < 0.01 and dy > MINIMUM_VERTICAL_DRAG_GESTURE) {
+            moveForward();
+        }
+    }
+
+    // GESTURE Show map
+    if( abs(dx) < 0.01 and dy < -MINIMUM_VERTICAL_DRAG_GESTURE) {
+        mr->panels->showMap();
+    }
+
+    if ( allowDragLook() ) {
+        lookPanoramaSnap(event);
         return;
     }
 
-    lookPanoramaSnap(event);
     
 }
 

@@ -17,11 +17,9 @@ FORWARD_REFERENCE(uielement);
 FORWARD_REFERENCE(uinotificationinterface);
 
 
-#define QUICK_SWIPE_LIMIT                   500
-#define MINIMUM_HORIZONTAL_SWIPE_MOVEMENT   25
 #define MINIMUM_HORIZONTAL_DRAG_MOVEMENT    16
 #define MINIMUM_VERTICAL_DRAG_MOVEMENT      16
-#define MINIMUM_VERTICAL_DRAG_GESTURE       25
+#define MINIMUM_VERTICAL_DRAG_GESTURE       0.10
 
 enum ZSORT {
     ZORDER_FAR                  =0,
