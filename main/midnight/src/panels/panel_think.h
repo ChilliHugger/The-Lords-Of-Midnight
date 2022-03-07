@@ -34,7 +34,7 @@ protected:
     void createPageView();
     void setupPages();
     void addPage( mxid id );
-    
+    void gotoPage( u32 page );
     void enableButtons();
     void enableButton(layoutid_t id, bool enabled);
     void showButton(layoutid_t id, bool enabled);

@@ -358,21 +358,27 @@ void panel_think::setupPages()
         
 }
 
+void panel_think::gotoPage( u32 page )
+{
+    if(!mr->settings->screentransitions)
+    {
+        pageView->setCurrentPageIndex(page);
+    }else{
+        pageView->scrollToPage(page);
+    }
+}
+
 void panel_think::OnNotification( Ref* sender )
 {
-    auto button = dynamic_cast<Widget*>(sender);
-    if ( button == nullptr )
-        return;
+    layoutid_t id = uihelper::getIdFromSender(sender);
     
-    auto buttonId = static_cast<layoutid_t>(button->getTag());
-    
-    if (buttonId >= ID_SELECT_CHAR ) {
-        mxid characterId = buttonId - ID_SELECT_CHAR;
+    if (id >= ID_SELECT_CHAR ) {
+        mxid characterId = id - ID_SELECT_CHAR;
         mr->selectCharacter(characterId);
         return;
     }
 
-    switch ( buttonId  )
+    switch ( id  )
     {
         case ID_LOOK:
             mr->look();
@@ -472,8 +478,51 @@ bool panel_think::OnKeyboardEvent( uikeyboardevent* event )
         return false;
     }
 
-    auto index = pageView->getCurrentPageIndex();
-    auto page = pages.at(index);
+    currentPage = pageView->getCurrentPageIndex();
+    u32 endPage = pages.size();
+    auto page = pages.at(currentPage);
+    
+    switch(event->getKey()){
+ 
+        case KEYCODE(END):
+        {
+            if(currentPage<endPage)
+            {
+                currentPage = endPage-1;
+                gotoPage(currentPage);
+            }
+        }
+
+        case KEYCODE(HOME):
+        {
+            if(currentPage>0)
+            {
+                currentPage = 0;
+                gotoPage(currentPage);
+            }
+        }
+            
+        case KEYCODE(PG_UP):
+        {
+             if(currentPage<endPage)
+            {
+                gotoPage(++currentPage);
+            }
+            return true;
+        }
+        case KEYCODE(PG_DOWN):
+        {
+             if(currentPage>0)
+            {
+                gotoPage(--currentPage);
+            }
+            return true;
+        }
+        
+        default:
+            break;
+    }
+    
     
     if( page->dispatchShortcutKey(event->getKey()) )
         return true;
@@ -486,3 +535,4 @@ bool panel_think::OnKeyboardEvent( uikeyboardevent* event )
     displayShortcuts();
     return false;
 }
+
