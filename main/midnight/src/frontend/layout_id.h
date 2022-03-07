@@ -10,6 +10,7 @@
 
 enum layoutid_t
 {
+    ID_NONE=0,
     
     ID_SEEK=1,              // 1
     ID_HIDE,
@@ -149,6 +150,9 @@ enum layoutid_t
     
     ID_GROUP_LEFT,
     ID_GROUP_RIGHT,
+    
+    ID_NEXT_PAGE,
+    ID_PREVIOUS_PAGE,
     
     ID_SELECT_CHAR=1000,
     ID_LANDSCAPE=2000,

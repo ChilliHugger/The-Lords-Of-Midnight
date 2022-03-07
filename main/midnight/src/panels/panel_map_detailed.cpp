@@ -160,8 +160,13 @@ bool panel_map_detailed::init()
     addShortcutKey(ID_FILTER_TUNNELS,       KEYCODE(F4));
     
     addShortcutKey(ID_LOOK,                 K_LOOK);
+    addShortcutKey(ID_LOOK,                 K_ESC);
+    addShortcutKey(ID_LOOK,                 K_MAP);
+    
     addShortcutKey(ID_DOWN,                 KEYCODE(DOWN_ARROW));
     addShortcutKey(ID_UP,                   KEYCODE(UP_ARROW));
+              
+
        
     showHelpWindow(HELP_DISCOVERY_MAP);
     

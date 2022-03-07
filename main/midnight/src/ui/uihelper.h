@@ -9,6 +9,7 @@
 #define __UIHELPER_H_INCLUDED__
 
 #include "../library/inc/mxtypes.h"
+#include "../frontend/layout_id.h"
 #include "uielement.h"
 
 using namespace chilli::types;
@@ -111,6 +112,7 @@ public:
     static T getChildByTagRecursively(const int nodeTag, Node* parent)
         { return static_cast<T>(getChildByTagRecursively(nodeTag,parent)); }
 
+    static layoutid_t getIdFromSender(cocos2d::Ref* ref);
 
 };
 

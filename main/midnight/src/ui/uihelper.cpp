@@ -438,3 +438,14 @@ Node* uihelper::addDebugNode(Node* node)
     uihelper::FillParent(background);
     return background;
 }
+
+layoutid_t uihelper::getIdFromSender(cocos2d::Ref* ref)
+{
+    // check for escape being pressed
+    // and don't pass it on so that we can close
+    auto button = static_cast<Widget*>(ref);
+    if ( button == nullptr )
+        return ID_NONE;
+    
+    return static_cast<layoutid_t>(button->getTag());
+}

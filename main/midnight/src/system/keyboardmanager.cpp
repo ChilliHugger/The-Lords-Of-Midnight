@@ -55,6 +55,9 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(D) // K_DISBAND
         , KEYCODE(TAB)  // K_MAP
         , KEYCODE(ESCAPE)  // K_ESC
+        , KEYCODE(PG_UP) // K_PAGE_UP
+        , KEYCODE(PG_DOWN) // K_PAGE_DOWN
+        
     },
     {
           KEYCODE(L) // K_LOOK
@@ -90,6 +93,8 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(D) // K_DISBAND
         , KEYCODE(TAB) // K_MAP
         , KEYCODE(ESCAPE)  // K_ESC
+        , KEYCODE(PG_UP) // K_PAGE_UP
+        , KEYCODE(PG_DOWN) // K_PAGE_DOWN
         
     }
 };

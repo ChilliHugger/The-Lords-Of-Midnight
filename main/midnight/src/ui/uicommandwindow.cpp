@@ -130,7 +130,13 @@ void uicommandwindow::initialiseCommands()
 {
     chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {
         this->OnClose();
-        this->parent->OnNotification(ref);
+        
+        // check for escape being pressed
+        // and don't pass it on so that we can close 
+        //if(uihelper::getIdFromSender(ref)!=ID_HOME)
+        {
+            this->parent->OnNotification(ref);
+        }
     };
     
     // map keyboard shortcut keys to layout children

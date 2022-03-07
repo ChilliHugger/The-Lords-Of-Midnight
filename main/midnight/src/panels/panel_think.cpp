@@ -89,6 +89,7 @@ bool panel_think::init()
     uishortcutkeys::registerCallback(this, clickCallback);
     
     addShortcutKey(ID_LOOK          ,K_LOOK);
+    addShortcutKey(ID_LOOK          ,K_ESC);
     addShortcutKey(ID_THINK_PERSON  ,K_PERSON);
     addShortcutKey(ID_THINK_PLACE   ,K_PLACE);
     addShortcutKey(ID_THINK_ARMY    ,K_ARMY);

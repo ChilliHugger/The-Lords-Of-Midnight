@@ -79,7 +79,8 @@ bool panel_map_overview::init()
     scrollView->setInnerContainerPosition(Vec2::ZERO);
     
     addShortcutKey(ID_LOOK,              K_LOOK);
-    //addShortcutKey(ID_MAP_DISCOVERY,             K_NIGHT);
+    addShortcutKey(ID_LOOK,              K_ESC);
+    addShortcutKey(ID_LOOK,              K_MAP);
     
     showHelpWindow(HELP_OVERVIEW_MAP);
     

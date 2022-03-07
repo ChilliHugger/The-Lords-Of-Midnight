@@ -109,6 +109,9 @@ bool panel_select::init()
     
     addShortcutKey(ID_LOOK,              K_LOOK);
     addShortcutKey(ID_NIGHT,             K_NIGHT);
+
+    addShortcutKey(ID_LOOK,              K_ESC);
+
     
     // set current page
     
@@ -471,12 +474,8 @@ void panel_select::updateFilterButton(Ref* sender,select_filters flag)
 
 void panel_select::OnNotification( Ref* sender )
 {
-    auto button = dynamic_cast<Widget*>(sender);
-    if ( button == nullptr )
-        return;
-    
-    auto id = static_cast<layoutid_t>(button->getTag());
-    
+    layoutid_t id = uihelper::getIdFromSender(sender);
+     
     if ( id >= ID_SELECT_CHAR ) {
         gradientB->setVisible(false);
         gradientR->setVisible(false);

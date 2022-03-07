@@ -48,6 +48,8 @@ enum KEY_MAP {
     K_DISBAND,
     K_MAP,
     K_ESC,
+    K_PAGE_UP,
+    K_PAGE_DOWN,
     K_MAP_MAX,
 };
 
