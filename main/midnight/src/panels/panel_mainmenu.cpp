@@ -210,6 +210,13 @@ bool panel_mainmenu::OnKeyboardEvent( uikeyboardevent* event )
         return false;
     }
 
+#if defined(__ANDROID__)
+    if(event->getKey() == KEYCODE(ESCAPE) ) {
+        OnExitGame();
+        return true;
+    }
+#endif
+
     if ( menu != nullptr ) {
         if( menu->dispatchShortcutKey(event->getKey()) )
             return true;
