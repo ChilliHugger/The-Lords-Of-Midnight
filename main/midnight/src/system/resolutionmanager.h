@@ -113,7 +113,7 @@ private:
 
 //#define TEST_PHONE_SCALE
 
-constexpr f32 PhoneScale = 1.75f;
+constexpr f32 PhoneScale = 1.6f;
 
 
 // iOS
