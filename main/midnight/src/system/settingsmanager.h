@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  8
+#define CONFIG_VERSION                  9
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -128,4 +128,7 @@ public:
     
     // Version 8
     BOOL    flipscreen;
+    
+    // Version 9
+    BOOL    night_confirm;
 };

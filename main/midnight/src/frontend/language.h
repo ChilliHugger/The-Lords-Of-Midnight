@@ -38,6 +38,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR KEYBOARD_KEY_2                     = "2";
     constexpr LPCSTR KEYBOARD_KEY_3                     = "3";
     constexpr LPCSTR KEYBOARD_KEY_4                     = "4";
+    constexpr LPCSTR KEYBOARD_KEY_5                     = "5";
 
     constexpr LPCSTR KEYBOARD_KEY_C                     = "C";
     constexpr LPCSTR KEYBOARD_KEY_D                     = "D";
@@ -103,6 +104,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOFIGHT           = "AUTO FIGHT";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOUNHIDE          = "AUTO UNHIDE";
     constexpr LPCSTR OPTIONS_SCREEN_NIGHTDISPLAY        = "NIGHT DISPLAY";
+    constexpr LPCSTR OPTIONS_SCREEN_NIGHTCONFIRM        = "NIGHT CONFIRM";
     constexpr LPCSTR OPTIONS_SCREEN_BATTLEREPORT        = "BATTLE REPORT";
     constexpr LPCSTR OPTIONS_SCREEN_COMPASSDELAY        = "COMPASS DELAY";
     constexpr LPCSTR OPTIONS_SCREEN_COMPASSVIBRATE      = "COMPASS VIBRATE";

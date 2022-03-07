@@ -50,6 +50,7 @@ static const char* values_screen2[]             = {OPTIONS_SCREEN_NOTSUPPORTED,O
     AUTO HIDE           ON, OFF
     BATTLE REPORT       SLOW, FAST
     NIGHT DISPLAY       BRIEF, FULL
+    NIGHT ARE YOU SURE  ON, OFF
  CONTROL
     COMPASS DELAY
     COMPASS VIBRATE
@@ -86,6 +87,7 @@ static uitextmenuitem items_game[] = {
     { ID_OPTION_AUTO_UNHIDE,            {OPTIONS_SCREEN_AUTOUNHIDE},            KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
     { ID_OPTION_NIGHT_DISPLAY,          {OPTIONS_SCREEN_NIGHTDISPLAY},          KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
     { ID_OPTION_BATTLE_FULL,            {OPTIONS_SCREEN_BATTLEREPORT},          KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+    { ID_OPTION_NIGHT_CONFIRM,          {OPTIONS_SCREEN_NIGHTCONFIRM},          KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
 };
 
 static uitextmenuitem items_control[] = {
@@ -121,7 +123,9 @@ static option_t options[] = {
     {   ID_OPTION_COMPASS_FEEDBACK, OPT_NUMBER,  4, values_compass_feedback,    nullptr, false },
     {   ID_OPTION_NIGHT_DISPLAY,    OPT_BOOL,    0, values_slowfast,            nullptr, false },
     {   ID_OPTION_BATTLE_FULL,      OPT_BOOL,    0, values_fullbrief,           nullptr, false },
-    
+    {   ID_OPTION_NIGHT_CONFIRM,    OPT_BOOL,    0, values_onoff,               nullptr, false },
+   
+
     {   ID_OPTION_SCREENMODE,       OPT_NUMBER,  4, values_screen,              nullptr, false },
 
     {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER,  2, values_keyboard,            nullptr, false },
@@ -182,7 +186,8 @@ bool panel_options::init()
     SET_OPTION(ID_OPTION_COMPASS_FEEDBACK,compass_feedback)
     SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast)
     SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full)
-    
+    SET_OPTION(ID_OPTION_NIGHT_CONFIRM,night_confirm)
+      
     SET_OPTION(ID_OPTION_SCREENMODE, screen_mode)
     SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode)
     

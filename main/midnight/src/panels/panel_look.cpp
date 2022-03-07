@@ -1241,9 +1241,13 @@ void panel_look::OnNotification( Ref* sender )
 
         case ID_NIGHT:
         {
-            AreYouSure(NIGHT_MSG, [&] {
+            if(mr->settings->night_confirm) {
+                AreYouSure(NIGHT_MSG, [&] {
+                    mr->night();
+                });
+            }else{
                 mr->night();
-            });
+            }
             
             return;
         }
