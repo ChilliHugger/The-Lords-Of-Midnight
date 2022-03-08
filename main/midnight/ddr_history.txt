@@ -1,5 +1,19 @@
 Doomdark's Revenge
 
+Version 2.0.2 (39)
+1. Fix win condition when Shareth dead
+2. Fix win/lose messages
+3. Disable drag look when in tunnels
+4. Return graffiti easter egg
+5. Add confirm night option
+6. panel_look - Add drag down gesture to moves
+7. panel_look - Add drag up gesture for map
+8. [desktop] Add mouse cursor images
+9. [desktop] Consolidate ESC key across all screens
+10. [desktop] Tidy shortcut keys across all screens
+11. [Android] panel_mainmenu Hardware back button now performs Exit
+12. [mobile] Tweak scale of buttons
+
 Version 2.0.2 (38)
 1. Fixed: panel_look - Fix black rectangle when transition from tunnel views
 2. Fixed: panel_think - adjust UI on phone

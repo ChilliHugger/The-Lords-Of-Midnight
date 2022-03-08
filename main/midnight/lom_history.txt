@@ -1,5 +1,20 @@
 The Lords of Midnight
 
+Version 2.0.2 (39)
+1. Return graffiti easter egg
+2. Add confirm night option
+3. panel_look - Add drag down gesture to moves
+4. panel_look - Add drag up gesture for map
+5. [desktop] Add mouse cursor images
+6. [desktop] Consolidate ESC key across all screens
+7. [desktop] Tidy shortcut keys across all screens
+8. [Android] panel_mainmenu Hardware back button now performs Exit
+9. [mobile] Tweak scale of buttons
+
+Version 2.0.2 (38)
+1. Fixed: panel_think - adjust UI on phone
+2. Fixed: potential memory leaks that could be causing crashes
+
 Version 2.0.2 (36)
 1. panel_think: Fix army numbers text
 
