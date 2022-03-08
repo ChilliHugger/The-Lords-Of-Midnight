@@ -44,6 +44,8 @@ namespace tme {
             mx->battle->ResetBattlesFought();
             mx->scenario->RemoveMapArmies();
             
+            RemoveMidwinterFromMap();
+            
             // place all lords at dawn
             for (ii = 0; ii < sv_characters; ii++) {
                 character = static_cast<ddr_character*>(mx->CharacterById(ii+1)) ;
@@ -149,18 +151,34 @@ namespace tme {
     
         void ddr_night::MoveMidwinter ( void )
         {
-            static tme::loc_t locations[] = { loc_t(38,18), loc_t(41,21), loc_t(42,15), loc_t(46,14), loc_t(49,13) }; // SHOULD BE USING PLACE SYMBOLS
-        
-            int p = mxrandom(NUMELE(locations)-1);
-            
-            mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
-            if ( c==NULL )
-                return;
-        
-            c->Location(locations[p]);
-            
+//            static tme::loc_t locations[] = { loc_t(29,72), loc_t(35,73), loc_t(35,78), loc_t(45,86), loc_t(57,70) }; // SHOULD BE USING PLACE SYMBOLS
+//
+//            int p = mxrandom(NUMELE(locations)-1);
+//
+//            mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
+//            if ( c==NULL )
+//                return;
+//
+//            c->Location(locations[p]);
+//
+//            mxlocinfo* info = c->GetLocInfo();
+//            if(info->objCharacters.Count()!=1) {
+//                RemoveMidwinterFromMap();
+//            }
+//            SAFEDELETE(info);
+//
         }
     
+        void ddr_night::RemoveMidwinterFromMap()
+        {
+//            mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
+//
+//            if ( c==NULL )
+//                return;
+//            c->Location(loc_t(0,0));
+//            c->Flags().Set(cf_tunnel|cf_hidden);
+        }
+
 
         void ddr_night::describeVictory ( void )
         {

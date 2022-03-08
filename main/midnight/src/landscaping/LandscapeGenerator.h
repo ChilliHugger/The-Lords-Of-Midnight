@@ -47,6 +47,7 @@ public:
     floor_t     floor;
     bool        army;
     bool        mist;
+    bool        graffiti;
     Vec3        position;
     f32         scale;
 };

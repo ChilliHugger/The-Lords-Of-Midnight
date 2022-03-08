@@ -1277,6 +1277,10 @@ namespace tme {
             
 #if defined(_DDR_)
             newobject = mx->gamemap->getLocationObject(this, Location());
+            //if ( newobject == OB_NONE && location.x == 24 && location.y == 58 ) {
+            //    mikeseek=TRUE;
+            //    newobject=OB_GUIDANCE;
+            //}
 #endif
 #if defined(_LOM_)
             newobject = (mxthing_t)mapsqr.object ;
@@ -1488,8 +1492,10 @@ namespace tme {
 #endif
             
 #if defined(_LOM_)
-            MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
-            mx->scenario->DropObject ( Location(), oldobject );
+            if( oldobject ) {
+                MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
+                mx->scenario->DropObject ( Location(), oldobject );
+            }
 #endif
             
 

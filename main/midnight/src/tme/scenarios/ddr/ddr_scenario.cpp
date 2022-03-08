@@ -125,6 +125,9 @@ void ddr_x::initialiseAfterCreate( u32 version )
     sv_energy_cannot_continue=31;
     
     
+    auto luxor = static_cast<ddr_character*>(mx->CharacterById(1));
+    luxor->Location(mxgridref(24,58));
+    
 MXTRACE("Place Objects On Map");
     PlaceObjectsOnMap();
     
@@ -280,10 +283,15 @@ std::string buffer = mx->LastActionMsg();
 
     RETURN_IF_NULL(character);
 
+    //bool mikeseek = (hint == 1);
+  
     int id = mxrandom(1,sv_characters-1);
     
     mxcharacter* c = mx->CharacterById(id);
-   
+
+    //if ( mikeseek )
+    //    c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
+
     RETURN_IF_NULL(c);
    
     if ( (c->Loyalty() != character->Loyalty() && c->IsAlive()) ) {

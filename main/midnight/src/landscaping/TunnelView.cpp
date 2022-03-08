@@ -74,15 +74,21 @@ bool TunnelView::initWithOptions( LandscapeOptions* options )
 void TunnelView::createColumns()
 {
     auto padding = std::max<int>(0,(getContentSize().width - RES(1024))/2);
+    auto graffiti = false;
    
-
-    createColumn(padding, flames_left, NUMELE(flames_left));
+#if defined(_DDR_)
+    graffiti = options->currentLocation.x == 24 && options->currentLocation.y == 59 &&
+        options->isLookingOutTunnel; // Tunnel at Temple of Kahulane
+#endif
+    
+    createColumn(padding, flames_left, NUMELE(flames_left), graffiti);
     createColumn(getContentSize().width-RES(132)-padding, flames_right, NUMELE(flames_right));
 }
 
-void TunnelView::createColumn(f32 x, LPCSTR images[], u32 count)
+void TunnelView::createColumn(f32 x, LPCSTR images[], u32 count, bool graffiti)
 {
-    auto column = Sprite::createWithSpriteFrameName("t_column");
+    auto column = Sprite::createWithSpriteFrameName(graffiti ? "t_column2" : "t_column");
+    
     uihelper::AddBottomLeft(clipping, column, x, RES(0));
 
     auto flame = Sprite::createWithSpriteFrameName("flame01");

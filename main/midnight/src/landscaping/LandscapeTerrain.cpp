@@ -81,9 +81,18 @@ void LandscapeTerrain::Build()
                 
             }
             
+            
             // terrain
-            AddGraphic(GetTerrainImage(item->terrain),x,y,tint1,tint2,alpha,scale,item);
-   
+#if defined(_LOM_)
+            if(item->graffiti) {
+                std::string graffiti = "t_lith1";
+                AddGraphic(GetImage(graffiti),x,y,tint1,tint2,alpha,scale,item);
+            }else
+#endif
+            {
+                AddGraphic(GetTerrainImage(item->terrain),x,y,tint1,tint2,alpha,scale,item);
+            }
+    
             if ( item->mist ) {
                 
                 std::string mist = "t_mist";

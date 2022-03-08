@@ -25,7 +25,7 @@ protected:
     
     void createColumns();
     void createSteps();
-    void createColumn( f32 x, LPCSTR images[], u32 count );
+    void createColumn( f32 x, LPCSTR images[], u32 count, bool graffiti = false );
     
     Node* clipping;
 };

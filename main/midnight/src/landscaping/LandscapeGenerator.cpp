@@ -146,6 +146,10 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
 	item->mist = false;
     item->position = Vec3(0,0,0);
     item->terrain = map.terrain;
+    
+#if defined(_LOM_)
+    item->graffiti = ( x == 4 && y == 10 );  // Lith in the domain of moon
+#endif
 
 	if( map.flags&lf_army && tinfo.flags&tif_army )
 		item->army = true;

@@ -35,7 +35,9 @@ namespace tme {
 
             virtual void Process(void);
             virtual m_gameover_t CheckWinLoseConditions ( bool night );
-            virtual void MoveMidwinter ( void );
+            virtual void MoveMidwinter ();
+            void RemoveMidwinterFromMap();
+
             virtual void checkImportantCharactersDead(void);
             
             virtual void describeVictory ( void );

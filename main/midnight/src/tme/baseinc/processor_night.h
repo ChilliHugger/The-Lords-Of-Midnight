@@ -13,7 +13,7 @@ namespace tme {
             virtual void Process(void);
             virtual m_gameover_t CheckWinLoseConditions ( bool night );
 
-            virtual void MoveMidwinter ( void );
+            virtual void MoveMidwinter ();
             
 #ifdef _TEST_WINLOSE_CONDITIONS_
             virtual void testWinLoseConditions ( void );
