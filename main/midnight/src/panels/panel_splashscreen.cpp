@@ -47,7 +47,7 @@ bool panel_splashscreen::init()
     {
         return false;
     }
-     
+    
     auto backgroundColor = setBackground(_clrDarkYellow);
     backgroundColor->setLocalZOrder(ZORDER_FAR-2);
      

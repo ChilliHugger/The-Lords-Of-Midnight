@@ -13,6 +13,8 @@
 #include "uielement.h"
 #include "uishortcutkeys.h"
 
+FORWARD_REFERENCE(uipanel);
+
 using namespace chilli::types;
 
 class uipopup :
@@ -28,7 +30,7 @@ private:
     ~uipopup();
     
 public:
-    static uipopup* create( Scene* parent, point pos, f32 width, LPCSTR text );
+    static uipopup* create( uipanel* parent, point pos, f32 width, LPCSTR text );
     
     void Show();
     void Close();
@@ -37,7 +39,7 @@ public:
     MXVoidCallback onOk;
     
 protected:
-    bool initWithParent( Scene* parent, point pos, f32 width, LPCSTR text );
+    bool initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text );
     void addTouchListener();
     void addKeyboardListener();
 
@@ -45,8 +47,8 @@ protected:
     void OnNo();
     
 protected:
-    Scene*  parent;
-    Layout* layout;
+    uipanel*    parent;
+    Layout*     layout;
     
 };
 

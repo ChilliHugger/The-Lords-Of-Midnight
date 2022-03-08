@@ -179,7 +179,7 @@ void uihelpwindow::Show( MXVoidCallback callback )
     
     // stop the underlying parent
     // from getting any of the events
-    parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);
+    parent->pauseEvents();
     
     addTouchListener();
     
@@ -207,8 +207,8 @@ void uihelpwindow::Close()
     parent->removeChild(this);
     
     // give the parent events back
-    parent->getEventDispatcher()->resumeEventListenersForTarget(parent,true);
     
+    parent->resumeEvents();
 }
 
 

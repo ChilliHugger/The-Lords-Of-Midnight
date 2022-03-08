@@ -7,6 +7,7 @@
 
 #include "uihelper.h"
 #include "uipopup.h"
+#include "uipanel.h"
 #include "../frontend/language.h"
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
@@ -26,7 +27,7 @@ uipopup::~uipopup()
     CC_SAFE_RELEASE_NULL(parent);
 }
 
-uipopup* uipopup::create( Scene* parent, point pos, f32 width, LPCSTR text )
+uipopup* uipopup::create( uipanel* parent, point pos, f32 width, LPCSTR text )
 {
     uipopup* node = new (std::nothrow) uipopup();
     if (node && node->initWithParent(parent,pos,width,text) )
@@ -39,7 +40,7 @@ uipopup* uipopup::create( Scene* parent, point pos, f32 width, LPCSTR text )
 }
 
 
-bool uipopup::initWithParent( Scene* parent, point pos, f32 width, LPCSTR text )
+bool uipopup::initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text )
 {
     if ( !Element::init() )
         return false;
@@ -151,7 +152,7 @@ void uipopup::Show()
 {
     // stop the underlying parent
     // from getting any of the events
-    parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);
+    parent->pauseEvents();
 
     addTouchListener();
     
@@ -183,7 +184,7 @@ void uipopup::Close()
     parent->removeChild(this);
     
     // give the parent events back
-    parent->getEventDispatcher()->resumeEventListenersForTarget(parent,true);
+    parent->resumeEvents();
     
 }
 

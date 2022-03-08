@@ -36,7 +36,7 @@ bool panel_advert::init()
     {
         return false;
     }
-    
+
     setBackgroundToWidth(SCREEN_ADVERT);
     
     return true;

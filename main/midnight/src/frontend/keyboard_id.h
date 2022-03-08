@@ -9,7 +9,8 @@
 #define keyboard_id_h
 
 enum MOUSE_CURSOR {
-    MOUSE_NORMAL=0,
+    MOUSE_NONE=0,
+    MOUSE_NORMAL=1,
     MOUSE_LOOK_LEFT,
     MOUSE_LOOK_RIGHT,
     MOUSE_MOVE,

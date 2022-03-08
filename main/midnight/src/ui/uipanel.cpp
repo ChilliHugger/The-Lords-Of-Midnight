@@ -17,6 +17,8 @@
 
 USING_NS_CC;
 
+Vec2            uipanel::cursorPosition;
+
 uipanel::uipanel() :
     popupWindow(nullptr),
     i_help(nullptr),
@@ -26,6 +28,10 @@ uipanel::uipanel() :
     clickCallback(nullptr),
     eventCallback(nullptr),
     safeArea(nullptr),
+#if defined(_MOUSE_ENABLED_)
+    imgCursor(nullptr),
+    currentCursor(MOUSE_NONE),
+#endif
     currentmode(MODE_NONE)
 {
 }
@@ -54,8 +60,7 @@ bool uipanel::init()
     safeArea->setLocalZOrder(ZORDER_FAR+500);
     safeArea->setPosition(padding.left,padding.bottom);
     addChild(safeArea);
-    
-    
+        
     //
     // Generic mapping from Cocos2dx
     //
@@ -68,6 +73,30 @@ bool uipanel::init()
     };
     
     addKeyboardListener();
+
+#if defined(_MOUSE_ENABLED_)
+    imgCursor = Sprite::create();
+    imgCursor->setScale(1.0f);
+    imgCursor->setVisible(false);
+    addChild(imgCursor);
+
+    addMouseListener();
+    setCursor(MOUSE_NONE);
+#endif
+
+#if defined(_MOUSE_ENABLED_)
+    setOnExitTransitionDidStartCallback([&]() {
+        setCursor(MOUSE_NONE);
+    });
+#endif
+
+    setOnEnterTransitionDidFinishCallback([&]() {
+#if defined(_MOUSE_ENABLED_)
+        setCursor(MOUSE_NORMAL);
+#endif
+        OnShown();
+    });
+
     
     return true;
 }
@@ -330,12 +359,6 @@ void uipanel::DebugNodesChildren(DrawNode* layer, Node* parent, Vec2 origin)
     
 }
 
-void uipanel::onEnterTransitionDidFinish()
-{
-    Scene::onEnterTransitionDidFinish();
-    OnShown();
-}
-
 void uipanel::onExit()
 {
     Scene::onExit();
@@ -365,6 +388,18 @@ void uipanel::setEnabled(bool enabled)
     this->enabled = enabled;
     Director::getInstance()->getEventDispatcher()->setEnabled( enabled );
 }
+
+void uipanel::pauseEvents()
+{
+    getEventDispatcher()->pauseEventListenersForTarget(this,true);
+    ResumeMouseListener();
+}
+
+void uipanel::resumeEvents()
+{
+    getEventDispatcher()->resumeEventListenersForTarget(this,true);
+}
+
 
 bool uipanel::OnKeyboardEvent( uikeyboardevent* event )
 {
@@ -398,5 +433,86 @@ void uipanel::addKeyboardListener()
         }
     };
     
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,this);
 }
+
+#if defined(_MOUSE_ENABLED_)
+void uipanel::addMouseListener()
+{
+    mouseEventListener = ResumeEventListenerMouse::create();
+    
+    mouseEventListener->onMouseMove = [this](Event* event)
+    {
+        auto mouseEvent = static_cast<EventMouse*>(event);
+        cursorPosition = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
+        
+        if(imgCursor!=nullptr) {
+            imgCursor->setPosition(cursorPosition+cursorAnchor);
+        }
+        
+        OnMouseMove(cursorPosition);
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseEventListener, this);
+}
+
+void uipanel::ResumeMouseListener()
+{
+    mouseEventListener->Resume();
+}
+
+void uipanel::setCursor(MOUSE_CURSOR cursor)
+{
+    currentCursor = cursor;
+    
+    if(cursor == MOUSE_NONE) {
+        imgCursor->setVisible(false);
+        return;
+    }
+    
+    if(mr->mouseData.empty())
+        return;
+    
+    cursorAnchor.x = -RES(mr->mouseData[cursor-1]->anchor.x);
+    cursorAnchor.y = RES(mr->mouseData[cursor-1]->anchor.y);
+    
+    //cursorAnchor.x = -cursorAnchor.x;
+    
+    imgCursor->initWithSpriteFrameName(mr->mouseData[cursor-1]->file);
+    imgCursor->setVisible(true);
+    imgCursor->setAnchorPoint(uihelper::AnchorTopLeft);
+    imgCursor->setPosition(cursorPosition+cursorAnchor);
+    imgCursor->setLocalZOrder(ZORDER_DRAG+1);
+}
+
+bool uipanel::OnMouseMove( Vec2 pos )
+{
+}
+
+Node* uipanel::childFromPoint( Node* node, Vec2 pos )
+{
+    for( auto n : node->getChildren()) {
+        
+        auto widget = dynamic_cast<cocos2d::ui::Widget*>(n);
+        
+        if( widget != nullptr && widget->isEnabled() ) {
+            auto b = n->getBoundingBox();
+            if(b.containsPoint(pos)) {
+                return widget;
+            }
+        }
+
+        auto c = childFromPoint(n, pos);
+        if(c!=nullptr) {
+            return c;
+        }
+    }
+    return nullptr;
+}
+
+Node* uipanel::childFromPoint( Vec2 pos )
+{
+    return childFromPoint(this,pos);
+}
+
+#endif

@@ -82,39 +82,25 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
 //    }
 //
 //
-//    if ( pass == 1 ) {
-//        // mouse
-//        UIDEBUG( "Frontend: Loading MOUSE..." );
-//        UpdateSplash("Loading mouse icons", progress++);
-//        if ( (e = base->Find( "mouse")) ) {
-//            // imagelist "gfx"
-//
-//            UIDEBUG( "found mouse tag" );
-//            lib::xml::node* e1 = e->Find("imagelist","gfx");
-//            if ( e1 ) {
-//                UIDEBUG( "found mouse gfx imagelist" );
-//                images.mouse.Load ( e1, ImageListLoadCallback );
-//            }
-//            /*
-//             lib::xml::node* e2 = e->Find("hotspots");
-//             if ( e2 ) {
-//             int ii=0;
-//             //UIDEBUG( "found mouse hotspots" );
-//             FOREACHELEMENT(e2,p) {
-//             if ( p->IsType("point") ) {
-//             p->ReadPoint("value", mouse_hotspots[ii]);
-//             ii++;
-//             }
-//             }
-//             }
-//             */
-//
-//
-//        }
-//    }
-//
-//
-//
+
+#if defined(_MOUSE_ENABLED_)
+        UIDEBUG( "Frontend: Loading MOUSE..." );
+        monitor->Update("Loading mouse icons",  0);
+        auto zero = point(0,0);
+        if ( (e = xml::Find( base, "cursors")) ) {
+             FOREACHELEMENT(e,t) {
+                if ( xml::IsType(t,"cursor") ) {
+                    auto d = new mouse_data_t ;
+                    d->file = xml::ReadStr(t,"image");
+                    auto a = xml::ReadPoint(t,"anchor", zero);
+                    d->anchor = cocos2d::Vec2(a.x, a.y);
+                    mr->mouseData.push_back(d);
+                }
+                monitor->Update("Loading mouse icons", 1);
+            }
+        }
+#endif
+
 //    if ( pass == 1 ) {
 //        // mouse
 //        UIDEBUG( "Frontend: Loading COMPASS..." );

@@ -23,6 +23,13 @@
 #include "../models/selectmodel.h"
 #include "../models/mapmodel.h"
 
+using chilli::collections::c_ptr;
+
+#if defined(_OS_DESKTOP_)
+    #define _MOUSE_ENABLED_
+#endif
+
+
 //#define _DEBUG_GAME_PANEL_
 
 //
@@ -41,6 +48,12 @@ FORWARD_REFERENCE(resolutionmanager);
 
 typedef std::function<void(bool updateAvailable, std::string& url)> GetVersionCallback;
 
+struct mouse_data_t
+{
+public:
+    std::string     file;
+    cocos2d::Vec2   anchor;
+} ;
 
 
 class moonring
@@ -146,6 +159,10 @@ public:
     
     selectmodel             selectmodel;
     mapmodel                mapmodel;
+    
+#if defined(_MOUSE_ENABLED_)
+    std::vector<mouse_data_t*>    mouseData;
+#endif
     
 };
 

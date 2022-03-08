@@ -44,7 +44,7 @@ protected:
     
 protected:
     moonring*       mr;
-    Scene*          parent;
+    uipanel*        parent;
     helpid_t        id;
     MXVoidCallback  closeCallback;
     Layout*         layout;

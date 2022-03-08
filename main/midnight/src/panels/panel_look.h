@@ -151,6 +151,9 @@ protected:
     void lookPanoramaSnap(uidragevent* event);
     void stopDragging(s32 adjustment);
 
+#if defined(_MOUSE_ENABLED_)
+    bool OnMouseMove( Vec2 pos ) override;
+#endif
 
 protected:
     mxid                characterId{};

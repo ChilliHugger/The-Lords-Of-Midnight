@@ -15,6 +15,7 @@
 #include "../frontend/panel_id.h"
 #include "../ui/uielement.h"
 #include "../ui/uishortcutkeys.h"
+#include "../system/moonring.h"
 
 using namespace chilli::types;
 
@@ -23,6 +24,31 @@ FORWARD_REFERENCE( uipopup );
 FORWARD_REFERENCE( uihelpwindow );
 FORWARD_REFERENCE( moonring );
 FORWARD_REFERENCE( uieventargs );
+
+
+
+class ResumeEventListenerMouse : public cocos2d::EventListenerMouse
+{
+public:
+    static ResumeEventListenerMouse* create()
+    {
+        auto ret = new (std::nothrow) ResumeEventListenerMouse();
+        if (ret && ret->init())
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            CC_SAFE_DELETE(ret);
+        }
+        return ret;
+    }
+    
+    void Resume() {
+        setPaused(false);
+    }
+};
+
 
 class uipanel :
     public cocos2d::Scene,
@@ -35,6 +61,7 @@ protected:
     using Layer = cocos2d::Layer;
     using Node = cocos2d::Node;
     using Vec2 = cocos2d::Vec2;
+    using Sprite = cocos2d::Sprite;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
     using WidgetEventCallback = chilli::ui::WidgetEventCallback;
 public:
@@ -47,9 +74,12 @@ public:
     virtual void OnActivate( void );
     virtual void OnDeActivate( void );
     virtual bool OnKeyboardEvent( uikeyboardevent* event );
+  
+#if defined(_MOUSE_ENABLED_)
+    virtual bool OnMouseMove( Vec2 pos );
+#endif
 
     // Cocos2dX Scene Helpers
-    virtual void onEnterTransitionDidFinish();
     virtual void onEnter();
     virtual void onExit();
     //
@@ -65,6 +95,8 @@ public:
     bool isHelpVisible() { return help_visible != HELP_NONE; }
     void showHelpPending();
 
+    void pauseEvents();
+    void resumeEvents();    
     
 protected:
     uipanel();
@@ -94,6 +126,14 @@ protected:
     
     void addKeyboardListener();
     
+#if defined(_MOUSE_ENABLED_)
+    void addMouseListener();
+    void setCursor(MOUSE_CURSOR cursor);
+    Node* childFromPoint( Vec2 pos );
+    Node* childFromPoint( Node* node, Vec2 pos );
+    void ResumeMouseListener();
+#endif
+    
 protected:
     uipopup*            popupWindow;
     moonring*           mr;
@@ -111,10 +151,18 @@ protected:
     
     Layer*              safeArea;
     
+#if defined(_MOUSE_ENABLED_)
+    Sprite*             imgCursor;
+    ResumeEventListenerMouse* mouseEventListener;
     
+public:
+    static Vec2     cursorPosition;
+    MOUSE_CURSOR    currentCursor;
+    Vec2            cursorAnchor;
+#endif
+
 public:
     panelmode_t     currentmode;
 };
-
 
 #endif /* uipanel_h */

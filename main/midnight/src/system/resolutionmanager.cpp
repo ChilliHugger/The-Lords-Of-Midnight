@@ -224,7 +224,7 @@ bool resolutionmanager::init()
 #else
         glview = setDisplayMode(mr->settings->screen_mode);
 #endif
-        //glview->setCursorVisible(false);
+        glview->setCursorVisible(false);
 #else
         glview = GLViewImpl::create(TME_ScenarioName());
 #endif
@@ -249,8 +249,6 @@ bool resolutionmanager::init()
 
     return true;
 }
-
-
 
 
 #if defined(_OS_DESKTOP_)

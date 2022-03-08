@@ -17,6 +17,7 @@
 
 #include "../ui/uihelper.h"
 #include "../ui/uicommandwindow.h"
+#include "../ui/uihelpwindow.h"
 #include "../ui/characters/uisinglelord.h"
 
 #include "../landscaping/LandscapeSky.h"
@@ -1769,3 +1770,57 @@ void panel_look::stopDragging(s32 adjustment)
     stopRotating(LM_NONE);
 }
 
+#if defined(_MOUSE_ENABLED_)
+bool panel_look::OnMouseMove( Vec2 position )
+{
+    f32 MOUSE_MOVE_BLEED = 256;
+
+    auto size = getContentSize();
+ 
+    f32 move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
+    f32 move_press_left = RES(MOUSE_MOVE_BLEED) ;
+    f32 move_press_right = size.width - RES(MOUSE_MOVE_BLEED) ;
+
+    // check mouse position
+    
+    MOUSE_CURSOR mode = MOUSE_NORMAL ;
+
+    if ( (i_command_window==NULL || !i_command_window->isVisible())
+         && (help_window==NULL || !help_window->isVisible())
+         && !landscape_dragging ) {
+
+        // check if pointer over any gadget   
+        if ( childFromPoint(position) == nullptr ) {
+        
+        if ( mr->settings->nav_mode!=CF_NAV_SWIPE ) {
+
+            // use full centre height if we are only pressing
+            if ( mr->settings->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
+                move_press_y = size.height * 0.75 ;
+            else if ( mr->settings->nav_mode==CF_NAV_PRESS )
+                move_press_y = size.height ;
+            
+            
+            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
+                if ( position.y > move_press_y && (position.x>move_press_left && position.x < move_press_right) ) {
+                    mode = MOUSE_MOVE;
+                }
+            }
+            
+            if ( position.x > move_press_right ) {
+                mode = MOUSE_LOOK_RIGHT ;
+            } else if ( position.x < move_press_left ) {
+                mode = MOUSE_LOOK_LEFT ;
+            }
+     
+        }
+        
+        }
+
+    }
+    
+    setCursor(mode);
+
+    return true;
+}
+#endif

@@ -126,9 +126,7 @@ void uibookmenu::Show()
 {    
     // stop the underlying parent
     // from getting any of the events
-    parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);
-    
-    //addTouchListener();
+    parent->pauseEvents();
     
     uishortcutkeys::addKeyboardListener(this);
 
@@ -144,6 +142,5 @@ void uibookmenu::Close()
     parent->removeChild(this);
     
     // give the parent events back
-    parent->getEventDispatcher()->resumeEventListenersForTarget(parent,true);
-    
+    parent->resumeEvents();
 }

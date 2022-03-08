@@ -378,8 +378,9 @@ void uicommandwindow::show( MXVoidCallback callback )
     
     // stop the underlying parent
     // from getting any of the events
-    parent->getEventDispatcher()->pauseEventListenersForTarget(parent,true);// now add an event listener
-    
+
+    parent->pauseEvents();
+
     uishortcutkeys::addKeyboardListener(this);
     
     addTouchListener();
@@ -420,7 +421,7 @@ void uicommandwindow::close()
     parent->removeChild(this);
     
     // give the parent events back
-    parent->getEventDispatcher()->resumeEventListenersForTarget(parent,true);
+    parent->resumeEvents();
     
 }
 
