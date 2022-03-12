@@ -17,7 +17,9 @@
 
 USING_NS_CC;
 
-Vec2            uipanel::cursorPosition;
+#if defined(_MOUSE_ENABLED_)
+Vec2 uipanel::cursorPosition;
+#endif
 
 uipanel::uipanel() :
     popupWindow(nullptr),
@@ -392,7 +394,9 @@ void uipanel::setEnabled(bool enabled)
 void uipanel::pauseEvents()
 {
     getEventDispatcher()->pauseEventListenersForTarget(this,true);
+#if defined(_MOUSE_ENABLED_)
     ResumeMouseListener();
+#endif
 }
 
 void uipanel::resumeEvents()
