@@ -38,7 +38,7 @@ static scenarioinfo_t    ddr_scenario_info = {
     "rorthron@doomdarksrevenge.com",
     "http://www.doomdarksrevenge.com",
     "Doomdark's Revenge for the Midnight Engine",
-    "Copyright 1985 - 2017 Mike Singleton & Chris Wild"
+    "Copyright 1985 - 2022 Mike Singleton & Chris Wild"
 };
 
 static ddr_x* ddr_scenario = NULL ;
@@ -123,11 +123,7 @@ void ddr_x::initialiseAfterCreate( u32 version )
     sv_character_max_warriors=1250;
     //sv_object_energy_watersoflife=255;
     sv_energy_cannot_continue=31;
-    
-    
-    auto luxor = static_cast<ddr_character*>(mx->CharacterById(1));
-    luxor->Location(mxgridref(24,58));
-    
+        
 MXTRACE("Place Objects On Map");
     PlaceObjectsOnMap();
     
