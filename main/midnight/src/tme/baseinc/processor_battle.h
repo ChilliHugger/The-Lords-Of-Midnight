@@ -3,8 +3,8 @@
 
 #include "info.h"
 
-#define MAX_FOE_ARMIES            128
-#define    MAX_FRIEND_ARMIES        MAX_FOE_ARMIES
+#define     MAX_FOE_ARMIES            128
+#define     MAX_FRIEND_ARMIES        MAX_FOE_ARMIES
 
 
 namespace tme {
@@ -32,20 +32,20 @@ namespace tme {
         private:
             virtual void CalculateCharactersKillRates( void );
             virtual void MakeFriendOrFoeList ( const mxcharacter* character=NULL );
-            virtual u32 Fight ( u32 attacks, u32 success, mxarmy* foes[], u32& nFoes );
+            virtual u32 Fight ( u32 attacks, u32 success, c_army& foes, u32& nFoes );
 
             virtual void AllOutWar ( int pass );
             virtual void CheckVictors ( void );
 
         private:
 
-            mxlocinfo*    info;
-            u32            nFoes;
-            u32            nFriends;
-            mxarmy*     foes[MAX_FOE_ARMIES];
-            mxarmy*     friends[MAX_FRIEND_ARMIES];
-            u32            battlesfought;
-            bitarray    battleareas;
+            mxlocinfo*      info;
+            u32             nFoes;
+            u32             nFriends;
+            c_army          foes;
+            c_army          friends;
+            u32             battlesfought;
+            bitarray        battleareas;
 
         };
 

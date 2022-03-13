@@ -36,6 +36,7 @@ namespace tme {
 
         mxlocinfo::~mxlocinfo()
         {
+            Clear();
             SAFEDELETE ( infront );
         }
 
@@ -50,7 +51,6 @@ namespace tme {
             adj_moral = 0 ;
             adj_stronghold = 0 ;
 
-            CLEARARRAY ( armies );
             friends.Clear();
             foe.Clear();
             doomdark.Clear();
@@ -59,7 +59,14 @@ namespace tme {
             owner = NULL;
 
             nRecruited = 0;
+
             nArmies = 0;
+            
+            for( int ii=0; ii<armies.Count(); ii++ ) {
+                SAFEDELETE(armies[ii]);
+            }
+            
+            armies.Clear();
 
             objCharacters.Clear();
             objRegiments.Clear();
@@ -340,10 +347,9 @@ namespace tme {
     //
         void mxlocinfo::FindArmiesHere ( void )
         {
-        u32        ii;
-        mxarmy*    army;
-        int        success;
-        bool    bInTunnel=FALSE;
+        u32         ii;
+        int         success;
+        bool        bInTunnel=FALSE;
 
             nArmies=0;
 
@@ -362,8 +368,6 @@ namespace tme {
                 mx->CollectRegiments ( location, objRegiments );
                 mx->CollectStrongholds ( location, objStrongholds );
             }
-
-            army = armies;
 
             foe.Type ( IDT_ARMYTOTAL );
             foe.Location ( Location() );
@@ -411,6 +415,7 @@ namespace tme {
                             friends.riders+=stronghold->TotalTroops();
                     }
 
+                    auto army = new mxarmy();
                     army->parent = stronghold ;
                     army->armytype = AT_STRONGHOLD ;
                     army->race = stronghold->OccupyingRace();
@@ -419,7 +424,8 @@ namespace tme {
                     army->success = stronghold->BattleSuccess((mxlocinfo&)*this);
                     army->killed = 0;
                     army->loyalto = stronghold->Owner() ? stronghold->Owner()->loyalty : RA_NONE ;
-                    army++;
+                    armies.Add(army);
+
             }
 
             // all the regiments here
@@ -428,6 +434,8 @@ namespace tme {
                 mxregiment* reg = (mxregiment*)objRegiments[ii] ;
 
                 if ( reg->Total() ) {
+                
+                    auto army = new mxarmy();
                     army->armytype = AT_REGIMENT ;
                     army->parent = reg ;
                     army->race = reg->Race();
@@ -453,19 +461,17 @@ namespace tme {
                         }
                         foe.armies++;
                     //}
-                    army++;    
+                    armies.Add(army);
                 }
             }
 
-
-            
-            
             // lets get all the armies belonging to the character
             for ( ii=0; ii<objCharacters.Count(); ii++ ) {
 
                 mxcharacter* c = (mxcharacter*)objCharacters[ii];
 
                 if ( c->warriors.Total() ) {
+                    auto army = new mxarmy();
                     army->armytype = AT_CHARACTER ;
                     army->parent = c ;
                     army->race = c->Race();
@@ -487,11 +493,11 @@ namespace tme {
                     friends.armies++;
                     friends.warriors+=army->total;
 #endif
-                
-                    army++;
+                    armies.Add(army);
                 }
 
                 if ( c->riders.Total() ) {
+                    auto army = new mxarmy();
                     army->armytype = AT_CHARACTER ;
                     army->parent = c;
                     army->race = c->Race();
@@ -511,13 +517,12 @@ namespace tme {
                     friends.armies++;
                     friends.riders+=army->total;
 #endif
-                    army++;
+                    armies.Add(army);
                 }
 
             }
 
-            
-            nArmies = (u32)(army - armies) ;
+            nArmies = armies.Count();
         }
 
         mxarmytotal::mxarmytotal()

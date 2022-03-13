@@ -17,7 +17,7 @@ constexpr int MAX_FOEARMIES_INLOCATION = 128;
 constexpr int MAX_FRIENDARMIES_INLOCATION = 128;
 #endif
 
-constexpr int MAX_ARMIES_INLOCATION = (MAX_FOEARMIES_INLOCATION+MAX_FRIENDARMIES_INLOCATION);
+//constexpr int MAX_ARMIES_INLOCATION = (MAX_FOEARMIES_INLOCATION+MAX_FRIENDARMIES_INLOCATION);
 constexpr int MAX_STRONGHOLDS_INLOCATION = 1;
 constexpr int MAX_ROUTENODES_INLOCATION = 1;
 
@@ -755,7 +755,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         };
         // mxarmy
 
-
+typedef chilli::collections::base<mxarmy*>     c_army ;
+      
         // base
         class mxitem  : public mxentity
         {
@@ -1186,8 +1187,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxarmytotal         friends;        // info block for friend. ie: Currently NOT doomdark
             mxarmytotal         foe;            // info block for foes ie: Currently IS doomdark
             mxarmytotal         doomdark;       // info block for doomdark's regiments, does not include strongolds
-            mxarmy              armies[MAX_ARMIES_INLOCATION];  // list of armies here
 
+            c_army              armies;
+            
             collections::entities   objStrongholds;         // list of strongholds here
             collections::entities   objRoutenodes;          // list of routenodes here
             collections::entities   objCharacters;          // list of characters here

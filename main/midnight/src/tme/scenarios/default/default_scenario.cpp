@@ -1039,7 +1039,7 @@ namespace tme {
             //if ( ISARG("ARMIES") ) {
             collection.Create( locinfo->nArmies );
             for ( u32 ii=0; ii<locinfo->nArmies; ii++ ) {
-                mxarmy* army = &locinfo->armies[ii] ;
+                auto army = locinfo->armies[ii] ;
                 int type = army->armytype == AT_CHARACTER ? (128|army->type) : army->armytype ;
                 collection[ii] = MAKE_ARMYID(type,mxentity::SafeId(army->parent) );
             }

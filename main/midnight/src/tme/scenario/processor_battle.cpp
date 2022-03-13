@@ -99,25 +99,21 @@ void mxbattle::MakeFriendOrFoeList ( const mxcharacter* character )
 {
 u32 j;
 
-//    _MXASSERTE ( character!=NULL );
-
-    nFoes=0;
-    nFriends=0;
-    CLEARARRAY ( foes );
-    CLEARARRAY ( friends );
+    foes.Clear();
+    friends.Clear();
 
     for ( j=0; j<info->nArmies; j++ ) {
-        if ( info->armies[j].total ) {
+        if ( info->armies[j]->total ) {
             //if ( info->armies[j].loyalto != character->loyalty ) 
-            if ( info->armies[j].race == RA_DOOMGUARD ) 
-                foes[nFoes++] = &info->armies[j];
+            if ( info->armies[j]->race == RA_DOOMGUARD )
+                foes.Add(info->armies[j]);
             else
-                friends[nFriends++] = &info->armies[j];
+                friends.Add(info->armies[j]);
         }
     }
 
-    _MXASSERTE ( nFriends < NUMELE( friends ) );
-    _MXASSERTE ( nFoes < NUMELE( foes ) );
+    nFriends = friends.Count();
+    nFoes = foes.Count();
 }
 
 
@@ -206,7 +202,7 @@ mxcharacter* character;
 
 
 
-u32 mxbattle::Fight ( u32 attacks, u32 success, mxarmy* foes[], u32& nFoes )
+u32 mxbattle::Fight ( u32 attacks, u32 success, c_army& foes, u32& nFoes )
 {
     int army;
     int    killed=0;
@@ -274,7 +270,7 @@ mxunit*        unit;
 
     for ( ii=0; ii<info->nArmies; ii++ ) {
 
-        mxarmy*    army = &info->armies[ii];
+        auto army = info->armies[ii];
 
         switch ( army->armytype ) {
 
