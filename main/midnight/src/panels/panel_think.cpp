@@ -233,16 +233,15 @@ void panel_think::createPageView()
     pageView->setCurrentPageIndex(0);
     
     f32 scale = phoneScale() ;
-    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f)*scale);
-    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(1))*scale);
-    pageView->setIndicatorIndexNodesColor(_clrBlack);
+    
+     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
     
     uihelper::AddBottomLeft(this, pageView);
     uihelper::FillParent(pageView);
     
     auto padding = getSafeArea();
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
+    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(4)) );
     
     pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
         if ( e == PageView::EventType::TURNING ) {
@@ -260,6 +259,38 @@ void panel_think::addPage( mxid pageId )
     page->setCallback(clickCallback);
     page->setObject(pageId, objectId, currentmode);
     pages.pushBack(page);
+
+    auto padding = getSafeArea();
+ 
+    f32 scale = CONTENT_SCALE(0.5f);
+    int xAdjust = CONTENT_SCALE(RES(-24));
+    int bottomAdj = RES(4);
+    
+    if( pages.size() < 32 ) {
+        //scale = 0.75f;
+        //xAdjust = RES(2);
+        //bottomAdj = RES(4);
+    }
+    else if( pages.size() < 64 ) {
+        scale = 0.5f;
+        xAdjust=0;
+        bottomAdj = RES(2);
+    }
+    else if( pages.size() < 100 ) {
+        scale = 0.4f;
+        xAdjust=RES(-4);
+        bottomAdj = RES(2);
+    }
+    else {
+        scale = 0.4f;
+        xAdjust=RES(-8);
+        bottomAdj = RES(2);
+    }
+    
+    pageView->setIndicatorIndexNodesScale(scale);
+    pageView->setIndicatorSpaceBetweenIndexNodes(xAdjust);
+    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + bottomAdj) );
+    
 }
 
 void panel_think::setupPages()

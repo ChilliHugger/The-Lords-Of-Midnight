@@ -131,8 +131,8 @@ void panel_select::createPageView()
     
     
     f32 scale = phoneScale() ;
-    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.25f)*scale);
-    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(1))*scale);
+    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.5f));
+    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(-24)));
     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
 
@@ -140,7 +140,7 @@ void panel_select::createPageView()
     uihelper::FillParent(pageView);
     
     auto padding = getSafeArea();
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(10)) );
+    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(4)) );
     
     pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
         if ( e == PageView::EventType::TURNING ) {
