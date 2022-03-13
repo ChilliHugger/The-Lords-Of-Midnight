@@ -1,5 +1,9 @@
 Doomdark's Revenge
 
+Version 2.0.2 (41)
+1. fix crash caused by using CROWN OF VARENAND or CARUDRIUM
+2. panel_think - adjust page indicator size dependent on number of pages
+
 Version 2.0.2 (39)
 1. Fix win condition when Shareth dead
 2. Fix win/lose messages

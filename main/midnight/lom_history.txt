@@ -1,5 +1,9 @@
 The Lords of Midnight
 
+Version 2.0.2 (41)
+1. fix crash caused by too many armies at a location
+2. panel_think - adjust page indicator size dependent on number of pages
+
 Version 2.0.2 (39)
 1. Return graffiti easter egg
 2. Add confirm night option
