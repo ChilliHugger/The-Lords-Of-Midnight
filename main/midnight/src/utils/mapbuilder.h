@@ -134,6 +134,7 @@ public:
     u32* terrain_discovery;
     u32* tunnels;
     u32* critters;
+    u32* tunnel_critters;
     
     Vector<map_object*>     characters;
     Vector<map_object*>     regiments;

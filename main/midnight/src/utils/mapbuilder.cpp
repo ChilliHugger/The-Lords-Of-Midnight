@@ -42,6 +42,7 @@ mapbuilder::mapbuilder() :
     terrain(nullptr),
     terrain_discovery(nullptr),
     critters(nullptr),
+    tunnel_critters(nullptr),
     mapdata(nullptr),
     mapsize(0,0)
 {
@@ -68,6 +69,7 @@ mapbuilder::~mapbuilder()
     SAFEFREE(terrain);
     SAFEFREE(terrain_discovery);
     SAFEFREE(critters);
+    SAFEFREE(tunnel_critters);
     SAFEFREE(mapdata);
     
     drainCollection(characters);
@@ -133,6 +135,7 @@ mapbuilder* mapbuilder::build ( void )
     SAFEFREE(terrain_discovery);
     SAFEFREE(tunnels);
     SAFEFREE(critters);
+    SAFEFREE(tunnel_critters);
     
     u32 size = mapsize.cx * mapsize.cy;
     
@@ -141,6 +144,7 @@ mapbuilder* mapbuilder::build ( void )
     terrain_discovery = static_cast<u32*>(malloc(size*sizeof(u32)));
     critters = static_cast<u32*>(malloc(size*sizeof(u32)));
     tunnels = static_cast<u32*>(malloc(size*sizeof(u32)));
+    tunnel_critters = static_cast<u32*>(malloc(size*sizeof(u32)));
     
     updateTerrain();
     
@@ -367,7 +371,8 @@ mapbuilder* mapbuilder::updateLayers()
     memset(terrain_discovery,0,max_cells);
     memset(tunnels, 0, max_cells);
     memset(critters, 0, max_cells);
-    
+    memset(tunnel_critters, 0, max_cells);
+
     bool debug_map = isDebugMap();
 #if defined(_DDR_)
     bool show_tunnels = checkFlags(mapflags::show_tunnels);
@@ -382,6 +387,7 @@ mapbuilder* mapbuilder::updateLayers()
     for ( int ii=0; ii<max_cells; ii++ ) {
         terrain[ii] = 0;
         critters[ii] = 0;
+        tunnel_critters[ii] = 0;
         tunnels[ii]=0;
         terrain_discovery[ii]=0;
         
@@ -422,7 +428,7 @@ mapbuilder* mapbuilder::updateLayers()
         mxthing_t thing = (mxthing_t)m->object ;
         
 #if defined(_DDR_)
-        if ( m->object_tunnel != OB_NONE && show_tunnels )
+        if ( m->object_tunnel != OB_NONE && show_tunnels  )
             thing = (mxthing_t)m->object_tunnel ;
 #endif
 
@@ -457,9 +463,8 @@ mapbuilder* mapbuilder::updateLayers()
         }
 #endif
 #if defined(_DDR_)
-        bool show_critter = ( passageway && tunnelseen ) || (!passageway && (seen && (visited || looked_at))) ;
+        bool show_critter = ( passageway && (tunnelseen||tunnelvisited) ) || (!passageway && (seen && (visited || looked_at))) ;
         if ( (show_critter || show_all_critters ) && show_critters  )  {
-                //if ( thing == (mxthing_t)m->object_tunnel )
                 show_thing = thing;
         }
 #endif
@@ -467,11 +472,17 @@ mapbuilder* mapbuilder::updateLayers()
         if ( !debug_map && show_thing > OB_WILDHORSES )
             show_thing = OB_NONE;
         
-        if ( show_thing && seen ) {
+        
+        if ( show_thing ) {
             TME_GetObject(o,MAKE_ID(IDT_OBJECT,show_thing));
             obj_data_t* d = (obj_data_t*)o.userdata ;
-            if ( d )
-                critters[ii] = d->mapcell ;
+            if ( d ) {
+                if ( show_thing == (mxthing_t)m->object_tunnel ) {
+                    tunnel_critters[ii] = d->mapcell ;
+                }else{
+                    critters[ii] = d->mapcell ;
+                }
+            }
         }
         
         
@@ -717,6 +728,7 @@ mapbuilder* mapbuilder::updatePlaces()
 void mapbuilder::clearLayers()
 {
     critters = nullptr;
+    tunnel_critters = nullptr;
     tunnels = nullptr;
     terrain = nullptr;
     terrain_discovery = nullptr;

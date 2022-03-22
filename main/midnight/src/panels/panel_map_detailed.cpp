@@ -390,6 +390,9 @@ void panel_map_detailed::updateFilters()
 #if defined(_DDR_)
     IF_NOT_NULL(tmxMap->getLayer("Tunnels"))
         ->setVisible( model->filters.Is(map_filters::show_tunnels) );
+
+    IF_NOT_NULL(tmxMap->getLayer("Tunnel Critters"))
+        ->setVisible( model->filters.Is(map_filters::show_tunnels) && model->filters.Is(map_filters::show_critters) );
 #endif
 
     IF_NOT_NULL(tmxMap->getLayer("Critters"))

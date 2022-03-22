@@ -92,5 +92,16 @@ TMXTiledMap* TiledMapper::createTMXMap(const mapbuilder* builder)
     tmxMapInfo->getLayers().pushBack(layer3);
     layer3->release();
     
+    // Layers
+    auto layer5 = new (std::nothrow) TMXLayerInfo();
+    layer5->_layerSize = tmxMapInfo->getMapSize();
+    layer5->_name = "Tunnel Critters";
+    layer5->_visible = true;
+    layer5->_opacity = ALPHA(0.50f);
+    layer5->_tiles = builder->tunnel_critters;
+    tmxMapInfo->getLayers().pushBack(layer5);
+    layer5->release();
+    
+    
     return extensions::TMXTiledMap::create(tmxMapInfo);
 }
