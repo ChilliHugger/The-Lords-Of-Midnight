@@ -465,6 +465,8 @@ void uipanel::ResumeMouseListener()
     mouseEventListener->Resume();
 }
 
+f32 cursor_scales[] = { 0.5f, 0.75f, 1.0f };
+
 void uipanel::setCursor(MOUSE_CURSOR cursor)
 {
     currentCursor = cursor;
@@ -477,8 +479,14 @@ void uipanel::setCursor(MOUSE_CURSOR cursor)
     if(mr->mouseData.empty())
         return;
     
-    cursorAnchor.x = -RES(mr->mouseData[cursor-1]->anchor.x);
-    cursorAnchor.y = RES(mr->mouseData[cursor-1]->anchor.y);
+    /// small 0.5
+    /// medium 0.75
+    /// large 1.0
+    
+    f32 scale = cursor_scales[mr->settings->cursor_size];
+    
+    cursorAnchor.x = -RES(mr->mouseData[cursor-1]->anchor.x) * scale;
+    cursorAnchor.y = RES(mr->mouseData[cursor-1]->anchor.y) * scale;
     
     //cursorAnchor.x = -cursorAnchor.x;
     
@@ -487,6 +495,7 @@ void uipanel::setCursor(MOUSE_CURSOR cursor)
     imgCursor->setAnchorPoint(uihelper::AnchorTopLeft);
     imgCursor->setPosition(cursorPosition+cursorAnchor);
     imgCursor->setLocalZOrder(ZORDER_DRAG+1);
+    imgCursor->setScale(scale);
 }
 
 bool uipanel::OnMouseMove( Vec2 pos )

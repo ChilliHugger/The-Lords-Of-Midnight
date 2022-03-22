@@ -28,6 +28,7 @@ settingsmanager::settingsmanager() :
     , screen_mode(CF_FULLSCREEN)
     , keyboard_mode(CF_KEYBOARD_CLASSIC)
     , fullscreensupported(true)
+    , cursor_size(CF_CURSOR_MEDIUM)
 {
     
 #if defined(_OS_DESKTOP_)
@@ -125,6 +126,9 @@ BOOL settingsmanager::Save ( void )
     
     // version 9
     ar << night_confirm;
+    
+    // version 10
+    ar << cursor_size;
 
     ar.Close();
 
@@ -155,26 +159,25 @@ BOOL settingsmanager::Load ( void )
         ar >> autofight;
         ar >> autounhide;
         ar >> showmovementindicators;
-        ar >> nav_mode ;
+        ar >> temp; nav_mode = (CONFIG_NAV_MODE) temp;
         ar >> screentransitions ;
     }
 
     if ( version>=3 ) {
-        ar >> compass_delay ;
-        ar >> think_paging_mode;
+        ar >> temp; compass_delay = (CONFIG_COMPASS_DELAY) temp;
+        ar >> temp; think_paging_mode = (CONFIG_THINK_PAGING) temp;
         ar >> night_display_fast ;
         ar >> night_battle_full ;
     }
 
     if ( version>=5 ) {
-        ar >> compass_feedback ;
+        ar >> temp; compass_feedback = (CONFIG_COMPASS_FEEDBACK) temp;
         
-        ar >> temp;
-        screen_mode = (CONFIG_SCREEN_MODE)temp;
+        ar >> temp; screen_mode = (CONFIG_SCREEN_MODE) temp;
     }
 
     if ( version >= 6 ) {
-        ar >> keyboard_mode ;
+        ar >> temp; keyboard_mode = (CONFIG_KEYBOARD_MODE)temp;
     }
 
     if ( version >= 7 ) {
@@ -189,7 +192,11 @@ BOOL settingsmanager::Load ( void )
     if ( version >= 9 ) {
         ar >> night_confirm;
     }
-    
+
+    if ( version >= 10 ) {
+        ar >> temp; cursor_size = (CONFIG_CURSOR_SIZE) temp;
+    }
+
     ar.Close();
 
     SAFEDELETE ( pFile );

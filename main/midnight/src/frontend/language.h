@@ -93,6 +93,10 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_LARGE               = "LARGE";
     constexpr LPCSTR OPTIONS_SCREEN_NOTSUPPORTED        = "FULLSCREEN - NOT SUPPORTED";
     
+    constexpr LPCSTR OPTIONS_CURSOR_SMALL               = "SMALL";
+    constexpr LPCSTR OPTIONS_CURSOR_MEDIUM              = "MEDIUM";
+    constexpr LPCSTR OPTIONS_CURSOR_LARGE               = "LARGE";
+    
     constexpr LPCSTR OPTIONS_SCREEN_DISPLAY             = "DISPLAY";
     constexpr LPCSTR OPTIONS_SCREEN_GAME                = "GAME";
     constexpr LPCSTR OPTIONS_SCREEN_CONTROL             = "CONTROL";
@@ -110,6 +114,8 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_COMPASSVIBRATE      = "COMPASS VIBRATE";
     constexpr LPCSTR OPTIONS_SCREEN_NAVIGATIONSTYLE     = "NAVIGATION STYLE";
     constexpr LPCSTR OPTIONS_SCREEN_KEYBOARDSTYLE       = "KEYBOARD STYLE";
+    constexpr LPCSTR OPTIONS_SCREEN_CURSORSIZE          = "CURSOR SIZE";
+    
     constexpr LPCSTR OPTIONS_SCREEN_TUTORIAL            = "TUTORIAL";
     constexpr LPCSTR OPTIONS_SCREEN_MOVEMENTINDICATORS  = "MOVEMENT INDICATORS";
     constexpr LPCSTR OPTIONS_SCREEN_NOVELLA             = "NOVELLA";

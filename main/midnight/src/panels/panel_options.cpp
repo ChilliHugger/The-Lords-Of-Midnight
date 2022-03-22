@@ -41,6 +41,10 @@ static const char* values_novella[]             = {OPTIONS_NOVELLA_EBOOK,OPTIONS
 static const char* values_screen[]              = {OPTIONS_SCREEN_FULLSCREEN,OPTIONS_SCREEN_SMALL,OPTIONS_SCREEN_MEDIUM,OPTIONS_SCREEN_LARGE};
 static const char* values_screen2[]             = {OPTIONS_SCREEN_NOTSUPPORTED,OPTIONS_SCREEN_SMALL,OPTIONS_SCREEN_MEDIUM,OPTIONS_SCREEN_LARGE};
 
+#if defined(_MOUSE_ENABLED_)
+static const char* values_cursor[]              = {OPTIONS_CURSOR_SMALL,OPTIONS_CURSOR_MEDIUM,OPTIONS_CURSOR_LARGE};
+#endif
+
 /*
  DISPLAY
     MODE                FULL, Window1, Window2, Window3
@@ -80,6 +84,9 @@ static uitextmenuitem items_display[] = {
 #endif
     { ID_OPTION_TRANSITIONS,            {OPTIONS_SCREEN_TRANSITIONS},           KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
     { ID_OPTION_FLIPSCREEN,             {OPTIONS_SCREEN_FLIPSCREEN},            KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+#if defined(_MOUSE_ENABLED_)
+    { ID_OPTION_CURSOR_SIZE,            {OPTIONS_SCREEN_CURSORSIZE},            KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+#endif
 };
     
 static uitextmenuitem items_game[] = {
@@ -129,7 +136,9 @@ static option_t options[] = {
     {   ID_OPTION_SCREENMODE,       OPT_NUMBER,  4, values_screen,              nullptr, false },
 
     {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER,  2, values_keyboard,            nullptr, false },
-    
+#if defined(_MOUSE_ENABLED_)
+    {   ID_OPTION_CURSOR_SIZE,      OPT_NUMBER,  3, values_cursor,              nullptr, false },
+#endif
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
@@ -190,6 +199,10 @@ bool panel_options::init()
       
     SET_OPTION(ID_OPTION_SCREENMODE, screen_mode)
     SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode)
+    
+#if defined(_MOUSE_ENABLED_)
+    SET_OPTION(ID_OPTION_CURSOR_SIZE, cursor_size)
+#endif
     
     if ( !mr->settings->fullscreensupported )
     {
@@ -263,6 +276,12 @@ void panel_options::OnMenuNotification(
         else
             showHelpWindow(HELP_TUTORIAL_OFF);
     }
+    
+#if defined(_MOUSE_ENABLED_)
+    if ( option->id == ID_OPTION_CURSOR_SIZE ) {
+        setCursor(MOUSE_NORMAL);
+    }
+#endif
     
 }
 

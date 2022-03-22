@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  9
+#define CONFIG_VERSION                  10
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -80,6 +80,13 @@ enum CONFIG_KEYBOARD_MODE
     CF_KEYBOARD_NEW=1,
 };
 
+enum CONFIG_CURSOR_SIZE
+{
+    CF_CURSOR_SMALL=0,
+    CF_CURSOR_MEDIUM=1,
+    CF_CURSOR_LARGE=2,
+};
+
 class settingsmanager : public ringcontroller
 {
     
@@ -94,41 +101,44 @@ public:
 
 public:    
     // not stored
-    BOOL    fullscreensupported;
+    BOOL                    fullscreensupported;
     
     
     // version 1
-    BOOL    tutorial;
+    BOOL                    tutorial;
     
     // version 2
-    BOOL    autofight;
-    BOOL    autounhide;
-    BOOL    showmovementindicators;
-    BOOL    screentransitions;
-    int     nav_mode;
+    BOOL                    autofight;
+    BOOL                    autounhide;
+    BOOL                    showmovementindicators;
+    BOOL                    screentransitions;
+    CONFIG_NAV_MODE         nav_mode;
     
     // version 3
-    int     compass_delay;
-    int     think_paging_mode;
-    BOOL    night_display_fast;
-    BOOL    night_battle_full;
+    CONFIG_COMPASS_DELAY    compass_delay;
+    CONFIG_THINK_PAGING     think_paging_mode;
+    BOOL                    night_display_fast;
+    BOOL                    night_battle_full;
 
     // version 4
-    int     compass_feedback;
+    CONFIG_COMPASS_FEEDBACK compass_feedback;
     
     // version 5
-    CONFIG_SCREEN_MODE     screen_mode;
+    CONFIG_SCREEN_MODE      screen_mode;
     
     // version 6
-    int     keyboard_mode;
+    CONFIG_KEYBOARD_MODE    keyboard_mode;
     
     // version 7
-    int     advert_screen_count;
-    BOOL    novella_pdf ;
+    int                     advert_screen_count;
+    BOOL                    novella_pdf ;
     
     // Version 8
-    BOOL    flipscreen;
+    BOOL                    flipscreen;
     
     // Version 9
-    BOOL    night_confirm;
+    BOOL                    night_confirm;
+    
+    // Version 10
+    CONFIG_CURSOR_SIZE      cursor_size;
 };
