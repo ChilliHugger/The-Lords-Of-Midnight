@@ -120,8 +120,12 @@ void LandscapePeople::Initialise()
     
     s32 objectid = GET_ID(location_object) ;
 #if defined(_DDR_)
-    if ( options->isInTunnel )
-        objectid = GET_ID(location_object_tunnel);
+    if ( options->isInTunnel ) {
+        objectid = options->isLookingDownTunnel
+            ? GET_ID(location_object_tunnel)
+            : OB_NONE;
+    }
+        
 #endif
     //
     // get location infront map
