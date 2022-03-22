@@ -1,5 +1,8 @@
 The Lords of Midnight
 
+Version 2.0.2 (42)
+1. [desktop] Added cursor sizes (small/medium/large)
+
 Version 2.0.2 (41)
 1. fix crash caused by too many armies at a location
 2. panel_think - adjust page indicator size dependent on number of pages

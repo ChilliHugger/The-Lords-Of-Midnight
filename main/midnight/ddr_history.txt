@@ -1,5 +1,10 @@
 Doomdark's Revenge
 
+Version 2.0.2 (42)
+1. fix creatures showing up on diagonal directions in tunnels
+2. move tunnel creatures to their own layer on panel_map_detailed
+3. [desktop] Added cursor sizes (small/medium/large)
+
 Version 2.0.2 (41)
 1. fix crash caused by using CROWN OF VARENAND or CARUDRIUM
 2. panel_think - adjust page indicator size dependent on number of pages
