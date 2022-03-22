@@ -6,13 +6,17 @@
 3. Generate Project - 'cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DTME:string=LOM'
 4. Update Archive Name
   - Product | Scheme | Edit Scheme | Archive | Archive Name - "The Lords of Midnight" | "Doomdark's Revenge"
-5. Check Build Version
+5. Check 'Archive Build Configuration'
+  - Project | Scheme | Edit Scheme | Archive | Build Configuration - RelWithDebInfo  
+6. Check Debug Info
+  - Project 'ALL' | Build Settings | Build Options | Debug Information Format | RelWithDebInfo | Dwarf with dSym File
+7. Check Build Version
   - Project 'Midnight' | General | Build
-6. Build / Archive
-7. Copy midnight.app.dsym from main/midnight/ios-build/bin/midnight/RelWithDebInfo to main/midnight/dsym files/ios/2.0.x.(xx) and compress
-8. Add dsym file to archive
-9. Validate
-10. Distribute
+8. Build / Archive
+9. Copy midnight.app.dsym from main/midnight/ios-build/bin/midnight/RelWithDebInfo to main/midnight/dsym files/ios/2.0.x.(xx) and compress
+10. Add dsym file to archive - 'main/midnight/iOS-build-lom/bin/midnight/RelWithDebInfo/midnight.app.dSYM'
+11. Validate
+12. Distribute
   - App Store Connect
   - Upload
   - Upload Symbols / Manage Version and Build Number
@@ -31,18 +35,23 @@
 3. Generate Project - 'cmake .. -GXcode -DTME:string=LOM'
 4. Update Archive Name
   - Product | Scheme | Edit Scheme | Archive | Archive Name - "The Lords of Midnight" | "Doomdark's Revenge"
-5. Check Build Version
+5. Check 'Archive Build Configuration'
+  - Project | Scheme | Edit Scheme | Archive | Build Configuration - RelWithDebInfo  
+6. Check Build Version
   - Project 'Midnight' | General | Build
-6. Check Deployment Target - 10.9
-7. Check Executable File '${EXECUTABLE_NAME}'
+7. Check Deployment Target - 10.11
+8. Check Executable File '${EXECUTABLE_NAME}'
   - Project 'Midnight' | Info | Executable file
-8. Check SDK - 'MacOS'
+9. Check SDK - 'MacOS'
   - Project 'Midnight' | Build Settings | Architectures | MacOS
-9. Check 'Hardened Runtime'
+10. Check 'Hardened Runtime'
   - Project 'Midnight' | Build Settings | Signing | Enable Hardened Runtime
-10. Build / Archive
-11. Validate
-12. Distribute App
+11. Check Debug Info
+  - Project 'ALL' | Build Settings | Build Options | Debug Information Format | RelWithDebInfo | Dwarf with dSym File
+12. Build / Archive
+13. Add dsym file to archive 'main/midnight/mac-build-lom/bin/midnight/RelWithDebInfo/midnight.app.dSYM'
+14. Validate
+15. Distribute App
   - App Store Connect
   - Upload
   - Upload Symbols
@@ -59,11 +68,11 @@
 3. Export Notarized App as 'The Lords of Midnight'
 
 ## Android - Google Play store
-1. Make sure there is a or LOM/DDR folder in resources 
+1. Make sure there is a or LOM/DDR folder in resources
 2. Open proj.android_lom or proj.android_ddr in Android Studio
 3. Update versionName / versionCode in build.gradle
 4. Check correct applicationId in build.gradle
-5. Clean and ReBuild project 
+5. Clean and ReBuild project
     - Build | Clean
     - Build | Rebuild
     - Build | Build Bundle(s) / APK(s) | Build Bundle(s)
