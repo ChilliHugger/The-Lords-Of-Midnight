@@ -139,7 +139,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
 
-    constexpr LPCSTR CREDITS_WEBSITE_ADDRESS            = "www.thelordsofmidnight.com";
+    constexpr LPCSTR CREDITS_WEBSITE_ADDRESS            = "www.thelordsofmidnight.com\n\n\n\n\n\n\n\n\n\n";
 #else
 
 #if defined(_DDR_)
@@ -154,7 +154,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     #else
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
-    constexpr LPCSTR CREDITS_WEBSITE_ADDRESS            = "www.doomdarksrevenge.com";
+    constexpr LPCSTR CREDITS_WEBSITE_ADDRESS            = "www.doomdarksrevenge.com\n\n\n\n\n\n\n\n\n\n";
 #else
     constexpr LPCSTR EXIT_MSG                           = "Do you want to exit?";
 #endif
