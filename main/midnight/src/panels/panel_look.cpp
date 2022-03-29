@@ -1630,13 +1630,13 @@ void panel_look::OnStopDrag(uidragevent* event)
 
     // GESTURE Move Forward
     if( allowDragDownMove()) {
-        if( abs(dx) < 0.01 and dy > MINIMUM_VERTICAL_DRAG_GESTURE) {
+        if( abs(dx) < 0.01 && dy > MINIMUM_VERTICAL_DRAG_GESTURE) {
             moveForward();
         }
     }
 
     // GESTURE Show map
-    if( abs(dx) < 0.01 and dy < -MINIMUM_VERTICAL_DRAG_GESTURE) {
+    if( abs(dx) < 0.01 && dy < -MINIMUM_VERTICAL_DRAG_GESTURE) {
         mr->panels->showMap();
     }
 

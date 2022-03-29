@@ -500,6 +500,7 @@ void uipanel::setCursor(MOUSE_CURSOR cursor)
 
 bool uipanel::OnMouseMove( Vec2 pos )
 {
+    return true;
 }
 
 Node* uipanel::childFromPoint( Node* node, Vec2 pos )
