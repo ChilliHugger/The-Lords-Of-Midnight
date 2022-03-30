@@ -7,32 +7,32 @@ using namespace chilli::collections;
 using namespace tme::scenarios::exports;
 
 mxinterface*    mxi ;
-character        cur_Character ;
+character       cur_Character ;
 
-c_mxid            default_characters ;
-c_mxid            recruitable_characters;
+c_mxid          default_characters ;
+c_mxid          recruitable_characters;
 
-c_mxid            location_characters;
-u32                location_recruited;
-c_mxid            location_strongholds;
+c_mxid          location_characters;
+u32             location_recruited;
+c_mxid          location_strongholds;
 mxid            location_infrontid;
 mxid            location_lookingatid;
-loc_t            location_infront;
-loc_t            location_lookingat;
-flags32            location_flags;
+loc_t           location_infront;
+loc_t           location_lookingat;
+flags32         location_flags;
 mxid            location_fightthing;
 mxid            location_object;
 
-stronghold        location_stronghold;
+stronghold      location_stronghold;
 
 mxid            location_stubborn_lord_attack;
 mxid            location_stubborn_lord_move;
 
-c_mxid            location_infront_strongholds;
+c_mxid          location_infront_strongholds;
 mxid            location_infront_object;
 
-loc_armyinfo_t    location_infront_armies;
-loc_armyinfo_t    location_armies;
+loc_armyinfo_t  location_infront_armies;
+loc_armyinfo_t  location_armies;
 
 #if defined(_DDR_)
 mxid            location_object_tunnel;

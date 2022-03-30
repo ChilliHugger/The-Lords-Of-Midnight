@@ -20,8 +20,8 @@ enum CHOOSE_INDEX {
     
 #if defined(_DDR_)
     CHOOSE_REST     = 1,
-    CHOOSE_TAKE     = 2,
-    CHOOSE_GIVE     = 3,
+    CHOOSE_GIVE     = 2,
+    CHOOSE_TAKE     = 3,
     CHOOSE_TUNNEL   = 8,
     CHOOSE_USE      = 9,
     CHOOSE_FIGHT    = 12,
