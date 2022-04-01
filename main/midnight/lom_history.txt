@@ -1,13 +1,13 @@
 The Lords of Midnight
 
-Version 2.0.2 (42)
+Version 2.0.3 (42)
 1. [desktop] Added cursor sizes (small/medium/large)
 
-Version 2.0.2 (41)
+Version 2.0.3 (41)
 1. fix crash caused by too many armies at a location
 2. panel_think - adjust page indicator size dependent on number of pages
 
-Version 2.0.2 (39)
+Version 2.0.3 (39)
 1. Return graffiti easter egg
 2. Add confirm night option
 3. panel_look - Add drag down gesture to moves
@@ -18,7 +18,7 @@ Version 2.0.2 (39)
 8. [Android] panel_mainmenu Hardware back button now performs Exit
 9. [mobile] Tweak scale of buttons
 
-Version 2.0.2 (38)
+Version 2.0.3 (38)
 1. Fixed: panel_think - adjust UI on phone
 2. Fixed: potential memory leaks that could be causing crashes
 

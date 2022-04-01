@@ -11,7 +11,7 @@ android {
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 2000042
-        versionName "2.0.2"
+        versionName "2.0.3"
 
         externalNativeBuild {
             cmake {
