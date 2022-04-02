@@ -169,7 +169,7 @@ void panel_select::addNewPage(ssize_t page) {
     layout->setContentSize(pageView->getContentSize());
     layout->setTag((s32)page+1);
     pages.pushBack(layout);
-    pageView->insertPage(layout, (s32)page);
+    pageView->addPage(layout);
 }
 
 void panel_select::setupPages()
