@@ -203,6 +203,7 @@ bool panel_look::init()
         person = LandscapePeople::create(options);
         person->setLocalZOrder(ZORDER_FAR+1);
         person->setContentSize( Size( getContentSize().width, RES(256)) );
+        person->setCallback(clickCallback);
         addChild(person);
     }
 
@@ -1334,6 +1335,13 @@ void panel_look::OnNotification( Ref* sender )
         {
             if ( mr->think() )
                 return;
+        }
+        
+        case ID_THINK_PERSON:
+        {
+            char_data_t* d = static_cast<char_data_t*>(button->getUserData());
+            mr->showPage(MODE_THINK_PERSON,d->id);
+            return;
         }
 
         case ID_RECRUITMEN:

@@ -13,6 +13,7 @@
 
 #include "LandscapeNode.h"
 #include "LandscapeGenerator.h"
+#include "../ui/uielement.h"
 
 typedef struct {
     bool        used;
@@ -44,10 +45,14 @@ typedef struct {
 #define MAX_ALLOWED_CHARACTER_WIDTH     128
 
 
-
+using namespace chilli::types;
 
 class LandscapePeople : public LandscapeNode
 {
+    using ImageView = cocos2d::ui::ImageView;
+    using WidgetClickCallback = chilli::ui::WidgetClickCallback;
+    using Widget = cocos2d::ui::Widget;
+        
 public:
     static LandscapePeople* create( LandscapeOptions* options );
 
@@ -65,13 +70,15 @@ public:
 
     void startFadeIn();
     void startFadeOut();
+    
+    void setCallback(const WidgetClickCallback& callback);
 
     
 protected:
     LandscapePeople();
     
     bool initWithOptions( LandscapeOptions* options );
-    void add( std::string& image, int number /*, void* hotspot*/ );
+    ImageView* add( std::string& image, int number );
 
 public:    
     tme::loc_t      loc;
@@ -81,6 +88,7 @@ public:
     f32             startlocationx;
     f32             startlocationy;
     f32             amountmoving;
+    WidgetClickCallback callback;
 };
 
 
