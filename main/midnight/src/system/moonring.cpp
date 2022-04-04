@@ -292,6 +292,10 @@ bool moonring::look()
 
 bool moonring::look( mxdir_t dir )
 {
+    if(dir == DR_NONE) {
+        return false;
+    }
+    
     character&    c = TME_CurrentCharacter();
     Character_Look(c, dir);
     showPage(MODE_LOOK,TME_CurrentCharacter().id);

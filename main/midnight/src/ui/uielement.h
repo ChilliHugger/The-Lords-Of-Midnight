@@ -190,18 +190,18 @@ namespace chilli {
 }
 
 
-static const f32 scale_double = 2.0f;
-static const f32 scale_normal = 1.0f;
-static const f32 scale_3qtr = 0.75f;
-static const f32 scale_half = 0.5f;
-static const f32 scale_1qtr = 0.25f;
-static const f32 scale_zero = 0.0f;
+constexpr f32 scale_double = 2.0f;
+constexpr f32 scale_normal = 1.0f;
+constexpr f32 scale_3qtr = 0.75f;
+constexpr f32 scale_half = 0.5f;
+constexpr f32 scale_1qtr = 0.25f;
+constexpr f32 scale_zero = 0.0f;
 
-static const f32 alpha_normal = 1.0f;
-static const f32 alpha_3qtr = 0.75f;
-static const f32 alpha_half = 0.5f;
-static const f32 alpha_1qtr = 0.25f;
-static const f32 alpha_zero = 0.0f;
+constexpr f32 alpha_normal = 1.0f;
+constexpr f32 alpha_3qtr = 0.75f;
+constexpr f32 alpha_half = 0.5f;
+constexpr f32 alpha_1qtr = 0.25f;
+constexpr f32 alpha_zero = 0.0f;
 
 #define HALF(x) (x/2)
 
