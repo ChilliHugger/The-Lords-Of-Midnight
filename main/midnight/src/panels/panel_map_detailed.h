@@ -28,8 +28,10 @@ class panel_map_detailed : public uipanel
     using ScrollView = extensions::ScrollView;
     using TMXTiledMap = cocos2d::TMXTiledMap;
     using Node = cocos2d::Node;
+    using DrawNode = cocos2d::DrawNode;
     using Vec2 = cocos2d::Vec2;
     using Label = cocos2d::Label;
+    using Widget = cocos2d::ui::Widget;
     
 public:
     virtual bool init() override;
@@ -56,7 +58,7 @@ protected:
     void setupStrongholds();
     
     void hideGroupLord();
-    void showGroupLord( Vec2 position, map_object* object );
+    void showGroupLord( Widget* button );
     
     void updateScale();
     
@@ -70,6 +72,8 @@ private:
     mapmodel*       model;
     Node*           characters;
     Node*           descriptions;
+    DrawNode*       groupLordBackground;
+    Widget*         groupLordButton;
     uigrouplord*    grouplord;
     //Label*          debug_label;
 };

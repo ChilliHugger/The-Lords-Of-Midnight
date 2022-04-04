@@ -114,7 +114,41 @@ void LandscapePeople::Initialise()
             continue;
 #endif
         person = GetCharacterImage(c);
-        add(person,DEFAULT_PRINT_CHARACTER /*, NULL &hotspot*/);
+        auto image = add(person,DEFAULT_PRINT_CHARACTER);
+        
+        if(image != nullptr) {
+            // create tooltip text
+            auto title = Label::createWithTTF( uihelper::font_config_small, c.longname );
+            title->setName("title");
+            title->setTextColor(Color4B(_clrWhite));
+            title->enableOutline(Color4B(_clrBlack),RES(1));
+            title->setLineSpacing(RES(-2));
+            title->setHeight(RES(32));
+            title->getFontAtlas()->setAntiAliasTexParameters();
+            title->setAnchorPoint(uihelper::AnchorCenter);
+            title->setWidth(RES(128));
+            title->setPosition( Vec2(image->getContentSize().width/2, image->getContentSize().height/2) );
+            title->setHorizontalAlignment(TextHAlignment::CENTER);
+            title->setVerticalAlignment(TextVAlignment::BOTTOM);
+            title->setVisible(false);
+            image->addChild(title);
+            
+            image->setTouchEnabled(true);
+            image->addClickEventListener(callback);
+            image->setTag(ID_THINK_PERSON);
+            image->setUserData(c.userdata);
+            
+            image->addTouchEventListener(
+                [title](Ref* ref, Widget::TouchEventType type) {
+                    if(type == Widget::TouchEventType::BEGAN ) {
+                        title->setVisible(true);
+                    } else if( type != Widget::TouchEventType::MOVED) {
+                        title->setVisible(false);
+                    }
+                }
+            );
+        }
+
     }
     
     
@@ -127,10 +161,6 @@ void LandscapePeople::Initialise()
     }
         
 #endif
-    //
-    // get location infront map
-    //
-    
     
 #if defined(_LOM_)
     if ( location_armies.foe_riders )
@@ -138,29 +168,27 @@ void LandscapePeople::Initialise()
         // LoM shows characters when there is an army in the location in front
         // however DDR only shows the army terrain image for wandering lords
         person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_DOOMGUARD),TRUE);
-        add( person, DEFAULT_PRINT_RIDERS/*, NULL*/);
+        add(person, DEFAULT_PRINT_RIDERS);
     } else if ( location_armies.foe_warriors ) {
         person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_DOOMGUARD),FALSE);
-        add( person,DEFAULT_PRINT_WARRIORS /*, NULL*/);
+        add(person,DEFAULT_PRINT_WARRIORS);
     } else
 #endif
-        if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
-        //hotspot.type = HOTSPOT_OBJECT;
-        //hotspot.thing = (thing_t)GET_ID(location_infront_object);
-        
+    if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
         person = GetObjectBig(MAKE_ID(IDT_OBJECT, objectid));
         if ( objectid == OB_DRAGONS ) {
-            add(person,DEFAULT_PRINT_DRAGONS /*, NULL*/);
+            add(person,DEFAULT_PRINT_DRAGONS);
         }else{
-            add(person,DEFAULT_PRINT_OTHER /*, NULL*/);
+            add(person,DEFAULT_PRINT_OTHER);
         }
     }
     
 }
 
-void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ )
+cocos2d::ui::ImageView* LandscapePeople::add( std::string& person, int number)
 {
     int column;
+    ImageView* imageAdded = nullptr;
     
 #if defined(_LOM_)
     static int xtable[] = { 3, 5, 4, 1, 2, 6, 0, 7 };
@@ -173,10 +201,8 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
     f32 width = getContentSize().width;
     f32 offsetX = (width - RES(1024))/2;
     
-    //lookhotspot_t*    newhotspot;
-    
     if ( person.empty() )
-        return;
+        return nullptr;
     
     int max_chars = MAX_DISPLAY_CHARACTERS ;
     
@@ -193,18 +219,23 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
                 break;
         
         if ( characters >= max_chars )
-            return;
+            return nullptr;
         
         column = xtable[characters] ;
         
-        auto image = Sprite::create(person);
+        //auto image = Sprite::create(person);
+        
+        auto image = ImageView::create();
+        image->loadTexture(person, cocos2d::ui::Widget::TextureResType::LOCAL);
+        image->setTouchEnabled(false);
+
         auto size = image->getContentSize();
         
         int x1 = offsetX + ( column * LRES(CHARACTER_COLUMN_WIDTH) );
-        int y1 = 0; //size.height; //-ASP(person->Height());
+        int y1 = 0;
         
         image->setAnchorPoint(uihelper::AnchorBottomLeft);
-        image->setPosition(x1, y1);
+        image->setPosition(Vec2(x1, y1));
         
         if(options->characterTimeShader)
         {
@@ -218,7 +249,6 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
         columns[column].image = person ;
         
         // mark this printing position as used
-        
         // and see if we have taken the one to the right of us
         if ( column <max_chars ) {
             //if ( LRES(person->Width()) > LRES(MAX_ALLOWED_CHARACTER_WIDTH) )
@@ -226,19 +256,17 @@ void LandscapePeople::add( std::string& person, int number /*, void* hotspot */ 
         }
         
         characters++;
-        
-        // add this into a mouse hotspot list
-        //if ( hotspot ) {
-        //    newhotspot = &hotspots[hotspot_count++];
-        //    memcpy ( newhotspot, hotspot, sizeof(lookhotspot_t) );
-        //    newhotspot->r = rect ( point(x1,y1), size(person->Width(),person->Height()) );
-        //    newhotspot->r.ClipRect ( &panel_rect );
-        //}
-        
+        imageAdded = image;
     }
+    
+    return imageAdded;
     
 }
 
+void LandscapePeople::setCallback(const WidgetClickCallback &callback)
+{
+    this->callback = callback;
+}
 
 void LandscapePeople::clear()
 {
