@@ -40,7 +40,9 @@ panel_map_detailed::panel_map_detailed() :
     tmxMap(nullptr),
     mapBuilder(nullptr),
     grouplord(nullptr),
-    model(nullptr)
+    model(nullptr),
+    groupLordBackground(nullptr),
+    groupLordButton(nullptr)
 {
 }
 
@@ -217,7 +219,7 @@ void panel_map_detailed::OnNotification( Ref* sender )
             if ( grouplord != nullptr )
                 hideGroupLord();
             else
-                showGroupLord( button->getPosition(), static_cast<map_object*>(button->getUserData()) );
+                showGroupLord( button );
             break;
         }
             
@@ -290,10 +292,22 @@ void panel_map_detailed::hideGroupLord()
 {
     grouplord->removeFromParent();
     grouplord = nullptr;
+    
+    groupLordBackground->removeFromParent();
+    groupLordBackground = nullptr;
+    
+    groupLordButton->setLocalZOrder(ZORDER_DEFAULT);
+    groupLordButton->setVisible(true);
+    groupLordButton = nullptr;
 }
 
-void panel_map_detailed::showGroupLord(Vec2 position, map_object* object)
+void panel_map_detailed::showGroupLord(Widget* button)
 {
+    groupLordButton = button;
+    
+    auto position = button->getPosition();
+    auto object = static_cast<map_object*>(button->getUserData()) ;
+    
     grouplord = uigrouplord::create();
     grouplord->setPosition(position);
     grouplord->setTag(ID_SELECT_ALL);
@@ -309,7 +323,20 @@ void panel_map_detailed::showGroupLord(Vec2 position, map_object* object)
     }
     
     grouplord->createFollowers(lords);
+    grouplord->setLocalZOrder(ZORDER_POPUP);
     
+    groupLordBackground = DrawNode::create();
+    auto size = grouplord->getContentSize();
+    groupLordBackground->setContentSize( grouplord->getContentSize() );
+    groupLordBackground->drawSolidCircle(Vec2(size.width/2,size.height/2), size.width/2 , 0, 64, 1.25f, 1.25f, Color4F(1.0f,1.0f,1.0f,0.9f));
+    groupLordBackground->setAnchorPoint(uihelper::AnchorCenter);
+    groupLordBackground->setPosition(Vec2(position.x,position.y));
+    groupLordBackground->setVisible(true);
+    groupLordBackground->setLocalZOrder(ZORDER_POPUP-1);
+    characters->addChild(groupLordBackground);
+    
+    groupLordButton->setLocalZOrder(ZORDER_POPUP+1);
+    groupLordButton->setVisible(false);
 }
 
 void panel_map_detailed::centreOnCharacter( character& c, bool animate )
@@ -440,6 +467,7 @@ void panel_map_detailed::setupCharacterButtons()
             
         }
         
+        node->setLocalZOrder(ZORDER_DEFAULT);
         node->setAnchorPoint(uihelper::AnchorCenter);
         node->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(32))) );
         node->addClickEventListener(clickCallback);

@@ -170,4 +170,15 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR BUTTON_NO                          = "NO";
     constexpr LPCSTR BUTTON_OK                          = "OK";
 
+
+    constexpr LPCSTR DIRECTION_N                        = "N";
+    constexpr LPCSTR DIRECTION_NE                       = "NE";
+    constexpr LPCSTR DIRECTION_E                        = "E";
+    constexpr LPCSTR DIRECTION_SE                       = "SE";
+    constexpr LPCSTR DIRECTION_S                        = "S";
+    constexpr LPCSTR DIRECTION_SW                       = "SW";
+    constexpr LPCSTR DIRECTION_W                        = "W";
+    constexpr LPCSTR DIRECTION_NW                       = "NW";
+  
+
 #endif /* language_h */
