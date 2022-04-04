@@ -113,7 +113,7 @@ namespace tme {
             flags.Reset(lif_blocked);
             if ( iowner && iowner->IsInTunnel() ) {
                 // we can only move through tunnels when in a tunnel
-                if ( !(infront->mapsqr.HasTunnel()) ) {
+                if ( !infront->mapsqr.HasTunnel() || looking&1 ) {
                     flags.Reset(lif_moveforward);
                     flags.Set(lif_blocked);
                 }
