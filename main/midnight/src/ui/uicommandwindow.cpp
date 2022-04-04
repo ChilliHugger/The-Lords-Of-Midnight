@@ -177,18 +177,7 @@ void uicommandwindow::initialiseCommands()
 
     auto give = uihelper::CreateImageButton("i_give", ID_GIVE, callback);
     addItem(give,CHOOSE_GIVE);
-    
-    auto givetext = Label::createWithTTF( uihelper::font_config_small, "luxor" );
-    givetext->setName("givetext");
-    givetext->getFontAtlas()->setAntiAliasTexParameters();
-    givetext->setTextColor(Color4B(_clrWhite));
-    givetext->enableOutline(Color4B(_clrBlack),RES(1));
-    givetext->setAnchorPoint(uihelper::AnchorCenter);
-    givetext->setWidth(give->getContentSize().width-RES(16));
-    givetext->setHorizontalAlignment(TextHAlignment::CENTER);
-    givetext->setVerticalAlignment(TextVAlignment::BOTTOM);
-    givetext->setVisible(false);
-    uihelper::AddBottomCenter(give, givetext, RES(0), RES(-16));
+    addCommandText(give);
     
     auto take = uihelper::CreateImageButton("i_take", ID_TAKE, callback);
     addItem(take,CHOOSE_TAKE);
@@ -216,7 +205,8 @@ void uicommandwindow::initialiseCommands()
     // APPROACH
     auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, callback);
     addItem(approach,CHOOSE_APPROACH);
-    
+    addCommandText(approach);
+        
     // RECRUIT SOLDIERS
     auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, callback);
     addItem(recruitMen,CHOOSE_RECRUIT);
@@ -293,7 +283,6 @@ void uicommandwindow::updateElements()
     
     
 #if defined(_DDR_)
-    
     enableItem(ID_GIVE, location_flags.Is(lif_give) );
     setupGiveText();
     
@@ -301,12 +290,11 @@ void uicommandwindow::updateElements()
     enableItem(ID_USE, location_flags.Is(lif_use) );
     enableItem(ID_REST, location_flags.Is(lif_rest) );
     enableItem(ID_ENTER_TUNNEL, location_flags.Is(lif_enter_tunnel) );
-    
-    
 #endif
     
     // APPROACH
     enableItem(ID_APPROACH, location_flags.Is(lif_recruitchar) );
+    setupApproachText();
     
     // RECRUIT SOLDIERS
     enableItem(ID_RECRUITMEN, location_flags.Is(lif_recruitmen) );
@@ -340,19 +328,62 @@ void uicommandwindow::updateElements()
 #if defined(_DDR_)
 void uicommandwindow::setupGiveText()
 {
-    auto button = findItemById(ID_GIVE);
-    auto text = button->getChildByName<Label*>(std::string("givetext"));
-
-    if ( location_flags.Is(lif_give) ) {
-        character c;
-        TME_GetCharacter(c, location_someone_to_give_to );
-        text->setString(c.shortname);
-        text->setVisible(true);
-    }else{
-        text->setVisible(false);
-    }
+    setCommandTextName(
+        ID_GIVE,
+        location_flags.Is(lif_give),
+        location_someone_to_give_to);
 }
 #endif
+
+void uicommandwindow::setupApproachText()
+{
+    setCommandTextName(
+        ID_APPROACH,
+        location_flags.Is(lif_recruitchar),
+        recruitable_characters[0]);
+}
+
+void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, id_t characterId)
+{
+    std::string value = "";
+
+    if ( enabled ) {
+        character c;
+        TME_GetCharacter(c, characterId );
+        value = c.shortname;
+    }
+    
+    setCommandText(ID_APPROACH, value);
+}
+
+void uicommandwindow::setCommandText(layoutid_t id, const std::string& value)
+{
+    auto button = findItemById(id);
+    auto text = button->getChildByName<Label*>("commandText");
+
+    if(value.empty()) {
+        text->setVisible(false);
+    }else{
+        text->setString(value);
+        text->setVisible(true);
+    }
+}
+
+void uicommandwindow::addCommandText(Node* node)
+{
+    auto text = Label::createWithTTF( uihelper::font_config_medium, "" );
+    text->setName("commandText");
+    text->getFontAtlas()->setAntiAliasTexParameters();
+    text->setTextColor(Color4B(_clrWhite));
+    text->enableOutline(Color4B(_clrBlack),RES(1));
+    text->setAnchorPoint(uihelper::AnchorCenter);
+    text->setWidth(node->getContentSize().width);
+    text->enableWrap(false);
+    text->setHorizontalAlignment(TextHAlignment::CENTER);
+    text->setVerticalAlignment(TextVAlignment::BOTTOM);
+    text->setVisible(false);
+    uihelper::AddBottomCenter(node, text, RES(0), RES(-16));
+}
 
 void uicommandwindow::addTouchListener()
 {
