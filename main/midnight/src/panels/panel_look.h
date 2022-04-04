@@ -13,6 +13,7 @@
 
 FORWARD_REFERENCE(uicommandwindow);
 FORWARD_REFERENCE(uisinglelord);
+FORWARD_REFERENCE(uicompass);
 
 typedef enum SNAP_MODE {
     sm_back_right=1,
@@ -75,6 +76,7 @@ class panel_look :
     using uidragevent = chilli::ui::DragEvent;
     using Color3B = cocos2d::Color3B;
     using DrawNode = cocos2d::DrawNode;
+    using EventListenerTouchOneByOne = cocos2d::EventListenerTouchOneByOne;
 
 public:
     virtual ~panel_look() override;
@@ -155,8 +157,13 @@ protected:
     bool OnMouseMove( Vec2 pos ) override;
 #endif
 
+    void startCompassTimer(Vec2 pos);
+    void cancelCompassTimer();
+    void showCompass(Vec2 pos);
+
 protected:
-    mxid                characterId{};
+    mxid                characterId;
+    uicompass*          compass;
     
     ILandscape*         current_view;
     
@@ -170,10 +177,10 @@ protected:
     Label*              lblName;
     ImageView*          imgShield;
     LayerColor*         layHeader;
-    ImageView*          imgHeader{};
-    uisinglelord*       following{};
-    DrawNode*           gradientL{};
-    DrawNode*           gradientR{};
+    ImageView*          imgHeader;
+    uisinglelord*       following;
+    DrawNode*           gradientL;
+    DrawNode*           gradientR;
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
  
@@ -193,11 +200,12 @@ protected:
     // draggin
     //f32                 dragged;
     bool                landscape_dragging;
-    u64                 mouse_down_time{};
-    bool                mouse_down{};
+    u64                 mouse_down_time;
+    bool                mouse_down;
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;
 
     f32                 startDragLookAmount;
     
+    EventListenerTouchOneByOne* touchListener;
 };

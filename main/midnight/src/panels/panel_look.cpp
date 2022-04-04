@@ -19,6 +19,7 @@
 #include "../ui/uicommandwindow.h"
 #include "../ui/uihelpwindow.h"
 #include "../ui/characters/uisinglelord.h"
+#include "../ui/uicompass.h"
 
 #include "../landscaping/LandscapeSky.h"
 #include "../landscaping/LandscapeLand.h"
@@ -73,6 +74,8 @@ constexpr f32 FADE_OUT_SPEED = 1.0f;
 #define IMAGE_HEADER    "misc/header.png"
 #endif
 
+static f32 compass_delays[] = { 0.0f, 1.0f, 0.375f, 2.0f };
+
 panel_look::panel_look() :
     current_view(nullptr),
     current_info(nullptr),
@@ -88,6 +91,8 @@ panel_look::panel_look() :
     prev_people(nullptr),
     prev_people1(nullptr),
     options(nullptr),
+    compass(nullptr),
+    touchListener(nullptr),
     currentMovementIndicator(LM_NONE)
 {
     CLEARARRAY(people);
@@ -243,9 +248,7 @@ bool panel_look::init()
     addShortcutKey(ID_ACTIONS,    K_CHOOSE);
 
     // TODO: Debug Menu
-    
-    // TODO: Compass
-    
+        
     // Direction movement indicators
     setupMovementIndicators();
 
@@ -280,16 +283,6 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     }
     
     landscape_dragging=FALSE;
-    
-    if ( type == LM_SHOW_COMPASS ) {
-        stopInactivity();
-        
-        // TODO:
-        //character&    c = TME_CurrentCharacter();
-        //i_compass->Show(landscape->mouse_down_pos, c.looking );
-        
-        return;
-    }
     
     Enable();
     
@@ -392,10 +385,6 @@ void panel_look::delayedSave()
 //  Exit Tunnel
 //  Menu Collapse
 //  Delayed Save
-//}
-
-//void panel_look::OnCompassEvent(uicompass *sender, uicompassevent *event)
-//{
 //}
 
 void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
@@ -606,10 +595,10 @@ void panel_look::addTouchListener()
     // we need swipe, drag, pinch zoom
     //
     // mouse events
-    auto listener = EventListenerTouchOneByOne::create();
+    touchListener = EventListenerTouchOneByOne::create();
     
     // trigger when you push down
-    listener->onTouchBegan = [=](Touch* touch, Event* event){
+    touchListener->onTouchBegan = [=](Touch* touch, Event* event){
         mouse_down_time = utils::getTimeInMilliseconds() ;
         mouse_down_pos = touch->getLocation();
         mouse_last_position = mouse_down_pos;
@@ -619,7 +608,7 @@ void panel_look::addTouchListener()
     };
     
     // trigger when moving touch
-    listener->onTouchMoved = [=](Touch* touch, Event* event){
+    touchListener->onTouchMoved = [=](Touch* touch, Event* event){
         
         Vec2 delta = touch->getLocation() - mouse_last_position;
         Vec2 distance = touch->getLocation() - mouse_down_pos;
@@ -654,7 +643,7 @@ void panel_look::addTouchListener()
     };
     
     // trigger when you let up
-    listener->onTouchEnded = [=](Touch* touch, Event* event){
+    touchListener->onTouchEnded = [=](Touch* touch, Event* event){
         
         if ( isDragging() ) {
             uidragevent    dev(nullptr,touch->getLocation(),DragEventType::stop);
@@ -672,7 +661,7 @@ void panel_look::addTouchListener()
     };
     
     // Add listener
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
 }
 
@@ -980,7 +969,8 @@ void panel_look::startInactivity()
 
 void panel_look::stopInactivity()
 {
-    this->unschedule("NonActivityTimer");
+    unschedule("NonActivityTimer");
+    cancelCompassTimer();
 }
 
 void panel_look::showInactivityHelp()
@@ -1461,6 +1451,50 @@ void panel_look::OnSetupIcons()
     
 }
 
+void panel_look::showCompass(Vec2 pos)
+{
+    stopInactivity();
+    
+#if defined(_MOUSE_ENABLED_)
+    setCursor(MOUSE_NORMAL);
+#endif
+
+    compass = uicompass::create(this);
+    compass->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    compass->setPosition(pos);
+    compass->setSelected( current_info->looking );
+    
+    compass->onCancel = [&] {
+        compass = nullptr;
+    };
+
+    compass->onOk = [&] {
+        mr->look(compass->getSelected());
+        compass = nullptr;
+    };
+
+    compass->Show(touchListener);
+}
+
+void panel_look::startCompassTimer(Vec2 pos)
+{
+    if (mr->settings->compass_delay == 0 ) {
+        return;
+    }
+
+    f32 compass_delay = compass_delays[mr->settings->compass_delay];
+
+    this->scheduleOnce( [&,pos](float) {
+        showCompass(pos);
+    }, compass_delay, "long_press" );
+}
+
+void panel_look::cancelCompassTimer()
+{
+    unschedule("long_press");
+}
+
+
 bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
 {
     if(options->isLooking)
@@ -1476,10 +1510,12 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     bool IsLeftMouseUp = false;
     
     if ( event->getType() == Event::Type::MOUSE || event->getType() == Event::Type::TOUCH ) {
-        if ( pressed )
+        if ( pressed ) {
             IsLeftMouseDown = true;
-        else
+        } else {
             IsLeftMouseUp = true;
+            cancelCompassTimer();
+        }
     }
     
     auto position =  touch->getLocation();
@@ -1517,6 +1553,10 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
             
         }
         
+        if(IsLeftMouseDown) {
+            startCompassTimer(position);
+        }
+
         if ( IsLeftMouseUp  ) {
             
             if ( currentMovementIndicator == LM_NONE )
@@ -1781,6 +1821,10 @@ void panel_look::stopDragging(s32 adjustment)
 #if defined(_MOUSE_ENABLED_)
 bool panel_look::OnMouseMove( Vec2 position )
 {
+    if(compass!=nullptr) {
+        return false;
+    }
+
     f32 MOUSE_MOVE_BLEED = 256;
 
     auto size = getContentSize();

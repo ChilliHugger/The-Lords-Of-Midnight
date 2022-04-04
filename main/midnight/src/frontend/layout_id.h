@@ -160,6 +160,7 @@ enum layoutid_t
     ID_STORIES=3000,
     ID_TUNNEL=4000,
     ID_SHOW_TOOLTIP=5000,
+    ID_SELECT_DIRECTION=6000,
 };
 
 
