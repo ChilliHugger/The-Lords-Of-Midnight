@@ -340,7 +340,7 @@ void uicommandwindow::setupApproachText()
     setCommandTextName(
         ID_APPROACH,
         location_flags.Is(lif_recruitchar),
-        recruitable_characters[0]);
+        recruitable_characters.size() > 0 ?  recruitable_characters[0] : 0);
 }
 
 void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, mxid characterId)
