@@ -53,13 +53,6 @@ enum CONFIG_COMPASS_DELAY
     CF_COMPASS_LONG=3,
 };
 
-enum CONFIG_COMPASS_FEEDBACK
-{
-    CF_COMPASS_LOW=1,
-    CF_COMPASS_MEDIUM=2,
-    CF_COMPASS_HIGH=3,
-};
-
 enum CONFIG_THINK_PAGING
 {
     CF_THINK_SWIPE=0,
@@ -121,7 +114,7 @@ public:
     BOOL                    night_battle_full;
 
     // version 4
-    CONFIG_COMPASS_FEEDBACK compass_feedback;
+    //CONFIG_COMPASS_FEEDBACK compass_feedback;
     
     // version 5
     CONFIG_SCREEN_MODE      screen_mode;

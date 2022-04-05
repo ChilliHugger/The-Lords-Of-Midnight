@@ -70,11 +70,6 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_COMPASS_DELAY_SHORT        = "SHORT PRESS";
     constexpr LPCSTR OPTIONS_COMPASS_DELAY_LONG         = "LONG PRESS";
 
-    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_OFF       = "OFF";
-    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_LOW       = "LOW";
-    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_MEDIUM    = "MEDIUM";
-    constexpr LPCSTR OPTIONS_COMPASS_FEEDBACK_HIGH      = "HIGH";
-
     constexpr LPCSTR OPTIONS_SLOW                       = "SLOW";
     constexpr LPCSTR OPTIONS_FAST                       = "FAST";
     
@@ -111,7 +106,6 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_NIGHTCONFIRM        = "NIGHT CONFIRM";
     constexpr LPCSTR OPTIONS_SCREEN_BATTLEREPORT        = "BATTLE REPORT";
     constexpr LPCSTR OPTIONS_SCREEN_COMPASSDELAY        = "COMPASS DELAY";
-    constexpr LPCSTR OPTIONS_SCREEN_COMPASSVIBRATE      = "COMPASS VIBRATE";
     constexpr LPCSTR OPTIONS_SCREEN_NAVIGATIONSTYLE     = "NAVIGATION STYLE";
     constexpr LPCSTR OPTIONS_SCREEN_KEYBOARDSTYLE       = "KEYBOARD STYLE";
     constexpr LPCSTR OPTIONS_SCREEN_CURSORSIZE          = "CURSOR SIZE";

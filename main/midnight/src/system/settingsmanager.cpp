@@ -20,7 +20,6 @@ settingsmanager::settingsmanager() :
     , screentransitions(true)
     , flipscreen(false)
     , compass_delay(CF_COMPASS_NORMAL)
-    , compass_feedback(CF_COMPASS_MEDIUM)
     , think_paging_mode(CF_THINK_SWIPE)
     , night_confirm(true)
     , night_display_fast(false)
@@ -109,12 +108,12 @@ BOOL settingsmanager::Save ( void )
     ar << night_battle_full ;
 
     // version 4
-    ar << compass_feedback ;
+    ar << (int)0 ;
 
     // version 5
-    ar << (int)screen_mode ;
+    ar << screen_mode ;
 
-    // version 5
+    // version 6
     ar << keyboard_mode;
 
     // version 7
@@ -170,9 +169,11 @@ BOOL settingsmanager::Load ( void )
         ar >> night_battle_full ;
     }
 
+    if ( version>=4 ) {
+        ar >> temp; // Compass Feedback - Deprecated
+    }
+
     if ( version>=5 ) {
-        ar >> temp; compass_feedback = (CONFIG_COMPASS_FEEDBACK) temp;
-        
         ar >> temp; screen_mode = (CONFIG_SCREEN_MODE) temp;
     }
 
