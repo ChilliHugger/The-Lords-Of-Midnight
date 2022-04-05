@@ -100,6 +100,9 @@ bool uihelpwindow::initWithParent( uipanel* parent, helpid_t id)
 
     auto scrollView = ScrollView::create();
     scrollView->setDirection(ScrollView::Direction::VERTICAL);
+    scrollView->setScrollBarAutoHideEnabled(true);
+    scrollView->setScrollBarAutoHideTime(0);
+ 
     layout->addChild(scrollView);
 
     // add text
