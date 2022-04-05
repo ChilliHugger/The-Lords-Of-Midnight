@@ -1663,11 +1663,11 @@ namespace tme {
             defaultexport::character_t* out = (defaultexport::character_t*)data;
             VALIDATE_INFO_BLOCK(out,INFO_CHARACTER,defaultexport::character_t);
 
-        out->looking = looking;
+            out->looking = looking;
             out->time = Time();
-            out->longname = longname;
-            out->shortname = shortname;
-//            out->images =  images;
+            out->longname = std::string(longname);
+            out->shortname = std::string(shortname);
+            //            out->images =  images;
 
 #if defined(_LOM_)
             out->warriors = MAKE_ARMYID(UT_WARRIORS,SafeId(this));
