@@ -132,7 +132,7 @@ void panel_select::createPageView()
     
     f32 scale = phoneScale() ;
     pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.5f));
-    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(-24)));
+    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(-2)));
     pageView->setIndicatorIndexNodesColor(_clrBlack);
     pageView->setIndicatorSelectedIndexColor(_clrBlue);
 

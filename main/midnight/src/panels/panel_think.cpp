@@ -263,7 +263,7 @@ void panel_think::addPage( mxid pageId )
     auto padding = getSafeArea();
  
     f32 scale = CONTENT_SCALE(0.5f);
-    int xAdjust = CONTENT_SCALE(RES(-24));
+    int xAdjust = CONTENT_SCALE(RES(-2));
     int bottomAdj = RES(4);
     
     if( pages.size() < 32 ) {
@@ -273,12 +273,12 @@ void panel_think::addPage( mxid pageId )
     }
     else if( pages.size() < 64 ) {
         scale = 0.5f;
-        xAdjust=0;
+        xAdjust=RES(-4);
         bottomAdj = RES(2);
     }
     else if( pages.size() < 100 ) {
         scale = 0.4f;
-        xAdjust=RES(-4);
+        xAdjust=RES(-6);
         bottomAdj = RES(2);
     }
     else {
