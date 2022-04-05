@@ -343,7 +343,7 @@ void uicommandwindow::setupApproachText()
         recruitable_characters[0]);
 }
 
-void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, id_t characterId)
+void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, mxid characterId)
 {
     std::string value = "";
 
@@ -369,7 +369,7 @@ void uicommandwindow::setCommandText(layoutid_t id, const std::string& value)
     }
 }
 
-void uicommandwindow::addCommandText(Node* node)
+void uicommandwindow::addCommandText(cocos2d::Node* node)
 {
     auto text = Label::createWithTTF( uihelper::font_config_medium, "" );
     text->setName("commandText");
