@@ -350,7 +350,7 @@ void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, mxid chara
     if ( enabled ) {
         character c;
         TME_GetCharacter(c, characterId );
-        value = c.shortname;
+        value = c.longname;
     }
     
     setCommandText(ID_APPROACH, value);
@@ -371,18 +371,27 @@ void uicommandwindow::setCommandText(layoutid_t id, const std::string& value)
 
 void uicommandwindow::addCommandText(Node* node)
 {
-    auto text = Label::createWithTTF( uihelper::font_config_medium, "" );
+    // position of text messes up because of phone scale
+    // so remove it, then add it back
+    auto scale = node->getScale();
+    node->setScale(scale_normal);
+        
+    auto text = Label::createWithTTF( uihelper::font_config_small, "" );
     text->setName("commandText");
     text->getFontAtlas()->setAntiAliasTexParameters();
     text->setTextColor(Color4B(_clrWhite));
     text->enableOutline(Color4B(_clrBlack),RES(1));
     text->setAnchorPoint(uihelper::AnchorCenter);
+    text->setLineSpacing(CONTENT_SCALE(0));
+    text->setHeight(RES(FONT_SIZE_SMALL)*3); // two lines
     text->setWidth(node->getContentSize().width);
-    text->enableWrap(false);
+    text->enableWrap(true);
     text->setHorizontalAlignment(TextHAlignment::CENTER);
     text->setVerticalAlignment(TextVAlignment::BOTTOM);
     text->setVisible(false);
     uihelper::AddBottomCenter(node, text, RES(0), RES(-16));
+    
+    node->setScale(scale);
 }
 
 void uicommandwindow::addTouchListener()

@@ -33,7 +33,6 @@ static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESN
 static const char* values_movement[]            = {OPTIONS_MOVEMENT_SWIPE_PUSH,OPTIONS_MOVEMENT_PUSH,OPTIONS_MOVEMENT_SWIPE,OPTIONS_MOVEMENT_PRESS_SWIPE};
 //static const char* values_think[]               = {OPTIONS_THINK_SWIPE,OPTIONS_THINK_SWIPE,OPTIONS_THINK_ARROWS};
 static const char* values_compass_delay[]       = {OPTIONS_COMPASS_DELAY_OFF,OPTIONS_COMPASS_DELAY_NORMAL,OPTIONS_COMPASS_DELAY_SHORT,OPTIONS_COMPASS_DELAY_LONG};
-static const char* values_compass_feedback[]    = {OPTIONS_COMPASS_FEEDBACK_OFF,OPTIONS_COMPASS_FEEDBACK_LOW,OPTIONS_COMPASS_FEEDBACK_MEDIUM,OPTIONS_COMPASS_FEEDBACK_HIGH};
 static const char* values_slowfast[]            = {OPTIONS_SLOW,OPTIONS_FAST};
 static const char* values_fullbrief[]           = {OPTIONS_BRIEF,OPTIONS_FULL};
 static const char* values_keyboard[]            = {OPTIONS_KEYBOARD_CLASSIC,OPTIONS_KEYBOARD_NEW};
@@ -57,7 +56,6 @@ static const char* values_cursor[]              = {OPTIONS_CURSOR_SMALL,OPTIONS_
     NIGHT ARE YOU SURE  ON, OFF
  CONTROL
     COMPASS DELAY
-    COMPASS VIBRATE
     THINK PAGING
     NAVIGATION STYLE    SWIPE
 
@@ -99,9 +97,8 @@ static uitextmenuitem items_game[] = {
 
 static uitextmenuitem items_control[] = {
     { ID_OPTION_COMPASS_DELAY,          {OPTIONS_SCREEN_COMPASSDELAY},          KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
-    { ID_OPTION_COMPASS_FEEDBACK,       {OPTIONS_SCREEN_COMPASSVIBRATE},        KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
-    { ID_OPTION_NAVIGATION,             {OPTIONS_SCREEN_NAVIGATIONSTYLE},       KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
-    { ID_OPTION_KEYBOARD_STYLE,         {OPTIONS_SCREEN_KEYBOARDSTYLE},         KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+    { ID_OPTION_NAVIGATION,             {OPTIONS_SCREEN_NAVIGATIONSTYLE},       KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_KEYBOARD_STYLE,         {OPTIONS_SCREEN_KEYBOARDSTYLE},         KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
 };
 
 static uitextmenuitem items_help[] = {
@@ -127,7 +124,6 @@ static option_t options[] = {
     {   ID_OPTION_NOVELLA,          OPT_BOOL,    0, values_novella,             nullptr, false },
     
     {   ID_OPTION_COMPASS_DELAY,    OPT_NUMBER,  4, values_compass_delay,       nullptr, false },
-    {   ID_OPTION_COMPASS_FEEDBACK, OPT_NUMBER,  4, values_compass_feedback,    nullptr, false },
     {   ID_OPTION_NIGHT_DISPLAY,    OPT_BOOL,    0, values_slowfast,            nullptr, false },
     {   ID_OPTION_BATTLE_FULL,      OPT_BOOL,    0, values_fullbrief,           nullptr, false },
     {   ID_OPTION_NIGHT_CONFIRM,    OPT_BOOL,    0, values_onoff,               nullptr, false },
@@ -192,7 +188,6 @@ bool panel_options::init()
     SET_OPTION(ID_OPTION_NOVELLA,novella_pdf)
     
     SET_OPTION(ID_OPTION_COMPASS_DELAY,compass_delay)
-    SET_OPTION(ID_OPTION_COMPASS_FEEDBACK,compass_feedback)
     SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast)
     SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full)
     SET_OPTION(ID_OPTION_NIGHT_CONFIRM,night_confirm)
@@ -302,13 +297,6 @@ void panel_options::SetMenu ( int id )
         {
             disableOption(ID_OPTION_KEYBOARD_STYLE);
         }
-
-        // check if compass feedback available
-//        if ( !ui->IsVibrationAvailable()) {
-//            menu2->DisableButton(ID_OPTION_COMPASS_FEEDBACK);
-//            gl->settings.compass_feedback=CF_COMPASS_OFF;
-//        }
-//
 
         SetMenu(items_control,NUMELE(items_control));
         

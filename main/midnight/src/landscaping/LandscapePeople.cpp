@@ -118,15 +118,14 @@ void LandscapePeople::Initialise()
         
         if(image != nullptr) {
             // create tooltip text
-            auto title = Label::createWithTTF( uihelper::font_config_small, c.longname );
+            auto title = Label::createWithTTF( uihelper::font_config_medium, c.longname );
             title->setName("title");
             title->setTextColor(Color4B(_clrWhite));
-            title->enableOutline(Color4B(_clrBlack),RES(1));
+            title->enableOutline(Color4B(_clrBlack),RES(2));
             title->setLineSpacing(RES(-2));
-            title->setHeight(RES(32));
             title->getFontAtlas()->setAntiAliasTexParameters();
             title->setAnchorPoint(uihelper::AnchorCenter);
-            title->setWidth(RES(128));
+            title->setWidth(RES(256));
             title->setPosition( Vec2(image->getContentSize().width/2, image->getContentSize().height/2) );
             title->setHorizontalAlignment(TextHAlignment::CENTER);
             title->setVerticalAlignment(TextVAlignment::BOTTOM);
