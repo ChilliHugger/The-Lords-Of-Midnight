@@ -369,7 +369,7 @@ void uicommandwindow::setCommandText(layoutid_t id, const std::string& value)
     }
 }
 
-void uicommandwindow::addCommandText(cocos2d::Node* node)
+void uicommandwindow::addCommandText(Node* node)
 {
     auto text = Label::createWithTTF( uihelper::font_config_medium, "" );
     text->setName("commandText");
