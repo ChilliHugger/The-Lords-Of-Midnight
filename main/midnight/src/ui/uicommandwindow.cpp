@@ -456,13 +456,12 @@ void uicommandwindow::OnClose()
 void uicommandwindow::close()
 {
     setVisible(false);
-    
-    //
-    parent->removeChild(this);
-    
+
     // give the parent events back
     parent->resumeEvents();
     
+    //
+    parent->removeChild(this);
 }
 
 void uicommandwindow::clearItems()

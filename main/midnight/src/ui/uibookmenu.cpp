@@ -138,13 +138,10 @@ void uibookmenu::Show()
 
 void uibookmenu::Close()
 {
-    // get parent so we can send events to 
-    // it once we do remove child
-    uipanel* menuParent = parent;
+    // give the parent events back
+    parent->resumeEvents();
 
     // remove child, this sets parent to null
     parent->removeChild(this);
     
-    // give the parent events back
-    menuParent->resumeEvents();
 }

@@ -50,7 +50,7 @@ namespace tme {
 
             out->id = SafeIdt(this);
             out->flags = flags ;
-            out->name = name ;
+            out->name = std::string(name) ;
             out->userdata = (void*)user_data ;
 
             return MX_OK ;

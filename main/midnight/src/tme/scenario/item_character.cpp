@@ -1667,7 +1667,7 @@ namespace tme {
             out->time = Time();
             out->longname = std::string(longname);
             out->shortname = std::string(shortname);
-            //            out->images =  images;
+
 
 #if defined(_LOM_)
             out->warriors = MAKE_ARMYID(UT_WARRIORS,SafeId(this));
@@ -1682,7 +1682,6 @@ namespace tme {
             out->battle.location.x = battleloc.x;
             out->battle.location.y = battleloc.y;
             out->battle.killed = battleslew;
-        //    out->battle.status = battlestatus;
 
             out->reckless = reckless;
             out->energy = energy;

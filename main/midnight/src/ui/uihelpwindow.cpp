@@ -206,12 +206,12 @@ void uihelpwindow::OnClose()
 
 void uihelpwindow::Close()
 {
+    // give the parent events back
+    parent->resumeEvents();
+
     //
     parent->removeChild(this);
     
-    // give the parent events back
-    
-    parent->resumeEvents();
 }
 
 

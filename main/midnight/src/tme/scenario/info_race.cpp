@@ -137,7 +137,7 @@ namespace tme {
             VALIDATE_INFO_BLOCK(out,INFO_RACEINFO,defaultexport::raceinfo_t);
 
             out->type = (mxrace_t)Id();
-            out->soldiersname = SoldiersName();;
+            out->soldiersname = std::string(SoldiersName());
             out->success = Success();
             out->initialmovement = InitialMovementValue();
             out->diagonalmodifier = DiagonalMovementModifier();

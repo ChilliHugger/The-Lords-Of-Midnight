@@ -67,8 +67,8 @@ namespace tme {
             VALIDATE_INFO_BLOCK(out,INFO_TERRAININFO,defaultexport::terraininfo_t);
 
             out->type = (mxterrain_t)Id();
-            out->preposition = Preposition();
-            out->description = Description();
+            out->preposition = std::string(Preposition());
+            out->description = std::string(Description());
             out->success = Success();
             out->visibility = Visibility();
             out->obstruction = Obstruction();

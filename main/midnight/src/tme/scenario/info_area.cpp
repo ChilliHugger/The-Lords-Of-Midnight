@@ -42,7 +42,7 @@ namespace tme {
     {
         defaultexport::areainfo_t* out = (defaultexport::areainfo_t*)data;
         VALIDATE_INFO_BLOCK(out,INFO_AREAINFO,defaultexport::areainfo_t);
-        out->prefix = prefix ;
+        out->prefix = std::string(prefix) ;
         return mxinfo::FillExportData ( data );
     }
 

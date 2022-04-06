@@ -77,8 +77,8 @@ namespace tme {
             defaultexport::object_t* out = (defaultexport::object_t*)data;
             VALIDATE_INFO_BLOCK(out,INFO_OBJECT,defaultexport::object_t);
             out->kills = kills;
-            out->name = name;
-            out->description = description;
+            out->name = std::string(name);
+            out->description = std::string(description);
             out->usedescription = MAKE_ID(IDT_STRING,usedescription);
             out->carriedby = SafeIdt(carriedby);
             return mxitem::FillExportData ( data );
