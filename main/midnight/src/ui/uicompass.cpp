@@ -158,11 +158,12 @@ void uicompass::Show(EventListenerTouchOneByOne* listener)
 
 void uicompass::Close()
 {
+    // give the parent events back
+    parent->resumeEvents();
+
     //
     parent->removeChild(this);
     
-    // give the parent events back
-    parent->resumeEvents();
 }
 
 void uicompass::setSelected(mxdir_t direction)
