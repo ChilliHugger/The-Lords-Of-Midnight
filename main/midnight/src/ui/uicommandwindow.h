@@ -28,6 +28,7 @@ class uicommandwindow :
 {
     using Widget = cocos2d::ui::Widget;
     using Layout = cocos2d::ui::Layout;
+    using Node = cocos2d::Node;
     template<class T> using Vector = cocos2d::Vector<T>;
 private:
     uicommandwindow();
@@ -58,7 +59,7 @@ protected:
     void setupGiveText();
 #endif
     
-    void setCommandTextName(layoutid_t id, bool enabled, id_t characterId);
+    void setCommandTextName(layoutid_t id, bool enabled, mxid characterId);
     void setCommandText(layoutid_t id, const std::string& value);
     void addCommandText(Node* node);
     void setupApproachText();

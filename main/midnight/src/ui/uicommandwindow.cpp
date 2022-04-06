@@ -340,10 +340,10 @@ void uicommandwindow::setupApproachText()
     setCommandTextName(
         ID_APPROACH,
         location_flags.Is(lif_recruitchar),
-        recruitable_characters.size() ? recruitable_characters[0] : 0);
+        recruitable_characters.size() > 0 ?  recruitable_characters[0] : 0);
 }
 
-void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, id_t characterId)
+void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, mxid characterId)
 {
     std::string value = "";
 

@@ -190,13 +190,13 @@ bool uisinglelord::setLord( mxid characterid )
     title->setTextColor(Color4B(_clrWhite));
     title->enableOutline(Color4B(_clrBlack),RES(1));
     title->setLineSpacing(CONTENT_SCALE(0));
-    title->setHeight(RES(FONT_SIZE_SMALL)*2); // two lines
+    title->setHeight(RES(FONT_SIZE_SMALL)*3); // three lines in case of very long names
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setAnchorPoint(uihelper::AnchorCenter);
-    title->setWidth(width-CONTENT_SCALE(16));
+    title->setWidth(width-CONTENT_SCALE(4)); // padding of 4 characters for very long names
 
     title->setHorizontalAlignment(TextHAlignment::CENTER);
-    title->setVerticalAlignment(TextVAlignment::TOP);
+    title->setVerticalAlignment(TextVAlignment::BOTTOM);
     uihelper::AddBottomCenter(face, title, RES(0), CONTENT_SCALE(0));
     
 
