@@ -1,1 +1,0 @@
-// intentionally left blank for Android project

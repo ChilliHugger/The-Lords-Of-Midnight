@@ -1,0 +1,13 @@
+The Midnight Engine
+
+Build (43)
+1. ADDED: permanent scrollbar to all scrollable tip windows
+2. ADDED: panel_map_detailed - clarity behind multi lord select popup
+3. ADDED: panel_look - compass - Long Press (see options)
+4. ADDED: panel_look - tool tip to lords on landscaping screen - press
+5. ADDED: panel_look - select lord from landscaping screen
+6. ADDED: panel_look - lord name to approach icon on choose actions
+7. FIXED: panel_select - crash caused by adding a new page / reorganise button
+8. FIXED: panel_select - [win] missing or corrupt lord names
+9. FIXED: panel_select - truncated long lord names
+10. FIXED: [tme] - Stop diagonal movement of lord in tunnel

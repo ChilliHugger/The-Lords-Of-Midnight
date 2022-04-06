@@ -1,22 +1,5 @@
 Doomdark's Revenge
 
-Version 2.0
-
-First rebuilt release to support latest models of iOS Devices.
-Including:
-
-1. Wider camera view dependent on device
-2. New night and day shaders for terrain and Characters
-3. Added 'fight', 'hide', 'approach', 'post', 'recruit', 'disband', and 'leave', 'enter tunnel' options to think screen
-4. Think screen now scrolls vertically
-5. Think screen now has scrolling pages
-6. Handles notch safe area
-7. New flip screen option
-8. Fixes for game logic - battles and win/lose conditions
-9. New optional night confirmation prompt
-10 [Desktop] new Cursor size options
-
-
 Version 2.0.2 (42)
 1. fix creatures showing up on diagonal directions in tunnels
 2. move tunnel creatures to their own layer on panel_map_detailed

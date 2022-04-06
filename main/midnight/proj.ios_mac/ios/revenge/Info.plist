@@ -17,13 +17,13 @@
     <key>CFBundleName</key>
     <string>Doomdark's&#x2007;Revenge</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.0.2</string>
+    <string>2.0.4</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>42</string>
+    <string>43</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UIAppFonts</key>
