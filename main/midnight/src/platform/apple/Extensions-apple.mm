@@ -24,7 +24,7 @@ namespace chilli
           return "";
       }
 
-	  std::string getVersion()
+      std::string getVersion()
       {
           return Application::getInstance()->getVersion();
       }
