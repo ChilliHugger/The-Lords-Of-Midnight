@@ -6,6 +6,7 @@
 //
 #include "Extensions-android.h"
 #include "../../library/chilli.h"
+#include "../../cocos.h"
 #include <string>
 
 USING_NS_CC;
@@ -21,6 +22,11 @@ namespace chilli
             // Build is xyyyzzz, where xxx=major, yyy=minor, zzz=build
             auto version =  JniHelper::callStaticStringMethod(utilsClassName, "getBuildNo");
             return version.substr(version.size() - 3);
+        }
+		
+        std::string getVersion()
+        {
+            return Application::getInstance()->getVersion();
         }
     }
 }
