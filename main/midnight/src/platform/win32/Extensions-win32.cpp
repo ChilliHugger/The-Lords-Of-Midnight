@@ -30,6 +30,8 @@ namespace chilli
         }
 
         std::string getVersion() {
+            // version is 4 numbers major.minor.maintenance.build
+            // discart last number only (build)
             std::string version = Application::getInstance()->getVersion();
             size_t buildLocation = version.find_last_of('.');
             return version.substr(0, buildLocation);
@@ -37,6 +39,8 @@ namespace chilli
 
         std::string getBuildNo()
         {
+            // version is 4 numbers major.minor.maintenance.build
+            // extract last number only (build)
             std::string version = Application::getInstance()->getVersion();
             size_t buildLocation = version.find_last_of('.');
             return version.substr(buildLocation+1);
