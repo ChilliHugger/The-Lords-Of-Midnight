@@ -149,7 +149,7 @@ To upgrade version do the following:
 
 ![build_windows_version_build](images/build_windows_version_build.png)
 
-- Rebuild your project
+- Rebuild your project.
 
 ### In Installer Project
 
@@ -161,7 +161,9 @@ To upgrade version do the following:
 
 - Once prompted to change 'ProductCode' click on 'No': 
 
-![build_windows_version_installer_confirm](images/build_windows_version_installer_confirm.PNG)
+![build_windows_version_installer_confirm](images/build_windows_version_installer_confirm.png)
+
+- Rebuild your project.
 
 ## About icons
 
