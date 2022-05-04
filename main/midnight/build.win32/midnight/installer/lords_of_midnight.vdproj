@@ -159,6 +159,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_16A4B85BDD384EA58423B2DEF57C9AAA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_16D2728E4EB44894B2A7C626F15785AB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -202,12 +208,6 @@
         "Entry"
         {
         "MsmKey" = "8:_1BBF402D986F4488B6F758D008C5572E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1C78D38B8FEA4E8181FA855EA5523B1E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1215,6 +1215,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CC90F129094443CDA1D75551E7E63A2A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CCB673A692AC438C94D5F935068608E8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -2110,6 +2116,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_16A4B85BDD384EA58423B2DEF57C9AAA"
+            {
+            "SourcePath" = "8:..\\..\\..\\proj.win32\\midnight\\game.ico"
+            "TargetName" = "8:game.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_A0A10F157C40433096039712A0E04012"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_16D2728E4EB44894B2A7C626F15785AB"
             {
             "SourcePath" = "8:..\\vs_project\\bin\\midnight\\Release\\Resources\\shaders\\terrainTimeShader.fsh"
@@ -2256,26 +2282,6 @@
             "TargetName" = "8:f_mitharg.png"
             "Tag" = "8:"
             "Folder" = "8:_C33C5F3C8036457C8D9199483254EE19"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1C78D38B8FEA4E8181FA855EA5523B1E"
-            {
-            "SourcePath" = "8:..\\..\\..\\proj.win32\\midnight\\icon.ico"
-            "TargetName" = "8:icon.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_DD31610A2FED40B9AAC85824305B2084"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -5630,6 +5636,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CC90F129094443CDA1D75551E7E63A2A"
+            {
+            "SourcePath" = "8:..\\..\\..\\proj.win32\\midnight\\game.ico"
+            "TargetName" = "8:game.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_DD31610A2FED40B9AAC85824305B2084"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCB673A692AC438C94D5F935068608E8"
             {
             "SourcePath" = "8:..\\vs_project\\bin\\midnight\\Release\\Resources\\lom\\gfx_m\\screens\\misc\\main_menu.png"
@@ -7116,15 +7142,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Lords of Midnight"
-        "ProductCode" = "8:{BCE65476-949A-4DD7-A89F-611686D69267}"
-        "PackageCode" = "8:{F5355842-44F0-4295-BEF0-58CD19DB564D}"
+        "ProductCode" = "8:{2E85CE4F-A8B9-4FA4-9E7F-707D8A2AD3BE}"
+        "PackageCode" = "8:{44B3C0C8-4217-4B73-939E-6CBA6F9D2375}"
         "UpgradeCode" = "8:{50C10DF9-F125-49C5-948D-A546D0DB5861}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.0.42"
+        "ProductVersion" = "8:2.0.4"
         "Manufacturer" = "8:Chilli Hugger Software Ltd"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -7134,7 +7160,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Lords of Midnight"
         "ARPURLINFOABOUT" = "8:https://www.chillihugger.com/"
-        "ARPPRODUCTICON" = "8:_1C78D38B8FEA4E8181FA855EA5523B1E"
+        "ARPPRODUCTICON" = "8:_CC90F129094443CDA1D75551E7E63A2A"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -7248,7 +7274,7 @@
             "Target" = "8:_86E270CEC85A470FB2DF5EBAC5E02475"
             "Folder" = "8:_FAF2EF475D514918B331C247306FAFE6"
             "WorkingFolder" = "8:_DD31610A2FED40B9AAC85824305B2084"
-            "Icon" = "8:_1C78D38B8FEA4E8181FA855EA5523B1E"
+            "Icon" = "8:_16A4B85BDD384EA58423B2DEF57C9AAA"
             "Feature" = "8:"
             }
         }
