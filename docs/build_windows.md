@@ -147,7 +147,7 @@ To upgrade version do the following:
 
 - For build, edit game.rc (for Lords of Midnight file under The-Lords-Of-Midnight\main\midnight\proj.win32\midnight, for Doomdark's Revenge file under The-Lords-Of-Midnight\main\midnight\proj.win32\revenge). Change version 'FILEVERSION' under 'Version' section:
 
-![build_windows_version_build](images\build_windows_version_build.png)
+![build_windows_version_build](images/build_windows_version_build.png)
 
 - Rebuild your project
 
@@ -157,11 +157,11 @@ To upgrade version do the following:
 
 - In Solution Explorer, look at 'Deployment Project Properties', scroll down until you see the version property, change it to reflect 'Major.Minor.Maintenance' (e.g. 2.0.4):
 
-![build_windows_version_installer](images\build_windows_version_installer.png)
+![build_windows_version_installer](images/build_windows_version_installer.png)
 
 - Once prompted to change 'ProductCode' click on 'No': 
 
-![build_windows_version_installer_confirm](images\build_windows_version_installer_confirm.PNG)
+![build_windows_version_installer_confirm](images/build_windows_version_installer_confirm.PNG)
 
 ## About icons
 
