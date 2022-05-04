@@ -7,6 +7,9 @@
 
 #pragma comment(lib,"user32.lib")
 #include "Extensions-win32.h"
+#include "../../cocos.h"
+
+USING_NS_CC;
 
 namespace chilli
 {
@@ -26,9 +29,21 @@ namespace chilli
           	height=desktop.bottom;
         }
 
+        std::string getVersion() {
+            // version is 4 numbers major.minor.maintenance.build
+            // discart last number only (build)
+            std::string version = Application::getInstance()->getVersion();
+            size_t buildLocation = version.find_last_of('.');
+            return version.substr(0, buildLocation);
+        }
+
         std::string getBuildNo()
         {
-            return "";
+            // version is 4 numbers major.minor.maintenance.build
+            // extract last number only (build)
+            std::string version = Application::getInstance()->getVersion();
+            size_t buildLocation = version.find_last_of('.');
+            return version.substr(buildLocation+1);
         }
     }
 }

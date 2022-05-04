@@ -52,7 +52,7 @@ bool panel_credits::init()
     setBackground(backgroundColour);
 
     std::string version = CREDITS_VERSION
-        + Application::getInstance()->getVersion()
+        + chilli::extensions::getVersion()
         + " (" + chilli::extensions::getBuildNo() + ")";
 
     auto label = Label::createWithTTF(uihelper::font_config_debug, version);

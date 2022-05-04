@@ -8,6 +8,9 @@
 #import <Foundation/Foundation.h>
 
 #include "Extensions-apple.h"
+#include "../../cocos.h"
+
+USING_NS_CC;
 
 namespace chilli
 {
@@ -19,6 +22,11 @@ namespace chilli
               return [version UTF8String];
           }
           return "";
+      }
+
+      std::string getVersion()
+      {
+          return Application::getInstance()->getVersion();
       }
     }
 }

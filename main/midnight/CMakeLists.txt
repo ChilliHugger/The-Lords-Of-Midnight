@@ -138,13 +138,21 @@ elseif(WINDOWS)
     add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_ -D_OS_WIN32_)
     list(APPEND GAME_HEADER
          proj.win32/main.h
-         proj.win32/resource.h
-         )
+         proj.win32/resource.h)
+         
     list(APPEND GAME_SOURCE
          proj.win32/main.cpp
-         proj.win32/game.rc
          ${common_res_files}
          )
+    if(TME STREQUAL "LOM")
+        list(APPEND GAME_SOURCE
+            proj.win32/midnight/game.rc
+            )
+    elseif(TME STREQUAL "DDR")
+        list(APPEND GAME_SOURCE
+            proj.win32/revenge/game.rc
+            )
+    endif()
 elseif(APPLE)
     if(IOS)
         add_compile_options(-D_OS_IOS_)

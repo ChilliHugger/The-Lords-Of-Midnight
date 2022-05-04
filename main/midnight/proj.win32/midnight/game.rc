@@ -1,6 +1,6 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "resource.h"
+#include "..\resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -42,13 +42,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-#ifdef ICON_LOM
-GLFW_ICON           ICON                    "midnight\icon.ico"
-#endif
-
-#ifdef ICON_DDR
-GLFW_ICON           ICON                    "revenge\icon.ico"
-#endif
+GLFW_ICON           ICON                    "game.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -56,7 +50,7 @@ GLFW_ICON           ICON                    "revenge\icon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
+ FILEVERSION 2,0,4,43
  PRODUCTVERSION 1,0,0,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
