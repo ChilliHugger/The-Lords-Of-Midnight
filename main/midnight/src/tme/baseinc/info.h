@@ -963,6 +963,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             GET_PROPERTY ( mxcharacter*, Foe, foe )
             GET_PROPERTY ( mxcharacter*, Liege, liege )
             GET_PROPERTY ( mxcharacter*, Following, following )
+            GET_PROPERTY ( bool, IsCoward, courage == 0 || traits.Is(ct_coward) )
 
             FLAG_PROPERTY ( IsHidden, cf_hidden )
             FLAG_PROPERTY ( IsRiding, cf_riding )

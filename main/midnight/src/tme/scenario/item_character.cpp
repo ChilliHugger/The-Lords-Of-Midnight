@@ -296,7 +296,7 @@ namespace tme {
             if ( info->flags.Is(lif_enterbattle) ) {
             // if a battle is allowed and we don't have any courage
             // then we can't actually enter the battle
-                if ( courage == 0  || traits.Is(ct_coward) )
+                if ( IsCoward() )
                     info->flags.Reset(lif_enterbattle) ;// = FALSE ;
                 
                 if ( IsFollowing()  )
@@ -309,7 +309,7 @@ namespace tme {
                     mx->scenario->GetCharacterFollowers(this, followers);
                     for ( u32 ii=0; ii<followers.Count(); ii++ ) {
                         mxcharacter* follower = (mxcharacter*) followers[ii];
-                        if ( follower->courage == 0 || follower->traits.Is(ct_coward)) {
+                        if ( follower->IsCoward() ) {
                             //info->flags.Reset(lif_enterbattle) ;
                             info->stubborn_follower_battle=follower;
                             break;

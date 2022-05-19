@@ -118,22 +118,28 @@ namespace tme {
                 info->flags.Set(lif_use);
         }
         
-        int enemies_infront = 0;
-        for (int ii=0; ii<info->infront->objCharacters.Count(); ii++ ) {
-            mxcharacter* c = (mxcharacter*)info->infront->objCharacters[ii];
-            if ( c->Loyalty() != Loyalty() ) {
-                enemies_infront++;
-                // we only care about 1
-                // so short circuit
-                break;
+        // TODO: This is a double check of corwardess and attacking
+        // This is because of the need for the DDR character loyalty check
+        // this attack check should be moved in to character in some way
+        // so that it is only done once
+        
+        if (!IsCoward()) {
+            int enemies_infront = 0;
+            for (int ii=0; ii<info->infront->objCharacters.Count(); ii++ ) {
+                mxcharacter* c = (mxcharacter*)info->infront->objCharacters[ii];
+                if ( c->Loyalty() != Loyalty() ) {
+                    enemies_infront++;
+                    // we only care about 1
+                    // so short circuit
+                    break;
+                }
             }
-        }
-        
-        
-        if ( enemies_infront > 0) {
-            if ( !sv_cheat_armies_noblock )
-                info->flags.Reset(lif_moveforward); // = FALSE;
-            info->flags.Set(lif_enterbattle); // = TRUE ;
+            
+            if ( enemies_infront > 0) {
+                if ( !sv_cheat_armies_noblock )
+                    info->flags.Reset(lif_moveforward); // = FALSE;
+                info->flags.Set(lif_enterbattle); // = TRUE ;
+            }
         }
         
         if ( IsNight() ) {
