@@ -112,14 +112,15 @@ namespace tme {
         bool isSavedGame() const { return m_savegame; }
         bool isDatabase() const { return !isSavedGame(); }
         
+        void setRules( RULEFLAGS flags) { m_ruleFlags.Set(flags); }
         
     public:
-        mxmap*                    gamemap;
+        mxmap*                  gamemap;
         mxdiscoverymap*         discoverymap;
-        mxtext*                    text;
+        mxtext*                 text;
         mxnight*                night;
-        mxbattle*                battle;
-        mxscenario*                scenario;
+        mxbattle*               battle;
+        mxscenario*             scenario;
         
         entities                objCharacters;
         entities                objRegiments;
@@ -129,28 +130,26 @@ namespace tme {
         entities                objMissions;
         entities                objVictories;
         entities                objObjects;
-        infos                    objDirectionInfos;
-        infos                    objUnitInfos;
-        infos                    objRaceInfos;
-        infos                    objGenderInfos;
-        infos                    objTerrainInfos;
-        infos                    objAreaInfos;
-        infos                    objCommandInfos;
+        infos                   objDirectionInfos;
+        infos                   objUnitInfos;
+        infos                   objRaceInfos;
+        infos                   objGenderInfos;
+        infos                   objTerrainInfos;
+        infos                   objAreaInfos;
+        infos                   objCommandInfos;
 #if defined(_DDR_)
         infos                   objObjectPowersInfos;
         infos                   objObjectTypesInfos;
 #endif
-        //types::randomno            m_random ;
         PFNNIGHTCALLBACK        pfnNightCallback ;
 
         bool                    m_bEnergyCheat;
-        u32                        m_versionno;
+        u32                     m_versionno;
         bool                    m_savegame;
-
+        eflags<RULEFLAGS,u64>   m_ruleFlags;
 
     private:
-        cvarreg_t*                variables ;
-    //os::config*                m_config;
+        cvarreg_t*              variables ;
         bool                    defaultscenario;
         u32                     m_errorcode;
         mxcharacter*            m_CurrentCharacter;

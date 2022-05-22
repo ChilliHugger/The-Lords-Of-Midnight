@@ -391,6 +391,7 @@ namespace tme {
     COMMAND( OnInit ) 
     {
         //argv[0]=0;
+        mx->setRules( (RULEFLAGS) (u64)argv[0] );
         return mx->LoadDatabase();
     }
 
@@ -468,17 +469,17 @@ namespace tme {
 
     
     static mxcommand_t mx_commands[] = {
-        {"@SETSCENARIO",            1, OnSetScenario,            {variant::vptr} },
-        {"@SETDATABASEDIRECTORY",    1, OnSetDatabaseDirectory,     {variant::vstring} },
-        {"@INIT",                    0, OnInit},
-        {"@DEINIT",                    0, OnDeInit },
-        {"@LOAD",                    2, OnLoadGame,                {variant::vstring,variant::vptr} },
-        {"@SAVE",                    2, OnSaveGame,                {variant::vstring,variant::vptr} },
-        {"@DESCRIPTION",            1, OnGameDescription,       {variant::vstring} },
-        {"@LOADDISCOVERYMAP",       1, OnLoadDiscoveryMap,      {variant::vstring} },
-        {"@SAVEDISCOVERYMAP",       1, OnSaveDiscoveryMap,      {variant::vstring} },
+        {"@SETSCENARIO",                1, OnSetScenario,           {variant::vptr} },
+        {"@SETDATABASEDIRECTORY",       1, OnSetDatabaseDirectory,  {variant::vstring} },
+        {"@INIT",                       1, OnInit,                  {variant::vuint64} },
+        {"@DEINIT",                     0, OnDeInit },
+        {"@LOAD",                       2, OnLoadGame,              {variant::vstring,variant::vptr} },
+        {"@SAVE",                       2, OnSaveGame,              {variant::vstring,variant::vptr} },
+        {"@DESCRIPTION",                1, OnGameDescription,       {variant::vstring} },
+        {"@LOADDISCOVERYMAP",           1, OnLoadDiscoveryMap,      {variant::vstring} },
+        {"@SAVEDISCOVERYMAP",           1, OnSaveDiscoveryMap,      {variant::vstring} },
         
-        {"@SETMAP",                  1, OnSetMap,                {variant::vptr} },
+        {"@SETMAP",                     1, OnSetMap,                {variant::vptr} },
         
     };
 
@@ -569,7 +570,7 @@ namespace tme {
             }
 
             if ( ISARG("CANFOLLOW") ) {
-                CONVERT_CHARACTER_ID(argv.vInt,leader);
+                CONVERT_CHARACTER_ID(argv.vSInt32,leader);
                 argv = (s32)character->CanFollow(leader);
                 return MX_OK ;
             }

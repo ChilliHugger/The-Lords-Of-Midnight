@@ -660,25 +660,31 @@ std::string  description;
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
 
-    if ( SaveGameVersion()>8 ) {
+    if ( SaveGameVersion()>=9 ) {
         ar >>  description;
     }else{
         description="";
     }
 
+    if ( SaveGameVersion()>=13 ) {
+        ar >> m_ruleFlags;
+    }else{
+        setRules(RF_DEFAULT);
+    }
+
     /* save the game map */
     gamemap->Serialize ( ar );
 
-    ar >> sv_characters ;        objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
-    ar >> sv_regiments ;        objRegiments.Create(scenario,IDT_REGIMENT,sv_regiments);
-    ar >> sv_routenodes ;        objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
-    ar >> sv_strongholds ;        objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
-    ar >> sv_missions ;            objMissions.Create(scenario,IDT_MISSION,sv_missions);
-    ar >> sv_victories ;        objVictories.Create(scenario,IDT_VICTORY,sv_victories);
-    ar >> sv_objects;            objObjects.Create(scenario,IDT_OBJECT,sv_objects);
+    ar >> sv_characters ;   objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
+    ar >> sv_regiments ;    objRegiments.Create(scenario,IDT_REGIMENT,sv_regiments);
+    ar >> sv_routenodes ;   objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
+    ar >> sv_strongholds ;  objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
+    ar >> sv_missions ;     objMissions.Create(scenario,IDT_MISSION,sv_missions);
+    ar >> sv_victories ;    objVictories.Create(scenario,IDT_VICTORY,sv_victories);
+    ar >> sv_objects;       objObjects.Create(scenario,IDT_OBJECT,sv_objects);
 
     /* default engine vars */
-     ar >> temp16; m_CurrentCharacter = CharacterById(temp16);
+    ar >> temp16; m_CurrentCharacter = CharacterById(temp16);
     ar >> sv_days;
     ar >> sv_strongholdadjuster;
 
@@ -692,7 +698,7 @@ std::string  description;
     objObjects.Serialize(ar);
 
     /* update map */
-    if ( SaveGameVersion() < 8 ) {
+    if ( SaveGameVersion() <= 7 ) {
      for (int ii = 0; ii < sv_strongholds; ii++) {
          mxstronghold* stronghold=StrongholdById(ii+1);
          mxloc& mapsqr = gamemap->GetAt ( stronghold->Location() );
@@ -710,7 +716,6 @@ std::string  description;
     scenario->Serialize ( ar );
 
     /* load Frontend Specific */
-    //if ( SaveGameVersion() > 5 && function!=NULL )
     if ( function!= NULL )
         function(SaveGameVersion(),ar);
 
@@ -785,8 +790,9 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
     
+    // version 9
     std::string temp;
-    if ( SaveGameVersion()>8 ) {
+    if ( SaveGameVersion() >= 9 ) {
         ar >>  temp;
     }else{
         temp="";
@@ -855,8 +861,8 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     ar << SAVEGAMEVERSION ;
     ar << (char*)SAVEGAMEHEADER ;
 
-    
-    //LPCSTR description = "DAY 000: Luxor - Tower of the Moon";
+    // version 9
+    // LPCSTR description = "DAY 000: Luxor - Tower of the Moon";
     int lords=0;
     char buffer[1024];
     
@@ -877,6 +883,9 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     
     ar << (char*)buffer ;
     
+    // version 13
+    ar << m_ruleFlags;
+
     /* save the game map */
     gamemap->Serialize ( ar );
 

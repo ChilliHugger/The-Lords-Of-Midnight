@@ -991,7 +991,7 @@ void* TME_GetEntityUserData ( mxid id)
 }
 
 
-bool TME_Init ( void )
+bool TME_Init ( u64 flags )
 {
     // first we need an interface object
     mxi = new mxinterface ;
@@ -1022,7 +1022,8 @@ bool TME_Init ( void )
     
     
     // initialise the engine
-    if ( MXFAILED ( mxi->Command("@INIT") ) ) {
+    args[0] = flags ;
+    if ( MXFAILED ( mxi->Command("@INIT", args, 1) ) ) {
         return false ;
     }
     
