@@ -158,7 +158,7 @@ storyid_t moonring::startNewStory()
         return id;
     }
     
-    stories->create(id,RF_DEFAULT);
+    stories->create(id, settings->game_rules );
     
     UIDEBUG("Resolve TME Data");
     

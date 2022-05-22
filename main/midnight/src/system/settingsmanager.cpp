@@ -128,6 +128,9 @@ BOOL settingsmanager::Save ( void )
     
     // version 10
     ar << cursor_size;
+    
+    // version 11
+    ar << game_rules;
 
     ar.Close();
 
@@ -196,6 +199,10 @@ BOOL settingsmanager::Load ( void )
 
     if ( version >= 10 ) {
         ar >> temp; cursor_size = (CONFIG_CURSOR_SIZE) temp;
+    }
+
+    if ( version >= 11 ) {
+        ar >> game_rules;
     }
 
     ar.Close();

@@ -25,8 +25,9 @@ public:
         if ( ar.IsStoring() ) { ar << m_flags ; }else{ar >> m_flags ;}
         return ar;
     }
-    MXINLINE eflags()                             { m_flags = 0 ; }
+    MXINLINE eflags()                                { m_flags = 0 ; }
     MXINLINE void Set ( T f )                        { m_flags |= (S)f ; }
+    MXINLINE void Set ( T f, bool v )                { if ( v ) Set(f); else Reset(f); }
     MXINLINE void Reset ( T f )                      { m_flags &= ~(S)f ; }
     MXINLINE void Toggle ( T f )                     { if ( Is(f) ) Reset(f); else Set(f); }
     MXINLINE bool Is ( T f) const                    { return m_flags&(S)f ? TRUE : FALSE  ; }

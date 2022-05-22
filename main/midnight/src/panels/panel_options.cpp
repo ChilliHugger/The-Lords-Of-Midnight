@@ -73,6 +73,7 @@ static uitextmenuitem items_main[] = {
     { ID_MENU_GAME,                     {OPTIONS_SCREEN_GAME},                  KEYCODE(G), KEYBOARD_KEY_G },
     { ID_MENU_CONTROL,                  {OPTIONS_SCREEN_CONTROL},               KEYCODE(C), KEYBOARD_KEY_C },
     { ID_MENU_HELP,                     {OPTIONS_SCREEN_HELP},                  KEYCODE(H), KEYBOARD_KEY_H },
+    { ID_MENU_RULES,                    {OPTIONS_SCREEN_RULES},                 KEYCODE(R), KEYBOARD_KEY_R },
     { ID_HOME,                          {OPTIONS_SCREEN_MAINMENU},              KEYCODE(ESCAPE), KEYBOARD_KEY_ESC }
 };
 
@@ -111,6 +112,13 @@ static uitextmenuitem items_help[] = {
 #endif
 };
 
+static uitextmenuitem items_rules[] = {
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+};
+
+
 static option_t options[] = {
     
     {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff,               nullptr, false },
@@ -135,9 +143,15 @@ static option_t options[] = {
 #if defined(_MOUSE_ENABLED_)
     {   ID_OPTION_CURSOR_SIZE,      OPT_NUMBER,  3, values_cursor,              nullptr, false },
 #endif
+
+    {   ID_OPTION_RULE_1,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_2,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_3,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+    
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
+static RULEFLAGS rule_mapping[] = { RF_RULE_1, RF_RULE_2, RF_RULE_3 };
 
 option_t* findOption(int id)
 {
@@ -203,6 +217,14 @@ bool panel_options::init()
     {
         findOption(ID_OPTION_SCREENMODE)->text = values_screen2;
     }
+        
+    // RULES
+    for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
+        rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]);
+        findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
+    }
+    // END RULES
+        
     
     SetMenu(ID_MENU_DISPLAY);
     
@@ -236,6 +258,7 @@ void panel_options::OnMenuNotification(
         case ID_MENU_DISPLAY:
         case ID_MENU_CONTROL:
         case ID_MENU_HELP:
+        case ID_MENU_RULES:
             SetMenu(tag);
             return;
 
@@ -290,6 +313,10 @@ void panel_options::SetMenu ( int id )
         SetMenu(items_display,NUMELE(items_display));
         SetValues();
         return;
+    }else if ( id == ID_MENU_RULES ) {
+        SetMenu(items_rules,NUMELE(items_rules));
+        SetValues();
+        return;
     } else if ( id == ID_MENU_CONTROL ) {
 
         // check if keyboard available
@@ -340,6 +367,13 @@ void panel_options::SetValues()
         }
         
     }
+    
+    // RULES
+    mr->settings->game_rules.Clear();
+    for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
+        mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
+    }
+    // END RULES
 }
 
 void panel_options::CreateMainMenu()

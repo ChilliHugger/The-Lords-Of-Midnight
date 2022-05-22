@@ -69,6 +69,7 @@ protected:
     uitextmenu*             mainMenu;
     cocos2d::Map<int, uioptionitem*> optionControls;
     CONFIG_SCREEN_MODE      initialScreenMode;
+    bool                    rules[64];
 };
 
 

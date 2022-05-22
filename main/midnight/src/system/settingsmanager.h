@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  10
+#define CONFIG_VERSION                  11
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -134,4 +134,7 @@ public:
     
     // Version 10
     CONFIG_CURSOR_SIZE      cursor_size;
+    
+    // version 11
+    eflags<RULEFLAGS,u64>   game_rules;
 };

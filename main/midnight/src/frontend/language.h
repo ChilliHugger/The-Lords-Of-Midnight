@@ -47,6 +47,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR KEYBOARD_KEY_H                     = "H";
     constexpr LPCSTR KEYBOARD_KEY_N                     = "N";
     constexpr LPCSTR KEYBOARD_KEY_O                     = "O";
+    constexpr LPCSTR KEYBOARD_KEY_R                     = "R";
     constexpr LPCSTR KEYBOARD_KEY_U                     = "U";
     constexpr LPCSTR KEYBOARD_KEY_Z                     = "Z";
     constexpr LPCSTR KEYBOARD_KEY_ESC                   = "ESC";
@@ -96,6 +97,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_GAME                = "GAME";
     constexpr LPCSTR OPTIONS_SCREEN_CONTROL             = "CONTROL";
     constexpr LPCSTR OPTIONS_SCREEN_HELP                = "HELP";
+    constexpr LPCSTR OPTIONS_SCREEN_RULES               = "GAME RULES";
     constexpr LPCSTR OPTIONS_SCREEN_MAINMENU            = "MAIN MENU";
     constexpr LPCSTR OPTIONS_SCREEN_SCREENMODE          = "SCREEN MODE";
     constexpr LPCSTR OPTIONS_SCREEN_TRANSITIONS         = "SCREEN TRANSITIONS";
@@ -114,6 +116,10 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_MOVEMENTINDICATORS  = "MOVEMENT INDICATORS";
     constexpr LPCSTR OPTIONS_SCREEN_NOVELLA             = "NOVELLA";
  
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_1              = "RULE 1";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_2              = "RULE 2";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_3              = "RULE 3";
+  
 #if defined(_LOM_)
 
     constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the epic world of";
