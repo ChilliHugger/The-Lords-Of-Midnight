@@ -325,7 +325,7 @@ namespace tme {
         MXRESULT GetProperty(const std::string& name, variant& arg)
         {
             arg.vType = variant::none ;
-            arg.vInt = 0 ;
+            arg.vSInt32 = 0 ;
 
             cvarreg_t* var = NULL ;
 

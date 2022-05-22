@@ -248,101 +248,7 @@ namespace chilli {
         MXINLINE void bitarray::Destroy()                                { if ( m_pData ) delete m_pData ;    m_pData = NULL;    m_nElements = 0; }
         MXINLINE archive& operator<<( archive& ar, bitarray& array )    { return array.Serialize(ar); }
         MXINLINE archive& operator>>( archive& ar, bitarray& array )    { return array.Serialize(ar); }
-
-        
-        
-        // flags
-        class  flags32
-        {
-        public:
-            flags32();
-            ~flags32();
-            void Set ( u32 flags ) ;
-            void Reset ( u32 flags ) ;
-            void Toggle ( u32 flags );
-            void Clear()                                    { m_flags = 0; }
-            bool Is ( u32 flag ) const ;
-            void ShiftLeft()                                { m_flags <<=1; }
-            void ShiftRight()                               { m_flags >>=1; }
-            archive& Serialize ( archive& ar );
-            operator u32() const ;
-            friend  archive& operator<<(archive& ar, flags32& flags );
-            friend  archive& operator>>( archive& ar, flags32& flags );
-        private:
-            u32        m_flags;
-        };
-
-        class  flags8  
-        {
-        public:
-            flags8();
-            ~flags8();
-            void Set ( u8 flags ) ;
-            void Reset ( u8 flags ) ;
-            void Toggle ( u32 flags );
-            void Clear()                                    { m_flags = 0; }
-            bool Is ( u8 flag ) const ;
-            void ShiftLeft()                                { m_flags <<=1; }
-            void ShiftRight()                               { m_flags >>=1; }
-            archive& Serialize ( archive& ar );
-            operator u8() const ;
-            friend  archive& operator<<(archive& ar, flags8& flags );
-            friend  archive& operator>>( archive& ar, flags8& flags );
-        private:
-            u8        m_flags;
-        };
-
-        class  flags16  
-        {
-        public:
-            flags16();
-            ~flags16();
-            void Set ( u16 flags ) ;
-            void Reset ( u16 flags ) ;
-            void Toggle ( u32 flags );
-            bool Is ( u16 flag ) const ;
-            void ShiftLeft()                                { m_flags <<=1; }
-            void ShiftRight()                               { m_flags >>=1; }
-            void Clear()                                    { m_flags = 0; }
-            archive& Serialize ( archive& ar );
-            operator u16() const ;
-            friend  archive& operator<<(archive& ar, flags16& flags );
-            friend  archive& operator>>( archive& ar, flags16& flags );
-        private:
-            u16        m_flags;
-        };
-        
-        
-        /* flags32 */
-        MXINLINE flags32::flags32()                                 { m_flags = 0 ; }
-        MXINLINE void flags32::Set ( u32 f )                        { m_flags |= f ; }
-        MXINLINE void flags32::Reset ( u32 f )                      { m_flags &= ~f ; }
-        MXINLINE void flags32::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags32::Is ( u32 f) const                    { return (m_flags&f)==f; }
-        MXINLINE flags32::operator u32() const                      { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags32& f )     { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags32& f )     { return f.Serialize(ar); }
-        
-        /* flags8 */
-        MXINLINE flags8::flags8()                                   { m_flags = 0 ; }
-        MXINLINE void flags8::Set ( u8 f )                          { m_flags |= f ; }
-        MXINLINE void flags8::Reset ( u8 f )                        { m_flags &= ~f ; }
-        MXINLINE void flags8::Toggle ( u32 f )                      { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags8::Is ( u8 f ) const                     { return (m_flags&f)==f; }
-        MXINLINE flags8::operator u8() const                        { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags8& f )      { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags8& f )      { return f.Serialize(ar); }
-        
-        /* flags16 */
-        MXINLINE flags16::flags16()                                 { m_flags = 0 ; }
-        MXINLINE void flags16::Set ( u16 f )                        { m_flags |= f ; }
-        MXINLINE void flags16::Reset ( u16 f )                      { m_flags &= ~f ; }
-        MXINLINE void flags16::Toggle ( u32 f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-        MXINLINE bool flags16::Is ( u16 f ) const                   { return (m_flags&f)==f; }
-        MXINLINE flags16::operator u16() const                      { return m_flags; }
-        MXINLINE archive& operator<<( archive& ar, flags16& f )     { return f.Serialize(ar); }
-        MXINLINE archive& operator>>( archive& ar, flags16& f )     { return f.Serialize(ar); }
-
+ 
         // random
         class randomno
         {
@@ -380,19 +286,23 @@ namespace chilli {
             ~variant() {}
 
             enum var_t {
-                none    =    0,
-                vnumber    =    1,
-                vstring    =    2,
-                vyesno    =    3,
-                vfloat    =    4,
-                vdouble    =    5,
-                vptr    =    6,
-                vid    =    7,
+                none        =   0,
+                vsint32     =   1,
+                vnumber     =   vsint32,
+                vstring     =   2,
+                vyesno      =   3,
+                vfloat      =   4,
+                vdouble     =   5,
+                vptr        =   6,
+                vid         =   7,
+                vuint64     =   8,
             };
 
 
             s32& operator = ( s32 value )
-                { vType=vnumber;vInt = value ; return vInt; }
+                { vType=vsint32;vSInt32 = value ; return vSInt32; }
+            u64& operator = ( u64 value )
+                { vType=vuint64;vUInt64 = value ; return vUInt64; }
             mxid& operator = ( mxid value )
                 { vType=vid;vId = value ; return vId; }
             f32& operator = ( f32 value )
@@ -401,8 +311,6 @@ namespace chilli {
                 { vType=vdouble;vDouble = value ; return vDouble; }
             LPSTR& operator = ( LPSTR value )
                 { vType=vstring;vString = value ; return vString; }
-            //LPSTR& operator = ( std::string value )
-            //    { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
             LPSTR& operator = ( std::string& value )
                 { vType=vstring;vString = (LPSTR)value.c_str() ; return vString; }
             LPSTR& operator = ( const std::string& value )
@@ -415,7 +323,9 @@ namespace chilli {
 
 
             operator s32() const
-                { return vInt; }
+                { return vSInt32; }
+            operator u64() const
+                { return vUInt64; }
             operator mxid() const
                 { return vId; }
             operator f32() const
@@ -424,20 +334,19 @@ namespace chilli {
                 { return vDouble; }
             operator char*() const
                 { return vString; }
-            //operator c_str() const
-            //    { return vString; }
             operator void*() const
                 { return vPtr; }
                 
         public:
-            var_t                vType;
+            var_t               vType;
             union {
-                s32                vInt;
+                s32             vSInt32;
+                u64             vUInt64;
                 mxid            vId;
-                f64                vDouble;
-                f32                vFloat;
-                char*            vString;
-                void*            vPtr;
+                f64             vDouble;
+                f32             vFloat;
+                char*           vString;
+                void*           vPtr;
             };
         };
 

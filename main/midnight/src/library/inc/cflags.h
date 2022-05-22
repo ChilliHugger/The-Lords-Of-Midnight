@@ -12,11 +12,11 @@
 #include "mxtypes.h"
 #include "carchive.h"
 
-template <class T>
-class  flags
+template <class T, typename S>
+class  eflags
 {
 public:
-    ~flags(){}
+    ~eflags(){}
     MXINLINE void Clear()                            { m_flags = 0; }
     MXINLINE void ShiftLeft()                        { m_flags <<=1; }
     MXINLINE void ShiftRight()                       { m_flags >>=1; }
@@ -25,19 +25,48 @@ public:
         if ( ar.IsStoring() ) { ar << m_flags ; }else{ar >> m_flags ;}
         return ar;
     }
-    
-    MXINLINE flags()                                 { m_flags = 0 ; }
-    MXINLINE void Set ( T f )                        { m_flags |= (u32)f ; }
-    MXINLINE void Reset ( T f )                      { m_flags &= ~(u32)f ; }
+    MXINLINE eflags()                             { m_flags = 0 ; }
+    MXINLINE void Set ( T f )                        { m_flags |= (S)f ; }
+    MXINLINE void Reset ( T f )                      { m_flags &= ~(S)f ; }
     MXINLINE void Toggle ( T f )                     { if ( Is(f) ) Reset(f); else Set(f); }
-    MXINLINE bool Is ( T f) const                    { return m_flags&(u32)f ? TRUE : FALSE  ; }
-    MXINLINE operator u32() const                    { return m_flags; }
-    friend MXINLINE archive& operator<<( archive& ar, flags& f )        { return f.Serialize(ar); }
-    friend MXINLINE archive& operator>>( archive& ar, flags& f )        { return f.Serialize(ar); }
+    MXINLINE bool Is ( T f) const                    { return m_flags&(S)f ? TRUE : FALSE  ; }
+    MXINLINE operator S() const                      { return m_flags; }
+    friend MXINLINE archive& operator<<( archive& ar, eflags<T,S>& f )        { return f.Serialize(ar); }
+    friend MXINLINE archive& operator>>( archive& ar, eflags<T,S>& f )        { return f.Serialize(ar); }
     
 private:
-    u32        m_flags;
+    S   m_flags;
 };
 
+// flags
+template <typename T>
+class  flags
+{
+public:
+    ~flags(){}
+    void Clear()                                        { m_flags = 0; }
+    void ShiftLeft()                                    { m_flags <<=1; }
+    void ShiftRight()                                   { m_flags >>=1; }
+    archive& Serialize ( archive& ar )
+    {
+        if ( ar.IsStoring() ) { ar << m_flags ; }else{ar >> m_flags ;}
+        return ar;
+    }
+    MXINLINE flags()                             { m_flags = 0 ; }
+    MXINLINE void Set ( T f )                        { m_flags |= f ; }
+    MXINLINE void Reset ( T f )                      { m_flags &= ~f ; }
+    MXINLINE void Toggle ( T f )                     { if ( Is(f) ) Reset(f); else Set(f); }
+    MXINLINE bool Is ( T f) const                    { return m_flags&f ? TRUE : FALSE  ; }
+    MXINLINE operator T() const                      { return m_flags; }
+    friend MXINLINE archive& operator<<( archive& ar, flags<T>& f )        { return f.Serialize(ar); }
+    friend MXINLINE archive& operator>>( archive& ar, flags<T>& f )        { return f.Serialize(ar); }
+private:
+    T m_flags;
+};
+
+typedef flags<u64>  flags64;
+typedef flags<u32>  flags32;
+typedef flags<u16>  flags16;
+typedef flags<u8>  flags8;
 
 #endif /* cflags_h */

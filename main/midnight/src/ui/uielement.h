@@ -11,6 +11,7 @@
 
 #include "../cocos.h"
 #include "../library/inc/mxtypes.h"
+#include "../library/inc/cflags.h"
 
 FORWARD_REFERENCE(uieventargs);
 FORWARD_REFERENCE(uielement);

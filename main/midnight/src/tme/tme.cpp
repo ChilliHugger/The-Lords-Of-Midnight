@@ -421,7 +421,7 @@ bool TME_GetLocationInfo( loc_t loc )
     if ( MXSUCCESS( mxi->GetEntityProperties ( MAKE_LOCID(loc.x,loc.y), "LOCATIONINFO", args, 11 ) ) ) {
 
         location_flags.Set(args[1]);
-        location_fightthing = args[2].vInt;
+        location_fightthing = args[2].vSInt32;
         
         location_armies.foe_warriors = args[3];
         location_armies.foe_riders = args[4];
@@ -430,9 +430,9 @@ bool TME_GetLocationInfo( loc_t loc )
         location_armies.regiment_warriors = args[7];
         location_armies.regiment_riders = args[8];
         
-        location_object= args[9].vInt; ;
+        location_object= args[9].vSInt32; ;
 #if defined(_DDR_)
-        location_object_tunnel= args[10].vInt;
+        location_object_tunnel= args[10].vSInt32;
 #endif
     
         
@@ -488,7 +488,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
         location_infrontid = args[3];
 
         location_flags.Set(args[4]);
-        location_fightthing = args[5].vInt;
+        location_fightthing = args[5].vSInt32;
 
         location_lookingat.x = GET_LOCIDX(location_lookingatid);
         location_lookingat.y = GET_LOCIDY(location_lookingatid);
@@ -502,14 +502,14 @@ bool TME_GetCharacterLocationInfo ( const character& c )
         location_armies.regiment_warriors = args[10];
         location_armies.regiment_riders = args[11];
         
-        location_object= args[12].vInt;
+        location_object= args[12].vSInt32;
         
-        location_stubborn_lord_attack=args[13].vInt;
-        location_stubborn_lord_move=args[14].vInt;
+        location_stubborn_lord_attack=args[13].vSInt32;
+        location_stubborn_lord_move=args[14].vSInt32;
         
 #if defined(_DDR_)
-        location_object_tunnel = args[15].vInt;
-        location_someone_to_give_to = args[16].vInt;
+        location_object_tunnel = args[15].vSInt32;
+        location_someone_to_give_to = args[16].vSInt32;
 #endif
         
     }
@@ -582,7 +582,7 @@ bool TME_Night ( NightNotificationDelegate* delegate )
         TME_CurrentCharacter ( args[0] );
         TME_RefreshCurrentCharacter ();
         
-        return (bool)args[1].vInt;
+        return (bool)args[1].vSInt32;
     }
 
     return FALSE;
@@ -591,7 +591,7 @@ bool TME_Night ( NightNotificationDelegate* delegate )
 m_gameover_t TME_CheckWinLose (void)
 {
     if ( MXSUCCESS(mxi->Command( "CHECKWINLOSE", args, 0 ) ) ) {
-        return (m_gameover_t)args[1].vInt;
+        return (m_gameover_t)args[1].vSInt32;
     }
     
     return MG_NONE;
@@ -713,7 +713,7 @@ void TME_SelectChar ( mxid newid )
 mxid Character_LocationObject (  const character& c )
 {
     mxi->GetEntityProperty(c.id,"LOCATIONOBJECT",args[0]);
-    return args[0].vInt;
+    return args[0].vSInt32;
 }
 
 bool Character_HasBattleInfo ( const character& c )
@@ -881,7 +881,7 @@ mxid Character_Fight ( const character& c )
     args[0] = c.id;
     if ( MXSUCCESS( mxi->Command("FIGHT",args,1) ) ) {
         TME_RefreshCurrentCharacter();
-        return args[1].vInt;
+        return args[1].vSInt32;
     }
     return IDT_NONE ;
 }
@@ -901,7 +901,7 @@ mxid Character_Seek ( const character& c )
     args[0] = c.id;
     if ( MXSUCCESS( mxi->Command("SEEK",args,1) ) ) {
         TME_RefreshCurrentCharacter();
-        return args[1].vInt;
+        return args[1].vSInt32;
     }
     return IDT_NONE ;
 }
