@@ -6,6 +6,7 @@
 //
 
 #include "../extensions/CustomDirector.h"
+#include "../extensions/ScrollView.h" // scrolling menu
 #include "../cocos.h"
 
 #include "panel_options.h"
@@ -23,10 +24,13 @@
 #include "../ui/uitextmenu.h"
 #include "../ui/uioptionitem.h"
 
+
 #include "../frontend/language.h"
 
 USING_NS_CC;
 USING_NS_CC_UI;
+
+//#define _USE_GAME_RULES_
 
 static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
 static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
@@ -73,7 +77,9 @@ static uitextmenuitem items_main[] = {
     { ID_MENU_GAME,                     {OPTIONS_SCREEN_GAME},                  KEYCODE(G), KEYBOARD_KEY_G },
     { ID_MENU_CONTROL,                  {OPTIONS_SCREEN_CONTROL},               KEYCODE(C), KEYBOARD_KEY_C },
     { ID_MENU_HELP,                     {OPTIONS_SCREEN_HELP},                  KEYCODE(H), KEYBOARD_KEY_H },
+#if defined(_USE_GAME_RULES_)
     { ID_MENU_RULES,                    {OPTIONS_SCREEN_RULES},                 KEYCODE(R), KEYBOARD_KEY_R },
+#endif
     { ID_HOME,                          {OPTIONS_SCREEN_MAINMENU},              KEYCODE(ESCAPE), KEYBOARD_KEY_ESC }
 };
 
@@ -112,12 +118,15 @@ static uitextmenuitem items_help[] = {
 #endif
 };
 
+#if defined(_USE_GAME_RULES_)
 static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
     { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
     { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
 };
-
+#else
+static uitextmenuitem items_rules[0];
+#endif
 
 static option_t options[] = {
     
@@ -306,15 +315,15 @@ void panel_options::OnMenuNotification(
 void panel_options::SetMenu ( int id )
 {
     if ( id == ID_MENU_GAME ) {
-        SetMenu(items_game,NUMELE(items_game));
+        SetSubMenu(items_game,NUMELE(items_game));
         SetValues();
         return;
     }else if ( id == ID_MENU_DISPLAY ) {
-        SetMenu(items_display,NUMELE(items_display));
+        SetSubMenu(items_display,NUMELE(items_display));
         SetValues();
         return;
     }else if ( id == ID_MENU_RULES ) {
-        SetMenu(items_rules,NUMELE(items_rules));
+        SetSubMenu(items_rules,NUMELE(items_rules));
         SetValues();
         return;
     } else if ( id == ID_MENU_CONTROL ) {
@@ -325,7 +334,7 @@ void panel_options::SetMenu ( int id )
             disableOption(ID_OPTION_KEYBOARD_STYLE);
         }
 
-        SetMenu(items_control,NUMELE(items_control));
+        SetSubMenu(items_control,NUMELE(items_control));
         
 #if defined(_OS_DESKTOP_)
         mr->settings->showmovementindicators=FALSE;
@@ -334,7 +343,7 @@ void panel_options::SetMenu ( int id )
         SetValues();
         return;
     } else if ( id == ID_MENU_HELP ) {
-        SetMenu(items_help,NUMELE(items_help));
+        SetSubMenu(items_help,NUMELE(items_help));
         
 #if !defined(_OS_IOS_) && !defined(_OS_OSX_)
         mr->settings->novella_pdf=TRUE;
@@ -392,10 +401,9 @@ void panel_options::CreateMainMenu()
     mainMenu->setNotificationCallback ( [&](const uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
     });
-    
 }
 
-void panel_options::SetMenu( uitextmenuitem items[], int elements )
+void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
 {
     // map keyboard shortcut keys to layout children
     uishortcutkeys::registerCallback(safeArea, clickCallback);
@@ -408,17 +416,24 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
     
     f32 contentWidth = safeArea->getContentSize().width;
     
-    if ( subMenu != nullptr )  {
-        subMenu->removeAllChildren();
-        subMenu->removeFromParent();
+    if ( subMenuScrollView != nullptr )  {
+        subMenuScrollView->removeAllChildren();
+        subMenuScrollView->removeFromParent();
     }
 
-    subMenu = Menu::create();
+    subMenuScrollView = ScrollView::create();
+    subMenuScrollView->setLocalZOrder(ZORDER_UI);
+    subMenuScrollView->setDirection(ScrollView::Direction::VERTICAL);
+    subMenuScrollView->setScrollBarAutoHideEnabled(true);
+    subMenuScrollView->setScrollBarAutoHideTime(0);
+
+    auto subMenu = extensions::ScrollingMenu::create();
     subMenu->setLocalZOrder(ZORDER_UI);
     
     u32 gapY = PHONE_SCALE(RES(5));
     
-    safeArea->addChild(subMenu);
+    subMenuScrollView->addChild(subMenu);
+    safeArea->addChild(subMenuScrollView);
     
     fields.clear();
     optionControls.clear();
@@ -457,9 +472,19 @@ void panel_options::SetMenu( uitextmenuitem items[], int elements )
         fields.pushBack(menuItem);
     }
     
+    auto maxHeight = RES(400);
+    
     subMenu->setContentSize(Size(width,height) );
-  
-    uihelper::PositionParentCenterLeft(subMenu,contentWidth/2);
+    subMenuScrollView->setContentSize(Size(width, std::min(height,maxHeight)));
+    subMenuScrollView->setInnerContainerSize(subMenu->getContentSize());
+
+    uihelper::PositionParentTopLeft( subMenu, 0, 0 ) ;
+    uihelper::PositionParentCenterLeft(subMenuScrollView,contentWidth/2);
+    
+    bool scrollingEnabled = height > maxHeight ;
+    subMenuScrollView->setBounceEnabled( scrollingEnabled );
+    subMenuScrollView->setScrollBarEnabled( scrollingEnabled );
+    
     
     // refresh positions
     auto offset = Vec2( width/2, height );

@@ -40,6 +40,7 @@ class panel_options : public uipanel
     using Node = cocos2d::Node;
     using DrawNode = cocos2d::DrawNode;
     using Menu = cocos2d::Menu;
+    using ScrollView = cocos2d::ui::ScrollView;
     using uinotificationinterface = chilli::ui::NotificationInterface;
     template<class T> using Vector = cocos2d::Vector<T>;
 public:
@@ -52,7 +53,7 @@ protected:
     void CreateMainMenu();
     void SetValues ( void );
     void SetMenu ( int id );
-    void SetMenu( uitextmenuitem items[], int elements);
+    void SetSubMenu( uitextmenuitem items[], int elements);
     
     void OnMenuNotification( const uinotificationinterface*, menueventargs* );
     virtual bool OnKeyboardEvent( uikeyboardevent* event ) override;
@@ -65,7 +66,7 @@ protected:
 protected:
     DrawNode*               menu2_background;
     Vector<Node*>           fields;
-    Menu*                   subMenu;
+    ScrollView*             subMenuScrollView;
     uitextmenu*             mainMenu;
     cocos2d::Map<int, uioptionitem*> optionControls;
     CONFIG_SCREEN_MODE      initialScreenMode;
