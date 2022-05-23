@@ -378,9 +378,8 @@ namespace tme {
         mx->gamemap->SetLocationArmy(Location(),0);
         mx->gamemap->SetLocationCharacter(Location(),0);
         
-        auto scenario = static_cast<ddr_x*>(mx->scenario);
         t = (mxterrain_t)mx->gamemap->GetAt ( location+looking ).terrain ;
-        t = scenario->NormaliseTerrain(t);
+        t = mx->scenario->toScenarioTerrain(t);
         
         if ( IsInTunnel() )
             t=TN_ICYWASTE;

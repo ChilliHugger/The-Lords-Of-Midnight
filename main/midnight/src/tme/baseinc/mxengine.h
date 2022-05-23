@@ -113,6 +113,7 @@ namespace tme {
         bool isDatabase() const { return !isSavedGame(); }
         
         void setRules( RULEFLAGS flags) { m_ruleFlags.Set(flags); }
+        bool isRuleEnabled( RULEFLAGS flags ) { return m_ruleFlags.Is(flags); }
         
     public:
         mxmap*                  gamemap;

@@ -226,7 +226,8 @@ void ddr_x::PlaceObjectsOnMap ( void )
             while ( !found ) {
                 loc.x = mxrandom(0,mx->gamemap->Size().cx-1);
                 loc.y = mxrandom(0,mx->gamemap->Size().cy-1);
-                if ( !mx->gamemap->HasObject(loc) && !mx->gamemap->IsLocationBlock(loc)  )
+                
+                if ( !mx->gamemap->HasObject(loc) && !mx->scenario->isLocationImpassable(loc)  )
                     found=true;
             }
             object->Location(loc);
@@ -320,7 +321,7 @@ std::string buffer = mx->LastActionMsg();
     mx->SetLastActionMsg(buffer);
 }
 
-mxterrain_t ddr_x::NormaliseTerrain( mxterrain_t t) const
+mxterrain_t ddr_x::toScenarioTerrain(mxterrain_t t) const
 {
     if ( t == TN_PLAINS )
         t=TN_PLAINS2;

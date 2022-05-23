@@ -217,6 +217,72 @@ namespace tme {
         {
         }
 
+        mxterrain_t mxscenario::toGeneralisedTerrain(mxterrain_t t) const
+        {
+            switch (t) {
+                case TN_PLAINS2:
+                case TN_PLAINS3:
+                case TN_LAND:
+                case TN_PLAIN:
+                    return TN_PLAINS;
+                    
+                case TN_FOREST2:
+                case TN_FOREST3:
+                case TN_TREES:
+                    return TN_FOREST;
+                    
+                case TN_MOUNTAIN2:
+                case TN_MOUNTAIN3:
+                case TN_ICY_MOUNTAIN:
+                    return TN_MOUNTAIN;
+                    
+                case TN_WATCHTOWER:
+                    return TN_TOWER;
+                    
+                case TN_ICYWASTE:
+                    return TN_FROZENWASTE;
+                    
+                case TN_LAKE3:
+                    return TN_LAKE;
+                    
+                case TN_HILLS3:
+                case TN_DOWNS:
+                case TN_FOOTHILLS:
+                    return TN_HILLS;
+                    
+                case TN_STONES:
+                    return TN_LITH;
+                    
+                default:
+                    return t;
+            }
+    
+        }
+
+        mxterrain_t mxscenario::toScenarioTerrain(mxterrain_t t) const
+        {
+            return t;
+        }
+
+        bool mxscenario::isLocationImpassable(mxgridref loc) const
+        {
+            auto mapLoc = mx->gamemap->GetAt(loc);
+            return isTerrainImpassable((mxterrain_t)mapLoc.terrain);
+        }
+
+        bool mxscenario::isTerrainImpassable(mxterrain_t terrain) const
+        {
+            auto tinfo = mx->TerrainById(terrain);
+
+            if( toGeneralisedTerrain(terrain) == TN_MOUNTAIN ) {
+                if ( mx->isRuleEnabled(RF_IMPASSABLE_MOUNTAINS) ) {
+                    return true;
+                }
+            }
+            return tinfo->IsBlock();
+        }
+
+
         /*
         * Function name    : base::Serialize
         * 

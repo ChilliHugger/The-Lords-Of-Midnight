@@ -35,7 +35,7 @@ namespace tme {
         virtual void PlaceObjectsOnMap ( void );
         virtual mxobject* FindObjectAtLocation ( mxgridref loc );
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
-        virtual mxterrain_t NormaliseTerrain( mxterrain_t t) const;
+        virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const;
     };
 
     

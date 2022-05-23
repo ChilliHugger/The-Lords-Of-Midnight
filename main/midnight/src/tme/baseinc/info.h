@@ -1148,7 +1148,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             virtual void FindCharactersHere ( void );
             virtual void FindArmiesHere ( void );
             virtual void WorkOutLocationDetails();
-
+            
         protected:    
             virtual void Clear();
 

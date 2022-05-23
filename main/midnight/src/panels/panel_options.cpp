@@ -30,7 +30,7 @@
 USING_NS_CC;
 USING_NS_CC_UI;
 
-//#define _USE_GAME_RULES_
+#define _USE_GAME_RULES_
 
 static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
 static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
@@ -120,10 +120,7 @@ static uitextmenuitem items_help[] = {
 
 #if defined(_USE_GAME_RULES_)
 static uitextmenuitem items_rules[] = {
-    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
-    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
-    { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
-};
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE }};
 #else
 static uitextmenuitem items_rules[0];
 #endif
@@ -154,13 +151,11 @@ static option_t options[] = {
 #endif
 
     {   ID_OPTION_RULE_1,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_2,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_3,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
-static RULEFLAGS rule_mapping[] = { RF_RULE_1, RF_RULE_2, RF_RULE_3 };
+static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS };
 
 option_t* findOption(int id)
 {

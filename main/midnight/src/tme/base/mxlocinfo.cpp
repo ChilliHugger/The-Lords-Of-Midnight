@@ -91,7 +91,7 @@ namespace tme {
             WorkOutLocationDetails();
         }
 
-        mxlocinfo::mxlocinfo( mxgridref loc, mxdir_t dir, mxcharacter* iowner, flags32_t sflags ) 
+        mxlocinfo::mxlocinfo( mxgridref loc, mxdir_t dir, mxcharacter* iowner, flags32_t sflags )
                 : mxitem ( loc )
         {
         mxterrain* tinfo;
@@ -123,8 +123,7 @@ namespace tme {
             }else{
 #endif
                 // can we pass through the terrain infront?
-                tinfo = mx->TerrainById(infront->mapsqr.terrain);
-                if ( tinfo->IsBlock() ) {
+                if ( mx->scenario->isTerrainImpassable( (mxterrain_t)infront->mapsqr.terrain ) ) {
                     flags.Reset(lif_moveforward);// = FALSE;
                     flags.Set(lif_blocked);
                 }
@@ -136,7 +135,6 @@ namespace tme {
                 
             }
 #endif
-
 
             // the only way to move forard when there is an army infront of you
             // is to enter battle

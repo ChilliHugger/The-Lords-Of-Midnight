@@ -389,7 +389,8 @@ namespace tme {
 
             for (;; ) {
                 loc = Location() + (mxdir_t)mxrandom(0, 7);
-                if ( !mx->gamemap->IsLocationBlock( loc ) ) {
+                
+                if ( !mx->scenario->isLocationImpassable( loc ) ) {
                     if ( IsRecruited() ) {
                         location = loc ;
                         EnterLocation ( loc );

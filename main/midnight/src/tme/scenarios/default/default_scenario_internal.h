@@ -72,12 +72,16 @@ namespace tme {
             
             
             virtual void GiveGuidance( mxcharacter* character, s32 hint );
+            
+            virtual mxterrain_t toGeneralisedTerrain( mxterrain_t t) const ;
+            virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const ;
 
-            
-            
             virtual MXRESULT GetLocInfo ( mxid id, mxlocinfo*&    info  );
 
             bool IsFeature(u32 flag) const { return (features&flag) == flag; }
+            
+            bool isTerrainImpassable(mxterrain_t terrain) const;
+            bool isLocationImpassable(mxgridref loc) const;
             
         public:
             flags32_t    features;
