@@ -132,6 +132,7 @@ void LandscapePeople::Initialise()
             title->setVisible(false);
             image->addChild(title);
             
+   
             image->setTouchEnabled(true);
             image->addClickEventListener(callback);
             image->setTag(ID_THINK_PERSON);
@@ -184,10 +185,10 @@ void LandscapePeople::Initialise()
     
 }
 
-cocos2d::ui::ImageView* LandscapePeople::add( std::string& person, int number)
+cocos2d::ui::Widget* LandscapePeople::add( std::string& person, int number)
 {
     int column;
-    ImageView* imageAdded = nullptr;
+    Widget* imageAdded = nullptr;
     
 #if defined(_LOM_)
     static int xtable[] = { 3, 5, 4, 1, 2, 6, 0, 7 };
@@ -222,25 +223,28 @@ cocos2d::ui::ImageView* LandscapePeople::add( std::string& person, int number)
         
         column = xtable[characters] ;
         
-        //auto image = Sprite::create(person);
+        auto image = Sprite::create(person);
+        auto widget = Widget::create();
+        widget->addChild(image);
         
-        auto image = ImageView::create();
-        image->loadTexture(person, cocos2d::ui::Widget::TextureResType::LOCAL);
-        image->setTouchEnabled(false);
-
+        
         auto size = image->getContentSize();
+        widget->setContentSize(size);
         
         int x1 = offsetX + ( column * LRES(CHARACTER_COLUMN_WIDTH) );
         int y1 = 0;
         
+        widget->setAnchorPoint(uihelper::AnchorBottomLeft);
+        widget->setPosition(Vec2(x1, y1));
+
         image->setAnchorPoint(uihelper::AnchorBottomLeft);
-        image->setPosition(Vec2(x1, y1));
-        
+        image->setPosition(Vec2(0, 0));
+
         if(options->characterTimeShader)
         {
             options->colour->updateCharacterNode(image);
         }
-        addChild(image);
+        addChild(widget);
 
         columns[column].used=TRUE;
         columns[column].pos = point(x1,y1);
@@ -255,7 +259,7 @@ cocos2d::ui::ImageView* LandscapePeople::add( std::string& person, int number)
         }
         
         characters++;
-        imageAdded = image;
+        imageAdded = widget;
     }
     
     return imageAdded;

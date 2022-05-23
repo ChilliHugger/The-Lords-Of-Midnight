@@ -49,7 +49,6 @@ using namespace chilli::types;
 
 class LandscapePeople : public LandscapeNode
 {
-    using ImageView = cocos2d::ui::ImageView;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
     using Widget = cocos2d::ui::Widget;
         
@@ -78,7 +77,7 @@ protected:
     LandscapePeople();
     
     bool initWithOptions( LandscapeOptions* options );
-    ImageView* add( std::string& image, int number );
+    Widget* add( std::string& image, int number );
 
 public:    
     tme::loc_t      loc;
