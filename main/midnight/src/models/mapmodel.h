@@ -40,7 +40,7 @@ public:
 public:
 
     // game specific
-    flags<map_filters> filters;
+    eflags<map_filters,u32> filters;
     point   oldoffset;
     f32     mapscale;
     f32     lastmapscale;

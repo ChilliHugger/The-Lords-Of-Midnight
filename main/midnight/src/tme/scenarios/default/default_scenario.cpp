@@ -662,7 +662,7 @@ namespace tme {
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
-            return character->Cmd_Wait((mxwait_t)argv[1].vInt);
+            return character->Cmd_Wait((mxwait_t)argv[1].vSInt32);
         }
 
         COMMAND( OnCharControl ) 

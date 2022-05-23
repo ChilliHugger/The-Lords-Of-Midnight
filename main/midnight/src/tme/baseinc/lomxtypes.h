@@ -580,6 +580,18 @@ using namespace chilli::types;
             PLURAL_DAY=2,
             };
 
+        enum RULEFLAGS : u64 {
+            RF_RULE_1   = MXBIT(0),
+            RF_RULE_2   = MXBIT(1),
+            RF_RULE_3   = MXBIT(2),
+            RF_RULE_4   = MXBIT(3),
+            RF_RULE_5   = MXBIT(4),
+            RF_RULE_6   = MXBIT(5),
+            RF_RULE_7   = MXBIT(6),
+            RF_RULE_8   = MXBIT(7),
+            RF_DEFAULT  = 0
+        };
+
 #ifdef _DEFINE_ENUMS_
     }
     // namespace enums
@@ -934,29 +946,29 @@ namespace tme {
 }
 // namespace tme
 
-#define DATABASEHEADER        "MidnightEngineDatabase"
+#define DATABASEHEADER          "MidnightEngineDatabase"
 #if defined(_LOM_)
-#define DATABASEVERSION        7
+#define DATABASEVERSION         7
 #else
-#define DATABASEVERSION        11
+#define DATABASEVERSION         11
 #endif
-#define MAPHEADER            "MidnightEngineMap"
-#define MAPVERSION            2
+#define MAPHEADER               "MidnightEngineMap"
+#define MAPVERSION              2
 
-#define DISCOVERYHEADER        "MidnightEngineDiscovery"
-#define DISCOVERYVERSION    1
+#define DISCOVERYHEADER         "MidnightEngineDiscovery"
+#define DISCOVERYVERSION        1
 
-#define SAVEGAMEHEADER        "MidnightEngineSaveGame"
+#define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_DDR_)
-    #define SAVEGAMEVERSION        12
+    #define SAVEGAMEVERSION     13
 #endif
 #if defined(_LOM_)
-    #define SAVEGAMEVERSION        9
+    #define SAVEGAMEVERSION     13
 #endif
 
 
-#define TME_MAGIC_NO        ID_4CC('T','M','E','!')
+#define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 
 
 #endif //_LOMXTYPES_H_INCLUDED_

@@ -21,5 +21,15 @@ namespace extensions {
         void scrollToPosition(const Vec2& des, float timeInSec, bool attenuated);
         
     };
+    
+
+    class ScrollingMenu : public cocos2d::Menu
+    {
+    public:
+        static ScrollingMenu * create();
+        
+    protected:
+        void enableScrolling();
+    };
 
 }

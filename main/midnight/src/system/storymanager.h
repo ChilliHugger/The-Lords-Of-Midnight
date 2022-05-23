@@ -59,7 +59,7 @@ public:
     virtual saveid_t lastNight() const ;
     
     virtual bool save ( savemode_t mode = savemode_normal );
-    virtual bool create ( storyid_t id );
+    virtual bool create ( storyid_t id, u64 flags );
     virtual bool save ( storyid_t id, savemode_t mode=savemode_normal );
     virtual bool load ( storyid_t id );
     virtual bool destroy ( storyid_t id );

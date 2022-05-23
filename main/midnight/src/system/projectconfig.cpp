@@ -44,23 +44,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
     }
 
     XmlNode* e = nullptr ;
-//
-//    if ( pass == 1 ) {
-//        // scenario
-//        UpdateSplash("Loading scenario", progress++);
-//        if ( (e = base->Find( "scenario")) ) {
-//            // id
-//            scenarioname = e->ReadStr("id");
-//            scenariodir = e->ReadStr("directory");
-//
-//            // create a blank
-//            if ( !TME_Init() ) {
-//                COMPLAIN ( "Cannot TME_Init()" );
-//            }
-//
-//        }
-//    }
-//
+
 //    if ( pass == 1 ) {
 //        // terrain
         UIDEBUG( "Frontend: Loading TERRAIN..." );
@@ -80,8 +64,6 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
             }
         }
 //    }
-//
-//
 
 #if defined(_MOUSE_ENABLED_)
         UIDEBUG( "Frontend: Loading MOUSE..." );
