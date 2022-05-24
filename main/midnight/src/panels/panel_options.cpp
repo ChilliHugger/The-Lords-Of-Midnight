@@ -120,7 +120,10 @@ static uitextmenuitem items_help[] = {
 
 #if defined(_USE_GAME_RULES_)
 static uitextmenuitem items_rules[] = {
-    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE }};
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE }
+};
+
 #else
 static uitextmenuitem items_rules[0];
 #endif
@@ -151,11 +154,12 @@ static option_t options[] = {
 #endif
 
     {   ID_OPTION_RULE_1,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    
+    {   ID_OPTION_RULE_2,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+     
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
-static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS };
+static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS, RF_AI_IMPASSABLE_MOUNTAINS };
 
 option_t* findOption(int id)
 {
@@ -403,7 +407,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
     // map keyboard shortcut keys to layout children
     uishortcutkeys::registerCallback(safeArea, clickCallback);
  
-    f32 width = RES(512-32);
+    f32 width = RES(600-32);
     if(isPhoneScaleEnabled())
     {
         width+=RES(128+64);

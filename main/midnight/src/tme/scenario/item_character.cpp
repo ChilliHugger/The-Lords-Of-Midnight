@@ -188,10 +188,13 @@ namespace tme {
             // make a list of all other recruitable
             // characters available
             // TODO in LOM this can only be one
-            if ( mx->scenario->IsFeature(SF_APPROACH_DDR)  ) 
-                info->FindApproachCharactersInfront(info->owner);
-            else
+            if ( mx->scenario->IsFeature(SF_APPROACH_DDR) ) {
+                if(!mx->scenario->isLocationImpassable(info->loc_infront, info->owner)) {
+                    info->FindApproachCharactersInfront(info->owner);
+                }
+            } else {
                 info->FindRecruitCharactersHere (info->owner);
+            }
 
             // can we recruit ?
             if ( info->objRecruit.Count() )
@@ -390,19 +393,17 @@ namespace tme {
             for (;; ) {
                 loc = Location() + (mxdir_t)mxrandom(0, 7);
                 
-                if ( !mx->scenario->isLocationImpassable( loc ) ) {
+                if ( !mx->scenario->isLocationImpassable( loc, this ) ) {
+                    location = loc ;
                     if ( IsRecruited() ) {
-                        location = loc ;
                         EnterLocation ( loc );
                         mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
-#if defined(_DDR_)
-                        mx->scenario->MakeMapAreaVisible(Location(), this);
-#endif
                     }
                     break;
                 }
             }
         }
+        
 
         void mxcharacter::SetLastCommand ( command_t cmd, mxid id )
         {

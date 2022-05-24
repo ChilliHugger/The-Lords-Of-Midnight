@@ -124,21 +124,24 @@ namespace tme {
         // so that it is only done once
         
         if (!IsCoward()) {
-            int enemies_infront = 0;
-            for (int ii=0; ii<info->infront->objCharacters.Count(); ii++ ) {
-                mxcharacter* c = (mxcharacter*)info->infront->objCharacters[ii];
-                if ( c->Loyalty() != Loyalty() ) {
-                    enemies_infront++;
-                    // we only care about 1
-                    // so short circuit
-                    break;
+        
+            if(!mx->scenario->isLocationImpassable(info->loc_infront, this)) {
+                int enemies_infront = 0;
+                for (int ii=0; ii<info->infront->objCharacters.Count(); ii++ ) {
+                    mxcharacter* c = (mxcharacter*)info->infront->objCharacters[ii];
+                    if ( c->Loyalty() != Loyalty() ) {
+                        enemies_infront++;
+                        // we only care about 1
+                        // so short circuit
+                        break;
+                    }
                 }
-            }
-            
-            if ( enemies_infront > 0) {
-                if ( !sv_cheat_armies_noblock )
-                    info->flags.Reset(lif_moveforward); // = FALSE;
-                info->flags.Set(lif_enterbattle); // = TRUE ;
+                
+                if ( enemies_infront > 0) {
+                    if ( !sv_cheat_armies_noblock )
+                        info->flags.Reset(lif_moveforward); // = FALSE;
+                    info->flags.Set(lif_enterbattle); // = TRUE ;
+                }
             }
         }
         
@@ -1279,6 +1282,35 @@ void ddr_character::Turn ( void )
     
 }
 
+void ddr_character::Displace()
+{
+    RULEFLAGS rule = IsAIControlled() ? RF_AI_IMPASSABLE_MOUNTAINS : RF_IMPASSABLE_MOUNTAINS ;
+    bool isImpassableRuleEnabled = mx->isRuleEnabled(rule);
+              
+    Flags().Reset(cf_tunnel|cf_preparesbattle);
+
+    // if impassable mountains is enabled then we can't use the default
+    // ddr displacement because it moves more than one location
+    if (isImpassableRuleEnabled) {
+        mxcharacter::Displace();
+        return;
+    }
+
+    mxgridref loc;
+    do {
+        loc = Location();
+        loc.x ^= (mxrandom(255)&3);
+        loc.y ^= (mxrandom(255)&3);
+    } while ( mx->scenario->isLocationImpassable(loc, this) );
+    
+    Location(loc);
+    
+    if ( IsRecruited() ) {
+        EnterLocation ( loc );
+        mx->scenario->MakeMapAreaVisible(Location(), this);
+    }
+    
+}
 
 } // namespace tme
 

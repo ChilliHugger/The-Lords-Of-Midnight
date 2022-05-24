@@ -970,11 +970,11 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             FLAG_PROPERTY ( IsAlive, cf_alive )
             FLAG_PROPERTY ( IsRecruited, cf_recruited )
             FLAG_PROPERTY ( IsAllowedArmy, cf_army )
+            FLAG_PROPERTY ( IsAIControlled, cf_ai )
 #if defined(_DDR_)
             FLAG_PROPERTY ( IsAllowedWarriors, cf_allowedwarriors )
             FLAG_PROPERTY ( IsAllowedRiders, cf_allowedriders )
             FLAG_PROPERTY ( IsPreparingForBattle, cf_preparesbattle )
-            FLAG_PROPERTY ( IsAIControlled, cf_ai )
             FLAG_PROPERTY ( IsApproaching, cf_approaching )
 #endif
             FLAG_PROPERTY ( IsAllowedHide, cf_hide )

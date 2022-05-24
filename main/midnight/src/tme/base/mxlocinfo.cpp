@@ -123,7 +123,7 @@ namespace tme {
             }else{
 #endif
                 // can we pass through the terrain infront?
-                if ( mx->scenario->isTerrainImpassable( (mxterrain_t)infront->mapsqr.terrain ) ) {
+                if ( mx->scenario->isTerrainImpassable( (mxterrain_t)infront->mapsqr.terrain, owner ) ) {
                     flags.Reset(lif_moveforward);// = FALSE;
                     flags.Set(lif_blocked);
                 }
@@ -138,7 +138,7 @@ namespace tme {
 
             // the only way to move forard when there is an army infront of you
             // is to enter battle
-            if ( infront->foe.armies) {
+            if ( infront->foe.armies && !mx->scenario->isLocationImpassable(loc_infront, owner) ) {
                 if ( !sv_cheat_armies_noblock )
                     flags.Reset(lif_moveforward); // = FALSE;
                 flags.Set(lif_enterbattle); // = TRUE ;

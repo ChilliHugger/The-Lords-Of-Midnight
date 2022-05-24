@@ -264,22 +264,39 @@ namespace tme {
             return t;
         }
 
-        bool mxscenario::isLocationImpassable(mxgridref loc) const
+        bool mxscenario::isLocationImpassable(mxgridref loc, mxitem* target) const
         {
             auto mapLoc = mx->gamemap->GetAt(loc);
-            return isTerrainImpassable((mxterrain_t)mapLoc.terrain);
+            return isTerrainImpassable((mxterrain_t)mapLoc.terrain, target);
         }
 
-        bool mxscenario::isTerrainImpassable(mxterrain_t terrain) const
+        bool mxscenario::isTerrainImpassable(mxterrain_t terrain, mxitem* target) const
         {
-            auto tinfo = mx->TerrainById(terrain);
-
-            if( toGeneralisedTerrain(terrain) == TN_MOUNTAIN ) {
-                if ( mx->isRuleEnabled(RF_IMPASSABLE_MOUNTAINS) ) {
-                    return true;
+            if(target!=nullptr) {
+                bool isAI = true;
+                mxrace_t race = RA_NONE;
+                
+                if(target->Type() == IDT_CHARACTER) {
+                    auto character = dynamic_cast<mxcharacter*>(target);
+                    if (character != nullptr) {
+                        if(character->IsInTunnel()) {
+                            return false;
+                        }
+                        isAI = character->IsAIControlled();
+                        race = character->Race();
+                    }
+                }
+            
+                if( race != RA_DWARF && race != RA_GIANT ) {
+                    if( toGeneralisedTerrain(terrain) == TN_MOUNTAIN ) {
+                        RULEFLAGS rule = isAI ? RF_AI_IMPASSABLE_MOUNTAINS : RF_IMPASSABLE_MOUNTAINS ;
+                        if ( mx->isRuleEnabled(rule) ) {
+                            return true;
+                        }
+                    }
                 }
             }
-            return tinfo->IsBlock();
+            return mx->TerrainById(terrain)->IsBlock();
         }
 
 

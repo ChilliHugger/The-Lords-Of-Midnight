@@ -117,7 +117,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_NOVELLA             = "NOVELLA";
  
     constexpr LPCSTR OPTIONS_SCREEN_RULE_1              = "IMPASSABLE MOUNTAINS";
-    constexpr LPCSTR OPTIONS_SCREEN_RULE_2              = "RULE 2";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_2              = "AI IMPASSABLE MOUNTAINS";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_3              = "RULE 3";
   
 #if defined(_LOM_)

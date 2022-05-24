@@ -219,6 +219,9 @@ void ddr_x::PlaceObjectsOnMap ( void )
 {
     ddr_object* object;
     mxgridref loc;
+    
+    auto luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
+    
     for ( int ii=0; ii<sv_objects; ii++ ) {
         object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
         if ( object->IsUnique() && object->IsRandomStart() ) {
@@ -227,7 +230,7 @@ void ddr_x::PlaceObjectsOnMap ( void )
                 loc.x = mxrandom(0,mx->gamemap->Size().cx-1);
                 loc.y = mxrandom(0,mx->gamemap->Size().cy-1);
                 
-                if ( !mx->gamemap->HasObject(loc) && !mx->scenario->isLocationImpassable(loc)  )
+                if ( !mx->gamemap->HasObject(loc) && !mx->scenario->isLocationImpassable(loc,luxor)  )
                     found=true;
             }
             object->Location(loc);

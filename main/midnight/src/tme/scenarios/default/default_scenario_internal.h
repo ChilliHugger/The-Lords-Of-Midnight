@@ -80,8 +80,8 @@ namespace tme {
 
             bool IsFeature(u32 flag) const { return (features&flag) == flag; }
             
-            bool isTerrainImpassable(mxterrain_t terrain) const;
-            bool isLocationImpassable(mxgridref loc) const;
+            bool isTerrainImpassable(mxterrain_t terrain, mxitem* target) const;
+            bool isLocationImpassable(mxgridref loc, mxitem* target) const;
             
         public:
             flags32_t    features;

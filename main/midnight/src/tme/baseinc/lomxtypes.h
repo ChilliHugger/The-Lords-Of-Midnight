@@ -581,14 +581,14 @@ using namespace chilli::types;
             };
 
         enum RULEFLAGS : u64 {
-            RF_IMPASSABLE_MOUNTAINS = MXBIT(0),
-            RF_RULE_2   = MXBIT(1),
-            RF_RULE_3   = MXBIT(2),
-            RF_RULE_4   = MXBIT(3),
-            RF_RULE_5   = MXBIT(4),
-            RF_RULE_6   = MXBIT(5),
-            RF_RULE_7   = MXBIT(6),
-            RF_RULE_8   = MXBIT(7),
+            RF_IMPASSABLE_MOUNTAINS         = MXBIT(0),
+            RF_AI_IMPASSABLE_MOUNTAINS      = MXBIT(1),
+            RF_RULE_3                       = MXBIT(2),
+            RF_RULE_4                       = MXBIT(3),
+            RF_RULE_5                       = MXBIT(4),
+            RF_RULE_6                       = MXBIT(5),
+            RF_RULE_7                       = MXBIT(6),
+            RF_RULE_8                       = MXBIT(7),
             RF_DEFAULT  = 0
         };
 
