@@ -275,6 +275,7 @@ namespace tme {
             if(target!=nullptr) {
                 bool isAI = true;
                 mxrace_t race = RA_NONE;
+                bool army = true;
                 
                 if(target->Type() == IDT_CHARACTER) {
                     auto character = dynamic_cast<mxcharacter*>(target);
@@ -284,10 +285,13 @@ namespace tme {
                         }
                         isAI = character->IsAIControlled();
                         race = character->Race();
+                        if(mx->isRuleEnabled(RF_SOLE_MOUNTAINEER) && !character->HasArmy() ) {
+                            army = false;
+                        }
                     }
                 }
             
-                if( race != RA_DWARF && race != RA_GIANT ) {
+                if( race != RA_DWARF && race != RA_GIANT && race != RA_DRAGON && army ) {
                     if( toGeneralisedTerrain(terrain) == TN_MOUNTAIN ) {
                         RULEFLAGS rule = isAI ? RF_AI_IMPASSABLE_MOUNTAINS : RF_IMPASSABLE_MOUNTAINS ;
                         if ( mx->isRuleEnabled(rule) ) {
@@ -512,8 +516,6 @@ namespace tme {
                     tinfo = mx->TerrainById(lookingat.terrain);
                     int visibility = tinfo->Visibility();
 
-                    
-                    
                     u32 k=0;
                     for ( k=0; k<NUMELE(steps[0]); k++ ) {
                     
@@ -530,7 +532,6 @@ namespace tme {
                             blocking += tinfo->Obstruction()/affect[j][k];
                             if ( blocking>=visibility ) break;
                         }
-
                     }
 
                     if ( blocking<visibility ) {
@@ -543,11 +544,7 @@ namespace tme {
                         
                     }
                 }
-
-
             }
-
-
         }
 
         COMMAND( OnCharLookLeft ) 

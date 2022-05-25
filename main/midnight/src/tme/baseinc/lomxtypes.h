@@ -584,7 +584,7 @@ using namespace chilli::types;
             RF_IMPASSABLE_MOUNTAINS         = MXBIT(0),
             RF_AI_IMPASSABLE_MOUNTAINS      = MXBIT(1),
             RF_ADD_MOUNTAIN_PASSES          = MXBIT(2),
-            RF_RULE_4                       = MXBIT(3),
+            RF_SOLE_MOUNTAINEER             = MXBIT(3),
             RF_RULE_5                       = MXBIT(4),
             RF_RULE_6                       = MXBIT(5),
             RF_RULE_7                       = MXBIT(6),
