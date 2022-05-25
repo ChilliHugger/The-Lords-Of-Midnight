@@ -353,18 +353,22 @@ namespace tme {
         bool mxcharacter::CheckRecruitChar ( mxcharacter* character )  const
         {
             if ( character == this )
-                return FALSE ;
+                return false ;
 
             if ( mx->scenario->IsFeature(SF_RECRUIT_DDR) ) {
                 // TODO: recruiting logic
-                return TRUE ;
+                return true ;
             }else{
+                if(mx->isRuleEnabled(RF_LOM_UNRECRUITABLE_FEY)
+                    && character->Race() == RA_FEY)
+                {
+                    return false;
+                }
                 if ( character->RecruitedBy & RecruitingKey )
-                    return TRUE ;
+                    return true ;
             }
 
-
-            return FALSE ;
+            return false ;
         }
 
         void mxcharacter::LostFight ( void )
