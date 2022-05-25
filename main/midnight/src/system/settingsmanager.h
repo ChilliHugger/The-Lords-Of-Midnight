@@ -92,7 +92,11 @@ public:
     
     bool bumpAdvert();
 
-public:    
+public:
+    // NOTE: boolean values need to be BOOL and not bool because of size differences and
+    // therefore legacy configurations
+    //
+    
     // not stored
     BOOL                    fullscreensupported;
     

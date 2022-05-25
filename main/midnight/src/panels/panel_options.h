@@ -16,6 +16,7 @@
 FORWARD_REFERENCE(menueventargs);
 FORWARD_REFERENCE(uinotificationinterface);
 FORWARD_REFERENCE(uioptionitem);
+FORWARD_REFERENCE(MenuItemNode);
 
 enum eOptionTypes {
     OPT_NONE=0,
@@ -29,7 +30,8 @@ typedef struct {
     int             max;
     const char**    text;
     void*           var;
-    bool            disabled;    
+    bool            disabled;
+    bool            hidden;
 } option_t ;
 
 #define SET_OPTION(x,z) \
@@ -54,7 +56,8 @@ protected:
     void SetValues ( void );
     void SetMenu ( int id );
     void SetSubMenu( uitextmenuitem items[], int elements);
-    
+    void clearRule(int id, bool condition);
+    void checkDisabledRules();
     void OnMenuNotification( const uinotificationinterface*, menueventargs* );
     virtual bool OnKeyboardEvent( uikeyboardevent* event ) override;
     virtual void OnNotification( Ref* sender ) override;
@@ -65,12 +68,12 @@ protected:
 
 protected:
     DrawNode*               menu2_background;
-    Vector<Node*>           fields;
+    Vector<MenuItemNode*>   fields;
     ScrollView*             subMenuScrollView;
     uitextmenu*             mainMenu;
     cocos2d::Map<int, uioptionitem*> optionControls;
     CONFIG_SCREEN_MODE      initialScreenMode;
-    bool                    rules[64];
+    BOOL                    rules[64]; // this needs to be BOOL not bool as they are different sizes!!
 };
 
 

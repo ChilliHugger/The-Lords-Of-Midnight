@@ -270,6 +270,13 @@ namespace tme {
             return isTerrainImpassable((mxterrain_t)mapLoc.terrain, target);
         }
 
+        //
+        // This adds in Mountains as a potential impassable terrain above and beyond
+        // and setup in the database. This is controlled by two game rules
+        // RF_AI_IMPASSABLE_MOUNTAINS and RF_IMPASSABLE_MOUNTAINS
+        // DWARVES, GIANTS, and DRAGONS can all pass impassable mountains
+        // and when RF_SOLE_MOUNTAINEER is enabled so can lords without armies.
+        //
         bool mxscenario::isTerrainImpassable(mxterrain_t terrain, mxitem* target) const
         {
             if(target!=nullptr) {
@@ -288,6 +295,12 @@ namespace tme {
                         if(mx->isRuleEnabled(RF_SOLE_MOUNTAINEER) && !character->HasArmy() ) {
                             army = false;
                         }
+                    }
+                }
+                else if(target->Type() == IDT_REGIMENT) {
+                    auto regiment = dynamic_cast<mxregiment*>(target);
+                    if (regiment != nullptr) {
+                        race = regiment->Race();
                     }
                 }
             

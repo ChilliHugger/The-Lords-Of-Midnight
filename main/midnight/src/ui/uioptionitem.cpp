@@ -83,6 +83,7 @@ bool MenuItemNode::initWithNode( Node* option)
         return false;
     
     setEnabled(true);
+    setCascadeOpacityEnabled(true);
     
     return true;
 }
