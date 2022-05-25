@@ -43,9 +43,16 @@ static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS, RF_AI_IMPASSABLE_MO
 #define _USE_GAME_RULES_
 static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
-    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE }
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE }
 };
-static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS, RF_AI_IMPASSABLE_MOUNTAINS };
+static RULEFLAGS rule_mapping[] = {
+    RF_IMPASSABLE_MOUNTAINS,
+    RF_AI_IMPASSABLE_MOUNTAINS,
+    RF_NONE,    // RF_ADD_MOUNTAIN_PASSES
+    RF_SOLE_MOUNTAINEER,
+    RF_NONE,
+};
 #endif
 
 static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
@@ -245,8 +252,12 @@ bool panel_options::init()
 #if defined(_USE_GAME_RULES_)
     // RULES
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
-        rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]);
-        findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
+        if(rule_mapping[ii]!=RF_NONE) {
+            rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]);
+            findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
+        }else{
+            rules[ii] = false;
+        }
     }
     // END RULES
 #endif
@@ -382,6 +393,8 @@ void panel_options::SetValues()
 {
     for (auto & option : options) {
 
+        CONTINUE_IF_NULL(option.var);
+
         int item=0;
         if ( option.type == OPT_BOOL ) {
             bool* value = (bool*) option.var ;
@@ -405,7 +418,9 @@ void panel_options::SetValues()
     // RULES
     mr->settings->game_rules.Clear();
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
-        mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
+        if(rule_mapping[ii]!=RF_NONE) {
+            mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
+        }
     }
     // END RULES
 #endif
@@ -416,8 +431,11 @@ void panel_options::checkDisabledRules()
 {
 #if defined(_USE_GAME_RULES_)
     #if defined(_LOM_)
-    clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
     clearRule(ID_OPTION_RULE_3, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
+    clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
+    #endif
+    #if defined(_DDR_)
+    clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
     #endif
 #endif
 }

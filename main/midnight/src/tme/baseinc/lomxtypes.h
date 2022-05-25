@@ -589,7 +589,8 @@ using namespace chilli::types;
             RF_RULE_6                       = MXBIT(5),
             RF_RULE_7                       = MXBIT(6),
             RF_RULE_8                       = MXBIT(7),
-            RF_DEFAULT  = 0
+            RF_DEFAULT = 0,
+            RF_NONE = 0,
         };
 
 #ifdef _DEFINE_ENUMS_
