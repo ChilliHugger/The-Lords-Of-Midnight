@@ -191,6 +191,27 @@ mxplace*        TowerOfDoom;
     return adj_fear ;
 }
 
+//
+// Adjustments to the map to make certain locations accessible
+// when impassable mountains is enabled. Controlled by RF_ADD_MOUNTAIN_PASSES
+//
+static int mountain_pass_adjustments[][3] = {
+    { 36,11, TN_DOWNS  }, // Tower of Ugrorn (37,10)
+    { 12,26, TN_FOREST }, // Tower of Coroth (13,25)
+    { 12,27, TN_FOREST },
+    { 20,33, TN_PLAINS }, // Tower of Dorak (19,32)
+    { 18,31, TN_PLAINS },
+    {  9,47, TN_DOWNS  }, // Keep of Torkren (8,48)
+    {  7,32, TN_PLAINS }, // Cavern of Ogrim (8,31)
+    { 38,49, TN_FOREST }, // Tower or Morning (39,50)
+    { 38,51, TN_FOREST },
+    { 57,54, TN_DOWNS  }, // A Keep in the domain of Corelay (56,55)
+    { 57,56, TN_PLAINS },
+                          // Village in the domain of Corelay (49,54)
+    { 49,56, TN_DOWNS  }, // Lake in the domain of Corelay (50,55)
+                          // Ruin in the domain of Corelay (48,56)
+    { 57,58, TN_DOWNS  }, // Henge in the domain of Corlay (58,59)
+};
 
 void lom_x::initialiseAfterCreate(u32 version)
 {
@@ -199,6 +220,12 @@ void lom_x::initialiseAfterCreate(u32 version)
         auto warriors = mx->UnitById(1);
         auto riders = mx->UnitById(2);
         swap(riders->success, warriors->success);
+    }
+    
+    if(mx->isRuleEnabled(RF_ADD_MOUNTAIN_PASSES)) {
+        for( auto adj : mountain_pass_adjustments ) {
+            mx->gamemap->GetAt(mxgridref(adj[0], adj[1])).terrain = adj[2];
+        }
     }
     
     mxscenario::initialiseAfterCreate(version);

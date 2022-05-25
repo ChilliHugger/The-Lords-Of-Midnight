@@ -583,7 +583,7 @@ using namespace chilli::types;
         enum RULEFLAGS : u64 {
             RF_IMPASSABLE_MOUNTAINS         = MXBIT(0),
             RF_AI_IMPASSABLE_MOUNTAINS      = MXBIT(1),
-            RF_RULE_3                       = MXBIT(2),
+            RF_ADD_MOUNTAIN_PASSES          = MXBIT(2),
             RF_RULE_4                       = MXBIT(3),
             RF_RULE_5                       = MXBIT(4),
             RF_RULE_6                       = MXBIT(5),

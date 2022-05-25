@@ -12,7 +12,6 @@
 #include "panel_options.h"
 #include "panel_mainmenu.h"
 
-
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 #include "../system/settingsmanager.h"
@@ -24,13 +23,29 @@
 #include "../ui/uitextmenu.h"
 #include "../ui/uioptionitem.h"
 
-
 #include "../frontend/language.h"
 
 USING_NS_CC;
 USING_NS_CC_UI;
 
+
+
+#if defined(_LOM_)
 #define _USE_GAME_RULES_
+static uitextmenuitem items_rules[] = {
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE }
+};
+static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS, RF_AI_IMPASSABLE_MOUNTAINS, RF_ADD_MOUNTAIN_PASSES };
+#elif defined(_DDR_)
+#define _USE_GAME_RULES_
+static uitextmenuitem items_rules[] = {
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE }
+};
+static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS, RF_AI_IMPASSABLE_MOUNTAINS };
+#endif
 
 static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
 static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
@@ -118,16 +133,6 @@ static uitextmenuitem items_help[] = {
 #endif
 };
 
-#if defined(_USE_GAME_RULES_)
-static uitextmenuitem items_rules[] = {
-    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
-    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE }
-};
-
-#else
-static uitextmenuitem items_rules[0];
-#endif
-
 static option_t options[] = {
     
     {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff,               nullptr, false },
@@ -155,11 +160,10 @@ static option_t options[] = {
 
     {   ID_OPTION_RULE_1,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_2,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-     
+    {   ID_OPTION_RULE_3,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+          
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
-
-static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS, RF_AI_IMPASSABLE_MOUNTAINS };
 
 option_t* findOption(int id)
 {
@@ -226,12 +230,14 @@ bool panel_options::init()
         findOption(ID_OPTION_SCREENMODE)->text = values_screen2;
     }
         
+#if defined(_USE_GAME_RULES_)
     // RULES
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
         rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]);
         findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
     }
     // END RULES
+#endif
         
     
     SetMenu(ID_MENU_DISPLAY);
@@ -321,10 +327,12 @@ void panel_options::SetMenu ( int id )
         SetSubMenu(items_display,NUMELE(items_display));
         SetValues();
         return;
+#if defined(_USE_GAME_RULES_)
     }else if ( id == ID_MENU_RULES ) {
         SetSubMenu(items_rules,NUMELE(items_rules));
         SetValues();
         return;
+#endif
     } else if ( id == ID_MENU_CONTROL ) {
 
         // check if keyboard available
@@ -376,12 +384,15 @@ void panel_options::SetValues()
         
     }
     
+#if defined(_USE_GAME_RULES_)
     // RULES
     mr->settings->game_rules.Clear();
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
         mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
     }
     // END RULES
+#endif
+
 }
 
 void panel_options::CreateMainMenu()
