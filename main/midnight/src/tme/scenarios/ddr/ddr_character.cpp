@@ -300,7 +300,7 @@ namespace tme {
     {
         // are we on our preferred terrain 0x7354
         // This replicates the original spectrum BUG
-        if(riding) {
+        if(!riding) {
             if( race==RA_MOONPRINCE )
                 return TN_FORTRESS;
             if( race==RA_WISE )
@@ -352,11 +352,14 @@ namespace tme {
 
     MXRESULT ddr_character::Cmd_WalkForward ( bool perform_seek )
     {
-    int                TimeCost;
+    int             TimeCost;
     mxrace*         rinfo;
     mxterrain*      tinfo;
-    mxterrain_t        t;
+    mxterrain_t     t;
+    bool            fastTunnels = false;
 
+        // NOTE: A time amount of 1 = 15 minutes
+        //
         rinfo = mx->RaceById(Race());
 
         // remove army from location
@@ -366,8 +369,12 @@ namespace tme {
         t = (mxterrain_t)mx->gamemap->GetAt ( location+looking ).terrain ;
         t = mx->scenario->toScenarioTerrain(t);
         
-        if ( IsInTunnel() )
+        if ( IsInTunnel() ) {
+            if(mx->isRuleEnabled(RF_FAST_TUNNELS)) {
+                fastTunnels = true;
+            }
             t=TN_ICYWASTE;
+        }
         
         // start with intial terrain
         tinfo = mx->TerrainById( t );
@@ -381,10 +388,17 @@ namespace tme {
         
         // adjust for race base
         // are we on horseback?
-        if ( !IsRiding() )
-            TimeCost += rinfo->InitialMovementValue(); 
-        else
-            TimeCost += rinfo->RidingMovementMultiplier() ;
+        int raceAdjustment = !IsRiding()
+            ? rinfo->InitialMovementValue()
+            : rinfo->RidingMovementMultiplier();
+
+        if (fastTunnels) {
+            if(Race()==RA_DWARF || Race() == RA_GIANT) {
+                raceAdjustment = 2;
+            }
+        }
+        
+        TimeCost += raceAdjustment;
         
         // are we moving diagonally?
         if ( Looking()&1 )
@@ -393,11 +407,13 @@ namespace tme {
         // check mist
         // this looks like a bug to me, why be affected by mist when in a tunnel?
         //
-        if ( mx->gamemap->GetAt ( location+looking ).IsMisty() ) {
-            if ( rinfo->MistTimeAffect() ) {
-                DecreaseEnergy(0);
-                TimeCost += rinfo->MistTimeAffect();
-                DecreaseDespondency( rinfo->MistDespondecyAffect() ) ;
+        if (!fastTunnels) {
+            if ( mx->gamemap->GetAt ( location+looking ).IsMisty() ) {
+                if ( rinfo->MistTimeAffect() ) {
+                    DecreaseEnergy(0);
+                    TimeCost += rinfo->MistTimeAffect();
+                    DecreaseDespondency( rinfo->MistDespondecyAffect() ) ;
+                }
             }
         }
 
@@ -415,6 +431,14 @@ namespace tme {
         // check slow
         if ( Traits().Is(ct_slow) )
             TimeCost += 1;
+
+        if(fastTunnels) {
+            if(Race()==RA_DWARF || Race() == RA_GIANT) {
+                TimeCost /= 3;
+            }else{
+                TimeCost /= 2;
+            }
+        }
 
         // mountains sap more energy for everyone except giants
         if ( t == TN_MOUNTAIN || t == TN_MOUNTAIN2 ) {

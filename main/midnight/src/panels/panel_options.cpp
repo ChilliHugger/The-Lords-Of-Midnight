@@ -37,14 +37,15 @@ static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
     { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
     { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
-    { ID_OPTION_RULE_5,                 {OPTIONS_SCREEN_RULE_5},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE }
+    { ID_OPTION_RULE_5,                 {OPTIONS_SCREEN_RULE_5},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE }
 };
 static RULEFLAGS rule_mapping[] = {
     RF_IMPASSABLE_MOUNTAINS,
     RF_AI_IMPASSABLE_MOUNTAINS,
     RF_ADD_MOUNTAIN_PASSES,
     RF_SOLE_MOUNTAINEER,
-    RF_LOM_UNRECRUITABLE_FEY
+    RF_LOM_UNRECRUITABLE_FEY,
+    RF_NONE                     // RF_FAST_TUNNELS
 };
 
 #elif defined(_DDR_)
@@ -52,14 +53,16 @@ static RULEFLAGS rule_mapping[] = {
 static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
     { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
-    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE }
+    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_RULE_6,                 {OPTIONS_SCREEN_RULE_6},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE }
 };
 static RULEFLAGS rule_mapping[] = {
     RF_IMPASSABLE_MOUNTAINS,
     RF_AI_IMPASSABLE_MOUNTAINS,
-    RF_NONE,    // RF_ADD_MOUNTAIN_PASSES
+    RF_NONE,                    // RF_ADD_MOUNTAIN_PASSES
     RF_SOLE_MOUNTAINEER,
-    RF_NONE,
+    RF_NONE,                    // RF_LOM_UNRECRUITABLE_FEY
+    RF_FAST_TUNNELS
 };
 #endif
 
@@ -179,7 +182,8 @@ static option_t options[] = {
     {   ID_OPTION_RULE_3,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_4,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_5,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-               
+    {   ID_OPTION_RULE_6,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+                  
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
