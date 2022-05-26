@@ -192,23 +192,22 @@ using namespace chilli::types;
             // with backward compatability issues
             
             // ddr
-            TN_PLAINS2          =    16,
-            
-            TN_MOUNTAIN2        =    17,
-            TN_FOREST2          =    18,
-            TN_HILLS            =    19,
-            TN_GATE             =    20, // tunnel exit/entrance
-            TN_TEMPLE           =    21, // tunnel exit/entrance
-            TN_PIT              =    22, // tunnel exit/entrance
-            TN_PALACE           =    23, // tunnel exit/entrance
-            TN_FORTRESS         =    24,
-            TN_HALL             =    25,
-            TN_HUT              =    26,
-            TN_WATCHTOWER       =    27,
-            TN_CITY             =    28,
-            TN_FOUNTAIN         =    29,
-            TN_STONES           =    30,
-            TN_ICYWASTE         =    31,
+            TN_PLAINS2          =    16, // 0
+            TN_MOUNTAIN2        =    17, // 1
+            TN_FOREST2          =    18, // 2
+            TN_HILLS            =    19, // 3
+            TN_GATE             =    20, // 4 tunnel exit/entrance
+            TN_TEMPLE           =    21, // 5 tunnel exit/entrance
+            TN_PIT              =    22, // 6 tunnel exit/entrance
+            TN_PALACE           =    23, // 7 tunnel exit/entrance
+            TN_FORTRESS         =    24, // 8
+            TN_HALL             =    25, // 9
+            TN_HUT              =    26, // 10
+            TN_WATCHTOWER       =    27, // 11
+            TN_CITY             =    28, // 12
+            TN_FOUNTAIN         =    29, // 13
+            TN_STONES           =    30, // 14
+            TN_ICYWASTE         =    31, // 15
             TN_UNUSED_32        =    32,
             
             // citadel

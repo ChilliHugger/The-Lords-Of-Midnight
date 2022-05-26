@@ -295,56 +295,60 @@ namespace tme {
     {
         despondency = BSub(despondency, amount, 0);
     }
-    
-    
-//    [ 1]     RA_DOOMGUARD 1 2.000000 2 0
-    
-//    [ 2]          RA_FREE 2 3.000000 2 2
-//    [ 3]           RA_FEY 2 2.000000 2 2
-//    [ 4]          RA_TARG 2 2.000000 2 2
-//    [ 5]          RA_WISE 2 2.000000 2 2
-//    [ 6]        RA_MORKIN 2 2.000000 2 2
-//    [ 7]      RA_SKULKRIN 2 2.000000 2 2
-//    [ 8]        RA_DRAGON 1 0.000000 2 0
-//    [ 9]         RA_TROLL 0 0.000000 2 2
-//    [10]    RA_MOONPRINCE 3 3.000000 2 2
-//    [11]     RA_BARBARIAN 5 3.000000 2 2
-//    [12]       RA_ICELORD 3 2.000000 2 0
-//    [13]         RA_GIANT 5 0.000000 2 2
-//    [14]  RA_HEARTSTEALER 2 0.000000 2 0
-//    [15]         RA_DWARF 5 0.000000 2 2
-//    [16]      RA_TARITHEL 2 0.000000 2 2
-//    [17]      RA_DOOMDARK 1 2.000000 2 0
-    
-//    [16]       TN_PLAINS2 1
-//    [17]     TN_MOUNTAIN2 8
-//    [18]       TN_FOREST2 4
-//    [19]          TN_HILL 3
-//    [20]          TN_GATE 2
-//    [21]        TN_TEMPLE 2
-//    [22]           TN_PIT 2
-//    [23]        TN_PALACE 2
-//    [24]      TN_FORTRESS 2
-//    [25]          TN_HALL 2
-//    [26]           TN_HUT 2
-//    [27]    TN_WATCHTOWER 2
-//    [28]          TN_CITY 2
-//    [29]      TN_FOUNTAIN 2
-//    [30]         TN_STONE 2
-//    [31]      TN_ICYWASTE 0
-    
-//    L7364
-//      DB 003h,006h    ; moonprince
-//      DB 003h,006h    ; free
-//      DB 002h,004h    ; wise
-//      DB 003h,006h    ; fey
-//      DB 005h,008h    ; barbarian
-//      DB 003h,005h    ; icelord
-//      DB 002h            ; tarithel
-//      DB 005h            ; giant
-//      DB 002h            ; heartstealer
-//      DB 005h            ; dwarf
-    
+
+    static mxterrain_t GetRacePeferredTerrain( mxrace_t race, bool riding )
+    {
+        // are we on our preferred terrain 0x7354
+        // This replicates the original spectrum BUG
+        if(riding) {
+            if( race==RA_MOONPRINCE )
+                return TN_FORTRESS;
+            if( race==RA_WISE )
+                return TN_HILLS;
+        }else{
+            if( race==RA_MOONPRINCE )
+                return TN_MOUNTAIN2;
+            if( race==RA_WISE )
+                return TN_GATE;
+        }
+        return TN_FOREST2;
+    }
+
+    static mxterrain_t GetRacePeferredTerrainFixed( mxrace_t race )
+    {
+        switch( race ) {
+            case RA_MOONPRINCE:
+                return TN_CITY;
+            case RA_FREE:
+                return TN_PLAINS2;
+            case RA_WISE:
+                return TN_WATCHTOWER;
+            case RA_FEY:
+            case RA_TARITHEL:
+                return TN_FOREST2;
+            case RA_BARBARIAN:
+                return TN_HILLS;
+            case RA_ICELORD:
+                return TN_PLAINS;
+            case RA_GIANT:
+                return TN_MOUNTAIN2;
+            case RA_HEARTSTEALER:
+                return TN_PLAINS;
+            case RA_DWARF:
+                return TN_ICYWASTE; // tunnels
+            default:
+                return TN_PLAINS;
+// NOT DDR
+//            case RA_DOOMGUARD:
+//            case RA_TARG:
+//            case RA_MORKIN:
+//            case RA_SKULKRIN:
+//            case RA_DRAGON:
+//            case RA_TROLL:
+//            case RA_DOOMDARK:
+//            case RA_MIDWINTER:
+        }
+    }
 
     MXRESULT ddr_character::Cmd_WalkForward ( bool perform_seek )
     {
@@ -367,12 +371,14 @@ namespace tme {
         
         // start with intial terrain
         tinfo = mx->TerrainById( t );
-        
         TimeCost = tinfo->MovementCost();
         
         // adjust for race/terrain
-        //TimeCost += rinfo->TerrainMovementModifier( t );
-
+        auto preferredTerrain = GetRacePeferredTerrain(Race(),IsRiding()) ;
+        if( t == preferredTerrain ) {
+            TimeCost = 0;
+        }
+        
         // adjust for race base
         // are we on horseback?
         if ( !IsRiding() )
@@ -385,6 +391,8 @@ namespace tme {
             TimeCost += rinfo->DiagonalMovementModifier();
 
         // check mist
+        // this looks like a bug to me, why be affected by mist when in a tunnel?
+        //
         if ( mx->gamemap->GetAt ( location+looking ).IsMisty() ) {
             if ( rinfo->MistTimeAffect() ) {
                 DecreaseEnergy(0);
