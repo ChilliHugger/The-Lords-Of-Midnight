@@ -546,11 +546,10 @@ namespace tme {
                 return MX_OK ;
             }
 
-            if ( ISARG("CANFIGHT") ) {    
-                mxlocinfo* locinfo = character->GetLocInfo();
+            if ( ISARG("CANFIGHT") ) {
+                std::unique_ptr<mxlocinfo> locinfo ( character->GetLocInfo() );
                 mxobject* obj = mx->ObjectById(locinfo->fightthing);
                 argv = (s32)character->CheckFightObject( obj );
-                SAFEDELETE ( locinfo );
                 return MX_OK ;
             }
             
@@ -644,8 +643,8 @@ namespace tme {
                     return MX_INVALID_ARGUMENT_COUNT;
 #endif
                 
-                mxlocinfo* locinfo = character->GetLocInfo();
-
+                std::unique_ptr<mxlocinfo> locinfo ( character->GetLocInfo() );
+        
                 argv[0] = (s32)14;
                 argv[1] = (s32)locinfo->looking ;
                 argv[2] = (s32)MAKE_LOCID (locinfo->loc_lookingat.x,locinfo->loc_lookingat.y) ;
@@ -657,8 +656,8 @@ namespace tme {
                 argv[7] = locinfo->foe.riders ;
                 argv[8] = locinfo->friends.warriors ;
                 argv[9] = locinfo->friends.riders ;
-                argv[10] = locinfo->doomdark.warriors ;
-                argv[11] = locinfo->doomdark.riders ;
+                argv[10] = locinfo->regiments.warriors ;
+                argv[11] = locinfo->regiments.riders ;
 
                 argv[13] = mxentity::SafeIdt(locinfo->stubborn_follower_battle) ;
                 argv[14] = mxentity::SafeIdt(locinfo->stubborn_follower_move) ;
@@ -674,8 +673,6 @@ namespace tme {
                     argv[15] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }
                 
-                SAFEDELETE ( locinfo );
-
                 return MX_OK ;
             }
         }
@@ -702,8 +699,8 @@ namespace tme {
                 argv[4] = locinfo->foe.riders ;
                 argv[5] = locinfo->friends.warriors ;
                 argv[6] = locinfo->friends.riders ;
-                argv[7] = locinfo->doomdark.warriors ;
-                argv[8] = locinfo->doomdark.riders ;
+                argv[7] = locinfo->regiments.warriors ;
+                argv[8] = locinfo->regiments.riders ;
                         
 #if defined(_DDR_)
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {

@@ -118,30 +118,10 @@ namespace tme {
                 info->flags.Set(lif_use);
         }
         
-        // TODO: This is a double check of corwardess and attacking
-        // This is because of the need for the DDR character loyalty check
-        // this attack check should be moved in to character in some way
-        // so that it is only done once
-        
-        if (!IsCoward()) {
-        
-            if(!mx->scenario->isLocationImpassable(info->loc_infront, this)) {
-                int enemies_infront = 0;
-                for (int ii=0; ii<info->infront->objCharacters.Count(); ii++ ) {
-                    mxcharacter* c = (mxcharacter*)info->infront->objCharacters[ii];
-                    if ( c->Loyalty() != Loyalty() ) {
-                        enemies_infront++;
-                        // we only care about 1
-                        // so short circuit
-                        break;
-                    }
-                }
-                
-                if ( enemies_infront > 0) {
-                    if ( !sv_cheat_armies_noblock )
-                        info->flags.Reset(lif_moveforward); // = FALSE;
-                    info->flags.Set(lif_enterbattle); // = TRUE ;
-                }
+        // we shouldn't leave a location that has enemies in
+        if( IsAIControlled() ) {
+            if( info->foe.armies || info->foe.characters ) {
+                info->flags.Reset(lif_moveforward);
             }
         }
         
@@ -164,8 +144,6 @@ namespace tme {
         
         return info;
     }
-    
-    
     
     mxobject* ddr_character::Cmd_Fight()
     {
@@ -735,7 +713,7 @@ namespace tme {
             // 2. our liege becomes the recruiting character
             liege = character->Liege() ;
             // 3. our loyalty race becomes recruiting character loyalty race
-            loyalty = character->Loyalty() ;
+            loyalty = character->NormalisedLoyalty() ;
             // 4. our foe becomes recruiting character's foe
             foe = character->Foe();
             // 5. traits
@@ -771,12 +749,9 @@ namespace tme {
         if ( Carrying() != desired_object )
             return MX_FAILED;
         
-        
         //
         mx->text->oinfo = Carrying() ;
 
-        
-        
         // check power!
         // check type
         switch (Carrying()->Id()) {
@@ -822,7 +797,6 @@ namespace tme {
             case OB_RUNES_FINORN: //3
                 // rorthron
                 
-                
                 for ( int ii=0; ii<sv_characters; ii++ ) {
                     mxcharacter* c = mx->CharacterById(ii+1);
                     if ( c->IsAlive() && !c->IsAIControlled() ) {
@@ -848,12 +822,8 @@ namespace tme {
         return MX_OK ;
     }
     
-    
-    
     void ddr_character::AICheckRecruitSoldiers ( void )
     {
-        //
-        
         if ( !IsAIControlled() )
             return;
 
@@ -864,7 +834,7 @@ namespace tme {
         if ( stronghold == nullptr )
             return;
         
-        if ( stronghold->Loyalty() != Loyalty() )
+        if ( !stronghold->IsFriend(this) )
             return;
         
         if ( stronghold->OccupyingRace() != Race() )
@@ -1079,8 +1049,8 @@ mxdir_t calcDirection ( mxgridref loc1, mxgridref loc2 )
   else pick new orders
 2. Check if can pickup object
 3. Choose Direction
-  If can't move forward
-    Way forward is blocked and it's not dawn then stop turn
+  If can't move forward, maybe because someone is here or blocked
+    If way forward is blocked and it's not dawn then stop turn
     else 50% chance to stop turn (8)
   If reached target the stop turn (8)
 4. Walk forward
@@ -1131,8 +1101,7 @@ void ddr_character::moveCharacterSomewhere ( void )
         MXTRACE("NOT Processing %s - DEAD", Longname().c_str());
         return;
     }
-    
-    
+        
     MXTRACE("Processing %s at location [%d,%d]", Longname().c_str(), location.x, location.y);
     MXTRACE("  START");
     
@@ -1158,7 +1127,8 @@ void ddr_character::moveCharacterSomewhere ( void )
         
         looking = direction;
         
-        mxlocinfo* info = this->GetLocInfo();
+        std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+        
         if ( !(info->flags&lif_moveforward) ) {
             if ( !IsDawn() || info->flags&lif_blocked ) {
                 MXTRACE("  Blocked (not dawn).");
@@ -1170,7 +1140,6 @@ void ddr_character::moveCharacterSomewhere ( void )
                 }
             }
         }
-        SAFEDELETE(info);
 
         if ( reachedTarget ) {
             MXTRACE("  Reached Target.");
@@ -1199,16 +1168,18 @@ void ddr_character::moveCharacterSomewhere ( void )
     // is there 1 enemy here?
     // are we at a stronghold?
     
-    mxlocinfo* info = GetLocInfo();
+    std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+   
     bool atStronghold = info->objStrongholds.Count() > 0 ;
     
     if ( !atStronghold ) {
         int enemies=0;
         mxcharacter* recruit=NULL;
 
+        // TODO: Check this info against foe.enemies and foe.characters
         for (u32 ii = 0; ii <info->objCharacters.Count(); ii++) {
             mxcharacter* character = (mxcharacter*)info->objCharacters[ii];
-            if ( character->Loyalty() != Loyalty() ) {
+            if ( !IsFriend(character) ) {
                 recruit=character;
                 enemies++;
             }
@@ -1223,7 +1194,6 @@ void ddr_character::moveCharacterSomewhere ( void )
         }
     }
     
-    SAFEDELETE(info);
     MXTRACE("  END");
 }
 
@@ -1238,8 +1208,6 @@ mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )
     MXTRACE("%s has failed to recruit %s", Longname().c_str(),  character->Longname().c_str());
     return NULL ;
 }
-
-
 
 void ddr_character::StartDawn ( void )
 {
@@ -1315,8 +1283,3 @@ void ddr_character::Displace()
 } // namespace tme
 
 #endif // _DDR_
-
-
-
-
-

@@ -63,7 +63,7 @@ namespace tme {
     //
     // RETURNS:    mxdir_t
     //
-    mxdir_t mxgridref::DirFromHere ( mxgridref loc ) const
+    mxdir_t mxgridref::DirFromHere ( const mxgridref& loc ) const
     {
         int dx = loc.x-x;
         if ( dx ) dx = SIGN(dx);
@@ -138,7 +138,7 @@ namespace tme {
     //
     // RETURNS:    s32 - distance
     //
-    s32 mxgridref::operator- ( mxgridref loc )
+    s32 mxgridref::operator- ( const mxgridref& loc )
     {
     s32 high, low;
         high = ABS((s32)x - (s32)loc.x);
@@ -157,7 +157,7 @@ namespace tme {
     //
     // RETURNS:    true/false
     //
-    bool mxgridref::operator == ( mxgridref& loc )
+    bool mxgridref::operator == ( const mxgridref& loc )
     {
         return (loc.x==x) && (loc.y==y) ;
     }
@@ -172,7 +172,7 @@ namespace tme {
     //
     // RETURNS:    true/false
     //
-    bool mxgridref::operator != ( mxgridref& loc )
+    bool mxgridref::operator != ( const mxgridref& loc )
     {
         return (loc.x!=x) || (loc.y!=y) ;
     }

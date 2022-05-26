@@ -68,9 +68,9 @@ namespace tme {
     
     mxrace_t ddr_stronghold::Loyalty ( void )
     {
-        if ( Occupier() == NULL )
-            return RA_NONE;
-        return Occupier()->Loyalty();
+        if ( Occupier() == nullptr )
+            return mxstronghold::Loyalty();
+        return Occupier()->NormalisedLoyalty();
     }
     
     MXRESULT ddr_stronghold::FillExportData ( info_t* data )

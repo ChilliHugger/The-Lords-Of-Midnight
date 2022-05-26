@@ -227,7 +227,7 @@ namespace tme {
 #endif
 #if defined(_DDR_)
                     
-                    if ( static_cast<ddr_stronghold*>(stronghold)->Loyalty() == Loyalty() && stronghold->OccupyingRace() == Race() ) {
+                    if ( static_cast<ddr_stronghold*>(stronghold)->IsFriend(this) && stronghold->OccupyingRace() == Race() ) {
 #endif
                     // can we recruit men ?
                     // this is not an exact check, a stronghold CAN have less than the minimum
@@ -313,7 +313,6 @@ namespace tme {
                     for ( u32 ii=0; ii<followers.Count(); ii++ ) {
                         mxcharacter* follower = (mxcharacter*) followers[ii];
                         if ( follower->IsCoward() ) {
-                            //info->flags.Reset(lif_enterbattle) ;
                             info->stubborn_follower_battle=follower;
                             break;
                         }
@@ -710,23 +709,20 @@ namespace tme {
         MXRESULT mxcharacter::Cmd_RecruitMen ( mxstronghold* stronghold, u32 qty )
         {
         s32                    delta;
-        mxlocinfo*            info;
         mxstronghold*        def_stronghold = NULL ;
 
             SetLastCommand ( CMD_RECRUITMEN, IDT_NONE );
 
             // get location info
-            info = GetLocInfo();
+            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+        
             if ( info->objStrongholds.Count() )
                     def_stronghold = (mxstronghold*)info->objStrongholds[0] ;
 
             // are we allowed to recruitmen ?
             if ( !info->flags.Is(lif_recruitmen) ) {
-                    SAFEDELETE ( info );
-                    return MX_FAILED ;
+                return MX_FAILED ;
             }
-
-            SAFEDELETE ( info );
 
             // get the default stronghold
             if ( stronghold == NULL ) {
@@ -758,23 +754,20 @@ namespace tme {
 
         MXRESULT mxcharacter::Cmd_PostMen ( mxstronghold* stronghold, u32 qty )
         {
-        mxlocinfo*            info;
         mxstronghold*    def_stronghold = NULL ;
 
             SetLastCommand ( CMD_POSTMEN, IDT_NONE );
 
             // get location info
-            info = GetLocInfo();
+            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+        
             if ( info->objStrongholds.Count() )
                     def_stronghold = (mxstronghold*)info->objStrongholds[0] ;
 
             // are we allowed to postmen ?
             if ( !info->flags.Is(lif_guardmen) ) {
-                SAFEDELETE ( info );
-                    return MX_FAILED ;
+                return MX_FAILED ;
             }
-
-            SAFEDELETE ( info );
 
             // get the default stronghold
             if ( stronghold == NULL ) {
@@ -801,7 +794,6 @@ namespace tme {
 
         mxcharacter* mxcharacter::Cmd_Approach ( mxcharacter* character )
         {
-        mxlocinfo*            info;
         mxcharacter*    def_character=NULL ;
 
             SetLastCommand ( CMD_APPROACH, IDT_NONE );
@@ -816,19 +808,17 @@ namespace tme {
 #endif
             
             // get location info
-            info = GetLocInfo();
+            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+    
             if ( info->objRecruit.Count() )
                 def_character = (mxcharacter*)info->objRecruit[0] ;
 
 #if defined(_LOM_)
             // are we allowed to approach ?
             if ( !info->flags.Is(lif_recruitchar) ) {
-                    SAFEDELETE ( info );
-                    return NULL ;
+                return NULL ;
             }
 #endif
-
-            SAFEDELETE ( info );
 
             // get the default character
             if ( character == NULL ) {
@@ -918,12 +908,12 @@ namespace tme {
             liege = c; //->Liege() ;
             
             // 3. our loyalty race becomes recruiting character loyalty race
-            loyalty = c->Loyalty() ;
+            loyalty = c->NormalisedLoyalty() ;
             
             // 4. get the my foe's loyalty, if they are loyal to the recruiting char's loyalty
             // then we need the recruiting characters foe
             // 
-            if ( foe->Loyalty() == c->Loyalty() ) {
+            if ( foe->NormalisedLoyalty() == loyalty ) {
                 foe = c->Foe() ;
             }
 
@@ -967,12 +957,12 @@ namespace tme {
             // 2. our liege becomes the recruiting character
             liege = c->Liege() ;
             // 3. our loyalty race becomes recruiting character loyalty race
-            loyalty = c->Loyalty() ;
+            loyalty = c->NormalisedLoyalty() ;
             // 4. get the my foe's loyalty, if they are loyal to the recruiting char's loyalty
             // then we need the recruiting characters foe
             // 
             mxcharacter* foe = Foe();
-            if ( foe->Loyalty() == c->Loyalty() ) {
+            if ( foe->NormalisedLoyalty() == loyalty ) {
                 foe = c->Foe() ;
             }
             
@@ -995,10 +985,10 @@ namespace tme {
             if ( IsFollowing() )
                 return MX_FAILED ;
             
-            mxlocinfo* info = GetLocInfo();
+            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+        
             bool battle = info->flags.Is(lif_enterbattle) ;
             mxcharacter* stubborn_follower = info->stubborn_follower_battle;
-            SAFEDELETE ( info );
             if ( !battle || stubborn_follower )
                 return MX_FAILED;
             
@@ -1258,7 +1248,7 @@ namespace tme {
             
             
             // we must be loyal to the same character
-            if ( c->Loyalty() != Loyalty() )
+            if ( !IsFriend(c) )
                 return FALSE ;
             
             return TRUE ;
@@ -1605,10 +1595,15 @@ namespace tme {
             return ar ;
         }
 
+        mxrace_t mxcharacter::NormalisedLoyalty() const
+        {
+            return loyalty == RA_NONE ? Race() : loyalty ;
+        }
+
         bool mxcharacter::IsFriend( const mxcharacter* c ) const
         {
             if ( c == nullptr ) return false ;
-            return loyalty == c->loyalty ;
+            return NormalisedLoyalty() == c->NormalisedLoyalty() ;
         }
 
         bool mxcharacter::IsOnSameSide ( const mxcharacter* c ) const
@@ -1622,8 +1617,6 @@ namespace tme {
                 return this ;
             return liege->CommanderInChief();
         }
-
-
 
         const std::string& mxcharacter::HeOrShe() const
         { 

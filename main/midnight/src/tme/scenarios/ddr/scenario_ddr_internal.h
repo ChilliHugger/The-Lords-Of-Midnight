@@ -63,11 +63,11 @@ namespace tme {
     public:
         ddr_stronghold();
         virtual ~ddr_stronghold();
-        virtual MXRESULT FillExportData ( info_t* data );
-        virtual void Serialize ( archive& ar );
-        virtual void MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier );
+        virtual MXRESULT FillExportData ( info_t* data ) override;
+        virtual void Serialize ( archive& ar ) override;
+        virtual void MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier ) override;
         virtual void OnRespawn();
-        virtual mxrace_t Loyalty ( void );
+        virtual mxrace_t Loyalty() override ;
         PROPERTY ( u32, Energy, energy )
     protected:
         u32 energy;

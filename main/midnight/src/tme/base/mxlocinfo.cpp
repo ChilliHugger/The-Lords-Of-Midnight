@@ -53,7 +53,7 @@ namespace tme {
 
             friends.Clear();
             foe.Clear();
-            doomdark.Clear();
+            regiments.Clear();
 
             infront = NULL ;
             owner = NULL;
@@ -106,12 +106,12 @@ namespace tme {
             loc_infront = location + looking ;
 
             // now check the location in front
-            infront = new mxlocinfo(loc_infront,iowner,sel_flags);
+            infront = new mxlocinfo(loc_infront,owner,sel_flags);
             
             //TN_GATE TN_TEMPLE TN_PIT TN_PALACE
 #if defined(_DDR_)
             flags.Reset(lif_blocked);
-            if ( iowner && iowner->IsInTunnel() ) {
+            if ( owner && owner->IsInTunnel() ) {
                 // we can only move through tunnels when in a tunnel
                 if ( !infront->mapsqr.HasTunnel() || looking&1 ) {
                     flags.Reset(lif_moveforward);
@@ -138,25 +138,32 @@ namespace tme {
 
             // the only way to move forard when there is an army infront of you
             // is to enter battle
-            if ( infront->foe.armies && !mx->scenario->isLocationImpassable(loc_infront, owner) ) {
+            bool AI = owner!=nullptr ? owner->IsAIControlled() : false ;
+            if ( !AI && (infront->foe.armies || infront->foe.characters) ) {
                 if ( !sv_cheat_armies_noblock )
                     flags.Reset(lif_moveforward); // = FALSE;
-                flags.Set(lif_enterbattle); // = TRUE ;
+                    
+                if( !mx->scenario->isLocationImpassable(loc_infront, owner) ) {
+                    flags.Set(lif_enterbattle); // = TRUE ;
+                }
             }
             
             // make sure we don't take too many lords into battle
-            u32 extra= owner!=NULL ? owner->followers : 0 ;
+            u32 extra = owner!=nullptr ? owner->followers : 0 ;
             
             // but if there are too many people there, then we can't
             if ( infront->friends.armies+extra >= MAX_CHARACTERS_INLOCATION ) {
                 flags.Reset(lif_moveforward); // = FALSE;
                 flags.Reset(lif_enterbattle); // = FALSE;
+                flags.Set(lif_blocked); // = TRUE
             }
 
+#if defined(_LOM_)
             // we can't enter another battle while we are in one, which we must be
             // if we are in the same location as the enemy
-            if ( foe.armies  )
+            if ( foe.armies || foe.characters  )
                 flags.Reset(lif_enterbattle); // = FALSE ;
+#endif
 
         }
 
@@ -166,7 +173,7 @@ namespace tme {
 
             friends.Clear();
             foe.Clear();
-            doomdark.Clear();
+            regiments.Clear();
 
             // the midnightx engine stores last nights adj_stronghold
             // the scenario holds current, thus we call midnightx
@@ -357,6 +364,14 @@ namespace tme {
             // luxor is currently friend
             mxcharacter* ch_luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
 
+            const mxcharacter* ch_friend = ch_luxor;
+            const mxcharacter* ch_foe = ch_doomdark;
+            
+            if(owner!=nullptr) {
+                ch_friend = owner->CommanderInChief();
+                ch_foe = owner->CommanderInChief()->foe;
+            }
+
             FindCharactersHere();
 
             // no strongholds when under the ground
@@ -370,17 +385,17 @@ namespace tme {
             foe.Type ( IDT_ARMYTOTAL );
             foe.Location ( Location() );
             foe.adjustment=0;
-            foe.character = ch_doomdark;
+            foe.loyalty = ch_foe;
 
-            doomdark.Type ( IDT_ARMYTOTAL );
-            doomdark.Location ( Location() );
-            doomdark.adjustment=0;
-            doomdark.character = ch_doomdark;
+            regiments.Type ( IDT_ARMYTOTAL );
+            regiments.Location ( Location() );
+            regiments.adjustment=0;
+            regiments.loyalty = ch_doomdark;
 
             friends.Type ( IDT_ARMYTOTAL );
             friends.Location ( Location() );
             friends.adjustment=0;
-            friends.character = ch_luxor;
+            friends.loyalty = ch_friend;
 
             // TODO all these need to be goverened by "friendorfoe"
 
@@ -393,10 +408,9 @@ namespace tme {
 
                     bool isLoyal = stronghold->OccupyingRace() != RA_DOOMGUARD ;
 #if defined(_DDR_)
-                    isLoyal = static_cast<ddr_stronghold*>(stronghold)->Loyalty() == ch_luxor->Loyalty();
+                    isLoyal = stronghold->IsFriend(ch_friend);
 #endif
                 
-                    //if ( stronghold->Owner() && (!stronghold->Owner()->IsFriend(owner)) )  {
                     if ( !isLoyal ) {
                         foe.adjustment = success ;
                         foe.armies++;
@@ -421,7 +435,7 @@ namespace tme {
                     army->total = stronghold->TotalTroops();
                     army->success = stronghold->BattleSuccess((mxlocinfo&)*this);
                     army->killed = 0;
-                    army->loyalto = stronghold->Owner() ? stronghold->Owner()->loyalty : RA_NONE ;
+                    army->loyalto = stronghold->Loyalty() ;
                     armies.Add(army);
 
             }
@@ -443,22 +457,14 @@ namespace tme {
                     army->killed = 0;
                     army->loyalto = reg->Loyalty()->loyalty ;
 
-                    //if ( reg->Loyalty()->IsFriend(owner) ) {
-                    //    if ( army->type == UT_WARRIORS ) {
-                    //        friends.warriors+=army->total;
-                    //    } else if ( army->type == UT_RIDERS ) {
-                    //        friends.riders+=army->total;
-                    //    }
-                    //}else{
-                        if ( army->type == UT_WARRIORS ) {
-                            foe.warriors+=army->total;
-                            doomdark.warriors+=army->total;
-                        } else if ( army->type == UT_RIDERS ) {
-                            foe.riders+=army->total;
-                            doomdark.riders+=army->total;
-                        }
-                        foe.armies++;
-                    //}
+                    if ( army->type == UT_WARRIORS ) {
+                        foe.warriors+=army->total;
+                        regiments.warriors+=army->total;
+                    } else if ( army->type == UT_RIDERS ) {
+                        foe.riders+=army->total;
+                        regiments.riders+=army->total;
+                    }
+                    foe.armies++;
                     armies.Add(army);
                 }
             }
@@ -468,6 +474,9 @@ namespace tme {
 
                 mxcharacter* c = (mxcharacter*)objCharacters[ii];
 
+#if defined(_DDR_)
+                bool isFriend = c->IsFriend(ch_friend);
+#endif
                 if ( c->warriors.Total() ) {
                     auto army = new mxarmy();
                     army->armytype = AT_CHARACTER ;
@@ -477,17 +486,20 @@ namespace tme {
                     army->total = c->warriors.Total();
                     army->success = c->warriors.BattleSuccess ( (mxlocinfo&)*this, c );
                     army->killed = 0;
-                    army->loyalto = c->loyalty ;
+                    army->loyalto = c->NormalisedLoyalty() ;
 
 #if defined(_DDR_)
-                    if ( c->IsFriend(ch_luxor) ) {
+                    if ( isFriend ) {
+                        friends.characters++;
                         friends.armies++;
                         friends.warriors+=army->total;
                     }else{
+                        foe.characters++;
                         foe.armies++;
                         foe.warriors+=army->total;
                     }
 #else
+                    friends.characters++;
                     friends.armies++;
                     friends.warriors+=army->total;
 #endif
@@ -503,15 +515,19 @@ namespace tme {
                     army->total = c->riders.Total();
                     army->success = c->riders.BattleSuccess ( (mxlocinfo&)*this, c );
                     army->killed = 0;
+                    army->loyalto = c->NormalisedLoyalty() ;
 #if defined(_DDR_)
-                    if ( c->IsFriend(ch_luxor) ) {
+                    if ( isFriend ) {
+                        friends.characters++;
                         friends.armies++;
                         friends.riders+=army->total;
                     }else{
+                        foe.characters++;
                         foe.armies++;
                         foe.riders+=army->total;
                     }
 #else
+                    friends.characters++;
                     friends.armies++;
                     friends.riders+=army->total;
 #endif
@@ -525,6 +541,7 @@ namespace tme {
 
         mxarmytotal::mxarmytotal()
         {
+            Clear();
             Type( IDT_ARMYTOTAL );
         }
 

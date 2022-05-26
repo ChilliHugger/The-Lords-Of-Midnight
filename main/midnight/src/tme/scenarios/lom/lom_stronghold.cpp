@@ -38,8 +38,6 @@ namespace tme {
 
     }
 
-
-
     /*
      * Function name    : lom_tronghold::Remove
      * 

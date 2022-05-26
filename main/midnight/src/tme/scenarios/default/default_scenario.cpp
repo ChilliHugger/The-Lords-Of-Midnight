@@ -1141,8 +1141,8 @@ namespace tme {
             argv[2] = locinfo->foe.riders ;
             argv[3] = locinfo->friends.warriors ;
             argv[4] = locinfo->friends.riders ;
-            argv[5] = locinfo->doomdark.warriors ;
-            argv[6] = locinfo->doomdark.riders ;
+            argv[5] = locinfo->regiments.warriors ;
+            argv[6] = locinfo->regiments.riders ;
             argv[7] = locinfo->friends.armies;
             argv[8] = locinfo->foe.armies;
 

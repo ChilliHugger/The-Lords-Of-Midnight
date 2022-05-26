@@ -106,9 +106,7 @@ namespace tme {
             return;
         
         MXTRACE("BATTLE: [%3d] %-16s", (int)character->Id(), character->Symbol().c_str() );
-
-        //mxlocinfo* info = character->GetLocInfo();
-        
+      
         // current garrison
         auto scenario = static_cast<ddr_x*>(mx->scenario);
         auto stronghold =  static_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(character->Location()));
@@ -117,7 +115,7 @@ namespace tme {
         u32 enemies=0;
         
         if ( stronghold ) {
-            if ( stronghold->Loyalty() != character->Loyalty() ) {
+            if ( !stronghold->IsFriend(character) ) {
                 enemies++;
             }
         }
@@ -127,19 +125,20 @@ namespace tme {
         for ( u32 ii=0; ii<sv_characters; ii++ ) {
             mxcharacter* c = mx->CharacterById(ii+1);
             
-            if ( c->IsInTunnel() )
-                continue;
+            CONTINUE_IF(c->IsDead());
             
-            if ( (c->Location().x != character->Location().x) || (c->Location().y != character->Location().y) )
-                continue;
+            CONTINUE_IF(c->IsInTunnel());
+            
+            CONTINUE_IF(c->Location() != character->Location());
             
             characters_here.Add(c);
-            if ( c->Loyalty() != character->Loyalty() )
+            if ( !character->IsFriend(c) )
                 enemies++;
         }
         
         // anything to fight?
         if ( enemies==0 ) {
+            MXTRACE("  No enemies!" );
             return;
         }
         
@@ -164,7 +163,6 @@ namespace tme {
             BattleVsCharacter(attacker);
         }
         
-        
         if ( stronghold ) {
             MXTRACE("Stronghold=%-16s", stronghold->Symbol().c_str());
             doBattle(stronghold,0);
@@ -173,19 +171,19 @@ namespace tme {
     
     void ddr_battle::BattleVsCharacter( mxcharacter* character )
     {
-         s32 success=0;
-         auto attacker = static_cast<ddr_character*>(character);
+        s32 success=0;
+        auto attacker = static_cast<ddr_character*>(character);
         auto object = static_cast<ddr_object*>(attacker->Carrying());
         
          // check power in battle
-         if ( object != NULL && object->power == OP_BATTLE )
-         {
-             success=255;
-         }
-         else
-         {
-             success= (((attacker->energy/2)+(attacker->despondency/2))/2)+attacker->reckless/2;
-         }
+        if ( object != nullptr && object->power == OP_BATTLE )
+        {
+            success=255;
+        }
+        else
+        {
+            success= (((attacker->energy/2)+(attacker->despondency/2))/2)+attacker->reckless/2;
+        }
          
         doBattle( attacker, success );
         
@@ -196,13 +194,10 @@ namespace tme {
     // BUT the defender success chance is purely a random number between 0 and 255
     //
     
-    
-    
-    
     void ddr_battle::doBattle ( mxitem* attacker, s32 attackers_success)
     {
-        ddr_character* attacker_character=NULL;
-        ddr_stronghold* attacker_stronghold=NULL;
+        ddr_character* attacker_character=nullptr;
+        ddr_stronghold* attacker_stronghold=nullptr;
         
         u32 rnd = mxrandom(255);
         u32 start = rnd % characters_here.Count();
@@ -214,7 +209,7 @@ namespace tme {
         
         if ( attacker->Type() == IDT_CHARACTER ) {
             attacker_character = static_cast<ddr_character*>(attacker);
-            loyalty = attacker_character->Loyalty();
+            loyalty = attacker_character->NormalisedLoyalty();
         }
         else if ( attacker->Type() == IDT_STRONGHOLD ) {
             attacker_stronghold= static_cast<ddr_stronghold*>(attacker);
@@ -224,7 +219,7 @@ namespace tme {
         
         // find someone to fight
         ddr_character* defender = static_cast<ddr_character*>(characters_here[start]);
-        while ( defender->IsDead() || defender->Loyalty() == loyalty ) {
+        while ( defender->IsDead() || defender->NormalisedLoyalty() == loyalty ) {
             
             // TODO: Defender may have been displaced
             
@@ -247,13 +242,11 @@ namespace tme {
             
             attacker_character->Flags().Set(cf_inbattle);
             attacker_character->battleloc = attacker->Location();
-
             
             if ( !attacker_character->Flags().Is(cf_killed_foe))
                 attacker_character->fighting_against = defender ;
                     
             s32 defenders_success = mxrandom(255);
-            
             
             MXTRACE("    %-16s (%d) vs %-16s (%d)", attacker->Symbol().c_str(), (int)attackers_success
                                                     , defender->Symbol().c_str(), (int)defenders_success);

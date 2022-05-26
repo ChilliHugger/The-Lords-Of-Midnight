@@ -812,7 +812,9 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             virtual u32 Remove ( mxrace_t race, mxunit_t type, u32 total );
             virtual u32 Add ( mxrace_t race, mxunit_t type, u32 total );
             virtual void MakeChangeSides( mxrace_t race, mxcharacter* newoccupier );
-
+            virtual mxrace_t Loyalty ();
+            virtual bool IsFriend( const mxcharacter* character );
+        
             void CheckForZero ( void );
 
             PROPERTY( u32, TotalTroops, totaltroops );
@@ -1050,6 +1052,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             virtual bool RemoveFollower ( mxcharacter* c );
 
             //
+            mxrace_t NormalisedLoyalty() const;
             bool IsFriend( const mxcharacter* c ) const;
             bool IsOnSameSide ( const mxcharacter* c ) const;
             const mxcharacter* CommanderInChief ( void ) const;
@@ -1121,14 +1124,15 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             mxarmytotal();
             virtual ~mxarmytotal();
 
-            void Clear() { warriors=riders=armies=adjustment=0; character=NULL;}
+            void Clear() { warriors=riders=armies=adjustment=characters=0; loyalty=nullptr;}
             
         public:
             u32                 warriors ;
             u32                 riders ;
             u32                 armies ;
             u32                 adjustment ;
-            mxcharacter*        character;
+            u32                 characters;
+            const mxcharacter*  loyalty;
         };
         // mxarmytotal
 
@@ -1187,7 +1191,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             
             mxarmytotal         friends;        // info block for friend. ie: Currently NOT doomdark
             mxarmytotal         foe;            // info block for foes ie: Currently IS doomdark
-            mxarmytotal         doomdark;       // info block for doomdark's regiments, does not include strongolds
+            mxarmytotal         regiments;      // info block for doomdark's regiments, does not include strongolds
 
             c_army              armies;
             

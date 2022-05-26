@@ -97,13 +97,13 @@ namespace tme {
                     mxcharacter* c = mx->CharacterById(ii+1);
                     if ( (c->Location().x != character->Location().x) || (c->Location().y != character->Location().y) )
                         continue;
-                    if ( c->Loyalty() != character->Loyalty() )
+                    if ( !c->IsFriend(character) )
                         enemies++;
                 }
                 
                 auto scenario = static_cast<ddr_x*>(mx->scenario);
                 auto stronghold = dynamic_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(character->Location()));
-                if ( stronghold && stronghold->Loyalty()!=character->Loyalty())
+                if ( stronghold && !stronghold->IsFriend(character))
                     enemies++;
                 if ( enemies == 0 )
                     character->Flags().Reset(cf_preparesbattle/*|cf_inbattle*/);
@@ -151,32 +151,10 @@ namespace tme {
     
         void ddr_night::MoveMidwinter ( void )
         {
-//            static tme::loc_t locations[] = { loc_t(29,72), loc_t(35,73), loc_t(35,78), loc_t(45,86), loc_t(57,70) }; // SHOULD BE USING PLACE SYMBOLS
-//
-//            int p = mxrandom(NUMELE(locations)-1);
-//
-//            mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
-//            if ( c==NULL )
-//                return;
-//
-//            c->Location(locations[p]);
-//
-//            mxlocinfo* info = c->GetLocInfo();
-//            if(info->objCharacters.Count()!=1) {
-//                RemoveMidwinterFromMap();
-//            }
-//            SAFEDELETE(info);
-//
         }
     
         void ddr_night::RemoveMidwinterFromMap()
         {
-//            mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
-//
-//            if ( c==NULL )
-//                return;
-//            c->Location(loc_t(0,0));
-//            c->Flags().Set(cf_tunnel|cf_hidden);
         }
 
 
@@ -294,7 +272,7 @@ namespace tme {
             for ( u32 ii=0; ii<characters.Count(); ii++ ) {
                 mxcharacter* c = static_cast<mxcharacter*>( characters[ii] ) ;
                 
-                if ( c->IsAlive() && c->Loyalty() == RA_MOONPRINCE) {
+                if ( c->IsAlive() && c->NormalisedLoyalty() == RA_MOONPRINCE) {
                     if ( c->Location() == gate_varenorn ) {
                         
                         // is main character home?

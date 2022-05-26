@@ -294,7 +294,7 @@ std::string buffer = mx->LastActionMsg();
 
     RETURN_IF_NULL(c);
    
-    if ( (c->Loyalty() != character->Loyalty() && c->IsAlive()) ) {
+    if ( c->IsAlive() && !c->IsFriend(character) ) {
     
         std::string seek = mx->text->SystemString(SS_SEEK_MSG1);
         buffer += mx->text->CookText(seek,c);
@@ -306,7 +306,7 @@ std::string buffer = mx->LastActionMsg();
  
         std::string guidance = mx->text->SystemString(SS_GUIDANCE2);
  
-        if ( (character->Carrying() == o) || o==NULL ) {
+        if ( (character->Carrying() == o) || o==nullptr ) {
             c = (mxcharacter*)mx->EntityByName("CH_SHARETH");
             
             std::string seek = mx->text->SystemString(SS_SEEK_MSG1);

@@ -190,8 +190,17 @@ u32 mxstronghold::Add ( mxrace_t race, mxunit_t type, u32 amount )
     return amount;
 }
 
+mxrace_t mxstronghold::Loyalty()
+{
+    RETURN_IF_NULL(Owner()) Race();
+    return Owner()->NormalisedLoyalty();
+}
 
-
+bool mxstronghold::IsFriend( const mxcharacter* character )
+{
+    RETURN_IF_NULL(character) false;
+    return Loyalty() == character->NormalisedLoyalty();
+}
 
 /*
  * Function name    : MakeChangeSides
@@ -291,7 +300,7 @@ MXRESULT mxstronghold::FillExportData ( info_t* data )
     out->respawn = respawn;
     out->occupier = SafeIdt(Occupier());
     out->owner = SafeIdt(Owner());
-    out->loyalty = Owner() != NULL ? Owner()->Loyalty() : RA_NONE ;
+    out->loyalty = Loyalty();
 
     return mxitem::FillExportData ( data );
 }
