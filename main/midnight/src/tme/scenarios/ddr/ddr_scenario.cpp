@@ -219,6 +219,9 @@ void ddr_x::PlaceObjectsOnMap ( void )
 {
     ddr_object* object;
     mxgridref loc;
+    
+    auto luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
+    
     for ( int ii=0; ii<sv_objects; ii++ ) {
         object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
         if ( object->IsUnique() && object->IsRandomStart() ) {
@@ -226,7 +229,8 @@ void ddr_x::PlaceObjectsOnMap ( void )
             while ( !found ) {
                 loc.x = mxrandom(0,mx->gamemap->Size().cx-1);
                 loc.y = mxrandom(0,mx->gamemap->Size().cy-1);
-                if ( !mx->gamemap->HasObject(loc) && !mx->gamemap->IsLocationBlock(loc)  )
+                
+                if ( !mx->gamemap->HasObject(loc) && !mx->scenario->isLocationImpassable(loc,luxor)  )
                     found=true;
             }
             object->Location(loc);
@@ -320,7 +324,7 @@ std::string buffer = mx->LastActionMsg();
     mx->SetLastActionMsg(buffer);
 }
 
-mxterrain_t ddr_x::NormaliseTerrain( mxterrain_t t) const
+mxterrain_t ddr_x::toScenarioTerrain(mxterrain_t t) const
 {
     if ( t == TN_PLAINS )
         t=TN_PLAINS2;

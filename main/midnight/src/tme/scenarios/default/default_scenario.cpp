@@ -217,6 +217,106 @@ namespace tme {
         {
         }
 
+        mxterrain_t mxscenario::toGeneralisedTerrain(mxterrain_t t) const
+        {
+            switch (t) {
+                case TN_PLAINS2:
+                case TN_PLAINS3:
+                case TN_LAND:
+                case TN_PLAIN:
+                    return TN_PLAINS;
+                    
+                case TN_FOREST2:
+                case TN_FOREST3:
+                case TN_TREES:
+                    return TN_FOREST;
+                    
+                case TN_MOUNTAIN2:
+                case TN_MOUNTAIN3:
+                case TN_ICY_MOUNTAIN:
+                    return TN_MOUNTAIN;
+                    
+                case TN_WATCHTOWER:
+                    return TN_TOWER;
+                    
+                case TN_ICYWASTE:
+                    return TN_FROZENWASTE;
+                    
+                case TN_LAKE3:
+                    return TN_LAKE;
+                    
+                case TN_HILLS3:
+                case TN_DOWNS:
+                case TN_FOOTHILLS:
+                    return TN_HILLS;
+                    
+                case TN_STONES:
+                    return TN_LITH;
+                    
+                default:
+                    return t;
+            }
+    
+        }
+
+        mxterrain_t mxscenario::toScenarioTerrain(mxterrain_t t) const
+        {
+            return t;
+        }
+
+        bool mxscenario::isLocationImpassable(mxgridref loc, mxitem* target) const
+        {
+            auto mapLoc = mx->gamemap->GetAt(loc);
+            return isTerrainImpassable((mxterrain_t)mapLoc.terrain, target);
+        }
+
+        //
+        // This adds in Mountains as a potential impassable terrain above and beyond
+        // and setup in the database. This is controlled by two game rules
+        // RF_AI_IMPASSABLE_MOUNTAINS and RF_IMPASSABLE_MOUNTAINS
+        // DWARVES, GIANTS, and DRAGONS can all pass impassable mountains
+        // and when RF_SOLE_MOUNTAINEER is enabled so can lords without armies.
+        //
+        bool mxscenario::isTerrainImpassable(mxterrain_t terrain, mxitem* target) const
+        {
+            if(target!=nullptr) {
+                bool isAI = true;
+                mxrace_t race = RA_NONE;
+                bool army = true;
+                
+                if(target->Type() == IDT_CHARACTER) {
+                    auto character = dynamic_cast<mxcharacter*>(target);
+                    if (character != nullptr) {
+                        if(character->IsInTunnel()) {
+                            return false;
+                        }
+                        isAI = character->IsAIControlled();
+                        race = character->Race();
+                        if(mx->isRuleEnabled(RF_SOLE_MOUNTAINEER) && !character->HasArmy() ) {
+                            army = false;
+                        }
+                    }
+                }
+                else if(target->Type() == IDT_REGIMENT) {
+                    auto regiment = dynamic_cast<mxregiment*>(target);
+                    if (regiment != nullptr) {
+                        race = regiment->Race();
+                    }
+                }
+            
+                if( race != RA_DWARF && race != RA_GIANT && race != RA_DRAGON && army ) {
+                    if( toGeneralisedTerrain(terrain) == TN_MOUNTAIN ) {
+                        RULEFLAGS rule = isAI ? RF_AI_IMPASSABLE_MOUNTAINS : RF_IMPASSABLE_MOUNTAINS ;
+                        if ( mx->isRuleEnabled(rule) ) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return mx->TerrainById(terrain)->IsBlock();
+        }
+
+
         /*
         * Function name    : base::Serialize
         * 
@@ -429,8 +529,6 @@ namespace tme {
                     tinfo = mx->TerrainById(lookingat.terrain);
                     int visibility = tinfo->Visibility();
 
-                    
-                    
                     u32 k=0;
                     for ( k=0; k<NUMELE(steps[0]); k++ ) {
                     
@@ -447,7 +545,6 @@ namespace tme {
                             blocking += tinfo->Obstruction()/affect[j][k];
                             if ( blocking>=visibility ) break;
                         }
-
                     }
 
                     if ( blocking<visibility ) {
@@ -460,11 +557,7 @@ namespace tme {
                         
                     }
                 }
-
-
             }
-
-
         }
 
         COMMAND( OnCharLookLeft ) 

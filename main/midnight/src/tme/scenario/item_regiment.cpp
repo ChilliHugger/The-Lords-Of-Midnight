@@ -135,7 +135,7 @@ namespace tme {
             if ( !IsFlags(rf_direct) ) {
                 for (dir=DR_NORTH; dir<=DR_NORTHWEST; dir=(mxdir_t)((int)dir+1))    {
                     targetlocation = Location()+dir;
-                    if ( mx->gamemap->IsLocationSpecial(targetlocation) ) {
+                    if ( mx->gamemap->IsLocationSpecial(targetlocation)) {
                         bFoundLocation=TRUE;
                         break;
                     }
@@ -191,11 +191,17 @@ namespace tme {
                 }
             }
             
-
+            // impassable mountains
+            if( mx->scenario->isLocationImpassable(targetlocation, this) ) {
+                EndOfTurn();
+                return;
+            }
+            
             // get the location we want
-            flags32_t f = 0;
-            if ( IsInTunnel() ) f|= slf_tunnel ;
-            mxlocinfo*    info = new mxlocinfo ( targetlocation, NULL, f );
+            flags32_t f = IsInTunnel() ? slf_tunnel : slf_none ;
+            
+            // TODO: This is an expensive check - make cheaper
+            auto info = new mxlocinfo ( targetlocation, NULL, f );
             totaldoomdarkarmies = info->foe.armies ;
             SAFEDELETE(info);
 
@@ -212,7 +218,7 @@ namespace tme {
             movement = rinfo->InitialMovementValue();
             
             // are we moving diagonally?
-            dir = Location().DirFromHere ( targetlocation );            
+            dir = Location().DirFromHere ( targetlocation );
             if ( dir&1 )
                 movement += rinfo->DiagonalMovementModifier();
             
@@ -255,10 +261,10 @@ namespace tme {
 
         void mxregiment::Cmd_Wander ( void )
         {
-            while (TRUE) {
+            while (true) {
                 mxdir_t dir = (mxdir_t)mxrandom(DR_NORTH, DR_NORTHWEST);
                 targetlocation = Location() + dir;
-                if ( !mx->gamemap->IsLocationBlock(targetlocation) )
+                if ( !mx->scenario->isLocationImpassable(targetlocation,this) )
                     break;
             }
         }
@@ -310,7 +316,8 @@ namespace tme {
         mxdir_t    dir;
         mxdir_t    directions[4];
         mxterrain*    tinfo;
-
+        bool        impassable;
+        
             dir = Location().DirFromHere ( targetlocation );
 
             // when moving in a direction
@@ -322,12 +329,16 @@ namespace tme {
             directions[3] = (mxdir_t)((dir+1)&0x07);
 
             for (ii = 0; ii < 8; ii++) {
+                impassable = false;
                 route = mxrandom(0, 3);
                 targetlocation = Location() + directions[route];
                 
                 mxloc& mapsqr = mx->gamemap->GetAt( targetlocation );
                 tinfo = mx->TerrainById( mapsqr.terrain );
-                if ( tinfo->IsBlock() )
+                
+                impassable = mx->scenario->isTerrainImpassable((mxterrain_t)mapsqr.terrain, this);
+                
+                if ( impassable )
                     continue;
 
                 // TODO should be a lookup
@@ -341,7 +352,7 @@ namespace tme {
             // the location infront can actually be entered.
             // regardless if we don't like the terrain type
 
-            return !tinfo->IsBlock() ;
+            return !impassable ;
         }
 
         mxgridref mxregiment::TargetLocation() const 

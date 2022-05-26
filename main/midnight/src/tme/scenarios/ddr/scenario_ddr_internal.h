@@ -35,7 +35,7 @@ namespace tme {
         virtual void PlaceObjectsOnMap ( void );
         virtual mxobject* FindObjectAtLocation ( mxgridref loc );
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
-        virtual mxterrain_t NormaliseTerrain( mxterrain_t t) const;
+        virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
     };
 
     
@@ -101,7 +101,8 @@ namespace tme {
         virtual void StartDawn ( void );
         virtual void Turn ( void );
         
-        virtual void LostFight ( void );
+        virtual void LostFight();
+        virtual void Displace();
         virtual mxlocinfo* GetLocInfo();
     
         virtual void CheckKilledFoe ( void );

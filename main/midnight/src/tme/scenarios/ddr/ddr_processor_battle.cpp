@@ -323,18 +323,8 @@ namespace tme {
                 ddr_character* defender_character = static_cast<ddr_character*>(defender);
                 
                 // defender flees
-                mxloc mapsqr;
-                mxgridref loc;
-                do {
-                    loc = defender_character->Location();
-                    loc.x ^= (mxrandom(255)&3);
-                    loc.y ^= (mxrandom(255)&3);
-                    mapsqr = mx->gamemap->GetAt(loc);
-                } while ( mapsqr.terrain==TN_FROZENWASTE || mapsqr.terrain==TN_ICYWASTE );
-                defender_character->Location(loc);
-                
+                defender_character->Displace();
                 MXTRACE("      Defender: %-16s is displaced", defender->Symbol().c_str() );
-
                 
                 // if we are a member of the group, then we need to leave the group
                 if ( defender_character->IsFollowing() )
@@ -344,7 +334,7 @@ namespace tme {
                 if ( defender_character->HasFollowers() )
                     defender_character->Cmd_DisbandGroup();
                 
-                defender_character->Flags().Reset(cf_wonbattle|cf_tunnel|cf_preparesbattle);
+                defender_character->Flags().Reset(cf_wonbattle);
                 defender_character->DecreaseDespondency(32);
                 
                 loseFight(defender_character, 0);

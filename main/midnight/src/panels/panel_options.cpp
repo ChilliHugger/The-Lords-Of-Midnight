@@ -12,7 +12,6 @@
 #include "panel_options.h"
 #include "panel_mainmenu.h"
 
-
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 #include "../system/settingsmanager.h"
@@ -24,13 +23,37 @@
 #include "../ui/uitextmenu.h"
 #include "../ui/uioptionitem.h"
 
-
 #include "../frontend/language.h"
 
 USING_NS_CC;
 USING_NS_CC_UI;
 
-//#define _USE_GAME_RULES_
+
+
+#if defined(_LOM_)
+#define _USE_GAME_RULES_
+static uitextmenuitem items_rules[] = {
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE }
+};
+static RULEFLAGS rule_mapping[] = { RF_IMPASSABLE_MOUNTAINS, RF_AI_IMPASSABLE_MOUNTAINS, RF_ADD_MOUNTAIN_PASSES, RF_SOLE_MOUNTAINEER };
+#elif defined(_DDR_)
+#define _USE_GAME_RULES_
+static uitextmenuitem items_rules[] = {
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE }
+};
+static RULEFLAGS rule_mapping[] = {
+    RF_IMPASSABLE_MOUNTAINS,
+    RF_AI_IMPASSABLE_MOUNTAINS,
+    RF_NONE,    // RF_ADD_MOUNTAIN_PASSES
+    RF_SOLE_MOUNTAINEER,
+    RF_NONE,
+};
+#endif
 
 static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
 static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
@@ -118,16 +141,6 @@ static uitextmenuitem items_help[] = {
 #endif
 };
 
-#if defined(_USE_GAME_RULES_)
-static uitextmenuitem items_rules[] = {
-    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
-    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
-    { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
-};
-#else
-static uitextmenuitem items_rules[0];
-#endif
-
 static option_t options[] = {
     
     {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff,               nullptr, false },
@@ -156,11 +169,10 @@ static option_t options[] = {
     {   ID_OPTION_RULE_1,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_2,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_3,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    
+    {   ID_OPTION_RULE_4,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+            
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
-
-static RULEFLAGS rule_mapping[] = { RF_RULE_1, RF_RULE_2, RF_RULE_3 };
 
 option_t* findOption(int id)
 {
@@ -172,15 +184,25 @@ option_t* findOption(int id)
     return nullptr;
 }
 
-void disableOption(int id)
+bool enableDisableOption(int id, bool value)
 {
     auto option = findOption(id);
     if(option!=nullptr)
     {
-        option->disabled = true;
+        option->disabled = value;
+        return true;
     }
+    return false;
 }
 
+void hideOption(int id)
+{
+    auto option = findOption(id);
+    if(option!=nullptr)
+    {
+        option->hidden = true;
+    }
+}
 
 bool panel_options::init()
 {
@@ -227,12 +249,18 @@ bool panel_options::init()
         findOption(ID_OPTION_SCREENMODE)->text = values_screen2;
     }
         
+#if defined(_USE_GAME_RULES_)
     // RULES
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
-        rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]);
-        findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
+        if(rule_mapping[ii]!=RF_NONE) {
+            rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]);
+            findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
+        }else{
+            rules[ii] = false;
+        }
     }
     // END RULES
+#endif
         
     
     SetMenu(ID_MENU_DISPLAY);
@@ -294,9 +322,13 @@ void panel_options::OnMenuNotification(
         if ( *value >= option->max )
             *value=0;
     }
-    
+
     SetValues();
-    
+
+    if(option->id>=ID_OPTION_RULES) {
+        checkDisabledRules();
+    }
+
     if ( option->id == ID_OPTION_TUTORIAL ) {
         if ( mr->settings->tutorial )
             showHelpWindow(HELP_TUTORIAL_ON);
@@ -322,16 +354,19 @@ void panel_options::SetMenu ( int id )
         SetSubMenu(items_display,NUMELE(items_display));
         SetValues();
         return;
+#if defined(_USE_GAME_RULES_)
     }else if ( id == ID_MENU_RULES ) {
         SetSubMenu(items_rules,NUMELE(items_rules));
         SetValues();
+        checkDisabledRules();
         return;
+#endif
     } else if ( id == ID_MENU_CONTROL ) {
 
         // check if keyboard available
         //if ( !ui->IsKeyboardAvailable() )
         {
-            disableOption(ID_OPTION_KEYBOARD_STYLE);
+            hideOption(ID_OPTION_KEYBOARD_STYLE);
         }
 
         SetSubMenu(items_control,NUMELE(items_control));
@@ -358,6 +393,8 @@ void panel_options::SetValues()
 {
     for (auto & option : options) {
 
+        CONTINUE_IF_NULL(option.var);
+
         int item=0;
         if ( option.type == OPT_BOOL ) {
             bool* value = (bool*) option.var ;
@@ -377,13 +414,57 @@ void panel_options::SetValues()
         
     }
     
+#if defined(_USE_GAME_RULES_)
     // RULES
     mr->settings->game_rules.Clear();
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
-        mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
+        if(rule_mapping[ii]!=RF_NONE) {
+            mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
+        }
     }
     // END RULES
+#endif
+
 }
+
+void panel_options::checkDisabledRules()
+{
+#if defined(_USE_GAME_RULES_)
+    #if defined(_LOM_)
+    clearRule(ID_OPTION_RULE_3, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
+    clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
+    #endif
+    #if defined(_DDR_)
+    clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
+    #endif
+#endif
+}
+
+void panel_options::clearRule(int id, bool condition)
+{
+    if(!enableDisableOption(id, !condition)) {
+        return;
+    }
+    
+    // we need to clear the selected value and update the text to 'off'
+    if(!condition) {
+        int index = id-ID_OPTION_RULES;
+        mr->settings->game_rules.Reset(rule_mapping[index]);
+        rules[index] = false;
+        auto option = findOption(id);
+        auto field = optionControls.at(id);
+        field->setValue(option->text[rules[index]]);
+    }
+    
+    // change the appearance of the disabled items
+    for ( auto item : fields ) {
+        if(item->getTag()==id) {
+            item->setEnabled(condition);
+            item->setOpacity( condition ? ALPHA(1.0) : ALPHA(0.25) );
+        }
+    }
+}
+
 
 void panel_options::CreateMainMenu()
 {
@@ -408,7 +489,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
     // map keyboard shortcut keys to layout children
     uishortcutkeys::registerCallback(safeArea, clickCallback);
  
-    f32 width = RES(512-32);
+    f32 width = RES(600-32);
     if(isPhoneScaleEnabled())
     {
         width+=RES(128+64);
@@ -444,7 +525,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         uitextmenuitem* item = &items[ii];
         
         auto option = findOption(item->id);
-        if(option->disabled)
+        if(option->hidden)
         {
             continue;
         }
@@ -452,6 +533,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         auto button = uioptionitem::create( width, item );
         button->setTag(item->id);
         button->setUserData(item);
+        button->setCascadeOpacityEnabled(true);
         
         addShortcutKey(button, item->id, item->keyboard_shortcut);
 
@@ -459,6 +541,9 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         optionControls.insert(item->id, button);
         
         auto menuItem = MenuItemNode::create(button);
+        menuItem->setTag(item->id);
+        menuItem->setEnabled(!option->disabled);
+  
         auto r = menuItem->getBoundingBox();
         height += r.size.height + gapY;
 
