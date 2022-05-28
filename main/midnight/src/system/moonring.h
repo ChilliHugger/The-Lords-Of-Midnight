@@ -125,6 +125,8 @@ public:
     // Version
 #if defined(_USE_VERSION_CHECK_)
     void getVersion(const GetVersionCallback& callback);
+    static std::tuple<int, int, int> getVersionBreakup(std::string fullVersion);
+
 #endif
     
 protected:

@@ -21,6 +21,7 @@
 #endif
 #include <string.h>
 #include <string>
+#include <memory>
 
 
 namespace tme {

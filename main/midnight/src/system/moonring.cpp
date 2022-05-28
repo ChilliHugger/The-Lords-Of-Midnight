@@ -767,7 +767,7 @@ void moonring::getVersion(const GetVersionCallback& callback)
     // TODO:
     // Ideally this should be cached and maybe only downloaded
     // once a day etc...
-
+    
     auto request = new HttpRequest();
     request->setRequestType(HttpRequest::Type::GET);
     request->setUrl(_VERSION_URL);
@@ -782,11 +782,31 @@ void moonring::getVersion(const GetVersionCallback& callback)
                 auto lines = StringExtensions::split_by_newline(input);
                 UIDEBUG("Version Check: %s (%s)",lines[0].c_str(), lines[1].c_str());
                
+                auto currentVersionNo = chilli::extensions::getVersion();
+                int currentMajor, currentMinor, currentMaint;
+                std::tie(currentMajor, currentMinor, currentMaint) =
+                    moonring::getVersionBreakup(currentVersionNo);
+
+                auto availableVersionNo = lines[0];
+                int availableMajor, availableMinor, availableMaint;
+                std::tie(availableMajor, availableMinor, availableMaint) = 
+                    moonring::getVersionBreakup(availableVersionNo);
+
                 auto buildNo = chilli::extensions::getBuildNo();
                 auto availableBuildNo = StringExtensions::atoi(lines[1]);
                 auto currentBuildNo =  StringExtensions::atoi(buildNo);
                 
-                isUpdateAvailable = currentBuildNo<availableBuildNo;
+                isUpdateAvailable = 
+                    (currentMajor < availableMajor) ||
+                    (currentMajor == availableMajor &&
+                        currentMinor < availableMinor) ||
+                    (currentMajor == availableMajor &&
+                        currentMinor == availableMinor &&
+                        currentMaint < availableMaint) ||
+                    (currentMajor == availableMajor &&
+                        currentMinor == availableMinor &&
+                        currentMaint == availableMaint &&
+                        currentBuildNo < availableBuildNo);
                 updateUrl = lines[2];
                 versionCheckCompleted = true;
                 callback(isUpdateAvailable,updateUrl);
@@ -795,7 +815,25 @@ void moonring::getVersion(const GetVersionCallback& callback)
         }
     });
 
+
     HttpClient::getInstance()->send(request);
     request->release();
+}
+
+// Break up a full version string (e.g. 2.0.5) into three int tuple [2, 0, 5] for version 
+// comparison
+std::tuple<int, int, int> moonring::getVersionBreakup(std::string fullVersion) {
+    size_t buildLocation = fullVersion.find_first_of('.');
+    auto majorVersionNo = fullVersion.substr(0, buildLocation);
+
+    auto minorMaintVersionNo = fullVersion.substr(buildLocation+1);
+    buildLocation = minorMaintVersionNo.find_first_of('.');
+
+    auto minorVersionNo = minorMaintVersionNo.substr(0, buildLocation);
+    auto maintVersionNo = minorMaintVersionNo.substr(buildLocation+1);
+
+    return std::make_tuple(StringExtensions::atoi(majorVersionNo), 
+        StringExtensions::atoi(minorVersionNo), 
+        StringExtensions::atoi(maintVersionNo));
 }
 #endif
