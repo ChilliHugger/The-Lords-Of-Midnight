@@ -57,6 +57,7 @@ public:
 public:
     mxid        id;
     loc_t       location;
+    bool        visible;
     
 //    loc_t       lastlocation;
 //    loc_t       targetlocation;
@@ -116,32 +117,24 @@ public:
     void drainCollection(Vector<map_object*> &objects);
     
 private:
-    flags32         flags;
-    MapInfo_t       info;
-    
-    loc_t           loc_start;
-    loc_t           loc_first;
-    
-    maplocation*    mapdata;
-    
+    flags32                 flags;
+    MapInfo_t               info;
+    maplocation*            mapdata;
 public:
-    size mapsize;
-    size screensize;
-    
-    u32 max_cells;
-    
-    u32* terrain;
-    u32* terrain_discovery;
-    u32* tunnels;
-    u32* critters;
-    u32* tunnel_critters;
-    
+    size                    mapsize;
+    size                    screensize;
+    loc_t                   loc_start;
+    loc_t                   loc_first;
+    u32                     max_cells;
+    u32*                    terrain;
+    u32*                    terrain_discovery;
+    u32*                    tunnels;
+    u32*                    critters;
+    u32*                    tunnel_critters;
     Vector<map_object*>     characters;
     Vector<map_object*>     regiments;
     Vector<map_object*>     strongholds;
     Vector<map_object*>     places;
-    
-
 };
 
 

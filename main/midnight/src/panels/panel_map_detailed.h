@@ -52,7 +52,8 @@ protected:
     void updateFilterButton(Ref* sender,map_filters flag);
 
     void updateFilters();
-    
+
+    void setupTooltip();
     void setupCharacterButtons();
     void setupPlaceLabels();
     void setupStrongholds();
@@ -62,8 +63,8 @@ protected:
     
     void updateScale();
     
-    //virtual void update(float delta) override;
-    
+    void addTouchListener();
+
 private:
     
     ScrollView*     scrollView;
@@ -75,5 +76,6 @@ private:
     DrawNode*       groupLordBackground;
     Widget*         groupLordButton;
     uigrouplord*    grouplord;
-    //Label*          debug_label;
+    Label*          toolTip;
+    
 };

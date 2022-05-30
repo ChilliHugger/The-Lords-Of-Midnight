@@ -208,11 +208,15 @@ mapbuilder* mapbuilder::updateTerrain()
             dst->area = m.area ;
             dst++;
             
-            if ( m.flags.Is(lf_looked_at) || m.flags.Is(lf_visited) || debug_map ) {
+            if ( m.flags.Is(lf_looked_at) || m.flags.Is(lf_visited)
+                || m.discovery_flags.Is(lf_looked_at) || m.discovery_flags.Is(lf_visited)
+                || debug_map ) {
                 if ( ( (m.flags.Is(lf_stronghold) && !m.flags.Is(lf_domain)) || (m.terrain == TN_TOWER || m.terrain == TN_WATCHTOWER || m.terrain == TN_GATE ) ) ) {
                     auto place = new map_object();
                     place->id = IDT_LOCATION;
                     place->location = loc;
+                    place->visible = (m.flags.Is(lf_looked_at) || m.flags.Is(lf_visited) || m.flags.Is(lf_seen))
+                        && (m.discovery_flags.Is(lf_looked_at) || m.discovery_flags.Is(lf_visited));
                     places.pushBack(place);
                     place->release();
                 }
