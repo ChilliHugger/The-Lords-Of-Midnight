@@ -128,6 +128,7 @@ bool panel_map_detailed::init()
     scrollView->setInnerContainerSize( tmxMap->getContentSize() );
     scrollView->setDirection(ScrollView::Direction::BOTH);
     scrollView->setInnerContainerPosition(Vec2(model->oldoffset.x,model->oldoffset.y));
+    scrollView->setSwallowTouches(false);
     
     descriptions = Node::create();
     descriptions->setContentSize(tmxMap->getContentSize());
@@ -136,16 +137,9 @@ bool panel_map_detailed::init()
     characters = Node::create();
     characters->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(characters);
-    
-//    uihelper::font_config_debug.outlineSize = 10;
-//    debug_label = Label::createWithTTF(uihelper::font_config_debug, "Debug Text");
-//    debug_label->getFontAtlas()->setAntiAliasTexParameters();
-//    debug_label->setTextColor(Color4B::BLACK);
-//    debug_label->enableOutline(Color4B(255,255,255,255));\
-//    debug_label->setLocalZOrder(ZORDER_DEFAULT);
-//    uihelper::AddTopCenter(safeArea, debug_label, RES(0), RES(32));
-    
-    
+      
+    setupTooltip();
+
     setupCharacterButtons();
     
     setupStrongholds();
@@ -168,27 +162,27 @@ bool panel_map_detailed::init()
     addShortcutKey(ID_DOWN,                 KEYCODE(DOWN_ARROW));
     addShortcutKey(ID_UP,                   KEYCODE(UP_ARROW));
               
-
-       
     showHelpWindow(HELP_DISCOVERY_MAP);
     
     mapBuilder->clearLayers();
     
-    //scheduleUpdate();
-    
     return true;
 }
 
-//void panel_map_detailed::update(float delta)
-//{
-//char debug_output[256];
-//
-//    auto pos = scrollView->getInnerContainerPosition();
-//    sprintf(debug_output, "Offets (%f,%f)", pos.x,pos.y);
-//    debug_label->setString(debug_output);
-//
-//    uipanel::update(delta);
-//}
+void panel_map_detailed::setupTooltip()
+{
+    toolTip = Label::createWithTTF( uihelper::font_config_medium, "" );
+    toolTip->setName("title");
+    toolTip->setTextColor(Color4B(_clrWhite));
+    toolTip->enableOutline(Color4B(_clrBlack),RES(2));
+    toolTip->setLineSpacing(RES(-2));
+    toolTip->getFontAtlas()->setAntiAliasTexParameters();
+    toolTip->setAnchorPoint(uihelper::AnchorCenter);
+    toolTip->setVisible(false);
+    toolTip->setLocalZOrder(ZORDER_DEFAULT);
+    uihelper::AddTopCenter(safeArea, toolTip, RES(0), RES(32));
+    addTouchListener();
+}
 
 void panel_map_detailed::OnNotification( Ref* sender )
 {
@@ -275,6 +269,111 @@ void panel_map_detailed::OnNotification( Ref* sender )
     }
 }
 
+bool IsSingularTerrain(mxterrain_t terrain)
+{
+    switch (terrain) {
+#if defined(_LOM_)
+        case TN_CAVERN:
+        case TN_CITADEL:
+        case TN_HENGE:
+        case TN_KEEP:
+        case TN_LAKE:
+        case TN_LITH:
+        case TN_RUIN:
+        case TN_SNOWHALL:
+        case TN_TOWER:
+            return true;
+#endif
+        
+#if defined(_DDR_)
+        case TN_CITY:
+        case TN_FORTRESS:
+        case TN_FOUNTAIN:
+        case TN_GATE:
+        case TN_HALL:
+        case TN_HUT:
+        case TN_PALACE:
+        case TN_PIT:
+        case TN_STONES:
+        case TN_TEMPLE:
+        case TN_WATCHTOWER:
+            return true;
+#endif
+            
+        default:
+            return false;
+    }
+}
+
+void panel_map_detailed::addTouchListener()
+{
+    // mouse events
+    auto touchListener = EventListenerTouchOneByOne::create();
+    
+    // trigger when you push down
+    touchListener->onTouchBegan = [=](Touch* touch, Event* event){
+     
+        auto loc = tmxMap->convertToNodeSpace(touch->getLocation());
+        loc.y = tmxMap->getContentSize().height - loc.y;
+        loc.x /= RES(64);
+        loc.y /= RES(64);
+        
+        auto grid = mxgridref(loc.x+mapBuilder->loc_start.x, loc.y+mapBuilder->loc_start.y);
+  
+        tme::scenarios::exports::location_t l;
+        TME_GetLocation(l, grid);
+        
+        
+        bool showTooltip = false;
+        
+        if (IsSingularTerrain(l.terrain)) {
+            showTooltip = l.flags.Is(lf_looked_at) || l.flags.Is(lf_visited)
+                          || l.discovery_flags.Is(lf_looked_at) || l.discovery_flags.Is(lf_visited);
+        }else{
+            showTooltip = l.flags.Is(lf_looked_at) || l.flags.Is(lf_visited) || l.flags.Is(lf_seen)
+              || l.discovery_flags.Is(lf_looked_at) || l.discovery_flags.Is(lf_visited) || l.discovery_flags.Is(lf_seen);
+        }
+        
+        if ( showTooltip )
+        {
+            toolTip->setOpacity(ALPHA(alpha_zero));
+            
+            auto tip = StringExtensions::toUpper(TME_GetLocationText(grid));
+            toolTip->setString(tip);
+            
+            
+            if(!toolTip->isVisible()) {
+                toolTip->setVisible(true);
+                toolTip->stopAllActions();
+                toolTip->runAction(FadeIn::create( 1.0f ));
+            }
+            
+            return true;
+        }
+        
+        
+    };
+    
+    // trigger when moving touch
+    touchListener->onTouchMoved = [=](Touch* touch, Event* event){
+    };
+    
+    // trigger when you let up
+    touchListener->onTouchEnded = [=](Touch* touch, Event* event){
+        if(toolTip->isVisible()) {
+            toolTip->stopAllActions();
+            toolTip->runAction(Sequence::create(
+                                              FadeOut::create( 1.0f ),
+                                              CallFunc::create( [this] { toolTip->setVisible(false); }),
+                                              nullptr
+                                              ));
+        }
+    };
+    
+    // Add listener
+    getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, tmxMap);
+    
+}
 
 void panel_map_detailed::updateScale()
 {
@@ -493,6 +592,8 @@ void panel_map_detailed::setupPlaceLabels()
         auto pos = mapBuilder->convertToPosition(m->location);
         
         auto name = TME_GetLocationText(m->location);
+        auto opacity =  m->visible ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr);
+        
         
         // set name label
         auto title = Label::createWithTTF( uihelper::font_config_small, name );
@@ -507,6 +608,7 @@ void panel_map_detailed::setupPlaceLabels()
         title->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(48))) );
         title->setHorizontalAlignment(TextHAlignment::CENTER);
         title->setVerticalAlignment(TextVAlignment::BOTTOM);
+        title->setOpacity(opacity);
       
         descriptions->addChild(title);
         //title->setLocalZOrder(ZORDER_NEAR);

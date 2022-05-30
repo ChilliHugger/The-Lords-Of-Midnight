@@ -196,13 +196,6 @@ bool TME_GetLocationInDirection( maplocation& out, loc_t loc, mxdir_t dir )
     return TME_GetLocation(out,MAKE_LOCID(ref.x,ref.y));
 }
 
-
-std::string TME_GetMapLocationText ( mxgridref loc )
-{
-    args[0] = MAKE_MAPLOCID(loc.x,loc.y) ;
-    return TME_GetText( "MapLocation", args, 1 );
-}
-
 bool TME_GetMapLocation( maplocation& out, mxid id )
 {
     CLEARINFOSTRUCT ( out, IDT_MAPLOCATION );
