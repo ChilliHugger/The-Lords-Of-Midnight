@@ -17,13 +17,13 @@
     <key>CFBundleName</key>
     <string>The&#x2007;Lords&#x2007;of&#x2007;Midnight</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.0.4</string>
+    <string>2.0.5</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>43</string>
+    <string>44</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UIAppFonts</key>

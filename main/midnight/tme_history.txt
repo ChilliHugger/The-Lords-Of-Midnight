@@ -1,5 +1,19 @@
 The Midnight Engine
 
+Build (44)
+1. ADDED: panel_map_detailed - tool tip for location - press
+2. ADDED: panel_options - gameplay rules
+3. ADDED: Rule: Impassable Mountains
+4. ADDED: Rule: AI Impassable Mountains
+5. ADDED: Rule: Sole Mountaineer
+6. ADDED: Rule: LoM - Unrecruitable Fey
+7. ADDED: DDR - Fast tunnels
+8. FIXED: Character Time Shader
+9. FIXED: DDR - Battle Algorithm
+10. FIXED: DDR - Race preferred terrain for movement
+11. FIXED: DDR - Cowardly lords attacking
+12. FIXED: Android Rotation
+
 Build (43)
 1. ADDED: permanent scrollbar to all scrollable tip windows
 2. ADDED: panel_map_detailed - clarity behind multi lord select popup
