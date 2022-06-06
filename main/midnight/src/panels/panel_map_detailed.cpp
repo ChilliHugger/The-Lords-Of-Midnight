@@ -337,11 +337,10 @@ void panel_map_detailed::addTouchListener()
         if ( showTooltip )
         {
             toolTip->setOpacity(ALPHA(alpha_zero));
-            
+
             auto tip = StringExtensions::toUpper(TME_GetLocationText(grid));
             toolTip->setString(tip);
-            
-            
+
             if(!toolTip->isVisible()) {
                 toolTip->setVisible(true);
                 toolTip->stopAllActions();
@@ -351,7 +350,7 @@ void panel_map_detailed::addTouchListener()
             return true;
         }
         
-        
+        return false;
     };
     
     // trigger when moving touch
