@@ -28,7 +28,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
@@ -66,13 +66,13 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "CompanyName", "Chilli Hugger\0"
-            VALUE "FileDescription", "game Module\0"
+            VALUE "CompanyName", "Chilli Hugger Software Ltd\0"
+            VALUE "FileDescription", "Doomdark's Revenge\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "game\0"
-            VALUE "LegalCopyright", "Copyright \0"
+            VALUE "InternalName", "Revenge\0"
+            VALUE "LegalCopyright", "Copyright © 1984 - 2022. All rights reserved.\0"
             VALUE "OriginalFilename", "game.exe\0"
-            VALUE "ProductName", "game Module\0"
+            VALUE "ProductName", "Doomdark's Revenge\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
         END
     END
