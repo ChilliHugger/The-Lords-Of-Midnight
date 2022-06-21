@@ -50,7 +50,7 @@ GLFW_ICON           ICON                    "game.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,4,43
+ FILEVERSION 2,0,5,44
  PRODUCTVERSION 1,0,0,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -66,7 +66,7 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "CompanyName", "\0"
+            VALUE "CompanyName", "Chilli Hugger\0"
             VALUE "FileDescription", "game Module\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "game\0"

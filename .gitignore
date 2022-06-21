@@ -53,3 +53,6 @@ main/midnight/mac-tests-build-ddr
 main/midnight/ios-build-lom
 main/midnight/mac-build-lom
 main/midnight/mac-tests-build-lom
+
+# vim backup files
+*~
