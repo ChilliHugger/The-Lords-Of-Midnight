@@ -29,21 +29,13 @@ namespace tme {
     
     void ddr_stronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
     {
-        // if the new occupier is allowed an army then
-        // the stronghold army will be his race
-        if ( newoccupier && newoccupier->IsAllowedArmy() )
-            newrace = newoccupier->Race();
-        
-        if ( newrace != OccupyingRace() )    {
-            occupyingrace = newrace ;
-            
-            totaltroops = 0 ;//Respawn() ; // respawn will happen at night
-            owner = newoccupier ;
-            
-            occupier = newoccupier ;
-            
-            type = static_cast<ddr_character*>(newoccupier)->getArmyType();
-        }
+        RETURN_IF_NULL(newoccupier);
+    
+        occupyingrace = newrace ;
+        totaltroops = 0 ; // respawn will happen at night
+        owner = newoccupier ;
+        occupier = newoccupier ;
+        type = static_cast<ddr_character*>(newoccupier)->getArmyType();
         
     }
     
