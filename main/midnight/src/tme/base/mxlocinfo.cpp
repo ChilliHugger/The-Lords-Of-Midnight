@@ -55,8 +55,8 @@ namespace tme {
             foe.Clear();
             regiments.Clear();
 
-            infront = NULL ;
-            owner = NULL;
+            infront = nullptr ;
+            owner = nullptr;
 
             nRecruited = 0;
 
@@ -73,11 +73,11 @@ namespace tme {
             objRoutenodes.Clear();
             objRecruit.Clear();
             
-            stubborn_follower_move=NULL;
-            stubborn_follower_battle=NULL;
+            stubborn_follower_move=nullptr;
+            stubborn_follower_battle=nullptr;
 #if defined(_DDR_)
-            object_to_take=NULL;
-            someone_to_give_to=NULL;
+            object_to_take=nullptr;
+            someone_to_give_to=nullptr;
 #endif
         }
 
@@ -94,8 +94,6 @@ namespace tme {
         mxlocinfo::mxlocinfo( mxgridref loc, mxdir_t dir, mxcharacter* iowner, flags32_t sflags )
                 : mxitem ( loc )
         {
-        mxterrain* tinfo;
-
             Clear();
             owner = iowner ;
             sel_flags.Set( sflags ) ;
@@ -192,7 +190,7 @@ namespace tme {
 #if defined(_DDR_)
             auto scenario = static_cast<ddr_x*>(mx->scenario);
             object_to_take = scenario->FindObjectAtLocation(location);
-            if ( object_to_take!= NULL )
+            if ( object_to_take!= nullptr )
                 flags.Set(lif_take);
 #endif
 
@@ -222,8 +220,7 @@ namespace tme {
     //
         void mxlocinfo::FindRecruitCharactersHere ( const mxcharacter* c )
         {
-            if ( c == NULL )
-                return;
+            RETURN_IF_NULL(c);
 
             // tunnel check
             bool isInTunnel = c->IsInTunnel() ;
@@ -232,23 +229,23 @@ namespace tme {
             
             for (u32 ii = 0; ii <objCharacters.Count(); ii++) {
 
-                mxcharacter* character = (mxcharacter*)objCharacters[ii];
+                auto character = (mxcharacter*)objCharacters[ii];
+                
+                CONTINUE_IF_NULL(character);
                 
                 // not dead, hidden, or recruited
-                if ( character==NULL || character->IsDead() || character->IsHidden() || character->IsRecruited() )
-                    continue;
+                CONTINUE_IF ( character->IsDead() ||
+                              character->IsHidden() ||
+                              character->IsRecruited() );
                 
                 // not self
-                if ( character == c )
-                    continue;
+                CONTINUE_IF ( character == c );
                 
                 // character location
-                if ( character->Location() != location )
-                    continue;
-
+                CONTINUE_IF ( character->Location() != location );
+                
                 // tunnel status must be the same
-                if ( character->IsInTunnel() != isInTunnel )
-                    continue;
+                CONTINUE_IF ( character->IsInTunnel() != isInTunnel );
 
                 // TODO check global flag AlwaysAttemptRecruit
                 // and maybe set the character up for recruit anyway
@@ -270,16 +267,12 @@ namespace tme {
     //
         void mxlocinfo::FindCharactersHere ( void )
         {
-        int ii;
-        mxcharacter*    moonringcarrier=NULL;
-        mxcharacter*    c=NULL;
-        mxobject*        moonring=NULL;
-        bool            bInTunnel = FALSE ;
-
-            
+        mxcharacter*    moonringcarrier=nullptr;
+        mxobject*       moonring=nullptr;
+        bool            bInTunnel = false ;
             
             // tunnel check
-            bInTunnel = (sel_flags & slf_tunnel); //owner && owner->IsInTunnel();
+            bInTunnel = (sel_flags & slf_tunnel);
 
             nRecruited=0;
 
@@ -293,24 +286,24 @@ namespace tme {
                 moonring = (mxobject*)mx->EntityByName("OB_MOONRING"); 
                 //moonringcarrier = mx->scenario->WhoHasObject(moonring);
                 moonringcarrier = mx->scenario->CurrentMoonringWearer();
-
             }
 
             // work through all characters to find the already recruited characters
-            for (ii = 0; ii < sv_characters; ii++) {
-                c = mx->CharacterById(ii+1);
+            for (u32 ii = 0; ii < sv_characters; ii++) {
+                auto c = mx->CharacterById(ii+1);
+
+                CONTINUE_IF_NULL(c);
 
                 // can't see dead hidden or not recruited characters
-                if ( c==NULL || c->IsDead() || c->IsHidden() || !c->IsRecruited() )
-                    continue;    
+                CONTINUE_IF ( c->IsDead() ||
+                              c->IsHidden() ||
+                              !c->IsRecruited() );
+  
                 // must be at this location
-                if ( c->Location() != location )
-                    continue;
+                CONTINUE_IF ( c->Location() != location );
 
                 // check tunnel
-                if ( !bInTunnel && c->IsInTunnel() )    continue;
-                if ( bInTunnel && !c->IsInTunnel() )    continue;
-                //
+                CONTINUE_IF ( bInTunnel != c->IsInTunnel() );
 
                 // potential moonring carrier or someone is carrying the moonring
                 //if ( moonring!=NULL ) {
@@ -322,17 +315,22 @@ namespace tme {
             }
 
             // now lets get the unrecruited characters
-            for (ii = 0; ii < sv_characters; ii++) {
-                c = mx->CharacterById(ii+1);
+            for (u32 ii = 0; ii < sv_characters; ii++) {
+                auto c = mx->CharacterById(ii+1);
+
+                CONTINUE_IF_NULL(c);
+                
                 // can't see dead hidden or not recruited characters
-                if ( c==NULL || c->IsDead() || c->IsHidden() || c->IsRecruited() )
-                    continue;    
+                CONTINUE_IF ( c->IsDead() ||
+                              c->IsHidden() ||
+                              c->IsRecruited() );
+                    
                 // must be at this location
-                if ( c->Location() != location )
-                    continue;
+                CONTINUE_IF ( c->Location() != location );
+                
                 // check tunnel
-                if ( !bInTunnel && c->IsInTunnel() )    continue;
-                if ( bInTunnel && !c->IsInTunnel() )    continue;
+                CONTINUE_IF ( bInTunnel != c->IsInTunnel() ) ;
+
                 //
                 objCharacters += c ;
             }
@@ -347,8 +345,6 @@ namespace tme {
     //
         void mxlocinfo::FindArmiesHere ( void )
         {
-        u32         ii;
-        int         success;
         bool        bInTunnel=false;
 
             nArmies=0;
@@ -383,9 +379,9 @@ namespace tme {
             // all the strongholds here
             if ( objStrongholds.Count() ) {
 
-                    mxstronghold* stronghold = (mxstronghold*)objStrongholds[0];
+                    auto stronghold = (mxstronghold*)objStrongholds[0];
 
-                    success = mx->TerrainById(mapsqr.terrain)->Success();
+                    bool success = mx->TerrainById(mapsqr.terrain)->Success();
 
                     bool isFriend = stronghold->OccupyingRace() != RA_DOOMGUARD ;
 #if defined(_DDR_)
@@ -422,9 +418,9 @@ namespace tme {
             }
 
             // all the regiments here
-            for ( ii=0; ii<objRegiments.Count(); ii++ ) {
+            for ( u32 ii=0; ii<objRegiments.Count(); ii++ ) {
 
-                mxregiment* reg = (mxregiment*)objRegiments[ii] ;
+                auto reg = (mxregiment*)objRegiments[ii] ;
 
                 if ( reg->Total() ) {
                 
@@ -451,9 +447,9 @@ namespace tme {
             }
 
             // lets get all the armies belonging to the character
-            for ( ii=0; ii<objCharacters.Count(); ii++ ) {
+            for ( u32 ii=0; ii<objCharacters.Count(); ii++ ) {
 
-                mxcharacter* c = (mxcharacter*)objCharacters[ii];
+                auto c = (mxcharacter*)objCharacters[ii];
 
                 bool isFriend = true;
 #if defined(_DDR_)
