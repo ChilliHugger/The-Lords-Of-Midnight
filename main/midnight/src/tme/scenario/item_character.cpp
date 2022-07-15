@@ -1606,18 +1606,6 @@ namespace tme {
             return NormalisedLoyalty() == c->NormalisedLoyalty() ;
         }
 
-        bool mxcharacter::IsOnSameSide ( const mxcharacter* c ) const
-        {
-            return CommanderInChief() == c->CommanderInChief() ;
-        }
-
-        const mxcharacter* mxcharacter::CommanderInChief ( void ) const
-        {
-            if ( liege == NULL )
-                return this ;
-            return liege->CommanderInChief();
-        }
-
         const std::string& mxcharacter::HeOrShe() const
         { 
             return mx->GenderById ( gender )->pronoun1; 
