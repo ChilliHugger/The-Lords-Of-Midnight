@@ -1092,18 +1092,6 @@ mxterrain*    tinfo;
     return buffer;
 }
 
-
-std::string mxtext::DescribeArmyTotal(const mxarmytotal* army)
-{
-    return Format (
-        CookedSystemString(SS_WARRIORS_RIDERS,army->loyalty).c_str(),
-        DescribeNumber(army->warriors).c_str(),
-        DescribeNumber(army->riders).c_str()
-        );
-}
-
-
-
 /*
  * Function name    : text::CookText
  * 

@@ -91,9 +91,6 @@ namespace tme {
 
             virtual std::string DescribeStronghold (const mxstronghold* stronghold) ;
 
-            // army totals
-            virtual std::string DescribeArmyTotal(const mxarmytotal* army) ;
-
             // location
             virtual std::string DescribeLocation( mxgridref loc) ;
 #if defined(_DDR_)

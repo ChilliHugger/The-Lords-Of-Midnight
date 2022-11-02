@@ -1054,9 +1054,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             //
             mxrace_t NormalisedLoyalty() const;
             bool IsFriend( const mxcharacter* c ) const;
-            bool IsOnSameSide ( const mxcharacter* c ) const;
-            const mxcharacter* CommanderInChief ( void ) const;
-
+  
             void ForcedVariableRefresh() const;
 
             const std::string& HeOrShe() const ;
@@ -1124,7 +1122,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             mxarmytotal();
             virtual ~mxarmytotal();
 
-            void Clear() { warriors=riders=armies=adjustment=characters=0; loyalty=nullptr;}
+            void Clear() { warriors=riders=armies=adjustment=characters=0;}
             
         public:
             u32                 warriors ;
@@ -1132,7 +1130,6 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             u32                 armies ;
             u32                 adjustment ;
             u32                 characters;
-            const mxcharacter*  loyalty;
         };
         // mxarmytotal
 
