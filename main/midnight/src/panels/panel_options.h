@@ -35,7 +35,7 @@ typedef struct {
 } option_t ;
 
 #define SET_OPTION(x,z) \
-    findOption(x)->var = &mr->settings->z;
+    findOption(x)->var = &mr->settings->z
 
 class panel_options : public uipanel
 {

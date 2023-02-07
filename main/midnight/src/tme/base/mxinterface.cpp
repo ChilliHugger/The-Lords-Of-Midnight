@@ -486,7 +486,7 @@ namespace tme {
     static mxcommand_t mx_commands[] = {
         {"@SETSCENARIO",                1, OnSetScenario,           {variant::vptr} },
         {"@SETDATABASEDIRECTORY",       1, OnSetDatabaseDirectory,  {variant::vstring} },
-        {"@INIT",                       1, OnInit,                  {variant::vuint64} },
+        {"@INIT",                       2, OnInit,                  {variant::vuint64,variant::vnumber} },
         {"@DEINIT",                     0, OnDeInit },
         {"@LOAD",                       2, OnLoadGame,              {variant::vstring,variant::vptr} },
         {"@SAVE",                       2, OnSaveGame,              {variant::vstring,variant::vptr} },

@@ -115,10 +115,10 @@ std::string storymanager::DiscoveryMapFilename()
     return mr->getWritablePath() + "/story/discovery.map";
 }
 
-bool storymanager::create ( storyid_t id, u64 flags )
+bool storymanager::create ( storyid_t id, u64 flags, mxdifficulty_t difficulty )
 {
     TME_DeInit();
-    TME_Init(flags);
+    TME_Init(flags,difficulty);
     currentStory=id;
     last_save=SAVE_NONE;
     last_night.Clear();

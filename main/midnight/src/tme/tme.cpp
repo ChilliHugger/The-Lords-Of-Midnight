@@ -1056,6 +1056,14 @@ bool TME_DeInit ( void )
     
 }
 
+mxdifficulty_t TME_GetDifficulty()
+{
+    if ( MXSUCCESS( mxi->Command("@GETDIFFICULTY", args, 0) ) ) {
+        return (mxdifficulty_t)(u32)args[0];
+    }
+    return DF_NORMAL;
+}
+
 bool TME_DebugInstallMap( void* map )
 {
     args[0] = map ;

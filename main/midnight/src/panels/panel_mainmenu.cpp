@@ -135,7 +135,7 @@ bool panel_mainmenu::init()
     //
     
     TME_DeInit();
-    TME_Init(RF_DEFAULT);
+    TME_Init(RF_DEFAULT,DF_NORMAL);
 
     refreshStories();
     

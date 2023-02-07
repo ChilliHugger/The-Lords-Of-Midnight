@@ -66,6 +66,8 @@ static RULEFLAGS rule_mapping[] = {
 };
 #endif
 
+
+
 static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
 static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
 static const char* values_movement[]            = {OPTIONS_MOVEMENT_SWIPE_PUSH,OPTIONS_MOVEMENT_PUSH,OPTIONS_MOVEMENT_SWIPE,OPTIONS_MOVEMENT_PRESS_SWIPE};
@@ -82,6 +84,8 @@ static const char* values_screen2[]             = {OPTIONS_SCREEN_NOTSUPPORTED,O
 static const char* values_cursor[]              = {OPTIONS_CURSOR_SMALL,OPTIONS_CURSOR_MEDIUM,OPTIONS_CURSOR_LARGE};
 #endif
 
+static const char* values_difficulty[]          = {OPTIONS_SCREEN_DF_NORMAL,OPTIONS_SCREEN_DF_EASY,OPTIONS_SCREEN_DF_MEDIUM,OPTIONS_SCREEN_DF_HARD};
+
 /*
  DISPLAY
     MODE                FULL, Window1, Window2, Window3
@@ -92,6 +96,7 @@ static const char* values_cursor[]              = {OPTIONS_CURSOR_SMALL,OPTIONS_
     BATTLE REPORT       SLOW, FAST
     NIGHT DISPLAY       BRIEF, FULL
     NIGHT ARE YOU SURE  ON, OFF
+    DIFFICULTY          NORMAL, EASY, MEDIUM, HARD
  CONTROL
     COMPASS DELAY
     THINK PAGING
@@ -134,6 +139,7 @@ static uitextmenuitem items_game[] = {
     { ID_OPTION_NIGHT_DISPLAY,          {OPTIONS_SCREEN_NIGHTDISPLAY},          KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
     { ID_OPTION_BATTLE_FULL,            {OPTIONS_SCREEN_BATTLEREPORT},          KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
     { ID_OPTION_NIGHT_CONFIRM,          {OPTIONS_SCREEN_NIGHTCONFIRM},          KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
+    { ID_OPTION_DIFFICULTY,             {OPTIONS_SCREEN_DIFFICULTY},            KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
 };
 
 static uitextmenuitem items_control[] = {
@@ -183,7 +189,9 @@ static option_t options[] = {
     {   ID_OPTION_RULE_4,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_5,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_6,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-                  
+
+    {   ID_OPTION_DIFFICULTY,       OPT_NUMBER,  4, values_difficulty,          nullptr, false },
+
     {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
 };
 
@@ -235,26 +243,26 @@ bool panel_options::init()
          
     CreateMainMenu();
     
-    SET_OPTION(ID_OPTION_AUTO_FIGHT,autofight)
-    SET_OPTION(ID_OPTION_AUTO_UNHIDE,autounhide)
-    SET_OPTION(ID_OPTION_MOVE_INDICATORS,showmovementindicators)
-    SET_OPTION(ID_OPTION_TUTORIAL,tutorial)
-    SET_OPTION(ID_OPTION_NAVIGATION,nav_mode)
-    SET_OPTION(ID_OPTION_TRANSITIONS,screentransitions)
-    SET_OPTION(ID_OPTION_FLIPSCREEN,flipscreen)
+    SET_OPTION(ID_OPTION_AUTO_FIGHT,autofight);
+    SET_OPTION(ID_OPTION_AUTO_UNHIDE,autounhide);
+    SET_OPTION(ID_OPTION_MOVE_INDICATORS,showmovementindicators);
+    SET_OPTION(ID_OPTION_TUTORIAL,tutorial);
+    SET_OPTION(ID_OPTION_NAVIGATION,nav_mode);
+    SET_OPTION(ID_OPTION_TRANSITIONS,screentransitions);
+    SET_OPTION(ID_OPTION_FLIPSCREEN,flipscreen);
     
-    SET_OPTION(ID_OPTION_NOVELLA,novella_pdf)
+    SET_OPTION(ID_OPTION_NOVELLA,novella_pdf);
     
-    SET_OPTION(ID_OPTION_COMPASS_DELAY,compass_delay)
-    SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast)
-    SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full)
-    SET_OPTION(ID_OPTION_NIGHT_CONFIRM,night_confirm)
+    SET_OPTION(ID_OPTION_COMPASS_DELAY,compass_delay);
+    SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast);
+    SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full);
+    SET_OPTION(ID_OPTION_NIGHT_CONFIRM,night_confirm);
       
-    SET_OPTION(ID_OPTION_SCREENMODE, screen_mode)
-    SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode)
+    SET_OPTION(ID_OPTION_SCREENMODE, screen_mode);
+    SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode);
     
 #if defined(_MOUSE_ENABLED_)
-    SET_OPTION(ID_OPTION_CURSOR_SIZE, cursor_size)
+    SET_OPTION(ID_OPTION_CURSOR_SIZE, cursor_size);
 #endif
     
     if ( !mr->settings->fullscreensupported )
@@ -275,6 +283,7 @@ bool panel_options::init()
     // END RULES
 #endif
         
+    SET_OPTION(ID_OPTION_DIFFICULTY, game_difficulty);
     
     SetMenu(ID_MENU_DISPLAY);
     
@@ -570,7 +579,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         fields.pushBack(menuItem);
     }
     
-    auto maxHeight = RES(400);
+    auto maxHeight = RES(500);
     
     subMenu->setContentSize(Size(width,height) );
     subMenuScrollView->setContentSize(Size(width, std::min(height,maxHeight)));

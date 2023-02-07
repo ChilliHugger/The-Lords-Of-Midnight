@@ -158,7 +158,7 @@ storyid_t moonring::startNewStory()
         return id;
     }
     
-    stories->create(id, settings->game_rules );
+    stories->create(id, settings->game_rules, settings->game_difficulty );
     
     UIDEBUG("Resolve TME Data");
     
@@ -659,9 +659,8 @@ void moonring::initialise( progressmonitor* monitor )
     project->LoadXmlConfig("lom/lom.tme", monitor );
 #endif
     
-
     // initialise TME
-    TME_Init(RF_DEFAULT);
+    TME_Init(RF_DEFAULT, DF_NORMAL);
     
     std::string configFilename = std::string( getWritablePath() ) + "/config.cfg";
     config->LoadXmlConfig( configFilename );

@@ -131,6 +131,7 @@ std::string TME_GetSymbol( mxid id );
 mxid TME_LinkData ( LPCSTR symbol, void* data );
 void* TME_GetEntityUserData ( mxid );
 mxid TME_GetId( LPCSTR symbol, id_type_t type );
+mxdifficulty_t TME_GetDifficulty();
 
 typedef struct MapInfo_t {
     tme::loc_t   top;
