@@ -1207,15 +1207,6 @@ void panel_look::OnNotification( Ref* sender )
             break;
         }
             
-        case ID_UNDO_NIGHT:
-        {
-            AreYouSure(UNDO_NIGHT_MSG, [&] {
-                OnUndo(savemode_night);
-            });
-
-            return;
-        }
-            
         case ID_UNDO_DAWN:
         {
             AreYouSure(UNDO_DAWN_MSG, [&] {

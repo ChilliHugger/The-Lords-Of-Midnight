@@ -23,7 +23,7 @@ storymanager::storymanager() :
     loadsave(nullptr),
     currentStory(STORY_NONE),
     last_save(SAVE_NONE),
-    undo_last_available(false)
+    undo_available(0)
 {
     CLEARARRAY(used);
     last_night.Clear();
@@ -157,16 +157,12 @@ bool storymanager::save( savemode_t mode )
 
 bool storymanager::save ( storyid_t id, savemode_t mode )
 {
-    undo_last_available=true;
-    
     if ( mode == savemode_night ) {
         last_night.Add( last_save );
-        undo_last_available=false;
         return true;
     }
     else if ( mode == savemode_dawn ) {
         last_morning.Add( last_save+1 );
-        undo_last_available=false;
     }
     
     auto file = getPath(id) ;
@@ -180,6 +176,7 @@ bool storymanager::save ( storyid_t id, savemode_t mode )
     }
     
     last_save++;
+    undo_available = std::min<int>(getUndoCount(), undo_available+1);
     
     if ( filemanager::Exists(file) )
         filemanager::Remove(file);
@@ -201,8 +198,7 @@ bool storymanager::save ( storyid_t id, savemode_t mode )
 bool storymanager::load ( storyid_t id )
 {
     currentStory = id;
-    undo_last_available=false;
-    
+ 
     if (!TME_Load( getPath(id), loadsave ) ){
         return false ;
     }
@@ -214,15 +210,17 @@ bool storymanager::load ( storyid_t id )
 
 bool storymanager::canUndo ( savemode_t mode )
 {
+    if (undo_available == 0 && !mr->config->always_undo)  {
+        return false;
+    }
+
     saveid_t save=last_save-1;
     if ( mode == savemode_dawn ) {
         save = lastMorning() ;
         if ( save == 0 ) save = 1;
     } else if ( mode == savemode_night )
         save=lastNight();
-    else if ( mode == savemode_last && (mr->config->undo_history == 1 && !mr->config->always_undo))
-        return undo_last_available ;
-    
+
     return filemanager::Exists(getPath(currentStory,save));
     
 }
@@ -239,9 +237,7 @@ saveid_t storymanager::lastMorning() const
         // are we at dawn?
         // then we want the previous dawn
         if ( dawn == last_save && last_morning.Count() > 1 ) {
-            
             dawn = last_morning.Get(last_morning.Count()-2);
-            
         }
         
         return dawn ;
@@ -265,9 +261,9 @@ std::string storymanager::getDescription( storyid_t id )
 bool storymanager::undo ( savemode_t mode )
 {
     saveid_t save=last_save-1;
-    if ( mode == savemode_dawn )
+    if ( mode == savemode_dawn ) {
         save=lastMorning();
-    else if ( mode == savemode_night )
+    } else if ( mode == savemode_night )
         save=lastNight();
     
     saveid_t temp_save = last_save ;
@@ -287,7 +283,7 @@ bool storymanager::undo ( savemode_t mode )
                 filemanager::Remove(file);
         }
         
-        undo_last_available=false;
+        undo_available = std::max<int>(0,undo_available-1);
         
         return true;
     }
@@ -295,12 +291,15 @@ bool storymanager::undo ( savemode_t mode )
     return false;
 }
 
+
 bool storymanager::cleanup ( void )
 {
     if ( mr->config->keep_full_save_history )
         return true;
     
-    s32 final_save = MAX(0,last_save-mr->config->undo_history);
+    s32 undo_history = getUndoCount() ;
+    
+    s32 final_save = MAX(0,last_save-undo_history);
     for ( s32 ii=0; ii<final_save; ii++ ) {
         if ( !last_morning.IsInList(ii) ) {
             auto file = getPath(currentStory,ii) ;
@@ -335,6 +334,8 @@ bool storymanager::Serialize( u32 version, archive& ar )
         ar << last_morning.Count();
         for ( int i =0; i<last_morning.Count(); i++ )
             ar << last_morning.Get(i) ;
+            
+        ar << undo_available ;
         
     }else{
         
@@ -367,9 +368,27 @@ bool storymanager::Serialize( u32 version, archive& ar )
             
         }
         
+        if ( version > 13 ) {
+            ar >> undo_available ;
+        }
     }
     
     return true;
+}
+
+
+
+u32 storymanager::getUndoCount()
+{
+static UNDOHISTORY undo_history_mapping[] = { UH_NORMAL, UH_EASY, UH_MEDIUM, UH_HARD };
+   
+    // config override
+    if(mr->config->undo_history != UH_NOTSET) {
+        return mr->config->undo_history;
+    }
+   
+    auto difficulty = TME_GetDifficulty();
+    return undo_history_mapping[difficulty] ;
 }
 
 
