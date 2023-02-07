@@ -1,5 +1,10 @@
 The Midnight Engine
 
+Build (45)
+1. FIXED: [tme] - DDR - strongholds don't change Occupier if the race is the same
+2. FIXED: [tme] - DDR - Night processing hangs because of circular lieges
+3. FIXED: [tme] - DDR - Obigrorn the Giant starts with Riders
+
 Build (44)
 1. ADDED: panel_map_detailed - tool tip for location - press
 2. ADDED: panel_options - gameplay rules
@@ -24,4 +29,4 @@ Build (43)
 7. FIXED: panel_select - crash caused by adding a new page / reorganise button
 8. FIXED: panel_select - [win] missing or corrupt lord names
 9. FIXED: panel_select - truncated long lord names
-10. FIXED: [tme] - Stop diagonal movement of lord in tunnel
+10. FIXED: [tme] - DDR - stop diagonal movement of lord in tunnel
