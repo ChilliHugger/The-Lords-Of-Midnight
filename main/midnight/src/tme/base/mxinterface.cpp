@@ -391,9 +391,9 @@ namespace tme {
     //
     COMMAND( OnInit ) 
     {
-        //argv[0]=0;
-        mx->setRules( (RULEFLAGS) (u64)argv[0] );
-        return mx->LoadDatabase();
+        auto rules = (RULEFLAGS) (u64)argv[0] ;
+        auto difficulty = (mxdifficulty_t) (u64)argv[1];
+        return mx->LoadDatabase(rules,difficulty);
     }
 
     // COMMAND: @DEINIT
@@ -463,11 +463,25 @@ namespace tme {
         mx->gamemap = map;
         mx->gamemap->CalculateVisibleArea();
         mx->gamemap->ClearVisible();
-        
-        
+
         return MX_OK;
     }
 
+    // COMMAND: @SETDIFFICULTY
+    //
+    COMMAND( OnSetDifficulty )
+    {
+        mx->Difficulty((mxdifficulty_t)(u32)argv[0]);
+        return MX_OK;
+    }
+
+    // COMMAND: @GETDIFFICULTY
+    //
+    COMMAND( OnGetDifficulty )
+    {
+        argv[0]=(u32)mx->Difficulty();
+        return MX_OK;
+    }
     
     static mxcommand_t mx_commands[] = {
         {"@SETSCENARIO",                1, OnSetScenario,           {variant::vptr} },
@@ -479,9 +493,10 @@ namespace tme {
         {"@DESCRIPTION",                1, OnGameDescription,       {variant::vstring} },
         {"@LOADDISCOVERYMAP",           1, OnLoadDiscoveryMap,      {variant::vstring} },
         {"@SAVEDISCOVERYMAP",           1, OnSaveDiscoveryMap,      {variant::vstring} },
-        
+    
         {"@SETMAP",                     1, OnSetMap,                {variant::vptr} },
-        
+        {"@SETDIFFICULTY",              1, OnSetDifficulty,         {variant::vnumber} },
+        {"@GETDIFFICULTY",              0, OnGetDifficulty},
     };
 
     //

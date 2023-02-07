@@ -6,11 +6,11 @@
 
 //#define _TME_DEMO_MODE_
 
-#define ISARG(x)     c_stricmp( arg.c_str(), x ) == 0
-#define COMMAND(x)    static MXRESULT (x)( const std::string& arg, variant argv[], u32 argc)
+#define ISARG(x)    c_stricmp( arg.c_str(), x ) == 0
+#define COMMAND(x)  static MXRESULT (x)( const std::string& arg, variant argv[], u32 argc)
 #define mxrandom    randomno::instance.get
 #define mxchance    randomno::instance.chance
-#define EOS(x)        x+c_strlen(x)
+#define EOS(x)      x+c_strlen(x)
 
 
 namespace tme {
@@ -18,23 +18,23 @@ namespace tme {
     //using namespace tme::collections;
     
     DECLARE_ENUM(arguments) {
-        character    =    128+IDT_CHARACTER,
-        stronghold    =    128+IDT_STRONGHOLD,
-        routenode    =    128+IDT_ROUTENODE,
+        character   =    128+IDT_CHARACTER,
+        stronghold  =    128+IDT_STRONGHOLD,
+        routenode   =    128+IDT_ROUTENODE,
         regiment    =    128+IDT_REGIMENT,
-        objectinfo    =    128+IDT_OBJECT,
+        objectinfo  =    128+IDT_OBJECT,
         location    =    128+IDT_LOCATION,
-        direction    =    128+IDT_DIRECTIONINFO,
+        direction   =    128+IDT_DIRECTIONINFO,
         area        =    128+IDT_AREAINFO,
-        terrain        =    128+IDT_TERRAININFO,
-        string        =    128+IDT_STRING,
+        terrain     =    128+IDT_TERRAININFO,
+        string      =    128+IDT_STRING,
     END_ENUM(arguments);
 
     typedef struct mxcommand_t {
-        LPCSTR        name;
-        u32            argcount;
-        PFNCOMMAND    pfnCommand;
-        u32            arguments[16];
+        LPCSTR      name;
+        u32         argcount;
+        PFNCOMMAND  pfnCommand;
+        u32         arguments[16];
     } mxcommand_t;
 
     using collections::entities;
@@ -47,7 +47,7 @@ namespace tme {
         virtual ~mxengine();
 
         virtual MXRESULT SetDatabaseDirectory ( const std::string& directory ) ;
-        virtual MXRESULT LoadDatabase ( void ) ;
+        virtual MXRESULT LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty ) ;
         virtual MXRESULT UnloadDatabase ( void ) ;
         //virtual MXRESULT LoadDefaultScenario ( void ) ;
         virtual MXRESULT LoadScenario ( mxscenario* scenario ) ;
@@ -115,6 +115,9 @@ namespace tme {
         void setRules( RULEFLAGS flags) { m_ruleFlags.Set(flags); }
         bool isRuleEnabled( RULEFLAGS flags ) { return m_ruleFlags.Is(flags); }
         
+        void Difficulty( mxdifficulty_t difficulty ) { m_difficulty = difficulty; }
+        mxdifficulty_t Difficulty() const { return m_difficulty ; }
+        
     public:
         mxmap*                  gamemap;
         mxdiscoverymap*         discoverymap;
@@ -144,10 +147,9 @@ namespace tme {
 #endif
         PFNNIGHTCALLBACK        pfnNightCallback ;
 
-        bool                    m_bEnergyCheat;
         u32                     m_versionno;
         bool                    m_savegame;
-        eflags<RULEFLAGS,u64>   m_ruleFlags;
+
 
     private:
         cvarreg_t*              variables ;
@@ -158,7 +160,8 @@ namespace tme {
         std::string             lastactiontext;
         
         u32                     savegameversion;
-
+        eflags<RULEFLAGS,u64>   m_ruleFlags;
+        mxdifficulty_t          m_difficulty;
     };
 
     inline std::string mxengine::LastActionMsg()

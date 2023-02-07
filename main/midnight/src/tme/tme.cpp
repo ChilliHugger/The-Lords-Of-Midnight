@@ -984,7 +984,7 @@ void* TME_GetEntityUserData ( mxid id)
 }
 
 
-bool TME_Init ( u64 flags )
+bool TME_Init ( u64 flags, mxdifficulty_t difficulty )
 {
     // first we need an interface object
     mxi = new mxinterface ;
@@ -1016,7 +1016,8 @@ bool TME_Init ( u64 flags )
     
     // initialise the engine
     args[0] = flags ;
-    if ( MXFAILED ( mxi->Command("@INIT", args, 1) ) ) {
+    args[1] = (u32)difficulty ;
+    if ( MXFAILED ( mxi->Command("@INIT", args, 2) ) ) {
         return false ;
     }
     
