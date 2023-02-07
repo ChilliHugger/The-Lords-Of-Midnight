@@ -128,17 +128,31 @@ MXTRACE("Place Objects On Map");
     PlaceObjectsOnMap();
     
     for (int ii = 0; ii < sv_characters; ii++) {
-        ddr_character* c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
+        auto c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
         c->lastlocation=c->Location();
     }
     
     for ( int ii=0; ii < sv_strongholds; ii++ ) {
-        mxstronghold* s = static_cast<mxstronghold*>(mx->StrongholdById(ii+1));
+        auto s = static_cast<mxstronghold*>(mx->StrongholdById(ii+1));
         s->MaxTroops(sv_stronghold_default_max);
         s->MinTroops(sv_stronghold_default_min);
     }
     
-    mxterrain* tinfo = mx->TerrainById(TN_ICYWASTE);
+    // Obigorn the giant starts with Riders and not Warriors
+    // this needs a data fix too
+    // https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/135
+    auto obigrorn = static_cast<ddr_character*>(mx->EntityByName("CH_OBIGRORN"));
+    if(obigrorn!=nullptr){
+        obigrorn->Flags().Reset(cf_allowedriders);
+        obigrorn->Flags().Set(cf_allowedwarriors);
+        obigrorn->warriors.Total(obigrorn->riders.Total());
+        obigrorn->warriors.Energy(obigrorn->riders.Energy());
+        obigrorn->warriors.Lost(obigrorn->riders.Lost());
+        obigrorn->warriors.Killed(obigrorn->riders.Killed());
+        obigrorn->riders.Total(0);
+    }
+  
+    auto tinfo = mx->TerrainById(TN_ICYWASTE);
     tinfo->movementcost=2;
     
     mxscenario::initialiseAfterCreate(version);
