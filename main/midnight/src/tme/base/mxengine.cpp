@@ -217,7 +217,7 @@ MXRESULT mxengine::SetDatabaseDirectory ( const std::string& directory )
  * 
  * Arguments        : void
  */
-MXRESULT mxengine::LoadDatabase ( void )
+MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
 {
 int ii;
 int id;
@@ -416,16 +416,13 @@ MXTRACE("Loading MAP");
     chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
-    
-    //sv_map_width = 66;
-    //sv_map_height = 63;
+
     gamemap = new mxmap() ;
 
     if ( !gamemap->Load ( filename.c_str() ) ) {
         SAFEDELETE ( gamemap );
         return MX_FAILED;
     }
-
     
     gamemap->ClearVisible();
     
@@ -435,12 +432,13 @@ MXTRACE( "Init Variables");
 
     sv_days = 0;
     sv_strongholdadjuster = 0;
+    m_difficulty = difficulty ;
+    setRules(rules);
 
     scenario->initialiseAfterCreate(m_versionno);
     
-    CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0]) ) ;
+    CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0])) ;
    
-    
     return MX_OK ;
 }
 
@@ -671,6 +669,15 @@ std::string  description;
     }else{
         setRules(RF_DEFAULT);
     }
+    if ( SaveGameVersion()>=14 ) {
+        READ_ENUM(m_difficulty);
+        u32 seed; ar >> seed;
+        if(m_difficulty == DF_MEDIUM || m_difficulty == DF_HARD ) {
+            randomno::instance.seed(seed);
+        }
+    }else{
+        m_difficulty = DF_NORMAL;
+    }
 
     /* save the game map */
     gamemap->Serialize ( ar );
@@ -885,6 +892,10 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     
     // version 13
     ar << m_ruleFlags;
+    
+    // version 14
+    WRITE_ENUM(m_difficulty);
+    ar << randomno::instance.seed();
 
     /* save the game map */
     gamemap->Serialize ( ar );

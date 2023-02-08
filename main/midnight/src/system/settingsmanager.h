@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  11
+#define CONFIG_VERSION                  12
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -80,6 +80,14 @@ enum CONFIG_CURSOR_SIZE
     CF_CURSOR_LARGE=2,
 };
 
+//enum CONFIG_DIFFICULTY
+//{
+//    CF_DIFFICULTY_NORMAL=DF_NORMAL,
+//    CF_DIFFICULTY_EASY=DF_EASY,
+//    CF_DIFFICULTY_MEDIUM=DF_MEDIUM,
+//    CF_DIFFICULTY_HARD=DF_HARD,
+//};
+
 class settingsmanager : public ringcontroller
 {
     
@@ -141,4 +149,7 @@ public:
     
     // version 11
     eflags<RULEFLAGS,u64>   game_rules;
+    
+    // version 12
+    mxdifficulty_t          game_difficulty;
 };
