@@ -484,10 +484,9 @@ void panel_options::SetMenu ( int id )
     } else if ( id == ID_MENU_CONTROL ) {
 
         // check if keyboard available
-        //if ( !ui->IsKeyboardAvailable() )
-        {
-            hideOption(ID_OPTION_KEYBOARD_STYLE);
-        }
+#if !defined(_OS_DESKTOP_)
+        hideOption(ID_OPTION_KEYBOARD_STYLE);
+#endif
 
         SetSubMenu(items_control,NUMELE(items_control));
         
