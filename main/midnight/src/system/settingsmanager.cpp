@@ -28,6 +28,7 @@ settingsmanager::settingsmanager() :
     , keyboard_mode(CF_KEYBOARD_CLASSIC)
     , fullscreensupported(true)
     , cursor_size(CF_CURSOR_MEDIUM)
+    , movement_type(CF_MOVEMENT_ORIGINAL)
 {
     
 #if defined(_OS_DESKTOP_)
