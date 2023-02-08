@@ -586,8 +586,8 @@ using namespace chilli::types;
             RF_SOLE_MOUNTAINEER             = MXBIT(3),
             RF_LOM_UNRECRUITABLE_FEY        = MXBIT(4),
             RF_FAST_TUNNELS                 = MXBIT(5),
-            RF_RULE_7                       = MXBIT(6),
-            RF_RULE_8                       = MXBIT(7),
+            RF_DDR_MOVEMENT_SPECTRUM        = MXBIT(6),
+            RF_DDR_MOVEMENT_C64             = MXBIT(7),
             RF_DEFAULT = 0,
             RF_NONE = 0,
         };
