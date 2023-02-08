@@ -46,7 +46,7 @@ static RULEFLAGS rule_mapping[] = {
     RF_ADD_MOUNTAIN_PASSES,
     RF_SOLE_MOUNTAINEER,
     RF_LOM_UNRECRUITABLE_FEY,
-    RF_NONE                     // RF_FAST_TUNNELS
+    RF_NONE,                    // RF_FAST_TUNNELS
     RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
     RF_NONE,                    // RF_DDR_MOVEMENT_C64,
 };
@@ -147,7 +147,12 @@ static const char* values_cursor[] = {
 };
 #endif
 
-static const char* values_difficulty[]          = {OPTIONS_SCREEN_DF_NORMAL,OPTIONS_SCREEN_DF_EASY,OPTIONS_SCREEN_DF_MEDIUM,OPTIONS_SCREEN_DF_HARD};
+static const char* values_difficulty[] = {
+    OPTIONS_SCREEN_DF_NORMAL,
+    OPTIONS_SCREEN_DF_EASY,
+    OPTIONS_SCREEN_DF_MEDIUM,
+    OPTIONS_SCREEN_DF_HARD
+};
 
 /*
  DISPLAY
@@ -159,12 +164,12 @@ static const char* values_difficulty[]          = {OPTIONS_SCREEN_DF_NORMAL,OPTI
     BATTLE REPORT       SLOW, FAST
     NIGHT DISPLAY       BRIEF, FULL
     NIGHT ARE YOU SURE  ON, OFF
-    DIFFICULTY          NORMAL, EASY, MEDIUM, HARD
  CONTROL
     COMPASS DELAY
     THINK PAGING
     NAVIGATION STYLE    SWIPE
-
+ GAME RULES
+    DIFFICULTY          NORMAL, EASY, MEDIUM, HARD
  
  HELP
     TUTORIAL
