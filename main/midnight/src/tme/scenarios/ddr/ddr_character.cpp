@@ -295,11 +295,13 @@ namespace tme {
     {
         despondency = BSub(despondency, amount, 0);
     }
-
-    static mxterrain_t GetRacePeferredTerrain( mxrace_t race, bool riding )
+    
+    static mxterrain_t GetRacePeferredTerrainOriginal( mxrace_t race, bool riding )
     {
         // are we on our preferred terrain 0x7354
         // This replicates the original spectrum BUG
+        // L7344 DB 001h,008h,004h,003h,002h,002h,002h,002h
+        // DB 002h,002h,002h,002h,002h,002h,002h,002h
         if(!riding) {
             if( race==RA_MOONPRINCE )
                 return TN_FORTRESS;
@@ -314,8 +316,19 @@ namespace tme {
         return TN_FOREST2;
     }
 
-    static mxterrain_t GetRacePeferredTerrainFixed( mxrace_t race )
+    static mxterrain_t GetRacePeferredTerrainSpectrum( mxrace_t race )
     {
+//    L7354  DB TERRAIN_CITY,   TERRAIN_CITY        ;moonprince
+//           DB TERRAIN_PLAINS, TERRAIN_PLAINS      ;free
+//           DB TERRAIN_TOWER,  TERRAIN_TOWER       ;wise
+//           DB TERRAIN_FOREST, TERRAIN_FOREST      ;fey
+//           DB TERRAIN_HILLS,  TERRAIN_HILLS       ;barbarian
+//           DB TERRAIN_PLAINS, TERRAIN_PLAINS      ;icelord
+//           DB TERRAIN_FOREST                      ;tarithel
+//           DB TERRAIN_MOUNTAINS                   ;giant
+//           DB TERRAIN_PLAINS                      ;heartstealer
+//           DB TERRAIN_FROZENWASTE                 ;dwarf
+
         switch( race ) {
             case RA_MOONPRINCE:
                 return TN_CITY;
@@ -329,7 +342,7 @@ namespace tme {
             case RA_BARBARIAN:
                 return TN_HILLS;
             case RA_ICELORD:
-                return TN_PLAINS;
+                return TN_PLAINS2;
             case RA_GIANT:
                 return TN_MOUNTAIN2;
             case RA_HEARTSTEALER:
@@ -349,6 +362,61 @@ namespace tme {
 //            case RA_MIDWINTER:
         }
     }
+    
+    static mxterrain_t GetRacePeferredTerrainC64( mxrace_t race )
+    {
+//    L7354A    DB TERRAIN_MOUNTAINS, TERRAIN_MOUNTAINS ;moonprince
+//              DB TERRAIN_PLAINS,    TERRAIN_PLAINS    ;free
+//              DB TERRAIN_FOREST,    TERRAIN_FOREST    ;wise
+//              DB TERRAIN_FOREST,    TERRAIN_FOREST    ;fey
+//              DB TERRAIN_FOREST,    TERRAIN_FOREST    ;barbarian
+//              DB TERRAIN_PLAINS,    TERRAIN_PLAINS    ;icelord
+//              DB TERRAIN_FOREST                       ;tarithel
+//              DB TERRAIN_MOUNTAINS                    ;giant
+//              DB TERRAIN_PLAINS                       ;heartstealer
+//              DB TERRAIN_FROZENWASTE                  ;dwarf
+
+        switch( race ) {
+            case RA_MOONPRINCE:
+                return TN_MOUNTAIN2;
+            case RA_FREE:
+            case RA_ICELORD:
+            case RA_HEARTSTEALER:
+                return TN_PLAINS2;
+            case RA_WISE:
+            case RA_FEY:
+            case RA_TARITHEL:
+            case RA_BARBARIAN:
+                return TN_FOREST2;
+            case RA_GIANT:
+                return TN_MOUNTAIN2;
+            case RA_DWARF:
+                return TN_ICYWASTE; // tunnels
+            default:
+                return TN_PLAINS2;
+// NOT DDR
+//            case RA_DOOMGUARD:
+//            case RA_TARG:
+//            case RA_MORKIN:
+//            case RA_SKULKRIN:
+//            case RA_DRAGON:
+//            case RA_TROLL:
+//            case RA_DOOMDARK:
+//            case RA_MIDWINTER:
+        }
+    }
+
+    static mxterrain_t GetRacePeferredTerrain( mxrace_t race, bool riding )
+    {
+        if(mx->isRuleEnabled(RF_DDR_MOVEMENT_SPECTRUM)) {
+            return GetRacePeferredTerrainSpectrum(race);
+        }
+        else if(mx->isRuleEnabled(RF_DDR_MOVEMENT_C64)) {
+            return GetRacePeferredTerrainC64(race);
+        }
+        return GetRacePeferredTerrainOriginal(race,riding);
+    }
+
 
     MXRESULT ddr_character::Cmd_WalkForward ( bool perform_seek )
     {

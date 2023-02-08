@@ -33,11 +33,12 @@ USING_NS_CC_UI;
 #if defined(_LOM_)
 #define _USE_GAME_RULES_
 static uitextmenuitem items_rules[] = {
-    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
-    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
-    { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
-    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
-    { ID_OPTION_RULE_5,                 {OPTIONS_SCREEN_RULE_5},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE }
+    { ID_OPTION_DIFFICULTY,             {OPTIONS_SCREEN_DIFFICULTY},            KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
+    { ID_OPTION_RULE_5,                 {OPTIONS_SCREEN_RULE_5},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE }
 };
 static RULEFLAGS rule_mapping[] = {
     RF_IMPASSABLE_MOUNTAINS,
@@ -46,15 +47,19 @@ static RULEFLAGS rule_mapping[] = {
     RF_SOLE_MOUNTAINEER,
     RF_LOM_UNRECRUITABLE_FEY,
     RF_NONE                     // RF_FAST_TUNNELS
+    RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
+    RF_NONE,                    // RF_DDR_MOVEMENT_C64,
 };
 
 #elif defined(_DDR_)
 #define _USE_GAME_RULES_
 static uitextmenuitem items_rules[] = {
-    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
-    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
-    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
-    { ID_OPTION_RULE_6,                 {OPTIONS_SCREEN_RULE_6},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE }
+    { ID_OPTION_DIFFICULTY,             {OPTIONS_SCREEN_DIFFICULTY},            KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
+    { ID_OPTION_RULE_1,                 {OPTIONS_SCREEN_RULE_1},                KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
+    { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+    { ID_OPTION_RULE_6,                 {OPTIONS_SCREEN_RULE_6},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
+    { ID_OPTION_RULE_7,                 {OPTIONS_SCREEN_RULE_7},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE }
 };
 static RULEFLAGS rule_mapping[] = {
     RF_IMPASSABLE_MOUNTAINS,
@@ -62,26 +67,84 @@ static RULEFLAGS rule_mapping[] = {
     RF_NONE,                    // RF_ADD_MOUNTAIN_PASSES
     RF_SOLE_MOUNTAINEER,
     RF_NONE,                    // RF_LOM_UNRECRUITABLE_FEY
-    RF_FAST_TUNNELS
+    RF_FAST_TUNNELS,
+    RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
+    RF_NONE,                    // RF_DDR_MOVEMENT_C64,
 };
 #endif
 
+static const char* values_movement_type[] = {
+    OPTIONS_SCREEN_RULE_ORIGINAL,
+    OPTIONS_SCREEN_RULE_INTENDED,
+    OPTIONS_SCREEN_RULE_C64
+};
 
+static const char* values_onoff[] = {
+    OPTIONS_ONOFF_OFF,
+    OPTIONS_ONOFF_ON
+};
 
-static const char* values_onoff[]               = {OPTIONS_ONOFF_OFF,OPTIONS_ONOFF_ON};
-static const char* values_yesno[]               = {OPTIONS_YESNO_NO,OPTIONS_YESNO_YES};
-static const char* values_movement[]            = {OPTIONS_MOVEMENT_SWIPE_PUSH,OPTIONS_MOVEMENT_PUSH,OPTIONS_MOVEMENT_SWIPE,OPTIONS_MOVEMENT_PRESS_SWIPE};
+static const char* values_yesno[] = {
+    OPTIONS_YESNO_NO,
+    OPTIONS_YESNO_YES
+};
+
+static const char* values_movement[] = {
+    OPTIONS_MOVEMENT_SWIPE_PUSH,
+    OPTIONS_MOVEMENT_PUSH,
+    OPTIONS_MOVEMENT_SWIPE,
+    OPTIONS_MOVEMENT_PRESS_SWIPE
+};
+
 //static const char* values_think[]               = {OPTIONS_THINK_SWIPE,OPTIONS_THINK_SWIPE,OPTIONS_THINK_ARROWS};
-static const char* values_compass_delay[]       = {OPTIONS_COMPASS_DELAY_OFF,OPTIONS_COMPASS_DELAY_NORMAL,OPTIONS_COMPASS_DELAY_SHORT,OPTIONS_COMPASS_DELAY_LONG};
-static const char* values_slowfast[]            = {OPTIONS_SLOW,OPTIONS_FAST};
-static const char* values_fullbrief[]           = {OPTIONS_BRIEF,OPTIONS_FULL};
-static const char* values_keyboard[]            = {OPTIONS_KEYBOARD_CLASSIC,OPTIONS_KEYBOARD_NEW};
-static const char* values_novella[]             = {OPTIONS_NOVELLA_EBOOK,OPTIONS_NOVELLA_PDF};
-static const char* values_screen[]              = {OPTIONS_SCREEN_FULLSCREEN,OPTIONS_SCREEN_SMALL,OPTIONS_SCREEN_MEDIUM,OPTIONS_SCREEN_LARGE};
-static const char* values_screen2[]             = {OPTIONS_SCREEN_NOTSUPPORTED,OPTIONS_SCREEN_SMALL,OPTIONS_SCREEN_MEDIUM,OPTIONS_SCREEN_LARGE};
+
+static const char* values_compass_delay[] = {
+    OPTIONS_COMPASS_DELAY_OFF,
+    OPTIONS_COMPASS_DELAY_NORMAL,
+    OPTIONS_COMPASS_DELAY_SHORT,
+    OPTIONS_COMPASS_DELAY_LONG
+};
+
+static const char* values_slowfast[] = {
+    OPTIONS_SLOW,
+    OPTIONS_FAST
+};
+
+static const char* values_fullbrief[] = {
+    OPTIONS_BRIEF,
+    OPTIONS_FULL
+};
+
+static const char* values_keyboard[] = {
+    OPTIONS_KEYBOARD_CLASSIC,
+    OPTIONS_KEYBOARD_NEW
+};
+
+static const char* values_novella[] = {
+    OPTIONS_NOVELLA_EBOOK,
+    OPTIONS_NOVELLA_PDF
+};
+
+static const char* values_screen[] = {
+    OPTIONS_SCREEN_FULLSCREEN,
+    OPTIONS_SCREEN_SMALL,
+    OPTIONS_SCREEN_MEDIUM,
+    OPTIONS_SCREEN_LARGE
+};
+
+static const char* values_screen2[] = {
+    OPTIONS_SCREEN_NOTSUPPORTED,
+    OPTIONS_SCREEN_SMALL,
+    OPTIONS_SCREEN_MEDIUM,
+    OPTIONS_SCREEN_LARGE
+};
 
 #if defined(_MOUSE_ENABLED_)
-static const char* values_cursor[]              = {OPTIONS_CURSOR_SMALL,OPTIONS_CURSOR_MEDIUM,OPTIONS_CURSOR_LARGE};
+static const char* values_cursor[] = {
+    OPTIONS_CURSOR_SMALL,
+    OPTIONS_CURSOR_MEDIUM,
+    OPTIONS_CURSOR_LARGE
+};
 #endif
 
 static const char* values_difficulty[]          = {OPTIONS_SCREEN_DF_NORMAL,OPTIONS_SCREEN_DF_EASY,OPTIONS_SCREEN_DF_MEDIUM,OPTIONS_SCREEN_DF_HARD};
@@ -139,7 +202,6 @@ static uitextmenuitem items_game[] = {
     { ID_OPTION_NIGHT_DISPLAY,          {OPTIONS_SCREEN_NIGHTDISPLAY},          KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
     { ID_OPTION_BATTLE_FULL,            {OPTIONS_SCREEN_BATTLEREPORT},          KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
     { ID_OPTION_NIGHT_CONFIRM,          {OPTIONS_SCREEN_NIGHTCONFIRM},          KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
-    { ID_OPTION_DIFFICULTY,             {OPTIONS_SCREEN_DIFFICULTY},            KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
 };
 
 static uitextmenuitem items_control[] = {
@@ -159,7 +221,6 @@ static uitextmenuitem items_help[] = {
 };
 
 static option_t options[] = {
-    
     {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_AUTO_UNHIDE,      OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_MOVE_INDICATORS,  OPT_BOOL,    0, values_yesno,               nullptr, false },
@@ -189,6 +250,8 @@ static option_t options[] = {
     {   ID_OPTION_RULE_4,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_5,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_6,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_7,           OPT_NUMBER,  3, values_movement_type,       nullptr, false },
+                  
 
     {   ID_OPTION_DIFFICULTY,       OPT_NUMBER,  4, values_difficulty,          nullptr, false },
 
@@ -224,6 +287,32 @@ void hideOption(int id)
         option->hidden = true;
     }
 }
+
+#if defined(_USE_GAME_RULES_)
+void setRulesFromMovementType(CONFIG_MOVEMENT_TYPE type, eflags<RULEFLAGS,u64>& rules) {
+    switch(type) {
+        case CF_MOVEMENT_ORIGINAL:
+            rules.Reset(RF_DDR_MOVEMENT_MASK);
+            break;
+        case CF_MOVEMENT_INTENDED:
+            rules.Set(RF_DDR_MOVEMENT_SPECTRUM);
+            break;
+        case CF_MOVEMENT_C64:
+            rules.Set(RF_DDR_MOVEMENT_C64);
+            break;
+    }
+}
+
+CONFIG_MOVEMENT_TYPE getMovementTypeFromRules(eflags<RULEFLAGS,u64> rules) {
+    if (rules.Is(RF_DDR_MOVEMENT_SPECTRUM)) {
+        return CF_MOVEMENT_INTENDED;
+    }
+    else if (rules.Is(RF_DDR_MOVEMENT_C64)) {
+        return CF_MOVEMENT_C64;
+    }
+    return CF_MOVEMENT_ORIGINAL;
+}
+#endif
 
 bool panel_options::init()
 {
@@ -280,6 +369,10 @@ bool panel_options::init()
             rules[ii] = false;
         }
     }
+    
+    mr->settings->movement_type = getMovementTypeFromRules(mr->settings->game_rules);
+    SET_OPTION(ID_OPTION_RULE_7, movement_type);
+    
     // END RULES
 #endif
         
@@ -444,10 +537,14 @@ void panel_options::SetValues()
             mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
         }
     }
+    
+    setRulesFromMovementType(mr->settings->movement_type,mr->settings->game_rules);
+    
     // END RULES
 #endif
 
 }
+
 
 void panel_options::checkDisabledRules()
 {

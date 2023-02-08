@@ -29,6 +29,7 @@ settingsmanager::settingsmanager() :
     , fullscreensupported(true)
     , cursor_size(CF_CURSOR_MEDIUM)
     , game_difficulty(DF_NORMAL)
+    , movement_type(CF_MOVEMENT_ORIGINAL)
 {
     
 #if defined(_OS_DESKTOP_)

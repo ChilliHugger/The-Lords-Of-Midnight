@@ -80,13 +80,12 @@ enum CONFIG_CURSOR_SIZE
     CF_CURSOR_LARGE=2,
 };
 
-//enum CONFIG_DIFFICULTY
-//{
-//    CF_DIFFICULTY_NORMAL=DF_NORMAL,
-//    CF_DIFFICULTY_EASY=DF_EASY,
-//    CF_DIFFICULTY_MEDIUM=DF_MEDIUM,
-//    CF_DIFFICULTY_HARD=DF_HARD,
-//};
+enum CONFIG_MOVEMENT_TYPE
+{
+    CF_MOVEMENT_ORIGINAL=0,
+    CF_MOVEMENT_INTENDED=1,
+    CF_MOVEMENT_C64=2,
+};
 
 class settingsmanager : public ringcontroller
 {
@@ -149,6 +148,8 @@ public:
     
     // version 11
     eflags<RULEFLAGS,u64>   game_rules;
+    CONFIG_MOVEMENT_TYPE    movement_type;
+
     
     // version 12
     mxdifficulty_t          game_difficulty;

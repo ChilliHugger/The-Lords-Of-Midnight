@@ -124,6 +124,12 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_4              = "SOLE MOUNTAINEER";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_5              = "UN-RECRUITABLE FEY";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_6              = "FAST TUNNELS";
+
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_7              = "MOVEMENT MODIFIERS";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_ORIGINAL       = "ORIGINAL SPECTRUM";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_INTENDED       = "INTENDED SPECTRUM";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_C64            = "ORIGINAL C64";
+    
     
     constexpr LPCSTR OPTIONS_SCREEN_DF_NORMAL           = "NORMAL";
     constexpr LPCSTR OPTIONS_SCREEN_DF_EASY             = "EASY";
