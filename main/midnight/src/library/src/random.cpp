@@ -46,10 +46,7 @@ namespace chilli {
 
         int randomno::get ( void )
         {
-            //return (((int)(random() * ((double)(h)-(l)+1))) + (l))
-            //return rand();
-            //return(((m_seed = m_seed * 214013L + 2531011L) >> 16) & 0xffff);
-            return get(32767);
+            return get(SHRT_MAX);
         }
 
         void randomno::seed ( u32 seed )
@@ -57,17 +54,13 @@ namespace chilli {
             srand ( seed ) ;
         }
 
-        int randomno::seed()
+        u32 randomno::seed()
         {
             return m_seed ;
         }
 
         f32 randomno::getfloat()
         {
-            //static unsigned int a = 1588635695, m = 4294967291U, q = 2, r = 1117695901;
-            //m_seed = a*(m_seed % q) - r*(m_seed / q);
-            //return (f32) (((double)m_seed / (double)m));
-
             m_seed = ((((m_seed + 1)*1951) % 65537) - 1);
             return (f32) (((double)m_seed / (double)65535)); 
         }

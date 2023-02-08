@@ -59,7 +59,7 @@ public:
     virtual saveid_t lastNight() const ;
     
     virtual bool save ( savemode_t mode = savemode_normal );
-    virtual bool create ( storyid_t id, u64 flags );
+    virtual bool create ( storyid_t id, u64 flags, mxdifficulty_t difficulty );
     virtual bool save ( storyid_t id, savemode_t mode=savemode_normal );
     virtual bool load ( storyid_t id );
     virtual bool destroy ( storyid_t id );
@@ -80,7 +80,9 @@ public:
     bool Serialize( u32 version, chilli::lib::archive& ar );
     
     std::string DiscoveryMapFilename();
-    
+
+    u32 getUndoCount();
+
 protected:
     bool                used[MAX_STORIES];
     storyid_t           currentStory;
@@ -88,7 +90,7 @@ protected:
     saveid_t            last_save;
     c_u32               last_night;
     c_u32               last_morning;
-    bool                undo_last_available;
+    u32                 undo_available;
     storyinfo_t         stories ;
 };
 

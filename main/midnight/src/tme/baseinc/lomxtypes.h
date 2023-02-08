@@ -54,6 +54,13 @@ using namespace chilli::types;
             MX_UNKNOWN_FILE             =    -11,
         };
 
+        enum mxdifficulty_t {
+            DF_NORMAL = 0,
+            DF_EASY,
+            DF_MEDIUM,
+            DF_HARD
+        };
+
         enum mxgender_t {
             GD_NONE,
             GD_MALE,
@@ -962,10 +969,10 @@ namespace tme {
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_DDR_)
-    #define SAVEGAMEVERSION     13
+    #define SAVEGAMEVERSION     14
 #endif
 #if defined(_LOM_)
-    #define SAVEGAMEVERSION     13
+    #define SAVEGAMEVERSION     14
 #endif
 
 

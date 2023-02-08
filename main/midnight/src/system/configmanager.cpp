@@ -11,19 +11,13 @@
 #include "tmemanager.h"
 #include "../library/chilli.h"
 
-#ifndef MX_DEBUG
-constexpr u32 _DEFAULT_DEBUG_UNDO_HISTORY_ = 1;
-#else
-constexpr u32 _DEFAULT_DEBUG_UNDO_HISTORY_ = 10;
-#endif
-
 configmanager::configmanager() :
     skip_adverts(false),
     skip_dedication(false),
     debug_map(false),
     keep_full_save_history(false),
     always_undo(false),
-    undo_history(_DEFAULT_DEBUG_UNDO_HISTORY_)
+    undo_history(UH_NOTSET)
 {
 }
 

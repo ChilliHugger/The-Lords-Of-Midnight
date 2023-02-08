@@ -308,7 +308,8 @@ void uicommandwindow::updateElements()
     // UNDO
     enableItem(ID_UNDO_DAWN, mr->stories->canUndo(savemode_dawn) );
     enableItem(ID_UNDO, mr->stories->canUndo(savemode_last) );
-    
+  
+
     // CHARACTERS
     for ( u32 ii=0; ii<default_characters.Count(); ii++ ) {
         character c;

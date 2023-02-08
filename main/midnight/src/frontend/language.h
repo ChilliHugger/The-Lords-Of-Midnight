@@ -39,6 +39,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR KEYBOARD_KEY_3                     = "3";
     constexpr LPCSTR KEYBOARD_KEY_4                     = "4";
     constexpr LPCSTR KEYBOARD_KEY_5                     = "5";
+    constexpr LPCSTR KEYBOARD_KEY_6                     = "6";
 
     constexpr LPCSTR KEYBOARD_KEY_C                     = "C";
     constexpr LPCSTR KEYBOARD_KEY_D                     = "D";
@@ -111,7 +112,8 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_NAVIGATIONSTYLE     = "NAVIGATION STYLE";
     constexpr LPCSTR OPTIONS_SCREEN_KEYBOARDSTYLE       = "KEYBOARD STYLE";
     constexpr LPCSTR OPTIONS_SCREEN_CURSORSIZE          = "CURSOR SIZE";
-    
+    constexpr LPCSTR OPTIONS_SCREEN_DIFFICULTY          = "DIFFICULTY";
+
     constexpr LPCSTR OPTIONS_SCREEN_TUTORIAL            = "TUTORIAL";
     constexpr LPCSTR OPTIONS_SCREEN_MOVEMENTINDICATORS  = "MOVEMENT INDICATORS";
     constexpr LPCSTR OPTIONS_SCREEN_NOVELLA             = "NOVELLA";
@@ -128,6 +130,11 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_INTENDED       = "INTENDED SPECTRUM";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_C64            = "ORIGINAL C64";
     
+    
+    constexpr LPCSTR OPTIONS_SCREEN_DF_NORMAL           = "NORMAL";
+    constexpr LPCSTR OPTIONS_SCREEN_DF_EASY             = "EASY";
+    constexpr LPCSTR OPTIONS_SCREEN_DF_MEDIUM           = "MEDIUM";
+    constexpr LPCSTR OPTIONS_SCREEN_DF_HARD             = "HARD";
     
 #if defined(_LOM_)
 

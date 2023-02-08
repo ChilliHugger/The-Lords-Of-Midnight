@@ -73,7 +73,7 @@ std::string TME_ScenarioDirectory ( void );
 std::string TME_ScenarioName ( void );
 std::string TME_ScenarioShortName ( void );
 
-bool TME_Init ( u64 flags );
+bool TME_Init ( u64 flags, mxdifficulty_t difficulty  );
 bool TME_DeInit ( void );
 void TME_PurgeTextCache();
 std::string TME_GetCharacterText ( const character& c, const std::string& command ) ;
@@ -131,6 +131,7 @@ std::string TME_GetSymbol( mxid id );
 mxid TME_LinkData ( LPCSTR symbol, void* data );
 void* TME_GetEntityUserData ( mxid );
 mxid TME_GetId( LPCSTR symbol, id_type_t type );
+mxdifficulty_t TME_GetDifficulty();
 
 typedef struct MapInfo_t {
     tme::loc_t   top;

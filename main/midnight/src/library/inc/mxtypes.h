@@ -258,7 +258,7 @@ namespace chilli {
 
             void srand ( u32 seed );
             void seed ( u32 seed );
-            int seed();
+            u32 seed();
             int get ( void );
             int get ( int number );
             int get ( int lower, int upper );

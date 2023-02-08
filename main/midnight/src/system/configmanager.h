@@ -14,6 +14,14 @@
 #include "../library/inc/mxtypes.h"
 #include "ringcontroller.h"
 
+enum UNDOHISTORY {
+    UH_NOTSET = -1,
+    UH_NORMAL = 1,
+    UH_EASY = 10,
+    UH_MEDIUM = 5,
+    UH_HARD = 0
+};
+
 class configmanager : public ringcontroller
 {
 public:

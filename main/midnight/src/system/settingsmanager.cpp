@@ -28,6 +28,7 @@ settingsmanager::settingsmanager() :
     , keyboard_mode(CF_KEYBOARD_CLASSIC)
     , fullscreensupported(true)
     , cursor_size(CF_CURSOR_MEDIUM)
+    , game_difficulty(DF_NORMAL)
     , movement_type(CF_MOVEMENT_ORIGINAL)
 {
     
@@ -52,7 +53,8 @@ settingsmanager::settingsmanager() :
 //#ifdef _OS_DESKTOP_
 //    nav_mode=CF_NAV_PRESS;
 //#endif
-    
+    game_rules.Clear();
+    game_rules.Set(RF_NONE);
 }
 
 
@@ -132,6 +134,9 @@ BOOL settingsmanager::Save ( void )
     
     // version 11
     ar << game_rules;
+    
+    // version 12
+    ar << game_difficulty;
 
     ar.Close();
 
@@ -204,6 +209,10 @@ BOOL settingsmanager::Load ( void )
 
     if ( version >= 11 ) {
         ar >> game_rules;
+    }
+    
+    if ( version >= 12 ) {
+        ar >> temp; game_difficulty = (mxdifficulty_t) temp;
     }
 
     ar.Close();

@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  11
+#define CONFIG_VERSION                  12
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -150,4 +150,7 @@ public:
     eflags<RULEFLAGS,u64>   game_rules;
     CONFIG_MOVEMENT_TYPE    movement_type;
 
+    
+    // version 12
+    mxdifficulty_t          game_difficulty;
 };
