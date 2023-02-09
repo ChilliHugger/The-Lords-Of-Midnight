@@ -37,6 +37,7 @@ loc_armyinfo_t  location_armies;
 #if defined(_DDR_)
 mxid            location_object_tunnel;
 mxid            location_someone_to_give_to;
+mxid            location_object_to_take;
 #endif
 
 static            variant args[20];
@@ -456,6 +457,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
 #if defined(_DDR_)
     location_object_tunnel = OB_NONE ;
     location_someone_to_give_to=IDT_NONE;
+    location_object_to_take=IDT_NONE;
 #endif
     
     location_armies.foe_warriors = 0;
@@ -469,7 +471,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     // Get the characters info for this location
     //
 #if defined(_DDR_)
-    int args_count = 17 ;
+    int args_count = 18 ;
 #endif
 #if defined(_LOM_)
     int args_count = 16 ;
@@ -503,6 +505,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
 #if defined(_DDR_)
         location_object_tunnel = args[15].vSInt32;
         location_someone_to_give_to = args[16].vSInt32;
+        location_object_to_take = args[17].vSInt32;
 #endif
         
     }

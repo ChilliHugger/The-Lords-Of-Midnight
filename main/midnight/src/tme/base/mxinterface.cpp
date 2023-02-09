@@ -679,9 +679,11 @@ namespace tme {
                 argv[14] = mxentity::SafeIdt(locinfo->stubborn_follower_move) ;
 #if defined(_DDR_)
                 argv[16] = mxentity::SafeIdt(locinfo->someone_to_give_to) ;
+                argv[17] = mxentity::SafeIdt(locinfo->object_to_take) ;
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[17] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else
 #endif
                 {

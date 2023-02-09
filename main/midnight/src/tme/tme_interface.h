@@ -232,15 +232,15 @@ bool TME_DebugInstallMap( void* map );
 
 
 extern tme::mxinterface*    mxi ;
-extern c_mxid                default_characters ;
-extern c_mxid                recruitable_characters;
-extern c_mxid                location_characters;
+extern c_mxid               default_characters ;
+extern c_mxid               recruitable_characters;
+extern c_mxid               location_characters;
 extern u32                  location_recruited;
 extern c_mxid               location_strongholds;
 extern mxid                 location_infrontid;
 extern mxid                 location_lookingatid;
-extern tme::loc_t            location_infront;
-extern tme::loc_t            location_lookingat;
+extern tme::loc_t           location_infront;
+extern tme::loc_t           location_lookingat;
 extern flags32              location_flags;
 extern mxid                 location_fightthing;
 extern stronghold           location_stronghold;
@@ -251,13 +251,14 @@ extern mxid                 location_stubborn_lord_move;
 #if defined(_DDR_)
 extern mxid                 location_object_tunnel;
 extern mxid                 location_someone_to_give_to;
+extern mxid                 location_object_to_take;
 #endif
 
 extern c_mxid               location_infront_strongholds;
 extern mxid                 location_infront_object;
 
-extern loc_armyinfo_t        location_infront_armies;
-extern loc_armyinfo_t        location_armies;
+extern loc_armyinfo_t       location_infront_armies;
+extern loc_armyinfo_t       location_armies;
 
 
 #endif // _TME_INTERFACE_H_INCLUDED
