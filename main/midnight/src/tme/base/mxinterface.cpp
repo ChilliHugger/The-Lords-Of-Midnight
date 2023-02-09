@@ -683,7 +683,6 @@ namespace tme {
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
-                    argv[17] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else
 #endif
                 {
