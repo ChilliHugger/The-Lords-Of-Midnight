@@ -57,10 +57,14 @@ protected:
 
 #if defined(_DDR_)
     void setupGiveText();
+    void setupTakeText();
+    void setupUseText();
 #endif
     
-    void setCommandTextName(layoutid_t id, bool enabled, mxid characterId);
-    void setCommandText(layoutid_t id, const std::string& value);
+    void setCommandTextCharacterName(layoutid_t id, bool enabled, mxid characterId);
+    void setCommandTextObjectName(layoutid_t id, bool enabled, mxid objectId);
+    void setCommandTopText(layoutid_t id, const std::string& top);
+    void setCommandBottomText(layoutid_t id, const std::string& bottom);
     void addCommandText(Node* node);
     void setupApproachText();
     

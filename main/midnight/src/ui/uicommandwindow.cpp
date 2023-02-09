@@ -181,10 +181,12 @@ void uicommandwindow::initialiseCommands()
     
     auto take = uihelper::CreateImageButton("i_take", ID_TAKE, callback);
     addItem(take,CHOOSE_TAKE);
+    addCommandText(take);
     
     auto use = uihelper::CreateImageButton("i_use", ID_USE, callback);
     addItem(use,CHOOSE_USE);
-    
+    addCommandText(use);
+        
     auto rest = uihelper::CreateImageButton("i_rest", ID_REST, callback);
     addItem(rest,CHOOSE_REST);
     
@@ -287,7 +289,11 @@ void uicommandwindow::updateElements()
     setupGiveText();
     
     enableItem(ID_TAKE, location_flags.Is(lif_take) );
+    setupTakeText();
+    
     enableItem(ID_USE, location_flags.Is(lif_use) );
+    setupUseText();
+    
     enableItem(ID_REST, location_flags.Is(lif_rest) );
     enableItem(ID_ENTER_TUNNEL, location_flags.Is(lif_enter_tunnel) );
 #endif
@@ -329,22 +335,40 @@ void uicommandwindow::updateElements()
 #if defined(_DDR_)
 void uicommandwindow::setupGiveText()
 {
-    setCommandTextName(
+    setCommandTextCharacterName(
         ID_GIVE,
         location_flags.Is(lif_give),
         location_someone_to_give_to);
+    setCommandTextObjectName(
+        ID_GIVE,
+        location_flags.Is(lif_give),
+        TME_CurrentCharacter().object);
+}
+void uicommandwindow::setupTakeText()
+{
+    setCommandTextObjectName(
+        ID_TAKE,
+        location_flags.Is(lif_take),
+        location_object_to_take);
+}
+void uicommandwindow::setupUseText()
+{
+    setCommandTextObjectName(
+        ID_USE,
+        location_flags.Is(lif_use),
+        TME_CurrentCharacter().object);
 }
 #endif
 
 void uicommandwindow::setupApproachText()
 {
-    setCommandTextName(
+    setCommandTextCharacterName(
         ID_APPROACH,
         location_flags.Is(lif_recruitchar),
         recruitable_characters.size() > 0 ?  recruitable_characters[0] : 0);
 }
 
-void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, mxid characterId)
+void uicommandwindow::setCommandTextCharacterName(layoutid_t id, bool enabled, mxid characterId)
 {
     std::string value = "";
 
@@ -354,19 +378,47 @@ void uicommandwindow::setCommandTextName(layoutid_t id, bool enabled, mxid chara
         value = c.longname;
     }
     
-    setCommandText(ID_APPROACH, value);
+    setCommandBottomText(id, value);
 }
 
-void uicommandwindow::setCommandText(layoutid_t id, const std::string& value)
+void uicommandwindow::setCommandTextObjectName(layoutid_t id, bool enabled, mxid objectId)
+{
+    std::string value = "";
+
+    if ( enabled ) {
+        object o;
+        TME_GetObject(o, objectId );
+        value = o.description;
+    }
+    
+    setCommandTopText(id, value);
+}
+
+void uicommandwindow::setCommandTopText(layoutid_t id, const std::string& top)
 {
     auto button = findItemById(id);
-    auto text = button->getChildByName<Label*>("commandText");
+    auto textTop = button->getChildByName<Label*>("commandText1");
 
-    if(value.empty()) {
-        text->setVisible(false);
+    if(top.empty()) {
+        textTop->setVisible(false);
     }else{
-        text->setString(value);
-        text->setVisible(true);
+        auto value = StringExtensions::toUpper(top);
+        textTop->setString(value);
+        textTop->setVisible(true);
+    }
+}
+
+void uicommandwindow::setCommandBottomText(layoutid_t id, const std::string& bottom)
+{
+    auto button = findItemById(id);
+    auto textBottom = button->getChildByName<Label*>("commandText2");
+
+    if(bottom.empty()) {
+        textBottom->setVisible(false);
+    }else{
+        auto value = StringExtensions::toUpper(bottom);
+        textBottom->setString(value);
+        textBottom->setVisible(true);
     }
 }
 
@@ -377,21 +429,37 @@ void uicommandwindow::addCommandText(Node* node)
     auto scale = node->getScale();
     node->setScale(scale_normal);
         
-    auto text = Label::createWithTTF( uihelper::font_config_small, "" );
-    text->setName("commandText");
-    text->getFontAtlas()->setAntiAliasTexParameters();
-    text->setTextColor(Color4B(_clrWhite));
-    text->enableOutline(Color4B(_clrBlack),RES(1));
-    text->setAnchorPoint(uihelper::AnchorCenter);
-    text->setLineSpacing(CONTENT_SCALE(0));
-    text->setHeight(RES(FONT_SIZE_SMALL)*3); // two lines
-    text->setWidth(node->getContentSize().width);
-    text->enableWrap(true);
-    text->setHorizontalAlignment(TextHAlignment::CENTER);
-    text->setVerticalAlignment(TextVAlignment::BOTTOM);
-    text->setVisible(false);
-    uihelper::AddBottomCenter(node, text, RES(0), RES(-16));
+    auto textBottom = Label::createWithTTF( uihelper::font_config_small, "" );
+    textBottom->setName("commandText2");
+    textBottom->getFontAtlas()->setAntiAliasTexParameters();
+    textBottom->setTextColor(Color4B(_clrWhite));
+    textBottom->enableOutline(Color4B(_clrBlack),RES(1));
+    textBottom->setAnchorPoint(uihelper::AnchorCenter);
+    textBottom->setLineSpacing(CONTENT_SCALE(0));
+    textBottom->setHeight(RES(FONT_SIZE_SMALL)*3); // two lines
+    textBottom->setWidth(node->getContentSize().width);
+    textBottom->enableWrap(true);
+    textBottom->setHorizontalAlignment(TextHAlignment::CENTER);
+    textBottom->setVerticalAlignment(TextVAlignment::BOTTOM);
+    textBottom->setVisible(false);
+    uihelper::AddBottomCenter(node, textBottom, RES(0), RES(-20));
+
+    auto textTop = Label::createWithTTF( uihelper::font_config_small, "" );
+    textTop->setName("commandText1");
+    textTop->getFontAtlas()->setAntiAliasTexParameters();
+    textTop->setTextColor(Color4B(_clrWhite));
+    textTop->enableOutline(Color4B(_clrBlack),RES(1));
+    textTop->setAnchorPoint(uihelper::AnchorCenter);
+    textTop->setLineSpacing(CONTENT_SCALE(0));
+    textTop->setHeight(RES(FONT_SIZE_SMALL)*3); // two lines
+    textTop->setWidth(node->getContentSize().width);
+    textTop->enableWrap(true);
+    textTop->setHorizontalAlignment(TextHAlignment::CENTER);
+    textTop->setVerticalAlignment(TextVAlignment::BOTTOM);
+    textTop->setVisible(false);
+    uihelper::AddTopCenter(node, textTop, RES(0), RES(-24));
     
+
     node->setScale(scale);
 }
 

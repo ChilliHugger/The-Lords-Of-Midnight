@@ -50,6 +50,7 @@ namespace tme {
             auto out = static_cast<export_t*>(data);
             out->type = type;
             out->power = power;
+            out->description = mx->text->DescribeObject(this);
             //out->isspecial =;
             
             return MX_OK;

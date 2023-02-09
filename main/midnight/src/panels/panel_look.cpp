@@ -370,11 +370,17 @@ void panel_look::delayedSave()
     mr->stories->save();
     Enable();
     setObject(characterId);
-    
+        
+#if defined(_DDR_)
+    if (location_object_to_take!=ID_NONE) {
+        mr->showPage ( MODE_THINK );
+    } else
+#endif
     if ( (mr->panels->currentmode == this->currentmode)
         && recruitable_characters.Count() ) {
         mr->showPage ( MODE_THINK_APPROACH, recruitable_characters[0] );
     }
+    
     //mr->showPage ( MODE_THINK );
 }
 

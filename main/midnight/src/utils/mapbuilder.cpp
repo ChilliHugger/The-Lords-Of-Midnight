@@ -575,7 +575,7 @@ mapbuilder* mapbuilder::updateSpecialObjects()
         
         int index = INDEX(loc.x,loc.y);
         if ( index < max_cells ) {
-            if ( mapdata[index].flags & lf_seen )
+            //if ( mapdata[index].flags & lf_seen)
                 critters[ index ] = cell ;
         }
     }

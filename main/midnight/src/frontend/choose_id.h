@@ -22,12 +22,12 @@ enum CHOOSE_INDEX {
     CHOOSE_REST     = 1,
     CHOOSE_GIVE     = 2,
     CHOOSE_TAKE     = 3,
+    CHOOSE_USE      = 4,
     CHOOSE_TUNNEL   = 8,
-    CHOOSE_USE      = 9,
     CHOOSE_FIGHT    = 12,
 #endif
     
-    CHOOSE_APPROACH = 4,
+    CHOOSE_APPROACH = 9,
     CHOOSE_BATTLE   = 5,
     CHOOSE_RECRUIT  = 6,
     CHOOSE_GUARD    = 7,

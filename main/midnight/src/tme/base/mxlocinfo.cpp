@@ -190,7 +190,7 @@ namespace tme {
 #if defined(_DDR_)
             auto scenario = static_cast<ddr_x*>(mx->scenario);
             object_to_take = scenario->FindObjectAtLocation(location);
-            if ( object_to_take!= nullptr )
+            if ( object_to_take!= nullptr ) 
                 flags.Set(lif_take);
 #endif
 
