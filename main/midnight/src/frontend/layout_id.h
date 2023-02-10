@@ -156,6 +156,8 @@ enum layoutid_t
     ID_NEXT_PAGE,
     ID_PREVIOUS_PAGE,
     
+    ID_RESET,
+    
     ID_SELECT_CHAR=1000,
     ID_LANDSCAPE=2000,
     ID_STORIES=3000,

@@ -79,24 +79,27 @@ bool panel_map_detailed::init()
     auto map = uihelper::CreateImageButton("i_big_map", ID_MAP_OVERVIEW, clickCallback);
     uihelper::AddBottomRight(safeArea, map, RES(10), RES(10) );
 
-    auto circle1 = Sprite::createWithSpriteFrameName("circle_selector");
-    circle1->setScale(PHONE_SCALE(0.25f));
-    circle1->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(safeArea, circle1, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48)) );
-    circle1->setAnchorPoint(uihelper::AnchorCenter);
-
-    auto circle2 = Sprite::createWithSpriteFrameName("circle_selector");
-    circle2->setScale(PHONE_SCALE(0.25f));
-    circle2->setLocalZOrder(ZORDER_FAR);
-    uihelper::AddTopLeft(safeArea, circle2, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48+64)) );
-    circle2->setAnchorPoint(uihelper::AnchorCenter);
+    for( int ii=0; ii<3; ii++ ) {
+        auto circle = Sprite::createWithSpriteFrameName("circle_selector");
+        circle->setScale(PHONE_SCALE(0.25f));
+        circle->setLocalZOrder(ZORDER_UI);
+        uihelper::AddTopLeft(safeArea, circle, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48+(ii*64))) );
+        circle->setAnchorPoint(uihelper::AnchorCenter);
+    }
 
     auto map_down = uihelper::CreateImageButton("map_scale_down_button", ID_DOWN, clickCallback);
     uihelper::AddTopLeft(safeArea, map_down, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48)) );
+    map_down->setLocalZOrder(ZORDER_UI+1);
     map_down->setAnchorPoint(uihelper::AnchorCenter);
-  
+
+    auto map_reset = uihelper::CreateImageButton("i_group_disband", ID_RESET, clickCallback);
+    uihelper::AddTopLeft(safeArea, map_reset, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48+64)) );
+    map_reset->setLocalZOrder(ZORDER_UI+1);
+    map_reset->setAnchorPoint(uihelper::AnchorCenter);
+
     auto map_up = uihelper::CreateImageButton("map_scale_up_button", ID_UP, clickCallback);
-    uihelper::AddTopLeft(safeArea, map_up, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48+64)) );
+    uihelper::AddTopLeft(safeArea, map_up, RES(PHONE_SCALE(48)), RES(PHONE_SCALE(48+128)) );
+    map_up->setLocalZOrder(ZORDER_UI+1);
     map_up->setAnchorPoint(uihelper::AnchorCenter);
   
     int adjy=RES(-16); 
@@ -262,7 +265,15 @@ void panel_map_detailed::OnNotification( Ref* sender )
                 updateScale();
             }
             break;
-        
+            
+        case ID_RESET:
+            {
+                model->lastmapscale = model->mapscale;
+                model->mapscale = INITIAL_MAP_SCALE;
+                updateScale();
+            }
+            break;
+
         
         default:
             break;
