@@ -61,11 +61,12 @@ protected:
     void setupUseText();
 #endif
     
-    void setCommandTextCharacterName(layoutid_t id, bool enabled, mxid characterId);
-    void setCommandTextObjectName(layoutid_t id, bool enabled, mxid objectId);
+    std::string getCharacterName(bool enabled, mxid characterId);
+    std::string getObjectName(bool enabled, mxid objectId);
     void setCommandTopText(layoutid_t id, const std::string& top);
     void setCommandBottomText(layoutid_t id, const std::string& bottom);
     void addCommandText(Node* node);
+    void setCommandText(layoutid_t id, int tag, const std::string& value);
     void setupApproachText();
     
 protected:
@@ -78,4 +79,7 @@ protected:
     size            padding;
     Vector<Widget*> elements;
 };
+
+constexpr int TAG_COMMAND_TEXT_TOP = 1;
+constexpr int TAG_COMMAND_TEXT_BOTTOM = 2;
 

@@ -50,8 +50,7 @@ uicommandwindow* uicommandwindow::create( uipanel* parent )
 
 bool uicommandwindow::initWithParent( uipanel* parent )
 {
-    if ( parent == nullptr )
-        return false;
+    RETURN_IF_NULL(parent) false;
     
     if ( !Element::init() )
         return false;
@@ -221,7 +220,7 @@ void uicommandwindow::initialiseCommands()
         char_data_t* data = (char_data_t*)TME_GetEntityUserData( default_characters[ii] );
         
         character c;
-        TME_GetCharacter(c, default_characters[ii] );
+        TME_GetCharacter(c, default_characters[ii]);
         
         layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
         
@@ -316,91 +315,94 @@ void uicommandwindow::updateElements()
 #if defined(_DDR_)
 void uicommandwindow::setupGiveText()
 {
-    setCommandTextCharacterName(
+    setCommandBottomText(
         ID_GIVE,
-        location_flags.Is(lif_give),
-        location_someone_to_give_to);
-    setCommandTextObjectName(
+        getCharacterName(
+            location_flags.Is(lif_give),
+            location_someone_to_give_to)
+    );
+        
+    setCommandTopText(
         ID_GIVE,
-        location_flags.Is(lif_give),
-        TME_CurrentCharacter().object);
+        getObjectName(
+            location_flags.Is(lif_give),
+            TME_CurrentCharacter().object)
+    );
 }
+
 void uicommandwindow::setupTakeText()
 {
-    setCommandTextObjectName(
+    setCommandBottomText(
         ID_TAKE,
-        location_flags.Is(lif_take),
-        location_object_to_take);
+        getObjectName(
+            location_flags.Is(lif_take),
+            location_object_to_take)
+    );
 }
+
 void uicommandwindow::setupUseText()
 {
-    setCommandTextObjectName(
+    setCommandBottomText(
         ID_USE,
-        location_flags.Is(lif_use),
-        TME_CurrentCharacter().object);
+        getObjectName(
+            location_flags.Is(lif_use),
+            TME_CurrentCharacter().object)
+    );
 }
 #endif
 
 void uicommandwindow::setupApproachText()
 {
-    setCommandTextCharacterName(
+    setCommandBottomText(
         ID_APPROACH,
-        location_flags.Is(lif_recruitchar),
-        recruitable_characters.size() > 0 ?  recruitable_characters[0] : 0);
+        getCharacterName(
+            location_flags.Is(lif_recruitchar),
+            recruitable_characters.size() > 0 ?  recruitable_characters[0] : 0)
+    );
 }
 
-void uicommandwindow::setCommandTextCharacterName(layoutid_t id, bool enabled, mxid characterId)
+std::string  uicommandwindow::getCharacterName(bool enabled, mxid characterId)
 {
-    std::string value = "";
-
     if ( enabled ) {
         character c;
-        TME_GetCharacter(c, characterId );
-        value = c.longname;
+        TME_GetCharacter(c, characterId);
+        return c.longname;
     }
-    
-    setCommandBottomText(id, value);
+    return "";
 }
 
-void uicommandwindow::setCommandTextObjectName(layoutid_t id, bool enabled, mxid objectId)
+std::string  uicommandwindow::getObjectName(bool enabled, mxid objectId)
 {
-    std::string value = "";
-
     if ( enabled ) {
         object o;
-        TME_GetObject(o, objectId );
-        value = o.description;
+        TME_GetObject(o, objectId);
+        return o.description;
     }
-    
-    setCommandTopText(id, value);
+    return "";
 }
 
-void uicommandwindow::setCommandTopText(layoutid_t id, const std::string& top)
+void uicommandwindow::setCommandText(layoutid_t id, int tag,  const std::string& text)
 {
     auto button = findItemById(id);
-    auto textTop = button->getChildByName<Label*>("commandText1");
+    auto label = button->getChildByTag<Label*>(tag);
 
-    if(top.empty()) {
-        textTop->setVisible(false);
+    if(text.empty()) {
+        label->setVisible(false);
     }else{
-        auto value = StringExtensions::toUpper(top);
-        textTop->setString(value);
-        textTop->setVisible(true);
+        auto value = StringExtensions::toUpper(text);
+        label->setString(value);
+        label->setVisible(true);
     }
 }
 
-void uicommandwindow::setCommandBottomText(layoutid_t id, const std::string& bottom)
+void uicommandwindow::setCommandTopText(layoutid_t id, const std::string& text)
 {
-    auto button = findItemById(id);
-    auto textBottom = button->getChildByName<Label*>("commandText2");
+    setCommandText(id, TAG_COMMAND_TEXT_TOP, text);
+}
 
-    if(bottom.empty()) {
-        textBottom->setVisible(false);
-    }else{
-        auto value = StringExtensions::toUpper(bottom);
-        textBottom->setString(value);
-        textBottom->setVisible(true);
-    }
+void uicommandwindow::setCommandBottomText(layoutid_t id, const std::string& text)
+{
+    setCommandText(id, TAG_COMMAND_TEXT_BOTTOM, text);
 }
 
 void uicommandwindow::addCommandText(Node* node)
@@ -411,7 +413,7 @@ void uicommandwindow::addCommandText(Node* node)
     node->setScale(scale_normal);
         
     auto textBottom = Label::createWithTTF( uihelper::font_config_small, "" );
-    textBottom->setName("commandText2");
+    textBottom->setTag(TAG_COMMAND_TEXT_BOTTOM);
     textBottom->getFontAtlas()->setAntiAliasTexParameters();
     textBottom->setTextColor(Color4B(_clrWhite));
     textBottom->enableOutline(Color4B(_clrBlack),RES(1));
@@ -426,7 +428,7 @@ void uicommandwindow::addCommandText(Node* node)
     uihelper::AddBottomCenter(node, textBottom, RES(0), RES(-20));
 
     auto textTop = Label::createWithTTF( uihelper::font_config_small, "" );
-    textTop->setName("commandText1");
+    textTop->setTag(TAG_COMMAND_TEXT_TOP);
     textTop->getFontAtlas()->setAntiAliasTexParameters();
     textTop->setTextColor(Color4B(_clrWhite));
     textTop->enableOutline(Color4B(_clrBlack),RES(1));
