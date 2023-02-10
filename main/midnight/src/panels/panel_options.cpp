@@ -680,19 +680,23 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         fields.pushBack(menuItem);
     }
     
-    auto maxHeight = RES(500);
+    auto maxHeight = getContentSize().height - RES(32);
     
     subMenu->setContentSize(Size(width,height) );
     subMenuScrollView->setContentSize(Size(width, std::min(height,maxHeight)));
     subMenuScrollView->setInnerContainerSize(subMenu->getContentSize());
 
+    int adjustX = contentWidth/2 ;
+    if ( adjustX + width > contentWidth ) {
+        adjustX = contentWidth - width - RES(16);
+    }
+    
     uihelper::PositionParentTopLeft( subMenu, 0, 0 ) ;
-    uihelper::PositionParentCenterLeft(subMenuScrollView,contentWidth/2);
+    uihelper::PositionParentCenterLeft(subMenuScrollView,adjustX);
     
     bool scrollingEnabled = height > maxHeight ;
     subMenuScrollView->setBounceEnabled( scrollingEnabled );
     subMenuScrollView->setScrollBarEnabled( scrollingEnabled );
-    
     
     // refresh positions
     auto offset = Vec2( width/2, height );
@@ -702,9 +706,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         item->setAnchorPoint( uihelper::AnchorCenter );
         item->setPosition(offset);
         offset.y -= (itemHeight / 2) + gapY;
-
     }
-
 }
 
 #if defined(_OS_DESKTOP_)
