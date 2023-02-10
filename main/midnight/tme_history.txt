@@ -4,6 +4,13 @@ Build (45)
 1. FIXED: [tme] - DDR - strongholds don't change Occupier if the race is the same
 2. FIXED: [tme] - DDR - Night processing hangs because of circular lieges
 3. FIXED: [tme] - DDR - Obigrorn the Giant starts with Riders
+4. FIXED: Options menu is sometimes off the screen on narrow screens.
+5. ADDED: 100% scale to panel_map_detailed
+6. FIXED: Give, Take, and Use text not working on action buttons
+7. FIXED: Check place should show when entering a location with an artefact
+8. FIXED: Replacing missing Keyboard option on desktop devices
+9. ADDED: Game Difficulty - Easy / Normal / Hard
+10. ADDED: DDR: Gameplay Rule - Intended original terrain travel times
 
 Build (44)
 1. ADDED: panel_map_detailed - tool tip for location - press

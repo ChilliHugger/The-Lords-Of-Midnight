@@ -91,12 +91,13 @@
 10. Google Play Store - https://play.google.com/console/u/0/developers/5865908633896374109/
     - Internal Testing
     - Create New Release
+    - Drag/Upload App Bundle
     - Version name - Version 2.0 (20000xx)
-    - Release Notes
+    - Release Notes ()
 <en-GB>
 Version 2.0 (xx)
 </en-GB>
-    - Save
+    - Next
     - Review Release
     - Start roll-out to Internal Testing
     - Promote to Alpha

@@ -50,7 +50,7 @@ GLFW_ICON           ICON                    "game.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,5,44
+ FILEVERSION 2,0,6,45
  PRODUCTVERSION 1,0,0,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -70,7 +70,7 @@ BEGIN
             VALUE "FileDescription", "The Lords of Midnight\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "Midnight\0"
-            VALUE "LegalCopyright", "Copyright © 1984 - 2022. All rights reserved.\0"
+            VALUE "LegalCopyright", "Copyright © 1984 - 2023. All rights reserved.\0"
             VALUE "OriginalFilename", "game.exe\0"
             VALUE "ProductName", "The Lords of Midnight\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"

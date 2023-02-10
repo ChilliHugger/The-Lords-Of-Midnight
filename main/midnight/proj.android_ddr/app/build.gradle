@@ -10,8 +10,8 @@ android {
         applicationId "com.chilli.revenge"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 2000044
-        versionName "2.0.5"
+        versionCode 2000045
+        versionName "2.0.6"
 
         externalNativeBuild {
             cmake {
@@ -32,6 +32,7 @@ android {
         res.srcDir "res"
         manifest.srcFile "AndroidManifest.xml"
         assets.srcDir "../../Resources"
+        assets.srcDir "../../Resources-revenge"
     }
 
     externalNativeBuild {
@@ -85,6 +86,11 @@ android.applicationVariants.all { variant ->
     tasks.register(copyTaskName) {
         copy {
             from "${buildDir}/../../../Resources"
+            into "${buildDir}/intermediates/assets/${variant.dirName}"
+            exclude "**/*.gz"
+        }
+        copy {
+            from "${buildDir}/../../../Resources-revenge"
             into "${buildDir}/intermediates/assets/${variant.dirName}"
             exclude "**/*.gz"
         }
