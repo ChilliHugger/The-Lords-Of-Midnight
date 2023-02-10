@@ -34,7 +34,6 @@ uicommandwindow::uicommandwindow() :
 
 uicommandwindow::~uicommandwindow()
 {
-    //CC_SAFE_RELEASE_NULL(parent);
 }
 
 uicommandwindow* uicommandwindow::create( uipanel* parent )
@@ -67,11 +66,9 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     padding = size( RES(32)*scale, RES(24)*scale );
     
     this->parent = parent;
-    // this->id = id;
-    //parent->retain();
     
-    this->setContentSize( rect.size );
-    this->setPosition( Vec2::ZERO );
+    setContentSize( rect.size );
+    setPosition( Vec2::ZERO );
     
     auto background = LayerColor::create(Color4B(0,0,0,ALPHA(alpha_3qtr)));
     uihelper::AddBottomLeft(this, background);
@@ -81,8 +78,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     //f32 layout_padding = RES(32);
     f32 width = (5*grid.cx) + (2*padding.cx);
     f32 maxHeight = (4*grid.cy) + (2*padding.cy);
-    //f32 innerWidth = width-(2*layout_padding);
-    
+   
     // layout
     layout = Layout::create();
     layout->setBackGroundImage(BOX_BACKGROUND_FILENAME);
@@ -123,14 +119,10 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     return true;
 }
 
-
-
-
 void uicommandwindow::initialiseCommands()
 {
     chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {
         this->OnClose();
-        
         // check for escape being pressed
         // and don't pass it on so that we can close 
         //if(uihelper::getIdFromSender(ref)!=ID_HOME)
@@ -141,14 +133,11 @@ void uicommandwindow::initialiseCommands()
     
     // map keyboard shortcut keys to layout children
     uishortcutkeys::registerCallback(layout, callback);
-    
+        
     // THINK
     auto think = uihelper::CreateImageButton("i_think", ID_THINK, callback);
     addItem(think, CHOOSE_THINK);
-    //think->setTitleText("He thinks again...");
-    //think->getTitleLabel()->setPosition(think->get().x, think->getPosition().y);
-    //think->getTitleLabel()->setAnchorPoint(uihelper::AnchorCenter);
-    
+  
 #if defined(_LOM_)
     // SEEK
     auto seek = uihelper::CreateImageButton("i_seek", ID_SEEK, callback);
@@ -165,10 +154,7 @@ void uicommandwindow::initialiseCommands()
     addItem(fight,CHOOSE_FIGHT);
 #endif
     
-
-    
 #if defined(_DDR_)
-
     if ( tme::variables::sv_cheat_nasties_noblock ) {
         // FIGHT
         auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
@@ -192,17 +178,15 @@ void uicommandwindow::initialiseCommands()
     
     auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, callback);
     addItem(tunnel, CHOOSE_TUNNEL);
-    
 #endif
     
     // MAP
     auto map = uihelper::CreateImageButton("i_map", ID_MAP, callback);
     addItem(map,CHOOSE_MAP);
     
-    // NIGHT 9
+    // NIGHT
     auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, callback);
     addItem(night,CHOOSE_NIGHT);
-    
     
     // APPROACH
     auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, callback);
@@ -264,10 +248,12 @@ void uicommandwindow::updateElements()
     character& c = TME_CurrentCharacter();
     TME_GetCharacterLocationInfo(c);
     
+    #define ENABLE_IF_LOC_FLAG(x,y) \
+        enableItem(x,location_flags.Is(y))
     
 #if defined(_LOM_)
     // SEEK
-    enableItem(ID_SEEK, location_flags.Is(lif_seek) );
+    ENABLE_IF_LOC_FLAG(ID_SEEK, lif_seek);
     
     // HIDE
     if ( Character_IsHidden(c) ) {
@@ -276,45 +262,43 @@ void uicommandwindow::updateElements()
     } else {
         showItem(ID_UNHIDE, false);
         showItem(ID_HIDE, true);
-        enableItem(ID_HIDE, location_flags.Is(lif_hide));
+        ENABLE_IF_LOC_FLAG(ID_HIDE, lif_hide);
     }
 #endif
     
     // FIGHT
-    enableItem(ID_FIGHT, location_flags.Is(lif_fight) );
-    
+    ENABLE_IF_LOC_FLAG(ID_FIGHT, lif_fight);
     
 #if defined(_DDR_)
-    enableItem(ID_GIVE, location_flags.Is(lif_give) );
+    ENABLE_IF_LOC_FLAG(ID_GIVE, lif_give);
     setupGiveText();
     
-    enableItem(ID_TAKE, location_flags.Is(lif_take) );
+    ENABLE_IF_LOC_FLAG(ID_TAKE, lif_take);
     setupTakeText();
     
-    enableItem(ID_USE, location_flags.Is(lif_use) );
+    ENABLE_IF_LOC_FLAG(ID_USE, lif_use);
     setupUseText();
     
-    enableItem(ID_REST, location_flags.Is(lif_rest) );
-    enableItem(ID_ENTER_TUNNEL, location_flags.Is(lif_enter_tunnel) );
+    ENABLE_IF_LOC_FLAG(ID_REST, lif_rest);
+    ENABLE_IF_LOC_FLAG(ID_ENTER_TUNNEL, lif_enter_tunnel);
 #endif
     
     // APPROACH
-    enableItem(ID_APPROACH, location_flags.Is(lif_recruitchar) );
+    ENABLE_IF_LOC_FLAG(ID_APPROACH, lif_recruitchar);
     setupApproachText();
     
     // RECRUIT SOLDIERS
-    enableItem(ID_RECRUITMEN, location_flags.Is(lif_recruitmen) );
+    ENABLE_IF_LOC_FLAG(ID_RECRUITMEN, lif_recruitmen);
     
     // POST SOLDIERS
-    enableItem(ID_POSTMEN, location_flags.Is(lif_guardmen) );
+    ENABLE_IF_LOC_FLAG(ID_POSTMEN, lif_guardmen);
     
     // BATTLE
-    enableItem(ID_ATTACK, location_flags.Is(lif_enterbattle) );
+    ENABLE_IF_LOC_FLAG(ID_ATTACK, lif_enterbattle);
     
     // UNDO
-    enableItem(ID_UNDO_DAWN, mr->stories->canUndo(savemode_dawn) );
-    enableItem(ID_UNDO, mr->stories->canUndo(savemode_last) );
-  
+    enableItem(ID_UNDO_DAWN, mr->stories->canUndo(savemode_dawn));
+    enableItem(ID_UNDO, mr->stories->canUndo(savemode_last));
 
     // CHARACTERS
     for ( u32 ii=0; ii<default_characters.Count(); ii++ ) {
@@ -326,10 +310,7 @@ void uicommandwindow::updateElements()
         enableItem( id, Character_IsAlive(c)
                    && Character_IsControllable(c.id)
                    && c.id != TME_CurrentCharacter().id );
-        //showItem( id, c.id != TME_CurrentCharacter().id );
-        
     }
-
 }
 
 #if defined(_DDR_)
@@ -459,7 +440,6 @@ void uicommandwindow::addCommandText(Node* node)
     textTop->setVisible(false);
     uihelper::AddTopCenter(node, textTop, RES(0), RES(-24));
     
-
     node->setScale(scale);
 }
 
@@ -478,7 +458,6 @@ void uicommandwindow::addTouchListener()
     };
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
 }
 
 void uicommandwindow::show( MXVoidCallback callback )
@@ -499,10 +478,9 @@ void uicommandwindow::show( MXVoidCallback callback )
     setVisible(true);
     
     if ( mr->settings->screentransitions ) {
-    
-        this->setCascadeOpacityEnabled(true);
-        this->setOpacity(ALPHA(alpha_zero));
-        this->runAction(FadeIn::create(0.25f));
+        setCascadeOpacityEnabled(true);
+        setOpacity(ALPHA(alpha_zero));
+        runAction(FadeIn::create(0.25f));
         
         layout->setOpacity(ALPHA(alpha_zero));
         layout->setCascadeOpacityEnabled(true);
@@ -512,7 +490,6 @@ void uicommandwindow::show( MXVoidCallback callback )
     }else{
         layout->setOpacity(ALPHA(alpha_3qtr));
     }
-
 }
 
 void uicommandwindow::OnClose()
@@ -539,8 +516,7 @@ void uicommandwindow::clearItems()
 
 Widget* uicommandwindow::findItemById( layoutid_t id )
 {
-    for(auto const& button: elements)
-     {
+    for(auto const& button: elements) {
         if ( button->getTag() == id ) {
             return button;
         }
@@ -572,8 +548,7 @@ void uicommandwindow::addItem( Widget* element, u32 index )
     int iy = index/(width/grid.cx);
     int ix = index%(width/grid.cx);
     
-    
-    Vec2 pos(padding.cx+(ix*grid.cx)+(grid.cx/2),padding.cy+(iy*grid.cy)+(grid.cy/2) );
+    Vec2 pos(padding.cx+(ix*grid.cx)+(grid.cx/2),padding.cy+(iy*grid.cy)+(grid.cy/2));
     
     // invert the y
     pos.y = layout->getContentSize().height - pos.y;
@@ -582,7 +557,4 @@ void uicommandwindow::addItem( Widget* element, u32 index )
     element->setAnchorPoint(uihelper::AnchorCenter);
     layout->addChild(element);
     elements.pushBack(element);
-
-    
 }
-
