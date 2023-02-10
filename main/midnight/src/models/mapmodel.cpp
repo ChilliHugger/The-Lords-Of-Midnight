@@ -43,7 +43,7 @@ void mapmodel::setDefaults ()
 {
     filters.Set(map_filters::all);
     oldoffset = point::ZERO;
-    mapscale=1.0f;
-    lastmapscale=0.5f;
+    mapscale = INITIAL_MAP_SCALE;
+    lastmapscale = INITIAL_MAP_SCALE;
     currentMapPanel = MODE_MAP_OVERVIEW ;
 }

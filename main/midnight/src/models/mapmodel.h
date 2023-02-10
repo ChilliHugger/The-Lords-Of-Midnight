@@ -30,6 +30,7 @@ enum class map_filters : u32 {
 #endif
 };
 
+constexpr float INITIAL_MAP_SCALE = 1.0f;
 
 class mapmodel : public panelmodel
 {
