@@ -1,0 +1,4 @@
+Version	Id	Symbol	Flags	Name	Personal Pronoun	Possessive Pronoun	Singular Pronoun
+1	0	GD_NONE		none	none	none	none
+1	1	GD_MALE		Male	he	his	him
+1	2	GD_FEMALE		Female	she	her	her
