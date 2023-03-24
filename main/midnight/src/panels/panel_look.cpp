@@ -309,7 +309,6 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
             
         }else if ( c.lastcommand == CMD_SEEK ) {
             mr->showPage(MODE_THINK_SEEK, c.lastcommandid);
-
         }
                 
         delayedSave();
@@ -891,8 +890,6 @@ bool panel_look::startMoving()
             
             options->generator->Build(options);
             UpdateLandscape();
-            
-            
         });
         
         this->runAction(EaseSineInOut::create(actionfloat));

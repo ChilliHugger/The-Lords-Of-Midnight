@@ -105,6 +105,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_FLIPSCREEN          = "FLIP SCREEN";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOFIGHT           = "AUTO FIGHT";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOUNHIDE          = "AUTO UNHIDE";
+    constexpr LPCSTR OPTIONS_SCREEN_AUTOSEEK            = "AUTO SEEK";
     constexpr LPCSTR OPTIONS_SCREEN_NIGHTDISPLAY        = "NIGHT DISPLAY";
     constexpr LPCSTR OPTIONS_SCREEN_NIGHTCONFIRM        = "NIGHT CONFIRM";
     constexpr LPCSTR OPTIONS_SCREEN_BATTLEREPORT        = "BATTLE REPORT";

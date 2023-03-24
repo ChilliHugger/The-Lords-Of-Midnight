@@ -30,6 +30,11 @@ settingsmanager::settingsmanager() :
     , cursor_size(CF_CURSOR_MEDIUM)
     , game_difficulty(DF_NORMAL)
     , movement_type(CF_MOVEMENT_ORIGINAL)
+#if defined(_LOM_)
+    , autoseek(false)
+#else
+    , autoseek(true)
+#endif
 {
     
 #if defined(_OS_DESKTOP_)
@@ -137,6 +142,9 @@ BOOL settingsmanager::Save ( void )
     
     // version 12
     ar << game_difficulty;
+    
+    // version 13
+    ar << autoseek;
 
     ar.Close();
 
@@ -213,6 +221,10 @@ BOOL settingsmanager::Load ( void )
     
     if ( version >= 12 ) {
         ar >> temp; game_difficulty = (mxdifficulty_t) temp;
+    }
+
+    if ( version >= 13 ) {
+        ar >> autoseek;
     }
 
     ar.Close();

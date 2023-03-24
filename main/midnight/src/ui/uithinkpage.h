@@ -58,14 +58,16 @@ protected:
     void displayCharacterTerrain(  const character& c );
     void displayTerrain ( mxterrain_t terrain );
     void displayObject ( mxid objectid );
-    void displayArmy ( void );
+    void displayArmy ();
     
     void aheadOrHere( std::string& text, tme::loc_t location, bool aheaddir );
-    void checkPerson(void);
-    void checkPlace(void);
-    void checkBattle(void);
-    void checkNormal(void);
-    void checkArmy(void);
+    void checkPerson();
+    void checkPlace();
+    void checkBattle();
+    void checkNormal();
+    void checkArmy();
+        
+    std::string checkFightAvailable();
     
     void recruitPostOptions ( stronghold& s );
     

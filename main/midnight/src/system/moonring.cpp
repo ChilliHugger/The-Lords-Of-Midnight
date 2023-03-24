@@ -187,6 +187,9 @@ void moonring::continueStory( storyid_t id )
     stories->load(id);
     help->Load( id );
     
+    // setup any options
+    tme::variables::sv_auto_seek = settings->autoseek;
+    
     TME_CurrentCharacter( TME_CurrentCharacter().id );
     
     // start game

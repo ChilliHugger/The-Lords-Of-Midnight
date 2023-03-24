@@ -431,11 +431,8 @@ namespace tme {
     
         MXRESULT mxcharacter::Cmd_MoveForward ( void )
         {
-        //mxlocinfo*    info=NULL;
-
             std::unique_ptr<mxlocinfo> info;
 
-        
             SetLastCommand ( CMD_MOVE, IDT_NONE);
 
             // lords who are following cannot be moved on their own
@@ -482,17 +479,10 @@ namespace tme {
                 }
             }
 #endif
-            
-            //SAFEDELETE(info);
-            
-            return Cmd_WalkForward(true);
-
-        ///exit:
-            //SAFEDELETE(info);
-            //return MX_FAILED;
+           
+            return Cmd_WalkForward(sv_auto_seek);
         }
 
-    
         bool mxcharacter::CanWalkForward ( void )
         {
             // dead men don't walk!
@@ -587,6 +577,16 @@ namespace tme {
 
             CommandTakesTime(TRUE);
             
+            // if we have moved, we are no longer in battle
+            flags.Reset(cf_inbattle|cf_preparesbattle);
+            
+            // TODO: shouldn't seek if approach
+            if ( perform_seek ) {
+                if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
+                    Cmd_Seek();
+                }
+            }
+            
             // if we are leading
             // then the whole group needs to be able to move
             if ( HasFollowers() ) {
@@ -599,10 +599,8 @@ namespace tme {
                     follower->looking = Looking();
                     follower->Cmd_WalkForward(perform_seek);
                 }
-            }            
+            }
             
-            // if we have moved, we are no longer in battle
-            flags.Reset(cf_inbattle|cf_preparesbattle);
             
             return MX_OK ;
         }

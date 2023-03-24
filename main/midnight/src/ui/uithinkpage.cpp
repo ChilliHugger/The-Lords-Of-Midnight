@@ -229,9 +229,6 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     if ( this->fight ) {
         auto color = _clrWhite ;
         auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), PHONE_SCALE(RES(128)), 1);
-    
-        //auto gradientC = LayerGradient::create( Color4B(_clrWhite,ALPHA(alpha_zero)), Color4B(_clrWhite,ALPHA(alpha_normal)) );
-        //gradientC->setContentSize(Size(RES(128),RES(64)));
         gradientC->setPosition(pos);
         scrollView->addChild(gradientC);
     }
@@ -466,14 +463,8 @@ void uithinkpage::setupUIElements()
             if ( Character_IsHidden(c) ) {
                 text = TME_GetSystemString(c,SS_HIDDEN);
                 unhide = true;
-            }else if ( objectid ) {
-                if ( flags.Is(lif_fight) ) {
-                    text = TME_GetSystemString(c,SS_MUSTFIGHT);
-                    fight=true;
-                    displayObject(objectid);
-                }else{
-                    text = TME_GetSystemString(c,SS_THINGATLOCATION);
-                }
+            }else{
+                text = checkFightAvailable();
             }
 #endif
             break;
@@ -485,6 +476,8 @@ void uithinkpage::setupUIElements()
             return;
             
         case MODE_THINK_SEEK:
+            text = checkFightAvailable();
+        
         case MODE_THINK_FIGHT:
             text = TME_LastActionMsg();
 #if defined(_DDR_)
@@ -505,6 +498,23 @@ void uithinkpage::setupUIElements()
     
     
 }
+
+std::string uithinkpage::checkFightAvailable()
+{
+    character& c = TME_CurrentCharacter();
+    
+    if ( objectid ) {
+        if ( flags.Is(lif_fight) ) {
+            fight=true;
+            displayObject(objectid);
+            return TME_GetSystemString(c,SS_MUSTFIGHT);
+        }else{
+            return TME_GetSystemString(c,SS_THINGATLOCATION);
+        }
+    }
+    return "";
+}
+
 
 /*
  * Function name    : panel_think::AheadOrHere
