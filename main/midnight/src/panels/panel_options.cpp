@@ -204,9 +204,10 @@ static uitextmenuitem items_display[] = {
 static uitextmenuitem items_game[] = {
     { ID_OPTION_AUTO_FIGHT,             {OPTIONS_SCREEN_AUTOFIGHT},             KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
     { ID_OPTION_AUTO_UNHIDE,            {OPTIONS_SCREEN_AUTOUNHIDE},            KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
-    { ID_OPTION_NIGHT_DISPLAY,          {OPTIONS_SCREEN_NIGHTDISPLAY},          KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
-    { ID_OPTION_BATTLE_FULL,            {OPTIONS_SCREEN_BATTLEREPORT},          KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
-    { ID_OPTION_NIGHT_CONFIRM,          {OPTIONS_SCREEN_NIGHTCONFIRM},          KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
+    { ID_OPTION_AUTO_SEEK,              {OPTIONS_SCREEN_AUTOSEEK},              KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_NIGHT_DISPLAY,          {OPTIONS_SCREEN_NIGHTDISPLAY},          KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+    { ID_OPTION_BATTLE_FULL,            {OPTIONS_SCREEN_BATTLEREPORT},          KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
+    { ID_OPTION_NIGHT_CONFIRM,          {OPTIONS_SCREEN_NIGHTCONFIRM},          KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
 };
 
 static uitextmenuitem items_control[] = {
@@ -228,6 +229,7 @@ static uitextmenuitem items_help[] = {
 static option_t options[] = {
     {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_AUTO_UNHIDE,      OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_AUTO_SEEK,        OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_MOVE_INDICATORS,  OPT_BOOL,    0, values_yesno,               nullptr, false },
     {   ID_OPTION_TUTORIAL,         OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_NAVIGATION,       OPT_NUMBER,  4, values_movement,            nullptr, false },
@@ -240,7 +242,6 @@ static option_t options[] = {
     {   ID_OPTION_NIGHT_DISPLAY,    OPT_BOOL,    0, values_slowfast,            nullptr, false },
     {   ID_OPTION_BATTLE_FULL,      OPT_BOOL,    0, values_fullbrief,           nullptr, false },
     {   ID_OPTION_NIGHT_CONFIRM,    OPT_BOOL,    0, values_onoff,               nullptr, false },
-   
 
     {   ID_OPTION_SCREENMODE,       OPT_NUMBER,  4, values_screen,              nullptr, false },
 
@@ -256,7 +257,6 @@ static option_t options[] = {
     {   ID_OPTION_RULE_5,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_6,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_7,           OPT_NUMBER,  3, values_movement_type,       nullptr, false },
-                  
 
     {   ID_OPTION_DIFFICULTY,       OPT_NUMBER,  4, values_difficulty,          nullptr, false },
 
@@ -339,6 +339,7 @@ bool panel_options::init()
     
     SET_OPTION(ID_OPTION_AUTO_FIGHT,autofight);
     SET_OPTION(ID_OPTION_AUTO_UNHIDE,autounhide);
+    SET_OPTION(ID_OPTION_AUTO_SEEK,autoseek);
     SET_OPTION(ID_OPTION_MOVE_INDICATORS,showmovementindicators);
     SET_OPTION(ID_OPTION_TUTORIAL,tutorial);
     SET_OPTION(ID_OPTION_NAVIGATION,nav_mode);
