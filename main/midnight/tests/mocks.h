@@ -14,7 +14,7 @@ class storymanagermock : public storymanager
 public:
     virtual bool load ( storyid_t id ) override;
     virtual bool save ( savemode_t mode = savemode_normal ) override;
-    virtual bool create ( storyid_t id ) override;
+    virtual bool create ( storyid_t id, u64 flags, mxdifficulty_t difficulty ) override;
     virtual bool save ( storyid_t id, savemode_t mode=savemode_normal ) override;
     virtual bool destroy ( storyid_t id ) override;
     virtual bool cleanup ( void ) override;

@@ -26,7 +26,7 @@ void LOMStep::UshgarakHasFallenInBattle()
     luxor->Location( ushgarak->Location() );
 
     // empty ushgarak
-    ushgarak->Total(10);
+    ushgarak->TotalTroops(10);
         
     // battle
     tme::mx->battle->KickOffAtLocation(luxor->Location());
@@ -47,7 +47,7 @@ void LOMStep::XajorkithHasFallenInBattle()
     xajorkith->riders.Total(0);
             
     // empty xajorkith
-    sh_xajorkith->Total(10);
+    sh_xajorkith->TotalTroops(10);
         
     // battle
     tme::mx->battle->KickOffAtLocation(xajorkith->Location());
@@ -69,6 +69,7 @@ void LOMStep::IceCrownHasBeenDestroyed()
     morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
     GetCharacter("CH_FARFLAME")->Location( morkin->Location() ) ;
 }
+
 void LOMStep::GameWon()
 {
     IceCrownHasBeenDestroyed();
@@ -81,3 +82,5 @@ void LOMStep::GameLost()
     LuxorIsDead();
     TMEStep::NightFalls();
 }
+
+

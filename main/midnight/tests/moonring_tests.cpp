@@ -187,16 +187,16 @@ SCENARIO("Add a lord to a group should make them follow their new leader")
   
     GIVEN("that Rorthron is with Luxor")
     {
-        TMEStep::LordAtLocation(ch_rorthron, ch_luxor);
+        TMEStep::LordAtLocation(TMEStep::ch_rorthron, TMEStep::ch_luxor);
         
         WHEN("Rorthron joins Luxor's group")
         {
-            UIStep::PlayerAddsLordToAGroup(ch_rorthron,ch_luxor);
+            UIStep::PlayerAddsLordToAGroup(TMEStep::ch_rorthron,TMEStep::ch_luxor);
         
             THEN("Rorthron should be following Luxor")
             {
-                auto rorthron = GetCharacter(ch_rorthron);
-                auto luxor = GetCharacter(ch_luxor);
+                auto rorthron = GetCharacter(TMEStep::ch_rorthron);
+                auto luxor = GetCharacter(TMEStep::ch_luxor);
                 
                 REQUIRE( rorthron->Following() == luxor );
                 
