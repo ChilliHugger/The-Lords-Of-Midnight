@@ -189,6 +189,8 @@ void moonring::continueStory( storyid_t id )
     
     // setup any options
     tme::variables::sv_auto_seek = settings->autoseek;
+    tme::variables::sv_auto_approach = true;
+    
     
     TME_CurrentCharacter( TME_CurrentCharacter().id );
     

@@ -473,6 +473,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             u32 Compact( void );
             void Resize ( u32 newsize );
             s32 IndexOf ( mxentity* entity );
+            
+            mxentity* First();
 
         protected:
             u32                 m_max;
@@ -1006,7 +1008,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             virtual MXRESULT Cmd_LookRight ( void );
             virtual MXRESULT Cmd_LookDir ( mxdir_t dir );
             virtual MXRESULT Cmd_MoveForward ( void );
-            virtual MXRESULT Cmd_WalkForward ( bool peform_seek );
+            virtual MXRESULT Cmd_WalkForward ( bool seek = false, bool approach = false );
             virtual MXRESULT Cmd_PostMen ( mxstronghold* s=NULL, u32 qty=0 );
             virtual MXRESULT Cmd_RecruitMen ( mxstronghold* s=NULL, u32 qty=0 );
             virtual MXRESULT Cmd_Attack ( void );
@@ -1050,6 +1052,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
 
             virtual bool AddFollower ( mxcharacter* c );
             virtual bool RemoveFollower ( mxcharacter* c );
+            virtual void WalkFollowersForward();
 
             //
             mxrace_t NormalisedLoyalty() const;
@@ -1061,6 +1064,8 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             const std::string& HisOrHer() const ;
             const std::string& HimOrHer() const ;
 
+            void ForEachFollower(const std::function<void(mxcharacter*)> &callback);
+            mxcharacter* FindFollower(const std::function<bool(mxcharacter*)> &callback);
 
         public:
 

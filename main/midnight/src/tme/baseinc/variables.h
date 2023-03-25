@@ -71,8 +71,6 @@ namespace tme {
             LPCSTR        currentValue;
         } cvarreg_t ;
 
-
-
         extern sv_num_t    sv_battle_default_energy_drain ;
         extern sv_num_t    sv_battle_default_char_energy_drain ;
         extern sv_num_t    sv_battle_success_regiment_warriors ;
@@ -97,19 +95,21 @@ namespace tme {
         extern sv_num_t    sv_stronghold_default_empty ;
         extern sv_num_t    sv_stronghold_default_min ;
         extern sv_num_t    sv_stronghold_default_max ;
-        extern sv_bool_t    sv_stronghold_default_allow_respawn ;
+        extern sv_bool_t   sv_stronghold_default_allow_respawn ;
         extern sv_num_t    sv_stronghold_default_respawn_amount ;
         extern sv_num_t    sv_success_fey_on_horse_adjuster    ;
         extern sv_num_t    sv_success_base_level ;
         extern sv_num_t    sv_success_riders_energy_mountain ;
         extern sv_num_t    sv_success_riders_energy_other ;
-        extern sv_bool_t    sv_always_attempt_recruit ;
+        extern sv_bool_t   sv_always_attempt_recruit ;
 
         extern sv_str_t    sv_map_file ;
         extern sv_num_t    sv_map_width ;
         extern sv_num_t    sv_map_height ;
-        extern sv_bool_t    sv_auto_unhide ;
-        extern sv_bool_t    sv_auto_seek ;
+        extern sv_bool_t   sv_auto_unhide ;
+        extern sv_bool_t   sv_auto_seek ;
+        extern sv_bool_t   sv_auto_approach ;
+        
         extern sv_num_t    sv_character_default_memory_age ;
 
         extern sv_int_t    sv_time_night ;
@@ -122,16 +122,16 @@ namespace tme {
         extern sv_int_t    sv_energy_scale ;
         extern sv_int_t    sv_reckless_scale ;
         
-        extern sv_bool_t    sv_collate_battle_areas ;
+        extern sv_bool_t   sv_collate_battle_areas ;
         
         extern sv_int_t    sv_energy_max ;
         extern sv_int_t    sv_strength_max ;
 
-        extern sv_mxid_t    sv_character_friend;
-        extern sv_mxid_t    sv_character_foe;
+        extern sv_mxid_t   sv_character_friend;
+        extern sv_mxid_t   sv_character_foe;
 
-        extern sv_c_mxid_t    sv_character_default;
-        extern sv_c_mxid_t    sv_guidance;
+        extern sv_c_mxid_t sv_character_default;
+        extern sv_c_mxid_t sv_guidance;
 
         extern sv_int_t    sv_characters ;
         extern sv_int_t    sv_routenodes ;
@@ -153,7 +153,7 @@ namespace tme {
         extern sv_int_t    sv_variables ;
         extern sv_int_t    sv_strongholdadjuster ;
         extern sv_int_t    sv_controlled_character ;
-        extern sv_int_t sv_energy_cannot_continue;
+        extern sv_int_t    sv_energy_cannot_continue;
 
 #if defined(_DDR_)
         extern sv_int_t    sv_object_powers ;
