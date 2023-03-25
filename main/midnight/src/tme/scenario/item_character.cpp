@@ -631,6 +631,23 @@ namespace tme {
             return MX_OK ;
         }
 
+        void mxcharacter::WalkFollowersForward()
+        {
+            // if we are leading
+            // then the whole group needs to be able to move
+            if ( HasFollowers() ) {
+                entities followers;
+                mx->scenario->GetCharacterFollowers(this, followers);
+                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
+                    auto follower = static_cast<mxcharacter*>(followers[ii]);
+                    // must look the same direction to make them move in the
+                    // correct direction
+                    follower->looking = Looking();
+                    follower->Cmd_WalkForward();
+                }
+            }
+        }
+
         void mxcharacter::DecreaseEnergy ( s32 amount )
         {
             energy = BSub(energy,amount,0);

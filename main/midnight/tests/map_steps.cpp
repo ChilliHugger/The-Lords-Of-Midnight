@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 25/03/2023.
 //
 
-#include "midnight/common_steps.h"
+#include "tme_steps.h"
 #include "map_steps.h"
 
 void MapStep::ClearObjectFromLocation(loc_t loc)

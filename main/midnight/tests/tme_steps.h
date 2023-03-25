@@ -12,6 +12,13 @@
 #include "../src/tme/tme_interface.h"
 #include "../src/tme/baseinc/tme_internal.h"
 
+#if defined(_LOM_)
+    #include "midnight/common_steps.h"
+#endif
+#if defined(_DDR_)
+    #include "revenge/common_steps.h"
+#endif
+
 #include <stdio.h>
 
 using namespace tme;
@@ -23,6 +30,7 @@ public:
     static void NewStory();
     static void NightFalls();
     static void CurrentLordIsDead();
+    static void SetCurrentLord(LPCSTR name);
     static void GameLost();
     static void GameWon();
     

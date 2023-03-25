@@ -9,17 +9,13 @@
 #include "mocks.h"
 #include "ui_steps.h"
 
-#if defined(_LOM_)
-#include "midnight/common_steps.h"
-#endif
-
-
 SCENARIO("Continuing a story with a dead lord should show the Think Screen")
 {
     TMEStep::NewStory();
   
     GIVEN("that the current lord is dead")
     {
+        TMEStep::SetCurrentLord( TMEStep::ch_rorthron );
         TMEStep::CurrentLordIsDead();
         
         WHEN("the player loads the story")
@@ -141,6 +137,7 @@ SCENARIO("Selecting the Look Screen for a dead lord should show the Select scree
   
     GIVEN("that the current lord is dead")
     {
+        TMEStep::SetCurrentLord( TMEStep::ch_rorthron );
         TMEStep::CurrentLordIsDead();
 
         WHEN("the player chooses the look screen")

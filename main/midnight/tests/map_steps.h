@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include "tme_steps.h"
+
+
 class MapStep {
 public:
     static void ClearObjectFromLocation(loc_t loc);

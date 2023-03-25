@@ -6,9 +6,6 @@
 //
 
 #include "tme_steps.h"
-#if defined(_LOM_)
-    #include "midnight/common_steps.h"
-#endif
 
 void TMEStep::NewStory()
 {
@@ -27,17 +24,30 @@ void TMEStep::CurrentLordIsDead()
     TME_RefreshCurrentCharacter();
 }
 
+void TMEStep::SetCurrentLord(LPCSTR name)
+{
+    auto lord = GetCharacter(name);
+    TME_CurrentCharacter(lord->SafeIdt(lord));
+}
+
+
 void TMEStep::GameWon()
 {
 #if defined(_LOM_)
-        LOMStep::GameWon();
+    LOMStep::GameWon();
+#endif
+#if defined(_DDR_)
+    DDRStep::GameWon();
 #endif
 }
 
 void TMEStep::GameLost()
 {
 #if defined(_LOM_)
-        LOMStep::GameLost();
+    LOMStep::GameLost();
+#endif
+#if defined(_DDR_)
+    DDRStep::GameLost();
 #endif
 }
 
