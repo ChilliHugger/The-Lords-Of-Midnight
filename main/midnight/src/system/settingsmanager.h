@@ -155,4 +155,5 @@ public:
     
     // version 13
     BOOL                    autoseek;
+    BOOL                    autoapproach;
 };

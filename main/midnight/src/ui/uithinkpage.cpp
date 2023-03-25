@@ -509,7 +509,9 @@ std::string uithinkpage::checkFightAvailable()
             displayObject(objectid);
             return TME_GetSystemString(c,SS_MUSTFIGHT);
         }else{
-            return TME_GetSystemString(c,SS_THINGATLOCATION);
+            if ( GET_ID(location_object) != OB_NONE ) {
+                return TME_GetSystemString(c,SS_THINGATLOCATION);
+            }
         }
     }
     return "";

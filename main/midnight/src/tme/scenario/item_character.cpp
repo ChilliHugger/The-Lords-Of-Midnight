@@ -514,7 +514,7 @@ namespace tme {
                  info->infront->FindRecruitCharactersHere(this);
                  approach = info->infront->objRecruit.Count() == 1;
             }
-           
+            
             return Cmd_WalkForward(sv_auto_seek, approach);
         }
 
@@ -614,12 +614,15 @@ namespace tme {
             // if we have moved, we are no longer in battle
             flags.Reset(cf_inbattle|cf_preparesbattle);
             
-            // TODO: shouldn't seek if approach
+            // auto approach
             if ( perform_approach ) {
                // we need to recruit before anyone else joins us
-               Cmd_Approach();
+                if ( Cmd_Approach() != nullptr) {
+                    perform_seek = false;
+                }
             }
             
+            // auto seek
             if ( perform_seek ) {
                 if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
                     Cmd_Seek();

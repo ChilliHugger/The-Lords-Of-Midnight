@@ -308,9 +308,12 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
             mr->showPage(MODE_THINK_FIGHT, c.lastcommandid);
             
         }else if ( c.lastcommand == CMD_SEEK ) {
-            mr->showPage(MODE_THINK_SEEK, c.lastcommandid);
+            mr->showPage(MODE_THINK_SEEK,c.lastcommandid);
+        }else if ( c.lastcommand == CMD_APPROACH ) {
+            characterId = c.lastcommandid;
+            TME_SelectChar(characterId);
+            mr->showPage(MODE_THINK);
         }
-                
         delayedSave();
     }
     
@@ -376,11 +379,9 @@ void panel_look::delayedSave()
     } else
 #endif
     if ( (mr->panels->currentmode == this->currentmode)
-        && recruitable_characters.Count() ) {
-        mr->showPage ( MODE_THINK_APPROACH, recruitable_characters[0] );
+        && !recruitable_characters.empty() ) {
+        mr->showPage ( MODE_THINK_APPROACH, recruitable_characters.front() );
     }
-    
-    //mr->showPage ( MODE_THINK );
 }
 
 //void panel_look::OnActionComplete( uiaction* sender, s32 value )
