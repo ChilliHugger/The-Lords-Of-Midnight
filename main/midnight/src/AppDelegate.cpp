@@ -99,16 +99,16 @@ void AppDelegate::InitialisePaths()
 
     char main_path[MAX_PATH];
     
-    sprintf( main_path, "%s/%s", scenario.c_str(), resfolder.c_str() );
+    snprintf( main_path, NUMELE(main_path), "%s/%s", scenario.c_str(), resfolder.c_str() );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "%s/%s/screens/%d", scenario.c_str(), resfolder.c_str(), res->Aspect() );
+    snprintf( main_path, NUMELE(main_path), "%s/%s/screens/%d", scenario.c_str(), resfolder.c_str(), res->Aspect() );
     searchPaths.push_back(main_path);
 
-    sprintf( main_path, "all/%s",resfolder.c_str() );
+    snprintf( main_path, NUMELE(main_path), "all/%s",resfolder.c_str() );
     searchPaths.push_back(main_path);
     
-    sprintf( main_path, "all/%s/screens/%d", resfolder.c_str(), res->Aspect() );
+    snprintf( main_path, NUMELE(main_path), "all/%s/screens/%d", resfolder.c_str(), res->Aspect() );
     searchPaths.push_back(main_path);
     
     

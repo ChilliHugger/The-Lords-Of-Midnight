@@ -328,7 +328,7 @@ void panel_think::setupPages()
                 if ( currentmode==MODE_THINK_APPROACH ) {
                     TME_GetCharacter(c1, collection[ii]);
                     if ( !Character_IsRecruited(c1) ) {
-                        currentPage=pages.size()-1;
+                        currentPage=(s32)pages.size()-1;
                     }
                 }
 #endif
@@ -343,7 +343,7 @@ void panel_think::setupPages()
             if ( currentmode==MODE_THINK_APPROACH ) {
                 TME_GetCharacter(c1, collection[ii]);
                 if ( !Character_IsRecruited(c1) ) {
-                    currentPage=pages.size()-1;
+                    currentPage=(s32)pages.size()-1;
                 }
             }
 #endif
@@ -509,8 +509,8 @@ bool panel_think::OnKeyboardEvent( uikeyboardevent* event )
         return false;
     }
 
-    currentPage = pageView->getCurrentPageIndex();
-    u32 endPage = pages.size();
+    currentPage = (s32)pageView->getCurrentPageIndex();
+    auto endPage = (s32)pages.size();
     auto page = pages.at(currentPage);
     
     switch(event->getKey()){

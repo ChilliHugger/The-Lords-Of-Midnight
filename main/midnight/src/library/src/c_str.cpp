@@ -62,7 +62,7 @@ namespace chilli {
             for (std::string line; std::getline(ss, line, delim);)
                 tokens.push_back(line);
 
-            return tokens.size();
+            return (int)tokens.size();
         }
          
         c_string split_by_newline(const std::string& str)
@@ -74,7 +74,7 @@ namespace chilli {
 
         std::string right(std::string& input, int amount)
         {
-            int inputSize = input.size();
+            int inputSize = (int)input.size();
             return (amount > 0 && inputSize > amount) ? input.substr(inputSize - amount) : input;
         }
         

@@ -71,19 +71,19 @@ void LandscapeDebug::Build()
                 
                 switch (options->debugMode) {
                     case 1:
-                        sprintf(buffer, "%f,%f", item->loc.x-(options->here.x/LANDSCAPE_DIR_STEPS), item->loc.y-(options->here.y/LANDSCAPE_DIR_STEPS));
+                        snprintf(buffer, NUMELE(buffer), "%f,%f", item->loc.x-(options->here.x/LANDSCAPE_DIR_STEPS), item->loc.y-(options->here.y/LANDSCAPE_DIR_STEPS));
                         break;
                     case 2:
-                        sprintf(buffer, "%f", item->scale);
+                        snprintf(buffer, NUMELE(buffer), "%f", item->scale);
                         break;
                     case 3:
-                        sprintf(buffer, "%d,%d", (int)item->position.x, (int)item->position.y);
+                        snprintf(buffer, NUMELE(buffer), "%d,%d", (int)item->position.x, (int)item->position.y);
                         break;
                     case 4:
-                        sprintf(buffer, "%d,%d", item->loc.x, item->loc.y);
+                        snprintf(buffer, NUMELE(buffer), "%d,%d", item->loc.x, item->loc.y);
                         break;
                     case 5:
-                        sprintf(buffer, "%d", item->terrain);
+                        snprintf(buffer, NUMELE(buffer), "%d", item->terrain);
                         break;
                     default:
                         break;
@@ -122,7 +122,7 @@ void LandscapeDebug::Build()
     
     char buffer[255];
     
-    sprintf(buffer, "Location %d,%d - Looking %d Landscape Adj=(%f,%f) Rotating=%d"
+    snprintf(buffer, NUMELE(buffer), "Location %d,%d - Looking %d Landscape Adj=(%f,%f) Rotating=%d"
             , options->currentLocation.x, options->currentLocation.y
             , options->currentDirection
             , options->landScaleX, options->landScaleY
