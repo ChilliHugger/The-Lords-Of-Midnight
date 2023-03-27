@@ -89,6 +89,7 @@ namespace tme {
         
         virtual MXRESULT Cmd_WalkForward ( bool perform_seek );
         virtual mxobject* Cmd_Fight( void );
+        virtual mxcharacter* Cmd_Approach ( mxcharacter* character );
         
         virtual MXRESULT Cmd_EnterTunnel ( void );
         virtual MXRESULT Cmd_ExitTunnel ( void );
@@ -125,6 +126,7 @@ namespace tme {
         
         mxorders_t pickNewOrders (void) const;
         mxcharacter* AI_Approach ( mxcharacter* character );
+
 
     public:
 

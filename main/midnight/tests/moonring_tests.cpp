@@ -9,17 +9,13 @@
 #include "mocks.h"
 #include "ui_steps.h"
 
-#if defined(_LOM_)
-#include "midnight/common_steps.h"
-#endif
-
-
 SCENARIO("Continuing a story with a dead lord should show the Think Screen")
 {
     TMEStep::NewStory();
   
     GIVEN("that the current lord is dead")
     {
+        TMEStep::SetCurrentLord( TMEStep::ch_rorthron );
         TMEStep::CurrentLordIsDead();
         
         WHEN("the player loads the story")
@@ -141,6 +137,7 @@ SCENARIO("Selecting the Look Screen for a dead lord should show the Select scree
   
     GIVEN("that the current lord is dead")
     {
+        TMEStep::SetCurrentLord( TMEStep::ch_rorthron );
         TMEStep::CurrentLordIsDead();
 
         WHEN("the player chooses the look screen")
@@ -187,16 +184,16 @@ SCENARIO("Add a lord to a group should make them follow their new leader")
   
     GIVEN("that Rorthron is with Luxor")
     {
-        TMEStep::LordAtLocation(ch_rorthron, ch_luxor);
+        TMEStep::LordAtLocation(TMEStep::ch_rorthron, TMEStep::ch_luxor);
         
         WHEN("Rorthron joins Luxor's group")
         {
-            UIStep::PlayerAddsLordToAGroup(ch_rorthron,ch_luxor);
+            UIStep::PlayerAddsLordToAGroup(TMEStep::ch_rorthron,TMEStep::ch_luxor);
         
             THEN("Rorthron should be following Luxor")
             {
-                auto rorthron = GetCharacter(ch_rorthron);
-                auto luxor = GetCharacter(ch_luxor);
+                auto rorthron = GetCharacter(TMEStep::ch_rorthron);
+                auto luxor = GetCharacter(TMEStep::ch_luxor);
                 
                 REQUIRE( rorthron->Following() == luxor );
                 

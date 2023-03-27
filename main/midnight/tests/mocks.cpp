@@ -68,7 +68,7 @@ bool storymanagermock::save ( savemode_t mode )
     return true;
 }
     
-bool storymanagermock::create ( storyid_t id )
+bool storymanagermock::create ( storyid_t id, u64 flags, mxdifficulty_t difficulty )
 {
     return true;
 }

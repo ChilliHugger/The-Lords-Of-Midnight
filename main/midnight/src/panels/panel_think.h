@@ -42,7 +42,7 @@ protected:
 
 protected:
     flags32                 flags;
-    s64                     currentPage;
+    s32                     currentPage;
     mxid                    id;
     mxid                    objectId;
     int                     current_tab;

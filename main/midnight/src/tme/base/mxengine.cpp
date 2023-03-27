@@ -880,7 +880,7 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
             lords++;
     }
     
-    sprintf( buffer, "Day %d\n%s\n%s\n%d %s"
+    snprintf( buffer, NUMELE(buffer), "Day %d\n%s\n%s\n%d %s"
             , (int)sv_days+1
             , m_CurrentCharacter->Longname().c_str()
             , mx->text->DescribeLocation(m_CurrentCharacter->Location()).c_str()
@@ -1191,7 +1191,7 @@ char msg_buffer[1024];
     va_list arglist ;
 
     va_start( arglist, format ) ;
-    vsprintf( msg_buffer, format, arglist );
+    vsnprintf( msg_buffer, NUMELE(msg_buffer), format, arglist );
     va_end( arglist ) ;
     
     cocos2d::log("TME: %s",msg_buffer);

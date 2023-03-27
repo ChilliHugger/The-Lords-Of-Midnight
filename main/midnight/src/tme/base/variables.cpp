@@ -47,19 +47,20 @@ namespace tme {
         sv_num_t    sv_stronghold_default_empty ;
         sv_num_t    sv_stronghold_default_min ;
         sv_num_t    sv_stronghold_default_max ;
-        sv_bool_t    sv_stronghold_default_allow_respawn ;
+        sv_bool_t   sv_stronghold_default_allow_respawn ;
         sv_num_t    sv_stronghold_default_respawn_amount ;
         sv_num_t    sv_success_fey_on_horse_adjuster    ;
         sv_num_t    sv_success_base_level ;
         sv_num_t    sv_success_riders_energy_mountain ;
         sv_num_t    sv_success_riders_energy_other ;
-        sv_bool_t    sv_always_attempt_recruit ;
+        sv_bool_t   sv_always_attempt_recruit ;
 
         sv_str_t    sv_map_file ;
         sv_num_t    sv_map_width ;
         sv_num_t    sv_map_height ;
-        sv_bool_t    sv_auto_unhide ;
-        sv_bool_t    sv_auto_seek ;
+        sv_bool_t   sv_auto_unhide ;
+        sv_bool_t   sv_auto_seek ;
+        sv_bool_t   sv_auto_approach ;
         sv_num_t    sv_character_default_memory_age ;
 
         sv_int_t    sv_time_night ;
@@ -74,10 +75,10 @@ namespace tme {
 
         sv_bool_t   sv_collate_battle_areas ;
         
-        sv_mxid_t    sv_character_friend;
-        sv_mxid_t    sv_character_foe;
-        sv_c_mxid_t    sv_character_default;
-        sv_c_mxid_t    sv_guidance;
+        sv_mxid_t   sv_character_friend;
+        sv_mxid_t   sv_character_foe;
+        sv_c_mxid_t sv_character_default;
+        sv_c_mxid_t sv_guidance;
 
         sv_int_t    sv_characters ;
         sv_int_t    sv_routenodes ;
@@ -163,6 +164,7 @@ namespace tme {
 
             VARIABLE( sv_auto_unhide,                           "CHARACTER_AUTO_UNHIDE",                CVar::YESNO,    "NO" ),
             VARIABLE( sv_auto_seek,                             "CHARACTER_AUTO_SEEK",                  CVar::YESNO,    "NO" ),
+            VARIABLE( sv_auto_approach,                         "CHARACTER_AUTO_APPROACH",              CVar::YESNO,    "NO" ),
             VARIABLE( sv_character_default_memory_age,          "CHARACTER_DEFAULT_MEMORY_AGE",         CVar::NUMBER,   "10" ),
 
 

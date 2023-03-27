@@ -19,13 +19,13 @@ public:
     static void IceCrownHasBeenDestroyed();
     static void GameWon();
     static void GameLost();
+
+    static constexpr LPCSTR ch_farflame = "CH_FARFLAME";
+    static constexpr LPCSTR ch_lorgrim = "CH_LORGRIM";
+    static constexpr LPCSTR ch_fawkrin = "CH_FAWKRIN";
+    static constexpr LPCSTR ch_shadows = "CH_SHADOWS";
+    static constexpr LPCSTR ch_dreams = "CH_DREAMS";
+    static constexpr LPCSTR pl_lake_mirrow = "PL_LAKE_MIRROW";
+    static constexpr LPCSTR pl_tower_of_doom = "PL_TOWER_OF_DOOM";
+    static constexpr LPCSTR ob_icecrown = "OB_ICECROWN";
 };
-
-constexpr LPCSTR ch_farflame = "CH_FARFLAME";
-constexpr LPCSTR ch_lorgrim = "CH_LORGRIM";
-constexpr LPCSTR ch_fawkrin = "CH_FAWKRIN";
-
-constexpr LPCSTR pl_lake_mirrow = "PL_LAKE_MIRROW";
-constexpr LPCSTR pl_tower_of_doom = "PL_TOWER_OF_DOOM";
-
-constexpr LPCSTR ob_icecrown = "OB_ICECROWN";

@@ -552,43 +552,27 @@ namespace tme {
         if ( !IsAIControlled() )
             mx->scenario->MakeMapAreaVisible(Location(), this);
         
-        CommandTakesTime(TRUE);
+        CommandTakesTime(true);
 
-        
         // if we have moved, we are no longer in battle
         flags.Reset(cf_inbattle|cf_preparesbattle);
         
-        // TODO: shouldn't seek if approach
+        // 
         if ( !IsAIControlled() && perform_seek ) {
             // quick fix
             if ( exit_tunnel ) flags.Reset ( cf_tunnel );
-            if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE /*|| ( Location().x==24 && Location().y==58)*/ ) {
+            if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
                 Cmd_Seek();
             }
             if ( exit_tunnel ) flags.Set ( cf_tunnel );
         }
         
-        
-        // if we are leading
-        // then the whole group needs to be able to move
-        if ( HasFollowers() ) {
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                // must look the same direction to make them move in the
-                // correct direction
-                follower->looking = Looking();
-                
-                follower->Cmd_WalkForward(perform_seek);
-            }
-        }
+        WalkFollowersForward();
         
         // if this location has an exit then we must exit
         if ( exit_tunnel )
             Cmd_ExitTunnel();
 
-        
         return MX_OK ;
     }
     
@@ -1379,6 +1363,75 @@ void ddr_character::Displace()
     }
     
 }
+
+
+
+mxcharacter* ddr_character::Cmd_Approach ( mxcharacter* character )
+{
+mxcharacter*    def_character=nullptr ;
+
+    if ( !mx->scenario->IsFeature(SF_APPROACH_DDR) ) {
+        return mxcharacter::Cmd_Approach( character );
+    }
+
+    SetLastCommand ( CMD_APPROACH, IDT_NONE );
+
+    // the leader of the group initiates the approach
+    if ( IsFollowing() ) {
+        // make the leader look to the same place as us!
+        Following()->Cmd_LookDir(Looking());
+        return Following()->Cmd_Approach(character);
+    }
+    
+    // get location info
+    std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+
+    if ( info->objRecruit.Count() )
+        def_character = (mxcharacter*)info->objRecruit[0] ;
+
+    // get the default character
+    if ( character == nullptr ) {
+        character = def_character;
+        if ( character == nullptr )
+            return nullptr ;
+
+    }
+
+    mxcharacter* will_perform_recruit = nullptr;
+    if ( CheckRecruitChar( character ) )
+        will_perform_recruit=this;
+    
+    // if we can't recruit, can any of my followers?
+    if ( will_perform_recruit == NULL && HasFollowers() ) {
+        entities followers;
+        mx->scenario->GetCharacterFollowers(this, followers);
+        for ( u32 ii=0; ii<followers.Count(); ii++ ) {
+            mxcharacter* follower = (mxcharacter*) followers[ii];
+            if ( follower->CheckRecruitChar( character ) ) {
+                will_perform_recruit = follower ;
+                break;
+            }
+        }
+    }
+    
+    // 1. move all characters into new location
+    Cmd_WalkForward (false);
+    
+    if ( will_perform_recruit ) {
+        if ( character->Recruited ( will_perform_recruit ) ) {
+            SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
+            return character;
+        }
+    }else{
+    // 2. Night
+        EnterBattle();
+        return nullptr ;
+    }
+
+    CommandTakesTime(false);
+    return nullptr ;
+}
+
 
 } // namespace tme
 

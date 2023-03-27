@@ -43,7 +43,7 @@ SCENARIO("For a new story Luxor should be the initial lord")
     {
         WHEN("the story is started")
         {
-            auto created = TME_Init();
+            auto created = TME_Init(RF_DEFAULT, DF_NORMAL);
 
             THEN("the story creation should be successfull")
             {

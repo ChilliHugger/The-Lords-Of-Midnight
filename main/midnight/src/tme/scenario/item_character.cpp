@@ -122,6 +122,36 @@ namespace tme {
 
         }
 
+        void mxcharacter::ForEachFollower(const std::function<void(mxcharacter*)> &callback)
+        {
+            if (!HasFollowers()) return;
+            
+            entities followers;
+            mx->scenario->GetCharacterFollowers(this, followers);
+            
+            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
+                auto follower = static_cast<mxcharacter*>(followers[ii]);
+                callback(follower);
+            }
+        }
+
+        mxcharacter* mxcharacter::FindFollower(const std::function<bool(mxcharacter*)> &callback)
+        {
+            if (!HasFollowers()) return nullptr;
+            
+            entities followers;
+            mx->scenario->GetCharacterFollowers(this, followers);
+            
+            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
+                auto follower = static_cast<mxcharacter*>(followers[ii]);
+                if (callback(follower)) {
+                    return follower;
+                }
+            }
+            
+            return nullptr;
+        }
+
         void mxcharacter::RefreshLocationBasedVariables ( const mxlocinfo* info )
         {
             fear = info->adj_fear ;
@@ -479,39 +509,44 @@ namespace tme {
                 }
             }
 #endif
-           
-            return Cmd_WalkForward(sv_auto_seek);
+            bool approach = false;
+            if ( sv_auto_approach ) {
+                 info->infront->FindRecruitCharactersHere(this);
+                 approach = info->infront->objRecruit.Count() == 1;
+            }
+            
+            return Cmd_WalkForward(sv_auto_seek, approach);
         }
 
         bool mxcharacter::CanWalkForward ( void )
         {
             // dead men don't walk!
             if ( IsDead() ) {
-                return FALSE;
+                return false;
             }
             
             // completely and untterly shattered?
             if ( energy <= sv_energy_cannot_continue ) {
-                return FALSE;
+                return false;
             }
             
             // hidden under a rock?
             if ( IsHidden() ) {
                 // if auto unhide turned on then we must unhide and carry on
                 if ( !sv_auto_unhide )
-                    return FALSE;
+                    return false;
             }
             
             // should be sleeping!
             if ( IsNight() ) {
-                return FALSE;
+                return false;
             }
 
-            return TRUE;
+            return true;
         }
         
     
-        MXRESULT mxcharacter::Cmd_WalkForward ( bool perform_seek )
+        MXRESULT mxcharacter::Cmd_WalkForward ( bool perform_seek, bool perform_approach )
         {
         s32            TimeCost;
         mxrace*        rinfo;
@@ -537,7 +572,6 @@ namespace tme {
             // set the new current location to visited
             mx->gamemap->SetLocationVisited(location, TRUE);
 
-            
             // add armies and characters back to the map
             // this is overkill!!!!
             mx->scenario->SetMapArmies();
@@ -580,29 +614,41 @@ namespace tme {
             // if we have moved, we are no longer in battle
             flags.Reset(cf_inbattle|cf_preparesbattle);
             
-            // TODO: shouldn't seek if approach
+            // auto approach
+            if ( perform_approach ) {
+               // we need to recruit before anyone else joins us
+                if ( Cmd_Approach() != nullptr) {
+                    perform_seek = false;
+                }
+            }
+            
+            // auto seek
             if ( perform_seek ) {
                 if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
                     Cmd_Seek();
                 }
             }
             
+            WalkFollowersForward();
+            
+            return MX_OK ;
+        }
+
+        void mxcharacter::WalkFollowersForward()
+        {
             // if we are leading
             // then the whole group needs to be able to move
             if ( HasFollowers() ) {
                 entities followers;
                 mx->scenario->GetCharacterFollowers(this, followers);
                 for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
+                    auto follower = static_cast<mxcharacter*>(followers[ii]);
                     // must look the same direction to make them move in the
                     // correct direction
                     follower->looking = Looking();
-                    follower->Cmd_WalkForward(perform_seek);
+                    follower->Cmd_WalkForward();
                 }
             }
-            
-            
-            return MX_OK ;
         }
 
         void mxcharacter::DecreaseEnergy ( s32 amount )
@@ -792,95 +838,32 @@ namespace tme {
 
         mxcharacter* mxcharacter::Cmd_Approach ( mxcharacter* character )
         {
-        mxcharacter*    def_character=NULL ;
-
             SetLastCommand ( CMD_APPROACH, IDT_NONE );
 
-#if defined(_DDR_)
-            // the leader of the group initiates the approach
-            if ( IsFollowing() ) {
-                // make the leader look to the same place as us!
-                Following()->Cmd_LookDir(Looking());
-                return Following()->Cmd_Approach(character);
-            }
-#endif
-            
-            // get location info
-            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
-    
-            if ( info->objRecruit.Count() )
-                def_character = (mxcharacter*)info->objRecruit[0] ;
+            if ( character == nullptr ) {
 
-#if defined(_LOM_)
-            // are we allowed to approach ?
-            if ( !info->flags.Is(lif_recruitchar) ) {
-                return NULL ;
-            }
-#endif
-
-            // get the default character
-            if ( character == NULL ) {
-                character = def_character;
-                if ( character == NULL )
-                    return NULL ;
-
-            }
-
-#if defined(_DDR_)
-            mxcharacter* will_perform_recruit=NULL;
-            if ( CheckRecruitChar( character ) )
-                will_perform_recruit=this;
-            
-            // if we can't recruit, can any of my followers?
-            if ( will_perform_recruit == NULL && HasFollowers() ) {
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
-                    if ( follower->CheckRecruitChar( character ) ) {
-                        will_perform_recruit = follower ;
-                        break;
-                    }
+                // get location info
+                std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+        
+                // are we allowed to approach ?
+                if ( !info->flags.Is(lif_recruitchar) ) {
+                    return nullptr ;
                 }
-            }
-#endif
-#if defined(_LOM_)
-            mxcharacter* will_perform_recruit=this;
-#endif
-            
-            
-            if ( mx->scenario->IsFeature(SF_APPROACH_DDR) ) {
-                // 1. move all characters into new location
- 
-                Cmd_WalkForward (false);
-                
-                if ( will_perform_recruit ) {
-                    if ( character->Recruited ( will_perform_recruit ) ) {
-                        SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
-                        CommandTakesTime(TRUE);
-                        return character;
-                    }
-                }else{
-                // 2. Night
-                    EnterBattle();
-                    return NULL ;
-                }
-            }else{
-                
-                // attempt to recruit
-                if ( will_perform_recruit ) {
-                    if ( character->Recruited ( will_perform_recruit ) ) {
-                        SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
-                        CommandTakesTime(TRUE);
-                        return character ;
-                    }else{
-                        // enter battle!
-                    }
-                }
+
+                character = static_cast<mxcharacter*>(info->objRecruit.First()) ;
             }
 
-            CommandTakesTime(FALSE);
-            return NULL ;
+            RETURN_IF_NULL(character) nullptr ;
+
+            if ( character->Recruited ( this ) ) {
+                SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
+                CommandTakesTime(true);
+                return character ;
+            }
+
+            CommandTakesTime(false);
+            
+            return nullptr ;
         }
 
 #if defined(_DDR_)
@@ -975,9 +958,6 @@ namespace tme {
         }
 #endif
 
-        
-
-    
         MXRESULT mxcharacter::Cmd_Attack ( void )
         {
             if ( IsFollowing() )
@@ -1254,9 +1234,7 @@ namespace tme {
             return FALSE ;
 #endif
         }
-        
 
-                
         mxobject* mxcharacter::Cmd_Seek ( void )
         {
         mxthing_t    newobject;

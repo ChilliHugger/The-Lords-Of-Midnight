@@ -189,6 +189,7 @@ void moonring::continueStory( storyid_t id )
     
     // setup any options
     tme::variables::sv_auto_seek = settings->autoseek;
+    tme::variables::sv_auto_approach = settings->autoapproach;
     
     TME_CurrentCharacter( TME_CurrentCharacter().id );
     
@@ -728,7 +729,7 @@ void moonring::complain (LPCSTR format, ... )
     va_list arglist ;
     
     va_start( arglist, format ) ;
-    vsprintf( msg_buffer, format, arglist );
+    vsnprintf( msg_buffer, NUMELE(msg_buffer), format, arglist );
     va_end( arglist ) ;
     
     cocos2d::log("%s",msg_buffer);
@@ -744,7 +745,7 @@ void  moonring::log(LPCSTR format, ...)
     va_list arglist;
 
     va_start(arglist, format);
-    vsprintf(msg_buffer, format, arglist);
+    vsnprintf(msg_buffer, NUMELE(msg_buffer), format, arglist);
     va_end(arglist);
 
     //CCLOG("UI: %s", msg_buffer);

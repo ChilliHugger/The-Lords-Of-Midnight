@@ -19,11 +19,11 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
 
     GIVEN("Morkin is carrying the ice crown ")
     {
-        TMEStep::LordCarryingObject(ch_morkin,OB_ICECROWN);
+        TMEStep::LordCarryingObject(TMEStep::ch_morkin,OB_ICECROWN);
      
         AND_GIVEN("that Farmflame the Dragonlord is with Morkin")
         {
-            TMEStep::LordAtLocation(ch_farflame, ch_morkin);
+            TMEStep::LordAtLocation(LOMStep::ch_farflame, TMEStep::ch_morkin);
 
             WHEN("night falls")
             {
@@ -39,7 +39,7 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
         
         AND_GIVEN("that Lorgrim the Wise is with Morkin")
         {
-            TMEStep::LordAtLocation(ch_lorgrim, ch_morkin);
+            TMEStep::LordAtLocation(LOMStep::ch_lorgrim, TMEStep::ch_morkin);
            
             WHEN("night falls")
             {
@@ -55,7 +55,7 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
         
         AND_GIVEN("that Fawkrin the Skulkrin is with Morkin")
         {
-            TMEStep::LordAtLocation(ch_fawkrin, ch_morkin);
+            TMEStep::LordAtLocation(LOMStep::ch_fawkrin, TMEStep::ch_morkin);
 
             WHEN("night falls")
             {
@@ -71,7 +71,7 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
 
         AND_GIVEN("that Morkin is at Lake Mirrow ")
         {
-            TMEStep::LordAtLocation(ch_morkin, pl_lake_mirrow);
+            TMEStep::LordAtLocation(TMEStep::ch_morkin, LOMStep::pl_lake_mirrow);
              
             WHEN("night falls")
             {
@@ -88,24 +88,24 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
     }
 }
 
-SCENARIO("The Ice Crown can only be destroyed when Morkinn is carrying it")
+SCENARIO("The Ice Crown can only be destroyed when Morkin is carrying it")
 {
     TMEStep::NewStory();
   
     GIVEN("Farmflame the Dragonlord is at the Tower of Doom ")
     {
-        TMEStep::LordAtLocation(ch_farflame, pl_tower_of_doom);
+        TMEStep::LordAtLocation(LOMStep::ch_farflame, LOMStep::pl_tower_of_doom);
         
         AND_GIVEN("that Morkin is not carrying anything and is at the Tower of Doom")
         {
-            TMEStep::LordCarryingObject(ch_morkin,OB_NONE);
+            TMEStep::LordCarryingObject(TMEStep::ch_morkin,OB_NONE);
             
-            TMEStep::LordAtLocation(ch_morkin, pl_tower_of_doom);
+            TMEStep::LordAtLocation(TMEStep::ch_morkin, LOMStep::pl_tower_of_doom);
     
             AND_GIVEN("that the Ice Crown is at the Tower of Doom")
             {
-                auto iceCrown = GetEntity<mxobject>("OB_ICECROWN");
-                auto towerOfDoom = GetEntity<mxplace>(pl_tower_of_doom);
+                auto iceCrown = GetEntity<mxobject>(LOMStep::ob_icecrown);
+                auto towerOfDoom = GetEntity<mxplace>(LOMStep::pl_tower_of_doom);
                 tme::mx->scenario->DropObject(towerOfDoom->Location(), iceCrown);
             
                 WHEN("night falls")

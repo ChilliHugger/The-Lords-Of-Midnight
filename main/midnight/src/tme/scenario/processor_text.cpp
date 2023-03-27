@@ -1487,7 +1487,7 @@ __terrain:
             }else
 // SYSTEM STRING
             IS_ARG("str") {
-                return CookedSystemString(StringExtensions::atol(tokens.at(is+1)),character);
+                return CookedSystemString(StringExtensions::atoi(tokens.at(is+1)),character);
             }else
 // SPECIAL
             IS_ARG("special") {

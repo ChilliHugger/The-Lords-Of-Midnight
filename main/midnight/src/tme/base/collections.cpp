@@ -205,6 +205,13 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
             Clear();
         }
 
+        mxentity* entities::First()
+        {
+            return ( Count()>0 )
+                ? m_objElements[ 0 ]
+                : nullptr;
+        }
+
         static int sort_hint=0;
         int object_compare( const void *arg1, const void *arg2 )
         {
@@ -219,7 +226,6 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
             qsort( (void *)m_objElements, (size_t)Count(), sizeof( mxobject* ), object_compare );
 
         }
-
 
         void infos::Serialize( archive& ar )
         {

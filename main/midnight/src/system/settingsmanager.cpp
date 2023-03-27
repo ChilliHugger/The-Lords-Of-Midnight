@@ -35,6 +35,7 @@ settingsmanager::settingsmanager() :
 #else
     , autoseek(true)
 #endif
+    , autoapproach(false)
 {
     
 #if defined(_OS_DESKTOP_)
@@ -145,6 +146,7 @@ BOOL settingsmanager::Save ( void )
     
     // version 13
     ar << autoseek;
+    ar << autoapproach;
 
     ar.Close();
 
@@ -225,6 +227,7 @@ BOOL settingsmanager::Load ( void )
 
     if ( version >= 13 ) {
         ar >> autoseek;
+        ar >> autoapproach;
     }
 
     ar.Close();
