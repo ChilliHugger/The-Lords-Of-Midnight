@@ -765,11 +765,6 @@ bool Character_Approach ( const character& c )
     args[0] = c.id ;
     args[1] = recruitable_characters[0] ;
     if ( MXSUCCESS( mxi->Command("APPROACH",args,2) ) ) {
-        if ( (s32)args[1] ) {
-            TME_CurrentCharacter ( args[1] );
-        }else{
-            TME_RefreshCurrentCharacter();
-        }
         return true;
     }
     return false;

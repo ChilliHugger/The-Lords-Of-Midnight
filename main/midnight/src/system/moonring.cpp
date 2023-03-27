@@ -20,6 +20,7 @@
 #include "progressmonitor.h"
 #include "configmanager.h"
 #include "shadermanager.h"
+#include "../frontend/language.h"
 #include <string>
 
 #if defined(_USE_VERSION_CHECK_)
@@ -343,26 +344,53 @@ bool moonring::night()
     return true;
 }
 
-bool moonring::approach()
+bool moonring::approach(uipanel* parent)
 {
     character& c = TME_CurrentCharacter();
-    
-    mxid currentCharacter = TME_CurrentCharacter().id;
-    
-    // if the recruit is successful then
-    // make the new character the current character
-    
-    if ( Character_Approach(c) ) {
-        if ( currentCharacter != TME_CurrentCharacter().id ) {
-        }
-    }else{
-        TME_RefreshCurrentCharacter();
+    mxid newId = c.id;
+
+    auto result = Character_Approach(c);
+        
+    stories->save();
+        
+    if ( result) {
+        return afterApproach(parent);
     }
     
-    stories->save();
+    TME_RefreshCurrentCharacter();
     showPage ( MODE_THINK );
+    return true;
+}
 
-    
+bool moonring::afterApproach(uipanel* parent)
+{
+    character& c = TME_CurrentCharacter();
+
+    switch (settings->approach_mode) {
+        case CF_APPROACH_SWAP:
+            TME_SelectChar(c.lastcommandid);
+            showPage ( MODE_THINK );
+            break;
+
+        case CF_APPROACH_ASK:
+            parent->AreYouSure(SWAP_LORD_MSG,
+                [&] {
+                    TME_SelectChar(c.lastcommandid);
+                    showPage ( MODE_THINK );
+                },
+                [&] {
+                    TME_RefreshCurrentCharacter();
+                    showPage ( MODE_THINK );
+                }
+            );
+            break;
+
+        case CF_APPROACH_STAY:
+            TME_RefreshCurrentCharacter();
+            showPage ( MODE_THINK );
+            break;
+    }
+        
     return true;
 }
 

@@ -467,7 +467,8 @@ void panel_think::OnNotification( Ref* sender )
 
         case ID_APPROACH:
         {
-            mr->approach();
+            if (mr->approach(this)) {
+            }
             break;
         }
             

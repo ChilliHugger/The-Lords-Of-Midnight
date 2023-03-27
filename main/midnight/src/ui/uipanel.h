@@ -97,6 +97,7 @@ public:
 
     void pauseEvents();
     void resumeEvents();    
+    void AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok = nullptr );
     
 protected:
     uipanel();
@@ -106,11 +107,9 @@ protected:
     Node* setBackground( Color3B color );
     Node* setBackgroundCentered( LPCSTR background );
 
-    
     void FadeExit( f32 delay = 0);
     void Exit( f32 delay = 0);
     
-    void AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok = nullptr );
     void OpenPDF(LPCSTR pdf);
     void FillBackground();
 
