@@ -774,6 +774,7 @@ bool panel_look::moveForward()
     
     TME_GetCharacterLocationInfo ( c );
     
+#if defined(_LOM_)
     // mr->checkFight?
     // something is in our way that we must fight
     // so check for auto fight
@@ -801,6 +802,7 @@ bool panel_look::moveForward()
             }
         }
     }
+#endif
     
     if ( !startMoving() ) {
         
