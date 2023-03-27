@@ -41,6 +41,9 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR KEYBOARD_KEY_5                     = "5";
     constexpr LPCSTR KEYBOARD_KEY_6                     = "6";
     constexpr LPCSTR KEYBOARD_KEY_7                     = "7";
+    constexpr LPCSTR KEYBOARD_KEY_8                     = "8";
+    constexpr LPCSTR KEYBOARD_KEY_9                     = "9";
+    constexpr LPCSTR KEYBOARD_KEY_0                     = "0";
 
     constexpr LPCSTR KEYBOARD_KEY_C                     = "C";
     constexpr LPCSTR KEYBOARD_KEY_D                     = "D";
@@ -108,6 +111,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOUNHIDE          = "AUTO UNHIDE";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOSEEK            = "AUTO SEEK";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOAPPROACH        = "AUTO APPROACH";
+    constexpr LPCSTR OPTIONS_SCREEN_APPROACH            = "AFTER APPROACH";
     constexpr LPCSTR OPTIONS_SCREEN_NIGHTDISPLAY        = "NIGHT DISPLAY";
     constexpr LPCSTR OPTIONS_SCREEN_NIGHTCONFIRM        = "NIGHT CONFIRM";
     constexpr LPCSTR OPTIONS_SCREEN_BATTLEREPORT        = "BATTLE REPORT";
@@ -139,8 +143,11 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_DF_MEDIUM           = "MEDIUM";
     constexpr LPCSTR OPTIONS_SCREEN_DF_HARD             = "HARD";
     
+    constexpr LPCSTR OPTIONS_SCREEN_APPROACH_SWAP       = "NEW LORD";
+    constexpr LPCSTR OPTIONS_SCREEN_APPROACH_STAY       = "DO NOTHING";
+    constexpr LPCSTR OPTIONS_SCREEN_APPROACH_ASK        = "ASK";
+    
 #if defined(_LOM_)
-
     constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the epic world of";
     constexpr LPCSTR SPLASH_SCREEN_TITLE                = "THE LORDS OF MIDNIGHT";
     constexpr LPCSTR SPLASH_SCREEN_BY                   = "         by";
@@ -184,7 +191,9 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR UNDO_NIGHT_MSG                     = "Are you sure that you wish to return to night?";
     constexpr LPCSTR UNDO_DAWN_MSG                      = "Are you sure that you wish to return to dawn?";
     constexpr LPCSTR CHANGE_DISPLAY_MSG                 = "Are you sure that you wish to change your game resolution?";
-        
+    constexpr LPCSTR SWAP_LORD_MSG                      = "Would you like to swap to the newly recruited Lord?";
+    
+    
     constexpr LPCSTR BUTTON_YES                         = "YES";
     constexpr LPCSTR BUTTON_NO                          = "NO";
     constexpr LPCSTR BUTTON_OK                          = "OK";

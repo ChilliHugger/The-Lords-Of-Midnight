@@ -154,6 +154,12 @@ static const char* values_difficulty[] = {
     OPTIONS_SCREEN_DF_HARD
 };
 
+static const char* values_approach[] = {
+    OPTIONS_SCREEN_APPROACH_SWAP,
+    OPTIONS_SCREEN_APPROACH_STAY,
+    OPTIONS_SCREEN_APPROACH_ASK,
+};
+
 /*
  DISPLAY
     MODE                FULL, Window1, Window2, Window3
@@ -205,11 +211,12 @@ static uitextmenuitem items_game[] = {
     { ID_OPTION_NIGHT_DISPLAY,          {OPTIONS_SCREEN_NIGHTDISPLAY},          KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
     { ID_OPTION_BATTLE_FULL,            {OPTIONS_SCREEN_BATTLEREPORT},          KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
     { ID_OPTION_NIGHT_CONFIRM,          {OPTIONS_SCREEN_NIGHTCONFIRM},          KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+    { ID_OPTION_APPROACH,               {OPTIONS_SCREEN_APPROACH},              KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
 #if defined(_LOM_)
-    { ID_OPTION_AUTO_FIGHT,             {OPTIONS_SCREEN_AUTOFIGHT},             KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
-    { ID_OPTION_AUTO_UNHIDE,            {OPTIONS_SCREEN_AUTOUNHIDE},            KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
-    { ID_OPTION_AUTO_SEEK,              {OPTIONS_SCREEN_AUTOSEEK},              KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
-    { ID_OPTION_AUTO_APPROACH,          {OPTIONS_SCREEN_AUTOAPPROACH},          KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
+    { ID_OPTION_AUTO_FIGHT,             {OPTIONS_SCREEN_AUTOFIGHT},             KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
+    { ID_OPTION_AUTO_UNHIDE,            {OPTIONS_SCREEN_AUTOUNHIDE},            KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
+    { ID_OPTION_AUTO_SEEK,              {OPTIONS_SCREEN_AUTOSEEK},              KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
+    { ID_OPTION_AUTO_APPROACH,          {OPTIONS_SCREEN_AUTOAPPROACH},          KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE },
 #endif
 };
 
@@ -234,7 +241,8 @@ static option_t options[] = {
     {   ID_OPTION_AUTO_UNHIDE,      OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_AUTO_SEEK,        OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_AUTO_APPROACH,    OPT_BOOL,    0, values_onoff,               nullptr, false },
-    
+    {   ID_OPTION_APPROACH,         OPT_NUMBER,  3, values_approach,            nullptr, false },
+
     {   ID_OPTION_MOVE_INDICATORS,  OPT_BOOL,    0, values_yesno,               nullptr, false },
     {   ID_OPTION_TUTORIAL,         OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_NAVIGATION,       OPT_NUMBER,  4, values_movement,            nullptr, false },
@@ -359,6 +367,7 @@ bool panel_options::init()
     SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast);
     SET_OPTION(ID_OPTION_BATTLE_FULL,night_battle_full);
     SET_OPTION(ID_OPTION_NIGHT_CONFIRM,night_confirm);
+    SET_OPTION(ID_OPTION_APPROACH,approach_mode);
       
     SET_OPTION(ID_OPTION_SCREENMODE, screen_mode);
     SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode);

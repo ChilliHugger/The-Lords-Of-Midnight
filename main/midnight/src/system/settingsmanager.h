@@ -87,6 +87,14 @@ enum CONFIG_MOVEMENT_TYPE
     CF_MOVEMENT_C64=2,
 };
 
+enum CONFIG_APPROACH_MODE
+{
+    CF_APPROACH_SWAP=0,
+    CF_APPROACH_STAY=1,
+    CF_APPROACH_ASK=2,
+};
+
+
 class settingsmanager : public ringcontroller
 {
     
@@ -156,4 +164,5 @@ public:
     // version 13
     BOOL                    autoseek;
     BOOL                    autoapproach;
+    CONFIG_APPROACH_MODE    approach_mode;
 };
