@@ -145,7 +145,6 @@ and all the members of midnight/mu - www.midnightmu.com)";
     
     constexpr LPCSTR OPTIONS_SCREEN_APPROACH_SWAP       = "NEW LORD";
     constexpr LPCSTR OPTIONS_SCREEN_APPROACH_STAY       = "DO NOTHING";
-    constexpr LPCSTR OPTIONS_SCREEN_APPROACH_ASK        = "ASK";
     
 #if defined(_LOM_)
     constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the epic world of";
@@ -191,8 +190,6 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR UNDO_NIGHT_MSG                     = "Are you sure that you wish to return to night?";
     constexpr LPCSTR UNDO_DAWN_MSG                      = "Are you sure that you wish to return to dawn?";
     constexpr LPCSTR CHANGE_DISPLAY_MSG                 = "Are you sure that you wish to change your game resolution?";
-    constexpr LPCSTR SWAP_LORD_MSG                      = "Would you like to swap to the newly recruited Lord?";
-    
     
     constexpr LPCSTR BUTTON_YES                         = "YES";
     constexpr LPCSTR BUTTON_NO                          = "NO";

@@ -156,8 +156,7 @@ static const char* values_difficulty[] = {
 
 static const char* values_approach[] = {
     OPTIONS_SCREEN_APPROACH_SWAP,
-    OPTIONS_SCREEN_APPROACH_STAY,
-    OPTIONS_SCREEN_APPROACH_ASK,
+    OPTIONS_SCREEN_APPROACH_STAY
 };
 
 /*
@@ -241,7 +240,7 @@ static option_t options[] = {
     {   ID_OPTION_AUTO_UNHIDE,      OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_AUTO_SEEK,        OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_AUTO_APPROACH,    OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_APPROACH,         OPT_NUMBER,  3, values_approach,            nullptr, false },
+    {   ID_OPTION_APPROACH,         OPT_NUMBER,  2, values_approach,            nullptr, false },
 
     {   ID_OPTION_MOVE_INDICATORS,  OPT_BOOL,    0, values_yesno,               nullptr, false },
     {   ID_OPTION_TUTORIAL,         OPT_BOOL,    0, values_onoff,               nullptr, false },

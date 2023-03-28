@@ -344,50 +344,36 @@ bool moonring::night()
     return true;
 }
 
-bool moonring::approach(uipanel* parent)
+bool moonring::approach()
 {
     character& c = TME_CurrentCharacter();
     mxid newId = c.id;
 
-    auto result = Character_Approach(c);
-        
-    stories->save();
-        
-    if ( result) {
-        return afterApproach(parent);
+    if (Character_Approach(c)) {
+        return afterApproach();
     }
     
+    stories->save();
     TME_RefreshCurrentCharacter();
     showPage ( MODE_THINK );
     return true;
 }
 
-bool moonring::afterApproach(uipanel* parent)
+bool moonring::afterApproach()
 {
+    stories->save();
+    
     character& c = TME_CurrentCharacter();
 
     switch (settings->approach_mode) {
         case CF_APPROACH_SWAP:
             TME_SelectChar(c.lastcommandid);
-            showPage ( MODE_THINK );
-            break;
-
-        case CF_APPROACH_ASK:
-            parent->AreYouSure(SWAP_LORD_MSG,
-                [&] {
-                    TME_SelectChar(c.lastcommandid);
-                    showPage ( MODE_THINK );
-                },
-                [&] {
-                    TME_RefreshCurrentCharacter();
-                    showPage ( MODE_THINK );
-                }
-            );
+            showPage ( MODE_THINK_APPROACH );
             break;
 
         case CF_APPROACH_STAY:
             TME_RefreshCurrentCharacter();
-            showPage ( MODE_THINK );
+            showPage ( MODE_THINK_APPROACH );
             break;
     }
         

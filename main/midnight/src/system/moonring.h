@@ -96,7 +96,7 @@ public:
     bool look( mxdir_t dir );
     bool undo( savemode_t mode );
     bool night();
-    bool approach(uipanel* parent);
+    bool approach();
     bool seek();
     bool fight();
     bool hideunhide();
@@ -121,7 +121,7 @@ public:
     void showPage( panelmode_t mode, mxid object = IDT_NONE );
 
     //
-    bool afterApproach(uipanel* parent);
+    bool afterApproach();
 
     bool checkGameOverConditions ( void );
     

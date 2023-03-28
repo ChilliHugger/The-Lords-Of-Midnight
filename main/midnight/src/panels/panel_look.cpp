@@ -310,8 +310,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
         }else if ( c.lastcommand == CMD_SEEK ) {
             mr->showPage(MODE_THINK_SEEK,c.lastcommandid);
         }else if ( c.lastcommand == CMD_APPROACH ) {
-            mr->stories->save();
-            mr->afterApproach(this);
+            mr->afterApproach();
             Enable();
             return;
         }
@@ -1258,7 +1257,7 @@ void panel_look::OnNotification( Ref* sender )
             
         case ID_APPROACH:
         {
-            if ( mr->approach(this) ) {
+            if ( mr->approach() ) {
                 return;
             }
         }

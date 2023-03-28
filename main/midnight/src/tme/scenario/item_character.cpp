@@ -857,6 +857,7 @@ namespace tme {
 
             if ( character->Recruited ( this ) ) {
                 SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
+                character->SetLastCommand ( CMD_APPROACHED, mxentity::SafeIdt(this) );
                 CommandTakesTime(true);
                 return character ;
             }
