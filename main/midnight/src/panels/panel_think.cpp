@@ -15,6 +15,7 @@
 #include "../ui/uihelper.h"
 #include "../ui/uithinkpage.h"
 #include "../frontend/layout_id.h"
+#include "../ui/characters/uisinglelord.h"
 
 USING_NS_CC;
 USING_NS_CC_UI;
@@ -50,6 +51,7 @@ bool panel_think::init()
     {
         return false;
     }
+    select = nullptr;
     
     setBackground(_clrWhite);
     
@@ -97,6 +99,34 @@ bool panel_think::init()
              
     return true;
 }
+
+void panel_think::createLookLordButton(mxid id)
+{
+    if(select!=nullptr) {
+        removeChild(select);
+        select->release();
+    }
+    
+    auto data = static_cast<char_data_t*>(TME_GetEntityUserData( id ));
+    
+    character c;
+    TME_GetCharacter(c, id);
+    
+    layoutid_t tag = (layoutid_t) (ID_SELECT_CHAR+c.id);
+    
+    select = uisinglelord::createWithLord(c.id);
+    select->setTag(tag);
+    select->setUserData(data);
+    select->addClickEventListener(callback);
+    select->setStatusImageVisible(false);
+    uihelper::AddBottomLeft(safeArea, select, RES(10) + RES(100) * phoneScale(), RES(10)-RES(22) );
+    
+    if ( mr->settings->keyboard_mode == CF_KEYBOARD_CLASSIC )
+        addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_old));
+    else
+        addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
+}
+
 
 void panel_think::showButton(layoutid_t buttonId, bool enabled)
 {
@@ -153,6 +183,15 @@ void panel_think::setObject(mxid targetObjectId)
     
     this->id = c.id;
     this->objectId = targetObjectId;
+    
+    // after a successfull approach
+    if ( currentmode == MODE_THINK_APPROACH ) {
+        if ( (c.lastcommand == CMD_APPROACH || c.lastcommand == CMD_APPROACHED)
+            && c.lastcommandid != IDT_NONE ) {
+            createLookLordButton(c.lastcommandid);
+        }
+    }
+    
     
     setupPages();
     

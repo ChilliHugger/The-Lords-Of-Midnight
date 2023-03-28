@@ -36,6 +36,7 @@ settingsmanager::settingsmanager() :
     , autoseek(true)
 #endif
     , autoapproach(false)
+    , approach_mode(CF_APPROACH_SWAP)
 {
     
 #if defined(_OS_DESKTOP_)
@@ -147,6 +148,7 @@ BOOL settingsmanager::Save ( void )
     // version 13
     ar << autoseek;
     ar << autoapproach;
+    ar << approach_mode;
 
     ar.Close();
 
@@ -228,6 +230,7 @@ BOOL settingsmanager::Load ( void )
     if ( version >= 13 ) {
         ar >> autoseek;
         ar >> autoapproach;
+        ar >> temp; approach_mode = (CONFIG_APPROACH_MODE)temp;
     }
 
     ar.Close();

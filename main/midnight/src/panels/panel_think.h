@@ -13,6 +13,8 @@
 #include "../ui/uithinkpage.h"
 #include "../frontend/layout_id.h"
 
+FORWARD_REFERENCE(uisinglelord);
+
 class panel_think : public uipanel
 {
     using PageView = cocos2d::ui::PageView;
@@ -40,6 +42,8 @@ protected:
     void showButton(layoutid_t id, bool enabled);
     void tintButton(layoutid_t id, Color3B colour);
 
+    void createLookLordButton(mxid id);
+
 protected:
     flags32                 flags;
     s32                     currentPage;
@@ -48,4 +52,5 @@ protected:
     int                     current_tab;
     PageView*               pageView;
     Vector<uithinkpage*>    pages;
+    uisinglelord*           select;
 };

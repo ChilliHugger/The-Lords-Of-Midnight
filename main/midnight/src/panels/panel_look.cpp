@@ -310,11 +310,25 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
         }else if ( c.lastcommand == CMD_SEEK ) {
             mr->showPage(MODE_THINK_SEEK,c.lastcommandid);
         }else if ( c.lastcommand == CMD_APPROACH ) {
-            characterId = c.lastcommandid;
-            TME_SelectChar(characterId);
-            mr->showPage(MODE_THINK);
+            mr->afterApproach();
+            Enable();
+            return;
         }
-        delayedSave();
+        
+        mr->stories->save();
+        
+        Enable();
+        setObject(characterId);
+            
+    #if defined(_DDR_)
+        if (location_object_to_take!=ID_NONE) {
+            mr->showPage ( MODE_THINK );
+        } else
+    #endif
+        if ( (mr->panels->currentmode == this->currentmode)
+            && !recruitable_characters.empty() ) {
+            mr->showPage ( MODE_THINK_APPROACH, recruitable_characters.front() );
+        }
     }
     
     // get the current location
@@ -369,19 +383,6 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
 
 void panel_look::delayedSave()
 {
-    mr->stories->save();
-    Enable();
-    setObject(characterId);
-        
-#if defined(_DDR_)
-    if (location_object_to_take!=ID_NONE) {
-        mr->showPage ( MODE_THINK );
-    } else
-#endif
-    if ( (mr->panels->currentmode == this->currentmode)
-        && !recruitable_characters.empty() ) {
-        mr->showPage ( MODE_THINK_APPROACH, recruitable_characters.front() );
-    }
 }
 
 //void panel_look::OnActionComplete( uiaction* sender, s32 value )
@@ -1256,8 +1257,9 @@ void panel_look::OnNotification( Ref* sender )
             
         case ID_APPROACH:
         {
-            if ( mr->approach() )
+            if ( mr->approach() ) {
                 return;
+            }
         }
             
 #if defined(_LOM_)

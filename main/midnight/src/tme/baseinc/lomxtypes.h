@@ -275,6 +275,7 @@ using namespace chilli::types;
             CMD_TAKEOBJECT,
             CMD_DROPOBJECT,
             CMD_WAIT,
+            CMD_APPROACHED,
         };
 
         enum mxcommanding_t {

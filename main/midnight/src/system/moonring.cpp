@@ -20,6 +20,7 @@
 #include "progressmonitor.h"
 #include "configmanager.h"
 #include "shadermanager.h"
+#include "../frontend/language.h"
 #include <string>
 
 #if defined(_USE_VERSION_CHECK_)
@@ -346,23 +347,36 @@ bool moonring::night()
 bool moonring::approach()
 {
     character& c = TME_CurrentCharacter();
-    
-    mxid currentCharacter = TME_CurrentCharacter().id;
-    
-    // if the recruit is successful then
-    // make the new character the current character
-    
-    if ( Character_Approach(c) ) {
-        if ( currentCharacter != TME_CurrentCharacter().id ) {
-        }
-    }else{
-        TME_RefreshCurrentCharacter();
+    mxid newId = c.id;
+
+    if (Character_Approach(c)) {
+        return afterApproach();
     }
     
     stories->save();
+    TME_RefreshCurrentCharacter();
     showPage ( MODE_THINK );
+    return true;
+}
 
+bool moonring::afterApproach()
+{
+    stories->save();
     
+    character& c = TME_CurrentCharacter();
+
+    switch (settings->approach_mode) {
+        case CF_APPROACH_SWAP:
+            TME_SelectChar(c.lastcommandid);
+            showPage ( MODE_THINK_APPROACH );
+            break;
+
+        case CF_APPROACH_STAY:
+            TME_RefreshCurrentCharacter();
+            showPage ( MODE_THINK_APPROACH );
+            break;
+    }
+        
     return true;
 }
 

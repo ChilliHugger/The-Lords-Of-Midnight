@@ -120,6 +120,9 @@ public:
     // Pages
     void showPage( panelmode_t mode, mxid object = IDT_NONE );
 
+    //
+    bool afterApproach();
+
     bool checkGameOverConditions ( void );
     
     // Version
