@@ -211,7 +211,7 @@ namespace tme {
 
             // can't hide or seek at night
             if( mx->Difficulty() > DF_EASY  && IsNight())
-                info->flags.Reset(lif_hide); // = false ;
+                info->flags.Reset(lif_hide|lif_seek); // = false ;
 
             // TODO Stop hiding when just entered into battle
             //if ( IsInBattle() )
@@ -1237,19 +1237,25 @@ namespace tme {
         mxthing_t    newobject;
         mxobject*    oinfo;
 
+            u32 timeCost = 0;
             bool removeObject = true;
-            bool mikeseek=FALSE;
+            bool mikeseek = false;
+
+            if ( mx->Difficulty() == DF_MEDIUM ) {
+                timeCost = sv_time_scale / 2; // half hr
+            }
+            else if ( mx->Difficulty() == DF_HARD ) {
+                timeCost = sv_time_scale ; // 1 hr
+            }
+
             SetLastCommand ( CMD_SEEK, IDT_NONE );
-            CommandTakesTime(TRUE);
+            
+            CommandTakesTime(true);
 
             mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
             
 #if defined(_DDR_)
             newobject = mx->gamemap->getLocationObject(this, Location());
-            //if ( newobject == OB_NONE && location.x == 24 && location.y == 58 ) {
-            //    mikeseek=TRUE;
-            //    newobject=OB_GUIDANCE;
-            //}
 #endif
 #if defined(_LOM_)
             newobject = (mxthing_t)mapsqr.object ;
@@ -1263,6 +1269,7 @@ namespace tme {
             oinfo = mx->ObjectById ( newobject );
 
             if ( oinfo == nullptr ) {
+                time = BSub(time, timeCost, 0);
                 mx->SetLastActionMsg(mx->text->CookedSystemString(SS_SEEK_NOTHING, this));
                 return oinfo;
             }
@@ -1290,15 +1297,18 @@ namespace tme {
                     break;
 
                 case OB_SHELTER:
+                    timeCost = timeCost * 2;
                     IncreaseEnergy( (s32)sv_object_energy_shelter );
                     break;
 
 #if defined(_DDR_)
                 case OB_CLAWS:
+                    timeCost = 0;
                     time = sv_time_night;
                     reset_msg=true;
                     break;
                 case OB_FLAMES:
+                    timeCost = 0;
                     time = sv_time_dawn;
                     reset_msg=true;
                     break;
@@ -1318,14 +1328,13 @@ namespace tme {
                     energy=sv_object_energy_watersoflife;
                     reset_msg=true;
                     break;
-                
 #endif
                     
                 case OB_GUIDANCE:
+                    timeCost = timeCost * 2;
                     mx->scenario->GiveGuidance(this, (mikeseek?1:0) );
                     break;
 
-                    
                 case OB_SHADOWSOFDEATH:
                     energy = (u32)sv_object_energy_shadowsofdeath;
                     warriors.energy = (u32)sv_object_energy_shadowsofdeath;
@@ -1341,17 +1350,20 @@ namespace tme {
                     break;
 
                 case OB_HANDOFDARK:
+                    timeCost = 0;
                     time = sv_time_night;
                     reset_msg=true;
                     break;
 
                 case OB_CUPOFDREAMS:
+                    timeCost = 0;
                     time = sv_time_dawn;
                     reset_msg=true;
                     break;
 
                 case OB_ICECROWN:
                     if ( IsAllowedIcecrown() ) {
+                        timeCost = timeCost * 4;
                         Cmd_PickupObject();
                     }else{
                         newobject = OB_NONE ;
@@ -1361,6 +1373,7 @@ namespace tme {
 
                 case OB_MOONRING:
                     if ( IsAllowedMoonring() ) {
+                        timeCost = timeCost * 4;
                         Cmd_PickupObject();
                     }else{
                         newobject = OB_NONE ;
@@ -1401,8 +1414,6 @@ namespace tme {
 
             }
 
-            
-            
 #if defined(_LOM_)
             if ( oinfo && oinfo->MapRemove() && removeObject ) {
                 mapsqr.RemoveObject();
@@ -1417,6 +1428,8 @@ namespace tme {
             if ( removeObject )
                 mapsqr.RemoveObject();
 #endif
+
+            time = BSub(time, timeCost, 0);
 
             SetLastCommand ( CMD_SEEK, MAKE_ID(IDT_OBJECT,newobject) );
 
