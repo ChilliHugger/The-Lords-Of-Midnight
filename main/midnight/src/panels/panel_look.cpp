@@ -821,16 +821,23 @@ bool panel_look::moveForward()
         
         if ( Character_IsNight(c) ) {
             if ( !showHelpWindow(HELP_PRESS_NIGHT))
-                return TRUE;
+                return true;
         }
         
         if ( c.following != IDT_NONE )
             if (!showHelpWindow(HELP_GROUPED))
-                return TRUE;
+                return true;
+        
+#if defined(_DDR_)
+        if(!recruitable_characters.empty() ) {
+            mr->showPage ( MODE_THINK_APPROACH, recruitable_characters.front() );
+            return true;
+        }
+#endif
         
         if ( location_infront_armies.foes_armies )
-            if (!showHelpWindow(HELP_BATTLE, TRUE))
-                return TRUE;
+            if (!showHelpWindow(HELP_BATTLE, true))
+                return true;
         
         // something is in our way that we must fight
         mxid objectid = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);

@@ -1368,8 +1368,6 @@ void ddr_character::Displace()
 
 mxcharacter* ddr_character::Cmd_Approach ( mxcharacter* character )
 {
-mxcharacter*    def_character=nullptr ;
-
     if ( !mx->scenario->IsFeature(SF_APPROACH_DDR) ) {
         return mxcharacter::Cmd_Approach( character );
     }
@@ -1386,27 +1384,22 @@ mxcharacter*    def_character=nullptr ;
     // get location info
     std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
 
-    if ( info->objRecruit.Count() )
-        def_character = (mxcharacter*)info->objRecruit[0] ;
-
     // get the default character
     if ( character == nullptr ) {
-        character = def_character;
-        if ( character == nullptr )
-            return nullptr ;
-
+        character = static_cast<mxcharacter*>(info->objRecruit.First());
+        RETURN_IF_NULL(character) nullptr;
     }
 
-    mxcharacter* will_perform_recruit = nullptr;
-    if ( CheckRecruitChar( character ) )
-        will_perform_recruit=this;
+    auto will_perform_recruit = CheckRecruitChar( character )
+        ? static_cast<mxcharacter*>(this)
+        : nullptr;
     
     // if we can't recruit, can any of my followers?
-    if ( will_perform_recruit == NULL && HasFollowers() ) {
+    if ( will_perform_recruit == nullptr && HasFollowers() ) {
         entities followers;
         mx->scenario->GetCharacterFollowers(this, followers);
         for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-            mxcharacter* follower = (mxcharacter*) followers[ii];
+            auto follower = static_cast<mxcharacter*>(followers[ii]);
             if ( follower->CheckRecruitChar( character ) ) {
                 will_perform_recruit = follower ;
                 break;
@@ -1420,6 +1413,8 @@ mxcharacter*    def_character=nullptr ;
     if ( will_perform_recruit ) {
         if ( character->Recruited ( will_perform_recruit ) ) {
             SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
+            character->SetLastCommand ( CMD_APPROACHED, mxentity::SafeIdt(this) );
+            CommandTakesTime(true);
             return character;
         }
     }else{

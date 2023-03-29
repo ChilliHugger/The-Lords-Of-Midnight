@@ -119,7 +119,13 @@ void panel_think::createLookLordButton(mxid id)
     select->setUserData(data);
     select->addClickEventListener(callback);
     select->setStatusImageVisible(false);
-    uihelper::AddBottomLeft(safeArea, select, RES(10) + RES(100) * phoneScale(), RES(10)-RES(22) );
+#if defined(_DDR_)
+    s32 y = RES(10)-RES(26);
+#else
+    s32 y = RES(10)-RES(22);
+#endif
+    
+    uihelper::AddBottomLeft(safeArea, select, RES(10) + RES(100) * phoneScale(), y );
     
     if ( mr->settings->keyboard_mode == CF_KEYBOARD_CLASSIC )
         addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_old));
@@ -425,7 +431,7 @@ void panel_think::setupPages()
     if ( pages.empty()  ) {
         addPage(c.id);
     }
-        
+    
 }
 
 void panel_think::gotoPage( u32 page )
