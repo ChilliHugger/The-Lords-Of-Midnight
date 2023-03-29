@@ -520,6 +520,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             DEFAULT_IMPLEMENTATION(mxcommand);
 
+            s32 SuccessTime() const ;
+
         public:
             s32                 successtime;
             s32                 failuretime;
@@ -1002,6 +1004,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
 
             void SetLastCommand ( command_t cmd, mxid id );
             void CommandTakesTime ( bool success );
+            s32 CommandSuccessTime( command_t cmd );
 
             // Commands
             virtual MXRESULT Cmd_LookLeft ( void );
@@ -1039,7 +1042,8 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             virtual bool CanFollow( const mxcharacter* c ) const ;
             virtual bool CheckFightObject ( mxobject* object ) const;
             virtual bool CheckRecruitChar ( mxcharacter* pChar ) const ;
-            virtual bool Recruited ( mxcharacter* character );
+            virtual bool Recruited ( mxcharacter* recruiter );
+            virtual void SetRecruitmentTime( mxcharacter* recruiter );
             virtual void LostFight ( void );
             virtual void Displace ( void );
             virtual void DecreaseEnergy ( s32 amount );

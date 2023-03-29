@@ -56,6 +56,11 @@ namespace tme {
         return mxinfo::FillExportData ( data );
     }
 
+    s32 mxcommand::SuccessTime() const
+    {
+        return successtime;
+    }
+
 
 }
 // namespace tme

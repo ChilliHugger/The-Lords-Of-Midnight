@@ -80,7 +80,7 @@ namespace tme {
         virtual ~ddr_character();
         
         virtual bool CheckRecruitChar ( mxcharacter* character )  const ;
-        virtual bool Recruited ( mxcharacter* character );
+        virtual bool Recruited ( mxcharacter* recruiter );
         virtual void Serialize ( archive& ar );
         virtual MXRESULT FillExportData ( info_t* data );
 
@@ -105,7 +105,8 @@ namespace tme {
         virtual void LostFight();
         virtual void Displace();
         virtual mxlocinfo* GetLocInfo();
-    
+        virtual MXRESULT EnterBattle ();
+        
         virtual void CheckKilledFoe ( void );
         virtual void AICheckRecruitSoldiers ( void );
     
@@ -127,6 +128,8 @@ namespace tme {
         mxorders_t pickNewOrders (void) const;
         mxcharacter* AI_Approach ( mxcharacter* character );
 
+    protected:
+        bool RecruitMorkin ( mxcharacter* recruiter );
 
     public:
 
