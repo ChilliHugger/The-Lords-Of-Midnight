@@ -99,7 +99,8 @@ public:
     bool approach();
     bool seek();
     bool fight();
-    bool hideunhide();
+    bool unhide();
+    bool hide();
     bool think();
     bool recruitMen();
     bool postMen();

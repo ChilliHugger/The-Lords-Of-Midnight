@@ -192,6 +192,10 @@ namespace tme {
             info->flags.Set(lif_hide); // = TRUE ;
             if ( IsHidden()  ) {
                 info->flags.Reset(lif_enterbattle); // = FALSE ;
+                info->flags.Set(lif_unhide);
+
+                if( mx->Difficulty() > DF_EASY && IsNight())
+                    info->flags.Reset(lif_unhide);
                 return info;
             }
 
@@ -204,6 +208,10 @@ namespace tme {
             // are below a certain number? - maybe warriors only
             if ( !IsAllowedHide() || HasArmy() || IsFollowing() || HasFollowers() )
                 info->flags.Reset(lif_hide); // = FALSE ;
+
+            // can't hide or seek at night
+            if( mx->Difficulty() > DF_EASY  && IsNight())
+                info->flags.Reset(lif_hide); // = false ;
 
             // TODO Stop hiding when just entered into battle
             //if ( IsInBattle() )
@@ -1015,7 +1023,16 @@ namespace tme {
                 return MX_FAILED;
 
             flags.Set ( cf_hidden );
-            CommandTakesTime(TRUE);
+            
+            if ( mx->Difficulty() == DF_MEDIUM ) {
+                time = BSub(time, sv_time_scale, 0);
+            }
+            else if ( mx->Difficulty() == DF_HARD ) {
+                time = sv_time_night;
+            }
+            
+            CommandTakesTime(true);
+            
             return MX_OK ;
         }
 
@@ -1025,8 +1042,17 @@ namespace tme {
 
             if ( !IsHidden() )
                 return MX_FAILED;
+                
+            // should add an extra check here that unhiding is allowed
+                
             flags.Reset ( cf_hidden );
-            CommandTakesTime(TRUE);
+            
+            if ( mx->Difficulty() > DF_EASY ) {
+                time = BSub(time, sv_time_scale, 0);
+            }
+            
+            CommandTakesTime(true);
+            
             return MX_OK ;
         }
 

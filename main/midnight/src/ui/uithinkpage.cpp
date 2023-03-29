@@ -431,6 +431,9 @@ void uithinkpage::setupUIElements()
     displayCharacterTerrain(c);
     displayObject(IDT_NONE);
     
+    if ( mode == MODE_THINK_PERSON && Character_IsHidden(c) )
+        mode = MODE_THINK ;
+    
     switch ( mode ) {
         case MODE_THINK_ARMY:
             checkArmy();
@@ -462,7 +465,7 @@ void uithinkpage::setupUIElements()
 #if defined(_LOM_)
             if ( Character_IsHidden(c) ) {
                 text = TME_GetSystemString(c,SS_HIDDEN);
-                unhide = true;
+                unhide = flags&lif_unhide;
             }else{
                 text = checkFightAvailable();
             }

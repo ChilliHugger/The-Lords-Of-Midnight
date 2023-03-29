@@ -190,6 +190,7 @@ void Character_LookLeft ( const character& c );
 void Character_LookRight ( const character& c );
 bool Character_Approach ( const character& c );
 bool Character_Hide ( const character& c );
+bool Character_UnHide ( const character& c );
 bool Character_HasBattleInfo ( const character& c );
 bool Character_Move ( const character& c );
 bool Character_Attack ( const character& c );
