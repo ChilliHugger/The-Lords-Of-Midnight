@@ -258,6 +258,7 @@ void uicommandwindow::updateElements()
     if ( Character_IsHidden(c) ) {
         showItem(ID_UNHIDE, true);
         showItem(ID_HIDE, false);
+        ENABLE_IF_LOC_FLAG(ID_UNHIDE, lif_unhide);
     } else {
         showItem(ID_UNHIDE, false);
         showItem(ID_HIDE, true);

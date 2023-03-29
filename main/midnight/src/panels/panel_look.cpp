@@ -797,9 +797,9 @@ bool panel_look::moveForward()
     }
     
     // mr->checkUnhide?
-    if ( Character_IsHidden(c) ) {
+    if ( location_flags&lif_unhide && Character_IsHidden(c) ) {
         if ( mr->settings->autounhide ) {
-            if ( Character_Hide(c) ) {
+            if ( Character_UnHide(c) ) {
             }
         }
     }
@@ -1277,9 +1277,16 @@ void panel_look::OnNotification( Ref* sender )
         }
             
         case ID_HIDE:
+        {
+            if ( mr->hide()) {
+                return;
+            }
+            break;
+        }
+        
         case ID_UNHIDE:
         {
-            if ( mr->hideunhide()) {
+            if ( mr->unhide()) {
                 return;
             }
             break;

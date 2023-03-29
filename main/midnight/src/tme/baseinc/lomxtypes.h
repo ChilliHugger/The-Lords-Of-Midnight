@@ -789,6 +789,7 @@ namespace tme {
             lif_take            = MXBIT(12),    // can we take
             lif_use             = MXBIT(13),    // can we use
             lif_blocked         = MXBIT(14),    // way forward is blocked
+            lif_unhide          = MXBIT(15),    // hidden and can unhide
         };
 
         enum LOCATIONFLAGS { // 28 bits

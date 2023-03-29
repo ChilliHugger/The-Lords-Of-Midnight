@@ -852,19 +852,22 @@ bool Character_PostMen ( const character& c )
 
 bool Character_Hide ( const character& c )
 {
-    MXRESULT res;
-    
     args[0] = c.id;
-    if ( Character_IsHidden(c) )
-        res = mxi->Command("UNHIDE",args,1);
-    else
-        res = mxi->Command("HIDE",args,1);
-    
-    if ( MXSUCCESS(res) ) {
+    if ( MXSUCCESS(mxi->Command("HIDE",args,1))) {
         TME_RefreshCurrentCharacter();
         return TRUE;
     }
-    return FALSE;
+    return false;
+}
+
+bool Character_UnHide ( const character& c )
+{
+    args[0] = c.id;
+    if ( MXSUCCESS(mxi->Command("UNHIDE",args,1)) ) {
+        TME_RefreshCurrentCharacter();
+        return true;
+    }
+    return false;
 }
 
 mxid Character_Fight ( const character& c )

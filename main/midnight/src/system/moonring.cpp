@@ -389,10 +389,21 @@ bool moonring::seek()
     return true;
 }
 
-bool moonring::hideunhide()
+bool moonring::hide()
 {
     character& c = TME_CurrentCharacter();
     if ( Character_Hide(c) ) {
+        stories->save();
+        showPage(MODE_THINK);
+        return true;
+    }
+    return false;
+}
+
+bool moonring::unhide()
+{
+    character& c = TME_CurrentCharacter();
+    if ( Character_UnHide(c) ) {
         stories->save();
         showPage(MODE_THINK);
         return true;

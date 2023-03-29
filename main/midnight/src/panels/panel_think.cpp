@@ -492,7 +492,7 @@ void panel_think::OnNotification( Ref* sender )
 #if defined(_LOM_)
         case ID_UNHIDE:
         {
-            mr->hideunhide();
+            mr->unhide();
         }
             
         case ID_FIGHT:
