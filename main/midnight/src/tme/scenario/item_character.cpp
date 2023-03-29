@@ -205,8 +205,12 @@ namespace tme {
             if ( !IsAllowedHide() || HasArmy() || IsFollowing() || HasFollowers() )
                 info->flags.Reset(lif_hide); // = FALSE ;
 
+            // can't hide or seek at night
+            if( mx->Difficulty() > DF_EASY  && IsNight())
+                info->flags.Reset(lif_hide|lif_seek); // = false ;
+
             // TODO Stop hiding when just entered into battle
-            //if ( IsInBattle() ) 
+            //if ( IsInBattle() )
             //    info->flags.Reset(lif_hide); ;
 
 #if !defined(_DDR_)
@@ -227,8 +231,12 @@ namespace tme {
             }
 
             // can we recruit ?
-            if ( info->objRecruit.Count() )
+            if ( info->objRecruit.Count() ) {
                 info->flags.Set(lif_recruitchar); // = TRUE ;
+            
+                if( mx->Difficulty() > DF_EASY  && IsNight())
+                    info->flags.Reset(lif_recruitchar); // = false ;
+            }
             
             // can we recruitmen or guardmen ?
             // Recruit:
@@ -443,6 +451,15 @@ namespace tme {
             lastcommand = cmd;
             lastcommandid = id;
         }
+        
+        s32 mxcharacter::CommandSuccessTime(command_t cmd)
+        {
+            auto command = mx->CommandById( cmd );
+            if ( command == nullptr )
+                return 0; // invalid command
+
+            return command->SuccessTime();
+        }
 
         void mxcharacter::CommandTakesTime ( bool success )
         {
@@ -451,10 +468,10 @@ namespace tme {
                 return;
             
             mxcommand* command = mx->CommandById( GET_ID(lastcommand) );
-            if ( command == NULL )
+            if ( command == nullptr )
                 return; // invalid command
 
-            int timetaken = success ? command->successtime : command->failuretime;
+            int timetaken = success ? command->SuccessTime() : command->failuretime;
 
             time = (mxtime_t) BSub(time,timetaken,0);
         }    
@@ -858,7 +875,6 @@ namespace tme {
             if ( character->Recruited ( this ) ) {
                 SetLastCommand ( CMD_APPROACH, mxentity::SafeIdt(character) );
                 character->SetLastCommand ( CMD_APPROACHED, mxentity::SafeIdt(this) );
-                CommandTakesTime(true);
                 return character ;
             }
 
@@ -866,89 +882,48 @@ namespace tme {
             
             return nullptr ;
         }
-
-#if defined(_DDR_)
-        bool mxcharacter::Recruited ( mxcharacter* c )
-        {
-            if ( !c->IsAIControlled() ) {
-                // set loyalty?
-                flags.Set ( cf_recruited );
-                flags.Reset(cf_ai);
-            }else{
-                flags.Reset(cf_recruited);
-                flags.Set(cf_ai);
-            }
-
-            // 1. set time of day to recruiting character
-            if ( mx->scenario->IsFeature(SF_RECRUIT_TIME) )
-                time = c->Time() ;
-
-            // 2. our liege becomes the recruiting character
-            if ( c == this ) {
-                MXTRACE("Recruited: Error Setting Liege to self! %s", Longname().c_str());
-            }
-            liege = c; //->Liege() ;
             
-            // 3. our loyalty race becomes recruiting character loyalty race
-            loyalty = c->NormalisedLoyalty() ;
-            
-            // 4. get the my foe's loyalty, if they are loyal to the recruiting char's loyalty
-            // then we need the recruiting characters foe
-            // 
-            if ( foe->NormalisedLoyalty() == loyalty ) {
-                foe = c->Foe() ;
-            }
-
-            return TRUE ;
-        }
-            
-        MXRESULT mxcharacter::EnterBattle ( void )
-        {
-            Flags().Set(cf_preparesbattle); // force the battle flag early!
-            
-            time = sv_time_night;
-            
-            if ( HasFollowers() ) {
-                // we need to do a merge
-                
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
-                    follower->EnterBattle();
-                }
-                
-            }
-            
-            return MX_OK;
-        }
-            
-#endif
-            
-#if defined(_LOM_)
-        bool mxcharacter::Recruited ( mxcharacter* c )
+        bool mxcharacter::Recruited ( mxcharacter* recruiter )
         {
             // set loyalty?
             flags.Set ( cf_recruited );
-            
+        
             // 1. set time of day to recruiting character
-            if ( mx->scenario->IsFeature(SF_RECRUIT_TIME) )
-                time = c->Time() ;
+            SetRecruitmentTime(recruiter);
             
             // 2. our liege becomes the recruiting character
-            liege = c->Liege() ;
+            liege = recruiter->Liege() ;
             // 3. our loyalty race becomes recruiting character loyalty race
-            loyalty = c->NormalisedLoyalty() ;
+            loyalty = recruiter->NormalisedLoyalty() ;
             // 4. get the my foe's loyalty, if they are loyal to the recruiting char's loyalty
             // then we need the recruiting characters foe
-            // 
+            //
             mxcharacter* foe = Foe();
             if ( foe->NormalisedLoyalty() == loyalty ) {
-                foe = c->Foe() ;
+                foe = recruiter->Foe() ;
             }
             
-            return TRUE ;
+            CommandTakesTime(true);
+
+            return true ;
+        }
+            
+        void mxcharacter::SetRecruitmentTime( mxcharacter* recruiter )
+        {
+            s32 TimeCost = 1 * sv_time_scale; // 1 hr
+        
+            if ( mx->scenario->IsFeature(SF_RECRUIT_TIME) )
+                time = recruiter->Time() ;
+
+            if ( mx->Difficulty() == DF_EASY )
+                time = sv_time_dawn ;
+            else if ( mx->Difficulty() == DF_MEDIUM ) {
+                recruiter->time = (mxtime_t) BSub(recruiter->time,TimeCost,0);
+                time = recruiter->Time() ;
+            } else if ( mx->Difficulty() == DF_HARD ) {
+                time = sv_time_night ;
+                recruiter->time = time;
+            }
         }
             
         MXRESULT mxcharacter::EnterBattle ( void )
@@ -957,7 +932,6 @@ namespace tme {
             
             return MX_OK;
         }
-#endif
 
         MXRESULT mxcharacter::Cmd_Attack ( void )
         {
