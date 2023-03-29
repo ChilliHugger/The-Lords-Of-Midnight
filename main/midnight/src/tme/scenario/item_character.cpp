@@ -205,10 +205,6 @@ namespace tme {
             if ( !IsAllowedHide() || HasArmy() || IsFollowing() || HasFollowers() )
                 info->flags.Reset(lif_hide); // = FALSE ;
 
-            // can't hide or seek at night
-            if( mx->Difficulty() > DF_EASY  && IsNight())
-                info->flags.Reset(lif_hide|lif_seek); // = false ;
-
             // TODO Stop hiding when just entered into battle
             //if ( IsInBattle() )
             //    info->flags.Reset(lif_hide); ;

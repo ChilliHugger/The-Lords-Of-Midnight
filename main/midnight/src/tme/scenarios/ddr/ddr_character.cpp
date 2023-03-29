@@ -719,7 +719,7 @@ namespace tme {
         return character;
     }
     
-      bool ddr_character::CheckRecruitChar ( mxcharacter* character )  const
+    bool ddr_character::CheckRecruitChar ( mxcharacter* character )  const
     {
         if ( character == this )
             return false ;
@@ -785,27 +785,82 @@ namespace tme {
 
     }
 
-    bool ddr_character::Recruited ( mxcharacter* character )
+    bool ddr_character::Recruited ( mxcharacter* recruiter )
     {
         // morkin in DDR is special
         if ( IsSymbol("CH_MORKIN") ) {
+            return RecruitMorkin(recruiter);
+        }
+      
+        if ( !recruiter->IsAIControlled() ) {
             // set loyalty?
             flags.Set ( cf_recruited );
-            flags.Reset( cf_ai );
-            // 1. set time of day to recruiting character
-            time = character->Time() ;
-            // 2. our liege becomes the recruiting character
-            liege = character->Liege() ;
-            // 3. our loyalty race becomes recruiting character loyalty race
-            loyalty = character->NormalisedLoyalty() ;
-            // 4. our foe becomes recruiting character's foe
-            foe = character->Foe();
-            // 5. traits
-            traits.Reset(ct_evil|ct_weak|ct_reticent|ct_greedy|ct_fawning|ct_coward|ct_slow|ct_treacherous);
-            traits.Set(ct_good|ct_strong|ct_forceful|ct_generous|ct_stubborn|ct_brave|ct_swift|ct_loyal);
-            return TRUE;
+            flags.Reset(cf_ai);
+        }else{
+            flags.Reset(cf_recruited);
+            flags.Set(cf_ai);
         }
-        return tme::mxcharacter::Recruited(character);
+
+        // 1. set time of day to recruiting character
+        SetRecruitmentTime(recruiter);
+
+        // 2. our liege becomes the recruiting character
+        if ( recruiter == this ) {
+            MXTRACE("Recruited: Error Setting Liege to self! %s", Longname().c_str());
+        }
+        liege = recruiter; //->Liege() ;
+        
+        // 3. our loyalty race becomes recruiting character loyalty race
+        loyalty = recruiter->NormalisedLoyalty() ;
+        
+        // 4. get the my foe's loyalty, if they are loyal to the recruiting char's loyalty
+        // then we need the recruiting characters foe
+        //
+        if ( foe->NormalisedLoyalty() == loyalty ) {
+            foe = recruiter->Foe() ;
+        }
+
+        return true ;
+    }
+        
+    MXRESULT ddr_character::EnterBattle ()
+    {
+        Flags().Set(cf_preparesbattle); // force the battle flag early!
+        
+        time = sv_time_night;
+        
+        if ( HasFollowers() ) {
+            // we need to do a merge
+            
+            entities followers;
+            mx->scenario->GetCharacterFollowers(this, followers);
+            
+            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
+                mxcharacter* follower = (mxcharacter*) followers[ii];
+                follower->EnterBattle();
+            }
+        }
+        
+        return MX_OK;
+    }
+
+    bool ddr_character::RecruitMorkin ( mxcharacter* recruiter )
+    {
+        // set loyalty?
+        flags.Set ( cf_recruited );
+        flags.Reset( cf_ai );
+        // 1. set time of day to recruiting character
+        SetRecruitmentTime(recruiter);
+        // 2. our liege becomes the recruiting character
+        liege = recruiter->Liege() ;
+        // 3. our loyalty race becomes recruiting character loyalty race
+        loyalty = recruiter->NormalisedLoyalty() ;
+        // 4. our foe becomes recruiting character's foe
+        foe = recruiter->Foe();
+        // 5. traits
+        traits.Reset(ct_evil|ct_weak|ct_reticent|ct_greedy|ct_fawning|ct_coward|ct_slow|ct_treacherous);
+        traits.Set(ct_good|ct_strong|ct_forceful|ct_generous|ct_stubborn|ct_brave|ct_swift|ct_loyal);
+        return true;
     }
     
     void ddr_character::CheckKilledFoe ( void )
@@ -1383,6 +1438,11 @@ mxcharacter* ddr_character::Cmd_Approach ( mxcharacter* character )
     
     // get location info
     std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+
+    // are we allowed to approach ?
+    if ( !info->flags.Is(lif_recruitchar) ) {
+        return nullptr ;
+    }
 
     // get the default character
     if ( character == nullptr ) {
