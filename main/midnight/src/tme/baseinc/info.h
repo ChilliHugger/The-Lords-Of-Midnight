@@ -954,7 +954,8 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             flags32& Traits()    { return traits; } 
 
             GET_PROPERTY ( mxobject*, Carrying, carrying )
-
+            GET_PROPERTY ( bool, IsCarryingObject, carrying != nullptr )
+            
             GET_PROPERTY ( mxwait_t, WaitMode, wait )
             GET_PROPERTY ( mxtime_t, Time, IsResting()?sv_time_night:time )
             GET_PROPERTY ( mxdir_t, Looking, looking )

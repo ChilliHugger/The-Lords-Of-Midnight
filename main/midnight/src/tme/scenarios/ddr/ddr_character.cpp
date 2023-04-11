@@ -100,10 +100,10 @@ namespace tme {
     
         // check if we can give object
         if ( !IsInBattle() ) {
-            if ( Carrying() != NULL && Carrying()->CanDrop() && traits.Is(ct_generous) ) {
+            if ( IsCarryingObject() && Carrying()->CanDrop() && traits.Is(ct_generous) ) {
                 for (u32 ii=0; ii<info->objCharacters.Count(); ii++) {
                     mxcharacter* ch = static_cast<mxcharacter*>(info->objCharacters[ii]);
-                    if ( ch!=this && ch->Carrying()==NULL) {
+                    if ( ch!=this && !ch->IsCarryingObject()) {
                         info->someone_to_give_to = ch ;
                         info->flags.Set(lif_give);
                         break;
@@ -114,7 +114,7 @@ namespace tme {
         
         // can we use object
         if ( !HasUsedObject() ) {
-            if ( Carrying() != NULL && Carrying() == desired_object )
+            if ( IsCarryingDesiredObject() )
                 info->flags.Set(lif_use);
         }
         
@@ -676,18 +676,18 @@ namespace tme {
     MXRESULT ddr_character::Cmd_Give ( mxcharacter* character )
     {
         // no character
-        if ( character == NULL )
+        if ( character == nullptr )
             return MX_FAILED ;
         
         // character is already carrying something
-        if ( character->Carrying() )
+        if ( character->IsCarryingObject() )
             return MX_FAILED ;
         
         character->carrying = Carrying();
         
-        carrying = NULL ;
+        carrying = nullptr ;
         
-        CommandTakesTime(TRUE);
+        CommandTakesTime(true);
         
         return MX_OK ;
     }
@@ -871,21 +871,73 @@ namespace tme {
     
     //Object 0-4 special objects
     //All others 255 to Tired and Despondency
-    //0 - OB_CROWN_VARENAND  - Bring all loyal lords to this location ( in/out tunnel )
-    //1 - OB_CROWN_CARUDRIUM
+    //0 - OB_CROWN_VARENAND  - Bring all luxor loyal lords to this location ( in/out tunnel )
+    //1 - OB_CROWN_CARUDRIUM - Bring all luxor loyal lords to this location ( in/out tunnel )
     //2 - OB_SPELL_THIGRORN  - Spell of swiftness - Bring morkin to current location
     //3 - OB_RUNES_FINORN  - Runes of Protection - 255 to Tired and Despondency of all loyal characters
-    //4 - OB_CROWN_IMIRIEL
+    //4 - OB_CROWN_IMIRIEL - Bring all luxor loyal lords to this location ( in/out tunnel )
     
+    
+    void ddr_character::UseCrownOfPersuassion()
+    {
+        for ( int ii=0; ii<sv_characters; ii++ ) {
+            auto c = mx->CharacterById(ii+1);
+            if ( c->IsAlive() && !c->IsAIControlled() ) {
+                c->Location(Location());
+                c->Flags().Reset( cf_tunnel );
+                if ( IsInTunnel() )
+                    c->Flags().Set( cf_tunnel );
+            }
+        }
+        // luxor the moonprince places the crown of carudrium on his head,
+        // the power contained within brings all lords loyal to him.
+        mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_1, this) );
+    }
+    
+    void ddr_character::UseSpellOfSwiftness()
+    {
+        // take tarithel to morkin
+        // set time of day
+        //
+        auto morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
+        
+        Location(morkin->Location());
+        Flags().Reset( cf_tunnel );
+        
+        if ( morkin->IsInTunnel() )
+            Flags().Set( cf_tunnel );
+        
+        // Tarithel the fey casts the Spell of Thigor, Morkin is transported to be with her.
+        mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_2, this) );
+    }
+    
+    void ddr_character::UseRunesOfProtection()
+    {
+        for ( int ii=0; ii<sv_characters; ii++ ) {
+            auto c = mx->CharacterById(ii+1);
+            if ( c->IsAlive() && !c->IsAIControlled() ) {
+                c->despondency=MAX_DESPONDENCY;
+                c->energy=MAX_ENERGY;
+            }
+        }
+        // rorthron throws the runes of finorn, all lords loyal to the moon prince are refreshed and envigorated
+        mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_3, this) );
+    }
+    
+    void ddr_character::UseAllOtherObjects()
+    {
+        despondency=MAX_DESPONDENCY;
+        energy=MAX_ENERGY;
+        // rorthron uses the %s, he now feels refreshed and envigorated.
+        mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
+    }
+
     MXRESULT ddr_character::Cmd_Use ( void )
     {
-        if ( Carrying() == NULL )
-            return MX_FAILED ;
-        
         if ( Flags().Is(cf_usedobject) )
             return MX_FAILED;
         
-        if ( Carrying() != desired_object )
+        if ( !IsCarryingDesiredObject() )
             return MX_FAILED;
         
         //
@@ -894,70 +946,30 @@ namespace tme {
         // check power!
         // check type
         switch (Carrying()->Id()) {
-            case OB_CROWN_VARENAND: // 0
-                // luxor
-            case OB_CROWN_CARUDRIUM: // 1
-                // morkin
-                
-                for ( int ii=0; ii<sv_characters; ii++ ) {
-                    mxcharacter* c = mx->CharacterById(ii+1);
-                    if ( c->IsAlive() && !c->IsAIControlled() ) {
-                        c->Location(Location());
-                        c->Flags().Reset( cf_tunnel );
-                        if ( IsInTunnel() )
-                            c->Flags().Set( cf_tunnel );
-                    }
-                }
-                // luxor the moonprince places the crown of carudrium on his head, the power contained within brings all lords loyal to him.
-                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_1, this) );
-
+            
+            case OB_CROWN_VARENAND:     // 0 - Luxor
+            case OB_CROWN_CARUDRIUM:    // 1 - Morkin
+            case OB_CROWN_IMIRIEL:      // 4 - Shareth
+                // shareth - Note: Only shareth can use Imiriel, but AI lords cannot use their objects
+                // so this is a little redundant for that object.
+                UseCrownOfPersuassion();
                 break;
                 
-            //case OB_CROWN_IMIRIEL: //4
-            //    // err shareth
-            //    break;
-                
-            case OB_SPELL_THIGROR: // 2
-            {
-                // take tarithel to morkin
-                // set time of day
-                //
-                mxcharacter* morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-                Location(morkin->Location());
-                Flags().Reset( cf_tunnel );
-                if ( morkin->IsInTunnel() )
-                    Flags().Set( cf_tunnel );
-                
-                // Tarithel the fey casts the Spell of Thigor, Morkin is transported to be with her.
-            }
-                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_2, this) );
+            case OB_SPELL_THIGRORN:     // 2 - Tarithel
+                UseSpellOfSwiftness();
                 break;
                 
-            case OB_RUNES_FINORN: //3
-                // rorthron
-                
-                for ( int ii=0; ii<sv_characters; ii++ ) {
-                    mxcharacter* c = mx->CharacterById(ii+1);
-                    if ( c->IsAlive() && !c->IsAIControlled() ) {
-                        c->despondency=MAX_DESPONDENCY;
-                        c->energy=MAX_ENERGY;
-                    }
-                }
-                // rorthron throws the runes of finorn, all lords loyal to the moon prince are refreshed and envigorated
-                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_3, this) );
+            case OB_RUNES_FINORN:       // 3 - rorthron
+                UseRunesOfProtection();
                 break;
                 
             default:
-                despondency=MAX_DESPONDENCY;
-                energy=MAX_ENERGY;
-                // rorthron uses the %s, he now feels refreshed and envigorated.
-                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_4, this) );
+                UseAllOtherObjects();
                 break;
         }
         
-        
         Flags().Set(cf_usedobject);
-        CommandTakesTime(TRUE);
+        CommandTakesTime(true);
         return MX_OK ;
     }
     
@@ -1222,7 +1234,7 @@ mxdir_t calcDirection ( mxgridref loc1, mxgridref loc2 )
       else become foe and follow new foe
     
 [FOLLOW_OBJECT]
-    Goto object location
+    Goto object location if not carried
     
 [HOME]
     Goto home location
@@ -1252,7 +1264,8 @@ void ddr_character::moveCharacterSomewhere ( void )
     
     for (;;) {
         
-        Cmd_PickupObject();
+        if( !IsCarryingObject() )
+            Cmd_PickupObject();
         
         mxdir_t direction = calcDirection(Location(),targetLocation);
     
