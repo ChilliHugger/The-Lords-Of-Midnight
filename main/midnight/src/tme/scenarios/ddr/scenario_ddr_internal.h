@@ -109,6 +109,8 @@ namespace tme {
         
         virtual void CheckKilledFoe ( void );
         virtual void AICheckRecruitSoldiers ( void );
+        
+        GET_PROPERTY ( bool, IsCarryingDesiredObject, IsCarryingObject() && carrying == desired_object )
     
         void Target ( const mxitem* newtarget );
         void whatIsCharacterDoing ( void );
@@ -130,6 +132,12 @@ namespace tme {
 
     protected:
         bool RecruitMorkin ( mxcharacter* recruiter );
+
+        virtual void UseCrownOfPersuassion();
+        virtual void UseSpellOfSwiftness();
+        virtual void UseRunesOfProtection();
+        virtual void UseAllOtherObjects();
+
 
     public:
 

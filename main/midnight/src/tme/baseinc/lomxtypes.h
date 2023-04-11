@@ -157,7 +157,7 @@ using namespace chilli::types;
             //
             OB_CROWN_VARENAND=22,
             OB_CROWN_CARUDRIUM,
-            OB_SPELL_THIGROR,
+            OB_SPELL_THIGRORN,
             OB_RUNES_FINORN,
             OB_CROWN_IMIRIEL
 #endif
