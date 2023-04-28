@@ -87,7 +87,7 @@ namespace tme {
         virtual void DecreaseEnergy ( s32 amount );
         virtual void IncreaseEnergy ( s32 amount );
         
-        virtual MXRESULT Cmd_WalkForward ( bool perform_seek );
+        virtual MXRESULT Cmd_WalkForward ( bool perform_seek, bool perform_approach );
         virtual mxobject* Cmd_Fight( void );
         virtual mxcharacter* Cmd_Approach ( mxcharacter* character );
         
