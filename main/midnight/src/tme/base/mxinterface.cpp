@@ -215,8 +215,9 @@ namespace tme {
                 out->terrain = (mxterrain_t)m.terrain;
                 
                 out->object = IDT_NONE ;
+                
+#if defined(_TUNNELS_)
                 out->object_tunnel = IDT_NONE ;
-#if defined(_DDR_)
                 if ( m.IsTunnelPassageway() )
                     out->object_tunnel = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
                 else
@@ -233,15 +234,17 @@ namespace tme {
                 if ( mx->discoverymap != NULL ) {
                     out->discovery_flags.Set( mx->discoverymap->GetAt(loc) );
                 }
-
-#if defined(_DDR_)
+                
+#if defined(_TUNNELS_)
                 if ( m.HasTunnelExit() )
                     out->flags.Set(lf_tunnel_exit);
                 if ( m.HasTunnelEntrance() )
                     out->flags.Set(lf_tunnel_entrance);
                 if ( m.IsTunnelPassageway() )
                     out->flags.Set(lf_tunnel_passageway);
+#endif
                     
+#if defined(_DDR_)
                 if ( m.HasObject() ) {
                     auto scenario = static_cast<ddr_x*>(mx->scenario);
                     auto obj = static_cast<ddr_object*>(scenario->FindObjectAtLocation(loc));

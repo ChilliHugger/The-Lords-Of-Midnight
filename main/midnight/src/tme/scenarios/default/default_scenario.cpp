@@ -287,9 +287,13 @@ namespace tme {
                 if(target->Type() == IDT_CHARACTER) {
                     auto character = dynamic_cast<mxcharacter*>(target);
                     if (character != nullptr) {
+                    
+#if defined(_TUNNELS_)
                         if(character->IsInTunnel()) {
                             return false;
                         }
+#endif
+
                         isAI = character->IsAIControlled();
                         race = character->Race();
                         if(mx->isRuleEnabled(RF_SOLE_MOUNTAINEER) && !character->HasArmy() ) {
@@ -1600,7 +1604,11 @@ namespace tme {
                 mx->gamemap->SetLocationArmy(mx->RegimentById(ii+1)->Location(),0);
         }
 
-        void mxscenario::LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel )
+        void mxscenario::LookInDirection( mxgridref loc, mxdir_t dir
+#if defined(_TUNNELS_)
+            , bool isintunnel
+#endif
+        )
         {
         
         panloc_t*    pview;
@@ -1609,7 +1617,7 @@ namespace tme {
 
             loc_t looked_at = loc + dir ;
             
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
             //
             if ( isintunnel ) {
                 mx->gamemap->SetTunnelVisible(loc, true);
@@ -1621,9 +1629,6 @@ namespace tme {
             mx->gamemap->SetLocationVisible(loc, true);
             
             mx->gamemap->SetLocationLookedAt(looked_at, true);
-            
-            
-            
             
             count = mx->gamemap->GetPanoramic ( loc, dir, &pview );
 
@@ -1640,8 +1645,6 @@ namespace tme {
                     mx->gamemap->SetLocationVisible(pview[ii].location, true);
                 }
             }
-            
-        
 
         }
 
@@ -1810,12 +1813,15 @@ namespace tme {
 
         u32 mxscenario::FindCharactersAtLocation ( mxgridref loc, collections::entities& characters, flags32_t flags )
         {
-        int                    ii;
-        mxcharacter*    moonringcarrier=NULL;
-        mxcharacter*    c=NULL;
-        mxobject*        moonring=NULL;
-        int                    count;
+        int             ii;
+        mxcharacter*    moonringcarrier=nullptr;
+        mxcharacter*    c=nullptr;
+        mxobject*       moonring=nullptr;
+        int             count;
+        
+#if defined(_TUNNELS_)
         bool                in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
+#endif
 
             // TODO character needs a visible flag
             mxcharacter* ch_doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
@@ -1841,10 +1847,11 @@ namespace tme {
                     continue;
 
                 
-                
+#if defined(_TUNNELS_)
                 // check for tunnel
                 if ( c->IsInTunnel() != in_tunnel )
                     continue;
+#endif
 
                 if ( !(flags & slf_all) ) {
                     if ( !c->IsRecruited() )

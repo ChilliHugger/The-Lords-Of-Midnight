@@ -156,7 +156,10 @@ bool panel_map_detailed::init()
     addShortcutKey(ID_FILTER_CURRENT_LOC,   KEYCODE(F1));
     addShortcutKey(ID_FILTER_CRITTERS,      KEYCODE(F2));
     addShortcutKey(ID_FILTER_LORDS,         KEYCODE(F3));
+    
+#if defined(_TUNNELS_)
     addShortcutKey(ID_FILTER_TUNNELS,       KEYCODE(F4));
+#endif
     
     addShortcutKey(ID_LOOK,                 K_LOOK);
     addShortcutKey(ID_LOOK,                 K_ESC);

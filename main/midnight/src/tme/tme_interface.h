@@ -168,14 +168,17 @@ inline bool Character_HasWonBattle(const character& c)        { return c.flags.I
 
 #if defined(_DDR_)
 inline bool Character_HasUsedObject(const character& c)        { return c.flags.Is(cf_usedobject); }
-inline bool Character_IsInTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
-inline bool Character_InTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
 inline bool Character_IsPreparingForBattle(const character& c)        { return c.flags.Is(cf_preparesbattle); }
-bool Character_EnterTunnel ( const character& c );
-//bool Character_ExitTunnel ( const character& c );
 bool Character_Use ( const character& c );
 bool Character_Give ( const character& c, mxid to );
 bool Character_Take ( const character& c );
+#endif
+
+#if defined(_TUNNELS_)
+inline bool Character_IsInTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
+inline bool Character_InTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
+bool Character_EnterTunnel ( const character& c );
+//bool Character_ExitTunnel ( const character& c );
 #endif
 
 inline bool Character_IsFollowing(const character& c)        { return c.following!=IDT_NONE; }

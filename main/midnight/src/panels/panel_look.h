@@ -53,10 +53,12 @@ typedef struct {
     std::string     face;
     std::string     name;
     std::string     locationtext;
-
+    
+#if defined(_TUNNELS_)
     bool            tunnel;
     bool            lookingdowntunnel;
     bool            lookingouttunnel;
+#endif
 
 } locationinfo_t ;
 

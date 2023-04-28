@@ -222,8 +222,10 @@ namespace tme {
         {
             RETURN_IF_NULL(c);
 
+#if defined(_TUNNELS_)
             // tunnel check
             bool isInTunnel = c->IsInTunnel() ;
+#endif
 
             objRecruit.Create(MAX_CHARACTERS_INLOCATION);
             
@@ -244,9 +246,10 @@ namespace tme {
                 // character location
                 CONTINUE_IF ( character->Location() != location );
                 
+#if defined(_TUNNELS_)
                 // tunnel status must be the same
                 CONTINUE_IF ( character->IsInTunnel() != isInTunnel );
-
+#endif
                 // TODO check global flag AlwaysAttemptRecruit
                 // and maybe set the character up for recruit anyway
 #if defined(_LOM_)
@@ -269,10 +272,10 @@ namespace tme {
         {
         mxcharacter*    moonringcarrier=nullptr;
         mxobject*       moonring=nullptr;
-        bool            bInTunnel = false ;
-            
-            // tunnel check
-            bInTunnel = (sel_flags & slf_tunnel);
+        
+#if defined(_TUNNELS_)
+        bool            bInTunnel = (sel_flags & slf_tunnel);
+#endif
 
             nRecruited=0;
 
@@ -302,9 +305,10 @@ namespace tme {
                 // must be at this location
                 CONTINUE_IF ( c->Location() != location );
 
+#if defined(_TUNNELS_)
                 // check tunnel
                 CONTINUE_IF ( bInTunnel != c->IsInTunnel() );
-
+#endif
                 // potential moonring carrier or someone is carrying the moonring
                 //if ( moonring!=NULL ) {
                 //    if ( moonringcarrier==NULL && !c->IsAllowedMoonring() )
@@ -328,9 +332,10 @@ namespace tme {
                 // must be at this location
                 CONTINUE_IF ( c->Location() != location );
                 
+#if defined(_TUNNELS_)
                 // check tunnel
                 CONTINUE_IF ( bInTunnel != c->IsInTunnel() ) ;
-
+#endif
                 //
                 objCharacters += c ;
             }
@@ -356,13 +361,14 @@ namespace tme {
 
             FindCharactersHere();
 
+#if defined(_TUNNELS_)
             // no strongholds when under the ground
             bInTunnel = (sel_flags & slf_tunnel) ;
-
             if ( !bInTunnel ) {
                 mx->CollectRegiments ( location, objRegiments );
                 mx->CollectStrongholds ( location, objStrongholds );
             }
+#endif
 
             foe.Type ( IDT_ARMYTOTAL );
             foe.Location ( Location() );

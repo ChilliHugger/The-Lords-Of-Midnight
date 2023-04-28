@@ -104,9 +104,12 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     addShortcutKey(ID_GIVE,         K_GIVE);
     addShortcutKey(ID_TAKE,         K_TAKE);
     addShortcutKey(ID_USE,          K_USE);
-    addShortcutKey(ID_ENTER_TUNNEL, K_TUNNEL);
     addShortcutKey(ID_REST,         K_REST);
 #endif
+#if defined(_TUNNELS_)
+    addShortcutKey(ID_ENTER_TUNNEL, K_TUNNEL);
+#endif
+
     addShortcutKey(ID_APPROACH,   K_APPROACH);
     addShortcutKey(ID_RECRUITMEN, K_RECRUIT);
     addShortcutKey(ID_POSTMEN,    K_POST);

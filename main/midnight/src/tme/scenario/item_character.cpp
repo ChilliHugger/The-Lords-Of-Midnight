@@ -177,9 +177,14 @@ namespace tme {
             // create a new info class
             // for our current location and the direction
             // we are looking
-            info = new mxlocinfo ( Location(), Looking(), this, (IsInTunnel() ? slf_tunnel : slf_none)  );
-
-            //info->owner = (mxcharacter*)this ;
+            
+#if defined(_TUNNELS_)
+            flags32_t flags = (IsInTunnel() ? slf_tunnel : slf_none);
+#else
+            flags32_t flags = slf_none;
+#endif
+            
+            info = new mxlocinfo ( Location(), Looking(), this, flags );
 
             if ( IsDead() )
                 return info;
@@ -428,6 +433,15 @@ namespace tme {
             }
         }
 
+        void mxcharacter::LookInDirection()
+        {
+            mx->scenario->LookInDirection ( Location(), Looking()
+            #if defined(_TUNNELS_)
+                , IsInTunnel()
+            #endif
+            );
+        }
+
         void mxcharacter::Displace ( void )
         {
         mxgridref    loc;
@@ -442,7 +456,7 @@ namespace tme {
                     location = loc ;
                     if ( IsRecruited() ) {
                         EnterLocation ( loc );
-                        mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+                        LookInDirection();
                     }
                     break;
                 }
@@ -598,7 +612,7 @@ namespace tme {
             mx->scenario->SetMapArmies();
 
             EnterLocation ( location );
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            LookInDirection();
           
             // calculate our movement values
             TimeCost = rinfo->InitialMovementValue();
@@ -701,7 +715,7 @@ namespace tme {
         { 
             //looking=(mxdir_t) ((looking-1)&7); 
             looking = PREV_DIRECTION(looking);
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            LookInDirection();
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
 #endif
@@ -713,7 +727,7 @@ namespace tme {
         { 
             //looking=(mxdir_t)((looking+1)&7); 
             looking = NEXT_DIRECTION(looking);
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            LookInDirection();
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
 #endif
@@ -724,7 +738,7 @@ namespace tme {
         MXRESULT mxcharacter::Cmd_LookDir ( mxdir_t dir )
         { 
             looking=(mxdir_t)((dir)&7); 
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            LookInDirection();
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
 #endif

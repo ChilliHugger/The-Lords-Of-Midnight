@@ -45,10 +45,12 @@ enum tagid_t {
     TAG_UNDO_DONE           = 2,
     TAG_MENU_COLLAPSE       _UNUSED_ = 3,
     TAG_DELAYED_SAVE        _UNUSED_ = 4,
+#if defined(_TUNNELS_)
     TAG_ENTER_TUNNEL        _UNUSED_ = 5,
     TAG_ENTER_TUNNEL_DONE   _UNUSED_ = 6,
     TAG_EXIT_TUNNEL         _UNUSED_ = 7,
     TAG_EXIT_TUNNEL_DONE    _UNUSED_ = 8,
+#endif
 };
 
 //#define SHIELD_WIDTH    RES(192)
@@ -348,7 +350,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
         return;
     }
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( Character_IsInTunnel(TME_CurrentCharacter()) ) {
         return;
     }
@@ -405,7 +407,7 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
     info->person = GetCharacterImage(c);
     info->face = GetCharacterFace(c);
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     info->tunnel = Character_IsInTunnel(c);
     info->lookingdowntunnel = false;
     info->lookingouttunnel = false;
@@ -417,7 +419,6 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
         info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
         info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
     }
-    
 #endif
 
     info->name = StringExtensions::toUpper(c.longname) ;
@@ -496,11 +497,9 @@ void panel_look::setViewForCurrentCharacter()
     options->here.y *= LANDSCAPE_DIR_STEPS;
     options->isMoving = false;
     options->isLooking = false;
-    options->isInTunnel = false;
-    options->isLookingDownTunnel = false;
-    options->isLookingOutTunnel = false;
 
-#if defined(_DDR_)
+
+#if defined(_TUNNELS_)
     options->isInTunnel = current_info->tunnel;
     options->isLookingDownTunnel = current_info->lookingdowntunnel;
     options->isLookingOutTunnel = current_info->lookingouttunnel;
@@ -567,13 +566,19 @@ void panel_look::UpdateLandscape()
     options->generator->horizontalOffset = options->lookAmount;
     options->generator->landscapeScreenWidth = getContentSize().width ;
 
-    if ( current_info->tunnel ) {
+#if defined(_TUNNELS_)
+    bool in_tunnel = current_info->tunnel ;
+    if ( in_tunnel ) {
         UIDEBUG("UpdateLandscape: Create Tunnel View");
         current_view = TunnelView::create(options);
     }else{
         UIDEBUG("UpdateLandscape: Create Landscape View");
         current_view = LandscapeView::create(options);
     }
+#else
+    bool in_tunnel = false ;
+    current_view = LandscapeView::create(options);
+#endif
 
     current_view->setAnchorPoint(Vec2::ZERO);
     current_view->setPosition(Vec2::ZERO);
@@ -582,13 +587,14 @@ void panel_look::UpdateLandscape()
     UIDEBUG("UpdateLandscape: Add Current View");
     addChild(current_view);
     
+    
     // LoM's header is affectively part of the background
     // so update the colour to the same as the sky
 #if defined(_LOM_)
     layHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
 #endif
 #if defined(_DDR_)
-    if(!current_info->tunnel){
+    if(!in_tunnel){
         imgHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainFill)));
     }
 #endif
@@ -672,7 +678,6 @@ void panel_look::addTouchListener()
     
 }
 
-
 bool panel_look::startLookLeft()
 {
     Disable();
@@ -680,7 +685,13 @@ bool panel_look::startLookLeft()
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
-    if(mr->settings->flipscreen || options->isInTunnel)
+    
+    
+    if(mr->settings->flipscreen
+#if defined(_TUNNELS_)
+        || options->isInTunnel
+#endif
+    )
     {
         stopRotating(LM_ROTATE_LEFT);
         return true;
@@ -727,7 +738,11 @@ bool panel_look::startLookRight()
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
     
-    if(mr->settings->flipscreen || options->isInTunnel)
+    if(mr->settings->flipscreen
+#if defined(_TUNNELS_)
+        || options->isInTunnel
+#endif
+    )
     {
         stopRotating(LM_ROTATE_RIGHT);
         return true;
@@ -854,8 +869,6 @@ bool panel_look::moveForward()
     return false;
 }
 
-
-
 bool panel_look::startMoving()
 {
     Disable();
@@ -874,7 +887,11 @@ bool panel_look::startMoving()
     
     if ( Character_Move(c) ) {
         
-        if ( mr->settings->flipscreen || options->isInTunnel ) {
+        if ( mr->settings->flipscreen
+#if defined(_TUNNELS_)
+            || options->isInTunnel
+#endif
+        ) {
             stopMoving();
             return true;
         }
@@ -1655,9 +1672,11 @@ bool panel_look::allowDragDownMove()
 
 bool panel_look::allowDragLook()
 {
+#if defined(_TUNNELS_)
     if(current_info->tunnel) {
         return false;
     }
+#endif
 
     int value = mr->settings->nav_mode ;
     if ( value != CF_NAV_PRESS && value != CF_NAV_SWIPE_MOVE_PRESS_LOOK && !mr->settings->flipscreen )

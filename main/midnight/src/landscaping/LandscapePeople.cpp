@@ -107,12 +107,13 @@ void LandscapePeople::Initialise()
         character c;
         TME_GetCharacter ( c, objects[ii] );
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         if ( options->isLookingDownTunnel && !Character_IsInTunnel(c) )
             continue;
+#endif
         if ( Character_IsDead(c) ||  Character_IsHidden(c) )
             continue;
-#endif
+
         person = GetCharacterImage(c);
         auto image = add(person,DEFAULT_PRINT_CHARACTER);
         

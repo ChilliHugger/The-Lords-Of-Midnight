@@ -2,6 +2,7 @@
 #define _INFO_H_INCLUDED_
 
 #include "../../library/inc/library.h"
+#include "features.h"
 
 #define MAX_CHARACTERS_FOLLOWING        32
 
@@ -282,22 +283,23 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         MAP_FLAG_PROPERTY( IsMisty,         lf_mist)
         MAP_FLAG_PROPERTY( IsStronghold,    lf_stronghold)
         MAP_FLAG_PROPERTY( IsRouteNode,     lf_routenode)
-#if defined(_DDR_)
+
+#if defined(_TUNNELS_)
         MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
         MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
+        bool HasTunnelExit() const ;
+        bool HasTunnelEntrance() const ;
+        bool IsTunnelPassageway() const ;
+#endif
+
+#if defined(_DDR_)
         MAP_FLAG_PROPERTY( HasObject,       lf_object)
 #endif
         MAP_FLAG_PROPERTY( HasArmy,         lf_army)
         MAP_FLAG_PROPERTY( HasCharacter,    lf_character)
         bool IsInteresting() const ;
         void Serialize ( chilli::lib::archive& ar ) ;
-        
-#if defined(_DDR_)
-        bool HasTunnelExit() const ;
-        bool HasTunnelEntrance() const ;
-        bool IsTunnelPassageway() const ;
-#endif
-        
+                
     public:
         u64 terrain             : 7 ; // 128 ( 16x8 )
         u64 variant             : 3 ; // 8 ( 8 )
@@ -347,19 +349,22 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         void SetLocationLookedAt( mxgridref l, bool visible );
         void SetLocationVisited( mxgridref l, bool visible );
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         bool HasTunnelEntrance( mxgridref l );
         bool HasTunnelExit( mxgridref l );
-
         void SetTunnelVisible( mxgridref l, bool visible );
         bool IsTunnelVisible( mxgridref loc );
         bool IsTunnel( mxgridref loc );
         bool IsTunnelPassageway( mxgridref l );
+#endif
+        
+#if defined(_DDR_)
         bool HasObject( mxgridref l );
         void SetObject( mxgridref l, bool value );
         void MoveMists ( void );
         void PutThingsOnMap ( void );
 #endif
+
         mxthing_t getLocationObject( const mxcharacter* c, mxgridref loc );
 
         void ResetVisibleRange();
@@ -388,6 +393,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
     public:
         size                    m_size;
         mxloc*                  m_data;
+        u32                     m_version;
+        flags32                 m_flags;
         loc_t                   m_top_visible;
         loc_t                   m_bottom_visible;
         // ptr to the current discovery map
@@ -423,7 +430,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         void CheckVisibleArea( mxgridref l );
         
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         bool IsTunnelVisible( mxgridref l );
         void SetTunnelVisible( mxgridref l, bool visible );
 #endif
@@ -900,7 +907,9 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
 
             GET_PROPERTY ( mxcharacter*, Loyalty, loyalty )
 
+#if defined(_TUNNELS_)
             FLAG_PROPERTY ( IsInTunnel, rf_tunnel )
+#endif
 
             PROPERTY( u32, Delay, delay );
             PROPERTY( u32, Total, total );
@@ -992,11 +1001,14 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             
             FLAG_PROPERTY ( IsInBattle, cf_inbattle )
             FLAG_PROPERTY ( HasWonBattle, cf_wonbattle )
-            FLAG_PROPERTY ( IsInTunnel, cf_tunnel )
             FLAG_PROPERTY ( HasUsedObject, cf_usedobject )
             FLAG_PROPERTY ( IsResting, cf_resting )
             FLAG_PROPERTY ( HasFollowers, cf_followers )
-            
+
+#if defined(_TUNNELS_)
+            FLAG_PROPERTY ( IsInTunnel, cf_tunnel )
+#endif
+            void LookInDirection();
             
             bool HasArmy() const { return ((riders.total+warriors.total) > 0); }
             bool IsDead() const { return !flags.Is(cf_alive); }

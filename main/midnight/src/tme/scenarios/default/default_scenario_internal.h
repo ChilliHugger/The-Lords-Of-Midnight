@@ -56,7 +56,11 @@ namespace tme {
             virtual void SetMapArmies ( void );
             
             virtual void RemoveMapArmies ( void );
+#if defined(_TUNNELS_)
             virtual void LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel );
+#else
+            virtual void LookInDirection( mxgridref loc, mxdir_t dir );
+#endif
             virtual void SetCharsLooking( void );
             virtual bool DropObject ( mxgridref loc, mxobject* object );
             virtual bool InCharactersMemory ( mxitem* item ) ;

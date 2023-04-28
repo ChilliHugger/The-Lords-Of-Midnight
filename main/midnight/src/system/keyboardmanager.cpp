@@ -42,13 +42,15 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(3) // K_GIVE
         , KEYCODE(2) // K_TAKE
         , KEYCODE(1) // K_REST
-        , KEYCODE(8) // K_TUNNEL
         , KEYCODE(9) // K_USE
 #endif
         , KEYCODE(4) // K_APPROACH,
         , KEYCODE(5) // K_RECRUIT
         , KEYCODE(6) // K_POST
         , KEYCODE(7) // K_ATTACK
+#if defined(_TUNNELS_)
+        , KEYCODE(8) // K_TUNNEL
+#endif
         , KEYCODE(G) // K_YES
         , KEYCODE(J) // K_NO
         , KEYCODE(L) // K_LEAVE
@@ -80,13 +82,15 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(3) // K_GIVE
         , KEYCODE(2) // K_TAKE
         , KEYCODE(1) // K_REST
-        , KEYCODE(8) // K_TUNNEL
         , KEYCODE(9) // K_USE
 #endif
         , KEYCODE(P) // K_APPROACH,
         , KEYCODE(R) // K_RECRUIT
         , KEYCODE(G) // K_POST
         , KEYCODE(A) // K_ATTACK
+#if defined(_TUNNELS_)
+        , KEYCODE(8) // K_TUNNEL
+#endif
         , KEYCODE(Y) // K_YES
         , KEYCODE(N) // K_NO
         , KEYCODE(L) // K_LEAVE

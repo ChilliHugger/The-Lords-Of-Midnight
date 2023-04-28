@@ -28,8 +28,10 @@ static mxloc blank;
 mxmap::mxmap()
 {
     m_size = size(0,0);
-    m_data = NULL ;
-    m_discoverymap = NULL ;
+    m_version = 0;
+    m_flags.Clear();
+    m_data = nullptr ;
+    m_discoverymap = nullptr ;
 }
 
 mxmap::~mxmap()
@@ -40,9 +42,10 @@ mxmap::~mxmap()
 
 mxmap::mxmap( u32 x, u32 y)
 {
-    m_data = NULL ;
-    m_discoverymap = NULL ;
-
+    m_data = nullptr ;
+    m_discoverymap = nullptr ;
+    m_flags.Clear();
+    m_version = MAPVERSION;
     Create ( size(x,y) );
 }
 
@@ -63,16 +66,14 @@ bool mxmap::Create ( size dimensions )
     m_size = dimensions ;
     SAFEFREE ( m_data );
     int bytes = m_size.cx*m_size.cy*sizeof(mxloc);
-    if ( (m_data = (mxloc*)malloc( bytes ) ) == NULL ) {
-        return FALSE;
+    if ( (m_data = (mxloc*)malloc( bytes ) ) == nullptr ) {
+        return false;
     }
     memset ( m_data, 0x00, bytes );
 
     ResetVisibleRange();
     
-//    blank.terrain=TN_CITADEL;
-    
-    return TRUE ;
+    return true ;
 }
 
 void mxmap::ClearVisible()
@@ -131,15 +132,15 @@ MXTRACE( "ByteSwapping ON");
     }else{
         if ( magicno != TME_MAGIC_NO ) {
             MXTRACE("Invalid MAP MagicNo");
-            return FALSE;
+            return false;
         }
     }
 
     ar >> versionno;
 MXTRACE( "Version=%d", (int)versionno);
-    if ( versionno != MAPVERSION ) {
+    if ( versionno > MAPVERSION ) {
         MXTRACE("Invalid MAP VersionNO");
-        return FALSE;
+        return false;
     }
     
     ar >> header;
@@ -147,7 +148,7 @@ MXTRACE( "Header='%s'", header.c_str());
 
     if (c_stricmp(header.c_str(),MAPHEADER) != 0 ) {
         MXTRACE("Invalid MAP Header");
-        return FALSE;
+        return false;
     }
 
     Serialize(ar);
@@ -177,8 +178,14 @@ MXTRACE( "mxmap::Serialize");
     
     if ( ar.IsStoring() ) {
         ar << m_size ;
+        ar << m_flags ;
     }else{
         ar >> m_size ;
+        m_flags.Clear();
+        if (m_version >= 3 ) {
+            ar >> m_flags;
+        }
+   
         Create ( m_size );
     }
 
@@ -186,13 +193,9 @@ MXTRACE( "MapSize:: Width = %d Height=%d)", (int)m_size.cx, (int)m_size.cy);
     
     for ( int ii=0; ii<m_size.cx*m_size.cy; ii++ ) {
         m_data[ii].Serialize(ar);
-    
         
-//#ifdef _DDR_
-//        if ( m_data[ii].HasTunnel() )
-//            m_data[ii].flags |= lf_tunnel_seen ;
-//#endif
-    
+        // update tunnel entrance / exit
+        
     }
     
     if ( ar.IsLoading() )
@@ -252,18 +255,18 @@ bool mxmap::IsLocationVisible( mxgridref l )
     return mapsqr.IsVisible()  ;
 }
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
 bool mxmap::HasTunnelEntrance( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnelEntrance() ;
 }
+
 bool mxmap::HasTunnelExit( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnelExit() ;
 }
-    
     
 bool mxmap::IsTunnelVisible( mxgridref l )
 {
@@ -295,7 +298,10 @@ void mxmap::SetTunnelVisible( mxgridref l, bool visible )
     
     IF_NOT_NULL(m_discoverymap)->SetTunnelVisible(l, visible);
 }
+#endif
     
+    
+#if defined(_DDR_)
 bool mxmap::HasObject( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
@@ -310,9 +316,6 @@ void mxmap::SetObject( mxgridref l, bool value )
     } else
         mapsqr.flags&=~lf_object;
 }
-
-    
-    
 #endif
     
 /*
@@ -948,7 +951,7 @@ mxterrain* tinfo;
     return tinfo->IsInteresting();
 }
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
 bool mxloc::HasTunnelExit() const 
 {
     if ( HasTunnel() && (terrain >=TN_GATE && terrain <=TN_PALACE) )

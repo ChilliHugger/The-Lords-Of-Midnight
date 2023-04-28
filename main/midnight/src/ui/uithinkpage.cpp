@@ -55,7 +55,9 @@ USING_NS_CC;
 uithinkpage::uithinkpage() :
     approach(false),
     disband(false),
+#if defined(_TUNNELS_)
     enterTunnel(false),
+#endif
     fight(false),
     leave(false),
     postMen(false),
@@ -234,7 +236,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     }
 #endif
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     // Enter Tunnel
     auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
     enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
@@ -254,7 +256,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     addShortcutKey(unhide, ID_UNHIDE,       K_UNHIDE);
     addShortcutKey(fight, ID_FIGHT,        K_FIGHT);
 #endif
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
 #endif
     addShortcutKey(approach, ID_APPROACH,   K_APPROACH);

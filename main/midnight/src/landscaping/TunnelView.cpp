@@ -6,9 +6,12 @@
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
 
-#include "TunnelView.h"
-#include "LandscapeView.h"
 
+#include "TunnelView.h"
+
+#if defined(_TUNNELS_)
+
+#include "LandscapeView.h"
 #include "LandscapeGenerator.h"
 #include "LandscapeNode.h"
 
@@ -114,3 +117,5 @@ void TunnelView::createSteps()
     steps->setPosition(getContentSize().width / 2, RES(60));
     clipping->addChild(steps);
 }
+
+#endif
