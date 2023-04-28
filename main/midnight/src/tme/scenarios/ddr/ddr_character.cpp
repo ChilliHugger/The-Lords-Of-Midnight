@@ -418,7 +418,7 @@ namespace tme {
     }
 
 
-    MXRESULT ddr_character::Cmd_WalkForward ( bool perform_seek )
+    MXRESULT ddr_character::Cmd_WalkForward ( bool perform_seek, bool perform_approach )
     {
     int             TimeCost;
     mxrace*         rinfo;
@@ -1298,7 +1298,7 @@ void ddr_character::moveCharacterSomewhere ( void )
             break;
         }
         
-        Cmd_WalkForward(false);
+        Cmd_WalkForward(false, false);
         MXTRACE("  Moved to [%d,%d]", location.x, location.y);
 
         if ( Time()==(mxtime_t)sv_time_night ) {
@@ -1481,7 +1481,7 @@ mxcharacter* ddr_character::Cmd_Approach ( mxcharacter* character )
     }
     
     // 1. move all characters into new location
-    Cmd_WalkForward (false);
+    Cmd_WalkForward (false, false);
     
     if ( will_perform_recruit ) {
         if ( character->Recruited ( will_perform_recruit ) ) {
