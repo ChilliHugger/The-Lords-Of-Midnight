@@ -2,9 +2,9 @@
 <data version="1.0">
     <struct type="Settings">
         <key>fileFormatVersion</key>
-        <int>5</int>
+        <int>6</int>
         <key>texturePackerVersion</key>
-        <string>6.0.1</string>
+        <string>7.0.2</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -60,22 +60,12 @@
         <uint>2</uint>
         <key>basisUniversalQualityLevel</key>
         <uint>2</uint>
-        <key>atfCompressData</key>
-        <false/>
-        <key>mipMapMinSize</key>
-        <uint>32768</uint>
         <key>etc1QualityLevel</key>
         <uint>40</uint>
         <key>etc2QualityLevel</key>
         <uint>40</uint>
         <key>dxtCompressionMode</key>
         <enum type="SettingsBase::DxtCompressionMode">DXT_PERCEPTUAL</enum>
-        <key>jxrColorFormat</key>
-        <enum type="SettingsBase::JpegXrColorMode">JXR_YUV444</enum>
-        <key>jxrTrimFlexBits</key>
-        <uint>0</uint>
-        <key>jxrCompressionLevel</key>
-        <uint>0</uint>
         <key>ditherType</key>
         <enum type="SettingsBase::DitherType">NearestNeighbour</enum>
         <key>backgroundColor</key>
@@ -99,8 +89,6 @@
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
-        <string></string>
-        <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
         <enum type="SettingsBase::TextureFormat">png</enum>
@@ -162,8 +150,8 @@
                 <filename></filename>
             </struct>
         </map>
-        <key>multiPack</key>
-        <true/>
+        <key>multiPackMode</key>
+        <enum type="SettingsBase::MultiPackMode">MultiPackAuto</enum>
         <key>forceIdenticalLayout</key>
         <false/>
         <key>outputFormat</key>
@@ -494,28 +482,34 @@
                 <false/>
             </struct>
         </map>
-        <key>fileList</key>
-        <array>
-            <filename>t_army0.png</filename>
-            <filename>t_cavern0.png</filename>
-            <filename>t_citadel0.png</filename>
-            <filename>t_downs0.png</filename>
-            <filename>t_forest0.png</filename>
-            <filename>t_frozenwaste0.png</filename>
-            <filename>t_henge0.png</filename>
-            <filename>t_keep0.png</filename>
-            <filename>t_lake0.png</filename>
-            <filename>t_lith0.png</filename>
-            <filename>t_mountain0.png</filename>
-            <filename>t_ruin0.png</filename>
-            <filename>t_snowhall0.png</filename>
-            <filename>t_tower0.png</filename>
-            <filename>t_village0.png</filename>
-            <filename>floor.png</filename>
-            <filename>dot.png</filename>
-            <filename>sky.png</filename>
-            <filename>t_lith1.png</filename>
-        </array>
+        <key>fileLists</key>
+        <map type="SpriteSheetMap">
+            <key>default</key>
+            <struct type="SpriteSheet">
+                <key>files</key>
+                <array>
+                    <filename>t_army0.png</filename>
+                    <filename>t_cavern0.png</filename>
+                    <filename>t_citadel0.png</filename>
+                    <filename>t_downs0.png</filename>
+                    <filename>t_forest0.png</filename>
+                    <filename>t_frozenwaste0.png</filename>
+                    <filename>t_henge0.png</filename>
+                    <filename>t_keep0.png</filename>
+                    <filename>t_lake0.png</filename>
+                    <filename>t_lith0.png</filename>
+                    <filename>t_mountain0.png</filename>
+                    <filename>t_ruin0.png</filename>
+                    <filename>t_snowhall0.png</filename>
+                    <filename>t_tower0.png</filename>
+                    <filename>t_village0.png</filename>
+                    <filename>floor.png</filename>
+                    <filename>dot.png</filename>
+                    <filename>sky.png</filename>
+                    <filename>t_lith1.png</filename>
+                </array>
+            </struct>
+        </map>
         <key>ignoreFileList</key>
         <array/>
         <key>replaceList</key>

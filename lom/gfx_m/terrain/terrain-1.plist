@@ -87,7 +87,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0ae69a0784581a3acd3541ae5a8ba704:c6f2df44db0d87736e4a700db9c3bbc6:8e90b992225262fb38ed17a113ef71b1$</string>
+            <string>$TexturePacker:SmartUpdate:4243b8c07f31fe61ea21f93ec301480d:c6f2df44db0d87736e4a700db9c3bbc6:8e90b992225262fb38ed17a113ef71b1$</string>
             <key>textureFileName</key>
             <string>terrain-1.png</string>
         </dict>
