@@ -973,7 +973,7 @@ namespace tme {
 #define DATABASEVERSION         11
 #endif
 #define MAPHEADER               "MidnightEngineMap"
-#define MAPVERSION              2
+#define MAPVERSION              3
 
 #define DISCOVERYHEADER         "MidnightEngineDiscovery"
 #define DISCOVERYVERSION        1
