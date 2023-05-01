@@ -267,7 +267,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
 {
     //UIDEBUG("OnMovementComplete(%d)", type);
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( type == LM_MOVE_FORWARD_LEAVE_TUNNEL ) {
         OnExitTunnel();
         return;
@@ -1344,6 +1344,9 @@ void panel_look::OnNotification( Ref* sender )
                 return;
             break;
         }
+#endif
+
+#if defined(_TUNNELS_)
         case ID_ENTER_TUNNEL:
         {
             if ( OnEnterTunnel() )
@@ -1418,7 +1421,7 @@ bool panel_look::OnUndo ( savemode_t mode )
 }
 
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
 
 bool panel_look::OnEnterTunnel()
 {
@@ -1450,7 +1453,7 @@ bool panel_look::OnExitTunnel()
     return true;
 }
 
-#endif // _DDR_
+#endif // _TUNNELS_
 
 
 void panel_look::OnSetupIcons()

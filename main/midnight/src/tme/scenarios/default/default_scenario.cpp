@@ -770,21 +770,23 @@ namespace tme {
             return MX_OK;
         }
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         COMMAND( OnCharEnterTunnel ) 
         {
-            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
             return character->Cmd_EnterTunnel();
         }
 
         COMMAND( OnCharExitTunnel ) 
         {
-            CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
+            CONVERT_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
             return character->Cmd_ExitTunnel();
         }
+#endif
 
+#if defined(_DDR_)
         COMMAND( OnCharGive )
         {
             CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
@@ -965,9 +967,13 @@ namespace tme {
             {"DROP",        1, OnCharDrop,            {arguments::character} },// arguments::objectinfo} },
             {"WAIT",        2, OnCharWait,            {arguments::character, variant::vnumber} }, //[mode]
             {"CONTROL",        1, OnCharControl,        {arguments::character} },
-#if defined(_DDR_)
+            
+#if defined(_TUNNELS_)
             {"ENTERTUNNEL",    1, OnCharEnterTunnel,    {arguments::character} },
             {"EXITTUNNEL",    1, OnCharExitTunnel,    {arguments::character} },
+#endif
+
+#if defined(_DDR_)
             {"GIVE",        1, OnCharGive,            {arguments::character} },
             {"TAKE",        1, OnCharTake,            {arguments::character} },
             {"USE",         1, OnCharUse,            {arguments::character, arguments::character} },
@@ -1558,8 +1564,13 @@ namespace tme {
 
             for (ii = 0; ii < sv_characters; ii++) {
                 character = mx->CharacterById(ii+1) ;
+                
+#if defined(_TUNNELS_)
+                CONTINUE_IF(character->IsInTunnel());
+#endif
+                
+                
 #if defined(_DDR_)
-                if ( !character->IsInTunnel() ) {
                 if ( character->IsAlive() && !character->IsHidden() ) {
 #endif
                     if ( character->warriors.Total()+character->riders.Total() ) {
@@ -1567,7 +1578,6 @@ namespace tme {
                     }
                     mx->gamemap->SetLocationCharacter(character->Location(),1);
 #if defined(_DDR_)
-                }
                 }
 #endif
             }

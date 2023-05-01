@@ -217,6 +217,9 @@ bool Character_Army ( mxid id, tme::scenarios::exports::army_t& out );
 #if defined(_DDR_)
 inline bool Location_IsVisible(const maplocation& l)            { return l.flags.Is(lf_seen); }
 inline bool Location_HasCharacters(const maplocation& l)        { return l.flags.Is(lf_character); }
+#endif
+
+#if defined(_TUNNELS_)
 inline bool Location_HasTunnel(const maplocation& l)        { return l.flags.Is(lf_tunnel); }
 inline bool Location_HasTunnelExit(const maplocation& l)        { return l.flags.Is(lf_tunnel_exit); }
 inline bool Location_HasTunnelEntrance(const maplocation& l)        { return l.flags.Is(lf_tunnel_entrance); }
@@ -252,8 +255,11 @@ extern mxid                 location_object;
 extern mxid                 location_stubborn_lord_attack;
 extern mxid                 location_stubborn_lord_move;
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
 extern mxid                 location_object_tunnel;
+#endif
+
+#if defined(_DDR_)
 extern mxid                 location_someone_to_give_to;
 extern mxid                 location_object_to_take;
 #endif

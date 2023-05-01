@@ -347,7 +347,7 @@ void uithinkpage::displayCharacter ( const character& c )
 
 void uithinkpage::displayCharacterTerrain(  const character& c )
 {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     imgTerrain->setVisible(false);
     if ( Character_InTunnel(c) )
         return ;
@@ -658,13 +658,14 @@ void uithinkpage::checkPlace ( void )
 {
     std::string text;
     
-#if defined(_DDR_)
-    
+
+#if defined(_TUNNELS_)
     auto c = TME_CurrentCharacter();
     TME_GetCharacterLocationInfo(c);
-    
     enterTunnel = location_flags.Is(lif_enter_tunnel);
-    
+#endif
+        
+#if defined(_DDR_)
     if ( ID_TYPE(id) ==  IDT_CHARACTER ) {
         checkNormal();
         return;

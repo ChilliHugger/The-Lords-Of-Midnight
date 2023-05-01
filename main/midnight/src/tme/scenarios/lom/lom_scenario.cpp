@@ -24,7 +24,7 @@ namespace tme {
 //    namespace scenarios {
 
     static scenarioinfo_t    lom_scenario_info = {
-        16,
+        26,
         100,
         "LOM Scenario",
         "Chris Wild",

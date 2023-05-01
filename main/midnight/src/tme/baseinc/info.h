@@ -1007,6 +1007,8 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
 
 #if defined(_TUNNELS_)
             FLAG_PROPERTY ( IsInTunnel, cf_tunnel )
+            virtual MXRESULT Cmd_EnterTunnel ( void );
+            virtual MXRESULT Cmd_ExitTunnel ( void );
 #endif
             void LookInDirection();
             

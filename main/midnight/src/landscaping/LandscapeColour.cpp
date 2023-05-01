@@ -161,7 +161,7 @@ f32 LandscapeColour::CalcCurrentMovementFade ( TINT shade )
     int index = (int)shade;
     if ( !options->isMoving )
     {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         if (options->isInTunnel)
             return FROM_ALPHA(GetTint(timeofday, TINT::Tunnel).a);
 #endif
@@ -211,7 +211,7 @@ Color4B LandscapeColour::CalcCurrentMovementTint ( TINT shade )
 
 Color3B LandscapeColour::GetPersonColour()
 {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if (options->isInTunnel)
         return Color3B(GetTint(timeofday, TINT::Tunnel));
 #endif

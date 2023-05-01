@@ -9,6 +9,8 @@
 #ifndef choose_id_h
 #define choose_id_h
 
+#include "../tme/baseinc/features.h"
+
 enum CHOOSE_INDEX {
     CHOOSE_THINK    = 0,
     
@@ -23,10 +25,13 @@ enum CHOOSE_INDEX {
     CHOOSE_GIVE     = 2,
     CHOOSE_TAKE     = 3,
     CHOOSE_USE      = 4,
-    CHOOSE_TUNNEL   = 8,
     CHOOSE_FIGHT    = 12,
 #endif
-    
+
+#if defined(_TUNNELS_)
+    CHOOSE_TUNNEL   = 8,
+#endif
+
     CHOOSE_APPROACH = 9,
     CHOOSE_BATTLE   = 5,
     CHOOSE_RECRUIT  = 6,

@@ -653,14 +653,8 @@ namespace tme {
             // characters location info
             if ( ISARG("LOCATIONINFO") ) {
             
-#if defined(_DDR_)
                 if ( argc < 16 )
                     return MX_INVALID_ARGUMENT_COUNT;
-#endif
-#if defined(_LOM_)
-                if ( argc < 16 )
-                    return MX_INVALID_ARGUMENT_COUNT;
-#endif
                 
                 std::unique_ptr<mxlocinfo> locinfo ( character->GetLocInfo() );
         
@@ -683,14 +677,17 @@ namespace tme {
 #if defined(_DDR_)
                 argv[16] = mxentity::SafeIdt(locinfo->someone_to_give_to) ;
                 argv[17] = mxentity::SafeIdt(locinfo->object_to_take) ;
+#endif
+
+#if defined(_TUNNELS_)
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else
 #endif
                 {
-                    argv[12] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[15] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[12] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                 }
                 
                 return MX_OK ;
@@ -722,7 +719,7 @@ namespace tme {
                 argv[7] = locinfo->regiments.warriors ;
                 argv[8] = locinfo->regiments.riders ;
                         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[10] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[9] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;

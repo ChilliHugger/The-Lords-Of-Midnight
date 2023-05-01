@@ -94,7 +94,7 @@ void LandscapePeople::Initialise()
     // get the characters infront of us
 #if defined(_LOM_)
     u32 recruited;
-    TME_GetCharacters ( locid, objects, recruited );
+    TME_GetCharacters ( locid, objects, recruited ); // TODO: Check tunnels
 #endif
     
 #if defined(_DDR_)
@@ -154,7 +154,7 @@ void LandscapePeople::Initialise()
     
     
     s32 objectid = GET_ID(location_object) ;
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( options->isInTunnel ) {
         objectid = options->isLookingDownTunnel
             ? GET_ID(location_object_tunnel)
@@ -207,7 +207,7 @@ cocos2d::ui::Widget* LandscapePeople::add( std::string& person, int number)
     
     int max_chars = MAX_DISPLAY_CHARACTERS ;
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( options->isLookingDownTunnel )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
 #endif

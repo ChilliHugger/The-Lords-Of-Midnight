@@ -170,7 +170,7 @@ void panel_think::enableButtons()
     showButton(ID_UNHIDE,       page->unhide);
     showButton(ID_FIGHT,        page->fight);
 #endif
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     showButton(ID_ENTER_TUNNEL, page->enterTunnel);
 #endif
     showButton(ID_APPROACH,   page->approach);
@@ -502,7 +502,7 @@ void panel_think::OnNotification( Ref* sender )
         }
 #endif
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         case ID_ENTER_TUNNEL:
         {
             mr->enterTunnel();

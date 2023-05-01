@@ -118,7 +118,6 @@ MXTRACE( "Loading Map '%s'", filename.c_str());
     archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
 u32 magicno;
-u32 versionno;
 std::string header;
 
     ar >> magicno;
@@ -136,9 +135,9 @@ MXTRACE( "ByteSwapping ON");
         }
     }
 
-    ar >> versionno;
-MXTRACE( "Version=%d", (int)versionno);
-    if ( versionno > MAPVERSION ) {
+    ar >> m_version;
+MXTRACE( "Version=%d", (int)m_version);
+    if ( m_version > MAPVERSION ) {
         MXTRACE("Invalid MAP VersionNO");
         return false;
     }
@@ -770,16 +769,12 @@ mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
 {
     mxloc& l = GetAt ( loc );
     
-#if defined(_LOM_)
-    return (mxthing_t)l.object;
-#endif
-    
 #if defined(_DDR_)
-    
     if ( !(l.flags&lf_creature) )
         return OB_NONE ;
+#endif
     
-    //
+#if defined(_TUNNELS_)
     if ( l.IsTunnelPassageway() ) {
         // location is a passageway
         if ( c->IsInTunnel() )
@@ -789,9 +784,13 @@ mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
             if ( (l.terrain != TN_ICYWASTE) && (l.terrain != TN_FROZENWASTE) )
                 return (mxthing_t)l.object ;
         }
-        
     }
 #endif
+
+#if defined(_LOM_)
+    return (mxthing_t)l.object;
+#endif
+
     return OB_NONE;
 }
 

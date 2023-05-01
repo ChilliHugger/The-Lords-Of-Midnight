@@ -135,26 +135,26 @@ mapbuilder* mapbuilder::build ( void )
     
     mapsize.cx = (info.bottom.x - loc_start.x) ;
     mapsize.cy = (info.bottom.y - loc_start.y) ;
-    
-    // we need some memory to store the map
-    SAFEFREE(mapdata);
-    SAFEFREE(terrain);
-    SAFEFREE(terrain_discovery);
-#if defined(_TUNNELS_)
-    SAFEFREE(tunnels);
-    SAFEFREE(tunnel_critters);
-#endif
-    SAFEFREE(critters);
-    
+        
     u32 size = mapsize.cx * mapsize.cy;
     
+    SAFEFREE(mapdata);
     mapdata = static_cast<maplocation*>(malloc(size*sizeof(maplocation)));
+
+    SAFEFREE(terrain);
     terrain = static_cast<u32*>(malloc(size*sizeof(u32)));
+
+    SAFEFREE(terrain_discovery);
     terrain_discovery = static_cast<u32*>(malloc(size*sizeof(u32)));
+
+    SAFEFREE(critters);
     critters = static_cast<u32*>(malloc(size*sizeof(u32)));
     
 #if defined(_TUNNELS_)
+    SAFEFREE(tunnels);
     tunnels = static_cast<u32*>(malloc(size*sizeof(u32)));
+
+    SAFEFREE(tunnel_critters);
     tunnel_critters = static_cast<u32*>(malloc(size*sizeof(u32)));
 #endif
     
@@ -331,7 +331,7 @@ if ( src->flags.Is(lf_seen) || src->discovery_flags.Is(lf_seen) || debug_map ) \
             }
             
             
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
             //
             // Check GFX type of tunnel
             //
@@ -380,26 +380,25 @@ if ( src->flags.Is(flags) || src->discovery_flags.Is(flags) || (src->flags.Is(lf
 
 mapbuilder* mapbuilder::updateLayers()
 {
-
     loc_first.x = 0 ;
     loc_first.y = 0;
     
     max_cells = mapsize.cx * mapsize.cy;
 
+    bool debug_map = isDebugMap();
+
     memset(terrain, 0, max_cells);
     memset(terrain_discovery,0,max_cells);
-#if defined(_TUNNELS_)
-    memset(tunnels, 0, max_cells);
-#endif
-    memset(critters, 0, max_cells);
-    memset(tunnel_critters, 0, max_cells);
 
-    bool debug_map = isDebugMap();
-#if defined(_TUNNELS_)
-    bool show_tunnels = checkFlags(mapflags::show_tunnels);
-#endif
+    memset(critters, 0, max_cells);
     bool show_critters = checkFlags(mapflags::show_critters);
     bool show_all_critters = checkFlags(mapflags::show_all_critters);
+    
+#if defined(_TUNNELS_)
+    memset(tunnels, 0, max_cells);
+    memset(tunnel_critters, 0, max_cells);
+    bool show_tunnels = checkFlags(mapflags::show_tunnels);
+#endif
     
     maplocation*    m = mapdata;
     terraininfo t;
@@ -408,11 +407,12 @@ mapbuilder* mapbuilder::updateLayers()
     for ( int ii=0; ii<max_cells; ii++ ) {
         terrain[ii] = 0;
         critters[ii] = 0;
+        terrain_discovery[ii]=0;
+#if defined(_TUNNELS_)
         tunnel_critters[ii] = 0;
         tunnels[ii]=0;
-        terrain_discovery[ii]=0;
+#endif
         
-    
         bool seen = m->flags.Is(lf_seen) || debug_map ;
         //bool domain = m->flags.Is(lf_domain);
         bool visited = m->flags.Is(lf_visited);
@@ -425,30 +425,24 @@ mapbuilder* mapbuilder::updateLayers()
         bool discovery_visited = m->discovery_flags.Is(lf_visited);
         //bool discovery_looked_at = m->discovery_flags.Is(lf_looked_at);
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         bool tunnelseen = m->flags.Is(lf_tunnel_looked_at) || debug_map;
         bool tunnelvisited = m->flags.Is(lf_tunnel_visited) || debug_map;
-        
         bool discovery_tunnelseen =  m->discovery_flags.Is(lf_tunnel_looked_at);
         bool discovery_tunnelvisited = m->discovery_flags.Is(lf_tunnel_visited) ;
-        
         bool passageway = m->flags.Is(lf_tunnel_passageway);
-        //bool object = m->flags.Is(lf_object);
-        //bool object_special = m->flags.Is(lf_object_special);
 #else
         bool tunnelseen = false;
         bool tunnelvisited = false ;
         bool discovery_tunnelseen = false;
         bool discovery_tunnelvisited = false ;
         bool passageway = false;
-        //bool object = false;
-        //bool object_special = false;
 #endif
         bool visible = seen || visited || discovery_seen || discovery_visited;
               
         mxthing_t thing = (mxthing_t)m->object ;
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         if ( m->object_tunnel != OB_NONE && show_tunnels  )
             thing = (mxthing_t)m->object_tunnel ;
 #endif
@@ -738,9 +732,11 @@ mapbuilder* mapbuilder::updatePlaces()
 
 void mapbuilder::clearLayers()
 {
-    critters = nullptr;
+ #if defined(_TUNNELS_)
     tunnel_critters = nullptr;
     tunnels = nullptr;
+#endif
+    critters = nullptr;
     terrain = nullptr;
     terrain_discovery = nullptr;
 }

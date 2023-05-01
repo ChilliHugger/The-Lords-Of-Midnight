@@ -111,6 +111,9 @@ public:
     bool take();
     bool give();
     bool rest();
+#endif
+
+#if defined(_TUNNELS_)
     bool enterTunnel();
 #endif
     

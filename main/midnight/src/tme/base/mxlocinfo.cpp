@@ -107,7 +107,7 @@ namespace tme {
             infront = new mxlocinfo(loc_infront,owner,sel_flags);
             
             //TN_GATE TN_TEMPLE TN_PIT TN_PALACE
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
             flags.Reset(lif_blocked);
             if ( owner && owner->IsInTunnel() ) {
                 // we can only move through tunnels when in a tunnel
@@ -118,21 +118,22 @@ namespace tme {
                 // check for exit
                 //if ( mapsqr.HasTunnelExit() )
                 //    flags.Set(lif_exit_tunnel);  ;
-            }else{
+            }
+            else
 #endif
+            {
                 // can we pass through the terrain infront?
                 if ( mx->scenario->isTerrainImpassable( (mxterrain_t)infront->mapsqr.terrain, owner ) ) {
                     flags.Reset(lif_moveforward);// = FALSE;
                     flags.Set(lif_blocked);
                 }
                 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 //
                 if ( mapsqr.HasTunnelEntrance() )
                     flags.Set(lif_enter_tunnel);  ;
-                
-            }
 #endif
+            }
 
             // the only way to move forard when there is an army infront of you
             // is to enter battle

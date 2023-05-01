@@ -10,6 +10,7 @@
 #ifndef _TME_H_INCLUDED_
 #define _TME_H_INCLUDED_
 
+#include "./baseinc/features.h"
 #include "./baseinc/mxinterface.h"
 #include "./baseinc/lomxtypes.h"
 #include "./baseinc/scenario.h"

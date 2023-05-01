@@ -49,11 +49,13 @@ enum helpid_t {
     HELP_TN_FOUNTAIN,
     HELP_TN_STONES,
     HELP_TN_ICYWASTES,
-    
     HELP_TN_MISTS,
+#endif
+
+#if defined(_TUNNELS_)
     HELP_TN_TUNNEL,
 #endif
-    
+
     HELP_SELECTING_CHARACTER,
     HELP_LOOKING_AROUND,
     HELP_MOVEMENT,

@@ -177,7 +177,9 @@ void uicommandwindow::initialiseCommands()
         
     auto rest = uihelper::CreateImageButton("i_rest", ID_REST, callback);
     addItem(rest,CHOOSE_REST);
-    
+#endif
+
+#if defined(_TUNNELS_)
     auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, callback);
     addItem(tunnel, CHOOSE_TUNNEL);
 #endif
@@ -283,6 +285,9 @@ void uicommandwindow::updateElements()
     setupUseText();
     
     ENABLE_IF_LOC_FLAG(ID_REST, lif_rest);
+#endif
+
+#if defined(_TUNNELS_)
     ENABLE_IF_LOC_FLAG(ID_ENTER_TUNNEL, lif_enter_tunnel);
 #endif
     
