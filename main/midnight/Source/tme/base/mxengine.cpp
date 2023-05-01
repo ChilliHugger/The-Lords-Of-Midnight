@@ -223,7 +223,10 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
 {
 int ii;
 int id;
-std::string filename = m_szDatabase + "/database";
+
+std::string filename = m_szDatabase + "/"
+    + std::to_string(scenario->GetInfoBlock()->Id)
+    + "/database";
 
     MX_REGISTER_SELF;
 
@@ -403,7 +406,9 @@ MXTRACE( "Update Variables");
 
 MXTRACE("Loading MAP");
 
-    filename = m_szDatabase + "/" + sv_map_file;
+    filename = m_szDatabase + "/"
+        + std::to_string(scenario->GetInfoBlock()->Id)
+        + "/" + sv_map_file;
 
 #if !defined(_OS_DESKTOP_)
     database = filename;
@@ -674,6 +679,13 @@ std::string  description;
         }
     }else{
         m_difficulty = DF_NORMAL;
+    }
+
+    /* load the game map */
+    if ( SaveGameVersion() >=16) {
+        gamemap->m_version = MAPVERSION;
+    }else{
+        gamemap->m_version = 2;
     }
 
     /* save the game map */
