@@ -211,23 +211,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">flame01.png</key>
-            <key type="filename">flame02.png</key>
-            <key type="filename">flame03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">floor.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -300,21 +283,6 @@
                 <rect>256,149,512,299</rect>
                 <key>scale9Paddings</key>
                 <rect>256,149,512,299</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">t_column.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,128,128,256</rect>
-                <key>scale9Paddings</key>
-                <rect>64,128,128,256</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -483,21 +451,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">t_steps0.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>96,192,192,384</rect>
-                <key>scale9Paddings</key>
-                <rect>96,192,192,384</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">t_tower0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -554,11 +507,6 @@
                     <filename>dot.png</filename>
                     <filename>sky.png</filename>
                     <filename>t_lith1.png</filename>
-                    <filename>flame01.png</filename>
-                    <filename>flame02.png</filename>
-                    <filename>flame03.png</filename>
-                    <filename>t_column.png</filename>
-                    <filename>t_steps0.png</filename>
                 </array>
             </struct>
         </map>
