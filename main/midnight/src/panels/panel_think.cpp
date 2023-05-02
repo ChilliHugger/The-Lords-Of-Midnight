@@ -344,7 +344,8 @@ void panel_think::setupPages()
     character   c;
     character   c1;
     c_mxid collection;
-
+    bool    tunnel = false;
+    
     TME_GetCharacter(c, id);
     
     currentPage=0;
@@ -355,33 +356,37 @@ void panel_think::setupPages()
         return;
     }
     
-    TME_GetCharacterLocationInfo ( c );
-    flags = location_flags;
+#if defined(_DDR_)
+    tunnel = Character_IsInTunnel(c);
+#endif
     
+    TME_GetCharacterLocationInfo ( c );
+  
     if ( currentmode == MODE_THINK_PERSON || currentmode == MODE_THINK_ARMY || currentmode == MODE_THINK_APPROACH ) {
         addPage(c.id);
         
-        
-        u32 temp;
-        TME_GetCharacters ( c.id,collection,temp );
-        
+        mxid locid = MAKE_LOCID( c.location.x, c.location.y );
+        TME_GetCharactersAtLocation ( locid, collection, true, tunnel );
+
         // persons here
         for ( ii=0; ii<collection.Count(); ii++ ) {
-            if ( collection[ii] != c.id ) {
-                addPage(collection[ii]);
+            CONTINUE_IF(collection[ii] == c.id);
+        
+            addPage(collection[ii]);
+
 #if defined(_LOM_)
-                if ( currentmode==MODE_THINK_APPROACH ) {
-                    TME_GetCharacter(c1, collection[ii]);
-                    if ( !Character_IsRecruited(c1) ) {
-                        currentPage=(s32)pages.size()-1;
-                    }
+            if ( currentmode==MODE_THINK_APPROACH ) {
+                TME_GetCharacter(c1, collection[ii]);
+                if ( !Character_IsRecruited(c1) ) {
+                    currentPage=(s32)pages.size()-1;
                 }
-#endif
             }
+#endif
         }
         
         // persons ahead
-        TME_GetCharacters ( location_infrontid, collection, temp );
+        TME_GetCharactersAtLocation ( location_infrontid, collection, true, tunnel );
+
         for ( ii=0; ii<collection.Count(); ii++ ) {
             addPage(collection[ii]);
 #if defined(_DDR_)
@@ -392,7 +397,6 @@ void panel_think::setupPages()
                 }
             }
 #endif
-            
         }
     }
     
@@ -403,17 +407,19 @@ void panel_think::setupPages()
             addPage(c.id);
 #endif
         
-        // current stronghold
-        if ( location_strongholds.Count() )
-            addPage(location_strongholds[0]);
-        
-        // stronghold ahead
-        variant args[2];
-        args[0] = &collection ;
-        args[1] = location_infrontid ;
-        mxi->GetProperties ( "STRONGHOLDS", args, 2 );
-        if ( collection.Count() )
-            addPage(collection[0]);
+        if (!tunnel) {
+            // current stronghold
+            if ( location_strongholds.Count() )
+                addPage(location_strongholds[0]);
+            
+            // stronghold ahead
+            variant args[2];
+            args[0] = &collection ;
+            args[1] = location_infrontid ;
+            mxi->GetProperties ( "STRONGHOLDS", args, 2 );
+            if ( collection.Count() )
+                addPage(collection[0]);
+        }
         
         // armies here
         if ( location_armies.regiment_warriors+location_armies.regiment_riders ) {
