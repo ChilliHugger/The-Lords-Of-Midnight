@@ -356,7 +356,7 @@ void panel_think::setupPages()
         return;
     }
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     tunnel = Character_IsInTunnel(c);
 #endif
     
@@ -407,7 +407,8 @@ void panel_think::setupPages()
             addPage(c.id);
 #endif
         
-        if (!tunnel) {
+        if (!tunnel)
+        {
             // current stronghold
             if ( location_strongholds.Count() )
                 addPage(location_strongholds[0]);
