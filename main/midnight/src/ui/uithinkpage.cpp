@@ -587,7 +587,13 @@ void uithinkpage::checkPerson ( void )
     int         msg=0;
     std::string text;
     
+    
     TME_GetCharacter(c,id) ;
+
+#if defined(_TUNNELS_)
+    TME_GetCharacterLocationInfo(c);
+    enterTunnel = location_flags.Is(lif_enter_tunnel);
+#endif
         
 #if defined(_LOM_)
     aheadOrHere ( text, c.location, true );

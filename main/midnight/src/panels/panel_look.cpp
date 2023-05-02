@@ -591,8 +591,15 @@ void panel_look::UpdateLandscape()
     // LoM's header is affectively part of the background
     // so update the colour to the same as the sky
 #if defined(_LOM_)
-    layHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
+    auto color = Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+    #if defined(_TUNNELS_)
+        if(in_tunnel){
+            color = _clrBlack;
+        }
+    #endif
+    layHeader->setColor(color);
 #endif
+
 #if defined(_DDR_)
     if(!in_tunnel){
         imgHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainFill)));

@@ -181,7 +181,7 @@ MXTRACE( "mxmap::Serialize");
     }else{
         ar >> m_size ;
         m_flags.Clear();
-        if (m_version >= 3 ) {
+        if ( m_version >= 3 ) {
             ar >> m_flags;
         }
    
@@ -953,22 +953,40 @@ mxterrain* tinfo;
 #if defined(_TUNNELS_)
 bool mxloc::HasTunnelExit() const 
 {
+#if defined(_DDR_)
     if ( HasTunnel() && (terrain >=TN_GATE && terrain <=TN_PALACE) )
-        return TRUE;
+        return true;
+#endif
+    //if ( HasTunnel() && (terrain == TN_SNOWHALL) )
+    //    return true;
+        
     return flags & lf_tunnel_exit ;
 }
 
 bool mxloc::HasTunnelEntrance() const 
 {
+#if defined(_DDR_)
     if ( HasTunnel() && (terrain >=TN_GATE && terrain <=TN_PALACE) )
-        return TRUE;
+        return true;
+#endif
+    //if ( HasTunnel() && (terrain == TN_SNOWHALL) )
+    //    return true;
+
     return flags & lf_tunnel_entrance ;
 }
 
 bool mxloc::IsTunnelPassageway() const
 {
     mxterrain_t t = mx->scenario->toScenarioTerrain((mxterrain_t)terrain);
+    #if defined(_LOM_)
+    return HasTunnel() && (t ==TN_PLAINS || t==TN_MOUNTAIN || t==TN_FOREST || t==TN_DOWNS ) ;
+    #endif
+    
+    #if defined(_DDR_)
     return HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
+    #endif
+    
+    return false;
 }
 #endif
     

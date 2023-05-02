@@ -987,10 +987,10 @@ namespace tme {
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_DDR_)
-    #define SAVEGAMEVERSION     14
+    #define SAVEGAMEVERSION     15
 #endif
 #if defined(_LOM_)
-    #define SAVEGAMEVERSION     14
+    #define SAVEGAMEVERSION     15
 #endif
 
 
