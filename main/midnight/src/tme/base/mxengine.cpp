@@ -683,7 +683,12 @@ std::string  description;
         m_difficulty = DF_NORMAL;
     }
 
-    /* save the game map */
+    /* load the game map */
+    if ( SaveGameVersion() >=15) {
+        gamemap->m_version = MAPVERSION;
+    }else{
+        gamemap->m_version = 2;
+    }
     gamemap->Serialize ( ar );
 
     ar >> sv_characters ;   objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
@@ -737,25 +742,7 @@ std::string  description;
 
     mx->CurrentChar ( m_CurrentCharacter );
 
-#if defined(_DDR_)
-    if ( SaveGameVersion() >= 11 ) {
-        // fix save games
-        mxcharacter* morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-        morkin->race = RA_MORKIN;
-
-        if ( !morkin->IsRecruited() )
-            morkin->Flags().Set(cf_ai);
-
-        // fix for morkin being AI character
-        // after being recruited
-        if ( morkin->IsRecruited() && morkin->IsAIControlled() ) {
-            morkin->Flags().Reset(cf_ai);
-            if ( morkin->IsInTunnel() )
-                morkin->looking=DR_NORTH;
-        }
-
-    }
-#endif
+    scenario->updateAfterLoad(SaveGameVersion());
 
     return MX_OK ;
 }

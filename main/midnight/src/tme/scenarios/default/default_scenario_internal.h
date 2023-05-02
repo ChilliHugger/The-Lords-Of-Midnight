@@ -35,6 +35,7 @@ namespace tme {
             virtual MXRESULT UnRegister ( mxengine* midnightx );
 
             virtual void initialiseAfterCreate ( u32 version );
+            virtual void updateAfterLoad ( u32 version );
             virtual mxentity* CreateEntity ( id_type_t type );
             virtual void Serialize ( chilli::lib::archive& ar ) ;
 

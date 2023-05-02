@@ -228,9 +228,31 @@ void lom_x::initialiseAfterCreate(u32 version)
         }
     }
     
+    
     mxscenario::initialiseAfterCreate(version);
 }
+ 
+void lom_x::updateAfterLoad( u32 version )
+{
+    // fixup strings
+    std::string ssMessage1 = std::string("{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:sees}");
+    // "{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. "
+    auto testMessage1 = mx->text->SystemString(SS_MESSAGE1);
+    mx->text->ModifySystemString(SS_MESSAGE1, ssMessage1 );
+
+    std::string ssMessage3 = std::string("{char:loc:text} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group} {char:text:sees}");
+    // "{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group}. "
+    auto testMessage3 = mx->text->SystemString(SS_MESSAGE3);
+    mx->text->ModifySystemString(SS_MESSAGE3, ssMessage3 );
     
+    std::string ssMessage4 = std::string("{char:loc:text} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group} {char:text:sees}");
+    // "{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group}. "
+    auto testMessage4 = mx->text->SystemString(SS_MESSAGE4);
+    mx->text->ModifySystemString(SS_MESSAGE4, ssMessage4 );
+    
+    mxscenario::updateAfterLoad(version);
+}
+ 
 mxregiment* lom_x::FindEmptyRegiment()
 {
     for (int ii = 0; ii < sv_regiments; ii++) {
@@ -279,98 +301,7 @@ void lom_x::NightStop(void)
         }
     }
 
-        
-        /*
-        mxplace* p=NULL ;
-        mxcharacter* c=NULL;
-        
-        // 1. Is the ice crown still active
-        //mxobject* icecrown = (mxobject*)mx->EntityByName("OB_ICECROWN");
-        //if ( icecrown == NULL )
-        //    return;
-        
-        // icecrown destroyed?
-        //if ( icecrown->IsDisabled() )
-        //    return ;
-        
-        mxregiment* r = FindEmptyRegiment();
-        if ( r == NULL )
-            return;
-        
-        c = IceCrownCarrier();
-        if ( c == NULL)
-            return;
-        
-        //c = WhoHasObject(icecrown) ;
-        // 2. is it being carried
-        
-        // respawn 1500 doomguard riders at ushgarak
-        p = (mxplace*)mx->EntityByName( "PL_CITADEL_USHGARAK", IDT_PLACE );
-        r->Location( p->Location() );
-        r->Total(1500) ;
-        r->Race(RA_DOOMGUARD);
-        r->Type(UT_RIDERS);
-        r->Success(4) ;
-        r->Orders(OD_ROUTE);
-        r->Target(p);
-        
-        // if the icecrown is being carried
-        // then we either target the carrier
-        // morkin, or luxor
-        
-        
-        int type = mxrandom(1,5);
-        
-        // ushgarak is not important if the icecrown is down
-        if ( c && type == 5 )
-            type = 1;
-        
-        // target the carrier
-        if ( type == 1 && c ) {
-            r->Target(c);
-            r->Orders(OD_FOLLOW);
-            return;
-        }
-        // ushgarak
-        if ( type == 5 ) {
-            p = (mxplace*)mx->EntityByName( "PL_CITADEL_USHGARAK", IDT_PLACE );
-            r->Target(p);
-            r->Orders(OD_GOTO);
-            return;
-        }
-        // xajorkith
-        if ( type == 2 ) {
-            p = (mxplace*)mx->EntityByName( "PL_CITADEL_XAJORKITH", IDT_PLACE );
-            r->Target(p);
-            r->Orders(OD_GOTO);
-            return;
-        }
-        
-        // luxor
-        if ( type == 3 ) {
-            c = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-            if ( c && c->IsAlive() ) {
-                r->Target(c);
-                r->Orders(OD_FOLLOW);
-                return;
-            }
-            type = 4 ;
-        }
-        
-        // morkin
-        if ( type == 4 ) {
-            c = (mxcharacter*)mx->EntityByName("CH_MORKIN");
-            if ( c && c->IsAlive() ) {
-                r->Target(c);
-                r->Orders(OD_FOLLOW);
-                return;
-            }
-        }
-        */
-    }
-    
-    
-    
+}
 
     //}
     // namespace scenarios
@@ -378,84 +309,3 @@ void lom_x::NightStop(void)
 }
 // namespace tme
 
-
-
-
-
-
-/*
-        u32 base::CalcFearAdjuster(mxCLocInfo* locinfo) const
-        {
-        mxcharacter* character;
-        bool        icecrowncarrierhere;
-        int            ii;
-        gridref        icefearbaseloc(0,0);
-
-            int adj_fear = 127;
-
-            // is there someone alive who can carry the ice crown?
-            // if not then the fear will be severe
-            if ( IceCrownCarrier() ) {
-
-
-                mxplace* TowerOfDoom = (mxplace*)mx->EntityByName( "PL_TOWER_OF_DOOM", IDT_PLACE );
-                if ( TowerOfDoom )
-                    icefearbaseloc = TowerOfDoom->Location() ;
-
-                //if ( mx->ReadBool("_ICEFEAR_FROM_ICECROWN_") ) {
-                //    character = mx->WhoHasObject(OB_ICECROWN) ;
-                //    if ( character ) {
-                //        icefearbaseloc=character->Location();
-                //    } else {
-                //        // need to find the ice crown
-                //    }
-                //}
-
-                // 
-                //now find the nearest Ice Crown carryer
-                //to the tower of doom
-                //
-                adj_fear = 9999;
-                for ( ii=0; ii<sv_characters; ii++ ) {
-                    character = mx->CharacterById(ii+1);
-                    if ( character->IsAllowedIcecrown() && character->IsAlive() )
-                        adj_fear = MIN ( character->DistanceFromLoc( icefearbaseloc ), adj_fear );
-                }
-                if ( adj_fear == 9999 )
-                    adj_fear=0;
-                
-                //
-                //is there anyone at the current location that can carry the
-                //ice crown?
-                //
-                icecrowncarrierhere=FALSE;
-                for ( ii=0; ii<locinfo->objCharacters.Count(); ii++ ) {
-                    mxcharacter* character = (mxcharacter*)locinfo->objCharacters[ii];
-                    if ( character->IsAllowedIcecrown() ) {
-                        icecrowncarrierhere=TRUE;
-                        break;
-                    }
-                }
-                
-                // is morkin at this location?
-                // if so then this is the ice fear to use
-                if ( icecrowncarrierhere ) {
-                    adj_fear = 0x01ff - ( adj_fear * 4);
-                    return adj_fear;
-                }
-                
-            }
-
-            // work out how much influence the moon ring
-            // will have on this location
-            object* moonring = (object*)mx->EntityByName("OB_MOONRING");
-            character = WhoHasObject(moonring) ;
-            adj_fear += ( (character==NULL) || character->IsDead() ) ? 127 : character->DistanceFromLoc(locinfo->Location()) ;
-
-            // work out how much affect doomdark
-            // will have on this location
-            adj_fear += 48 + locinfo->adj_stronghold;
-
-            return adj_fear ;
-        }
-*/

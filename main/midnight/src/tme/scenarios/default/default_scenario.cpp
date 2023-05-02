@@ -1967,7 +1967,10 @@ namespace tme {
         
     }
     
-
+    void mxscenario::updateAfterLoad( u32 version )
+    {
+    }
+    
     void mxscenario::GiveGuidance( mxcharacter* character, s32 hint )
     {
         bool mikeseek = (hint == 1);

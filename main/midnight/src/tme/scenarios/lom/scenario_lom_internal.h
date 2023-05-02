@@ -25,6 +25,7 @@ namespace tme {
         mxregiment* FindEmptyRegiment();
         
         virtual void initialiseAfterCreate(u32 version);
+        virtual void updateAfterLoad ( u32 version );
 
     private:
         bool    luxorAlive;
