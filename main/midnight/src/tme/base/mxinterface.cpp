@@ -682,7 +682,7 @@ namespace tme {
 #if defined(_TUNNELS_)
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-                    argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[12] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else
 #endif
                 {
@@ -697,21 +697,26 @@ namespace tme {
         if ( ID_TYPE(id) == IDT_LOCATION ) {
 
             // location info
-            if ( ISARG("LOCATIONINFO") ) {
+            if ( ISARG("LOCATIONINFO") || ISARG("TUNNELINFO")) {
                 
                 if ( argc < 10 )
                     return MX_INVALID_ARGUMENT_COUNT;
                 
                 mxgridref loc( GET_LOCIDX(id), GET_LOCIDY(id) );
 
-                mxlocinfo* locinfo = new mxlocinfo( loc, NULL, slf_none )  ;
+                flags32_t f = slf_none;
+                
+#if defined(_TUNNELS_)
+                if (ISARG("TUNNELINFO")) {
+                    f = slf_tunnel;
+                }
+#endif
+
+                mxlocinfo* locinfo = new mxlocinfo( loc, nullptr, f )  ;
         
                 argv[0] = (s32)9;
                 argv[1] = locinfo->flags ;
                 argv[2] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-
-                
-                
                 argv[3] = locinfo->foe.warriors ;
                 argv[4] = locinfo->foe.riders ;
                 argv[5] = locinfo->friends.warriors ;

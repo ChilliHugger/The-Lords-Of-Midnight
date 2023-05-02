@@ -1019,30 +1019,21 @@ namespace tme {
         COMMAND( PropDefaultCharacters )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("DEFAULTCHARACTERS") ) {
                 collections::entities mycollection;
                 mx->scenario->GetDefaultCharacters ( mycollection );
                 if ( mycollection.CreateIdtCollection(collection) )
                     return MX_OK ;
                 return MX_FAILED ;
-            //}
         }
 
-        COMMAND ( PropCharacters )
+        COMMAND ( PropAllCharacters )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("CHARACTERS") ) {
-                //if ( mx->objCharacters.CreateIdtCollection(collection) )
-                //    return MX_OK ;
-                //return MX_FAILED ;
-            //}
             
             // don't return DOOMDARK
             // TODO: Create a flag for this!!!!
             mxcharacter* doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
-            
-            
-            //collection.Create( mx->objCharacters.Count() );
+                        
             collection.Clear();
             for ( u32 ii=0; ii<mx->objCharacters.Count(); ii++ ) {
                 mxcharacter* c = (mxcharacter*)mx->objCharacters[ii] ;
@@ -1053,47 +1044,39 @@ namespace tme {
             
         }
 
-        COMMAND ( PropRegiments )
+        COMMAND ( PropAllRegiments )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("REGIMENTS") ) {
                 if ( mx->objRegiments.CreateIdtCollection(collection) )
                     return MX_OK ;
                 return MX_FAILED ;
-            //}
         }
 
-        COMMAND ( PropRouteNodes )
+        COMMAND ( PropAllRouteNodes )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("ROUTENODES") ) {
                 if ( mx->objRoutenodes.CreateIdtCollection(collection) )
                     return MX_OK ;
                 return MX_FAILED ;
-            //}
         }
 
-        COMMAND ( PropPlaces )
+        COMMAND ( PropAllPlaces )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("ROUTENODES") ) {
                 if ( mx->objPlaces.CreateIdtCollection(collection) )
                     return MX_OK ;
                 return MX_FAILED ;
-            //}
         }
 
-        COMMAND ( PropStrongholds )
+        COMMAND ( PropAllStrongholds )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("STRONGHOLDS") ) {
             if ( mx->objStrongholds.CreateIdtCollection(collection) )
                 return MX_OK ;
             return MX_FAILED ;
-            //}
         }
 
-        COMMAND ( PropObjects )
+        COMMAND ( PropAllObjects )
         {
             CONVERT_COLLECTION(argv[0],collection);
             if ( mx->objObjects.CreateIdtCollection(collection) )
@@ -1101,45 +1084,41 @@ namespace tme {
             return MX_FAILED ;
         }
     
-        COMMAND ( PropCharacters2 )
-        {
-            CONVERT_COLLECTION(argv[0],collection);
-            
-            mxlocinfo* locinfo;
-            if ( mx->scenario->GetLocInfo ( argv[1], locinfo ) != MX_OK )
-                return MX_FAILED ;
-            
-            //if ( ISARG("CHARACTERS") ) {
-            locinfo->objCharacters.CreateIdtCollection(collection);
-            argv[1] = locinfo->nRecruited ;
-            SAFEDELETE ( locinfo );
-            return MX_OK ;
-            //}
-        }
-
         COMMAND ( PropRecruitable )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
-            if ( mx->scenario->GetLocInfo ( argv[1], locinfo ) != MX_OK )
+            
+            if ( ID_TYPE(argv[1].vid) != IDT_CHARACTER )
                 return MX_FAILED;
-            //if ( ISARG("RECRUITABLE") ) {
+            
+            mxlocinfo* locinfo;
+            if ( mx->scenario->GetLocInfo ( argv[1], slf_none, locinfo ) != MX_OK )
+                return MX_FAILED;
+                
             locinfo->objRecruit.CreateIdtCollection(collection);
             SAFEDELETE ( locinfo );
             return MX_OK ;
-            //}
         }
 
         COMMAND ( PropArmies )
         {
             CONVERT_COLLECTION(argv[0],collection);
+            
+            if ( ID_TYPE(argv[1].vid) != IDT_LOCATION )
+                return MX_FAILED;
+
+            flags32_t flags = slf_none;
+#if defined(_TUNNELS_)
+                if ( argv[2].vyesno )
+                    flags |= slf_tunnel;
+#endif
+
             mxlocinfo* locinfo = nullptr;
-            mx->scenario->GetLocInfo ( argv[1], locinfo );
+            mx->scenario->GetLocInfo ( argv[1], flags, locinfo );
             if(locinfo == nullptr) {
                 return MX_FAILED;
             }
 
-            //if ( ISARG("ARMIES") ) {
             collection.Create( locinfo->nArmies );
             for ( u32 ii=0; ii<locinfo->nArmies; ii++ ) {
                 auto army = locinfo->armies[ii] ;
@@ -1158,23 +1137,20 @@ namespace tme {
 
             SAFEDELETE ( locinfo );
             return MX_OK ;
-            //}
         }
 
-        COMMAND ( PropStrongholds2 )
+        COMMAND ( PropStrongholdById )
         {
             CONVERT_COLLECTION(argv[0],collection);
             mxlocinfo* locinfo = nullptr;
-            mx->scenario->GetLocInfo ( argv[1], locinfo );
+            mx->scenario->GetLocInfo ( argv[1], slf_none, locinfo );
             if(locinfo == nullptr) {
                 return MX_FAILED;
             }
             
-            //if ( ISARG("STRONGHOLDS") ) {
             locinfo->objStrongholds.CreateIdtCollection(collection);
             SAFEDELETE ( locinfo );
             return MX_OK ;
-            //}
         }
 
         COMMAND ( PropCharsForCommand )
@@ -1242,28 +1218,27 @@ namespace tme {
         }
     
         static mxcommand_t mx_properties[] = {
-            { "CONTROLLED_CHARACTER",     0, PropCurrentCharacter },
+            { "CONTROLLED_CHARACTER",   0, PropCurrentCharacter },
 
-            { "DEFAULTCHARACTERS",    1, PropDefaultCharacters,    {variant::vptr} },
-            { "CHARACTERS",            1, PropCharacters,            {variant::vptr} },
-            { "REGIMENTS",            1, PropRegiments,            {variant::vptr} },
-            { "ROUTENODES",            1, PropRouteNodes,            {variant::vptr} },
-            { "STRONGHOLDS",        1, PropStrongholds,            {variant::vptr} },
-            { "PLACES",                1, PropPlaces,                {variant::vptr} },
-            { "CHARACTERS",            2, PropCharacters2,            {variant::vptr, variant::vid} },
-            { "RECRUITABLE",        2, PropRecruitable,            {variant::vptr, variant::vid} },
-            { "ARMIES",                2, PropArmies,                {variant::vptr, variant::vid} },
-            { "STRONGHOLDS",        2, PropStrongholds2,        {variant::vptr, variant::vid} },
-            { "ROUTENODES",            2, PropRouteNodes,            {variant::vptr, variant::vid} },
-
-            { "CharsForCommand",    3, PropCharsForCommand,        {variant::vptr, variant::vnumber, arguments::location} },
-            { "ArmiesAtLocation",    2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
-            { "CharsAtLoc",            3, PropCharsAtLoc,            {variant::vptr, arguments::location, variant::vnumber} },
+            { "DEFAULTCHARACTERS",      1, PropDefaultCharacters,   {variant::vptr} },
+            { "ALLCHARACTERS",          1, PropAllCharacters,       {variant::vptr} },
+            { "ALLREGIMENTS",           1, PropAllRegiments,        {variant::vptr} },
+            { "ALLROUTENODES",          1, PropAllRouteNodes,       {variant::vptr} },
+            { "ALLSTRONGHOLDS",         1, PropAllStrongholds,      {variant::vptr} },
+            { "ALLPLACES",              1, PropAllPlaces,           {variant::vptr} },
+            { "ALLOBJECTS",             1, PropAllObjects,          {variant::vptr} },
             
-            { "MAPINFO",            0, PropMapInfo,             },
-            { "MAPSIZE",            0, PropMapSize,                },
+            { "RECRUITABLE",            2, PropRecruitable,         {variant::vptr, variant::vid} },
+            { "ARMIES",                 3, PropArmies,              {variant::vptr, variant::vid} },
+            { "STRONGHOLDS",            2, PropStrongholdById,      {variant::vptr, variant::vid} },
 
-            { "OBJECTS",            1, PropObjects,             {variant::vptr} },
+            { "CharsForCommand",        3, PropCharsForCommand,     {variant::vptr, variant::vnumber, arguments::location} },
+            { "ArmiesAtLocation",       2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
+            { "CharsAtLoc",             3, PropCharsAtLoc,          {variant::vptr, arguments::location, variant::vnumber} },
+            
+            { "MAPINFO",                0, PropMapInfo },
+            { "MAPSIZE",                0, PropMapSize },
+
             
         };
 
@@ -1735,19 +1710,19 @@ namespace tme {
         
         }
 
-        MXRESULT mxscenario::GetLocInfo ( mxid id, mxlocinfo*& info )
+        MXRESULT mxscenario::GetLocInfo ( mxid id, flags32_t flags, mxlocinfo*& info )
         {
             if ( ID_TYPE(id) == IDT_LOCATION ) {
                 CONVERT_GRIDREF(id,loc);
-                info = new mxlocinfo(loc,NULL,0);
+                info = new mxlocinfo(loc, nullptr, flags);
                 return MX_OK;
             }else if ( ID_TYPE(id) == IDT_STRONGHOLD ) {
                 CONVERT_STRONGHOLD_ID(id,stronghold);
-                info = new mxlocinfo(stronghold->Location(),NULL,0);
+                info = new mxlocinfo(stronghold->Location(), nullptr, slf_none);
                 return MX_OK;
             }else if ( ID_TYPE(id) == IDT_ROUTENODE ) {
                 CONVERT_ROUTENODE_ID(id,routenode);
-                info = new mxlocinfo(routenode->Location(),NULL,0);
+                info = new mxlocinfo(routenode->Location(), nullptr, slf_none);
                 return MX_OK;
             }else if ( ID_TYPE(id) == IDT_CHARACTER ) {
                 CONVERT_CHARACTER_ID(id,character);
