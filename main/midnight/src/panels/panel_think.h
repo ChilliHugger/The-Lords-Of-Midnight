@@ -45,7 +45,6 @@ protected:
     void createLookLordButton(mxid id);
 
 protected:
-    flags32                 flags;
     s32                     currentPage;
     mxid                    id;
     mxid                    objectId;
