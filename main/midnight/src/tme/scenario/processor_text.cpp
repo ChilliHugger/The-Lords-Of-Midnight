@@ -946,13 +946,40 @@ std::string buffer;
 
 std::string mxtext::DescribeCharacterSees ( const mxcharacter* character )
 {
+std::string buffer;
+
     RETURN_IF_NULL(character) "";
-     
-    if (mx->gamemap->HasTunnelEntrance(character->Location()) ) {
-        std::string buffer = character->Shortname() + " sees an underground entrance.";
-        return buffer;
+    
+    int type = 0;
+    
+    auto item = mx->gamemap->getLocationObject(character, character->Location());
+    mxobject* object = mx->ObjectById(item);
+    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
+
+    if ( object == nullptr && !entrance )
+        return "";
+    
+    std::string msg = "";
+    
+    if ( object != nullptr && object->CanPickup() )
+        type = 1;
+    
+    if ( entrance )
+        type += 2;
+        
+    switch (type) {
+        case 1:
+            msg = "{char:name} sees {char:loc:obj}. "; // SS_SEES_1;
+            break;
+        case 2:
+            msg = "{char:name} sees an underground entrance. "; // SS_SEES_2;
+            break;
+        case 3:
+            msg = "{char:name} sees {char:loc:obj} and an underground entrance. "; // SS_SEES_3;
+            break;
     }
-    return "";
+    
+    return CookText(msg,character);
 }
 #endif
 
