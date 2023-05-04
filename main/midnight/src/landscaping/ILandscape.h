@@ -52,6 +52,7 @@ public:
     bool                    isInTunnel;
     bool                    isLookingDownTunnel;
     bool                    isLookingOutTunnel;
+    bool                    isNarrowTunnel;
 #endif
     mxtime_t                timeofday;
     f32                     resScale;

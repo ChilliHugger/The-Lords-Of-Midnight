@@ -78,6 +78,10 @@ void TunnelView::createColumns()
 {
     auto padding = std::max<int>(0,(getContentSize().width - RES(1024))/2);
     auto graffiti = false;
+    
+    if ( options->isNarrowTunnel ) {
+        padding = std::max<int>(0,(getContentSize().width - RES(768))/2);
+    }
    
 #if defined(_DDR_)
     graffiti = options->currentLocation.x == 24 && options->currentLocation.y == 59 &&

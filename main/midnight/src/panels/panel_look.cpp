@@ -411,6 +411,7 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
     info->tunnel = Character_IsInTunnel(c);
     info->lookingdowntunnel = false;
     info->lookingouttunnel = false;
+    info->narrowtunnel = false;
 
     if ( (c.looking&1) == 0 ) {
         maplocation m;
@@ -418,6 +419,7 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
 
         info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
         info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
+        info->narrowtunnel = m.flags.Is(lf_tunnel_small) && info->tunnel;
     }
 #endif
 
@@ -503,6 +505,7 @@ void panel_look::setViewForCurrentCharacter()
     options->isInTunnel = current_info->tunnel;
     options->isLookingDownTunnel = current_info->lookingdowntunnel;
     options->isLookingOutTunnel = current_info->lookingouttunnel;
+    options->isNarrowTunnel = current_info->narrowtunnel;
 #endif
 
     // TODO: Make this independent of UI

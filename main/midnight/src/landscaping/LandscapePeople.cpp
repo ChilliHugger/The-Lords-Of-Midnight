@@ -178,10 +178,18 @@ void LandscapePeople::Initialise()
 #endif
     if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
         person = GetObjectBig(MAKE_ID(IDT_OBJECT, objectid));
-        if ( objectid == OB_DRAGONS ) {
-            add(person,DEFAULT_PRINT_DRAGONS);
-        }else{
-            add(person,DEFAULT_PRINT_OTHER);
+        
+#if defined(_TUNNELS_)
+        if ( options->isNarrowTunnel )
+            add(person,DEFAULT_PRINT_THING_NARROW_TUNNEL);
+        else
+#endif
+        {
+            if ( objectid == OB_DRAGONS ) {
+                add(person,DEFAULT_PRINT_DRAGONS);
+            }else{
+                add(person,DEFAULT_PRINT_OTHER);
+            }
         }
     }
     
@@ -211,6 +219,10 @@ cocos2d::ui::Widget* LandscapePeople::add( std::string& person, int number)
 #if defined(_TUNNELS_)
     if ( options->isLookingDownTunnel )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
+    if ( options->isLookingDownTunnel && options->isNarrowTunnel )
+        max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL_NARROW ;
+        
+        
 #endif
     
     for (u32 ii = 0; ii < number; ii++)    {
