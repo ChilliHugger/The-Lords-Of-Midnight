@@ -409,8 +409,7 @@ mapbuilder* mapbuilder::updateLayers()
         
         bool discovery_tunnelseen =  m->discovery_flags.Is(lf_tunnel_looked_at);
         bool discovery_tunnelvisited = m->discovery_flags.Is(lf_tunnel_visited) ;
-        
-        bool passageway = m->flags.Is(lf_tunnel_passageway);
+        bool passageway = m->flags.Is(lf_tunnel) && ! m->flags.Is(lf_tunnel_exit|lf_tunnel_entrance);
 #else
         bool tunnelseen = false;
         bool tunnelvisited = false ;
