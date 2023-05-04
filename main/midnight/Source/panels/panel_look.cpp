@@ -405,6 +405,7 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
     info->tunnel = Character_IsInTunnel(c);
     info->lookingdowntunnel = false;
     info->lookingouttunnel = false;
+    info->narrowtunnel = false;
 
     if ( (c.looking&1) == 0 ) {
         maplocation m;
@@ -412,6 +413,7 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
 
         info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
         info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
+        info->narrowtunnel = m.flags.Is(lf_tunnel_small) && info->tunnel;
     }
 #endif
 
@@ -496,6 +498,7 @@ void panel_look::setViewForCurrentCharacter()
     options->isInTunnel = current_info->tunnel;
     options->isLookingDownTunnel = current_info->lookingdowntunnel;
     options->isLookingOutTunnel = current_info->lookingouttunnel;
+    options->isNarrowTunnel = current_info->narrowtunnel;
 #endif
 
     // TODO: Make this independent of UI
@@ -560,15 +563,18 @@ void panel_look::UpdateLandscape()
     options->generator->landscapeScreenWidth = getContentSize().width ;
 
 #if defined(_TUNNELS_)
-    if ( current_info->tunnel ) {
+    bool in_tunnel = current_info->tunnel ;
+    if ( in_tunnel ) {
         UIDEBUG("UpdateLandscape: Create Tunnel View");
         current_view = TunnelView::create(options);
-    }else
-#endif
-    {
+    }else{
         UIDEBUG("UpdateLandscape: Create Landscape View");
         current_view = LandscapeView::create(options);
     }
+#else
+    bool in_tunnel = false ;
+    current_view = LandscapeView::create(options);
+#endif
 
     current_view->setAnchorPoint(Vec2::ZERO);
     current_view->setPosition(Vec2::ZERO);
@@ -580,13 +586,21 @@ void panel_look::UpdateLandscape()
     // LoM's header is affectively part of the background
     // so update the colour to the same as the sky
 #if defined(_LOM_)
-    layHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
+    auto color = Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));
+    #if defined(_TUNNELS_)
+        if(in_tunnel){
+            color = _clrBlack;
+        }
+    #endif
+    layHeader->setColor(color);
 #endif
-#if defined(_TUNNELS_)
-    if(!current_info->tunnel){
+
+#if defined(_DDR_)
+    if(!in_tunnel){
         imgHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainFill)));
     }
 #endif
+
 }
 
 void panel_look::addTouchListener()

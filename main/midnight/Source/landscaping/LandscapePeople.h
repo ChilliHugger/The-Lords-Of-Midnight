@@ -41,7 +41,9 @@ typedef struct {
 #endif
 
 #if defined(_TUNNELS_)
-#define MAX_DISPLAY_CHARACTERS_TUNNEL   4
+#define MAX_DISPLAY_CHARACTERS_TUNNEL           4
+#define MAX_DISPLAY_CHARACTERS_TUNNEL_NARROW    3
+#define DEFAULT_PRINT_THING_NARROW_TUNNEL       2
 #endif
 
 #define CHARACTER_COLUMN_WIDTH          128
