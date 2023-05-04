@@ -63,14 +63,14 @@ void LandscapeColour::updateCharacterNode( Node* node )
 
 #if defined(_DDR_)
     auto normalcolour = Vec4(0,0,0,alpha_normal);
-    auto tunnelcolour = Vec4((80.0f/255.0f),0,0,alpha_normal)
+    auto tunnelcolour = Vec4((80.0f/255.0f),0,0,alpha_normal);
 #endif
 
     auto colour = normalcolour ;
     
 #if defined(_TUNNELS_)
     if ( options->isInTunnel ) {
-        tunnelcolour;
+        colour = tunnelcolour;
     }
 #endif
     

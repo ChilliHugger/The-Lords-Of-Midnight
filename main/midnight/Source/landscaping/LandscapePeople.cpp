@@ -177,10 +177,18 @@ void LandscapePeople::Initialise()
 #endif
     if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
         person = GetObjectBig(MAKE_ID(IDT_OBJECT, objectid));
-        if ( objectid == OB_DRAGONS ) {
-            add(person,DEFAULT_PRINT_DRAGONS);
-        }else{
-            add(person,DEFAULT_PRINT_OTHER);
+        
+#if defined(_TUNNELS_)
+        if ( options->isNarrowTunnel )
+            add(person,DEFAULT_PRINT_THING_NARROW_TUNNEL);
+        else
+#endif
+        {
+            if ( objectid == OB_DRAGONS ) {
+                add(person,DEFAULT_PRINT_DRAGONS);
+            }else{
+                add(person,DEFAULT_PRINT_OTHER);
+            }
         }
     }
     
@@ -198,7 +206,11 @@ ax::ui::Widget* LandscapePeople::add( std::string& person, int number)
     // 0 1 2 3 4 5 6 7
     static int xtable[] = { 3, 4, 2, 5, 6, 1, 7, 0 };
 #endif
-    
+
+#if defined(_TUNNELS_)
+    static int xtable_small_tunnels[] = { 4, 3, 5, 2, 1, 6, 0, 7 };
+#endif
+
     f32 width = getContentSize().width;
     f32 offsetX = (width - RES(1024))/2;
     
@@ -206,23 +218,32 @@ ax::ui::Widget* LandscapePeople::add( std::string& person, int number)
         return nullptr;
     
     int max_chars = MAX_DISPLAY_CHARACTERS ;
+    int* order = xtable;
     
 #if defined(_TUNNELS_)
     if ( options->isLookingDownTunnel )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
+    if ( options->isLookingDownTunnel && options->isNarrowTunnel ) {
+        max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL_NARROW ;
+        order = xtable_small_tunnels;
+    }
+        
+        
 #endif
+    
+    
     
     for (u32 ii = 0; ii < number; ii++)    {
         
         // make sure our printing position is free
         for(;characters<max_chars;characters++)
-            if ( !columns[xtable[characters]].used)
+            if ( !columns[order[characters]].used)
                 break;
         
         if ( characters >= max_chars )
             return nullptr;
         
-        column = xtable[characters] ;
+        column = order[characters] ;
         
         auto image = Sprite::create(person);
         auto widget = Widget::create();
