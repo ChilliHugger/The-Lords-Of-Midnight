@@ -803,18 +803,18 @@ namespace tme {
 #if defined(_TUNNELS_)
             lf_tunnel           = MXBIT(1),     // location has tunnel
 #endif
-            lf_creature         = MXBIT(2),     // location has creature
+            lf_creature         = MXBIT(2),     // location has creature - Deprecate
             lf_character        = MXBIT(3),     // character in location
             lf_army             = MXBIT(4),     // army at location
             lf_seen             = MXBIT(5),     // has been seen by the mapper
             lf_domain           = MXBIT(6),     // special domain
             lf_special          = MXBIT(7),     // is interesting
-            lf_building         = MXBIT(8),     // currently not used
+            lf_impassable       = MXBIT(8),     // location is impassable
             lf_stronghold       = MXBIT(9),     // stronghold at location
             lf_routenode        = MXBIT(10),    // routenode at location
-            lf_terrain_custom   = MXBIT(11),    // terrain is custom stored
-            lf_object_custom    = MXBIT(12),    // object is custom stored
-            lf_area_custom      = MXBIT(13),    // area is custom stored
+            lf_respawn          = MXBIT(11),    // thing will respawn at location
+            lf_unused13         = MXBIT(12),    // ** currently not used **
+            lf_tunnel_small     = MXBIT(13),    // tunnel is a confined space
 #if defined(_TUNNELS_)
             lf_tunnel_exit      = MXBIT(14),    // can exit tunnel here
             lf_tunnel_entrance  = MXBIT(15),    // can enter tunnel here
@@ -825,14 +825,18 @@ namespace tme {
 #if defined(_TUNNELS_)
             lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
             lf_tunnel_visited   = MXBIT(19),    // played has visited the tunnel location
-            lf_tunnel_passageway    = MXBIT(20),    // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
 #endif
+            lf_unused21         = MXBIT(20),    // ** currently not used **
 
 #if defined(_DDR_)
             lf_object           = MXBIT(21),    // object to take
-            lf_object_special   = MXBIT(22),    // the object to take is one of the special objects
 #endif
-
+            lf_unused23         = MXBIT(22),    // ** currently not used **
+            lf_unused24         = MXBIT(23),    // ** currently not used **
+            lf_unused25         = MXBIT(24),    // ** currently not used **
+            lf_unused26         = MXBIT(25),    // ** currently not used **
+            lf_unused27         = MXBIT(26),    // ** currently not used **
+            lf_unused28         = MXBIT(27),    // ** currently not used **
         };
 
         enum CHARACTERFLAGS {

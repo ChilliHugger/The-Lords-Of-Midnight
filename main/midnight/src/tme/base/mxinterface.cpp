@@ -240,8 +240,6 @@ namespace tme {
                     out->flags.Set(lf_tunnel_exit);
                 if ( m.HasTunnelEntrance() )
                     out->flags.Set(lf_tunnel_entrance);
-                if ( m.IsTunnelPassageway() )
-                    out->flags.Set(lf_tunnel_passageway);
 #endif
                     
 #if defined(_DDR_)
