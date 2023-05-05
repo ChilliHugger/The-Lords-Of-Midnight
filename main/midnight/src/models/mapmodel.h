@@ -18,14 +18,14 @@ enum class map_filters : u32 {
     centre_char     = MXBIT(1),
     overview_map    = MXBIT(2),
     show_lords      = MXBIT(4),
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     show_tunnels    = MXBIT(3),
 #endif
     all             = show_critters
                         | centre_char
                         | show_lords
                         | overview_map
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                         | show_tunnels
 #endif
 };

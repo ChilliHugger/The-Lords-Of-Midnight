@@ -84,7 +84,11 @@ void LandscapePeople::Initialise()
     
     mxid locid = MAKE_LOCID( loc.x, loc.y );
     
-    TME_GetLocationInfo(loc);
+    TME_GetLocationInfo(loc
+#if defined(_TUNNELS_)
+        , options->isInTunnel
+#endif
+    );
     
     // we have not printed anyone yet
     characters = 0;
@@ -92,14 +96,11 @@ void LandscapePeople::Initialise()
     
     
     // get the characters infront of us
-#if defined(_LOM_)
-    u32 recruited;
-    TME_GetCharacters ( locid, objects, recruited );
+    TME_GetCharactersAtLocation(locid, objects, true
+#if defined(_TUNNELS_)
+        , options->isInTunnel
 #endif
-    
-#if defined(_DDR_)
-    TME_GetCharactersAtLocation(locid, objects, TRUE, options->isInTunnel);
-#endif
+    );
     
     // if there are characters in front of us then
     // print them on screen
@@ -107,12 +108,13 @@ void LandscapePeople::Initialise()
         character c;
         TME_GetCharacter ( c, objects[ii] );
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         if ( options->isLookingDownTunnel && !Character_IsInTunnel(c) )
             continue;
+#endif
         if ( Character_IsDead(c) ||  Character_IsHidden(c) )
             continue;
-#endif
+
         person = GetCharacterImage(c);
         auto image = add(person,DEFAULT_PRINT_CHARACTER);
         
@@ -153,7 +155,7 @@ void LandscapePeople::Initialise()
     
     
     s32 objectid = GET_ID(location_object) ;
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( options->isInTunnel ) {
         objectid = options->isLookingDownTunnel
             ? GET_ID(location_object_tunnel)
@@ -176,10 +178,18 @@ void LandscapePeople::Initialise()
 #endif
     if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
         person = GetObjectBig(MAKE_ID(IDT_OBJECT, objectid));
-        if ( objectid == OB_DRAGONS ) {
-            add(person,DEFAULT_PRINT_DRAGONS);
-        }else{
-            add(person,DEFAULT_PRINT_OTHER);
+        
+#if defined(_TUNNELS_)
+        if ( options->isNarrowTunnel )
+            add(person,DEFAULT_PRINT_THING_NARROW_TUNNEL);
+        else
+#endif
+        {
+            if ( objectid == OB_DRAGONS ) {
+                add(person,DEFAULT_PRINT_DRAGONS);
+            }else{
+                add(person,DEFAULT_PRINT_OTHER);
+            }
         }
     }
     
@@ -197,7 +207,11 @@ cocos2d::ui::Widget* LandscapePeople::add( std::string& person, int number)
     // 0 1 2 3 4 5 6 7
     static int xtable[] = { 3, 4, 2, 5, 6, 1, 7, 0 };
 #endif
-    
+
+#if defined(_TUNNELS_)
+    static int xtable_small_tunnels[] = { 4, 3, 5, 2, 1, 6, 0, 7 };
+#endif
+
     f32 width = getContentSize().width;
     f32 offsetX = (width - RES(1024))/2;
     
@@ -205,23 +219,32 @@ cocos2d::ui::Widget* LandscapePeople::add( std::string& person, int number)
         return nullptr;
     
     int max_chars = MAX_DISPLAY_CHARACTERS ;
+    int* order = xtable;
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( options->isLookingDownTunnel )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
+    if ( options->isLookingDownTunnel && options->isNarrowTunnel ) {
+        max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL_NARROW ;
+        order = xtable_small_tunnels;
+    }
+        
+        
 #endif
+    
+    
     
     for (u32 ii = 0; ii < number; ii++)    {
         
         // make sure our printing position is free
         for(;characters<max_chars;characters++)
-            if ( !columns[xtable[characters]].used)
+            if ( !columns[order[characters]].used)
                 break;
         
         if ( characters >= max_chars )
             return nullptr;
         
-        column = xtable[characters] ;
+        column = order[characters] ;
         
         auto image = Sprite::create(person);
         auto widget = Widget::create();

@@ -18,7 +18,9 @@ enum LORD_STATUS {
     status_night    = MXBIT(2),
     status_inbattle = MXBIT(3),
     status_dead     = MXBIT(4),
+#if defined(_TUNNELS_)
     status_tunnel   = MXBIT(5),
+#endif
     status_selected = MXBIT(6),
     status_location = MXBIT(7),
 };

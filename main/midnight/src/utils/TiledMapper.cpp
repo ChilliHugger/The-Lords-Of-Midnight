@@ -8,6 +8,7 @@
 
 #include "TiledMapper.h"
 
+#include "../tme/baseinc/features.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "../extensions/TMXTiledMap.h"
@@ -82,6 +83,7 @@ TMXTiledMap* TiledMapper::createTMXMap(const mapbuilder* builder)
     tmxMapInfo->getLayers().pushBack(layer2);
     layer2->release();
     
+#if defined(_TUNNELS_)
     // Layers
     auto layer3 = new (std::nothrow) TMXLayerInfo();
     layer3->_layerSize = tmxMapInfo->getMapSize();
@@ -101,6 +103,7 @@ TMXTiledMap* TiledMapper::createTMXMap(const mapbuilder* builder)
     layer5->_tiles = builder->tunnel_critters;
     tmxMapInfo->getLayers().pushBack(layer5);
     layer5->release();
+#endif
     
     
     return extensions::TMXTiledMap::create(tmxMapInfo);

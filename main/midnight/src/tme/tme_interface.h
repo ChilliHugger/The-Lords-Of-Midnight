@@ -103,7 +103,7 @@ bool TME_GetMapLocation( maplocation& out, tme::loc_t loc );
 
 bool TME_GetRegiment( regiment& out, mxid id );
 
-bool TME_GetLocationInfo( tme::loc_t loc );
+bool TME_GetLocationInfo( tme::loc_t loc, bool tunnel = false );
 bool TME_GetCharacterLocationInfo ( const character& c );
 std::string TME_GetUnitTypeName(mxunit_t type );
 
@@ -116,17 +116,14 @@ bool TME_SaveDiscoveryMap ( const std::string& filespec );
 bool TME_LoadDiscoveryMap ( const std::string& filespec );
 void TME_SelectChar ( mxid newid );
 size TME_MapSize ( void );
-void TME_GetArmies ( mxid loc, loc_armyinfo_t* army );
+void TME_GetArmies ( mxid loc, bool tunnel, loc_armyinfo_t* army );
 s32 TME_GetAllStrongholds (c_mxid& collection ) ;
 s32 TME_GetAllRegiments (c_mxid& collection );
-s32 TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited );
 s32 TME_GetAllCharacters (c_mxid& collection );
 s32 TME_GetAllObjects( c_mxid& collection );
 s32 TME_GetFollowers ( mxid id, c_mxid& collection );
-s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel  );
+s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool tunnel = false  );
 s32 TME_GetCharactersAtLocation ( tme::loc_t loc, c_mxid& collection, bool showall  );
-MXRESULT TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends );
-MXRESULT TME_GetArmiesAtLocation( tme::loc_t loc, u32& enemies, u32& friends );
 std::string TME_GetSymbol( mxid id );
 mxid TME_LinkData ( LPCSTR symbol, void* data );
 void* TME_GetEntityUserData ( mxid );
@@ -168,14 +165,17 @@ inline bool Character_HasWonBattle(const character& c)        { return c.flags.I
 
 #if defined(_DDR_)
 inline bool Character_HasUsedObject(const character& c)        { return c.flags.Is(cf_usedobject); }
-inline bool Character_IsInTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
-inline bool Character_InTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
 inline bool Character_IsPreparingForBattle(const character& c)        { return c.flags.Is(cf_preparesbattle); }
-bool Character_EnterTunnel ( const character& c );
-//bool Character_ExitTunnel ( const character& c );
 bool Character_Use ( const character& c );
 bool Character_Give ( const character& c, mxid to );
 bool Character_Take ( const character& c );
+#endif
+
+#if defined(_TUNNELS_)
+inline bool Character_IsInTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
+inline bool Character_InTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
+bool Character_EnterTunnel ( const character& c );
+//bool Character_ExitTunnel ( const character& c );
 #endif
 
 inline bool Character_IsFollowing(const character& c)        { return c.following!=IDT_NONE; }
@@ -214,6 +214,9 @@ bool Character_Army ( mxid id, tme::scenarios::exports::army_t& out );
 #if defined(_DDR_)
 inline bool Location_IsVisible(const maplocation& l)            { return l.flags.Is(lf_seen); }
 inline bool Location_HasCharacters(const maplocation& l)        { return l.flags.Is(lf_character); }
+#endif
+
+#if defined(_TUNNELS_)
 inline bool Location_HasTunnel(const maplocation& l)        { return l.flags.Is(lf_tunnel); }
 inline bool Location_HasTunnelExit(const maplocation& l)        { return l.flags.Is(lf_tunnel_exit); }
 inline bool Location_HasTunnelEntrance(const maplocation& l)        { return l.flags.Is(lf_tunnel_entrance); }
@@ -236,7 +239,6 @@ extern tme::mxinterface*    mxi ;
 extern c_mxid               default_characters ;
 extern c_mxid               recruitable_characters;
 extern c_mxid               location_characters;
-extern u32                  location_recruited;
 extern c_mxid               location_strongholds;
 extern mxid                 location_infrontid;
 extern mxid                 location_lookingatid;
@@ -249,8 +251,11 @@ extern mxid                 location_object;
 extern mxid                 location_stubborn_lord_attack;
 extern mxid                 location_stubborn_lord_move;
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
 extern mxid                 location_object_tunnel;
+#endif
+
+#if defined(_DDR_)
 extern mxid                 location_someone_to_give_to;
 extern mxid                 location_object_to_take;
 #endif

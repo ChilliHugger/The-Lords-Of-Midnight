@@ -148,6 +148,12 @@ int id;
 }
 
 
+void mxtext::ModifySystemString( mxid id, std::string& value )
+{
+    systemstrings[GET_ID(id)-1] = value ;
+}
+
+
 mxid mxtext::StringByName ( const std::string& name ) const
 {
     for ( u32 ii=0; ii<m_cSystemStrings; ii++ ) {
@@ -880,7 +886,11 @@ std::string mxtext::DescribeCharacterGroup ( const mxcharacter* character )
 std::string mxtext::DescribeCharacterLocation( const mxcharacter* character )
 {
     RETURN_IF_NULL(character) "";
-    
+        
+    if ( character->IsInTunnel() ) {
+        return CookedSystemString(SS_TUNNEL,character);
+    }
+
     mxloc& here = mx->gamemap->GetAt ( character->Location() );
     mxgridref loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
     mxloc& there = mx->gamemap->GetAt ( loc );
@@ -932,9 +942,50 @@ std::string buffer;
     
     return buffer;
 }
+#else
+
+std::string mxtext::DescribeCharacterSees ( const mxcharacter* character )
+{
+std::string buffer;
+
+    RETURN_IF_NULL(character) "";
+    
+    int type = 0;
+    
+    auto item = mx->gamemap->getLocationObject(character, character->Location());
+    mxobject* object = mx->ObjectById(item);
+    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
+
+    if ( object == nullptr && !entrance )
+        return "";
+    
+    std::string msg = "";
+    
+    if ( object != nullptr && object->CanPickup() )
+        type = 1;
+    
+    if ( entrance )
+        type += 2;
+        
+    switch (type) {
+        case 1:
+            msg = "{char:name} sees {char:loc:obj}. "; // SS_SEES_1;
+            break;
+        case 2:
+            msg = "{char:name} sees an underground entrance. "; // SS_SEES_2;
+            break;
+        case 3:
+            msg = "{char:name} sees {char:loc:obj} and an underground entrance. "; // SS_SEES_3;
+            break;
+    }
+    
+    return CookText(msg,character);
+}
+#endif
 
 std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character )
 {
+#if defined(_TUNNELS_)
     mxgridref oldLoc = this->loc;
     
     this->loc = loc ;
@@ -949,11 +1000,10 @@ std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter*
     this->loc = oldLoc ;
     
     return buffer;
-}
 #endif
-    
-    
-    
+    return "";
+}
+
 /*
  * Function name    : text::DescribeLocation
  * 
@@ -1349,9 +1399,9 @@ __char:
 #if defined(_DDR_)
                     IS_ARG("death2")    return DescribeCharacterDeath2 ( character );
                     IS_ARG("loyalty")   return DescribeCharacterLoyalty( character );
-                    IS_ARG("sees")      return DescribeCharacterSees( character );
                     IS_ARG("inbattle")  return DescribeCharacterInBattle( character );
 #endif
+                    IS_ARG("sees")      return DescribeCharacterSees( character );
                 }
             
                 IS_ARG("lookat")    {
@@ -1456,9 +1506,9 @@ __obj:
 __loc:
                 is++;
                 IS_ARG("name")        return DescribeLocation(loc);
-#if defined(_DDR_)
+
                 IS_ARG("text")        return DescribeLocationWithPrep(loc,character);
-#endif
+
                 IS_ARG("terrain")    {
                                     tinfo = mx->TerrainById( mx->gamemap->GetAt(loc).terrain );
                                     goto __terrain;

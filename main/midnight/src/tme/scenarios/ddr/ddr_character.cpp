@@ -542,10 +542,8 @@ namespace tme {
             EnterLocation ( location );
 
         // if this location has an exit then we must exit
-        bool exit_tunnel = false;
-        if ( mx->gamemap->GetAt ( location ).HasTunnelExit() )
-            exit_tunnel=true;
-
+        bool exit_tunnel = IsInTunnel() && mx->gamemap->GetAt ( location ).HasTunnelExit() ;
+            
         if ( !IsAIControlled() )
             mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
         
@@ -576,97 +574,6 @@ namespace tme {
         return MX_OK ;
     }
     
-    MXRESULT ddr_character::Cmd_EnterTunnel ( void )
-    {
-        if ( IsFollowing() )
-            return MX_FAILED ;
-        
-        if ( IsInTunnel() )
-            return MX_FAILED ;
-        
-        mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
-        if ( !mapsqr.HasTunnelEntrance() )
-            return MX_FAILED ;
-        
-        // remove army from location
-        mx->gamemap->SetLocationArmy(Location(),0);
-        mx->gamemap->SetLocationCharacter(Location(),0);
-        
-        flags.Set ( cf_tunnel );
-        EnterLocation(Location());
-        
-        
-        
-        // TODO:
-        // we now need to cycle round the locations
-        // looking for the location that connections to us
-        // and drop us in there
-        for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
-            mxdir_t d = (mxdir_t) ii ;
-            loc_t l = Location() + d ;
-            if ( mx->gamemap->GetAt ( l ).HasTunnel() ) {
-                location = l ;
-                looking=d;
-                break;
-            }
-            
-        }
-        
-        // new location
-        EnterLocation(Location());
-        
-        // group enter tunnel
-        
-        if ( HasFollowers() ) {
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->Flags().Set(cf_tunnel);
-                follower->looking = Looking();
-                follower->Location(Location());
-            }
-        }
-        
-        mx->scenario->SetMapArmies();
-        
-        CommandTakesTime(TRUE);
-        
-        return MX_OK ;
-    }
-    
-    MXRESULT ddr_character::Cmd_ExitTunnel ( void )
-    {
-        if ( IsFollowing() )
-            return MX_FAILED ;
-        
-        if ( !IsInTunnel() )
-            return MX_FAILED ;
-        
-        mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
-        
-        if ( !mapsqr.HasTunnelExit() )
-            return MX_FAILED ;
-        
-        flags.Reset ( cf_tunnel );
-        
-        // group exit tunnel
-        
-        if ( HasFollowers() ) {
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->Flags().Reset(cf_tunnel);
-                follower->looking = Looking();
-                follower->Location( Location() );
-            }
-        }
-        
-        CommandTakesTime(TRUE);
-        
-        return MX_OK ;
-    }
     
     MXRESULT ddr_character::Cmd_Take ( void )
     {

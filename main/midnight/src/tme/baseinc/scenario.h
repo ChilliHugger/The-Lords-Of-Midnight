@@ -221,11 +221,15 @@ namespace tme {
             typedef struct location_t : public mxitem_t {
                 mxterrain_t     terrain;
                 mxid            object;
+#if defined(_TUNNELS_)
                 mxid            object_tunnel;
+#endif
                 mxid            area;
                 u8              climate;
                 u8              density;
+#if defined(_TUNNELS_)
                 u8              tunnel;
+#endif
                 flags32         discovery_flags;
             } location_t ;
         } // namespace export ;

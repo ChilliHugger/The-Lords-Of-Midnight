@@ -40,6 +40,7 @@ namespace tme {
             LPCSTR SystemString ( u32 id );
             LPCSTR SystemStringById ( mxid id );
             mxid StringByName ( const std::string& name ) const;
+            void ModifySystemString( mxid id, std::string& value );
 
             std::string CookedSystemString ( u32 id, const mxcharacter* character=NULL );
             std::string CookText ( std::string& input, const mxcharacter* character=NULL );
@@ -83,9 +84,9 @@ namespace tme {
             virtual std::string DescribeCharacterGroup ( const mxcharacter* character ) ;
 #if defined(_DDR_)
             virtual std::string DescribeCharacterLoyalty ( const mxcharacter* character ) ;
-            virtual std::string DescribeCharacterSees ( const mxcharacter* character ) ;
             virtual std::string DescribeCharacterInBattle ( const mxcharacter* character );
 #endif
+            virtual std::string DescribeCharacterSees ( const mxcharacter* character ) ;
 
             // strongholds
 
@@ -93,9 +94,7 @@ namespace tme {
 
             // location
             virtual std::string DescribeLocation( mxgridref loc) ;
-#if defined(_DDR_)
             virtual std::string DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character );
-#endif
             virtual std::string DescribeArea(u32 area) ;
             virtual std::string DescribeTerrainPlural(mxterrain_t terrain);
             virtual std::string DescribeTerrainSingularPlural(mxterrain_t terrain);

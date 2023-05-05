@@ -35,6 +35,7 @@ namespace tme {
             virtual MXRESULT UnRegister ( mxengine* midnightx );
 
             virtual void initialiseAfterCreate ( u32 version );
+            virtual void updateAfterLoad ( u32 version );
             virtual mxentity* CreateEntity ( id_type_t type );
             virtual void Serialize ( chilli::lib::archive& ar ) ;
 
@@ -56,7 +57,11 @@ namespace tme {
             virtual void SetMapArmies ( void );
             
             virtual void RemoveMapArmies ( void );
+#if defined(_TUNNELS_)
             virtual void LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel );
+#else
+            virtual void LookInDirection( mxgridref loc, mxdir_t dir );
+#endif
             virtual void SetCharsLooking( void );
             virtual bool DropObject ( mxgridref loc, mxobject* object );
             virtual bool InCharactersMemory ( mxitem* item ) ;
@@ -76,7 +81,7 @@ namespace tme {
             virtual mxterrain_t toGeneralisedTerrain( mxterrain_t t) const ;
             virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const ;
 
-            virtual MXRESULT GetLocInfo ( mxid id, mxlocinfo*&    info  );
+            virtual MXRESULT GetLocInfo ( mxid id, flags32_t flags, mxlocinfo*& info );
 
             bool IsFeature(u32 flag) const { return (features&flag) == flag; }
             

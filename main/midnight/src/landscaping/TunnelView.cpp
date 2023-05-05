@@ -6,9 +6,12 @@
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
 
-#include "TunnelView.h"
-#include "LandscapeView.h"
 
+#include "TunnelView.h"
+
+#if defined(_TUNNELS_)
+
+#include "LandscapeView.h"
 #include "LandscapeGenerator.h"
 #include "LandscapeNode.h"
 
@@ -75,6 +78,10 @@ void TunnelView::createColumns()
 {
     auto padding = std::max<int>(0,(getContentSize().width - RES(1024))/2);
     auto graffiti = false;
+    
+    if ( options->isNarrowTunnel ) {
+        padding = std::max<int>(0,(getContentSize().width - RES(768))/2);
+    }
    
 #if defined(_DDR_)
     graffiti = options->currentLocation.x == 24 && options->currentLocation.y == 59 &&
@@ -114,3 +121,5 @@ void TunnelView::createSteps()
     steps->setPosition(getContentSize().width / 2, RES(60));
     clipping->addChild(steps);
 }
+
+#endif

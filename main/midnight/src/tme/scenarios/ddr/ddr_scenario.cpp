@@ -158,6 +158,29 @@ MXTRACE("Place Objects On Map");
     mxscenario::initialiseAfterCreate(version);
 
 }
+
+void ddr_x::updateAfterLoad( u32 version )
+{
+    if ( version >= 11 ) {
+        // fix save games
+        mxcharacter* morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
+        morkin->race = RA_MORKIN;
+
+        if ( !morkin->IsRecruited() )
+            morkin->Flags().Set(cf_ai);
+
+        // fix for morkin being AI character
+        // after being recruited
+        if ( morkin->IsRecruited() && morkin->IsAIControlled() ) {
+            morkin->Flags().Reset(cf_ai);
+            if ( morkin->IsInTunnel() )
+                morkin->looking=DR_NORTH;
+        }
+
+    }
+
+    mxscenario::updateAfterLoad(version);
+}
     
 mxentity* ddr_x::CreateEntity ( id_type_t type )
 {

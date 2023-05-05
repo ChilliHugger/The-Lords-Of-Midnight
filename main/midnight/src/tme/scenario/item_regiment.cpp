@@ -198,7 +198,11 @@ namespace tme {
             }
             
             // get the location we want
+#if defined(_TUNNELS_)
             flags32_t f = IsInTunnel() ? slf_tunnel : slf_none ;
+#else
+            flags32_t f = slf_none;
+#endif
             
             // TODO: This is an expensive check - make cheaper
             auto info = new mxlocinfo ( targetlocation, NULL, f );

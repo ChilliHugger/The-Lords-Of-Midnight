@@ -10,8 +10,7 @@
 #ifndef _TMEINTERNAL_H_INCLUDED_
 #define _TMEINTERNAL_H_INCLUDED_
 
-
-
+#include "features.h"
 #include "info.h"
 #include "mxengine.h"
 #include "mxinterface.h"

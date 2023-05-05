@@ -519,7 +519,9 @@ bool moonring::rest()
     showPage(MODE_THINK);
     return true;
 }
+#endif // DDR
 
+#if defined(_TUNNELS_)
 bool moonring::enterTunnel()
 {
     character& c = TME_CurrentCharacter();
@@ -528,8 +530,7 @@ bool moonring::enterTunnel()
     look();
     return true;
 }
-
-#endif
+#endif // _TUNNELS_
 
 //
 bool moonring::dawn()
@@ -612,7 +613,12 @@ bool moonring::serialize( u32 version, archive& ar )
 
 // TODO: Move these to a resource manager
 
-std::string imageFiles[] = {"rest-0", "rest-1", "language-0", "terrain/terrain-0", "terrain/terrain-1" };
+std::string imageFiles[] = {
+    "rest-0", "rest-1",
+    "language-0",
+    "terrain/terrain-0", "terrain/terrain-1",
+    "terrain/tunnels-0"
+};
 
 
 #if defined(_OS_DESKTOP_)

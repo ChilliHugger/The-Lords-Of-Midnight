@@ -8,6 +8,8 @@
 #ifndef layout_id_h
 #define layout_id_h
 
+#include "../tme/baseinc/features.h"
+
 enum layoutid_t
 {
     ID_NONE=0,
@@ -84,8 +86,10 @@ enum layoutid_t
     
     ID_GROUP_LEAVE,
     ID_GROUP_DISBAND,
+#if defined(_TUNNELS_)
     ID_ENTER_TUNNEL,
     ID_SHOW_TUNNELS,
+#endif
     ID_CLEANUP_SELECT,
     
     // no images
@@ -140,7 +144,10 @@ enum layoutid_t
     ID_FILTER_DEAD,
     ID_FILTER_CURRENT_LOC,
     ID_FILTER_LORDS,
+    
+#if defined(_TUNNELS_)
     ID_FILTER_TUNNELS,
+#endif
     
     ID_COMPASS_N,
     ID_COMPASS_NE,
@@ -164,7 +171,11 @@ enum layoutid_t
     ID_SELECT_CHAR=1000,
     ID_LANDSCAPE=2000,
     ID_STORIES=3000,
+
+#if defined(_TUNNELS_)
     ID_TUNNEL=4000,
+#endif
+
     ID_SHOW_TOOLTIP=5000,
     ID_SELECT_DIRECTION=6000,
     

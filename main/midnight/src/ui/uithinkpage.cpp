@@ -55,7 +55,9 @@ USING_NS_CC;
 uithinkpage::uithinkpage() :
     approach(false),
     disband(false),
+#if defined(_TUNNELS_)
     enterTunnel(false),
+#endif
     fight(false),
     leave(false),
     postMen(false),
@@ -234,7 +236,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     }
 #endif
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     // Enter Tunnel
     auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
     enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
@@ -254,7 +256,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     addShortcutKey(unhide, ID_UNHIDE,       K_UNHIDE);
     addShortcutKey(fight, ID_FIGHT,        K_FIGHT);
 #endif
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
 #endif
     addShortcutKey(approach, ID_APPROACH,   K_APPROACH);
@@ -345,7 +347,7 @@ void uithinkpage::displayCharacter ( const character& c )
 
 void uithinkpage::displayCharacterTerrain(  const character& c )
 {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     imgTerrain->setVisible(false);
     if ( Character_InTunnel(c) )
         return ;
@@ -585,7 +587,15 @@ void uithinkpage::checkPerson ( void )
     int         msg=0;
     std::string text;
     
+    
     TME_GetCharacter(c,id) ;
+
+#if defined(_TUNNELS_)
+    if (c.id == TME_CurrentCharacter().id) {
+        TME_GetCharacterLocationInfo(c);
+        enterTunnel = location_flags.Is(lif_enter_tunnel);
+    }
+#endif
         
 #if defined(_LOM_)
     aheadOrHere ( text, c.location, true );
@@ -656,13 +666,14 @@ void uithinkpage::checkPlace ( void )
 {
     std::string text;
     
-#if defined(_DDR_)
-    
+
+#if defined(_TUNNELS_)
     auto c = TME_CurrentCharacter();
     TME_GetCharacterLocationInfo(c);
-    
     enterTunnel = location_flags.Is(lif_enter_tunnel);
-    
+#endif
+        
+#if defined(_DDR_)
     if ( ID_TYPE(id) ==  IDT_CHARACTER ) {
         checkNormal();
         return;

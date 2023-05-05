@@ -30,7 +30,9 @@ enum class mapflags {
     show_visited                = MXBIT(11),
     show_looked_at              = MXBIT(12),
     show_critters               = MXBIT(13),
+#if defined(_TUNNELS_)
     show_tunnels                = MXBIT(14),
+#endif
     
     debug_map                   = MXBIT(16),
     
@@ -39,13 +41,6 @@ enum class mapflags {
 enum CELLFLAGS {
     cf_visible                  = MXBIT(0)
 };
-
-//enum LAYERS {
-//    LAYER_TERRAIN,
-//    LAYER_CRITTERS,
-//    LAYER_TUNNELS,
-//    MAX_LAYERS
-//};
 
 class map_object : public cocos2d::Ref
 {
@@ -58,21 +53,6 @@ public:
     mxid        id;
     loc_t       location;
     bool        visible;
-    
-//    loc_t       lastlocation;
-//    loc_t       targetlocation;
-//#if defined(_DDR_)
-//    loc_t       homelocation;
-//#endif
-//    u32         soldiers;
-//    mxunit_t    type;
-//    rect        r;
-    
-//    BOOL        selected;
-//    BOOL        selectable;
-//    BOOL        multiple;
-//    BOOL        popup;
-//    BOOL        tunnel;
     BOOL        processed;
     
     Vector<map_object*>   here;
@@ -128,9 +108,11 @@ public:
     u32                     max_cells;
     u32*                    terrain;
     u32*                    terrain_discovery;
-    u32*                    tunnels;
     u32*                    critters;
+#if defined(_TUNNELS_)
+    u32*                    tunnels;
     u32*                    tunnel_critters;
+#endif
     Vector<map_object*>     characters;
     Vector<map_object*>     regiments;
     Vector<map_object*>     strongholds;

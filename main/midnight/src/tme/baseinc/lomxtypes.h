@@ -2,24 +2,19 @@
 #define _LOMXTYPES_H_INCLUDED_
 
 #include "../../library/inc/library.h"
+#include "features.h"
 
 using namespace chilli::types;
 
-//#define _DDR_
-//#define _LOM_
+
 
 
 /* these are the various enums
- * that define variable types used within 
+ * that define variable types used within
  * the midnight engine
  * these are just the default as used in the LOM and DDR scenarios
  */
 
-//#if _MSC_VER >= 1300
-//#define _DEFINE_ENUMS_
-//#endif 
-
-//#define _TEST_WINLOSE_CONDITIONS_
 
 // enum control
 #define DECLARE_ENUM(x)        namespace x { enum x##_t
@@ -755,7 +750,9 @@ namespace tme {
         enum SELECTIONFLAGS {
             slf_none            = 0,
             slf_all             = MXBIT(1),
+#if defined(_TUNNELS_)
             slf_tunnel          = MXBIT(2),
+#endif
         };
 
         enum ENTITYFLAGS {
@@ -773,6 +770,13 @@ namespace tme {
             vf_complete         = MXBIT(2),
         };
 
+        enum MAPFLAGS {
+            mf_none             = 0,
+#if defined(_TUNNELS_)
+            mf_tunnelendpoints  = MXBIT(0),     // map has defined entrance exits
+#endif
+        };
+
         enum LOCATIONINFOFLAGS {
             lif_moveforward     = MXBIT(0),     // can we move into the location we are looking at?
             lif_seek            = MXBIT(1),     // can we do a search - always true at present
@@ -782,8 +786,10 @@ namespace tme {
             lif_recruitmen      = MXBIT(5),     // are there any soldiers to recruit, and can the <character> do it
             lif_guardmen        = MXBIT(6),     // could the <character> place and men on guard
             lif_enterbattle     = MXBIT(7),     // can we enter into battle?
+#if defined(_TUNNELS_)
             lif_enter_tunnel    = MXBIT(8),     // can we enter tunnel
             lif_exit_tunnel     = MXBIT(9),     // can we exit tunnel
+#endif
             lif_rest            = MXBIT(10),    // can we rest
             lif_give            = MXBIT(11),    // can we give
             lif_take            = MXBIT(12),    // can we take
@@ -793,34 +799,44 @@ namespace tme {
         };
 
         enum LOCATIONFLAGS { // 28 bits
-            lf_mist             = MXBIT(0),     // DDR Scenario, currently not used
-            lf_tunnel           = MXBIT(1),     // DDR Scenario, currently not used
-            lf_creature         = MXBIT(2),     // DDR Scenario, currently not used
+            lf_mist             = MXBIT(0),     // location has mist
+#if defined(_TUNNELS_)
+            lf_tunnel           = MXBIT(1),     // location has tunnel
+#endif
+            lf_creature         = MXBIT(2),     // location has creature - Deprecate
             lf_character        = MXBIT(3),     // character in location
             lf_army             = MXBIT(4),     // army at location
             lf_seen             = MXBIT(5),     // has been seen by the mapper
             lf_domain           = MXBIT(6),     // special domain
             lf_special          = MXBIT(7),     // is interesting
-            lf_building         = MXBIT(8),     // currently not used
+            lf_impassable       = MXBIT(8),     // location is impassable
             lf_stronghold       = MXBIT(9),     // stronghold at location
             lf_routenode        = MXBIT(10),    // routenode at location
-            lf_terrain_custom   = MXBIT(11),    // terrain is custom stored
-            lf_object_custom    = MXBIT(12),    // object is custom stored
-            lf_area_custom      = MXBIT(13),    // area is custom stored
-#if defined(_DDR_)
+            lf_respawn          = MXBIT(11),    // thing will respawn at location
+            lf_unused13         = MXBIT(12),    // ** currently not used **
+            lf_tunnel_small     = MXBIT(13),    // tunnel is a confined space
+#if defined(_TUNNELS_)
             lf_tunnel_exit      = MXBIT(14),    // can exit tunnel here
             lf_tunnel_entrance  = MXBIT(15),    // can enter tunnel here
 #endif
             lf_looked_at        = MXBIT(16),    // has been stood in front of
             lf_visited          = MXBIT(17),    // player has visited this location
-#if defined(_DDR_)
+
+#if defined(_TUNNELS_)
             lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
-            lf_tunnel_visited   = MXBIT(19),    // played has visited the tunnel location
-            lf_tunnel_passageway    = MXBIT(20),    // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
-            lf_object           = MXBIT(21),    // object to take
-            lf_object_special   = MXBIT(22),    // the object to take is one of the special objects
+            lf_tunnel_visited   = MXBIT(19),    // player has visited the tunnel location
+            lf_tunnel_object    = MXBIT(20),    // object/thing is in tunnel
 #endif
 
+#if defined(_DDR_)
+            lf_object           = MXBIT(21),    // object to take
+#endif
+            lf_unused23         = MXBIT(22),    // ** currently not used **
+            lf_unused24         = MXBIT(23),    // ** currently not used **
+            lf_unused25         = MXBIT(24),    // ** currently not used **
+            lf_unused26         = MXBIT(25),    // ** currently not used **
+            lf_unused27         = MXBIT(26),    // ** currently not used **
+            lf_unused28         = MXBIT(27),    // ** currently not used **
         };
 
         enum CHARACTERFLAGS {
@@ -853,7 +869,9 @@ namespace tme {
             cf_resting          = MXBIT(16),    // currently resting
             cf_inbattle         = MXBIT(17),    // currently in battle
             cf_wonbattle        = MXBIT(18),    // just won a battle
-            cf_tunnel           = MXBIT(19),    // currently in a tunnel (DDR)
+#if defined(_TUNNELS_)
+            cf_tunnel           = MXBIT(19),    // currently in a tunnel
+#endif
             cf_usedobject       = MXBIT(20),    // has used his special object (DDR)
             cf_followers        = MXBIT(21),    // has followers
             cf_preparesbattle   = MXBIT(22),    // prepares to do battle
@@ -863,7 +881,9 @@ namespace tme {
             cf_resting          = MXBIT(14),    // currently resting
             cf_inbattle         = MXBIT(15),    // currently in battle
             cf_wonbattle        = MXBIT(16),    // just won a battle
-            cf_tunnel           = MXBIT(17),    // currently in a tunnel (DDR)
+#if defined(_TUNNELS_)
+            cf_tunnel           = MXBIT(17),    // currently in a tunnel
+#endif
             cf_usedobject       = MXBIT(18),    // has used his special object (DDR)
             cf_followers        = MXBIT(19),    // has followers
             cf_preparesbattle   = MXBIT(20),    // prepares to do battle
@@ -895,7 +915,7 @@ namespace tme {
         enum REGIMENTFLAGS {
             rf_direct           = MXBIT(0),     // regiment will directly do their command
             rf_inbattle         = MXBIT(17),    // currently in battle
-            rf_tunnel           = MXBIT(19),    // currently in a tunnel (DDR)
+            rf_tunnel           = MXBIT(19),    // currently in a tunnel
         };
 
         enum OBJECTFLAGS {
@@ -963,7 +983,7 @@ namespace tme {
 #define DATABASEVERSION         11
 #endif
 #define MAPHEADER               "MidnightEngineMap"
-#define MAPVERSION              2
+#define MAPVERSION              3
 
 #define DISCOVERYHEADER         "MidnightEngineDiscovery"
 #define DISCOVERYVERSION        1
@@ -971,10 +991,10 @@ namespace tme {
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_DDR_)
-    #define SAVEGAMEVERSION     14
+    #define SAVEGAMEVERSION     15
 #endif
 #if defined(_LOM_)
-    #define SAVEGAMEVERSION     14
+    #define SAVEGAMEVERSION     15
 #endif
 
 

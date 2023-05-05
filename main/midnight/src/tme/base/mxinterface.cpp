@@ -215,9 +215,10 @@ namespace tme {
                 out->terrain = (mxterrain_t)m.terrain;
                 
                 out->object = IDT_NONE ;
+                
+#if defined(_TUNNELS_)                
                 out->object_tunnel = IDT_NONE ;
-#if defined(_DDR_)
-                if ( m.IsTunnelPassageway() )
+                if ( m.IsTunnelObject() )
                     out->object_tunnel = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
                 else
 #endif
@@ -233,15 +234,17 @@ namespace tme {
                 if ( mx->discoverymap != NULL ) {
                     out->discovery_flags.Set( mx->discoverymap->GetAt(loc) );
                 }
-
-#if defined(_DDR_)
+                
+#if defined(_TUNNELS_)
                 if ( m.HasTunnelExit() )
                     out->flags.Set(lf_tunnel_exit);
                 if ( m.HasTunnelEntrance() )
                     out->flags.Set(lf_tunnel_entrance);
-                if ( m.IsTunnelPassageway() )
-                    out->flags.Set(lf_tunnel_passageway);
+                if ( m.IsTunnelObject() )
+                    out->flags.Set(lf_tunnel_object);
+#endif
                     
+#if defined(_DDR_)
                 if ( m.HasObject() ) {
                     auto scenario = static_cast<ddr_x*>(mx->scenario);
                     auto obj = static_cast<ddr_object*>(scenario->FindObjectAtLocation(loc));
@@ -650,14 +653,8 @@ namespace tme {
             // characters location info
             if ( ISARG("LOCATIONINFO") ) {
             
-#if defined(_DDR_)
                 if ( argc < 16 )
                     return MX_INVALID_ARGUMENT_COUNT;
-#endif
-#if defined(_LOM_)
-                if ( argc < 16 )
-                    return MX_INVALID_ARGUMENT_COUNT;
-#endif
                 
                 std::unique_ptr<mxlocinfo> locinfo ( character->GetLocInfo() );
         
@@ -680,14 +677,17 @@ namespace tme {
 #if defined(_DDR_)
                 argv[16] = mxentity::SafeIdt(locinfo->someone_to_give_to) ;
                 argv[17] = mxentity::SafeIdt(locinfo->object_to_take) ;
-                if ( locinfo->mapsqr.IsTunnelPassageway()) {
+#endif
+
+#if defined(_TUNNELS_)
+                if ( locinfo->mapsqr.IsTunnelObject()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-                    argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[12] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else
 #endif
                 {
-                    argv[12] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[15] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[12] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                 }
                 
                 return MX_OK ;
@@ -697,21 +697,26 @@ namespace tme {
         if ( ID_TYPE(id) == IDT_LOCATION ) {
 
             // location info
-            if ( ISARG("LOCATIONINFO") ) {
+            if ( ISARG("LOCATIONINFO") || ISARG("TUNNELINFO")) {
                 
                 if ( argc < 10 )
                     return MX_INVALID_ARGUMENT_COUNT;
                 
                 mxgridref loc( GET_LOCIDX(id), GET_LOCIDY(id) );
 
-                mxlocinfo* locinfo = new mxlocinfo( loc, NULL, slf_none )  ;
+                flags32_t f = slf_none;
+                
+#if defined(_TUNNELS_)
+                if (ISARG("TUNNELINFO")) {
+                    f = slf_tunnel;
+                }
+#endif
+
+                mxlocinfo* locinfo = new mxlocinfo( loc, nullptr, f )  ;
         
                 argv[0] = (s32)9;
                 argv[1] = locinfo->flags ;
                 argv[2] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-
-                
-                
                 argv[3] = locinfo->foe.warriors ;
                 argv[4] = locinfo->foe.riders ;
                 argv[5] = locinfo->friends.warriors ;
@@ -719,8 +724,8 @@ namespace tme {
                 argv[7] = locinfo->regiments.warriors ;
                 argv[8] = locinfo->regiments.riders ;
                         
-#if defined(_DDR_)
-                if ( locinfo->mapsqr.IsTunnelPassageway()) {
+#if defined(_TUNNELS_)
+                if ( locinfo->mapsqr.IsTunnelObject()) {
                     argv[10] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[9] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else
