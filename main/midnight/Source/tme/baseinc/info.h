@@ -284,6 +284,14 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         MAP_FLAG_PROPERTY( IsStronghold,    lf_stronghold)
         MAP_FLAG_PROPERTY( IsRouteNode,     lf_routenode)
 
+#if defined(_TUNNELS_)
+        MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
+        MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
+        bool HasTunnelExit() const ;
+        bool HasTunnelEntrance() const ;
+        bool IsTunnelObject() const ;
+#endif
+
 #if defined(_DDR_)
         MAP_FLAG_PROPERTY( HasObject,       lf_object)
 #endif
