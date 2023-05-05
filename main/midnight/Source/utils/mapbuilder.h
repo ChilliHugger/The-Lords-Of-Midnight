@@ -78,6 +78,18 @@ public:
     Vector<map_object*>   here;
 };
 
+typedef struct loc_info_t {
+    mxterrain_t     terrain;
+    mxid            object;
+    mxid            object_tunnel;
+    mxid            area;
+    u8              climate;
+    u8              density;
+    u8              tunnel;
+    flags32         flags;
+    flags32         discovery_flags;
+} loc_info_t ;
+
 
 class mapbuilder : public Ref
 {
@@ -119,7 +131,7 @@ public:
 private:
     flags32                 flags;
     MapInfo_t               info;
-    maplocation*            mapdata;
+    loc_info_t*             mapdata;
 public:
     size                    mapsize;
     size                    screensize;

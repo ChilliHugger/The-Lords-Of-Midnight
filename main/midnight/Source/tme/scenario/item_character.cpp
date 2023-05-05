@@ -312,7 +312,8 @@ namespace tme {
             // info->flags.Set(lif_rest);
             
             mxthing_t thing = (mxthing_t)info->mapsqr.object;
-            if ( info->mapsqr.IsTunnelPassageway() && !IsInTunnel() )
+
+            if ( info->mapsqr.IsTunnelObject() && !IsInTunnel() )
                 thing=OB_NONE;
             
             // can we fight ?

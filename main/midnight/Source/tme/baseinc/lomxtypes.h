@@ -834,8 +834,8 @@ namespace tme {
             lf_looked_at        = MXBIT(16),    // has been stood in front of
             lf_visited          = MXBIT(17),    // player has visited this location
             lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
-            lf_tunnel_visited   = MXBIT(19),    // played has visited the tunnel location
-            lf_unused21         = MXBIT(20),    // ** currently not used **
+            lf_tunnel_visited   = MXBIT(19),    // player has visited the tunnel location
+            lf_tunnel_object    = MXBIT(20),    // object/thing is in tunnel
 
 #if defined(_DDR_)
             lf_object           = MXBIT(21),    // object to take

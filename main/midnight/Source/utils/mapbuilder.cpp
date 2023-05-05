@@ -139,7 +139,7 @@ mapbuilder* mapbuilder::build ( void )
     
     u32 size = mapsize.cx * mapsize.cy;
     
-    mapdata = static_cast<maplocation*>(malloc(size*sizeof(maplocation)));
+    mapdata = static_cast<loc_info_t*>(malloc(size*sizeof(loc_info_t)));
     terrain = static_cast<u32*>(malloc(size*sizeof(u32)));
     terrain_discovery = static_cast<u32*>(malloc(size*sizeof(u32)));
     critters = static_cast<u32*>(malloc(size*sizeof(u32)));
@@ -171,7 +171,7 @@ mapbuilder* mapbuilder::build ( void )
 mapbuilder* mapbuilder::updateTerrain()
 {
     maplocation m;
-    maplocation* dst = mapdata ;
+    loc_info_t* dst = mapdata ;
     
     /*
      Discover map uses the following flags
@@ -196,11 +196,9 @@ mapbuilder* mapbuilder::updateTerrain()
             loc_t loc(loc_start.x+x,loc_start.y+y);
             
             TME_GetLocation(m,loc);
-            
+            dst->flags = m.flags;
             dst->terrain = m.terrain ;
             dst->density=0;
-            dst->flags=m.flags;
-            dst->object=GET_ID(m.object);
 #if defined(_TUNNELS_)
             dst->tunnel=0;
             dst->object_tunnel = GET_ID(m.object_tunnel);
@@ -232,8 +230,8 @@ mapbuilder* mapbuilder::updateTerrain()
 
 mapbuilder* mapbuilder::updateDensityMap()
 {
-    maplocation* dst = nullptr ;
-    maplocation* src = nullptr;
+    loc_info_t* dst = nullptr ;
+    loc_info_t* src = nullptr;
 
     u8 density=0;
     
@@ -386,7 +384,7 @@ mapbuilder* mapbuilder::updateLayers()
     bool show_critters = checkFlags(mapflags::show_critters);
     bool show_all_critters = checkFlags(mapflags::show_all_critters);
     
-    maplocation*    m = mapdata;
+    loc_info_t*    m = mapdata;
     terraininfo t;
     object o;
     
@@ -409,13 +407,13 @@ mapbuilder* mapbuilder::updateLayers()
         
         bool discovery_tunnelseen =  m->discovery_flags.Is(lf_tunnel_looked_at);
         bool discovery_tunnelvisited = m->discovery_flags.Is(lf_tunnel_visited) ;
-        bool passageway = m->flags.Is(lf_tunnel) && ! m->flags.Is(lf_tunnel_exit|lf_tunnel_entrance);
+        bool tunnelobject = m->flags.Is(lf_tunnel_object);
 #else
         bool tunnelseen = false;
         bool tunnelvisited = false ;
         bool discovery_tunnelseen = false;
         bool discovery_tunnelvisited = false ;
-        bool passageway = false;
+        bool tunnelobject = false;
 #endif
         bool visible = seen || visited || discovery_seen || discovery_visited;
               
@@ -451,14 +449,17 @@ mapbuilder* mapbuilder::updateLayers()
         mxthing_t show_thing = OB_NONE;
         
         // critters
-#if defined(_TUNNELS_)
-        bool show_critter = ( passageway && (tunnelseen||tunnelvisited) ) || (!passageway && (seen && (visited || looked_at))) ;
-        if ( (show_critter || show_all_critters ) && show_critters  ) {
-            show_thing = thing;
+#if defined(_LOM_)
+        if ( ((seen && (visited || looked_at)) || show_all_critters ) && show_critters )  {
+                show_thing = thing;
         }
-#else
-        if ( ((seen && (visited || looked_at)) || show_all_critters ) && show_critters ) {
-            show_thing = thing;
+#endif
+#if defined(_TUNNELS_)
+        bool show_critter = ( tunnelobject && (tunnelseen||tunnelvisited) )
+            || (!tunnelobject && (seen && (visited || looked_at))) ;
+            
+        if ( (show_critter || show_all_critters ) && show_critters  )  {
+                show_thing = thing;
         }
 #endif
         
@@ -648,11 +649,10 @@ mapbuilder* mapbuilder::updateCharacters()
 mapbuilder* mapbuilder::updateRegiments()
 {
     regiment r;
-    maplocation m;
     
     regiments.clear();
     
-   if  (!checkFlags(mapflags::show_enemy_armies) )
+    if  (!checkFlags(mapflags::show_enemy_armies) )
        return this;
        
     // get armies
@@ -685,7 +685,6 @@ mapbuilder* mapbuilder::updateRegiments()
 mapbuilder* mapbuilder::updateStrongholds()
 {
     stronghold s;
-    maplocation m;
     
     // get armies
     c_mxid tme_strongholds;
