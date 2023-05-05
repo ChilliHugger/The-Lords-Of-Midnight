@@ -824,9 +824,9 @@ namespace tme {
 
 #if defined(_TUNNELS_)
             lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
-            lf_tunnel_visited   = MXBIT(19),    // played has visited the tunnel location
+            lf_tunnel_visited   = MXBIT(19),    // player has visited the tunnel location
+            lf_tunnel_object    = MXBIT(20),    // object/thing is in tunnel
 #endif
-            lf_unused21         = MXBIT(20),    // ** currently not used **
 
 #if defined(_DDR_)
             lf_object           = MXBIT(21),    // object to take

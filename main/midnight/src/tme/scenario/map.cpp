@@ -775,7 +775,7 @@ mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
 #endif
     
 #if defined(_TUNNELS_)
-    if ( l.IsTunnelPassageway() ) {
+    if ( l.IsTunnelObject() ) {
         // location is a passageway
         if ( c->IsInTunnel() )
             return (mxthing_t)l.object ;
@@ -975,11 +975,11 @@ bool mxloc::HasTunnelEntrance() const
     return flags & lf_tunnel_entrance ;
 }
 
-bool mxloc::IsTunnelPassageway() const
+bool mxloc::IsTunnelObject() const
 {
     mxterrain_t t = mx->scenario->toScenarioTerrain((mxterrain_t)terrain);
     #if defined(_LOM_)
-    return HasTunnel() && (t ==TN_PLAINS || t==TN_MOUNTAIN || t==TN_FOREST || t==TN_DOWNS ) ;
+    return HasTunnel() && (t ==TN_PLAINS || t==TN_MOUNTAIN || t==TN_FOREST || t==TN_DOWNS || t==TN_FROZENWASTE) ;
     #endif
     
     #if defined(_DDR_)

@@ -212,7 +212,7 @@ mapbuilder* mapbuilder::updateTerrain()
             
             dst->terrain = m.terrain ;
             dst->density=0;
-#if defined(_TUNNELS)
+#if defined(_TUNNELS_)
             dst->tunnel=0;
             dst->object_tunnel = GET_ID(m.object_tunnel);
 #endif
@@ -430,13 +430,13 @@ mapbuilder* mapbuilder::updateLayers()
         bool tunnelvisited = m->flags.Is(lf_tunnel_visited) || debug_map;
         bool discovery_tunnelseen =  m->discovery_flags.Is(lf_tunnel_looked_at);
         bool discovery_tunnelvisited = m->discovery_flags.Is(lf_tunnel_visited) ;
-        bool passageway = m->flags.Is(lf_tunnel) && ! m->flags.Is(lf_tunnel_exit|lf_tunnel_entrance);
+        bool tunnelobject = m->flags.Is(lf_tunnel_object);
 #else
         bool tunnelseen = false;
         bool tunnelvisited = false ;
         bool discovery_tunnelseen = false;
         bool discovery_tunnelvisited = false ;
-        bool passageway = false;
+        bool tunnelobject = false;
 #endif
         bool visible = seen || visited || discovery_seen || discovery_visited;
               
@@ -477,8 +477,10 @@ mapbuilder* mapbuilder::updateLayers()
                 show_thing = thing;
         }
 #endif
-#if defined(_TUNNELS)
-        bool show_critter = ( passageway && (tunnelseen||tunnelvisited) ) || (!passageway && (seen && (visited || looked_at))) ;
+#if defined(_TUNNELS_)
+        bool show_critter = ( tunnelobject && (tunnelseen||tunnelvisited) )
+            || (!tunnelobject && (seen && (visited || looked_at))) ;
+            
         if ( (show_critter || show_all_critters ) && show_critters  )  {
                 show_thing = thing;
         }
@@ -492,7 +494,7 @@ mapbuilder* mapbuilder::updateLayers()
             TME_GetObject(o,MAKE_ID(IDT_OBJECT,show_thing));
             obj_data_t* d = (obj_data_t*)o.userdata ;
             if ( d ) {
-#if defined(_TUNNELS)
+#if defined(_TUNNELS_)
                 if ( show_thing == (mxthing_t)m->object_tunnel ) {
                     tunnel_critters[ii] = d->mapcell ;
                 }else{

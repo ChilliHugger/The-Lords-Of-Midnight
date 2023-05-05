@@ -329,7 +329,7 @@ namespace tme {
             
             mxthing_t thing = (mxthing_t)info->mapsqr.object;
 #if defined(_TUNNELS_)
-            if ( info->mapsqr.IsTunnelPassageway() && !IsInTunnel() )
+            if ( info->mapsqr.IsTunnelObject() && !IsInTunnel() )
                 thing=OB_NONE;
 #endif
             

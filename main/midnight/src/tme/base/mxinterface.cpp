@@ -216,9 +216,9 @@ namespace tme {
                 
                 out->object = IDT_NONE ;
                 
-#if defined(_TUNNELS_)
+#if defined(_TUNNELS_)                
                 out->object_tunnel = IDT_NONE ;
-                if ( m.IsTunnelPassageway() )
+                if ( m.IsTunnelObject() )
                     out->object_tunnel = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
                 else
 #endif
@@ -240,6 +240,8 @@ namespace tme {
                     out->flags.Set(lf_tunnel_exit);
                 if ( m.HasTunnelEntrance() )
                     out->flags.Set(lf_tunnel_entrance);
+                if ( m.IsTunnelObject() )
+                    out->flags.Set(lf_tunnel_object);
 #endif
                     
 #if defined(_DDR_)
@@ -678,7 +680,7 @@ namespace tme {
 #endif
 
 #if defined(_TUNNELS_)
-                if ( locinfo->mapsqr.IsTunnelPassageway()) {
+                if ( locinfo->mapsqr.IsTunnelObject()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[12] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else
@@ -723,7 +725,7 @@ namespace tme {
                 argv[8] = locinfo->regiments.riders ;
                         
 #if defined(_TUNNELS_)
-                if ( locinfo->mapsqr.IsTunnelPassageway()) {
+                if ( locinfo->mapsqr.IsTunnelObject()) {
                     argv[10] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[9] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }else

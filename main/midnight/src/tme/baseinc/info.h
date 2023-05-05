@@ -289,7 +289,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
         bool HasTunnelExit() const ;
         bool HasTunnelEntrance() const ;
-        bool IsTunnelPassageway() const ;
+        bool IsTunnelObject() const ;
 #endif
 
 #if defined(_DDR_)
