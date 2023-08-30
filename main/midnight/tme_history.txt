@@ -1,5 +1,15 @@
 The Midnight Engine
 
+Build (46)
+1. FIXED: DDR - Think page incorrectly shows Person and Army info outside of tunnels
+2. ADDED: Game Difficulty - time affects seeking
+3. ADDED: Game Difficulty - time affects hiding
+4. ADDED: Game Difficulty - time affects recruiting
+5. ADDED: Game Option - Don't swap after successful approach
+6. ADDED: Game Option - Auto Seek enhancement
+7. ADDED: Game Option - Auto Approach enhancement
+8. UPDATED: Android target sdk 33
+
 Build (45)
 1. FIXED: [tme] - DDR - strongholds don't change Occupier if the race is the same
 2. FIXED: [tme] - DDR - Night processing hangs because of circular lieges
