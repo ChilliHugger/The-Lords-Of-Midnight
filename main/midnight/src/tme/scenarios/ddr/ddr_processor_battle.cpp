@@ -87,7 +87,9 @@ namespace tme {
             CONTINUE_IF(c->IsInTunnel());
 
             CONTINUE_IF(c->Location() != character->Location());
-
+            
+            CONTINUE_IF(c->IsBattleOver());
+            
             characters_here.Add(c);
             if ( !character->IsFriend(c) )
                 enemies++;
@@ -99,23 +101,19 @@ namespace tme {
             return;
         }
         
+        // DEBUG output
         for ( u32 ii=0; ii<characters_here.Count(); ii++ )
         {
-            mxcharacter* attacker = static_cast<mxcharacter*>(characters_here[ii]);
+            auto attacker = static_cast<mxcharacter*>(characters_here[ii]);
             MXTRACE("  [%d:%d] %-16s", (int)ii, (int)attacker->Id(), attacker->Symbol().c_str());
         }
+        // END DEBUG output
         
         // give all the bad guys first hit
         for ( u32 ii=0; ii<characters_here.Count(); ii++ )
         {
-            mxcharacter* attacker = static_cast<mxcharacter*>(characters_here[ii]);
-            
-            // TODO: is character still alive?
-            // still at this location?
-            
-            //attacker->Flags().Set(cf_inbattle);
-            //attacker->battleloc = attacker->Location();
-            
+            // TODO: Potentially the attacker could be dead or displaced?
+            auto attacker = static_cast<mxcharacter*>(characters_here[ii]);
             MXTRACE("  skirmish: %-16s", attacker->Symbol().c_str() );
             BattleVsCharacter(attacker);
         }
@@ -175,10 +173,8 @@ namespace tme {
             return;
         
         // find someone to fight
-        ddr_character* defender = static_cast<ddr_character*>(characters_here[start]);
-        while ( defender->IsDead() || defender->NormalisedLoyalty() == loyalty ) {
-            
-            // TODO: Defender may have been displaced
+        auto defender = static_cast<ddr_character*>(characters_here[start]);
+        while ( defender->IsBattleOver() || defender->IsDead() || defender->NormalisedLoyalty() == loyalty ) {
             
             start++;
             if ( start == characters_here.Count() )
@@ -187,7 +183,6 @@ namespace tme {
                 return;
             
             defender = static_cast<ddr_character*>(characters_here[start]);
-            
         }
         
         defender->Flags().Set(cf_inbattle);
@@ -213,6 +208,7 @@ namespace tme {
                 
                 loseFight( defender, defenders_success );
                 if ( defender->IsDead() ) {
+                    defender->LostBattle(false);
                     attacker_character->Flags().Set(cf_wonbattle|cf_killed_foe);
                     attacker_character->fighting_against=defender;
                     MXTRACE("    Defender: %-16s is dead killed by %s", defender->Symbol().c_str(), attacker->Symbol().c_str() );
@@ -270,20 +266,11 @@ namespace tme {
             
             if ( defender->Type() == IDT_CHARACTER ) {
                 
-                ddr_character* defender_character = static_cast<ddr_character*>(defender);
+                auto defender_character = static_cast<ddr_character*>(defender);
                 
-                // defender flees
-                defender_character->Displace();
-                MXTRACE("      Defender: %-16s is displaced", defender->Symbol().c_str() );
-                
-                // if we are a member of the group, then we need to leave the group
-                if ( defender_character->IsFollowing() )
-                    defender_character->Cmd_UnFollow(defender_character->Following());
-                
-                // if we are leading a group, then we must disband the group
-                if ( defender_character->HasFollowers() )
-                    defender_character->Cmd_DisbandGroup();
-                
+                MXTRACE("      Defender: %-16s lost battle", defender_character->Symbol().c_str() );
+     
+                defender_character->LostBattle(true);
                 defender_character->Flags().Reset(cf_wonbattle);
                 defender_character->DecreaseDespondency(32);
                 
@@ -313,31 +300,28 @@ namespace tme {
 
             }
         }
-        
-        
+                
         //MXTRACE("Defender: %s army = (%d)", (LPSTR)defender->Symbol(), (int)getArmySize(defender) );
 
-        
         if ( defender->Type() == IDT_CHARACTER ) {
             // character->lost = killed;
-            ddr_character* defender_character = static_cast<ddr_character*>(defender);
+            auto defender_character = static_cast<ddr_character*>(defender);
             defender_character->battlelost=killed;
             defender_character->setArmyLost(killed);
             defender_character->Flags().Set(cf_inbattle);
             defender_character->battleloc = defender_character->Location();
 
-            
         } else if ( defender->Type() == IDT_STRONGHOLD ) {
-            mxstronghold* defender_stronghold = static_cast<mxstronghold*>(defender);
+            auto defender_stronghold = static_cast<mxstronghold*>(defender);
             defender_stronghold->Lost(killed);
         }
         
         if ( attacker->Type() == IDT_CHARACTER ) {
-            ddr_character* attacker_character = static_cast<ddr_character*>(attacker);
+            auto attacker_character = static_cast<ddr_character*>(attacker);
             attacker_character->battleslew = killed;
             attacker_character->setArmyKilled(killed);
         } else if ( attacker->Type() == IDT_STRONGHOLD ) {
-            mxstronghold* attacker_stronghold = static_cast<mxstronghold*>(attacker);
+            auto attacker_stronghold = static_cast<mxstronghold*>(attacker);
             attacker_stronghold->Killed(killed);
         }
         
@@ -370,8 +354,6 @@ namespace tme {
         }
         
         character->Cmd_Dead();
-        
-        
     }
 
     //RACE_MOONPRINCE         EQU 00h

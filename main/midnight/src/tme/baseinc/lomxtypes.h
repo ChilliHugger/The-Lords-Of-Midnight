@@ -856,6 +856,7 @@ namespace tme {
             cf_followers        = MXBIT(21),    // has followers
             cf_preparesbattle   = MXBIT(22),    // prepares to do battle
             cf_approaching      = MXBIT(23),    // we are approaching a lord (DDR)
+            cf_battleover       = MXBIT(24),    // character will not fight again this round
         };
 
         enum CHARACTERTRAITS {

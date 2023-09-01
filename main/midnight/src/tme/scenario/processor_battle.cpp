@@ -177,10 +177,9 @@ mxcharacter* character;
         
         // build the foe list
         MakeFriendOrFoeList ( character );
-        if ( nFoes )
+        if ( nFoes ) {
             character->battleslew = Fight( character->strength, character->energy+128, foes, nFoes );
-        //else
-        //    character->battleslew = 0;
+        }
     }
 }
 
@@ -251,12 +250,12 @@ u32 mxbattle::Fight ( u32 attacks, u32 success, c_army& foes, u32& nFoes )
 
 void mxbattle::CheckVictors ( void )
 {
-u32                    ii;
-mxbattlestatus_t        battlestatus;
-mxstronghold*    stronghold;
-mxregiment*        regiment;
-mxcharacter*    character;
-mxunit*        unit;
+u32                 ii;
+mxbattlestatus_t    battlestatus;
+mxstronghold*       stronghold;
+mxregiment*         regiment;
+mxcharacter*        character;
+mxunit*             unit;
 
     MakeFriendOrFoeList();
     
@@ -323,19 +322,14 @@ mxunit*        unit;
             case AT_CHARACTER:
                 character = (mxcharacter*)army->parent;
                 
-                if ( army->type == UT_RIDERS ) 
-                    unit = &character->riders  ;
-                else
-                    unit = &character->warriors ;
+                unit = army->type == UT_RIDERS
+                    ? static_cast<mxunit*>(&character->riders)
+                    : static_cast<mxunit*>(&character->warriors) ;
 
                 unit->Lost(unit->Total()-army->total);
                 unit->Total(army->total); 
                 unit->Killed(army->killed);
-
-                // reduce armies energy
-                // unit->Energy ( MAX(0,(unit->Energy() - (s32)sv_battle_default_energy_drain)) );
                 unit->Energy ( BSub(unit->Energy(), (u32)sv_battle_default_energy_drain, 0) );
-
                 break;
                 
             default:
@@ -350,13 +344,7 @@ mxunit*        unit;
         if ( character->Race() == RA_MIDWINTER )
             continue;
 
-        
-        // reduce characters energy
-        //character->energy -= (u32)sv_battle_default_char_energy_drain ;
-        //if ( character->energy <= 0 )
-        //    character->energy=0;
         character->energy = BSub(character->energy, (u32)sv_battle_default_char_energy_drain, 0);
-        
         character->battleloc = info->Location() ;
 
         if ( battlestatus==BA_CONTINUES ){
@@ -365,7 +353,7 @@ mxunit*        unit;
             character->Flags().Set(cf_wonbattle);
         }else{
             character->LostFight();
-            character->Displace();
+            character->LostBattle(true);
         }
     }
 
@@ -374,8 +362,6 @@ mxunit*        unit;
 
     // The bloody sword of battle brings death in the domain of
     // ashimar and of Valethor
-
-    //mx->text->ainfo = mx->AreaById(area);
     mx->text->loc = info->Location();
     if ( battlesfought==0 ) {
         mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_BATTLE2)) ;

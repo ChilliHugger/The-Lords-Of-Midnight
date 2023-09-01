@@ -406,13 +406,14 @@ namespace tme {
         {
         mxgridref    loc;
 
-            if ( IsDead() )
+            if ( IsDead() || IsFollowing() || HasFollowers() )
                 return;
-
+                
             for (;; ) {
                 loc = Location() + (mxdir_t)mxrandom(0, 7);
                 
                 if ( !mx->scenario->isLocationImpassable( loc, this ) ) {
+                    Flags().Reset(cf_battleover);
                     location = loc ;
                     if ( IsRecruited() ) {
                         EnterLocation ( loc );
@@ -423,6 +424,35 @@ namespace tme {
             }
         }
         
+        void mxcharacter::LostBattle(bool canFlee)
+        {
+            // we might not have displaced the lord due to grouping
+            // so mark them as not being able to fight anyone else in this round
+            Flags().Set(cf_battleover);
+
+            if ( IsFollowing() ) {
+                if ( mx->Difficulty() == DF_HARD ) {
+                    // if we are a member of the group, then we need to leave the group
+                    Cmd_UnFollow(Following());
+                }else{
+                    return;
+                }
+            }
+            
+            if ( HasFollowers() ) {
+                if ( mx->Difficulty() == DF_HARD ) {
+                    // if we are leading a group, then we must disband the group
+                    Cmd_DisbandGroup();
+                }else{
+                    return;
+                }
+            }
+
+            if (canFlee) {
+                // lord flees
+                Displace();
+            }
+        }
 
         void mxcharacter::SetLastCommand ( command_t cmd, mxid id )
         {
@@ -1052,35 +1082,35 @@ namespace tme {
             if ( Following() != c )
                 return MX_FAILED ;
             
-            following->RemoveFollower( this );
+            c->RemoveFollower( this );
             
-            CommandTakesTime(TRUE);
+            CommandTakesTime(true);
             
             return MX_OK ;
         }
     
         bool mxcharacter::AddFollower ( mxcharacter* character )
         {
-            if ( character->Following() != NULL )
-                return FALSE;
+            if ( character->Following() != nullptr )
+                return false;
             followers+=1;
             if ( followers > 0 )
                 flags.Set(cf_followers);
             character->following=this;
-            return TRUE;
+            return true;
         }
 
         bool mxcharacter::RemoveFollower ( mxcharacter* character )
         {
             if ( character->Following() != this )
-                return FALSE;
+                return false;
             followers-=1;
             if ( followers == 0 )
                 flags.Reset(cf_followers);
             
-            character->following = NULL ;
+            character->following = nullptr ;
             
-            return TRUE;
+            return true;
         }
     
         MXRESULT mxcharacter::Cmd_DisbandGroup ( void )
