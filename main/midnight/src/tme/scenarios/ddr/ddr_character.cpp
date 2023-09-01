@@ -23,6 +23,7 @@
 #include "scenario_ddr.h"
 #include "scenario_ddr_internal.h"
 #include "ddr_processor_battle.h"
+#include "../../utils/savegamemapping.h"
 
 using namespace tme::scenarios ;
 
@@ -64,7 +65,11 @@ namespace tme {
        
             if ( mx->isSavedGame() )
                 ar >> battlelost ;
-            
+
+            // https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/178
+            if ( tme::mx->SaveGameVersion() < 15 && tme::mx->isSavedGame() ) {
+                flags = utils::UpdateDDRCharacterFlags(flags);
+            }
         }
 
     }
