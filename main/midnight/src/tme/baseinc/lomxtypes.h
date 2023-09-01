@@ -846,10 +846,8 @@ namespace tme {
 
             cf_ai               = MXBIT(12),    // character is an AI character
             cf_killed_foe       = MXBIT(13),    // character killed his foe
-            
-            // TODO: Resolve these
-            // Do we need to be backward compatible?
-#if defined(_LOM_)
+            cf_unused1          = MXBIT(14),    //
+            cf_unused2          = MXBIT(15),    //
             cf_resting          = MXBIT(16),    // currently resting
             cf_inbattle         = MXBIT(17),    // currently in battle
             cf_wonbattle        = MXBIT(18),    // just won a battle
@@ -858,18 +856,6 @@ namespace tme {
             cf_followers        = MXBIT(21),    // has followers
             cf_preparesbattle   = MXBIT(22),    // prepares to do battle
             cf_approaching      = MXBIT(23),    // we are approaching a lord (DDR)
-#endif
-#if defined(_DDR_)
-            cf_resting          = MXBIT(14),    // currently resting
-            cf_inbattle         = MXBIT(15),    // currently in battle
-            cf_wonbattle        = MXBIT(16),    // just won a battle
-            cf_tunnel           = MXBIT(17),    // currently in a tunnel (DDR)
-            cf_usedobject       = MXBIT(18),    // has used his special object (DDR)
-            cf_followers        = MXBIT(19),    // has followers
-            cf_preparesbattle   = MXBIT(20),    // prepares to do battle
-            cf_approaching      = MXBIT(21),    // we are approaching a lord (DDR)
-#endif
-            
         };
 
         enum CHARACTERTRAITS {
@@ -971,10 +957,10 @@ namespace tme {
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_DDR_)
-    #define SAVEGAMEVERSION     14
+    #define SAVEGAMEVERSION     15
 #endif
 #if defined(_LOM_)
-    #define SAVEGAMEVERSION     14
+    #define SAVEGAMEVERSION     15
 #endif
 
 
