@@ -474,7 +474,7 @@ namespace tme {
         TimeCost += raceAdjustment;
         
         // are we moving diagonally?
-        if ( Looking()&1 )
+        if ( IS_DIAGONAL(Looking()) )
             TimeCost += rinfo->DiagonalMovementModifier();
 
         // check mist

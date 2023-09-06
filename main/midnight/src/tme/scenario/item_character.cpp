@@ -15,6 +15,8 @@
  */
 
 #include "../baseinc/tme_internal.h"
+#include "../scenario/helpers/race_terrain_movement_modifier.h"
+
 #include <memory>
 #include <string>
 
@@ -604,7 +606,7 @@ namespace tme {
             TimeCost = rinfo->InitialMovementValue();
 
             // are we moving diagonally?
-            if ( Looking()&1 )
+            if ( IS_DIAGONAL(Looking()) )
                 TimeCost += rinfo->DiagonalMovementModifier();
 
             // are we on horseback?
@@ -612,7 +614,10 @@ namespace tme {
                 TimeCost = (s32) ((f64)TimeCost * rinfo->RidingMovementMultiplier()) ;
 
             // adjust for terrain
-            TimeCost += rinfo->TerrainMovementModifier((mxterrain_t)mx->gamemap->GetAt ( location ).terrain);
+            TimeCost += TME::helpers::RaceTerrainMovementModifier::Get(
+                Race(),
+                (mxterrain_t)mx->gamemap->GetAt ( location ).terrain
+            );
 
             // check for max out
             TimeCost = std::min<int>( TimeCost, (int)rinfo->MovementMax() );

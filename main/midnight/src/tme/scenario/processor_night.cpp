@@ -15,6 +15,8 @@
  */
 
 #include "../baseinc/tme_internal.h"
+#include "../baseinc/regiment_turn_processor.h"
+
 #include <string>
 
 namespace tme {
@@ -44,7 +46,6 @@ namespace tme {
             }
 
 #ifdef _LOM_
-            mxstronghold*    stronghold;
             // check all the lord that are not hidden and alive
             // and mark their locations as being of special interest
             // by setting the special bit on in the map data
@@ -59,15 +60,17 @@ namespace tme {
             // checking all the strongholds that don't belong to doomdark
             // and mark then on the map as being of special interest
             for (ii = 0; ii < sv_strongholds; ii++) {
-                stronghold=mx->StrongholdById(ii+1);
+                auto stronghold=mx->StrongholdById(ii+1);
                 if ( stronghold->OccupyingRace() != RA_DOOMGUARD )
                     mx->gamemap->SetLocationSpecial(stronghold->Location(),1);
             }
 
 #ifndef _TME_DEMO_MODE_
             // process all the regiments
-            for (ii = 0; ii < sv_regiments; ii++)
-                mx->RegimentById(ii+1)->Cmd_Night();
+            auto processor = new RegimentTurnProcessor();
+            for (ii = 0; ii < sv_regiments; ii++) {
+                processor->Process(mx->RegimentById(ii+1));
+            }
 #endif
             // remove mark where all the characters are
             for (ii = 0; ii < sv_characters; ii++)

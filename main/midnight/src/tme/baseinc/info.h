@@ -566,8 +566,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             DEFAULT_IMPLEMENTATION(mxrace);
 
-            virtual u32 TerrainMovementModifier( mxterrain_t terrain ) const;
-
             GET_PROPERTY ( u32, Success, success )
             GET_PROPERTY ( u32, InitialMovementValue, initialmovement )
             GET_PROPERTY ( s32, DiagonalMovementModifier, diagonalmodifier )
@@ -890,7 +888,6 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             DEFAULT_IMPLEMENTATION(mxregiment);
 
             virtual s32 BattleSuccess ( const mxlocinfo& locinfo );
-            virtual void Cmd_Night ( void );
 
             PROPERTY ( mxrace_t, Race, race )
             PROPERTY ( mxunit_t, Type, type )
@@ -906,39 +903,20 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             PROPERTY( u32, Total, total );
             PROPERTY( u32, Killed, killed );
             PROPERTY( u32, Lost, lost );
-
-            virtual void Target ( const mxitem* target );
-
-        protected:
-        // internal
-            virtual void NextTurn( void );
-            virtual void EndOfTurn( void );
-            virtual bool RetargetTarget ( void );
-            virtual void Cmd_Goto ( void );
-            virtual void Cmd_Wander ( void );
-            virtual void Cmd_Follow ( void );
-            virtual void Cmd_Route ( void );
-
-            mxgridref TargetLocation() const ;
+            PROPERTY( mxgridref, LastLocation, lastlocation );
 
         protected:
-            mxrace_t            race;
-            mxunit_t            type;
-            u32                 total;
-            mxid                targetid;
-            mxorders_t          orders;
-            u32                 delay;
-            u32                 success;
-            u32                 killed;
-            u32                 lost;
-            mxcharacter*        loyalty;
-            mxgridref           lastlocation;
-
-        // night processing and thus not required for storage
-            u32                 turns;
-            mxgridref           targetlocation;
-        //
-
+            mxrace_t        race;
+            mxunit_t        type;
+            u32             total;
+            mxid            targetid;
+            mxorders_t      orders;
+            u32             delay;
+            u32             success;
+            u32             killed;
+            u32             lost;
+            mxcharacter*    loyalty;
+            mxgridref       lastlocation;
         };
         // mxregiment
         

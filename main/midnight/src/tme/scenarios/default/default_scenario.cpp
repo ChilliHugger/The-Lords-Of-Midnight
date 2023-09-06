@@ -1613,7 +1613,7 @@ namespace tme {
             //
             if ( isintunnel ) {
                 mx->gamemap->SetTunnelVisible(loc, true);
-                if ( (dir&1) == 0 && mx->gamemap->IsTunnel(looked_at))
+                if ( !IS_DIAGONAL(dir) && mx->gamemap->IsTunnel(looked_at))
                     mx->gamemap->SetTunnelVisible(looked_at, true);
                 return;
             }
