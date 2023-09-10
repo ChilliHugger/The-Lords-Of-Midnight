@@ -275,7 +275,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         mxloc();
         ~mxloc();
         
-        void RemoveObject()                 { object = 0; }
+        void RemoveThing()                 { thing = 0; flags &= ~lf_thing; }
+        MAP_FLAG_PROPERTY( HasObject,       lf_object)
         MAP_FLAG_PROPERTY( IsInDomain,      lf_domain)
         MAP_FLAG_PROPERTY( IsSpecial,       lf_special)
         MAP_FLAG_PROPERTY( IsVisible,       lf_seen)
@@ -285,7 +286,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 #if defined(_DDR_)
         MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
         MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
-        MAP_FLAG_PROPERTY( HasObject,       lf_object)
 #endif
         MAP_FLAG_PROPERTY( HasArmy,         lf_army)
         MAP_FLAG_PROPERTY( HasCharacter,    lf_character)
@@ -297,13 +297,16 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool HasTunnelEntrance() const ;
         bool IsTunnelPassageway() const ;
 #endif
+        inline mxthing_t Thing() { return (mxthing_t) thing; }
+        inline mxterrain_t Terrain() { return (mxterrain_t) terrain; }
         
     public:
-        u64 terrain             : 7 ; // 128 ( 16x8 )
-        u64 variant             : 3 ; // 8 ( 8 )
-        u64 climate             : 7 ; // 128 ( 16x8 )
-        u64 object              : 9 ; // 512 ( 16x8 )
-        u64 area                : 10 ; // 1024 ( 64x16 )
+        u64 terrain             : 7 ; // 128
+        u64 variant             : 3 ; // 8
+        u64 climate             : 7 ; // 128
+        u64 thing               : 6 ; // 64
+        u64 unused              : 3 ; // 8
+        u64 area                : 10 ; // 1024
         u64 flags               : 28 ; // ( lf_domain|lf_mist|lf_tunnel )
     };
     // class mxloc
@@ -339,7 +342,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool IsLocationBlock( mxgridref loc ) ;
         bool IsLocOnMap ( mxgridref loc ) const ;
         bool IsLocationVisible( mxgridref loc );
-        
+        bool HasObject( mxgridref l );
+        void SetObject( mxgridref l, bool value );
         void SetLocationArmy( mxgridref loc, u32 number );
         void SetLocationCharacter( mxgridref loc, u32 number );
         void SetLocationSpecial( mxgridref loc, u32 number );
@@ -355,12 +359,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool IsTunnelVisible( mxgridref loc );
         bool IsTunnel( mxgridref loc );
         bool IsTunnelPassageway( mxgridref l );
-        bool HasObject( mxgridref l );
-        void SetObject( mxgridref l, bool value );
         void MoveMists ( void );
         void PutThingsOnMap ( void );
 #endif
-        mxthing_t getLocationObject( const mxcharacter* c, mxgridref loc );
+        mxthing_t getLocationThing( const mxcharacter* c, mxgridref loc );
 
         void ResetVisibleRange();
         void CheckVisibleRange( mxgridref l );
@@ -790,6 +792,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             FLAG_PROPERTY( IsWeapon,    of_weapon )
             FLAG_PROPERTY( MapRemove,   of_remove )
             FLAG_PROPERTY( IsUnique,    of_unique )
+            FLAG_PROPERTY( IsThing,     of_thing )
             
             bool IsCarried() const ;
 
@@ -798,6 +801,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             std::string& Name()          { return name ; }
 
         public:
+            mxthing_t           thing;  // used for placing
             mxthing_t           kills;
             std::string         name;
             std::string         description;

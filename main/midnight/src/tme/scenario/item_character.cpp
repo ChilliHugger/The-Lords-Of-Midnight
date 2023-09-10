@@ -322,21 +322,20 @@ namespace tme {
             // rest
             info->flags.Set(lif_rest);
             
-            mxthing_t thing = (mxthing_t)info->mapsqr.object;
+            auto thing = info->mapsqr.Thing();
 #if defined(_DDR_)
             if ( info->mapsqr.IsTunnelPassageway() && !IsInTunnel() )
-                thing=OB_NONE;
+                thing=TH_NONE;
 #endif
             
             // can we fight ?
-            // can we fight the object currently in this location?
-            mxobject* obj = mx->ObjectById(thing);
+            // can we fight the thing currently in this location?
+            auto obj = mx->ObjectFromThing(thing);
             if ( CheckFightObject ( obj )  ) {
                 info->flags.Set(lif_fight); // = TRUE ;
                 info->fightthing = thing ;
             }
 
-            
             // attack
             if ( info->flags.Is(lif_enterbattle) ) {
             // if a battle is allowed and we don't have any courage
@@ -645,7 +644,7 @@ namespace tme {
             
             // auto seek
             if ( perform_seek ) {
-                if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
+                if ( mx->gamemap->getLocationThing(this, Location())!=TH_NONE ) {
                     Cmd_Seek();
                 }
             }
@@ -959,45 +958,44 @@ namespace tme {
 
         mxobject* mxcharacter::Cmd_Fight ( void )
         {
-        bool    objectautokill = false ;
-        int        friends_armies=0;
+        bool objectautokill = false ;
+        int friends_armies = 0;
 
             SetLastCommand ( CMD_FIGHT, IDT_NONE );
 
             std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
             
-            auto fightobject = mx->ObjectById(info->fightthing) ;
+            auto fightthing = mx->ObjectFromThing(info->fightthing) ;
             friends_armies = info->friends.armies ;
 
             // are we allowed to fight
             if ( !info->flags.Is(lif_fight) )
-                fightobject = nullptr ;
+                fightthing = nullptr ;
 
             // is there anything to fight
-            if ( fightobject == nullptr )
+            if ( fightthing == nullptr )
                 return nullptr ;
 
-            SetLastCommand ( CMD_FIGHT,SafeIdt(fightobject)) ;
+            SetLastCommand ( CMD_FIGHT,SafeIdt(fightthing)) ;
 
             auto oinfo = Carrying();
-            objectautokill = oinfo ? oinfo->CanDestroy(fightobject) : false ;
+            objectautokill = oinfo ? oinfo->CanDestroy(fightthing) : false ;
             
             // if there is any friends here
             // then we win by default
             if (  friends_armies == 0 && !objectautokill && !sv_cheat_always_win_fight ) {
-
                 LostFight();
-
+                
                 if ( IsDead() ) {
-                    killedbyobject = fightobject ;
-                    return fightobject;
+                    killedbyobject = fightthing ;
+                    return fightthing;
                 }
 
             }
 
             // we have killed the enemy
             //
-            mx->text->oinfo = fightobject;
+            mx->text->oinfo = fightthing;
 
             // describe that
             u32 message =  objectautokill ? oinfo->usedescription : SS_FIGHT ;
@@ -1007,9 +1005,9 @@ namespace tme {
             CommandTakesTime(true);
 
             // this does an auto write to the map!
-            mx->gamemap->GetAt( Location() ).RemoveObject();
+            mx->gamemap->GetAt( Location() ).RemoveThing();
 
-            return fightobject ;
+            return fightthing ;
         }
 
         MXRESULT mxcharacter::Cmd_Hide ( void )
@@ -1058,11 +1056,9 @@ namespace tme {
 
         mxthing_t mxcharacter::LocationThing() const
         {
-            mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
-            mxthing_t thing = (mxthing_t)mapsqr.object;
-            if ( thing == OB_NONE ) return thing;
-            mxobject* oinfo = mx->ObjectById ( thing );
-            return  oinfo->CanSee() ? thing : OB_NONE ;
+            auto thing = mx->gamemap->GetAt ( Location() ).Thing();
+            if ( thing == TH_NONE ) return thing;
+            return mx->ObjectFromThing ( thing )->CanSee() ? thing : TH_NONE ;
         }
 
         MXRESULT mxcharacter::Cmd_Follow ( mxcharacter* c )
@@ -1234,11 +1230,11 @@ namespace tme {
 
         mxobject* mxcharacter::Cmd_Seek ( void )
         {
-        mxthing_t    newobject;
+        mxthing_t    newthing;
         mxobject*    oinfo;
 
             u32 timeCost = 0;
-            bool removeObject = true;
+            bool removeThing = true;
             bool mikeseek = false;
 
             if ( mx->Difficulty() == DF_MEDIUM ) {
@@ -1255,18 +1251,18 @@ namespace tme {
             mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
             
 #if defined(_DDR_)
-            newobject = mx->gamemap->getLocationObject(this, Location());
+            newthing = mx->gamemap->getLocationThing(this, Location());
 #endif
 #if defined(_LOM_)
-            newobject = (mxthing_t)mapsqr.object ;
+            newthing = mapsqr.Thing() ;
             if ( location.x == 4 && location.y == 10 ) {
-                mikeseek=TRUE;
-                newobject=OB_GUIDANCE;
+                mikeseek = true;
+                newthing = TH_GUIDANCE;
             }
 #endif
             
         top:
-            oinfo = mx->ObjectById ( newobject );
+            oinfo = mx->ObjectFromThing ( newthing );
 
             if ( oinfo == nullptr ) {
                 time = BSub(time, timeCost, 0);
@@ -1279,15 +1275,15 @@ namespace tme {
             bool reset_msg=false;
 
 #if defined(_DDR_)
-            if ( newobject == OB_GUIDANCE )
+            if ( newthing == TH_GUIDANCE )
                 mx->SetLastActionMsg(mx->text->CookedSystemString(SS_GUIDANCE1, this));
             else
 #endif
                 mx->SetLastActionMsg(mx->text->CookedSystemString(SS_SEEK, this));
             
-            switch ( newobject ) {
+            switch ( newthing ) {
 
-                case OB_WILDHORSES:
+                case TH_WILDHORSES:
                     if ( IsAllowedHorse() ) {
                         flags.Set ( cf_riding );
                         //
@@ -1296,90 +1292,91 @@ namespace tme {
                     }
                     break;
 
-                case OB_SHELTER:
+                case TH_SHELTER:
                     timeCost = timeCost * 2;
                     IncreaseEnergy( (s32)sv_object_energy_shelter );
                     break;
 
 #if defined(_DDR_)
-                case OB_CLAWS:
+                case TH_CLAWS:
                     timeCost = 0;
                     time = sv_time_night;
                     reset_msg=true;
                     break;
-                case OB_FLAMES:
+                case TH_FLAMES:
                     timeCost = 0;
                     time = sv_time_dawn;
                     reset_msg=true;
                     break;
-                case OB_THORNS:
+                case TH_THORNS:
                     despondency=0;
                     reset_msg=true;
                     break;
-                case OB_BLOOD:
+                case TH_BLOOD:
                     despondency=MAX_DESPONDENCY;
                     reset_msg=true;
                     break;
-                case OB_LANGUOR:
+                case TH_LANGUOR:
                     energy=sv_object_energy_shadowsofdeath;
                     reset_msg=true;
                     break;
-                case OB_SPRINGS:
+                case TH_SPRINGS:
                     energy=sv_object_energy_watersoflife;
                     reset_msg=true;
                     break;
 #endif
                     
-                case OB_GUIDANCE:
+                case TH_GUIDANCE:
                     timeCost = timeCost * 2;
                     mx->scenario->GiveGuidance(this, (mikeseek?1:0) );
                     break;
 
-                case OB_SHADOWSOFDEATH:
+                case TH_SHADOWSOFDEATH:
                     energy = (u32)sv_object_energy_shadowsofdeath;
                     warriors.energy = (u32)sv_object_energy_shadowsofdeath;
                     riders.energy = (u32)sv_object_energy_shadowsofdeath;
                     reset_msg=true;
                     break;
 
-                case OB_WATERSOFLIFE:
+                case TH_WATERSOFLIFE:
                     energy = (u32)sv_object_energy_watersoflife;
                     warriors.energy = (u32)sv_object_energy_watersoflife;
                     riders.energy = (u32)sv_object_energy_watersoflife;
                     reset_msg=true;
                     break;
 
-                case OB_HANDOFDARK:
+                case TH_HANDOFDARK:
                     timeCost = 0;
                     time = sv_time_night;
                     reset_msg=true;
                     break;
 
-                case OB_CUPOFDREAMS:
+                case TH_CUPOFDREAMS:
                     timeCost = 0;
                     time = sv_time_dawn;
                     reset_msg=true;
                     break;
 
-                case OB_ICECROWN:
+                case TH_ICECROWN:
                     if ( IsAllowedIcecrown() ) {
                         timeCost = timeCost * 4;
                         Cmd_PickupObject();
                     }else{
-                        newobject = OB_NONE ;
+                        newthing = TH_NONE ;
                         goto top;
                     }
                     break;
 
-                case OB_MOONRING:
+                case TH_MOONRING:
                     if ( IsAllowedMoonring() ) {
                         timeCost = timeCost * 4;
                         Cmd_PickupObject();
                     }else{
-                        newobject = OB_NONE ;
+                        newthing = TH_NONE ;
                         goto top;
                     }
                     break;
+
 
                 default:
 
@@ -1389,7 +1386,7 @@ namespace tme {
                         if ( !sv_cheat_nasties_noblock ) {
                             Cmd_Fight();
                         } else {
-                            removeObject = false;
+                            removeThing = false;
                         }
 #endif  
                     } else
@@ -1399,7 +1396,7 @@ namespace tme {
 
                         // we can only pickup a new object if can we drop our current object
                         if ( carrying && !carrying->CanDrop() ) {
-                            newobject = OB_NONE ;
+                            newthing = TH_NONE ;
                             goto top;
                         }
 
@@ -1415,8 +1412,8 @@ namespace tme {
             }
 
 #if defined(_LOM_)
-            if ( oinfo && oinfo->MapRemove() && removeObject ) {
-                mapsqr.RemoveObject();
+            if ( oinfo && oinfo->MapRemove() && removeThing ) {
+                mapsqr.RemoveThing();
             }
 #endif
 #if defined(_DDR_)
@@ -1425,15 +1422,15 @@ namespace tme {
                 mx->SetLastActionMsg( mx->text->CookedSystemString( SS_SEEK, this) );
             }
             
-            if ( removeObject )
-                mapsqr.RemoveObject();
+            if ( removeThing )
+                mapsqr.RemoveThing();
 #endif
 
             time = BSub(time, timeCost, 0);
 
-            SetLastCommand ( CMD_SEEK, MAKE_ID(IDT_OBJECT,newobject) );
+            SetLastCommand ( CMD_SEEK, MAKE_ID(IDT_THING,newthing) );
 
-            return mx->ObjectById(newobject) ;
+            return mx->ObjectById(newthing) ;
         }
 
         MXRESULT mxcharacter::Cmd_DropObject ( void )
@@ -1441,45 +1438,30 @@ namespace tme {
             SetLastCommand ( CMD_DROPOBJECT, mxentity::SafeIdt(carrying) );
 
             mx->scenario->DropObject ( Location(), carrying );
-#if defined(_DDR_)
-            carrying->carriedby=NULL;
-#endif
-            carrying=NULL;
+            carrying=nullptr;
             
             return MX_OK ;
         }
 
         mxobject* mxcharacter::Cmd_PickupObject ( void )
         {
-        mxobject* oldobject=carrying;
+            auto oldobject=carrying;
 
-            carrying = mx->scenario->PickupObject( Location() ) ;
-            if(carrying!=nullptr) {
-                MXTRACE("%s picks up object %s", Longname().c_str(), carrying->name.c_str());
-            }
-
-#if defined(_DDR_)
-            if ( carrying==nullptr) {
-                carrying = oldobject;
-                return NULL;
+            auto newobject = mx->scenario->PickupObject( Location() ) ;
+            if ( newobject==nullptr) {
+                return nullptr;
             }
             
-            carrying->carriedby=this;
+            carrying = newobject;
+            MXTRACE("%s picks up object %s", Longname().c_str(), carrying->name.c_str());
+            
+            if(carrying->IsUnique())
+                carrying->carriedby=this;
             
             if ( oldobject ) {
                 MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
                 mx->scenario->DropObject ( Location(), oldobject );
-                oldobject->carriedby=nullptr;
             }
-#endif
-            
-#if defined(_LOM_)
-            if( oldobject ) {
-                MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
-                mx->scenario->DropObject ( Location(), oldobject );
-            }
-#endif
-            
 
             SetLastCommand ( CMD_TAKEOBJECT, mxentity::SafeIdt(carrying) );
 
@@ -1515,7 +1497,6 @@ namespace tme {
 
         void mxcharacter::Cmd_Dead ( void )
         {
-            
             // TODO we need to check if there is an object
             // we don't want to lose in the location underneath us
             if ( carrying && carrying->IsUnique() )

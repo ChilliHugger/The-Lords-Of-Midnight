@@ -15,6 +15,8 @@
  */
 
 #include "../../baseinc/tme_internal.h"
+#include "../../utils/savegamemapping.h"
+#include "../../utils/thing_mapping.h"
 
 #if defined(_DDR_)
 
@@ -158,7 +160,17 @@ MXTRACE("Place Objects On Map");
     mxscenario::initialiseAfterCreate(version);
 
 }
-    
+
+void ddr_x::updateAfterLoad ( u32 version )
+{
+    if ( version >= 11 ) {
+        utils::FixMorkinFromBeingAIAfterRecruited();
+    }
+
+    mxscenario::updateAfterLoad(version);
+}
+
+
 mxentity* ddr_x::CreateEntity ( id_type_t type )
 {
     switch ( type ) {
@@ -200,34 +212,6 @@ void ddr_x::MakeMapAreaVisible ( mxgridref l, mxcharacter* character )
     
     mxscenario::MakeMapAreaVisible(l, character);
 }
-
-mxcharacter* ddr_x::WhoHasObject( mxobject* object ) const
-{
-    return static_cast<mxcharacter*>(object->carriedby) ;
-}
-
-
-bool ddr_x::DropObject ( mxgridref loc, mxobject* obj )
-{
-    if ( obj->IsUnique() ) {
-        obj->Location( loc );
-        mx->gamemap->SetObject( loc, true );
-        return true;
-    }
-    return mxscenario::DropObject(loc, obj);
-}
-
-
-mxobject* ddr_x::PickupObject ( mxgridref loc )
-{
-    if ( mx->gamemap->GetAt ( loc ).HasObject() ) {
-        mxobject* object = FindObjectAtLocation(loc);
-        mx->gamemap->SetObject(loc, false);
-        object->Location(mxgridref(0, 0));
-        return object;
-    }
-    return nullptr;
-}
     
 void ddr_x::PlaceObjectsOnMap ( void )
 {
@@ -251,22 +235,6 @@ void ddr_x::PlaceObjectsOnMap ( void )
             mx->gamemap->SetObject( loc, true );
         }
     }
-}
-
-mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
-{
-    if ( !mx->gamemap->HasObject(loc) )
-        return nullptr;
-    
-    ddr_object* object;
-    for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
-        if ( object->IsCarried() )
-            continue;
-        if ( object->Location() == loc )
-            return object;
-    }
-    return nullptr;
 }
 
 mxstronghold* ddr_x::StrongholdFromLocation ( mxgridref loc )

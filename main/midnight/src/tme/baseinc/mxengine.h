@@ -79,6 +79,7 @@ namespace tme {
         mxregiment*     RegimentById(u32 id) ;
         mxplace*        PlaceById(u32 id) ;
         mxobject*       ObjectById(u32 id) ;
+        mxobject*       ObjectFromThing(mxthing_t thing) ;
         mxvictory*      VictoryById(u32 id) ;
         mxmission*      MissionById(u32 id) ;
 
@@ -147,9 +148,8 @@ namespace tme {
 #endif
         PFNNIGHTCALLBACK        pfnNightCallback ;
 
-        u32                     m_versionno;
         bool                    m_savegame;
-
+        mxobject*               thing_remap_table[MAX_THINGS];
 
     private:
         cvarreg_t*              variables ;

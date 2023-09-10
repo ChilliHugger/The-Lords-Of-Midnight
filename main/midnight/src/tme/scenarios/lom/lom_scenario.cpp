@@ -17,6 +17,8 @@
 #include "../../baseinc/tme_internal.h"
 #include "scenario_lom.h"
 #include "scenario_lom_internal.h"
+#include "../../utils/savegamemapping.h"
+#include "../../utils/thing_mapping.h"
 #include <string>
 
 namespace tme {
@@ -228,9 +230,21 @@ void lom_x::initialiseAfterCreate(u32 version)
         }
     }
     
+    /* update things */
+    utils::UpdateObjectIds();
+    
     mxscenario::initialiseAfterCreate(version);
 }
+
+void lom_x::updateAfterLoad(u32 version)
+{
+    /* update things */
+    utils::UpdateObjectIds();
     
+    mxscenario::updateAfterLoad(version);
+}
+
+
 mxregiment* lom_x::FindEmptyRegiment()
 {
     for (int ii = 0; ii < sv_regiments; ii++) {
@@ -280,94 +294,7 @@ void lom_x::NightStop(void)
     }
 
         
-        /*
-        mxplace* p=NULL ;
-        mxcharacter* c=NULL;
-        
-        // 1. Is the ice crown still active
-        //mxobject* icecrown = (mxobject*)mx->EntityByName("OB_ICECROWN");
-        //if ( icecrown == NULL )
-        //    return;
-        
-        // icecrown destroyed?
-        //if ( icecrown->IsDisabled() )
-        //    return ;
-        
-        mxregiment* r = FindEmptyRegiment();
-        if ( r == NULL )
-            return;
-        
-        c = IceCrownCarrier();
-        if ( c == NULL)
-            return;
-        
-        //c = WhoHasObject(icecrown) ;
-        // 2. is it being carried
-        
-        // respawn 1500 doomguard riders at ushgarak
-        p = (mxplace*)mx->EntityByName( "PL_CITADEL_USHGARAK", IDT_PLACE );
-        r->Location( p->Location() );
-        r->Total(1500) ;
-        r->Race(RA_DOOMGUARD);
-        r->Type(UT_RIDERS);
-        r->Success(4) ;
-        r->Orders(OD_ROUTE);
-        r->Target(p);
-        
-        // if the icecrown is being carried
-        // then we either target the carrier
-        // morkin, or luxor
-        
-        
-        int type = mxrandom(1,5);
-        
-        // ushgarak is not important if the icecrown is down
-        if ( c && type == 5 )
-            type = 1;
-        
-        // target the carrier
-        if ( type == 1 && c ) {
-            r->Target(c);
-            r->Orders(OD_FOLLOW);
-            return;
-        }
-        // ushgarak
-        if ( type == 5 ) {
-            p = (mxplace*)mx->EntityByName( "PL_CITADEL_USHGARAK", IDT_PLACE );
-            r->Target(p);
-            r->Orders(OD_GOTO);
-            return;
-        }
-        // xajorkith
-        if ( type == 2 ) {
-            p = (mxplace*)mx->EntityByName( "PL_CITADEL_XAJORKITH", IDT_PLACE );
-            r->Target(p);
-            r->Orders(OD_GOTO);
-            return;
-        }
-        
-        // luxor
-        if ( type == 3 ) {
-            c = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-            if ( c && c->IsAlive() ) {
-                r->Target(c);
-                r->Orders(OD_FOLLOW);
-                return;
-            }
-            type = 4 ;
-        }
-        
-        // morkin
-        if ( type == 4 ) {
-            c = (mxcharacter*)mx->EntityByName("CH_MORKIN");
-            if ( c && c->IsAlive() ) {
-                r->Target(c);
-                r->Orders(OD_FOLLOW);
-                return;
-            }
-        }
-        */
-    }
+}
     
     
     

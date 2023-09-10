@@ -223,15 +223,10 @@ std::string& GetCharacterShield(const character& c)
 }
 
 
-std::string& GetObjectBig(mxid id)
+std::string& GetThingBig(mxid id)
 {
     object o;
     TME_GetObject(o,id);
-    return GetObjectBig(o);
-}
-
-std::string& GetObjectBig(const object& o)
-{
     obj_data_t* d = static_cast<obj_data_t*>(o.userdata);
     return d ? LOAD_IMAGE(d->i_big) : empty_string ;
 }

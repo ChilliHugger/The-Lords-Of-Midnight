@@ -341,8 +341,8 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
             return;
     }
     
-    int id = GET_ID(location_infront_object) ;
-    if ( id >= OB_WOLVES && id<=OB_WILDHORSES ) {
+    int id = GET_ID(location_infront_thing) ;
+    if ( id >= TH_WOLVES && id<=TH_WILDHORSES ) {
         if ( !showHelpWindow(HELP_NASTIES) )
             return;
         return;
@@ -840,13 +840,13 @@ bool panel_look::moveForward()
                 return true;
         
         // something is in our way that we must fight
-        mxid objectid = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);
+        mxid thingid = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);
         
         // TODO: Character_UtterlyTired(c)
-        if ( objectid == IDT_NONE && c.energy <= tme::variables::sv_energy_cannot_continue ) {
+        if ( thingid == IDT_NONE && c.energy <= tme::variables::sv_energy_cannot_continue ) {
             mr->showPage(MODE_THINK_PERSON);
         }else{
-            mr->showPage(MODE_THINK, objectid);
+            mr->showPage(MODE_THINK, thingid);
         }
         return true;
     }

@@ -189,8 +189,8 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
                 for ( ii=0; ii<Count(); ii++ ) {
                     ar >> id;
                     id--;
-                    m_objElements[id]->Serialize ( ar );
                     m_objElements[id]->Id(id+1);
+                    m_objElements[id]->Serialize ( ar );
                 }
             }
         }

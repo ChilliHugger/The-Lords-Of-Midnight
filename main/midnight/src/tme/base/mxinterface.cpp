@@ -146,27 +146,27 @@ namespace tme {
     mxentity*    obj = NULL ;
 
         id_type_t type = (id_type_t)ID_TYPE(id);
-        int objectno = GET_ID(id);
+        u32 entity = GET_ID(id);
 
         switch ( type ) {
     
             case IDT_ARMY:
                 {
                 int type = GET_ARMYIDTYPE(id);
-                objectno = GET_ARMYID(id);
+                entity = GET_ARMYID(id);
 
                 VALIDATE_INFO_BLOCK(info,INFO_ARMY,defaultexport::army_t);
 
                 defaultexport::army_t* out = (defaultexport::army_t*) info ;
 
                 if ( type == AT_REGIMENT ) {
-                    obj = (mxentity*)mx->RegimentById(objectno);
+                    obj = static_cast<mxentity*>(mx->RegimentById(entity));
                 } else if ( type == AT_STRONGHOLD ) {
-                    obj = (mxentity*)mx->StrongholdById(objectno);
+                    obj = static_cast<mxentity*>(mx->StrongholdById(entity));
 #if defined(_LOM_)
                 } else if ( type == AT_CHARACTER ) {
                     // character
-                    obj = (mxentity*)mx->CharacterById(objectno);
+                    obj = static_cast<mxentity*>(mx->CharacterById(entity));
                     // select which unit ( Warriors/Riders etc... )
                     out->unit = (mxunit_t) (type&0x7f) ;
                     // now let export handle correctly
@@ -177,7 +177,7 @@ namespace tme {
 #if defined(_DDR_)
                 } else {
                     // character
-                    obj = (mxentity*)mx->CharacterById(objectno);
+                    obj = static_cast<mxentity*>(mx->CharacterById(entity));
                     // select which unit ( Warriors/Riders etc... )
                     out->unit = (mxunit_t) (type&0x7f) ;
                     // now let export handle correctly
@@ -214,14 +214,14 @@ namespace tme {
                 out->location.y=loc.y;
                 out->terrain = (mxterrain_t)m.terrain;
                 
-                out->object = IDT_NONE ;
-                out->object_tunnel = IDT_NONE ;
+                out->thing = IDT_NONE ;
+                out->thing_tunnel = IDT_NONE ;
 #if defined(_DDR_)
                 if ( m.IsTunnelPassageway() )
-                    out->object_tunnel = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
+                    out->thing_tunnel = m.thing ? MAKE_ID(IDT_THING,m.thing) : TH_NONE ;
                 else
 #endif
-                    out->object = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
+                    out->thing = m.thing ? MAKE_ID(IDT_THING,m.thing) : TH_NONE ;
                     
                 out->area = MAKE_ID(IDT_AREAINFO,m.area);
                 out->climate = m.climate ;
@@ -253,6 +253,11 @@ namespace tme {
                 return MX_OK ;
                 }
                 break;
+                
+            case IDT_THING:
+                obj = mx->ObjectFromThing((mxthing_t)entity);
+                break;
+                
             default:
                 obj = mx->EntityByIdt(id);
                 break;
@@ -564,7 +569,7 @@ namespace tme {
 
             if ( ISARG("CANFIGHT") ) {
                 std::unique_ptr<mxlocinfo> locinfo ( character->GetLocInfo() );
-                mxobject* obj = mx->ObjectById(locinfo->fightthing);
+                auto obj = mx->ObjectFromThing(locinfo->fightthing);
                 argv = (s32)character->CheckFightObject( obj );
                 return MX_OK ;
             }
@@ -666,7 +671,7 @@ namespace tme {
                 argv[2] = (s32)MAKE_LOCID (locinfo->loc_lookingat.x,locinfo->loc_lookingat.y) ;
                 argv[3] = (s32)MAKE_LOCID (locinfo->loc_infront.x,locinfo->loc_infront.y) ;
                 argv[4] = locinfo->flags ;
-                argv[5] = MAKE_ID(IDT_OBJECT,locinfo->fightthing) ;
+                argv[5] = MAKE_ID(IDT_THING,locinfo->fightthing) ;
 
                 argv[6] = locinfo->foe.warriors ;
                 argv[7] = locinfo->foe.riders ;
@@ -681,13 +686,13 @@ namespace tme {
                 argv[16] = mxentity::SafeIdt(locinfo->someone_to_give_to) ;
                 argv[17] = mxentity::SafeIdt(locinfo->object_to_take) ;
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
-                    argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-                    argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[15] = MAKE_ID(IDT_THING,locinfo->mapsqr.thing) ;
+                    argv[12] = MAKE_ID(IDT_THING,TH_NONE) ;
                 }else
 #endif
                 {
-                    argv[12] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-                    argv[15] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[12] = MAKE_ID(IDT_THING,locinfo->mapsqr.thing) ;
+                    argv[15] = MAKE_ID(IDT_THING,TH_NONE) ;
                 }
                 
                 return MX_OK ;
@@ -708,7 +713,7 @@ namespace tme {
         
                 argv[0] = (s32)9;
                 argv[1] = locinfo->flags ;
-                argv[2] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
+                argv[2] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.thing) ;
 
                 
                 
@@ -721,13 +726,13 @@ namespace tme {
                         
 #if defined(_DDR_)
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
-                    argv[10] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-                    argv[9] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[10] = MAKE_ID(IDT_THING,locinfo->mapsqr.thing) ;
+                    argv[9] = MAKE_ID(IDT_THING,TH_NONE) ;
                 }else
 #endif
                 {
-                    argv[9] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
-                    argv[10] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
+                    argv[9] = MAKE_ID(IDT_THING,locinfo->mapsqr.thing) ;
+                    argv[10] = MAKE_ID(IDT_THING,TH_NONE) ;
                 }
                 SAFEDELETE( locinfo );
             

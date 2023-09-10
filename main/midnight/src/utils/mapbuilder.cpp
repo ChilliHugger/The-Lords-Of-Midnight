@@ -201,8 +201,8 @@ mapbuilder* mapbuilder::updateTerrain()
             dst->density=0;
             dst->tunnel=0;
             dst->flags=m.flags;
-            dst->object=GET_ID(m.object);
-            dst->object_tunnel = GET_ID(m.object_tunnel);
+            dst->thing=GET_ID(m.thing);
+            dst->thing_tunnel = GET_ID(m.thing_tunnel);
             dst->discovery_flags = m.discovery_flags ;
             dst->discovery_flags.Reset(~reset_discover_mask);
             dst->area = m.area ;
@@ -429,11 +429,11 @@ mapbuilder* mapbuilder::updateLayers()
 #endif
         bool visible = seen || visited || discovery_seen || discovery_visited;
               
-        mxthing_t thing = (mxthing_t)m->object ;
+        mxthing_t thing = (mxthing_t)m->thing ;
         
 #if defined(_DDR_)
-        if ( m->object_tunnel != OB_NONE && show_tunnels  )
-            thing = (mxthing_t)m->object_tunnel ;
+        if ( m->thing_tunnel != TH_NONE && show_tunnels  )
+            thing = (mxthing_t)m->thing_tunnel ;
 #endif
 
         if ( visible ) {
@@ -458,7 +458,7 @@ mapbuilder* mapbuilder::updateLayers()
             terrain[ii] = CELL_FIRST_BLANK_TERRAIN + m->density + 1 ;
         }
         
-        mxthing_t show_thing = OB_NONE;
+        mxthing_t show_thing = TH_NONE;
         
         // critters
 #if defined(_LOM_)
@@ -473,15 +473,15 @@ mapbuilder* mapbuilder::updateLayers()
         }
 #endif
         
-        if ( !debug_map && show_thing > OB_WILDHORSES )
-            show_thing = OB_NONE;
+        if ( !debug_map && show_thing > TH_WILDHORSES )
+            show_thing = TH_NONE;
         
         
         if ( show_thing ) {
-            TME_GetObject(o,MAKE_ID(IDT_OBJECT,show_thing));
+            TME_GetObject(o,MAKE_ID(IDT_THING,show_thing));
             obj_data_t* d = (obj_data_t*)o.userdata ;
             if ( d ) {
-                if ( show_thing == (mxthing_t)m->object_tunnel ) {
+                if ( show_thing == (mxthing_t)m->thing_tunnel ) {
                     tunnel_critters[ii] = d->mapcell ;
                 }else{
                     critters[ii] = d->mapcell ;

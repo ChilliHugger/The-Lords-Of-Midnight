@@ -16,6 +16,8 @@
 
 #include "../baseinc/tme_internal.h"
 #include "cocos2d.h"
+#include "../utils/savegamemapping.h"
+#include "../utils/thing_mapping.h"
 #include <stdio.h>
 
 
@@ -69,9 +71,9 @@ mxengine::mxengine()
 //    m_config=NULL;
     pfnNightCallback=NULL;
     m_CurrentCharacter=NULL;
-    defaultscenario    = FALSE ;
-
+    defaultscenario = FALSE ;
     m_errorcode=0;
+    CLEARARRAY(thing_remap_table);
 }
 
 
@@ -226,6 +228,7 @@ std::string filename = m_szDatabase + "/database";
     MX_REGISTER_SELF;
 
     variables::Init(1);
+    CLEARARRAY(thing_remap_table);
 
     // We need to move the default database into an accessible folder
 #if !defined(_OS_DESKTOP_)
@@ -426,7 +429,6 @@ MXTRACE("Loading MAP");
     
     gamemap->ClearVisible();
     
-    
 MXTRACE( "Init Variables");
     variables::Init(2);
 
@@ -435,7 +437,7 @@ MXTRACE( "Init Variables");
     m_difficulty = difficulty ;
     setRules(rules);
 
-    scenario->initialiseAfterCreate(m_versionno);
+    scenario->initialiseAfterCreate(savegameversion);
     
     CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0])) ;
    
@@ -498,7 +500,7 @@ MXRESULT mxengine::UnloadDatabase ( void )
     variables::DeInit();
 
     SAFEDELETEARRAY ( variables );
-
+    CLEARARRAY(thing_remap_table);
 
     return MX_OK ;
 }
@@ -615,6 +617,8 @@ void mxengine::NightCallback( callback_t* ptr)
 
 MXRESULT mxengine::LoadGame ( const std::string& filename, PFNSERIALIZE function )
 {
+    CLEARARRAY(thing_remap_table);
+    
     chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
     if ( !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
@@ -648,11 +652,7 @@ std::string  description;
     if ( scenarioid != scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
 
-    ar >> m_versionno ;
-    //if ( m_versionno != SAVEGAMEVERSION )
-    //    return MX_INCORRECT_VERSION;
-
-    savegameversion = m_versionno ;
+    ar >> savegameversion ;
 
     ar >> header ;
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
@@ -703,18 +703,7 @@ std::string  description;
     objMissions.Serialize(ar);
     objVictories.Serialize(ar);
     objObjects.Serialize(ar);
-
-    /* update map */
-    if ( SaveGameVersion() <= 7 ) {
-     for (int ii = 0; ii < sv_strongholds; ii++) {
-         mxstronghold* stronghold=StrongholdById(ii+1);
-         mxloc& mapsqr = gamemap->GetAt ( stronghold->Location() );
-         if ( mapsqr.IsVisible() )
-             mapsqr.flags |= lf_visited|lf_looked_at ;
-
-     }
-    }
-
+    
     /* Load Character memories */
     for ( int ii=0; ii<sv_characters; ii++ )
         CharacterById(ii+1)->memory.Serialize ( ar );
@@ -726,32 +715,13 @@ std::string  description;
     if ( function!= NULL )
         function(SaveGameVersion(),ar);
 
-
     ar.Close();
 
     SAFEDELETE ( pFile );
 
     mx->CurrentChar ( m_CurrentCharacter );
 
-#if defined(_DDR_)
-    if ( SaveGameVersion() >= 11 ) {
-        // fix save games
-        mxcharacter* morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-        morkin->race = RA_MORKIN;
-
-        if ( !morkin->IsRecruited() )
-            morkin->Flags().Set(cf_ai);
-
-        // fix for morkin being AI character
-        // after being recruited
-        if ( morkin->IsRecruited() && morkin->IsAIControlled() ) {
-            morkin->Flags().Reset(cf_ai);
-            if ( morkin->IsInTunnel() )
-                morkin->looking=DR_NORTH;
-        }
-
-    }
-#endif
+    mx->scenario->updateAfterLoad(SaveGameVersion());
 
     return MX_OK ;
 }
@@ -789,10 +759,8 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     if ( scenarioid != scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
     
-    ar >> m_versionno ;
-    
-    savegameversion = m_versionno ;
-    
+    ar >> savegameversion ;
+
     ar >> header ;
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
@@ -1142,6 +1110,13 @@ mxentity* mxengine::EntityByIdt( mxid id )
     FIND_IDT(IDT_COMMANDINFO,CommandById);
 
     return NULL;
+}
+
+mxobject* mxengine::ObjectFromThing(mxthing_t thing)
+{
+    if ( thing == TH_NONE || thing>MAX_THINGS)
+        return nullptr;
+    return thing_remap_table[thing-1];
 }
 
 

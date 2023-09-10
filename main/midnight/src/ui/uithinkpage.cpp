@@ -62,18 +62,18 @@ uithinkpage::uithinkpage() :
     recruitMen(false),
     unhide(false),
     id(IDT_NONE),
-    objectid(IDT_NONE)
+    thingid(IDT_NONE)
 {
 }
 
-void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
+void uithinkpage::setThing( mxid id, mxid thingid, panelmode_t mode )
 {
     f32 x,y;
     Vec2 pos = Vec2::ZERO;
     
     this->id = id;
     this->mode = mode;
-    this->objectid = objectId;
+    this->thingid = thingid;
     
     imgTerrain->removeAllChildren();
     
@@ -207,19 +207,19 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 
     // object
 #if defined(_LOM_)
-    y = RES(OBJECT_Y) - imgObject->getContentSize().height;
-    x = RES(OBJECT_X) - (imgObject->getContentSize().width/2);
+    y = RES(OBJECT_Y) - imgThing->getContentSize().height;
+    x = RES(OBJECT_X) - (imgThing->getContentSize().width/2);
   
     if (mr->resolution->IsPhoneScaleEnabled())
     {
         y -= RES(16);
     }
     
-    uihelper::PositionParentTopLeft(imgObject,x,y);
+    uihelper::PositionParentTopLeft(imgThing,x,y);
 
     auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
-    pos = imgObject->getPosition();
-    pos.y -= imgObject->getContentSize().height;
+    pos = imgThing->getPosition();
+    pos.y -= imgThing->getContentSize().height;
     
     fight->setPosition(pos);
     fight->setVisible(this->fight);
@@ -317,8 +317,8 @@ bool uithinkpage::init()
     // Object Image
 #if defined(_LOM_)
     // create image for object
-    imgObject = ImageView::create();
-    scrollView->addChild(imgObject);
+    imgThing = ImageView::create();
+    scrollView->addChild(imgThing);
 #endif
     
     // Terrain Image
@@ -403,16 +403,16 @@ void uithinkpage::setImageColour(Sprite* node)
 }
 
 
-void uithinkpage::displayObject ( mxid objectid )
+void uithinkpage::displayThing ( mxid thingid )
 {
 #if defined(_LOM_)
-    if ( objectid == IDT_NONE ) {
-        imgObject->setVisible(false);
+    if ( thingid == IDT_NONE ) {
+        imgThing->setVisible(false);
         return;
     }
     
-    imgObject->loadTexture( GetObjectBig(objectid), cocos2d::ui::Widget::TextureResType::LOCAL );
-    imgObject->setVisible(true);
+    imgThing->loadTexture( GetThingBig(thingid), cocos2d::ui::Widget::TextureResType::LOCAL );
+    imgThing->setVisible(true);
 #endif
     
 }
@@ -429,7 +429,7 @@ void uithinkpage::setupUIElements()
     
     displayCharacter (c);
     displayCharacterTerrain(c);
-    displayObject(IDT_NONE);
+    displayThing(IDT_NONE);
     
     if ( mode == MODE_THINK_PERSON && Character_IsHidden(c) )
         mode = MODE_THINK ;
@@ -454,7 +454,7 @@ void uithinkpage::setupUIElements()
 
     // completely different if dead!
     if ( Character_IsDead(c) ) {
-        objectid = c.killedby;
+        thingid = c.killedby;
         lblDescription->setString(TME_GetCharacterText(c,"CharDeath"));
         return;
     }
@@ -506,13 +506,13 @@ std::string uithinkpage::checkFightAvailable()
 {
     character& c = TME_CurrentCharacter();
     
-    if ( objectid ) {
+    if ( thingid ) {
         if ( flags.Is(lif_fight) ) {
             fight=true;
-            displayObject(objectid);
+            displayThing(thingid);
             return TME_GetSystemString(c,SS_MUSTFIGHT);
         }else{
-            if ( GET_ID(location_object) != OB_NONE ) {
+            if ( GET_ID(location_thing) != OB_NONE ) {
                 return TME_GetSystemString(c,SS_THINGATLOCATION);
             }
         }

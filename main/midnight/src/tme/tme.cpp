@@ -21,7 +21,7 @@ loc_t           location_infront;
 loc_t           location_lookingat;
 flags32         location_flags;
 mxid            location_fightthing;
-mxid            location_object;
+mxid            location_thing;
 
 stronghold      location_stronghold;
 
@@ -29,13 +29,13 @@ mxid            location_stubborn_lord_attack;
 mxid            location_stubborn_lord_move;
 
 c_mxid          location_infront_strongholds;
-mxid            location_infront_object;
+mxid            location_infront_thing;
 
 loc_armyinfo_t  location_infront_armies;
 loc_armyinfo_t  location_armies;
 
 #if defined(_DDR_)
-mxid            location_object_tunnel;
+mxid            location_thing_tunnel;
 mxid            location_someone_to_give_to;
 mxid            location_object_to_take;
 #endif
@@ -386,15 +386,15 @@ bool TME_GetLocationInfo( loc_t loc )
     location_lookingatid = IDT_NONE ;
     location_infrontid = IDT_NONE ;
     location_flags.Clear() ;
-    location_fightthing = OB_NONE;
+    location_fightthing = TH_NONE;
     location_lookingat.x = 0;
     location_lookingat.y = 0;
     location_infront.x = 0;
     location_infront.y = 0;
-    location_infront_object = OB_NONE ;
-    location_object= OB_NONE ;
+    location_infront_thing = TH_NONE ;
+    location_thing= TH_NONE ;
 #if defined(_DDR_)
-    location_object_tunnel = OB_NONE ;
+    location_thing_tunnel = TH_NONE ;
 #endif
     location_stubborn_lord_attack=IDT_NONE;
     location_stubborn_lord_move=IDT_NONE;
@@ -424,9 +424,9 @@ bool TME_GetLocationInfo( loc_t loc )
         location_armies.regiment_warriors = args[7];
         location_armies.regiment_riders = args[8];
         
-        location_object= args[9].vSInt32; ;
+        location_thing = args[9].vSInt32; ;
 #if defined(_DDR_)
-        location_object_tunnel= args[10].vSInt32;
+        location_thing_tunnel = args[10].vSInt32;
 #endif
     
         
@@ -444,18 +444,18 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     location_lookingatid = IDT_NONE ;
     location_infrontid = IDT_NONE ;
     location_flags.Clear() ;
-    location_fightthing = OB_NONE;
+    location_fightthing = TH_NONE;
     location_lookingat.x = 0;
     location_lookingat.y = 0;
     location_infront.x = 0;
     location_infront.y = 0;
-    location_infront_object = OB_NONE ;
-    location_object= OB_NONE ;
+    location_infront_thing = TH_NONE ;
+    location_thing = TH_NONE ;
     location_stubborn_lord_attack=IDT_NONE;
     location_stubborn_lord_move=IDT_NONE;
     
 #if defined(_DDR_)
-    location_object_tunnel = OB_NONE ;
+    location_thing_tunnel = TH_NONE ;
     location_someone_to_give_to=IDT_NONE;
     location_object_to_take=IDT_NONE;
 #endif
@@ -497,13 +497,13 @@ bool TME_GetCharacterLocationInfo ( const character& c )
         location_armies.regiment_warriors = args[10];
         location_armies.regiment_riders = args[11];
         
-        location_object= args[12].vSInt32;
+        location_thing = args[12].vSInt32;
         
         location_stubborn_lord_attack=args[13].vSInt32;
         location_stubborn_lord_move=args[14].vSInt32;
         
 #if defined(_DDR_)
-        location_object_tunnel = args[15].vSInt32;
+        location_thing_tunnel = args[15].vSInt32;
         location_someone_to_give_to = args[16].vSInt32;
         location_object_to_take = args[17].vSInt32;
 #endif
@@ -536,7 +536,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     //
     maplocation loc;
     TME_GetLocation ( loc, location_infrontid );
-    location_infront_object = loc.object;
+    location_infront_thing = loc.thing;
     
     //
     // Get the characters info for infront location

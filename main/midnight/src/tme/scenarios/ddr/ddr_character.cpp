@@ -156,13 +156,13 @@ namespace tme {
         
         std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
         
-        auto fightobject = static_cast<ddr_object*>(mx->ObjectById(info->fightthing)) ;
+        auto fightthing = static_cast<ddr_object*>(mx->ObjectFromThing(info->fightthing)) ;
         
         // is there anything to fight
-        if ( fightobject == nullptr )
+        if ( fightthing == nullptr )
             return nullptr ;
         
-        SetLastCommand ( CMD_FIGHT, mxentity::SafeIdt(fightobject)) ;
+        SetLastCommand ( CMD_FIGHT, mxentity::SafeIdt(fightthing)) ;
 
         if ( ! sv_cheat_always_win_fight )
         {
@@ -173,28 +173,29 @@ namespace tme {
             warriors.Loses(loses);
             riders.Loses(loses);
             
+            // TODO: this is not future proof
             static u8 critter_success[] = { 0, 9, 8, 10, 11 };
             
-            if ( r > critter_success[fightobject->Id()]  ) {
+            if ( r > critter_success[fightthing->Id()]  ) {
                 static_cast<ddr_battle*>(mx->battle)->loseFight(this,r);
                 if ( IsDead() ) {
-                    killedbyobject = fightobject;
-                    return fightobject;
+                    killedbyobject = fightthing;
+                    return fightthing;
                 }
             }
         }
         
         // we have killed the enemy
         //
-        mx->text->oinfo = fightobject;
+        mx->text->oinfo = fightthing;
         mx->SetLastActionMsg( mx->text->CookedSystemString( SS_FIGHT, this) );
         
         CommandTakesTime(true);
         
         // this does an auto write to the map!
-        mx->gamemap->GetAt( Location() ).RemoveObject();
+        mx->gamemap->GetAt( Location() ).RemoveThing();
         
-        return fightobject ;
+        return fightthing ;
         
     }
     
@@ -491,8 +492,8 @@ namespace tme {
         }
 
         // check monster
-        mxthing_t thing = mx->gamemap->getLocationObject(this,location+looking);
-        if ( thing >= OB_WOLVES && thing <= OB_SKULKRIN ) {
+        mxthing_t thing = mx->gamemap->getLocationThing(this,location+looking);
+        if ( thing >= TH_WOLVES && thing <= TH_SKULKRIN ) {
             DecreaseEnergy(0);
             TimeCost += 2;
         }
@@ -566,7 +567,7 @@ namespace tme {
         if ( !IsAIControlled() && perform_seek ) {
             // quick fix
             if ( exit_tunnel ) flags.Reset ( cf_tunnel );
-            if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
+            if ( mx->gamemap->getLocationThing(this, Location())!=TH_NONE ) {
                 Cmd_Seek();
             }
             if ( exit_tunnel ) flags.Set ( cf_tunnel );

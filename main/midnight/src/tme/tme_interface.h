@@ -245,18 +245,18 @@ extern tme::loc_t           location_lookingat;
 extern flags32              location_flags;
 extern mxid                 location_fightthing;
 extern stronghold           location_stronghold;
-extern mxid                 location_object;
+extern mxid                 location_thing;
 extern mxid                 location_stubborn_lord_attack;
 extern mxid                 location_stubborn_lord_move;
 
 #if defined(_DDR_)
-extern mxid                 location_object_tunnel;
+extern mxid                 location_thing_tunnel;
 extern mxid                 location_someone_to_give_to;
 extern mxid                 location_object_to_take;
 #endif
 
 extern c_mxid               location_infront_strongholds;
-extern mxid                 location_infront_object;
+extern mxid                 location_infront_thing;
 
 extern loc_armyinfo_t       location_infront_armies;
 extern loc_armyinfo_t       location_armies;

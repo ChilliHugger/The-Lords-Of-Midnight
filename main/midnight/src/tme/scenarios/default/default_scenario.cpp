@@ -15,7 +15,8 @@
  */
 
 #include "../../baseinc/tme_internal.h"
-
+#include "../../utils/savegamemapping.h"
+#include "../../utils/thing_mapping.h"
 #if defined (_DDR_)
 #include "../../scenarios/ddr/scenario_ddr_internal.h"
 #endif
@@ -400,15 +401,11 @@ namespace tme {
         {
             // TODO shouldn't we be checking if they are recruited here?
             if ( IsFeature(SF_MOONRING) ) {
-                //mxobject* moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
-                //if ( moonring == NULL ) return TRUE ;
-                //const mxcharacter* moonringcarrier = WhoHasObject(moonring);
-                
-                const mxcharacter* moonringcarrier = CurrentMoonringWearer();
-                if ( moonringcarrier==NULL && !character->IsAllowedMoonring() )
-                    return FALSE;
+                const auto moonringcarrier = CurrentMoonringWearer();
+                if ( moonringcarrier==nullptr && !character->IsAllowedMoonring() )
+                    return false;
             }
-            return TRUE ;
+            return true ;
         }
     
 
@@ -729,27 +726,6 @@ namespace tme {
             return MX_FAILED ;
         }
 
-        COMMAND( OnCharPickup ) 
-        {
-            argc=0;
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
-            // TODO Check return Type
-            mxobject* object  = character->Cmd_PickupObject();
-            if ( object != NULL ) {
-                argv[1] = mxentity::SafeIdt(object);
-                argv[0] = (s32)1;
-                return MX_OK ;
-            }
-            argv[0]=(s32)0;
-            return MX_FAILED ;
-        }
-
-        COMMAND( OnCharDrop ) 
-        {
-            CONVERT_CHARACTER_ID( argv[0].vId, character );
-            argv[0]=(s32)0;
-            return character->Cmd_DropObject();
-        }
 
         COMMAND( OnCharWait ) 
         {
@@ -943,52 +919,47 @@ namespace tme {
         static mxcommand_t mx_commands[] = {
             
             // character commands} },
-            {"LOOKLEFT",    1, OnCharLookLeft,        {arguments::character} },
-            {"LOOKRIGHT",    1, OnCharLookRight,     {arguments::character} },
-            {"LOOK",        2, OnCharLook,            {arguments::character, arguments::direction} },
-            {"FORWARD",        1, OnCharForward,        {arguments::character} },
-            {"POSTMEN",        3, OnCharPostMen,        {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"RECRUITMEN",    3, OnCharRecruitMen,    {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"ATTACK",        1, OnCharAttack,        {arguments::character} },
-            {"REST",        1, OnCharRest,            {arguments::character} },
-            {"HIDE",        1, OnCharHide,            {arguments::character} },
-            {"UNHIDE",        1, OnCharUnHide,        {arguments::character} },
-            {"LOOKAT",        2, OnCharLookAt,        {arguments::character, arguments::location} },
-            {"APPROACH",    2, OnCharApproach,        {arguments::character, arguments::character} },
-            {"FIGHT",        1, OnCharFight,            {arguments::character} },
-            {"SEEK",        1, OnCharSeek,            {arguments::character} },
-            {"PICKUP",        1, OnCharPickup,        {arguments::character} },
-            {"DROP",        1, OnCharDrop,            {arguments::character} },// arguments::objectinfo} },
-            {"WAIT",        2, OnCharWait,            {arguments::character, variant::vnumber} }, //[mode]
-            {"CONTROL",        1, OnCharControl,        {arguments::character} },
+            {"LOOKLEFT",        1, OnCharLookLeft,      {arguments::character} },
+            {"LOOKRIGHT",       1, OnCharLookRight,     {arguments::character} },
+            {"LOOK",            2, OnCharLook,          {arguments::character, arguments::direction} },
+            {"FORWARD",         1, OnCharForward,       {arguments::character} },
+            {"POSTMEN",         3, OnCharPostMen,       {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"RECRUITMEN",      3, OnCharRecruitMen,    {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"ATTACK",          1, OnCharAttack,        {arguments::character} },
+            {"REST",            1, OnCharRest,          {arguments::character} },
+            {"HIDE",            1, OnCharHide,          {arguments::character} },
+            {"UNHIDE",          1, OnCharUnHide,        {arguments::character} },
+            {"LOOKAT",          2, OnCharLookAt,        {arguments::character, arguments::location} },
+            {"APPROACH",        2, OnCharApproach,      {arguments::character, arguments::character} },
+            {"FIGHT",           1, OnCharFight,         {arguments::character} },
+            {"SEEK",            1, OnCharSeek,          {arguments::character} },
+            {"WAIT",            2, OnCharWait,          {arguments::character, variant::vnumber} }, //[mode]
+            {"CONTROL",         1, OnCharControl,       {arguments::character} },
 #if defined(_DDR_)
-            {"ENTERTUNNEL",    1, OnCharEnterTunnel,    {arguments::character} },
-            {"EXITTUNNEL",    1, OnCharExitTunnel,    {arguments::character} },
-            {"GIVE",        1, OnCharGive,            {arguments::character} },
-            {"TAKE",        1, OnCharTake,            {arguments::character} },
-            {"USE",         1, OnCharUse,            {arguments::character, arguments::character} },
+            {"ENTERTUNNEL",     1, OnCharEnterTunnel,   {arguments::character} },
+            {"EXITTUNNEL",      1, OnCharExitTunnel,    {arguments::character} },
+            {"GIVE",            1, OnCharGive,          {arguments::character} },
+            {"TAKE",            1, OnCharTake,          {arguments::character} },
+            {"USE",             1, OnCharUse,           {arguments::character, arguments::character} },
 #endif
-            {"FOLLOW",      2, OnCharFollow,        {arguments::character, arguments::character} },
-            {"UNFOLLOW",    2, OnCharUnFollow,      {arguments::character, arguments::character} },
-            {"DISBANDGROUP",1, OnCharDisbandGroup,  {arguments::character} },
+            {"FOLLOW",          2, OnCharFollow,        {arguments::character, arguments::character} },
+            {"UNFOLLOW",        2, OnCharUnFollow,      {arguments::character, arguments::character} },
+            {"DISBANDGROUP",    1, OnCharDisbandGroup,  {arguments::character} },
             {"SWAPGROUPLEADER", 2, OnCharSwapGroupLeader,{arguments::character, arguments::character} },
+            {"PLACE",           2, OnCharPlace,         {arguments::character, arguments::location} },
 
-            {"PLACE",           2, OnCharPlace,        {arguments::character, arguments::location} },
+            // Regiment Commands
+            {"HOLD",            1, OnRegimentHold,      {arguments::regiment} },
+            {"GOTO",            2, OnRegimentGoto,      {arguments::regiment, arguments::location} },
+            {"WANDER",          1, OnRegimentWander,    {arguments::regiment} },
+            {"FOLLOW",          2, OnRegimentFollow,    {arguments::regiment, arguments::character} },
+            {"ROUTE",           2, OnRegimentRoute,     {arguments::regiment, arguments::routenode} },
 
-            
-            
-                    // Regiment Commands
-            {"HOLD",        1, OnRegimentHold,        {arguments::regiment} },
-            {"GOTO",        2, OnRegimentGoto,        {arguments::regiment, arguments::location} },
-            {"WANDER",        1, OnRegimentWander,    {arguments::regiment} },
-            {"FOLLOW",        2, OnRegimentFollow,    {arguments::regiment, arguments::character} },
-            {"ROUTE",        2, OnRegimentRoute,        {arguments::regiment, arguments::routenode} },
+            // other
+            { "NIGHT",          1, OnNight,             {variant::vptr} },
+            { "CHECKWINLOSE",   0, OnWinLose },
 
-                    // other
-            { "NIGHT",        1, OnNight,                {variant::vptr} },
-            { "CHECKWINLOSE", 0, OnWinLose },
-
-            { "GetPanoramic",    2,    OnGetPanoramic,    {arguments::location, arguments::direction}},
+            { "GetPanoramic",   2, OnGetPanoramic,      {arguments::location, arguments::direction}},
 
 
         };
@@ -1622,9 +1593,6 @@ namespace tme {
             
             mx->gamemap->SetLocationLookedAt(looked_at, true);
             
-            
-            
-            
             count = mx->gamemap->GetPanoramic ( loc, dir, &pview );
 
             for ( ii=0; ii<count; ii++ ) {
@@ -1662,6 +1630,10 @@ namespace tme {
 
         mxcharacter* mxscenario::WhoHasObject( mxobject* object ) const
         {
+            if ( object->IsUnique() ) {
+                return static_cast<mxcharacter*>(object->carriedby) ;
+            }
+        
             for ( int ii=0; ii<sv_characters; ii++ ) {
                 mxcharacter* character = mx->CharacterById(ii+1);
                 if ( character->carrying == object )
@@ -1670,23 +1642,57 @@ namespace tme {
             return nullptr ;
         }
 
-
         bool mxscenario::DropObject ( mxgridref loc, mxobject* obj )
-        {
-            mx->gamemap->GetAt ( loc ).object = obj ? obj->Id() : OB_NONE ;
+        {        
+            if ( obj->IsUnique() ) {
+                obj->carriedby = nullptr;
+                obj->Location( loc );
+                mx->gamemap->SetObject( loc, true );
+                
+                if( !obj->IsThing() ) {
+                    return true;
+                }
+            }
+            mx->gamemap->GetAt ( loc ).thing = obj ? obj->thing : TH_NONE ;
             return true ;
         }
 
-
         mxobject* mxscenario::PickupObject ( mxgridref loc )
         {
-            mxthing_t oldobject ;
-
-            oldobject = (mxthing_t)mx->gamemap->GetAt ( loc ).object ;
-
-            mx->gamemap->GetAt ( loc ).RemoveObject();
+            if ( mx->gamemap->GetAt ( loc ).HasObject() ) {
+                auto object = FindObjectAtLocation(loc);
+                mx->gamemap->SetObject(loc, false);
+                object->Location(mxgridref(0, 0));
+                return object;
+            }
             
-            return mx->ObjectById(oldobject) ;
+            // NOTE: Objects that are of_thing and of_unique
+            // will be on the map at the start of the game and removed when picked up
+            // but will not return to the map when dropped.
+            
+            auto thing = mx->gamemap->GetAt ( loc ).Thing() ;
+            auto oinfo = mx->ObjectFromThing( thing );
+
+            if (!oinfo->CanPickup()) {
+                return nullptr;
+            }
+            
+            mx->gamemap->GetAt ( loc ).RemoveThing();
+            return oinfo ;
+        }
+
+        mxobject* mxscenario::FindObjectAtLocation ( mxgridref loc )
+        {
+            if ( !mx->gamemap->HasObject(loc) )
+                return nullptr;
+            
+            for ( int ii=0; ii<sv_objects; ii++ ) {
+                auto object = mx->ObjectById(ii+1);
+                CONTINUE_IF ( object->IsCarried() );
+                if ( object->Location() == loc )
+                    return object;
+            }
+            return nullptr;
         }
 
         bool mxscenario::InCharactersMemory ( mxitem* item ) 
@@ -1948,6 +1954,14 @@ namespace tme {
 //        ADD_TERRAIN(TN_UNUSED_56);
         
         
+    }
+    
+    void mxscenario::updateAfterLoad(u32 version)
+    {
+        /* update map */
+        if ( version <= 7 ) {
+            utils::UpdateStrongholdsOnMap();
+        }
     }
     
 

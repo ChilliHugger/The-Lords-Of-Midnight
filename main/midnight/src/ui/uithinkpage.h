@@ -40,11 +40,11 @@ public:
    
     CREATE_FUNC(uithinkpage);
     
-    void setObject( mxid id, mxid objectId, panelmode_t mode );
+    void setThing( mxid id, mxid thingid, panelmode_t mode );
     void setCallback( WidgetClickCallback callback ) { clickCallback = callback;}
     
     mxid Id() const { return id; }
-    mxid ObjectId() const { return objectid; }
+    mxid ThingId() const { return thingid; }
     
 protected:
 
@@ -57,7 +57,7 @@ protected:
     void displayCharacter ( const character& c );
     void displayCharacterTerrain(  const character& c );
     void displayTerrain ( mxterrain_t terrain );
-    void displayObject ( mxid objectid );
+    void displayThing ( mxid thingid );
     void displayArmy ();
     
     void aheadOrHere( std::string& text, tme::loc_t location, bool aheaddir );
@@ -73,9 +73,8 @@ protected:
     
 protected:
     mxid                id;
-    mxid                objectid ;
+    mxid                thingid ;
     panelmode_t         mode;
-    //character           current_character;
     stronghold          current_stronghold;
     
     Label*              lblName;
@@ -83,7 +82,7 @@ protected:
 
     Sprite*             imgTerrain;
     ImageView*          imgCharacter;
-    ImageView*          imgObject;
+    ImageView*          imgThing;
     
     ScrollView*         scrollView;
     Layer*              safeArea;

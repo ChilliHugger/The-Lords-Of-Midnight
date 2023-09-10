@@ -12,19 +12,19 @@ namespace tme {
         lom_x();
         virtual ~lom_x();
         
-        virtual scenarioinfo_t* GetInfoBlock() const;
-        virtual MXRESULT Register ( mxengine* midnightx );
-        virtual MXRESULT UnRegister ( mxengine* midnightx );    
-        virtual mxentity* CreateEntity ( id_type_t type );
+        virtual scenarioinfo_t* GetInfoBlock() const override;
+        virtual MXRESULT Register ( mxengine* midnightx ) override;
+        virtual MXRESULT UnRegister ( mxengine* midnightx ) override;
+        virtual mxentity* CreateEntity ( id_type_t type ) override;
+        virtual u32 CalcFearAdjuster( mxlocinfo* locinfo ) const override;
+        virtual void NightStop(void) override;
+        virtual void NightStart(void) override;
         
-        
+        virtual void initialiseAfterCreate(u32 version) override;
+        virtual void updateAfterLoad ( u32 version ) override;
+
         virtual mxcharacter* IceCrownCarrier( void ) const ;
-        virtual u32 CalcFearAdjuster( mxlocinfo* locinfo ) const;
-        virtual void NightStop(void);
-        virtual void NightStart(void);
         mxregiment* FindEmptyRegiment();
-        
-        virtual void initialiseAfterCreate(u32 version);
 
     private:
         bool    luxorAlive;

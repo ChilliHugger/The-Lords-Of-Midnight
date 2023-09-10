@@ -78,8 +78,8 @@ namespace tme {
                 
                 // remove critters from character locations
                 mxloc& m = mx->gamemap->GetAt(character->Location());
-                m.flags &= ~lf_creature ;
-                m.object = OB_NONE ;
+                m.flags &= ~lf_thing ;
+                m.thing = TH_NONE ;
                 
 #if !defined( _TME_DEMO_MODE_ )
                 //
@@ -129,18 +129,14 @@ namespace tme {
         {
         std::string buffer = mx->LastActionMsg();
         
-            ddr_character* ch_shareth = static_cast<ddr_character*>( mx->EntityByName("CH_SHARETH") );
-            //ch_shareth->Cmd_Dead();
-            //ch_shareth->killedbyobject = (mxobject*)mx->EntityByName("OB_WOLVES");
+            auto ch_shareth = static_cast<ddr_character*>( mx->EntityByName("CH_SHARETH") );
             
             if ( ch_shareth->IsDead() ) {
                 buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_shareth);
                 mx->NightCallback(NULL);
             }
             
-            ddr_character* ch_morkin= static_cast<ddr_character*>( mx->EntityByName("CH_MORKIN") );
-            //ch_morkin->Cmd_Dead();
-            //ch_morkin->fighting_against=ch_shareth;
+            auto ch_morkin= static_cast<ddr_character*>( mx->EntityByName("CH_MORKIN") );
             if ( ch_morkin->IsDead() ) {
                 buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_morkin);
                 mx->NightCallback(NULL);
@@ -335,12 +331,6 @@ namespace tme {
             ddr_character* ch_rorthron =  static_cast<ddr_character*>(mx->EntityByName("CH_RORTHRON"));
             ddr_character* ch_shareth =  static_cast<ddr_character*>(mx->EntityByName("CH_SHARETH"));
        
-//            objects.Add( mx->EntityByName("OB_CROWN_VARENAND"));
-//            objects.Add( mx->EntityByName("OB_CROWN_CARUDRIUM"));
-//            objects.Add( mx->EntityByName("OB_SPELL_THIGRORN"));
-//            objects.Add( mx->EntityByName("OB_RUNES_FINORN"));
-//            objects.Add( mx->EntityByName("OB_CROWN_IMIRIEL"));
-
             mxgridref gate_varenorn = mxgridref(6,92);
             
             int test = 10;

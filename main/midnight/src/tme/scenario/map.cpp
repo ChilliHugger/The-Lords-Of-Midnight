@@ -296,12 +296,15 @@ void mxmap::SetTunnelVisible( mxgridref l, bool visible )
     IF_NOT_NULL(m_discoverymap)->SetTunnelVisible(l, visible);
 }
     
+#endif
+
+
 bool mxmap::HasObject( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasObject() ;
 }
-    
+
 void mxmap::SetObject( mxgridref l, bool value )
 {
     mxloc& mapsqr = GetAt( l );
@@ -311,10 +314,7 @@ void mxmap::SetObject( mxgridref l, bool value )
         mapsqr.flags&=~lf_object;
 }
 
-    
-    
-#endif
-    
+
 /*
  * Function name    : map::IsLocationBlock
  * 
@@ -763,33 +763,33 @@ mxgridref loc;
  //   }
     
     
-mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
+mxthing_t mxmap::getLocationThing( const mxcharacter* c, mxgridref loc )
 {
     mxloc& l = GetAt ( loc );
     
 #if defined(_LOM_)
-    return (mxthing_t)l.object;
+    return l.Thing();
 #endif
     
 #if defined(_DDR_)
     
-    if ( !(l.flags&lf_creature) )
-        return OB_NONE ;
+    if ( !(l.flags&lf_thing) )
+        return TH_NONE ;
     
     //
     if ( l.IsTunnelPassageway() ) {
         // location is a passageway
         if ( c->IsInTunnel() )
-            return (mxthing_t)l.object ;
+            return l.Thing() ;
     }else{
         if ( !c->IsInTunnel() ) {
             if ( (l.terrain != TN_ICYWASTE) && (l.terrain != TN_FROZENWASTE) )
-                return (mxthing_t)l.object ;
+                return l.Thing() ;
         }
         
     }
 #endif
-    return OB_NONE;
+    return TH_NONE;
 }
 
 
@@ -799,25 +799,25 @@ mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
 #if defined(_DDR_)
     
 
-    mxthing_t location_objects[16][4] = {
-        { OB_DRAGONS,   OB_SKULKRIN,    OB_WOLVES,      OB_WILDHORSES },    //For    Plains
-        { OB_DRAGONS,   OB_DRAGONS,     OB_ICETROLLS,   OB_WOLVES },        //       Mountins
-        { OB_DRAGONS,   OB_SKULKRIN,    OB_WOLVES,      OB_WOLVES },        //       Forest
-        { OB_DRAGONS,   OB_ICETROLLS,   OB_WOLVES,      OB_WOLVES },        //       Hills
+    mxthing_t location_things[16][4] = {
+        { TH_DRAGONS,   TH_SKULKRIN,    TH_WOLVES,      TH_WILDHORSES },    //For    Plains
+        { TH_DRAGONS,   TH_DRAGONS,     TH_ICETROLLS,   TH_WOLVES },        //       Mountins
+        { TH_DRAGONS,   TH_SKULKRIN,    TH_WOLVES,      TH_WOLVES },        //       Forest
+        { TH_DRAGONS,   TH_ICETROLLS,   TH_WOLVES,      TH_WOLVES },        //       Hills
         
-        { OB_DRAGONS,   OB_CLAWS,       OB_FLAMES,      OB_BLOOD },         //       Gate
-        { OB_FLAMES,    OB_THORNS,      OB_BLOOD,       OB_LANGUOR },       //       Temple
-        { OB_ICETROLLS, OB_WOLVES,      OB_THORNS,      OB_SPRINGS },       //       Pit
-        { OB_DRAGONS,   OB_WILDHORSES,  OB_CLAWS,       OB_BLOOD },         //       Palace
-        { OB_DRAGONS,   OB_WOLVES,      OB_SHELTER,     OB_SHELTER },       //       Fortress
-        { OB_ICETROLLS, OB_SHELTER,     OB_SHELTER,     OB_BLOOD },         //       Hall
-        { OB_SKULKRIN,  OB_WOLVES,      OB_SHELTER,     OB_SHELTER },       //       Hut
-        { OB_GUIDANCE,  OB_GUIDANCE,    OB_GUIDANCE,    OB_GUIDANCE },      //       Tower
-        { OB_DRAGONS,   OB_SHELTER,     OB_SHELTER,     OB_SPRINGS },       //       City
-        { OB_SKULKRIN,  OB_SPRINGS,     OB_SPRINGS,     OB_SPRINGS },       //       Fountain
-        { OB_DRAGONS,   OB_FLAMES,      OB_FLAMES,      OB_LANGUOR },       //       Stones
+        { TH_DRAGONS,   TH_CLAWS,       TH_FLAMES,      TH_BLOOD },         //       Gate
+        { TH_FLAMES,    TH_THORNS,      TH_BLOOD,       TH_LANGUOR },       //       Temple
+        { TH_ICETROLLS, TH_WOLVES,      TH_THORNS,      TH_SPRINGS },       //       Pit
+        { TH_DRAGONS,   TH_WILDHORSES,  TH_CLAWS,       TH_BLOOD },         //       Palace
+        { TH_DRAGONS,   TH_WOLVES,      TH_SHELTER,     TH_SHELTER },       //       Fortress
+        { TH_ICETROLLS, TH_SHELTER,     TH_SHELTER,     TH_BLOOD },         //       Hall
+        { TH_SKULKRIN,  TH_WOLVES,      TH_SHELTER,     TH_SHELTER },       //       Hut
+        { TH_GUIDANCE,  TH_GUIDANCE,    TH_GUIDANCE,    TH_GUIDANCE },      //       Tower
+        { TH_DRAGONS,   TH_SHELTER,     TH_SHELTER,     TH_SPRINGS },       //       City
+        { TH_SKULKRIN,  TH_SPRINGS,     TH_SPRINGS,     TH_SPRINGS },       //       Fountain
+        { TH_DRAGONS,   TH_FLAMES,      TH_FLAMES,      TH_LANGUOR },       //       Stones
         
-        { OB_DRAGONS,   OB_SKULKRIN,    OB_ICETROLLS,   OB_ICETROLLS }      //       Wastes
+        { TH_DRAGONS,   TH_SKULKRIN,    TH_ICETROLLS,   TH_ICETROLLS }      //       Wastes
     };
     
     int calculateNameSeed(int x, int y) {
@@ -847,24 +847,23 @@ void mxmap::PutThingsOnMap ( void )
             // plains, mountains, forest, hills all reset randomly
             
             // TODO: should be governed by bit flag on TERRAIN
-            mxterrain_t t = (mxterrain_t)mapsqr.terrain ;
+            auto terrain = mapsqr.Terrain() ;
             
             // remap ddr/lom
-            t = mx->scenario->toScenarioTerrain(t);
+            terrain = mx->scenario->toScenarioTerrain(terrain);
             
-            if ( (t >= TN_GATE || (u32)(t-TN_PLAINS2) == r) && t != TN_ICYWASTE ) {
-                mapsqr.flags |= lf_creature ;
+            if ( (terrain >= TN_GATE || (u32)(terrain-TN_PLAINS2) == r) && terrain != TN_ICYWASTE ) {
+                mapsqr.flags |= lf_thing ;
             
                 // if it is a tunnel passageway
                 // then use the same types
                 if ( mapsqr.IsTunnelPassageway() )
-                    t = TN_ICYWASTE ;
+                    terrain = TN_ICYWASTE ;
    
-                mapsqr.object = location_objects[t-TN_PLAINS2][key];
+                mapsqr.thing = location_things[terrain-TN_PLAINS2][key];
                 
             }else{
-                mapsqr.flags &= ~lf_creature ;
-                mapsqr.object = OB_NONE ;
+                mapsqr.RemoveThing() ;
             }
             
         }
@@ -932,7 +931,8 @@ mxloc::mxloc()
 #else
     terrain=TN_FROZENWASTE;
 #endif
-    object=OB_NONE;
+    thing=TH_NONE;
+    unused=0;
     area=0;
     flags=0;
 }

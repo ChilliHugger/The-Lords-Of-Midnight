@@ -302,7 +302,7 @@ void panel_think::addPage( mxid pageId )
     uithinkpage* page = uithinkpage::create();
     page->mr = GetMoonring();
     page->setCallback(clickCallback);
-    page->setObject(pageId, objectId, currentmode);
+    page->setThing(pageId, objectId, currentmode);
     pages.pushBack(page);
 
     auto padding = getSafeArea();

@@ -1464,7 +1464,7 @@ __loc:
                                     goto __terrain;
                                     }
                 IS_ARG("obj")    {
-                                    oinfo = mx->ObjectById( mx->gamemap->GetAt(loc).object );
+                                    oinfo = mx->ObjectById( mx->gamemap->GetAt(loc).thing );
                                     goto __obj;
                                     }
                 IS_ARG("area")        {    

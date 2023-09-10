@@ -35,6 +35,8 @@ namespace tme {
             virtual MXRESULT UnRegister ( mxengine* midnightx );
 
             virtual void initialiseAfterCreate ( u32 version );
+            virtual void updateAfterLoad ( u32 version );
+            
             virtual mxentity* CreateEntity ( id_type_t type );
             virtual void Serialize ( chilli::lib::archive& ar ) ;
 
@@ -50,6 +52,8 @@ namespace tme {
             virtual mxcharacter* MoonringWearer( void ) ;
             virtual mxcharacter* WhoHasObject( mxobject* object ) const ;
             virtual mxobject* PickupObject ( mxgridref loc );
+            virtual mxobject* FindObjectAtLocation ( mxgridref loc );
+
             virtual void DeadCharactersDropObjects( void );
             virtual mxgridref FindLookingTowards( mxgridref loc, mxdir_t dir );
             virtual void ResetMapArmies ( void );

@@ -220,8 +220,8 @@ namespace tme {
             
             typedef struct location_t : public mxitem_t {
                 mxterrain_t     terrain;
-                mxid            object;
-                mxid            object_tunnel;
+                mxid            thing;
+                mxid            thing_tunnel;
                 mxid            area;
                 u8              climate;
                 u8              density;

@@ -25,7 +25,7 @@ public:
     
     CREATE_FUNC(panel_think);
     
-    void setTargetObject(mxid id);
+    void setTargetThing(mxid id);
     
 protected:
     
