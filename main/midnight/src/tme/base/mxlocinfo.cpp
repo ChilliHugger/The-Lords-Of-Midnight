@@ -46,7 +46,7 @@ namespace tme {
             sel_flags.Reset(0xffffffff);
             flags.Reset(0xffffffff);
             flags.Set(lif_moveforward);
-            fightthing = OB_NONE ;
+            fightthing = TH_NONE ;
             adj_fear = 0 ;
             adj_moral = 0 ;
             adj_stronghold = 0 ;

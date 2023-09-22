@@ -163,7 +163,7 @@ namespace tme {
         
         int test = 5;
         
-        morkin->carrying = mx->ObjectById(OB_ICECROWN);
+        morkin->carrying = mx->ObjectById(dropICECROWN);
 
         mx->battle->ResetBattlesFought();
         

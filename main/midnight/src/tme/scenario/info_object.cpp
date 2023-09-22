@@ -16,8 +16,7 @@
 
 
 #include "../baseinc/tme_internal.h"
-
-
+#include "../utils/savegamemapping.h"
 
 namespace tme {
 
@@ -41,12 +40,17 @@ namespace tme {
                 ar << description;
                 WRITE_ENUM( kills );
                 ar << usedescription ;
+                WRITE_ENUM( thing );
             }else{
                 ar >> name;
                 ar >> carriedby;
                 ar >> description;
                 READ_ENUM( kills );
                 ar >> usedescription ;
+                if ( tme::mx->SaveGameVersion()>15)
+                    READ_ENUM( thing );
+                else
+                    utils::UpdateObjectThing(this);
             }
         }
     

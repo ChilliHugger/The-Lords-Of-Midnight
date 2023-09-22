@@ -152,12 +152,12 @@ void LandscapePeople::Initialise()
     }
     
     
-    s32 objectid = GET_ID(location_object) ;
+    s32 thingid = GET_ID(location_thing) ;
 #if defined(_DDR_)
     if ( options->isInTunnel ) {
-        objectid = options->isLookingDownTunnel
-            ? GET_ID(location_object_tunnel)
-            : OB_NONE;
+        thingid = options->isLookingDownTunnel
+            ? GET_ID(location_thing_tunnel)
+            : TH_NONE;
     }
         
 #endif
@@ -174,9 +174,9 @@ void LandscapePeople::Initialise()
         add(person,DEFAULT_PRINT_WARRIORS);
     } else
 #endif
-    if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
-        person = GetObjectBig(MAKE_ID(IDT_OBJECT, objectid));
-        if ( objectid == OB_DRAGONS ) {
+    if ( thingid >= TH_WOLVES && thingid <= TH_WILDHORSES)    {
+        person = GetThingBig(MAKE_ID(IDT_THING, thingid));
+        if ( thingid == TH_DRAGONS ) {
             add(person,DEFAULT_PRINT_DRAGONS);
         }else{
             add(person,DEFAULT_PRINT_OTHER);

@@ -23,17 +23,18 @@ namespace tme {
         virtual void NightStop(void) override;
 
         virtual void initialiseAfterCreate( u32 version ) override;
-     
+        virtual void updateAfterLoad ( u32 version ) override;
+             
         virtual void GiveGuidance(mxcharacter *character, s32 hint) override;
         
         virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character ) override;
 
-        virtual mxcharacter* WhoHasObject( mxobject* object ) const override;
-        virtual bool DropObject ( mxgridref loc, mxobject* obj ) override;
-        virtual mxobject* PickupObject ( mxgridref loc ) override;
+        //virtual mxcharacter* WhoHasObject( mxobject* object ) const override;
+        //virtual bool DropObject ( mxgridref loc, mxobject* obj ) override;
+        //virtual mxobject* PickupObject ( mxgridref loc ) override;
 
         virtual void PlaceObjectsOnMap ( void );
-        virtual mxobject* FindObjectAtLocation ( mxgridref loc );
+        //virtual mxobject* FindObjectAtLocation ( mxgridref loc ) override;
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
     };

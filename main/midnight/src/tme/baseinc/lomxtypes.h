@@ -122,47 +122,52 @@ using namespace chilli::types;
         };
 
         enum mxthing_t {
-            OB_NONE=0,
-            OB_WOLVES,
-            OB_DRAGONS,
-            OB_ICETROLLS,
-            OB_SKULKRIN,
-            OB_WILDHORSES,
-            OB_SHELTER,
-            OB_GUIDANCE,
-            
-            OB_SHADOWSOFDEATH,
-            OB_WATERSOFLIFE,
-            OB_HANDOFDARK,
-            OB_CUPOFDREAMS,
-            OB_WOLFSLAYER,
-            OB_DRAGONSLAYER,
-            OB_ICECROWN,
-            OB_MOONRING,
-
+            // COMMON
+            TH_NONE             = 0,
+            TH_WOLVES           = 1,
+            TH_DRAGONS          = 2,
+            TH_ICETROLLS        = 3,
+            TH_SKULKRIN         = 4,
+            TH_WILDHORSES       = 5,
+            TH_SHELTER          = 6,
+            TH_GUIDANCE         = 7,
+            // LOM
+            TH_SHADOWSOFDEATH   = 8,
+            TH_WATERSOFLIFE     = 9,
+            TH_HANDOFDARK       = 10,
+            TH_CUPOFDREAMS      = 11,
+            TH_WOLFSLAYER       = 12,
+            TH_DRAGONSLAYER     = 13,
+            TH_ICECROWN         = 14,
+            TH_MOONRING         = 15,
             // DDR
-            OB_CLAWS,
-            OB_FLAMES,
-            OB_THORNS,
-            OB_BLOOD,
-            OB_LANGUOR,
-            OB_SPRINGS,
-            
-            // other
+            TH_CLAWS            = 16,
+            TH_FLAMES           = 17,
+            TH_THORNS           = 18,
+            TH_BLOOD            = 19,
+            TH_LANGUOR          = 20,
+            TH_SPRINGS          = 21,
+        };
+
+constexpr int MAX_THINGS = 21;
+
+        enum mxobject_t {
+            OB_NONE             = 0,
+            OB_ICECROWN         = TH_ICECROWN,
+            OB_MOONRING         = TH_MOONRING,
 #if defined(_LOM_)
-            OB_EYEOFTHEMOON,
+            OB_EYEOFTHEMOON     = 22, // 66
 #endif
             
 #if defined(_DDR_)
-            //
-            OB_CROWN_VARENAND=22,
+            OB_CROWN_VARENAND   = 22, // 67
             OB_CROWN_CARUDRIUM,
             OB_SPELL_THIGRORN,
             OB_RUNES_FINORN,
             OB_CROWN_IMIRIEL
 #endif
-            
         };
+
 
 #define MAX_DESPONDENCY                 255
 #define MAX_ENERGY                      255
@@ -399,7 +404,7 @@ using namespace chilli::types;
             INFO_REGIMENT               =    12,
             INFO_ROUTENODE              =    13,
             INFO_STRONGHOLD             =    14,
-            //INFO_OBJECT               =    15,
+            //INFO_THING               =    15,
             INFO_UNIT                   =    16,
             INFO_ARMYTOTAL              =    17,
             INFO_MAPLOCATION            =    18,
@@ -432,7 +437,7 @@ using namespace chilli::types;
             IDT_REGIMENT                =    12,
             IDT_ROUTENODE               =    13,
             IDT_STRONGHOLD              =    14,
-            //IDT_OBJECT                =    15,
+            IDT_THING                   =    15,
             IDT_UNIT                    =    16,
             IDT_ARMYTOTAL               =    17,
             IDT_LOCATION                =    18,
@@ -793,9 +798,9 @@ namespace tme {
         };
 
         enum LOCATIONFLAGS { // 28 bits
-            lf_mist             = MXBIT(0),     // DDR Scenario, currently not used
-            lf_tunnel           = MXBIT(1),     // DDR Scenario, currently not used
-            lf_creature         = MXBIT(2),     // DDR Scenario, currently not used
+            lf_mist             = MXBIT(0),     // mist at location
+            lf_tunnel           = MXBIT(1),     // tunnel under location
+            lf_thing            = MXBIT(2),     // thing at location
             lf_character        = MXBIT(3),     // character in location
             lf_army             = MXBIT(4),     // army at location
             lf_seen             = MXBIT(5),     // has been seen by the mapper
@@ -817,9 +822,9 @@ namespace tme {
             lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
             lf_tunnel_visited   = MXBIT(19),    // played has visited the tunnel location
             lf_tunnel_passageway    = MXBIT(20),    // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
-            lf_object           = MXBIT(21),    // object to take
             lf_object_special   = MXBIT(22),    // the object to take is one of the special objects
 #endif
+            lf_object           = MXBIT(21),    // object to take
 
         };
 
@@ -897,6 +902,7 @@ namespace tme {
             of_recruitment      = MXBIT(8),     // object can help with recruitment
             of_randomstart      = MXBIT(9),     // object starts randomly on map
 #endif
+            of_thing            = MXBIT(10),    // object is also a thing
         };
 
         enum TERRAININFOFLAGS {
@@ -957,10 +963,10 @@ namespace tme {
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_DDR_)
-    #define SAVEGAMEVERSION     15
+    #define SAVEGAMEVERSION     16
 #endif
 #if defined(_LOM_)
-    #define SAVEGAMEVERSION     15
+    #define SAVEGAMEVERSION     16
 #endif
 
 
