@@ -48,11 +48,10 @@ namespace tme {
             return MX_FAILED;
         }
 
-        int mxvictory::Compare ( mxentity* o, int hint ) const
+        int mxvictory::Compare ( const mxentity* o, int hint ) const
         {
-            if ( hint == 1 )
-                return chilli::lib::Compare( Priority(), ((mxvictory*)o)->Priority() );
-
+            if ( hint == SORT::PRIORITY )
+                return Priority() > static_cast<const mxvictory*>(o)->Priority();
 
             return mxentity::Compare(o,hint);
         }
@@ -116,10 +115,10 @@ namespace tme {
             return MX_FAILED;
         }
 
-        int mxmission::Compare ( mxentity* o, int hint ) const
+        int mxmission::Compare ( const mxentity* o, int hint ) const
         {
-            if ( hint == 1 )
-                return chilli::lib::Compare( Priority(), ((mxmission*)o)->Priority() );
+            if ( hint == SORT::PRIORITY )
+                return Priority() > static_cast<const mxmission*>(o)->Priority();
 
             return mxentity::Compare(o,hint);
         }

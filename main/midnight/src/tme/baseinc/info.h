@@ -24,11 +24,12 @@ constexpr int MAX_ROUTENODES_INLOCATION = 1;
 class CListS;
 
 #include "variables.h"
+#include "../base/collections.h"
 
 
 
 // enum control
-//#define DECLARE_ENUM(x)        namespace x { enum  
+//#define DECLARE_ENUM(x)        namespace x { enum
 //#define END_ENUM(x)            }; }
 
 
@@ -36,16 +37,14 @@ class CListS;
         x(void); \
         virtual ~x(void); \
         virtual void Serialize ( chilli::lib::archive& ar ); \
-        virtual MXRESULT FillExportData ( info_t* data ) 
+        virtual MXRESULT FillExportData ( info_t* data )
 
 
 namespace tme {
 
     using namespace chilli;
     using namespace chilli::lib;
-    //using namespace chilli::collections;
     using namespace variables;
-    //using namespace tme::collections;
     using namespace flags;
     
     // forward references
@@ -443,63 +442,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         
     }; // class mxdiscoverymap
     
-    
-    using chilli::collections::c_mxid;
-    
-    // namespace collections
-    namespace collections {
-        // class entities collection
-        class entities
-        {
-        public:
-            entities(void);
-            ~entities(void);
-            bool Create( u32 count );
-            bool Create( mxscenario* scenario, id_type_t type, u32 count );
-            void Clear(); 
-            bool CreateIdtCollection ( c_mxid& obj );
-            u32 Count() const;
-
-            void operator = ( const entities& src );
-            mxentity*& operator[]( u32 nSubscript );
-            void operator += ( mxentity* o );
-
-            void Destroy( void );
-            virtual void Serialize( chilli::lib::archive& ar );
-            mxentity* FindSymbol ( const std::string& name ) ;
-            void Sort ( int hint ) ; // not thread safe
-
-            bool Add ( mxentity* );
-            u32 Compact( void );
-            void Resize ( u32 newsize );
-            s32 IndexOf ( mxentity* entity );
-            
-            mxentity* First();
-
-        protected:
-            u32                 m_max;
-            u32                 m_used;
-            mxentity**          m_objElements;
-            bool                m_bOwner;
-        };
-        // class entities collection
-
-        // class infos collection
-        class infos : public entities
-        {
-        public:
-            infos(void);
-            ~infos(void);
-            virtual void Serialize( chilli::lib::archive& ar );
-        };
-        // class infos collection
-    }
-    // namespace collections
-
-
-    // namespace info
+        
     //namespace info {
-
         // base
         class mxinfo : public mxentity
         {
@@ -525,8 +469,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             s32                 successtime;
             s32                 failuretime;
-        }; // command
-
+        };
+        typedef tme::collections::infos<mxcommand*>          c_command;
+        // command
 
         // area
         class mxarea : public mxinfo
@@ -536,7 +481,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         public:
             std::string               prefix;
-        }; // area
+        };
+        typedef tme::collections::infos<mxarea*>             c_area;
+        // area
 
         // direction
         class mxdirection : public mxinfo
@@ -546,7 +493,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         protected:
 
-        }; // direction
+        };
+        typedef tme::collections::infos<mxdirection*>          c_direction;
+        // direction
 
         // gender
         class mxgender : public mxinfo
@@ -559,6 +508,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             std::string         pronoun2;
             std::string         pronoun3;
         };
+        typedef tme::collections::infos<mxgender*>           c_gender;
+        // gender
 
         // race
         class mxrace : public mxinfo
@@ -596,7 +547,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             s32                 mistdespondecyaffect ;
             s32                 baseenergycost ;
             s32                 baseenergycosthorse ;
-        }; // race
+        };
+        typedef tme::collections::infos<mxrace*>             c_race;
+        // race
 
         // terrain
         class mxterrain : public mxinfo
@@ -627,7 +580,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             u32                 visibility;
             u32                 obstruction;
             s32                 movementcost;
-        }; // terrain
+        };
+        typedef tme::collections::infos<mxterrain*>          c_terrain;
+        // terrain
 
         // unit
         class mxunitinfo : public mxinfo
@@ -644,6 +599,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
                         
             friend class lom_x;
         };
+        typedef tme::collections::infos<mxunitinfo*>         c_unit;
+        // unit
     
 #if defined(_DDR_)
         // object_power
@@ -654,7 +611,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
         protected:
             
-        }; // objectpower
+        };
+        typedef tme::collections::infos<mxobjectpower*>      c_objectpower;
+        // objectpower
 
         // objecttype
         class mxobjecttype : public mxinfo
@@ -664,7 +623,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
         protected:
             
-        }; // objecttype
+        };
+        typedef tme::collections::infos<mxobjecttype*>       c_objecttype;
+        // objecttype
 #endif
     
     //}
@@ -705,6 +666,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxid                mission;
             u32                 string;
         };
+        typedef tme::collections::entities<mxvictory*>       c_victory;
         // victory
 
 
@@ -735,6 +697,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             m_action_t          action;
             mxid                actionid;
         };
+        typedef tme::collections::entities<mxmission*>       c_mission;
         // mission
 
 
@@ -801,7 +764,9 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             std::string         description;
             u32                 usedescription;
             mxitem*             carriedby;
-        }; // object
+        };
+        typedef tme::collections::entities<mxobject*>        c_object;
+        // object
 
 
         // mxstronghold
@@ -853,6 +818,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             u32                 killed;
             u32                 lost;
         };
+        typedef tme::collections::entities<mxstronghold*>    c_stronghold;
         // mxstronghold
 
         // mxroutenode
@@ -868,6 +834,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
 
             mxroutenode*        paths[2];
         };
+        typedef tme::collections::entities<mxroutenode*>     c_routenode;
         // routenode
 
 
@@ -878,6 +845,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             DEFAULT_IMPLEMENTATION(mxplace);
 
         };
+        typedef tme::collections::entities<mxplace*>         c_place;
         // mxplace
 
 
@@ -918,6 +886,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             mxcharacter*    loyalty;
             mxgridref       lastlocation;
         };
+        typedef tme::collections::entities<mxregiment*>      c_regiment;
         // mxregiment
         
         // mxcharacter
@@ -1049,7 +1018,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
 
             void ForEachFollower(const std::function<void(mxcharacter*)> &callback);
             mxcharacter* FindFollower(const std::function<bool(mxcharacter*)> &callback);
-
+            
         public:
 
             mxdir_t             looking;
@@ -1101,6 +1070,15 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             //
 
         };
+        typedef tme::collections::entities<mxcharacter*>     c_character;
+        
+        #define FOR_EACH_FOLLOWER(x) \
+            ForEachFollower([&](mxcharacter* x)
+        
+        #define FIND_FOLLOWER(x) \
+            FindFollower([&](mxcharacter* x)
+        
+
         // mxcharacter
 
         // army total
@@ -1180,11 +1158,11 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
 
             c_army              armies;
             
-            collections::entities   objStrongholds;         // list of strongholds here
-            collections::entities   objRoutenodes;          // list of routenodes here
-            collections::entities   objCharacters;          // list of characters here
-            collections::entities   objRegiments;           // list of regiments here
-            collections::entities   objRecruit;             // list of characters that <character> can recruit
+            c_stronghold        objStrongholds;         // list of strongholds here
+            c_routenode         objRoutenodes;          // list of routenodes here
+            c_character         objCharacters;          // list of characters here
+            c_regiment          objRegiments;           // list of regiments here
+            c_character         objRecruit;             // list of characters that <character> can recruit
 
             mxcharacter*        stubborn_follower_move;     // which character is stopping us moving
             mxcharacter*        stubborn_follower_battle;   // which character is stopping us attacking
@@ -1216,9 +1194,6 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
     chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxentity*& ptr );
     inline chilli::lib::archive& operator<<( chilli::lib::archive& ar, mxgridref& loc )        { return loc.Serialize(ar); }
     inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxgridref& loc )        { return loc.Serialize(ar); }
-
-
-
 }
 // namespace tme
 

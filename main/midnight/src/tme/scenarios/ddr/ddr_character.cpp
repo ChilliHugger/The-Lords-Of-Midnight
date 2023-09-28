@@ -622,16 +622,11 @@ namespace tme {
         
         // group enter tunnel
         
-        if ( HasFollowers() ) {
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->Flags().Set(cf_tunnel);
-                follower->looking = Looking();
-                follower->Location(Location());
-            }
-        }
+        FOR_EACH_FOLLOWER(f) {
+            f->Flags().Set(cf_tunnel);
+            f->looking = Looking();
+            f->Location(Location());
+        });
         
         mx->scenario->SetMapArmies();
         
@@ -656,17 +651,11 @@ namespace tme {
         flags.Reset ( cf_tunnel );
         
         // group exit tunnel
-        
-        if ( HasFollowers() ) {
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->Flags().Reset(cf_tunnel);
-                follower->looking = Looking();
-                follower->Location( Location() );
-            }
-        }
+        FOR_EACH_FOLLOWER(f) {
+            f->Flags().Reset(cf_tunnel);
+            f->looking = Looking();
+            f->Location(Location());
+        });
         
         CommandTakesTime(TRUE);
         
@@ -834,17 +823,11 @@ namespace tme {
         
         time = sv_time_night;
         
-        if ( HasFollowers() ) {
-            // we need to do a merge
-            
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->EnterBattle();
-            }
-        }
+        
+        // we need to do a merge
+        FOR_EACH_FOLLOWER(f) {
+            f->EnterBattle();
+        });
         
         return MX_OK;
     }
@@ -885,8 +868,7 @@ namespace tme {
     
     void ddr_character::UseCrownOfPersuassion()
     {
-        for ( int ii=0; ii<sv_characters; ii++ ) {
-            auto c = mx->CharacterById(ii+1);
+        FOR_EACH_CHARACTER(c) {
             if ( c->IsAlive() && !c->IsAIControlled() ) {
                 c->Location(Location());
                 c->Flags().Reset( cf_tunnel );
@@ -918,8 +900,7 @@ namespace tme {
     
     void ddr_character::UseRunesOfProtection()
     {
-        for ( int ii=0; ii<sv_characters; ii++ ) {
-            auto c = mx->CharacterById(ii+1);
+        FOR_EACH_CHARACTER(c) {
             if ( c->IsAlive() && !c->IsAIControlled() ) {
                 c->despondency=MAX_DESPONDENCY;
                 c->energy=MAX_ENERGY;
@@ -1473,16 +1454,10 @@ mxcharacter* ddr_character::Cmd_Approach ( mxcharacter* character )
         : nullptr;
     
     // if we can't recruit, can any of my followers?
-    if ( will_perform_recruit == nullptr && HasFollowers() ) {
-        entities followers;
-        mx->scenario->GetCharacterFollowers(this, followers);
-        for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-            auto follower = static_cast<mxcharacter*>(followers[ii]);
-            if ( follower->CheckRecruitChar( character ) ) {
-                will_perform_recruit = follower ;
-                break;
-            }
-        }
+    if ( will_perform_recruit == nullptr ) {
+        will_perform_recruit = FIND_FOLLOWER(f) {
+            return f->CheckRecruitChar( character );
+        });
     }
     
     // 1. move all characters into new location

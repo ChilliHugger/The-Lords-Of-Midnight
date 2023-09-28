@@ -9,10 +9,6 @@ namespace tme {
     class mxgridref ;
     class mxinterface;
 
-    namespace collections {
-        class entities ;
-    }
-
     //namespace item {
         class mxitem;
         class mxlocinfo ;
@@ -43,7 +39,7 @@ namespace tme {
             virtual u32 CalcFearAdjuster(mxlocinfo* info) const ;
             virtual u32 CalcStrongholdAdjuster(void) const;
             virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character );
-            virtual void GetDefaultCharacters ( entities& collection );
+            virtual void GetDefaultCharacters ( c_character* collection );
             virtual bool CanWeSelectCharacter ( const mxcharacter* character );
                         
             virtual mxcharacter* CurrentMoonringWearer( void );
@@ -64,11 +60,11 @@ namespace tme {
 
             virtual void CheckMoonringWearerDead ( void );
             
-            virtual bool GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, entities& collection );
+            virtual bool GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, c_character* collection );
             virtual u32 FindArmiesAtLocation ( mxgridref loc, u32& enemies, u32& friends, flags32_t flags );
-            virtual u32 FindCharactersAtLocation ( mxgridref loc, entities& characters, flags32_t flags );
+            virtual u32 FindCharactersAtLocation ( mxgridref loc, c_character* characters, flags32_t flags );
 
-            virtual void GetCharacterFollowers ( mxcharacter* leader, collections::entities& collection );
+            virtual c_character GetCharacterFollowers ( mxcharacter* leader );
             
             
             virtual void GiveGuidance( mxcharacter* character, s32 hint );

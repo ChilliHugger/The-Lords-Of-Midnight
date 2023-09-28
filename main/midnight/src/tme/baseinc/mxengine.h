@@ -36,10 +36,7 @@ namespace tme {
         PFNCOMMAND  pfnCommand;
         u32         arguments[16];
     } mxcommand_t;
-
-    using collections::entities;
-    using collections::infos;
-        
+   
     class mxengine
     {
     public:
@@ -98,9 +95,9 @@ namespace tme {
         void CurrentChar ( mxcharacter* character);
         mxcharacter* CurrentChar ( void ) const;
         
-        u32 CollectRegiments ( mxgridref loc, entities& collection ) ;
-        u32 CollectStrongholds ( mxgridref loc, entities& collection ) ;
-        u32 CollectRoutenodes ( mxgridref loc, entities& collection ) ;
+        u32 CollectRegiments ( mxgridref loc, c_regiment& collection ) ;
+        u32 CollectStrongholds ( mxgridref loc, c_stronghold& collection ) ;
+        u32 CollectRoutenodes ( mxgridref loc, c_routenode& collection ) ;
 
         cvarreg_t* FindDBVariable ( const std::string& name ) const;
         mxentity* EntityByName( const std::string& name, id_type_t type=IDT_NONE );
@@ -126,24 +123,24 @@ namespace tme {
         mxbattle*               battle;
         mxscenario*             scenario;
         
-        entities                objCharacters;
-        entities                objRegiments;
-        entities                objRoutenodes;
-        entities                objStrongholds;
-        entities                objPlaces;
-        entities                objMissions;
-        entities                objVictories;
-        entities                objObjects;
-        infos                   objDirectionInfos;
-        infos                   objUnitInfos;
-        infos                   objRaceInfos;
-        infos                   objGenderInfos;
-        infos                   objTerrainInfos;
-        infos                   objAreaInfos;
-        infos                   objCommandInfos;
+        c_character     objCharacters;
+        c_regiment      objRegiments;
+        c_routenode     objRoutenodes;
+        c_stronghold    objStrongholds;
+        c_place         objPlaces;
+        c_mission       objMissions;
+        c_victory       objVictories;
+        c_object        objObjects;
+        c_direction     objDirectionInfos;
+        c_unit          objUnitInfos;
+        c_race          objRaceInfos;
+        c_gender        objGenderInfos;
+        c_terrain       objTerrainInfos;
+        c_area          objAreaInfos;
+        c_command       objCommandInfos;
 #if defined(_DDR_)
-        infos                   objObjectPowersInfos;
-        infos                   objObjectTypesInfos;
+        c_objectpower   objObjectPowersInfos;
+        c_objecttype    objObjectTypesInfos;
 #endif
         PFNNIGHTCALLBACK        pfnNightCallback ;
 
@@ -171,6 +168,12 @@ namespace tme {
         { lastactiontext = text; }
 
     extern mxengine* mx;
+
+#define FOR_EACH_CHARACTER(c) for ( auto c : mx->objCharacters )
+#define FOR_EACH_REGIMENT(r) for ( auto r : mx->objRegiments )
+#define FOR_EACH_OBJECT(o) for ( auto o : mx->objObjects )
+#define FOR_EACH_STRONGHOLD(s) for ( auto s : mx->objStrongholds )
+#define FOR_EACH_ROUTENODE(r) for ( auto r : mx->objRoutenodes )
 
 
 }

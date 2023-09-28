@@ -616,8 +616,7 @@ namespace tme {
 
             if ( ISARG("FOLLOWERS") ) {
                 c_mxid& collection= (c_mxid&) *((c_mxid*)argv.vPtr) ;
-                entities chars;
-                mx->scenario->GetCharacterFollowers(character, chars);
+                auto chars = mx->scenario->GetCharacterFollowers(character);
                 chars.CreateIdtCollection( collection );
                 return MX_OK ;
             }

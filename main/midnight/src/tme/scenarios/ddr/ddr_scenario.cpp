@@ -127,15 +127,14 @@ void ddr_x::initialiseAfterCreate( u32 version )
 MXTRACE("Place Objects On Map");
     PlaceObjectsOnMap();
     
-    for (int ii = 0; ii < sv_characters; ii++) {
-        auto c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
+    FOR_EACH_CHARACTER(character) {
+        auto c = static_cast<ddr_character*>(character);
         c->lastlocation=c->Location();
     }
     
-    for ( int ii=0; ii < sv_strongholds; ii++ ) {
-        auto s = static_cast<mxstronghold*>(mx->StrongholdById(ii+1));
-        s->MaxTroops(sv_stronghold_default_max);
-        s->MinTroops(sv_stronghold_default_min);
+    FOR_EACH_STRONGHOLD(stronghold) {
+        stronghold->MaxTroops(sv_stronghold_default_max);
+        stronghold->MinTroops(sv_stronghold_default_min);
     }
     
     // Obigorn the giant starts with Riders and not Warriors
@@ -231,13 +230,11 @@ mxobject* ddr_x::PickupObject ( mxgridref loc )
     
 void ddr_x::PlaceObjectsOnMap ( void )
 {
-    ddr_object* object;
     mxgridref loc;
     
-    auto luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
     
-    for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
+    FOR_EACH_OBJECT(o) {
+        auto object = static_cast<ddr_object*>(o);
         if ( object->IsUnique() && object->IsRandomStart() ) {
             bool found=false;
             while ( !found ) {
@@ -258,11 +255,9 @@ mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
     if ( !mx->gamemap->HasObject(loc) )
         return nullptr;
     
-    ddr_object* object;
-    for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
-        if ( object->IsCarried() )
-            continue;
+    FOR_EACH_OBJECT(o) {
+        auto object = static_cast<ddr_object*>(o);
+        CONTINUE_IF ( object->IsCarried() );
         if ( object->Location() == loc )
             return object;
     }
@@ -272,14 +267,12 @@ mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
 mxstronghold* ddr_x::StrongholdFromLocation ( mxgridref loc )
 {
     mxloc& mapsqr = mx->gamemap->GetAt ( loc );
-    if ( !(mapsqr.flags&lf_stronghold) )
-        return nullptr;
     
-    mxstronghold* stronghold;
-    for ( int ii=0; ii<sv_strongholds; ii++ ) {
-        stronghold = mx->StrongholdById(ii+1);
-        if ( stronghold->Location() == loc )
-            return stronghold;
+    if ( mapsqr.flags&lf_stronghold ) {
+        FOR_EACH_STRONGHOLD(stronghold) {
+            if ( stronghold->Location() == loc )
+                return stronghold;
+        }
     }
     return nullptr;
 }

@@ -40,8 +40,7 @@ namespace tme {
             mx->battle->ResetBattlesFought();
 
             // place all lords at dawn
-            for (ii = 0; ii < sv_characters; ii++) {
-                character = mx->CharacterById(ii+1) ;
+            FOR_EACH_CHARACTER(character) {
                 character->StartDawn();
             }
 
@@ -50,8 +49,7 @@ namespace tme {
             // and mark their locations as being of special interest
             // by setting the special bit on in the map data
      
-            for (ii = 0; ii < sv_characters; ii++) {
-                character = mx->CharacterById(ii+1) ;
+            FOR_EACH_CHARACTER(character) {
                 if ( character->IsAlive() && !character->IsHidden() && character->race!=RA_MIDWINTER ) {
                     mx->gamemap->SetLocationSpecial(character->Location(),1);
                 }
@@ -59,8 +57,7 @@ namespace tme {
 
             // checking all the strongholds that don't belong to doomdark
             // and mark then on the map as being of special interest
-            for (ii = 0; ii < sv_strongholds; ii++) {
-                auto stronghold=mx->StrongholdById(ii+1);
+            FOR_EACH_STRONGHOLD(stronghold) {
                 if ( stronghold->OccupyingRace() != RA_DOOMGUARD )
                     mx->gamemap->SetLocationSpecial(stronghold->Location(),1);
             }
@@ -68,17 +65,19 @@ namespace tme {
 #ifndef _TME_DEMO_MODE_
             // process all the regiments
             auto processor = new RegimentTurnProcessor();
-            for (ii = 0; ii < sv_regiments; ii++) {
-                processor->Process(mx->RegimentById(ii+1));
+            FOR_EACH_REGIMENT(regiment) {
+                processor->Process(regimemt);
             }
 #endif
             // remove mark where all the characters are
-            for (ii = 0; ii < sv_characters; ii++)
-                ResetLocationSpecial(mx->CharacterById(ii+1)->Location());
+            FOR_EACH_CHARACTER(character) {
+                ResetLocationSpecial(character->Location());
+            }
 
             // remove mark where the keeps and citadels armies are
-            for (ii = 0; ii < sv_strongholds; ii++)
-                ResetLocationSpecial(mx->StrongholdById(ii+1)->Location());
+            FOR_EACH_STRONGHOLD(stronghold) {
+                ResetLocationSpecial(stronghold->Location());
+            }
             
             MoveMidwinter();
             
@@ -97,23 +96,19 @@ namespace tme {
         m_gameover_t mxnight::CheckWinLoseConditions ( bool night )
         {
 #ifndef _TME_DEMO_MODE_
-            collections::entities collection;
-
-            // scan the mission tables        
-            collection = mx->objMissions;
-            collection.Sort(1);
-            for ( u32 ii=0; ii<collection.Count(); ii++ ) {
-                mxmission* m = (mxmission*)collection[ii];
+            // scan the mission tables
+            auto missions = mx->objMissions;
+            missions.Sort(1);
+            for ( auto m : missions ) {
                 if ( !night && m->Condition() != MC_CHARACTER_DEAD )
                     continue;
                 m->CheckComplete();
             }
 
             // scan the victory tables
-            collection = mx->objVictories;
-            collection.Sort(1);
-            for ( u32 ii=0; ii<collection.Count(); ii++ ) {
-                mxvictory* v = (mxvictory*)collection[ii];
+            auto victories = mx->objVictories;
+            victories.Sort(1);
+            for ( auto v : victories ) {
                 if ( v->CheckComplete() ) {
                     // display message
                     mx->SetLastActionMsg(mx->text->CookedSystemString(v->Message()));
@@ -191,8 +186,9 @@ namespace tme {
             case 5:
                 // ushgarak fallen
                 //
-                for ( u32 ii=0; ii<mx->objRegiments.Count(); ii++ )
-                    ((mxregiment*)mx->objRegiments[ii])->Total(0);
+                FOR_EACH_REGIMENT(r) {
+                    r->Total(0);
+                }
                 
                 luxor->warriors.Total(1200);
                 luxor->riders.Total(1200);
@@ -206,8 +202,9 @@ namespace tme {
             case 6:
                 // ushgarak fallen
                 //
-                for ( u32 ii=0; ii<mx->objRegiments.Count(); ii++ )
-                    ((mxregiment*)mx->objRegiments[ii])->Total(0);
+                FOR_EACH_REGIMENT(r) {
+                    r->Total(0);
+                }
                 
                 luxor->warriors.Total(1200);
                 luxor->riders.Total(1200);
@@ -225,14 +222,8 @@ namespace tme {
             case 7:
                 // xajorkith fallen
                 //
-                //for ( u32 ii=0; ii<mx->objRegiments.Count(); ii++ )
-                //    ((mxregiment*)mx->objRegiments[ii])->Total(0);
                 
                 ((mxregiment*)mx->objRegiments[0])->Location( sh_xajorkith->Location() );
-                
-                //luxor->warriors.Total(1200);
-                //luxor->riders.Total(1200);
-                //luxor->Location( ushgarak->Location() );
                 
                 sh_xajorkith->TotalTroops(10);
 

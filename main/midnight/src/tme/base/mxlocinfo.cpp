@@ -289,8 +289,7 @@ namespace tme {
             }
 
             // work through all characters to find the already recruited characters
-            for (u32 ii = 0; ii < sv_characters; ii++) {
-                auto c = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(c) {
 
                 CONTINUE_IF_NULL(c);
 
@@ -315,8 +314,7 @@ namespace tme {
             }
 
             // now lets get the unrecruited characters
-            for (u32 ii = 0; ii < sv_characters; ii++) {
-                auto c = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(c) {
 
                 CONTINUE_IF_NULL(c);
                 

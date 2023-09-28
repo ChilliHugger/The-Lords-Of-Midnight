@@ -47,12 +47,13 @@ namespace tme {
             RemoveMidwinterFromMap();
             
             // place all lords at dawn
-            for (ii = 0; ii < sv_characters; ii++) {
-                character = static_cast<ddr_character*>(mx->CharacterById(ii+1)) ;
-                if ( character->IsDead())
-                    continue;
+            FOR_EACH_CHARACTER(c) {
+                auto character = static_cast<ddr_character*>(c);
+                
+                CONTINUE_IF( character->IsDead());
                 
                 character->StartDawn();
+                
 #if !defined( _TME_DEMO_MODE_ )
                 character->Turn();
 #endif
@@ -70,11 +71,10 @@ namespace tme {
             // tidy up
 
             // characters
-            for (ii = 0; ii < sv_characters; ii++) {
-                character = static_cast<ddr_character*>(mx->CharacterById(ii+1));
-                if ( character->IsDead())
-                    continue;
+            FOR_EACH_CHARACTER(c) {
+                auto character = static_cast<ddr_character*>(c);
                 
+                CONTINUE_IF(character->IsDead());
                 
                 // remove critters from character locations
                 mxloc& m = mx->gamemap->GetAt(character->Location());
@@ -93,8 +93,7 @@ namespace tme {
                 
                 // cleanup 'prepares to do battle'
                 int enemies=0;
-                for ( u32 ii=0; ii<sv_characters; ii++ ) {
-                    mxcharacter* c = mx->CharacterById(ii+1);
+                FOR_EACH_CHARACTER(c) {
                     if ( (c->Location().x != character->Location().x) || (c->Location().y != character->Location().y) )
                         continue;
                     if ( !c->IsFriend(character) )
@@ -110,8 +109,8 @@ namespace tme {
             }
 
             // strongholds
-            for (ii = 0; ii < sv_strongholds; ii++) {
-                auto stronghold = static_cast<ddr_stronghold*>(mx->StrongholdById(ii+1));
+            FOR_EACH_STRONGHOLD(s) {
+                auto stronghold = static_cast<ddr_stronghold*>(s);
                 stronghold->OnRespawn();
             }
 

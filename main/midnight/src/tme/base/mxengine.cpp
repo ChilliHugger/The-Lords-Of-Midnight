@@ -15,6 +15,7 @@
  */
 
 #include "../baseinc/tme_internal.h"
+#include "../base/collections.h"
 #include "cocos2d.h"
 #include <stdio.h>
 
@@ -298,21 +299,21 @@ MXTRACE( "Header='%s'", header.c_str());
         return MX_UNKNOWN_FILE;
     }
 
-    ar >> sv_characters ;    objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
+    ar >> sv_characters ;   objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
     ar >> sv_regiments ;    objRegiments.Create(scenario,IDT_REGIMENT,sv_regiments);
-    ar >> sv_routenodes ;    objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
-    ar >> sv_strongholds ;    objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
-    ar >> sv_places ;        objPlaces.Create(scenario,IDT_PLACE,sv_places);
-    ar >> sv_objects ;        objObjects.Create(scenario,IDT_OBJECT,sv_objects);
-    ar >> sv_missions ;        objMissions.Create(scenario,IDT_MISSION,sv_missions);
+    ar >> sv_routenodes ;   objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
+    ar >> sv_strongholds ;  objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
+    ar >> sv_places ;       objPlaces.Create(scenario,IDT_PLACE,sv_places);
+    ar >> sv_objects ;      objObjects.Create(scenario,IDT_OBJECT,sv_objects);
+    ar >> sv_missions ;     objMissions.Create(scenario,IDT_MISSION,sv_missions);
     ar >> sv_victories ;    objVictories.Create(scenario,IDT_VICTORY,sv_victories);
-    ar >> sv_directions ;    objDirectionInfos.Create(scenario,IDT_DIRECTIONINFO,sv_directions);
+    ar >> sv_directions ;   objDirectionInfos.Create(scenario,IDT_DIRECTIONINFO,sv_directions);
     ar >> sv_units ;        objUnitInfos.Create(scenario,IDT_UNITINFO,sv_units);
     ar >> sv_races ;        objRaceInfos.Create(scenario,IDT_RACEINFO,sv_races);
-    ar >> sv_genders ;        objGenderInfos.Create(scenario,IDT_GENDERINFO,sv_genders);
-    ar >> sv_terrains ;        objTerrainInfos.Create(scenario,IDT_TERRAININFO,sv_terrains);
+    ar >> sv_genders ;      objGenderInfos.Create(scenario,IDT_GENDERINFO,sv_genders);
+    ar >> sv_terrains ;     objTerrainInfos.Create(scenario,IDT_TERRAININFO,sv_terrains);
     ar >> sv_areas ;        objAreaInfos.Create(scenario,IDT_AREAINFO,sv_areas);
-    ar >> sv_commands ;        objCommandInfos.Create(scenario,IDT_COMMANDINFO,sv_commands);
+    ar >> sv_commands ;     objCommandInfos.Create(scenario,IDT_COMMANDINFO,sv_commands);
     ar >> sv_variables ;    variables = new cvarreg_t[sv_variables];
 
 MXTRACE( "Characters =%d", (int)sv_characters);
@@ -959,18 +960,13 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
  * 
  */
 
-u32 mxengine::CollectRegiments ( mxgridref loc, tme::collections::entities& collection )
+u32 mxengine::CollectRegiments ( mxgridref loc, c_regiment& collection )
 {
-int ii;
-    //int count=0;
-
     collection.Create(MAX_REGIMENTS_INLOCATION);
 
-    // count
-    for (ii = 0; ii < sv_regiments; ii++) {
-        mxregiment* pReg = RegimentById(ii+1);
-        if ( pReg && pReg->Total() && pReg->Location() == loc )
-            collection.Add(pReg) ;
+    FOR_EACH_REGIMENT(regiment) {
+        if ( regiment && regiment->Total() && regiment->Location() == loc )
+            collection.Add(regiment) ;
     }
 
     return collection.Compact();
@@ -989,11 +985,8 @@ int ii;
  * 
  */
 
-u32 mxengine::CollectStrongholds ( mxgridref loc, tme::collections::entities& collection ) 
+u32 mxengine::CollectStrongholds ( mxgridref loc, c_stronghold& collection )
 {
-int ii;
-//int count=0;
-
     collection.Clear();
 
     mxloc& mapsqr = gamemap->GetAt ( loc );
@@ -1004,8 +997,7 @@ int ii;
     collection.Create(MAX_STRONGHOLDS_INLOCATION);
 
     // count
-    for (ii = 0; ii < sv_strongholds; ii++) {
-        mxstronghold* stronghold = mx->StrongholdById(ii+1);
+    FOR_EACH_STRONGHOLD(stronghold) {
         if ( stronghold && stronghold->Location() == loc ) {
             collection.Add(stronghold);
         }
@@ -1015,11 +1007,8 @@ int ii;
 }
 
 
-u32 mxengine::CollectRoutenodes ( mxgridref loc, tme::collections::entities& collection ) 
+u32 mxengine::CollectRoutenodes ( mxgridref loc, c_routenode& collection ) 
 {
-int ii;
-//int count=0;
-
     collection.Clear();
 
     mxloc& mapsqr = gamemap->GetAt ( loc );
@@ -1029,11 +1018,9 @@ int ii;
 
     collection.Create(MAX_ROUTENODES_INLOCATION);
 
-
-    for (ii = 0; ii < sv_routenodes; ii++) {
-        mxroutenode* pNode = mx->RouteNodeById(ii+1);
-        if ( pNode && pNode->Location() == loc ) {
-            collection.Add(pNode);
+    FOR_EACH_ROUTENODE(routenode) {
+        if ( routenode && routenode->Location() == loc ) {
+            collection.Add(routenode);
         }
     }
 

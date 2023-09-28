@@ -73,9 +73,8 @@ namespace tme {
     void ddr_battle::War( void )
     {
         // fights
-        for ( int ii=0; ii<sv_characters; ii++ ) {
-            ddr_character* character = static_cast<ddr_character*>(mx->CharacterById(ii+1));
-            Battle(character);
+        FOR_EACH_CHARACTER(character) {
+            Battle(static_cast<ddr_character*>(character));
         }
     }
     
@@ -122,15 +121,14 @@ namespace tme {
         
         characters_here.Clear();
         
-        for ( u32 ii=0; ii<sv_characters; ii++ ) {
-            mxcharacter* c = mx->CharacterById(ii+1);
-            
+        FOR_EACH_CHARACTER(c)
+        {
             CONTINUE_IF(c->IsDead());
-            
+
             CONTINUE_IF(c->IsInTunnel());
-            
+
             CONTINUE_IF(c->Location() != character->Location());
-            
+
             characters_here.Add(c);
             if ( !character->IsFriend(c) )
                 enemies++;

@@ -139,12 +139,11 @@ mxentity* lom_x::CreateEntity ( id_type_t type )
 
 mxcharacter* lom_x::IceCrownCarrier( void ) const
 {
-    for ( int ii=0; ii<sv_characters; ii++ ) {
-        mxcharacter* character = mx->CharacterById(ii+1);
+    FOR_EACH_CHARACTER(character) {
         if ( character->IsAllowedIcecrown() && character->IsAlive() )
             return character ;
     }
-    return NULL ;
+    return nullptr ;
 }
 
 
@@ -233,11 +232,10 @@ void lom_x::initialiseAfterCreate(u32 version)
     
 mxregiment* lom_x::FindEmptyRegiment()
 {
-    for (int ii = 0; ii < sv_regiments; ii++) {
-        mxregiment* r = mx->RegimentById(ii+1);
-        if ( r->Total() == 0 ) return r ;
+    FOR_EACH_REGIMENT(regiment) {
+        if ( regiment->Total() == 0 ) return regiment ;
     }
-    return NULL ;
+    return nullptr ;
 }
 
 void lom_x::NightStart(void)
