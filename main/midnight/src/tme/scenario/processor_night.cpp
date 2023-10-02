@@ -64,9 +64,9 @@ namespace tme {
 
 #ifndef _TME_DEMO_MODE_
             // process all the regiments
-            auto processor = new RegimentTurnProcessor();
+            std::unique_ptr<RegimentTurnProcessor> processor ( new RegimentTurnProcessor() );
             FOR_EACH_REGIMENT(regiment) {
-                processor->Process(regimemt);
+                processor->Process(regiment);
             }
 #endif
             // remove mark where all the characters are
@@ -97,90 +97,92 @@ namespace tme {
         {
 #ifndef _TME_DEMO_MODE_
             // scan the mission tables
-            auto missions = mx->objMissions;
-            missions.Sort(1);
+            auto missions = mx->objMissions.Clone();
+            missions.Sort(mxmission::SORT::PRIORITY);
             for ( auto m : missions ) {
-                if ( !night && m->Condition() != MC_CHARACTER_DEAD )
-                    continue;
+                //MXTRACE("%s[%d] %d", m->Symbol().c_str(), (int)m->Id(), (int)m->Priority() );
+                CONTINUE_IF ( !night && m->Condition() != MC_CHARACTER_DEAD );
                 m->CheckComplete();
             }
 
             // scan the victory tables
-            auto victories = mx->objVictories;
-            victories.Sort(1);
+            auto victories = mx->objVictories.Clone();
+            victories.Sort(mxvictory::SORT::PRIORITY);
             for ( auto v : victories ) {
-                if ( v->CheckComplete() ) {
-                    // display message
-                    mx->SetLastActionMsg(mx->text->CookedSystemString(v->Message()));
+                //MXTRACE("%s[%d] %d", v->Symbol().c_str(), (int)v->Id(), (int)v->Priority() );
+                CONTINUE_IF( !v->CheckComplete() );
+                
+                // display message
+                mx->SetLastActionMsg(mx->text->CookedSystemString(v->Message()));
      
-                    // game over?
-                    m_gameover_t gameover = MG_NONE ;
-                    if ( v->IsGameOver() ) {
-                        gameover = v->Priority()==3 ? MG_LOSE : MG_WIN ;
-                    }
-                    //mx->NightCallback(NULL);
-                    if ( gameover != MG_NONE ) {
-                        return gameover ;
-                    }
+                // game over?
+                m_gameover_t gameover = MG_NONE ;
+                if ( v->IsGameOver() ) {
+                    gameover = v->Priority() == 3 ? MG_LOSE : MG_WIN ;
+                }
+                if ( gameover != MG_NONE ) {
+                    return gameover ;
                 }
             }
 #endif
-
             return MG_NONE ;
         }
 
     
         void mxnight::MoveMidwinter ( void )
         {
-            static tme::loc_t locations[] = { loc_t(38,18), loc_t(41,21), loc_t(42,15), loc_t(46,14), loc_t(49,13) };
+            static tme::loc_t locations[] = {
+                loc_t(38,18),
+                loc_t(41,21),
+                loc_t(42,15),
+                loc_t(46,14),
+                loc_t(49,13)
+            };
         
             int p = mxrandom(NUMELE(locations) - 1);
             
-            mxcharacter* c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
-            if ( c==NULL )
-                return;
+            auto c = mx->CharacterBySymbol("CH_MIDWINTER");
+            RETURN_IF_NULL(c);
         
             c->Location(locations[p]);
-            
         }
     
 #ifdef _TEST_WINLOSE_CONDITIONS_
     void mxnight::testWinLoseConditions ( void )
     {
-        mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-
-        mxcharacter* morkin = (mxcharacter*)mx->EntityByName("CH_MORKIN");
-        mxcharacter* xajorkith = (mxcharacter*)mx->EntityByName("CH_XAJORKITH");
-        mxcharacter* farflame = (mxcharacter*)mx->EntityByName("CH_FARFLAME");
-        mxcharacter* lorgim = (mxcharacter*)mx->EntityByName("CH_LORGRIM");
-        mxcharacter* fawkrin = (mxcharacter*)mx->EntityByName("CH_FAWKRIN");
-        mxplace* mirrow = (mxplace*)mx->EntityByName("PL_LAKE_MIRROW");
-        mxstronghold* sh_ushgarak = (mxstronghold*)mx->EntityByName("SH_CITADEL_USHGARAK");
-        mxstronghold* sh_xajorkith = (mxstronghold*)mx->EntityByName("SH_CITADEL_XAJORKITH");
+        auto ch_luxor = mx->CharacterBySymbol("CH_LUXOR");
+        auto ch_morkin = mx->CharacterBySymbol("CH_MORKIN");
+        auto ch_xajorkith = mx->CharacterBySymbol("CH_XAJORKITH");
+        auto ch_farflame = mx->CharacterBySymbol("CH_FARFLAME");
+        auto ch_lorgim = mx->CharacterBySymbol("CH_LORGRIM");
+        auto ch_fawkrin = mx->CharacterBySymbol("CH_FAWKRIN");
+        auto pl_mirrow = static_cast<mxplace*>(mx->EntityByName("PL_LAKE_MIRROW", IDT_PLACE));
+        auto sh_ushgarak = static_cast<mxstronghold*>(mx->EntityByName("SH_CITADEL_USHGARAK", IDT_STRONGHOLD));
+        auto sh_xajorkith = static_cast<mxstronghold*>(mx->EntityByName("SH_CITADEL_XAJORKITH", IDT_STRONGHOLD));
     
         
         int test = 5;
         
-        morkin->carrying = mx->ObjectById(OB_ICECROWN);
+        morkin->carrying = static_cast<mxobject*>(mx->EntityByName("OB_ICECROWN", IDT_OBJECT));
 
         mx->battle->ResetBattlesFought();
         
         switch ( test ) {
             case 1:
                 // morkin & farflame
-                farflame->Location( morkin->Location() ) ;
+                ch_farflame->Location( ch_morkin->Location() ) ;
                 break;
             case 2:
                 // morkin & logrim
-                lorgim->Location( morkin->Location() ) ;
+                ch_lorgim->Location( ch_morkin->Location() ) ;
             break;
             case 3:
                 // morkin & fawkrin
-                fawkrin->Location( morkin->Location() ) ;
+                ch_fawkrin->Location( ch_morkin->Location() ) ;
                 break;
             case 4:
                 // morkin & lake mirrow
-                morkin->Location( mirrow->Location() ) ;
+                ch_morkin->Location( ch_mirrow->Location() ) ;
                 break;
                 
             case 5:
@@ -190,12 +192,11 @@ namespace tme {
                     r->Total(0);
                 }
                 
-                luxor->warriors.Total(1200);
-                luxor->riders.Total(1200);
-                luxor->Location( sh_ushgarak->Location() );
+                ch_luxor->warriors.Total(1200);
+                ch_luxor->riders.Total(1200);
+                ch_luxor->Location( sh_ushgarak->Location() );
                 
-                mx->battle->KickOffAtLocation(luxor->Location());
-                //sh_ushgarak->Total(10);
+                mx->battle->KickOffAtLocation(ch_luxor->Location());
                 
                 break;
 
@@ -206,16 +207,16 @@ namespace tme {
                     r->Total(0);
                 }
                 
-                luxor->warriors.Total(1200);
-                luxor->riders.Total(1200);
-                luxor->Location( sh_ushgarak->Location() );
+                ch_luxor->warriors.Total(1200);
+                ch_luxor->riders.Total(1200);
+                ch_luxor->Location( sh_ushgarak->Location() );
                 
                 sh_ushgarak->TotalTroops(10);
                 
-                mx->battle->KickOffAtLocation(luxor->Location());
+                mx->battle->KickOffAtLocation(ch_luxor->Location());
                 
                 // morkin & farflame
-                farflame->Location( morkin->Location() ) ;
+                ch_farflame->Location( ch_morkin->Location() ) ;
                 
                 break;
         
@@ -223,20 +224,20 @@ namespace tme {
                 // xajorkith fallen
                 //
                 
-                ((mxregiment*)mx->objRegiments[0])->Location( sh_xajorkith->Location() );
+                mx->objRegiments.First()->Location( sh_xajorkith->Location() );
                 
                 sh_xajorkith->TotalTroops(10);
 
-                morkin->Cmd_Dead();
+                ch_morkin->Cmd_Dead();
                 
-                xajorkith->Location( luxor->Location() );
-                mx->battle->KickOffAtLocation(luxor->Location());
+                ch_xajorkith->Location( ch_luxor->Location() );
+                mx->battle->KickOffAtLocation(ch_luxor->Location());
                 break;
                 
             case 8:
                 // luxor and morkin dead
-                luxor->Cmd_Dead();
-                morkin->Cmd_Dead();
+                ch_luxor->Cmd_Dead();
+                ch_morkin->Cmd_Dead();
                 break;
                 
                 

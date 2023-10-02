@@ -883,15 +883,15 @@ namespace tme {
     
     void ddr_character::UseSpellOfSwiftness()
     {
+        auto ch_morkin = SCENARIO(morkin);
+    
         // take tarithel to morkin
         // set time of day
-        //
-        auto morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-        
-        Location(morkin->Location());
+        //        
+        Location(ch_morkin->Location());
         Flags().Reset( cf_tunnel );
         
-        if ( morkin->IsInTunnel() )
+        if ( ch_morkin->IsInTunnel() )
             Flags().Set( cf_tunnel );
         
         // Tarithel the fey casts the Spell of Thigor, Morkin is transported to be with her.
@@ -1063,8 +1063,8 @@ void ddr_character::whatIsCharacterDoing ( void )
     
     orders = new_orders ;
     
-    mxcharacter* ch_luxor = static_cast<mxcharacter*>(mx->EntityByName("CH_LUXOR"));
-    
+    auto ch_luxor = SCENARIO(luxor);
+
     switch ( orders )
     {
         case OD_FOLLOW_LIEGE:
@@ -1129,8 +1129,8 @@ void ddr_character::whatIsCharacterDoing ( void )
             // object is carried, so start heading home
             
         case OD_HOME:
-            if ( this == mx->EntityByName("CH_SHARETH")) {
-                Target( static_cast<mxitem*>(mx->EntityByName("SH_CITY_GLIREON")) );
+            if ( this == SCENARIO(shareth) ) {
+                Target( SCENARIO(cityofglireon) );
             }else{
                 Target(home_stronghold);
             }

@@ -23,12 +23,16 @@ namespace tme {
         virtual void NightStop(void);
         virtual void NightStart(void);
         mxregiment* FindEmptyRegiment();
-        
+
+        virtual void initialise(u32 version);
         virtual void initialiseAfterCreate(u32 version);
+    public:
+        mxplace*        towerofdoom;
+        mxcharacter*    morkin;
 
     private:
-        bool    luxorAlive;
-        bool    morkinAlive;
+        bool            luxorAlive;
+        bool            morkinAlive;
     };
 
 
@@ -44,6 +48,10 @@ namespace tme {
         };
     //}
     
+    #if defined(SCENARIO)
+        #undef SCENARIO
+    #endif
+    #define SCENARIO(x) static_cast<lom_x*>(mx->scenario)->x
 }
 
 #endif //_LOMSCENARIO_INTERNAL_H_INCLUDED_

@@ -283,7 +283,7 @@ namespace tme {
             // if they are not then the only person we are going to be able to see
             // are people who could potentially carry the moonring
             if ( mx->scenario->IsFeature(SF_MOONRING) ) {
-                moonring = (mxobject*)mx->EntityByName("OB_MOONRING"); 
+                moonring = SCENARIO(moonring); 
                 //moonringcarrier = mx->scenario->WhoHasObject(moonring);
                 moonringcarrier = mx->scenario->CurrentMoonringWearer();
             }
@@ -348,9 +348,9 @@ namespace tme {
             nArmies=0;
    
             // luxor is currently always the players friend
-            const mxcharacter* ch_friend = owner != nullptr
+            const auto ch_friend = owner != nullptr
                 ? owner
-                : (mxcharacter*)mx->EntityByName("CH_LUXOR") ;
+                : SCENARIO(luxor) ;
 
             FindCharactersHere();
 

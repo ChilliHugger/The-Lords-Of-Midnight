@@ -133,7 +133,7 @@ namespace tme {
         std::string& Symbol() { return symbol ; }
         bool IsSymbol(LPCSTR s) const { return c_stricmp(symbol.c_str(),s) == 0; }
 
-        virtual int Compare ( mxentity* o, int hint ) const;
+        virtual int Compare ( const mxentity* o, int hint ) const;
 
         void SetUserData(const void* data) { user_data = data; }
         const void* GetUserData() { return user_data; }
@@ -650,6 +650,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         class mxvictory : public mxentity
         {
         public:
+            enum SORT {
+                PRIORITY = 1
+            };
+        public:
             DEFAULT_IMPLEMENTATION(mxvictory);
 
             FLAG_PROPERTY ( IsGameOver, vf_gameover );
@@ -659,7 +663,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             GET_PROPERTY ( s32, Priority, priority );
 
             virtual bool CheckComplete ( void );
-            virtual int Compare ( mxentity* o, int hint ) const;
+            virtual int Compare ( const mxentity* o, int hint ) const;
 
         protected:
             s32                 priority;
@@ -674,6 +678,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         class mxmission : public mxentity
         {
         public:
+            enum SORT {
+                PRIORITY = 1
+            };
+
+        public:
             DEFAULT_IMPLEMENTATION(mxmission);
 
             FLAG_PROPERTY ( IsComplete, mf_complete );
@@ -684,8 +693,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual bool CheckComplete ( void );
             virtual bool Completed ( void );
             virtual mxgridref GetLocation ( mxid id ) const;
-            virtual int Compare ( mxentity* o, int hint ) const;
-
+            virtual int Compare ( const mxentity* o, int hint ) const;
 
         protected:
             s32                 priority;

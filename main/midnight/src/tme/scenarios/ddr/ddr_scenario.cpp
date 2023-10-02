@@ -68,7 +68,12 @@ variant args;
 //
 
 
-ddr_x::ddr_x()
+ddr_x::ddr_x() :
+    morkin(nullptr),
+    tarithel(nullptr),
+    rorthron(nullptr),
+    shareth(nullptr),
+    cityofglireon(nullptr)
 {
 }
 
@@ -81,8 +86,7 @@ scenarioinfo_t* ddr_x::GetInfoBlock() const
     return &ddr_scenario_info ;
 }
 
-    
-    
+
 MXRESULT ddr_x::Register ( mxengine* midnightx )
 {
     // mx = midnightx ;
@@ -106,14 +110,23 @@ MXRESULT ddr_x::UnRegister ( mxengine* midnightx )
     
     // mx will delete the scenario, so just lose our
     // reference to it
-    ddr_scenario = NULL ;
+    ddr_scenario = nullptr ;
     return MX_OK ;
 }
+
+void ddr_x::initialise( u32 version )
+{
+    morkin = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_MORKIN"));
+    tarithel = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_TARITHEL"));
+    rorthron = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_RORTHRON"));
+    shareth = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_SHARETH"));
+    cityofglireon = static_cast<mxplace*>(mx->EntityByName("SH_CITY_GLIREON", IDT_PLACE));
     
+    mxscenario::initialise(version);
+}
     
 void ddr_x::initialiseAfterCreate( u32 version )
 {
-    
     //sv_riders_max_energy=255;
     //sv_warriors_max_energy=255;
     sv_stronghold_default_max=1250;
@@ -140,7 +153,7 @@ MXTRACE("Place Objects On Map");
     // Obigorn the giant starts with Riders and not Warriors
     // this needs a data fix too
     // https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/135
-    auto obigrorn = static_cast<ddr_character*>(mx->EntityByName("CH_OBIGRORN"));
+    auto obigrorn = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_OBIGRORN"));
     if(obigrorn!=nullptr){
         obigrorn->Flags().Reset(cf_allowedriders);
         obigrorn->Flags().Set(cf_allowedwarriors);
@@ -290,14 +303,9 @@ std::string buffer = mx->LastActionMsg();
 
     RETURN_IF_NULL(character);
 
-    //bool mikeseek = (hint == 1);
-  
     int id = mxrandom(1,sv_characters-1);
     
-    mxcharacter* c = mx->CharacterById(id);
-
-    //if ( mikeseek )
-    //    c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
+    auto c = mx->CharacterById(id);
 
     RETURN_IF_NULL(c);
    
@@ -308,13 +316,13 @@ std::string buffer = mx->LastActionMsg();
     
     } else {
         
-        ddr_character* ddr = static_cast<ddr_character*>(character);
-        mxobject* o = ddr->desired_object ;
+        auto ddr = static_cast<ddr_character*>(character);
+        auto o = ddr->desired_object ;
  
         std::string guidance = mx->text->SystemString(SS_GUIDANCE2);
  
         if ( (character->Carrying() == o) || o==nullptr ) {
-            c = (mxcharacter*)mx->EntityByName("CH_SHARETH");
+            c = shareth;
             
             std::string seek = mx->text->SystemString(SS_SEEK_MSG1);
  

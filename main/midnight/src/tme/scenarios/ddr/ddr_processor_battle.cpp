@@ -36,29 +36,29 @@ namespace tme {
     
     void ddr_battle::Test(void)
     {
-        mxcharacter* ch_torinarg = (mxcharacter*)mx->EntityByName("CH_TORINARG");
-        mxcharacter* ch_luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
+        mxcharacter* ch_torinarg = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_TORINARG"));
+        mxcharacter* ch_luxor = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_LUXOR"));
         
         ch_luxor->Location( ch_torinarg->Location() );
         
         mxcharacter* ch = NULL;
 
-        ch = (mxcharacter*)mx->EntityByName("CH_RORTHRON");
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_RORTHRON"));
         ch->Location(ch_luxor->Location());
 
         
-        ch = (mxcharacter*)mx->EntityByName("CH_THORTHAND");
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_THORTHAND"));
         ch->Location(ch_luxor->Location());
         ch->Recruited(ch_luxor);
         
-        ch = (mxcharacter*)mx->EntityByName("CH_LORANGRIEL");
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_LORANGRIEL"));
         ch->Location(ch_luxor->Location());
         ch->Recruited(ch_luxor);
         
         
-        ch = (mxcharacter*)mx->EntityByName("CH_IMGORARG");
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_IMGORARG"));
         ch->Location(ch_luxor->Location());
-        ch = (mxcharacter*)mx->EntityByName("CH_GLORMARG");
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_GLORMARG"));
         ch->Location(ch_luxor->Location());
 
         Battle(ch_luxor);

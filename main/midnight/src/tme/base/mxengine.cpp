@@ -436,6 +436,7 @@ MXTRACE( "Init Variables");
     m_difficulty = difficulty ;
     setRules(rules);
 
+    scenario->initialise(m_versionno);
     scenario->initialiseAfterCreate(m_versionno);
     
     CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0])) ;
@@ -707,18 +708,17 @@ std::string  description;
 
     /* update map */
     if ( SaveGameVersion() <= 7 ) {
-     for (int ii = 0; ii < sv_strongholds; ii++) {
-         mxstronghold* stronghold=StrongholdById(ii+1);
-         mxloc& mapsqr = gamemap->GetAt ( stronghold->Location() );
-         if ( mapsqr.IsVisible() )
-             mapsqr.flags |= lf_visited|lf_looked_at ;
-
-     }
+        FOR_EACH_STRONGHOLD(stronghold) {
+             mxloc& mapsqr = gamemap->GetAt ( stronghold->Location() );
+             if ( mapsqr.IsVisible() )
+                 mapsqr.flags |= lf_visited|lf_looked_at ;
+        }
     }
 
     /* Load Character memories */
-    for ( int ii=0; ii<sv_characters; ii++ )
-        CharacterById(ii+1)->memory.Serialize ( ar );
+    FOR_EACH_CHARACTER(character) {
+        character->memory.Serialize ( ar );
+    }
 
     /* Load scenario specific */
     scenario->Serialize ( ar );
@@ -734,10 +734,12 @@ std::string  description;
 
     mx->CurrentChar ( m_CurrentCharacter );
 
+    scenario->initialise(m_versionno);
+
 #if defined(_DDR_)
     if ( SaveGameVersion() >= 11 ) {
         // fix save games
-        mxcharacter* morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
+        auto morkin = mx->CharacterBySymbol("CH_MORKIN");
         morkin->race = RA_MORKIN;
 
         if ( !morkin->IsRecruited() )
@@ -874,10 +876,9 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     int lords=0;
     char buffer[1024];
     
-    for ( int ii=0; ii<sv_characters; ii++ ) {
-        mxcharacter* c = CharacterById(ii+1);
+    FOR_EACH_CHARACTER(c) {
         if ( scenario->CanWeSelectCharacter(c))
-        if ( c->IsRecruited() &&  c->IsAlive() )
+        if ( c->IsRecruited() && c->IsAlive() )
             lords++;
     }
     
@@ -924,8 +925,9 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     objObjects.Serialize(ar);
 
     /* Save Character memories */
-    for ( int ii=0; ii<sv_characters; ii++ )
-        CharacterById(ii+1)->memory.Serialize ( ar );
+    FOR_EACH_CHARACTER(c) {
+        c->memory.Serialize ( ar );
+    }
 
     /* save scenario specific */
     scenario->Serialize ( ar );
@@ -935,7 +937,6 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     if ( function != NULL )
         function(SAVEGAMEVERSION,ar);
     
- 
     ar.Close();
 
     SAFEDELETE ( pFile );

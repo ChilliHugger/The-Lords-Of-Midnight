@@ -135,7 +135,10 @@ namespace tme {
          
     
     
-        mxscenario::mxscenario()
+        mxscenario::mxscenario() :
+            luxor(nullptr),
+            doomdark(nullptr),
+            moonring(nullptr)
         {
         }
 
@@ -367,11 +370,9 @@ namespace tme {
         u32 mxscenario::CalcStrongholdAdjuster(void) const
         {
         u32 adj_stronghold = 0;
-        int count=0;
             FOR_EACH_STRONGHOLD(stronghold) {
                 if ( stronghold->OccupyingRace() == RA_DOOMGUARD ) {
                     adj_stronghold += stronghold->Influence() ;
-                    count++;
                 }
             }
             return adj_stronghold ;
@@ -403,15 +404,14 @@ namespace tme {
         {
             // TODO shouldn't we be checking if they are recruited here?
             if ( IsFeature(SF_MOONRING) ) {
-                //mxobject* moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
-                //if ( moonring == NULL ) return TRUE ;
+                //if ( ob_moonring == NULL ) return true ;
                 //const mxcharacter* moonringcarrier = WhoHasObject(moonring);
                 
                 const mxcharacter* moonringcarrier = CurrentMoonringWearer();
-                if ( moonringcarrier==NULL && !character->IsAllowedMoonring() )
-                    return FALSE;
+                if ( moonringcarrier==nullptr && !character->IsAllowedMoonring() )
+                    return false;
             }
-            return TRUE ;
+            return true ;
         }
     
 
@@ -946,54 +946,46 @@ namespace tme {
         static mxcommand_t mx_commands[] = {
             
             // character commands} },
-            {"LOOKLEFT",    1, OnCharLookLeft,        {arguments::character} },
-            {"LOOKRIGHT",    1, OnCharLookRight,     {arguments::character} },
-            {"LOOK",        2, OnCharLook,            {arguments::character, arguments::direction} },
-            {"FORWARD",        1, OnCharForward,        {arguments::character} },
-            {"POSTMEN",        3, OnCharPostMen,        {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"RECRUITMEN",    3, OnCharRecruitMen,    {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"ATTACK",        1, OnCharAttack,        {arguments::character} },
-            {"REST",        1, OnCharRest,            {arguments::character} },
-            {"HIDE",        1, OnCharHide,            {arguments::character} },
-            {"UNHIDE",        1, OnCharUnHide,        {arguments::character} },
-            {"LOOKAT",        2, OnCharLookAt,        {arguments::character, arguments::location} },
-            {"APPROACH",    2, OnCharApproach,        {arguments::character, arguments::character} },
-            {"FIGHT",        1, OnCharFight,            {arguments::character} },
-            {"SEEK",        1, OnCharSeek,            {arguments::character} },
-            {"PICKUP",        1, OnCharPickup,        {arguments::character} },
-            {"DROP",        1, OnCharDrop,            {arguments::character} },// arguments::objectinfo} },
-            {"WAIT",        2, OnCharWait,            {arguments::character, variant::vnumber} }, //[mode]
-            {"CONTROL",        1, OnCharControl,        {arguments::character} },
+            {"LOOKLEFT",        1, OnCharLookLeft,          {arguments::character} },
+            {"LOOKRIGHT",       1, OnCharLookRight,         {arguments::character} },
+            {"LOOK",            2, OnCharLook,              {arguments::character, arguments::direction} },
+            {"FORWARD",         1, OnCharForward,           {arguments::character} },
+            {"POSTMEN",         3, OnCharPostMen,           {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"RECRUITMEN",      3, OnCharRecruitMen,        {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"ATTACK",          1, OnCharAttack,            {arguments::character} },
+            {"REST",            1, OnCharRest,              {arguments::character} },
+            {"HIDE",            1, OnCharHide,              {arguments::character} },
+            {"UNHIDE",          1, OnCharUnHide,            {arguments::character} },
+            {"LOOKAT",          2, OnCharLookAt,            {arguments::character, arguments::location} },
+            {"APPROACH",        2, OnCharApproach,          {arguments::character, arguments::character} },
+            {"FIGHT",           1, OnCharFight,             {arguments::character} },
+            {"SEEK",            1, OnCharSeek,              {arguments::character} },
+            {"PICKUP",          1, OnCharPickup,            {arguments::character} },
+            {"DROP",            1, OnCharDrop,              {arguments::character} },
+            {"WAIT",            2, OnCharWait,              {arguments::character, variant::vnumber} }, //[mode]
+            {"CONTROL",         1, OnCharControl,           {arguments::character} },
 #if defined(_DDR_)
-            {"ENTERTUNNEL",    1, OnCharEnterTunnel,    {arguments::character} },
-            {"EXITTUNNEL",    1, OnCharExitTunnel,    {arguments::character} },
-            {"GIVE",        1, OnCharGive,            {arguments::character} },
-            {"TAKE",        1, OnCharTake,            {arguments::character} },
-            {"USE",         1, OnCharUse,            {arguments::character, arguments::character} },
+            {"ENTERTUNNEL",     1, OnCharEnterTunnel,       {arguments::character} },
+            {"EXITTUNNEL",      1, OnCharExitTunnel,        {arguments::character} },
+            {"GIVE",            1, OnCharGive,              {arguments::character} },
+            {"TAKE",            1, OnCharTake,              {arguments::character} },
+            {"USE",             1, OnCharUse,               {arguments::character, arguments::character} },
 #endif
-            {"FOLLOW",      2, OnCharFollow,        {arguments::character, arguments::character} },
-            {"UNFOLLOW",    2, OnCharUnFollow,      {arguments::character, arguments::character} },
-            {"DISBANDGROUP",1, OnCharDisbandGroup,  {arguments::character} },
-            {"SWAPGROUPLEADER", 2, OnCharSwapGroupLeader,{arguments::character, arguments::character} },
-
-            {"PLACE",           2, OnCharPlace,        {arguments::character, arguments::location} },
-
-            
-            
-                    // Regiment Commands
-            {"HOLD",        1, OnRegimentHold,        {arguments::regiment} },
-            {"GOTO",        2, OnRegimentGoto,        {arguments::regiment, arguments::location} },
-            {"WANDER",        1, OnRegimentWander,    {arguments::regiment} },
-            {"FOLLOW",        2, OnRegimentFollow,    {arguments::regiment, arguments::character} },
-            {"ROUTE",        2, OnRegimentRoute,        {arguments::regiment, arguments::routenode} },
-
-                    // other
-            { "NIGHT",        1, OnNight,                {variant::vptr} },
-            { "CHECKWINLOSE", 0, OnWinLose },
-
-            { "GetPanoramic",    2,    OnGetPanoramic,    {arguments::location, arguments::direction}},
-
-
+            {"FOLLOW",          2, OnCharFollow,            {arguments::character, arguments::character} },
+            {"UNFOLLOW",        2, OnCharUnFollow,          {arguments::character, arguments::character} },
+            {"DISBANDGROUP",    1, OnCharDisbandGroup,      {arguments::character} },
+            {"SWAPGROUPLEADER", 2, OnCharSwapGroupLeader,   {arguments::character, arguments::character} },
+            {"PLACE",           2, OnCharPlace,             {arguments::character, arguments::location} },
+            // Regiment Commands
+            {"HOLD",            1, OnRegimentHold,          {arguments::regiment} },
+            {"GOTO",            2, OnRegimentGoto,          {arguments::regiment, arguments::location} },
+            {"WANDER",          1, OnRegimentWander,        {arguments::regiment} },
+            {"FOLLOW",          2, OnRegimentFollow,        {arguments::regiment, arguments::character} },
+            {"ROUTE",           2, OnRegimentRoute,         {arguments::regiment, arguments::routenode} },
+            // other
+            { "NIGHT",          1, OnNight,                 {variant::vptr} },
+            { "CHECKWINLOSE",   0, OnWinLose },
+            { "GetPanoramic",   2, OnGetPanoramic,      {arguments::location, arguments::direction}},
         };
 
         MXRESULT mxscenario::Command ( const std::string& arg, variant argv[], u32 argc )
@@ -1023,13 +1015,9 @@ namespace tme {
         {
             CONVERT_COLLECTION(argv[0],collection);
 
-            // don't return DOOMDARK
-            // TODO: Create a flag for this!!!!
-            mxcharacter* doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
-            
             collection.Clear();
             FOR_EACH_CHARACTER(c) {
-                if ( c!=doomdark )
+                if ( c!=mx->scenario->doomdark )
                     collection.Add(mxentity::SafeIdt(c));
             }
             return MX_OK ;
@@ -1132,6 +1120,7 @@ namespace tme {
 
         COMMAND ( PropStrongholds2 )
         {
+      
             CONVERT_COLLECTION(argv[0],collection);
             mxlocinfo* locinfo = nullptr;
             mx->scenario->GetLocInfo ( argv[1], locinfo );
@@ -1429,8 +1418,7 @@ namespace tme {
         mxcharacter* mxscenario::CurrentMoonringWearer ( void )
         {
             if ( IsFeature(SF_MOONRING) ) {
-                mxobject* moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
-                return moonring!=NULL ? WhoHasObject(moonring) : NULL ;
+                return moonring != nullptr ? WhoHasObject(moonring) : NULL ;
             }
             return NULL ;
         }
@@ -1692,62 +1680,43 @@ namespace tme {
             return MX_FAILED;
         }
 
-
-
         bool mxscenario::GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, c_character* collection )
         {
-        int            count;
-        int            ii;
-        mxcharacter*    c=NULL;
-        mxobject*        moonring=NULL;
-        mxcharacter*    moonringcarrier=NULL;
+        mxcharacter*    moonringcarrier=nullptr;
         
             RETURN_IF_NULL(collection);
             collection->Clear();
 
-            // don't return DOOMDARK
-            // TODO: Create a flag for this!!!!
-            mxcharacter* doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
-            
-            
             if ( IsFeature(SF_MOONRING) ) {
-                moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
                 //moonringcarrier = moonring ? WhoHasObject(moonring) : NULL ;
                 moonringcarrier = CurrentMoonringWearer();
-
             }
 
-            count=0;
             FOR_EACH_CHARACTER(c) {
 
                 if ( mode != CMDG_ALL ) {
 
-                    if ( !c->IsRecruited() )
-                        continue;
+                    CONTINUE_IF ( !c->IsRecruited() );
 
                     if ( IsFeature(SF_MOONRING) ) {
-                        if ( moonring && moonringcarrier==NULL && !c->IsAllowedMoonring() )
-                            continue;
+                        CONTINUE_IF ( moonring && moonringcarrier==nullptr && !c->IsAllowedMoonring() );
                     }
 
                     if ( mode==CMDG_WAITING ) {
-                        if ( c->IsWaiting() || c->IsNight() || c->IsDead() )
-                            continue;
+                        CONTINUE_IF ( c->IsWaiting() || c->IsNight() || c->IsDead() );
                     }else if ( mode==CMDG_CURRENTLOC ) {
-                        if ( c->Location() != loc )
-                            continue;
+                        CONTINUE_IF ( c->Location() != loc );
                     }
 
                 }else{
-                    if ( c == doomdark )
-                        continue;
+                    CONTINUE_IF ( c == doomdark );
                 }
 
                 collection->Add(c);
 
             }
 
-            return TRUE ;
+            return true ;
         }
 
 
@@ -1766,35 +1735,28 @@ namespace tme {
 
             RETURN_IF_NULL(characters);
 
-            // TODO character needs a visible flag
-            mxcharacter* ch_doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
-
             count=0;
 
             if ( IsFeature(SF_MOONRING) ) {
-                moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
                 //moonringcarrier = moonring ? WhoHasObject(moonring) : NULL ;
                 moonringcarrier = CurrentMoonringWearer();
-
             }
 
             characters->Create(MAX_CHARACTERS_INLOCATION);
 
             FOR_EACH_CHARACTER(c) {
-                CONTINUE_IF_NULL(c); //|| character->IsDead() || character->IsHidden() )
+                CONTINUE_IF_NULL(c);
 
-                CONTINUE_IF ( c == ch_doomdark );
+                CONTINUE_IF ( c == doomdark );
 
                 CONTINUE_IF ( c->Location() != loc );
                 
                 CONTINUE_IF( c->IsInTunnel() != in_tunnel );
                 
                 if ( !(flags & slf_all) ) {
-                    if ( !c->IsRecruited() )
-                        continue;    
+                    CONTINUE_IF ( !c->IsRecruited() );
                     if ( IsFeature(SF_MOONRING) ) {
-                        if ( moonring && moonringcarrier==NULL && !c->IsAllowedMoonring() )
-                            continue;
+                        CONTINUE_IF ( moonring && moonringcarrier==nullptr && !c->IsAllowedMoonring() );
                     }
                 }
 
@@ -1821,6 +1783,12 @@ namespace tme {
             return friends+enemies ;
         }
 
+    void mxscenario::initialise( u32 version )
+    {
+        moonring = static_cast<mxobject*>(mx->EntityByName("OB_MOONRING",IDT_OBJECT));
+        luxor = mx->CharacterBySymbol("CH_LUXOR");
+        doomdark = mx->CharacterBySymbol("CH_DOOMDARK");
+    }
     
     void mxscenario::initialiseAfterCreate( u32 version )
     {
@@ -1894,11 +1862,10 @@ namespace tme {
             while ( !found  ) {
                 int id = mxrandom(1, sv_characters - 1);
                 
-                mxcharacter* c = mx->CharacterById(id);
-                
-                if ( mikeseek )
-                    c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
-                
+                auto c = mikeseek
+                    ? mx->CharacterBySymbol("CH_MIDWINTER")
+                    : mx->CharacterById(id);
+
                 // lets not find doomdark
                 if ( c->Race()==RA_DOOMGUARD )
                     continue;

@@ -7,6 +7,7 @@
 #if defined(_DDR_)
 namespace tme {
 
+    FORWARD_REFERENCE(ddr_character);
 
     class ddr_x  : public mxscenario
     {
@@ -22,6 +23,7 @@ namespace tme {
 
         virtual void NightStop(void) override;
 
+        virtual void initialise( u32 version ) override;
         virtual void initialiseAfterCreate( u32 version ) override;
      
         virtual void GiveGuidance(mxcharacter *character, s32 hint) override;
@@ -36,6 +38,13 @@ namespace tme {
         virtual mxobject* FindObjectAtLocation ( mxgridref loc );
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
+    
+    public:
+        ddr_character*    morkin;
+        ddr_character*    tarithel;
+        ddr_character*    rorthron;
+        ddr_character*    shareth;
+        mxplace*          cityofglireon;
     };
 
     
@@ -154,6 +163,11 @@ namespace tme {
         u32             battlelost;
     };
     
+    
+    #if defined(SCENARIO)
+        #undef SCENARIO
+    #endif
+    #define SCENARIO(x) static_cast<ddr_x*>(mx->scenario)->x
 
     
 }

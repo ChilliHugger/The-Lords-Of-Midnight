@@ -74,9 +74,9 @@ namespace tme {
         return ar ;
     }
 
-    int mxentity::Compare ( mxentity* o, int hint ) const
+    int mxentity::Compare ( const mxentity* o, int hint ) const
     {
-        return chilli::lib::Compare((s32)Id(),(s32)o->Id());
+        return Id() > (s32)o->Id();
     }
 
 }

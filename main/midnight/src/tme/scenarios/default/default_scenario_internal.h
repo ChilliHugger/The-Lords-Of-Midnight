@@ -30,7 +30,9 @@ namespace tme {
             virtual MXRESULT Register ( mxengine* midnightx ) ;
             virtual MXRESULT UnRegister ( mxengine* midnightx );
 
+            virtual void initialise ( u32 version );
             virtual void initialiseAfterCreate ( u32 version );
+
             virtual mxentity* CreateEntity ( id_type_t type );
             virtual void Serialize ( chilli::lib::archive& ar ) ;
 
@@ -81,9 +83,14 @@ namespace tme {
             
         public:
             flags32_t    features;
+            
+            mxobject*       moonring;
+            mxcharacter*    doomdark;
+            mxcharacter*    luxor;
         };
     
-    
+        #define SCENARIO(x) (mx->scenario)->x
+            
 }// namespace tme
 
 

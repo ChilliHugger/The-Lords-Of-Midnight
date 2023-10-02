@@ -128,18 +128,13 @@ namespace tme {
         {
         std::string buffer = mx->LastActionMsg();
         
-            ddr_character* ch_shareth = static_cast<ddr_character*>( mx->EntityByName("CH_SHARETH") );
-            //ch_shareth->Cmd_Dead();
-            //ch_shareth->killedbyobject = (mxobject*)mx->EntityByName("OB_WOLVES");
-            
+            auto ch_shareth = SCENARIO(shareth);
             if ( ch_shareth->IsDead() ) {
                 buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_shareth);
                 mx->NightCallback(NULL);
             }
             
-            ddr_character* ch_morkin= static_cast<ddr_character*>( mx->EntityByName("CH_MORKIN") );
-            //ch_morkin->Cmd_Dead();
-            //ch_morkin->fighting_against=ch_shareth;
+            auto ch_morkin = SCENARIO(morkin);
             if ( ch_morkin->IsDead() ) {
                 buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_morkin);
                 mx->NightCallback(NULL);
@@ -162,13 +157,6 @@ namespace tme {
             if ( victoryMode == WIN_NONE )
                 return;
             
-            mxcharacter* ch_luxor = static_cast<mxcharacter*>(mx->EntityByName("CH_LUXOR"));
-            mxcharacter* ch_morkin =  static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-            mxcharacter* ch_tarithel =  static_cast<mxcharacter*>(mx->EntityByName("CH_TARITHEL"));
-            mxcharacter* ch_rorthron =  static_cast<mxcharacter*>(mx->EntityByName("CH_RORTHRON"));
-            mxcharacter* ch_shareth =  static_cast<mxcharacter*>(mx->EntityByName("CH_SHARETH"));
-
-            
             // SS_VICTORY2
             // After {special:days} {plural:day:days} the warriors of Midnight return to the frozen gates.
             
@@ -176,31 +164,31 @@ namespace tme {
 
             if (victoryFlags.Is(wf_luxor_home)) {
                 // luxor is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_luxor);
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(luxor));
             }
       
             if (victoryFlags.Is(wf_morkin_home)) {
                 // morkin is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_morkin);
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(morkin));
             }
 
             if (victoryFlags.Is(wf_tarithel_home)) {
                 // tarithel is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_tarithel);
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(tarithel));
             }
             
             if (victoryFlags.Is(wf_rorthron_home)) {
                 // and rorthron is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,ch_rorthron);
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(rorthron));
             }
             
             if (victoryFlags.Is(wf_shareth_dead)) {
                 // shareth is dead
-                buffer += mx->text->CookedSystemString(SS_SHARETH_DEAD,ch_shareth);
+                buffer += mx->text->CookedSystemString(SS_SHARETH_DEAD,SCENARIO(shareth));
             }
             
             // describe victory
-            ddr_text* text = static_cast<ddr_text*>(mx->text);
+            auto text = static_cast<ddr_text*>(mx->text);
             buffer += text->DescribeVictory(victoryTargets, victoryMode);
             
             if ( victoryMode == WIN_NOBLE ) {
@@ -238,10 +226,10 @@ namespace tme {
             //6 - not
             //7 - not at all
             
-            mxcharacter* ch_luxor = static_cast<mxcharacter*>(mx->EntityByName("CH_LUXOR"));
-            mxcharacter* ch_morkin =  static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-            mxcharacter* ch_tarithel =  static_cast<mxcharacter*>(mx->EntityByName("CH_TARITHEL"));
-            mxcharacter* ch_rorthron =  static_cast<mxcharacter*>(mx->EntityByName("CH_RORTHRON"));
+            auto ch_luxor = SCENARIO(luxor);
+//            mxcharacter* ch_morkin =  static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
+//            mxcharacter* ch_tarithel =  static_cast<mxcharacter*>(mx->EntityByName("CH_TARITHEL"));
+//            mxcharacter* ch_rorthron =  static_cast<mxcharacter*>(mx->EntityByName("CH_RORTHRON"));
             mxcharacter* ch_shareth =  static_cast<mxcharacter*>(mx->EntityByName("CH_SHARETH"));
             
             if ( ch_luxor->IsDead() ) {
@@ -250,17 +238,17 @@ namespace tme {
             }
             
             chilli::collections::c_ptr characters;
-            characters.Add(ch_luxor);             // bit 4
-            characters.Add(ch_morkin);            // bit 3
-            characters.Add(ch_tarithel);          // bit 2
-            characters.Add(ch_rorthron);          // bit 1
+            characters.Add(ch_luxor);               // bit 4
+            characters.Add(SCENARIO(morkin));       // bit 3
+            characters.Add(SCENARIO(tarithel));     // bit 2
+            characters.Add(SCENARIO(rorthron));     // bit 1
             
             chilli::collections::c_ptr objects;
-            objects.Add( mx->EntityByName("OB_CROWN_VARENAND"));
-            objects.Add( mx->EntityByName("OB_CROWN_CARUDRIUM"));
-            objects.Add( mx->EntityByName("OB_SPELL_THIGRORN"));
-            objects.Add( mx->EntityByName("OB_RUNES_FINORN"));
-            objects.Add( mx->EntityByName("OB_CROWN_IMIRIEL"));
+            objects.Add(mx->EntityByName("OB_CROWN_VARENAND", IDT_OBJECT));
+            objects.Add(mx->EntityByName("OB_CROWN_CARUDRIUM", IDT_OBJECT));
+            objects.Add(mx->EntityByName("OB_SPELL_THIGRORN", IDT_OBJECT));
+            objects.Add(mx->EntityByName("OB_RUNES_FINORN", IDT_OBJECT));
+            objects.Add(mx->EntityByName("OB_CROWN_IMIRIEL", IDT_OBJECT));
             
             victoryTargets=WIN_MAX_TARGETS;
             victoryFlags.Clear();
@@ -328,18 +316,13 @@ namespace tme {
         void ddr_night::testWinLoseConditions ( void )
         {
             
-            ddr_character* ch_luxor = static_cast<ddr_character*>(mx->EntityByName("CH_LUXOR"));
-            ddr_character* ch_morkin =  static_cast<ddr_character*>(mx->EntityByName("CH_MORKIN"));
-            ddr_character* ch_tarithel =  static_cast<ddr_character*>(mx->EntityByName("CH_TARITHEL"));
-            ddr_character* ch_rorthron =  static_cast<ddr_character*>(mx->EntityByName("CH_RORTHRON"));
-            ddr_character* ch_shareth =  static_cast<ddr_character*>(mx->EntityByName("CH_SHARETH"));
+            auto ch_luxor = SCENARIO(luxor);
+            auto ch_morkin = SCENARIO(morkin);
+            auto ch_tarithel = SCENARIO(tarithel);
+            auto ch_rorthron = SCENARIO(rorthron);
+            auto ch_shareth = SCENARIO(shareth);
+            auto wolves = static_cast<mxobject*>(mx->EntityByName("OB_WOLVES", IDT_OBJECT))
        
-//            objects.Add( mx->EntityByName("OB_CROWN_VARENAND"));
-//            objects.Add( mx->EntityByName("OB_CROWN_CARUDRIUM"));
-//            objects.Add( mx->EntityByName("OB_SPELL_THIGRORN"));
-//            objects.Add( mx->EntityByName("OB_RUNES_FINORN"));
-//            objects.Add( mx->EntityByName("OB_CROWN_IMIRIEL"));
-
             mxgridref gate_varenorn = mxgridref(6,92);
             
             int test = 10;
@@ -350,13 +333,13 @@ namespace tme {
                 case 1:
                 {
                     ch_luxor->Cmd_Dead();
-                    ch_luxor->killedbyobject = static_cast<mxobject*>(mx->EntityByName("OB_WOLVES"));
+                    ch_luxor->killedbyobject = wolves;
                     break;
                 }
                 case 2:
                 {
                     ch_luxor->Cmd_Dead();
-                    ch_luxor->killedbyobject = NULL;
+                    ch_luxor->killedbyobject = nullptr;
                     break;
                 }
                 case 3:
@@ -371,7 +354,7 @@ namespace tme {
                     // all main lords back to gate
                     // shareth dead
                     ch_shareth->Cmd_Dead();
-                    ch_shareth->killedbyobject = static_cast<mxobject*>(mx->EntityByName("OB_WOLVES"));
+                    ch_shareth->killedbyobject = wolves;
                     
                     ch_morkin->Recruited(ch_tarithel);
                     ch_luxor->Location(gate_varenorn);
@@ -428,7 +411,7 @@ namespace tme {
                     // morkin not home
                     // shareth dead
                     ch_shareth->Cmd_Dead();
-                    ch_shareth->killedbyobject = static_cast<mxobject*>(mx->EntityByName("OB_WOLVES"));
+                    ch_shareth->killedbyobject = wolves;
                     
                     ch_morkin->Recruited(ch_tarithel);
                     ch_luxor->Location(gate_varenorn);
@@ -457,7 +440,7 @@ namespace tme {
                     // luxor home
                     // shareth dead
                     ch_shareth->Cmd_Dead();
-                    ch_shareth->killedbyobject = static_cast<mxobject*>(mx->EntityByName("OB_WOLVES"));
+                    ch_shareth->killedbyobject = wolves;
     
                     ch_luxor->Location(gate_varenorn);
                     ch_morkin->Location(mxgridref(0,0));

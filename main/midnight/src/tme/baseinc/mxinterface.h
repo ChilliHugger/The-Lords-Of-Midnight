@@ -18,6 +18,10 @@ namespace tme {
         
 
         mxid EntityByName( const std::string& name, id_type_t type=IDT_NONE );
+        inline mxid CharacterBySymbol( const std::string& symbol ) {
+            return EntityByName(symbol,IDT_CHARACTER);
+        }
+
         MXRESULT GetEntityProperty( mxid id, const std::string& name, variant& arg) const ;
         MXRESULT GetEntityProperties ( mxid id, const std::string& name, variant argv[], u32 argc );
 

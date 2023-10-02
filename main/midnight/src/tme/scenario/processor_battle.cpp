@@ -286,40 +286,30 @@ mxunit*        unit;
                 if ( army->race == RA_DOOMGUARD && battlestatus==BA_FRIEND ) {
 
 #if 0
-                    
-                    // find the first character that is allowed an army
-                    // and allow them to occupy the keep
-                    bool changesides=true;
-                    int j=0;
-                    for ( j=0; j<info->objCharacters.Count(); j++ ) {
-                        mxcharacter* character = (mxcharacter*)info->objCharacters[j];
-                        if ( character->IsAllowedArmy() ) {
-                            stronghold->MakeChangeSides( RA_FREE, character );
-                            changesides=false;
-                            break;
-                        }
-                    }
-
-                    // otherwise default to the free
-                    if ( changesides ) {
-                        stronghold->MakeChangeSides( RA_FREE, (mxcharacter*)info->objCharacters[0] );
-                    }
+//                    // find the first character that is allowed an army
+//                    // and allow them to occupy the keep
+//                    bool changesides=true;
+//                    int j=0;
+//                    for ( j=0; j<info->objCharacters.Count(); j++ ) {
+//                        auto character = info->objCharacters[j];
+//                        if ( character->IsAllowedArmy() ) {
+//                            stronghold->MakeChangeSides( RA_FREE, character );
+//                            changesides=false;
+//                            break;
+//                        }
+//                    }
+//
+//                    // otherwise default to the free
+//                    if ( changesides ) {
+//                        stronghold->MakeChangeSides( RA_FREE, info->objCharacters.First() );
+//                    }
 #else
-                     mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-                   stronghold->MakeChangeSides( RA_FREE, luxor );
-                  
+                   stronghold->MakeChangeSides( RA_FREE, SCENARIO(luxor) );
 #endif
 
-
                 } else if ( army->race != RA_DOOMGUARD && battlestatus==BA_FOE ) {
-
                     // find the first foe
-
-                    mxcharacter* doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
-                    stronghold->MakeChangeSides(RA_DOOMGUARD,doomdark);    
-
-
-
+                   stronghold->MakeChangeSides(RA_DOOMGUARD,SCENARIO(doomdark));
                 }
                 break;
 

@@ -115,6 +115,11 @@ namespace tme {
         void Difficulty( mxdifficulty_t difficulty ) { m_difficulty = difficulty; }
         mxdifficulty_t Difficulty() const { return m_difficulty ; }
         
+        inline mxcharacter* CharacterBySymbol( const std::string& symbol) {
+            return static_cast<mxcharacter*>(EntityByName(symbol, IDT_CHARACTER));
+        }
+
+        
     public:
         mxmap*                  gamemap;
         mxdiscoverymap*         discoverymap;
@@ -123,24 +128,24 @@ namespace tme {
         mxbattle*               battle;
         mxscenario*             scenario;
         
-        c_character     objCharacters;
-        c_regiment      objRegiments;
-        c_routenode     objRoutenodes;
-        c_stronghold    objStrongholds;
-        c_place         objPlaces;
-        c_mission       objMissions;
-        c_victory       objVictories;
-        c_object        objObjects;
-        c_direction     objDirectionInfos;
-        c_unit          objUnitInfos;
-        c_race          objRaceInfos;
-        c_gender        objGenderInfos;
-        c_terrain       objTerrainInfos;
-        c_area          objAreaInfos;
-        c_command       objCommandInfos;
+        c_character             objCharacters;
+        c_regiment              objRegiments;
+        c_routenode             objRoutenodes;
+        c_stronghold            objStrongholds;
+        c_place                 objPlaces;
+        c_mission               objMissions;
+        c_victory               objVictories;
+        c_object                objObjects;
+        c_direction             objDirectionInfos;
+        c_unit                  objUnitInfos;
+        c_race                  objRaceInfos;
+        c_gender                objGenderInfos;
+        c_terrain               objTerrainInfos;
+        c_area                  objAreaInfos;
+        c_command               objCommandInfos;
 #if defined(_DDR_)
-        c_objectpower   objObjectPowersInfos;
-        c_objecttype    objObjectTypesInfos;
+        c_objectpower           objObjectPowersInfos;
+        c_objecttype            objObjectTypesInfos;
 #endif
         PFNNIGHTCALLBACK        pfnNightCallback ;
 
