@@ -15,7 +15,7 @@
  */
 
 #include "../../baseinc/tme_internal.h"
-
+#include "../../utils/savegamemapping.h"
 #if defined (_DDR_)
 #include "../../scenarios/ddr/scenario_ddr_internal.h"
 #endif
@@ -1852,6 +1852,13 @@ namespace tme {
         
     }
     
+    void mxscenario::updateAfterLoad(u32 version)
+    {
+        /* update map */
+        if ( version <= 7 ) {
+            utils::UpdateStrongholdsOnMap();
+        }
+    }
 
     void mxscenario::GiveGuidance( mxcharacter* character, s32 hint )
     {

@@ -18,6 +18,7 @@
 
 #if defined(_DDR_)
 
+#include "../../utils/savegamemapping.h"
 #include "scenario_ddr.h"
 #include "scenario_ddr_internal.h"
 #include "ddr_processor_text.h"
@@ -169,6 +170,15 @@ MXTRACE("Place Objects On Map");
     
     mxscenario::initialiseAfterCreate(version);
 
+}
+
+void ddr_x::updateAfterLoad ( u32 version )
+{
+    if ( version >= 11 ) {
+        utils::FixMorkinFromBeingAIAfterRecruited();
+    }
+
+    mxscenario::updateAfterLoad(version);
 }
     
 mxentity* ddr_x::CreateEntity ( id_type_t type )

@@ -16,6 +16,7 @@
 
 #include "../baseinc/tme_internal.h"
 #include "../base/collections.h"
+#include "../utils/savegamemapping.h"
 #include "cocos2d.h"
 #include <stdio.h>
 
@@ -289,8 +290,6 @@ MXTRACE( "Version=%d", (int)savegameversion);
         return MX_INCORRECT_VERSION ;
     }
 
-    
-    
     ar >> header ;
 MXTRACE( "Header='%s'", header.c_str());
     
@@ -436,8 +435,8 @@ MXTRACE( "Init Variables");
     m_difficulty = difficulty ;
     setRules(rules);
 
-    scenario->initialise(m_versionno);
-    scenario->initialiseAfterCreate(m_versionno);
+    scenario->initialise(SaveGameVersion());
+    scenario->initialiseAfterCreate(SaveGameVersion());
     
     CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0])) ;
    
@@ -650,11 +649,7 @@ std::string  description;
     if ( scenarioid != scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
 
-    ar >> m_versionno ;
-    //if ( m_versionno != SAVEGAMEVERSION )
-    //    return MX_INCORRECT_VERSION;
-
-    savegameversion = m_versionno ;
+    ar >> savegameversion ;
 
     ar >> header ;
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
@@ -706,15 +701,6 @@ std::string  description;
     objVictories.Serialize(ar);
     objObjects.Serialize(ar);
 
-    /* update map */
-    if ( SaveGameVersion() <= 7 ) {
-        FOR_EACH_STRONGHOLD(stronghold) {
-             mxloc& mapsqr = gamemap->GetAt ( stronghold->Location() );
-             if ( mapsqr.IsVisible() )
-                 mapsqr.flags |= lf_visited|lf_looked_at ;
-        }
-    }
-
     /* Load Character memories */
     FOR_EACH_CHARACTER(character) {
         character->memory.Serialize ( ar );
@@ -734,27 +720,8 @@ std::string  description;
 
     mx->CurrentChar ( m_CurrentCharacter );
 
-    scenario->initialise(m_versionno);
-
-#if defined(_DDR_)
-    if ( SaveGameVersion() >= 11 ) {
-        // fix save games
-        auto morkin = mx->CharacterBySymbol("CH_MORKIN");
-        morkin->race = RA_MORKIN;
-
-        if ( !morkin->IsRecruited() )
-            morkin->Flags().Set(cf_ai);
-
-        // fix for morkin being AI character
-        // after being recruited
-        if ( morkin->IsRecruited() && morkin->IsAIControlled() ) {
-            morkin->Flags().Reset(cf_ai);
-            if ( morkin->IsInTunnel() )
-                morkin->looking=DR_NORTH;
-        }
-
-    }
-#endif
+    scenario->initialise(SaveGameVersion());
+    scenario->updateAfterLoad(SaveGameVersion());
 
     return MX_OK ;
 }
@@ -773,9 +740,9 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     // serialize is for save game
     m_savegame = TRUE ;
     
-    u32        magicno;
-    u32        scenarioid;
-    std::string    header;
+    u32         magicno;
+    u32         scenarioid;
+    std::string header;
     
     // magic no
     ar >> magicno;
@@ -792,10 +759,8 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     if ( scenarioid != scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
     
-    ar >> m_versionno ;
-    
-    savegameversion = m_versionno ;
-    
+    ar >> savegameversion ;
+     
     ar >> header ;
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
@@ -932,7 +897,6 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     /* save scenario specific */
     scenario->Serialize ( ar );
 
-    
     /* save frontend specific */
     if ( function != NULL )
         function(SAVEGAMEVERSION,ar);
@@ -942,7 +906,6 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     SAFEDELETE ( pFile );
 
     return MX_OK ;
-
 }
 
 

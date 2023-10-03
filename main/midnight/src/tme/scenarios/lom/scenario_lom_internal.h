@@ -26,6 +26,8 @@ namespace tme {
 
         virtual void initialise(u32 version);
         virtual void initialiseAfterCreate(u32 version);
+        virtual void updateAfterLoad(u32 version);
+
     public:
         mxplace*        towerofdoom;
         mxcharacter*    morkin;

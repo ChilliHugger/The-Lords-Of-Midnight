@@ -149,9 +149,7 @@ namespace tme {
 #endif
         PFNNIGHTCALLBACK        pfnNightCallback ;
 
-        u32                     m_versionno;
         bool                    m_savegame;
-
 
     private:
         cvarreg_t*              variables ;

@@ -15,6 +15,7 @@
  */
 
 #include "../../baseinc/tme_internal.h"
+#include "../../utils/savegamemapping.h"
 #include "scenario_lom.h"
 #include "scenario_lom_internal.h"
 #include <string>
@@ -233,6 +234,12 @@ void lom_x::initialiseAfterCreate(u32 version)
     
     mxscenario::initialiseAfterCreate(version);
 }
+
+void lom_x::updateAfterLoad(u32 version)
+{
+    mxscenario::updateAfterLoad(version);
+}
+
     
 mxregiment* lom_x::FindEmptyRegiment()
 {

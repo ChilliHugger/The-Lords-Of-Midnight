@@ -25,7 +25,8 @@ namespace tme {
 
         virtual void initialise( u32 version ) override;
         virtual void initialiseAfterCreate( u32 version ) override;
-     
+        virtual void updateAfterLoad ( u32 version ) override;
+
         virtual void GiveGuidance(mxcharacter *character, s32 hint) override;
         
         virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character ) override;
