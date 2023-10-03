@@ -1,6 +1,6 @@
 FILE(GLOB HDR_TME src/tme/baseinc/*.h)
 FILE(GLOB SRC_TME src/tme/base/*.cpp)
-FILE(GLOB SRC_TME_SCENARIO src/tme/scenario/*.cpp)
+FILE(GLOB_RECURSE SRC_TME_SCENARIO src/tme/scenario/*.cpp)
 
 include(src/tme/scenarios/CMakeLists.txt)
 

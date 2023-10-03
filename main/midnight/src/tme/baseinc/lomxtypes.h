@@ -121,6 +121,8 @@ using namespace chilli::types;
             DR_NONE=255,
         };
 
+#define IS_DIAGONAL(x) ((x)&1)
+
         enum mxthing_t {
             OB_NONE=0,
             OB_WOLVES,

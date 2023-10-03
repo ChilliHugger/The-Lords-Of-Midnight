@@ -97,7 +97,6 @@ namespace tme {
                 mxunit_t        type;
                 u32             total;
                 mxid            target;
-                loc_t           targetlocation;
                 mxorders_t      orders;
                 u32             success;
                 u32             killed;
