@@ -8,6 +8,7 @@
 namespace tme {
 
     FORWARD_REFERENCE(ddr_character);
+    FORWARD_REFERENCE(ddr_object);
 
     class ddr_x  : public mxscenario
     {
@@ -41,11 +42,16 @@ namespace tme {
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
     
     public:
-        ddr_character*    morkin;
-        ddr_character*    tarithel;
-        ddr_character*    rorthron;
-        ddr_character*    shareth;
-        mxplace*          cityofglireon;
+        ddr_character*  morkin;
+        ddr_character*  tarithel;
+        ddr_character*  rorthron;
+        ddr_character*  shareth;
+        mxplace*        cityofglireon;
+        ddr_object*     crownofvarenand;
+        ddr_object*     crownofcarudrium;
+        ddr_object*     spellofthigrorn;
+        ddr_object*     runesoffinorn;
+        ddr_object*     crownofimiriel;
     };
 
     
@@ -164,13 +170,8 @@ namespace tme {
         u32             battlelost;
     };
     
-    
-    #if defined(SCENARIO)
-        #undef SCENARIO
-    #endif
-    #define SCENARIO(x) static_cast<ddr_x*>(mx->scenario)->x
+    #define DDR_SCENARIO(x) static_cast<ddr_x*>(mx->scenario)->x
 
-    
 }
 #endif // _DDR_
 

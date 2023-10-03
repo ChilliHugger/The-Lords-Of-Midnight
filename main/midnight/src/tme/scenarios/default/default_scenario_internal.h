@@ -91,7 +91,7 @@ namespace tme {
             mxcharacter*    luxor;
         };
     
-        #define SCENARIO(x) (mx->scenario)->x
+        #define DEF_SCENARIO(x) (mx->scenario)->x
             
 }// namespace tme
 

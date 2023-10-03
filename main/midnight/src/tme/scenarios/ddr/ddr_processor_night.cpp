@@ -36,10 +36,6 @@ namespace tme {
 
         void ddr_night::Process( void )
         {
-        int                ii;
-        ddr_character*        character;
-        mxstronghold*       stronghold;
-
             mx->scenario->NightStart();
             mx->battle->ResetBattlesFought();
             mx->scenario->RemoveMapArmies();
@@ -94,10 +90,11 @@ namespace tme {
                 // cleanup 'prepares to do battle'
                 int enemies=0;
                 FOR_EACH_CHARACTER(c) {
-                    if ( (c->Location().x != character->Location().x) || (c->Location().y != character->Location().y) )
-                        continue;
-                    if ( !c->IsFriend(character) )
-                        enemies++;
+                    CONTINUE_IF( c->Location() != character->Location() );
+
+                    CONTINUE_IF ( c->IsFriend(character) );
+                    
+                    enemies++;
                 }
                 
                 auto scenario = static_cast<ddr_x*>(mx->scenario);
@@ -128,13 +125,13 @@ namespace tme {
         {
         std::string buffer = mx->LastActionMsg();
         
-            auto ch_shareth = SCENARIO(shareth);
+            auto ch_shareth = DDR_SCENARIO(shareth);
             if ( ch_shareth->IsDead() ) {
                 buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_shareth);
                 mx->NightCallback(NULL);
             }
             
-            auto ch_morkin = SCENARIO(morkin);
+            auto ch_morkin = DDR_SCENARIO(morkin);
             if ( ch_morkin->IsDead() ) {
                 buffer += mx->text->CookedSystemString(SS_CHARACTER_DEAD,ch_morkin);
                 mx->NightCallback(NULL);
@@ -164,27 +161,27 @@ namespace tme {
 
             if (victoryFlags.Is(wf_luxor_home)) {
                 // luxor is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(luxor));
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,DDR_SCENARIO(luxor));
             }
       
             if (victoryFlags.Is(wf_morkin_home)) {
                 // morkin is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(morkin));
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,DDR_SCENARIO(morkin));
             }
 
             if (victoryFlags.Is(wf_tarithel_home)) {
                 // tarithel is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(tarithel));
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,DDR_SCENARIO(tarithel));
             }
             
             if (victoryFlags.Is(wf_rorthron_home)) {
                 // and rorthron is here
-                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,SCENARIO(rorthron));
+                buffer += mx->text->CookedSystemString(SS_CHARACTER_HERE,DDR_SCENARIO(rorthron));
             }
             
             if (victoryFlags.Is(wf_shareth_dead)) {
                 // shareth is dead
-                buffer += mx->text->CookedSystemString(SS_SHARETH_DEAD,SCENARIO(shareth));
+                buffer += mx->text->CookedSystemString(SS_SHARETH_DEAD,DDR_SCENARIO(shareth));
             }
             
             // describe victory
@@ -216,7 +213,6 @@ namespace tme {
             victoryFlags.Clear();
             victoryMode=WIN_NONE;
             
-            
             //0 - utterly
             //1 - extremely
             //2 - very
@@ -226,29 +222,26 @@ namespace tme {
             //6 - not
             //7 - not at all
             
-            auto ch_luxor = SCENARIO(luxor);
-//            mxcharacter* ch_morkin =  static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-//            mxcharacter* ch_tarithel =  static_cast<mxcharacter*>(mx->EntityByName("CH_TARITHEL"));
-//            mxcharacter* ch_rorthron =  static_cast<mxcharacter*>(mx->EntityByName("CH_RORTHRON"));
-            mxcharacter* ch_shareth =  static_cast<mxcharacter*>(mx->EntityByName("CH_SHARETH"));
-            
+            auto ch_luxor = DDR_SCENARIO(luxor);
             if ( ch_luxor->IsDead() ) {
                 mx->SetLastActionMsg( mx->text->CookedSystemString( SS_DEFEAT2, ch_luxor) );
                 return MG_LOSE;
             }
             
-            chilli::collections::c_ptr characters;
-            characters.Add(ch_luxor);               // bit 4
-            characters.Add(SCENARIO(morkin));       // bit 3
-            characters.Add(SCENARIO(tarithel));     // bit 2
-            characters.Add(SCENARIO(rorthron));     // bit 1
+            auto ch_shareth = DDR_SCENARIO(shareth);
             
-            chilli::collections::c_ptr objects;
-            objects.Add(mx->EntityByName("OB_CROWN_VARENAND", IDT_OBJECT));
-            objects.Add(mx->EntityByName("OB_CROWN_CARUDRIUM", IDT_OBJECT));
-            objects.Add(mx->EntityByName("OB_SPELL_THIGRORN", IDT_OBJECT));
-            objects.Add(mx->EntityByName("OB_RUNES_FINORN", IDT_OBJECT));
-            objects.Add(mx->EntityByName("OB_CROWN_IMIRIEL", IDT_OBJECT));
+            c_character characters;
+            characters.Add(ch_luxor);               // bit 4
+            characters.Add(DDR_SCENARIO(morkin));   // bit 3
+            characters.Add(DDR_SCENARIO(tarithel)); // bit 2
+            characters.Add(DDR_SCENARIO(rorthron)); // bit 1
+            
+            c_object objects;
+            objects.Add(DDR_SCENARIO(crownofvarenand));
+            objects.Add(DDR_SCENARIO(crownofcarudrium));
+            objects.Add(DDR_SCENARIO(spellofthigrorn));
+            objects.Add(DDR_SCENARIO(runesoffinorn));
+            objects.Add(DDR_SCENARIO(crownofimiriel));
             
             victoryTargets=WIN_MAX_TARGETS;
             victoryFlags.Clear();
@@ -256,9 +249,7 @@ namespace tme {
             
             mxgridref gate_varenorn = mxgridref(6,92); // SHOULD BE USING PLACE SYMBOL
             
-            for ( u32 ii=0; ii<characters.Count(); ii++ ) {
-                mxcharacter* c = static_cast<mxcharacter*>( characters[ii] ) ;
-                
+            for ( auto c : characters ) {
                 if ( c->IsAlive() && c->NormalisedLoyalty() == RA_MOONPRINCE) {
                     if ( c->Location() == gate_varenorn ) {
                         

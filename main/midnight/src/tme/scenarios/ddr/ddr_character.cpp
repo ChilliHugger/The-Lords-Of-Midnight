@@ -728,16 +728,16 @@ namespace tme {
         //    return true;
         
         // Only Tarithel can recruit Morkin
-        if ( character->IsSymbol("CH_MORKIN") )
-            return IsSymbol("CH_TARITHEL");
+        if ( character == DDR_SCENARIO(morkin) )
+            return this == DDR_SCENARIO(tarithel);
         
-        else if ( character->IsSymbol("CH_TARITHEL"))
+        else if ( character == DDR_SCENARIO(tarithel) )
             return false;
-        else if ( character->IsSymbol("CH_RORTHRON"))
+        else if ( character == DDR_SCENARIO(rorthron) )
             return false;
-        else if ( character->IsSymbol("CH_LUXOR"))
+        else if ( character == DDR_SCENARIO(luxor) )
             return false;
-        else if ( character->IsSymbol("CH_SHARETH") )
+        else if ( character == DDR_SCENARIO(shareth) )
             return false ;
 
         u8 us_attribute_good = traits & 0xff ;
@@ -782,7 +782,7 @@ namespace tme {
     bool ddr_character::Recruited ( mxcharacter* recruiter )
     {
         // morkin in DDR is special
-        if ( IsSymbol("CH_MORKIN") ) {
+        if ( this == DDR_SCENARIO(morkin) ) {
             return RecruitMorkin(recruiter);
         }
       
@@ -883,7 +883,7 @@ namespace tme {
     
     void ddr_character::UseSpellOfSwiftness()
     {
-        auto ch_morkin = SCENARIO(morkin);
+        auto ch_morkin = DDR_SCENARIO(morkin);
     
         // take tarithel to morkin
         // set time of day
@@ -1063,7 +1063,7 @@ void ddr_character::whatIsCharacterDoing ( void )
     
     orders = new_orders ;
     
-    auto ch_luxor = SCENARIO(luxor);
+    auto ch_luxor = DDR_SCENARIO(luxor);
 
     switch ( orders )
     {
@@ -1129,8 +1129,8 @@ void ddr_character::whatIsCharacterDoing ( void )
             // object is carried, so start heading home
             
         case OD_HOME:
-            if ( this == SCENARIO(shareth) ) {
-                Target( SCENARIO(cityofglireon) );
+            if ( this == DDR_SCENARIO(shareth) ) {
+                Target( DDR_SCENARIO(cityofglireon) );
             }else{
                 Target(home_stronghold);
             }

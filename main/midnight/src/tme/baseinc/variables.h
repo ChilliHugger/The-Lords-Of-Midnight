@@ -90,8 +90,6 @@ namespace tme {
         extern sv_num_t    sv_object_energy_watersoflife ;
         extern sv_num_t    sv_lookforwarddistance ;
         extern sv_num_t    sv_regiment_default_moves ;
-        extern sv_num_t    sv_regiment_stop_move ;
-        extern sv_num_t    sv_stronghold_success_none ;
         extern sv_num_t    sv_stronghold_default_empty ;
         extern sv_num_t    sv_stronghold_default_min ;
         extern sv_num_t    sv_stronghold_default_max ;
@@ -200,15 +198,5 @@ namespace tme {
         
     }
 }
-
-#define REGIMENT_STOP_MOVE                    0
-#define STRONGHOLD_SUCCESS_NONE                0
-
-
-
-
-
-
-
 
 #endif //_VARIABLES_H_INCLUDED_

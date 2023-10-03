@@ -13,8 +13,7 @@ namespace utils {
 
     void UpdateStrongholdsOnMap()
     {
-         for (int ii = 0; ii < sv_strongholds; ii++) {
-            auto stronghold = static_cast<mxstronghold*>(mx->StrongholdById(ii+1));
+        FOR_EACH_STRONGHOLD(stronghold) {
             mxloc& mapsqr = mx->gamemap->GetAt ( stronghold->Location() );
             if ( mapsqr.IsVisible() )
                 mapsqr.flags |= lf_visited|lf_looked_at ;

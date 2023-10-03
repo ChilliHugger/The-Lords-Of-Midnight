@@ -121,7 +121,14 @@ void ddr_x::initialise( u32 version )
     tarithel = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_TARITHEL"));
     rorthron = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_RORTHRON"));
     shareth = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_SHARETH"));
+    
     cityofglireon = static_cast<mxplace*>(mx->EntityByName("SH_CITY_GLIREON", IDT_PLACE));
+    
+    crownofvarenand = static_cast<ddr_object*>(mx->EntityByName("OB_CROWN_VARENAND", IDT_OBJECT));
+    crownofcarudrium = static_cast<ddr_object*>(mx->EntityByName("OB_CROWN_CARUDRIUM", IDT_OBJECT));
+    spellofthigrorn = static_cast<ddr_object*>(mx->EntityByName("OB_SPELL_THIGRORN", IDT_OBJECT));
+    runesoffinorn = static_cast<ddr_object*>(mx->EntityByName("OB_RUNES_FINORN", IDT_OBJECT));
+    crownofimiriel = static_cast<ddr_object*>(mx->EntityByName("OB_CROWN_IMIRIEL", IDT_OBJECT));
     
     mxscenario::initialise(version);
 }

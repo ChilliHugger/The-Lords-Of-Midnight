@@ -304,12 +304,12 @@ mxunit*        unit;
 //                        stronghold->MakeChangeSides( RA_FREE, info->objCharacters.First() );
 //                    }
 #else
-                   stronghold->MakeChangeSides( RA_FREE, SCENARIO(luxor) );
+                   stronghold->MakeChangeSides( RA_FREE, DEF_SCENARIO(luxor) );
 #endif
 
                 } else if ( army->race != RA_DOOMGUARD && battlestatus==BA_FOE ) {
                     // find the first foe
-                   stronghold->MakeChangeSides(RA_DOOMGUARD,SCENARIO(doomdark));
+                   stronghold->MakeChangeSides(RA_DOOMGUARD,DEF_SCENARIO(doomdark));
                 }
                 break;
 

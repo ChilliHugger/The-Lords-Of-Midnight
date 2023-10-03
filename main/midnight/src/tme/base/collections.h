@@ -71,6 +71,7 @@ public:
     u32 Compact( void );
     void Resize ( u32 newsize );
     s32 IndexOf ( T entity );
+    bool IsInList ( T entity ) { return IndexOf(entity) != -1; }
     
     T First();
 

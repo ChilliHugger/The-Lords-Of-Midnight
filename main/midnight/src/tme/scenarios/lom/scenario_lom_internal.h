@@ -50,10 +50,7 @@ namespace tme {
         };
     //}
     
-    #if defined(SCENARIO)
-        #undef SCENARIO
-    #endif
-    #define SCENARIO(x) static_cast<lom_x*>(mx->scenario)->x
+    #define LOM_SCENARIO(x) static_cast<lom_x*>(mx->scenario)->x
 }
 
 #endif //_LOMSCENARIO_INTERNAL_H_INCLUDED_
