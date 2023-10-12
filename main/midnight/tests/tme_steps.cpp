@@ -123,3 +123,9 @@ void TMEStep::LordMovesForward(LPCSTR name)
     auto lord1 = GetCharacter(name);
     lord1->Cmd_MoveForward();
 }
+
+void TMEStep::LordIsDead(LPCSTR name)
+{
+    auto lord = GetCharacter(name);
+    lord->Cmd_Dead();
+}

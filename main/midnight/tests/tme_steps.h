@@ -44,6 +44,7 @@ public:
     static void LordPerformsApproach(LPCSTR name1, LPCSTR name2 = "");
     static void LordsIsLookingAt(LPCSTR name1, LPCSTR name2);
     static void LordMovesForward(LPCSTR name);
+    static void LordIsDead(LPCSTR name);
     
     //
     static bool LordHasBeenRecruited(LPCSTR name);

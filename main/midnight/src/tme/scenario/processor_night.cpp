@@ -100,16 +100,28 @@ namespace tme {
             auto missions = mx->objMissions.Clone();
             missions.Sort(mxmission::SORT::PRIORITY);
             for ( auto m : missions ) {
-                //MXTRACE("%s[%d] %d", m->Symbol().c_str(), (int)m->Id(), (int)m->Priority() );
+//                MXTRACE("%s[%d] %d Complete '%s'", m->Symbol().c_str(), (int)m->Id(), (int)m->Priority(),  m->IsComplete() ?  "YES" : "NO" );
                 CONTINUE_IF ( !night && m->Condition() != MC_CHARACTER_DEAD );
                 m->CheckComplete();
+//                MXTRACE("Complete '%s'", m->IsComplete() ?  "YES" : "NO" );
             }
 
             // scan the victory tables
             auto victories = mx->objVictories.Clone();
             victories.Sort(mxvictory::SORT::PRIORITY);
+                        
+//            for ( auto v : victories ) {
+//                MXTRACE("%s[%d] %d Complete='%s' '%s'",
+//                    v->Symbol().c_str(),
+//                    (int)v->Id(),
+//                    (int)v->Priority(),
+//                    v->IsComplete() ?  "YES" : "NO",
+//                    mx->text->CookedSystemString(v->Message()).c_str() );
+//                v->CheckComplete();
+//            }
+            
             for ( auto v : victories ) {
-                //MXTRACE("%s[%d] %d", v->Symbol().c_str(), (int)v->Id(), (int)v->Priority() );
+//                MXTRACE("%s[%d] %d Complete='%s'", v->Symbol().c_str(), (int)v->Id(), (int)v->Priority(), v->IsComplete() ?  "YES" : "NO" );
                 CONTINUE_IF( !v->CheckComplete() );
                 
                 // display message

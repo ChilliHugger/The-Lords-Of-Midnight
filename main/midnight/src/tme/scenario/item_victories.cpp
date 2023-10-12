@@ -51,7 +51,7 @@ namespace tme {
         int mxvictory::Compare ( const mxentity* o, int hint ) const
         {
             if ( hint == SORT::PRIORITY )
-                return Priority() > static_cast<const mxvictory*>(o)->Priority();
+                return Priority() < static_cast<const mxvictory*>(o)->Priority();
 
             return mxentity::Compare(o,hint);
         }
@@ -118,7 +118,7 @@ namespace tme {
         int mxmission::Compare ( const mxentity* o, int hint ) const
         {
             if ( hint == SORT::PRIORITY )
-                return Priority() > static_cast<const mxmission*>(o)->Priority();
+                return Priority() < static_cast<const mxmission*>(o)->Priority();
 
             return mxentity::Compare(o,hint);
         }
