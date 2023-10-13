@@ -24,6 +24,7 @@
 #include "ddr_processor_text.h"
 #include "ddr_processor_night.h"
 #include "ddr_processor_battle.h"
+#include "ddr_gameover.h"
 
 using namespace chilli::lib::StringExtensions;
 
@@ -95,6 +96,7 @@ MXRESULT ddr_x::Register ( mxengine* midnightx )
     mx->text = new ddr_text;
     mx->night = new ddr_night;
     mx->battle = new ddr_battle;
+    mx->gameover = new ddr_gameover;
     mx->scenario = (mxscenario*)ddr_scenario;
     
     // set initial feature flags
@@ -105,6 +107,7 @@ MXRESULT ddr_x::Register ( mxengine* midnightx )
 
 MXRESULT ddr_x::UnRegister ( mxengine* midnightx )
 {
+    SAFEDELETE ( mx->gameover );
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
     SAFEDELETE ( mx->battle ) ;

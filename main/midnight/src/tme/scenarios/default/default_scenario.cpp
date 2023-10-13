@@ -865,15 +865,10 @@ namespace tme {
             sv_days++;
 #endif
             
-#ifdef _TEST_WINLOSE_CONDITIONS_
-            mx->night->testWinLoseConditions();
-            mx->SetLastActionMsg("");
-#endif
-
             mx->pfnNightCallback = (PFNNIGHTCALLBACK)argv[0].vPtr ;
             argv[0]=(s32)0;
             
-            m_gameover_t win = mx->night->CheckWinLoseConditions(TRUE);
+            m_gameover_t win = mx->gameover->Process(true);
             if ( win != MG_NONE ) {
                 gameover_callback_t event;
                 event.type = callback_t::gameover ;
@@ -915,7 +910,7 @@ namespace tme {
         {
             mx->LastActionMsg()[0] = '\0';
             
-            m_gameover_t win = mx->night->CheckWinLoseConditions(FALSE);
+            m_gameover_t win = mx->gameover->Process(false);
             
             argv[1] = (u32)win;
             

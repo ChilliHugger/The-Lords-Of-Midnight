@@ -18,6 +18,7 @@
 #include "../../utils/savegamemapping.h"
 #include "scenario_lom.h"
 #include "scenario_lom_internal.h"
+#include "lom_gameover.h"
 #include <string>
 
 namespace tme {
@@ -107,6 +108,7 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
     mx->text = new mxtext;
     mx->night = new mxnight;
     mx->battle = new mxbattle;
+    mx->gameover = new lom_gameover;
     mx->scenario = (mxscenario*)lom_scenario;
     
     // set initial feature flags
@@ -117,6 +119,7 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
 
 MXRESULT lom_x::UnRegister ( mxengine* midnightx )
 {
+    SAFEDELETE ( mx->gameover ) ;
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
     SAFEDELETE ( mx->battle ) ;

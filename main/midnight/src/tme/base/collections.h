@@ -48,7 +48,8 @@ public:
 public:
     entities(void);
     ~entities(void);
-    
+
+    entities(const std::vector<T> list);
     entities(const entities<T>& list);
     entities<T> Clone() const;
     
@@ -113,6 +114,18 @@ void entities<T>::Clear( void )
     m_elements.clear();
     m_used=0;
     m_max=0;
+}
+
+template <typename T>
+entities<T>::entities(std::vector<T> list)
+{
+    Clear();
+    Create((u32)list.size());
+    for ( u32 ii=0; ii<list.size(); ii++ ) {
+        m_elements[ii] = list.at(ii);
+        m_used++;
+    }
+    m_bOwner = false;
 }
 
 template <typename T>

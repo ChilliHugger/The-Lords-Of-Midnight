@@ -80,6 +80,7 @@ namespace tme {
             class mxtext;
             class mxnight;
             class mxbattle;
+            class mxgameover;
     //} ;
 
     //namespace scenarios 

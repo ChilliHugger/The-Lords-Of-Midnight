@@ -126,6 +126,7 @@ namespace tme {
         mxtext*                 text;
         mxnight*                night;
         mxbattle*               battle;
+        mxgameover*             gameover;
         mxscenario*             scenario;
         
         c_character             objCharacters;
