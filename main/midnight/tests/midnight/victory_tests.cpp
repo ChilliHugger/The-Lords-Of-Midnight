@@ -13,6 +13,31 @@
 
 #include "common_steps.h"
 
+void Victory(std::string text)
+{
+    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
+    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains(text));
+}
+
+void NoVictory()
+{
+    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_NONE );
+}
+
+void VictoryToTheFree(std::string text)
+{
+    Victory(text);
+    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to the Free!"));
+}
+
+void VictoryToDoomdark(std::string text)
+{
+    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_LOSE );
+    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains(text));
+    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to Doomdark!"));
+}
+
+
 SCENARIO("Morkin and his friends can destroy the ice crown")
 {
     TMEStep::NewStory();
@@ -31,8 +56,7 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
 
                 THEN("the ice crown should be destroyed by Farflame")
                 {
-                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Farflame the Dragonlord has destroyed the Ice Crown"));
+                    Victory("Farflame the Dragonlord has destroyed the Ice Crown");
                 }
             }
         }
@@ -47,8 +71,7 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
                 
                 THEN("the ice crown should be destroyed by Lorgrim")
                 {
-                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Lorgrim the Wise has destroyed the Ice Crown"));
+                    Victory("Lorgrim the Wise has destroyed the Ice Crown");
                 }
             }
         }
@@ -63,8 +86,7 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
                 
                 THEN("the ice crown should be destroyed by Fawkrin")
                 {
-                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Fawkrin the Skulkrin has destroyed the Ice Crown"));
+                    Victory("Fawkrin the Skulkrin has destroyed the Ice Crown");
                 }
             }
         }
@@ -79,12 +101,10 @@ SCENARIO("Morkin and his friends can destroy the ice crown")
                 
                 THEN("the ice crown should be destroyed in the Lake")
                 {
-                  REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                  REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Morkin cast the Ice Crown into Lake Mirrow and destroyed it"));
+                    Victory("Morkin cast the Ice Crown into Lake Mirrow and destroyed it");
                 }
             }
         }
-    
     }
 }
 
@@ -114,7 +134,7 @@ SCENARIO("The Ice Crown can only be destroyed when Morkin is carrying it")
 
                     THEN("the ice crown should not be destroyed by Farflame")
                     {
-                        REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_NONE );
+                        NoVictory();
                     }
                 }
             }
@@ -138,9 +158,7 @@ SCENARIO("Victory to the Free when The Citadel of Ushgarak has fallen in battle"
                 
                 THEN("Ushgark should have fallen and Victory to the Free")
                 {
-                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Ushgarak has fallen."));
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to the Free!"));
+                    VictoryToTheFree("Ushgarak has fallen.");
                 }
             }
         }
@@ -155,13 +173,10 @@ SCENARIO("Victory to the Free when The Citadel of Ushgarak has fallen in battle"
 
                 THEN("Ushgarak should have fallen and the Ice Crown has been destroyed and Victory to the Free")
                 {
-                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_WIN );
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Ushgarak has fallen and the Ice Crown has been destroyed."));
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to the Free!"));
+                    VictoryToTheFree("Ushgarak has fallen and the Ice Crown has been destroyed.");
                 }
             }
         }
-
     }
 }
 
@@ -183,9 +198,7 @@ SCENARIO("Xajorkith has fallen in battle and Morkin is Dead then victory to Doom
                 
                 THEN("Xajorkith should have fallen and Victory to Doomdark")
                 {
-                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_LOSE );
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Xajorkith has fallen and Morkin is dead!"));
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to Doomdark!"));
+                    VictoryToDoomdark("Xajorkith has fallen and Morkin is dead!");
                 }
             }
         }
@@ -210,9 +223,7 @@ SCENARIO("Luxor and Morkin are dead victory should be to Doomdark")
                 
                 THEN("Victory to Doomdark")
                 {
-                    REQUIRE( TME_CheckWinLose() == m_gameover_t::MG_LOSE );
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Luxor and Morkin are dead!"));
-                    REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("Victory to Doomdark!"));
+                    VictoryToDoomdark("Luxor and Morkin are dead!");
                 }
             }
         }

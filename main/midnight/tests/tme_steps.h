@@ -35,6 +35,8 @@ public:
     static void GameWon();
     
     static void LordCarryingObject(LPCSTR name, mxthing_t thing);
+    static void LordCarryingObject(LPCSTR name, LPCSTR object);
+
     static void LordAtLocation(LPCSTR name, LPCSTR location);
     static void LordAtLocation(LPCSTR name, loc_t location);
     static void LordsAtSameLocation(LPCSTR name1, LPCSTR name2);
@@ -45,6 +47,8 @@ public:
     static void LordsIsLookingAt(LPCSTR name1, LPCSTR name2);
     static void LordMovesForward(LPCSTR name);
     static void LordIsDead(LPCSTR name);
+    static void LordKilledByObject(LPCSTR name, LPCSTR killedby);
+
     
     //
     static bool LordHasBeenRecruited(LPCSTR name);
@@ -53,7 +57,11 @@ public:
     static constexpr LPCSTR ch_morkin = "CH_MORKIN";
     static constexpr LPCSTR ch_luxor = "CH_LUXOR";
     static constexpr LPCSTR ch_rorthron = "CH_RORTHRON";
+#if defined(_LOM_)
     static constexpr LPCSTR ch_shadows = "CH_SHADOWS";
+#endif
+
+    static constexpr LPCSTR ob_wolves = "OB_WOLVES";
 };
 
 template <typename T> T* GetEntity(LPCSTR name)
@@ -71,4 +79,8 @@ inline mxstronghold* GetStronghold(LPCSTR name)
     return GetEntity<mxstronghold>(name);
 }
 
+inline mxobject* GetObject(LPCSTR name)
+{
+    return GetEntity<mxobject>(name);
+}
 

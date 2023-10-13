@@ -152,7 +152,7 @@ SCENARIO("Selecting the Look Screen for a dead lord should show the Select scree
     }
 }
 
-SCENARIO("Selecting the Look Screen for a alive lord should show the Look screen")
+SCENARIO("Selecting the Look Screen for an alive lord should show the Look screen")
 {
     TMEStep::NewStory();
   
