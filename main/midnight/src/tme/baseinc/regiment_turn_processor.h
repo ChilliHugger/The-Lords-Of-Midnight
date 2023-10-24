@@ -35,6 +35,9 @@ namespace tme {
         mxregiment*     regiment;
         u32             turns;
         mxgridref       targetlocation;
+
+    // const
+        const int REGIMENT_STOP_MOVE = 0;
     };
 }
 

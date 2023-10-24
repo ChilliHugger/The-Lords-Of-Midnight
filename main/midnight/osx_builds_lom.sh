@@ -1,3 +1,5 @@
+find . -type f -name '.DS*' -delete
+
 rm -r mac-build-lom
 mkdir mac-build-lom
 cd mac-build-lom

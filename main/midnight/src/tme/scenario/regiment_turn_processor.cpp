@@ -11,6 +11,7 @@
 
 namespace tme {
 
+
     RegimentTurnProcessor::RegimentTurnProcessor() :
         regiment(nullptr)
     {

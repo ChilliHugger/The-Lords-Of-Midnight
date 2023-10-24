@@ -10,6 +10,18 @@
 namespace tme {
 namespace utils {
 
+
+    void UpdateStrongholdsOnMap()
+    {
+        FOR_EACH_STRONGHOLD(stronghold) {
+            mxloc& mapsqr = mx->gamemap->GetAt ( stronghold->Location() );
+            if ( mapsqr.IsVisible() )
+                mapsqr.flags |= lf_visited|lf_looked_at ;
+        }
+    }
+
+#if defined(_DDR_)
+
     //
     // Old DDR flags in this section were 2 bits shifted down than LOM
     //
@@ -27,6 +39,24 @@ namespace utils {
         flags.Set(old_flags);
         return flags;
     }
+
+    void FixMorkinFromBeingAIAfterRecruited()
+    {
+        auto morkin = mx->CharacterBySymbol("CH_MORKIN");
+        morkin->race = RA_MORKIN;
+
+        if ( !morkin->IsRecruited() )
+            morkin->Flags().Set(cf_ai);
+
+        // fix for morkin being AI character
+        // after being recruited
+        if ( morkin->IsRecruited() && morkin->IsAIControlled() ) {
+            morkin->Flags().Reset(cf_ai);
+            if ( morkin->IsInTunnel() )
+                morkin->looking=DR_NORTH;
+        }
+    }
+#endif
 
 }
 }

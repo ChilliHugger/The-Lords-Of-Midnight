@@ -15,7 +15,7 @@
  */
 
 #include "../../baseinc/tme_internal.h"
-
+#include "../../utils/savegamemapping.h"
 #if defined (_DDR_)
 #include "../../scenarios/ddr/scenario_ddr_internal.h"
 #endif
@@ -27,6 +27,11 @@ using namespace chilli::lib;
 using namespace chilli::collections;
 
 namespace tme {
+
+    mxentity* CreateEntity(mxscenario* scenario, id_type_t type)
+    {
+        return scenario->CreateEntity(type);
+    }
 
 #define CONVERT_COLLECTION(x,y) \
     c_mxid& y = (c_mxid&) *((c_mxid*)x.vPtr)
@@ -130,7 +135,10 @@ namespace tme {
          
     
     
-        mxscenario::mxscenario()
+        mxscenario::mxscenario() :
+            luxor(nullptr),
+            doomdark(nullptr),
+            moonring(nullptr)
         {
         }
 
@@ -361,54 +369,49 @@ namespace tme {
 
         u32 mxscenario::CalcStrongholdAdjuster(void) const
         {
-        int ii;
-        u32 adj_stronghold;
-        int count;
-
-            adj_stronghold = 0;
-            count=0;
-            for (ii = 0; ii < sv_strongholds; ii++) {
-                mxstronghold* stronghold =  mx->StrongholdById(ii+1);
+        u32 adj_stronghold = 0;
+            FOR_EACH_STRONGHOLD(stronghold) {
                 if ( stronghold->OccupyingRace() == RA_DOOMGUARD ) {
                     adj_stronghold += stronghold->Influence() ;
-                    count++;
                 }
             }
             return adj_stronghold ;
         }
 
-
-        void mxscenario::GetCharacterFollowers ( mxcharacter* leader, collections::entities& collection )
+        c_character mxscenario::GetCharacterFollowers ( mxcharacter* leader )
         {
-            collection.Clear();
-            for ( int ii=0; ii<sv_characters; ii++ ) {
-                mxcharacter* character = mx->CharacterById(ii+1);
+            c_character collection;
+
+            FOR_EACH_CHARACTER(character) {
                 if ( character->following == leader )
                     collection.Add(character) ;
             }
             
+            return collection;
         }
     
-        void mxscenario::GetDefaultCharacters ( collections::entities& collection )
+        void mxscenario::GetDefaultCharacters ( c_character* collection )
         {
-            collection.Clear();
+            RETURN_IF_NULL(collection);
+
+            collection->Clear();
             for ( u32 ii=0; ii<sv_character_default.Count(); ii++ )
-                collection += mx->EntityByIdt(sv_character_default[ii]);
+                collection->Add( static_cast<mxcharacter*>(mx->EntityByIdt(sv_character_default[ii]))
+                );
         }
 
         bool mxscenario::CanWeSelectCharacter ( const mxcharacter* character )
         {
             // TODO shouldn't we be checking if they are recruited here?
             if ( IsFeature(SF_MOONRING) ) {
-                //mxobject* moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
-                //if ( moonring == NULL ) return TRUE ;
+                //if ( ob_moonring == NULL ) return true ;
                 //const mxcharacter* moonringcarrier = WhoHasObject(moonring);
                 
                 const mxcharacter* moonringcarrier = CurrentMoonringWearer();
-                if ( moonringcarrier==NULL && !character->IsAllowedMoonring() )
-                    return FALSE;
+                if ( moonringcarrier==nullptr && !character->IsAllowedMoonring() )
+                    return false;
             }
-            return TRUE ;
+            return true ;
         }
     
 
@@ -862,15 +865,10 @@ namespace tme {
             sv_days++;
 #endif
             
-#ifdef _TEST_WINLOSE_CONDITIONS_
-            mx->night->testWinLoseConditions();
-            mx->SetLastActionMsg("");
-#endif
-
             mx->pfnNightCallback = (PFNNIGHTCALLBACK)argv[0].vPtr ;
             argv[0]=(s32)0;
             
-            m_gameover_t win = mx->night->CheckWinLoseConditions(TRUE);
+            m_gameover_t win = mx->gameover->Process(true);
             if ( win != MG_NONE ) {
                 gameover_callback_t event;
                 event.type = callback_t::gameover ;
@@ -912,7 +910,7 @@ namespace tme {
         {
             mx->LastActionMsg()[0] = '\0';
             
-            m_gameover_t win = mx->night->CheckWinLoseConditions(FALSE);
+            m_gameover_t win = mx->gameover->Process(false);
             
             argv[1] = (u32)win;
             
@@ -943,54 +941,46 @@ namespace tme {
         static mxcommand_t mx_commands[] = {
             
             // character commands} },
-            {"LOOKLEFT",    1, OnCharLookLeft,        {arguments::character} },
-            {"LOOKRIGHT",    1, OnCharLookRight,     {arguments::character} },
-            {"LOOK",        2, OnCharLook,            {arguments::character, arguments::direction} },
-            {"FORWARD",        1, OnCharForward,        {arguments::character} },
-            {"POSTMEN",        3, OnCharPostMen,        {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"RECRUITMEN",    3, OnCharRecruitMen,    {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"ATTACK",        1, OnCharAttack,        {arguments::character} },
-            {"REST",        1, OnCharRest,            {arguments::character} },
-            {"HIDE",        1, OnCharHide,            {arguments::character} },
-            {"UNHIDE",        1, OnCharUnHide,        {arguments::character} },
-            {"LOOKAT",        2, OnCharLookAt,        {arguments::character, arguments::location} },
-            {"APPROACH",    2, OnCharApproach,        {arguments::character, arguments::character} },
-            {"FIGHT",        1, OnCharFight,            {arguments::character} },
-            {"SEEK",        1, OnCharSeek,            {arguments::character} },
-            {"PICKUP",        1, OnCharPickup,        {arguments::character} },
-            {"DROP",        1, OnCharDrop,            {arguments::character} },// arguments::objectinfo} },
-            {"WAIT",        2, OnCharWait,            {arguments::character, variant::vnumber} }, //[mode]
-            {"CONTROL",        1, OnCharControl,        {arguments::character} },
+            {"LOOKLEFT",        1, OnCharLookLeft,          {arguments::character} },
+            {"LOOKRIGHT",       1, OnCharLookRight,         {arguments::character} },
+            {"LOOK",            2, OnCharLook,              {arguments::character, arguments::direction} },
+            {"FORWARD",         1, OnCharForward,           {arguments::character} },
+            {"POSTMEN",         3, OnCharPostMen,           {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"RECRUITMEN",      3, OnCharRecruitMen,        {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"ATTACK",          1, OnCharAttack,            {arguments::character} },
+            {"REST",            1, OnCharRest,              {arguments::character} },
+            {"HIDE",            1, OnCharHide,              {arguments::character} },
+            {"UNHIDE",          1, OnCharUnHide,            {arguments::character} },
+            {"LOOKAT",          2, OnCharLookAt,            {arguments::character, arguments::location} },
+            {"APPROACH",        2, OnCharApproach,          {arguments::character, arguments::character} },
+            {"FIGHT",           1, OnCharFight,             {arguments::character} },
+            {"SEEK",            1, OnCharSeek,              {arguments::character} },
+            {"PICKUP",          1, OnCharPickup,            {arguments::character} },
+            {"DROP",            1, OnCharDrop,              {arguments::character} },
+            {"WAIT",            2, OnCharWait,              {arguments::character, variant::vnumber} }, //[mode]
+            {"CONTROL",         1, OnCharControl,           {arguments::character} },
 #if defined(_DDR_)
-            {"ENTERTUNNEL",    1, OnCharEnterTunnel,    {arguments::character} },
-            {"EXITTUNNEL",    1, OnCharExitTunnel,    {arguments::character} },
-            {"GIVE",        1, OnCharGive,            {arguments::character} },
-            {"TAKE",        1, OnCharTake,            {arguments::character} },
-            {"USE",         1, OnCharUse,            {arguments::character, arguments::character} },
+            {"ENTERTUNNEL",     1, OnCharEnterTunnel,       {arguments::character} },
+            {"EXITTUNNEL",      1, OnCharExitTunnel,        {arguments::character} },
+            {"GIVE",            1, OnCharGive,              {arguments::character} },
+            {"TAKE",            1, OnCharTake,              {arguments::character} },
+            {"USE",             1, OnCharUse,               {arguments::character, arguments::character} },
 #endif
-            {"FOLLOW",      2, OnCharFollow,        {arguments::character, arguments::character} },
-            {"UNFOLLOW",    2, OnCharUnFollow,      {arguments::character, arguments::character} },
-            {"DISBANDGROUP",1, OnCharDisbandGroup,  {arguments::character} },
-            {"SWAPGROUPLEADER", 2, OnCharSwapGroupLeader,{arguments::character, arguments::character} },
-
-            {"PLACE",           2, OnCharPlace,        {arguments::character, arguments::location} },
-
-            
-            
-                    // Regiment Commands
-            {"HOLD",        1, OnRegimentHold,        {arguments::regiment} },
-            {"GOTO",        2, OnRegimentGoto,        {arguments::regiment, arguments::location} },
-            {"WANDER",        1, OnRegimentWander,    {arguments::regiment} },
-            {"FOLLOW",        2, OnRegimentFollow,    {arguments::regiment, arguments::character} },
-            {"ROUTE",        2, OnRegimentRoute,        {arguments::regiment, arguments::routenode} },
-
-                    // other
-            { "NIGHT",        1, OnNight,                {variant::vptr} },
-            { "CHECKWINLOSE", 0, OnWinLose },
-
-            { "GetPanoramic",    2,    OnGetPanoramic,    {arguments::location, arguments::direction}},
-
-
+            {"FOLLOW",          2, OnCharFollow,            {arguments::character, arguments::character} },
+            {"UNFOLLOW",        2, OnCharUnFollow,          {arguments::character, arguments::character} },
+            {"DISBANDGROUP",    1, OnCharDisbandGroup,      {arguments::character} },
+            {"SWAPGROUPLEADER", 2, OnCharSwapGroupLeader,   {arguments::character, arguments::character} },
+            {"PLACE",           2, OnCharPlace,             {arguments::character, arguments::location} },
+            // Regiment Commands
+            {"HOLD",            1, OnRegimentHold,          {arguments::regiment} },
+            {"GOTO",            2, OnRegimentGoto,          {arguments::regiment, arguments::location} },
+            {"WANDER",          1, OnRegimentWander,        {arguments::regiment} },
+            {"FOLLOW",          2, OnRegimentFollow,        {arguments::regiment, arguments::character} },
+            {"ROUTE",           2, OnRegimentRoute,         {arguments::regiment, arguments::routenode} },
+            // other
+            { "NIGHT",          1, OnNight,                 {variant::vptr} },
+            { "CHECKWINLOSE",   0, OnWinLose },
+            { "GetPanoramic",   2, OnGetPanoramic,      {arguments::location, arguments::direction}},
         };
 
         MXRESULT mxscenario::Command ( const std::string& arg, variant argv[], u32 argc )
@@ -1009,34 +999,20 @@ namespace tme {
         COMMAND( PropDefaultCharacters )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("DEFAULTCHARACTERS") ) {
-                collections::entities mycollection;
-                mx->scenario->GetDefaultCharacters ( mycollection );
-                if ( mycollection.CreateIdtCollection(collection) )
-                    return MX_OK ;
-                return MX_FAILED ;
-            //}
+            c_character mycollection;
+            mx->scenario->GetDefaultCharacters ( &mycollection );
+            if ( mycollection.CreateIdtCollection(collection) )
+                return MX_OK ;
+            return MX_FAILED ;
         }
 
         COMMAND ( PropCharacters )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("CHARACTERS") ) {
-                //if ( mx->objCharacters.CreateIdtCollection(collection) )
-                //    return MX_OK ;
-                //return MX_FAILED ;
-            //}
-            
-            // don't return DOOMDARK
-            // TODO: Create a flag for this!!!!
-            mxcharacter* doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
-            
-            
-            //collection.Create( mx->objCharacters.Count() );
+
             collection.Clear();
-            for ( u32 ii=0; ii<mx->objCharacters.Count(); ii++ ) {
-                mxcharacter* c = (mxcharacter*)mx->objCharacters[ii] ;
-                if ( c!=doomdark )
+            FOR_EACH_CHARACTER(c) {
+                if ( c!=mx->scenario->doomdark )
                     collection.Add(mxentity::SafeIdt(c));
             }
             return MX_OK ;
@@ -1046,41 +1022,33 @@ namespace tme {
         COMMAND ( PropRegiments )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("REGIMENTS") ) {
-                if ( mx->objRegiments.CreateIdtCollection(collection) )
-                    return MX_OK ;
-                return MX_FAILED ;
-            //}
+            if ( mx->objRegiments.CreateIdtCollection(collection) )
+                return MX_OK ;
+            return MX_FAILED ;
         }
 
         COMMAND ( PropRouteNodes )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("ROUTENODES") ) {
-                if ( mx->objRoutenodes.CreateIdtCollection(collection) )
-                    return MX_OK ;
-                return MX_FAILED ;
-            //}
+            if ( mx->objRoutenodes.CreateIdtCollection(collection) )
+                return MX_OK ;
+            return MX_FAILED ;
         }
 
         COMMAND ( PropPlaces )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("ROUTENODES") ) {
-                if ( mx->objPlaces.CreateIdtCollection(collection) )
-                    return MX_OK ;
-                return MX_FAILED ;
-            //}
+            if ( mx->objPlaces.CreateIdtCollection(collection) )
+                return MX_OK ;
+            return MX_FAILED ;
         }
 
         COMMAND ( PropStrongholds )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            //if ( ISARG("STRONGHOLDS") ) {
             if ( mx->objStrongholds.CreateIdtCollection(collection) )
                 return MX_OK ;
             return MX_FAILED ;
-            //}
         }
 
         COMMAND ( PropObjects )
@@ -1099,12 +1067,10 @@ namespace tme {
             if ( mx->scenario->GetLocInfo ( argv[1], locinfo ) != MX_OK )
                 return MX_FAILED ;
             
-            //if ( ISARG("CHARACTERS") ) {
             locinfo->objCharacters.CreateIdtCollection(collection);
             argv[1] = locinfo->nRecruited ;
             SAFEDELETE ( locinfo );
             return MX_OK ;
-            //}
         }
 
         COMMAND ( PropRecruitable )
@@ -1113,11 +1079,9 @@ namespace tme {
             mxlocinfo* locinfo;
             if ( mx->scenario->GetLocInfo ( argv[1], locinfo ) != MX_OK )
                 return MX_FAILED;
-            //if ( ISARG("RECRUITABLE") ) {
             locinfo->objRecruit.CreateIdtCollection(collection);
             SAFEDELETE ( locinfo );
             return MX_OK ;
-            //}
         }
 
         COMMAND ( PropArmies )
@@ -1129,7 +1093,6 @@ namespace tme {
                 return MX_FAILED;
             }
 
-            //if ( ISARG("ARMIES") ) {
             collection.Create( locinfo->nArmies );
             for ( u32 ii=0; ii<locinfo->nArmies; ii++ ) {
                 auto army = locinfo->armies[ii] ;
@@ -1148,11 +1111,11 @@ namespace tme {
 
             SAFEDELETE ( locinfo );
             return MX_OK ;
-            //}
         }
 
         COMMAND ( PropStrongholds2 )
         {
+      
             CONVERT_COLLECTION(argv[0],collection);
             mxlocinfo* locinfo = nullptr;
             mx->scenario->GetLocInfo ( argv[1], locinfo );
@@ -1160,11 +1123,9 @@ namespace tme {
                 return MX_FAILED;
             }
             
-            //if ( ISARG("STRONGHOLDS") ) {
             locinfo->objStrongholds.CreateIdtCollection(collection);
             SAFEDELETE ( locinfo );
             return MX_OK ;
-            //}
         }
 
         COMMAND ( PropCharsForCommand )
@@ -1172,12 +1133,11 @@ namespace tme {
             CONVERT_COLLECTION(argv[0],collection);
             CONVERT_GRIDREF(argv[2],loc);
             
-            collections::entities    chars;
-            mx->scenario->GetCharactersAvailableForCommand ( argv[1], loc, chars );
+            c_character chars;
+            mx->scenario->GetCharactersAvailableForCommand ( argv[1], loc, &chars );
             chars.CreateIdtCollection( collection );
 
             return MX_OK ;
-            //}
         }
 
         COMMAND ( PropArmiesAtLocation )
@@ -1196,8 +1156,8 @@ namespace tme {
         {
             CONVERT_COLLECTION(argv[0],collection);
             CONVERT_GRIDREF(argv[1],loc);
-            collections::entities    chars;
-            mx->scenario->FindCharactersAtLocation ( loc, chars, argv[2] );
+            c_character chars;
+            mx->scenario->FindCharactersAtLocation ( loc, &chars, argv[2] );
             chars.CreateIdtCollection( collection );
             return MX_OK ;
         }
@@ -1234,24 +1194,24 @@ namespace tme {
         static mxcommand_t mx_properties[] = {
             { "CONTROLLED_CHARACTER",     0, PropCurrentCharacter },
 
-            { "DEFAULTCHARACTERS",    1, PropDefaultCharacters,    {variant::vptr} },
-            { "CHARACTERS",            1, PropCharacters,            {variant::vptr} },
-            { "REGIMENTS",            1, PropRegiments,            {variant::vptr} },
-            { "ROUTENODES",            1, PropRouteNodes,            {variant::vptr} },
-            { "STRONGHOLDS",        1, PropStrongholds,            {variant::vptr} },
-            { "PLACES",                1, PropPlaces,                {variant::vptr} },
-            { "CHARACTERS",            2, PropCharacters2,            {variant::vptr, variant::vid} },
-            { "RECRUITABLE",        2, PropRecruitable,            {variant::vptr, variant::vid} },
-            { "ARMIES",                2, PropArmies,                {variant::vptr, variant::vid} },
+            { "DEFAULTCHARACTERS",  1, PropDefaultCharacters,   {variant::vptr} },
+            { "CHARACTERS",         1, PropCharacters,          {variant::vptr} },
+            { "REGIMENTS",          1, PropRegiments,           {variant::vptr} },
+            { "ROUTENODES",         1, PropRouteNodes,          {variant::vptr} },
+            { "STRONGHOLDS",        1, PropStrongholds,         {variant::vptr} },
+            { "PLACES",             1, PropPlaces,              {variant::vptr} },
+            { "CHARACTERS",         2, PropCharacters2,         {variant::vptr, variant::vid} },
+            { "RECRUITABLE",        2, PropRecruitable,         {variant::vptr, variant::vid} },
+            { "ARMIES",             2, PropArmies,              {variant::vptr, variant::vid} },
             { "STRONGHOLDS",        2, PropStrongholds2,        {variant::vptr, variant::vid} },
-            { "ROUTENODES",            2, PropRouteNodes,            {variant::vptr, variant::vid} },
+            { "ROUTENODES",         2, PropRouteNodes,          {variant::vptr, variant::vid} },
 
-            { "CharsForCommand",    3, PropCharsForCommand,        {variant::vptr, variant::vnumber, arguments::location} },
-            { "ArmiesAtLocation",    2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
-            { "CharsAtLoc",            3, PropCharsAtLoc,            {variant::vptr, arguments::location, variant::vnumber} },
+            { "CharsForCommand",    3, PropCharsForCommand,     {variant::vptr, variant::vnumber, arguments::location} },
+            { "ArmiesAtLocation",   2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
+            { "CharsAtLoc",         3, PropCharsAtLoc,          {variant::vptr, arguments::location, variant::vnumber} },
             
             { "MAPINFO",            0, PropMapInfo,             },
-            { "MAPSIZE",            0, PropMapSize,                },
+            { "MAPSIZE",            0, PropMapSize,             },
 
             { "OBJECTS",            1, PropObjects,             {variant::vptr} },
             
@@ -1417,35 +1377,31 @@ namespace tme {
 
     
         static mxcommand_t mx_text[] = {
-            {"Number",            2, OnTextNumber,            {variant::vnumber, variant::vnumber} },    // TMP: New !
-            {"NumberPart",        1, OnTextNumberPart,        {variant::vnumber} },
-            {"Energy",            1, OnTextEnergy,            {variant::vnumber} },
-            {"Fear",            1, OnTextFear,                {variant::vnumber} },
-            {"Courage",            1, OnTextCourage,            {variant::vnumber} },
-            {"CharRecruitMen",    3, OnTextCharRecruitMen,    {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"CharPostMen",        3, OnTextCharPostMen,        {arguments::character, arguments::stronghold, variant::vnumber} },
-            {"CharTime",        1, OnTextCharTime,            {arguments::character} },
-            {"CharEnergy",        1, OnTextCharEnergy,        {arguments::character} },
-            {"CharCourage",        1, OnTextCharCourage,        {arguments::character} },
-            {"CharFear",        1, OnTextCharFear,            {arguments::character} },
-            {"CharObject",        1, OnTextCharObject,        {arguments::character} },
-            {"CharDeath",        1, OnTextCharDeath,            {arguments::character} },
-            {"CharBattle",        1, OnTextCharBattle,        {arguments::character} },
-            {"CharArmy",        1, OnTextCharArmy,            {arguments::character} },
-//            {"CharAttributes",    1, OnTextCharAttributes,    {arguments::character} },
-//            {"CharFoe",            1, OnTextCharFoe,            {arguments::character} },
-//            {"CharLiege",        1, OnTextCharLiege,            {arguments::character} },
-            {"CharLocation",    1, OnTextCharLocation,        {arguments::character} },
-            {"Stronghold",        1, OnTextStronghold,        {arguments::stronghold} },
-        //    {"ArmyTotal",        1, OnTextArmyTotal,            {const mxCArmyTotal* army} },
-            {"Location",        1, OnTextLocation,            {arguments::location} },
-            {"Area",            1, OnTextArea,                {arguments::area} },
-            {"Object",            1, OnTextObject,            {arguments::objectinfo} },
-            {"TerrainPlural",    1, OnTextTerrainPlural,        {arguments::terrain} },
-            {"Terrain",            1, OnTextTerrain,            {arguments::terrain} },
-            {"SpecialStrings",    2, OnTextSpecialStrings,    {variant::vnumber, arguments::character} },
-            {"LastActionMsg",    0, OnLastActionMsg,             },                                // TMP: New !
-            {"Purge",            0, OnTextPurge,                 },                                // TMP: New !
+            {"Number",          2, OnTextNumber,            {variant::vnumber, variant::vnumber} },
+            {"NumberPart",      1, OnTextNumberPart,        {variant::vnumber} },
+            {"Energy",          1, OnTextEnergy,            {variant::vnumber} },
+            {"Fear",            1, OnTextFear,              {variant::vnumber} },
+            {"Courage",         1, OnTextCourage,           {variant::vnumber} },
+            {"CharRecruitMen",  3, OnTextCharRecruitMen,    {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"CharPostMen",     3, OnTextCharPostMen,       {arguments::character, arguments::stronghold, variant::vnumber} },
+            {"CharTime",        1, OnTextCharTime,          {arguments::character} },
+            {"CharEnergy",      1, OnTextCharEnergy,        {arguments::character} },
+            {"CharCourage",     1, OnTextCharCourage,       {arguments::character} },
+            {"CharFear",        1, OnTextCharFear,          {arguments::character} },
+            {"CharObject",      1, OnTextCharObject,        {arguments::character} },
+            {"CharDeath",       1, OnTextCharDeath,         {arguments::character} },
+            {"CharBattle",      1, OnTextCharBattle,        {arguments::character} },
+            {"CharArmy",        1, OnTextCharArmy,          {arguments::character} },
+            {"CharLocation",    1, OnTextCharLocation,      {arguments::character} },
+            {"Stronghold",      1, OnTextStronghold,        {arguments::stronghold} },
+            {"Location",        1, OnTextLocation,          {arguments::location} },
+            {"Area",            1, OnTextArea,              {arguments::area} },
+            {"Object",          1, OnTextObject,            {arguments::objectinfo} },
+            {"TerrainPlural",   1, OnTextTerrainPlural,     {arguments::terrain} },
+            {"Terrain",         1, OnTextTerrain,           {arguments::terrain} },
+            {"SpecialStrings",  2, OnTextSpecialStrings,    {variant::vnumber, arguments::character} },
+            {"LastActionMsg",   0, OnLastActionMsg,         },
+            {"Purge",           0, OnTextPurge,             },
         };
 
 
@@ -1457,8 +1413,7 @@ namespace tme {
         mxcharacter* mxscenario::CurrentMoonringWearer ( void )
         {
             if ( IsFeature(SF_MOONRING) ) {
-                mxobject* moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
-                return moonring!=NULL ? WhoHasObject(moonring) : NULL ;
+                return moonring != nullptr ? WhoHasObject(moonring) : NULL ;
             }
             return NULL ;
         }
@@ -1466,19 +1421,17 @@ namespace tme {
         mxcharacter* mxscenario::MoonringWearer( void ) 
         {
             if ( IsFeature(SF_MOONRING) ) {
-                for ( int ii=0; ii<sv_characters; ii++ ) {
-                    mxcharacter* character = mx->CharacterById(ii+1);
+                FOR_EACH_CHARACTER(character) {
                     if ( character->IsAllowedMoonring() && character->IsAlive() )
                         return character ;
                 }
             }
-            return NULL ;
+            return nullptr ;
         }
 
         void mxscenario::DeadCharactersDropObjects( void )
         {
-            for ( int ii=0; ii<sv_characters; ii++ ) {
-                mxcharacter* character = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(character){
                 if ( character->IsDead() && character->carrying ) {
                     if ( character->carrying->IsUnique() )
                         character->Cmd_DropObject() ;
@@ -1495,8 +1448,7 @@ namespace tme {
             if ( moonringcarrier != NULL )
                 return;
             
-            for ( int ii=0; ii<sv_characters; ii++ ) {
-                mxcharacter* character = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(character) {
                 if ( character->IsAllowedMoonring() && character->IsAlive() ) {
                     // if character is alive
                     // and they can carry the moonring
@@ -1505,18 +1457,12 @@ namespace tme {
                     if ( character->IsFollowing() )
                         character->Cmd_UnFollow(character->Following());
                     
-                    if ( character->HasFollowers() ) {
-                        for ( int jj=0; jj<sv_characters; jj++ ) {
-                            mxcharacter* follower = mx->CharacterById(jj+1);
-                            if ( follower->Following() == character )
-                                follower->Cmd_UnFollow(character);
-                        }
+                    for (auto f : mx->scenario->GetCharacterFollowers(character)) {
+                        if ( f->Following() == character )
+                            f->Cmd_UnFollow(character);
                     }
-                    
                 }
             }
-            
-            
         }
     
 
@@ -1552,8 +1498,7 @@ namespace tme {
         mxcharacter*        character;
         mxregiment*        regiment;
 
-            for (ii = 0; ii < sv_characters; ii++) {
-                character = mx->CharacterById(ii+1) ;
+            FOR_EACH_CHARACTER(character) {
 #if defined(_DDR_)
                 if ( !character->IsInTunnel() ) {
                 if ( character->IsAlive() && !character->IsHidden() ) {
@@ -1568,16 +1513,13 @@ namespace tme {
 #endif
             }
 #if !defined(_DDR_)
-            mxstronghold*    stronghold;
-            for (ii = 0; ii < sv_strongholds; ii++) {
-                stronghold=mx->StrongholdById(ii+1);
+            FOR_EACH_STRONGHOLD(stronghold) {
                 if ( stronghold->TotalTroops() )
                     mx->gamemap->SetLocationArmy(stronghold->Location(),1);
             }
 #endif
 
-            for (ii = 0; ii < sv_regiments; ii++) {    
-                regiment=mx->RegimentById(ii+1);
+            FOR_EACH_REGIMENT(regiment) {
                 if ( regiment->Total() )
                     mx->gamemap->SetLocationArmy(regiment->Location(),1);
             }
@@ -1587,17 +1529,18 @@ namespace tme {
 
         void mxscenario::RemoveMapArmies ( void )
         {
-        int    ii;
-            for (ii = 0; ii < sv_characters; ii++) {
-                mx->gamemap->SetLocationArmy(mx->CharacterById(ii+1)->Location(),0);
-                mx->gamemap->SetLocationCharacter(mx->CharacterById(ii+1)->Location(),0);
+            FOR_EACH_CHARACTER(character) {
+                mx->gamemap->SetLocationArmy(character->Location(),0);
+                mx->gamemap->SetLocationCharacter(character->Location(),0);
             }
 
-            for (ii = 0; ii < sv_strongholds; ii++)
-                mx->gamemap->SetLocationArmy(mx->StrongholdById(ii+1)->Location(),0);
+            FOR_EACH_STRONGHOLD(stronghold) {
+                mx->gamemap->SetLocationArmy(stronghold->Location(),0);
+            }
 
-            for (ii = 0; ii < sv_regiments; ii++)
-                mx->gamemap->SetLocationArmy(mx->RegimentById(ii+1)->Location(),0);
+            FOR_EACH_REGIMENT(regiment) {
+                mx->gamemap->SetLocationArmy(regiment->Location(),0);
+            }
         }
 
         void mxscenario::LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel )
@@ -1649,21 +1592,18 @@ namespace tme {
         void mxscenario::SetCharsLooking( void )
         {
             // setup the initial stuff that characters looking will do
-            for ( int ii=0; ii<sv_characters; ii++ ) {
-                mxcharacter* character = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(character) {
                 if ( character->IsRecruited() ) {
                     character->Cmd_LookDir ( character->Looking() );
                     character->memory.Update();
                     character->EnterLocation ( character->Location() );
                 }
-
             }
         }
 
         mxcharacter* mxscenario::WhoHasObject( mxobject* object ) const
         {
-            for ( int ii=0; ii<sv_characters; ii++ ) {
-                mxcharacter* character = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(character) {
                 if ( character->carrying == object )
                     return character ;
             }
@@ -1691,26 +1631,18 @@ namespace tme {
 
         bool mxscenario::InCharactersMemory ( mxitem* item ) 
         {
-        mxcharacter* character;
-            for ( int ii=0; ii<sv_characters; ii++ ) {
-                character = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(character) {
                 if ( character->memory.IsMemorised(item) )
-                    return TRUE;
+                    return true;
             }
-            return FALSE;
+            return false;
         }
 
 
         void mxscenario::ClearFromMemory ( mxgridref loc )
         {
-        
-        int            ii;
-        mxcharacter* character;
-        mxfragment* item;
-
-            for ( ii=0; ii<sv_characters; ii++ ) {
-                character = mx->CharacterById(ii+1);
-                item = character->memory.IsMemorised(loc,RA_DOOMGUARD);
+            FOR_EACH_CHARACTER(character) {
+                auto item = character->memory.IsMemorised(loc,RA_DOOMGUARD);
                 if ( item ) {
                     character->memory.DeleteFragment ( item );
                 }
@@ -1719,7 +1651,6 @@ namespace tme {
                     character->memory.DeleteFragment ( item );
                 }
             }
-        
         }
 
         MXRESULT mxscenario::GetLocInfo ( mxid id, mxlocinfo*& info )
@@ -1744,63 +1675,43 @@ namespace tme {
             return MX_FAILED;
         }
 
-
-
-        bool mxscenario::GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, collections::entities& collection )
+        bool mxscenario::GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, c_character* collection )
         {
-        int            count;
-        int            ii;
-        mxcharacter*    c=NULL;
-        mxobject*        moonring=NULL;
-        mxcharacter*    moonringcarrier=NULL;
+        mxcharacter*    moonringcarrier=nullptr;
         
-            collection.Clear();
+            RETURN_IF_NULL(collection);
+            collection->Clear();
 
-            // don't return DOOMDARK
-            // TODO: Create a flag for this!!!!
-            mxcharacter* doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
-            
-            
             if ( IsFeature(SF_MOONRING) ) {
-                moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
                 //moonringcarrier = moonring ? WhoHasObject(moonring) : NULL ;
                 moonringcarrier = CurrentMoonringWearer();
-
             }
 
-            count=0;
-            for ( ii=0; ii<sv_characters; ii++ ) {
-
-                c = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(c) {
 
                 if ( mode != CMDG_ALL ) {
 
-                    if ( !c->IsRecruited() )
-                        continue;
+                    CONTINUE_IF ( !c->IsRecruited() );
 
                     if ( IsFeature(SF_MOONRING) ) {
-                        if ( moonring && moonringcarrier==NULL && !c->IsAllowedMoonring() )
-                            continue;
+                        CONTINUE_IF ( moonring && moonringcarrier==nullptr && !c->IsAllowedMoonring() );
                     }
 
                     if ( mode==CMDG_WAITING ) {
-                        if ( c->IsWaiting() || c->IsNight() || c->IsDead() )
-                            continue;
+                        CONTINUE_IF ( c->IsWaiting() || c->IsNight() || c->IsDead() );
                     }else if ( mode==CMDG_CURRENTLOC ) {
-                        if ( c->Location() != loc )
-                            continue;
+                        CONTINUE_IF ( c->Location() != loc );
                     }
 
                 }else{
-                    if ( c == doomdark )
-                        continue;
+                    CONTINUE_IF ( c == doomdark );
                 }
 
-                collection += c;
+                collection->Add(c);
 
             }
 
-            return TRUE ;
+            return true ;
         }
 
 
@@ -1808,7 +1719,7 @@ namespace tme {
     // above ground
     // underground
 
-        u32 mxscenario::FindCharactersAtLocation ( mxgridref loc, collections::entities& characters, flags32_t flags )
+        u32 mxscenario::FindCharactersAtLocation ( mxgridref loc, c_character* characters, flags32_t flags )
         {
         int                    ii;
         mxcharacter*    moonringcarrier=NULL;
@@ -1817,61 +1728,46 @@ namespace tme {
         int                    count;
         bool                in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
 
-            // TODO character needs a visible flag
-            mxcharacter* ch_doomdark = (mxcharacter*)mx->EntityByName("CH_DOOMDARK");
+            RETURN_IF_NULL(characters);
 
             count=0;
 
             if ( IsFeature(SF_MOONRING) ) {
-                moonring = (mxobject*)mx->EntityByName("OB_MOONRING");
                 //moonringcarrier = moonring ? WhoHasObject(moonring) : NULL ;
                 moonringcarrier = CurrentMoonringWearer();
-
             }
 
-            characters.Create(MAX_CHARACTERS_INLOCATION);
+            characters->Create(MAX_CHARACTERS_INLOCATION);
 
-            for (ii = 0; ii < sv_characters; ii++) {
-                c = mx->CharacterById(ii+1);
-                if ( c==NULL ) //|| character->IsDead() || character->IsHidden() )
-                    continue;
-                if ( c == ch_doomdark )
-                    continue;
-                if ( c->Location() != loc )
-                    continue;
+            FOR_EACH_CHARACTER(c) {
+                CONTINUE_IF_NULL(c);
 
+                CONTINUE_IF ( c == doomdark );
+
+                CONTINUE_IF ( c->Location() != loc );
                 
+                CONTINUE_IF( c->IsInTunnel() != in_tunnel );
                 
-                // check for tunnel
-                if ( c->IsInTunnel() != in_tunnel )
-                    continue;
-
                 if ( !(flags & slf_all) ) {
-                    if ( !c->IsRecruited() )
-                        continue;    
+                    CONTINUE_IF ( !c->IsRecruited() );
                     if ( IsFeature(SF_MOONRING) ) {
-                        if ( moonring && moonringcarrier==NULL && !c->IsAllowedMoonring() )
-                            continue;
+                        CONTINUE_IF ( moonring && moonringcarrier==nullptr && !c->IsAllowedMoonring() );
                     }
                 }
 
-                characters += c ;
+                characters->Add(c) ;
             }
 
-            return characters.Count();
+            return characters->Count();
         }
 
 
         u32 mxscenario::FindArmiesAtLocation ( mxgridref loc, u32& enemies, u32& friends, flags32_t flags )
         {
-        int            ii;
-        mxcharacter* character;
-
             enemies=0;
             friends=0;
 
-            for ( ii=0; ii<sv_characters; ii++ ) {
-                character = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(character) {
                 if ( character->memory.IsMemorised(loc,RA_DOOMGUARD) )
                     enemies++;
                 if ( character->memory.IsMemorised(loc,RA_FREE) )
@@ -1879,11 +1775,15 @@ namespace tme {
                 if ( character->Location() == loc && character->HasArmy() )
                     friends++;
             }
-
-
             return friends+enemies ;
         }
 
+    void mxscenario::initialise( u32 version )
+    {
+        moonring = static_cast<mxobject*>(mx->EntityByName("OB_MOONRING",IDT_OBJECT));
+        luxor = mx->CharacterBySymbol("CH_LUXOR");
+        doomdark = mx->CharacterBySymbol("CH_DOOMDARK");
+    }
     
     void mxscenario::initialiseAfterCreate( u32 version )
     {
@@ -1892,24 +1792,21 @@ namespace tme {
         SetCharsLooking();
         
 #if defined(_DDR_)
-        for ( int ii=0; ii<sv_characters; ii++ ) {
-            auto c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
-            c->lastlocation=c->Location();
+        FOR_EACH_CHARACTER(c) {
+            static_cast<ddr_character*>(c)->lastlocation=c->Location();
         }
 #endif
         
         MXTRACE( "Place Strongholds On Map");
         // mark the strongholds onto the map
-        for (int ii = 0; ii < sv_strongholds; ii++) {
-            mxstronghold* stronghold=mx->StrongholdById(ii+1);
+        FOR_EACH_STRONGHOLD(stronghold) {
             mxloc& mapsqr = mx->gamemap->GetAt ( stronghold->Location() );
             mapsqr.flags|=lf_stronghold;
         }
         
         MXTRACE( "Place RouteNodes On Map");
         // mark the routenodes onto the map
-        for (int ii = 0; ii < sv_routenodes; ii++) {
-            mxroutenode* routenode=mx->RouteNodeById(ii+1);
+        FOR_EACH_ROUTENODE(routenode) {
             mxloc& mapsqr = mx->gamemap->GetAt ( routenode->Location() );
             mapsqr.flags|=lf_routenode;
         }
@@ -1950,6 +1847,13 @@ namespace tme {
         
     }
     
+    void mxscenario::updateAfterLoad(u32 version)
+    {
+        /* update map */
+        if ( version <= 7 ) {
+            utils::UpdateStrongholdsOnMap();
+        }
+    }
 
     void mxscenario::GiveGuidance( mxcharacter* character, s32 hint )
     {
@@ -1960,18 +1864,16 @@ namespace tme {
             while ( !found  ) {
                 int id = mxrandom(1, sv_characters - 1);
                 
-                mxcharacter* c = mx->CharacterById(id);
-                
-                if ( mikeseek )
-                    c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
-                
+                auto c = mikeseek
+                    ? mx->CharacterBySymbol("CH_MIDWINTER")
+                    : mx->CharacterById(id);
+
                 // lets not find doomdark
                 if ( c->Race()==RA_DOOMGUARD )
                     continue;
                 
-                collections::entities collection;
-                
-                mx->scenario->GetDefaultCharacters ( collection );
+                c_character collection;
+                mx->scenario->GetDefaultCharacters ( &collection );
                 if ( collection.FindSymbol(c->Symbol()) == NULL ) {
                     std::string guidance = mx->text->SystemString(SS_GUIDANCE1);
                     mx->SetLastActionMsg(mx->text->CookText(guidance,c));

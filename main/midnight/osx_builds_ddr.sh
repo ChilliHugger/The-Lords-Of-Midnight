@@ -1,3 +1,5 @@
+find . -type f -name '.DS*' -delete 
+
 rm -r mac-build-ddr
 mkdir mac-build-ddr
 cd mac-build-ddr

@@ -17,6 +17,8 @@
 
 namespace tme {
 
+const int STRONGHOLD_SUCCESS_NONE = 0;
+
 mxstronghold::mxstronghold() :
     race(RA_NONE),
     occupyingrace(RA_NONE),

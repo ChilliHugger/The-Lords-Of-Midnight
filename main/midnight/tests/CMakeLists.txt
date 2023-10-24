@@ -24,5 +24,6 @@ if(TESTS)
   )
 
   add_compile_options(-D_UNIT_TESTS_)
+  add_compile_options(-DMX_DEBUG)
 
 endif()

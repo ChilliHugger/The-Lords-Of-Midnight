@@ -772,7 +772,7 @@ void uithinkpage::checkArmy ( void )
     if ( id == SpecialId::ArmiesHere || id == SpecialId::ArmiesAhead ) {
         int warriors,riders;
         
-        mxid idt = mxi->EntityByName( "CH_DOOMDARK", IDT_CHARACTER );
+        mxid idt = mxi->CharacterBySymbol("CH_DOOMDARK");
         TME_GetCharacter(c,idt);
         
         if ( id == SpecialId::ArmiesHere) {

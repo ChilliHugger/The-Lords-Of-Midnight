@@ -33,7 +33,7 @@ namespace tme {
             void Test(void);
             
         protected:
-            entities  characters_here;
+            c_character  characters_here;
         
         };
 

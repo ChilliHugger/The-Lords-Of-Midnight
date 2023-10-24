@@ -15,8 +15,10 @@
  */
 
 #include "../../baseinc/tme_internal.h"
+#include "../../utils/savegamemapping.h"
 #include "scenario_lom.h"
 #include "scenario_lom_internal.h"
+#include "lom_gameover.h"
 #include <string>
 
 namespace tme {
@@ -82,7 +84,11 @@ MXRESULT lom::Text ( const std::string& command, variant* argv, u32 args )
 //
 //
 
-lom_x::lom_x()
+lom_x::lom_x() :
+    towerofdoom(nullptr),
+    morkin(nullptr),
+    luxorAlive(true),
+    morkinAlive(true)
 {
 }
 
@@ -102,6 +108,7 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
     mx->text = new mxtext;
     mx->night = new mxnight;
     mx->battle = new mxbattle;
+    mx->gameover = new lom_gameover;
     mx->scenario = (mxscenario*)lom_scenario;
     
     // set initial feature flags
@@ -112,13 +119,14 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
 
 MXRESULT lom_x::UnRegister ( mxengine* midnightx )
 {
+    SAFEDELETE ( mx->gameover ) ;
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
     SAFEDELETE ( mx->battle ) ;
     
     // mx will delete the scenario, so just lose our
     // reference to it
-    lom_scenario = NULL ;
+    lom_scenario = nullptr ;
     return MX_OK ;
 }
 
@@ -128,7 +136,7 @@ mxentity* lom_x::CreateEntity ( id_type_t type )
 {
     switch ( type ) {
         case IDT_STRONGHOLD:
-            return (mxentity*) new lom_stronghold ;
+            return new lom_stronghold;
         default:
             break;
     }
@@ -139,12 +147,11 @@ mxentity* lom_x::CreateEntity ( id_type_t type )
 
 mxcharacter* lom_x::IceCrownCarrier( void ) const
 {
-    for ( int ii=0; ii<sv_characters; ii++ ) {
-        mxcharacter* character = mx->CharacterById(ii+1);
+    FOR_EACH_CHARACTER(character) {
         if ( character->IsAllowedIcecrown() && character->IsAlive() )
             return character ;
     }
-    return NULL ;
+    return nullptr ;
 }
 
 
@@ -152,23 +159,15 @@ mxcharacter* lom_x::IceCrownCarrier( void ) const
 //
 u32 lom_x::CalcFearAdjuster( mxlocinfo* locinfo ) const
 {
-
-mxcharacter*    morkin;
-mxcharacter*    luxor;
-mxplace*        TowerOfDoom;
-
     int adj_fear = 127;
 
-    TowerOfDoom = (mxplace*)mx->EntityByName( "PL_ICE_FEAR_CENTRE", IDT_PLACE );
-    if ( TowerOfDoom == NULL )
+    if ( towerofdoom == nullptr )
         return 0;
 
-    // get morkin
-    morkin = (mxcharacter*)mx->EntityByName("CH_MORKIN");
     if ( morkin->IsAlive() ) {
 
         // morkins distance from the tower of doom
-        adj_fear = morkin->DistanceFromLoc( TowerOfDoom->Location() );
+        adj_fear = morkin->DistanceFromLoc( towerofdoom->Location() );
 
         // is morkin at this location?
         // if so then this is the ice fear to use
@@ -181,7 +180,6 @@ mxplace*        TowerOfDoom;
 
     // work out how much influence luxor 
     // will have on this location
-    luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
     adj_fear += ( luxor->IsDead() ) ? 127 : luxor->DistanceFromLoc(locinfo->Location()) ;
 
     // work out how much affect doomdark
@@ -213,6 +211,15 @@ static int mountain_pass_adjustments[][3] = {
     { 57,58, TN_DOWNS  }, // Henge in the domain of Corlay (58,59)
 };
 
+
+void lom_x::initialise(u32 version)
+{
+    towerofdoom = static_cast<mxplace*>(mx->EntityByName( "PL_ICE_FEAR_CENTRE", IDT_PLACE ));
+    morkin = mx->CharacterBySymbol("CH_MORKIN");
+    
+    mxscenario::initialise(version);
+}
+
 void lom_x::initialiseAfterCreate(u32 version)
 {
     // FIX: Database has warriors and riders success the wrong way around
@@ -230,22 +237,24 @@ void lom_x::initialiseAfterCreate(u32 version)
     
     mxscenario::initialiseAfterCreate(version);
 }
+
+void lom_x::updateAfterLoad(u32 version)
+{
+    mxscenario::updateAfterLoad(version);
+}
+
     
 mxregiment* lom_x::FindEmptyRegiment()
 {
-    for (int ii = 0; ii < sv_regiments; ii++) {
-        mxregiment* r = mx->RegimentById(ii+1);
-        if ( r->Total() == 0 ) return r ;
+    FOR_EACH_REGIMENT(regiment) {
+        if ( regiment->Total() == 0 ) return regiment ;
     }
-    return NULL ;
+    return nullptr ;
 }
 
 void lom_x::NightStart(void)
 {
-    mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
     luxorAlive = luxor->IsAlive();
-    
-    mxcharacter* morkin = (mxcharacter*)mx->EntityByName("CH_MORKIN");
     morkinAlive = morkin->IsAlive();
 }
 
@@ -253,16 +262,13 @@ void lom_x::NightStart(void)
 void lom_x::NightStop(void)
 {
     
-    mxcharacter* luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
     if ( luxor->IsDead() ) {
-        mxcharacter* morkin = (mxcharacter*)mx->EntityByName("CH_MORKIN");
-        
         // if luxor is dead and the moonring has not been found
         // the morkin should be the current character
         // unless we were looking at luxor already
         mxcharacter* moonringcarrier = CurrentMoonringWearer();
-        if ( moonringcarrier==NULL ) {
-            if ( mx->CurrentChar()!=luxor ) {
+        if ( moonringcarrier==nullptr ) {
+            if ( mx->CurrentChar() != luxor ) {
                 mx->CurrentChar(morkin);
             }
         }
@@ -278,96 +284,7 @@ void lom_x::NightStop(void)
                 mx->CurrentChar(luxor);
         }
     }
-
-        
-        /*
-        mxplace* p=NULL ;
-        mxcharacter* c=NULL;
-        
-        // 1. Is the ice crown still active
-        //mxobject* icecrown = (mxobject*)mx->EntityByName("OB_ICECROWN");
-        //if ( icecrown == NULL )
-        //    return;
-        
-        // icecrown destroyed?
-        //if ( icecrown->IsDisabled() )
-        //    return ;
-        
-        mxregiment* r = FindEmptyRegiment();
-        if ( r == NULL )
-            return;
-        
-        c = IceCrownCarrier();
-        if ( c == NULL)
-            return;
-        
-        //c = WhoHasObject(icecrown) ;
-        // 2. is it being carried
-        
-        // respawn 1500 doomguard riders at ushgarak
-        p = (mxplace*)mx->EntityByName( "PL_CITADEL_USHGARAK", IDT_PLACE );
-        r->Location( p->Location() );
-        r->Total(1500) ;
-        r->Race(RA_DOOMGUARD);
-        r->Type(UT_RIDERS);
-        r->Success(4) ;
-        r->Orders(OD_ROUTE);
-        r->Target(p);
-        
-        // if the icecrown is being carried
-        // then we either target the carrier
-        // morkin, or luxor
-        
-        
-        int type = mxrandom(1,5);
-        
-        // ushgarak is not important if the icecrown is down
-        if ( c && type == 5 )
-            type = 1;
-        
-        // target the carrier
-        if ( type == 1 && c ) {
-            r->Target(c);
-            r->Orders(OD_FOLLOW);
-            return;
-        }
-        // ushgarak
-        if ( type == 5 ) {
-            p = (mxplace*)mx->EntityByName( "PL_CITADEL_USHGARAK", IDT_PLACE );
-            r->Target(p);
-            r->Orders(OD_GOTO);
-            return;
-        }
-        // xajorkith
-        if ( type == 2 ) {
-            p = (mxplace*)mx->EntityByName( "PL_CITADEL_XAJORKITH", IDT_PLACE );
-            r->Target(p);
-            r->Orders(OD_GOTO);
-            return;
-        }
-        
-        // luxor
-        if ( type == 3 ) {
-            c = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-            if ( c && c->IsAlive() ) {
-                r->Target(c);
-                r->Orders(OD_FOLLOW);
-                return;
-            }
-            type = 4 ;
-        }
-        
-        // morkin
-        if ( type == 4 ) {
-            c = (mxcharacter*)mx->EntityByName("CH_MORKIN");
-            if ( c && c->IsAlive() ) {
-                r->Target(c);
-                r->Orders(OD_FOLLOW);
-                return;
-            }
-        }
-        */
-    }
+}
     
     
     

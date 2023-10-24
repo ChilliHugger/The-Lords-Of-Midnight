@@ -283,14 +283,13 @@ namespace tme {
             // if they are not then the only person we are going to be able to see
             // are people who could potentially carry the moonring
             if ( mx->scenario->IsFeature(SF_MOONRING) ) {
-                moonring = (mxobject*)mx->EntityByName("OB_MOONRING"); 
+                moonring = DEF_SCENARIO(moonring);
                 //moonringcarrier = mx->scenario->WhoHasObject(moonring);
                 moonringcarrier = mx->scenario->CurrentMoonringWearer();
             }
 
             // work through all characters to find the already recruited characters
-            for (u32 ii = 0; ii < sv_characters; ii++) {
-                auto c = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(c) {
 
                 CONTINUE_IF_NULL(c);
 
@@ -315,8 +314,7 @@ namespace tme {
             }
 
             // now lets get the unrecruited characters
-            for (u32 ii = 0; ii < sv_characters; ii++) {
-                auto c = mx->CharacterById(ii+1);
+            FOR_EACH_CHARACTER(c) {
 
                 CONTINUE_IF_NULL(c);
                 
@@ -350,9 +348,9 @@ namespace tme {
             nArmies=0;
    
             // luxor is currently always the players friend
-            const mxcharacter* ch_friend = owner != nullptr
+            const auto ch_friend = owner != nullptr
                 ? owner
-                : (mxcharacter*)mx->EntityByName("CH_LUXOR") ;
+                : DEF_SCENARIO(luxor) ;
 
             FindCharactersHere();
 

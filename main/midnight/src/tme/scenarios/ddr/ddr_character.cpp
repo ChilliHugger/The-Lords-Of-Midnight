@@ -622,16 +622,11 @@ namespace tme {
         
         // group enter tunnel
         
-        if ( HasFollowers() ) {
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->Flags().Set(cf_tunnel);
-                follower->looking = Looking();
-                follower->Location(Location());
-            }
-        }
+        FOR_EACH_FOLLOWER(f) {
+            f->Flags().Set(cf_tunnel);
+            f->looking = Looking();
+            f->Location(Location());
+        });
         
         mx->scenario->SetMapArmies();
         
@@ -656,17 +651,11 @@ namespace tme {
         flags.Reset ( cf_tunnel );
         
         // group exit tunnel
-        
-        if ( HasFollowers() ) {
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->Flags().Reset(cf_tunnel);
-                follower->looking = Looking();
-                follower->Location( Location() );
-            }
-        }
+        FOR_EACH_FOLLOWER(f) {
+            f->Flags().Reset(cf_tunnel);
+            f->looking = Looking();
+            f->Location(Location());
+        });
         
         CommandTakesTime(TRUE);
         
@@ -739,16 +728,16 @@ namespace tme {
         //    return true;
         
         // Only Tarithel can recruit Morkin
-        if ( character->IsSymbol("CH_MORKIN") )
-            return IsSymbol("CH_TARITHEL");
+        if ( character == DDR_SCENARIO(morkin) )
+            return this == DDR_SCENARIO(tarithel);
         
-        else if ( character->IsSymbol("CH_TARITHEL"))
+        else if ( character == DDR_SCENARIO(tarithel) )
             return false;
-        else if ( character->IsSymbol("CH_RORTHRON"))
+        else if ( character == DDR_SCENARIO(rorthron) )
             return false;
-        else if ( character->IsSymbol("CH_LUXOR"))
+        else if ( character == DDR_SCENARIO(luxor) )
             return false;
-        else if ( character->IsSymbol("CH_SHARETH") )
+        else if ( character == DDR_SCENARIO(shareth) )
             return false ;
 
         u8 us_attribute_good = traits & 0xff ;
@@ -793,7 +782,7 @@ namespace tme {
     bool ddr_character::Recruited ( mxcharacter* recruiter )
     {
         // morkin in DDR is special
-        if ( IsSymbol("CH_MORKIN") ) {
+        if ( this == DDR_SCENARIO(morkin) ) {
             return RecruitMorkin(recruiter);
         }
       
@@ -834,17 +823,11 @@ namespace tme {
         
         time = sv_time_night;
         
-        if ( HasFollowers() ) {
-            // we need to do a merge
-            
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->EnterBattle();
-            }
-        }
+        
+        // we need to do a merge
+        FOR_EACH_FOLLOWER(f) {
+            f->EnterBattle();
+        });
         
         return MX_OK;
     }
@@ -885,8 +868,7 @@ namespace tme {
     
     void ddr_character::UseCrownOfPersuassion()
     {
-        for ( int ii=0; ii<sv_characters; ii++ ) {
-            auto c = mx->CharacterById(ii+1);
+        FOR_EACH_CHARACTER(c) {
             if ( c->IsAlive() && !c->IsAIControlled() ) {
                 c->Location(Location());
                 c->Flags().Reset( cf_tunnel );
@@ -901,15 +883,15 @@ namespace tme {
     
     void ddr_character::UseSpellOfSwiftness()
     {
+        auto ch_morkin = DDR_SCENARIO(morkin);
+    
         // take tarithel to morkin
         // set time of day
-        //
-        auto morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-        
-        Location(morkin->Location());
+        //        
+        Location(ch_morkin->Location());
         Flags().Reset( cf_tunnel );
         
-        if ( morkin->IsInTunnel() )
+        if ( ch_morkin->IsInTunnel() )
             Flags().Set( cf_tunnel );
         
         // Tarithel the fey casts the Spell of Thigor, Morkin is transported to be with her.
@@ -918,8 +900,7 @@ namespace tme {
     
     void ddr_character::UseRunesOfProtection()
     {
-        for ( int ii=0; ii<sv_characters; ii++ ) {
-            auto c = mx->CharacterById(ii+1);
+        FOR_EACH_CHARACTER(c) {
             if ( c->IsAlive() && !c->IsAIControlled() ) {
                 c->despondency=MAX_DESPONDENCY;
                 c->energy=MAX_ENERGY;
@@ -1082,8 +1063,8 @@ void ddr_character::whatIsCharacterDoing ( void )
     
     orders = new_orders ;
     
-    mxcharacter* ch_luxor = static_cast<mxcharacter*>(mx->EntityByName("CH_LUXOR"));
-    
+    auto ch_luxor = DDR_SCENARIO(luxor);
+
     switch ( orders )
     {
         case OD_FOLLOW_LIEGE:
@@ -1148,8 +1129,8 @@ void ddr_character::whatIsCharacterDoing ( void )
             // object is carried, so start heading home
             
         case OD_HOME:
-            if ( this == mx->EntityByName("CH_SHARETH")) {
-                Target( static_cast<mxitem*>(mx->EntityByName("SH_CITY_GLIREON")) );
+            if ( this == DDR_SCENARIO(shareth) ) {
+                Target( DDR_SCENARIO(cityofglireon) );
             }else{
                 Target(home_stronghold);
             }
@@ -1473,16 +1454,10 @@ mxcharacter* ddr_character::Cmd_Approach ( mxcharacter* character )
         : nullptr;
     
     // if we can't recruit, can any of my followers?
-    if ( will_perform_recruit == nullptr && HasFollowers() ) {
-        entities followers;
-        mx->scenario->GetCharacterFollowers(this, followers);
-        for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-            auto follower = static_cast<mxcharacter*>(followers[ii]);
-            if ( follower->CheckRecruitChar( character ) ) {
-                will_perform_recruit = follower ;
-                break;
-            }
-        }
+    if ( will_perform_recruit == nullptr ) {
+        will_perform_recruit = FIND_FOLLOWER(f) {
+            return f->CheckRecruitChar( character );
+        });
     }
     
     // 1. move all characters into new location

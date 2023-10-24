@@ -19,6 +19,7 @@
 #include "lomxtypes.h"
 #include "../scenarios/default/default_scenario.h"
 #include "../scenarios/default/default_scenario_internal.h"
+#include "../baseinc/mxgameover.h"
 
 namespace tme {
     MXINLINE archive& operator<<( archive& ar, std::string& s )  { return StringExtensions::SerializeString(ar, s); }

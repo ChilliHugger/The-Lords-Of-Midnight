@@ -13,6 +13,7 @@
 namespace tme {
 namespace utils {
 
+#if defined(_DDR_)
     enum OLD_DDR_CHARACTERFLAGS {
         cf_resting          = MXBIT(14),    // currently resting
         cf_inbattle         = MXBIT(15),    // currently in battle
@@ -28,6 +29,11 @@ namespace utils {
     };
 
     flags32 UpdateDDRCharacterFlags(flags32 flags);
+    void FixMorkinFromBeingAIAfterRecruited();
+#endif
+    
+    void UpdateStrongholdsOnMap();
+
 }
 }
 

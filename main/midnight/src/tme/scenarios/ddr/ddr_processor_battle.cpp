@@ -33,49 +33,11 @@ namespace tme {
     {
     }
 
-    
-    void ddr_battle::Test(void)
-    {
-        mxcharacter* ch_torinarg = (mxcharacter*)mx->EntityByName("CH_TORINARG");
-        mxcharacter* ch_luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
-        
-        ch_luxor->Location( ch_torinarg->Location() );
-        
-        mxcharacter* ch = NULL;
-
-        ch = (mxcharacter*)mx->EntityByName("CH_RORTHRON");
-        ch->Location(ch_luxor->Location());
-
-        
-        ch = (mxcharacter*)mx->EntityByName("CH_THORTHAND");
-        ch->Location(ch_luxor->Location());
-        ch->Recruited(ch_luxor);
-        
-        ch = (mxcharacter*)mx->EntityByName("CH_LORANGRIEL");
-        ch->Location(ch_luxor->Location());
-        ch->Recruited(ch_luxor);
-        
-        
-        ch = (mxcharacter*)mx->EntityByName("CH_IMGORARG");
-        ch->Location(ch_luxor->Location());
-        ch = (mxcharacter*)mx->EntityByName("CH_GLORMARG");
-        ch->Location(ch_luxor->Location());
-
-        Battle(ch_luxor);
-        
-        ch_luxor->Flags().Reset(cf_inbattle);
-        Battle(ch_luxor);
-        
-        
-    }
-    
-    
     void ddr_battle::War( void )
     {
         // fights
-        for ( int ii=0; ii<sv_characters; ii++ ) {
-            ddr_character* character = static_cast<ddr_character*>(mx->CharacterById(ii+1));
-            Battle(character);
+        FOR_EACH_CHARACTER(character) {
+            Battle(static_cast<ddr_character*>(character));
         }
     }
     
@@ -91,14 +53,10 @@ namespace tme {
      e2 vs f2
      e3 vs f1
      f2 vs e1
-     
-     
      */
-    
     
     void ddr_battle::Battle ( mxcharacter* character )
     {
-        
         if ( character->IsInBattle() )
             return;
         
@@ -122,15 +80,14 @@ namespace tme {
         
         characters_here.Clear();
         
-        for ( u32 ii=0; ii<sv_characters; ii++ ) {
-            mxcharacter* c = mx->CharacterById(ii+1);
-            
+        FOR_EACH_CHARACTER(c)
+        {
             CONTINUE_IF(c->IsDead());
-            
+
             CONTINUE_IF(c->IsInTunnel());
-            
+
             CONTINUE_IF(c->Location() != character->Location());
-            
+
             characters_here.Add(c);
             if ( !character->IsFriend(c) )
                 enemies++;
@@ -493,7 +450,42 @@ namespace tme {
         return strength;
         
     }
-    
+
+    void ddr_battle::Test(void)
+    {
+#if defined(_TEST_BATTLE_)
+        mxcharacter* ch_torinarg = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_TORINARG"));
+        mxcharacter* ch_luxor = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_LUXOR"));
+        
+        ch_luxor->Location( ch_torinarg->Location() );
+        
+        mxcharacter* ch = NULL;
+
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_RORTHRON"));
+        ch->Location(ch_luxor->Location());
+
+        
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_THORTHAND"));
+        ch->Location(ch_luxor->Location());
+        ch->Recruited(ch_luxor);
+        
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_LORANGRIEL"));
+        ch->Location(ch_luxor->Location());
+        ch->Recruited(ch_luxor);
+        
+        
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_IMGORARG"));
+        ch->Location(ch_luxor->Location());
+        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_GLORMARG"));
+        ch->Location(ch_luxor->Location());
+
+        Battle(ch_luxor);
+        
+        ch_luxor->Flags().Reset(cf_inbattle);
+        Battle(ch_luxor);
+#endif
+    }
+
 }
 // namespace tme
 

@@ -7,6 +7,7 @@
 
 #include "tme_steps.h"
 
+
 void TMEStep::NewStory()
 {
     TME_DeInit();
@@ -55,6 +56,12 @@ void TMEStep::LordCarryingObject(LPCSTR name, mxthing_t thing)
 {
     auto lord = GetCharacter(name);
     lord->carrying = tme::mx->ObjectById(thing);
+ }
+
+void TMEStep::LordCarryingObject(LPCSTR name, LPCSTR object)
+{
+    auto lord = GetCharacter(name);
+    lord->carrying = GetObject(object);
  }
 
 void TMEStep::LordAtLocation(LPCSTR name, LPCSTR location)
@@ -123,3 +130,16 @@ void TMEStep::LordMovesForward(LPCSTR name)
     auto lord1 = GetCharacter(name);
     lord1->Cmd_MoveForward();
 }
+
+void TMEStep::LordIsDead(LPCSTR name)
+{
+    GetCharacter(name)->Cmd_Dead();
+}
+
+void TMEStep::LordKilledByObject(LPCSTR name, LPCSTR killedby)
+{
+    auto lord = GetCharacter(name);
+    lord->Cmd_Dead();
+    lord->killedbyobject = GetObject(killedby);
+}
+

@@ -15,6 +15,8 @@
  */
 
 #include "../baseinc/tme_internal.h"
+#include "../base/collections.h"
+#include "../utils/savegamemapping.h"
 #include "cocos2d.h"
 #include <stdio.h>
 
@@ -288,8 +290,6 @@ MXTRACE( "Version=%d", (int)savegameversion);
         return MX_INCORRECT_VERSION ;
     }
 
-    
-    
     ar >> header ;
 MXTRACE( "Header='%s'", header.c_str());
     
@@ -298,21 +298,21 @@ MXTRACE( "Header='%s'", header.c_str());
         return MX_UNKNOWN_FILE;
     }
 
-    ar >> sv_characters ;    objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
+    ar >> sv_characters ;   objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
     ar >> sv_regiments ;    objRegiments.Create(scenario,IDT_REGIMENT,sv_regiments);
-    ar >> sv_routenodes ;    objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
-    ar >> sv_strongholds ;    objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
-    ar >> sv_places ;        objPlaces.Create(scenario,IDT_PLACE,sv_places);
-    ar >> sv_objects ;        objObjects.Create(scenario,IDT_OBJECT,sv_objects);
-    ar >> sv_missions ;        objMissions.Create(scenario,IDT_MISSION,sv_missions);
+    ar >> sv_routenodes ;   objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
+    ar >> sv_strongholds ;  objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
+    ar >> sv_places ;       objPlaces.Create(scenario,IDT_PLACE,sv_places);
+    ar >> sv_objects ;      objObjects.Create(scenario,IDT_OBJECT,sv_objects);
+    ar >> sv_missions ;     objMissions.Create(scenario,IDT_MISSION,sv_missions);
     ar >> sv_victories ;    objVictories.Create(scenario,IDT_VICTORY,sv_victories);
-    ar >> sv_directions ;    objDirectionInfos.Create(scenario,IDT_DIRECTIONINFO,sv_directions);
+    ar >> sv_directions ;   objDirectionInfos.Create(scenario,IDT_DIRECTIONINFO,sv_directions);
     ar >> sv_units ;        objUnitInfos.Create(scenario,IDT_UNITINFO,sv_units);
     ar >> sv_races ;        objRaceInfos.Create(scenario,IDT_RACEINFO,sv_races);
-    ar >> sv_genders ;        objGenderInfos.Create(scenario,IDT_GENDERINFO,sv_genders);
-    ar >> sv_terrains ;        objTerrainInfos.Create(scenario,IDT_TERRAININFO,sv_terrains);
+    ar >> sv_genders ;      objGenderInfos.Create(scenario,IDT_GENDERINFO,sv_genders);
+    ar >> sv_terrains ;     objTerrainInfos.Create(scenario,IDT_TERRAININFO,sv_terrains);
     ar >> sv_areas ;        objAreaInfos.Create(scenario,IDT_AREAINFO,sv_areas);
-    ar >> sv_commands ;        objCommandInfos.Create(scenario,IDT_COMMANDINFO,sv_commands);
+    ar >> sv_commands ;     objCommandInfos.Create(scenario,IDT_COMMANDINFO,sv_commands);
     ar >> sv_variables ;    variables = new cvarreg_t[sv_variables];
 
 MXTRACE( "Characters =%d", (int)sv_characters);
@@ -435,7 +435,8 @@ MXTRACE( "Init Variables");
     m_difficulty = difficulty ;
     setRules(rules);
 
-    scenario->initialiseAfterCreate(m_versionno);
+    scenario->initialise(SaveGameVersion());
+    scenario->initialiseAfterCreate(SaveGameVersion());
     
     CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0])) ;
    
@@ -648,11 +649,7 @@ std::string  description;
     if ( scenarioid != scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
 
-    ar >> m_versionno ;
-    //if ( m_versionno != SAVEGAMEVERSION )
-    //    return MX_INCORRECT_VERSION;
-
-    savegameversion = m_versionno ;
+    ar >> savegameversion ;
 
     ar >> header ;
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
@@ -704,20 +701,10 @@ std::string  description;
     objVictories.Serialize(ar);
     objObjects.Serialize(ar);
 
-    /* update map */
-    if ( SaveGameVersion() <= 7 ) {
-     for (int ii = 0; ii < sv_strongholds; ii++) {
-         mxstronghold* stronghold=StrongholdById(ii+1);
-         mxloc& mapsqr = gamemap->GetAt ( stronghold->Location() );
-         if ( mapsqr.IsVisible() )
-             mapsqr.flags |= lf_visited|lf_looked_at ;
-
-     }
-    }
-
     /* Load Character memories */
-    for ( int ii=0; ii<sv_characters; ii++ )
-        CharacterById(ii+1)->memory.Serialize ( ar );
+    FOR_EACH_CHARACTER(character) {
+        character->memory.Serialize ( ar );
+    }
 
     /* Load scenario specific */
     scenario->Serialize ( ar );
@@ -733,25 +720,8 @@ std::string  description;
 
     mx->CurrentChar ( m_CurrentCharacter );
 
-#if defined(_DDR_)
-    if ( SaveGameVersion() >= 11 ) {
-        // fix save games
-        mxcharacter* morkin = static_cast<mxcharacter*>(mx->EntityByName("CH_MORKIN"));
-        morkin->race = RA_MORKIN;
-
-        if ( !morkin->IsRecruited() )
-            morkin->Flags().Set(cf_ai);
-
-        // fix for morkin being AI character
-        // after being recruited
-        if ( morkin->IsRecruited() && morkin->IsAIControlled() ) {
-            morkin->Flags().Reset(cf_ai);
-            if ( morkin->IsInTunnel() )
-                morkin->looking=DR_NORTH;
-        }
-
-    }
-#endif
+    scenario->initialise(SaveGameVersion());
+    scenario->updateAfterLoad(SaveGameVersion());
 
     return MX_OK ;
 }
@@ -770,9 +740,9 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     // serialize is for save game
     m_savegame = TRUE ;
     
-    u32        magicno;
-    u32        scenarioid;
-    std::string    header;
+    u32         magicno;
+    u32         scenarioid;
+    std::string header;
     
     // magic no
     ar >> magicno;
@@ -789,10 +759,8 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     if ( scenarioid != scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
     
-    ar >> m_versionno ;
-    
-    savegameversion = m_versionno ;
-    
+    ar >> savegameversion ;
+     
     ar >> header ;
     if ( strcmp( header.c_str(), SAVEGAMEHEADER ) != 0 )
         return MX_UNKNOWN_FILE;
@@ -873,10 +841,9 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     int lords=0;
     char buffer[1024];
     
-    for ( int ii=0; ii<sv_characters; ii++ ) {
-        mxcharacter* c = CharacterById(ii+1);
+    FOR_EACH_CHARACTER(c) {
         if ( scenario->CanWeSelectCharacter(c))
-        if ( c->IsRecruited() &&  c->IsAlive() )
+        if ( c->IsRecruited() && c->IsAlive() )
             lords++;
     }
     
@@ -923,24 +890,22 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     objObjects.Serialize(ar);
 
     /* Save Character memories */
-    for ( int ii=0; ii<sv_characters; ii++ )
-        CharacterById(ii+1)->memory.Serialize ( ar );
+    FOR_EACH_CHARACTER(c) {
+        c->memory.Serialize ( ar );
+    }
 
     /* save scenario specific */
     scenario->Serialize ( ar );
 
-    
     /* save frontend specific */
     if ( function != NULL )
         function(SAVEGAMEVERSION,ar);
     
- 
     ar.Close();
 
     SAFEDELETE ( pFile );
 
     return MX_OK ;
-
 }
 
 
@@ -959,18 +924,13 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
  * 
  */
 
-u32 mxengine::CollectRegiments ( mxgridref loc, tme::collections::entities& collection )
+u32 mxengine::CollectRegiments ( mxgridref loc, c_regiment& collection )
 {
-int ii;
-    //int count=0;
-
     collection.Create(MAX_REGIMENTS_INLOCATION);
 
-    // count
-    for (ii = 0; ii < sv_regiments; ii++) {
-        mxregiment* pReg = RegimentById(ii+1);
-        if ( pReg && pReg->Total() && pReg->Location() == loc )
-            collection.Add(pReg) ;
+    FOR_EACH_REGIMENT(regiment) {
+        if ( regiment && regiment->Total() && regiment->Location() == loc )
+            collection.Add(regiment) ;
     }
 
     return collection.Compact();
@@ -989,11 +949,8 @@ int ii;
  * 
  */
 
-u32 mxengine::CollectStrongholds ( mxgridref loc, tme::collections::entities& collection ) 
+u32 mxengine::CollectStrongholds ( mxgridref loc, c_stronghold& collection )
 {
-int ii;
-//int count=0;
-
     collection.Clear();
 
     mxloc& mapsqr = gamemap->GetAt ( loc );
@@ -1004,8 +961,7 @@ int ii;
     collection.Create(MAX_STRONGHOLDS_INLOCATION);
 
     // count
-    for (ii = 0; ii < sv_strongholds; ii++) {
-        mxstronghold* stronghold = mx->StrongholdById(ii+1);
+    FOR_EACH_STRONGHOLD(stronghold) {
         if ( stronghold && stronghold->Location() == loc ) {
             collection.Add(stronghold);
         }
@@ -1015,11 +971,8 @@ int ii;
 }
 
 
-u32 mxengine::CollectRoutenodes ( mxgridref loc, tme::collections::entities& collection ) 
+u32 mxengine::CollectRoutenodes ( mxgridref loc, c_routenode& collection ) 
 {
-int ii;
-//int count=0;
-
     collection.Clear();
 
     mxloc& mapsqr = gamemap->GetAt ( loc );
@@ -1029,11 +982,9 @@ int ii;
 
     collection.Create(MAX_ROUTENODES_INLOCATION);
 
-
-    for (ii = 0; ii < sv_routenodes; ii++) {
-        mxroutenode* pNode = mx->RouteNodeById(ii+1);
-        if ( pNode && pNode->Location() == loc ) {
-            collection.Add(pNode);
+    FOR_EACH_ROUTENODE(routenode) {
+        if ( routenode && routenode->Location() == loc ) {
+            collection.Add(routenode);
         }
     }
 

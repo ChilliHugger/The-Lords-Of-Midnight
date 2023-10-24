@@ -28,7 +28,6 @@
 
 namespace tme {
 
-
         mxcharacter::mxcharacter() 
         {
             mxentity::type = IDT_CHARACTER ;
@@ -127,12 +126,7 @@ namespace tme {
         void mxcharacter::ForEachFollower(const std::function<void(mxcharacter*)> &callback)
         {
             if (!HasFollowers()) return;
-            
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                auto follower = static_cast<mxcharacter*>(followers[ii]);
+            for ( auto follower : mx->scenario->GetCharacterFollowers(this) ) {
                 callback(follower);
             }
         }
@@ -140,17 +134,11 @@ namespace tme {
         mxcharacter* mxcharacter::FindFollower(const std::function<bool(mxcharacter*)> &callback)
         {
             if (!HasFollowers()) return nullptr;
-            
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                auto follower = static_cast<mxcharacter*>(followers[ii]);
+            for ( auto follower : mx->scenario->GetCharacterFollowers(this) ) {
                 if (callback(follower)) {
                     return follower;
                 }
             }
-            
             return nullptr;
         }
 
@@ -351,33 +339,17 @@ namespace tme {
 
                 // if we have followers then all my followers
                 // must have courage
-                if ( HasFollowers() ) {
-                    entities followers;
-                    mx->scenario->GetCharacterFollowers(this, followers);
-                    for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                        mxcharacter* follower = (mxcharacter*) followers[ii];
-                        if ( follower->IsCoward() ) {
-                            info->stubborn_follower_battle=follower;
-                            break;
-                        }
-                    }
-                }
+                info->stubborn_follower_battle = FIND_FOLLOWER(f) {
+                    return f->IsCoward();
+                });
                 
             }
 
             // if we are leading
             // then the whole group needs to be able to move
-            if ( HasFollowers() ) {
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
-                    if ( !follower->CanWalkForward() ) {
-                        info->stubborn_follower_move=follower ;
-                        break;
-                    }
-                }
-            }
+            info->stubborn_follower_move = FIND_FOLLOWER(f) {
+                return !f->CanWalkForward();
+            });
             
             return info ;
 
@@ -494,20 +466,13 @@ namespace tme {
             
             if ( !CanWalkForward() )
                 return MX_FAILED ;
-            
+
             // if we are leading
             // then the whole group needs to be able to move
-            if ( HasFollowers() ) {
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
-                    if ( !follower->CanWalkForward() )
-                        return MX_FAILED ;
-                }
-            }
-            
-            
+            auto cantWalkForward = FIND_FOLLOWER(f) { return !f->CanWalkForward(); });
+            if ( cantWalkForward != nullptr )
+                return MX_FAILED;
+                        
             // find where we will be moving to
             info.reset(GetLocInfo());
             
@@ -664,17 +629,12 @@ namespace tme {
         {
             // if we are leading
             // then the whole group needs to be able to move
-            if ( HasFollowers() ) {
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    auto follower = static_cast<mxcharacter*>(followers[ii]);
-                    // must look the same direction to make them move in the
-                    // correct direction
-                    follower->looking = Looking();
-                    follower->Cmd_WalkForward();
-                }
-            }
+            FOR_EACH_FOLLOWER(f) {
+                // must look the same direction to make them move in the
+                // correct direction
+                f->looking = Looking();
+                f->Cmd_WalkForward();
+            });
         }
 
         void mxcharacter::DecreaseEnergy ( s32 amount )
@@ -764,13 +724,10 @@ namespace tme {
 
             flags.Set(cf_resting);
             
-           entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                follower->Cmd_Rest();
-            }
-
+            FOR_EACH_FOLLOWER(f) {
+                f->Cmd_Rest();
+            });
+            
             CommandTakesTime(TRUE);
 
             return MX_OK ;
@@ -1075,21 +1032,11 @@ namespace tme {
             if ( !CanFollow(c) )
                 return MX_FAILED ;
             
-            //following = (mxcharacter*)c ;
-
-            if ( HasFollowers() ) {
-                // we need to do a merge
- 
-                entities followers;
-                mx->scenario->GetCharacterFollowers(this, followers);
-                
-                for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                    mxcharacter* follower = (mxcharacter*) followers[ii];
-                    RemoveFollower(follower);
-                    c->AddFollower(follower);
-                }
-                
-            }
+            // we need to do a merge
+            FOR_EACH_FOLLOWER(f) {
+                RemoveFollower(f);
+                c->AddFollower(f);
+            });
             
             c->AddFollower( this );
             
@@ -1097,7 +1044,6 @@ namespace tme {
             
             return MX_OK ;
         }
-    
     
         MXRESULT mxcharacter::Cmd_UnFollow ( mxcharacter* c )
         {
@@ -1137,18 +1083,14 @@ namespace tme {
             return TRUE;
         }
     
-    
         MXRESULT mxcharacter::Cmd_DisbandGroup ( void )
         {
             if ( !HasFollowers() )
                 return MX_FAILED;
             
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
+            FOR_EACH_FOLLOWER(follower) {
                 RemoveFollower(follower);
-            }
+            });
             
             CommandTakesTime(TRUE);
             
@@ -1160,28 +1102,22 @@ namespace tme {
             if ( !HasFollowers() )
                 return MX_FAILED;
             
-            entities followers;
-            mx->scenario->GetCharacterFollowers(this, followers);
+            auto followers = mx->scenario->GetCharacterFollowers(this);
             
             // remove them all first
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-                RemoveFollower(follower);
+            for ( auto f : followers ) {
+                RemoveFollower(f);
             }
             
             // then add them back in the same order
             // with the old leader taking the same slot as the new leader
-            for ( u32 ii=0; ii<followers.Count(); ii++ ) {
-                
-                mxcharacter* follower = (mxcharacter*) followers[ii];
-               
-                if ( character == follower ) {
+            for ( auto f : followers ) {
+                if ( character == f ) {
                     // I join the group
                     character->AddFollower(this);
                 }else{
-                    character->AddFollower(follower);
+                    character->AddFollower(f);
                 }
-                
             }
             
             CommandTakesTime(TRUE);
@@ -1543,26 +1479,21 @@ namespace tme {
 
         void mxcharacter::CanSeeLocation ( mxgridref loc )
         {
-        mxstronghold*    stronghold;
-        collections::entities    objects;
-        int count;
-
             mxloc& mapsqr = mx->gamemap->GetAt( loc );
-
-            count=0;
 
             mx->scenario->ClearFromMemory(loc);
 
             if ( mapsqr.HasArmy() ) {
                 
-                if ( (count = mx->CollectRegiments ( loc, objects )) )
-                    memory.Memorise ( (mxregiment*)objects[0], RA_DOOMGUARD );
+                c_regiment regiments;
+                if ( mx->CollectRegiments ( loc, regiments ) )
+                    memory.Memorise ( regiments.First(), RA_DOOMGUARD );
 
 
                 if ( mapsqr.IsStronghold() ) {
-                    mx->CollectStrongholds ( loc, objects );
-                    if ( objects.Count() ) {
-                        stronghold = (mxstronghold*)objects[0];
+                    c_stronghold strongholds;
+                    if ( mx->CollectStrongholds ( loc, strongholds ) ) {
+                        auto stronghold = strongholds.First();
                         if ( stronghold->OccupyingRace() == RA_DOOMGUARD )
                             memory.Memorise ( stronghold, RA_DOOMGUARD );
                         else 
@@ -1690,8 +1621,5 @@ namespace tme {
 
             return mxitem::FillExportData ( data );
         }
-
-
-
 }
 // namespace tme

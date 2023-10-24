@@ -19,8 +19,6 @@ using namespace chilli::types;
 //#define _DEFINE_ENUMS_
 //#endif 
 
-//#define _TEST_WINLOSE_CONDITIONS_
-
 // enum control
 #define DECLARE_ENUM(x)        namespace x { enum x##_t
 #define END_ENUM(x)            }; }

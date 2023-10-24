@@ -18,11 +18,13 @@
 
 #if defined(_DDR_)
 
+#include "../../utils/savegamemapping.h"
 #include "scenario_ddr.h"
 #include "scenario_ddr_internal.h"
 #include "ddr_processor_text.h"
 #include "ddr_processor_night.h"
 #include "ddr_processor_battle.h"
+#include "ddr_gameover.h"
 
 using namespace chilli::lib::StringExtensions;
 
@@ -68,7 +70,12 @@ variant args;
 //
 
 
-ddr_x::ddr_x()
+ddr_x::ddr_x() :
+    morkin(nullptr),
+    tarithel(nullptr),
+    rorthron(nullptr),
+    shareth(nullptr),
+    cityofglireon(nullptr)
 {
 }
 
@@ -81,8 +88,7 @@ scenarioinfo_t* ddr_x::GetInfoBlock() const
     return &ddr_scenario_info ;
 }
 
-    
-    
+
 MXRESULT ddr_x::Register ( mxengine* midnightx )
 {
     // mx = midnightx ;
@@ -90,6 +96,7 @@ MXRESULT ddr_x::Register ( mxengine* midnightx )
     mx->text = new ddr_text;
     mx->night = new ddr_night;
     mx->battle = new ddr_battle;
+    mx->gameover = new ddr_gameover;
     mx->scenario = (mxscenario*)ddr_scenario;
     
     // set initial feature flags
@@ -100,20 +107,37 @@ MXRESULT ddr_x::Register ( mxengine* midnightx )
 
 MXRESULT ddr_x::UnRegister ( mxengine* midnightx )
 {
+    SAFEDELETE ( mx->gameover );
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
     SAFEDELETE ( mx->battle ) ;
     
     // mx will delete the scenario, so just lose our
     // reference to it
-    ddr_scenario = NULL ;
+    ddr_scenario = nullptr ;
     return MX_OK ;
 }
+
+void ddr_x::initialise( u32 version )
+{
+    morkin = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_MORKIN"));
+    tarithel = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_TARITHEL"));
+    rorthron = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_RORTHRON"));
+    shareth = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_SHARETH"));
     
+    cityofglireon = static_cast<mxplace*>(mx->EntityByName("SH_CITY_GLIREON", IDT_PLACE));
+    
+    crownofvarenand = static_cast<ddr_object*>(mx->EntityByName("OB_CROWN_VARENAND", IDT_OBJECT));
+    crownofcarudrium = static_cast<ddr_object*>(mx->EntityByName("OB_CROWN_CARUDRIUM", IDT_OBJECT));
+    spellofthigrorn = static_cast<ddr_object*>(mx->EntityByName("OB_SPELL_THIGRORN", IDT_OBJECT));
+    runesoffinorn = static_cast<ddr_object*>(mx->EntityByName("OB_RUNES_FINORN", IDT_OBJECT));
+    crownofimiriel = static_cast<ddr_object*>(mx->EntityByName("OB_CROWN_IMIRIEL", IDT_OBJECT));
+    
+    mxscenario::initialise(version);
+}
     
 void ddr_x::initialiseAfterCreate( u32 version )
 {
-    
     //sv_riders_max_energy=255;
     //sv_warriors_max_energy=255;
     sv_stronghold_default_max=1250;
@@ -127,21 +151,20 @@ void ddr_x::initialiseAfterCreate( u32 version )
 MXTRACE("Place Objects On Map");
     PlaceObjectsOnMap();
     
-    for (int ii = 0; ii < sv_characters; ii++) {
-        auto c = static_cast<ddr_character*>(mx->CharacterById(ii+1));
+    FOR_EACH_CHARACTER(character) {
+        auto c = static_cast<ddr_character*>(character);
         c->lastlocation=c->Location();
     }
     
-    for ( int ii=0; ii < sv_strongholds; ii++ ) {
-        auto s = static_cast<mxstronghold*>(mx->StrongholdById(ii+1));
-        s->MaxTroops(sv_stronghold_default_max);
-        s->MinTroops(sv_stronghold_default_min);
+    FOR_EACH_STRONGHOLD(stronghold) {
+        stronghold->MaxTroops(sv_stronghold_default_max);
+        stronghold->MinTroops(sv_stronghold_default_min);
     }
     
     // Obigorn the giant starts with Riders and not Warriors
     // this needs a data fix too
     // https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/135
-    auto obigrorn = static_cast<ddr_character*>(mx->EntityByName("CH_OBIGRORN"));
+    auto obigrorn = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_OBIGRORN"));
     if(obigrorn!=nullptr){
         obigrorn->Flags().Reset(cf_allowedriders);
         obigrorn->Flags().Set(cf_allowedwarriors);
@@ -157,6 +180,15 @@ MXTRACE("Place Objects On Map");
     
     mxscenario::initialiseAfterCreate(version);
 
+}
+
+void ddr_x::updateAfterLoad ( u32 version )
+{
+    if ( version >= 11 ) {
+        utils::FixMorkinFromBeingAIAfterRecruited();
+    }
+
+    mxscenario::updateAfterLoad(version);
 }
     
 mxentity* ddr_x::CreateEntity ( id_type_t type )
@@ -231,13 +263,11 @@ mxobject* ddr_x::PickupObject ( mxgridref loc )
     
 void ddr_x::PlaceObjectsOnMap ( void )
 {
-    ddr_object* object;
     mxgridref loc;
     
-    auto luxor = (mxcharacter*)mx->EntityByName("CH_LUXOR");
     
-    for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
+    FOR_EACH_OBJECT(o) {
+        auto object = static_cast<ddr_object*>(o);
         if ( object->IsUnique() && object->IsRandomStart() ) {
             bool found=false;
             while ( !found ) {
@@ -258,11 +288,9 @@ mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
     if ( !mx->gamemap->HasObject(loc) )
         return nullptr;
     
-    ddr_object* object;
-    for ( int ii=0; ii<sv_objects; ii++ ) {
-        object = static_cast<ddr_object*>(mx->ObjectById(ii+1));
-        if ( object->IsCarried() )
-            continue;
+    FOR_EACH_OBJECT(o) {
+        auto object = static_cast<ddr_object*>(o);
+        CONTINUE_IF ( object->IsCarried() );
         if ( object->Location() == loc )
             return object;
     }
@@ -272,14 +300,12 @@ mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
 mxstronghold* ddr_x::StrongholdFromLocation ( mxgridref loc )
 {
     mxloc& mapsqr = mx->gamemap->GetAt ( loc );
-    if ( !(mapsqr.flags&lf_stronghold) )
-        return nullptr;
     
-    mxstronghold* stronghold;
-    for ( int ii=0; ii<sv_strongholds; ii++ ) {
-        stronghold = mx->StrongholdById(ii+1);
-        if ( stronghold->Location() == loc )
-            return stronghold;
+    if ( mapsqr.flags&lf_stronghold ) {
+        FOR_EACH_STRONGHOLD(stronghold) {
+            if ( stronghold->Location() == loc )
+                return stronghold;
+        }
     }
     return nullptr;
 }
@@ -297,14 +323,9 @@ std::string buffer = mx->LastActionMsg();
 
     RETURN_IF_NULL(character);
 
-    //bool mikeseek = (hint == 1);
-  
     int id = mxrandom(1,sv_characters-1);
     
-    mxcharacter* c = mx->CharacterById(id);
-
-    //if ( mikeseek )
-    //    c = (mxcharacter*)mx->EntityByName("CH_MIDWINTER");
+    auto c = mx->CharacterById(id);
 
     RETURN_IF_NULL(c);
    
@@ -315,13 +336,13 @@ std::string buffer = mx->LastActionMsg();
     
     } else {
         
-        ddr_character* ddr = static_cast<ddr_character*>(character);
-        mxobject* o = ddr->desired_object ;
+        auto ddr = static_cast<ddr_character*>(character);
+        auto o = ddr->desired_object ;
  
         std::string guidance = mx->text->SystemString(SS_GUIDANCE2);
  
         if ( (character->Carrying() == o) || o==nullptr ) {
-            c = (mxcharacter*)mx->EntityByName("CH_SHARETH");
+            c = shareth;
             
             std::string seek = mx->text->SystemString(SS_SEEK_MSG1);
  
