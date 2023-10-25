@@ -1459,25 +1459,21 @@ namespace tme {
             
         void mxcharacter::StartDawn ( void )
         {
+            if (IsDead()) {
+                return;
+            }
+        
             IncreaseEnergy( Time()/2 );
 
             time = sv_time_dawn; 
-            flags.Reset ( cf_resting );
 
-            if ( !IsDead() ) {
-#if defined(_DDR_)
-                flags.Reset ( cf_inbattle|cf_wonbattle|cf_preparesbattle);
-#endif
-#if defined(_LOM_)
-                flags.Reset ( cf_inbattle|cf_wonbattle );
-#endif
-                battleloc= mxgridref(-1,-1);
-                battleslew = 0;
-                riders.lost = 0;
-                riders.slew = 0;
-                warriors.lost = 0;
-                warriors.slew = 0;
-            }
+            flags.Reset ( cf_resting|cf_inbattle|cf_wonbattle|cf_battleover );
+            battleloc= mxgridref(-1,-1);
+            battleslew = 0;
+            riders.lost = 0;
+            riders.slew = 0;
+            warriors.lost = 0;
+            warriors.slew = 0;
 
             // reset the waiting mode
             if ( WaitMode() == WM_OVERNIGHT )

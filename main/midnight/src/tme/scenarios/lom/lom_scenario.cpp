@@ -21,6 +21,8 @@
 #include "lom_gameover.h"
 #include <string>
 
+#if defined(_LOM_)
+
 namespace tme {
 
 //    namespace scenarios {
@@ -295,7 +297,7 @@ void lom_x::NightStop(void)
 }
 // namespace tme
 
-
+#endif // _LOM_
 
 
 

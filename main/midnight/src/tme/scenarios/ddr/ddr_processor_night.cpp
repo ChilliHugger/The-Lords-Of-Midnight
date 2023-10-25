@@ -58,7 +58,7 @@ namespace tme {
             }
             
             
-            static_cast<ddr_battle*>(mx->battle)->War();
+            static_cast<ddr_battle*>(mx->battle)->Process();
             
             // put critters on the map
             mx->gamemap->PutThingsOnMap();
