@@ -39,7 +39,7 @@ namespace tme {
         void ddr_night::Process( void )
         {
             mx->scenario->NightStart();
-            mx->battle->ResetBattlesFought();
+            mx->battle->Reset();
             mx->scenario->RemoveMapArmies();
             
             RemoveMidwinterFromMap();
@@ -58,7 +58,7 @@ namespace tme {
             }
             
             
-            static_cast<ddr_battle*>(mx->battle)->War();
+            static_cast<ddr_battle*>(mx->battle)->Process();
             
             // put critters on the map
             mx->gamemap->PutThingsOnMap();

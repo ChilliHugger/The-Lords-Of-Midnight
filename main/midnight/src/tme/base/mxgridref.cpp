@@ -162,6 +162,11 @@ namespace tme {
         return (loc.x==x) && (loc.y==y) ;
     }
 
+    bool mxgridref::operator == ( const mxgridref& loc ) const
+    {
+        return (loc.x==x) && (loc.y==y) ;
+    }
+
     //
     // METHOD:    operator ==
     //            checks is this grid reference different from another

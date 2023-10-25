@@ -703,8 +703,7 @@ namespace tme {
         loc_t operator+(loc_t value) const  { return loc_t(x + value.x, y + value.y); }
         loc_t operator-(loc_t value) const  { return loc_t(x - value.x, y - value.y); }
 
-        bool operator==(loc_t value) const  { return (x == value.x && y == value.y); }
-
+        bool operator==(const loc_t value) const  { return (x == value.x && y == value.y); }
     
     } loc_t ;
 
@@ -856,6 +855,7 @@ namespace tme {
             cf_followers        = MXBIT(21),    // has followers
             cf_preparesbattle   = MXBIT(22),    // prepares to do battle
             cf_approaching      = MXBIT(23),    // we are approaching a lord (DDR)
+            cf_battleover       = MXBIT(24),    // character will not fight again this round
         };
 
         enum CHARACTERTRAITS {
@@ -929,7 +929,7 @@ namespace tme {
         void operator += ( mxdir_t dir )                        { AddDirection(dir); }
         mxdir_t DirFromHere ( const mxgridref& loc ) const;
 
-        
+        bool operator == ( const mxgridref& loc ) const;
         
         static s32 DirectionLookTable[];
         

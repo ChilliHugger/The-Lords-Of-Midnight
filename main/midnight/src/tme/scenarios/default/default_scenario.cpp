@@ -384,7 +384,7 @@ namespace tme {
 
             FOR_EACH_CHARACTER(character) {
                 if ( character->following == leader )
-                    collection.Add(character) ;
+                    collection += character ;
             }
             
             return collection;
@@ -1494,10 +1494,6 @@ namespace tme {
 
         void mxscenario::SetMapArmies ( void )
         {
-        int                ii;
-        mxcharacter*        character;
-        mxregiment*        regiment;
-
             FOR_EACH_CHARACTER(character) {
 #if defined(_DDR_)
                 if ( !character->IsInTunnel() ) {
@@ -1564,9 +1560,6 @@ namespace tme {
             mx->gamemap->SetLocationVisible(loc, true);
             
             mx->gamemap->SetLocationLookedAt(looked_at, true);
-            
-            
-            
             
             count = mx->gamemap->GetPanoramic ( loc, dir, &pview );
 
@@ -1737,7 +1730,7 @@ namespace tme {
                 moonringcarrier = CurrentMoonringWearer();
             }
 
-            characters->Create(MAX_CHARACTERS_INLOCATION);
+            characters->Clear();
 
             FOR_EACH_CHARACTER(c) {
                 CONTINUE_IF_NULL(c);
@@ -1777,6 +1770,18 @@ namespace tme {
             }
             return friends+enemies ;
         }
+
+    s32 mxscenario::BaseDoomdarkSuccess ( mxrace_t race, mxunit_t unit, const mxlocinfo& locinfo )
+    {
+        // TODO this should be a lookup table
+        // TODO this should be race dependent
+        s32 modifier = (unit == UT_WARRIORS)
+            ? (s32)sv_battle_success_regiment_warriors
+            : (s32)sv_battle_success_regiment_riders ;
+            
+        return locinfo.foe.adjustment + ( locinfo.adj_fear / modifier );
+    }
+
 
     void mxscenario::initialise( u32 version )
     {
@@ -1892,11 +1897,6 @@ namespace tme {
         }
 
     }
-
-    
-    
-    
-    
 
     //}
     // namespace scenarios

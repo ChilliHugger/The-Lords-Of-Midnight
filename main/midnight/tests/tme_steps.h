@@ -22,12 +22,17 @@
 #include <stdio.h>
 
 using namespace tme;
+using namespace std;
 extern mxengine* mx;
 
 class TMEStep
 {
 public:
-    static void NewStory();
+    static void NewStory(mxdifficulty_t difficulty = DF_NORMAL);
+    
+    static void GivenNormalGame() { NewStory(); }
+    static void GivenHardGame() { NewStory(DF_HARD); }
+    
     static void NightFalls();
     static void CurrentLordIsDead();
     static void SetCurrentLord(LPCSTR name);
@@ -48,6 +53,9 @@ public:
     static void LordMovesForward(LPCSTR name);
     static void LordIsDead(LPCSTR name);
     static void LordKilledByObject(LPCSTR name, LPCSTR killedby);
+
+    // Grouping
+    static void LordHasFollowers(LPCSTR lord, vector<string> names);
 
     
     //

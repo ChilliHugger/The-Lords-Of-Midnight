@@ -1361,7 +1361,7 @@ void ddr_character::StartDawn ( void )
         
         time = sv_time_dawn;
   
-        flags.Reset ( cf_resting|cf_inbattle|cf_wonbattle|cf_killed_foe|cf_preparesbattle );
+        flags.Reset ( cf_resting|cf_inbattle|cf_wonbattle|cf_killed_foe|cf_preparesbattle|cf_battleover );
         battleloc= mxgridref(-1,-1);
         battleslew = 0;
         battlelost = 0;
@@ -1390,10 +1390,13 @@ void ddr_character::Turn ( void )
 
 void ddr_character::Displace()
 {
+    if ( IsDead() || IsFollowing() || HasFollowers() )
+        return;
+
     RULEFLAGS rule = IsAIControlled() ? RF_AI_IMPASSABLE_MOUNTAINS : RF_IMPASSABLE_MOUNTAINS ;
     bool isImpassableRuleEnabled = mx->isRuleEnabled(rule);
               
-    Flags().Reset(cf_tunnel|cf_preparesbattle);
+    Flags().Reset(cf_tunnel|cf_preparesbattle|cf_battleover);
 
     // if impassable mountains is enabled then we can't use the default
     // ddr displacement because it moves more than one location
@@ -1415,7 +1418,6 @@ void ddr_character::Displace()
         EnterLocation ( loc );
         mx->scenario->MakeMapAreaVisible(Location(), this);
     }
-    
 }
 
 

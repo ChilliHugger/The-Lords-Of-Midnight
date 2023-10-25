@@ -8,10 +8,10 @@
 #include "tme_steps.h"
 
 
-void TMEStep::NewStory()
+void TMEStep::NewStory(mxdifficulty_t difficulty)
 {
     TME_DeInit();
-    TME_Init(RF_DEFAULT, DF_NORMAL);
+    TME_Init(RF_DEFAULT, difficulty);
 }
 
 void TMEStep::NightFalls()
@@ -143,3 +143,18 @@ void TMEStep::LordKilledByObject(LPCSTR name, LPCSTR killedby)
     lord->killedbyobject = GetObject(killedby);
 }
 
+void TMEStep::LordHasFollowers(LPCSTR lord, vector<string> names)
+{
+    auto leader = GetCharacter(lord);
+    for (string &name : names) {
+        auto lord = GetCharacter(name.c_str());
+
+        // same location
+        lord->Location(leader->Location());
+
+        // same loyalty
+        lord->Recruited(leader);
+        
+        lord->Cmd_Follow(leader);
+    }
+}

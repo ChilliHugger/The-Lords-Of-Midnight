@@ -12,7 +12,7 @@
 
 void LOMStep::UshgarakHasFallenInBattle()
 {
-    tme::mx->battle->ResetBattlesFought();
+    tme::mx->battle->Reset();
 
     auto luxor = GetCharacter("CH_LUXOR");
     auto ushgarak = GetStronghold("SH_CITADEL_USHGARAK");
@@ -29,12 +29,12 @@ void LOMStep::UshgarakHasFallenInBattle()
     ushgarak->TotalTroops(10);
         
     // battle
-    tme::mx->battle->KickOffAtLocation(luxor->Location());
+    tme::mx->battle->ProcessLocation(luxor->Location());
 }
 
 void LOMStep::XajorkithHasFallenInBattle()
 {
-    tme::mx->battle->ResetBattlesFought();
+    tme::mx->battle->Reset();
 
     auto sh_xajorkith = GetStronghold("SH_CITADEL_XAJORKITH");
 
@@ -50,7 +50,7 @@ void LOMStep::XajorkithHasFallenInBattle()
     sh_xajorkith->TotalTroops(10);
         
     // battle
-    tme::mx->battle->KickOffAtLocation(xajorkith->Location());
+    tme::mx->battle->ProcessLocation(xajorkith->Location());
 }
 
 void LOMStep::MorkinIsDead()

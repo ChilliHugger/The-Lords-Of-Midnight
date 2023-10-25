@@ -62,11 +62,11 @@ namespace tme {
 
             nArmies = 0;
             
-            for( int ii=0; ii<armies.Count(); ii++ ) {
+            for( int ii=0; ii<armies.size(); ii++ ) {
                 SAFEDELETE(armies[ii]);
             }
             
-            armies.Clear();
+            armies.clear();
 
             objCharacters.Clear();
             objRegiments.Clear();
@@ -204,20 +204,10 @@ namespace tme {
             if ( infront->objCharacters.Count()>1 )
                 return;
 #endif
-            for (u32 ii = 0; ii <infront->objRecruit.Count(); ii++)
-                objRecruit.Add ( infront->objRecruit[ii] );
+            for ( auto character : infront->objRecruit )
+                objRecruit.Add ( character );
         }
 
-    //
-    // METHOD:    FindRecruitCharactersHere
-    //            Creates a list of characters that have not been recruited  
-    // 
-    // PARAMS:    c            Current Character
-    // 
-    // REMARKS:    
-    //
-    // RETURNS:    NONE
-    //
         void mxlocinfo::FindRecruitCharactersHere ( const mxcharacter* c )
         {
             RETURN_IF_NULL(c);
@@ -225,12 +215,10 @@ namespace tme {
             // tunnel check
             bool isInTunnel = c->IsInTunnel() ;
 
-            objRecruit.Create(MAX_CHARACTERS_INLOCATION);
+            objRecruit.Clear();
             
-            for (u32 ii = 0; ii <objCharacters.Count(); ii++) {
+            for ( auto character : objCharacters ) {
 
-                auto character = (mxcharacter*)objCharacters[ii];
-                
                 CONTINUE_IF_NULL(character);
                 
                 // not dead, hidden, or recruited
@@ -251,8 +239,10 @@ namespace tme {
                 // and maybe set the character up for recruit anyway
 #if defined(_LOM_)
                 if ( c->CheckRecruitChar ( character ) )
-#endif
                     objRecruit += character ;
+#else
+                objRecruit += character ;
+#endif
             }
 
         }
@@ -260,10 +250,6 @@ namespace tme {
     //
     // METHOD:    FindCharactersHere
     //            Creates a list of characters that are also here, not including non recruited characters
-    // 
-    // REMARKS:    
-    //
-    // RETURNS:    NONE
     //
         void mxlocinfo::FindCharactersHere ( void )
         {
@@ -276,8 +262,7 @@ namespace tme {
 
             nRecruited=0;
 
-            // setup an empty collection
-            objCharacters.Create(MAX_CHARACTERS_INLOCATION);
+            objCharacters.Clear();
 
             // is anyone carrying the moonring?
             // if they are not then the only person we are going to be able to see
@@ -343,8 +328,6 @@ namespace tme {
     //
         void mxlocinfo::FindArmiesHere ( void )
         {
-        bool        bInTunnel=false;
-
             nArmies=0;
    
             // luxor is currently always the players friend
@@ -355,7 +338,7 @@ namespace tme {
             FindCharactersHere();
 
             // no strongholds when under the ground
-            bInTunnel = (sel_flags & slf_tunnel) ;
+            bool bInTunnel = (sel_flags & slf_tunnel) ;
 
             if ( !bInTunnel ) {
                 mx->CollectRegiments ( location, objRegiments );
@@ -375,9 +358,9 @@ namespace tme {
             friends.adjustment=0;
  
             // all the strongholds here
-            if ( objStrongholds.Count() ) {
+            if ( !objStrongholds.Empty() ) {
 
-                    auto stronghold = (mxstronghold*)objStrongholds[0];
+                    auto stronghold = objStrongholds.First();
 
                     bool success = mx->TerrainById(mapsqr.terrain)->Success();
 
@@ -411,14 +394,12 @@ namespace tme {
                     army->success = stronghold->BattleSuccess((mxlocinfo&)*this);
                     army->killed = 0;
                     army->loyalto = stronghold->Loyalty() ;
-                    armies.Add(army);
+                    armies.push_back(army);
 
             }
 
             // all the regiments here
-            for ( u32 ii=0; ii<objRegiments.Count(); ii++ ) {
-
-                auto reg = (mxregiment*)objRegiments[ii] ;
+            for ( auto reg : objRegiments ) {
 
                 if ( reg->Total() ) {
                 
@@ -440,14 +421,12 @@ namespace tme {
                         regiments.riders+=army->total;
                     }
                     foe.armies++;
-                    armies.Add(army);
+                    armies.push_back(army);
                 }
             }
 
             // lets get all the armies belonging to the character
-            for ( u32 ii=0; ii<objCharacters.Count(); ii++ ) {
-
-                auto c = (mxcharacter*)objCharacters[ii];
+            for ( auto c : objCharacters ) {
 
                 bool isFriend = true;
 #if defined(_DDR_)
@@ -473,7 +452,7 @@ namespace tme {
                         foe.armies++;
                         foe.warriors+=army->total;
                     }
-                    armies.Add(army);
+                    armies.push_back(army);
                 }
 
                 if ( c->riders.Total() ) {
@@ -496,12 +475,12 @@ namespace tme {
                         foe.armies++;
                         foe.riders+=army->total;
                     }
-                    armies.Add(army);
+                    armies.push_back(army);
                 }
 
             }
 
-            nArmies = armies.Count();
+            nArmies = (u32)armies.size();
         }
 
         mxarmytotal::mxarmytotal()

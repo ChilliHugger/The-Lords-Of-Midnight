@@ -729,7 +729,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         };
         // mxarmy
 
-typedef chilli::collections::base<mxarmy*>     c_army ;
+        typedef std::vector<mxarmy*>     c_army ;
       
         // base
         class mxitem  : public mxentity
@@ -952,7 +952,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             FLAG_PROPERTY ( HasUsedObject, cf_usedobject )
             FLAG_PROPERTY ( IsResting, cf_resting )
             FLAG_PROPERTY ( HasFollowers, cf_followers )
-            
+            FLAG_PROPERTY ( IsBattleOver, cf_battleover )
             
             bool HasArmy() const { return ((riders.total+warriors.total) > 0); }
             bool IsDead() const { return !flags.Is(cf_alive); }
@@ -1002,6 +1002,7 @@ typedef chilli::collections::base<mxarmy*>     c_army ;
             virtual bool Recruited ( mxcharacter* recruiter );
             virtual void SetRecruitmentTime( mxcharacter* recruiter );
             virtual void LostFight ( void );
+            virtual void LostBattle ( bool canFlee );
             virtual void Displace ( void );
             virtual void DecreaseEnergy ( s32 amount );
             virtual void IncreaseEnergy ( s32 amount );

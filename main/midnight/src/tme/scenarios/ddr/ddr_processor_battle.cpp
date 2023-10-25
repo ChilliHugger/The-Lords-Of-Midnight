@@ -25,15 +25,7 @@
 
 namespace tme {
     
-    ddr_battle::ddr_battle()
-    {
-    }
-
-    ddr_battle::~ddr_battle()
-    {
-    }
-
-    void ddr_battle::War( void )
+    void ddr_battle::Process( void )
     {
         // fights
         FOR_EACH_CHARACTER(character) {
@@ -55,7 +47,7 @@ namespace tme {
      f2 vs e1
      */
     
-    void ddr_battle::Battle ( mxcharacter* character )
+    void ddr_battle::Battle ( ddr_character* character )
     {
         if ( character->IsInBattle() )
             return;
@@ -79,7 +71,41 @@ namespace tme {
         }
         
         characters_here.Clear();
+        enemies += GetCharactersHereForBattle(characters_here, character);
         
+        // anything to fight?
+        if ( enemies == 0 ) {
+            MXTRACE("  No enemies!" );
+            return;
+        }
+        
+        //auto location = character->Location();
+        
+        // DEBUG output
+        for ( u32 ii=0; ii<characters_here.Count(); ii++ ) {
+            auto attacker = static_cast<mxcharacter*>(characters_here[ii]);
+            MXTRACE("  [%d:%d] %-16s", (int)ii, (int)attacker->Id(), attacker->Symbol().c_str());
+        }
+        // END DEBUG output
+        
+        // give all the lords first hit
+        for ( auto attacker : characters_here ) {
+            MXTRACE("  skirmish: %-16s", attacker->Symbol().c_str() );
+            CharacterAttacks(static_cast<ddr_character*>(attacker));
+        }
+        
+        // Then the strong hold armies
+        if ( stronghold ) {
+            MXTRACE("Stronghold=%-16s", stronghold->Symbol().c_str());
+            StrongholdAttacks(stronghold);
+        }
+        
+        //Announce(location);
+    }
+    
+    s32 ddr_battle::GetCharactersHereForBattle(c_character& characters, mxcharacter* character)
+    {
+        s32 enemies = 0;
         FOR_EACH_CHARACTER(c)
         {
             CONTINUE_IF(c->IsDead());
@@ -87,65 +113,36 @@ namespace tme {
             CONTINUE_IF(c->IsInTunnel());
 
             CONTINUE_IF(c->Location() != character->Location());
-
-            characters_here.Add(c);
+            
+            CONTINUE_IF(c->IsBattleOver());
+            
+            characters.Add(c);
             if ( !character->IsFriend(c) )
                 enemies++;
         }
         
-        // anything to fight?
-        if ( enemies==0 ) {
-            MXTRACE("  No enemies!" );
-            return;
-        }
-        
-        for ( u32 ii=0; ii<characters_here.Count(); ii++ )
-        {
-            mxcharacter* attacker = static_cast<mxcharacter*>(characters_here[ii]);
-            MXTRACE("  [%d:%d] %-16s", (int)ii, (int)attacker->Id(), attacker->Symbol().c_str());
-        }
-        
-        // give all the bad guys first hit
-        for ( u32 ii=0; ii<characters_here.Count(); ii++ )
-        {
-            mxcharacter* attacker = static_cast<mxcharacter*>(characters_here[ii]);
-            
-            // TODO: is character still alive?
-            // still at this location?
-            
-            //attacker->Flags().Set(cf_inbattle);
-            //attacker->battleloc = attacker->Location();
-            
-            MXTRACE("  skirmish: %-16s", attacker->Symbol().c_str() );
-            BattleVsCharacter(attacker);
-        }
-        
-        if ( stronghold ) {
-            MXTRACE("Stronghold=%-16s", stronghold->Symbol().c_str());
-            doBattle(stronghold,0);
-        }
+        return enemies;
     }
     
-    void ddr_battle::BattleVsCharacter( mxcharacter* character )
+    s32 ddr_battle::CalcCharacterAttackerHP(const ddr_character* attacker)
     {
-        s32 success=0;
-        auto attacker = static_cast<ddr_character*>(character);
-        auto object = static_cast<ddr_object*>(attacker->Carrying());
-        
-         // check power in battle
-        if ( object != nullptr && object->power == OP_BATTLE )
-        {
-            success=255;
+        if ( CharacterHasBattleObject(attacker) ) {
+            return 255;
         }
-        else
-        {
-            success= (((attacker->energy/2)+(attacker->despondency/2))/2)+attacker->reckless/2;
-        }
-         
-        doBattle( attacker, success );
         
+        return (((attacker->energy/2)+(attacker->despondency/2))/2)+attacker->reckless/2;
     }
     
+    void ddr_battle::CharacterAttacks( ddr_character* attacker )
+    {
+        doBattle( attacker, CalcCharacterAttackerHP(attacker) );
+    }
+
+    void ddr_battle::StrongholdAttacks( mxstronghold* attacker )
+    {
+        doBattle( attacker, 0 );
+    }
+
     // When a lord fights another lord, the attacking lord has his success calculated
     // as energy/2 + despondency/2 + reckless/2 OR 255 if carrying a battle object
     // BUT the defender success chance is purely a random number between 0 and 255
@@ -155,14 +152,8 @@ namespace tme {
     {
         ddr_character* attacker_character=nullptr;
         ddr_stronghold* attacker_stronghold=nullptr;
-        
-        u32 rnd = mxrandom(255);
-        u32 start = rnd % characters_here.Count();
-        u32 end = start;
-        
-        MXTRACE("    Start=%d Rnd=%d, Count=%d", (int)start, (int)rnd, (int)characters_here.Count());
-        
-        mxrace_t loyalty=RA_NONE;
+         
+        mxrace_t loyalty = RA_NONE;
         
         if ( attacker->Type() == IDT_CHARACTER ) {
             attacker_character = static_cast<ddr_character*>(attacker);
@@ -175,54 +166,88 @@ namespace tme {
             return;
         
         // find someone to fight
-        ddr_character* defender = static_cast<ddr_character*>(characters_here[start]);
-        while ( defender->IsDead() || defender->NormalisedLoyalty() == loyalty ) {
-            
-            // TODO: Defender may have been displaced
-            
-            start++;
-            if ( start == characters_here.Count() )
-                start=0;
-            if ( start == end )
-                return;
-            
-            defender = static_cast<ddr_character*>(characters_here[start]);
-            
-        }
+        auto defender = SelectDefender(characters_here, loyalty);
         
-        defender->Flags().Set(cf_inbattle);
-        defender->battleloc = defender->Location();
+        RETURN_IF_NULL(defender);
+        
+        PutCharacterInBattle(defender);
         
         MXTRACE("    Attacker = %-16s, Defender = %-16s", attacker->Symbol().c_str(), defender->Symbol().c_str());
         
         if ( attacker_character ) {
-            
-            attacker_character->Flags().Set(cf_inbattle);
-            attacker_character->battleloc = attacker->Location();
-            
-            if ( !attacker_character->Flags().Is(cf_killed_foe))
-                attacker_character->fighting_against = defender ;
-                    
-            s32 defenders_success = mxrandom(255);
-            
-            MXTRACE("    %-16s (%d) vs %-16s (%d)", attacker->Symbol().c_str(), (int)attackers_success
-                                                    , defender->Symbol().c_str(), (int)defenders_success);
-            
-            if ( attackers_success > defenders_success  ) {
-                MXTRACE("    Defender: %-16s lost fight", defender->Symbol().c_str() );
-                
-                loseFight( defender, defenders_success );
-                if ( defender->IsDead() ) {
-                    attacker_character->Flags().Set(cf_wonbattle|cf_killed_foe);
-                    attacker_character->fighting_against=defender;
-                    MXTRACE("    Defender: %-16s is dead killed by %s", defender->Symbol().c_str(), attacker->Symbol().c_str() );
-                }
-            }
-        
+            CharacterVsCharacter(attacker_character, attackers_success, defender);
         }
         
         battleArmies( attacker, defender );
         battleArmies( defender, attacker );
+    }
+    
+    void ddr_battle::PutCharacterInBattle( ddr_character* character )
+    {
+        character->Flags().Set(cf_inbattle);
+        character->battleloc = character->Location();
+    }
+    
+    void ddr_battle::CharacterVsCharacter( ddr_character* attacker, s32 attackers_hp, ddr_character* defender)
+    {
+        PutCharacterInBattle(attacker);
+        
+        if ( !attacker->Flags().Is(cf_killed_foe))
+            attacker->fighting_against = defender ;
+                
+        s32 defenders_hp = CalcCharacterDefenderHP(defender);
+        
+        MXTRACE("    %-16s (%d) vs %-16s (%d)", attacker->Symbol().c_str(), (int)attackers_hp
+                                                , defender->Symbol().c_str(), (int)defenders_hp);
+        
+        if ( attackers_hp > defenders_hp  ) {
+            MXTRACE("    Defender: %-16s lost fight", defender->Symbol().c_str() );
+            DefenderLoses(defender, defenders_hp, attacker);
+        }
+    }
+    
+    s32 ddr_battle::CalcCharacterDefenderHP( const ddr_character* defender )
+    {
+        return mxrandom(255);
+    }
+    
+    void ddr_battle::DefenderLoses(ddr_character* defender, s32 defender_hp, ddr_character* attacker )
+    {
+        loseFight( defender, defender_hp );
+        if ( defender->IsDead() ) {
+            MXTRACE("    Defender: %-16s is dead killed by %s", defender->Symbol().c_str(), attacker->Symbol().c_str() );
+            CharacterKilledByCharacter(defender, attacker);
+        }
+    }
+
+    void ddr_battle::CharacterKilledByCharacter(ddr_character* defender, ddr_character* attacker )
+    {
+        defender->LostBattle(false);
+        attacker->Flags().Set(cf_wonbattle|cf_killed_foe);
+        attacker->fighting_against=defender;
+    }
+
+    ddr_character* ddr_battle::SelectDefender(c_character& characters, mxrace_t loyalty)
+    {
+        u32 rnd = mxrandom(255);
+        u32 start = rnd % characters.Count();
+        u32 end = start;
+        
+        MXTRACE("    Start=%d Rnd=%d, Count=%d", (int)start, (int)rnd, (int)characters.Count());
+       
+        auto defender = static_cast<ddr_character*>(characters[start]);
+        while ( defender->IsBattleOver() || defender->IsDead() || defender->NormalisedLoyalty() == loyalty ) {
+            
+            start++;
+            if ( start == characters.Count() )
+                start=0;
+            if ( start == end )
+                return nullptr;
+            
+            defender = static_cast<ddr_character*>(characters[start]);
+        }
+        
+        return defender;
     }
     
     s32 ddr_battle::getArmySize( mxitem* item )
@@ -244,7 +269,53 @@ namespace tme {
         }
     }
     
-    void ddr_battle::battleArmies ( mxitem* attacker, mxitem* defender )
+    void ddr_battle::AttackerArmiesWinBattle(tme::mxitem *attacker)
+    {
+        if ( attacker->Type() == IDT_CHARACTER ) {
+            attacker->Flags().Set(cf_wonbattle);
+            MXTRACE("      Attacker: %-16s won battle", attacker->Symbol().c_str() );
+        }
+    }
+    
+    void ddr_battle::DefenderArmiesLosesBattle(tme::mxitem *attacker, tme::mxitem *defender)
+    {
+        if ( defender->Type() == IDT_CHARACTER ) {
+            CharacterLosesArmy(static_cast<ddr_character*>(defender));
+        }
+                
+        if ( defender->Type() == IDT_STRONGHOLD ) {
+            StrongholdLosesArmy(
+                static_cast<mxstronghold*>(defender),
+                static_cast<mxcharacter*>(attacker) // attacker must be a character
+                );
+        }
+    }
+
+    void ddr_battle::StrongholdLosesArmy(mxstronghold* stronghold, mxcharacter* attacker)
+    {
+        // change sides
+        stronghold->MakeChangeSides(attacker->Race(), attacker);
+        MXTRACE("      Stronghold Changes Sides: %-16s",stronghold->Symbol().c_str() );
+    }
+
+    void ddr_battle::CharacterLosesArmy(ddr_character* defender)
+    {
+        MXTRACE("      Defender: %-16s lost battle", defender->Symbol().c_str() );
+            
+        defender->LostBattle(true);
+        defender->Flags().Reset(cf_wonbattle);
+        defender->DecreaseDespondency(32);
+        
+        loseFight(defender, 0);
+        if ( defender->IsDead() ) {
+            MXTRACE("      Defender: %-16s is dead, killed by soldiers.", defender->Symbol().c_str() );
+            // FIX: 30/9/2014 - don't clear the fighting_against flag if the lord dying killed their foe
+            if ( !defender->Flags().Is(cf_killed_foe))
+                defender->fighting_against=NULL;
+        }
+    }
+
+    s32 ddr_battle::CalcArmyAttackerHP( mxitem* attacker )
     {
         s32 attackerStrength = getArmyStrength(attacker);
         s32 attackerSize = getArmySize(attacker);
@@ -252,126 +323,126 @@ namespace tme {
         attackerStrength *= (attackerSize/5);
         attackerStrength *= (mxrandom(255)&31)+16;
         
-        s32 defenderStrength = getArmyStrength(defender);
+        return attackerStrength;
+    }
+    
+    s32 ddr_battle::CalcArmyDefenderHP( mxitem* defender )
+    {
+        return getArmyStrength(defender);
+    }
+
+    s32 ddr_battle::CalcDefenderLoses( mxitem* attacker, mxitem* defender )
+    {
+        s32 attackerHP = CalcArmyAttackerHP(attacker);
+        s32 defenderHP = CalcArmyDefenderHP(defender);
+        
         s32 defenderSize = getArmySize(defender);
         
-        s32 killed = (attackerStrength / defenderStrength);
+        s32 killed = (attackerHP / defenderHP);
         killed = ((killed/256) & 255)*5 ;
-        
         killed = std::min<int>(killed,defenderSize);
-
-        MXTRACE("      Defender: %-16s lost %d of (%d)", defender->Symbol().c_str(), (int)killed, defenderSize );
         
-        defenderSize = BSub(defenderSize, killed, 0);
+        return killed;
+    }
+    
+    void ddr_battle::battleArmies ( mxitem* attacker, mxitem* defender )
+    {
+        s32 loses = CalcDefenderLoses(attacker, defender);
+        s32 defenderSize = getArmySize(defender);
+
+        MXTRACE("      Defender: %-16s lost %d of (%d)", defender->Symbol().c_str(), (int)loses, defenderSize );
+        
+        defenderSize = BSub(defenderSize, loses, 0);
         setArmySize( defender, defenderSize );
-
-        if ( defenderSize == 0 ) {
-            // defender lost army
-            
-            if ( defender->Type() == IDT_CHARACTER ) {
-                
-                ddr_character* defender_character = static_cast<ddr_character*>(defender);
-                
-                // defender flees
-                defender_character->Displace();
-                MXTRACE("      Defender: %-16s is displaced", defender->Symbol().c_str() );
-                
-                // if we are a member of the group, then we need to leave the group
-                if ( defender_character->IsFollowing() )
-                    defender_character->Cmd_UnFollow(defender_character->Following());
-                
-                // if we are leading a group, then we must disband the group
-                if ( defender_character->HasFollowers() )
-                    defender_character->Cmd_DisbandGroup();
-                
-                defender_character->Flags().Reset(cf_wonbattle);
-                defender_character->DecreaseDespondency(32);
-                
-                loseFight(defender_character, 0);
-                if ( defender_character->IsDead() ) {
-                    MXTRACE("      Defender: %-16s is dead, killed by soldiers.", defender->Symbol().c_str() );
-                    // FIX: 30/9/2014 - don't clear the fighting_against flag if the lord dying killed their foe
-                    if ( !defender_character->Flags().Is(cf_killed_foe))
-                        defender_character->fighting_against=NULL;
-                }
-                
-            }
-            
-            if ( attacker->Type() == IDT_CHARACTER ) {
-                attacker->Flags().Set(cf_wonbattle);
-                MXTRACE("      Attacker: %-16s won battle", attacker->Symbol().c_str() );
-            }
-            
-            if ( defender->Type() == IDT_STRONGHOLD ) {
-                //
-                ddr_character* attacker_character = static_cast<ddr_character*>(attacker);
-                
-                // change sides
-                mxstronghold* defender_stronghold = static_cast<mxstronghold*>(defender);
-                defender_stronghold->MakeChangeSides(attacker_character->Race(), attacker_character);
-                MXTRACE("      Stronghold Changes Sides: %-16s",defender->Symbol().c_str() );
-
-            }
+        
+        if( defenderSize == 0 ) {
+            AttackerArmiesWinBattle(attacker);
+            DefenderArmiesLosesBattle(attacker, defender);
         }
-        
-        
+                
         //MXTRACE("Defender: %s army = (%d)", (LPSTR)defender->Symbol(), (int)getArmySize(defender) );
 
-        
+        UpdateDefenderLoses(defender, loses);
+        UpdateAttackerKills(attacker, loses);
+    }
+    
+    void ddr_battle::UpdateDefenderLoses(mxitem* defender, s32 loses)
+    {
         if ( defender->Type() == IDT_CHARACTER ) {
             // character->lost = killed;
-            ddr_character* defender_character = static_cast<ddr_character*>(defender);
-            defender_character->battlelost=killed;
-            defender_character->setArmyLost(killed);
+            auto defender_character = static_cast<ddr_character*>(defender);
+            defender_character->battlelost=loses;
+            defender_character->setArmyLost(loses);
             defender_character->Flags().Set(cf_inbattle);
             defender_character->battleloc = defender_character->Location();
 
-            
         } else if ( defender->Type() == IDT_STRONGHOLD ) {
-            mxstronghold* defender_stronghold = static_cast<mxstronghold*>(defender);
-            defender_stronghold->Lost(killed);
+            auto defender_stronghold = static_cast<mxstronghold*>(defender);
+            defender_stronghold->Lost(loses);
         }
-        
+    }
+    
+    void ddr_battle::UpdateAttackerKills(mxitem *attacker, s32 kills)
+    {
         if ( attacker->Type() == IDT_CHARACTER ) {
-            ddr_character* attacker_character = static_cast<ddr_character*>(attacker);
-            attacker_character->battleslew = killed;
-            attacker_character->setArmyKilled(killed);
+            auto attacker_character = static_cast<ddr_character*>(attacker);
+            attacker_character->battleslew = kills;
+            attacker_character->setArmyKilled(kills);
         } else if ( attacker->Type() == IDT_STRONGHOLD ) {
-            mxstronghold* attacker_stronghold = static_cast<mxstronghold*>(attacker);
-            attacker_stronghold->Killed(killed);
+            auto attacker_stronghold = static_cast<mxstronghold*>(attacker);
+            attacker_stronghold->Killed(kills);
         }
+    }
+    
+    bool ddr_battle::CharacterShouldLoseHorse(const ddr_character* character, s32 success)
+    {
+        return (success&3) == 1;
+    }
+    
+    bool ddr_battle::CharacterHasBattleObject( const ddr_character* character )
+    {
+        auto object = static_cast<ddr_object*>(character->Carrying());
+        return object != nullptr && object->power == OP_BATTLE ;
+    }
+    
+    bool ddr_battle::CharacterShouldDie(const ddr_character* character)
+    {
+        u32 r = mxrandom(255);
+        if ( (r&1) == 0 )
+            return false;
         
+        if ( character->reckless > r )
+            return false;
+            
+        if ( CharacterHasBattleObject(character)) {
+            if ( mxrandom(255) >= 80 )
+                return false;
+        }
+            
+        return true;
+    }
+    
+    bool ddr_battle::CharacterIsProtected(const ddr_character* character)
+    {
+        auto object = static_cast<ddr_object*>(character->Carrying());
+        return object != nullptr && object->power == OP_PROTECTION;
     }
     
     void ddr_battle::loseFight ( ddr_character* character, s32 success )
     {
-        auto object = static_cast<ddr_object*>(character->Carrying());
-        if (object!=nullptr) {
-            if ( object->power == OP_PROTECTION ) {
-                return;
-            }
+        if ( CharacterIsProtected(character) ) {
+            return;
         }
-        
-        // lose horse
-        if ( (success&3) == 1 ) {
+
+        if ( CharacterShouldLoseHorse(character, success) ) {
             character->Flags().Reset(cf_riding);
         }
         
-        u32 r = mxrandom(255);
-        if ( (r&1) == 0 )
+        if ( !CharacterShouldDie(character) ) {
             return;
-        
-        if ( character->reckless > r )
-            return;
-        
-        if (object && object->power == OP_BATTLE ) {
-            if ( mxrandom(255) >= 80 )
-                return;
         }
         
         character->Cmd_Dead();
-        
-        
     }
 
     //RACE_MOONPRINCE         EQU 00h
@@ -429,63 +500,27 @@ namespace tme {
         
         s32 strength =0;
         s32 energy=0;
-        s32 race = 0;
+        s32 index = 0;
         
         if ( army->Type() == IDT_STRONGHOLD ) {
             ddr_stronghold* army_stronghold = static_cast<ddr_stronghold*>(army);
-            race = army_stronghold->Race()*2;
+            index = army_stronghold->Race()*2;
             if ( army_stronghold->Type() == UT_WARRIORS )
-                race++;
+                index++;
             energy = army_stronghold->Energy();
-            strength = ((strengths[race]/2) + (energy/2)) /2 ;
+            strength = ((strengths[index]/2) + (energy/2)) /2 ;
         }else if ( army->Type() == IDT_CHARACTER ) {
             ddr_character* army_character = static_cast<ddr_character*>(army);
-            race = army_character->Race()*2;
+            index = army_character->Race()*2;
             if ( army_character->IsAllowedWarriors() )
-                race++;
+                index++;
             energy = army_character->energy;
-            strength = ((strengths[race]/2) + (energy/2)) ;
+            strength = ((strengths[index]/2) + (energy/2)) ;
         }
     
         return strength;
         
     }
-
-    void ddr_battle::Test(void)
-    {
-#if defined(_TEST_BATTLE_)
-        mxcharacter* ch_torinarg = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_TORINARG"));
-        mxcharacter* ch_luxor = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_LUXOR"));
-        
-        ch_luxor->Location( ch_torinarg->Location() );
-        
-        mxcharacter* ch = NULL;
-
-        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_RORTHRON"));
-        ch->Location(ch_luxor->Location());
-
-        
-        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_THORTHAND"));
-        ch->Location(ch_luxor->Location());
-        ch->Recruited(ch_luxor);
-        
-        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_LORANGRIEL"));
-        ch->Location(ch_luxor->Location());
-        ch->Recruited(ch_luxor);
-        
-        
-        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_IMGORARG"));
-        ch->Location(ch_luxor->Location());
-        ch = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_GLORMARG"));
-        ch->Location(ch_luxor->Location());
-
-        Battle(ch_luxor);
-        
-        ch_luxor->Flags().Reset(cf_inbattle);
-        Battle(ch_luxor);
-#endif
-    }
-
 }
 // namespace tme
 
