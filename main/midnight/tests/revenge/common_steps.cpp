@@ -73,3 +73,4 @@ void DDRStep::LordsNotAtGateOfVarenorn(vector<string> names)
         LordNotAtGateOfVarenorn(name.c_str());
     }
 }
+
