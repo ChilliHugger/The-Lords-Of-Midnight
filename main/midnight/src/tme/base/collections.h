@@ -58,6 +58,7 @@ public:
     void Clear();
     bool CreateIdtCollection ( c_mxid& obj );
     u32 Count() const;
+    bool Empty() { return Count() == 0; }
 
     //void operator = ( const entities<T>& src );
     T& operator[]( u32 nSubscript );

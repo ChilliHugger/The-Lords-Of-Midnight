@@ -39,7 +39,7 @@ namespace tme {
         void ddr_night::Process( void )
         {
             mx->scenario->NightStart();
-            mx->battle->ResetBattlesFought();
+            mx->battle->Reset();
             mx->scenario->RemoveMapArmies();
             
             RemoveMidwinterFromMap();

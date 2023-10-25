@@ -25,14 +25,6 @@
 
 namespace tme {
     
-    ddr_battle::ddr_battle()
-    {
-    }
-
-    ddr_battle::~ddr_battle()
-    {
-    }
-
     void ddr_battle::Process( void )
     {
         // fights
@@ -87,6 +79,8 @@ namespace tme {
             return;
         }
         
+        //auto location = character->Location();
+        
         // DEBUG output
         for ( u32 ii=0; ii<characters_here.Count(); ii++ ) {
             auto attacker = static_cast<mxcharacter*>(characters_here[ii]);
@@ -105,6 +99,8 @@ namespace tme {
             MXTRACE("Stronghold=%-16s", stronghold->Symbol().c_str());
             StrongholdAttacks(stronghold);
         }
+        
+        //Announce(location);
     }
     
     s32 ddr_battle::GetCharactersHereForBattle(c_character& characters, mxcharacter* character)

@@ -18,6 +18,7 @@
 #include "../../utils/savegamemapping.h"
 #include "scenario_lom.h"
 #include "scenario_lom_internal.h"
+#include "lom_processor_battle.h"
 #include "lom_gameover.h"
 #include <string>
 
@@ -109,7 +110,7 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
     // add in the interfaces
     mx->text = new mxtext;
     mx->night = new mxnight;
-    mx->battle = new mxbattle;
+    mx->battle = new lom_battle;
     mx->gameover = new lom_gameover;
     mx->scenario = (mxscenario*)lom_scenario;
     

@@ -729,7 +729,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         };
         // mxarmy
 
-typedef chilli::collections::base<mxarmy*>     c_army ;
+        typedef std::vector<mxarmy*>     c_army ;
       
         // base
         class mxitem  : public mxentity

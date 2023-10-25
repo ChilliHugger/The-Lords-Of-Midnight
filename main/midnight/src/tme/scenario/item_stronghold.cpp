@@ -132,7 +132,7 @@ s32 mxstronghold::BattleSuccess ( const mxlocinfo& locinfo )
 {
     if ( this == nullptr ) return STRONGHOLD_SUCCESS_NONE ;
     if ( OccupyingRace() == RA_DOOMGUARD )
-        return enemy_success + mx->battle->BaseDoomdarkSuccess( OccupyingRace(),Type(), locinfo );
+        return enemy_success + mx->scenario->BaseDoomdarkSuccess( OccupyingRace(),Type(), locinfo );
     return mx->UnitById(Type())->Success()+mx->RaceById(OccupyingRace())->Success() ;
 }
 

@@ -69,7 +69,8 @@ namespace tme {
             virtual u32 FindCharactersAtLocation ( mxgridref loc, c_character* characters, flags32_t flags );
 
             virtual c_character GetCharacterFollowers ( mxcharacter* leader );
-            
+            virtual s32 BaseDoomdarkSuccess ( mxrace_t race, mxunit_t unit, const mxlocinfo& locinfo );
+
             
             virtual void GiveGuidance( mxcharacter* character, s32 hint );
             

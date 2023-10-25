@@ -68,7 +68,7 @@ namespace tme {
 
         s32 mxregiment::BattleSuccess ( const mxlocinfo& locinfo )
         {
-            return success + mx->battle->BaseDoomdarkSuccess(Race(),Type(),locinfo);
+            return success + mx->scenario->BaseDoomdarkSuccess(Race(),Type(),locinfo);
         }
 
         MXRESULT mxregiment::FillExportData ( info_t* data )

@@ -3,53 +3,20 @@
 
 #include "info.h"
 
-#define     MAX_FOE_ARMIES            128
-#define     MAX_FRIEND_ARMIES        MAX_FOE_ARMIES
-
-
 namespace tme {
-    //namespace processors {
 
-        class mxbattle  
-        {
-        public:
-            mxbattle();
-            virtual ~mxbattle();
-
-            virtual void KickOffAtLocation ( mxgridref loc );
-            
-            virtual s32 BaseDoomdarkSuccess ( mxrace_t race, mxunit_t unit, const mxlocinfo& locinfo );
-            virtual void ResetBattlesFought();
-
-            enum INITIATIVE    {
-                BI_CHARACTER    = 1,
-                BI_FRIEND_1        = 2,
-                BI_FOE_1        = 3,
-                BI_FRIEND_2        = 4,
-                BI_FOE_2        = 5,
-            } INITIATIVE ;
-
-        private:
-            virtual void CalculateCharactersKillRates( void );
-            virtual void MakeFriendOrFoeList ( const mxcharacter* character=NULL );
-            virtual u32 Fight ( u32 attacks, u32 success, c_army& foes, u32& nFoes );
-
-            virtual void AllOutWar ( int pass );
-            virtual void CheckVictors ( void );
-
-        private:
-
-            mxlocinfo*      info;
-            u32             nFoes;
-            u32             nFriends;
-            c_army          foes;
-            c_army          friends;
-            u32             battlesfought;
-            bitarray        battleareas;
-
-        };
-
-    //}
+    class mxbattle
+    {
+    public:
+        virtual void ProcessLocation ( mxgridref loc );
+        virtual void Process ();
+        virtual void Reset();
+        virtual void Announce( mxgridref loc );
+    protected:
+        u32         battles;
+        bitarray    areas;
+    };
+        
 }
 
 #endif //_CBATTLEPROCESSOR_H_INCLUDED_

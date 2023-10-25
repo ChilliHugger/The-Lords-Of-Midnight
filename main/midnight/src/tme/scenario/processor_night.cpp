@@ -37,7 +37,7 @@ namespace tme {
         mxcharacter*        character;
 
             mx->scenario->NightStart();
-            mx->battle->ResetBattlesFought();
+            mx->battle->Reset();
 
             // place all lords at dawn
             FOR_EACH_CHARACTER(character) {
@@ -89,7 +89,7 @@ namespace tme {
         void mxnight::ResetLocationSpecial ( mxgridref loc )
         {
             if ( mx->gamemap->IsLocationSpecial(loc) )
-                mx->battle->KickOffAtLocation(loc);
+                mx->battle->ProcessLocation(loc);
             mx->gamemap->SetLocationSpecial(loc,0);
         }
     
