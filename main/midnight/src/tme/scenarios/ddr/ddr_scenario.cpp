@@ -97,6 +97,7 @@ MXRESULT ddr_x::Register ( mxengine* midnightx )
     mx->night = new ddr_night;
     mx->battle = new ddr_battle;
     mx->gameover = new ddr_gameover;
+    mx->entityfactory = new ddr_entityfactory;
     mx->scenario = (mxscenario*)ddr_scenario;
     
     // set initial feature flags
@@ -111,6 +112,7 @@ MXRESULT ddr_x::UnRegister ( mxengine* midnightx )
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
     SAFEDELETE ( mx->battle ) ;
+    SAFEDELETE ( mx->entityfactory );
     
     // mx will delete the scenario, so just lose our
     // reference to it
@@ -191,7 +193,7 @@ void ddr_x::updateAfterLoad ( u32 version )
     mxscenario::updateAfterLoad(version);
 }
     
-mxentity* ddr_x::CreateEntity ( id_type_t type )
+mxentity* ddr_entityfactory::Create ( id_type_t type )
 {
     switch ( type ) {
         case IDT_OBJECT:
@@ -208,7 +210,7 @@ mxentity* ddr_x::CreateEntity ( id_type_t type )
             break;
     }
 
-    return mxscenario::CreateEntity ( type );
+    return mxentityfactory::Create ( type );
 }
     
 void ddr_x::MakeMapAreaVisible ( mxgridref l, mxcharacter* character )

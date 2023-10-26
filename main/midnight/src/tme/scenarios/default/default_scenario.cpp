@@ -30,7 +30,7 @@ namespace tme {
 
     mxentity* CreateEntity(mxscenario* scenario, id_type_t type)
     {
-        return scenario->CreateEntity(type);
+        return mx->entityfactory->Create(type);
     }
 
 #define CONVERT_COLLECTION(x,y) \
@@ -119,6 +119,7 @@ namespace tme {
             mx->text = new mxtext;
             mx->night = new mxnight;
             mx->battle = new mxbattle;
+            mx->entityfactory = new mxentityfactory;
             mx->scenario = this;
             return MX_OK ;
         }
@@ -128,6 +129,7 @@ namespace tme {
             SAFEDELETE ( mx->text ) ;
             SAFEDELETE ( mx->night ) ;
             SAFEDELETE ( mx->battle ) ;
+            SAFEDELETE ( mx->entityfactory );
             //mx->scenario = this;
             //default_scenario=nullptr ;
             return MX_OK ;
@@ -162,18 +164,8 @@ namespace tme {
             return &scenario_info ;
         }
 
-        /*
-        * Function name    : base::CreateItemClass
-        * 
-        * Return type        : object*
-        * 
-        * Arguments        : itemtype_t type
-        * 
-        * Description        : 
-        * 
-        */
 
-        mxentity* mxscenario::CreateEntity ( id_type_t type )
+        mxentity* mxentityfactory::Create ( id_type_t type )
         {
             switch ( type ) {
                 case IDT_ARMY:
@@ -1897,6 +1889,10 @@ namespace tme {
         }
 
     }
+
+
+
+
 
     //}
     // namespace scenarios

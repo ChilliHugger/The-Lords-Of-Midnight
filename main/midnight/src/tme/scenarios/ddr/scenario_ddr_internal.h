@@ -16,11 +16,9 @@ namespace tme {
         ddr_x();
         virtual ~ddr_x();
 
-
         virtual scenarioinfo_t* GetInfoBlock() const override;
         virtual MXRESULT Register ( mxengine* midnightx ) override;
         virtual MXRESULT UnRegister ( mxengine* midnightx ) override;
-        virtual mxentity* CreateEntity ( id_type_t type ) override;
 
         virtual void NightStop(void) override;
 
@@ -54,6 +52,11 @@ namespace tme {
         ddr_object*     crownofimiriel;
     };
 
+    class ddr_entityfactory : public mxentityfactory
+    {
+    public:
+        virtual mxentity* Create(id_type_t type) override;
+    };
     
     class ddr_object : public mxobject
     {

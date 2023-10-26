@@ -16,6 +16,13 @@ namespace tme {
         class mxobject ;
     //};
 
+    class mxentityfactory {
+    public:
+        virtual mxentity* Create ( id_type_t type );
+    };
+
+
+
         // ALIAS default_scenario
         class mxscenario 
         {
@@ -34,8 +41,6 @@ namespace tme {
             virtual void initialiseAfterCreate ( u32 version );
             virtual void updateAfterLoad ( u32 version );
      
-
-            virtual mxentity* CreateEntity ( id_type_t type );
             virtual void Serialize ( chilli::lib::archive& ar ) ;
 
             virtual void NightStart(void);
@@ -85,11 +90,10 @@ namespace tme {
             bool isLocationImpassable(mxgridref loc, mxitem* target) const;
             
         public:
-            flags32_t    features;
-            
-            mxobject*       moonring;
-            mxcharacter*    doomdark;
-            mxcharacter*    luxor;
+            flags32_t           features;
+            mxobject*           moonring;
+            mxcharacter*        doomdark;
+            mxcharacter*        luxor;
         };
     
         #define DEF_SCENARIO(x) (mx->scenario)->x

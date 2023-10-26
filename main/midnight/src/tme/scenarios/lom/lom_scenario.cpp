@@ -112,6 +112,7 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
     mx->night = new mxnight;
     mx->battle = new lom_battle;
     mx->gameover = new lom_gameover;
+    mx->entityfactory = new mxentityfactory;
     mx->scenario = (mxscenario*)lom_scenario;
     
     // set initial feature flags
@@ -126,6 +127,7 @@ MXRESULT lom_x::UnRegister ( mxengine* midnightx )
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
     SAFEDELETE ( mx->battle ) ;
+    SAFEDELETE ( mx->entityfactory );
     
     // mx will delete the scenario, so just lose our
     // reference to it
@@ -134,8 +136,7 @@ MXRESULT lom_x::UnRegister ( mxengine* midnightx )
 }
 
     
-    
-mxentity* lom_x::CreateEntity ( id_type_t type )
+mxentity* lom_entityfactory::Create ( id_type_t type )
 {
     switch ( type ) {
         case IDT_STRONGHOLD:
@@ -144,7 +145,7 @@ mxentity* lom_x::CreateEntity ( id_type_t type )
             break;
     }
 
-    return mxscenario::CreateEntity ( type );
+    return mxentityfactory::Create ( type );
 }
 
 

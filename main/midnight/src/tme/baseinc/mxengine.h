@@ -13,8 +13,11 @@
 #define EOS(x)      x+c_strlen(x)
 
 
+
 namespace tme {
-    
+
+    FORWARD_REFERENCE(mxentityfactory);
+
     //using namespace tme::collections;
     
     DECLARE_ENUM(arguments) {
@@ -119,6 +122,8 @@ namespace tme {
             return static_cast<mxcharacter*>(EntityByName(symbol, IDT_CHARACTER));
         }
 
+        mxentity* CreateEntity ( id_type_t type );
+
         
     public:
         mxmap*                  gamemap;
@@ -128,6 +133,7 @@ namespace tme {
         mxbattle*               battle;
         mxgameover*             gameover;
         mxscenario*             scenario;
+        mxentityfactory*        entityfactory;
         
         c_character             objCharacters;
         c_regiment              objRegiments;
