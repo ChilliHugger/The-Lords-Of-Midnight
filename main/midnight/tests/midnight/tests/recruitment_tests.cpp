@@ -4,8 +4,8 @@
 //
 //  Created by Chris Wild on 25/03/2023.
 //
-#include "common_steps.h"
-#include "../map_steps.h"
+#include "../steps/common_steps.h"
+#include "../../steps/map_steps.h"
 
 SCENARIO("Morkin can recruit Shadows")
 {

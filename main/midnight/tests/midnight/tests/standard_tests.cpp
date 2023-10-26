@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 03/01/2021.
 //
 
-#include "common_steps.h"
+#include "../steps/common_steps.h"
 
 TEST_CASE( "Lom Scenario has been setup corretly" )
 {
