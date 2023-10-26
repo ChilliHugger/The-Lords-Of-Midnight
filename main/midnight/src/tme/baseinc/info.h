@@ -1011,6 +1011,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual mxthing_t LocationThing() const ;
             virtual void RefreshLocationBasedVariables ( const mxlocinfo* info ) ;
             virtual bool CanWalkForward ( void );
+            virtual bool ShouldLoseHorse() const;
+            virtual bool ShouldDieInFight() const;
+            virtual void Dismount();
 
             virtual bool AddFollower ( mxcharacter* c );
             virtual bool RemoveFollower ( mxcharacter* c );

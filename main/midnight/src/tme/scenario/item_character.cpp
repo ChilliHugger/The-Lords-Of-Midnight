@@ -386,17 +386,31 @@ namespace tme {
             return false ;
         }
 
+        bool mxcharacter::ShouldLoseHorse() const
+        {
+            return mxrandom() & 1;
+        }
+
+        bool mxcharacter::ShouldDieInFight() const
+        {
+            auto temp = (energy/2) - 64 + reckless;
+            return mxrandom(255) >= temp;
+        }
+
+        void mxcharacter::Dismount()
+        {
+            flags.Reset ( cf_riding );
+        }
+
         void mxcharacter::LostFight ( void )
         {
-        int temp;
             if ( !IsDead() ) {
                 if ( IsRiding() ) {
-                    if (mxrandom() & 1)
-                        flags.Reset ( cf_riding );
+                    if (ShouldLoseHorse())
+                        Dismount();
                 }
 
-                temp = (energy/2) - 64 + reckless;
-                if (mxrandom(255) >= temp) {
+                if (ShouldDieInFight()) {
                     Cmd_Dead();
                 }
             }
