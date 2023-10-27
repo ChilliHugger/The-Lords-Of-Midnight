@@ -72,6 +72,10 @@ namespace tme {
     
         bool IsSpecial() const;
         
+        virtual u32 FightHP() const;
+        virtual u32 FightSuccess() const;
+        virtual u32 KillRate( u32 hp ) const;
+        
     public:
         mxobjtype_t   type;
         mxobjpower_t  power;
@@ -121,7 +125,13 @@ namespace tme {
         virtual void StartDawn ( void );
         virtual void Turn ( void );
         
-        virtual void LostFight();
+        virtual bool ShouldLoseHorse( s32 hint ) const;
+        virtual void LostFight( s32 hint );
+        
+        virtual bool HasBattleObject() const;
+        virtual bool IsProtected() const;
+        virtual bool ShouldDieInFight() const;
+        
         virtual void Displace();
         virtual mxlocinfo* GetLocInfo();
         virtual MXRESULT EnterBattle ();

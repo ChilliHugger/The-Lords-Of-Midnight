@@ -39,6 +39,31 @@ namespace tme {
         return FALSE;
     }
     
+    u32 ddr_object::FightHP() const
+    {
+        return mxrandom(255) & 15;
+    }
+    
+    u32 ddr_object::FightSuccess() const
+    {
+        auto thing = (mxthing_t)Id();
+    
+        switch (thing) {
+            case OB_WOLVES: return 9;
+            case OB_DRAGONS: return 8;
+            case OB_ICETROLLS: return 10;
+            case OB_SKULKRIN: return 11;
+            default:
+                return 0;
+        }
+    }
+    
+    u32 ddr_object::KillRate( u32 hp ) const
+    {
+        return (hp/2) * 5;
+    }
+    
+    
     MXRESULT ddr_object::FillExportData ( info_t* data )
     {
         using export_t = tme::scenarios::ddr::exports::object_t;

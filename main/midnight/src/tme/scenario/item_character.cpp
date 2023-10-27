@@ -386,7 +386,7 @@ namespace tme {
             return false ;
         }
 
-        bool mxcharacter::ShouldLoseHorse() const
+        bool mxcharacter::ShouldLoseHorse(s32 hint) const
         {
             return mxrandom() & 1;
         }
@@ -402,7 +402,7 @@ namespace tme {
             flags.Reset ( cf_riding );
         }
 
-        void mxcharacter::LostFight ( void )
+        void mxcharacter::LostFight ( s32 hint )
         {
             if ( !IsDead() ) {
                 if ( IsRiding() ) {
@@ -963,6 +963,20 @@ namespace tme {
             return result;
         }
 
+        bool mxcharacter::ShouldHaveOneToOneWithNasty() const
+        {
+            // allow game difficulty to have an effect
+            // on the grouping
+            if ( mx->Difficulty() == DF_EASY && followers>= 2 ) {
+                return false;
+            }
+            if ( mx->Difficulty() == DF_MEDIUM || mx->Difficulty() == DF_NORMAL ) {
+                if ( followers >= 3 )
+                    return false;
+            }
+            return true;
+        }
+
         mxobject* mxcharacter::Cmd_Fight ( void )
         {
         bool needfight = true ;
@@ -997,17 +1011,8 @@ namespace tme {
             if ( sv_cheat_always_win_fight )
                 needfight = false;
 
-            // DIFFICULTY
-            // allow game difficulty to have an effect
-            // on the grouping
-            if ( mx->Difficulty() == DF_EASY && followers>= 2 ) {
+            if ( !ShouldHaveOneToOneWithNasty() )
                 needfight = false;
-            }  
-            if ( mx->Difficulty() == DF_MEDIUM || mx->Difficulty() == DF_NORMAL ) {
-                if ( followers >= 3 )
-                    needfight = false;
-            }
-            // DIFFICULTY
   
             if ( needfight ) {
 

@@ -1001,7 +1001,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual bool CheckRecruitChar ( mxcharacter* pChar ) const ;
             virtual bool Recruited ( mxcharacter* recruiter );
             virtual void SetRecruitmentTime( mxcharacter* recruiter );
-            virtual void LostFight ( void );
+            virtual void LostFight ( s32 hint = 0 );
             virtual void LostBattle ( bool canFlee );
             virtual void Displace ( void );
             virtual void DecreaseEnergy ( s32 amount );
@@ -1011,8 +1011,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual mxthing_t LocationThing() const ;
             virtual void RefreshLocationBasedVariables ( const mxlocinfo* info ) ;
             virtual bool CanWalkForward ( void );
-            virtual bool ShouldLoseHorse() const;
+            virtual bool ShouldLoseHorse(s32 hint = 0) const;
             virtual bool ShouldDieInFight() const;
+            virtual bool ShouldHaveOneToOneWithNasty() const;
             virtual void Dismount();
 
             virtual bool AddFollower ( mxcharacter* c );
