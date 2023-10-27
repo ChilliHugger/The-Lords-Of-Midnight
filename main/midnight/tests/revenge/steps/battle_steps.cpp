@@ -6,7 +6,7 @@
 //
 
 #include "battle_steps.h"
-#include "../../src/tme/scenarios/ddr/ddr_processor_battle.h"
+#include "../../../src/tme/scenarios/ddr/ddr_processor_battle.h"
 
 static const LPCSTR ch_leader = "CH_CARORMAND";
 static const LPCSTR ch_follower = "CH_GLORTHARG";

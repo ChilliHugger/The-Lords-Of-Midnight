@@ -9,7 +9,7 @@
 //
 
 #include "common_steps.h"
-#include "../../src/tme/scenarios/ddr/scenario_ddr_internal.h"
+#include "../../../src/tme/scenarios/ddr/scenario_ddr_internal.h"
 
 using namespace std;
 

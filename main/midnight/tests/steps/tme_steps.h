@@ -107,3 +107,14 @@ inline mockcharacter* GetMockCharacter(const string& lord)
 {
     return static_cast<mockcharacter*>(GetCharacter(lord));
 }
+
+#if defined(_DDR_)
+inline mockobject* GetMockObject(const string& object)
+{
+    return static_cast<mockobject*>(GetObject(object));
+}
+
+inline mockobject* GetMockThing(mxthing_t thing) {
+    return static_cast<mockobject*>(tme::mx->EntityByIdt(MAKE_ID(IDT_OBJECT,thing)));
+}
+#endif
