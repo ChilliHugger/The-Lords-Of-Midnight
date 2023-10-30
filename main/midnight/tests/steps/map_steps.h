@@ -13,4 +13,7 @@
 class MapStep {
 public:
     static void ClearObjectFromLocation(loc_t loc);
+    static void SetObjectAtLocation(loc_t loc, mxthing_t thing);
+    static mxthing_t GetObjectAtLocation(loc_t loc);
+
 };

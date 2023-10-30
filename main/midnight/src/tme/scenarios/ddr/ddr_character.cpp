@@ -149,7 +149,7 @@ namespace tme {
         
         return info;
     }
-    
+        
     mxobject* ddr_character::Cmd_Fight()
     {
         SetLastCommand ( CMD_FIGHT, IDT_NONE );
@@ -166,20 +166,21 @@ namespace tme {
 
         if ( ! sv_cheat_always_win_fight )
         {
-            u32 r = mxrandom(255) & 15 ;
-            s32 loses = (r/2)*5;
+            u32 hp = fightobject->FightHP();
+            s32 loses = fightobject->KillRate(hp);
             
-            // soldiers -= loses ;
             warriors.Loses(loses);
             riders.Loses(loses);
-            
-            static u8 critter_success[] = { 0, 9, 8, 10, 11 };
-            
-            if ( r > critter_success[fightobject->Id()]  ) {
-                static_cast<ddr_battle*>(mx->battle)->loseFight(this,r);
-                if ( IsDead() ) {
-                    killedbyobject = fightobject;
-                    return fightobject;
+                        
+            auto needfight = ShouldHaveOneToOneWithNasty();
+                        
+            if ( needfight ) {
+                if ( hp > fightobject->FightSuccess() ) {
+                    LostFight(hp);
+                    if ( IsDead() ) {
+                        killedbyobject = fightobject;
+                        return fightobject;
+                    }
                 }
             }
         }
@@ -198,12 +199,57 @@ namespace tme {
         
     }
     
-    void ddr_character::LostFight ( void )
+    bool ddr_character::ShouldLoseHorse(s32 hint) const
     {
-        // stubber out
+        return (hint&3) == 1;
     }
+    
+    bool ddr_character::HasBattleObject() const
+    {
+        auto object = static_cast<ddr_object*>(Carrying());
+        return object != nullptr && object->power == OP_BATTLE ;
+    }
+    
+    bool ddr_character::IsProtected() const
+    {
+        auto object = static_cast<ddr_object*>(Carrying());
+        return object != nullptr && object->power == OP_PROTECTION;
+    }
+    
+    bool ddr_character::ShouldDieInFight() const
+    {
+        u32 r = mxrandom(255);
+        if ( (r&1) == 0 )
+            return false;
+        
+        if ( reckless > r )
+            return false;
+            
+        if ( HasBattleObject()) {
+            if ( mxrandom(255) >= 80 )
+                return false;
+        }
+            
+        return true;
+    }
+    
+    void ddr_character::LostFight ( s32 hint )
+    {
+        if ( IsProtected() ) {
+            return;
+        }
 
-
+        if ( ShouldLoseHorse(hint) ) {
+            Flags().Reset(cf_riding);
+        }
+        
+        if ( !ShouldDieInFight() ) {
+            return;
+        }
+        
+        Cmd_Dead();
+    }
+    
     void ddr_character::DecreaseEnergy ( s32 amount )
     {
     mxrace*        rinfo = mx->RaceById(Race());

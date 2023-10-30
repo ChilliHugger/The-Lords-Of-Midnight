@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_RUNNER
 #include "catch2/catch.hpp"
 
-#include "mocks.h"
+#include "mocks/mocks.h"
 #include "../src/cocos.h"
 
 

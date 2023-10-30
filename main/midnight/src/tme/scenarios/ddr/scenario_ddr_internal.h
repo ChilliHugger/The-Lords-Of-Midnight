@@ -16,11 +16,9 @@ namespace tme {
         ddr_x();
         virtual ~ddr_x();
 
-
         virtual scenarioinfo_t* GetInfoBlock() const override;
         virtual MXRESULT Register ( mxengine* midnightx ) override;
         virtual MXRESULT UnRegister ( mxengine* midnightx ) override;
-        virtual mxentity* CreateEntity ( id_type_t type ) override;
 
         virtual void NightStop(void) override;
 
@@ -54,6 +52,11 @@ namespace tme {
         ddr_object*     crownofimiriel;
     };
 
+    class ddr_entityfactory : public mxentityfactory
+    {
+    public:
+        virtual mxentity* Create(id_type_t type) override;
+    };
     
     class ddr_object : public mxobject
     {
@@ -68,6 +71,10 @@ namespace tme {
         FLAG_PROPERTY( IsRandomStart,    of_randomstart )
     
         bool IsSpecial() const;
+        
+        virtual u32 FightHP() const;
+        virtual u32 FightSuccess() const;
+        virtual u32 KillRate( u32 hp ) const;
         
     public:
         mxobjtype_t   type;
@@ -118,7 +125,13 @@ namespace tme {
         virtual void StartDawn ( void );
         virtual void Turn ( void );
         
-        virtual void LostFight();
+        virtual bool ShouldLoseHorse( s32 hint ) const;
+        virtual void LostFight( s32 hint );
+        
+        virtual bool HasBattleObject() const;
+        virtual bool IsProtected() const;
+        virtual bool ShouldDieInFight() const;
+        
         virtual void Displace();
         virtual mxlocinfo* GetLocInfo();
         virtual MXRESULT EnterBattle ();

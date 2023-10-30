@@ -11,7 +11,7 @@
 // their command."
 //
 
-#include "common_steps.h"
+#include "../steps/common_steps.h"
 
 void Victory(std::string text)
 {

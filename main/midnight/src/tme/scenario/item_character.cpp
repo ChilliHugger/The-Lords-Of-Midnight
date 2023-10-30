@@ -386,17 +386,31 @@ namespace tme {
             return false ;
         }
 
-        void mxcharacter::LostFight ( void )
+        bool mxcharacter::ShouldLoseHorse(s32 hint) const
         {
-        int temp;
+            return mxrandom() & 1;
+        }
+
+        bool mxcharacter::ShouldDieInFight() const
+        {
+            auto temp = (energy/2) - 64 + reckless;
+            return mxrandom(255) >= temp;
+        }
+
+        void mxcharacter::Dismount()
+        {
+            flags.Reset ( cf_riding );
+        }
+
+        void mxcharacter::LostFight ( s32 hint )
+        {
             if ( !IsDead() ) {
                 if ( IsRiding() ) {
-                    if (mxrandom() & 1)
-                        flags.Reset ( cf_riding );
+                    if (ShouldLoseHorse())
+                        Dismount();
                 }
 
-                temp = (energy/2) - 64 + reckless;
-                if (mxrandom(255) >= temp) {
+                if (ShouldDieInFight()) {
                     Cmd_Dead();
                 }
             }
@@ -949,34 +963,58 @@ namespace tme {
             return result;
         }
 
+        bool mxcharacter::ShouldHaveOneToOneWithNasty() const
+        {
+            // allow game difficulty to have an effect
+            // on the grouping
+            if ( mx->Difficulty() == DF_EASY && followers>= 2 ) {
+                return false;
+            }
+            if ( mx->Difficulty() == DF_MEDIUM || mx->Difficulty() == DF_NORMAL ) {
+                if ( followers >= 3 )
+                    return false;
+            }
+            return true;
+        }
+
         mxobject* mxcharacter::Cmd_Fight ( void )
         {
-        bool    objectautokill = false ;
-        int        friends_armies=0;
+        bool needfight = true ;
+        bool killedwithobject = false;
 
             SetLastCommand ( CMD_FIGHT, IDT_NONE );
 
             std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
             
-            auto fightobject = mx->ObjectById(info->fightthing) ;
-            friends_armies = info->friends.armies ;
-
             // are we allowed to fight
             if ( !info->flags.Is(lif_fight) )
-                fightobject = nullptr ;
-
+               return nullptr ;
+                
             // is there anything to fight
+            auto fightobject = mx->ObjectById(info->fightthing) ;
             if ( fightobject == nullptr )
                 return nullptr ;
 
             SetLastCommand ( CMD_FIGHT,SafeIdt(fightobject)) ;
 
-            auto oinfo = Carrying();
-            objectautokill = oinfo ? oinfo->CanDestroy(fightobject) : false ;
-            
             // if there is any friends here
             // then we win by default
-            if (  friends_armies == 0 && !objectautokill && !sv_cheat_always_win_fight ) {
+            if (info->friends.armies)
+                needfight = false;
+
+            auto oinfo = Carrying();
+            if (oinfo != nullptr && oinfo->CanDestroy(fightobject)) {
+                needfight = false;
+                killedwithobject = true;
+            }
+            
+            if ( sv_cheat_always_win_fight )
+                needfight = false;
+
+            if ( !ShouldHaveOneToOneWithNasty() )
+                needfight = false;
+  
+            if ( needfight ) {
 
                 LostFight();
 
@@ -984,15 +1022,15 @@ namespace tme {
                     killedbyobject = fightobject ;
                     return fightobject;
                 }
-
             }
 
-            // we have killed the enemy
-            //
+            // we have killed the nasty
             mx->text->oinfo = fightobject;
 
-            // describe that
-            u32 message =  objectautokill ? oinfo->usedescription : SS_FIGHT ;
+            // describe how
+            u32 message = killedwithobject
+                ? oinfo->usedescription
+                : SS_FIGHT ;
 
             mx->SetLastActionMsg(mx->text->CookedSystemString(message, this));
 

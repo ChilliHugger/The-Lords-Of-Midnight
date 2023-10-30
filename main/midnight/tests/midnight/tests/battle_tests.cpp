@@ -1,11 +1,11 @@
 //
 //  battle_tests.cpp
-//  revenge
+//  midnight
 //
 //  Created by Chris Wild on 02/09/2023.
 //
 
-#include "battle_steps.h"
+#include "../steps/battle_steps.h"
 
 // GIVEN a hard game
 // AND a lord has followers

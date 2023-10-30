@@ -14,9 +14,7 @@ namespace tme {
         
         virtual scenarioinfo_t* GetInfoBlock() const;
         virtual MXRESULT Register ( mxengine* midnightx );
-        virtual MXRESULT UnRegister ( mxengine* midnightx );    
-        virtual mxentity* CreateEntity ( id_type_t type );
-        
+        virtual MXRESULT UnRegister ( mxengine* midnightx );
         
         virtual mxcharacter* IceCrownCarrier( void ) const ;
         virtual u32 CalcFearAdjuster( mxlocinfo* locinfo ) const;
@@ -37,8 +35,14 @@ namespace tme {
         bool            morkinAlive;
     };
 
-
     //namespace lom {
+    
+        class lom_entityfactory : public mxentityfactory
+        {
+        public:
+            virtual mxentity* Create(id_type_t type) override;
+        };
+    
         // info classes
         class lom_stronghold  : public mxstronghold
         {
@@ -46,7 +50,6 @@ namespace tme {
             lom_stronghold();
             virtual ~lom_stronghold();
             virtual u32 Remove ( mxrace_t race, mxunit_t type, u32 total );
-            
         };
     //}
     

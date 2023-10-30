@@ -6,10 +6,10 @@
 //
 
 #include "battle_steps.h"
-#include "../../src/tme/baseinc/processor_battle.h"
+#include "../../../src/tme/baseinc/processor_battle.h"
 
-static const LPCSTR ch_leader = "CH_LUXOR";
-static const LPCSTR ch_follower = "CH_MORKIN";
+static const string ch_leader = "CH_LUXOR";
+static const string ch_follower = "CH_MORKIN";
 static mxcharacter* leader = nullptr;
 static mxcharacter* follower = nullptr;
 static mxgridref previous_location;

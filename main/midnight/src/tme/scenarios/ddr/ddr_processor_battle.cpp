@@ -126,7 +126,7 @@ namespace tme {
     
     s32 ddr_battle::CalcCharacterAttackerHP(const ddr_character* attacker)
     {
-        if ( CharacterHasBattleObject(attacker) ) {
+        if ( attacker->HasBattleObject() ) {
             return 255;
         }
         
@@ -213,7 +213,7 @@ namespace tme {
     
     void ddr_battle::DefenderLoses(ddr_character* defender, s32 defender_hp, ddr_character* attacker )
     {
-        loseFight( defender, defender_hp );
+        defender->LostFight( defender_hp );
         if ( defender->IsDead() ) {
             MXTRACE("    Defender: %-16s is dead killed by %s", defender->Symbol().c_str(), attacker->Symbol().c_str() );
             CharacterKilledByCharacter(defender, attacker);
@@ -305,8 +305,7 @@ namespace tme {
         defender->LostBattle(true);
         defender->Flags().Reset(cf_wonbattle);
         defender->DecreaseDespondency(32);
-        
-        loseFight(defender, 0);
+        defender->LostFight(0);
         if ( defender->IsDead() ) {
             MXTRACE("      Defender: %-16s is dead, killed by soldiers.", defender->Symbol().c_str() );
             // FIX: 30/9/2014 - don't clear the fighting_against flag if the lord dying killed their foe
@@ -394,56 +393,6 @@ namespace tme {
         }
     }
     
-    bool ddr_battle::CharacterShouldLoseHorse(const ddr_character* character, s32 success)
-    {
-        return (success&3) == 1;
-    }
-    
-    bool ddr_battle::CharacterHasBattleObject( const ddr_character* character )
-    {
-        auto object = static_cast<ddr_object*>(character->Carrying());
-        return object != nullptr && object->power == OP_BATTLE ;
-    }
-    
-    bool ddr_battle::CharacterShouldDie(const ddr_character* character)
-    {
-        u32 r = mxrandom(255);
-        if ( (r&1) == 0 )
-            return false;
-        
-        if ( character->reckless > r )
-            return false;
-            
-        if ( CharacterHasBattleObject(character)) {
-            if ( mxrandom(255) >= 80 )
-                return false;
-        }
-            
-        return true;
-    }
-    
-    bool ddr_battle::CharacterIsProtected(const ddr_character* character)
-    {
-        auto object = static_cast<ddr_object*>(character->Carrying());
-        return object != nullptr && object->power == OP_PROTECTION;
-    }
-    
-    void ddr_battle::loseFight ( ddr_character* character, s32 success )
-    {
-        if ( CharacterIsProtected(character) ) {
-            return;
-        }
-
-        if ( CharacterShouldLoseHorse(character, success) ) {
-            character->Flags().Reset(cf_riding);
-        }
-        
-        if ( !CharacterShouldDie(character) ) {
-            return;
-        }
-        
-        character->Cmd_Dead();
-    }
 
     //RACE_MOONPRINCE         EQU 00h
     //RACE_FREE               EQU 02h

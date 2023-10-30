@@ -12,7 +12,7 @@
 // from the Gate of Varenorn?
 //
 
-#include "common_steps.h"
+#include "../steps/common_steps.h"
 
 #include <iostream>
 #include <vector>

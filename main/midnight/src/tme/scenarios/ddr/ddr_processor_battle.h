@@ -42,13 +42,7 @@ namespace tme {
         virtual void AttackerArmiesWinBattle(tme::mxitem *attacker);
         virtual void DefenderArmiesLosesBattle( mxitem *attacker, mxitem* defender );
 
-        virtual void loseFight ( ddr_character* character, s32 success );
         virtual void CharacterKilledByCharacter(ddr_character* defender, ddr_character* attacker );
-
-        virtual bool CharacterShouldLoseHorse(const ddr_character* character, s32 success);
-        virtual bool CharacterShouldDie(const ddr_character* character);
-        virtual bool CharacterIsProtected(const ddr_character* character);
-        virtual bool CharacterHasBattleObject( const ddr_character* character );
 
         s32 getArmySize( mxitem* item);
         void setArmySize(mxitem* item, s32 size);

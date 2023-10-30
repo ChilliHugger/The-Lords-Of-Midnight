@@ -985,7 +985,7 @@ void* TME_GetEntityUserData ( mxid id)
 }
 
 
-bool TME_Init ( u64 flags, mxdifficulty_t difficulty )
+bool TME_Init ( u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate )
 {
     // first we need an interface object
     mxi = new mxinterface ;
@@ -1004,7 +1004,10 @@ bool TME_Init ( u64 flags, mxdifficulty_t difficulty )
     }
 #endif
     
-
+    if ( afterCreate != nullptr ) {
+        afterCreate();
+    }
+    
     randomno::instance.randomize();
     
     // Tell the engine where to find its data

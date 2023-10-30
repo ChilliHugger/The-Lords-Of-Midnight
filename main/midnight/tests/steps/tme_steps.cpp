@@ -6,12 +6,20 @@
 //
 
 #include "tme_steps.h"
+#include "../mocks/mocks_entity.h"
 
 
 void TMEStep::NewStory(mxdifficulty_t difficulty)
 {
     TME_DeInit();
-    TME_Init(RF_DEFAULT, difficulty);
+        
+    //TME_Init(RF_DEFAULT, difficulty);
+    
+    TME_Init(RF_DEFAULT, difficulty, [] {
+        tme::mx->entityfactory = new mockentityfactory();
+    });
+
+    
 }
 
 void TMEStep::NightFalls()
@@ -25,7 +33,7 @@ void TMEStep::CurrentLordIsDead()
     TME_RefreshCurrentCharacter();
 }
 
-void TMEStep::SetCurrentLord(LPCSTR name)
+void TMEStep::SetCurrentLord(const string& name)
 {
     auto lord = GetCharacter(name);
     TME_CurrentCharacter(lord->SafeIdt(lord));
@@ -52,25 +60,25 @@ void TMEStep::GameLost()
 #endif
 }
 
-void TMEStep::LordCarryingObject(LPCSTR name, mxthing_t thing)
+void TMEStep::LordCarryingObject(const string& name, mxthing_t thing)
 {
     auto lord = GetCharacter(name);
     lord->carrying = tme::mx->ObjectById(thing);
  }
 
-void TMEStep::LordCarryingObject(LPCSTR name, LPCSTR object)
+void TMEStep::LordCarryingObject(const string& name, const string& object)
 {
     auto lord = GetCharacter(name);
     lord->carrying = GetObject(object);
  }
 
-void TMEStep::LordAtLocation(LPCSTR name, LPCSTR location)
+void TMEStep::LordAtLocation(const string& name, const string& location)
 {
     auto lord = GetCharacter(name);
     lord->Location( GetEntity<mxitem>(location)->Location() );
 }
 
-void TMEStep::LordsAtSameLocation(LPCSTR name1, LPCSTR name2)
+void TMEStep::LordsAtSameLocation(const string& name1, const string& name2)
 {
     auto lord1 = GetCharacter(name1);
     auto lord2 = GetCharacter(name2);
@@ -79,13 +87,13 @@ void TMEStep::LordsAtSameLocation(LPCSTR name1, LPCSTR name2)
 }
 
 
-void TMEStep::LordAtLocation(LPCSTR name, loc_t location)
+void TMEStep::LordAtLocation(const string& name, loc_t location)
 {
     auto lord = GetCharacter(name);
     lord->Location( location );
 }
 
-void TMEStep::LordIsNotRecruited(LPCSTR name)
+void TMEStep::LordIsNotRecruited(const string& name)
 {
     auto lord = GetCharacter(name);
     lord->Flags().Reset(cf_recruited);
@@ -93,7 +101,7 @@ void TMEStep::LordIsNotRecruited(LPCSTR name)
     lord->liege = nullptr ;
 }
 
-void TMEStep::LordIsRecruited(LPCSTR name)
+void TMEStep::LordIsRecruited(const string& name)
 {
     auto lord = GetCharacter(name);
     lord->Flags().Set(cf_recruited);
@@ -101,19 +109,19 @@ void TMEStep::LordIsRecruited(LPCSTR name)
     lord->liege = GetCharacter(ch_luxor);
 }
 
-void TMEStep::LordPerformsApproach(LPCSTR name1, LPCSTR name2)
+void TMEStep::LordPerformsApproach(const string& name1, const string& name2)
 {
     auto lord = GetCharacter(name1);
     lord->Cmd_Approach(GetCharacter(name2));
 }
                 
-bool TMEStep::LordHasBeenRecruited(LPCSTR name)
+bool TMEStep::LordHasBeenRecruited(const string& name)
 {
     auto lord = GetCharacter(name);
     return lord->Flags().Is(cf_recruited);
 }
 
-void TMEStep::LordsIsLookingAt(LPCSTR name1, LPCSTR name2)
+void TMEStep::LordsIsLookingAt(const string& name1, const string& name2)
 {
     auto lord1 = GetCharacter(name1);
     auto lord2 = GetCharacter(name2);
@@ -125,25 +133,31 @@ void TMEStep::LordsIsLookingAt(LPCSTR name1, LPCSTR name2)
     lord1->looking = DR_NORTH;
 }
 
-void TMEStep::LordMovesForward(LPCSTR name)
+void TMEStep::LordMovesForward(const string& name)
 {
     auto lord1 = GetCharacter(name);
     lord1->Cmd_MoveForward();
 }
 
-void TMEStep::LordIsDead(LPCSTR name)
+void TMEStep::LordFights(const string& name)
+{
+    auto lord1 = GetCharacter(name);
+    lord1->Cmd_Fight();
+}
+
+void TMEStep::LordIsDead(const string& name)
 {
     GetCharacter(name)->Cmd_Dead();
 }
 
-void TMEStep::LordKilledByObject(LPCSTR name, LPCSTR killedby)
+void TMEStep::LordKilledByObject(const string& name, const string& killedby)
 {
     auto lord = GetCharacter(name);
     lord->Cmd_Dead();
     lord->killedbyobject = GetObject(killedby);
 }
 
-void TMEStep::LordHasFollowers(LPCSTR lord, vector<string> names)
+void TMEStep::LordHasFollowers(const string& lord, vector<string> names)
 {
     auto leader = GetCharacter(lord);
     for (string &name : names) {
@@ -158,3 +172,28 @@ void TMEStep::LordHasFollowers(LPCSTR lord, vector<string> names)
         lord->Cmd_Follow(leader);
     }
 }
+
+void TMEStep::LordShouldDieInFight(const string& lord)
+{
+    auto mock = GetMockCharacter(lord);
+    mock->mockData.properties["ShouldDieInFight"] = "true";
+}
+
+void TMEStep::LordShouldNotDieInFight(const string& lord)
+{
+    auto mock = GetMockCharacter(lord);
+    mock->mockData.properties["ShouldDieInFight"] = "false";
+}
+
+void TMEStep::LordShouldLoseHorse(const string& lord)
+{
+    auto mock = GetMockCharacter(lord);
+    mock->mockData.properties["ShouldLoseHorse"] = "true";
+}
+
+void TMEStep::LordShouldNotLoseHorse(const string& lord)
+{
+    auto mock = GetMockCharacter(lord);
+    mock->mockData.properties["ShouldLoseHorse"] = "false";
+}
+

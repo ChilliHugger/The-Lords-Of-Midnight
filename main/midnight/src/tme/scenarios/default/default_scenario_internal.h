@@ -16,6 +16,13 @@ namespace tme {
         class mxobject ;
     //};
 
+    class mxentityfactory {
+    public:
+        virtual mxentity* Create ( id_type_t type );
+    };
+
+
+
         // ALIAS default_scenario
         class mxscenario 
         {
@@ -34,12 +41,11 @@ namespace tme {
             virtual void initialiseAfterCreate ( u32 version );
             virtual void updateAfterLoad ( u32 version );
      
-
-            virtual mxentity* CreateEntity ( id_type_t type );
             virtual void Serialize ( chilli::lib::archive& ar ) ;
 
             virtual void NightStart(void);
             virtual void NightStop(void);
+            
             virtual u32 CalcFearAdjuster(mxlocinfo* info) const ;
             virtual u32 CalcStrongholdAdjuster(void) const;
             virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character );
@@ -48,29 +54,32 @@ namespace tme {
                         
             virtual mxcharacter* CurrentMoonringWearer( void );
             virtual mxcharacter* MoonringWearer( void ) ;
+            virtual void CheckMoonringWearerDead ( void );
+            
             virtual mxcharacter* WhoHasObject( mxobject* object ) const ;
             virtual mxobject* PickupObject ( mxgridref loc );
             virtual void DeadCharactersDropObjects( void );
+            virtual bool DropObject ( mxgridref loc, mxobject* object );
+            
             virtual mxgridref FindLookingTowards( mxgridref loc, mxdir_t dir );
+
             virtual void ResetMapArmies ( void );
             virtual void SetMapArmies ( void );
-            
             virtual void RemoveMapArmies ( void );
+            virtual u32 FindArmiesAtLocation ( mxgridref loc, u32& enemies, u32& friends, flags32_t flags );
+            
             virtual void LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel );
             virtual void SetCharsLooking( void );
-            virtual bool DropObject ( mxgridref loc, mxobject* object );
+
             virtual bool InCharactersMemory ( mxitem* item ) ;
             virtual void ClearFromMemory ( mxgridref loc );
 
-            virtual void CheckMoonringWearerDead ( void );
             
             virtual bool GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, c_character* collection );
-            virtual u32 FindArmiesAtLocation ( mxgridref loc, u32& enemies, u32& friends, flags32_t flags );
             virtual u32 FindCharactersAtLocation ( mxgridref loc, c_character* characters, flags32_t flags );
-
             virtual c_character GetCharacterFollowers ( mxcharacter* leader );
+            
             virtual s32 BaseDoomdarkSuccess ( mxrace_t race, mxunit_t unit, const mxlocinfo& locinfo );
-
             
             virtual void GiveGuidance( mxcharacter* character, s32 hint );
             
@@ -85,11 +94,10 @@ namespace tme {
             bool isLocationImpassable(mxgridref loc, mxitem* target) const;
             
         public:
-            flags32_t    features;
-            
-            mxobject*       moonring;
-            mxcharacter*    doomdark;
-            mxcharacter*    luxor;
+            flags32_t           features;
+            mxobject*           moonring;
+            mxcharacter*        doomdark;
+            mxcharacter*        luxor;
         };
     
         #define DEF_SCENARIO(x) (mx->scenario)->x
