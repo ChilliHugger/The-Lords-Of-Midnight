@@ -172,6 +172,8 @@ namespace tme {
         virtual void UseSpellOfSwiftness();
         virtual void UseRunesOfProtection();
         virtual void UseAllOtherObjects();
+        
+        virtual bool DesiredObjectAtLocation();
 
 
     public:

@@ -43,6 +43,7 @@ public:
     
     static void LordCarryingObject(const string& name, mxthing_t thing);
     static void LordCarryingObject(const string& name, const string& object);
+    static void LordNotCarryingObject(const string& name);
 
     static void LordAtLocation(const string& name, const string& location);
     static void LordAtLocation(const string& name, loc_t location);

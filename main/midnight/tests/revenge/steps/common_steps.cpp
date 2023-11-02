@@ -74,3 +74,15 @@ void DDRStep::LordsNotAtGateOfVarenorn(vector<string> names)
     }
 }
 
+void DDRStep::ObjectAtLocation(const string& name, mxgridref loc)
+{
+    auto object = GetObject(name);
+    object->Location(loc);
+    object->carriedby = nullptr;
+    tme::mx->gamemap->SetObject( loc, true );
+ }
+
+void DDRStep::LordTakesTurn(const string& name)
+{
+    GetDDRCharacter(name.c_str())->Turn();
+}
