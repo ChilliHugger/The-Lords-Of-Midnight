@@ -170,8 +170,8 @@ using namespace chilli::types;
 #define SOLDIERS_RECRUIT_GAP            20
 #define MIN_AI_MOVEMENT_ENERGY          96
 
-#define DAWN_ENERGY_BOOST               20
-#define DAWN_ENERGY_BOOST_AI            10
+#define DAWN_ENERGY_BOOST               10
+#define DAWN_ENERGY_BOOST_AI            20
 
         // MAX 128
         enum mxterrain_t {
