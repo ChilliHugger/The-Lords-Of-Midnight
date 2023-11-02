@@ -100,5 +100,14 @@ TEST_CASE("OB_BOW_TORORTHANE is a bow not a hammer")
     
     REQUIRE( item != nullptr );
     REQUIRE( item->type == OT_BOW );
+}
 
+TEST_CASE("CH_IMGORARG should be loyal to the dwarves")
+{
+    TMEStep::NewStory();
+    
+    auto item = static_cast<mxcharacter*>(tme::mx->EntityByName("CH_IMGORARG", IDT_CHARACTER));
+    
+    REQUIRE( item != nullptr );
+    REQUIRE( item->loyalty == RA_DWARF );
 }
