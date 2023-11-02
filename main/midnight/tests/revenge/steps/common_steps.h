@@ -22,9 +22,13 @@ public:
     static void MorkinRescued();
     static void LordAtGateOfVarenorn(LPCSTR name);
     static void LordNotAtGateOfVarenorn(LPCSTR name);
+    
+    static void LordTakesTurn(const string& name);
 
     static void LordsAtGateOfVarenorn(vector<string> names);
     static void LordsNotAtGateOfVarenorn(vector<string> names);
+
+    static void ObjectAtLocation(const string& name, mxgridref loc);
 
 
     static constexpr LPCSTR ch_shareth = "CH_SHARETH";

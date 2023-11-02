@@ -1271,7 +1271,20 @@ mxdir_t calcDirection ( mxgridref loc1, mxgridref loc2 )
 [HOME]
     Goto home location
  */
+ 
+bool ddr_character::DesiredObjectAtLocation()
+{
+    if (IsCarryingDesiredObject())
+        return false;
 
+    if ( desired_object == nullptr )
+        return false;
+        
+    if ( desired_object->IsCarried() )
+        return;
+        
+    return desired_object->Location() == Location();
+}
 
 void ddr_character::moveCharacterSomewhere ( void )
 {
@@ -1296,7 +1309,7 @@ void ddr_character::moveCharacterSomewhere ( void )
     
     for (;;) {
         
-        if( !IsCarryingObject() )
+        if( !IsCarryingObject() || DesiredObjectAtLocation() )
             Cmd_PickupObject();
         
         mxdir_t direction = calcDirection(Location(),targetLocation);

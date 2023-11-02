@@ -64,14 +64,18 @@ namespace utils {
     void UpdateDDRObjects::FixInvalidTypes()
     {
         // 118 | OB_SWORD_THORTHAK > should be a SPEAR
-        auto item1 = static_cast<ddr_object*>(mx->EntityByName("OB_SWORD_THORTHAK", IDT_OBJECT));
-        item1->type = OT_SPEAR;
-        item1->symbol = "OB_SPEAR_THORTHAK";
+        auto sword = static_cast<ddr_object*>(mx->EntityByName("OB_SWORD_THORTHAK", IDT_OBJECT));
+        if (sword!=nullptr) {
+            sword->type = OT_SPEAR;
+            sword->symbol = "OB_SPEAR_THORTHAK";
+        }
         
         // 124 | OB_HAMMER_TORORTHANE > should be a BOW 
-        auto item2 = static_cast<ddr_object*>(mx->EntityByName("OB_HAMMER_TORORTHANE", IDT_OBJECT));
-        item2->type = OT_BOW;
-        item2->symbol = "OB_BOW_TORORTHANE";
+        auto hammer = static_cast<ddr_object*>(mx->EntityByName("OB_HAMMER_TORORTHANE", IDT_OBJECT));
+        if (hammer!=nullptr) {
+            hammer->type = OT_BOW;
+            hammer->symbol = "OB_BOW_TORORTHANE";
+        }
     }
     
 #endif
