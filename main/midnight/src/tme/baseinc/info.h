@@ -1006,7 +1006,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual void Displace ( void );
             virtual void DecreaseEnergy ( s32 amount );
             virtual void IncreaseEnergy ( s32 amount );
-            virtual void StartDawn ( void );
+            virtual void InitNightProcessing ( void );
             virtual bool HasBattleInfo() const ;
             virtual mxthing_t LocationThing() const ;
             virtual void RefreshLocationBasedVariables ( const mxlocinfo* info ) ;

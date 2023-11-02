@@ -349,3 +349,112 @@ SCENARIO("In normal mode when follower loses to another lord")
         }
     }
 }
+
+// GIVEN a lord is near enemies
+// WHEN the lord enters battle
+// THEN the lords should be preparing for battle
+
+// GIVEN a lord is near enemies
+// WHEN a lord fails an approach
+// THEN the lords should be preparing for battle
+
+// GIVEN a lord is at the same location as an enemy
+// WHEN dawn breaks
+// THEN the lords should be preparing for battle
+
+// GIVEN a lord is preparing for battle
+// WHEN the lord moves
+// THEN they should no longer be preparing for battle
+
+SCENARIO("Lord prepares to do battle")
+{
+    auto lord = TMEStep::ch_luxor;
+    auto enemy = DDRStep::ch_shareth;
+    auto enemyStronghold = "SH_CITY_IMIRIEL";
+    auto location = mxgridref(10,10);
+    
+    auto LordPreparesForBattle = [lord]() {
+        REQUIRE( GetCharacter(lord)->Flags().Is(cf_preparesbattle) );
+    };
+
+    auto LordNotPreparesForBattle = [lord]() {
+        REQUIRE( !GetCharacter(lord)->Flags().Is(cf_preparesbattle) );
+    };
+    
+    TMEStep::NewStory();
+    
+    LordNotPreparesForBattle();
+    
+    GIVEN("a lord is near enemies")
+    {
+        TMEStep::LordAtLocation(enemy, location);
+        TMEStep::LordsIsLookingAt(lord, enemy);
+    
+        WHEN("a lord enters battle")
+        {
+            GetCharacter(lord)->Cmd_Attack();
+            
+            THEN("the lords should be preparing for battle")
+            {
+                LordPreparesForBattle();
+            }
+        }
+        
+        WHEN("a lord fails an approach")
+        {
+            GetCharacter(lord)->Cmd_Approach();
+            
+            THEN("the lords should be preparing for battle")
+            {
+                LordPreparesForBattle();
+            }
+        }
+    }
+    
+    GIVEN("a lord is at the same location as an enemy lord")
+    {
+        TMEStep::LordAtLocation(enemy, location);
+        TMEStep::LordsAtSameLocation(enemy, lord);
+        
+        WHEN("dawn breaks")
+        {
+            DDRStep::CharactersDawnBreaks();
+        
+            THEN("the lords should be preparing for battle")
+            {
+                LordPreparesForBattle();
+            }
+        }
+    }
+
+    GIVEN("a lord is at the same location as an enemy stronghold")
+    {
+        TMEStep::LordAtLocation(lord, enemyStronghold);
+        
+        WHEN("dawn breaks")
+        {
+            DDRStep::CharactersDawnBreaks();
+        
+            THEN("the lords should be preparing for battle")
+            {
+                LordPreparesForBattle();
+            }
+        }
+    }
+    
+    GIVEN("a lord is preparing for battle")
+    {
+        GetCharacter(lord)->Flags().Set(cf_preparesbattle);
+
+        WHEN("the lord moves")
+        {
+            GetCharacter(lord)->Cmd_WalkForward();
+
+            THEN("the lords should not be preparing for battle")
+            {
+                LordNotPreparesForBattle();
+            }
+        }
+    }
+
+}

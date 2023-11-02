@@ -44,19 +44,7 @@ namespace tme {
             
             RemoveMidwinterFromMap();
             
-            // place all lords at dawn
-            FOR_EACH_CHARACTER(c) {
-                auto character = static_cast<ddr_character*>(c);
-                
-                CONTINUE_IF( character->IsDead());
-                
-                character->StartDawn();
-                
-#if !defined( _TME_DEMO_MODE_ )
-                character->Turn();
-#endif
-            }
-            
+            LordsProcessStart();
             
             static_cast<ddr_battle*>(mx->battle)->Process();
             
@@ -69,6 +57,42 @@ namespace tme {
             // tidy up
 
             // characters
+            LordsProcessEnd();
+
+            // strongholds
+            FOR_EACH_STRONGHOLD(s) {
+                auto stronghold = static_cast<ddr_stronghold*>(s);
+                stronghold->OnRespawn();
+            }
+
+            // check morkin dead
+            // check shareth dead
+            static_cast<ddr_gameover*>(mx->gameover)->checkImportantCharactersDead();
+            
+            MoveMidwinter();
+            
+            mx->scenario->SetMapArmies();
+            mx->scenario->NightStop();
+        }
+    
+        void ddr_night::LordsProcessStart()
+        {
+            // place all lords at dawn
+            FOR_EACH_CHARACTER(c) {
+                auto character = static_cast<ddr_character*>(c);
+                
+                CONTINUE_IF( character->IsDead());
+                
+                character->InitNightProcessing();
+                
+#if !defined( _TME_DEMO_MODE_ )
+                character->Turn();
+#endif
+            }
+        }
+
+        void ddr_night::LordsProcessEnd()
+        {
             FOR_EACH_CHARACTER(c) {
                 auto character = static_cast<ddr_character*>(c);
                 
@@ -103,26 +127,10 @@ namespace tme {
                 auto stronghold = dynamic_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(character->Location()));
                 if ( stronghold && !stronghold->IsFriend(character))
                     enemies++;
-                if ( enemies == 0 )
-                    character->Flags().Reset(cf_preparesbattle/*|cf_inbattle*/);
+                if ( enemies != 0 )
+                    character->Flags().Set(cf_preparesbattle);
             }
-
-            // strongholds
-            FOR_EACH_STRONGHOLD(s) {
-                auto stronghold = static_cast<ddr_stronghold*>(s);
-                stronghold->OnRespawn();
-            }
-
-            // check morkin dead
-            // check shareth dead
-            static_cast<ddr_gameover*>(mx->gameover)->checkImportantCharactersDead();
-            
-            MoveMidwinter();
-            
-            mx->scenario->SetMapArmies();
-            mx->scenario->NightStop();
         }
-    
     
     
         void ddr_night::MoveMidwinter ( void )

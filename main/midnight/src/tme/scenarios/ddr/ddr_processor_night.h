@@ -13,7 +13,11 @@ namespace tme {
         virtual void Process(void);
         virtual void MoveMidwinter ();
         virtual void RemoveMidwinterFromMap();
-     };
+        
+        virtual void LordsProcessStart();
+        virtual void LordsProcessEnd();
+
+    };
 }
 
 #endif //_DDR_NIGHTPROCESSOR_H_INCLUDED_

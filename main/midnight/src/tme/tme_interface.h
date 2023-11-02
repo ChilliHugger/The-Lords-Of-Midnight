@@ -147,30 +147,30 @@ using namespace tme::flags;
 
 
 // character helpers
-inline bool Character_IsResting(const character& c)            { return c.flags.Is(cf_resting); }
-inline mxtime_t Character_Time(const character& c)        { return Character_IsResting(c) ? tme::variables::sv_time_night : c.time ; }
-inline bool Character_IsNight(const character& c)            { return Character_Time(c)==(mxtime_t)tme::variables::sv_time_night; }
-inline bool Character_IsDawn(const character& c)            { return Character_Time(c)==(mxtime_t)tme::variables::sv_time_dawn; }
-inline bool Character_IsWaiting(const character& c)            { return c.wait!=WM_NONE; }
-inline bool Character_IsHidden(const character& c)            { return c.flags.Is(cf_hidden); }
-inline bool Character_IsRiding(const character& c)            { return c.flags.Is(cf_riding); }
-inline bool Character_IsAlive(const character& c)            { return c.flags.Is(cf_alive); }
-inline bool Character_IsDead(const character& c)            { return !c.flags.Is(cf_alive); }
-inline bool Character_IsRecruited(const character& c)        { return c.flags.Is(cf_recruited); }
-inline bool Character_IsAllowedArmy(const character& c)        { return c.flags.Is(cf_army); }
-inline bool Character_IsAllowedHide(const character& c)        { return c.flags.Is(cf_hide); }
-inline bool Character_IsAllowedHorse(const character& c)    { return c.flags.Is(cf_horse); }
-inline bool Character_IsAllowedMoonring(const character& c)    { return c.flags.Is(cf_moonring); }
-inline bool Character_IsAllowedIcecrown(const character& c)    { return c.flags.Is(cf_icecrown); }
-inline bool Character_CanDestroyIcecrown(const character& c){ return c.flags.Is(cf_destroyicecrown); }
-inline bool Character_IsInBattle(const character& c)        { return c.flags.Is(cf_inbattle); }
-inline bool Character_HasWonBattle(const character& c)        { return c.flags.Is(cf_wonbattle); }
+inline bool Character_IsResting(const character& c)             { return c.flags.Is(cf_resting); }
+inline mxtime_t Character_Time(const character& c)              { return Character_IsResting(c) ? tme::variables::sv_time_night : c.time ; }
+inline bool Character_IsNight(const character& c)               { return Character_Time(c)==(mxtime_t)tme::variables::sv_time_night; }
+inline bool Character_IsDawn(const character& c)                { return Character_Time(c)==(mxtime_t)tme::variables::sv_time_dawn; }
+inline bool Character_IsWaiting(const character& c)             { return c.wait!=WM_NONE; }
+inline bool Character_IsHidden(const character& c)              { return c.flags.Is(cf_hidden); }
+inline bool Character_IsRiding(const character& c)              { return c.flags.Is(cf_riding); }
+inline bool Character_IsAlive(const character& c)               { return c.flags.Is(cf_alive); }
+inline bool Character_IsDead(const character& c)                { return !c.flags.Is(cf_alive); }
+inline bool Character_IsRecruited(const character& c)           { return c.flags.Is(cf_recruited); }
+inline bool Character_IsAllowedArmy(const character& c)         { return c.flags.Is(cf_army); }
+inline bool Character_IsAllowedHide(const character& c)         { return c.flags.Is(cf_hide); }
+inline bool Character_IsAllowedHorse(const character& c)        { return c.flags.Is(cf_horse); }
+inline bool Character_IsAllowedMoonring(const character& c)     { return c.flags.Is(cf_moonring); }
+inline bool Character_IsAllowedIcecrown(const character& c)     { return c.flags.Is(cf_icecrown); }
+inline bool Character_CanDestroyIcecrown(const character& c)    { return c.flags.Is(cf_destroyicecrown); }
+inline bool Character_IsInBattle(const character& c)            { return c.flags.Is(cf_inbattle); }
+inline bool Character_HasWonBattle(const character& c)          { return c.flags.Is(cf_wonbattle); }
 
 #if defined(_DDR_)
-inline bool Character_HasUsedObject(const character& c)        { return c.flags.Is(cf_usedobject); }
-inline bool Character_IsInTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
-inline bool Character_InTunnel(const character& c)        { return c.flags.Is(cf_tunnel); }
-inline bool Character_IsPreparingForBattle(const character& c)        { return c.flags.Is(cf_preparesbattle); }
+inline bool Character_HasUsedObject(const character& c)         { return c.flags.Is(cf_usedobject); }
+inline bool Character_IsInTunnel(const character& c)            { return c.flags.Is(cf_tunnel); }
+inline bool Character_InTunnel(const character& c)              { return c.flags.Is(cf_tunnel); }
+inline bool Character_IsPreparingForBattle(const character& c)  { return c.flags.Is(cf_preparesbattle); }
 bool Character_EnterTunnel ( const character& c );
 //bool Character_ExitTunnel ( const character& c );
 bool Character_Use ( const character& c );
@@ -178,8 +178,8 @@ bool Character_Give ( const character& c, mxid to );
 bool Character_Take ( const character& c );
 #endif
 
-inline bool Character_IsFollowing(const character& c)        { return c.following!=IDT_NONE; }
-inline bool Character_IsLeading(const character& c)        { return c.followers!=0; }
+inline bool Character_IsFollowing(const character& c)           { return c.following!=IDT_NONE; }
+inline bool Character_IsLeading(const character& c)             { return c.followers!=0; }
 
 bool Character_IsControllable( mxid id );
 void Character_Lookat ( const character& c, tme::loc_t location );
@@ -214,9 +214,9 @@ bool Character_Army ( mxid id, tme::scenarios::exports::army_t& out );
 #if defined(_DDR_)
 inline bool Location_IsVisible(const maplocation& l)            { return l.flags.Is(lf_seen); }
 inline bool Location_HasCharacters(const maplocation& l)        { return l.flags.Is(lf_character); }
-inline bool Location_HasTunnel(const maplocation& l)        { return l.flags.Is(lf_tunnel); }
+inline bool Location_HasTunnel(const maplocation& l)            { return l.flags.Is(lf_tunnel); }
 inline bool Location_HasTunnelExit(const maplocation& l)        { return l.flags.Is(lf_tunnel_exit); }
-inline bool Location_HasTunnelEntrance(const maplocation& l)        { return l.flags.Is(lf_tunnel_entrance); }
+inline bool Location_HasTunnelEntrance(const maplocation& l)    { return l.flags.Is(lf_tunnel_entrance); }
 #endif
 
 

@@ -17,6 +17,7 @@ public:
     static void GameWon();
     static void GameLost();
     
+    static void CharactersDawnBreaks();
 
     static void LordKilledByCharacter(LPCSTR name, LPCSTR killedby);
     static void MorkinRescued();

@@ -1495,7 +1495,7 @@ namespace tme {
             return carrying ;
         }
             
-        void mxcharacter::StartDawn ( void )
+        void mxcharacter::InitNightProcessing ( void )
         {
             if (IsDead()) {
                 return;
