@@ -169,7 +169,7 @@ using namespace chilli::types;
 #define DESPONDENCY_BOOST_KILLED_FOE    32
 #define SOLDIERS_RECRUIT_GAP            20
 #define MIN_AI_MOVEMENT_ENERGY          96
-#define RESTING_ENERGY_BOOST            32
+
 #define DAWN_ENERGY_BOOST               20
 #define DAWN_ENERGY_BOOST_AI            10
 

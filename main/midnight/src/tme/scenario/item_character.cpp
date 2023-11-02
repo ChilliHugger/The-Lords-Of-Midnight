@@ -310,7 +310,7 @@ namespace tme {
             // 3. are we generous
             
             // rest
-            info->flags.Set(lif_rest);
+            // info->flags.Set(lif_rest);
             
             mxthing_t thing = (mxthing_t)info->mapsqr.object;
 #if defined(_DDR_)

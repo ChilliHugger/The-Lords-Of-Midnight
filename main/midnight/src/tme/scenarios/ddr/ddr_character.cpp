@@ -103,6 +103,9 @@ namespace tme {
     {
         mxlocinfo* info = mxcharacter::GetLocInfo();
     
+        // can we rest
+        info->flags.Set(lif_rest);
+    
         // check if we can give object
         if ( !IsInBattle() ) {
             if ( IsCarryingObject() && Carrying()->CanDrop() && traits.Is(ct_generous) ) {
@@ -869,7 +872,6 @@ namespace tme {
         
         time = sv_time_night;
         
-        
         // we need to do a merge
         FOR_EACH_FOLLOWER(f) {
             f->EnterBattle();
@@ -1409,10 +1411,11 @@ mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )
 void ddr_character::InitNightProcessing ( void )
 {
     if ( !IsDead() ) {
-        
-        if ( IsResting() )
-            IncreaseEnergy(RESTING_ENERGY_BOOST);
-        
+                
+        if (IsResting()) {
+            IncreaseEnergy( Time() );
+        }
+
         if ( IsAIControlled() )
             IncreaseEnergy( DAWN_ENERGY_BOOST_AI );
         else
