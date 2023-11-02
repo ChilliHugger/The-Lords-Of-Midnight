@@ -36,6 +36,7 @@ namespace utils {
     {
     public:
         static void FixInvalidTypes();
+        static void FixRecruitmentFlags();
     };
 #endif
     

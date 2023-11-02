@@ -43,7 +43,7 @@ namespace utils {
         flags.Set(old_flags);
         return flags;
     }
-
+    
     void FixMorkinFromBeingAIAfterRecruited()
     {
         auto morkin = mx->CharacterBySymbol("CH_MORKIN");
@@ -80,6 +80,22 @@ namespace utils {
         auto imgorarg = static_cast<mxcharacter*>(mx->EntityByName("CH_IMGORARG", IDT_CHARACTER));
         if (imgorarg!=nullptr) {
             imgorarg->loyalty = RA_DWARF;
+        }
+    }
+    
+    void UpdateDDRObjects::FixRecruitmentFlags()
+    {
+        auto objects = { "OB_CROWN_VARENAND",
+                         "OB_CROWN_CARUDRIUM",
+                         "OB_SPELL_THIGRORN",
+                         "OB_RUNES_FINORN",
+                         "OB_CROWN_IMIRIEL" };
+                         
+        for ( auto name : objects ) {
+            auto object = static_cast<mxobject*>(mx->EntityByName(name, IDT_OBJECT));
+            if (object!=nullptr) {
+                object->Flags().Set(of_recruitment);
+            }
         }
     }
     

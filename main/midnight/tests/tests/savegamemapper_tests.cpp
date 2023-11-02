@@ -111,3 +111,21 @@ TEST_CASE("CH_IMGORARG should be loyal to the dwarves")
     REQUIRE( item != nullptr );
     REQUIRE( item->loyalty == RA_DWARF );
 }
+
+TEST_CASE("Special objects can aid recruitment")
+{
+    auto object = GENERATE(
+                    "OB_CROWN_VARENAND",
+                    "OB_CROWN_CARUDRIUM",
+                    "OB_SPELL_THIGRORN",
+                    "OB_RUNES_FINORN",
+                    "OB_CROWN_IMIRIEL");
+                
+    TMEStep::NewStory();
+    
+    auto item = static_cast<ddr_object*>(tme::mx->EntityByName(object, IDT_OBJECT));
+    REQUIRE( item != nullptr );
+    REQUIRE( item->CanHelpRecruitment() );
+   
+    
+}
