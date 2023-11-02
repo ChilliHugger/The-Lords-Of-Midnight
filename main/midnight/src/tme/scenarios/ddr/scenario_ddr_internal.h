@@ -71,8 +71,8 @@ namespace tme {
         virtual MXRESULT FillExportData ( info_t* data );
         virtual void Serialize ( archive& ar );
 
-        FLAG_PROPERTY( CanHelpRecruitment,        of_recruitment )
-        FLAG_PROPERTY( IsRandomStart,    of_randomstart )
+        FLAG_PROPERTY( CanHelpRecruitment,  of_recruitment )
+        FLAG_PROPERTY( IsRandomStart,       of_randomstart )
     
         bool IsSpecial() const;
         

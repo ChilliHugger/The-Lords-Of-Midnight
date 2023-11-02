@@ -182,6 +182,7 @@ MXTRACE("Place Objects On Map");
     
     // remap
     utils::UpdateDDRObjects::FixInvalidTypes();
+    utils::UpdateDDRObjects::FixRecruitmentFlags();
         
     mxscenario::initialiseAfterCreate(version);
 
@@ -192,6 +193,8 @@ void ddr_x::updateAfterLoad ( u32 version )
     if ( version >= 11 ) {
         utils::FixMorkinFromBeingAIAfterRecruited();
     }
+
+    utils::UpdateDDRObjects::FixRecruitmentFlags();
 
     mxscenario::updateAfterLoad(version);
 }
