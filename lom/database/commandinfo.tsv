@@ -1,0 +1,15 @@
+Version	Id	Symbol	Flags	Name	Success Time	Failure Time
+1	0	CMD_NONE		None	0	0
+1	1	CMD_MOVE		Move	0	0
+1	2	CMD_APPROACH		Approach	0	0
+1	3	CMD_RECRUITMEN		RecruitMen	0	0
+1	4	CMD_POSTMEN		PostMen	0	0
+1	5	CMD_ATTACK		Attack	0	0
+1	6	CMD_FIGHT		Fight	0	0
+1	7	CMD_REST		Rest	0	0
+1	8	CMD_HIDE		Hide	0	0
+1	9	CMD_UNHIDE		UnHide	0	0
+1	10	CMD_SEEK		Seek	0	0
+1	11	CMD_TAKEOBJECT		TakeObject	0	0
+1	12	CMD_DROPOBJECT		DropObject	0	0
+1	13	CMD_WAIT		Wait	0	0

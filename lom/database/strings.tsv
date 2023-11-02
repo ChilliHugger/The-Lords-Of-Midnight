@@ -1,0 +1,102 @@
+Version	Id	Symbol	Text
+1	0	SS_ADVERBS	utterly |very |-|quite |slightly |-|very |utterly |
+1	1	SS_NUMBERS	one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand
+1	2	SS_ENERGYTOKENS	invigorated|tired
+1	3	SS_FEARTOKENS	mild|cold
+1	4	SS_COURAGETOKEN	bold|afraid
+1	5	SS_DEFAULT_TERRAIN	the {terrain:plural} of {area:text}
+1	6	SS_LOCATION_DOMAIN	{terrain:single} in the Domain of {area:text}
+1	7	SS_LOCATION_NOTDOMAIN	{terrain:text}
+1	8	SS_DAWN	.{lf}{crlf}{cr}  Do you want Dawn? 
+1	9	SS_NIGHT	  Night has fallen and the Foul are abroad! {case:first}{special:days} {plural:day:days} {plural:has:have} passed since the War of the Solstice began
+1	10	SS_THINGATLOCATION	{case:first}{char:loc:obj:name} are abroad. 
+1	11	SS_RECRUITMEN	{char:name} has recruited {number:%d} %s from {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
+1	12	SS_POSTMEN	{char:name} has placed {number:%d} %s on guard at {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
+1	13	SS_ITISNIGHT	It is night
+1	14	SS_ITISDAWN	It is dawn
+1	15	SS_LESSTHAN	Less than {char:time} {plural:hour:hours} of the day {plural:remains:remain}
+1	16	SS_HOURSOFDAY	{case:first}{char:time} {plural:hour:hours} of the day {plural:remains:remain}
+1	17	SS_CHARACTER_ENERGY	{char:name} is {char:energy}
+1	18	SS_CHARACTER_FEAR	The ice fear is {char:fear}
+1	19	SS_CHARACTER_COURAGE	{char:name} is {char:courage}
+1	20	SS_CARRYNOTHING	{case:first}{char:gender:heshe} is carrying nothing
+1	21	SS_CARRYING	{case:first}{char:gender:heshe} has with {char:gender:himher} {char:obj:text}
+1	22	SS_KILLED_OBJECT	{char:battle:obj:name} killed {char:gender:himher}. 
+1	23	SS_KILLED_BATTLE	{case:first}{char:gender:heshe} was killed in battle. %s
+1	24	SS_HIDDEN	{case:first}{char:name} is hidden. 
+1	25	SS_MUSTFIGHT	{case:first}{char:loc:obj:name} are abroad and {char:gender:heshe} must fight or hide. 
+1	26	SS_MESSAGE1	{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. 
+1	27	SS_MESSAGE2	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:army}
+1	28	SS_MESSAGE3	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group}. 
+1	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group}. 
+1	30	SS_MESSAGE5	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}. 
+1	31	SS_MESSAGE6	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}. 
+1	32	SS_SEEK	{case:first}{char:gender:heshe} has found {obj:text}. 
+1	33	SS_FIGHT	{case:first}{char:gender:heshe} slew the {obj:name}. 
+1	34	SS_GUIDANCE1	A voice calls, "Looking for {char:longname}, you must seek {char:loc:name}." 
+1	35	SS_GUIDANCE2	can destroy the Ice Crown
+1	36	SS_SEEK_NOTHING	{case:first}{char:gender:heshe} has found nothing. 
+1	37	SS_BATTLE1	In the battle of {char:battle:loc:area:text}, {char:name}
+1	38	SS_BATTLE_NONE	In the battle of {char:battle:loc:area:text}, 
+1	39	SS_BATTLE_WARRIORS	{str:37} lost %s warriors. 
+1	40	SS_BATTLE_RIDERS	{str:37} lost %s riders. 
+1	41	SS_BATTLE_WARRIORS_RIDERS	{str:37} lost %s warriors and %s riders. 
+1	42	SS_BATTLE_CHARACTER_SLEW	{char:name} alone slew %s of the enemy. 
+1	43	SS_BATTLE_WARRIORS_SLEW	{case:first}{char:gender:hisher} warriors slew %s. 
+1	44	SS_BATTLE_RIDERS_SLEW	{case:first}{char:gender:hisher} riders slew %s. 
+1	45	SS_VICTORY_FREE	Victory went to the free! 
+1	46	SS_VICTORY_ENEMY	Victory went to the enemy! 
+1	47	SS_VICTORY_NONE	The battle continues. . . 
+1	48	SS_ARMY_CHARACTER_COMMANDS	{char:longname} commands
+1	49	SS_ARMY_CHARACTER_WARRIORS	{case:first}{char:gender:hisher} warriors are %s. 
+1	50	SS_ARMY_CHARACTER_RIDERS	{case:first}{char:gender:hisher} riders are %s. 
+1	51	SS_ARMY_NONE	{str:48} no army. 
+1	52	SS_ARMY_WARRIORS	{str:48} %s warriors but no riders. {str:49}
+1	53	SS_ARMY_RIDERS	{str:48} no warriors but %s riders. {str:50}
+1	54	SS_ARMY_WARRIORS_RIDERS	{str:48} %s warriors and %s riders. {str:49}{str:50}
+1	55	SS_TERRAIN_PLURAL	{terrain:name}s
+1	56	SS_TERRAIN_SINGLE	a {terrain:name}
+1	57	SS_AREA_PREFIXED	{area:prefix} {area:name}
+1	58	SS_DEFEAT1	{lf}{crlf}{cr}Victory to Doomdark! 
+1	59	SS_DEFEAT2	{lf}{crlf}{cr}Luxor and Morkin are dead!{str:58}
+1	60	SS_DEFEAT3	{lf}{crlf}{cr}Xajorkith has fallen and Morkin is dead!{str:58}
+1	61	SS_VICTORY1	{lf}{crlf}{cr}Victory to the Free! 
+1	62	SS_VICTORY2	{lf}{crlf}{cr}Ushgarak has fallen.{str:61}
+1	63	SS_VICTORY3	{lf}{crlf}{cr}Lorgrim the Wise has destroyed the Ice Crown.{str:61}
+1	64	SS_VICTORY4	{lf}{crlf}{cr}Morkin cast the Ice Crown into Lake Mirrow and destroyed it.{str:61}
+1	65	SS_VICTORY5	{lf}{crlf}{cr}Ushgarak has fallen and the Ice Crown has been destroyed.{str:61}
+1	66	SS_VICTORY6	{lf}{crlf}{cr}Fawkrin the Skulkrin has destroyed the Ice Crown.{str:61}
+1	67	SS_ZEROTOKENS	|no|none|zero
+1	68	SS_WARRIORS_RIDERS	{char:longname} has an army of %s warriors and %s riders. 
+1	69	SS_MESSAGE7	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. 
+1	70	SS_BATTLE2	.{lf}{crlf}{cr}  The bloody sword of battle brings death in the Domain of {loc:area:text}
+1	71	SS_BATTLE3	 and of {loc:area:text}
+1	72	SS_PLURALTOKENS	has|have|day|days
+1	73	SS_STRONGHOLD1	The %s is occupied by armies loyal to %s. 
+1	74	SS_STRONGHOLD2	The %s is owned by %s. 
+1	75	SS_STRONGHOLD3	%s holds %s %s of the %s. 
+1	76	SS_FIGHT2	{case:first}{char:gender:heshe} slew the {obj:name} with {char:obj:text}. 
+1	77	SS_FIGHT3	The {obj:name} fled from the warmth of {char:obj:text}. 
+1	78	SS_FIGHT4	{case:first}{char:gender:heshe} touches the {obj:name} with {char:obj:text} and they were slain by their own fear. 
+1	79	SS_PREFIX_HERE	  Here
+1	80	SS_PREFIX_AHEAD	  Ahead
+1	81	SS_PREFIX_DIRECTION	  To the {char:dir:name}
+1	82	SS_SEEK_MSG1	A voice calls, "Farflame the Dragonlord {str:35}." 
+1	83	SS_SEEK_MSG2	A voice calls, "Fawkrin the Skulkrin {str:35}." 
+1	84	SS_SEEK_MSG3	A voice calls, "Lorgrim the Wise {str:35}." 
+1	85	SS_SEEK_MSG4	A voice calls, "Lake Mirrow {str:35}." 
+1	86	SS_OBJECT_NAME	{obj:type} of {obj:name}
+1	87	SS_OBJECT_POWER	whose power is in {obj:power}
+1	88	SS_OBJECT_FULL_DESCRIPTION	the {str:86} {str:87}. 
+1	89	SS_VICTORY7	{lf}{crlf}{cr}Farflame the Dragonlord has destroyed the Ice Crown.{str:61}
+1	90	SS_MESSAGE8	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:courage}. {char:text:obj}. 
+1	91	SS_CHARACTER_CANNOT_CONTINUE	%s and cannot continue
+1	92	SS_TOKENS_DESPONDENT	despondent|despondent
+1	93	SS_TOKENS_RECKLESS	reckless|reckless
+1	94	SS_CHAR_DESPONDENCY_TIRED	{char:name} is {char:despondency} and {char:energy}.
+1	95	SS_CHAR_LIEGE	{char:name}'s liege is {char:liege:longname}.
+1	96	SS_CHAR_FOE	{char:name}'s foe is {char:foe:longname}.
+1	97	SS_TOKENS_TRAITS	good|strong|forceful|generous|stubborn|brave|swift|loyal|evil|weak|reticent|greedy|fawning|cowardly|slow|treacherous|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-
+1	98	SS_TUNNEL	{case:first}{char:gender:heshe} stands in a tunnel looking {char:dir:name}.
+1	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group
+1	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}

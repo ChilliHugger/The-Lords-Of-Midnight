@@ -1,0 +1,19 @@
+Version	Id	Symbol	Flags	Name	Default Soldiers Name	Success	Initial Movement	Diagonal Movement	Riding Multiplier	Movement Max	Rest Amount	Stronghold Startups	Mist Time Adjustment	Mist Despondency Adjustment	Energy Amount	Energy Amount Riding
+1	0	RA_DEFAULT		Default		0	2	2	2	255	9	0	0	0	0	0
+1	1	RA_DOOMGUARD		Doomdark	Doomguard	0	0	0	0	255	9	200	0	0	0	0
+1	2	RA_FREE		Free		0	6	2	3	255	9	0	2	6	2	4
+1	3	RA_FEY		Fey		0	6	2	3	255	9	100	2	6	2	3
+1	4	RA_TARG		Targ		0	0	2	0	255	9	100	2	6	0	0
+1	5	RA_WISE		Wise		0	4	2	2	255	9	0	2	6	0	1
+1	6	RA_MORKIN		Morkin	Moonguard	0	6	2	3	255	9	0	2	6	2	4
+1	7	RA_SKULKRIN		Skulkrin		0	0	2	0	255	9	100	2	6	0	0
+1	8	RA_DRAGON		Dragon	Dragonguard	0	0	2	0	1	9	100	0	0	0	0
+1	9	RA_TROLL		Troll	Trolls	0	0	2	0	0	9	100	2	6	0	0
+1	10	RA_MOONPRINCE		Moonprince	Moonguard	0	6	2	3	0	9	250	2	6	1	2
+1	11	RA_BARBARIAN		Barbarians		0	8	2	5	0	9	100	2	6	2	4
+1	12	RA_ICELORD		Icelords	Iceguard	0	5	2	3	0	9	200	0	0	1	2
+1	13	RA_GIANT		Giants		0	5	2	5	0	9	100	2	6	2	2
+1	14	RA_HEARTSTEALER		Heartstealer	Iceguard	0	2	2	2	0	9	200	0	0	0	0
+1	15	RA_DWARF		Dwarves		0	5	2	5	0	9	100	2	6	3	3
+1	16	RA_TARITHEL		Fey		0	2	2	2	0	9	0	2	6	1	1
+1	17	RA_DOOMDARK		Doomdark	Doomguard	0	0	2	0	255	9	200	0	0	0	0

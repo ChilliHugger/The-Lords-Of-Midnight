@@ -1,0 +1,9 @@
+Version	Id	Symbol	Flags	Name
+1	0	DR_NORTH		North
+1	1	DR_NORTHEAST		Northeast
+1	2	DR_EAST		East
+1	3	DR_SOUTHEAST		Southeast
+1	4	DR_SOUTH		South
+1	5	DR_SOUTHWEST		Southwest
+1	6	DR_WEST		West
+1	7	DR_NORTHWEST		Northwest

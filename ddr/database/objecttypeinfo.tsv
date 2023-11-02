@@ -1,0 +1,11 @@
+Version	Id	Symbol	Flags	Name
+1	0	OT_NONE		
+1	1	OT_CROWN		Crown
+1	2	OT_RUNES		Runes
+1	3	OT_BOW		Bow
+1	4	OT_SPEAR		Spear
+1	5	OT_SWORD		Sword
+1	6	OT_AXE		Axe
+1	7	OT_SPELL		Spell
+1	8	OT_HAMMER		Hammer
+1	9	OT_RING		Ring
