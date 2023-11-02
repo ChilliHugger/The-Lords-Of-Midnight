@@ -76,6 +76,11 @@ namespace utils {
             hammer->type = OT_BOW;
             hammer->symbol = "OB_BOW_TORORTHANE";
         }
+        
+        auto imgorarg = static_cast<mxcharacter*>(mx->EntityByName("CH_IMGORARG", IDT_CHARACTER));
+        if (imgorarg!=nullptr) {
+            imgorarg->loyalty = RA_DWARF;
+        }
     }
     
 #endif
