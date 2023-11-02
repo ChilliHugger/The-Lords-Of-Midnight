@@ -7,6 +7,7 @@
 #include "catch2/catch.hpp"
 #include "../../src/tme/baseinc/tme_internal.h"
 #include "../../src/tme/utils/savegamemapping.h"
+#include "../steps/tme_steps.h"
 
 using oldflags = tme::utils::OLD_DDR_CHARACTERFLAGS ;
 using newflags = tme::flags::CHARACTERFLAGS ;
@@ -74,4 +75,30 @@ TEST_CASE("Other Flags are not moved")
     flags32 new_flags = tme::utils::UpdateDDRCharacterFlags(old_flags);
     
     REQUIRE (new_flags == expected_flags);
+}
+
+TEST_CASE("OB_SPEAR_THORTHAK is a spear not a sword")
+{
+    TMEStep::NewStory();
+    
+    // 118 | OB_SWORD_THORTHAK > should be a SPEAR ?
+    // 124 | OB_HAMMER_TORORTHANE > should be a BOW ?
+    auto item = static_cast<ddr_object*>(tme::mx->EntityByName("OB_SPEAR_THORTHAK", IDT_OBJECT));
+
+    REQUIRE( item != nullptr );
+    REQUIRE( item->type == OT_SPEAR );
+
+}
+
+TEST_CASE("OB_BOW_TORORTHANE is a bow not a hammer")
+{
+    TMEStep::NewStory();
+    
+    // 118 | OB_SWORD_THORTHAK > should be a SPEAR ?
+    // 124 | OB_HAMMER_TORORTHANE > should be a BOW ?
+    auto item = static_cast<ddr_object*>(tme::mx->EntityByName("OB_BOW_TORORTHANE", IDT_OBJECT));
+    
+    REQUIRE( item != nullptr );
+    REQUIRE( item->type == OT_BOW );
+
 }

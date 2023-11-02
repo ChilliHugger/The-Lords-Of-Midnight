@@ -180,6 +180,9 @@ MXTRACE("Place Objects On Map");
     auto tinfo = mx->TerrainById(TN_ICYWASTE);
     tinfo->movementcost=2;
     
+    // remap
+    utils::UpdateDDRObjects::FixInvalidTypes();
+        
     mxscenario::initialiseAfterCreate(version);
 
 }

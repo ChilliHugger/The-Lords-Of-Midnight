@@ -30,6 +30,13 @@ namespace utils {
 
     flags32 UpdateDDRCharacterFlags(flags32 flags);
     void FixMorkinFromBeingAIAfterRecruited();
+    
+    
+    class UpdateDDRObjects
+    {
+    public:
+        static void FixInvalidTypes();
+    };
 #endif
     
     void UpdateStrongholdsOnMap();
