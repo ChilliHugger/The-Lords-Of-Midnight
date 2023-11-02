@@ -9,6 +9,10 @@ namespace tme {
 
     FORWARD_REFERENCE(ddr_character);
     FORWARD_REFERENCE(ddr_object);
+    
+    namespace utils {
+        FORWARD_REFERENCE(UpdateDDRObjects);
+    }
 
     class ddr_x  : public mxscenario
     {
@@ -79,6 +83,8 @@ namespace tme {
     public:
         mxobjtype_t   type;
         mxobjpower_t  power;
+        
+        friend tme::utils::UpdateDDRObjects;
     };
     
     class ddr_stronghold : public mxstronghold
