@@ -10,6 +10,7 @@
 
 #include "common_steps.h"
 #include "../../../src/tme/scenarios/ddr/scenario_ddr_internal.h"
+#include "../../../src/tme/scenarios/ddr/ddr_processor_night.h"
 
 using namespace std;
 
@@ -85,4 +86,10 @@ void DDRStep::ObjectAtLocation(const string& name, mxgridref loc)
 void DDRStep::LordTakesTurn(const string& name)
 {
     GetDDRCharacter(name.c_str())->Turn();
+}
+
+void DDRStep::CharactersDawnBreaks()
+{
+    auto night = static_cast<tme::ddr_night*>(tme::mx->night);
+    night->LordsProcessEnd();
 }

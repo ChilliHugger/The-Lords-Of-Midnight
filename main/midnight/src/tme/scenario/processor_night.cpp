@@ -41,7 +41,7 @@ namespace tme {
 
             // place all lords at dawn
             FOR_EACH_CHARACTER(character) {
-                character->StartDawn();
+                character->InitNightProcessing();
             }
 
 #ifdef _LOM_

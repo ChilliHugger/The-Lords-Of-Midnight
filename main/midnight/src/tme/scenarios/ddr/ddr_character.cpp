@@ -1406,7 +1406,7 @@ mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )
     return NULL ;
 }
 
-void ddr_character::StartDawn ( void )
+void ddr_character::InitNightProcessing ( void )
 {
     if ( !IsDead() ) {
         
@@ -1420,7 +1420,7 @@ void ddr_character::StartDawn ( void )
         
         time = sv_time_dawn;
   
-        flags.Reset ( cf_resting|cf_inbattle|cf_wonbattle|cf_killed_foe|cf_preparesbattle|cf_battleover );
+        flags.Reset ( cf_resting|cf_inbattle|cf_wonbattle|cf_killed_foe|cf_battleover );
         battleloc= mxgridref(-1,-1);
         battleslew = 0;
         battlelost = 0;

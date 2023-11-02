@@ -128,7 +128,7 @@ namespace tme {
         virtual mxcharacter* GetNextFoe() const;
         virtual mxcharacter* GetNextLiege() const;
         
-        virtual void StartDawn ( void );
+        virtual void InitNightProcessing ( void );
         virtual void Turn ( void );
         
         virtual bool ShouldLoseHorse( s32 hint ) const;
