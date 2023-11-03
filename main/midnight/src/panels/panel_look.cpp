@@ -142,10 +142,26 @@ bool panel_look::init()
     options->terrainTimeShader = mr->shader->GetTerrainTimeShader();
     options->characterTimeShader = mr->shader->GetCharacterTimeShader();
 
+    auto landscapeHeight = RES( LANDSCAPE_SKY_HEIGHT+LANDSCAPE_FLOOR_HEIGHT+HEADER_HEIGHT ) ;
+
+    portraitAdjust = getContentSize().height > getContentSize().width
+        ? (getContentSize().height - landscapeHeight) / 2
+        : 0 ;
+
+    options->portraitAdjust=portraitAdjust;
+
+    // background
+    if(portraitAdjust != 0) {
+        auto backgroundColour = Color3B(245,238,228);
+        auto background = LayerColor::create(Color4B(backgroundColour), getContentSize().width, getContentSize().height );
+        background->setLocalZOrder(ZORDER_FAR);
+        uihelper::AddTopLeft(this,background);
+    }
+
     // Header area
     layHeader = LayerColor::create(Color4B(_clrWhite), getContentSize().width, HEADER_HEIGHT );
     layHeader->setLocalZOrder(ZORDER_FAR+1);
-    uihelper::AddTopLeft(this,layHeader);
+    uihelper::AddTopLeft(this,layHeader,0,portraitAdjust);
     
 #if defined(_DDR_)
     imgHeader = ImageView::create(IMAGE_HEADER);
@@ -160,7 +176,7 @@ bool panel_look::init()
     lblName->getFontAtlas()->setAntiAliasTexParameters();
     lblName->setTextColor(Color4B::YELLOW);
     lblName->setLocalZOrder(ZORDER_DEFAULT);
-    uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32));
+    uihelper::AddTopLeft(safeArea,lblName,RES(32),RES(32)+portraitAdjust);
     f32 lblNameAdjust = PHONE_SCALE(RES(32)) ;
 #endif
 
@@ -170,7 +186,7 @@ bool panel_look::init()
     lblDescription->setTextColor(Color4B(DESCRIPTION_COLOUR));
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
     lblDescription->setWidth(getContentSize().width*0.70f);
-    uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(32)+lblNameAdjust);
+    uihelper::AddTopLeft(safeArea,lblDescription, RES(32),RES(32)+lblNameAdjust+portraitAdjust);
 
     // Shield
     imgShield = ImageView::create();
@@ -185,10 +201,10 @@ bool panel_look::init()
     // It's been removed from the right, so utilsise the left side
     auto adjustX = mr->resolution->getSafeArea().left;
     imgShield->setAnchorPoint(uihelper::AnchorBottomRight);
-    imgShield->setPosition(Vec2(getContentSize().width-SHIELD_X-adjustX, getContentSize().height-SHIELD_Y-HEADER_HEIGHT));
+    imgShield->setPosition(Vec2(getContentSize().width-SHIELD_X-adjustX, (getContentSize().height-SHIELD_Y-HEADER_HEIGHT)-portraitAdjust));
     safeArea->addChild(imgShield);
 #else
-    uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y);
+    uihelper::AddTopRight(safeArea, imgShield,SHIELD_X,SHIELD_Y-portraitAdjust);
 #endif
     
 
@@ -255,6 +271,10 @@ bool panel_look::init()
 
     auto size = getContentSize();
     f32 landscapeWidth = size.height*1.3333;
+    if( size.height > size.height) {
+        landscapeWidth = size.width;
+    }
+    
     f32 centerLandscapeViewAdjustment = ((size.width - landscapeWidth)/2)*1.05;
     options->lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - centerLandscapeViewAdjustment;
     
@@ -576,9 +596,9 @@ void panel_look::UpdateLandscape()
     }
 
     current_view->setAnchorPoint(Vec2::ZERO);
-    current_view->setPosition(Vec2::ZERO);
+    current_view->setPosition(Vec2(100,portraitAdjust));
     current_view->setLocalZOrder(ZORDER_FAR);
-    
+
     UIDEBUG("UpdateLandscape: Add Current View");
     addChild(current_view);
     
@@ -1842,7 +1862,7 @@ bool panel_look::OnMouseMove( Vec2 position )
 
     auto size = getContentSize();
  
-    f32 move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
+    f32 move_press_y = size.height - RES(MOUSE_MOVE_BLEED) - portraitAdjust ;
     f32 move_press_left = RES(MOUSE_MOVE_BLEED) ;
     f32 move_press_right = size.width - RES(MOUSE_MOVE_BLEED) ;
 

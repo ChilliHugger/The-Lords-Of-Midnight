@@ -166,6 +166,7 @@ protected:
     uicompass*          compass;
     
     ILandscape*         current_view;
+    s32                 portraitAdjust;
     
     LandscapeOptions*   options;
     //bool                isLooking;

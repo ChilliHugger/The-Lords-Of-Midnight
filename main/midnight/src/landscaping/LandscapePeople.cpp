@@ -23,7 +23,7 @@
 USING_NS_CC;
 using namespace tme;
 
-#define adjusty                 LRES(8)
+#define adjusty                 LRES(8)+options->portraitAdjust
 
 LandscapePeople::LandscapePeople()
 {

@@ -62,8 +62,9 @@ bool resolutionmanager::calcDisplayInfo ( void )
     float width = size.height;
     
     // landscape
-    if ( height > width )
+    if ( height > width ) {
         std::swap(height, width);
+    }
     
     int dpi = Device::getDPI();
     float xInches = director->getWinSize().width / dpi;

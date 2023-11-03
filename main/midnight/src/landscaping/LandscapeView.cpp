@@ -41,6 +41,9 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
         return false;
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
+    if ( visibleSize.height > visibleSize.width) {
+        std::swap(visibleSize.width, visibleSize.height);
+    }
     setContentSize( visibleSize );
 
     auto clipping = this;

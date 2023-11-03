@@ -182,7 +182,8 @@ static cocos2d::Size DesktopLargerText2 = cocos2d::Size(1600, 900);    // 1.7777
 
 #if defined(_OS_DESKTOP_)
 //#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::CF_WINDOW_LARGE
-//#define DesktopDebugResolution iPad3
+#define DesktopDebugResolution cocos2d::Size(768, 1024)
+//#define DesktopDebugResolution iPad1
 #define _SWITCH_VIDEO_IMPLEMENTED_
 #endif
 

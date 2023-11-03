@@ -53,7 +53,7 @@ public:
     bool                    isLookingOutTunnel;
     mxtime_t                timeofday;
     f32                     resScale;
-    
+    f32                     portraitAdjust;
 };
 
 class ILandscape : public LandscapeNode

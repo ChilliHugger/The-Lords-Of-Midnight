@@ -31,6 +31,9 @@ void LandscapeGenerator::Build(LandscapeOptions* options)
     this->mr = options->mr;
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
+    if ( visibleSize.height > visibleSize.width) {
+        std::swap(visibleSize.width, visibleSize.height);
+    }
     
     f32 aspect = 1024.0 / 768.0;
     f32 newWidth = visibleSize.height * aspect;
