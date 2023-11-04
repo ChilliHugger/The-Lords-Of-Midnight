@@ -14,12 +14,6 @@
 
 using namespace std;
 
-inline ddr_character* GetDDRCharacter(LPCSTR name)
-{
-    return static_cast<tme::ddr_character*>(GetCharacter(name));
-}
-
-
 void DDRStep::GameWon()
 {
     GetCharacter(DDRStep::ch_shareth)->Cmd_Dead();

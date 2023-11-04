@@ -39,9 +39,15 @@ public:
     map<string, string> properties;
 };
 
-#define INIT_MOCK_CLASS \
-void SetEvent( string name ) { \
-    mockData.events.push_back(name); \
+template<typename T>
+T ConvertStringTo(const string& value)
+{
+    return (T)StringExtensions::atol(value);
+}
+
+#define INIT_MOCK_CLASS(x) \
+void SetEvent( string name ) const { \
+    const_cast<x*>(this)->mockData.events.push_back(name); \
 } \
 \
 string GetProperty( string name ) const { \
@@ -53,6 +59,7 @@ bool HasEvent(string event) { \
 } \
 \
 bool Override( const string& name, function<bool(void)> func) const { \
+    SetEvent(name); \
     auto value = GetProperty(name);  \
     if ( value == "false" ) return false;  \
     if ( value == "true" ) return true;  \
@@ -60,6 +67,7 @@ bool Override( const string& name, function<bool(void)> func) const { \
 }  \
 \
 u32 OverrideU32( const string& name, function<u32(void)> func) const { \
+    SetEvent(name); \
     auto value = GetProperty(name);  \
     if ( !value.empty() ) return (u32)StringExtensions::atol(value);  \
     return func();  \
@@ -74,7 +82,7 @@ MockData    mockData \
 class mockcharacter : public BASE_CHARACTER
 {
 public:
-    INIT_MOCK_CLASS;
+    INIT_MOCK_CLASS(mockcharacter);
 
     CAPTURE_VOID ( Cmd_Dead );
     CAPTURE_VOID ( Dismount );
@@ -98,6 +106,33 @@ public:
             return BASE_CHARACTER::ShouldDieInFight();
         });
     }
+
+    virtual bool ShouldWeStopTurnForEnemy() const override
+    {
+        return Override(__FUNCTION__, [&] {
+            return BASE_CHARACTER::ShouldWeStopTurnForEnemy();
+        });
+    }
+
+    
+#if defined(_DDR_)
+    virtual bool ShouldWeStayAndFight(const mxarmytotal* friends, const mxarmytotal* foe) const override
+    {
+        SetEvent(__FUNCTION__);
+        return BASE_CHARACTER::ShouldWeStayAndFight(friends,foe);
+    }
+    
+    virtual mxorders_t pickNewOrders () const override
+    {
+        auto value = GetProperty(__FUNCTION__);
+        if ( !value.empty() )
+            return ConvertStringTo<mxorders_t>(value);
+        return BASE_CHARACTER::pickNewOrders();
+    }
+    
+    
+#endif
+
 };
 
 #if defined(_DDR_)
@@ -110,7 +145,7 @@ public:
 class mockobject : public BASE_OBJECT
 {
 public:
-    INIT_MOCK_CLASS;
+    INIT_MOCK_CLASS(mockobject);
     
     virtual u32 FightHP() const override
     {

@@ -34,19 +34,19 @@ namespace chilli {
             return ar;
         }
         
-        long atol( std::string& value )
+        long atol( const std::string& value )
         {
             if ( value.empty() ) return 0;
             return ::atol(value.c_str());
         }
 
-        f32 atof( std::string& value )
+        f32 atof( const std::string& value )
         {
             if ( value.empty() ) return 0;
             return ::atof(value.c_str());
         }
         
-        s32 atoi( std::string& value )
+        s32 atoi( const std::string& value )
         {
             if ( value.empty() ) return 0;
             return ::atoi(value.c_str());

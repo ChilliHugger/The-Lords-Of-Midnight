@@ -1103,6 +1103,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual ~mxarmytotal();
 
             void Clear() { warriors=riders=armies=adjustment=characters=0;}
+            u32 Total() const { return warriors + riders; } 
             
         public:
             u32                 warriors ;

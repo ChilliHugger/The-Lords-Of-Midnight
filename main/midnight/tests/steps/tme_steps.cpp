@@ -9,13 +9,11 @@
 #include "../mocks/mocks_entity.h"
 
 
-void TMEStep::NewStory(mxdifficulty_t difficulty)
+void TMEStep::NewStory(RULEFLAGS rules, mxdifficulty_t difficulty)
 {
     TME_DeInit();
-        
-    //TME_Init(RF_DEFAULT, difficulty);
-    
-    TME_Init(RF_DEFAULT, difficulty, [] {
+            
+    TME_Init(rules, difficulty, [] {
         tme::mx->entityfactory = new mockentityfactory();
     });
 

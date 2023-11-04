@@ -6,6 +6,8 @@
 //
 
 #include "../steps/battle_steps.h"
+#include "../steps/common_steps.h"
+#include "../../../src/tme/scenarios/ddr/ddr_processor_battle.h"
 
 // GIVEN a hard game
 // AND a lord has followers
@@ -457,4 +459,112 @@ SCENARIO("Lord prepares to do battle")
         }
     }
 
+}
+
+
+// CH_TARITHEL vs CH_VARATRARG @ SH_FORTRESS_VARATRARG
+//TME: BATTLE: [  3] CH_TARITHEL
+//TME:   [0:3] CH_TARITHEL
+//TME:   [1:94] CH_VARATRARG
+//TME:   skirmish: CH_TARITHEL
+//TME:     Start=0 Rnd=8, Count=2
+//TME:     Attacker = CH_TARITHEL     , Defender = CH_VARATRARG
+//TME:     CH_TARITHEL      (255) vs CH_VARATRARG     (63)
+//TME:     Defender: CH_VARATRARG     lost fight
+//TME:     Defender: CH_VARATRARG     is dead killed by CH_TARITHEL
+//TME:       Defender: CH_VARATRARG     lost 0 of (1000)
+//TME:       Defender: CH_TARITHEL      lost 0 of (0)
+//TME:       Attacker: CH_VARATRARG     won battle
+//TME:       Defender: CH_TARITHEL      lost battle
+//TME:   skirmish: CH_VARATRARG
+//TME:     Start=1 Rnd=15, Count=2
+//TME:     Attacker = CH_VARATRARG    , Defender = CH_TARITHEL
+//TME:     CH_VARATRARG     (201) vs CH_TARITHEL      (33)
+//TME:     Defender: CH_TARITHEL      lost fight
+//TME:       Defender: CH_TARITHEL      lost 0 of (0)
+//TME:       Attacker: CH_VARATRARG     won battle
+//TME:       Defender: CH_TARITHEL      lost battle
+//TME:       Defender: CH_VARATRARG     lost 0 of (1000)
+//TME: Stronghold=SH_FORTRESS_VARATRARG
+//TME:     Start=1 Rnd=161, Count=2
+//TME:     Attacker = SH_FORTRESS_VARATRARG, Defender = CH_TARITHEL
+//TME:       Defender: CH_TARITHEL      lost 0 of (0)
+//TME:       Defender: CH_TARITHEL      lost battle
+//TME:       Defender: SH_FORTRESS_VARATRARG lost 0 of (1050)
+
+TEST_CASE("Tarithel vs Varatrarg @ fortress of Varatrarg", "[ignore]")
+{
+    TMEStep::NewStory();
+
+    auto tarithel = GetDDRCharacter("CH_TARITHEL");
+    auto varatarg = GetDDRCharacter("CH_VARATRARG");
+    auto fortress = GetStronghold("SH_FORTRESS_VARATRARG");
+        
+    tarithel->Location(fortress->Location());
+    varatarg->Location(fortress->Location());
+    
+    auto battle = static_cast<ddr_battle*>(tme::mx->battle);
+    
+    battle->Battle(tarithel);
+}
+
+TEST_CASE("Ushangrane vs Varatrarg @ fortress of Varatrarg", "[new]")
+{
+    TMEStep::NewStory();
+
+    auto tarithel = GetDDRCharacter("CH_USHANGRANE");
+    auto varatarg = GetDDRCharacter("CH_VARATRARG");
+    auto fortress = GetStronghold("SH_FORTRESS_VARATRARG");
+        
+    tarithel->Location(fortress->Location());
+    varatarg->Location(fortress->Location());
+    
+    auto battle = static_cast<ddr_battle*>(tme::mx->battle);
+    
+    battle->Battle(tarithel);
+}
+
+// CH_TARITHEL vs CH_THELAK @ SH_FORTRESS_THELAK
+//TME: BATTLE: [  3] CH_TARITHEL
+//TME:   [0:3] CH_TARITHEL
+//TME:   [1:87] CH_THELAK
+//TME:   skirmish: CH_TARITHEL
+//TME:     Start=0 Rnd=84, Count=2
+//TME:     Attacker = CH_TARITHEL     , Defender = CH_THELAK
+//TME:     CH_TARITHEL      (255) vs CH_THELAK        (190)
+//TME:     Defender: CH_THELAK        lost fight
+//TME:       Defender: CH_THELAK        lost 0 of (1050)
+//TME:       Defender: CH_TARITHEL      lost 0 of (0)
+//TME:       Attacker: CH_THELAK        won battle
+//TME:       Defender: CH_TARITHEL      lost battle
+//TME:   skirmish: CH_THELAK
+//TME:     Start=0 Rnd=124, Count=2
+//TME:     Attacker = CH_THELAK       , Defender = CH_TARITHEL
+//TME:     CH_THELAK        (201) vs CH_TARITHEL      (32)
+//TME:     Defender: CH_TARITHEL      lost fight
+//TME:       Defender: CH_TARITHEL      lost 0 of (0)
+//TME:       Attacker: CH_THELAK        won battle
+//TME:       Defender: CH_TARITHEL      lost battle
+//TME:       Defender: CH_THELAK        lost 0 of (1050)
+//TME: Stronghold=SH_FORTRESS_THELAK
+//TME:     Start=1 Rnd=227, Count=2
+//TME:     Attacker = SH_FORTRESS_THELAK, Defender = CH_TARITHEL
+//TME:       Defender: CH_TARITHEL      lost 0 of (0)
+//TME:       Defender: CH_TARITHEL      lost battle
+//TME:       Defender: SH_FORTRESS_THELAK lost 0 of (1100)
+
+TEST_CASE("Tarithel vs Thelak @ fortress of Thelak", "[new]")
+{
+    TMEStep::NewStory();
+
+    auto tarithel = GetDDRCharacter("CH_TARITHEL");
+    auto varatarg = GetDDRCharacter("CH_THELAK");
+    auto fortress = GetStronghold("SH_FORTRESS_THELAK");
+        
+    tarithel->Location(fortress->Location());
+    varatarg->Location(fortress->Location());
+    
+    auto battle = static_cast<ddr_battle*>(tme::mx->battle);
+    
+    battle->Battle(tarithel);
 }

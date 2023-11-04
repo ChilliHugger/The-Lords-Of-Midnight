@@ -596,6 +596,7 @@ using namespace chilli::types;
             RF_FAST_TUNNELS                 = MXBIT(5),
             RF_DDR_MOVEMENT_SPECTRUM        = MXBIT(6),
             RF_DDR_MOVEMENT_C64             = MXBIT(7),
+            RF_DDR_BETTER_ARMIES            = MXBIT(8),
             RF_DEFAULT = 0,
             RF_NONE = 0,
             RF_DDR_MOVEMENT_MASK            = RF_DDR_MOVEMENT_SPECTRUM|RF_DDR_MOVEMENT_C64,

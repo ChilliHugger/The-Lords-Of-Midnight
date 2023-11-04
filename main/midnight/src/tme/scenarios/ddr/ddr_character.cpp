@@ -318,9 +318,16 @@ namespace tme {
         };
     }
     
-    s32 ddr_character::getArmySize()
+    s32 ddr_character::getArmySize() const
     {
-        return getUnit()->Total();
+        switch ( getArmyType() ) {
+            case UT_RIDERS:
+                return riders.Total();
+            case UT_WARRIORS:
+                return warriors.Total();
+            default:
+                return 0;
+        };
     }
     
     void ddr_character::setArmySize(s32 value)
@@ -1288,6 +1295,11 @@ bool ddr_character::DesiredObjectAtLocation()
     return desired_object->Location() == Location();
 }
 
+bool ddr_character::ShouldWeStopTurnForEnemy() const
+{
+    return mxrandom(255)&1;
+}
+
 void ddr_character::moveCharacterSomewhere ( void )
 {
     if ( !IsAIControlled() ) {
@@ -1303,6 +1315,9 @@ void ddr_character::moveCharacterSomewhere ( void )
     MXTRACE("Processing %s at location [%d,%d]", Longname().c_str(), location.x, location.y);
     MXTRACE("  START");
     
+    //
+    // 1. Decide what the lord should do
+    //
     whatIsCharacterDoing();
     
     MXTRACE("  Target Location is [%d,%d]", targetLocation.x, targetLocation.y);
@@ -1311,9 +1326,15 @@ void ddr_character::moveCharacterSomewhere ( void )
     
     for (;;) {
         
+        //
+        // 2. Check if can pickup object
+        //
         if( !IsCarryingObject() || DesiredObjectAtLocation() )
             Cmd_PickupObject();
         
+        //
+        // 3. Choose Direction
+        //
         mxdir_t direction = calcDirection(Location(),targetLocation);
     
         if ( direction==DR_NONE ) {
@@ -1333,9 +1354,14 @@ void ddr_character::moveCharacterSomewhere ( void )
                 MXTRACE("  Blocked (not dawn).");
                 reachedTarget=true;
             }else{
-                if ( mxrandom(255)&1 ) {
-                    MXTRACE("  Decided to stop for a turn.");
-                    reachedTarget=true;
+                if ( mx->isRuleEnabled(RULEFLAGS::RF_DDR_BETTER_ARMIES)
+                     && ShouldWeStayAndFight(&info->friends, &info->foe) ) {
+                    reachedTarget = true;
+                }else{
+                    if ( ShouldWeStopTurnForEnemy() ) {
+                        MXTRACE("  Decided to stop for a turn.");
+                        reachedTarget=true;
+                    }
                 }
             }
         }
@@ -1345,14 +1371,23 @@ void ddr_character::moveCharacterSomewhere ( void )
             break;
         }
         
+        //
+        // 4. Walk forward
+        //
         Cmd_WalkForward(false, false);
         MXTRACE("  Moved to [%d,%d]", location.x, location.y);
 
-        if ( Time()==(mxtime_t)sv_time_night ) {
+        //
+        // 5. If night then stop turn (8)
+        //
+        if ( IsNight() ) {
             MXTRACE("Stopping for the day.");
             break;
         }
 
+        //
+        // 6. If tired then stop turn (8)
+        //
         if (energy<MIN_AI_MOVEMENT_ENERGY) {
             MXTRACE("Stopping because tired.");
             break;
@@ -1394,6 +1429,49 @@ void ddr_character::moveCharacterSomewhere ( void )
     }
     
     MXTRACE("  END");
+}
+
+const f32 MINIMUM_OWN_ARMY = 0.75;
+const f32 MINIMUM_COMBINED_ARMY = 0.50;
+
+bool ddr_character::ShouldWeStayAndFight(const mxarmytotal* friends, const mxarmytotal* foe) const
+{
+    // is there an enemy here
+    // check game play rule
+    if( foe->armies || foe->characters ) {
+        MXTRACE("Enemy still present");
+        
+        if (IsCoward()) {
+            MXTRACE("Decided to leave because of being a coward");
+            return false;
+        }
+
+        // my army size compared to the total enemy army
+        if ( foe->Total() ) {
+            if ( friends->characters == 1 ) {
+            
+                //auto army = getArmySize();
+                //auto foes = foe->Total();
+                //auto percent = (f32)getArmySize() / (f32)foe->Total();
+                
+                if ( (f32)getArmySize() / (f32)foe->Total() < MINIMUM_OWN_ARMY ) {
+                    MXTRACE("Decided to leave because own army size too small");
+                    return false;
+                }
+            }else{
+                // total army percentage for friends against the foe
+                if ( (f32)friends->Total() / (f32)foe->Total() < MINIMUM_COMBINED_ARMY ) {
+                    MXTRACE("Decided to leave because friend army size too small");
+                    return false;
+                }
+            }
+        }
+
+        MXTRACE("Decided to stay and fight");
+        return true;
+    }
+    
+    return false;
 }
 
 mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )

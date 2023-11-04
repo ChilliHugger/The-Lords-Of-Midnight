@@ -92,7 +92,7 @@ SCENARIO("Lord fights a nasty with no object and no army but leads others")
 
     GIVEN(StringExtensions::Format("Difficulty is %s", mode_text[mode]))
     {
-        TMEStep::NewStory(mode);
+        TMEStep::NewStory(RF_DEFAULT, mode);
 
         auto lord = LordNeedstoFightNasty( TMEStep::ch_morkin, OB_DRAGONS );
 
