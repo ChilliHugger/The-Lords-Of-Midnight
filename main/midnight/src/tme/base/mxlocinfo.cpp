@@ -432,6 +432,12 @@ namespace tme {
 #if defined(_DDR_)
                 isFriend = c->IsFriend(ch_friend);
 #endif
+                if ( isFriend ) {
+                    friends.characters++;
+                }else{
+                    foe.characters++;
+                }
+
                 if ( c->warriors.Total() ) {
                     auto army = new mxarmy();
                     army->armytype = AT_CHARACTER ;
@@ -444,11 +450,9 @@ namespace tme {
                     army->loyalto = c->NormalisedLoyalty() ;
 
                     if ( isFriend ) {
-                        friends.characters++;
                         friends.armies++;
                         friends.warriors+=army->total;
                     }else{
-                        foe.characters++;
                         foe.armies++;
                         foe.warriors+=army->total;
                     }
@@ -467,11 +471,9 @@ namespace tme {
                     army->loyalto = c->NormalisedLoyalty() ;
 
                     if ( isFriend ) {
-                        friends.characters++;
                         friends.armies++;
                         friends.riders+=army->total;
                     }else{
-                        foe.characters++;
                         foe.armies++;
                         foe.riders+=army->total;
                     }
