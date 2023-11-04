@@ -225,7 +225,7 @@ namespace tme {
         if ( (r&1) == 0 )
             return false;
         
-        if ( reckless > r )
+        if ( reckless >= r )
             return false;
             
         if ( HasBattleObject()) {
@@ -1449,11 +1449,6 @@ bool ddr_character::ShouldWeStayAndFight(const mxarmytotal* friends, const mxarm
         // my army size compared to the total enemy army
         if ( foe->Total() ) {
             if ( friends->characters == 1 ) {
-            
-                //auto army = getArmySize();
-                //auto foes = foe->Total();
-                //auto percent = (f32)getArmySize() / (f32)foe->Total();
-                
                 if ( (f32)getArmySize() / (f32)foe->Total() < MINIMUM_OWN_ARMY ) {
                     MXTRACE("Decided to leave because own army size too small");
                     return false;
