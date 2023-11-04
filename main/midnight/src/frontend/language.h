@@ -136,6 +136,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_ORIGINAL       = "ORIGINAL SPECTRUM";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_INTENDED       = "INTENDED SPECTRUM";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_C64            = "ORIGINAL C64";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_8              = "UPGRADE SHARETH ARMY AI";
     
     
     constexpr LPCSTR OPTIONS_SCREEN_DF_NORMAL           = "NORMAL";
