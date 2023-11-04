@@ -58,18 +58,10 @@ bool HasEvent(string event) { \
     return ( std::find(mockData.events.begin(), mockData.events.end(), event) != mockData.events.end() );  \
 } \
 \
-bool Override( const string& name, function<bool(void)> func) const { \
+template<typename T> T Override( const string& name, function<T(void)> func) const { \
     SetEvent(name); \
     auto value = GetProperty(name);  \
-    if ( value == "false" ) return false;  \
-    if ( value == "true" ) return true;  \
-    return func();  \
-}  \
-\
-u32 OverrideU32( const string& name, function<u32(void)> func) const { \
-    SetEvent(name); \
-    auto value = GetProperty(name);  \
-    if ( !value.empty() ) return (u32)StringExtensions::atol(value);  \
+    if ( !value.empty() ) return ConvertStringTo<T>(value);  \
     return func();  \
 }  \
 \
@@ -95,27 +87,26 @@ public:
 
     virtual bool ShouldLoseHorse(s32 hint) const override
     {
-        return Override(__FUNCTION__, [&] {
+        return Override<bool>(__FUNCTION__, [&] {
             return BASE_CHARACTER::ShouldLoseHorse(hint);
         });
     }
 
     virtual bool ShouldDieInFight() const override
     {
-        return Override(__FUNCTION__, [&] {
+        return Override<bool>(__FUNCTION__, [&] {
             return BASE_CHARACTER::ShouldDieInFight();
         });
     }
 
+#if defined(_DDR_)
     virtual bool ShouldWeStopTurnForEnemy() const override
     {
-        return Override(__FUNCTION__, [&] {
+        return Override<bool>(__FUNCTION__, [&] {
             return BASE_CHARACTER::ShouldWeStopTurnForEnemy();
         });
     }
-
     
-#if defined(_DDR_)
     virtual bool ShouldWeStayAndFight(const mxarmytotal* friends, const mxarmytotal* foe) const override
     {
         SetEvent(__FUNCTION__);
@@ -124,10 +115,9 @@ public:
     
     virtual mxorders_t pickNewOrders () const override
     {
-        auto value = GetProperty(__FUNCTION__);
-        if ( !value.empty() )
-            return ConvertStringTo<mxorders_t>(value);
-        return BASE_CHARACTER::pickNewOrders();
+        return Override<mxorders_t>(__FUNCTION__, [&] {
+            return BASE_CHARACTER::pickNewOrders();
+        });
     }
     
     
@@ -149,19 +139,19 @@ public:
     
     virtual u32 FightHP() const override
     {
-        return OverrideU32(__FUNCTION__, [&] {
+        return Override<u32>(__FUNCTION__, [&] {
             return BASE_OBJECT::FightHP();
         });
     }
     virtual u32 KillRate(u32 hp) const override
     {
-        return OverrideU32(__FUNCTION__, [&] {
+        return Override<u32>(__FUNCTION__, [&] {
             return BASE_OBJECT::KillRate(hp);
         });
     }
     virtual u32 FightSuccess() const override
     {
-        return OverrideU32(__FUNCTION__, [&] {
+        return Override<u32>(__FUNCTION__, [&] {
             return BASE_OBJECT::FightSuccess();
         });
     }

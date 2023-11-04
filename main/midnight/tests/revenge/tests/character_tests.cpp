@@ -162,7 +162,7 @@ const string SHOULD_WE_STOP_TURN_EVENT = "ShouldWeStopTurnForEnemy";
 const string PICK_NEW_ORDERS = "pickNewOrders";
 const string NEW_ORDERS = "8"; // OD_FOLLOW_FOE
 
-SCENARIO("Characters will consider staying in a battle", "[new]")
+SCENARIO("Characters will consider staying in a battle")
 {
     auto enemy = DDRStep::ch_tarithel;
     auto lord = DDRStep::ch_shareth;
@@ -250,7 +250,7 @@ SCENARIO("Characters will consider staying in a battle", "[new]")
         
         // make sure lord doesn't get distracted
         GetMockCharacter(lord)->mockData.properties[PICK_NEW_ORDERS] = NEW_ORDERS ;
-        GetMockCharacter(lord)->mockData.properties[SHOULD_WE_STOP_TURN_EVENT] = "false";
+        GetMockCharacter(lord)->mockData.properties[SHOULD_WE_STOP_TURN_EVENT] = "0";
     
         AND_GIVEN("lord is at a location with an enemy")
         {
