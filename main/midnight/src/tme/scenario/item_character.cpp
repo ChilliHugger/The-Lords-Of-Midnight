@@ -970,7 +970,7 @@ namespace tme {
             if ( mx->Difficulty() == DF_EASY && followers>= 2 ) {
                 return false;
             }
-            if ( mx->Difficulty() == DF_MEDIUM || mx->Difficulty() == DF_NORMAL ) {
+            if ( mx->Difficulty() == DF_MEDIUM ) {
                 if ( followers >= 3 )
                     return false;
             }

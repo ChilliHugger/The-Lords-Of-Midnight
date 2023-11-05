@@ -175,9 +175,7 @@ namespace tme {
             warriors.Loses(loses);
             riders.Loses(loses);
                         
-            auto needfight = ShouldHaveOneToOneWithNasty();
-                        
-            if ( needfight ) {
+            if ( ShouldHaveOneToOneWithNasty() ) {
                 if ( hp > fightobject->FightSuccess() ) {
                     LostFight(hp);
                     if ( IsDead() ) {
