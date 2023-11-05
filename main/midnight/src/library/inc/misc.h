@@ -52,9 +52,9 @@ namespace chilli {
         namespace StringExtensions
         {
             archive& SerializeString ( archive& ar, std::string& string );
-            long atol( std::string& value );
-            f32 atof( std::string& value );
-            s32 atoi( std::string& value );
+            long atol( const std::string& value );
+            f32 atof( const std::string& value );
+            s32 atoi( const std::string& value );
             int split ( const std::string& source, char delim, c_string& lines );
             c_string split_by_newline(const std::string& str);
             std::string right(std::string& input, int amount);

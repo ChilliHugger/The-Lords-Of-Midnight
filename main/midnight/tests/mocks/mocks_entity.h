@@ -39,9 +39,15 @@ public:
     map<string, string> properties;
 };
 
-#define INIT_MOCK_CLASS \
-void SetEvent( string name ) { \
-    mockData.events.push_back(name); \
+template<typename T>
+T ConvertStringTo(const string& value)
+{
+    return (T)StringExtensions::atol(value);
+}
+
+#define INIT_MOCK_CLASS(x) \
+void SetEvent( string name ) const { \
+    const_cast<x*>(this)->mockData.events.push_back(name); \
 } \
 \
 string GetProperty( string name ) const { \
@@ -52,16 +58,10 @@ bool HasEvent(string event) { \
     return ( std::find(mockData.events.begin(), mockData.events.end(), event) != mockData.events.end() );  \
 } \
 \
-bool Override( const string& name, function<bool(void)> func) const { \
+template<typename T> T Override( const string& name, function<T(void)> func) const { \
+    SetEvent(name); \
     auto value = GetProperty(name);  \
-    if ( value == "false" ) return false;  \
-    if ( value == "true" ) return true;  \
-    return func();  \
-}  \
-\
-u32 OverrideU32( const string& name, function<u32(void)> func) const { \
-    auto value = GetProperty(name);  \
-    if ( !value.empty() ) return (u32)StringExtensions::atol(value);  \
+    if ( !value.empty() ) return ConvertStringTo<T>(value);  \
     return func();  \
 }  \
 \
@@ -74,7 +74,7 @@ MockData    mockData \
 class mockcharacter : public BASE_CHARACTER
 {
 public:
-    INIT_MOCK_CLASS;
+    INIT_MOCK_CLASS(mockcharacter);
 
     CAPTURE_VOID ( Cmd_Dead );
     CAPTURE_VOID ( Dismount );
@@ -87,17 +87,42 @@ public:
 
     virtual bool ShouldLoseHorse(s32 hint) const override
     {
-        return Override(__FUNCTION__, [&] {
+        return Override<bool>(__FUNCTION__, [&] {
             return BASE_CHARACTER::ShouldLoseHorse(hint);
         });
     }
 
     virtual bool ShouldDieInFight() const override
     {
-        return Override(__FUNCTION__, [&] {
+        return Override<bool>(__FUNCTION__, [&] {
             return BASE_CHARACTER::ShouldDieInFight();
         });
     }
+
+#if defined(_DDR_)
+    virtual bool ShouldWeStopTurnForEnemy() const override
+    {
+        return Override<bool>(__FUNCTION__, [&] {
+            return BASE_CHARACTER::ShouldWeStopTurnForEnemy();
+        });
+    }
+    
+    virtual bool ShouldWeStayAndFight(const mxarmytotal* friends, const mxarmytotal* foe) const override
+    {
+        SetEvent(__FUNCTION__);
+        return BASE_CHARACTER::ShouldWeStayAndFight(friends,foe);
+    }
+    
+    virtual mxorders_t pickNewOrders () const override
+    {
+        return Override<mxorders_t>(__FUNCTION__, [&] {
+            return BASE_CHARACTER::pickNewOrders();
+        });
+    }
+    
+    
+#endif
+
 };
 
 #if defined(_DDR_)
@@ -110,23 +135,23 @@ public:
 class mockobject : public BASE_OBJECT
 {
 public:
-    INIT_MOCK_CLASS;
+    INIT_MOCK_CLASS(mockobject);
     
     virtual u32 FightHP() const override
     {
-        return OverrideU32(__FUNCTION__, [&] {
+        return Override<u32>(__FUNCTION__, [&] {
             return BASE_OBJECT::FightHP();
         });
     }
     virtual u32 KillRate(u32 hp) const override
     {
-        return OverrideU32(__FUNCTION__, [&] {
+        return Override<u32>(__FUNCTION__, [&] {
             return BASE_OBJECT::KillRate(hp);
         });
     }
     virtual u32 FightSuccess() const override
     {
-        return OverrideU32(__FUNCTION__, [&] {
+        return Override<u32>(__FUNCTION__, [&] {
             return BASE_OBJECT::FightSuccess();
         });
     }

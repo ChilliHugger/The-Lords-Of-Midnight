@@ -49,6 +49,7 @@ static RULEFLAGS rule_mapping[] = {
     RF_NONE,                    // RF_FAST_TUNNELS
     RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
     RF_NONE,                    // RF_DDR_MOVEMENT_C64,
+    RF_NONE,                    // RF_DDR_BETTER_ARMIES
 };
 
 #elif defined(_DDR_)
@@ -59,7 +60,8 @@ static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
     { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
     { ID_OPTION_RULE_6,                 {OPTIONS_SCREEN_RULE_6},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
-    { ID_OPTION_RULE_7,                 {OPTIONS_SCREEN_RULE_7},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE }
+    { ID_OPTION_RULE_7,                 {OPTIONS_SCREEN_RULE_7},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
+    { ID_OPTION_RULE_8,                 {OPTIONS_SCREEN_RULE_8},                KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE }
 };
 static RULEFLAGS rule_mapping[] = {
     RF_IMPASSABLE_MOUNTAINS,
@@ -70,6 +72,7 @@ static RULEFLAGS rule_mapping[] = {
     RF_FAST_TUNNELS,
     RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
     RF_NONE,                    // RF_DDR_MOVEMENT_C64,
+    RF_DDR_BETTER_ARMIES
 };
 #endif
 
@@ -269,6 +272,7 @@ static option_t options[] = {
     {   ID_OPTION_RULE_5,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_6,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_7,           OPT_NUMBER,  3, values_movement_type,       nullptr, false },
+    {   ID_OPTION_RULE_8,           OPT_BOOL,    0, values_onoff,               nullptr, false },
 
     {   ID_OPTION_DIFFICULTY,       OPT_NUMBER,  4, values_difficulty,          nullptr, false },
 

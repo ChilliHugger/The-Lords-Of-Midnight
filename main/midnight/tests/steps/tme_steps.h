@@ -30,10 +30,10 @@ extern mxengine* mx;
 class TMEStep
 {
 public:
-    static void NewStory(mxdifficulty_t difficulty = DF_NORMAL);
+    static void NewStory(RULEFLAGS rules = RF_DEFAULT, mxdifficulty_t difficulty = DF_NORMAL);
     
     static void GivenNormalGame() { NewStory(); }
-    static void GivenHardGame() { NewStory(DF_HARD); }
+    static void GivenHardGame() { NewStory(RF_DEFAULT, DF_HARD); }
     
     static void NightFalls();
     static void CurrentLordIsDead();
@@ -117,5 +117,10 @@ inline mockobject* GetMockObject(const string& object)
 
 inline mockobject* GetMockThing(mxthing_t thing) {
     return static_cast<mockobject*>(tme::mx->EntityByIdt(MAKE_ID(IDT_OBJECT,thing)));
+}
+
+inline ddr_character* GetDDRCharacter(LPCSTR name)
+{
+    return static_cast<tme::ddr_character*>(GetCharacter(name));
 }
 #endif

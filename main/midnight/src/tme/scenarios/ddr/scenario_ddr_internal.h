@@ -151,18 +151,21 @@ namespace tme {
         void whatIsCharacterDoing ( void );
         bool retarget ();
         void moveCharacterSomewhere ( void );
+        
+        virtual bool ShouldWeStopTurnForEnemy() const;
+        virtual bool ShouldWeStayAndFight(const mxarmytotal* friends, const mxarmytotal* foe) const;
 
         void IncreaseDespondency( s32 amount );
         void DecreaseDespondency( s32 amount );
         
         mxunit_t getArmyType() const ;
         mxunit* getUnit();
-        s32 getArmySize();
+        s32 getArmySize() const;
         void setArmySize(s32 value);
         void setArmyLost(s32 value);
         void setArmyKilled(s32 value);
         
-        mxorders_t pickNewOrders (void) const;
+        virtual mxorders_t pickNewOrders() const;
         mxcharacter* AI_Approach ( mxcharacter* character );
 
     protected:

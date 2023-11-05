@@ -9,13 +9,11 @@
 #include "../mocks/mocks_entity.h"
 
 
-void TMEStep::NewStory(mxdifficulty_t difficulty)
+void TMEStep::NewStory(RULEFLAGS rules, mxdifficulty_t difficulty)
 {
     TME_DeInit();
-        
-    //TME_Init(RF_DEFAULT, difficulty);
-    
-    TME_Init(RF_DEFAULT, difficulty, [] {
+            
+    TME_Init(rules, difficulty, [] {
         tme::mx->entityfactory = new mockentityfactory();
     });
 
@@ -182,24 +180,24 @@ void TMEStep::LordHasFollowers(const string& lord, vector<string> names)
 void TMEStep::LordShouldDieInFight(const string& lord)
 {
     auto mock = GetMockCharacter(lord);
-    mock->mockData.properties["ShouldDieInFight"] = "true";
+    mock->mockData.properties["ShouldDieInFight"] = "1";
 }
 
 void TMEStep::LordShouldNotDieInFight(const string& lord)
 {
     auto mock = GetMockCharacter(lord);
-    mock->mockData.properties["ShouldDieInFight"] = "false";
+    mock->mockData.properties["ShouldDieInFight"] = "0";
 }
 
 void TMEStep::LordShouldLoseHorse(const string& lord)
 {
     auto mock = GetMockCharacter(lord);
-    mock->mockData.properties["ShouldLoseHorse"] = "true";
+    mock->mockData.properties["ShouldLoseHorse"] = "1";
 }
 
 void TMEStep::LordShouldNotLoseHorse(const string& lord)
 {
     auto mock = GetMockCharacter(lord);
-    mock->mockData.properties["ShouldLoseHorse"] = "false";
+    mock->mockData.properties["ShouldLoseHorse"] = "0";
 }
 
