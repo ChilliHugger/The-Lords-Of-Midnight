@@ -55,7 +55,7 @@ namespace tme {
         if ( character->IsInTunnel())
             return;
         
-        MXTRACE("BATTLE: [%3d] %-16s", (int)character->Id(), character->Symbol().c_str() );
+        MXTRACE("BATTLE: [%3d] %-16s %s", (int)character->Id(), character->Symbol().c_str(), character->Longname().c_str() );
       
         // current garrison
         auto scenario = static_cast<ddr_x*>(mx->scenario);
@@ -84,7 +84,7 @@ namespace tme {
         // DEBUG output
         for ( u32 ii=0; ii<characters_here.Count(); ii++ ) {
             auto attacker = static_cast<mxcharacter*>(characters_here[ii]);
-            MXTRACE("  [%d:%d] %-16s", (int)ii, (int)attacker->Id(), attacker->Symbol().c_str());
+            MXTRACE("  [%d:%d] %-16s %s", (int)ii, (int)attacker->Id(), attacker->Symbol().c_str(), attacker->Longname().c_str());
         }
         // END DEBUG output
         
@@ -96,7 +96,7 @@ namespace tme {
         
         // Then the strong hold armies
         if ( stronghold ) {
-            MXTRACE("Stronghold=%-16s", stronghold->Symbol().c_str());
+            MXTRACE("  stronghold=%-16s", stronghold->Symbol().c_str());
             StrongholdAttacks(stronghold);
         }
         

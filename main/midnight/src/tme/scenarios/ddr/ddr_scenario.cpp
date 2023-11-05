@@ -318,6 +318,29 @@ mxstronghold* ddr_x::StrongholdFromLocation ( mxgridref loc )
     return nullptr;
 }
     
+mxcharacter* ddr_x::IsEnemyAtLocation( mxgridref loc, const mxcharacter* character) const
+{
+    FOR_EACH_CHARACTER(c)
+    {
+        CONTINUE_IF(c->IsDead());
+
+        CONTINUE_IF(c->IsInTunnel());
+
+        CONTINUE_IF(c->Location() != loc);
+        
+        if ( !character->IsFriend(c) ) {
+        
+            if ( c->NormalisedLoyalty() != RA_MOONPRINCE ) {
+                if ( mxchance(0.75f)  )
+                    continue ;
+            }
+        
+            return c;
+        }
+    }
+    
+    return nullptr;
+}
     
 void ddr_x::NightStop(void)
 {

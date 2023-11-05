@@ -1089,6 +1089,12 @@ void ddr_character::whatIsCharacterDoing ( void )
     mxorders_t      new_orders = OD_NONE ;
     mxcharacter*    follow_character=NULL;
 
+    if ( mx->isRuleEnabled(RULEFLAGS::RF_DDR_BETTER_ARMIES) ) {
+        if (LookForInterestingLocationNearby()) {
+            return;
+        }
+    }
+
 #ifdef MX_DEBUG_ON
     LPCSTR          commanded="";
 #endif
@@ -1110,7 +1116,7 @@ void ddr_character::whatIsCharacterDoing ( void )
     
     // stay here
     if ( new_orders == OD_NONE ) {
-        MXTRACE("%s is doing nothing.", Longname().c_str());
+        MXTRACE("  %s is doing nothing.", Longname().c_str());
         Target(this);
         return;
     }
@@ -1146,9 +1152,9 @@ void ddr_character::whatIsCharacterDoing ( void )
             
 #ifdef MX_DEBUG_ON
             if ( Liege() == follow_character ) {
-                MXTRACE("%s is following liege %s%s.", Longname().c_str(), follow_character->Longname().c_str(), commanded);
+                MXTRACE("  %s is following liege %s%s.", Longname().c_str(), follow_character->Longname().c_str(), commanded);
             }else{
-                MXTRACE("%s is following %s%s.", Longname().c_str(), follow_character->Longname().c_str(), commanded);
+                MXTRACE("  %s is following %s%s.", Longname().c_str(), follow_character->Longname().c_str(), commanded);
             }
 #endif
             
@@ -1168,14 +1174,14 @@ void ddr_character::whatIsCharacterDoing ( void )
                         foe=follow_character;
                 }
             }
-            MXTRACE("%s is following foe %s.", Longname().c_str(), follow_character->Longname().c_str());
+            MXTRACE("  %s is following foe %s.", Longname().c_str(), follow_character->Longname().c_str());
             Target(follow_character);
             break;
         
         case OD_FIND_OBJECT:
             // object
             if ( !desired_object->IsCarried() ) {
-                MXTRACE("%s is looking for %s", Longname().c_str(), mx->text->DescribeObject(desired_object).c_str());
+                MXTRACE("  %s is looking for %s", Longname().c_str(), mx->text->DescribeObject(desired_object).c_str());
                 Target(desired_object);
                 break;
             }
@@ -1189,7 +1195,7 @@ void ddr_character::whatIsCharacterDoing ( void )
             }else{
                 Target(home_stronghold);
             }
-            MXTRACE("%s is heading home.", Longname().c_str());
+            MXTRACE("  %s is heading home.", Longname().c_str());
 
             break;
             
@@ -1320,7 +1326,7 @@ void ddr_character::moveCharacterSomewhere ( void )
     //
     whatIsCharacterDoing();
     
-    MXTRACE("  Target Location is [%d,%d]", targetLocation.x, targetLocation.y);
+    MXTRACE("    Target Location is [%d,%d]", targetLocation.x, targetLocation.y);
 
     bool reachedTarget = false;
     
@@ -1338,12 +1344,12 @@ void ddr_character::moveCharacterSomewhere ( void )
         mxdir_t direction = calcDirection(Location(),targetLocation);
     
         if ( direction==DR_NONE ) {
-            MXTRACE("  No Direction.");
+            MXTRACE("    No Direction.");
             break;
         }
         
         auto dinfo = mx->DirectionById(direction);
-        MXTRACE("  Heading: %s", dinfo->Name().c_str());
+        MXTRACE("    Heading: %s", dinfo->Name().c_str());
         
         looking = direction;
         
@@ -1351,15 +1357,14 @@ void ddr_character::moveCharacterSomewhere ( void )
         
         if ( !(info->flags&lif_moveforward) ) {
             if ( !IsDawn() || info->flags&lif_blocked ) {
-                MXTRACE("  Blocked (not dawn).");
+                MXTRACE("    Blocked (not dawn).");
                 reachedTarget=true;
             }else{
-                if ( mx->isRuleEnabled(RULEFLAGS::RF_DDR_BETTER_ARMIES)
-                     && ShouldWeStayAndFight(&info->friends, &info->foe) ) {
-                    reachedTarget = true;
+                if ( mx->isRuleEnabled(RULEFLAGS::RF_DDR_BETTER_ARMIES) ) {
+                    reachedTarget = ShouldWeStayAndFight(&info->friends, &info->foe);
                 }else{
                     if ( ShouldWeStopTurnForEnemy() ) {
-                        MXTRACE("  Decided to stop for a turn.");
+                        MXTRACE("    Decided to stop for a turn.");
                         reachedTarget=true;
                     }
                 }
@@ -1367,7 +1372,7 @@ void ddr_character::moveCharacterSomewhere ( void )
         }
 
         if ( reachedTarget ) {
-            MXTRACE("  Reached Target.");
+            MXTRACE("    Reached Target.");
             break;
         }
         
@@ -1375,13 +1380,13 @@ void ddr_character::moveCharacterSomewhere ( void )
         // 4. Walk forward
         //
         Cmd_WalkForward(false, false);
-        MXTRACE("  Moved to [%d,%d]", location.x, location.y);
+        MXTRACE("    Moved to [%d,%d]", location.x, location.y);
 
         //
         // 5. If night then stop turn (8)
         //
         if ( IsNight() ) {
-            MXTRACE("Stopping for the day.");
+            MXTRACE("    Stopping for the day.");
             break;
         }
 
@@ -1389,7 +1394,7 @@ void ddr_character::moveCharacterSomewhere ( void )
         // 6. If tired then stop turn (8)
         //
         if (energy<MIN_AI_MOVEMENT_ENERGY) {
-            MXTRACE("Stopping because tired.");
+            MXTRACE("    Stopping because tired.");
             break;
         }
         
@@ -1411,19 +1416,32 @@ void ddr_character::moveCharacterSomewhere ( void )
         mxcharacter* recruit=NULL;
 
         // TODO: Check this info against foe.enemies and foe.characters
-        for (u32 ii = 0; ii <info->objCharacters.Count(); ii++) {
-            mxcharacter* character = (mxcharacter*)info->objCharacters[ii];
-            if ( !IsFriend(character) ) {
-                recruit=character;
-                enemies++;
+        for (auto c : info->objCharacters) {
+            if ( c!= this ) {
+#if MX_DEBUG_ON
+                std::string type = "- friend";
+#endif
+                if ( !IsFriend(c) ) {
+                    recruit=c;
+                    enemies++;
+#if MX_DEBUG_ON
+                    type = "- enemy";
+#endif
+                }
+                MXTRACE("      %s %s", c->Longname().c_str(), type.c_str());
             }
         }
         
-        MXTRACE("  At location with %d enemies and %d lords.", enemies, info->objCharacters.Count());
+        
+#ifdef MX_DEBUG_ON
+        if (enemies!=0 && info->objCharacters.Count()!=1 ) {
+            MXTRACE("    At location with %d enemies and %d lords.", enemies, info->objCharacters.Count());
+        }
+#endif
 
         
         if ( (enemies==1) && (info->objCharacters.Count()==2) ) {
-            MXTRACE("  Approaching %s", recruit->Longname().c_str());
+            MXTRACE("    Approaching %s", recruit->Longname().c_str());
             AI_Approach(recruit);
         }
     }
@@ -1439,10 +1457,10 @@ bool ddr_character::ShouldWeStayAndFight(const mxarmytotal* friends, const mxarm
     // is there an enemy here
     // check game play rule
     if( foe->armies || foe->characters ) {
-        MXTRACE("Enemy still present");
+        MXTRACE("  Enemy still present");
         
         if (IsCoward()) {
-            MXTRACE("Decided to leave because of being a coward");
+            MXTRACE("  Decided to leave because of being a coward");
             return false;
         }
 
@@ -1450,34 +1468,85 @@ bool ddr_character::ShouldWeStayAndFight(const mxarmytotal* friends, const mxarm
         if ( foe->Total() ) {
             if ( friends->characters == 1 ) {
                 if ( (f32)getArmySize() / (f32)foe->Total() < MINIMUM_OWN_ARMY ) {
-                    MXTRACE("Decided to leave because own army size too small");
+                    MXTRACE("  Decided to leave because own army size too small");
                     return false;
                 }
             }else{
                 // total army percentage for friends against the foe
                 if ( (f32)friends->Total() / (f32)foe->Total() < MINIMUM_COMBINED_ARMY ) {
-                    MXTRACE("Decided to leave because friend army size too small");
+                    MXTRACE("  Decided to leave because friend army size too small");
                     return false;
                 }
             }
         }
 
-        MXTRACE("Decided to stay and fight");
+        MXTRACE("  Decided to stay and fight");
         return true;
     }
     
     return false;
 }
 
+
+bool ddr_character::LookForInterestingLocationNearby()
+{
+    if ( IsCoward() || Traits().Is(ct_weak)) {
+        return false;
+    }
+
+    auto scenario = static_cast<ddr_x*>(mx->scenario);
+
+    // do a complete scan around us and see if there
+    // is anything more interesting to do than our current orders
+    // ie: someone else is in the next location
+    for (mxdir_t dir=DR_NORTH; dir<=DR_NORTHWEST; dir=(mxdir_t)((int)dir+1)) {
+        auto location = Location()+dir;
+        if ( mx->gamemap->IsLocationSpecial(location)) {
+            auto enemy = scenario->IsEnemyAtLocation(location, this);
+            if (enemy != nullptr ) {
+                MXTRACE("    Found enemy '%s' at nearby location", enemy->Longname().c_str());
+                targetLocation = location;
+                return true;
+            }
+        }
+    }
+
+    // look around for strongholds
+    for (mxdir_t dir=DR_NORTH; dir<=DR_NORTHWEST; dir=(mxdir_t)((int)dir+1))    {
+        auto location = Location()+dir;
+        if ( mx->gamemap->IsLocationSpecial(targetLocation)) {
+            // what's actually there
+            auto stronghold =  static_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(location));
+            if ( stronghold != nullptr && !stronghold->IsFriend(this) ) {
+            
+                if ( stronghold->Loyalty() != RA_MOONPRINCE ) {
+                    if ( mxchance(0.75f)  ) {
+                        MXTRACE("    Ignored enemy stronghold '%s' at nearby location", stronghold->Symbol().c_str());
+                        continue ;
+                    }
+                }
+            
+                MXTRACE("    Found enemy stronghold '%s' at nearby location", stronghold->Symbol().c_str());
+                targetLocation = location;
+                return true;
+            }
+        }
+    }
+
+
+    return false;
+}
+
+
 mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )
 {
     if ( CheckRecruitChar( character ) ) {
         if ( character->Recruited ( this ) ) {
-            MXTRACE("%s has recruited %s", Longname().c_str(),  character->Longname().c_str());
+            MXTRACE("      %s has recruited %s", Longname().c_str(),  character->Longname().c_str());
             return character ;
         }
     }
-    MXTRACE("%s has failed to recruit %s", Longname().c_str(),  character->Longname().c_str());
+    MXTRACE("      %s has failed to recruit %s", Longname().c_str(),  character->Longname().c_str());
     return NULL ;
 }
 

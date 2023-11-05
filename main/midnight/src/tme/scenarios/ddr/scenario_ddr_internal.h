@@ -42,6 +42,8 @@ namespace tme {
         virtual mxobject* FindObjectAtLocation ( mxgridref loc );
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
+        virtual mxcharacter* IsEnemyAtLocation( mxgridref loc, const mxcharacter* character) const;
+
     
     public:
         ddr_character*  morkin;
@@ -154,6 +156,7 @@ namespace tme {
         
         virtual bool ShouldWeStopTurnForEnemy() const;
         virtual bool ShouldWeStayAndFight(const mxarmytotal* friends, const mxarmytotal* foe) const;
+        virtual bool LookForInterestingLocationNearby();
 
         void IncreaseDespondency( s32 amount );
         void DecreaseDespondency( s32 amount );

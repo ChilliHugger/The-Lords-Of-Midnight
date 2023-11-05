@@ -13,8 +13,11 @@ namespace tme {
 
         virtual void MoveMidwinter ();
 
-    private:
-        void ResetLocationSpecial ( mxgridref loc );
+    protected:
+        virtual void SetSpecialLocationsCharacter();
+        virtual void SetSpecialLocationsStrongholds();
+        virtual void ResetLocationSpecial ( mxgridref loc );
+        virtual void ResetSpecialLocations();
     };
 
 }
