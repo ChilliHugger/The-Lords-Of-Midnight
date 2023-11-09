@@ -51,6 +51,12 @@ string LordNeedstoFightNasty( const string& name, mxthing_t nasty)
     return name;
 }
 
+void ThingHasZeroKillRate()
+{
+    auto mock = GetMockThing(currentThing);
+    mock->mockData.properties["KillRate"] = "0";
+}
+
 SCENARIO("Lord fights a thing")
 {
     LPCSTR nasty_text[] = { "", "WOLVES","ICE TROLLS", "SKULKRIN", "DRAGONS"  };
@@ -138,7 +144,7 @@ SCENARIO("Lord fights a nasty with no object and no army but leads others")
             {
                 ShouldFightAndWillLose(lord);
 
-                THEN("the lord will be killed in hard")
+                THEN("the lord will be killed in hard and normal")
                 {
                     if ( mode == DF_HARD ) {
                         LordDead(lord);
@@ -150,4 +156,97 @@ SCENARIO("Lord fights a nasty with no object and no army but leads others")
         }
     }
 }
+
+
+SCENARIO("Lord fights a nasty with no object but armies")
+{
+    LPCSTR mode_text[] = { "NORMAL", "EASY", "MEDIUM", "HARD",  };
+    auto mode = GENERATE( DF_NORMAL, DF_EASY, DF_MEDIUM, DF_HARD );
+
+    GIVEN(StringExtensions::Format("Difficulty is %s", mode_text[mode]))
+    {
+        TMEStep::NewStory(RF_DEFAULT, mode);
+
+        auto lord = LordNeedstoFightNasty( TMEStep::ch_morkin, OB_DRAGONS );
+        ThingHasZeroKillRate();
+
+        AND_GIVEN("and has 249 soldiers")
+        {
+            GetCharacter(lord)->warriors.Total(100);
+            GetCharacter(lord)->riders.Total(149);
+
+            WHEN("lord fights thing")
+            {
+                ShouldFightAndWillLose(lord);
+
+                THEN("the lord will be killed")
+                {
+                    LordDead(lord);
+                }
+            }
+        }
+        
+        AND_GIVEN("and has 250 soldiers")
+        {
+            GetCharacter(lord)->warriors.Total(101);
+            GetCharacter(lord)->riders.Total(149);
+
+            WHEN("lord fights thing")
+            {
+                ShouldFightAndWillLose(lord);
+
+                THEN("the thing will be killed in easy")
+                {
+                    if ( mode == DF_EASY ) {
+                        ThingKilled();
+                    }else{
+                        LordDead(lord);
+                    }
+                }
+            }
+        }
+        
+        AND_GIVEN("and has 749 soldiers")
+        {
+            GetCharacter(lord)->warriors.Total(600);
+            GetCharacter(lord)->riders.Total(149);
+
+            WHEN("lord fights thing")
+            {
+                ShouldFightAndWillLose(lord);
+
+                THEN("the thing will be killed in easy")
+                {
+                    if ( mode == DF_EASY ) {
+                        ThingKilled();
+                    }else{
+                        LordDead(lord);
+                    }
+                }
+            }
+        }
+        
+        AND_GIVEN("and has 750 soldiers")
+        {
+            GetCharacter(lord)->warriors.Total(601);
+            GetCharacter(lord)->riders.Total(149);
+
+            WHEN("lord fights thing")
+            {
+                ShouldFightAndWillLose(lord);
+
+                THEN("the thing will be killed in easy and medium")
+                {
+                    if ( mode == DF_EASY || mode == DF_MEDIUM) {
+                        ThingKilled();
+                    }else{
+                        LordDead(lord);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 
