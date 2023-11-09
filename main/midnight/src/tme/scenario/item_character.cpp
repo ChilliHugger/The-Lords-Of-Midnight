@@ -974,6 +974,14 @@ namespace tme {
                 if ( followers >= 3 )
                     return false;
             }
+            
+            s32 total = warriors.total + riders.total ;
+            if ( mx->Difficulty() == DF_EASY && total >= 250 )
+                return false;
+                
+            if ( mx->Difficulty() == DF_MEDIUM && total >= 750 )
+                return false;
+            
             return true;
         }
 
