@@ -42,7 +42,8 @@ namespace tme {
         virtual mxobject* FindObjectAtLocation ( mxgridref loc );
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
-        virtual mxcharacter* IsEnemyAtLocation( mxgridref loc, const mxcharacter* character) const;
+        virtual mxcharacter* IsEnemyAtLocation( mxgridref loc, const ddr_character* character) const;
+        virtual bool IsLoyalToTheMoonprince(mxrace_t race) const ;
 
     
     public:
@@ -171,6 +172,11 @@ namespace tme {
         virtual mxorders_t pickNewOrders() const;
         mxcharacter* AI_Approach ( mxcharacter* character );
 
+        virtual bool IsLoyalToTheFoe(mxrace_t race) const;
+        virtual bool InterestedInMoonprince() const ;
+        virtual bool InterestedInFoe() const ;
+        virtual bool InterestedInOthers() const ;
+
     protected:
         bool RecruitMorkin ( mxcharacter* recruiter );
 
@@ -178,9 +184,7 @@ namespace tme {
         virtual void UseSpellOfSwiftness();
         virtual void UseRunesOfProtection();
         virtual void UseAllOtherObjects();
-        
         virtual bool DesiredObjectAtLocation();
-
 
     public:
 

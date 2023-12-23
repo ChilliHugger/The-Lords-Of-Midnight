@@ -1516,17 +1516,21 @@ bool ddr_character::LookForInterestingLocationNearby()
             // what's actually there
             auto stronghold =  static_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(location));
             if ( stronghold != nullptr && !stronghold->IsFriend(this) ) {
-            
-                if ( stronghold->Loyalty() != RA_MOONPRINCE ) {
-                    if ( mxchance(0.75f)  ) {
-                        MXTRACE("    Ignored enemy stronghold '%s' at nearby location", stronghold->Symbol().c_str());
-                        continue ;
-                    }
+                auto loyalty = stronghold->Loyalty();
+                
+                if ( DDR_SCENARIO(IsLoyalToTheMoonprince(loyalty)) && InterestedInMoonprince() ) {
+                    MXTRACE("    Found moonprince enemy stronghold '%s' at nearby location", stronghold->Symbol().c_str());
+                    targetLocation = location;
+                    return true;
                 }
             
-                MXTRACE("    Found enemy stronghold '%s' at nearby location", stronghold->Symbol().c_str());
-                targetLocation = location;
-                return true;
+                if ( IsLoyalToTheFoe(loyalty) && InterestedInFoe() ) {
+                    MXTRACE("    Found enemy stronghold '%s' at nearby location", stronghold->Symbol().c_str());
+                    targetLocation = location;
+                    return true;
+                }
+                            
+                MXTRACE("    Ignoring stronghold '%s' at nearby location", stronghold->Symbol().c_str());
             }
         }
     }
@@ -1535,6 +1539,25 @@ bool ddr_character::LookForInterestingLocationNearby()
     return false;
 }
 
+bool ddr_character::InterestedInMoonprince() const
+{
+    return mxchance(0.50f);
+}
+
+bool ddr_character::InterestedInFoe() const
+{
+    return mxchance(0.75f);
+}
+
+bool ddr_character::InterestedInOthers() const
+{
+    return mxchance(0.25f);
+}
+
+bool ddr_character::IsLoyalToTheFoe(mxrace_t race) const
+{
+    return foe != nullptr && race == foe->NormalisedLoyalty();
+}
 
 mxcharacter* ddr_character::AI_Approach ( mxcharacter* character )
 {

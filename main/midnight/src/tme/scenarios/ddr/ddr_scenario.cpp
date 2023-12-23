@@ -318,7 +318,7 @@ mxstronghold* ddr_x::StrongholdFromLocation ( mxgridref loc )
     return nullptr;
 }
     
-mxcharacter* ddr_x::IsEnemyAtLocation( mxgridref loc, const mxcharacter* character) const
+mxcharacter* ddr_x::IsEnemyAtLocation( mxgridref loc, const ddr_character* character) const
 {
     FOR_EACH_CHARACTER(c)
     {
@@ -330,16 +330,26 @@ mxcharacter* ddr_x::IsEnemyAtLocation( mxgridref loc, const mxcharacter* charact
         
         if ( !character->IsFriend(c) ) {
         
-            if ( c->NormalisedLoyalty() != RA_MOONPRINCE ) {
-                if ( mxchance(0.75f)  )
-                    continue ;
-            }
+            auto loyalty = c->NormalisedLoyalty();
         
-            return c;
+            if ( IsLoyalToTheMoonprince(loyalty) && character->InterestedInMoonprince() ) {
+                return c;
+            }
+            
+            if ( character->IsLoyalToTheFoe(loyalty) && character->InterestedInFoe() )
+                return c ;
+                
+            if ( character->InterestedInOthers() )
+                return c;
         }
     }
     
     return nullptr;
+}
+
+bool ddr_x::IsLoyalToTheMoonprince(mxrace_t race) const
+{
+    return race == RA_MOONPRINCE;
 }
     
 void ddr_x::NightStop(void)
