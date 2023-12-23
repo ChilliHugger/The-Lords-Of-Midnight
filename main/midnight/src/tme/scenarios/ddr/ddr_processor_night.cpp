@@ -44,6 +44,9 @@ namespace tme {
             
             RemoveMidwinterFromMap();
             
+            SetSpecialLocationsCharacter();
+            SetSpecialLocationsStrongholds();
+            
             LordsProcessStart();
             
             static_cast<ddr_battle*>(mx->battle)->Process();
@@ -68,13 +71,25 @@ namespace tme {
             // check morkin dead
             // check shareth dead
             static_cast<ddr_gameover*>(mx->gameover)->checkImportantCharactersDead();
-            
-            MoveMidwinter();
+
+            ResetSpecialLocations();
             
             mx->scenario->SetMapArmies();
             mx->scenario->NightStop();
         }
     
+        void ddr_night::SetSpecialLocationsStrongholds()
+        {
+            FOR_EACH_STRONGHOLD(stronghold) {
+                mx->gamemap->SetLocationSpecial(stronghold->Location(),1);
+            }
+        }
+    
+        void ddr_night::ResetLocationSpecial ( mxgridref loc )
+        {
+            mx->gamemap->SetLocationSpecial(loc,0);
+        }
+
         void ddr_night::LordsProcessStart()
         {
             // place all lords at dawn

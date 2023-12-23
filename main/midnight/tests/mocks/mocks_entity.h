@@ -120,7 +120,27 @@ public:
         });
     }
     
-    
+    virtual bool InterestedInMoonprince() const override
+    {
+        return Override<bool>(__FUNCTION__, [&] {
+            return BASE_CHARACTER::InterestedInMoonprince();
+        });
+    }
+
+    virtual bool InterestedInFoe() const override
+    {
+        return Override<bool>(__FUNCTION__, [&] {
+            return BASE_CHARACTER::InterestedInFoe();
+        });
+    }
+
+    virtual bool InterestedInOthers() const override
+    {
+        return Override<bool>(__FUNCTION__, [&] {
+            return BASE_CHARACTER::InterestedInOthers();
+        });
+    }
+
 #endif
 
 };

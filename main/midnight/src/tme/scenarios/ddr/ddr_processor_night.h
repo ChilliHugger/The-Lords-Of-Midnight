@@ -10,12 +10,16 @@ namespace tme {
         ddr_night();
         virtual ~ddr_night();
 
-        virtual void Process(void);
-        virtual void MoveMidwinter ();
+        virtual void Process(void) override;
+        virtual void MoveMidwinter () override;
         virtual void RemoveMidwinterFromMap();
         
         virtual void LordsProcessStart();
         virtual void LordsProcessEnd();
+
+    protected:
+        virtual void SetSpecialLocationsStrongholds() override;
+        virtual void ResetLocationSpecial ( mxgridref loc ) override;
 
     };
 }

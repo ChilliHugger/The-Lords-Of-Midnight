@@ -45,22 +45,8 @@ namespace tme {
             }
 
 #ifdef _LOM_
-            // check all the lord that are not hidden and alive
-            // and mark their locations as being of special interest
-            // by setting the special bit on in the map data
-     
-            FOR_EACH_CHARACTER(character) {
-                if ( character->IsAlive() && !character->IsHidden() && character->race!=RA_MIDWINTER ) {
-                    mx->gamemap->SetLocationSpecial(character->Location(),1);
-                }
-            }
-
-            // checking all the strongholds that don't belong to doomdark
-            // and mark then on the map as being of special interest
-            FOR_EACH_STRONGHOLD(stronghold) {
-                if ( stronghold->OccupyingRace() != RA_DOOMGUARD )
-                    mx->gamemap->SetLocationSpecial(stronghold->Location(),1);
-            }
+            SetSpecialLocationsCharacter();
+            SetSpecialLocationsStrongholds();
 
 #ifndef _TME_DEMO_MODE_
             // process all the regiments
@@ -69,6 +55,35 @@ namespace tme {
                 processor->Process(regiment);
             }
 #endif
+ 
+            ResetSpecialLocations();
+            
+            MoveMidwinter();
+            
+#endif
+
+            mx->scenario->NightStop();
+        }
+
+        void mxnight::SetSpecialLocationsCharacter()
+        {
+            FOR_EACH_CHARACTER(character) {
+                if ( character->IsAlive() && !character->IsHidden() && character->race!=RA_MIDWINTER ) {
+                    mx->gamemap->SetLocationSpecial(character->Location(),1);
+                }
+            }
+        }
+
+        void mxnight::SetSpecialLocationsStrongholds()
+        {
+            FOR_EACH_STRONGHOLD(stronghold) {
+                if ( stronghold->OccupyingRace() != RA_DOOMGUARD )
+                    mx->gamemap->SetLocationSpecial(stronghold->Location(),1);
+            }
+        }
+
+        void mxnight::ResetSpecialLocations()
+        {
             // remove mark where all the characters are
             FOR_EACH_CHARACTER(character) {
                 ResetLocationSpecial(character->Location());
@@ -78,12 +93,6 @@ namespace tme {
             FOR_EACH_STRONGHOLD(stronghold) {
                 ResetLocationSpecial(stronghold->Location());
             }
-            
-            MoveMidwinter();
-            
-#endif
-
-            mx->scenario->NightStop();
         }
 
         void mxnight::ResetLocationSpecial ( mxgridref loc )

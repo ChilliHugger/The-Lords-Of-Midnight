@@ -20,6 +20,9 @@
 
 namespace tme {
 
+    const loc_t loc_t::ZERO(0, 0);
+    const loc_t loc_t::INVALID(-1, -1);
+
     // Table to work out directions
     s32 mxgridref::DirectionLookTable[] = {
         0,-1,        // DR_NORTH,

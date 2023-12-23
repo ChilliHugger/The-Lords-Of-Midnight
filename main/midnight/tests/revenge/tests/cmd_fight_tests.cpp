@@ -146,7 +146,7 @@ SCENARIO("Lord fights a nasty with no object and no army but leads others")
 
                 THEN("the lord will be killed in hard and normal")
                 {
-                    if ( mode == DF_HARD ) {
+                    if ( mode == DF_HARD || mode == DF_NORMAL) {
                         LordDead(lord);
                     }else{
                         ThingKilled();

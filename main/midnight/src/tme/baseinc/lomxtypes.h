@@ -692,6 +692,9 @@ namespace tme {
     
 //
     typedef struct loc_t {
+        static const loc_t ZERO;
+        static const loc_t INVALID;
+        
         s32                x;
         s32                y;
         

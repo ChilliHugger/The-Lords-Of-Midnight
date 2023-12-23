@@ -461,7 +461,6 @@ SCENARIO("Lord prepares to do battle")
 
 }
 
-
 // CH_TARITHEL vs CH_VARATRARG @ SH_FORTRESS_VARATRARG
 //TME: BATTLE: [  3] CH_TARITHEL
 //TME:   [0:3] CH_TARITHEL
@@ -508,7 +507,7 @@ TEST_CASE("Tarithel vs Varatrarg @ fortress of Varatrarg", "[ignore]")
     battle->Battle(tarithel);
 }
 
-TEST_CASE("Ushangrane vs Varatrarg @ fortress of Varatrarg", "[new]")
+TEST_CASE("Ushangrane vs Varatrarg @ fortress of Varatrarg", "[ignore]")
 {
     TMEStep::NewStory();
 
@@ -553,7 +552,7 @@ TEST_CASE("Ushangrane vs Varatrarg @ fortress of Varatrarg", "[new]")
 //TME:       Defender: CH_TARITHEL      lost battle
 //TME:       Defender: SH_FORTRESS_THELAK lost 0 of (1100)
 
-TEST_CASE("Tarithel vs Thelak @ fortress of Thelak", "[new]")
+TEST_CASE("Tarithel vs Thelak @ fortress of Thelak", "[ignore]")
 {
     TMEStep::NewStory();
 

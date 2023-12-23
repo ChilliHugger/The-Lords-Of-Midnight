@@ -970,7 +970,7 @@ namespace tme {
             if ( mx->Difficulty() == DF_EASY && followers>= 2 ) {
                 return false;
             }
-            if ( mx->Difficulty() == DF_MEDIUM || mx->Difficulty() == DF_NORMAL ) {
+            if ( mx->Difficulty() == DF_MEDIUM ) {
                 if ( followers >= 3 )
                     return false;
             }
@@ -1472,7 +1472,7 @@ namespace tme {
 
             carrying = mx->scenario->PickupObject( Location() ) ;
             if(carrying!=nullptr) {
-                MXTRACE("%s picks up object %s", Longname().c_str(), carrying->name.c_str());
+                MXTRACE("    %s picks up object %s", Longname().c_str(), carrying->name.c_str());
             }
 
 #if defined(_DDR_)
@@ -1484,7 +1484,7 @@ namespace tme {
             carrying->carriedby=this;
             
             if ( oldobject ) {
-                MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
+                MXTRACE("    %s drops object %s", Longname().c_str(), oldobject->name.c_str());
                 mx->scenario->DropObject ( Location(), oldobject );
                 oldobject->carriedby=nullptr;
             }
@@ -1492,7 +1492,7 @@ namespace tme {
             
 #if defined(_LOM_)
             if( oldobject ) {
-                MXTRACE("%s drops object %s", Longname().c_str(), oldobject->name.c_str());
+                MXTRACE("    %s drops object %s", Longname().c_str(), oldobject->name.c_str());
                 mx->scenario->DropObject ( Location(), oldobject );
             }
 #endif

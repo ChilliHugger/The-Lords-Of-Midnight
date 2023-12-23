@@ -378,3 +378,241 @@ SCENARIO("Characters will consider staying in a battle")
         
     }
 }
+
+LPCSTR directions[] = { "NORTH", "NORTHEAST", "EAST", "SOUTHEAST", "SOUTH", "SOUTHWEST", "WEST", "NORTHWEST" };
+    
+SCENARIO("Characters will look interesting locations containing a lord loyal to the moonprince")
+{
+    auto direction = GENERATE( DR_NORTH, DR_NORTHEAST, DR_EAST, DR_SOUTHEAST, DR_SOUTH, DR_SOUTHWEST, DR_WEST, DR_NORTHWEST );
+
+    auto enemy = "CH_TARITHEL";
+    auto lord = "CH_IMGARIL";
+
+    TMEStep::NewStory(RF_DDR_BETTER_ARMIES);
+
+    GIVEN(StringExtensions::Format("the lord is %s from the enemy", directions[direction]))
+    {
+        auto enemyLocation = GetCharacter(enemy)->Location();
+        tme::mx->gamemap->SetLocationSpecial(enemyLocation,1);
+        
+        auto location = enemyLocation + direction ;
+        TMEStep::LordAtLocation(lord, location);
+
+        AND_GIVEN("the lord is interested in the moonprince")
+        {
+            auto c = GetMockCharacter(lord);
+            c->mockData.properties["InterestedInMoonprince"] = "1" ;
+            c->mockData.properties["InterestedInFoe"] = "0" ;
+            c->mockData.properties["InterestedInOthers"] = "0" ;
+            c->targetLocation = mxgridref::INVALID;
+            
+            AND_GIVEN("lord is not cowardly")
+            {
+                c->Traits().Reset(ct_weak);
+                c->Traits().Reset(ct_coward);
+                c->courage = 100;
+            
+                WHEN("the lord looks around")
+                {
+                    auto result = c->LookForInterestingLocationNearby();
+                    
+                    THEN("the they should make the enemy location their target")
+                    {
+                        REQUIRE( result );
+                        REQUIRE( c->targetLocation == enemyLocation );
+                    }
+                }
+            }
+            
+            AND_GIVEN("lord is cowardly")
+            {
+                c->Traits().Set(ct_coward);
+            
+                WHEN("the lord looks around")
+                {
+                    auto result = c->LookForInterestingLocationNearby();
+                    
+                    THEN("the they should not make the enemy location their target")
+                    {
+                        REQUIRE( result == false );
+                        REQUIRE( c->targetLocation == mxgridref::INVALID );
+                    }
+                }
+            }
+            
+            AND_GIVEN("lord is weak")
+            {
+                c->Traits().Set(ct_weak);
+            
+                WHEN("the lord looks around")
+                {
+                    auto result = c->LookForInterestingLocationNearby();
+                    
+                    THEN("the they should not make the enemy location their target")
+                    {
+                        REQUIRE( result == false );
+                        REQUIRE( c->targetLocation == mxgridref::INVALID );
+                    }
+                }
+            }
+            AND_GIVEN("lord has no courage")
+            {
+                c->courage = 0;
+            
+                WHEN("the lord looks around")
+                {
+                    auto result = c->LookForInterestingLocationNearby();
+                    
+                    THEN("the they should not make the enemy location their target")
+                    {
+                        REQUIRE( result == false );
+                        REQUIRE( c->targetLocation == mxgridref::INVALID );
+                    }
+                }
+            }
+        }
+    }
+}
+
+SCENARIO("Characters will look interesting locations containing a lord loyal to the foe")
+{
+    auto direction = GENERATE( DR_NORTH, DR_NORTHEAST, DR_EAST, DR_SOUTHEAST, DR_SOUTH, DR_SOUTHWEST, DR_WEST, DR_NORTHWEST );
+
+// Thigrim the Icelord
+// foe is Berorthim the Giant
+// so Obigrorn the Giant
+
+
+    auto enemy = "CH_OBIGRORN";
+    auto lord = "CH_THIGRIM";
+
+    TMEStep::NewStory(RF_DDR_BETTER_ARMIES);
+
+    GIVEN(StringExtensions::Format("the lord is %s from the enemy", directions[direction]))
+    {
+        auto enemyLocation = GetCharacter(enemy)->Location();
+        tme::mx->gamemap->SetLocationSpecial(enemyLocation,1);
+        
+        auto location = enemyLocation + direction ;
+        TMEStep::LordAtLocation(lord, location);
+
+        AND_GIVEN("the lord is interested in their foe")
+        {
+            auto c = GetMockCharacter(lord);
+            c->mockData.properties["InterestedInMoonprince"] = "0" ;
+            c->mockData.properties["InterestedInFoe"] = "1" ;
+            c->mockData.properties["InterestedInOthers"] = "0" ;
+            c->targetLocation = mxgridref::INVALID;
+            
+            AND_GIVEN("lord is not cowardly")
+            {
+                c->Traits().Reset(ct_weak);
+                c->Traits().Reset(ct_coward);
+                c->courage = 100;
+            
+                WHEN("the lord looks around")
+                {
+                    auto result = c->LookForInterestingLocationNearby();
+                    
+                    THEN("the they should make the enemy location their target")
+                    {
+                        REQUIRE( result );
+                        REQUIRE( c->targetLocation == enemyLocation );
+                    }
+                }
+            }
+        }
+    }
+}
+
+SCENARIO("Characters will look interesting locations containing a general lord")
+{
+    auto direction = GENERATE( DR_NORTH, DR_NORTHEAST, DR_EAST, DR_SOUTHEAST, DR_SOUTH, DR_SOUTHWEST, DR_WEST, DR_NORTHWEST );
+
+    auto enemy = "CH_THORMAND";
+    auto lord = "CH_THIGRIM";
+
+    TMEStep::NewStory(RF_DDR_BETTER_ARMIES);
+
+    GIVEN(StringExtensions::Format("the lord is %s from the enemy", directions[direction]))
+    {
+        auto enemyLocation = GetCharacter(enemy)->Location();
+        tme::mx->gamemap->SetLocationSpecial(enemyLocation,1);
+        
+        auto location = enemyLocation + direction ;
+        TMEStep::LordAtLocation(lord, location);
+
+        AND_GIVEN("the lord is interested in other lords")
+        {
+            auto c = GetMockCharacter(lord);
+            c->mockData.properties["InterestedInMoonprince"] = "0" ;
+            c->mockData.properties["InterestedInFoe"] = "0" ;
+            c->mockData.properties["InterestedInOthers"] = "1" ;
+            c->targetLocation = mxgridref::INVALID;
+            
+            AND_GIVEN("lord is not cowardly")
+            {
+                c->Traits().Reset(ct_weak);
+                c->Traits().Reset(ct_coward);
+                c->courage = 100;
+            
+                WHEN("the lord looks around")
+                {
+                    auto result = c->LookForInterestingLocationNearby();
+                    
+                    THEN("the they should make the enemy location their target")
+                    {
+                        REQUIRE( result );
+                        REQUIRE( c->targetLocation == enemyLocation );
+                    }
+                }
+            }
+        }
+    }
+}
+
+SCENARIO("Characters will not look interesting locations", "[new]")
+{
+    auto direction = GENERATE( DR_NORTH, DR_NORTHEAST, DR_EAST, DR_SOUTHEAST, DR_SOUTH, DR_SOUTHWEST, DR_WEST, DR_NORTHWEST );
+
+    auto enemy = "CH_THORMAND";
+    auto lord = "CH_THIGRIM";
+
+    TMEStep::NewStory(RF_DDR_BETTER_ARMIES);
+
+    GIVEN(StringExtensions::Format("the lord is %s from the enemy", directions[direction]))
+    {
+        auto enemyLocation = GetCharacter(enemy)->Location();
+        TMEStep::LordAtLocation("CH_TARITHEL", enemyLocation);
+        TMEStep::LordAtLocation("CH_OBIGRORN", enemyLocation);
+        tme::mx->gamemap->SetLocationSpecial(enemyLocation,1);
+        
+        auto location = enemyLocation + direction ;
+        TMEStep::LordAtLocation(lord, location);
+
+        auto c = GetMockCharacter(lord);
+        c->Traits().Reset(ct_weak);
+        c->Traits().Reset(ct_coward);
+        c->courage = 100;
+            
+        AND_GIVEN("the lord is not interested in any lords")
+        {
+            c->mockData.properties["InterestedInMoonprince"] = "0" ;
+            c->mockData.properties["InterestedInFoe"] = "0" ;
+            c->mockData.properties["InterestedInOthers"] = "0" ;
+            c->targetLocation = mxgridref::INVALID;
+            
+            WHEN("the lord looks around")
+            {
+                auto result = c->LookForInterestingLocationNearby();
+                
+                THEN("the they should npt make the enemy location their target")
+                {
+                    REQUIRE( result == false );
+                    REQUIRE( c->targetLocation == mxgridref::INVALID );
+                }
+            }
+        }
+    }
+}
+
