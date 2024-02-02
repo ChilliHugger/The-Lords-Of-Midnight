@@ -1294,7 +1294,7 @@ bool ddr_character::DesiredObjectAtLocation()
         return false;
         
     if ( desired_object->IsCarried() )
-        return;
+        return false;
         
     return desired_object->Location() == Location();
 }
@@ -1426,7 +1426,9 @@ void ddr_character::moveCharacterSomewhere ( void )
                     type = "- enemy";
 #endif
                 }
+#if MX_DEBUG_ON
                 MXTRACE("      %s %s", c->Longname().c_str(), type.c_str());
+#endif
             }
         }
         

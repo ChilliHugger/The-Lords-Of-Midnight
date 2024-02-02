@@ -1664,7 +1664,7 @@ namespace tme {
         {
         mxcharacter*    moonringcarrier=nullptr;
         
-            RETURN_IF_NULL(collection);
+            RETURN_IF_NULL(collection) false;
             collection->Clear();
 
             if ( IsFeature(SF_MOONRING) ) {
@@ -1713,7 +1713,7 @@ namespace tme {
         int                    count;
         bool                in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
 
-            RETURN_IF_NULL(characters);
+            RETURN_IF_NULL(characters) false;
 
             count=0;
 
