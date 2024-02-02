@@ -1,13 +1,27 @@
 The Midnight Engine
 
+Build (47)
+1. ADDED: Game Difficulty - Number of followers should affect outcome of fights
+2. UPDATED: Lords should not be displaced when a member of a group
+3. UPDATED: Groups should not disbanded when the leader dies in a battle
+4. ADDED: Game Difficulty - Number of Soldiers affects the outcome of a fight
+5. ADDED: DDR - Game Option - Upgrade to Shareth Army AI
+6. FIXED: DDR - Character without an army doesn't trigger an AI lord deciding to stay at a location
+7. FIXED: DDR - 'prepares to do battle' message is shown incorrectly
+8. FIXED: DDR - Imgorarg's loyalty is incorrect - should be Dwarf
+9. FIXED: DDR - Dawn energy boosts are flipped for AI / Non AI characters
+10. FIXED: DDR - Dawn energy boosts for resting are fixed and not based on hours remaining
+11. FIXED: DDR - Recruitment does not take in to account the power of the 5 main special objects
+12. FIXED: DDR - Incorrect object name / types
+
 Build (46)
-1. FIXED: DDR - Think page incorrectly shows Person and Army info outside of tunnels
-2. ADDED: Game Difficulty - time affects seeking
-3. ADDED: Game Difficulty - time affects hiding
-4. ADDED: Game Difficulty - time affects recruiting
-5. ADDED: Game Option - Don't swap after successful approach
-6. ADDED: Game Option - Auto Seek enhancement
-7. ADDED: Game Option - Auto Approach enhancement
+1. ADDED: Game Difficulty - time affects seeking
+2. ADDED: Game Difficulty - time affects hiding
+3. ADDED: Game Difficulty - time affects recruiting
+4. FIXED: DDR - Think page incorrectly shows Person and Army info outside of tunnels
+5. ADDED: DDR - Game Option - Don't swap after successful approach
+6. ADDED: LOM - Game Option - Auto Seek enhancement
+7. ADDED: LOM - Game Option - Auto Approach enhancement
 8. UPDATED: Android target sdk 33
 
 Build (45)

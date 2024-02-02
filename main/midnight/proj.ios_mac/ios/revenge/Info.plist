@@ -17,13 +17,13 @@
     <key>CFBundleName</key>
     <string>Doomdark's&#x2007;Revenge</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.0.7</string>
+    <string>2.0.8</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>46</string>
+    <string>47</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UIAppFonts</key>
@@ -42,7 +42,7 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
     </array>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 1984 - 2023. All rights reserved.</string>
+    <string>Copyright © 1984 - 2024. All rights reserved.</string>
     <key>UIRequiredDeviceCapabilities</key>
   	<array>
   		<string>metal</string>

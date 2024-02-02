@@ -10,8 +10,8 @@ android {
         applicationId "com.chilli.revenge"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 2000046
-        versionName "2.0.7"
+        versionCode 2000047
+        versionName "2.0.8"
 
         externalNativeBuild {
             cmake {

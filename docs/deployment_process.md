@@ -106,3 +106,20 @@ Version 2.0 (xx)
 
 ##Debug DSYM files
 atos -o midnight.app.dSYM -l 0x1000b4000 0x0000000100100008
+
+## Versioning
+main/midnight/proj.android_lom/app/build.gradle
+main/midnight/proj.ios_mac/ios/midnight/Info.plist
+main/midnight/proj.ios_mac/mac/midnight/Info.plist
+main/midnight/proj.win32/midnight/game.rc
+main/midnight/lom_v2.0_osx.cfg
+main/midnight/lom_v2.0_win.cfg
+
+main/midnight/proj.android_ddr/app/build.gradle
+main/midnight/proj.ios_mac/ios/revenge/Info.plist
+main/midnight/proj.ios_mac/mac/revenge/Info.plist
+main/midnight/proj.win32/revenge/game.rc
+main/midnight/ddr_v2.0_osx.cfg
+main/midnight/ddr_v2.0_win.cfg
+
+main/midnight/tme_history.txt
