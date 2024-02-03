@@ -17,6 +17,7 @@
 #include "../baseinc/tme_internal.h"
 #include "../baseinc/regiment_turn_processor.h"
 
+#include <memory>
 #include <string>
 
 namespace tme {
