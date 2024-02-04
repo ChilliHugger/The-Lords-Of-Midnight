@@ -20,7 +20,7 @@ namespace tme {
 
         mxplace::mxplace()
         {
-            mxentity::type = IDT_PLACE ;
+            mxentity::idType = IDT_PLACE ;
         }
 
         mxplace::~mxplace()

@@ -22,7 +22,7 @@ namespace tme {
 
         mxvictory::mxvictory()
         {
-            mxentity::type = IDT_VICTORY ;
+            mxentity::idType = IDT_VICTORY ;
         }
 
         mxvictory::~mxvictory()
@@ -77,7 +77,7 @@ namespace tme {
 
         mxmission::mxmission()
         {
-            mxentity::type = IDT_MISSION ;
+            mxentity::idType = IDT_MISSION ;
         }
 
         mxmission::~mxmission()

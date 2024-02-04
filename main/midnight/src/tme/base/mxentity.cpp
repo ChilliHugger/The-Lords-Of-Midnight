@@ -21,7 +21,7 @@ namespace tme {
 
     mxentity::mxentity(void) :
         user_data(nullptr),
-        type(IDT_NONE),
+        idType(IDT_NONE),
         id(0)
     {
     }
@@ -47,7 +47,7 @@ namespace tme {
     {
         if ( entity==nullptr )
             return IDT_NONE;
-        return MAKE_ID(entity->type,entity->Id());
+        return MAKE_ID(entity->IdType(),entity->Id());
     }
 
     void mxentity::Serialize ( archive& ar )

@@ -21,7 +21,7 @@ namespace tme {
 
     mxarea::mxarea()
     {
-        mxentity::type = IDT_AREAINFO ;
+        mxentity::idType = IDT_AREAINFO ;
     }
 
     mxarea::~mxarea()

@@ -155,11 +155,11 @@ namespace tme {
          
         mxrace_t loyalty = RA_NONE;
         
-        if ( attacker->Type() == IDT_CHARACTER ) {
+        if ( attacker->IsType(IDT_CHARACTER) ) {
             attacker_character = static_cast<ddr_character*>(attacker);
             loyalty = attacker_character->NormalisedLoyalty();
         }
-        else if ( attacker->Type() == IDT_STRONGHOLD ) {
+        else if ( attacker->IsType(IDT_STRONGHOLD) ) {
             attacker_stronghold= static_cast<ddr_stronghold*>(attacker);
             loyalty = attacker_stronghold->Loyalty();
         } else
@@ -252,9 +252,9 @@ namespace tme {
     
     s32 ddr_battle::getArmySize( mxitem* item )
     {
-        if ( item->Type() == IDT_STRONGHOLD ) {
+        if ( item->IsType(IDT_STRONGHOLD) ) {
             return static_cast<mxstronghold*>(item)->TotalTroops();
-        } else if ( item->Type() == IDT_CHARACTER ) {
+        } else if ( item->IsType(IDT_CHARACTER) ) {
             return static_cast<ddr_character*>(item)->getArmySize();
         }
         return 0;
@@ -262,16 +262,16 @@ namespace tme {
     
     void ddr_battle::setArmySize(mxitem* item, s32 size)
     {
-        if ( item->Type() == IDT_STRONGHOLD ) {
+        if ( item->IsType(IDT_STRONGHOLD) ) {
             static_cast<mxstronghold*>(item)->TotalTroops(size);
-        } else if ( item->Type() == IDT_CHARACTER ) {
+        } else if ( item->IsType(IDT_CHARACTER) ) {
             static_cast<ddr_character*>(item)->setArmySize(size);
         }
     }
     
     void ddr_battle::AttackerArmiesWinBattle(tme::mxitem *attacker)
     {
-        if ( attacker->Type() == IDT_CHARACTER ) {
+        if ( attacker->IsType(IDT_CHARACTER) ) {
             attacker->Flags().Set(cf_wonbattle);
             MXTRACE("      Attacker: %-16s won battle", attacker->Symbol().c_str() );
         }
@@ -279,11 +279,11 @@ namespace tme {
     
     void ddr_battle::DefenderArmiesLosesBattle(tme::mxitem *attacker, tme::mxitem *defender)
     {
-        if ( defender->Type() == IDT_CHARACTER ) {
+        if ( defender->IsType(IDT_CHARACTER) ) {
             CharacterLosesArmy(static_cast<ddr_character*>(defender));
         }
                 
-        if ( defender->Type() == IDT_STRONGHOLD ) {
+        if ( defender->IsType(IDT_STRONGHOLD) ) {
             StrongholdLosesArmy(
                 static_cast<mxstronghold*>(defender),
                 static_cast<mxcharacter*>(attacker) // attacker must be a character
@@ -367,7 +367,7 @@ namespace tme {
     
     void ddr_battle::UpdateDefenderLoses(mxitem* defender, s32 loses)
     {
-        if ( defender->Type() == IDT_CHARACTER ) {
+        if ( defender->IsType(IDT_CHARACTER) ) {
             // character->lost = killed;
             auto defender_character = static_cast<ddr_character*>(defender);
             defender_character->battlelost=loses;
@@ -375,7 +375,7 @@ namespace tme {
             defender_character->Flags().Set(cf_inbattle);
             defender_character->battleloc = defender_character->Location();
 
-        } else if ( defender->Type() == IDT_STRONGHOLD ) {
+        } else if ( defender->IsType(IDT_STRONGHOLD) ) {
             auto defender_stronghold = static_cast<mxstronghold*>(defender);
             defender_stronghold->Lost(loses);
         }
@@ -383,11 +383,11 @@ namespace tme {
     
     void ddr_battle::UpdateAttackerKills(mxitem *attacker, s32 kills)
     {
-        if ( attacker->Type() == IDT_CHARACTER ) {
+        if ( attacker->IsType(IDT_CHARACTER) ) {
             auto attacker_character = static_cast<ddr_character*>(attacker);
             attacker_character->battleslew = kills;
             attacker_character->setArmyKilled(kills);
-        } else if ( attacker->Type() == IDT_STRONGHOLD ) {
+        } else if ( attacker->IsType(IDT_STRONGHOLD) ) {
             auto attacker_stronghold = static_cast<mxstronghold*>(attacker);
             attacker_stronghold->Killed(kills);
         }
@@ -451,14 +451,14 @@ namespace tme {
         s32 energy=0;
         s32 index = 0;
         
-        if ( army->Type() == IDT_STRONGHOLD ) {
+        if ( army->IsType(IDT_STRONGHOLD) ) {
             ddr_stronghold* army_stronghold = static_cast<ddr_stronghold*>(army);
             index = army_stronghold->Race()*2;
             if ( army_stronghold->Type() == UT_WARRIORS )
                 index++;
             energy = army_stronghold->Energy();
             strength = ((strengths[index]/2) + (energy/2)) /2 ;
-        }else if ( army->Type() == IDT_CHARACTER ) {
+        }else if ( army->IsType(IDT_CHARACTER) ) {
             ddr_character* army_character = static_cast<ddr_character*>(army);
             index = army_character->Race()*2;
             if ( army_character->IsAllowedWarriors() )

@@ -23,7 +23,7 @@ namespace tme {
 
     mxcommand::mxcommand()
     {
-        mxentity::type = IDT_COMMANDINFO ;
+        mxentity::idType = IDT_COMMANDINFO ;
     }
 
     mxcommand::~mxcommand()
