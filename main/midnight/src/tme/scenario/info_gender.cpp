@@ -23,7 +23,7 @@ namespace tme {
 
         mxgender::mxgender()
         {
-            mxentity::type = IDT_GENDERINFO ;
+            mxentity::idType = IDT_GENDERINFO ;
         }
 
         mxgender::~mxgender()

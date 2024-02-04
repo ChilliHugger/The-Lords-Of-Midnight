@@ -24,7 +24,7 @@ namespace tme {
     
     mxobjectpower::mxobjectpower()
     {
-        mxentity::type = IDT_OBJECT_POWER ;
+        mxentity::idType = IDT_OBJECT_POWER ;
     }
     
     mxobjectpower::~mxobjectpower()

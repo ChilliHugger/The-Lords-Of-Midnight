@@ -24,7 +24,7 @@ namespace tme {
 
         mxobject::mxobject()
         {
-            mxentity::type = IDT_OBJECT ;
+            mxentity::idType = IDT_OBJECT ;
         }
 
         mxobject::~mxobject()

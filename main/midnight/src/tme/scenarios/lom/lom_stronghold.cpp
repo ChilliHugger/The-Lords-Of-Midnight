@@ -26,7 +26,7 @@ namespace tme {
     
     lom_stronghold::lom_stronghold()
     {
-        mxentity::type = IDT_STRONGHOLD ;
+        mxentity::idType = IDT_STRONGHOLD ;
         race=RA_NONE;
         totaltroops=0;
         owner=NULL;

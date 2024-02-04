@@ -24,7 +24,7 @@ namespace tme {
             orders(OD_NONE),
             lost(0)
         {
-            mxentity::type = IDT_REGIMENT ;
+            mxentity::idType = IDT_REGIMENT ;
         }
 
         mxregiment::~mxregiment()

@@ -128,7 +128,7 @@ namespace tme {
         static u32 SafeId(const mxentity* entity) ;
         static mxid SafeIdt(const mxentity* entity);
 
-        PROPERTY( id_type_t, Type, type );
+        PROPERTY( id_type_t, IdType, idType );
         PROPERTY( u32, Id, id );
 
         std::string& Symbol() { return symbol ; }
@@ -141,10 +141,11 @@ namespace tme {
 
         flags32& Flags() { return flags; }
         bool IsFlags(u32 f) { return flags.Is(f); }
+        bool IsType(id_type_t type) const { return idType == type; }
         FLAG_PROPERTY( IsDisabled,    et_disabled )
 
     protected:
-        id_type_t               type;
+        id_type_t               idType;
         u32                     id;
         std::string             symbol;
         flags32                 flags;

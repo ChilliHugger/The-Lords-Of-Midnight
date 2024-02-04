@@ -21,7 +21,7 @@ namespace tme {
 
         mxrace::mxrace()
         {
-            mxentity::type = IDT_RACEINFO ;
+            mxentity::idType = IDT_RACEINFO ;
         }
 
         mxrace::~mxrace()

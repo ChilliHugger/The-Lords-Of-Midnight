@@ -345,15 +345,15 @@ namespace tme {
                 mx->CollectStrongholds ( location, objStrongholds );
             }
 
-            foe.Type ( IDT_ARMYTOTAL );
+            foe.IdType ( IDT_ARMYTOTAL );
             foe.Location ( Location() );
             foe.adjustment=0;
 
-            regiments.Type ( IDT_ARMYTOTAL );
+            regiments.IdType ( IDT_ARMYTOTAL );
             regiments.Location ( Location() );
             regiments.adjustment=0;
 
-            friends.Type ( IDT_ARMYTOTAL );
+            friends.IdType ( IDT_ARMYTOTAL );
             friends.Location ( Location() );
             friends.adjustment=0;
  
@@ -488,7 +488,7 @@ namespace tme {
         mxarmytotal::mxarmytotal()
         {
             Clear();
-            Type( IDT_ARMYTOTAL );
+            IdType( IDT_ARMYTOTAL );
         }
 
         mxarmytotal::~mxarmytotal()

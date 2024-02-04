@@ -22,7 +22,7 @@ namespace tme {
 
         mxroutenode::mxroutenode()
         {
-            mxentity::type = IDT_ROUTENODE ;
+            mxentity::idType = IDT_ROUTENODE ;
             CLEARARRAY ( paths );
         }
 

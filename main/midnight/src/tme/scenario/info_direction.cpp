@@ -23,7 +23,7 @@ namespace tme {
 
     mxdirection::mxdirection()
     {
-        mxentity::type = IDT_DIRECTIONINFO ;
+        mxentity::idType = IDT_DIRECTIONINFO ;
     }
 
     mxdirection::~mxdirection()

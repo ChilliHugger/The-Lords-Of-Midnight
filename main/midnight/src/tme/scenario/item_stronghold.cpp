@@ -37,7 +37,7 @@ mxstronghold::mxstronghold() :
     respawn(0),
     influence(0)
 {
-    mxentity::type = IDT_STRONGHOLD ;
+    mxentity::idType = IDT_STRONGHOLD ;
 }
 
 mxstronghold::~mxstronghold()

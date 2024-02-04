@@ -30,7 +30,7 @@ namespace tme {
 
         mxcharacter::mxcharacter() 
         {
-            mxentity::type = IDT_CHARACTER ;
+            mxentity::idType = IDT_CHARACTER ;
             //memory=NULL;
         }
 
