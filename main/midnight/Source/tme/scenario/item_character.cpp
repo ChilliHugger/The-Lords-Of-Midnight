@@ -365,7 +365,7 @@ namespace tme {
             return obj ? obj->CanFight() : FALSE ;
         }
 
-        bool mxcharacter::CheckRecruitChar ( mxcharacter* character )  const
+        bool mxcharacter::CheckRecruitChar ( mxcharacter* character ) const
         {
             if ( character == this )
                 return false ;
@@ -377,7 +377,13 @@ namespace tme {
                 if(mx->isRuleEnabled(RF_LOM_UNRECRUITABLE_FEY)
                     && character->Race() == RA_FEY)
                 {
-                    return false;
+                    // In the novel, Feys only join the cause after 
+                    // the Lord of Dreams joins.
+                    // The Lord of Dreams is required for recruiting Fey, 
+                    // he can always be recruited and other Fey can only
+                    // be recruited if he has already been recruited
+                    return character->Id() == mx->scenario->dreams->Id() ||
+                        mx->scenario->dreams->IsRecruited();
                 }
                 if ( character->RecruitedBy & RecruitingKey )
                     return true ;

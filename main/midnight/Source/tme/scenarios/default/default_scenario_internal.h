@@ -98,6 +98,7 @@ namespace tme {
             mxobject*           moonring;
             mxcharacter*        doomdark;
             mxcharacter*        luxor;
+            mxcharacter*        dreams;
         };
     
         #define DEF_SCENARIO(x) (mx->scenario)->x
