@@ -365,7 +365,7 @@ namespace tme {
             return obj ? obj->CanFight() : FALSE ;
         }
 
-        bool mxcharacter::CheckRecruitChar ( mxcharacter* character )  const
+        bool mxcharacter::CheckRecruitChar ( mxcharacter* character ) const
         {
             if ( character == this )
                 return false ;
@@ -377,7 +377,11 @@ namespace tme {
                 if(mx->isRuleEnabled(RF_LOM_UNRECRUITABLE_FEY)
                     && character->Race() == RA_FEY)
                 {
-                    return false;
+                    // lord of dreams is key for recruiting fey, 
+                    // he can always be recruited and other fey can only
+                    // be recruited if he has already been recruited
+                    mxcharacter* lordOfDreams = mx->CharacterBySymbol("CH_DREAMS");
+                    return character->Id() == lordOfDreams->Id() || lordOfDreams->IsRecruited();
                 }
                 if ( character->RecruitedBy & RecruitingKey )
                     return true ;
