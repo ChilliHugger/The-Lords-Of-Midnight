@@ -169,7 +169,7 @@ bool entities<T>::CreateIdtCollection ( c_mxid& obj )
     for ( u32 ii=0; ii<Count(); ii++ ) {
         auto entity = m_elements[ii];
         obj[ii] = entity != nullptr
-            ? MAKE_ID(entity->Type(),entity->Id())
+            ? MAKE_ID(entity->IdType(),entity->Id())
             : IDT_NONE;
     }
 

@@ -284,7 +284,7 @@ namespace tme {
                 mxrace_t race = RA_NONE;
                 bool army = true;
                 
-                if(target->Type() == IDT_CHARACTER) {
+                if(target->IsType(IDT_CHARACTER)) {
                     auto character = dynamic_cast<mxcharacter*>(target);
                     if (character != nullptr) {
                         if(character->IsInTunnel()) {
@@ -297,7 +297,7 @@ namespace tme {
                         }
                     }
                 }
-                else if(target->Type() == IDT_REGIMENT) {
+                else if(target->IsType(IDT_REGIMENT)) {
                     auto regiment = dynamic_cast<mxregiment*>(target);
                     if (regiment != nullptr) {
                         race = regiment->Race();

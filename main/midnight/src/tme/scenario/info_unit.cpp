@@ -21,7 +21,7 @@ namespace tme {
 
         mxunitinfo::mxunitinfo()
         {
-            mxentity::type = IDT_UNITINFO ;
+            mxentity::idType = IDT_UNITINFO ;
         }
 
         mxunitinfo::~mxunitinfo()

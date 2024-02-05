@@ -28,7 +28,6 @@ import android.os.Bundle;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import android.os.Build;
 import android.view.WindowManager;
-import android.view.WindowManager.LayoutParams;
 
 public class AppActivity extends Cocos2dxActivity {
 
@@ -51,8 +50,7 @@ public class AppActivity extends Cocos2dxActivity {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             getWindow().setAttributes(lp);
         }
-        // DO OTHER INITIALIZATION BELOW
-        
-    }
 
+        // DO OTHER INITIALIZATION BELOW
+    }
 }

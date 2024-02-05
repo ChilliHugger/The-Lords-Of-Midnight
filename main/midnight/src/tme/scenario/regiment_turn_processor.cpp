@@ -213,7 +213,7 @@ namespace tme {
     {
         auto item = static_cast<mxitem*>(mx->EntityByIdt(regiment->TargetId()));
 
-        if ( item->Type() == IDT_CHARACTER ) {
+        if ( item->IsType(IDT_CHARACTER) ) {
             auto character = static_cast<mxcharacter*>(item);
             if ( character->IsDead() )
                 item = mx->scenario->MoonringWearer();
@@ -226,7 +226,7 @@ namespace tme {
     {
         auto item = static_cast<mxitem*>(mx->EntityByIdt(regiment->TargetId()));
 
-        if ( item->Type() == IDT_ROUTENODE ) {
+        if ( item->IsType(IDT_ROUTENODE) ) {
             auto routenode = static_cast<mxroutenode*>(item);
             if ( routenode->Location() == regiment->Location() )
                 item = mxrandom(1) ? routenode->Right() : routenode->Left();

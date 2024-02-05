@@ -21,12 +21,12 @@ namespace tme {
 
         mxterrain::mxterrain()
         {
-            mxentity::type = IDT_TERRAININFO ;
+            mxentity::idType = IDT_TERRAININFO ;
         }
 
         mxterrain::mxterrain( mxterrain_t id, LPCSTR symbol )
         {
-            mxentity::type = IDT_TERRAININFO ;
+            mxentity::idType = IDT_TERRAININFO ;
             mxentity::symbol = symbol;
             mxentity::id = id ;
             
