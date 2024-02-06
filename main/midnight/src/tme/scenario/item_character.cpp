@@ -378,7 +378,7 @@ namespace tme {
                     if (mx->isRuleEnabled(RF_LOM_FEY_RECRUIT_OFF))
                     {
                         return false;
-                    }else if (mx->isRuleEnabled(RF_LOM_FEY_RECRUIT_REQUIRE_DREAMS)) {
+                    }else if (mx->isRuleEnabled(RF_LOM_FEY_RECRUIT_NOVEL)) {
                         // In the novel, Feys only join the cause after 
                         // the Lord of Dreams joins.
                         // The Lord of Dreams is required for recruiting Fey, 

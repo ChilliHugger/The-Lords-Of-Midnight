@@ -85,7 +85,7 @@ static const char* values_movement_type[] = {
 static const char* values_fey_recruit_mode[] = {
     OPTIONS_SCREEN_FEY_RECRUIT_ON,
     OPTIONS_SCREEN_FEY_RECRUIT_OFF,
-    OPTIONS_SCREEN_FEY_RECRUIT_DREAMS
+    OPTIONS_SCREEN_FEY_RECRUIT_NOVEL
 };
 
 static const char* values_onoff[] = {
@@ -348,8 +348,8 @@ void setRulesFromFeyRecruitMode(CONFIG_FEY_RECRUIT_MODE type, eflags<RULEFLAGS, 
     case CF_FEY_RECRUIT_OFF:
         rules.Set(RF_LOM_FEY_RECRUIT_OFF);
         break;
-    case CF_FEY_RECRUIT_REQUIRE_DREAMS:
-        rules.Set(RF_LOM_FEY_RECRUIT_REQUIRE_DREAMS);
+    case CF_FEY_RECRUIT_NOVEL:
+        rules.Set(RF_LOM_FEY_RECRUIT_NOVEL);
         break;
     }
 }
@@ -358,8 +358,8 @@ CONFIG_FEY_RECRUIT_MODE getFeyRecruitModeFromRules(eflags<RULEFLAGS, u64> rules)
     if (rules.Is(RF_LOM_FEY_RECRUIT_OFF)) {
         return CF_FEY_RECRUIT_OFF;
     }
-    else if (rules.Is(RF_LOM_FEY_RECRUIT_REQUIRE_DREAMS)) {
-        return CF_FEY_RECRUIT_REQUIRE_DREAMS;
+    else if (rules.Is(RF_LOM_FEY_RECRUIT_NOVEL)) {
+        return CF_FEY_RECRUIT_NOVEL;
     }
     return CF_FEY_RECRUIT_ON;
 }

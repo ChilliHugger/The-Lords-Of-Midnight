@@ -597,11 +597,11 @@ using namespace chilli::types;
             RF_DDR_MOVEMENT_SPECTRUM            = MXBIT(6),
             RF_DDR_MOVEMENT_C64                 = MXBIT(7),
             RF_DDR_BETTER_ARMIES                = MXBIT(8),
-            RF_LOM_FEY_RECRUIT_REQUIRE_DREAMS   = MXBIT(9),
+            RF_LOM_FEY_RECRUIT_NOVEL            = MXBIT(9),
             RF_DEFAULT = 0,
             RF_NONE = 0,
             RF_DDR_MOVEMENT_MASK            = RF_DDR_MOVEMENT_SPECTRUM|RF_DDR_MOVEMENT_C64,
-            RF_LOM_FEY_RECRUIT_MASK         = RF_LOM_FEY_RECRUIT_OFF | RF_LOM_FEY_RECRUIT_REQUIRE_DREAMS,
+            RF_LOM_FEY_RECRUIT_MASK         = RF_LOM_FEY_RECRUIT_OFF | RF_LOM_FEY_RECRUIT_NOVEL,
         };
 
 #ifdef _DEFINE_ENUMS_

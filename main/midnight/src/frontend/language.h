@@ -132,7 +132,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_5              = "FEY RECRUITING";
     constexpr LPCSTR OPTIONS_SCREEN_FEY_RECRUIT_ON      = "ON";
     constexpr LPCSTR OPTIONS_SCREEN_FEY_RECRUIT_OFF     = "OFF";
-    constexpr LPCSTR OPTIONS_SCREEN_FEY_RECRUIT_DREAMS  = "LORD OF DREAMS RECRUITED";
+    constexpr LPCSTR OPTIONS_SCREEN_FEY_RECRUIT_NOVEL   = "LORD OF DREAMS RECRUITED";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_6              = "FAST TUNNELS";
 
     constexpr LPCSTR OPTIONS_SCREEN_RULE_7              = "MOVEMENT MODIFIERS";
