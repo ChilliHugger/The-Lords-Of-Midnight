@@ -87,6 +87,13 @@ enum CONFIG_MOVEMENT_TYPE
     CF_MOVEMENT_C64=2,
 };
 
+enum CONFIG_FEY_RECRUIT_MODE
+{
+    CF_FEY_RECRUIT_ON=0,
+    CF_FEY_RECRUIT_OFF=1,
+    CF_FEY_RECRUIT_NOVEL=2,
+};
+
 enum CONFIG_APPROACH_MODE
 {
     CF_APPROACH_SWAP=0,
@@ -157,6 +164,7 @@ public:
     // version 11
     eflags<RULEFLAGS,u64>   game_rules;
     CONFIG_MOVEMENT_TYPE    movement_type;
+    CONFIG_FEY_RECRUIT_MODE fey_recruit_mode;
 
     // version 12
     mxdifficulty_t          game_difficulty;
