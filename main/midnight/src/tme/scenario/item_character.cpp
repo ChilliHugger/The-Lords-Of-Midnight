@@ -374,16 +374,19 @@ namespace tme {
                 // TODO: recruiting logic
                 return true ;
             }else{
-                if(mx->isRuleEnabled(RF_LOM_UNRECRUITABLE_FEY)
-                    && character->Race() == RA_FEY)
-                {
-                    // In the novel, Feys only join the cause after 
-                    // the Lord of Dreams joins.
-                    // The Lord of Dreams is required for recruiting Fey, 
-                    // he can always be recruited and other Fey can only
-                    // be recruited if he has already been recruited
-                    return character->Id() == mx->scenario->dreams->Id() ||
-                        mx->scenario->dreams->IsRecruited();
+                if ( character->Race() == RA_FEY) {
+                    if (mx->isRuleEnabled(RF_LOM_FEY_RECRUIT_OFF))
+                    {
+                        return false;
+                    }else if (mx->isRuleEnabled(RF_LOM_FEY_RECRUIT_NOVEL)) {
+                        // In the novel, Feys only join the cause after 
+                        // the Lord of Dreams joins.
+                        // The Lord of Dreams is required for recruiting Fey, 
+                        // he can always be recruited and other Fey can only
+                        // be recruited if he has already been recruited
+                        return character->Id() == mx->scenario->dreams->Id() ||
+                            mx->scenario->dreams->IsRecruited();
+                    }
                 }
                 if ( character->RecruitedBy & RecruitingKey )
                     return true ;
