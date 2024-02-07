@@ -176,7 +176,7 @@ void panel_splashscreen::complete()
     // we want at least 3 seconds of splash screen
     f32 delay = MAX(0,(f32)(MAX_SPLASHSCREEN_TIME-Duration) / 1000.0f);
     
-    if ( CONFIG(screentransitions) ) {
+    if ( is(CONFIG(screentransitions)) ) {
         loadingProgress->runAction( FadeOut::create(1.0) );
     }else{
         loadingProgress->setVisible(false);

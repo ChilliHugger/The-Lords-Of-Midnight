@@ -177,9 +177,9 @@ keyboardmanager::keyboardmanager()
     key_flags.Clear();
 }
 
-void keyboardmanager::SetKeyboardMode ( CONFIG_KEYBOARD_MODE mode )
+void keyboardmanager::SetKeyboardMode ( CF_KEYBOARD mode )
 {
-    key_mapping = &keyboard_map[mode][0];
+    key_mapping = &keyboard_map[(int)mode][0];
 }
 
 keycode_t keyboardmanager::getKeycode( KEY_MAP key )

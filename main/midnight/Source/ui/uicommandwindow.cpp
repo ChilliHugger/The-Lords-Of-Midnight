@@ -232,7 +232,7 @@ void uicommandwindow::initialiseCommands()
         lord->refreshStatus();
         addItem(lord, CHOOSE_CHAR+ii);
         
-        if ( mr->settings->keyboard_mode == CF_KEYBOARD_CLASSIC )
+        if ( mr->settings->keyboard_mode == CF_KEYBOARD::CLASSIC )
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_old));
         else
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
@@ -480,7 +480,7 @@ void uicommandwindow::show( MXVoidCallback callback )
     parent->addChild(this);
     setVisible(true);
     
-    if ( mr->settings->screentransitions ) {
+    if ( is(mr->settings->screentransitions) ) {
         setCascadeOpacityEnabled(true);
         setOpacity(ALPHA(alpha_zero));
         runAction(FadeIn::create(0.25f));

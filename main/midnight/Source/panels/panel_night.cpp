@@ -106,7 +106,7 @@ void panel_night::update(float delta)
 
 void panel_night::OnShown()
 {
-    variables::sv_collate_battle_areas = !mr->settings->night_battle_full ;
+    variables::sv_collate_battle_areas = isNot(mr->settings->night_battle_full) ;
     
     // Initialise in a thread
     auto atp = AsyncTaskPool::getInstance();
@@ -141,7 +141,7 @@ void panel_night::OnNightNotification ( callback_t* event )
             message = TME_LastActionMsg();
         );
         
-        if ( !mr->settings->night_display_fast )
+        if ( isNot(mr->settings->night_display_fast) )
             std::this_thread::sleep_for(std::chrono::seconds(NIGHT_DISPLAY_SLOW_DELAY_SECONDS));
 
     }else{

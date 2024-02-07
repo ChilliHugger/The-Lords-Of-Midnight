@@ -313,7 +313,7 @@ void panel_mainmenu::OnShowManual()
 
 void panel_mainmenu::showNovella()
 {
-    if ( mr->settings->novella_pdf ) {
+    if ( is(mr->settings->novella_pdf) ) {
         OpenPDF(_NOVELLA_DOCUMENT_PDF_);
     }else{
         OpenPDF(_NOVELLA_DOCUMENT_);

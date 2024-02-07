@@ -27,8 +27,8 @@ bool panel_dedication::init()
     // Background White
     setBackground(_clrWhite);
 
-    auto alpha = CONFIG(screentransitions) ? alpha_zero : alpha_normal ;
-    f32 delay = CONFIG(screentransitions) ? 1.0f : 3.0f ;
+    auto alpha = is(CONFIG(screentransitions)) ? alpha_zero : alpha_normal ;
+    f32 delay = is(CONFIG(screentransitions)) ? 1.0f : 3.0f ;
 
     // Dedication Image
     image = Sprite::create("misc/in-memory-of.png");
@@ -45,7 +45,7 @@ bool panel_dedication::init()
 
 void panel_dedication::startDedication()
 {
-    if ( CONFIG(screentransitions) )
+    if ( is(CONFIG(screentransitions)) )
     {
         image->runAction(Sequence::create(
                                           FadeIn::create( 3.0f ),
