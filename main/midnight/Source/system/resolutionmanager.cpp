@@ -274,26 +274,26 @@ Size resolutionmanager::calcWindowSize(f32 scale, f32 aspect)
     return cocos2d::Size(width,height);
 }
 
-GLView* resolutionmanager::setDisplayMode(CONFIG_SCREEN_MODE mode)
+GLView* resolutionmanager::setDisplayMode(CF_SCREEN mode)
 {
     f32 scale = 0.75;
     f32 aspect = 1.7777;
 
     switch(mode)
     {
-        case CONFIG_SCREEN_MODE::CF_FULLSCREEN:
+        case CF_SCREEN::FULL:
             return GLViewImpl::createWithFullScreen(TME_ScenarioName());
             break;
         
-        case CONFIG_SCREEN_MODE::CF_WINDOW_SMALL:
+        case CF_SCREEN::SMALL:
             scale = 0.25f;
             break;
             
-        case CONFIG_SCREEN_MODE::CF_WINDOW_MEDIUM:
+        case CF_SCREEN::MEDIUM:
             scale = 0.50f;
             break;
             
-        case CONFIG_SCREEN_MODE::CF_WINDOW_LARGE:
+        case CF_SCREEN::LARGE:
             scale=0.75f;
             break;
     }
@@ -304,7 +304,7 @@ GLView* resolutionmanager::setDisplayMode(CONFIG_SCREEN_MODE mode)
 
 }
 
-bool resolutionmanager::changeDisplayMode(CONFIG_SCREEN_MODE mode)
+bool resolutionmanager::changeDisplayMode(CF_SCREEN mode)
 {
     Size windowSize;
     f32 scale = 0.0;
@@ -314,26 +314,26 @@ bool resolutionmanager::changeDisplayMode(CONFIG_SCREEN_MODE mode)
     
     switch(mode)
     {
-        case CONFIG_SCREEN_MODE::CF_FULLSCREEN:
+        case CF_SCREEN::FULL:
             glView->setFullscreen();
             windowSize = director->getGLView()->getFrameSize();
             break;
 
-        case CONFIG_SCREEN_MODE::CF_WINDOW_SMALL:
+        case CF_SCREEN::SMALL:
             scale = 0.25f;
             break;
             
-        case CONFIG_SCREEN_MODE::CF_WINDOW_MEDIUM:
+        case CF_SCREEN::MEDIUM:
             scale = 0.50f;
             break;
             
-        case CONFIG_SCREEN_MODE::CF_WINDOW_LARGE:
+        case CF_SCREEN::LARGE:
             scale=0.75f;
             break;
     }
 
     
-    if(mode!=CONFIG_SCREEN_MODE::CF_FULLSCREEN)
+    if(mode!=CF_SCREEN::FULL)
     {
         windowSize = calcWindowSize(scale, aspect);
         glView->setWindowed(windowSize.width,windowSize.height);

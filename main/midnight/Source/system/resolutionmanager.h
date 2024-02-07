@@ -66,8 +66,8 @@ public:
 #if defined(_OS_DESKTOP_)
     bool IsDesktop() { return true; }
     size getDesktopSize();
-    bool changeDisplayMode(CONFIG_SCREEN_MODE mode);
-    cocos2d::GLView* setDisplayMode(CONFIG_SCREEN_MODE mode);
+    bool changeDisplayMode(CF_SCREEN mode);
+    cocos2d::GLView* setDisplayMode(CF_SCREEN mode);
     cocos2d::GLView* setWindowedMode(cocos2d::Size size);
     cocos2d::Size calcWindowSize(f32 scale, f32 aspect);
     
@@ -95,7 +95,7 @@ private:
     bool isTablet;
     bool isPhone;
   
-    CONFIG_SCREEN_MODE currentMode;
+    CF_SCREEN currentMode;
     
 };
 
@@ -181,7 +181,7 @@ static cocos2d::Size DesktopLargerText1 = cocos2d::Size(2048, 1152);    // 1.777
 static cocos2d::Size DesktopLargerText2 = cocos2d::Size(1600, 900);    // 1.7777
 
 #if defined(_OS_DESKTOP_)
-//#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::CF_WINDOW_LARGE
+//#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::LARGE
 //#define DesktopDebugResolution iPad3
 #define _SWITCH_VIDEO_IMPLEMENTED_
 #endif

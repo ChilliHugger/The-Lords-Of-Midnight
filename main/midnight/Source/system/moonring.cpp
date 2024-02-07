@@ -94,7 +94,7 @@ moonring::moonring() :
     
     settings->Load();
     
-    keyboard->SetKeyboardMode((CONFIG_KEYBOARD_MODE)settings->keyboard_mode);
+    keyboard->SetKeyboardMode((CF_KEYBOARD)settings->keyboard_mode);
 
 }
 
@@ -189,8 +189,8 @@ void moonring::continueStory( storyid_t id )
     help->Load( id );
     
     // setup any options
-    tme::variables::sv_auto_seek = settings->autoseek;
-    tme::variables::sv_auto_approach = settings->autoapproach;
+    tme::variables::sv_auto_seek = is(settings->autoseek);
+    tme::variables::sv_auto_approach = is(settings->autoapproach);
     
     TME_CurrentCharacter( TME_CurrentCharacter().id );
     
@@ -366,12 +366,12 @@ bool moonring::afterApproach()
     character& c = TME_CurrentCharacter();
 
     switch (settings->approach_mode) {
-        case CF_APPROACH_SWAP:
+        case CF_APPROACH::SWAP:
             TME_SelectChar(c.lastcommandid);
             showPage ( MODE_THINK_APPROACH );
             break;
 
-        case CF_APPROACH_STAY:
+        case CF_APPROACH::STAY:
             TME_RefreshCurrentCharacter();
             showPage ( MODE_THINK_APPROACH );
             break;
@@ -729,7 +729,7 @@ void moonring::changeDisplayMode()
     auto screenMode = settings->screen_mode ;
     
     if ( !settings->fullscreensupported
-        && screenMode == CONFIG_SCREEN_MODE::CF_FULLSCREEN)
+        && screenMode == CF_SCREEN::FULL)
     {
         return;
     }

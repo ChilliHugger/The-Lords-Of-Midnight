@@ -13,37 +13,38 @@
 using namespace chilli::lib ;
 
 settingsmanager::settingsmanager() :
-      tutorial(true)
-    , autofight(false)
-    , autounhide(false)
-    , nav_mode(CF_NAV_BOTH)
-    , screentransitions(true)
-    , flipscreen(false)
-    , compass_delay(CF_COMPASS_NORMAL)
-    , think_paging_mode(CF_THINK_SWIPE)
-    , night_confirm(true)
-    , night_display_fast(false)
-    , night_battle_full(true)
-    , screen_mode(CF_FULLSCREEN)
-    , keyboard_mode(CF_KEYBOARD_CLASSIC)
+      tutorial(TOGGLE::ON)
+    , autofight(TOGGLE::OFF)
+    , autounhide(TOGGLE::OFF)
+    , nav_mode(CF_NAVIGATION::BOTH)
+    , screentransitions(TOGGLE::ON)
+    , flipscreen(TOGGLE::OFF)
+    , compass_delay(CF_COMPASS::NORMAL)
+    , think_paging_mode(CF_THINK_PAGING::SWIPE)
+    , night_confirm(TOGGLE::ON)
+    , night_display_fast(TOGGLE::OFF)
+    , night_battle_full(TOGGLE::ON)
+    , screen_mode(CF_SCREEN::FULL)
+    , keyboard_mode(CF_KEYBOARD::CLASSIC)
     , fullscreensupported(true)
-    , cursor_size(CF_CURSOR_MEDIUM)
+    , cursor_size(CF_CURSOR::MEDIUM)
     , game_difficulty(DF_NORMAL)
-    , movement_type(CF_MOVEMENT_ORIGINAL)
+    , movement_type(CF_MOVEMENT::ORIGINAL)
 #if defined(_LOM_)
-    , autoseek(false)
+    , autoseek(TOGGLE::OFF)
 #else
-    , autoseek(true)
+    , autoseek(TOGGLE::ON)
 #endif
-    , autoapproach(false)
-    , approach_mode(CF_APPROACH_SWAP)
+    , autoapproach(TOGGLE::OFF)
+    , approach_mode(CF_APPROACH::SWAP)
     , firsttime(true)
+    , fey_recruit_mode(CF_FEY_RECRUIT::ON)
 {
     
 #if defined(_OS_DESKTOP_)
-    showmovementindicators=FALSE;
+    showmovementindicators=TOGGLE::OFF;
 #else
-    showmovementindicators=TRUE;
+    showmovementindicators=TOGGLE::ON;
 #endif
     
 #if defined(ADVERT_FREQUENCY)
@@ -53,13 +54,13 @@ settingsmanager::settingsmanager() :
 #endif
     
 #if defined(_OS_IOS_) || defined(_OS_OSX_)
-    novella_pdf=false;
+    novella_pdf=TOGGLE::OFF;
 #else
-    novella_pdf=true;
+    novella_pdf=TOGGLE::ON;
 #endif
     
 //#ifdef _OS_DESKTOP_
-//    nav_mode=CF_NAV_PRESS;
+//    nav_mode=PRESS;
 //#endif
     game_rules.Clear();
     game_rules.Set(RF_NONE);
@@ -87,14 +88,17 @@ bool settingsmanager::bumpAdvert()
     return showAdvert;
 }
 
-BOOL settingsmanager::Save ( void )
+bool settingsmanager::Save ( void )
 {
+#define FROM_ENUM(x) (int)x
+#define FROM_TOGGLE(x) FROM_ENUM(x)
+
     auto filename = StringExtensions::Format("%s/%s", mr->getWritablePath().c_str(), CONFIG_FILENAME );
     
     chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
     if ( pFile == NULL || !pFile->IsOpen() ) {
         if ( pFile ) delete pFile;
-        return FALSE;
+        return false;
     }
 
     chilli::lib::archive ar (pFile, archive::store | archive::bNoFlushOnDelete );
@@ -103,53 +107,53 @@ BOOL settingsmanager::Save ( void )
 
     // version 1
     ar << version ;
-    ar << tutorial ;
+    ar << FROM_TOGGLE(tutorial) ;
 
     // version 2
-    ar << autofight;
-    ar << autounhide;
-    ar << showmovementindicators;
-    ar << nav_mode ;
-    ar << screentransitions ;
+    ar << FROM_TOGGLE(autofight);
+    ar << FROM_TOGGLE(autounhide);
+    ar << FROM_TOGGLE(showmovementindicators);
+    ar << FROM_ENUM(nav_mode) ;
+    ar << FROM_TOGGLE(screentransitions) ;
 
     // version 3
-    ar << compass_delay ;
-    ar << think_paging_mode ;
-    ar << night_display_fast ;
-    ar << night_battle_full ;
+    ar << FROM_ENUM(compass_delay) ;
+    ar << FROM_ENUM(think_paging_mode) ;
+    ar << FROM_TOGGLE(night_display_fast) ;
+    ar << FROM_TOGGLE(night_battle_full) ;
 
     // version 4
     ar << (int)0 ;
 
     // version 5
-    ar << screen_mode ;
+    ar << FROM_ENUM(screen_mode) ;
 
     // version 6
-    ar << keyboard_mode;
+    ar << FROM_ENUM(keyboard_mode);
 
     // version 7
     ar << advert_screen_count;
-    ar << novella_pdf ;
+    ar << FROM_TOGGLE(novella_pdf) ;
     
     // version 8
-    ar << flipscreen;
+    ar << FROM_TOGGLE(flipscreen);
     
     // version 9
-    ar << night_confirm;
+    ar << FROM_TOGGLE(night_confirm);
     
     // version 10
-    ar << cursor_size;
+    ar << FROM_ENUM(cursor_size);
     
     // version 11
     ar << game_rules;
     
     // version 12
-    ar << game_difficulty;
+    ar << FROM_ENUM(game_difficulty);
     
     // version 13
-    ar << autoseek;
-    ar << autoapproach;
-    ar << approach_mode;
+    ar << FROM_TOGGLE(autoseek);
+    ar << FROM_TOGGLE(autoapproach);
+    ar << FROM_ENUM(approach_mode);
 
     ar.Close();
 
@@ -158,8 +162,13 @@ BOOL settingsmanager::Save ( void )
     return TRUE;
 }
 
-BOOL settingsmanager::Load ( void )
+
+
+bool settingsmanager::Load ( void )
 {
+#define TO_ENUM(x,y) temp; x = (y)temp
+#define TO_TOGGLE(x) TO_ENUM(x,TOGGLE)
+
     auto filename = StringExtensions::Format("%s/%s", mr->getWritablePath().c_str(), CONFIG_FILENAME );
     
     chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
@@ -172,54 +181,55 @@ BOOL settingsmanager::Load ( void )
 
     archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
-    u32 version=CONFIG_VERSION;
+    u32 version = CONFIG_VERSION;
     int temp;
 
     ar >> version ;
-    ar >> tutorial ;
+    
+    ar >> TO_TOGGLE( tutorial ) ;
 
-    if ( version>=2 ) {
-        ar >> autofight;
-        ar >> autounhide;
-        ar >> showmovementindicators;
-        ar >> temp; nav_mode = (CONFIG_NAV_MODE) temp;
-        ar >> screentransitions ;
+    if ( version >= 2 ) {
+        ar >> TO_TOGGLE(autofight);
+        ar >> TO_TOGGLE(autounhide);
+        ar >> TO_TOGGLE(showmovementindicators);
+        ar >> TO_ENUM(nav_mode, CF_NAVIGATION) ;
+        ar >> TO_TOGGLE(screentransitions);
     }
 
-    if ( version>=3 ) {
-        ar >> temp; compass_delay = (CONFIG_COMPASS_DELAY) temp;
-        ar >> temp; think_paging_mode = (CONFIG_THINK_PAGING) temp;
-        ar >> night_display_fast ;
-        ar >> night_battle_full ;
+    if ( version >= 3 ) {
+        ar >> TO_ENUM(compass_delay, CF_COMPASS);
+        ar >> TO_ENUM(think_paging_mode, CF_THINK_PAGING);
+        ar >> TO_TOGGLE(night_display_fast);
+        ar >> TO_TOGGLE(night_battle_full);
     }
 
-    if ( version>=4 ) {
+    if ( version >= 4 ) {
         ar >> temp; // Compass Feedback - Deprecated
     }
 
-    if ( version>=5 ) {
-        ar >> temp; screen_mode = (CONFIG_SCREEN_MODE) temp;
+    if ( version >= 5 ) {
+        ar >> TO_ENUM(screen_mode, CF_SCREEN);
     }
 
     if ( version >= 6 ) {
-        ar >> temp; keyboard_mode = (CONFIG_KEYBOARD_MODE)temp;
+        ar >> TO_ENUM(keyboard_mode, CF_KEYBOARD);
     }
 
     if ( version >= 7 ) {
         ar >> advert_screen_count ;
-        ar >> novella_pdf ;
+        ar >> TO_TOGGLE(novella_pdf);
     }
 
     if ( version >= 8 ) {
-        ar >> flipscreen ;
+        ar >> TO_TOGGLE(flipscreen);
     }
     
     if ( version >= 9 ) {
-        ar >> night_confirm;
+        ar >> TO_TOGGLE(night_confirm);
     }
 
     if ( version >= 10 ) {
-        ar >> temp; cursor_size = (CONFIG_CURSOR_SIZE) temp;
+        ar >> TO_ENUM(cursor_size, CF_CURSOR);
     }
 
     if ( version >= 11 ) {
@@ -227,13 +237,13 @@ BOOL settingsmanager::Load ( void )
     }
     
     if ( version >= 12 ) {
-        ar >> temp; game_difficulty = (mxdifficulty_t) temp;
+        ar >> TO_ENUM(game_difficulty,mxdifficulty_t);
     }
 
     if ( version >= 13 ) {
-        ar >> autoseek;
-        ar >> autoapproach;
-        ar >> temp; approach_mode = (CONFIG_APPROACH_MODE)temp;
+        ar >> TO_TOGGLE(autoseek);
+        ar >> TO_TOGGLE(autoapproach);
+        ar >> TO_ENUM(approach_mode,CF_APPROACH);
     }
 
     ar.Close();

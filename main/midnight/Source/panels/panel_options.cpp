@@ -245,44 +245,44 @@ static uitextmenuitem items_help[] = {
 };
 
 static option_t options[] = {
-    {   ID_OPTION_AUTO_FIGHT,       OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_AUTO_UNHIDE,      OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_AUTO_SEEK,        OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_AUTO_APPROACH,    OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_APPROACH,         OPT_NUMBER,  2, values_approach,            nullptr, false },
+    {   ID_OPTION_AUTO_FIGHT,       OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_AUTO_UNHIDE,      OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_AUTO_SEEK,        OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_AUTO_APPROACH,    OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_APPROACH,         OPT_NUMBER, 2, values_approach,            nullptr, false },
 
-    {   ID_OPTION_MOVE_INDICATORS,  OPT_BOOL,    0, values_yesno,               nullptr, false },
-    {   ID_OPTION_TUTORIAL,         OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_NAVIGATION,       OPT_NUMBER,  4, values_movement,            nullptr, false },
-    {   ID_OPTION_TRANSITIONS,      OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_FLIPSCREEN,       OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_MOVE_INDICATORS,  OPT_TOGGLE, 0, values_yesno,               nullptr, false },
+    {   ID_OPTION_TUTORIAL,         OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_NAVIGATION,       OPT_NUMBER, 4, values_movement,            nullptr, false },
+    {   ID_OPTION_TRANSITIONS,      OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_FLIPSCREEN,       OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     
-    {   ID_OPTION_NOVELLA,          OPT_BOOL,    0, values_novella,             nullptr, false },
+    {   ID_OPTION_NOVELLA,          OPT_TOGGLE, 0, values_novella,             nullptr, false },
     
-    {   ID_OPTION_COMPASS_DELAY,    OPT_NUMBER,  4, values_compass_delay,       nullptr, false },
-    {   ID_OPTION_NIGHT_DISPLAY,    OPT_BOOL,    0, values_slowfast,            nullptr, false },
-    {   ID_OPTION_BATTLE_FULL,      OPT_BOOL,    0, values_fullbrief,           nullptr, false },
-    {   ID_OPTION_NIGHT_CONFIRM,    OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_COMPASS_DELAY,    OPT_NUMBER, 4, values_compass_delay,       nullptr, false },
+    {   ID_OPTION_NIGHT_DISPLAY,    OPT_TOGGLE, 0, values_slowfast,            nullptr, false },
+    {   ID_OPTION_BATTLE_FULL,      OPT_TOGGLE, 0, values_fullbrief,           nullptr, false },
+    {   ID_OPTION_NIGHT_CONFIRM,    OPT_TOGGLE, 0, values_onoff,               nullptr, false },
 
-    {   ID_OPTION_SCREENMODE,       OPT_NUMBER,  4, values_screen,              nullptr, false },
+    {   ID_OPTION_SCREENMODE,       OPT_NUMBER, 4, values_screen,              nullptr, false },
 
-    {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER,  2, values_keyboard,            nullptr, false },
+    {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER, 2, values_keyboard,            nullptr, false },
 #if defined(_MOUSE_ENABLED_)
-    {   ID_OPTION_CURSOR_SIZE,      OPT_NUMBER,  3, values_cursor,              nullptr, false },
+    {   ID_OPTION_CURSOR_SIZE,      OPT_NUMBER, 3, values_cursor,              nullptr, false },
 #endif
 
-    {   ID_OPTION_RULE_1,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_2,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_3,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_4,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_5,           OPT_NUMBER,  3, values_fey_recruit_mode,    nullptr, false },
-    {   ID_OPTION_RULE_6,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_7,           OPT_NUMBER,  3, values_movement_type,       nullptr, false },
-    {   ID_OPTION_RULE_8,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_1,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_2,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_3,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_4,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_5,           OPT_NUMBER, 3, values_fey_recruit_mode,    nullptr, false },
+    {   ID_OPTION_RULE_6,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_7,           OPT_NUMBER, 3, values_movement_type,       nullptr, false },
+    {   ID_OPTION_RULE_8,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
 
-    {   ID_OPTION_DIFFICULTY,       OPT_NUMBER,  4, values_difficulty,          nullptr, false },
+    {   ID_OPTION_DIFFICULTY,       OPT_NUMBER, 4, values_difficulty,          nullptr, false },
 
-    {   ID_HOME,                    OPT_NONE,    0, nullptr,                    nullptr, false },
+    {   ID_HOME,                    OPT_NONE,   0, nullptr,                    nullptr, false },
 };
 
 option_t* findOption(int id)
@@ -316,52 +316,52 @@ void hideOption(int id)
 }
 
 #if defined(_USE_GAME_RULES_)
-void setRulesFromMovementType(CONFIG_MOVEMENT_TYPE type, eflags<RULEFLAGS,u64>& rules) {
+void setRulesFromMovementType(CF_MOVEMENT type, eflags<RULEFLAGS,u64>& rules) {
     switch(type) {
-        case CF_MOVEMENT_ORIGINAL:
+        case CF_MOVEMENT::ORIGINAL:
             rules.Reset(RF_DDR_MOVEMENT_MASK);
             break;
-        case CF_MOVEMENT_INTENDED:
+        case CF_MOVEMENT::INTENDED:
             rules.Set(RF_DDR_MOVEMENT_SPECTRUM);
             break;
-        case CF_MOVEMENT_C64:
+        case CF_MOVEMENT::C64:
             rules.Set(RF_DDR_MOVEMENT_C64);
             break;
     }
 }
 
-CONFIG_MOVEMENT_TYPE getMovementTypeFromRules(eflags<RULEFLAGS,u64> rules) {
+CF_MOVEMENT getMovementTypeFromRules(eflags<RULEFLAGS,u64> rules) {
     if (rules.Is(RF_DDR_MOVEMENT_SPECTRUM)) {
-        return CF_MOVEMENT_INTENDED;
+        return CF_MOVEMENT::INTENDED;
     }
     else if (rules.Is(RF_DDR_MOVEMENT_C64)) {
-        return CF_MOVEMENT_C64;
+        return CF_MOVEMENT::C64;
     }
-    return CF_MOVEMENT_ORIGINAL;
+    return CF_MOVEMENT::ORIGINAL;
 }
 
-void setRulesFromFeyRecruitMode(CONFIG_FEY_RECRUIT_MODE type, eflags<RULEFLAGS, u64>& rules) {
+void setRulesFromFeyRecruitMode(CF_FEY_RECRUIT type, eflags<RULEFLAGS, u64>& rules) {
     switch (type) {
-    case CF_FEY_RECRUIT_ON:
-        rules.Reset(RF_LOM_FEY_RECRUIT_MASK);
-        break;
-    case CF_FEY_RECRUIT_OFF:
-        rules.Set(RF_LOM_FEY_RECRUIT_OFF);
-        break;
-    case CF_FEY_RECRUIT_NOVEL:
-        rules.Set(RF_LOM_FEY_RECRUIT_NOVEL);
-        break;
+        case CF_FEY_RECRUIT::ON:
+            rules.Reset(RF_LOM_FEY_RECRUIT_MASK);
+            break;
+        case CF_FEY_RECRUIT::OFF:
+            rules.Set(RF_LOM_FEY_RECRUIT_OFF);
+            break;
+        case CF_FEY_RECRUIT::NOVEL:
+            rules.Set(RF_LOM_FEY_RECRUIT_NOVEL);
+            break;
     }
 }
 
-CONFIG_FEY_RECRUIT_MODE getFeyRecruitModeFromRules(eflags<RULEFLAGS, u64> rules) {
+CF_FEY_RECRUIT getFeyRecruitModeFromRules(eflags<RULEFLAGS, u64> rules) {
     if (rules.Is(RF_LOM_FEY_RECRUIT_OFF)) {
-        return CF_FEY_RECRUIT_OFF;
+        return CF_FEY_RECRUIT::OFF;
     }
     else if (rules.Is(RF_LOM_FEY_RECRUIT_NOVEL)) {
-        return CF_FEY_RECRUIT_NOVEL;
+        return CF_FEY_RECRUIT::NOVEL;
     }
-    return CF_FEY_RECRUIT_ON;
+    return CF_FEY_RECRUIT::ON;
 }
 #endif
 
@@ -418,10 +418,10 @@ bool panel_options::init()
     // RULES
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
         if(rule_mapping[ii]!=RF_NONE) {
-            rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]);
+            rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]) ? TOGGLE::ON : TOGGLE::OFF;
             findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
         }else{
-            rules[ii] = false;
+            rules[ii] = TOGGLE::OFF;
         }
     }
     
@@ -484,8 +484,8 @@ void panel_options::OnMenuNotification(
     if(option==nullptr)
         return;
 
-    if ( option->type == OPT_BOOL ) {
-        BOOL* value = (BOOL*) option->var;
+    if ( option->type == OPT_TOGGLE ) {
+        int* value = (int*) option->var;
         *value = ! *value;
     }
     
@@ -503,7 +503,7 @@ void panel_options::OnMenuNotification(
     }
 
     if ( option->id == ID_OPTION_TUTORIAL ) {
-        if ( mr->settings->tutorial )
+        if ( is(mr->settings->tutorial) )
             showHelpWindow(HELP_TUTORIAL_ON);
         else
             showHelpWindow(HELP_TUTORIAL_OFF);
@@ -544,7 +544,7 @@ void panel_options::SetMenu ( int id )
         SetSubMenu(items_control,NUMELE(items_control));
         
 #if defined(_OS_DESKTOP_)
-        mr->settings->showmovementindicators=FALSE;
+        mr->settings->showmovementindicators = TOGGLE::OFF;
 #endif
         
         SetValues();
@@ -553,7 +553,7 @@ void panel_options::SetMenu ( int id )
         SetSubMenu(items_help,NUMELE(items_help));
         
 #if !defined(_OS_IOS_) && !defined(_OS_OSX_)
-        mr->settings->novella_pdf=TRUE;
+        mr->settings->novella_pdf=ON;
 #endif
         
         SetValues();
@@ -568,8 +568,8 @@ void panel_options::SetValues()
         CONTINUE_IF_NULL(option.var);
 
         int item=0;
-        if ( option.type == OPT_BOOL ) {
-            bool* value = (bool*) option.var ;
+        if ( option.type == OPT_TOGGLE ) {
+            int* value = (int*) option.var ;
             item = *value ? 1 : 0 ;
         }
         if ( option.type == OPT_NUMBER ) {
@@ -591,7 +591,7 @@ void panel_options::SetValues()
     mr->settings->game_rules.Clear();
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
         if(rule_mapping[ii]!=RF_NONE) {
-            mr->settings->game_rules.Set(rule_mapping[ii], rules[ii]);
+            mr->settings->game_rules.Set(rule_mapping[ii], is(rules[ii]));
         }
     }
     
@@ -627,10 +627,10 @@ void panel_options::clearRule(int id, bool condition)
     if(!condition) {
         int index = id-ID_OPTION_RULES;
         mr->settings->game_rules.Reset(rule_mapping[index]);
-        rules[index] = false;
+        rules[index] = TOGGLE::OFF;
         auto option = findOption(id);
         auto field = optionControls.at(id);
-        field->setValue(option->text[rules[index]]);
+        field->setValue(option->text[(int)rules[index]]);
     }
     
     // change the appearance of the disabled items

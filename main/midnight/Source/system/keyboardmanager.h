@@ -68,7 +68,7 @@ public:
     
     
 public:
-    void SetKeyboardMode ( CONFIG_KEYBOARD_MODE mode );
+    void SetKeyboardMode ( CF_KEYBOARD mode );
     keycode_t getKeycode( KEY_MAP key );
     LPCSTR getKeyboardDescription ( keycode_t key );
     keycode_t getKeyboardValue ( std::string& key );

@@ -680,7 +680,7 @@ bool panel_look::startLookLeft()
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
-    if(mr->settings->flipscreen || options->isInTunnel)
+    if(is(mr->settings->flipscreen) || options->isInTunnel)
     {
         stopRotating(LM_ROTATE_LEFT);
         return true;
@@ -727,7 +727,7 @@ bool panel_look::startLookRight()
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
     
-    if(mr->settings->flipscreen || options->isInTunnel)
+    if(is(mr->settings->flipscreen) || options->isInTunnel)
     {
         stopRotating(LM_ROTATE_RIGHT);
         return true;
@@ -780,7 +780,7 @@ bool panel_look::moveForward()
     // something is in our way that we must fight
     // so check for auto fight
     if ( location_flags&lif_fight ) {
-        if ( mr->settings->autofight ) {
+        if ( is(mr->settings->autofight) ) {
             // do we have an army?
             // do we have the correct sword?
             
@@ -798,7 +798,7 @@ bool panel_look::moveForward()
     
     // mr->checkUnhide?
     if ( location_flags&lif_unhide && Character_IsHidden(c) ) {
-        if ( mr->settings->autounhide ) {
+        if ( is(mr->settings->autounhide) ) {
             if ( Character_UnHide(c) ) {
             }
         }
@@ -874,7 +874,7 @@ bool panel_look::startMoving()
     
     if ( Character_Move(c) ) {
         
-        if ( mr->settings->flipscreen || options->isInTunnel ) {
+        if ( is(mr->settings->flipscreen) || options->isInTunnel ) {
             stopMoving();
             return true;
         }
@@ -1013,7 +1013,7 @@ void panel_look::hideMenus()
 
 void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback& callback )
 {
-    if ( !mr->settings->screentransitions ) {
+    if ( isNot(mr->settings->screentransitions) ) {
         if ( callback != nullptr ) {
             callback();
         }
@@ -1043,7 +1043,7 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback&
 
 void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback& callback )
 {
-    if ( !mr->settings->screentransitions ) {
+    if ( isNot(mr->settings->screentransitions) ) {
         if ( callback != nullptr ) {
             callback();
         }
@@ -1238,7 +1238,7 @@ void panel_look::OnNotification( Ref* sender )
 
         case ID_NIGHT:
         {
-            if(mr->settings->night_confirm) {
+            if(is(mr->settings->night_confirm)) {
                 AreYouSure(NIGHT_MSG, [&] {
                     mr->night();
                 });
@@ -1491,11 +1491,11 @@ void panel_look::showCompass(Vec2 pos)
 
 void panel_look::startCompassTimer(Vec2 pos)
 {
-    if (mr->settings->compass_delay == 0 ) {
+    if (mr->settings->compass_delay == CF_COMPASS::OFF ) {
         return;
     }
 
-    f32 compass_delay = compass_delays[mr->settings->compass_delay];
+    f32 compass_delay = compass_delays[(int)mr->settings->compass_delay];
 
     this->scheduleOnce( [&,pos](float) {
         showCompass(pos);
@@ -1533,22 +1533,22 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     
     auto position =  touch->getLocation();
     
-    if ( mr->settings->nav_mode!=CF_NAV_SWIPE || mr->settings->flipscreen ) {
+    if ( mr->settings->nav_mode != CF_NAVIGATION::SWIPE || is(mr->settings->flipscreen) ) {
         
         f32 move_press_y = size.height - RES(MOUSE_MOVE_BLEED) ;
         f32 move_press_left = RES(MOUSE_MOVE_BLEED) ;
         f32 move_press_right = size.width - RES(MOUSE_MOVE_BLEED) ;
         
         // use full centre height if we are only pressing
-        if ( mr->settings->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
+        if ( mr->settings->nav_mode==CF_NAVIGATION::FULL)
             move_press_y = size.height * 0.75 ;
         
-        else if ( mr->settings->nav_mode==CF_NAV_PRESS || mr->settings->flipscreen)
+        else if ( mr->settings->nav_mode==CF_NAVIGATION::PRESS || is(mr->settings->flipscreen))
             move_press_y = 0;
         
         if ( IsLeftMouseDown ) {
             
-            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
+            if ( mr->settings->nav_mode != CF_NAVIGATION::FULL || is(mr->settings->flipscreen)) {
                 if ( position.y > move_press_y
                     && (position.x>move_press_left && position.x < move_press_right ) ) {
                     updateMovementIndicators(LM_MOVE_FORWARD);
@@ -1575,7 +1575,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
             if ( currentMovementIndicator == LM_NONE )
                 return true;
             
-            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
+            if ( mr->settings->nav_mode != CF_NAVIGATION::FULL || is(mr->settings->flipscreen)) {
                 if ( position.y > move_press_y
                     && (position.x>move_press_left && position.x < move_press_right ) ) {
                     updateMovementIndicators(LM_NONE);
@@ -1601,7 +1601,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
 
 void panel_look::setupMovementIndicators()
 {
-    if ( !mr->settings->showmovementindicators )
+    if ( isNot(mr->settings->showmovementindicators) )
         return;
     
     f32 scale = 2.5f;
@@ -1630,7 +1630,7 @@ void panel_look::updateMovementIndicators(LANDSCAPE_MOVEMENT movement)
     bool drawArrows = movement != LM_NONE ;
     currentMovementIndicator = movement;
  
-    if ( !mr->settings->showmovementindicators )
+    if ( isNot(mr->settings->showmovementindicators) )
         return;
 
     for ( int ii=0; ii<NUMELE(movementIndicators); ii++ ) {
@@ -1649,8 +1649,7 @@ void panel_look::updateMovementIndicators(LANDSCAPE_MOVEMENT movement)
 
 bool panel_look::allowDragDownMove()
 {
-    int value = mr->settings->nav_mode ;
-    return ( value != CF_NAV_PRESS);
+    return ( mr->settings->nav_mode != CF_NAVIGATION::PRESS);
 }
 
 bool panel_look::allowDragLook()
@@ -1659,8 +1658,8 @@ bool panel_look::allowDragLook()
         return false;
     }
 
-    int value = mr->settings->nav_mode ;
-    if ( value != CF_NAV_PRESS && value != CF_NAV_SWIPE_MOVE_PRESS_LOOK && !mr->settings->flipscreen )
+    CF_NAVIGATION value = mr->settings->nav_mode ;
+    if ( value != CF_NAVIGATION::PRESS && value != CF_NAVIGATION::FULL && isNot(mr->settings->flipscreen) )
         return  true;
     return false;
 }
@@ -1857,16 +1856,16 @@ bool panel_look::OnMouseMove( Vec2 position )
         // check if pointer over any gadget   
         if ( childFromPoint(position) == nullptr ) {
         
-        if ( mr->settings->nav_mode!=CF_NAV_SWIPE ) {
+        if ( mr->settings->nav_mode!=CF_NAVIGATION::SWIPE ) {
 
             // use full centre height if we are only pressing
-            if ( mr->settings->nav_mode==CF_NAV_SWIPE_MOVE_PRESS_LOOK)
+            if ( mr->settings->nav_mode==CF_NAVIGATION::FULL)
                 move_press_y = size.height * 0.75 ;
-            else if ( mr->settings->nav_mode==CF_NAV_PRESS )
+            else if ( mr->settings->nav_mode==CF_NAVIGATION::PRESS )
                 move_press_y = size.height ;
             
             
-            if ( mr->settings->nav_mode!=CF_NAV_SWIPE_MOVE_PRESS_LOOK || mr->settings->flipscreen) {
+            if ( mr->settings->nav_mode!=CF_NAVIGATION::FULL || is(mr->settings->flipscreen)) {
                 if ( position.y > move_press_y && (position.x>move_press_left && position.x < move_press_right) ) {
                     mode = MOUSE_MOVE;
                 }

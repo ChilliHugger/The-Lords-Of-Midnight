@@ -37,69 +37,82 @@
     #define PRE_RENDERED_LORD_NAMES
 #endif
 
-enum CONFIG_NAV_MODE
+enum class CF_NAVIGATION : int
 {
-    CF_NAV_BOTH=0,
-    CF_NAV_PRESS=1,
-    CF_NAV_SWIPE=2,
-    CF_NAV_SWIPE_MOVE_PRESS_LOOK=3,
+    BOTH    = 0,
+    PRESS   = 1,
+    SWIPE   = 2,
+    FULL    = 3,
 };
 
-enum CONFIG_COMPASS_DELAY
+enum class CF_COMPASS : int
 {
-    CF_COMPASS_OFF=0,
-    CF_COMPASS_NORMAL=1,
-    CF_COMPASS_SHORT=2,
-    CF_COMPASS_LONG=3,
+    OFF     = 0,
+    NORMAL  = 1,
+    SHORT   = 2,
+    LONG    = 3,
 };
 
-enum CONFIG_THINK_PAGING
+enum class CF_THINK_PAGING : int
 {
-    CF_THINK_SWIPE=0,
-    CF_THINK_PRESS=1,
+    SWIPE   = 0,
+    PRESS   = 1,
 };
 
-enum CONFIG_SCREEN_MODE
+enum class CF_SCREEN : int
 {
-    CF_FULLSCREEN=0,
-    CF_WINDOW_SMALL=1,
-    CF_WINDOW_MEDIUM=2,
-    CF_WINDOW_LARGE=3,
+    FULL    = 0,
+    SMALL   = 1,
+    MEDIUM  = 2,
+    LARGE   = 3,
 };
 
-enum CONFIG_KEYBOARD_MODE
+enum class CF_KEYBOARD : int
 {
-    CF_KEYBOARD_CLASSIC=0,
-    CF_KEYBOARD_NEW=1,
+    CLASSIC = 0,
+    NEW     = 1,
 };
 
-enum CONFIG_CURSOR_SIZE
+enum class CF_CURSOR : int
 {
-    CF_CURSOR_SMALL=0,
-    CF_CURSOR_MEDIUM=1,
-    CF_CURSOR_LARGE=2,
+    SMALL   = 0,
+    MEDIUM  = 1,
+    LARGE   = 2,
 };
 
-enum CONFIG_MOVEMENT_TYPE
+enum class CF_MOVEMENT : int
 {
-    CF_MOVEMENT_ORIGINAL=0,
-    CF_MOVEMENT_INTENDED=1,
-    CF_MOVEMENT_C64=2,
+    ORIGINAL= 0,
+    INTENDED= 1,
+    C64     = 2,
 };
 
-enum CONFIG_FEY_RECRUIT_MODE
+enum class CF_FEY_RECRUIT : int
 {
-    CF_FEY_RECRUIT_ON=0,
-    CF_FEY_RECRUIT_OFF=1,
-    CF_FEY_RECRUIT_NOVEL=2,
+    ON      = 0,
+    OFF     = 1,
+    NOVEL   = 2,
 };
 
-enum CONFIG_APPROACH_MODE
+enum class CF_APPROACH
 {
-    CF_APPROACH_SWAP=0,
-    CF_APPROACH_STAY=1
+    SWAP    = 0,
+    STAY    = 1
 };
 
+enum class TOGGLE : int
+{
+    OFF     = 0,
+    ON      = 1
+};
+
+inline bool is(TOGGLE value) {
+    return (value == TOGGLE::ON);
+}
+
+inline bool isNot(TOGGLE value) {
+    return (value == TOGGLE::OFF);
+}
 
 class settingsmanager : public ringcontroller
 {
@@ -108,69 +121,65 @@ public:
     settingsmanager();
     virtual ~settingsmanager();
 
-    BOOL Save ( void );
-    BOOL Load ( void );
-    
+    bool Save ( void );
+    bool Load ( void );
     bool bumpAdvert();
 
 public:
-    // NOTE: boolean values need to be BOOL and not bool because of size differences and
-    // therefore legacy configurations
-    //
-    
     // not stored
-    BOOL                    fullscreensupported;
-    BOOL                    firsttime;
+    bool                    fullscreensupported;
+    bool                    firsttime;
     
+    // Game Rules save in game_rules
+    CF_MOVEMENT             movement_type;
+    CF_FEY_RECRUIT          fey_recruit_mode;
     
     // version 1
-    BOOL                    tutorial;
+    TOGGLE                  tutorial;
     
     // version 2
-    BOOL                    autofight;
-    BOOL                    autounhide;
-    BOOL                    showmovementindicators;
-    BOOL                    screentransitions;
-    CONFIG_NAV_MODE         nav_mode;
+    TOGGLE                  autofight;
+    TOGGLE                  autounhide;
+    TOGGLE                  showmovementindicators;
+    TOGGLE                  screentransitions;
+    CF_NAVIGATION           nav_mode;
     
     // version 3
-    CONFIG_COMPASS_DELAY    compass_delay;
-    CONFIG_THINK_PAGING     think_paging_mode;
-    BOOL                    night_display_fast;
-    BOOL                    night_battle_full;
+    CF_COMPASS              compass_delay;
+    CF_THINK_PAGING         think_paging_mode;
+    TOGGLE                  night_display_fast;
+    TOGGLE                  night_battle_full;
 
     // version 4
-    //CONFIG_COMPASS_FEEDBACK compass_feedback;
+    //CF_COMPASS_FEEDBACK   compass_feedback;
     
     // version 5
-    CONFIG_SCREEN_MODE      screen_mode;
+    CF_SCREEN               screen_mode;
     
     // version 6
-    CONFIG_KEYBOARD_MODE    keyboard_mode;
+    CF_KEYBOARD             keyboard_mode;
     
     // version 7
     int                     advert_screen_count;
-    BOOL                    novella_pdf ;
+    TOGGLE                  novella_pdf ;
     
     // Version 8
-    BOOL                    flipscreen;
+    TOGGLE                  flipscreen;
     
     // Version 9
-    BOOL                    night_confirm;
+    TOGGLE                  night_confirm;
     
     // Version 10
-    CONFIG_CURSOR_SIZE      cursor_size;
+    CF_CURSOR               cursor_size;
     
     // version 11
     eflags<RULEFLAGS,u64>   game_rules;
-    CONFIG_MOVEMENT_TYPE    movement_type;
-    CONFIG_FEY_RECRUIT_MODE fey_recruit_mode;
 
     // version 12
     mxdifficulty_t          game_difficulty;
     
     // version 13
-    BOOL                    autoseek;
-    BOOL                    autoapproach;
-    CONFIG_APPROACH_MODE    approach_mode;
+    TOGGLE                  autoseek;
+    TOGGLE                  autoapproach;
+    CF_APPROACH             approach_mode;
 };

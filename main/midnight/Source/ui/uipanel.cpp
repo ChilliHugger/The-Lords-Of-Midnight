@@ -244,7 +244,7 @@ bool uipanel::showHelpWindow ( helpid_t id, BOOL forceImportant, MXVoidCallback 
     
     if ( !help->isAlways(id) ) {
         
-        if ( !mr->settings->tutorial ) {
+        if ( isNot(mr->settings->tutorial) ) {
             if ( callback != nullptr )
                 callback();
             return true;
@@ -483,7 +483,7 @@ void uipanel::setCursor(MOUSE_CURSOR cursor)
     /// medium 0.75
     /// large 1.0
     
-    f32 scale = cursor_scales[mr->settings->cursor_size];
+    f32 scale = cursor_scales[(int)mr->settings->cursor_size];
     
     cursorAnchor.x = -RES(mr->mouseData[cursor-1]->anchor.x) * scale;
     cursorAnchor.y = RES(mr->mouseData[cursor-1]->anchor.y) * scale;

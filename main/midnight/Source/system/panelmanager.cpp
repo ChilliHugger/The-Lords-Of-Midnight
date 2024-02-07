@@ -117,7 +117,7 @@ void panelmanager::returnToPrevious()
 
 void panelmanager::returnToPrevious( transition_t transition )
 {
-    if ( !CONFIG(screentransitions) )
+    if ( isNot(CONFIG(screentransitions)) )
         transition=TRANSITION_NONE;
     
     CustomDirector *director = (CustomDirector *)Director::getInstance();
@@ -171,7 +171,7 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
 {
     //ui->hideKeyboardShortcuts(FALSE);
     
-    if ( !CONFIG(screentransitions) )
+    if ( isNot(CONFIG(screentransitions)) )
         transition=TRANSITION_NONE;
     
     outgoing_panel = currentPanel();
@@ -235,7 +235,7 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
 void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
 {
     
-    if ( !CONFIG(screentransitions) )
+    if ( isNot(CONFIG(screentransitions)) )
         transition=TRANSITION_NONE;
     
     outgoing_panel = currentPanel();

@@ -127,7 +127,7 @@ void panel_think::createLookLordButton(mxid id)
     
     uihelper::AddBottomLeft(safeArea, select, RES(10) + RES(100) * phoneScale(), y );
     
-    if ( mr->settings->keyboard_mode == CF_KEYBOARD_CLASSIC )
+    if ( mr->settings->keyboard_mode == CF_KEYBOARD::CLASSIC )
         addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_old));
     else
         addShortcutKey(tag, mr->keyboard->getKeyboardValue(data->shortcut_new));
@@ -443,7 +443,7 @@ void panel_think::setupPages()
 
 void panel_think::gotoPage( u32 page )
 {
-    if(!mr->settings->screentransitions)
+    if(isNot(mr->settings->screentransitions))
     {
         pageView->setCurrentPageIndex(page);
     }else{

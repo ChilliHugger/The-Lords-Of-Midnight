@@ -238,7 +238,7 @@ void panel_select::getCharacters()
         
         auto userdata = lord->userData();
         
-        if ( mr->settings->keyboard_mode == CF_KEYBOARD_CLASSIC )
+        if ( mr->settings->keyboard_mode == CF_KEYBOARD::CLASSIC )
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(userdata->shortcut_old));
         else
             addShortcutKey(tag, mr->keyboard->getKeyboardValue(userdata->shortcut_new));
