@@ -1,8 +1,8 @@
 #/****************************************************************************
 # Copyright (c) 2013-2014 cocos2d-x.org
-# Copyright (c) 2015-2017 Chukong Technologies Inc.
+# Copyright (c) 2019-present Axmol Engine contributors (see AUTHORS.md).
 #
-# http://www.cocos2d-x.org
+# https://axmolengine.github.io/
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,97 +23,150 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-cmake_minimum_required(VERSION 3.6)
-
 if(TME STREQUAL "LOM")
   set(APP_BUILD _LOM_)
   set(APP_NAME midnight)
+  set(LOM ON CACHE BOOL "Enable Lords of Midnight")
   if(WINDOWS)
     add_compile_definitions(ICON_LOM)
   endif()
 elseif(TME STREQUAL "DDR")
   set(APP_BUILD _DDR_)
   set(APP_NAME revenge)
+  set(DDR ON CACHE BOOL "Enable Doomdark's Revenge")
   if(WINDOWS)
     add_compile_definitions(ICON_DDR)
   endif()
 endif()
 
+cmake_minimum_required(VERSION 3.6)
 project(${APP_NAME})
 
-if(XCODE)
-    if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
-        SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 12.0)
+ set(AX_ENABLE_EXT_GUI OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_ASSETMANAGER OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_PARTICLE3D OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_PHYSICS_NODE OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_SPINE OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_DRAGONBONES OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_COCOSTUDIO OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_FAIRYGUI OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_LIVE2D OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_EFFEKSEER OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_JSONDEFAULT OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_DRAWNODEEX OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_LUA OFF CACHE BOOL "" FORCE)
+ set(AX_ENABLE_MFMEDIA OFF CACHE BOOL "")
+ set(AX_ENABLE_MSEDGE_WEBVIEW2 OFF CACHE BOOL "")
+
+ set(AX_ENABLE_EXT_IMGUI OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_INSPECTOR OFF CACHE BOOL "")
+ set(AX_ENABLE_EXT_SDFGEN OFF CACHE BOOL "")
+
+
+ set(AX_WITH_BULLET OFF CACHE BOOL "")
+ set(AX_WITH_BOX2D OFF CACHE BOOL "")
+ set(AX_WITH_CHIPMUNK OFF CACHE BOOL "")
+ set(AX_WITH_WEBP OFF CACHE BOOL "")
+ set(AX_WITH_JPEG OFF CACHE BOOL "")
+ set(AX_WITH_RECAST OFF CACHE BOOL "")
+ set(AX_WITH_ZLIB OFF CACHE BOOL "")
+
+if(NOT DEFINED BUILD_ENGINE_DONE) # to test new into root project
+    if(XCODE)
+        set(CMAKE_XCODE_GENERATE_TOP_LEVEL_PROJECT_ONLY TRUE)
+    endif()
+
+    # config quick starter batch script run.bat for windows
+    if(WIN32)
+        file(RELATIVE_PATH CMAKE_BUILD_RELATIVE_DIR "${CMAKE_CURRENT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
+        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/run.bat.in" "${CMAKE_CURRENT_SOURCE_DIR}/run.bat" @ONLY)
+    endif()
+
+    set(_AX_ROOT "$ENV{AX_ROOT}")
+
+    if(NOT (_AX_ROOT STREQUAL ""))
+        file(TO_CMAKE_PATH ${_AX_ROOT} _AX_ROOT)
+        message(STATUS "Using system env var _AX_ROOT=${_AX_ROOT}")
+    else()
+        message(FATAL_ERROR "Please run setup.ps1 add system env var 'AX_ROOT' to specific the engine root")
+    endif()
+
+    set(CMAKE_MODULE_PATH ${_AX_ROOT}/cmake/Modules/)
+
+    include(AXBuildSet)
+    set(_AX_USE_PREBUILT FALSE)
+    if ((WIN32 OR LINUX) AND DEFINED AX_PREBUILT_DIR AND IS_DIRECTORY ${_AX_ROOT}/${AX_PREBUILT_DIR})
+        set(_AX_USE_PREBUILT TRUE)
+    endif()
+
+    if (NOT _AX_USE_PREBUILT)
+        add_subdirectory(${_AX_ROOT}/core ${ENGINE_BINARY_PATH}/axmol/core)
     endif()
 endif()
 
-if(NOT DEFINED BUILD_ENGINE_DONE) # to test midnight into root project
-    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
-    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+# The common cross-platforms source files and header files
+include(Source/extensions/CMakeLists.txt)
+include(Source/frontend/CMakeLists.txt)
+include(Source/landscaping/CMakeLists.txt)
+include(Source/library/CMakeLists.txt)
+include(Source/models/CMakeLists.txt)
+include(Source/panels/CMakeLists.txt)
+include(Source/system/CMakeLists.txt)
+include(Source/tinyxml/CMakeLists.txt)
+include(Source/tme/CMakeLists.txt)
+include(Source/ui/CMakeLists.txt)
+include(Source/utils/CMakeLists.txt)
+include(Source/platform/CMakeLists.txt)
 
-    include(CocosBuildSet)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+set(GAME_HEADER
+       Source/cocos.h
+       Source/AppDelegate.h
+       ${HDR_EXTENSIONS}
+       ${HDR_FRONTEND}
+       ${HDR_LANDSCAPING}
+       ${HDR_LIBRARY}
+       ${HDR_MODELS}
+       ${HDR_PANELS}
+       ${HDR_SYSTEM}
+       ${HDR_TINYXML}
+       ${HDR_TME}
+       ${HDR_UI}
+       ${HDR_UTILS}
+       ${HDR_PLATFORM}
+    )
 
-# record sources, headers, resources...
-set(GAME_SOURCE)
-set(GAME_HEADER)
+set(GAME_SOURCE
+       Source/AppDelegate.cpp
+       ${SRC_EXTENSIONS}
+       ${SRC_FRONTEND}
+       ${SRC_LANDSCAPING}
+       ${SRC_LIBRARY}
+       ${SRC_MODELS}
+       ${SRC_PANELS}
+       ${SRC_SYSTEM}
+       ${SRC_TINYXML}
+       ${SRC_TME}
+       ${SRC_UI}
+       ${SRC_UTILS}
+       ${SRC_PLATFORM}
+    )
 
-set(GAME_RES_FOLDER
+set(GAME_INC_DIRS
+  "${CMAKE_CURRENT_SOURCE_DIR}/Source"
+)
+
+#list(APPEND GAME_SRC ${GAME_HEADER})
+
+set(content_folder
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources-${APP_NAME}"
     )
 
-if(APPLE OR WINDOWS)
-    cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
+if(APPLE)
+    ax_mark_multi_resources(common_content_files RES_TO "Resources" FOLDERS ${content_folder})
+elseif(WINDOWS)
+    ax_mark_multi_resources(common_content_files RES_TO "Content" FOLDERS ${content_folder})
 endif()
-
-# add cross-platforms source files and header files
-
-include(src/extensions/CMakeLists.txt)
-include(src/frontend/CMakeLists.txt)
-include(src/landscaping/CMakeLists.txt)
-include(src/library/CMakeLists.txt)
-include(src/models/CMakeLists.txt)
-include(src/panels/CMakeLists.txt)
-include(src/system/CMakeLists.txt)
-include(src/tme/CMakeLists.txt)
-include(src/ui/CMakeLists.txt)
-include(src/utils/CMakeLists.txt)
-include(src/platform/CMakeLists.txt)
-
-set(GAME_HEADER
-  src/cocos.h
-  src/AppDelegate.h
-  ${HDR_EXTENSIONS}
-  ${HDR_FRONTEND}
-  ${HDR_LANDSCAPING}
-  ${HDR_LIBRARY}
-  ${HDR_MODELS}
-  ${HDR_PANELS}
-  ${HDR_SYSTEM}
-  ${HDR_TME}
-  ${HDR_UI}
-  ${HDR_UTILS}
-  ${HDR_PLATFORM}
-  )
-
-set(GAME_SOURCE
-  src/AppDelegate.cpp
-  ${SRC_EXTENSIONS}
-  ${SRC_FRONTEND}
-  ${SRC_LANDSCAPING}
-  ${SRC_LIBRARY}
-  ${SRC_MODELS}
-  ${SRC_PANELS}
-  ${SRC_SYSTEM}
-  ${SRC_TME}
-  ${SRC_UI}
-  ${SRC_UTILS}
-  ${SRC_PLATFORM}
-  )
-
-list(APPEND GAME_SRC ${GAME_HEADER})
 
 if(TESTS)
   include(tests/CMakeLists.txt)
@@ -124,47 +177,57 @@ endif()
 add_compile_options("-D${APP_BUILD}")
 
 if(ANDROID)
-    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-    if(TME STREQUAL "LOM")
-      list(APPEND GAME_SOURCE proj.android_lom/app/jni/hellocpp/main.cpp )
-    elseif(TME STREQUAL "DDR")
-      list(APPEND GAME_SOURCE proj.android_ddr/app/jni/hellocpp/main.cpp )
-    endif()
-elseif(LINUX)
+    # the APP_NAME should match on AndroidManifest.xml
     list(APPEND GAME_SOURCE
-         proj.linux/main.cpp
+         proj.android_${APP_NAME}/app/jni/main.cpp
          )
+#elseif(LINUX)
+#    list(APPEND GAME_SOURCE
+#         proj.linux/main.cpp
+#         )
+#    list(APPEND GAME_SOURCE ${common_content_files})
+#elseif(WASM)
+#    list(APPEND GAME_SOURCE
+#         proj.wasm/main.cpp
+#         )
+#    list(APPEND GAME_SOURCE ${common_content_files})
 elseif(WINDOWS)
-    add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_ -D_OS_WIN32_)
-    list(APPEND GAME_HEADER
-         proj.win32/main.h
-         proj.win32/resource.h)
-         
-    list(APPEND GAME_SOURCE
-         proj.win32/main.cpp
-         ${common_res_files}
-         )
-    if(TME STREQUAL "LOM")
-        list(APPEND GAME_SOURCE
-            proj.win32/midnight/game.rc
+    if(NOT WINRT)
+        add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_ -D_OS_WIN32_)
+        list(APPEND GAME_HEADER
+            proj.win32/main.h
+            proj.win32/resource.h
             )
-    elseif(TME STREQUAL "DDR")
         list(APPEND GAME_SOURCE
-            proj.win32/revenge/game.rc
+            proj.win32/main.cpp
+            proj.win32/${APP_NAME}/game.rc
             )
+#    else()
+#        ax_setup_winrt_sources()
     endif()
+    list(APPEND GAME_SOURCE ${common_content_files})
 elseif(APPLE)
     if(IOS)
-        add_compile_options(-D_OS_IOS_)
         list(APPEND GAME_HEADER
              proj.ios_mac/ios/AppController.h
              proj.ios_mac/ios/RootViewController.h
              )
-        set(APP_UI_RES
-            proj.ios_mac/ios/${APP_NAME}/LaunchScreen.storyboard
-            proj.ios_mac/ios/${APP_NAME}/LaunchScreenBackground.png
-            proj.ios_mac/ios/${APP_NAME}/Images.xcassets
-            )
+
+        if (TVOS)
+            set(APP_UI_RES
+                proj.ios_mac/ios/targets/tvos/LaunchScreenBackground.png
+                proj.ios_mac/ios/targets/tvos/LaunchScreen.storyboard
+                proj.ios_mac/ios/targets/tvos/Images.xcassets
+                )
+        else()
+            add_compile_options(-D_OS_IOS_)
+            set(APP_UI_RES
+                proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
+                proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
+                proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
+                )
+        endif()
+
         list(APPEND GAME_SOURCE
              proj.ios_mac/ios/main.m
              proj.ios_mac/ios/AppController.mm
@@ -177,6 +240,7 @@ elseif(APPLE)
         set(APP_UI_RES
             proj.ios_mac/mac/${APP_NAME}/Images.xcassets
             proj.ios_mac/mac/${APP_NAME}/Icon.icns
+            proj.ios_mac/mac/${APP_NAME}/Info.plist
             )
         list(APPEND GAME_SOURCE
              proj.ios_mac/mac/main.cpp
@@ -184,67 +248,124 @@ elseif(APPLE)
              ${APP_UI_RES}
              )
     endif()
-    list(APPEND GAME_SOURCE ${common_res_files})
+    list(APPEND GAME_SOURCE ${common_content_files})
 endif()
 
 # mark app complie info and libs info
-set(all_code_files
+set(APP_SOURCES
     ${GAME_HEADER}
     ${GAME_SOURCE}
     )
 if(NOT ANDROID)
-    add_executable(${APP_NAME} ${all_code_files})
+    add_executable(${APP_NAME} ${APP_SOURCES})
 else()
-    add_library(${APP_NAME} SHARED ${all_code_files})
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
+    add_library(${APP_NAME} SHARED ${APP_SOURCES})
+    # whole archive for jni
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+    config_android_shared_libs("org.axmol.lib" "${CMAKE_CURRENT_SOURCE_DIR}/proj.android_${APP_NAME}/app/src")
 endif()
 
-if(TESTS)
-  target_link_libraries(${APP_NAME}
-    cocos2d
-    Catch2::Catch2
-  )
-else()
-  target_link_libraries(${APP_NAME} cocos2d)
+if (NOT _AX_USE_PREBUILT)
+    if (TESTS)
+      target_link_libraries(${APP_NAME}
+        ${_AX_CORE_LIB}
+        Catch2::Catch2
+        )
+    else()
+      target_link_libraries(${APP_NAME}
+        ${_AX_CORE_LIB}
+        )
+    endif()
 endif()
 
-target_include_directories(${APP_NAME}
-        PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
-)
+# The optional thirdparties(not dependent by engine)
+if (AX_WITH_YAML_CPP)
+    list(APPEND GAME_INC_DIRS "${_AX_ROOT}/thirdparty/yaml-cpp/include")
+endif()
 
-# mark app resources
-setup_cocos_app_config(${APP_NAME})
+target_include_directories(${APP_NAME} PRIVATE ${GAME_INC_DIRS})
+
+
+# mark app resources, resource will be copy auto after mark
+ax_setup_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     set_xcode_property(${APP_NAME} INSTALL_PATH "\$(LOCAL_APPS_DIR)")
 
+    set_target_properties(${APP_NAME} PROPERTIES
+           XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "$(inherited)"
+    )
+
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
-          XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
-          MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/${APP_NAME}/Info.plist"
-          XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/midnight.entitlements")
+              XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
+              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/${APP_NAME}/Info.plist"
+              XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/midnight.entitlements"
+        )
+#    elseif(TVOS)
+#       set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/targets/tvos/Info.plist")
+#       set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "Brand Assets")
     elseif(IOS)
-        set_target_properties(${APP_NAME} PROPERTIES
-          MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/${APP_NAME}/Info.plist"
-          XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
-          )
-        set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
-        # force x86_64 architecture for iphonesimulator builds
-        set_target_properties(${APP_NAME} PROPERTIES
-          XCODE_ATTRIBUTE_ARCHS[sdk=iphonesimulator*] x86_64
-          XCODE_ATTRIBUTE_VALID_ARCHS[sdk=iphonesimulator*] x86_64
-          )
-
+       set_target_properties(${APP_NAME} PROPERTIES
+              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/targets/ios/${APP_NAME}/Info.plist"
+       )
+       set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
+       set_xcode_property(${APP_NAME} TARGETED_DEVICE_FAMILY "1,2")
+       set_target_properties(${APP_NAME} PROPERTIES
+              XCODE_ATTRIBUTE_ARCHS[sdk=iphonesimulator*] x86_64
+              XCODE_ATTRIBUTE_VALID_ARCHS[sdk=iphonesimulator*] x86_64
+        )
     endif()
 
     # For code-signing, set the DEVELOPMENT_TEAM:
     set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "8K6PYTU8T7")
+    set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "")
+    set_xcode_property(${APP_NAME} CODE_SIGNING_ALLOWED "YES")
+
+
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME})
+    if(NOT _AX_USE_PREBUILT)
+        ax_sync_target_dlls(${APP_NAME})
+    endif()
 endif()
 
-if(LINUX OR WINDOWS)
-    cocos_get_resource_path(APP_RES_DIR ${APP_NAME})
-    cocos_copy_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
+if (NOT DEFINED AX_PREBUILT_DIR)
+    # todo: add "AX_ENABLE_SCRIPT_BINDING=0", now it breaks compilation for android
+    target_compile_definitions(${_AX_CORE_LIB} PUBLIC
+            AX_USE_PHYSICS=0
+            AX_USE_3D_PHYSICS=0
+            AX_USE_NAVMESH=0
+            AX_ENABLE_CHIPMUNK_INTEGRATION=0
+            AX_USE_JPEG=0
+            AX_USE_TIFF=0
+            AX_USE_WEBP=0)
 endif()
+
+if ((NOT APPLE) AND (NOT WINRT))
+    ax_get_resource_path(APP_RES_DIR ${APP_NAME})
+    ax_sync_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${content_folder} SYM_LINK 1)
+
+    if((WINDOWS AND (NOT (CMAKE_GENERATOR MATCHES "Ninja"))))
+        set_property(TARGET ${APP_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${content_folder}")
+        if(NOT DEFINED BUILD_ENGINE_DONE)
+            set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${APP_NAME})
+        endif()
+    endif()
+elseif(WINRT)
+    if(NOT DEFINED BUILD_ENGINE_DONE)
+        set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${APP_NAME})
+    endif()
+endif()
+
+if (_AX_USE_PREBUILT) # support windows and linux
+    use_ax_compile_define(${APP_NAME})
+
+    include(AXLinkHelpers)
+    ax_link_cxx_prebuilt(${APP_NAME} ${_AX_ROOT} ${AX_PREBUILT_DIR})
+endif()
+
+if (NOT DEFINED BUILD_ENGINE_DONE)
+    ax_uwp_set_all_targets_deploy_min_version()
+endif()
+
+ax_setup_app_props(${APP_NAME})

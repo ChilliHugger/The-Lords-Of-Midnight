@@ -57,3 +57,8 @@ main/midnight/mac-tests-build-lom
 # vim backup files
 *~
 main/midnight/mac-build-citadel
+main/midnight/cocos_Builds
+main/midnight/cocos_projects
+main/midnight/Builds
+main/midnight/proj.android_midnight/app/.cxx
+main/midnight/proj.android_midnight/.idea

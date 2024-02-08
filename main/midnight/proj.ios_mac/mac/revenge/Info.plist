@@ -7,7 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Doomdark's Revenge</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>revenge</string>
 	<key>CFBundleIconFile</key>
 	<string>Icon</string>
 	<key>CFBundleIdentifier</key>

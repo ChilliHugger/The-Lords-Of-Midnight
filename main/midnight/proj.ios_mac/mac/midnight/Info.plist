@@ -7,7 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>The Lords of Midnight</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>midnight</string>
 	<key>CFBundleIconFile</key>
 	<string>Icon</string>
 	<key>CFBundleIdentifier</key>
