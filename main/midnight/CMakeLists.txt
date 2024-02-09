@@ -125,34 +125,20 @@ add_compile_options("-D${APP_BUILD}")
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-    if(TME STREQUAL "LOM")
-      list(APPEND GAME_SOURCE proj.android_lom/app/jni/hellocpp/main.cpp )
-    elseif(TME STREQUAL "DDR")
-      list(APPEND GAME_SOURCE proj.android_ddr/app/jni/hellocpp/main.cpp )
-    endif()
-elseif(LINUX)
-    list(APPEND GAME_SOURCE
-         proj.linux/main.cpp
-         )
+      list(APPEND GAME_SOURCE proj.android_${APP_NAME}/app/jni/hellocpp/main.cpp )
 elseif(WINDOWS)
     add_compile_options(-D_MSC_EXTENSIONS -D_OS_DESKTOP_ -D_OS_WIN32_)
     list(APPEND GAME_HEADER
          proj.win32/main.h
          proj.win32/resource.h)
-         
+
     list(APPEND GAME_SOURCE
          proj.win32/main.cpp
          ${common_res_files}
          )
-    if(TME STREQUAL "LOM")
-        list(APPEND GAME_SOURCE
-            proj.win32/midnight/game.rc
-            )
-    elseif(TME STREQUAL "DDR")
-        list(APPEND GAME_SOURCE
-            proj.win32/revenge/game.rc
-            )
-    endif()
+    list(APPEND GAME_SOURCE
+         proj.win32/${APP_NAME}/game.rc
+         )
 elseif(APPLE)
     if(IOS)
         add_compile_options(-D_OS_IOS_)
@@ -218,6 +204,8 @@ setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     set_xcode_property(${APP_NAME} INSTALL_PATH "\$(LOCAL_APPS_DIR)")
+    set_target_properties(${APP_NAME} PROPERTIES
+           XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "$(inherited)")
 
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES

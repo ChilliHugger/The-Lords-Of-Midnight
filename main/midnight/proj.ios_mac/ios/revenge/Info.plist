@@ -7,7 +7,7 @@
     <key>CFBundleDisplayName</key>
     <string>Doomdark's&#x2007;Revenge</string>
     <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
+    <string>revenge</string>
     <key>CFBundleIconFile</key>
     <string>Icon-57.png</string>
     <key>CFBundleIdentifier</key>
@@ -23,7 +23,7 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>47</string>
+    <string>49</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UIAppFonts</key>

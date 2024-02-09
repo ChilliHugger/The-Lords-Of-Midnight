@@ -7,16 +7,16 @@ android {
     ndkVersion "22.0.7026061"
 
     defaultConfig {
-        applicationId "com.chilli.revenge"
+        applicationId "com.chilli.midnight"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 2000048
+        versionCode 2000049
         versionName "2.0.8"
 
         externalNativeBuild {
             cmake {
-                targets 'revenge'
-                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=DDR"
+                targets 'midnight'
+                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=LOM"
                 cppFlags "-frtti -fexceptions -fsigned-char"
             }
         }
@@ -32,7 +32,7 @@ android {
         res.srcDir "res"
         manifest.srcFile "AndroidManifest.xml"
         assets.srcDir "../../Resources"
-        assets.srcDir "../../Resources-revenge"
+        assets.srcDir "../../Resources-midnight"
     }
 
     externalNativeBuild {
@@ -90,7 +90,7 @@ android.applicationVariants.all { variant ->
             exclude "**/*.gz"
         }
         copy {
-            from "${buildDir}/../../../Resources-revenge"
+            from "${buildDir}/../../../Resources-midnight"
             into "${buildDir}/intermediates/assets/${variant.dirName}"
             exclude "**/*.gz"
         }
@@ -101,4 +101,5 @@ android.applicationVariants.all { variant ->
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':libcocos2dx')
+    implementation project(path: ':libcocos2dx')
 }
