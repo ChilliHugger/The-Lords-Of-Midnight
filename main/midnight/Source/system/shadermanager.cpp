@@ -38,7 +38,7 @@ void setUniform(cocos2d::backend::ProgramState* state, std::string uniform, T va
 
 void shadermanager::CreateCharacterTimeShader()
 {
-    characterTimeShader = SimpleShader::createWithFragmentShader("shaders/characterTimeShader.fsh");
+    characterTimeShader = SimpleShader::createWithFragmentShader("custom/characterTimeShader_fs");
 
     characterTimeShader->setUniform("p_colour", Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal));
     characterTimeShader->setUniform("p_alpha", alpha_normal);
@@ -68,7 +68,7 @@ Node* shadermanager::AddCharacterTimeShader(Node* node)
 
 void shadermanager::CreateTerrainTimeShader()
 {
-    terrainTimeShader = SimpleShader::createWithFragmentShader("shaders/terrainTimeShader.fsh");
+    terrainTimeShader = SimpleShader::createWithFragmentShader("custom/terrainTimeShader_fs");
     terrainTimeShader->setUniform("p_left", Vec4(0,0,(165.0f/255.0f),alpha_normal));   // Outline
     terrainTimeShader->setUniform("p_right", Vec4(1,1,1,alpha_normal));                // Body
     terrainTimeShader->setUniform("p_alpha", alpha_normal);                            // Alpha
