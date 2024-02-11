@@ -8,9 +8,9 @@
 
 
 #include "catch2/catch.hpp"
-#include "../../src/system/moonring.h"
-#include "../../src/tme/tme_interface.h"
-#include "../../src/tme/baseinc/tme_internal.h"
+#include "../../Source/system/moonring.h"
+#include "../../Source/tme/tme_interface.h"
+#include "../../Source/tme/baseinc/tme_internal.h"
 #include "../mocks/mocks_entity.h"
 
 #if defined(_LOM_)

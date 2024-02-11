@@ -23,25 +23,10 @@ std::string SimpleShader::defaultVert = R"(
     }
     )";
 
-std::string SimpleShader::fragHead = R"(
-    #ifdef GL_ES
-    precision lowp float;
-    #endif
-
-    varying vec4 cc_FragColor;
-    varying vec2 cc_FragTexCoord1;
-
-    uniform sampler2D u_texture;
-    uniform float cc_Time;
-    )";
-
-//std::string SimpleShader::fragHead = "";
-//std::string SimpleShader::defaultVert = "";
-
 SimpleShader::SimpleShader(const std::string& vertSource, const std::string& fragSource)
 {
     //create the shader
-    program = cocos2d::backend::Device::getInstance()->newProgram(vertSource, fragSource);
+    program = cocos2d::backend::DriverBase::getInstance()->newProgram(vertSource, fragSource);
     programState = new cocos2d::backend::ProgramState(program);
 
     currentTextureSlot = 1;
@@ -62,27 +47,18 @@ SimpleShader::~SimpleShader()
 
 SimpleShader* SimpleShader::createWithFragmentShader(const std::string& fragShaderPath)
 {
-    //custom fragment shader 
-    auto fragSourceRaw = cocos2d::FileUtils::getInstance()->getStringFromFile(fragShaderPath);
-
-    //build full fragment shader
-    auto fragSource = fragHead + fragSourceRaw;
-
-    return new SimpleShader(defaultVert, fragSource);
+    return createWithVertexAndFragmentShader("custom/standard_vs", fragShaderPath);
 }
 
 SimpleShader* SimpleShader::createWithVertexAndFragmentShader(const std::string& vertShaderPath, const std::string& fragShaderPath)
 {
-    //custom vertex shader 
+    //custom vertex shader
     auto vertSource = cocos2d::FileUtils::getInstance()->getStringFromFile(vertShaderPath);
 
-    //custom fragment shader 
+    //custom fragment shader
     auto fragSourceRaw = cocos2d::FileUtils::getInstance()->getStringFromFile(fragShaderPath);
 
-    //build full fragment shader
-    auto fragSource = fragHead + fragSourceRaw;
-
-    return new SimpleShader(vertSource, fragSource);
+    return new SimpleShader(vertSource, fragSourceRaw);
 }
 
 void SimpleShader::setUniform(std::string uniform, cocos2d::Texture2D* value)

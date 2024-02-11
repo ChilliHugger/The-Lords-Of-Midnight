@@ -1,6 +1,5 @@
 #pragma once
 #include "cocos2d.h"
-#include "renderer/backend/Device.h"
 
 #include <vector>
 #include <string>

@@ -929,13 +929,11 @@ namespace tme {
         void AddDirection( mxdir_t dir );
         mxgridref operator + ( mxdir_t dir );
         s32 operator - ( const mxgridref& loc );
-        bool operator == ( const mxgridref& loc );
-        bool operator != ( const mxgridref& loc );
+        bool operator == ( const mxgridref& loc ) const;
+        bool operator != ( const mxgridref& loc ) const;
         void operator += ( mxdir_t dir )                        { AddDirection(dir); }
         mxdir_t DirFromHere ( const mxgridref& loc ) const;
-
-        bool operator == ( const mxgridref& loc ) const;
-        
+  
         static s32 DirectionLookTable[];
         
     };

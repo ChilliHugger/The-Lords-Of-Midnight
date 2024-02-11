@@ -4,7 +4,7 @@
 #include "settingsmanager.h"
 #include "../platform/Extensions.h"
 
-#include "base/CCDirector.h"
+#include "base/Director.h"
 #include "../ui/uielement.h"
 #include "../ui/uihelper.h"
 
@@ -56,7 +56,7 @@ resolutionmanager::~resolutionmanager ( void )
 
 bool resolutionmanager::calcDisplayInfo ( void )
 {
-    auto size = director->getOpenGLView()->getFrameSize();
+    auto size = director->getGLView()->getFrameSize();
     
     float height = size.width;
     float width = size.height;
@@ -210,7 +210,7 @@ f32 resolutionmanager::phoneScale()
 
 bool resolutionmanager::init()
 {
-    auto glview = director->getOpenGLView();
+    auto glview = director->getGLView();
 
     if(!glview)
     {
@@ -228,7 +228,7 @@ bool resolutionmanager::init()
 #else
         glview = GLViewImpl::create(TME_ScenarioName());
 #endif
-        director->setOpenGLView(glview);
+        director->setGLView(glview);
     }
 
     // turn on display FPS
@@ -239,7 +239,7 @@ bool resolutionmanager::init()
     
     calcDisplayInfo();
 
-    auto windowSize = director->getOpenGLView()->getFrameSize();
+    auto windowSize = director->getGLView()->getFrameSize();
    
     glview->setDesignResolutionSize(windowSize.width, windowSize.height, ResolutionPolicy::EXACT_FIT);
     
@@ -310,13 +310,13 @@ bool resolutionmanager::changeDisplayMode(CONFIG_SCREEN_MODE mode)
     f32 scale = 0.0;
     f32 aspect = 1.7777;
 
-    auto glView = dynamic_cast<GLViewImpl*>(director->getOpenGLView());
+    auto glView = dynamic_cast<GLViewImpl*>(director->getGLView());
     
     switch(mode)
     {
         case CONFIG_SCREEN_MODE::CF_FULLSCREEN:
             glView->setFullscreen();
-            windowSize = director->getOpenGLView()->getFrameSize();
+            windowSize = director->getGLView()->getFrameSize();
             break;
 
         case CONFIG_SCREEN_MODE::CF_WINDOW_SMALL:

@@ -48,35 +48,30 @@ void uihelper::initialiseFonts()
     font_config_big.fontSize = RES(FONT_SIZE_BIG)*scale;
     font_config_big.glyphs = GlyphCollection::DYNAMIC;
     font_config_big.outlineSize = 0;
-    font_config_big.customGlyphs = nullptr;
     font_config_big.distanceFieldEnabled = false;
 
     font_config_medium.fontFilePath = FONT_FILENAME;
     font_config_medium.fontSize = RES(FONT_SIZE_MEDIUM)*scale;
     font_config_medium.glyphs = GlyphCollection::DYNAMIC;
     font_config_medium.outlineSize = 0;
-    font_config_medium.customGlyphs = nullptr;
     font_config_medium.distanceFieldEnabled = false;
 
     font_config_small.fontFilePath = FONT_FILENAME;
     font_config_small.fontSize = RES(FONT_SIZE_SMALL);
     font_config_small.glyphs = GlyphCollection::DYNAMIC;
     font_config_small.outlineSize = 0;
-    font_config_small.customGlyphs = nullptr;
     font_config_small.distanceFieldEnabled = false;
 
     font_config_shortcut.fontFilePath = FONT_FILENAME;
     font_config_shortcut.fontSize = RES(FONT_SIZE_SHORTCUT);
     font_config_shortcut.glyphs = GlyphCollection::DYNAMIC;
     font_config_shortcut.outlineSize = 0;
-    font_config_shortcut.customGlyphs = nullptr;
     font_config_shortcut.distanceFieldEnabled = false;
     
     font_config_debug.fontFilePath = "fonts/arial.ttf";
     font_config_debug.fontSize = RES(16)*scale;
     font_config_debug.glyphs = GlyphCollection::DYNAMIC;
     font_config_debug.outlineSize = 0;
-    font_config_debug.customGlyphs = nullptr;
     font_config_debug.distanceFieldEnabled = false;
 }
 
