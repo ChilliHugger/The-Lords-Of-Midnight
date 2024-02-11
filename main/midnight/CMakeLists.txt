@@ -23,6 +23,8 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
+cmake_policy(SET CMP0054 NEW)
+
 if(TME STREQUAL "LOM")
   set(APP_BUILD _LOM_)
   set(APP_NAME midnight)
@@ -40,6 +42,14 @@ elseif(TME STREQUAL "DDR")
 endif()
 
 cmake_minimum_required(VERSION 3.6)
+
+if(MACOSX)
+  set_target_properties(${APP_NAME} PROPERTIES
+    CMAKE_OSX_SYSROOT 14.2
+    )
+  set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version")
+endif()
+
 project(${APP_NAME})
 
  set(AX_ENABLE_EXT_GUI OFF CACHE BOOL "")
@@ -112,7 +122,7 @@ include(Source/library/CMakeLists.txt)
 include(Source/models/CMakeLists.txt)
 include(Source/panels/CMakeLists.txt)
 include(Source/system/CMakeLists.txt)
-include(Source/tinyxml/CMakeLists.txt)
+include(Source/tinyxml2/CMakeLists.txt)
 include(Source/tme/CMakeLists.txt)
 include(Source/ui/CMakeLists.txt)
 include(Source/utils/CMakeLists.txt)
@@ -151,11 +161,11 @@ set(GAME_SOURCE
        ${SRC_PLATFORM}
     )
 
-set(GAME_INC_DIRS
-  "${CMAKE_CURRENT_SOURCE_DIR}/Source"
-)
+#set(GAME_INC_DIRS
+#  "${CMAKE_CURRENT_SOURCE_DIR}/Source"
+#)
 
-#list(APPEND GAME_SRC ${GAME_HEADER})
+list(APPEND GAME_SRC ${GAME_HEADER})
 
 set(content_folder
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
@@ -167,53 +177,6 @@ if(APPLE)
 elseif(WINDOWS)
     ax_mark_multi_resources(common_content_files RES_TO "Content" FOLDERS ${content_folder})
 endif()
-
-# add cross-platforms source files and header files
-
-include(Source/extensions/CMakeLists.txt)
-include(Source/frontend/CMakeLists.txt)
-include(Source/landscaping/CMakeLists.txt)
-include(Source/library/CMakeLists.txt)
-include(Source/models/CMakeLists.txt)
-include(Source/panels/CMakeLists.txt)
-include(Source/system/CMakeLists.txt)
-include(Source/tme/CMakeLists.txt)
-include(Source/ui/CMakeLists.txt)
-include(Source/utils/CMakeLists.txt)
-include(Source/platform/CMakeLists.txt)
-
-set(GAME_HEADER
-  Source/cocos.h
-  Source/AppDelegate.h
-  ${HDR_EXTENSIONS}
-  ${HDR_FRONTEND}
-  ${HDR_LANDSCAPING}
-  ${HDR_LIBRARY}
-  ${HDR_MODELS}
-  ${HDR_PANELS}
-  ${HDR_SYSTEM}
-  ${HDR_TME}
-  ${HDR_UI}
-  ${HDR_UTILS}
-  ${HDR_PLATFORM}
-  )
-
-set(GAME_SOURCE
-  Source/AppDelegate.cpp
-  ${SRC_EXTENSIONS}
-  ${SRC_FRONTEND}
-  ${SRC_LANDSCAPING}
-  ${SRC_LIBRARY}
-  ${SRC_MODELS}
-  ${SRC_PANELS}
-  ${SRC_SYSTEM}
-  ${SRC_TME}
-  ${SRC_UI}
-  ${SRC_UTILS}
-  ${SRC_PLATFORM}
-  )
-
-list(APPEND GAME_SRC ${GAME_HEADER})
 
 if(TESTS)
   include(tests/CMakeLists.txt)
@@ -268,11 +231,20 @@ elseif(APPLE)
                 )
         else()
             add_compile_options(-D_OS_IOS_)
-            set(APP_UI_RES
-                proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
-                proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
-                proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
-                )
+            if (LOM)
+                   set(APP_UI_RES
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
+                       )
+            elseif(DDR)
+                   set(APP_UI_RES
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground2.png
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
+                       )
+            endif()
         endif()
 
         list(APPEND GAME_SOURCE
@@ -341,10 +313,6 @@ if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
            XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "$(inherited)")
 
-    set_target_properties(${APP_NAME} PROPERTIES
-           XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "$(inherited)"
-    )
-
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
               XCODE_ATTRIBUTE_ENABLE_HARDENED_RUNTIME YES
@@ -368,8 +336,11 @@ if(APPLE)
 
     # For code-signing, set the DEVELOPMENT_TEAM:
     set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "8K6PYTU8T7")
-    set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "")
-    set_xcode_property(${APP_NAME} CODE_SIGNING_ALLOWED "YES")
+
+    if(MACOSX)
+        set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "")
+        set_xcode_property(${APP_NAME} CODE_SIGNING_ALLOWED "YES")
+    endif()
 
 
 elseif(WINDOWS)
