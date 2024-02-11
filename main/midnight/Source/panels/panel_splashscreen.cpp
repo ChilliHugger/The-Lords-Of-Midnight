@@ -60,7 +60,6 @@ bool panel_splashscreen::init()
     font_config_splash.fontSize = RES(35);
     font_config_splash.glyphs = GlyphCollection::DYNAMIC;
     font_config_splash.outlineSize = 0;
-    font_config_splash.customGlyphs = nullptr;
     font_config_splash.distanceFieldEnabled = false;
     
     f32 lineHeight = RES(40);

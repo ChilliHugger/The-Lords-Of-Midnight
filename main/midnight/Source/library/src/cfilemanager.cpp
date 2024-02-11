@@ -30,7 +30,7 @@
 #endif
 
 #if defined(COCOS2DX)
-#include "platform/CCFileUtils.h"
+#include "platform/FileUtils.h"
 #endif
 
 
@@ -55,7 +55,7 @@ namespace chilli {
         void* filemanager::Load ( const std::string& filename, u32* size )
         {
 #if defined(COCOS2DX)
-            auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(filename);
+            auto data = ax::FileUtils::getInstance()->getDataFromFile(filename);
             *size = (u32)data.getSize();
             if ( data.getSize() == 0 )
                 return nullptr;
@@ -140,7 +140,7 @@ namespace chilli {
         u32 filemanager::Size ( const std::string& filename )
         {
 #if defined(COCOS2DX)
-            return (u32)cocos2d::FileUtils::getInstance()->getFileSize(filename);
+            return (u32)ax::FileUtils::getInstance()->getFileSize(filename);
 #else
             DWORD    dwSize;
             
@@ -175,9 +175,9 @@ namespace chilli {
         bool filemanager::Save( const std::string& filename, const void* lpBuffer, u32 dwSize )
         {
 #if defined(COCOS2DX)
-            cocos2d::Data data;
+            ax::Data data;
             data.copy((const unsigned char* )lpBuffer, dwSize);
-            return cocos2d::FileUtils::getInstance()->writeDataToFile(data, filename);
+            return ax::FileUtils::getInstance()->writeDataToFile(data, filename);
 #else
             PFILE pFile = new file (  );
             if ( !pFile->Open(filename.c_str(), file::modeWrite|file::modeCreate) ) {
@@ -224,7 +224,7 @@ namespace chilli {
             return IwFileCheckExists(fileName);
             
 #elif defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->isFileExist(fileName);
+            return ax::FileUtils::getInstance()->isFileExist(fileName);
             
 #elif defined(_UNIX_) || defined(_LINUX_)
             filelist files;
@@ -260,7 +260,7 @@ namespace chilli {
         bool filemanager::ExistsDir(const std::string& fileName)
         {
 #if defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->isDirectoryExist(fileName);
+            return ax::FileUtils::getInstance()->isDirectoryExist(fileName);
 #endif
             //S3E_API s3eFileList* s3eFileListDirectory(const char* dirName);
             return FALSE;
@@ -271,7 +271,7 @@ namespace chilli {
 #ifdef _MARMALADE_
             return s3eFileRename(oldName, newName ) == S3E_RESULT_SUCCESS ;
 #elif defined(COCOS2DX)
-            cocos2d::FileUtils::getInstance()->renameFile(oldName,newName);
+            ax::FileUtils::getInstance()->renameFile(oldName,newName);
 #else
             return rename(oldName.c_str(), newName.c_str()) == 0;
 #endif
@@ -281,7 +281,7 @@ namespace chilli {
         bool filemanager::Remove(const std::string& fileName)
         {
 #if defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->removeFile(fileName);
+            return ax::FileUtils::getInstance()->removeFile(fileName);
 #else
             return remove(fileName.c_str()) == 0;
 #endif
@@ -292,8 +292,8 @@ namespace chilli {
 #ifdef _MARMALADE_
             return IwFileCopy( dstName, srcName ) == S3E_RESULT_SUCCESS ;
 #elif defined(COCOS2DX)
-            auto data = cocos2d::FileUtils::getInstance()->getDataFromFile(srcName);
-            return cocos2d::FileUtils::getInstance()->writeDataToFile(data, dstName);
+            auto data = ax::FileUtils::getInstance()->getDataFromFile(srcName);
+            return ax::FileUtils::getInstance()->writeDataToFile(data, dstName);
 #else
 
 #endif
@@ -313,7 +313,7 @@ namespace chilli {
 #endif
             
 #if defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->createDirectory(path);
+            return ax::FileUtils::getInstance()->createDirectory(path);
 #endif
             
             return FALSE ;
@@ -322,7 +322,7 @@ namespace chilli {
         bool filemanager::DestroyDirectory ( const std::string& path )
         {
 #if defined(COCOS2DX)
-            return cocos2d::FileUtils::getInstance()->removeDirectory(path);
+            return ax::FileUtils::getInstance()->removeDirectory(path);
 #endif
             
             return TRUE ;
