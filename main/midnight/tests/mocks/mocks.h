@@ -6,8 +6,8 @@
 //
 #pragma once
 
-#include "../../src/system/moonring.h"
-#include "../../src/ui/uipanel.h"
+#include "../../Source/system/moonring.h"
+#include "../../Source/ui/uipanel.h"
 
 class storymanagermock : public storymanager
 {

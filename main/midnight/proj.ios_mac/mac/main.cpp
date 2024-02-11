@@ -24,12 +24,23 @@
  ****************************************************************************/
 
 #include "../Source/AppDelegate.h"
+#include "../../Source/system/moonring.h"
 #include "cocos2d.h"
 
 USING_NS_AX;
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
+#if !defined(_UNIT_TESTS_)
     AppDelegate app;
-    return Application::getInstance()->run();
+    auto ret = Application::getInstance()->run();
+#if AX_REF_LEAK_DETECTION
+    Ref::printLeaks();
+#endif
+    return ret;
+#else
+    extern int tests_main(int argc, char *argv[]);
+    return tests_main(argc,argv);
+#endif
 }
+
