@@ -13,7 +13,7 @@
 #endif
 
     #include "mxtypes.h"
-    #include "tinyxml2/tinyxml2.h"
+    #include "../../tinyxml2/tinyxml2.h"
     #include "collections.h"
     #include "cfile.h"
     #include "carchive.h"

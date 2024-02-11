@@ -6,14 +6,13 @@
 //
 //
 
-#include "2d/CCTMXTiledMap.h"
-#include "2d/CCTMXXMLParser.h"
-#include "2d/CCTMXLayer.h"
+#include "2d/TileMapAtlas.h"
+#include "2d/TMXXMLParser.h"
 
 #include "TMEMapBuilder.h"
 #include "baseinc/tme_internal.h"
 
-USING_NS_CC;
+USING_NS_AX;
 using namespace tme;
 
 tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )

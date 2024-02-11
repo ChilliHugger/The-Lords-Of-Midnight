@@ -6,7 +6,7 @@
 //
 
 #include "battle_steps.h"
-#include "../../../src/tme/baseinc/processor_battle.h"
+#include "../../../Source/tme/baseinc/processor_battle.h"
 
 static const string ch_leader = "CH_LUXOR";
 static const string ch_follower = "CH_MORKIN";
