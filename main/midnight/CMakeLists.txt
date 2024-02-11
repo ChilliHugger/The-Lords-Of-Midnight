@@ -23,6 +23,8 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
+cmake_policy(SET CMP0054 NEW)
+
 if(TME STREQUAL "LOM")
   set(APP_BUILD _LOM_)
   set(APP_NAME midnight)
@@ -40,6 +42,14 @@ elseif(TME STREQUAL "DDR")
 endif()
 
 cmake_minimum_required(VERSION 3.6)
+
+if(MACOSX)
+  set_target_properties(${APP_NAME} PROPERTIES
+    CMAKE_OSX_SYSROOT 14.2
+    )
+  set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version")
+endif()
+
 project(${APP_NAME})
 
  set(AX_ENABLE_EXT_GUI OFF CACHE BOOL "")
@@ -221,11 +231,20 @@ elseif(APPLE)
                 )
         else()
             add_compile_options(-D_OS_IOS_)
-            set(APP_UI_RES
-                proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
-                proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
-                proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
-                )
+            if (LOM)
+                   set(APP_UI_RES
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
+                       )
+            elseif(DDR)
+                   set(APP_UI_RES
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground2.png
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
+                       )
+            endif()
         endif()
 
         list(APPEND GAME_SOURCE
@@ -319,8 +338,9 @@ if(APPLE)
 
     # For code-signing, set the DEVELOPMENT_TEAM:
     set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "8K6PYTU8T7")
-    set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "")
-    set_xcode_property(${APP_NAME} CODE_SIGNING_ALLOWED "YES")
+
+    #set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "")
+    #set_xcode_property(${APP_NAME} CODE_SIGNING_ALLOWED "YES")
 
 
 elseif(WINDOWS)
