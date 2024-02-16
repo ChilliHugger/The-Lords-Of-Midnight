@@ -27,33 +27,30 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-/main/midnight/proj.win32/LOM_Debug.win32
-/main/midnight/proj.win32/DDR_Debug.win32
-main/midnight/mac-build
-main/midnight/cocos2d
-main/midnight/cocos2d_new
-main/midnight/win32-build
-main/midnight/ios-build
-main/midnight/proj.android/app/.cxx
-main/midnight/proj.android/.idea
-main/midnight/proj.android/app/release
-main/midnight/proj.android_ddr/.idea
-main/midnight/proj.android_ddr/app/.cxx
-main/midnight/proj.android_ddr/app/release
-main/midnight/proj.android_lom/.idea
-main/midnight/proj.android_lom/app/.cxx
-main/midnight/proj.android_lom/app/release
 main/midnight/tests-build
 main/midnight/mac-tests-build
-main/midnight/Releases
-main/midnight/dsym files
 main/midnight/ios-build-ddr
 main/midnight/mac-build-ddr
 main/midnight/mac-tests-build-ddr
 main/midnight/ios-build-lom
 main/midnight/mac-build-lom
 main/midnight/mac-tests-build-lom
+main/midnight/mac-build-citadel
+main/midnight/mac-build
+main/midnight/cocos2d
+main/midnight/cocos2d_new
+main/midnight/win32-build
+main/midnight/ios-build
+main/midnight/proj.win32/LOM_Debug.win32
+main/midnight/proj.win32/DDR_Debug.win32
+main/midnight/proj.android_revenge/.idea
+main/midnight/proj.android_revenge/app/.cxx
+main/midnight/proj.android_revenge/app/release
+main/midnight/proj.android_midnight/.idea
+main/midnight/proj.android_midnight/app/.cxx
+main/midnight/proj.android_midnight/app/release
+main/midnight/Releases
+main/midnight/dsym files
 
 # vim backup files
 *~
-main/midnight/mac-build-citadel
