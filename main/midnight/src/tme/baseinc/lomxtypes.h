@@ -759,6 +759,7 @@ namespace tme {
             slf_none            = 0,
             slf_all             = MXBIT(1),
             slf_tunnel          = MXBIT(2),
+            slf_dead            = MXBIT(3),
         };
 
         enum ENTITYFLAGS {

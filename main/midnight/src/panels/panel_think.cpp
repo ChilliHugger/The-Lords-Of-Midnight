@@ -369,14 +369,15 @@ void panel_think::setupPages()
         TME_GetCharactersAtLocation ( locid, collection, true, tunnel );
 
         // persons here
-        for ( ii=0; ii<collection.Count(); ii++ ) {
-            CONTINUE_IF(collection[ii] == c.id);
+        for (auto id : collection) {
         
-            addPage(collection[ii]);
+            CONTINUE_IF(id == c.id);
+        
+            addPage(id);
 
 #if defined(_LOM_)
             if ( currentmode==MODE_THINK_APPROACH ) {
-                TME_GetCharacter(c1, collection[ii]);
+                TME_GetCharacter(c1, id);
                 if ( !Character_IsRecruited(c1) ) {
                     currentPage=(s32)pages.size()-1;
                 }
@@ -387,11 +388,11 @@ void panel_think::setupPages()
         // persons ahead
         TME_GetCharactersAtLocation ( location_infrontid, collection, true, tunnel );
 
-        for ( ii=0; ii<collection.Count(); ii++ ) {
-            addPage(collection[ii]);
+        for (auto id : collection) {
+            addPage(id);
 #if defined(_DDR_)
             if ( currentmode==MODE_THINK_APPROACH ) {
-                TME_GetCharacter(c1, collection[ii]);
+                TME_GetCharacter(c1, id);
                 if ( !Character_IsRecruited(c1) ) {
                     currentPage=(s32)pages.size()-1;
                 }

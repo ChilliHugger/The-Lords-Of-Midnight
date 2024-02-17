@@ -1706,16 +1706,11 @@ namespace tme {
 
         u32 mxscenario::FindCharactersAtLocation ( mxgridref loc, c_character* characters, flags32_t flags )
         {
-        int                    ii;
-        mxcharacter*    moonringcarrier=NULL;
-        mxcharacter*    c=NULL;
-        mxobject*        moonring=NULL;
-        int                    count;
-        bool                in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
+        mxcharacter*    moonringcarrier=nullptr;
+        bool            in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
+        bool            show_dead = ( flags & slf_dead ) == slf_dead;
 
             RETURN_IF_NULL(characters) false;
-
-            count=0;
 
             if ( IsFeature(SF_MOONRING) ) {
                 //moonringcarrier = moonring ? WhoHasObject(moonring) : NULL ;
@@ -1732,6 +1727,8 @@ namespace tme {
                 CONTINUE_IF ( c->Location() != loc );
                 
                 CONTINUE_IF( c->IsInTunnel() != in_tunnel );
+                
+                CONTINUE_IF( !show_dead && c->IsDead() );
                 
                 if ( !(flags & slf_all) ) {
                     CONTINUE_IF ( !c->IsRecruited() );
