@@ -87,10 +87,23 @@ enum CONFIG_MOVEMENT_TYPE
     CF_MOVEMENT_C64=2,
 };
 
+enum CONFIG_FEY_RECRUIT_MODE
+{
+    CF_FEY_RECRUIT_ON=0,
+    CF_FEY_RECRUIT_OFF=1,
+    CF_FEY_RECRUIT_NOVEL=2,
+};
+
 enum CONFIG_APPROACH_MODE
 {
     CF_APPROACH_SWAP=0,
     CF_APPROACH_STAY=1
+};
+
+enum TOGGLE
+{
+    OFF=0,
+    ON=1
 };
 
 
@@ -101,35 +114,31 @@ public:
     settingsmanager();
     virtual ~settingsmanager();
 
-    BOOL Save ( void );
-    BOOL Load ( void );
-    
+    bool Save ( void );
+    bool Load ( void );
     bool bumpAdvert();
 
 public:
-    // NOTE: boolean values need to be BOOL and not bool because of size differences and
-    // therefore legacy configurations
-    //
-    
     // not stored
-    BOOL                    fullscreensupported;
-    
+    TOGGLE                  fullscreensupported;
+    CONFIG_MOVEMENT_TYPE    movement_type;
+    CONFIG_FEY_RECRUIT_MODE fey_recruit_mode;
     
     // version 1
-    BOOL                    tutorial;
+    TOGGLE                  tutorial;
     
     // version 2
-    BOOL                    autofight;
-    BOOL                    autounhide;
-    BOOL                    showmovementindicators;
-    BOOL                    screentransitions;
+    TOGGLE                  autofight;
+    TOGGLE                  autounhide;
+    TOGGLE                  showmovementindicators;
+    TOGGLE                  screentransitions;
     CONFIG_NAV_MODE         nav_mode;
     
     // version 3
     CONFIG_COMPASS_DELAY    compass_delay;
     CONFIG_THINK_PAGING     think_paging_mode;
-    BOOL                    night_display_fast;
-    BOOL                    night_battle_full;
+    TOGGLE                  night_display_fast;
+    TOGGLE                  night_battle_full;
 
     // version 4
     //CONFIG_COMPASS_FEEDBACK compass_feedback;
@@ -142,26 +151,25 @@ public:
     
     // version 7
     int                     advert_screen_count;
-    BOOL                    novella_pdf ;
+    TOGGLE                  novella_pdf ;
     
     // Version 8
-    BOOL                    flipscreen;
+    TOGGLE                  flipscreen;
     
     // Version 9
-    BOOL                    night_confirm;
+    TOGGLE                  night_confirm;
     
     // Version 10
     CONFIG_CURSOR_SIZE      cursor_size;
     
     // version 11
     eflags<RULEFLAGS,u64>   game_rules;
-    CONFIG_MOVEMENT_TYPE    movement_type;
 
     // version 12
     mxdifficulty_t          game_difficulty;
     
     // version 13
-    BOOL                    autoseek;
-    BOOL                    autoapproach;
+    TOGGLE                  autoseek;
+    TOGGLE                  autoapproach;
     CONFIG_APPROACH_MODE    approach_mode;
 };

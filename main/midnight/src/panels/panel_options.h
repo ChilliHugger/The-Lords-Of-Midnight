@@ -20,7 +20,7 @@ FORWARD_REFERENCE(MenuItemNode);
 
 enum eOptionTypes {
     OPT_NONE=0,
-    OPT_BOOL=1,
+    OPT_TOGGLE=1,
     OPT_NUMBER=2,
 };
 
@@ -73,7 +73,7 @@ protected:
     uitextmenu*             mainMenu;
     cocos2d::Map<int, uioptionitem*> optionControls;
     CONFIG_SCREEN_MODE      initialScreenMode;
-    BOOL                    rules[64]; // this needs to be BOOL not bool as they are different sizes!!
+    int                     rules[64]; // this needs to be BOOL not bool as they are different sizes!!
 };
 
 
