@@ -86,6 +86,7 @@ bool panel_mainmenu::init()
     //
     menu = uitextmenu::create(RES(512), items, NUMELE(items) );
     uihelper::AddCenter(safeArea,menu);
+    menu->setVisible(false);
     
     menu->setNotificationCallback ( [&](uinotificationinterface* s, uieventargs* e) {
         this->OnMenuNotification( s, (menueventargs*)e );
@@ -124,11 +125,17 @@ bool panel_mainmenu::init()
     //
     // Guide and Manual
     //    
-    auto guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback);
+    guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback);
+    guide->setScale(scale_normal+scale_half);
     uihelper::AddBottomRight(safeArea,guide, RES(10), RES(10) );
+    
 
-    auto story = uihelper::CreateImageButton("i_story", ID_MANUAL, clickCallback);
+    story = uihelper::CreateImageButton("i_story", ID_MANUAL, clickCallback);
+    story->setScale(scale_normal+scale_half);
     uihelper::AddBottomLeft(safeArea,story, RES(10), RES(10) );
+    
+    
+    
     
     //
     // Other
@@ -139,7 +146,71 @@ bool panel_mainmenu::init()
 
     refreshStories();
     
+    //if(mr->settings->firsttime) {
+        scheduleOnce( [&](float) {
+            OnShowWelcomeMessage();
+        }, 1.0, "delayed_welcome_message" );
+    //}else{
+    //    menu->setVisible(true);
+    //}
+    
     return true;
+}
+
+ActionInterval* createBounceAction()
+{
+    auto duration = 1.0f;
+    auto distance = RES(50);
+    return RepeatForever::create(
+            Sequence::create(
+                EaseSineOut::create(MoveBy::create(duration, Vec2(0,distance))),
+                EaseBounceOut::create(MoveBy::create(duration, Vec2(0,-distance))),
+                nullptr
+            )
+        );
+}
+
+void panel_mainmenu::OnShowWelcomeMessage()
+{
+    auto posy = guide->getPositionY();
+
+    guide->stopAllActions();
+    guide->runAction(createBounceAction());
+
+    story->stopAllActions();
+    story->runAction(
+        Sequence::createWithTwoActions(
+            DelayTime::create(0.5f),
+            CallFunc::create( [this] { story->runAction(createBounceAction()); })
+        )
+    );
+
+    AreYouSure(_WELCOME_PROMPT_,
+    [&] {
+        hideWelcomeMessage(posy);
+        showNovella();
+    },
+    [&] {
+        hideWelcomeMessage(posy);
+    });
+}
+
+void panel_mainmenu::hideWelcomeMessage(f32 y)
+{
+    guide->stopAllActions();
+    story->stopAllActions();
+    
+    guide->runAction(EaseBounceOut::create(MoveTo::create(1.0f, Vec2(guide->getPositionX(), y))));
+    story->runAction(EaseBounceOut::create(MoveTo::create(1.0f, Vec2(story->getPositionX(), y))));
+        
+    auto scale = menu->getScale();
+    menu->setScale(0);
+    menu->setVisible(true);
+    menu->runAction(ScaleTo::create(0.5f,scale));
+    
+    mr->settings->firsttime = false;
+    mr->settings->Save();
+
 }
 
 void panel_mainmenu::OnNotification( Ref* sender )
@@ -236,12 +307,17 @@ bool panel_mainmenu::OnKeyboardEvent( uikeyboardevent* event )
 void panel_mainmenu::OnShowManual()
 {
     AreYouSure(_NOVELLA_PROMPT_, [&] {
-        if ( mr->settings->novella_pdf ) {
-            OpenPDF(_NOVELLA_DOCUMENT_PDF_);
-        }else{
-            OpenPDF(_NOVELLA_DOCUMENT_);
-        }
+        showNovella();
     });
+}
+
+void panel_mainmenu::showNovella()
+{
+    if ( mr->settings->novella_pdf ) {
+        OpenPDF(_NOVELLA_DOCUMENT_PDF_);
+    }else{
+        OpenPDF(_NOVELLA_DOCUMENT_);
+    }
 }
 
 void panel_mainmenu::OnShowGuide()

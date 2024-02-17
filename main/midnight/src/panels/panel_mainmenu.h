@@ -35,6 +35,9 @@ protected:
     void OnNewStory();
     void OnContinueStory();
     void OnEndStory();
+    void OnShowWelcomeMessage();
+    void hideWelcomeMessage(f32 y);
+    void showNovella();
 
     void deleteStory( storyid_t id );
     void refreshStories( void );
@@ -47,6 +50,12 @@ protected:
 private:
     uitextmenu* menu;
     std::string versionUrl;
+    
+    Button* guide;
+    Button* story;
+    
+    
+    
 };
 
 #endif // __panel_mainmenu_h__
