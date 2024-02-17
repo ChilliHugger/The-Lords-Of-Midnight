@@ -113,6 +113,7 @@ public:
     
     // not stored
     BOOL                    fullscreensupported;
+    BOOL                    firsttime;
     
     
     // version 1

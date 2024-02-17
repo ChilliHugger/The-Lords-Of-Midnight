@@ -37,6 +37,7 @@ settingsmanager::settingsmanager() :
 #endif
     , autoapproach(false)
     , approach_mode(CF_APPROACH_SWAP)
+    , firsttime(true)
 {
     
 #if defined(_OS_DESKTOP_)
@@ -166,6 +167,8 @@ BOOL settingsmanager::Load ( void )
         if ( pFile ) delete pFile;
         return FALSE;
     }
+
+    firsttime = false;
 
     archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
