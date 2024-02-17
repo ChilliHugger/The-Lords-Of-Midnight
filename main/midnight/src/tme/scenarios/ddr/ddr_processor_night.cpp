@@ -112,7 +112,7 @@ namespace tme {
                 auto character = static_cast<ddr_character*>(c);
                 
                 CONTINUE_IF(character->IsDead());
-                
+                                
                 // remove critters from character locations
                 mxloc& m = mx->gamemap->GetAt(character->Location());
                 m.flags &= ~lf_creature ;
@@ -131,10 +131,9 @@ namespace tme {
                 // cleanup 'prepares to do battle'
                 int enemies=0;
                 FOR_EACH_CHARACTER(c) {
+                    CONTINUE_IF( c->IsDead() );
                     CONTINUE_IF( c->Location() != character->Location() );
-
-                    CONTINUE_IF ( c->IsFriend(character) );
-                    
+                    CONTINUE_IF( c->IsFriend(character) );
                     enemies++;
                 }
                 
@@ -142,11 +141,13 @@ namespace tme {
                 auto stronghold = dynamic_cast<ddr_stronghold*>(scenario->StrongholdFromLocation(character->Location()));
                 if ( stronghold && !stronghold->IsFriend(character))
                     enemies++;
+                    
                 if ( enemies != 0 )
                     character->Flags().Set(cf_preparesbattle);
+                    else
+                    character->Flags().Reset(cf_preparesbattle);
             }
         }
-    
     
         void ddr_night::MoveMidwinter ( void )
         {
