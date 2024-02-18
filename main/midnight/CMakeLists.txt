@@ -28,12 +28,14 @@ cmake_minimum_required(VERSION 3.6)
 if(TME STREQUAL "LOM")
   set(APP_BUILD _LOM_)
   set(APP_NAME midnight)
+  set(LOM ON CACHE BOOL "Enable Lords of Midnight")
   if(WINDOWS)
     add_compile_definitions(ICON_LOM)
   endif()
 elseif(TME STREQUAL "DDR")
   set(APP_BUILD _DDR_)
   set(APP_NAME revenge)
+  set(DDR ON CACHE BOOL "Enable Doomdark's Revenge")
   if(WINDOWS)
     add_compile_definitions(ICON_DDR)
   endif()
@@ -70,21 +72,21 @@ endif()
 
 # add cross-platforms source files and header files
 
-include(src/extensions/CMakeLists.txt)
-include(src/frontend/CMakeLists.txt)
-include(src/landscaping/CMakeLists.txt)
-include(src/library/CMakeLists.txt)
-include(src/models/CMakeLists.txt)
-include(src/panels/CMakeLists.txt)
-include(src/system/CMakeLists.txt)
-include(src/tme/CMakeLists.txt)
-include(src/ui/CMakeLists.txt)
-include(src/utils/CMakeLists.txt)
-include(src/platform/CMakeLists.txt)
+include(Source/extensions/CMakeLists.txt)
+include(Source/frontend/CMakeLists.txt)
+include(Source/landscaping/CMakeLists.txt)
+include(Source/library/CMakeLists.txt)
+include(Source/models/CMakeLists.txt)
+include(Source/panels/CMakeLists.txt)
+include(Source/system/CMakeLists.txt)
+include(Source/tme/CMakeLists.txt)
+include(Source/ui/CMakeLists.txt)
+include(Source/utils/CMakeLists.txt)
+include(Source/platform/CMakeLists.txt)
 
 set(GAME_HEADER
-  src/cocos.h
-  src/AppDelegate.h
+  Source/cocos.h
+  Source/AppDelegate.h
   ${HDR_EXTENSIONS}
   ${HDR_FRONTEND}
   ${HDR_LANDSCAPING}
@@ -99,7 +101,7 @@ set(GAME_HEADER
   )
 
 set(GAME_SOURCE
-  src/AppDelegate.cpp
+  Source/AppDelegate.cpp
   ${SRC_EXTENSIONS}
   ${SRC_FRONTEND}
   ${SRC_LANDSCAPING}
