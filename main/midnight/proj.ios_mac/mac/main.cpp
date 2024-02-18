@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "../../src/AppDelegate.h"
-#include "../../src/system/moonring.h"
+#include "../../Source/AppDelegate.h"
+#include "../../Source/system/moonring.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
