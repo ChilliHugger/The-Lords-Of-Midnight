@@ -1,6 +1,19 @@
-uniform vec4 p_colour;
-uniform float p_alpha  ;
-uniform float p_fade  ;
+#version 310 es
+precision highp float;
+precision highp int;
+
+layout(location = COLOR0) in vec4 v_color;
+layout(location = TEXCOORD0) in vec2 v_texCoord;
+
+layout(location = SV_Target0) out vec4 FragColor;
+
+layout(binding = 0) uniform sampler2D u_tex0;
+
+layout(std140) uniform fs_ub {
+    vec4 p_colour;
+    float p_alpha;
+    float p_fade;
+};
 
 #ifndef saturate
 #define saturate(v) clamp(v, 0.0, 1.0)
@@ -8,7 +21,7 @@ uniform float p_fade  ;
 
 void main()
 {
-    vec4 c = texture2D(u_texture, cc_FragTexCoord1).rgba;
+    vec4 c = texture(u_tex0, v_texCoord).rgba;
     vec4 n;
     vec4 b = vec4( 0.0, 0.0, 0.0, 0.0 ) ;
     
@@ -33,6 +46,5 @@ void main()
 
     fragRGB = n.rgb * n.a; // Premultiply alpha
     
-    gl_FragColor = vec4(fragRGB.rgb, n.a);
-
+    FragColor = vec4(fragRGB.rgb, n.a);
 }
