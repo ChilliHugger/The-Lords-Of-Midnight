@@ -146,13 +146,13 @@ bool panel_mainmenu::init()
 
     refreshStories();
     
-    //if(mr->settings->firsttime) {
+    if(mr->settings->firsttime) {
         scheduleOnce( [&](float) {
             OnShowWelcomeMessage();
         }, 1.0, "delayed_welcome_message" );
-    //}else{
-    //    menu->setVisible(true);
-    //}
+    }else{
+        menu->setVisible(true);
+    }
     
     return true;
 }
