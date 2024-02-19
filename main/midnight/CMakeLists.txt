@@ -189,7 +189,7 @@ add_compile_options("-D${APP_BUILD}")
 if(ANDROID)
     # the APP_NAME should match on AndroidManifest.xml
     list(APPEND GAME_SOURCE
-         proj.android_${APP_NAME}/app/jni/main.cpp
+         proj.android/app/jni/main.cpp
          )
 #elseif(LINUX)
 #    list(APPEND GAME_SOURCE
@@ -281,7 +281,7 @@ else()
     add_library(${APP_NAME} SHARED ${APP_SOURCES})
     # whole archive for jni
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
-    config_android_shared_libs("org.axmol.lib" "${CMAKE_CURRENT_SOURCE_DIR}/proj.android_${APP_NAME}/app/src")
+    config_android_shared_libs("org.axmol.lib" "${CMAKE_CURRENT_SOURCE_DIR}/proj.android/app/src")
 endif()
 
 if (NOT _AX_USE_PREBUILT)
