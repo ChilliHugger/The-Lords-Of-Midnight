@@ -1,7 +1,3 @@
-
-/main/midnight/proj.win32/Debug.win32
-/main/midnight/proj.win10/.vs/citadel/v15
-
 .DS_Store
 
 # Xcode
@@ -27,19 +23,20 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-main/midnight/Builds
+
+# Windows
 main/midnight/win32-build
 main/midnight/proj.win32/LOM_Debug.win32
 main/midnight/proj.win32/DDR_Debug.win32
-main/midnight/proj.android_revenge/.idea
-main/midnight/proj.android_revenge/app/.cxx
-main/midnight/proj.android_revenge/app/release
-main/midnight/proj.android_midnight/.idea
-main/midnight/proj.android_midnight/app/.cxx
-main/midnight/proj.android_midnight/app/release
+
+# Android
+main/midnight/proj.android/.idea
+main/midnight/proj.android/app/.cxx
+main/midnight/proj.android/app/release
 
 # vim backup files
 *~
+
+# Misc
+main/midnight/Builds
 main/midnight/cocos2d
-main/midnight/proj.android/.idea
-main/midnight/proj.android/app/.cxx
