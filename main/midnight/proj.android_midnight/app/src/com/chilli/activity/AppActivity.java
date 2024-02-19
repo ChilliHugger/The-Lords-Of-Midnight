@@ -2,7 +2,7 @@
 Copyright (c) 2015-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
-http://www.cocos2d-x.org
+https://axmolengine.github.io/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package org.cocos2dx.cpp;
+package com.chilli.activity;
 
 import android.os.Bundle;
-import org.cocos2dx.lib.Cocos2dxActivity;
+import org.axmol.lib.AxmolActivity;
+import org.axmol.lib.SharedLoader;
 import android.os.Build;
 import android.view.WindowManager;
 
-public class AppActivity extends Cocos2dxActivity {
-
+public class AppActivity extends AxmolActivity {
+    static {
+        // DNT remove, some android simulator require explicit load shared libraries, otherwise will crash
+        SharedLoader.load();
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setEnableVirtualButton(false);
@@ -50,7 +55,8 @@ public class AppActivity extends Cocos2dxActivity {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             getWindow().setAttributes(lp);
         }
-
         // DO OTHER INITIALIZATION BELOW
+        
     }
+
 }
