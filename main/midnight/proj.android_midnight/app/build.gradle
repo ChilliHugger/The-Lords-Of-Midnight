@@ -1,10 +1,19 @@
-import org.gradle.internal.os.OperatingSystem
-
 apply plugin: 'com.android.application'
+apply from: project(':libaxmol').projectDir.toString() + "/axutils.gradle"
 
 android {
-    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    ndkVersion "22.0.7026061"
+    namespace "com.chilli.midnight"
+    compileSdk PROP_COMPILE_SDK_VERSION.toInteger()
+
+    // Setup native build tools: ndk & cmake
+    //def nbtInfo = axutils.findNativeBuildTools(project)
+    def nbtInfo = axutils.findNativeBuildTools(project, '3.28.3+')
+    ndkVersion = nbtInfo[0]
+    if(nbtInfo[1]) {
+        ndkPath = nbtInfo[1]
+    }
+    def cmakeVer = nbtInfo[2]
+    def cmakeOptions = Eval.me(nbtInfo[3])
 
     defaultConfig {
         applicationId "com.chilli.midnight"
@@ -15,8 +24,8 @@ android {
 
         externalNativeBuild {
             cmake {
-                targets 'midnight'
-                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=LOM"
+                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_shared", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=LOM"
+                arguments.addAll(cmakeOptions)
                 cppFlags "-frtti -fexceptions -fsigned-char"
             }
         }
@@ -37,6 +46,7 @@ android {
 
     externalNativeBuild {
         cmake {
+            version "$cmakeVer"
             path "../../CMakeLists.txt"
         }
     }
@@ -72,34 +82,60 @@ android {
             renderscriptDebuggable true
         }
     }
+
+    aaptOptions {
+       noCompress 'mp3','ogg','wav','mp4','ttf','ttc'
+    }
+
+    buildFeatures {
+        aidl true
+    }
 }
 
-android.applicationVariants.all { variant ->
-    def project_root_folder = "${projectDir}/../.."
-    def dest_assets_folder = "${projectDir}/assets"
-
-    // delete previous files first
-    delete dest_assets_folder
-    def targetName = variant.name.capitalize()
-    def copyTaskName = "copy${targetName}ResourcesToAssets"
-
-    tasks.register(copyTaskName) {
-        copy {
-            from "${buildDir}/../../../Resources"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
-            exclude "**/*.gz"
+android.applicationVariants.configureEach { variant ->
+    def variantName = variant.name.capitalize()
+    tasks.register("copy${variantName}ContentToAssets") {
+        doFirst {
+            delete "${projectDir}/build/assets"
         }
-        copy {
-            from "${buildDir}/../../../Resources-midnight"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
-            exclude "**/*.gz"
+        doLast {
+            copy {
+                from "${projectDir}/../../Content"
+                into "${projectDir}/build/assets"
+                exclude "**/*.gz"
+            }
+            copy {
+                from "${projectDir}/build/runtime/axslc"
+                into "${projectDir}/build/assets/axslc"
+            }
+            copy {
+                from "${projectDir}/../../Resources"
+                into "${projectDir}/build/assets"
+                exclude "**/*.gz"
+            }
+            copy {
+                from "${projectDir}/../../Resources-midnight"
+                into "${projectDir}/build/assets"
+                exclude "**/*.gz"
+            }
         }
     }
-    tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':libcocos2dx')
-    implementation project(path: ':libcocos2dx')
+    implementation project(':libaxmol')
+}
+
+project.afterEvaluate {
+    android.applicationVariants.configureEach { variant ->
+        def variantName = variant.name.capitalize()
+        def externalNativeBuild = tasks.named("externalNativeBuild${variantName}")
+        if (externalNativeBuild) {
+            def copyContentToAssets = tasks.named("copy${variantName}ContentToAssets")
+            copyContentToAssets
+            copyContentToAssets.get().dependsOn externalNativeBuild
+            tasks.named("compile${variantName}JavaWithJavac").get().dependsOn copyContentToAssets
+        }
+    }
 }
