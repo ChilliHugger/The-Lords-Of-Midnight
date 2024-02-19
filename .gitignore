@@ -41,3 +41,5 @@ main/midnight/proj.android_midnight/app/release
 # vim backup files
 *~
 main/midnight/cocos2d
+main/midnight/proj.android/.idea
+main/midnight/proj.android/app/.cxx
