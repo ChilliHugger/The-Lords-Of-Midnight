@@ -7,7 +7,7 @@
 #pragma once
 
 #if defined(_LOM_)
-    #include "../../../../src/tme/scenarios/lom/scenario_lom_internal.h"
+    #include "../../Source/tme/scenarios/lom/scenario_lom_internal.h"
     
     #define BASE_CHARACTER mxcharacter
     #define BASE_FACTORY lom_entityfactory
@@ -15,7 +15,7 @@
 #endif
 
 #if defined(_DDR_)
-    #include "../../../../src/tme/scenarios/ddr/scenario_ddr_internal.h"
+    #include "../../Source/tme/scenarios/ddr/scenario_ddr_internal.h"
     
     #define BASE_CHARACTER ddr_character
     #define BASE_FACTORY ddr_entityfactory

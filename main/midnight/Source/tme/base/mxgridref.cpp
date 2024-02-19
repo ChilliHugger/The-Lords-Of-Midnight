@@ -160,11 +160,6 @@ namespace tme {
     //
     // RETURNS:    true/false
     //
-    bool mxgridref::operator == ( const mxgridref& loc )
-    {
-        return (loc.x==x) && (loc.y==y) ;
-    }
-
     bool mxgridref::operator == ( const mxgridref& loc ) const
     {
         return (loc.x==x) && (loc.y==y) ;
@@ -180,7 +175,7 @@ namespace tme {
     //
     // RETURNS:    true/false
     //
-    bool mxgridref::operator != ( const mxgridref& loc )
+    bool mxgridref::operator != ( const mxgridref& loc ) const
     {
         return (loc.x!=x) || (loc.y!=y) ;
     }
