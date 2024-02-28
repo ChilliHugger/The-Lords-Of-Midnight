@@ -1,5 +1,17 @@
 The Midnight Engine
 
+Build (50)
+1. ADDED: Welcome popup for first time user
+2. FIXED: DDR - Dead lords showing on think pages
+3. FIXED: DDR - Dead lords making a lord still think they 'prepares for battle'
+
+Build (49)
+1. FIXED: Check Place think page showing just Ahead...
+2. FIXED: recruit soldiers not working
+
+Build (48)
+1. FIXED: ANDROID: Credits crash - stop proguard stripping version utils.
+
 Build (47)
 1. ADDED: Game Difficulty - Number of followers should affect outcome of fights
 2. UPDATED: Lords should not be displaced when a member of a group
