@@ -757,7 +757,7 @@ void moonring::complain (LPCSTR format, ... )
     vsnprintf( msg_buffer, NUMELE(msg_buffer), format, arglist );
     va_end( arglist ) ;
     
-    cocos2d::log("%s",msg_buffer);
+    AXLOGD("{}",msg_buffer);
     
     exit(-1);
 }
@@ -774,7 +774,7 @@ void  moonring::log(LPCSTR format, ...)
     va_end(arglist);
 
     //CCLOG("UI: %s", msg_buffer);
-    cocos2d::log("UI: %s", msg_buffer);
+    AXLOGD("UI: {}", msg_buffer);
 }
 
 
