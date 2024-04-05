@@ -1145,7 +1145,7 @@ char msg_buffer[1024];
     vsnprintf( msg_buffer, NUMELE(msg_buffer), format, arglist );
     va_end( arglist ) ;
     
-    cocos2d::log("TME: %s",msg_buffer);
+    AXLOGD("TME: {}",msg_buffer);
 
 }
 
