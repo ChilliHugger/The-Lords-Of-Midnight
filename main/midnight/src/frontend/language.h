@@ -129,7 +129,10 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_2              = "AI IMPASSABLE MOUNTAINS";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_3              = "ADD MOUNTAIN PASSES";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_4              = "SOLE MOUNTAINEER";
-    constexpr LPCSTR OPTIONS_SCREEN_RULE_5              = "UN-RECRUITABLE FEY";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_5              = "FEY RECRUITING";
+    constexpr LPCSTR OPTIONS_SCREEN_FEY_RECRUIT_ON      = "ON";
+    constexpr LPCSTR OPTIONS_SCREEN_FEY_RECRUIT_OFF     = "OFF";
+    constexpr LPCSTR OPTIONS_SCREEN_FEY_RECRUIT_NOVEL   = "LORD OF DREAMS RECRUITED";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_6              = "FAST TUNNELS";
 
     constexpr LPCSTR OPTIONS_SCREEN_RULE_7              = "MOVEMENT MODIFIERS";
@@ -137,7 +140,8 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_INTENDED       = "INTENDED SPECTRUM";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_C64            = "ORIGINAL C64";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_8              = "UPGRADE SHARETH ARMY AI";
-    
+
+
     
     constexpr LPCSTR OPTIONS_SCREEN_DF_NORMAL           = "NORMAL";
     constexpr LPCSTR OPTIONS_SCREEN_DF_EASY             = "EASY";

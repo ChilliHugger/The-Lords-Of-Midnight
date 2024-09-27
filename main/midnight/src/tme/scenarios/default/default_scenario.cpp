@@ -1777,6 +1777,8 @@ namespace tme {
         moonring = static_cast<mxobject*>(mx->EntityByName("OB_MOONRING",IDT_OBJECT));
         luxor = mx->CharacterBySymbol("CH_LUXOR");
         doomdark = mx->CharacterBySymbol("CH_DOOMDARK");
+        // the Lord of Dreams is a key character for Fey recruiting
+        dreams = mx->CharacterBySymbol("CH_DREAMS");
     }
     
     void mxscenario::initialiseAfterCreate( u32 version )

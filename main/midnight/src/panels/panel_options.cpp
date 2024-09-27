@@ -45,7 +45,7 @@ static RULEFLAGS rule_mapping[] = {
     RF_AI_IMPASSABLE_MOUNTAINS,
     RF_ADD_MOUNTAIN_PASSES,
     RF_SOLE_MOUNTAINEER,
-    RF_LOM_UNRECRUITABLE_FEY,
+    RF_NONE,                    
     RF_NONE,                    // RF_FAST_TUNNELS
     RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
     RF_NONE,                    // RF_DDR_MOVEMENT_C64,
@@ -68,7 +68,7 @@ static RULEFLAGS rule_mapping[] = {
     RF_AI_IMPASSABLE_MOUNTAINS,
     RF_NONE,                    // RF_ADD_MOUNTAIN_PASSES
     RF_SOLE_MOUNTAINEER,
-    RF_NONE,                    // RF_LOM_UNRECRUITABLE_FEY
+    RF_NONE,                    
     RF_FAST_TUNNELS,
     RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
     RF_NONE,                    // RF_DDR_MOVEMENT_C64,
@@ -80,6 +80,12 @@ static const char* values_movement_type[] = {
     OPTIONS_SCREEN_RULE_ORIGINAL,
     OPTIONS_SCREEN_RULE_INTENDED,
     OPTIONS_SCREEN_RULE_C64
+};
+
+static const char* values_fey_recruit_mode[] = {
+    OPTIONS_SCREEN_FEY_RECRUIT_ON,
+    OPTIONS_SCREEN_FEY_RECRUIT_OFF,
+    OPTIONS_SCREEN_FEY_RECRUIT_NOVEL
 };
 
 static const char* values_onoff[] = {
@@ -269,7 +275,7 @@ static option_t options[] = {
     {   ID_OPTION_RULE_2,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_3,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_4,           OPT_BOOL,    0, values_onoff,               nullptr, false },
-    {   ID_OPTION_RULE_5,           OPT_BOOL,    0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_5,           OPT_NUMBER,  3, values_fey_recruit_mode,    nullptr, false },
     {   ID_OPTION_RULE_6,           OPT_BOOL,    0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_7,           OPT_NUMBER,  3, values_movement_type,       nullptr, false },
     {   ID_OPTION_RULE_8,           OPT_BOOL,    0, values_onoff,               nullptr, false },
@@ -332,6 +338,30 @@ CONFIG_MOVEMENT_TYPE getMovementTypeFromRules(eflags<RULEFLAGS,u64> rules) {
         return CF_MOVEMENT_C64;
     }
     return CF_MOVEMENT_ORIGINAL;
+}
+
+void setRulesFromFeyRecruitMode(CONFIG_FEY_RECRUIT_MODE type, eflags<RULEFLAGS, u64>& rules) {
+    switch (type) {
+    case CF_FEY_RECRUIT_ON:
+        rules.Reset(RF_LOM_FEY_RECRUIT_MASK);
+        break;
+    case CF_FEY_RECRUIT_OFF:
+        rules.Set(RF_LOM_FEY_RECRUIT_OFF);
+        break;
+    case CF_FEY_RECRUIT_NOVEL:
+        rules.Set(RF_LOM_FEY_RECRUIT_NOVEL);
+        break;
+    }
+}
+
+CONFIG_FEY_RECRUIT_MODE getFeyRecruitModeFromRules(eflags<RULEFLAGS, u64> rules) {
+    if (rules.Is(RF_LOM_FEY_RECRUIT_OFF)) {
+        return CF_FEY_RECRUIT_OFF;
+    }
+    else if (rules.Is(RF_LOM_FEY_RECRUIT_NOVEL)) {
+        return CF_FEY_RECRUIT_NOVEL;
+    }
+    return CF_FEY_RECRUIT_ON;
 }
 #endif
 
@@ -397,6 +427,9 @@ bool panel_options::init()
     
     mr->settings->movement_type = getMovementTypeFromRules(mr->settings->game_rules);
     SET_OPTION(ID_OPTION_RULE_7, movement_type);
+
+    mr->settings->fey_recruit_mode = getFeyRecruitModeFromRules(mr->settings->game_rules);
+    SET_OPTION(ID_OPTION_RULE_5, fey_recruit_mode);
     
     // END RULES
 #endif
@@ -563,7 +596,8 @@ void panel_options::SetValues()
     }
     
     setRulesFromMovementType(mr->settings->movement_type,mr->settings->game_rules);
-    
+    setRulesFromFeyRecruitMode(mr->settings->fey_recruit_mode, mr->settings->game_rules);
+
     // END RULES
 #endif
 

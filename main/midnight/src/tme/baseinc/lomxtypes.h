@@ -592,14 +592,16 @@ using namespace chilli::types;
             RF_AI_IMPASSABLE_MOUNTAINS      = MXBIT(1),
             RF_ADD_MOUNTAIN_PASSES          = MXBIT(2),
             RF_SOLE_MOUNTAINEER             = MXBIT(3),
-            RF_LOM_UNRECRUITABLE_FEY        = MXBIT(4),
+            RF_LOM_FEY_RECRUIT_OFF          = MXBIT(4),
             RF_FAST_TUNNELS                 = MXBIT(5),
             RF_DDR_MOVEMENT_SPECTRUM        = MXBIT(6),
             RF_DDR_MOVEMENT_C64             = MXBIT(7),
             RF_DDR_BETTER_ARMIES            = MXBIT(8),
+            RF_LOM_FEY_RECRUIT_NOVEL        = MXBIT(9),
             RF_DEFAULT = 0,
             RF_NONE = 0,
             RF_DDR_MOVEMENT_MASK            = RF_DDR_MOVEMENT_SPECTRUM|RF_DDR_MOVEMENT_C64,
+            RF_LOM_FEY_RECRUIT_MASK         = RF_LOM_FEY_RECRUIT_OFF | RF_LOM_FEY_RECRUIT_NOVEL,
         };
 
 #ifdef _DEFINE_ENUMS_
