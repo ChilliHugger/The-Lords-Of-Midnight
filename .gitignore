@@ -41,3 +41,6 @@ main/midnight/proj.android/app/release
 main/midnight/Builds
 main/midnight/cocos2d
 main/midnight/build*
+main/midnight/ios-build-ddr
+main/midnight/mac-build-ddr
+main/midnight/mac-tests-build-ddr
