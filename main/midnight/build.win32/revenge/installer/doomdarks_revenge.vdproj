@@ -15,13 +15,25 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_04DF8720DADE46BCAA16455FFDEA32B6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_05A7C1371EA1480CB838BD9D71DC1EDC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_07B2AB4B829A4651AA86517547A62EAE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_07B7588C8FCA424DAAC94953BD0C2977"
+        "MsmKey" = "8:_085618C44CFA4B35854E042F4A38B689"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -63,13 +75,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_11152A04A27340A193B935B9B545D29B"
+        "MsmKey" = "8:_10F68C9D95C2432DAE79FAE8D9934ADE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_11205204FECC428092D7C94D5178A10D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_11AC0126E70D4ACA9F5081BD90A1B11C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_134C4DDBA88943B197A138EEA6525865"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -123,13 +147,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_1C918C72522341E5875BEEDAC8B1B5C9"
+        "MsmKey" = "8:_1CC8D619C6554FAE9D4CA97462E17CBC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1CC8D619C6554FAE9D4CA97462E17CBC"
+        "MsmKey" = "8:_1EBA61BFED1A4ED99625978BBB43FCA9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -147,6 +171,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_21F0FFCE6BD24FF8AFE8110580FC7E2E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_24AB97801C0C4D5AB9EFBA4644C7E232"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_25B5ADB34C6A4F95B5F9B8C696C8DE92"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -159,7 +195,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2845831436BF4141A31FE8AFF5149DB4"
+        "MsmKey" = "8:_282AF40E682449CF9D712BC1F432AB3A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -171,25 +207,43 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2CDD9EB48E7E4E21A4B7CDC7947E749E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_32BDF3D81CF54E92AB7F0C6CFE905AC5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_357ACA7B0A184A239629161E26DB131D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3650223C57684FAAAB8182BFECEF4088"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_36EAEED5076F454687EC402454ED0AA8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_36F3ED75EE954D1082ACD014DE2E558D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_381D932660D449E28F66038367EA9A11"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_39DEF075EBEA477591B651449F10DB95"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3C93E15E7BB04001BB18585095923A04"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -208,6 +262,12 @@
         "Entry"
         {
         "MsmKey" = "8:_3FC37E67DC594194AF77FD5B68F5E53F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_41BDE97823A04C3D83FAA32597291E39"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -237,7 +297,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_46E5A413DE034933BD74B486A0E8D273"
+        "MsmKey" = "8:_46907833AC934D318AF5A3C79AAC04BA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_48426B4FD9604E2A86E6C4CDB25B67E4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -291,25 +357,31 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5637DDB8ED314862AB67C1F891231DC7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_566D708FD22847029E1E504F4B5A0B3F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5B7F212FA90B4093BF5F5B324C5F7566"
+        "MsmKey" = "8:_56A24A8731EA4FC1BFB11B621CFC6CE9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5B25A537769545668934F8A31A09ED0B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5C64CD42A8774B13852CE2A11E0538D5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5D05BB4404C0478FBF7F6F55B6E93532"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -333,13 +405,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6384AF5DD58E44668595075094C7268A"
+        "MsmKey" = "8:_64F42ABD01F54AC9BB053EAF736D7E27"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_64F42ABD01F54AC9BB053EAF736D7E27"
+        "MsmKey" = "8:_6524A314A33F42F8B20E41368608BC07"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_658E77A5D8C14EF4A972E08EF9725FEA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -351,13 +429,37 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_678086DB7B554A9C803A58D4E72D1D95"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_68EA27DE44C2444B83A9A66B68FE2C14"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_6A4DA61022F1496783F481063AB18CA3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6A761C51A66A4D51A16CFE3D4ACC0539"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6A8D75BA787E4DBA9EF308435C274633"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6B1F40CB098E4CC6B485B951B1239526"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -411,13 +513,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_70075130AC5C43CE92C09CAD2274DAC0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_70359771FFDA492786AC78D747C01029"
+        "MsmKey" = "8:_71438A3672BD4559AF36453CF725C4EA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -436,6 +532,12 @@
         "Entry"
         {
         "MsmKey" = "8:_7400EEC3A1344BE9AF8A391CC58BAC17"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_742407E226304DA3BE8FD8091687FEDC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -465,12 +567,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_75ACF3F408184ADBAB8B630E832AAA5B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7664E53376214AF89BDF25B2E243CD77"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -478,6 +574,18 @@
         "Entry"
         {
         "MsmKey" = "8:_766C9560F67F4E8B82F1E9F01670F777"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_767E1F0BD2064FC1A90207A2B1682C51"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_783DA43E09E946F293A724CDBF0DE6B2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -501,6 +609,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_796AC6CD1410454F96F046C46536229E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7A2553828ED14D48BFA23D790AD16A54"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -508,12 +622,6 @@
         "Entry"
         {
         "MsmKey" = "8:_7E4BDC1F541C4C7690B2AAB6FA63742D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_82574CFAE7314ECF98C646AAE41B2972"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -579,7 +687,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_97B314D5708D45F58654B842E0FE1A4B"
+        "MsmKey" = "8:_986645CD0C2C49D994F94A91478D32E2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -591,13 +699,55 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9CABB4C440C1455181E32D37909B4D6B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A0B0F6FEBF4A41F89B631CC3C9F35C41"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A14B355E9ECC43A1A93218E4EB5439E1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A1A6EA64B51441F0B5E6B47F0D420ADB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A21CF9C0ACF6432CAF245DDF3A9480F1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_A28B3AB898A4431489553A9F48A072ED"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A3598BC68DC14C6697CE2E03D7CA8990"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A4900CD406E54B67B509D8C40E9166F3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A50BD4EB4C6E40C9B9A7C604C7B468D6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -615,7 +765,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A6E9D053554445DB8DD921E7E9D19C12"
+        "MsmKey" = "8:_A6E9D60A34E2488FA5D59530E0AAE4CC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -639,7 +789,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AF05BB282CED4754A972AB3A0077EAA3"
+        "MsmKey" = "8:_B3971AAF20D74F30AAC478234FE502A2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -652,6 +802,12 @@
         "Entry"
         {
         "MsmKey" = "8:_B45B4F19E71D4DCA84853007A51ECC31"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B5148F1531F348DA9C385CF514C5CFCD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -670,6 +826,24 @@
         "Entry"
         {
         "MsmKey" = "8:_B83FC761916E49C3869D84C31F4C5F38"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BB3BE1DF451C485EACAF59E144007E8F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BB8008F8F98F4C03B45943E086411687"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BCB0852D0797470CB69861018599AC47"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -694,6 +868,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C9D92D10E390403AA1708A62DB1D76BD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CB1BD8026BFF4119814C5227511C1C92"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -747,7 +927,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D4B994012D6B4BE7B74B2661DAE9F06B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D4D6F0306B5C4F4BBCF7A9F04DB6851F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D515B829286149EB9DA48E643EE7FD97"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -759,7 +951,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D9317D14BE414A1DBDA10706150CFDAC"
+        "MsmKey" = "8:_DA00110F62484794A19D0DAD5B47115C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -777,6 +969,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DD73454D5020433AA4FD02DED822BDAD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E04C97CA5CCB452EB4AE1F8A818DF0CF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E0854E7B80B14568BAC2A1C5928E42F0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -789,6 +993,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E1A38A80AA664A428D2885E92E00660A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E34279DFB663415A9D7663F55B88B98A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E35A087DE1FA4F90BDB4FF97D45CFEC2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -796,6 +1012,12 @@
         "Entry"
         {
         "MsmKey" = "8:_E3D6EEBE3F2343589CB8E830B95A9D42"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E4068FBC37E44412BBA3ED6A3C5C08DE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -819,7 +1041,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E70291AD5AF44B658ADF3071A48D843A"
+        "MsmKey" = "8:_E7050884298D4F0E84EB1A4559137F63"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EA42F5396BDC46F58F78F829F22DF1E9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EA5140CD00F247C8BB19C902AAD366BD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -832,6 +1066,18 @@
         "Entry"
         {
         "MsmKey" = "8:_EDAD8727F728411CB3E5CD20C6476D00"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F00D8F4A5F7F45599CE155376B9FA2B6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F068EB0E2E24400F9D218FE03193F2D3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -861,13 +1107,49 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F7F7DEF9F6A24EF6B3D94DDD0B1F7CEF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F87FA6A753C644438447ECF6C9DD85E7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_F88A325E26444050953CEE826F7F3113"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F8B7A67E260741F584370181CC44FE5D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F915783D91664311A6968858080AAC53"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F977C45DF37E4173BCB9E99FFC5CEE40"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FA0DCA1602B04842A743433C4F92592F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FA49C35B09E14FAEB0C5A216F227D258"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -970,9 +1252,49 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_04DF8720DADE46BCAA16455FFDEA32B6"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\position_vs"
+            "TargetName" = "8:position_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_05A7C1371EA1480CB838BD9D71DC1EDC"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\grayScale_fs"
+            "TargetName" = "8:grayScale_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_07B2AB4B829A4651AA86517547A62EAE"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_wiseh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_wiseh.png"
             "TargetName" = "8:c_wiseh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -990,12 +1312,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_07B7588C8FCA424DAAC94953BD0C2977"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_085618C44CFA4B35854E042F4A38B689"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\shaders\\characterTimeShader.fsh"
-            "TargetName" = "8:characterTimeShader.fsh"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionTexture_vs"
+            "TargetName" = "8:positionTexture_vs"
             "Tag" = "8:"
-            "Folder" = "8:_AC29EDE3429B49C492569985DF0CA3B6"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1012,7 +1334,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A83FDF80DFD4FB389F78FCFB2863CB7"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_morkin.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_morkin.png"
             "TargetName" = "8:c_morkin.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -1032,7 +1354,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0BB5D979A20848C1B7945183692F1882"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\rest-0.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\rest-0.png"
             "TargetName" = "8:rest-0.png"
             "Tag" = "8:"
             "Folder" = "8:_8322AF335C1949928897D6C07F9F56AD"
@@ -1052,7 +1374,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0BF64EAFBA3F448AB02D741C5FB06F9B"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_dwarf.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_dwarf.png"
             "TargetName" = "8:p_dwarf.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -1072,7 +1394,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0F878F5DC27F4FCFB5F6EC9B7EEDC730"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\overview_map.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\overview_map.png"
             "TargetName" = "8:overview_map.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -1092,7 +1414,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0FA819D6103E48AA8125DB221612E8C2"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_morkin.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_morkin.png"
             "TargetName" = "8:p_morkin.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -1112,7 +1434,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1050C4FA5434430384943DE118987BC7"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_icelordh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_icelordh.png"
             "TargetName" = "8:c_icelordh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -1130,12 +1452,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_11152A04A27340A193B935B9B545D29B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_10F68C9D95C2432DAE79FAE8D9934ADE"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\uv.dll"
-            "TargetName" = "8:uv.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionTextureColorAlphaTest_fs"
+            "TargetName" = "8:positionTextureColorAlphaTest_fs"
             "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_11205204FECC428092D7C94D5178A10D"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\skinPositionNormalTexture_vs"
+            "TargetName" = "8:skinPositionNormalTexture_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1152,7 +1494,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_11AC0126E70D4ACA9F5081BD90A1B11C"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_m\\misc\\box_16.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_m\\misc\\box_16.png"
             "TargetName" = "8:box_16.png"
             "Tag" = "8:"
             "Folder" = "8:_013F7ED898FC4D99B8BAE96BB3EFF04B"
@@ -1170,9 +1512,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_134C4DDBA88943B197A138EEA6525865"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionColorTextureAsPointsize_vs"
+            "TargetName" = "8:positionColorTextureAsPointsize_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_14ED19C604B34F559684A3D03EC6B946"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_icelord.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_icelord.png"
             "TargetName" = "8:p_icelord.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -1192,7 +1554,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_15414DFCB5504EFEB7C0FCFB25BAECB7"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\terrain\\terrain-1.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\terrain\\terrain-1.png"
             "TargetName" = "8:terrain-1.png"
             "Tag" = "8:"
             "Folder" = "8:_A26A546364484E61AE9C2E96274EECA4"
@@ -1212,7 +1574,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_15F9634212EB4E0190EE3C27A7EE8B4E"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_fey.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_fey.png"
             "TargetName" = "8:c_fey.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -1232,7 +1594,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_161EA74AAC2D4862BB931A6CF6F203DE"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_tarithel.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_tarithel.png"
             "TargetName" = "8:p_tarithel.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -1252,7 +1614,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_174AC0B4358E4BDFAF86CD7FF8FAF8EF"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_shareth.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_shareth.png"
             "TargetName" = "8:p_shareth.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -1272,7 +1634,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_17D49408EDD84955BD99E0AAF38122DE"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\main_menu.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\main_menu.png"
             "TargetName" = "8:main_menu.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -1292,7 +1654,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_17D5DE42036144C8977A0E26D02F67C2"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_tarithel.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_tarithel.png"
             "TargetName" = "8:p_tarithel.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -1312,7 +1674,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1BF646ACC1BA49F3991CD3E192D5CE40"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\lose.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\lose.png"
             "TargetName" = "8:lose.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -1330,29 +1692,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1C918C72522341E5875BEEDAC8B1B5C9"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\websockets.dll"
-            "TargetName" = "8:websockets.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1CC8D619C6554FAE9D4CA97462E17CBC"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_h\\misc\\box_16.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_h\\misc\\box_16.png"
             "TargetName" = "8:box_16.png"
             "Tag" = "8:"
             "Folder" = "8:_F544EE2D04434AB8B7F4229E06097F1F"
@@ -1370,9 +1712,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1EBA61BFED1A4ED99625978BBB43FCA9"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\label_outline_fs"
+            "TargetName" = "8:label_outline_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1F9AEF8385904AC3BEF9C5C82054273B"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\fonts\\sherwood.ttf"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\fonts\\sherwood.ttf"
             "TargetName" = "8:sherwood.ttf"
             "Tag" = "8:"
             "Folder" = "8:_4CF5525086464634B9261EABD6432F02"
@@ -1392,7 +1754,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1FD130D2703C4101BCB2D0AF17198752"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_giant.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_giant.png"
             "TargetName" = "8:c_giant.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -1410,9 +1772,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_21F0FFCE6BD24FF8AFE8110580FC7E2E"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\videoTextureNV12_fs"
+            "TargetName" = "8:videoTextureNV12_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_24AB97801C0C4D5AB9EFBA4644C7E232"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionColorLengthTexture_fs"
+            "TargetName" = "8:positionColorLengthTexture_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_25B5ADB34C6A4F95B5F9B8C696C8DE92"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_luxorh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_luxorh.png"
             "TargetName" = "8:c_luxorh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -1432,7 +1834,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2698B8C2E7CC4B3D969C8CB68F16E0C2"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\objects\\bo_troll.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\objects\\bo_troll.png"
             "TargetName" = "8:bo_troll.png"
             "Tag" = "8:"
             "Folder" = "8:_99F7DAAC493640409FBD1F38E0558D43"
@@ -1450,12 +1852,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2845831436BF4141A31FE8AFF5149DB4"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_282AF40E682449CF9D712BC1F432AB3A"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\zlib1.dll"
-            "TargetName" = "8:zlib1.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionTextureColor_vs"
+            "TargetName" = "8:positionTextureColor_vs"
             "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1472,7 +1874,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2949C942AD274937A28B56454B639558"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_morkinh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_morkinh.png"
             "TargetName" = "8:c_morkinh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -1490,12 +1892,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_36EAEED5076F454687EC402454ED0AA8"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2CDD9EB48E7E4E21A4B7CDC7947E749E"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_barbarian.png"
-            "TargetName" = "8:p_barbarian.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\cameraClear_vs"
+            "TargetName" = "8:cameraClear_vs"
             "Tag" = "8:"
-            "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1510,27 +1912,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_381D932660D449E28F66038367EA9A11"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_icelord.png"
-            "TargetName" = "8:c_icelord.png"
-            "Tag" = "8:"
-            "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_39DEF075EBEA477591B651449F10DB95"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_32BDF3D81CF54E92AB7F0C6CFE905AC5"
             {
             "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libcurl.dll"
             "TargetName" = "8:libcurl.dll"
@@ -1550,12 +1932,92 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3C93E15E7BB04001BB18585095923A04"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_357ACA7B0A184A239629161E26DB131D"
             {
-            "SourcePath" = "8:..\\..\\dlls\\msvcp140.dll"
-            "TargetName" = "8:msvcp140.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\quadColor_fs"
+            "TargetName" = "8:quadColor_fs"
             "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3650223C57684FAAAB8182BFECEF4088"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\terrain_vs"
+            "TargetName" = "8:terrain_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_36EAEED5076F454687EC402454ED0AA8"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_barbarian.png"
+            "TargetName" = "8:p_barbarian.png"
+            "Tag" = "8:"
+            "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_36F3ED75EE954D1082ACD014DE2E558D"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\skinPositionNormalTexture_vs_1"
+            "TargetName" = "8:skinPositionNormalTexture_vs_1"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_381D932660D449E28F66038367EA9A11"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_icelord.png"
+            "TargetName" = "8:c_icelord.png"
+            "Tag" = "8:"
+            "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1572,7 +2034,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3C99BE6F5C17499BBCE7CE1C9FBABC80"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_h\\language-0.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_h\\language-0.png"
             "TargetName" = "8:language-0.png"
             "Tag" = "8:"
             "Folder" = "8:_E6DA7E30C83442E38316875619081CFB"
@@ -1592,7 +2054,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3D52513916B34D51BD9C23768234AF7D"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_luxorh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_luxorh.png"
             "TargetName" = "8:c_luxorh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -1612,7 +2074,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3FC37E67DC594194AF77FD5B68F5E53F"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\rest-1.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\rest-1.plist"
             "TargetName" = "8:rest-1.plist"
             "Tag" = "8:"
             "Folder" = "8:_B710661FC7C74828A5CD993B7D070233"
@@ -1630,9 +2092,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_41BDE97823A04C3D83FAA32597291E39"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionColorLengthTexture_vs"
+            "TargetName" = "8:positionColorLengthTexture_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_438E77655B064D71A8886D1D5D350886"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_h\\misc\\in-memory-of.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_h\\misc\\in-memory-of.png"
             "TargetName" = "8:in-memory-of.png"
             "Tag" = "8:"
             "Folder" = "8:_F544EE2D04434AB8B7F4229E06097F1F"
@@ -1652,7 +2134,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4557F20551394D0A88FFC39931962783"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\map"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\map"
             "TargetName" = "8:map"
             "Tag" = "8:"
             "Folder" = "8:_CF975F4EDFC645BB817BC90488CFFB91"
@@ -1672,7 +2154,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4573D8B222DE4AA1AF0C328DB9AC1502"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_shareth.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_shareth.png"
             "TargetName" = "8:c_shareth.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -1692,7 +2174,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_45F057D970FD4487A20A71D6E5F831F4"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\misc\\logo.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\misc\\logo.png"
             "TargetName" = "8:logo.png"
             "Tag" = "8:"
             "Folder" = "8:_854ADEE9734F4081896A8F1B650BF4B6"
@@ -1710,12 +2192,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_46E5A413DE034933BD74B486A0E8D273"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_46907833AC934D318AF5A3C79AAC04BA"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\iconv.dll"
-            "TargetName" = "8:iconv.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\label_distanceNormal_fs"
+            "TargetName" = "8:label_distanceNormal_fs"
             "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_48426B4FD9604E2A86E6C4CDB25B67E4"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\layer_radialGradient_fs"
+            "TargetName" = "8:layer_radialGradient_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1732,7 +2234,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_48838E339A2346C4BB36C020968D10E2"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\win.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\win.png"
             "TargetName" = "8:win.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -1752,7 +2254,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_48AD21E71D7F4EB78F64A39FA64ED736"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_fey.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_fey.png"
             "TargetName" = "8:p_fey.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -1772,7 +2274,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4960B3560D3B4DBFB8FDC146FD7B8C67"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\objects\\bo_horse.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\objects\\bo_horse.png"
             "TargetName" = "8:bo_horse.png"
             "Tag" = "8:"
             "Folder" = "8:_99F7DAAC493640409FBD1F38E0558D43"
@@ -1792,7 +2294,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4D4C9CA2010846368805F1EBEE91E450"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\night.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\night.png"
             "TargetName" = "8:night.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -1812,7 +2314,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4E634F5E5C974143A8168F7D7B460934"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\objects\\bo_horse.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\objects\\bo_horse.png"
             "TargetName" = "8:bo_horse.png"
             "Tag" = "8:"
             "Folder" = "8:_D2CFFF4A29CD42408B6F1397E972F05A"
@@ -1832,7 +2334,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4E9F76C132154B7D8A45942A9C293FC9"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_wise.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_wise.png"
             "TargetName" = "8:c_wise.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -1852,7 +2354,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4FDAA9A1DAD84E4A89A562033CAE9DF4"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\credits.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\credits.png"
             "TargetName" = "8:credits.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -1872,7 +2374,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5524451D01E64D56A2F2C33C3563AE10"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\terrain\\terrain-1.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\terrain\\terrain-1.plist"
             "TargetName" = "8:terrain-1.plist"
             "Tag" = "8:"
             "Folder" = "8:_A26A546364484E61AE9C2E96274EECA4"
@@ -1890,9 +2392,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5637DDB8ED314862AB67C1F891231DC7"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionNormalTexture_vs_1"
+            "TargetName" = "8:positionNormalTexture_vs_1"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_566D708FD22847029E1E504F4B5A0B3F"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_icelord.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_icelord.png"
             "TargetName" = "8:p_icelord.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -1910,10 +2432,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B7F212FA90B4093BF5F5B324C5F7566"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56A24A8731EA4FC1BFB11B621CFC6CE9"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libmpg123.dll"
-            "TargetName" = "8:libmpg123.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\lineColor_vs"
+            "TargetName" = "8:lineColor_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5B25A537769545668934F8A31A09ED0B"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libGLESv2.dll"
+            "TargetName" = "8:libGLESv2.dll"
             "Tag" = "8:"
             "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
             "Condition" = "8:"
@@ -1950,29 +2492,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5D05BB4404C0478FBF7F6F55B6E93532"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libogg.dll"
-            "TargetName" = "8:libogg.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5D2C1CF385C442F8A9A47F3C5338F8AC"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\rest-0.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\rest-0.png"
             "TargetName" = "8:rest-0.png"
             "Tag" = "8:"
             "Folder" = "8:_B710661FC7C74828A5CD993B7D070233"
@@ -1992,7 +2514,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5F1033E440194E7CA8296164DBCE5F54"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\terrain\\terrain-1.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\terrain\\terrain-1.png"
             "TargetName" = "8:terrain-1.png"
             "Tag" = "8:"
             "Folder" = "8:_8AC323D0A8DC4CCC99784218596D111B"
@@ -2012,7 +2534,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_626E99A2E3714DF78A4451923DBD3C52"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_free.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_free.png"
             "TargetName" = "8:c_free.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -2030,29 +2552,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6384AF5DD58E44668595075094C7268A"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\shaders\\terrainTimeShader.fsh"
-            "TargetName" = "8:terrainTimeShader.fsh"
-            "Tag" = "8:"
-            "Folder" = "8:_AC29EDE3429B49C492569985DF0CA3B6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_64F42ABD01F54AC9BB053EAF736D7E27"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_wise.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_wise.png"
             "TargetName" = "8:c_wise.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -2070,9 +2572,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6524A314A33F42F8B20E41368608BC07"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\dualSampler_hsv_fs"
+            "TargetName" = "8:dualSampler_hsv_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_658E77A5D8C14EF4A972E08EF9725FEA"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\particle_vs"
+            "TargetName" = "8:particle_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_65E668F6C3B84F9783EC90317FC89EBA"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\win.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\win.png"
             "TargetName" = "8:win.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -2090,9 +2632,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_678086DB7B554A9C803A58D4E72D1D95"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionColor_vs"
+            "TargetName" = "8:positionColor_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_68EA27DE44C2444B83A9A66B68FE2C14"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_giant.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_giant.png"
             "TargetName" = "8:c_giant.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -2110,9 +2672,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6A4DA61022F1496783F481063AB18CA3"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\dualSampler_gray_fs"
+            "TargetName" = "8:dualSampler_gray_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6A761C51A66A4D51A16CFE3D4ACC0539"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\objects\\bo_wolf.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\objects\\bo_wolf.png"
             "TargetName" = "8:bo_wolf.png"
             "Tag" = "8:"
             "Folder" = "8:_99F7DAAC493640409FBD1F38E0558D43"
@@ -2130,9 +2712,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6A8D75BA787E4DBA9EF308435C274633"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libssl-3.dll"
+            "TargetName" = "8:libssl-3.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6B1F40CB098E4CC6B485B951B1239526"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionTextureInstance_vs"
+            "TargetName" = "8:positionTextureInstance_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6CB87FA9ED704B1B824236AE1C1F0269"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\objects\\bo_dragon.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\objects\\bo_dragon.png"
             "TargetName" = "8:bo_dragon.png"
             "Tag" = "8:"
             "Folder" = "8:_99F7DAAC493640409FBD1F38E0558D43"
@@ -2152,7 +2774,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6CBFB3385DE64209B90BB5185DC4A047"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\fonts\\Midnight.ttf"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\fonts\\Midnight.ttf"
             "TargetName" = "8:Midnight.ttf"
             "Tag" = "8:"
             "Folder" = "8:_4CF5525086464634B9261EABD6432F02"
@@ -2172,7 +2794,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6CDD6ECD788642518EF4357AE110E0A3"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\terrain\\terrain-1.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\terrain\\terrain-1.plist"
             "TargetName" = "8:terrain-1.plist"
             "Tag" = "8:"
             "Folder" = "8:_8AC323D0A8DC4CCC99784218596D111B"
@@ -2192,7 +2814,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6DDE6E13616B416A98AADF8C6821A273"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_m\\misc\\in-memory-of.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_m\\misc\\in-memory-of.png"
             "TargetName" = "8:in-memory-of.png"
             "Tag" = "8:"
             "Folder" = "8:_013F7ED898FC4D99B8BAE96BB3EFF04B"
@@ -2212,7 +2834,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6DF7D9D5BC5645B488FDD20191C1EDA9"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\objects\\bo_troll.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\objects\\bo_troll.png"
             "TargetName" = "8:bo_troll.png"
             "Tag" = "8:"
             "Folder" = "8:_D2CFFF4A29CD42408B6F1397E972F05A"
@@ -2232,7 +2854,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E14104E395549D3B0546DD738F2FE21"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_m\\language-0.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_m\\language-0.plist"
             "TargetName" = "8:language-0.plist"
             "Tag" = "8:"
             "Folder" = "8:_1C97A01FBD7D4DA486351ECC9D4D9F81"
@@ -2252,7 +2874,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6F83D6AFE2B142469871F9265CB0D4DF"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_shareth.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_shareth.png"
             "TargetName" = "8:p_shareth.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -2272,7 +2894,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70036682567B45C0BBD9A2F6B03C1819"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_icelordh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_icelordh.png"
             "TargetName" = "8:c_icelordh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -2290,30 +2912,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70075130AC5C43CE92C09CAD2274DAC0"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_71438A3672BD4559AF36453CF725C4EA"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libssl-1_1.dll"
-            "TargetName" = "8:libssl-1_1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70359771FFDA492786AC78D747C01029"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\revenge.exe"
-            "TargetName" = "8:revenge.exe"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libcrypto-3.dll"
+            "TargetName" = "8:libcrypto-3.dll"
             "Tag" = "8:"
             "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
             "Condition" = "8:"
@@ -2332,7 +2934,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_736B193EC6A341D6A7FEFACE03AC73B5"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_freeh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_freeh.png"
             "TargetName" = "8:c_freeh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -2352,7 +2954,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_73EE9FB499A7483B988ADD7A35991CF8"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\misc\\header.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\misc\\header.png"
             "TargetName" = "8:header.png"
             "Tag" = "8:"
             "Folder" = "8:_854ADEE9734F4081896A8F1B650BF4B6"
@@ -2372,7 +2974,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7400EEC3A1344BE9AF8A391CC58BAC17"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_dwarf.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_dwarf.png"
             "TargetName" = "8:p_dwarf.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -2390,9 +2992,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_742407E226304DA3BE8FD8091687FEDC"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionColor_fs"
+            "TargetName" = "8:positionColor_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_747A3732DBE3467488D6A1EE0F1C442B"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_icelord.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_icelord.png"
             "TargetName" = "8:c_icelord.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -2412,7 +3034,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7515859745D54674BD33A62FF7418B92"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_free.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_free.png"
             "TargetName" = "8:p_free.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -2432,7 +3054,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_753598ECCC0941F39148EBFCFEAA139F"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\0\\splash.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\0\\splash.png"
             "TargetName" = "8:splash.png"
             "Tag" = "8:"
             "Folder" = "8:_8DCEBFCFF2DA40349EBC3E25E4C79F30"
@@ -2452,7 +3074,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7542FB0F38934C9E81EEC61C9E1640A1"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_feyh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_feyh.png"
             "TargetName" = "8:c_feyh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -2470,29 +3092,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_75ACF3F408184ADBAB8B630E832AAA5B"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libcrypto-1_1.dll"
-            "TargetName" = "8:libcrypto-1_1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7664E53376214AF89BDF25B2E243CD77"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\terrain\\map_tiles.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\terrain\\map_tiles.png"
             "TargetName" = "8:map_tiles.png"
             "Tag" = "8:"
             "Folder" = "8:_8AC323D0A8DC4CCC99784218596D111B"
@@ -2512,7 +3114,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_766C9560F67F4E8B82F1E9F01670F777"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_wise.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_wise.png"
             "TargetName" = "8:p_wise.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -2530,9 +3132,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_767E1F0BD2064FC1A90207A2B1682C51"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionTexture_fs"
+            "TargetName" = "8:positionTexture_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_783DA43E09E946F293A724CDBF0DE6B2"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\colorNormalTexture_fs"
+            "TargetName" = "8:colorNormalTexture_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_788A765E814942B0BA04648B57721918"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_barbarianh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_barbarianh.png"
             "TargetName" = "8:c_barbarianh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -2552,7 +3194,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_78CD623A2A7D4019922DDE6F69DD78A6"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\objects\\bo_dragon.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\objects\\bo_dragon.png"
             "TargetName" = "8:bo_dragon.png"
             "Tag" = "8:"
             "Folder" = "8:_D2CFFF4A29CD42408B6F1397E972F05A"
@@ -2572,7 +3214,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7936FFED17CD40F0B1AAE979A86EA879"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\ddr_advert_for_mobile.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\ddr_advert_for_mobile.png"
             "TargetName" = "8:ddr_advert_for_mobile.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -2590,9 +3232,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_796AC6CD1410454F96F046C46536229E"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\dualSampler_fs"
+            "TargetName" = "8:dualSampler_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7A2553828ED14D48BFA23D790AD16A54"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_tarithel.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_tarithel.png"
             "TargetName" = "8:c_tarithel.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -2612,7 +3274,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7E4BDC1F541C4C7690B2AAB6FA63742D"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_skulkrin.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_skulkrin.png"
             "TargetName" = "8:c_skulkrin.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -2630,29 +3292,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_82574CFAE7314ECF98C646AAE41B2972"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\OpenAL32.dll"
-            "TargetName" = "8:OpenAL32.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_846FD90ED9AE4CEFBF9BDFC637DE2C37"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_m\\language-0.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_m\\language-0.png"
             "TargetName" = "8:language-0.png"
             "Tag" = "8:"
             "Folder" = "8:_1C97A01FBD7D4DA486351ECC9D4D9F81"
@@ -2672,7 +3314,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_86ABDCFC10C94F1386A40E99674991BC"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\terrain\\terrain-0.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\terrain\\terrain-0.png"
             "TargetName" = "8:terrain-0.png"
             "Tag" = "8:"
             "Folder" = "8:_8AC323D0A8DC4CCC99784218596D111B"
@@ -2692,7 +3334,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8B628A454EF042DFA1181CA8D68883AD"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\rest-1.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\rest-1.png"
             "TargetName" = "8:rest-1.png"
             "Tag" = "8:"
             "Folder" = "8:_8322AF335C1949928897D6C07F9F56AD"
@@ -2712,7 +3354,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8C780C8376EE44B3ABB986DB9D5813D8"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_fey.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_fey.png"
             "TargetName" = "8:p_fey.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -2732,7 +3374,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_902781263EA04E869D8DE45758F4F7D5"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\rest-0.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\rest-0.plist"
             "TargetName" = "8:rest-0.plist"
             "Tag" = "8:"
             "Folder" = "8:_8322AF335C1949928897D6C07F9F56AD"
@@ -2752,7 +3394,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_90CED41D85AF4BF3AEECC70FF4E35305"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_barbarian.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_barbarian.png"
             "TargetName" = "8:c_barbarian.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -2772,7 +3414,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9189A5BACDD14F9696ED11C657AFB31A"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\database"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\database"
             "TargetName" = "8:database"
             "Tag" = "8:"
             "Folder" = "8:_CF975F4EDFC645BB817BC90488CFFB91"
@@ -2792,7 +3434,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_92D63AC42A0746BC8F975E212F5C3EB5"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\objects\\bo_skulkrin.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\objects\\bo_skulkrin.png"
             "TargetName" = "8:bo_skulkrin.png"
             "Tag" = "8:"
             "Folder" = "8:_99F7DAAC493640409FBD1F38E0558D43"
@@ -2812,7 +3454,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9384F74D5214449CAAB236C3BAE34F48"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\ddr_advert_for_mobile.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\ddr_advert_for_mobile.png"
             "TargetName" = "8:ddr_advert_for_mobile.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -2832,7 +3474,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_961EF109537C4C819E3DEFA7E93154A4"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\main_menu.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\main_menu.png"
             "TargetName" = "8:main_menu.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -2850,10 +3492,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_97B314D5708D45F58654B842E0FE1A4B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_986645CD0C2C49D994F94A91478D32E2"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\glew32.dll"
-            "TargetName" = "8:glew32.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\OpenAL32.dll"
+            "TargetName" = "8:OpenAL32.dll"
             "Tag" = "8:"
             "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
             "Condition" = "8:"
@@ -2872,7 +3514,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_98C09923D5394366B6AFBEFFFDD6DF55"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\ddr.tme"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\ddr.tme"
             "TargetName" = "8:ddr.tme"
             "Tag" = "8:"
             "Folder" = "8:_CF975F4EDFC645BB817BC90488CFFB91"
@@ -2890,9 +3532,89 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9CABB4C440C1455181E32D37909B4D6B"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\zlib1.dll"
+            "TargetName" = "8:zlib1.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A0B0F6FEBF4A41F89B631CC3C9F35C41"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\colorTexture_fs"
+            "TargetName" = "8:colorTexture_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A14B355E9ECC43A1A93218E4EB5439E1"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\label_normal_fs"
+            "TargetName" = "8:label_normal_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A1A6EA64B51441F0B5E6B47F0D420ADB"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\skybox_vs"
+            "TargetName" = "8:skybox_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A21CF9C0ACF6432CAF245DDF3A9480F1"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\ddr_advert_for_desktops.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\ddr_advert_for_desktops.png"
             "TargetName" = "8:ddr_advert_for_desktops.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -2910,9 +3632,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A28B3AB898A4431489553A9F48A072ED"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionTexture3D_vs"
+            "TargetName" = "8:positionTexture3D_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A3598BC68DC14C6697CE2E03D7CA8990"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\fonts\\celtic.ttf"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\fonts\\celtic.ttf"
             "TargetName" = "8:celtic.ttf"
             "Tag" = "8:"
             "Folder" = "8:_4CF5525086464634B9261EABD6432F02"
@@ -2930,9 +3672,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A4900CD406E54B67B509D8C40E9166F3"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\color_fs"
+            "TargetName" = "8:color_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A50BD4EB4C6E40C9B9A7C604C7B468D6"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\videoTextureYUY2_fs"
+            "TargetName" = "8:videoTextureYUY2_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A590093406FD45DAA58F7513A88FD404"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\lose.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\lose.png"
             "TargetName" = "8:lose.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -2952,7 +3734,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A6646E5A35AC45819899C4014BBD89F2"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\all\\gfx_h\\language-0.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\all\\gfx_h\\language-0.plist"
             "TargetName" = "8:language-0.plist"
             "Tag" = "8:"
             "Folder" = "8:_E6DA7E30C83442E38316875619081CFB"
@@ -2970,12 +3752,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A6E9D053554445DB8DD921E7E9D19C12"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A6E9D60A34E2488FA5D59530E0AAE4CC"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\shaders\\standard.vsh"
-            "TargetName" = "8:standard.vsh"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\lineColor_fs"
+            "TargetName" = "8:lineColor_fs"
             "Tag" = "8:"
-            "Folder" = "8:_AC29EDE3429B49C492569985DF0CA3B6"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2992,7 +3774,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A9E6B1DB307F4983AD7C63D9A5D383B4"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_dragon.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_dragon.png"
             "TargetName" = "8:c_dragon.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3012,7 +3794,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AE913B573D99400C992CF3A8DF6882C1"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\terrain\\terrain-0.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\terrain\\terrain-0.plist"
             "TargetName" = "8:terrain-0.plist"
             "Tag" = "8:"
             "Folder" = "8:_8AC323D0A8DC4CCC99784218596D111B"
@@ -3032,7 +3814,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AEA40DBE849044E7BD31BEA441DDEDF7"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\misc\\logo.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\misc\\logo.png"
             "TargetName" = "8:logo.png"
             "Tag" = "8:"
             "Folder" = "8:_8EABBDC06C664F93A7F04290AAE111B0"
@@ -3050,10 +3832,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AF05BB282CED4754A972AB3A0077EAA3"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B3971AAF20D74F30AAC478234FE502A2"
             {
-            "SourcePath" = "8:..\\..\\dlls\\vcruntime140.dll"
-            "TargetName" = "8:vcruntime140.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\revenge.exe"
+            "TargetName" = "8:revenge.exe"
             "Tag" = "8:"
             "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
             "Condition" = "8:"
@@ -3072,7 +3854,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B4352859F7C1496A9526006823AAB28A"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\misc\\header.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\misc\\header.png"
             "TargetName" = "8:header.png"
             "Tag" = "8:"
             "Folder" = "8:_8EABBDC06C664F93A7F04290AAE111B0"
@@ -3092,7 +3874,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B45B4F19E71D4DCA84853007A51ECC31"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\terrain\\map_tiles.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\terrain\\map_tiles.png"
             "TargetName" = "8:map_tiles.png"
             "Tag" = "8:"
             "Folder" = "8:_A26A546364484E61AE9C2E96274EECA4"
@@ -3110,9 +3892,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B5148F1531F348DA9C385CF514C5CFCD"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\d3dcompiler_47.dll"
+            "TargetName" = "8:d3dcompiler_47.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B6DD7283AC764C7B95F7B45D5C730934"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\objects\\bo_skulkrin.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\objects\\bo_skulkrin.png"
             "TargetName" = "8:bo_skulkrin.png"
             "Tag" = "8:"
             "Folder" = "8:_D2CFFF4A29CD42408B6F1397E972F05A"
@@ -3132,7 +3934,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B7759A904C1B4A1E9A3B50B5B2AA2DA7"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\rest-1.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\rest-1.png"
             "TargetName" = "8:rest-1.png"
             "Tag" = "8:"
             "Folder" = "8:_B710661FC7C74828A5CD993B7D070233"
@@ -3152,7 +3954,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B83FC761916E49C3869D84C31F4C5F38"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\rest-0.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\rest-0.plist"
             "TargetName" = "8:rest-0.plist"
             "Tag" = "8:"
             "Folder" = "8:_B710661FC7C74828A5CD993B7D070233"
@@ -3170,9 +3972,69 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BB3BE1DF451C485EACAF59E144007E8F"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\terrain_fs"
+            "TargetName" = "8:terrain_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BB8008F8F98F4C03B45943E086411687"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\cameraClear_fs"
+            "TargetName" = "8:cameraClear_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BCB0852D0797470CB69861018599AC47"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\colorNormalTexture_fs_1"
+            "TargetName" = "8:colorNormalTexture_fs_1"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF8C30BE929048D8BC4BE8FD57C63660"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\fonts\\libra.ttf"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\fonts\\libra.ttf"
             "TargetName" = "8:libra.ttf"
             "Tag" = "8:"
             "Folder" = "8:_4CF5525086464634B9261EABD6432F02"
@@ -3192,7 +4054,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C3447C8D66934E9A8C304B301A19C293"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_freeh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_freeh.png"
             "TargetName" = "8:c_freeh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3212,7 +4074,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C73BD454B9134B6C8B0D055A86D58A03"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_barbarian.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_barbarian.png"
             "TargetName" = "8:p_barbarian.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -3232,7 +4094,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C9D92D10E390403AA1708A62DB1D76BD"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_shareth.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_shareth.png"
             "TargetName" = "8:c_shareth.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -3250,9 +4112,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CB1BD8026BFF4119814C5227511C1C92"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\label_distanceOutline_fs"
+            "TargetName" = "8:label_distanceOutline_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CB87A8633009421D9C1B06AE06A1B30B"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\night.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\night.png"
             "TargetName" = "8:night.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -3272,7 +4154,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCFCB3D8017E487BAFBA04DECAC43741"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_midwinterh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_midwinterh.png"
             "TargetName" = "8:c_midwinterh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -3292,7 +4174,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CD37A7C97E1343D28F311A699C4A0896"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_free.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_free.png"
             "TargetName" = "8:p_free.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -3312,7 +4194,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CDDDBED41F2F4D39A4BF27D60D3C29EA"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_morkin.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_morkin.png"
             "TargetName" = "8:c_morkin.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3332,7 +4214,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CFD690ABC8904994BD93D560C77DB9D1"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_morkinh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_morkinh.png"
             "TargetName" = "8:c_morkinh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3352,7 +4234,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D083ACE807464F26B03A660139B06562"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\credits.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\credits.png"
             "TargetName" = "8:credits.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -3372,7 +4254,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D08DFDE8E8354B71833A8DEEC8E6C306"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_morkin.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_morkin.png"
             "TargetName" = "8:p_morkin.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -3392,7 +4274,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D279BCED4F2E4212AEC6EE7E7C79BB27"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\screens\\misc\\ddr_advert_for_desktops.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\screens\\misc\\ddr_advert_for_desktops.png"
             "TargetName" = "8:ddr_advert_for_desktops.png"
             "Tag" = "8:"
             "Folder" = "8:_F59135CB00FF488DBC7E3E6C3ECABE85"
@@ -3410,9 +4292,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D4B994012D6B4BE7B74B2661DAE9F06B"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libEGL.dll"
+            "TargetName" = "8:libEGL.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D4D6F0306B5C4F4BBCF7A9F04DB6851F"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_fey.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_fey.png"
             "TargetName" = "8:c_fey.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3430,9 +4332,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D515B829286149EB9DA48E643EE7FD97"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\custom\\characterTimeShader_fs"
+            "TargetName" = "8:characterTimeShader_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_26694D84FE94461BB3550635951F1037"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D7F1EBC7E0A245788738EAFB9A15F652"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_tarithel.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_tarithel.png"
             "TargetName" = "8:c_tarithel.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3450,12 +4372,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9317D14BE414A1DBDA10706150CFDAC"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DA00110F62484794A19D0DAD5B47115C"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libvorbis.dll"
-            "TargetName" = "8:libvorbis.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\skybox_fs"
+            "TargetName" = "8:skybox_fs"
             "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3472,7 +4394,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DA705A71420F4C0380CFA4DE799EA48D"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_wise.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_wise.png"
             "TargetName" = "8:p_wise.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -3492,7 +4414,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DC2CF591549B4CF9919F251F4E507494"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\faces\\p_giant.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\faces\\p_giant.png"
             "TargetName" = "8:p_giant.png"
             "Tag" = "8:"
             "Folder" = "8:_669C54B8F700442493E3D4A99BB22BA1"
@@ -3510,9 +4432,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD73454D5020433AA4FD02DED822BDAD"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\quadColor_vs"
+            "TargetName" = "8:quadColor_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E04C97CA5CCB452EB4AE1F8A818DF0CF"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionTextureColor_fs"
+            "TargetName" = "8:positionTextureColor_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E0854E7B80B14568BAC2A1C5928E42F0"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\fonts\\arial.ttf"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\fonts\\arial.ttf"
             "TargetName" = "8:arial.ttf"
             "Tag" = "8:"
             "Folder" = "8:_4CF5525086464634B9261EABD6432F02"
@@ -3532,7 +4494,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E08FCB8BF8C245C88220BF46D717F6B6"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_wiseh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_wiseh.png"
             "TargetName" = "8:c_wiseh.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -3550,9 +4512,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E1A38A80AA664A428D2885E92E00660A"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\skinPositionTexture_vs"
+            "TargetName" = "8:skinPositionTexture_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E34279DFB663415A9D7663F55B88B98A"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\quadTexture_fs"
+            "TargetName" = "8:quadTexture_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E35A087DE1FA4F90BDB4FF97D45CFEC2"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\0\\splash.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\0\\splash.png"
             "TargetName" = "8:splash.png"
             "Tag" = "8:"
             "Folder" = "8:_C09959E9B11F4A7AA0EA11F8FF24F3C4"
@@ -3572,7 +4574,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E3D6EEBE3F2343589CB8E830B95A9D42"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_free.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_free.png"
             "TargetName" = "8:c_free.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3590,9 +4592,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E4068FBC37E44412BBA3ED6A3C5C08DE"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionNormalTexture_vs"
+            "TargetName" = "8:positionNormalTexture_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E4BF6A67E62B45279CFC048ECAFF647B"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\screens\\misc\\overview_map.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\screens\\misc\\overview_map.png"
             "TargetName" = "8:overview_map.png"
             "Tag" = "8:"
             "Folder" = "8:_65EC42785AB449E18DEBCEA4BCB594F7"
@@ -3612,7 +4634,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E53DE77D24B14AABA28873D3B33FC5DF"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_midwinterh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_midwinterh.png"
             "TargetName" = "8:c_midwinterh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3632,7 +4654,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E55F171F943A4D70B400FAA15C7837FE"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_barbarian.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_barbarian.png"
             "TargetName" = "8:c_barbarian.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -3650,12 +4672,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E70291AD5AF44B658ADF3071A48D843A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E7050884298D4F0E84EB1A4559137F63"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\libvorbisfile.dll"
-            "TargetName" = "8:libvorbisfile.dll"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\positionUColor_vs"
+            "TargetName" = "8:positionUColor_vs"
             "Tag" = "8:"
-            "Folder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EA42F5396BDC46F58F78F829F22DF1E9"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\particleColor_fs"
+            "TargetName" = "8:particleColor_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EA5140CD00F247C8BB19C902AAD366BD"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\custom\\terrainTimeShader_fs"
+            "TargetName" = "8:terrainTimeShader_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_26694D84FE94461BB3550635951F1037"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3672,7 +4734,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EB87C89798FC48C8BDE628AC407E44BA"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\res\\.gitkeep"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\res\\.gitkeep"
             "TargetName" = "8:.gitkeep"
             "Tag" = "8:"
             "Folder" = "8:_89819371EEE24A999D130A344313D4B4"
@@ -3692,7 +4754,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EDAD8727F728411CB3E5CD20C6476D00"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\terrain\\terrain-0.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\terrain\\terrain-0.png"
             "TargetName" = "8:terrain-0.png"
             "Tag" = "8:"
             "Folder" = "8:_A26A546364484E61AE9C2E96274EECA4"
@@ -3710,9 +4772,49 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F00D8F4A5F7F45599CE155376B9FA2B6"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\label_distanceGlow_fs"
+            "TargetName" = "8:label_distanceGlow_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F068EB0E2E24400F9D218FE03193F2D3"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\videoTextureI420_fs"
+            "TargetName" = "8:videoTextureI420_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F11A174F3AFA4BA88C1348B937A34317"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_barbarianh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_barbarianh.png"
             "TargetName" = "8:c_barbarianh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3732,7 +4834,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F271902BFBBD4A879EB9B3000110B0D3"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\rest-1.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\rest-1.plist"
             "TargetName" = "8:rest-1.plist"
             "Tag" = "8:"
             "Folder" = "8:_8322AF335C1949928897D6C07F9F56AD"
@@ -3752,7 +4854,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F27A4D0C5CD2473E94E32520D4E9C343"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\faces\\p_giant.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\faces\\p_giant.png"
             "TargetName" = "8:p_giant.png"
             "Tag" = "8:"
             "Folder" = "8:_B9D770F231B54F41BF629AAC7EBD1D24"
@@ -3772,7 +4874,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F2DF62A6CD50453BAD4700E3056EA3FF"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_feyh.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_feyh.png"
             "TargetName" = "8:c_feyh.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3790,9 +4892,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F7F7DEF9F6A24EF6B3D94DDD0B1F7CEF"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\colorNormal_fs"
+            "TargetName" = "8:colorNormal_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F87FA6A753C644438447ECF6C9DD85E7"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_m\\people\\c_dwarf.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_dwarf.png"
             "TargetName" = "8:c_dwarf.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
@@ -3810,9 +4932,89 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F88A325E26444050953CEE826F7F3113"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\videoTextureBGRA_fs"
+            "TargetName" = "8:videoTextureBGRA_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F8B7A67E260741F584370181CC44FE5D"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\hsv_fs"
+            "TargetName" = "8:hsv_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F915783D91664311A6968858080AAC53"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\custom\\standard_vs"
+            "TargetName" = "8:standard_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_26694D84FE94461BB3550635951F1037"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F977C45DF37E4173BCB9E99FFC5CEE40"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\quadTexture_vs"
+            "TargetName" = "8:quadTexture_vs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FA0DCA1602B04842A743433C4F92592F"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\people\\c_dwarf.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\people\\c_dwarf.png"
             "TargetName" = "8:c_dwarf.png"
             "Tag" = "8:"
             "Folder" = "8:_EA692CB43C3B458C96113DE28FD5D55A"
@@ -3830,9 +5032,29 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FA49C35B09E14FAEB0C5A216F227D258"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\particleTexture_fs"
+            "TargetName" = "8:particleTexture_fs"
+            "Tag" = "8:"
+            "Folder" = "8:_F6C7365B40F94FF8A013A8DEA892E611"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FCECB82F1E7F4CF2A2F822EB14640172"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\terrain\\terrain-0.plist"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\terrain\\terrain-0.plist"
             "TargetName" = "8:terrain-0.plist"
             "Tag" = "8:"
             "Folder" = "8:_A26A546364484E61AE9C2E96274EECA4"
@@ -3852,7 +5074,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FD515A569F034C578261FC076B0CA006"
             {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Resources\\ddr\\gfx_h\\objects\\bo_wolf.png"
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_h\\objects\\bo_wolf.png"
             "TargetName" = "8:bo_wolf.png"
             "Tag" = "8:"
             "Folder" = "8:_D2CFFF4A29CD42408B6F1397E972F05A"
@@ -3899,7 +5121,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_195F428C0CFB4A1CB5B41C339137520A"
                     {
-                    "Name" = "8:Resources"
+                    "Name" = "8:Content"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -3924,17 +5146,6 @@
                             "Condition" = "8:"
                             "Transitive" = "11:FALSE"
                             "Property" = "8:_E6C03B7168A242128B2FC92116474FD3"
-                                "Folders"
-                                {
-                                }
-                            }
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_AC29EDE3429B49C492569985DF0CA3B6"
-                            {
-                            "Name" = "8:shaders"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_D4F3154117B04FB5A4FF57796637EF22"
                                 "Folders"
                                 {
                                 }
@@ -4205,6 +5416,28 @@
                             }
                         }
                     }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_F6C7365B40F94FF8A013A8DEA892E611"
+                    {
+                    "Name" = "8:axslc"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_E6A4BD29981C4D1997DA0C2E9AC9B9E4"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_26694D84FE94461BB3550635951F1037"
+                            {
+                            "Name" = "8:custom"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_F3F33592BEF347268A9A0536BAFBA7B8"
+                                "Folders"
+                                {
+                                }
+                            }
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_F2F26C53EFA74BC1990DAB75D8E87A23"
@@ -4363,7 +5596,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_70359771FFDA492786AC78D747C01029"
+            "Target" = "8:_B3971AAF20D74F30AAC478234FE502A2"
             "Folder" = "8:_275437407E4843F4B8A8B267080B04CA"
             "WorkingFolder" = "8:_C6C32E89DACF4571BBB0F3E57EC93F59"
             "Icon" = "8:_5C64CD42A8774B13852CE2A11E0538D5"

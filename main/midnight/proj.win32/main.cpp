@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "main.h"
-#include "AppDelegate.h"
+#include "..\Source\AppDelegate.h"
 #include "axmol.h"
 
 USING_NS_AX;
