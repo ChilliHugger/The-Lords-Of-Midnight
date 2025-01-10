@@ -1,15 +1,12 @@
 # Building on OSX
 
-
-
 ## Install CMake
 
 https://cmake.org/download/
 
-## Install Cocos2d-x
+### Install axmol
 
-https://github.com/cocos2d/cocos2d-x
-https://docs.cocos.com/cocos2d-x/manual/en/installation/
+- Follow the axmol install instructions from: https://github.com/axmolengine/axmol/blob/dev/docs/DevSetup.md
 
 ## Create Projects
 
@@ -18,19 +15,19 @@ https://docs.cocos.com/cocos2d-x/manual/en/installation/CMake-Guide.html
 ## Create OSX XCode Project
 
 ```
-cd main/midnight
-mkdir mac-build
-cd mac-build
-cmake .. -GXcode -DTME:string=LOM
+cd main/midnight/builds
+mkdir mac-lom
+cd mac-lom
+axmol build -configOnly -p osx -a x64 -xc '-DTME=LOM,-BBuilds/mac-lom'
 ```
 
 ## Create OSX XCode Project for Tests
 
 ```
-cd main/midnight
-mkdir mac-tests-build
-cd mac-tests-build
-cmake .. -GXcode -DTME:string=LOM -DTESTS=YES
+cd main/midnight/builds
+mkdir mac-tests-lom
+cd mac-tests-lom
+axmol build -configOnly -p osx -a x64 -xc '-DTME=LOM,-DTESTS=YES,-BBuilds/mac-tests-lom'
 ```
 
 Replace LOM with DDR for Doomdark's Revenge
@@ -38,10 +35,10 @@ Replace LOM with DDR for Doomdark's Revenge
 ## Create iOS XCode Project
 
 ```
-cd main/midnight
-mkdir ios-build
-cd ios-build
-cmake .. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DTME:string=LOM
+cd main/midnight/builds
+mkdir ios-lom
+cd ios-lom
+axmol build -configOnly -p ios -a arm64 -xc '-DTME=LOM,-BBuilds/ios-lom'
 ```
 
 Replace LOM with DDR for Doomdark's Revenge
