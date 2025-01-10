@@ -6,35 +6,25 @@
 
 ### Install CMake
 
-- Download CMake installer from: https://cmake.org/download/
+- Download CMake installer (3.31+) from: https://cmake.org/download/
 - Install making sure CMake is added to your path during installation.
 
-### Install Visual Studio 19
+### Install Visual Studio 22
 
-- Download Visual Studio 19 community edition from: https://visualstudio.microsoft.com/
-- Install making sure that you select "Game development with C++" and "Microsoft Visual Studio Installer Projects" from Workloads tab.
+- Download Visual Studio 22 community edition from: https://visualstudio.microsoft.com/
+- Install making sure that you select "Game development with C++" from Workloads tab, "Microsoft Visual Studio Installer Projects" from Individual Components tab.
 
-### Install coco2d
+### Install axmol
 
-- Download and install Python 2.7 from: https://www.python.org/downloads/windows/
-- Download cocos2d-x version 4.0 from: http://www.cocos2d-x.org
-- Unzip coco2d-x into location where you want it (e.g. C:\opt\coco2d-x-4.0)
-- From command line run setup.py from within unzipped directory
-- Installer should have setup environment variables:
-  - COCOS_CONSOLE_ROOT
-  - COCOS_X_ROOT
-  - COCOS_TEMPLATES_ROOT
+- Follow the axmol install instructions from:https://github.com/axmolengine/axmol/blob/dev/docs/DevSetup.md#prerequisites
 
-### Generate coco2d code
+### For Powershell 5.X
 
-- Create a temporary directory (e.g. 'C:\coco2d-tmp')
-- Run
+- Run powershell then do:
 
-```
-  cocos new codebuild -p chilli.codebuild -l cpp -d .
-```
+  Set-ExecutionPolicy  -ExecutionPolicy Bypass -Force
 
-- Copy directory 'codebuild\cocos2d' into 'The-Lords-Of-Midnight\main\midnight'
+
 
 ## For Lords of Midnight
 
@@ -45,7 +35,7 @@
 ```
 cd main\midnight\build.win32\midnight
 mkdir vs_project && cd vs_project
-cmake ..\..\.. -G"Visual Studio 16 2019" -A Win32 -DTME:string=LOM
+cmake ..\..\.. -G"Visual Studio 17 2022" -A Win32 -DTME:string=LOM
 ```
 
 ### Build Code from Windows VS
@@ -79,6 +69,8 @@ cmake ..\..\.. -G"Visual Studio 16 2019" -A Win32 -DTME:string=LOM
 
 - You should now have an executable under 'vs_project\bin\midnight\Release'
 
+- Setup working directory for debug by selecting 'Debug', then selecting 'midnight Debug Properties', then 'Debugging'. Click on 'Working Directory', select browse and choose 'bin\midnight\Debug\Content' 
+
 - If needing to debug code, change target to 'Debug', click on 'Local Windows Debugger':
 
   ![Debugging](images/build_windows_debug.png)
@@ -106,7 +98,7 @@ A pre-defined project is built already present to support building installer fro
 ```
 cd main\midnight\build.win32\revenge
 mkdir vs_project && cd vs_project
-cmake ..\..\.. -G"Visual Studio 16 2019" -A Win32 -DTME:string=DDR
+cmake ..\..\.. -G"Visual Studio 17 2022" -A Win32 -DTME:string=DDR
 ```
 
 ### Build Code from Windows VS
@@ -114,9 +106,7 @@ cmake ..\..\.. -G"Visual Studio 16 2019" -A Win32 -DTME:string=DDR
 Instructions very similar to building Lords of Midnight, instead of 'midnight' you will see a 'revenge' solution. Refer to images in instructions on building Lords of Midnight for details.
 
 - Open Visual Studio solution 'midnight.sln' from within 'main\midnight\build.win32\revenge\vs_project'
-
 - Change target to 'Release':
-
 - From Solution Explorer expand 'CMakePredefinedTargets', expand 'ALL_BUILD', right click on 'CMakeLists.txt' and select 'Properties'.
 - From 'Properties' dialog, select 'Custom Build Tool\General', edit 'Command Line'.
 - From 'Properties' dialog, select 'Custom Build Tool\General', edit 'Command Line'.
@@ -126,6 +116,7 @@ Instructions very similar to building Lords of Midnight, instead of 'midnight' y
 - Expand 'revenge', right click on 'CMakeLists.txt', go through same process as before to add '-DTME=DDR' to 'Command Line'.
 - From Solution Explorer, right click on 'revenge' and select 'Build'.
 - You should now have an executable under 'vs_project\bin\revenge\Release'
+- Setup working directory for debug by selecting 'Debug', then selecting 'revenge Debug Properties', then 'Debugging'. Click on 'Working Directory', select browse and choose 'bin\revenge\Debug\Content' 
 - If needing to debug code, change target to 'Debug', click on 'Local Windows Debugger'.
 
 ## Create Windows Installer
@@ -159,7 +150,7 @@ To upgrade version do the following:
 
 ![build_windows_version_installer](images/build_windows_version_installer.png)
 
-- Once prompted to change 'ProductCode' click on 'No': 
+- Once prompted to change 'ProductCode' click on 'Yes': 
 
 ![build_windows_version_installer_confirm](images/build_windows_version_installer_confirm.png)
 

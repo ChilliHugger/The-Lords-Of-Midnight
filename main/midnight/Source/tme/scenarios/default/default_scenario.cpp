@@ -1157,8 +1157,8 @@ namespace tme {
         COMMAND ( PropMapSize )
         {
             argv[0]=(s32)2;
-            argv[1]=mx->gamemap->Size().cx;
-            argv[2]=mx->gamemap->Size().cy;
+            argv[1]=(s32)mx->gamemap->Size().cx;
+            argv[2]=(s32)mx->gamemap->Size().cy;
             return MX_OK ;
         }
 
