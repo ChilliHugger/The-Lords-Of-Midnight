@@ -36,7 +36,7 @@ namespace extensions {
         
         CCASSERT( !mapInfo->getTilesets().empty(), "TMXTiledMap: Map not found. Please check the filename.");
         
-        buildWithMapInfo(mapInfo);
+        buildWithMapInfo(mapInfo, true);
         
         return true;
     }
