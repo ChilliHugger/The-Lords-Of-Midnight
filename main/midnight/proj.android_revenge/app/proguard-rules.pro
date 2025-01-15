@@ -17,8 +17,8 @@
 #}
 
 # Proguard Cocos2d-x for release
--keep public class org.cocos2dx.** { *; }
--dontwarn org.cocos2dx.**
+-keep public class org.axmol.** { *; }
+-dontwarn org.axmol.**
 -keep public class com.chukong.** { *; }
 -dontwarn com.chukong.**
 -keep public class com.huawei.android.** { *; }
@@ -29,8 +29,8 @@
 -dontwarn org.apache.http.**
 
 # Proguard rules for TME
--keep public class com.chillihugger.extensions.** { *; }
--dontwarn com.chillihugger.extensions.**
+-keep public class com.chilli.extensions.** { *; }
+-dontwarn com.chilli.extensions.**
 
 # Proguard Android Webivew for release. uncomment if you are using a webview in cocos2d-x
 #-keep public class android.net.http.SslError

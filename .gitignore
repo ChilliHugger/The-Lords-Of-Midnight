@@ -31,6 +31,7 @@ main/midnight/proj.win32/DDR_Debug.win32
 
 # Android
 main/midnight/proj.android/.idea
+main/midnight/proj.android/app/local.properties
 main/midnight/proj.android/app/.cxx
 main/midnight/proj.android/app/release
 
@@ -39,8 +40,11 @@ main/midnight/proj.android/app/release
 
 # Misc
 main/midnight/Builds
-main/midnight/cocos2d
 main/midnight/build*
-main/midnight/ios-build-ddr
-main/midnight/mac-build-ddr
-main/midnight/mac-tests-build-ddr
+main/midnight/proj.android/app/.idea
+main/midnight/proj.android_revenge/.idea
+main/midnight/proj.android_revenge/app/.idea
+main/midnight/proj.android_revenge/app/.cxx
+main/midnight/proj.android_midnight/.idea
+main/midnight/proj.android_midnight/app/.cxx
+main/midnight/proj.android_midnight/app/.idea

@@ -3,4 +3,3 @@ include ':libaxmol'
 project(':libaxmol').projectDir = new File(Paths.get("${System.env.AX_ROOT}/core/platform/android/libaxmol").toUri())
 include ':midnight'
 project(':midnight').projectDir = new File(settingsDir, 'app')
-rootProject.name = "midnight"

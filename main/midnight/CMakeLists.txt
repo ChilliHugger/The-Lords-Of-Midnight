@@ -41,7 +41,7 @@ elseif(TME STREQUAL "DDR")
   endif()
 endif()
 
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.31.2)
 
 if(MACOSX)
   set_target_properties(${APP_NAME} PROPERTIES
@@ -271,10 +271,11 @@ set(APP_SOURCES
 if(NOT ANDROID)
     add_executable(${APP_NAME} ${APP_SOURCES})
 else()
+    message(STATUS "Source files: ${APP_NAME} '${APP_SOURCES}'")
     add_library(${APP_NAME} SHARED ${APP_SOURCES})
     # whole archive for jni
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
-    config_android_shared_libs("org.axmol.lib" "${CMAKE_CURRENT_SOURCE_DIR}/proj.android/app/src")
+    config_android_shared_libs("org.axmol.lib" "${CMAKE_CURRENT_SOURCE_DIR}/proj.android_${APP_NAME}/app/src")
 endif()
 
 if (NOT _AX_USE_PREBUILT)

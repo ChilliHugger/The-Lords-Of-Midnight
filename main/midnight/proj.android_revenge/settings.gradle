@@ -1,4 +1,5 @@
-include ':libcocos2dx'
-project(':libcocos2dx').projectDir = new File(settingsDir, '../cocos2d/cocos/platform/android/libcocos2dx')
+import java.nio.file.Paths
+include ':libaxmol'
+project(':libaxmol').projectDir = new File(Paths.get("${System.env.AX_ROOT}/core/platform/android/libaxmol").toUri())
 include ':revenge'
 project(':revenge').projectDir = new File(settingsDir, 'app')
