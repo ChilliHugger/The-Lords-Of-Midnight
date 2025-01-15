@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chilli.midnight"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -14,7 +13,7 @@
         
         <!-- Tell AxmolActivity the name of our .so -->
         <meta-data android:name="android.app.lib_name"
-                   android:value="${libraryName}" />
+                   android:value="midnight" />
 
         <activity
             android:name="com.chilli.activity.AppActivity"

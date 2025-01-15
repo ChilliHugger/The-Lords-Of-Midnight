@@ -2,28 +2,32 @@ apply plugin: 'com.android.application'
 apply from: project(':libaxmol').projectDir.toString() + "/axutils.gradle"
 
 android {
-    namespace "com.chilli.midnight"
-    compileSdk PROP_COMPILE_SDK_VERSION.toInteger()
+    // Resolve build profiles
+    def buildProfiles = AxmolUtils.resolveBuildProfiles(project)
+    def packageName = "com.chilli.midnight"
+    def cmakeVer = buildProfiles['cmakeVer']
+    def cmakeOptions = Eval.me(buildProfiles['cmakeOptions'])
+    def minSdk = buildProfiles['minSdk']
+    def targetSdk = buildProfiles['targetSdk']
 
-    // Setup native build tools: ndk & cmake
-    //def nbtInfo = axutils.findNativeBuildTools(project)
-    def nbtInfo = axutils.findNativeBuildTools(project, '3.28.3+')
-    ndkVersion = nbtInfo[0]
-    if(nbtInfo[1]) {
-        ndkPath = nbtInfo[1]
+    // Apply build profiles
+    namespace packageName
+    compileSdk targetSdk.toInteger()
+    ndkVersion = buildProfiles['ndkVer']
+    if(buildProfiles.containsKey('ndkPath')) {
+        ndkPath = buildProfiles['ndkPath']
     }
-    def cmakeVer = nbtInfo[2]
-    def cmakeOptions = Eval.me(nbtInfo[3])
 
     defaultConfig {
-        minSdkVersion PROP_MIN_SDK_VERSION
-        targetSdkVersion PROP_TARGET_SDK_VERSION
+        applicationId packageName
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
         versionCode 2000050
         versionName "2.0.8"
 
         externalNativeBuild {
             cmake {
-                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_shared", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_shared", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=LOM"
                 arguments.addAll(cmakeOptions)
                 cppFlags "-frtti -fexceptions -fsigned-char"
             }
@@ -32,23 +36,6 @@ android {
         ndk {
             abiFilters = []
             abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
-        }
-    }
-
-    flavorDimensions += "product"
-
-    productFlavors {
-        create("midnight") {
-            dimension = "product"
-            applicationId "com.chilli.midnight"
-            manifestPlaceholders.libraryName = "midnight"
-            externalNativeBuild.cmake.arguments.addAll("-DTME=LOM")
-        }
-        create("revenge") {
-            dimension = "product"
-            applicationId "com.chilli.revenge"
-            manifestPlaceholders.libraryName = "revenge"
-            externalNativeBuild.cmake.arguments.addAll("-DTME=DDR")
         }
     }
 
@@ -109,7 +96,6 @@ android {
 
 android.applicationVariants.configureEach { variant ->
     def variantName = variant.name.capitalize()
-    def variantAssets = variant.flavorName
 
     tasks.register("copy${variantName}ContentToAssets") {
         doFirst {
@@ -131,7 +117,7 @@ android.applicationVariants.configureEach { variant ->
                 exclude "**/*.gz"
             }
             copy {
-                from "${projectDir}/../../Resources-${variantAssets}"
+                from "${projectDir}/../../Resources-midnight"
                 into "${projectDir}/build/assets"
                 exclude "**/*.gz"
             }

@@ -5,6 +5,7 @@
 //  Created by Chris Wild on 17/12/2020.
 //
 #include "Extensions-android.h"
+#include "platform/android/jni/JniHelper.h"
 #include "../../library/chilli.h"
 #include "../../cocos.h"
 #include <string>

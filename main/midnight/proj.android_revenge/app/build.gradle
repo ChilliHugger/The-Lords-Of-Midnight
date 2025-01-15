@@ -1,22 +1,34 @@
-import org.gradle.internal.os.OperatingSystem
-
 apply plugin: 'com.android.application'
+apply from: project(':libaxmol').projectDir.toString() + "/axutils.gradle"
 
 android {
-    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    ndkVersion "22.0.7026061"
+    // Resolve build profiles
+    def buildProfiles = AxmolUtils.resolveBuildProfiles(project)
+    def packageName = "com.chilli.revenge"
+    def cmakeVer = buildProfiles['cmakeVer']
+    def cmakeOptions = Eval.me(buildProfiles['cmakeOptions'])
+    def minSdk = buildProfiles['minSdk']
+    def targetSdk = buildProfiles['targetSdk']
+
+    // Apply build profiles
+    namespace packageName
+    compileSdk targetSdk.toInteger()
+    ndkVersion = buildProfiles['ndkVer']
+    if(buildProfiles.containsKey('ndkPath')) {
+        ndkPath = buildProfiles['ndkPath']
+    }
 
     defaultConfig {
-        applicationId "com.chilli.revenge"
-        minSdkVersion PROP_MIN_SDK_VERSION
-        targetSdkVersion PROP_TARGET_SDK_VERSION
+        applicationId packageName
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
         versionCode 2000050
         versionName "2.0.8"
 
         externalNativeBuild {
             cmake {
-                targets 'revenge'
-                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=DDR"
+                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_shared", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DTME=DDR"
+                arguments.addAll(cmakeOptions)
                 cppFlags "-frtti -fexceptions -fsigned-char"
             }
         }
@@ -31,12 +43,12 @@ android {
         java.srcDir "src"
         res.srcDir "res"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "../../Resources"
-        assets.srcDir "../../Resources-revenge"
+        assets.srcDir "build/assets"
     }
 
     externalNativeBuild {
         cmake {
+            version "$cmakeVer"
             path "../../CMakeLists.txt"
         }
     }
@@ -72,33 +84,62 @@ android {
             renderscriptDebuggable true
         }
     }
+
+    aaptOptions {
+       noCompress 'mp3','ogg','wav','mp4','ttf','ttc'
+    }
+
+    buildFeatures {
+        aidl true
+    }
 }
 
-android.applicationVariants.all { variant ->
-    def project_root_folder = "${projectDir}/../.."
-    def dest_assets_folder = "${projectDir}/assets"
+android.applicationVariants.configureEach { variant ->
+    def variantName = variant.name.capitalize()
+    def variantAssets = variant.flavorName
 
-    // delete previous files first
-    delete dest_assets_folder
-    def targetName = variant.name.capitalize()
-    def copyTaskName = "copy${targetName}ResourcesToAssets"
-
-    tasks.register(copyTaskName) {
-        copy {
-            from "${buildDir}/../../../Resources"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
-            exclude "**/*.gz"
+    tasks.register("copy${variantName}ContentToAssets") {
+        doFirst {
+            delete "${projectDir}/build/assets"
         }
-        copy {
-            from "${buildDir}/../../../Resources-revenge"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
-            exclude "**/*.gz"
+        doLast {
+            copy {
+                from "${projectDir}/../../Content"
+                into "${projectDir}/build/assets"
+                exclude "**/*.gz"
+            }
+            copy {
+                from "${projectDir}/build/runtime/axslc"
+                into "${projectDir}/build/assets/axslc"
+            }
+            copy {
+                from "${projectDir}/../../Resources"
+                into "${projectDir}/build/assets"
+                exclude "**/*.gz"
+            }
+            copy {
+                from "${projectDir}/../../Resources-revenge"
+                into "${projectDir}/build/assets"
+                exclude "**/*.gz"
+            }
         }
     }
-    tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':libcocos2dx')
+    implementation project(':libaxmol')
+}
+
+project.afterEvaluate {
+    android.applicationVariants.configureEach { variant ->
+        def variantName = variant.name.capitalize()
+        def externalNativeBuild = tasks.named("externalNativeBuild${variantName}")
+        if (externalNativeBuild) {
+            def copyContentToAssets = tasks.named("copy${variantName}ContentToAssets")
+            copyContentToAssets
+            copyContentToAssets.get().dependsOn externalNativeBuild
+            tasks.named("compile${variantName}JavaWithJavac").get().dependsOn copyContentToAssets
+        }
+    }
 }

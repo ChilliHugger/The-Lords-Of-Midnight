@@ -13,16 +13,19 @@
 #include "ui/CocosGUI.h"
 
 #if !defined (_USE_COCOS_)
-#define _USING_AXMOL_
-#else
-#define _USING_COCOS_
+#if !defined (_USING_AXMOL_)
+    #define _USING_AXMOL_
+#endif
 #endif
 
 
 #define ALPHA(x)                (f32)((x)*255.0)
 #define FROM_ALPHA(x)           (f32)((x)/255.0)
 
+#if !defined(USING_NS_CC)
 #define USING_NS_CC             using namespace cocos2d
+#endif
+
 #define USING_NS_CC_UI          using namespace cocos2d::ui
 
 #if defined(_USING_AXMOL_)
