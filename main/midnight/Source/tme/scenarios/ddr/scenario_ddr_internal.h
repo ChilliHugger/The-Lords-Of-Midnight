@@ -122,9 +122,7 @@ namespace tme {
         virtual MXRESULT Cmd_WalkForward ( bool perform_seek, bool perform_approach );
         virtual mxobject* Cmd_Fight( void );
         virtual mxcharacter* Cmd_Approach ( mxcharacter* character );
-        
-        virtual MXRESULT Cmd_EnterTunnel ( void );
-        virtual MXRESULT Cmd_ExitTunnel ( void );
+                
         virtual MXRESULT Cmd_Use ( void ) ;
         virtual MXRESULT Cmd_Take ( void ) ;
         virtual MXRESULT Cmd_Give ( mxcharacter* character ) ;

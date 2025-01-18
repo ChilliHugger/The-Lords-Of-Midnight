@@ -186,13 +186,6 @@ MXTRACE( "MapSize:: Width = %d Height=%d)", (int)m_size.cx, (int)m_size.cy);
     
     for ( int ii=0; ii<m_size.cx*m_size.cy; ii++ ) {
         m_data[ii].Serialize(ar);
-    
-        
-//#ifdef _DDR_
-//        if ( m_data[ii].HasTunnel() )
-//            m_data[ii].flags |= lf_tunnel_seen ;
-//#endif
-    
     }
     
     if ( ar.IsLoading() )
@@ -252,40 +245,66 @@ bool mxmap::IsLocationVisible( mxgridref l )
     return mapsqr.IsVisible()  ;
 }
     
-#if defined(_DDR_)
 bool mxmap::HasTunnelEntrance( mxgridref l )
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnelEntrance() ;
+#endif
 }
 bool mxmap::HasTunnelExit( mxgridref l )
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnelExit() ;
+#endif
 }
-    
     
 bool mxmap::IsTunnelVisible( mxgridref l )
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
     mxloc& mapsqr = GetAt( l );
     return mapsqr.IsTunnelVisible() ;
+#endif
 }
 
 bool mxmap::IsTunnel( mxgridref l )
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
     mxloc& mapsqr = GetAt( l );
     return mapsqr.HasTunnel() ;
+#endif
 }
     
 bool mxmap::IsTunnelPassageway( mxgridref l )
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
     mxloc& mapsqr = GetAt( l );
     mxterrain_t t = mx->scenario->toScenarioTerrain((mxterrain_t)mapsqr.terrain);
+#if defined(_DDR_)
     return mapsqr.HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
+#endif
+#if defined(_LOM_)
+    return mapsqr.HasTunnel() && (t ==TN_PLAINS || t==TN_MOUNTAIN || t==TN_FOREST || t==TN_DOWNS ) ;
+#endif
+#endif
 }
 
 void mxmap::SetTunnelVisible( mxgridref l, bool visible )
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
     mxloc& mapsqr = GetAt( l );
     if ( visible ) {
         mapsqr.flags|=lf_tunnel_looked_at;
@@ -294,8 +313,11 @@ void mxmap::SetTunnelVisible( mxgridref l, bool visible )
         mapsqr.flags&=~lf_tunnel_looked_at;
     
     IF_NOT_NULL(m_discoverymap)->SetTunnelVisible(l, visible);
+#endif
 }
+
     
+#if defined(_DDR_)
 bool mxmap::HasObject( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
@@ -310,9 +332,6 @@ void mxmap::SetObject( mxgridref l, bool value )
     } else
         mapsqr.flags&=~lf_object;
 }
-
-    
-    
 #endif
     
 /*
@@ -750,19 +769,6 @@ mxgridref loc;
     
 }
  
- //    void putThingsOnMap() {
- //       int r,i;
- //       for (i = 0; i < (0xc000-0xa800); i++) {
- //           r = randomish()&3;
- //           if ( (g_map[i]&0xf) >= GATE  || (g_map[i]&0xf) == r ) {
- //               g_map[i] |= HAS_OBJECT_FLAG; // has object
- //           } else {
- //               g_map[i] &= ~HAS_OBJECT_FLAG; // no object
- //           }
- //       }
- //   }
-    
-    
 mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
 {
     mxloc& l = GetAt ( loc );
@@ -772,10 +778,11 @@ mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
 #endif
     
 #if defined(_DDR_)
-    
     if ( !(l.flags&lf_creature) )
         return OB_NONE ;
+#endif
     
+#if defined(_TUNNELS_)
     //
     if ( l.IsTunnelPassageway() ) {
         // location is a passageway
@@ -855,10 +862,12 @@ void mxmap::PutThingsOnMap ( void )
             if ( (t >= TN_GATE || (u32)(t-TN_PLAINS2) == r) && t != TN_ICYWASTE ) {
                 mapsqr.flags |= lf_creature ;
             
+#if defined(_TUNNELS_)
                 // if it is a tunnel passageway
                 // then use the same types
                 if ( mapsqr.IsTunnelPassageway() )
                     t = TN_ICYWASTE ;
+#endif
    
                 mapsqr.object = location_objects[t-TN_PLAINS2][key];
                 
@@ -922,9 +931,6 @@ bool mxmap::IsLocOnMap ( mxgridref mxloc ) const
     return TRUE;
 }
 
-
-
-
 mxloc::mxloc()
 {
 #if defined(_DDR_)
@@ -948,27 +954,55 @@ mxterrain* tinfo;
     return tinfo->IsInteresting();
 }
 
-#if defined(_DDR_)
-bool mxloc::HasTunnelExit() const 
+bool mxloc::HasTunnelExit() const
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
+#if defined(_DDR_)
     if ( HasTunnel() && (terrain >=TN_GATE && terrain <=TN_PALACE) )
-        return TRUE;
+        return true;
+#endif
+#if defined(_LOM_)
+    if ( HasTunnel() && (terrain == TN_CAVERN || terrain == TN_TOWER || terrain == TN_SNOWHALL) )
+        return true;
+#endif
     return flags & lf_tunnel_exit ;
+#endif
 }
 
 bool mxloc::HasTunnelEntrance() const 
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
+
+#if defined(_DDR_)
     if ( HasTunnel() && (terrain >=TN_GATE && terrain <=TN_PALACE) )
-        return TRUE;
+        return true;
+#endif
+#if defined(_LOM_)
+    if ( HasTunnel() && (terrain == TN_CAVERN || terrain == TN_TOWER || terrain == TN_SNOWHALL) )
+        return true;
+#endif
     return flags & lf_tunnel_entrance ;
+#endif
 }
 
 bool mxloc::IsTunnelPassageway() const
 {
+#if !defined(_TUNNELS_)
+    return false;
+#else
     mxterrain_t t = mx->scenario->toScenarioTerrain((mxterrain_t)terrain);
+#if defined (_DDR_)
     return HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
-}
 #endif
+#if defined(_LOM_)
+    return HasTunnel() && (t ==TN_PLAINS || t==TN_MOUNTAIN || t==TN_FOREST || t==TN_DOWNS ) ;
+#endif
+#endif
+}
     
 void mxloc::Serialize ( archive& ar ) 
 {

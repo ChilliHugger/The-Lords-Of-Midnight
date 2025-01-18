@@ -365,22 +365,23 @@ std::string ddr_text::DescribeCharacterLocation( const mxcharacter* character )
     mxloc& here = mx->gamemap->GetAt ( character->Location() );
     mxgridref loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
     mxloc& there = mx->gamemap->GetAt ( loc );
-    
+
+#if defined(_TUNNELS_)
     if ( character->IsInTunnel() ) {
         return CookedSystemString(SS_TUNNEL,character);
-    }else{
+    }
+#endif
         
-        if ( there.IsMisty() ) {
-            return CookedSystemString(SS_MESSAGE_MIST,character);
-        } else {
-            if ( (here.area!=there.area) ||
-                (here.IsInDomain()!=there.IsInDomain()) ||
-                (here.terrain!=there.terrain) )
-            {
-                return CookedSystemString(SS_MESSAGE6,character);
-            }else{
-                return CookedSystemString(SS_MESSAGE5,character);
-            }
+    if ( there.IsMisty() ) {
+        return CookedSystemString(SS_MESSAGE_MIST,character);
+    } else {
+        if ( (here.area!=there.area) ||
+            (here.IsInDomain()!=there.IsInDomain()) ||
+            (here.terrain!=there.terrain) )
+        {
+            return CookedSystemString(SS_MESSAGE6,character);
+        }else{
+            return CookedSystemString(SS_MESSAGE5,character);
         }
     }
 }

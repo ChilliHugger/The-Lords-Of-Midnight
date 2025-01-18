@@ -36,9 +36,12 @@ typedef struct {
 
 #if defined(_DDR_)
 #define MAX_DISPLAY_CHARACTERS          6
-#define MAX_DISPLAY_CHARACTERS_TUNNEL   4
 #else
 #define MAX_DISPLAY_CHARACTERS          8
+#endif
+
+#if defined(_TUNNELS_)
+#define MAX_DISPLAY_CHARACTERS_TUNNEL   4
 #endif
 
 #define CHARACTER_COLUMN_WIDTH          128

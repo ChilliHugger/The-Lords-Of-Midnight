@@ -18,6 +18,8 @@
 
 USING_NS_AX;
 
+#if defined(_TUNNELS_)
+
 static LPCSTR flames_left[] = { "flame01", "flame02","flame03" };
 static LPCSTR flames_right[] = { "flame03", "flame01","flame02" };
 
@@ -114,3 +116,5 @@ void TunnelView::createSteps()
     steps->setPosition(getContentSize().width / 2, RES(60));
     clipping->addChild(steps);
 }
+
+#endif

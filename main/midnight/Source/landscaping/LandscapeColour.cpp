@@ -56,14 +56,12 @@ void LandscapeColour::updateCharacterNode( Node* node )
     
     shader->AttachShader(node, options->characterTimeShader);
 
-#if defined(_LOM_)
-    auto colour = Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal);
-#endif
-
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     auto colour = options->isInTunnel
         ? Vec4((80.0f/255.0f),0,0,alpha_normal)
         : Vec4(0,0,0,alpha_normal);
+#else
+    auto colour = Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal);
 #endif
 
     
@@ -89,7 +87,9 @@ void LandscapeColour::SetMovementColour(mxtime_t start,mxtime_t end)
     SET_TINT(startTint, start, TINT::TerrainOutline);
     SET_TINT(startTint, start, TINT::TerrainFill);
     SET_TINT(startTint, start, TINT::Person);
+#if defined(_TUNNELS_)
     SET_TINT(startTint, start, TINT::Tunnel);
+#endif
     
     
     // TINT::Normal
@@ -100,7 +100,9 @@ void LandscapeColour::SetMovementColour(mxtime_t start,mxtime_t end)
     SET_TINT(endTint, end, TINT::TerrainOutline);
     SET_TINT(endTint, end, TINT::TerrainFill);
     SET_TINT(endTint, end, TINT::Person);
+#if defined(_TUNNELS_)
     SET_TINT(endTint, end, TINT::Tunnel);
+#endif
 }
 
 void LandscapeColour::SetLookColour(mxtime_t time)
@@ -114,7 +116,9 @@ void LandscapeColour::SetLookColour(mxtime_t time)
     SET_TINT(startTint, time, TINT::TerrainOutline);
     SET_TINT(startTint, time, TINT::TerrainFill);
     SET_TINT(startTint, time, TINT::Person);
+#if defined(_TUNNELS_)
     SET_TINT(startTint, time, TINT::Tunnel);
+#endif
     
     endTint[0]=startTint[0];
     endTint[1]=startTint[1];
@@ -161,7 +165,7 @@ f32 LandscapeColour::CalcCurrentMovementFade ( TINT shade )
     int index = (int)shade;
     if ( !options->isMoving )
     {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         if (options->isInTunnel)
             return FROM_ALPHA(GetTint(timeofday, TINT::Tunnel).a);
 #endif
@@ -211,7 +215,7 @@ Color4B LandscapeColour::CalcCurrentMovementTint ( TINT shade )
 
 Color3B LandscapeColour::GetPersonColour()
 {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if (options->isInTunnel)
         return Color3B(GetTint(timeofday, TINT::Tunnel));
 #endif
@@ -242,7 +246,9 @@ void LandscapeColour::OnXmlInit ( XmlNode* node )
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
                 int id = xml::ReadInt(d,"id");
                 SET_COLOUR(TINT::Person,"normal") ;
+#if defined(_TUNNELS_)
                 SET_COLOUR(TINT::Tunnel,"tunnel") ;
+#endif
             }
         }
     }

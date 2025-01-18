@@ -97,7 +97,7 @@ void LandscapePeople::Initialise()
     TME_GetCharacters ( locid, objects, recruited );
 #endif
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     TME_GetCharactersAtLocation(locid, objects, TRUE, options->isInTunnel);
 #endif
     
@@ -107,9 +107,12 @@ void LandscapePeople::Initialise()
         character c;
         TME_GetCharacter ( c, objects[ii] );
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         if ( options->isLookingDownTunnel && !Character_IsInTunnel(c) )
             continue;
+#endif
+
+#if defined(_DDR_)
         if ( Character_IsDead(c) ||  Character_IsHidden(c) )
             continue;
 #endif
@@ -153,7 +156,7 @@ void LandscapePeople::Initialise()
     
     
     s32 objectid = GET_ID(location_object) ;
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( options->isInTunnel ) {
         objectid = options->isLookingDownTunnel
             ? GET_ID(location_object_tunnel)
@@ -206,7 +209,7 @@ ax::ui::Widget* LandscapePeople::add( std::string& person, int number)
     
     int max_chars = MAX_DISPLAY_CHARACTERS ;
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( options->isLookingDownTunnel )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
 #endif

@@ -25,7 +25,10 @@
 #include "../landscaping/LandscapeLand.h"
 #include "../landscaping/LandscapeTerrain.h"
 #include "../landscaping/LandscapeColour.h"
+
+#if defined(_TUNNELS_)
 #include "../landscaping/TunnelView.h"
+#endif
 
 #include "../tme/tme_interface.h"
 
@@ -45,10 +48,12 @@ enum tagid_t {
     TAG_UNDO_DONE           = 2,
     TAG_MENU_COLLAPSE       _UNUSED_ = 3,
     TAG_DELAYED_SAVE        _UNUSED_ = 4,
+#if defined(_TUNNELS_)
     TAG_ENTER_TUNNEL        _UNUSED_ = 5,
     TAG_ENTER_TUNNEL_DONE   _UNUSED_ = 6,
     TAG_EXIT_TUNNEL         _UNUSED_ = 7,
     TAG_EXIT_TUNNEL_DONE    _UNUSED_ = 8,
+#endif
 };
 
 //#define SHIELD_WIDTH    RES(192)
@@ -265,7 +270,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
 {
     //UIDEBUG("OnMovementComplete(%d)", type);
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( type == LM_MOVE_FORWARD_LEAVE_TUNNEL ) {
         OnExitTunnel();
         return;
@@ -348,7 +353,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
         return;
     }
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( Character_IsInTunnel(TME_CurrentCharacter()) ) {
         return;
     }
@@ -385,15 +390,6 @@ void panel_look::delayedSave()
 {
 }
 
-//void panel_look::OnActionComplete( uiaction* sender, s32 value )
-//{
-//  UNDO
-//  Enter Tunnel
-//  Exit Tunnel
-//  Menu Collapse
-//  Delayed Save
-//}
-
 void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
 {
     info->id = c.id;
@@ -405,7 +401,7 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
     info->person = GetCharacterImage(c);
     info->face = GetCharacterFace(c);
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     info->tunnel = Character_IsInTunnel(c);
     info->lookingdowntunnel = false;
     info->lookingouttunnel = false;
@@ -417,7 +413,6 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
         info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
         info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
     }
-    
 #endif
 
     info->name = StringExtensions::toUpper(c.longname) ;
@@ -496,11 +491,8 @@ void panel_look::setViewForCurrentCharacter()
     options->here.y *= LANDSCAPE_DIR_STEPS;
     options->isMoving = false;
     options->isLooking = false;
-    options->isInTunnel = false;
-    options->isLookingDownTunnel = false;
-    options->isLookingOutTunnel = false;
-
-#if defined(_DDR_)
+    
+#if defined(_TUNNELS_)
     options->isInTunnel = current_info->tunnel;
     options->isLookingDownTunnel = current_info->lookingdowntunnel;
     options->isLookingOutTunnel = current_info->lookingouttunnel;
@@ -567,10 +559,13 @@ void panel_look::UpdateLandscape()
     options->generator->horizontalOffset = options->lookAmount;
     options->generator->landscapeScreenWidth = getContentSize().width ;
 
+#if defined(_TUNNELS_)
     if ( current_info->tunnel ) {
         UIDEBUG("UpdateLandscape: Create Tunnel View");
         current_view = TunnelView::create(options);
-    }else{
+    }else
+#endif
+    {
         UIDEBUG("UpdateLandscape: Create Landscape View");
         current_view = LandscapeView::create(options);
     }
@@ -587,7 +582,7 @@ void panel_look::UpdateLandscape()
 #if defined(_LOM_)
     layHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
 #endif
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if(!current_info->tunnel){
         imgHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainFill)));
     }
@@ -680,7 +675,14 @@ bool panel_look::startLookLeft()
     character&    c = TME_CurrentCharacter();
     Character_LookLeft ( c );
     
-    if(is(mr->settings->flipscreen) || options->isInTunnel)
+    auto flipScreen = is(mr->settings->flipscreen);
+    
+#if defined(_TUNNELS_)
+    if (options->isInTunnel)
+        flipScreen = true;
+#endif
+
+    if(flipScreen)
     {
         stopRotating(LM_ROTATE_LEFT);
         return true;
@@ -727,7 +729,13 @@ bool panel_look::startLookRight()
     character&    c = TME_CurrentCharacter();
     Character_LookRight ( c );
     
-    if(is(mr->settings->flipscreen) || options->isInTunnel)
+    auto flipScreen = is(mr->settings->flipscreen);
+#if defined(_TUNNELS_)
+    if (options->isInTunnel)
+        flipScreen = true;
+#endif
+    
+    if(flipScreen)
     {
         stopRotating(LM_ROTATE_RIGHT);
         return true;
@@ -874,7 +882,13 @@ bool panel_look::startMoving()
     
     if ( Character_Move(c) ) {
         
-        if ( is(mr->settings->flipscreen) || options->isInTunnel ) {
+        auto flipScreen = is(mr->settings->flipscreen);
+#if defined(_TUNNELS_)
+        if (options->isInTunnel)
+            flipScreen = true;
+#endif
+    
+        if ( flipScreen ) {
             stopMoving();
             return true;
         }
@@ -1327,6 +1341,9 @@ void panel_look::OnNotification( Ref* sender )
                 return;
             break;
         }
+#endif
+
+#if defined(_TUNNELS_)
         case ID_ENTER_TUNNEL:
         {
             if ( OnEnterTunnel() )
@@ -1401,8 +1418,7 @@ bool panel_look::OnUndo ( savemode_t mode )
 }
 
 
-#if defined(_DDR_)
-
+#if defined(_TUNNELS_)
 bool panel_look::OnEnterTunnel()
 {
     hideMenus();
@@ -1432,31 +1448,11 @@ bool panel_look::OnExitTunnel()
     });
     return true;
 }
-
-#endif // _DDR_
+#endif // _TUNNELS_
 
 
 void panel_look::OnSetupIcons()
 {
-
-// TODO: Debug menu
-//    if ( debug ) {
-//        debug->ClearItems();
-//
-//        if ( gl->stories->canUndo(savemode_night) )
-//            debug->AddItem(i_debug_undo_night);
-//
-//        if ( gl->stories->canUndo(savemode_dawn) )
-//            debug->AddItem(i_debug_undo_dawn);
-//
-//        if ( gl->stories->canUndo(savemode_normal) )
-//            debug->AddItem(i_debug_undo);
-//
-//        debug->AddItem(i_debug_email);
-//        debug->AddItem(i_debug_map);
-//    }
-    
-    
     if ( i_command_window==nullptr )
         return;
     
@@ -1654,9 +1650,11 @@ bool panel_look::allowDragDownMove()
 
 bool panel_look::allowDragLook()
 {
+#if defined(_TUNNELS_)
     if(current_info->tunnel) {
         return false;
     }
+#endif
 
     CF_NAVIGATION value = mr->settings->nav_mode ;
     if ( value != CF_NAVIGATION::PRESS && value != CF_NAVIGATION::FULL && isNot(mr->settings->flipscreen) )

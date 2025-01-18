@@ -54,7 +54,9 @@ USING_NS_AX;
 uithinkpage::uithinkpage() :
     approach(false),
     disband(false),
+#if defined(_TUNNELS_)
     enterTunnel(false),
+#endif
     fight(false),
     leave(false),
     postMen(false),
@@ -138,6 +140,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     unhide->setVisible(this->unhide);
     unhide->setEnabled(this->unhide);
     scrollView->addChild(unhide);
+    addShortcutKey(unhide, ID_UNHIDE,       K_UNHIDE);
 #endif
         
     // Leave
@@ -231,15 +234,18 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
         gradientC->setPosition(pos);
         scrollView->addChild(gradientC);
     }
+    
+    addShortcutKey(fight, ID_FIGHT,        K_FIGHT);
 #endif
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     // Enter Tunnel
     auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
     enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
     enterTunnel->setVisible(this->enterTunnel);
     enterTunnel->setEnabled(this->enterTunnel);
     imgTerrain->addChild(enterTunnel);
+    addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
 #endif
 
     uihelper::AddTopLeft(safeArea, scrollView);
@@ -249,13 +255,6 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
  // map keyboard shortcut keys to layout children
     uishortcutkeys::registerCallback(this, clickCallback);
 
-#if defined(_LOM_)
-    addShortcutKey(unhide, ID_UNHIDE,       K_UNHIDE);
-    addShortcutKey(fight, ID_FIGHT,        K_FIGHT);
-#endif
-#if defined(_DDR_)
-    addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
-#endif
     addShortcutKey(approach, ID_APPROACH,   K_APPROACH);
     addShortcutKey(recruitMen, ID_RECRUITMEN, K_RECRUIT);
     addShortcutKey(postMen, ID_POSTMEN,    K_POST);
@@ -346,6 +345,9 @@ void uithinkpage::displayCharacterTerrain(  const character& c )
 {
 #if defined(_DDR_)
     imgTerrain->setVisible(false);
+#endif
+
+#if defined(_TUNNELS_)
     if ( Character_InTunnel(c) )
         return ;
 #endif
@@ -655,17 +657,22 @@ void uithinkpage::checkPlace ( void )
 {
     std::string text;
     
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_TUNNELS_)
     
     auto c = TME_CurrentCharacter();
     TME_GetCharacterLocationInfo(c);
     
+#if defined(_TUNNELS_)
     enterTunnel = location_flags.Is(lif_enter_tunnel);
+#endif
     
+#if defined(_DDR_)
     if ( ID_TYPE(id) ==  IDT_CHARACTER ) {
         checkNormal();
         return;
     }
+#endif
+
 #endif
     
     

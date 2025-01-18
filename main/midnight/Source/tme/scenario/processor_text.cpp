@@ -914,20 +914,29 @@ std::string buffer;
     auto scenario = static_cast<ddr_x*>(mx->scenario);
     
     mxobject* object = scenario->FindObjectAtLocation(character->Location());
+    
+#if defined(_TUNNELS_)
     bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
+#else
+    bool entrance = false;
+#endif
 
-    if ( object== nullptr && !entrance )
+    if ( object == nullptr && !entrance )
         return "";
     
     buffer = character->Shortname() + " sees ";
     if ( object ) {
         buffer += "the " + DescribeObjectWithPower(object) ;
     }
+
+#if defined(_TUNNELS_)
     if ( entrance ) {
         if ( object )
             buffer += "and ";
         buffer += "an underground entrance";
     }
+#endif
+    
     buffer += ". ";
     
     return buffer;
@@ -939,9 +948,11 @@ std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter*
     
     this->loc = loc ;
     
+#if defined(_TUNNELS_)
     if ( character && character->IsInTunnel() ) {
         return "in the tunnel";
     }
+#endif
     
     std::string msg = "{loc:terrain:prep} ";
     auto buffer = CookText(msg) + DescribeLocation(loc);

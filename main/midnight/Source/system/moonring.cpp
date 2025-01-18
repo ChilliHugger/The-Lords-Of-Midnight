@@ -519,7 +519,9 @@ bool moonring::rest()
     showPage(MODE_THINK);
     return true;
 }
+#endif
 
+#if defined(_TUNNELS_)
 bool moonring::enterTunnel()
 {
     character& c = TME_CurrentCharacter();
@@ -528,7 +530,6 @@ bool moonring::enterTunnel()
     look();
     return true;
 }
-
 #endif
 
 //

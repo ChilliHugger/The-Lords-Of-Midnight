@@ -104,7 +104,7 @@ Sprite* uigroupedlord::getFaceImage(character& c)
     if ( Character_IsDead(c) )
         return Sprite::createWithSpriteFrameName("f_dead!");
     
-#ifdef _DDR_
+#if defined(_DDR_)
     auto face = GetCharacterFace(c);
     return Sprite::create( face );
 #else

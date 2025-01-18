@@ -283,21 +283,21 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         MAP_FLAG_PROPERTY( IsMisty,         lf_mist)
         MAP_FLAG_PROPERTY( IsStronghold,    lf_stronghold)
         MAP_FLAG_PROPERTY( IsRouteNode,     lf_routenode)
+
 #if defined(_DDR_)
-        MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
-        MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
         MAP_FLAG_PROPERTY( HasObject,       lf_object)
 #endif
         MAP_FLAG_PROPERTY( HasArmy,         lf_army)
         MAP_FLAG_PROPERTY( HasCharacter,    lf_character)
+        
         bool IsInteresting() const ;
         void Serialize ( chilli::lib::archive& ar ) ;
         
-#if defined(_DDR_)
+        MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
+        MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
         bool HasTunnelExit() const ;
         bool HasTunnelEntrance() const ;
         bool IsTunnelPassageway() const ;
-#endif
         
     public:
         u64 terrain             : 7 ; // 128 ( 16x8 )
@@ -348,14 +348,14 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         void SetLocationLookedAt( mxgridref l, bool visible );
         void SetLocationVisited( mxgridref l, bool visible );
 
-#if defined(_DDR_)
         bool HasTunnelEntrance( mxgridref l );
         bool HasTunnelExit( mxgridref l );
-
         void SetTunnelVisible( mxgridref l, bool visible );
         bool IsTunnelVisible( mxgridref loc );
         bool IsTunnel( mxgridref loc );
         bool IsTunnelPassageway( mxgridref l );
+
+#if defined(_DDR_)
         bool HasObject( mxgridref l );
         void SetObject( mxgridref l, bool value );
         void MoveMists ( void );
@@ -422,12 +422,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         void SetLocationLookedAt( mxgridref l, bool visible );
         void SetLocationVisited( mxgridref l, bool visible );
         void CheckVisibleArea( mxgridref l );
-        
-        
-#if defined(_DDR_)
+                
         bool IsTunnelVisible( mxgridref l );
         void SetTunnelVisible( mxgridref l, bool visible );
-#endif
         
         void TransferFromMap( mxmap* map );
         
@@ -950,6 +947,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY ( IsInBattle, cf_inbattle )
             FLAG_PROPERTY ( HasWonBattle, cf_wonbattle )
             FLAG_PROPERTY ( IsInTunnel, cf_tunnel )
+
             FLAG_PROPERTY ( HasUsedObject, cf_usedobject )
             FLAG_PROPERTY ( IsResting, cf_resting )
             FLAG_PROPERTY ( HasFollowers, cf_followers )
@@ -993,6 +991,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual mxobject* Cmd_PickupObject ( void );
             virtual void Cmd_Dead ( void );
             
+#if defined(_TUNNELS_)
+            virtual MXRESULT Cmd_EnterTunnel ( void );
+            virtual MXRESULT Cmd_ExitTunnel ( void );
+#endif
+            
             virtual MXRESULT EnterBattle ( void );
 
             virtual bool EnterLocation ( mxgridref loc );
@@ -1016,7 +1019,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual bool ShouldDieInFight() const;
             virtual bool ShouldHaveOneToOneWithNasty() const;
             virtual void Dismount();
-
+            virtual void CheckPerformSeek(bool seek, bool tunnelexit);
+    
             virtual bool AddFollower ( mxcharacter* c );
             virtual bool RemoveFollower ( mxcharacter* c );
             virtual void WalkFollowersForward();
