@@ -134,8 +134,7 @@ namespace tme {
         }
         
         if ( IsNight() ) {
-            info->flags.Reset( lif_enter_tunnel
-                              |lif_enterbattle
+            info->flags.Reset(lif_enterbattle
                               |lif_fight
                               |lif_guardmen
                               |lif_recruitchar
@@ -146,6 +145,7 @@ namespace tme {
                               |lif_use
                               |lif_give
                               |lif_hide
+                              |lif_enter_tunnel
                               );
         }
         
@@ -496,12 +496,14 @@ namespace tme {
         t = (mxterrain_t)mx->gamemap->GetAt ( location+looking ).terrain ;
         t = mx->scenario->toScenarioTerrain(t);
         
+#if defined(_TUNNELS_)
         if ( IsInTunnel() ) {
             if(mx->isRuleEnabled(RF_FAST_TUNNELS)) {
                 fastTunnels = true;
             }
             t=TN_ICYWASTE;
         }
+#endif
         
         // start with intial terrain
         tinfo = mx->TerrainById( t );
@@ -519,11 +521,13 @@ namespace tme {
             ? rinfo->InitialMovementValue()
             : rinfo->RidingMovementMultiplier();
 
+#if defined(_TUNNELS_)
         if (fastTunnels) {
             if(Race()==RA_DWARF || Race() == RA_GIANT) {
                 raceAdjustment = 2;
             }
         }
+#endif
         
         TimeCost += raceAdjustment;
         
@@ -559,6 +563,7 @@ namespace tme {
         if ( Traits().Is(ct_slow) )
             TimeCost += 1;
 
+#if defined(_TUNNELS_)
         if(fastTunnels) {
             if(Race()==RA_DWARF || Race() == RA_GIANT) {
                 TimeCost /= 3;
@@ -566,6 +571,7 @@ namespace tme {
                 TimeCost /= 2;
             }
         }
+#endif
 
         // mountains sap more energy for everyone except giants
         if ( t == TN_MOUNTAIN || t == TN_MOUNTAIN2 ) {
@@ -601,9 +607,7 @@ namespace tme {
             EnterLocation ( location );
 
         // if this location has an exit then we must exit
-        bool exit_tunnel = false;
-        if ( mx->gamemap->GetAt ( location ).HasTunnelExit() )
-            exit_tunnel=true;
+        bool exit_tunnel = mx->gamemap->GetAt ( location ).HasTunnelExit() ;
 
         if ( !IsAIControlled() )
             mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
@@ -616,106 +620,20 @@ namespace tme {
         // if we have moved, we are no longer in battle
         flags.Reset(cf_inbattle|cf_preparesbattle);
         
-        // 
-        if ( !IsAIControlled() && perform_seek ) {
-            // quick fix
-            if ( exit_tunnel ) flags.Reset ( cf_tunnel );
-            if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
-                Cmd_Seek();
-            }
-            if ( exit_tunnel ) flags.Set ( cf_tunnel );
-        }
-        
+        // auto seek
+        CheckPerformSeek (perform_seek, exit_tunnel);
+                    
         WalkFollowersForward();
-        
+      
+#if defined(_TUNNELS_)
         // if this location has an exit then we must exit
         if ( exit_tunnel )
             Cmd_ExitTunnel();
+#endif
 
         return MX_OK ;
     }
-    
-    MXRESULT ddr_character::Cmd_EnterTunnel ( void )
-    {
-        if ( IsFollowing() )
-            return MX_FAILED ;
         
-        if ( IsInTunnel() )
-            return MX_FAILED ;
-        
-        mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
-        if ( !mapsqr.HasTunnelEntrance() )
-            return MX_FAILED ;
-        
-        // remove army from location
-        mx->gamemap->SetLocationArmy(Location(),0);
-        mx->gamemap->SetLocationCharacter(Location(),0);
-        
-        flags.Set ( cf_tunnel );
-        EnterLocation(Location());
-        
-        
-        
-        // TODO:
-        // we now need to cycle round the locations
-        // looking for the location that connections to us
-        // and drop us in there
-        for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
-            mxdir_t d = (mxdir_t) ii ;
-            loc_t l = Location() + d ;
-            if ( mx->gamemap->GetAt ( l ).HasTunnel() ) {
-                location = l ;
-                looking=d;
-                break;
-            }
-            
-        }
-        
-        // new location
-        EnterLocation(Location());
-        
-        // group enter tunnel
-        
-        FOR_EACH_FOLLOWER(f) {
-            f->Flags().Set(cf_tunnel);
-            f->looking = Looking();
-            f->Location(Location());
-        });
-        
-        mx->scenario->SetMapArmies();
-        
-        CommandTakesTime(TRUE);
-        
-        return MX_OK ;
-    }
-    
-    MXRESULT ddr_character::Cmd_ExitTunnel ( void )
-    {
-        if ( IsFollowing() )
-            return MX_FAILED ;
-        
-        if ( !IsInTunnel() )
-            return MX_FAILED ;
-        
-        mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
-        
-        if ( !mapsqr.HasTunnelExit() )
-            return MX_FAILED ;
-        
-        flags.Reset ( cf_tunnel );
-        
-        // group exit tunnel
-        FOR_EACH_FOLLOWER(f) {
-            f->Flags().Reset(cf_tunnel);
-            f->looking = Looking();
-            f->Location(Location());
-        });
-        
-        CommandTakesTime(TRUE);
-        
-        return MX_OK ;
-    }
-    
     MXRESULT ddr_character::Cmd_Take ( void )
     {
         return Cmd_PickupObject()==NULL ? MX_FAILED : MX_OK ;
@@ -942,6 +860,7 @@ namespace tme {
         // set time of day
         //        
         Location(ch_morkin->Location());
+        
         Flags().Reset( cf_tunnel );
         
         if ( ch_morkin->IsInTunnel() )
@@ -1623,7 +1542,11 @@ void ddr_character::Displace()
     RULEFLAGS rule = IsAIControlled() ? RF_AI_IMPASSABLE_MOUNTAINS : RF_IMPASSABLE_MOUNTAINS ;
     bool isImpassableRuleEnabled = mx->isRuleEnabled(rule);
               
-    Flags().Reset(cf_tunnel|cf_preparesbattle|cf_battleover);
+    Flags().Reset(
+            cf_preparesbattle
+            |cf_battleover
+            |cf_tunnel
+            );
 
     // if impassable mountains is enabled then we can't use the default
     // ddr displacement because it moves more than one location

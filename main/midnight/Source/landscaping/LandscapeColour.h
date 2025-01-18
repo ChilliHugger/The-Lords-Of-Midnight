@@ -19,7 +19,9 @@ enum class TINT {
     Normal = 0,
     TerrainOutline = 1,
     TerrainFill = 2,
+#if defined(_TUNNELS_)
     Tunnel = 3,
+#endif
     Person = 4,
 };
 

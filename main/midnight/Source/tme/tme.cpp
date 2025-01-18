@@ -34,8 +34,9 @@ mxid            location_infront_object;
 loc_armyinfo_t  location_infront_armies;
 loc_armyinfo_t  location_armies;
 
-#if defined(_DDR_)
 mxid            location_object_tunnel;
+
+#if defined(_DDR_)
 mxid            location_someone_to_give_to;
 mxid            location_object_to_take;
 #endif
@@ -349,12 +350,7 @@ s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, boo
 {
     args[0] = &collection ;
     args[1] = id ;
-#if defined(_LOM_)
-    args[2] = (s32)(showall?slf_all:slf_none);
-#endif
-#if defined(_DDR_)
     args[2] = (s32)(showall?slf_all:slf_none)|(s32)(showtunnel?slf_tunnel:slf_none);
-#endif
     
     mxi->GetProperties ( "CharsAtLoc", args, 3 );
     return collection.Count();
@@ -393,9 +389,7 @@ bool TME_GetLocationInfo( loc_t loc )
     location_infront.y = 0;
     location_infront_object = OB_NONE ;
     location_object= OB_NONE ;
-#if defined(_DDR_)
     location_object_tunnel = OB_NONE ;
-#endif
     location_stubborn_lord_attack=IDT_NONE;
     location_stubborn_lord_move=IDT_NONE;
     
@@ -406,13 +400,10 @@ bool TME_GetLocationInfo( loc_t loc )
     location_armies.regiment_warriors = 0;
     location_armies.regiment_riders = 0;
     
-    
-    
-    
     //
     // Get the info for this location
     //
-    if ( MXSUCCESS( mxi->GetEntityProperties ( MAKE_LOCID(loc.x,loc.y), "LOCATIONINFO", args, 11 ) ) ) {
+    if ( MXSUCCESS( mxi->GetEntityProperties ( MAKE_LOCID(loc.x,loc.y), "LOCATIONINFO", args, 10 ) ) ) {
 
         location_flags.Set(args[1]);
         location_fightthing = args[2].vSInt32;
@@ -423,17 +414,10 @@ bool TME_GetLocationInfo( loc_t loc )
         location_armies.friends_riders = args[6];
         location_armies.regiment_warriors = args[7];
         location_armies.regiment_riders = args[8];
-        
         location_object= args[9].vSInt32; ;
-#if defined(_DDR_)
         location_object_tunnel= args[10].vSInt32;
-#endif
-    
-        
         return true;
-        
     }
-    
     
     return false;
 }
@@ -454,8 +438,9 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     location_stubborn_lord_attack=IDT_NONE;
     location_stubborn_lord_move=IDT_NONE;
     
-#if defined(_DDR_)
     location_object_tunnel = OB_NONE ;
+
+#if defined(_DDR_)
     location_someone_to_give_to=IDT_NONE;
     location_object_to_take=IDT_NONE;
 #endif
@@ -470,14 +455,8 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     //
     // Get the characters info for this location
     //
-#if defined(_DDR_)
-    int args_count = 18 ;
-#endif
-#if defined(_LOM_)
-    int args_count = 16 ;
-#endif
-    
-    if ( MXSUCCESS( mxi->GetEntityProperties ( c.id, "LOCATIONINFO", args, args_count ) ) ) {
+
+    if ( MXSUCCESS( mxi->GetEntityProperties ( c.id, "LOCATIONINFO", args, 17 ) ) ) {
         // dir_t            argv[1]        direction looking
         location_lookingatid = args[2];
         location_infrontid = args[3];
@@ -502,8 +481,9 @@ bool TME_GetCharacterLocationInfo ( const character& c )
         location_stubborn_lord_attack=args[13].vSInt32;
         location_stubborn_lord_move=args[14].vSInt32;
         
-#if defined(_DDR_)
         location_object_tunnel = args[15].vSInt32;
+
+#if defined(_DDR_)
         location_someone_to_give_to = args[16].vSInt32;
         location_object_to_take = args[17].vSInt32;
 #endif
@@ -648,7 +628,7 @@ bool TME_SaveDiscoveryMap ( const std::string&  filespec )
     return TRUE;
 }
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
 bool Character_EnterTunnel ( const character& c )
 {
     args[0] = c.id ;
@@ -657,9 +637,9 @@ bool Character_EnterTunnel ( const character& c )
     TME_RefreshCurrentCharacter();
     return TRUE;
 }
+#endif // _TUNNELS_
 
-//void Character_ExitTunnel ( const character& c );
-
+#if defined(_DDR_)
 void Character_Rest ( const character& c )
 {
     args[0] = c.id;
@@ -667,8 +647,6 @@ void Character_Rest ( const character& c )
         TME_RefreshCurrentCharacter();
     }
 }
-
-
 #endif //_DDR_
 
 void Character_Lookat ( const character& c, loc_t location )

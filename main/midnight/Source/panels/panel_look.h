@@ -33,7 +33,7 @@ enum LANDSCAPE_MOVEMENT
     LM_ROTATE_RIGHT=2,
     LM_MOVE_FORWARD=3,
     LM_MOVE_BACKWARD=4,
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     LM_MOVE_FORWARD_LEAVE_TUNNEL=5,
 #endif
     LM_DRAG_START=10,
@@ -54,9 +54,11 @@ typedef struct {
     std::string     name;
     std::string     locationtext;
 
+#if defined(_TUNNELS_)
     bool            tunnel;
     bool            lookingdowntunnel;
     bool            lookingouttunnel;
+#endif
 
 } locationinfo_t ;
 
@@ -134,7 +136,7 @@ protected:
     
     // Actions and Commands
     bool OnUndo ( savemode_t mode );
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     bool OnEnterTunnel();
     bool OnExitTunnel();
 #endif

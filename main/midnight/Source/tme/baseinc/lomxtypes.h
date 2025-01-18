@@ -8,6 +8,14 @@ using namespace chilli::types;
 //#define _DDR_
 //#define _LOM_
 
+#if defined(_DDR_)
+#define _TUNNELS_
+#endif
+
+#if defined(_LOM_)
+// #define _TUNNELS_
+#endif
+
 
 /* these are the various enums
  * that define variable types used within 
@@ -813,16 +821,15 @@ namespace tme {
             lf_terrain_custom   = MXBIT(11),    // terrain is custom stored
             lf_object_custom    = MXBIT(12),    // object is custom stored
             lf_area_custom      = MXBIT(13),    // area is custom stored
-#if defined(_DDR_)
             lf_tunnel_exit      = MXBIT(14),    // can exit tunnel here
             lf_tunnel_entrance  = MXBIT(15),    // can enter tunnel here
-#endif
             lf_looked_at        = MXBIT(16),    // has been stood in front of
             lf_visited          = MXBIT(17),    // player has visited this location
-#if defined(_DDR_)
             lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
             lf_tunnel_visited   = MXBIT(19),    // played has visited the tunnel location
             lf_tunnel_passageway    = MXBIT(20),    // tunnel is a pssageway NOTE: this is technicall ~(lt_tunnel_exit|lf_tunnel_entrance)
+
+#if defined(_DDR_)
             lf_object           = MXBIT(21),    // object to take
             lf_object_special   = MXBIT(22),    // the object to take is one of the special objects
 #endif
@@ -857,7 +864,7 @@ namespace tme {
             cf_resting          = MXBIT(16),    // currently resting
             cf_inbattle         = MXBIT(17),    // currently in battle
             cf_wonbattle        = MXBIT(18),    // just won a battle
-            cf_tunnel           = MXBIT(19),    // currently in a tunnel (DDR)
+            cf_tunnel           = MXBIT(19),    // currently in a tunnel
             cf_usedobject       = MXBIT(20),    // has used his special object (DDR)
             cf_followers        = MXBIT(21),    // has followers
             cf_preparesbattle   = MXBIT(22),    // prepares to do battle
@@ -888,7 +895,7 @@ namespace tme {
         enum REGIMENTFLAGS {
             rf_direct           = MXBIT(0),     // regiment will directly do their command
             rf_inbattle         = MXBIT(17),    // currently in battle
-            rf_tunnel           = MXBIT(19),    // currently in a tunnel (DDR)
+            rf_tunnel           = MXBIT(19),    // currently in a tunnel
         };
 
         enum OBJECTFLAGS {

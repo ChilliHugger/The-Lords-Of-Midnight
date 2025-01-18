@@ -167,9 +167,18 @@ namespace tme {
             // create a new info class
             // for our current location and the direction
             // we are looking
-            info = new mxlocinfo ( Location(), Looking(), this, (IsInTunnel() ? slf_tunnel : slf_none)  );
+            auto flags = slf_none;
+            
+            #if defined(_TUNNELS)
+                if (IsInTunnel())
+                    flags = slf_tunnel;
+            #endif
+            
+            info = new mxlocinfo ( Location(), Looking(), this, flags );
 
-            //info->owner = (mxcharacter*)this ;
+            if ( IsNight() ) {
+                info->flags.Reset(lif_enter_tunnel);
+            }
 
             if ( IsDead() )
                 return info;
@@ -313,10 +322,8 @@ namespace tme {
             // info->flags.Set(lif_rest);
             
             mxthing_t thing = (mxthing_t)info->mapsqr.object;
-#if defined(_DDR_)
             if ( info->mapsqr.IsTunnelPassageway() && !IsInTunnel() )
                 thing=OB_NONE;
-#endif
             
             // can we fight ?
             // can we fight the object currently in this location?
@@ -447,7 +454,7 @@ namespace tme {
                     location = loc ;
                     if ( IsRecruited() ) {
                         EnterLocation ( loc );
-                        mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+                        mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
                     }
                     break;
                 }
@@ -625,8 +632,12 @@ namespace tme {
             mx->scenario->SetMapArmies();
 
             EnterLocation ( location );
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
-          
+            
+            // if this location has an exit then we must exit
+            bool exit_tunnel = mx->gamemap->GetAt ( location ).HasTunnelExit() ;
+            
+            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            
             // calculate our movement values
             TimeCost = rinfo->InitialMovementValue();
 
@@ -674,16 +685,114 @@ namespace tme {
             }
             
             // auto seek
-            if ( perform_seek ) {
-                if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
-                    Cmd_Seek();
-                }
-            }
+            CheckPerformSeek (perform_seek, exit_tunnel);
             
             WalkFollowersForward();
             
+#if defined(_TUNNELS_)
+            // if this location has an exit then we must exit
+            if ( exit_tunnel )
+                Cmd_ExitTunnel();
+#endif
+            
             return MX_OK ;
         }
+        
+        void mxcharacter::CheckPerformSeek(bool seek, bool tunnelexit)
+        {
+            if ( !IsAIControlled() && seek ) {
+                // quick fix
+                if ( tunnelexit ) flags.Reset ( cf_tunnel );
+
+                if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
+                    Cmd_Seek();
+                }
+
+                if ( tunnelexit ) flags.Set ( cf_tunnel );
+            }
+        }
+
+#if defined(_TUNNELS_)
+        MXRESULT mxcharacter::Cmd_EnterTunnel ( void )
+        {
+            if ( IsFollowing() )
+                return MX_FAILED ;
+
+            if ( IsInTunnel() )
+                return MX_FAILED ;
+                
+            mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
+            if ( !mapsqr.HasTunnelEntrance() )
+                return MX_FAILED ;
+            
+            // remove army from location
+            mx->gamemap->SetLocationArmy(Location(),0);
+            mx->gamemap->SetLocationCharacter(Location(),0);
+            
+            flags.Set ( cf_tunnel );
+
+            EnterLocation(Location());
+            
+            // TODO:
+            // we now need to cycle round the locations
+            // looking for the location that connections to us
+            // and drop us in there
+            for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
+                mxdir_t d = (mxdir_t) ii ;
+                loc_t l = Location() + d ;
+                if ( mx->gamemap->GetAt ( l ).HasTunnel() ) {
+                    location = l ;
+                    looking=d;
+                    break;
+                }
+                
+            }
+            
+            // new location
+            EnterLocation(Location());
+            
+            // group enter tunnel
+            
+            FOR_EACH_FOLLOWER(f) {
+                f->Flags().Set(cf_tunnel);
+                f->looking = Looking();
+                f->Location(Location());
+            });
+            
+            mx->scenario->SetMapArmies();
+            
+            CommandTakesTime(TRUE);
+            
+            return MX_OK ;
+        }
+        
+        MXRESULT mxcharacter::Cmd_ExitTunnel ( void )
+        {
+            if ( IsFollowing() )
+                return MX_FAILED ;
+            
+            if ( !IsInTunnel() )
+                return MX_FAILED ;
+            
+            mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
+            
+            if ( !mapsqr.HasTunnelExit() )
+                return MX_FAILED ;
+            
+            flags.Reset ( cf_tunnel );
+            
+            // group exit tunnel
+            FOR_EACH_FOLLOWER(f) {
+                f->Flags().Reset(cf_tunnel);
+                f->looking = Looking();
+                f->Location(Location());
+            });
+            
+            CommandTakesTime(TRUE);
+            
+            return MX_OK ;
+        }
+#endif
 
         void mxcharacter::WalkFollowersForward()
         {
@@ -726,7 +835,9 @@ namespace tme {
         { 
             //looking=(mxdir_t) ((looking-1)&7); 
             looking = PREV_DIRECTION(looking);
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            
+            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
 #endif
@@ -738,7 +849,9 @@ namespace tme {
         { 
             //looking=(mxdir_t)((looking+1)&7); 
             looking = NEXT_DIRECTION(looking);
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            
+            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
 #endif
@@ -749,7 +862,9 @@ namespace tme {
         MXRESULT mxcharacter::Cmd_LookDir ( mxdir_t dir )
         { 
             looking=(mxdir_t)((dir)&7); 
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            
+            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
 #endif
@@ -1248,13 +1363,10 @@ namespace tme {
             if ( l != l2 )
                 return FALSE ;
             
-#if defined(_DDR_)
             // they both need to be in or out of a tunnel
             if ( c->IsInTunnel() != IsInTunnel() )
                 return FALSE;
-#endif
-            
-            
+                
             // we must be loyal to the same character
             if ( !IsFriend(c) )
                 return FALSE ;

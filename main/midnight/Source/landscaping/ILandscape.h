@@ -48,9 +48,11 @@ public:
     bool                    isLooking;
     f32                     lookAmount;
     f32                     lookOffsetAdjustment;
+#if defined(_TUNNELS_)
     bool                    isInTunnel;
     bool                    isLookingDownTunnel;
     bool                    isLookingOutTunnel;
+#endif
     mxtime_t                timeofday;
     f32                     resScale;
     

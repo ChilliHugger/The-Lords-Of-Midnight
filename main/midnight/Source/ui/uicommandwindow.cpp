@@ -104,9 +104,12 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     addShortcutKey(ID_GIVE,         K_GIVE);
     addShortcutKey(ID_TAKE,         K_TAKE);
     addShortcutKey(ID_USE,          K_USE);
-    addShortcutKey(ID_ENTER_TUNNEL, K_TUNNEL);
     addShortcutKey(ID_REST,         K_REST);
 #endif
+#if defined(_TUNNELS_)
+    addShortcutKey(ID_ENTER_TUNNEL, K_TUNNEL);
+#endif
+
     addShortcutKey(ID_APPROACH,   K_APPROACH);
     addShortcutKey(ID_RECRUITMEN, K_RECRUIT);
     addShortcutKey(ID_POSTMEN,    K_POST);
@@ -174,7 +177,9 @@ void uicommandwindow::initialiseCommands()
         
     auto rest = uihelper::CreateImageButton("i_rest", ID_REST, callback);
     addItem(rest,CHOOSE_REST);
-    
+#endif
+
+#if defined(_TUNNELS_)
     auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, callback);
     addItem(tunnel, CHOOSE_TUNNEL);
 #endif
@@ -280,9 +285,12 @@ void uicommandwindow::updateElements()
     setupUseText();
     
     ENABLE_IF_LOC_FLAG(ID_REST, lif_rest);
+#endif
+
+#if defined(_TUNNELS_)
     ENABLE_IF_LOC_FLAG(ID_ENTER_TUNNEL, lif_enter_tunnel);
 #endif
-    
+
     // APPROACH
     ENABLE_IF_LOC_FLAG(ID_APPROACH, lif_recruitchar);
     setupApproachText();
