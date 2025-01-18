@@ -216,7 +216,7 @@ namespace tme {
                 
                 out->object = IDT_NONE ;
                 out->object_tunnel = IDT_NONE ;
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 if ( m.IsTunnelPassageway() )
                     out->object_tunnel = m.object ? MAKE_ID(IDT_OBJECT,m.object) : OB_NONE ;
                 else
@@ -234,21 +234,22 @@ namespace tme {
                     out->discovery_flags.Set( mx->discoverymap->GetAt(loc) );
                 }
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 if ( m.HasTunnelExit() )
                     out->flags.Set(lf_tunnel_exit);
                 if ( m.HasTunnelEntrance() )
                     out->flags.Set(lf_tunnel_entrance);
                 if ( m.IsTunnelPassageway() )
                     out->flags.Set(lf_tunnel_passageway);
+#endif
                     
+#if defined(_DDR_)
                 if ( m.HasObject() ) {
                     auto scenario = static_cast<ddr_x*>(mx->scenario);
                     auto obj = static_cast<ddr_object*>(scenario->FindObjectAtLocation(loc));
                     if ( obj && obj->IsSpecial() )
                         out->flags.Set(lf_object_special);
                 }
-
 #endif
                 return MX_OK ;
                 }
@@ -679,6 +680,8 @@ namespace tme {
 #if defined(_DDR_)
                 argv[16] = mxentity::SafeIdt(locinfo->someone_to_give_to) ;
                 argv[17] = mxentity::SafeIdt(locinfo->object_to_take) ;
+#endif
+#if defined(_TUNNELS_)
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[15] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[12] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;
@@ -718,7 +721,7 @@ namespace tme {
                 argv[7] = locinfo->regiments.warriors ;
                 argv[8] = locinfo->regiments.riders ;
                         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 if ( locinfo->mapsqr.IsTunnelPassageway()) {
                     argv[10] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[9] =  MAKE_ID(IDT_OBJECT,OB_NONE) ;

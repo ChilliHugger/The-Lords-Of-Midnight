@@ -287,9 +287,11 @@ namespace tme {
                 if(target->IsType(IDT_CHARACTER)) {
                     auto character = dynamic_cast<mxcharacter*>(target);
                     if (character != nullptr) {
+#if defined(_TUNNELS_)
                         if(character->IsInTunnel()) {
                             return false;
                         }
+#endif
                         isAI = character->IsAIControlled();
                         race = character->Race();
                         if(mx->isRuleEnabled(RF_SOLE_MOUNTAINEER) && !character->HasArmy() ) {
@@ -761,8 +763,8 @@ namespace tme {
             return MX_OK;
         }
 
-#if defined(_DDR_)
-        COMMAND( OnCharEnterTunnel ) 
+#if defined(_TUNNELS_)
+        COMMAND( OnCharEnterTunnel )
         {
             CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
             argv[0]=(s32)0;
@@ -775,7 +777,9 @@ namespace tme {
             argv[0]=(s32)0;
             return character->Cmd_ExitTunnel();
         }
+#endif
 
+#if defined(_DDR_)
         COMMAND( OnCharGive )
         {
             CONVERT_DDR_CHARACTER_ID( argv[0].vId, character );
@@ -951,9 +955,12 @@ namespace tme {
             {"DROP",            1, OnCharDrop,              {arguments::character} },
             {"WAIT",            2, OnCharWait,              {arguments::character, variant::vnumber} }, //[mode]
             {"CONTROL",         1, OnCharControl,           {arguments::character} },
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
             {"ENTERTUNNEL",     1, OnCharEnterTunnel,       {arguments::character} },
             {"EXITTUNNEL",      1, OnCharExitTunnel,        {arguments::character} },
+#endif
+            
+#if defined(_DDR_)
             {"GIVE",            1, OnCharGive,              {arguments::character} },
             {"TAKE",            1, OnCharTake,              {arguments::character} },
             {"USE",             1, OnCharUse,               {arguments::character, arguments::character} },
@@ -1487,8 +1494,11 @@ namespace tme {
         void mxscenario::SetMapArmies ( void )
         {
             FOR_EACH_CHARACTER(character) {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 if ( !character->IsInTunnel() ) {
+#endif
+
+#if defined(_DDR_)
                 if ( character->IsAlive() && !character->IsHidden() ) {
 #endif
                     if ( character->warriors.Total()+character->riders.Total() ) {
@@ -1497,9 +1507,12 @@ namespace tme {
                     mx->gamemap->SetLocationCharacter(character->Location(),1);
 #if defined(_DDR_)
                 }
+#endif
+#if defined(_TUNNELS_)
                 }
 #endif
             }
+            
 #if !defined(_DDR_)
             FOR_EACH_STRONGHOLD(stronghold) {
                 if ( stronghold->TotalTroops() )
@@ -1540,7 +1553,7 @@ namespace tme {
 
             loc_t looked_at = loc + dir ;
             
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
             //
             if ( isintunnel ) {
                 mx->gamemap->SetTunnelVisible(loc, true);
@@ -1707,7 +1720,9 @@ namespace tme {
         u32 mxscenario::FindCharactersAtLocation ( mxgridref loc, c_character* characters, flags32_t flags )
         {
         mxcharacter*    moonringcarrier=nullptr;
+#if defined(_TUNNELS_)
         bool            in_tunnel = ( flags & slf_tunnel ) == slf_tunnel;
+#endif
         bool            show_dead = ( flags & slf_dead ) == slf_dead;
 
             RETURN_IF_NULL(characters) false;
@@ -1726,7 +1741,9 @@ namespace tme {
 
                 CONTINUE_IF ( c->Location() != loc );
                 
+#if defined(_TUNNELS_)
                 CONTINUE_IF( c->IsInTunnel() != in_tunnel );
+#endif
                 
                 CONTINUE_IF( !show_dead && c->IsDead() );
                 

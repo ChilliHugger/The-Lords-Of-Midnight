@@ -265,7 +265,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
 {
     //UIDEBUG("OnMovementComplete(%d)", type);
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( type == LM_MOVE_FORWARD_LEAVE_TUNNEL ) {
         OnExitTunnel();
         return;
@@ -348,7 +348,7 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
         return;
     }
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if ( Character_IsInTunnel(TME_CurrentCharacter()) ) {
         return;
     }
@@ -385,15 +385,6 @@ void panel_look::delayedSave()
 {
 }
 
-//void panel_look::OnActionComplete( uiaction* sender, s32 value )
-//{
-//  UNDO
-//  Enter Tunnel
-//  Exit Tunnel
-//  Menu Collapse
-//  Delayed Save
-//}
-
 void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
 {
     info->id = c.id;
@@ -405,7 +396,7 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
     info->person = GetCharacterImage(c);
     info->face = GetCharacterFace(c);
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     info->tunnel = Character_IsInTunnel(c);
     info->lookingdowntunnel = false;
     info->lookingouttunnel = false;
@@ -417,7 +408,6 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
         info->lookingdowntunnel = m.flags.Is(lf_tunnel) && info->tunnel;
         info->lookingouttunnel = m.flags.Is(lf_tunnel_exit) && info->tunnel;
     }
-    
 #endif
 
     info->name = StringExtensions::toUpper(c.longname) ;
@@ -500,7 +490,7 @@ void panel_look::setViewForCurrentCharacter()
     options->isLookingDownTunnel = false;
     options->isLookingOutTunnel = false;
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     options->isInTunnel = current_info->tunnel;
     options->isLookingDownTunnel = current_info->lookingdowntunnel;
     options->isLookingOutTunnel = current_info->lookingouttunnel;
@@ -587,7 +577,7 @@ void panel_look::UpdateLandscape()
 #if defined(_LOM_)
     layHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline)));
 #endif
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if(!current_info->tunnel){
         imgHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainFill)));
     }
@@ -1327,6 +1317,9 @@ void panel_look::OnNotification( Ref* sender )
                 return;
             break;
         }
+#endif
+
+#if defined(_TUNNELS_)
         case ID_ENTER_TUNNEL:
         {
             if ( OnEnterTunnel() )
@@ -1401,8 +1394,7 @@ bool panel_look::OnUndo ( savemode_t mode )
 }
 
 
-#if defined(_DDR_)
-
+#if defined(_TUNNELS_)
 bool panel_look::OnEnterTunnel()
 {
     hideMenus();
@@ -1432,31 +1424,11 @@ bool panel_look::OnExitTunnel()
     });
     return true;
 }
-
-#endif // _DDR_
+#endif // _TUNNELS_
 
 
 void panel_look::OnSetupIcons()
 {
-
-// TODO: Debug menu
-//    if ( debug ) {
-//        debug->ClearItems();
-//
-//        if ( gl->stories->canUndo(savemode_night) )
-//            debug->AddItem(i_debug_undo_night);
-//
-//        if ( gl->stories->canUndo(savemode_dawn) )
-//            debug->AddItem(i_debug_undo_dawn);
-//
-//        if ( gl->stories->canUndo(savemode_normal) )
-//            debug->AddItem(i_debug_undo);
-//
-//        debug->AddItem(i_debug_email);
-//        debug->AddItem(i_debug_map);
-//    }
-    
-    
     if ( i_command_window==nullptr )
         return;
     

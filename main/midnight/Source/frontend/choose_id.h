@@ -23,15 +23,18 @@ enum CHOOSE_INDEX {
     CHOOSE_GIVE     = 2,
     CHOOSE_TAKE     = 3,
     CHOOSE_USE      = 4,
-    CHOOSE_TUNNEL   = 8,
     CHOOSE_FIGHT    = 12,
 #endif
-    
+
     CHOOSE_APPROACH = 9,
     CHOOSE_BATTLE   = 5,
     CHOOSE_RECRUIT  = 6,
     CHOOSE_GUARD    = 7,
-    
+
+#if defined(_TUNNELS_)
+    CHOOSE_TUNNEL   = 8,
+#endif
+
     CHOOSE_MAP      = 13,
     CHOOSE_NIGHT    = 14,
     

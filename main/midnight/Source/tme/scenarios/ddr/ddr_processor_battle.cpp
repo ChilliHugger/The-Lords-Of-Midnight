@@ -52,8 +52,10 @@ namespace tme {
         if ( character->IsInBattle() )
             return;
         
+#if defined(_TUNNELS_)
         if ( character->IsInTunnel())
             return;
+#endif
         
         MXTRACE("BATTLE: [%3d] %-16s %s", (int)character->Id(), character->Symbol().c_str(), character->Longname().c_str() );
       
@@ -110,7 +112,9 @@ namespace tme {
         {
             CONTINUE_IF(c->IsDead());
 
+#if defined(_TUNNELS_)
             CONTINUE_IF(c->IsInTunnel());
+#endif
 
             CONTINUE_IF(c->Location() != character->Location());
             

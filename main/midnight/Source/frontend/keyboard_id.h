@@ -36,9 +36,14 @@ enum KEY_MAP {
     K_GIVE,
     K_TAKE,
     K_REST,
-    K_TUNNEL,
     K_USE,
 #endif
+
+#if defined(_TUNNELS_)
+    K_TUNNEL,
+#endif
+
+
     K_APPROACH,
     K_RECRUIT,
     K_POST,

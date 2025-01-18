@@ -134,8 +134,7 @@ namespace tme {
         }
         
         if ( IsNight() ) {
-            info->flags.Reset( lif_enter_tunnel
-                              |lif_enterbattle
+            info->flags.Reset(lif_enterbattle
                               |lif_fight
                               |lif_guardmen
                               |lif_recruitchar
@@ -146,6 +145,9 @@ namespace tme {
                               |lif_use
                               |lif_give
                               |lif_hide
+#if defined(_TUNNELS_)
+                              |lif_enter_tunnel
+#endif
                               );
         }
         
@@ -496,12 +498,14 @@ namespace tme {
         t = (mxterrain_t)mx->gamemap->GetAt ( location+looking ).terrain ;
         t = mx->scenario->toScenarioTerrain(t);
         
+#if defined(_TUNNELS_)
         if ( IsInTunnel() ) {
             if(mx->isRuleEnabled(RF_FAST_TUNNELS)) {
                 fastTunnels = true;
             }
             t=TN_ICYWASTE;
         }
+#endif
         
         // start with intial terrain
         tinfo = mx->TerrainById( t );
@@ -519,11 +523,13 @@ namespace tme {
             ? rinfo->InitialMovementValue()
             : rinfo->RidingMovementMultiplier();
 
+#if defined(_TUNNELS_)
         if (fastTunnels) {
             if(Race()==RA_DWARF || Race() == RA_GIANT) {
                 raceAdjustment = 2;
             }
         }
+#endif
         
         TimeCost += raceAdjustment;
         
@@ -600,10 +606,12 @@ namespace tme {
         if ( !IsAIControlled() )
             EnterLocation ( location );
 
+#if defined(_TUNNELS_)
         // if this location has an exit then we must exit
         bool exit_tunnel = false;
         if ( mx->gamemap->GetAt ( location ).HasTunnelExit() )
             exit_tunnel=true;
+#endif
 
         if ( !IsAIControlled() )
             mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
@@ -619,30 +627,37 @@ namespace tme {
         // 
         if ( !IsAIControlled() && perform_seek ) {
             // quick fix
+#if defined(_TUNNELS_)
             if ( exit_tunnel ) flags.Reset ( cf_tunnel );
+#endif
             if ( mx->gamemap->getLocationObject(this, Location())!=OB_NONE ) {
                 Cmd_Seek();
             }
+#if defined(_TUNNELS_)    
             if ( exit_tunnel ) flags.Set ( cf_tunnel );
+#endif
         }
         
         WalkFollowersForward();
-        
+      
+#if defined(_TUNNELS_)
         // if this location has an exit then we must exit
         if ( exit_tunnel )
             Cmd_ExitTunnel();
+#endif
 
         return MX_OK ;
     }
     
+#if defined(_TUNNELS_)
     MXRESULT ddr_character::Cmd_EnterTunnel ( void )
     {
         if ( IsFollowing() )
             return MX_FAILED ;
-        
+
         if ( IsInTunnel() )
             return MX_FAILED ;
-        
+            
         mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
         if ( !mapsqr.HasTunnelEntrance() )
             return MX_FAILED ;
@@ -652,9 +667,8 @@ namespace tme {
         mx->gamemap->SetLocationCharacter(Location(),0);
         
         flags.Set ( cf_tunnel );
+
         EnterLocation(Location());
-        
-        
         
         // TODO:
         // we now need to cycle round the locations
@@ -715,6 +729,7 @@ namespace tme {
         
         return MX_OK ;
     }
+#endif
     
     MXRESULT ddr_character::Cmd_Take ( void )
     {
@@ -924,9 +939,11 @@ namespace tme {
         FOR_EACH_CHARACTER(c) {
             if ( c->IsAlive() && !c->IsAIControlled() ) {
                 c->Location(Location());
+#if defined(_TUNNELS_)
                 c->Flags().Reset( cf_tunnel );
                 if ( IsInTunnel() )
                     c->Flags().Set( cf_tunnel );
+#endif
             }
         }
         // luxor the moonprince places the crown of carudrium on his head,
@@ -942,10 +959,13 @@ namespace tme {
         // set time of day
         //        
         Location(ch_morkin->Location());
+        
+#if defined(_TUNNELS_)
         Flags().Reset( cf_tunnel );
         
         if ( ch_morkin->IsInTunnel() )
             Flags().Set( cf_tunnel );
+#endif
         
         // Tarithel the fey casts the Spell of Thigor, Morkin is transported to be with her.
         mx->SetLastActionMsg( mx->text->CookedSystemString( SS_OBJECT_USE_2, this) );
@@ -1623,7 +1643,13 @@ void ddr_character::Displace()
     RULEFLAGS rule = IsAIControlled() ? RF_AI_IMPASSABLE_MOUNTAINS : RF_IMPASSABLE_MOUNTAINS ;
     bool isImpassableRuleEnabled = mx->isRuleEnabled(rule);
               
-    Flags().Reset(cf_tunnel|cf_preparesbattle|cf_battleover);
+    Flags().Reset(
+            cf_preparesbattle
+            |cf_battleover
+#if defined(_TUNNELS_)
+            |cf_tunnel
+#endif
+            );
 
     // if impassable mountains is enabled then we can't use the default
     // ddr displacement because it moves more than one location

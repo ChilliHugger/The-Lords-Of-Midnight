@@ -107,7 +107,7 @@ namespace tme {
             infront = new mxlocinfo(loc_infront,owner,sel_flags);
             
             //TN_GATE TN_TEMPLE TN_PIT TN_PALACE
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
             flags.Reset(lif_blocked);
             if ( owner && owner->IsInTunnel() ) {
                 // we can only move through tunnels when in a tunnel
@@ -126,7 +126,7 @@ namespace tme {
                     flags.Set(lif_blocked);
                 }
                 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 //
                 if ( mapsqr.HasTunnelEntrance() )
                     flags.Set(lif_enter_tunnel);  ;
@@ -212,8 +212,10 @@ namespace tme {
         {
             RETURN_IF_NULL(c);
 
+#if defined(_TUNNELS_)
             // tunnel check
             bool isInTunnel = c->IsInTunnel() ;
+#endif
 
             objRecruit.Clear();
             
@@ -232,8 +234,10 @@ namespace tme {
                 // character location
                 CONTINUE_IF ( character->Location() != location );
                 
+#if defined(_TUNNELS_)
                 // tunnel status must be the same
                 CONTINUE_IF ( character->IsInTunnel() != isInTunnel );
+#endif
 
                 // TODO check global flag AlwaysAttemptRecruit
                 // and maybe set the character up for recruit anyway
@@ -255,10 +259,12 @@ namespace tme {
         {
         mxcharacter*    moonringcarrier=nullptr;
         mxobject*       moonring=nullptr;
-        bool            bInTunnel = false ;
             
+#if defined(_TUNNELS_)
+        bool            bInTunnel = false ;
             // tunnel check
             bInTunnel = (sel_flags & slf_tunnel);
+#endif
 
             nRecruited=0;
 
@@ -286,8 +292,10 @@ namespace tme {
                 // must be at this location
                 CONTINUE_IF ( c->Location() != location );
 
+#if defined(_TUNNELS_)
                 // check tunnel
                 CONTINUE_IF ( bInTunnel != c->IsInTunnel() );
+#endif
 
                 // potential moonring carrier or someone is carrying the moonring
                 //if ( moonring!=NULL ) {
@@ -311,8 +319,10 @@ namespace tme {
                 // must be at this location
                 CONTINUE_IF ( c->Location() != location );
                 
+#if defined(_TUNNELS_)
                 // check tunnel
                 CONTINUE_IF ( bInTunnel != c->IsInTunnel() ) ;
+#endif
 
                 //
                 objCharacters += c ;
@@ -337,12 +347,15 @@ namespace tme {
 
             FindCharactersHere();
 
+#if defined(_TUNNELS_)
             // no strongholds when under the ground
             bool bInTunnel = (sel_flags & slf_tunnel) ;
-
-            if ( !bInTunnel ) {
+            if ( !bInTunnel )
+#endif
+            {
                 mx->CollectRegiments ( location, objRegiments );
                 mx->CollectStrongholds ( location, objStrongholds );
+      
             }
 
             foe.IdType ( IDT_ARMYTOTAL );

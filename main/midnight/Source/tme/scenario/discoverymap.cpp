@@ -260,7 +260,7 @@ namespace tme {
         return GetAt( l ).Is(lf_seen);
     }
     
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     bool mxdiscoverymap::IsTunnelVisible( mxgridref l )
     {
         return GetAt( l ).Is( lf_tunnel_looked_at);
@@ -275,8 +275,6 @@ namespace tme {
         } else
             mapsqr.Reset(lf_tunnel_looked_at);
     }
-    
-    
 #endif
     
     void mxdiscoverymap::SetLocationVisible( mxgridref l, bool visible )
@@ -357,7 +355,7 @@ namespace tme {
                 
                 GetAt(loc).Set( l.flags & (lf_seen|lf_visited|lf_looked_at) );
                 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
                 GetAt(loc).Set( l.flags&(lf_tunnel_looked_at|lf_tunnel_visited) ) ;
 #endif
             }

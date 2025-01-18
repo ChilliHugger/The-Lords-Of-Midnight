@@ -123,8 +123,11 @@ namespace tme {
         virtual mxobject* Cmd_Fight( void );
         virtual mxcharacter* Cmd_Approach ( mxcharacter* character );
         
+#if defined(_TUNNELS_)
         virtual MXRESULT Cmd_EnterTunnel ( void );
         virtual MXRESULT Cmd_ExitTunnel ( void );
+#endif
+        
         virtual MXRESULT Cmd_Use ( void ) ;
         virtual MXRESULT Cmd_Take ( void ) ;
         virtual MXRESULT Cmd_Give ( mxcharacter* character ) ;

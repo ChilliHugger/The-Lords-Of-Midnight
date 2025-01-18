@@ -56,14 +56,12 @@ void LandscapeColour::updateCharacterNode( Node* node )
     
     shader->AttachShader(node, options->characterTimeShader);
 
-#if defined(_LOM_)
-    auto colour = Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal);
-#endif
-
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     auto colour = options->isInTunnel
         ? Vec4((80.0f/255.0f),0,0,alpha_normal)
         : Vec4(0,0,0,alpha_normal);
+#else
+    auto colour = Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal);
 #endif
 
     
@@ -161,7 +159,7 @@ f32 LandscapeColour::CalcCurrentMovementFade ( TINT shade )
     int index = (int)shade;
     if ( !options->isMoving )
     {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         if (options->isInTunnel)
             return FROM_ALPHA(GetTint(timeofday, TINT::Tunnel).a);
 #endif
@@ -211,7 +209,7 @@ Color4B LandscapeColour::CalcCurrentMovementTint ( TINT shade )
 
 Color3B LandscapeColour::GetPersonColour()
 {
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
     if (options->isInTunnel)
         return Color3B(GetTint(timeofday, TINT::Tunnel));
 #endif
@@ -242,7 +240,9 @@ void LandscapeColour::OnXmlInit ( XmlNode* node )
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
                 int id = xml::ReadInt(d,"id");
                 SET_COLOUR(TINT::Person,"normal") ;
+#if defined(_TUNNELS_)
                 SET_COLOUR(TINT::Tunnel,"tunnel") ;
+#endif
             }
         }
     }

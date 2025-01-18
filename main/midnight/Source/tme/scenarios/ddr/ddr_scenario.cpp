@@ -222,6 +222,7 @@ mxentity* ddr_entityfactory::Create ( id_type_t type )
 void ddr_x::MakeMapAreaVisible ( mxgridref l, mxcharacter* character )
 {
     // in a tunnel?
+#if defined(_TUNNELS_)
     if ( character->IsInTunnel() ) {
 
         mxloc& current = mx->gamemap->GetAt( l );
@@ -237,6 +238,7 @@ void ddr_x::MakeMapAreaVisible ( mxgridref l, mxcharacter* character )
         
         return;
     }
+#endif
     
     mxscenario::MakeMapAreaVisible(l, character);
 }
@@ -324,7 +326,9 @@ mxcharacter* ddr_x::IsEnemyAtLocation( mxgridref loc, const ddr_character* chara
     {
         CONTINUE_IF(c->IsDead());
 
+#if defined(_TUNNELS_)
         CONTINUE_IF(c->IsInTunnel());
+#endif
 
         CONTINUE_IF(c->Location() != loc);
         

@@ -283,17 +283,19 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         MAP_FLAG_PROPERTY( IsMisty,         lf_mist)
         MAP_FLAG_PROPERTY( IsStronghold,    lf_stronghold)
         MAP_FLAG_PROPERTY( IsRouteNode,     lf_routenode)
+
 #if defined(_DDR_)
-        MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
-        MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
         MAP_FLAG_PROPERTY( HasObject,       lf_object)
 #endif
         MAP_FLAG_PROPERTY( HasArmy,         lf_army)
         MAP_FLAG_PROPERTY( HasCharacter,    lf_character)
+        
         bool IsInteresting() const ;
         void Serialize ( chilli::lib::archive& ar ) ;
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
+        MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
+        MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
         bool HasTunnelExit() const ;
         bool HasTunnelEntrance() const ;
         bool IsTunnelPassageway() const ;
@@ -348,7 +350,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         void SetLocationLookedAt( mxgridref l, bool visible );
         void SetLocationVisited( mxgridref l, bool visible );
 
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         bool HasTunnelEntrance( mxgridref l );
         bool HasTunnelExit( mxgridref l );
 
@@ -356,6 +358,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool IsTunnelVisible( mxgridref loc );
         bool IsTunnel( mxgridref loc );
         bool IsTunnelPassageway( mxgridref l );
+#endif
+
+#if defined(_DDR_)
         bool HasObject( mxgridref l );
         void SetObject( mxgridref l, bool value );
         void MoveMists ( void );
@@ -424,7 +429,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         void CheckVisibleArea( mxgridref l );
         
         
-#if defined(_DDR_)
+#if defined(_TUNNELS_)
         bool IsTunnelVisible( mxgridref l );
         void SetTunnelVisible( mxgridref l, bool visible );
 #endif
@@ -875,7 +880,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             GET_PROPERTY ( mxcharacter*, Loyalty, loyalty )
 
+#if defined(_TUNNELS_)
             FLAG_PROPERTY ( IsInTunnel, rf_tunnel )
+#endif
 
             PROPERTY( u32, Delay, delay );
             PROPERTY( u32, Total, total );
@@ -949,7 +956,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
             FLAG_PROPERTY ( IsInBattle, cf_inbattle )
             FLAG_PROPERTY ( HasWonBattle, cf_wonbattle )
+#if defined(_TUNNELS_)
             FLAG_PROPERTY ( IsInTunnel, cf_tunnel )
+#endif
             FLAG_PROPERTY ( HasUsedObject, cf_usedobject )
             FLAG_PROPERTY ( IsResting, cf_resting )
             FLAG_PROPERTY ( HasFollowers, cf_followers )
