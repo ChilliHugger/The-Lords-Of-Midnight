@@ -85,7 +85,7 @@ void LandscapeLand::Build()
     if ( loc1 == nullptr || loc2 == nullptr )
         return;
     
-    auto fnDrawTerrain = [=]( LandscapeItem* item, f32 adjustX, f32 adjustY )
+    auto fnDrawTerrain = [=, this]( LandscapeItem* item, f32 adjustX, f32 adjustY )
     {
         if ((item->position.z>=options->generator->viewportNear)&&(item->position.z<options->generator->viewportFar))
         {

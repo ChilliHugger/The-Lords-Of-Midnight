@@ -79,7 +79,7 @@ public:
     virtual bool OnMouseMove( Vec2 pos );
 #endif
 
-    // Cocos2dX Scene Helpers
+    // Axmol Scene Helpers
     virtual void onEnter();
     virtual void onExit();
     //

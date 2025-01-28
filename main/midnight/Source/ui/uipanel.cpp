@@ -64,7 +64,7 @@ bool uipanel::init()
     addChild(safeArea);
         
     //
-    // Generic mapping from Cocos2dx
+    // Generic mapping from Axmol
     //
     clickCallback = [&] (Ref* ref ) {
         this->OnNotification(ref);
@@ -196,7 +196,7 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok 
     popupWindow->retain();
     
     popupWindow->onCancel = [&,notok] {
-        RUN_ON_UI_THREAD([=]() {
+        RUN_ON_UI_THREAD([=, this]() {
             CC_SAFE_RELEASE_NULL(popupWindow);
             if (notok != nullptr) {
                 RUN_EVENT(notok(););
@@ -204,7 +204,7 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok 
         });
     };
     popupWindow->onOk = [&,ok] {
-        RUN_ON_UI_THREAD([=]() {
+        RUN_ON_UI_THREAD([=, this]() {
             CC_SAFE_RELEASE_NULL(popupWindow);
             if (ok != nullptr) {
                 RUN_EVENT(ok(););
@@ -323,7 +323,7 @@ void uipanel::popupHelpWindow ( helpid_t id, MXVoidCallback callback )
     help_window->retain();
     
     help_window->Show( [&,callback] {
-        RUN_ON_UI_THREAD([=]() {
+        RUN_ON_UI_THREAD([=, this]() {
             CC_SAFE_RELEASE_NULL(help_window);
             help_visible = HELP_NONE;
             if (callback != nullptr)
@@ -448,7 +448,7 @@ void uipanel::addMouseListener()
     mouseEventListener->onMouseMove = [this](Event* event)
     {
         auto mouseEvent = static_cast<EventMouse*>(event);
-        cursorPosition = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
+        cursorPosition = Vec2(mouseEvent->getLocation().x, mouseEvent->getLocation().y);
         
         if(imgCursor!=nullptr) {
             imgCursor->setPosition(cursorPosition+cursorAnchor);

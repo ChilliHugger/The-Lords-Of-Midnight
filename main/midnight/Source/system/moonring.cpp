@@ -663,7 +663,7 @@ void moonring::initialise( progressmonitor* monitor )
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
     
-    RUN_ON_UI_THREAD([=](){
+    RUN_ON_UI_THREAD([=, this](){
         
         // load shader
         shader->Init();

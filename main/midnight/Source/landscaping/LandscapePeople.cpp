@@ -354,7 +354,7 @@ void LandscapePeople::startFadeOut()
     setScale(startScale);
     setPosition( startX, startY );
     
-    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0.0f, 1.0f, [=](float value) {
+    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0.0f, 1.0f, [=, this](float value) {
         
         f32 alpha = 1.0f - (1.0f * value);
         f32 scale = startScale + (1.5f*value);
@@ -388,7 +388,7 @@ void LandscapePeople::startFadeIn()
     setScale(startScale);
     setPosition( startX, startY );
     
-    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0.0f, 1.0f, [=](float value) {
+    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0.0f, 1.0f, [=, this](float value) {
         
         f32 alpha = 1.0f * value;
         f32 scale = startScale + ((1.0f-startScale)*value);

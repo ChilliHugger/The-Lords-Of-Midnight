@@ -124,7 +124,7 @@ bool storymanager::create ( storyid_t id, u64 flags, mxdifficulty_t difficulty )
     last_night.Clear();
     last_morning.Clear();
     
-    cocos2d::FileUtils::getInstance()->createDirectory(getFolder(id));
+    cocos2d::FileUtils::getInstance()->createDirectories(getFolder(id));
     
     TME_LoadDiscoveryMap( DiscoveryMapFilename() );
     
