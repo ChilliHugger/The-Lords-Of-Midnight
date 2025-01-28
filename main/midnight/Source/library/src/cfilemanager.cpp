@@ -14,8 +14,8 @@
  *
  */
 
-// cocos2dx
-#define COCOS2DX 1
+// Axmol
+#define AXMOL 1
 
 #include "../inc/mxtypes.h"
 #include "../inc/cfile.h"
@@ -29,7 +29,7 @@
     #include "S3EFile.h"
 #endif
 
-#if defined(COCOS2DX)
+#if defined(AXMOL)
 #include "platform/FileUtils.h"
 #endif
 
@@ -54,7 +54,7 @@ namespace chilli {
         
         void* filemanager::Load ( const std::string& filename, u32* size )
         {
-#if defined(COCOS2DX)
+#if defined(AXMOL)
             auto data = ax::FileUtils::getInstance()->getDataFromFile(filename);
             *size = (u32)data.getSize();
             if ( data.getSize() == 0 )
@@ -139,7 +139,7 @@ namespace chilli {
         
         u32 filemanager::Size ( const std::string& filename )
         {
-#if defined(COCOS2DX)
+#if defined(AXMOL)
             return (u32)ax::FileUtils::getInstance()->getFileSize(filename);
 #else
             DWORD    dwSize;
@@ -174,7 +174,7 @@ namespace chilli {
         
         bool filemanager::Save( const std::string& filename, const void* lpBuffer, u32 dwSize )
         {
-#if defined(COCOS2DX)
+#if defined(AXMOL)
             ax::Data data;
             data.copy((const unsigned char* )lpBuffer, dwSize);
             return ax::FileUtils::getInstance()->writeDataToFile(data, filename);
@@ -223,7 +223,7 @@ namespace chilli {
 #ifdef _MARMALADE_
             return IwFileCheckExists(fileName);
             
-#elif defined(COCOS2DX)
+#elif defined(AXMOL)
             return ax::FileUtils::getInstance()->isFileExist(fileName);
             
 #elif defined(_UNIX_) || defined(_LINUX_)
@@ -259,7 +259,7 @@ namespace chilli {
         
         bool filemanager::ExistsDir(const std::string& fileName)
         {
-#if defined(COCOS2DX)
+#if defined(AXMOL)
             return ax::FileUtils::getInstance()->isDirectoryExist(fileName);
 #endif
             //S3E_API s3eFileList* s3eFileListDirectory(const char* dirName);
@@ -270,7 +270,7 @@ namespace chilli {
         {
 #ifdef _MARMALADE_
             return s3eFileRename(oldName, newName ) == S3E_RESULT_SUCCESS ;
-#elif defined(COCOS2DX)
+#elif defined(AXMOL)
             ax::FileUtils::getInstance()->renameFile(oldName,newName);
 #else
             return rename(oldName.c_str(), newName.c_str()) == 0;
@@ -280,7 +280,7 @@ namespace chilli {
         
         bool filemanager::Remove(const std::string& fileName)
         {
-#if defined(COCOS2DX)
+#if defined(AXMOL)
             return ax::FileUtils::getInstance()->removeFile(fileName);
 #else
             return remove(fileName.c_str()) == 0;
@@ -291,7 +291,7 @@ namespace chilli {
         {
 #ifdef _MARMALADE_
             return IwFileCopy( dstName, srcName ) == S3E_RESULT_SUCCESS ;
-#elif defined(COCOS2DX)
+#elif defined(AXMOL)
             auto data = ax::FileUtils::getInstance()->getDataFromFile(srcName);
             return ax::FileUtils::getInstance()->writeDataToFile(data, dstName);
 #else
@@ -312,8 +312,8 @@ namespace chilli {
 #endif
 #endif
             
-#if defined(COCOS2DX)
-            return ax::FileUtils::getInstance()->createDirectory(path);
+#if defined(AXMOL)
+            return ax::FileUtils::getInstance()->createDirectories(path);
 #endif
             
             return FALSE ;
@@ -321,7 +321,7 @@ namespace chilli {
         
         bool filemanager::DestroyDirectory ( const std::string& path )
         {
-#if defined(COCOS2DX)
+#if defined(AXMOL)
             return ax::FileUtils::getInstance()->removeDirectory(path);
 #endif
             

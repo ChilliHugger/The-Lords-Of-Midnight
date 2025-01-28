@@ -109,7 +109,7 @@ void uicompass::addTouchListener(EventListenerTouchOneByOne* listener)
         return true;
     };
   
-    localListener->onTouchMoved = [=](Touch* touch, Event* event){
+    localListener->onTouchMoved = [=, this](Touch* touch, Event* event){
         auto pos = touch->getLocationInView() ;
         auto focus = getItem(touch->getLocationInView());
         clearCurrentFocus();
@@ -120,7 +120,7 @@ void uicompass::addTouchListener(EventListenerTouchOneByOne* listener)
     };
     
     // trigger when you let up
-    localListener->onTouchEnded = [=](Touch* touch, Event* event){
+    localListener->onTouchEnded = [=, this](Touch* touch, Event* event){
         clearSelectedFocus();
         selected = current;
         clearCurrentFocus();

@@ -605,7 +605,7 @@ void panel_look::addTouchListener()
     touchListener = EventListenerTouchOneByOne::create();
     
     // trigger when you push down
-    touchListener->onTouchBegan = [=](Touch* touch, Event* event){
+    touchListener->onTouchBegan = [this](Touch* touch, Event* event){
         mouse_down_time = utils::getTimeInMilliseconds() ;
         mouse_down_pos = touch->getLocation();
         mouse_last_position = mouse_down_pos;
@@ -615,7 +615,7 @@ void panel_look::addTouchListener()
     };
     
     // trigger when moving touch
-    touchListener->onTouchMoved = [=](Touch* touch, Event* event){
+    touchListener->onTouchMoved = [this](Touch* touch, Event* event){
         
         Vec2 delta = touch->getLocation() - mouse_last_position;
         Vec2 distance = touch->getLocation() - mouse_down_pos;
@@ -650,7 +650,7 @@ void panel_look::addTouchListener()
     };
     
     // trigger when you let up
-    touchListener->onTouchEnded = [=](Touch* touch, Event* event){
+    touchListener->onTouchEnded = [this](Touch* touch, Event* event){
         
         if ( isDragging() ) {
             uidragevent    dev(nullptr,touch->getLocation(),DragEventType::stop);
@@ -693,7 +693,7 @@ bool panel_look::startLookLeft()
     
     options->isLooking = true;
     
-    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
+    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=, this](float value) {
         options->lookAmount = originalLooking + value;
         
         //UIDEBUG("MovementLeft  %f %f %f", target, options->lookAmount, value);
@@ -740,7 +740,7 @@ bool panel_look::startLookRight()
     
     options->isLooking = true;
     
-    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
+    auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=, this](float value) {
         options->lookAmount = originalLooking + value;
         
         //UIDEBUG("MovementRight  %f %f %f", target, options->lookAmount, value);
@@ -886,7 +886,7 @@ bool panel_look::startMoving()
         
         options->isMoving = true;
    
-        auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=](float value) {
+        auto actionfloat = ActionFloat::create(TRANSITION_DURATION, 0, target, [=, this](float value) {
             
             options->here.x = options->moveFrom.x*(LANDSCAPE_DIR_STEPS - value) + options->moveTo.x*value;
             options->here.y = options->moveFrom.y*(LANDSCAPE_DIR_STEPS - value) + options->moveTo.y*value;
@@ -1027,7 +1027,7 @@ void panel_look::fadeIn ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback&
     fade_panel->setLocalZOrder(ZORDER_POPUP);
     addChild(fade_panel);
     
-    auto callbackAction = CallFunc::create([=]() {
+    auto callbackAction = CallFunc::create([=, this]() {
         if ( callback != nullptr ) {
             callback();
         }
@@ -1057,7 +1057,7 @@ void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback
     fade_panel->setOpacity(ALPHA(initialAlpha));
     addChild(fade_panel);
     
-    auto callbackAction = CallFunc::create([=]() {
+    auto callbackAction = CallFunc::create([=, this]() {
         if ( callback != nullptr ) {
             callback();
         }
@@ -1390,7 +1390,7 @@ void panel_look::OnNotification( Ref* sender )
 
 bool panel_look::OnUndo ( savemode_t mode )
 {
-    fadeOut(_clrBlack, 0.75f, [=](){
+    fadeOut(_clrBlack, 0.75f, [=, this](){
         mr->undo(mode);
         setObject( TME_CurrentCharacter().id );
         fadeIn(_clrBlack, 1.0f, [&]{
@@ -1802,14 +1802,14 @@ void panel_look::lookPanoramaSnap(uidragevent* event)
     //        options->currentDirection, locationAdjustment, options->currentDirection + locationAdjustment );
 
 
-    auto actionfloat = ActionFloat::create(duration, options->lookAmount, amount, [=](float value) {
+    auto actionfloat = ActionFloat::create(duration, options->lookAmount, amount, [=, this](float value) {
         options->isLooking = true;
         options->lookAmount =  value;
         UpdatePanningLandscape();
         parallaxCharacters();
     });
     
-    runAction(Sequence::createWithTwoActions( actionfloat, CallFunc::create( [=] { stopDragging(locationAdjustment); } )));
+    runAction(Sequence::createWithTwoActions( actionfloat, CallFunc::create( [=, this] { stopDragging(locationAdjustment); } )));
 }
 
 //

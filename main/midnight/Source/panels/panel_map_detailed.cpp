@@ -322,7 +322,7 @@ void panel_map_detailed::addTouchListener()
     auto touchListener = EventListenerTouchOneByOne::create();
     
     // trigger when you push down
-    touchListener->onTouchBegan = [=](Touch* touch, Event* event){
+    touchListener->onTouchBegan = [=, this](Touch* touch, Event* event){
      
         auto loc = tmxMap->convertToNodeSpace(touch->getLocation());
         loc.y = tmxMap->getContentSize().height - loc.y;
@@ -369,7 +369,7 @@ void panel_map_detailed::addTouchListener()
     };
     
     // trigger when you let up
-    touchListener->onTouchEnded = [=](Touch* touch, Event* event){
+    touchListener->onTouchEnded = [=, this](Touch* touch, Event* event){
         if(toolTip->isVisible()) {
             toolTip->stopAllActions();
             toolTip->runAction(Sequence::create(
