@@ -2,7 +2,7 @@
 #include <__bit_reference>
 #endif
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 #include "panel_mainmenu.h"
 #include "panel_credits.h"
@@ -24,8 +24,8 @@
 #include "../ui/uibook.h"
 #include "../ui/uibookmenu.h"
 
-USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 //#define BOOKMARK_IMAGE          "bookmark"
 //#define BOOKMARK_OVERLAY_IMAGE  "bookmark_overlay"

@@ -9,11 +9,11 @@
 #include "uielement.h"
 #include "uipanel.h"
 
-class uicompass : public cocos2d::Node
+class uicompass : public ax::Node
 {
-    using DrawNode = cocos2d::DrawNode;
-    using Vec2 = cocos2d::Vec2;
-    using EventListenerTouchOneByOne = cocos2d::EventListenerTouchOneByOne;
+    using DrawNode = ax::DrawNode;
+    using Vec2 = ax::Vec2;
+    using EventListenerTouchOneByOne = ax::EventListenerTouchOneByOne;
    
 public:
     static uicompass* create( uipanel* parent );

@@ -8,14 +8,14 @@
 
 #ifndef LandscapeNode_hpp
 #define LandscapeNode_hpp
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include <stdio.h>
 #include "../tme/tme_interface.h"
 
 FORWARD_REFERENCE(LandscapeOptions);
 FORWARD_REFERENCE(moonring);
 
-class LandscapeNode : public cocos2d::Node
+class LandscapeNode : public ax::Node
 {
 public:
     static LandscapeNode* create(LandscapeOptions* options);

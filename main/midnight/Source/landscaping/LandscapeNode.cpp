@@ -22,7 +22,7 @@ LandscapeNode* LandscapeNode::create( LandscapeOptions* options )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

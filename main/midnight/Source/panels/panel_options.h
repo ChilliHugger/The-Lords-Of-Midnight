@@ -8,7 +8,7 @@
 #ifndef __PANEL_OPTIONS_H__
 #define __PANEL_OPTIONS_H__
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../ui/uipanel.h"
 #include "../ui/uitextmenuitem.h"
 #include "../ui/uitextmenu.h"
@@ -39,12 +39,12 @@ typedef struct {
 
 class panel_options : public uipanel
 {
-    using Node = cocos2d::Node;
-    using DrawNode = cocos2d::DrawNode;
-    using Menu = cocos2d::Menu;
-    using ScrollView = cocos2d::ui::ScrollView;
+    using Node = ax::Node;
+    using DrawNode = ax::DrawNode;
+    using Menu = ax::Menu;
+    using ScrollView = ax::ui::ScrollView;
     using uinotificationinterface = chilli::ui::NotificationInterface;
-    template<class T> using Vector = cocos2d::Vector<T>;
+    template<class T> using Vector = ax::Vector<T>;
 public:
 
     virtual bool init() override;
@@ -71,7 +71,7 @@ protected:
     Vector<MenuItemNode*>   fields;
     ScrollView*             subMenuScrollView;
     uitextmenu*             mainMenu;
-    cocos2d::Map<int, uioptionitem*> optionControls;
+    ax::Map<int, uioptionitem*> optionControls;
     CF_SCREEN      initialScreenMode;
     TOGGLE                  rules[64];
 };

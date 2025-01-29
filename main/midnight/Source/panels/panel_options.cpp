@@ -7,7 +7,7 @@
 
 #include "../extensions/CustomDirector.h"
 #include "../extensions/ScrollView.h" // scrolling menu
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 #include "panel_options.h"
 #include "panel_mainmenu.h"
@@ -25,8 +25,8 @@
 
 #include "../frontend/language.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 
 
@@ -724,7 +724,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         auto r = menuItem->getBoundingBox();
         height += r.size.height + gapY;
 
-        menuItem->setCallback([&,item](cocos2d::Ref *sender) {
+        menuItem->setCallback([&,item](Ref *sender) {
             menueventargs args;
             args.menuitem = item;
             OnMenuNotification( nullptr, &args );

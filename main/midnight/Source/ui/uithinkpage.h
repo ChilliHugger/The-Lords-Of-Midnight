@@ -30,10 +30,10 @@ class uithinkpage :
             // , public uiactioncompletedelegate
             // , public uidragmoveelement
 {
-    using Sprite = cocos2d::Sprite;
-    using ImageView = cocos2d::ui::ImageView;
-    using ScrollView = cocos2d::ui::ScrollView;
-    using Label = cocos2d::Label;
+    using Sprite = ax::Sprite;
+    using ImageView = ax::ui::ImageView;
+    using ScrollView = ax::ui::ScrollView;
+    using Label = ax::Label;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
 
 public:

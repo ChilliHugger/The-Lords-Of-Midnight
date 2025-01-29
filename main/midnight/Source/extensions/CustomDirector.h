@@ -8,15 +8,15 @@
 #ifndef CustomDirector_h
 #define CustomDirector_h
 
-#include "cocos2d.h"
+#include "axmol.h"
 
-class CustomDirector : public cocos2d::Director
+class CustomDirector : public ax::Director
 {
-    using Scene = cocos2d::Scene;
+    using Scene = ax::Scene;
 public:
     template<class T>  void popSceneWithTransition(float duration)
     {
-        CCASSERT(_runningScene != NULL, "running scene should not null");
+        AXASSERT(_runningScene != NULL, "running scene should not null");
         
         _scenesStack.popBack();
         ssize_t c = _scenesStack.size();

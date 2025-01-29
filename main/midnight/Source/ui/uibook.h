@@ -11,7 +11,7 @@
 #include "uielement.h"
 #include "../system/storymanager.h"
 
-class uibook : public cocos2d::Node 
+class uibook : public ax::Node 
 {
 public:
     CREATE_FUNC(uibook);

@@ -16,7 +16,7 @@
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 static LPCSTR flames_left[] = { "flame01", "flame02","flame03" };
 static LPCSTR flames_right[] = { "flame03", "flame01","flame02" };
@@ -33,7 +33,7 @@ TunnelView* TunnelView::create( LandscapeOptions* options )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

@@ -12,13 +12,13 @@
 
 class uigroupedlord : public uilordselect
 {
-    using TextHAlignment = cocos2d::TextHAlignment;
-    using Camera = cocos2d::Camera;
-    using Label = cocos2d::Label;
-    using Sprite = cocos2d::Sprite;
-    using LayerColor = cocos2d::LayerColor;
-    using Vec2 = cocos2d::Vec2;
-    using Vec3 = cocos2d::Vec3;
+    using TextHAlignment = ax::TextHAlignment;
+    using Camera = ax::Camera;
+    using Label = ax::Label;
+    using Sprite = ax::Sprite;
+    using LayerColor = ax::LayerColor;
+    using Vec2 = ax::Vec2;
+    using Vec3 = ax::Vec3;
     
 public:
     CREATE_FUNC(uigroupedlord);

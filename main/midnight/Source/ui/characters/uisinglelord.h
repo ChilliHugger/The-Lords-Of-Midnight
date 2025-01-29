@@ -20,9 +20,9 @@
 class uisinglelord : public uilordselect
 {
 protected:
-    using Sprite = cocos2d::Sprite;
-    using DrawNode = cocos2d::DrawNode;
-    using LayerColor = cocos2d::LayerColor;
+    using Sprite = ax::Sprite;
+    using DrawNode = ax::DrawNode;
+    using LayerColor = ax::LayerColor;
     using uidragevent = chilli::ui::DragEvent;
     
 public:

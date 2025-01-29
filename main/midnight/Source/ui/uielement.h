@@ -9,7 +9,7 @@
 #ifndef __UIELEMENT_H_INCLUDED__
 #define __UIELEMENT_H_INCLUDED__
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../library/inc/mxtypes.h"
 #include "../library/inc/cflags.h"
 
@@ -61,7 +61,7 @@ namespace chilli {
     };
         
     class Element :
-        public cocos2d::Layer,
+        public ax::Layer,
         public NotificationInterface
     {
     public:
@@ -81,8 +81,8 @@ namespace chilli {
     class DragEvent
     {
     protected:
-        using Node = cocos2d::Node;
-        using Vec2 = cocos2d::Vec2;
+        using Node = ax::Node;
+        using Vec2 = ax::Vec2;
         
     public:
         enum class Type {
@@ -120,7 +120,7 @@ namespace chilli {
 
     class DragElement
     {
-        using Vec2 = cocos2d::Vec2;
+        using Vec2 = ax::Vec2;
         
     public:
         DragElement();
@@ -150,7 +150,7 @@ namespace chilli {
 
     class DragMoveElement : public DragElement
     {
-        using Vec2 = cocos2d::Vec2;
+        using Vec2 = ax::Vec2;
     public:
         DragMoveElement();
         
@@ -166,7 +166,7 @@ namespace chilli {
 
     class DropTarget
     {
-        using Vec2 = cocos2d::Vec2;
+        using Vec2 = ax::Vec2;
     public:
         DropTarget();
         
@@ -211,7 +211,7 @@ constexpr f32 alpha_zero = 0.0f;
 // typedef definition can be placed outside #ifndef to be visible on circular dependencies
 namespace chilli {
     namespace ui {
-        typedef cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
-        typedef cocos2d::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
+        typedef ax::ui::AbstractCheckButton::ccWidgetClickCallback WidgetClickCallback;
+        typedef ax::ui::AbstractCheckButton::ccWidgetEventCallback WidgetEventCallback;
     }
 }

@@ -8,7 +8,7 @@
 
 #include "ScrollView.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 namespace extensions {
     
@@ -20,7 +20,7 @@ namespace extensions {
             ret->autorelease();
             return ret;
         }
-        CC_SAFE_DELETE(ret);
+        AX_SAFE_DELETE(ret);
         return nullptr;
     }
     
@@ -40,7 +40,7 @@ namespace extensions {
         }
         else
         {
-            CC_SAFE_DELETE(ret);
+            AX_SAFE_DELETE(ret);
         }
         
         return ret;
@@ -53,10 +53,10 @@ namespace extensions {
         auto touchListener = EventListenerTouchOneByOne::create();
         touchListener->setSwallowTouches(false);
         
-        touchListener->onTouchBegan = CC_CALLBACK_2(Menu::onTouchBegan, this);
-        touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
-        touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
-        touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
+        touchListener->onTouchBegan = AX_CALLBACK_2(Menu::onTouchBegan, this);
+        touchListener->onTouchMoved = AX_CALLBACK_2(Menu::onTouchMoved, this);
+        touchListener->onTouchEnded = AX_CALLBACK_2(Menu::onTouchEnded, this);
+        touchListener->onTouchCancelled = AX_CALLBACK_2(Menu::onTouchCancelled, this);
         
         _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     }

@@ -13,7 +13,7 @@
 #include "../../system/moonring.h"
 #include "../../system/resolutionmanager.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 uigroupedlord::uigroupedlord() :
     buttonNode(nullptr)
@@ -27,7 +27,7 @@ bool uigroupedlord::init()
         
         setContentSize(Size(DISTANCE_INNER,DISTANCE_INNER));
         
-//        auto bg = cocos2d::LayerColor::create(Color4B(0,0,0, 25));
+//        auto bg = ax::LayerColor::create(Color4B(0,0,0, 25));
 //        bg->setContentSize(this->getContentSize());
 //        this->addChild(bg);
 
@@ -60,7 +60,7 @@ bool uigroupedlord::setLord(mxid characterid)
         face = Sprite::createWithSpriteFrameName("f_dead!");
     uihelper::AddCenter(this, face, 0, SHIELD_OFFSET_Y);
     
-//    titleBackground = cocos2d::LayerColor::create(Color4B(_clrRed));
+//    titleBackground = ax::LayerColor::create(Color4B(_clrRed));
 //    titleBackground->setContentSize(Size(getContentSize().width,RES(16)));
 //    titleBackground->setPosition(-(face->getContentSize().width/2),0);
 //    face->addChild(titleBackground);
@@ -132,6 +132,6 @@ void uigroupedlord::onPressStateChangedToPressed()
 
 bool uigroupedlord::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
-    return cocos2d::ui::Widget::hitTest(pt, camera, p)
+    return ax::ui::Widget::hitTest(pt, camera, p)
         && MouseOverHotspot(pt, MOUSE_OVER_HINT_DROP) == MOUSE_OVER_FACE ;
 }

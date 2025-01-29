@@ -12,9 +12,8 @@
 #include "uitextmenu.h"
 
 
-USING_NS_CC;
-
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 uitextmenu* uitextmenu::create( f32 width, uitextmenuitem* items, u32 count )
 {
@@ -24,7 +23,7 @@ uitextmenu* uitextmenu::create( f32 width, uitextmenuitem* items, u32 count )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

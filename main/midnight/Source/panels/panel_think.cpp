@@ -8,7 +8,7 @@
  *
  */
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "panel_think.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
@@ -17,9 +17,9 @@
 #include "../frontend/layout_id.h"
 #include "../ui/characters/uisinglelord.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
-using namespace tme;
+USING_NS_AX;
+USING_NS_AX_UI;
+USING_NS_TME;
 
 // think pages are
 // person

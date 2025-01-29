@@ -17,9 +17,9 @@
 
 #include "../tme/tme_interface.h"
 
-USING_NS_CC;
-using namespace tme;
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_TME;
+USING_NS_AX_UI;
 
 bool panel_gameover::init()
 {

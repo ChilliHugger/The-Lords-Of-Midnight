@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../library/inc/mxtypes.h"
 #include "uielement.h"
 #include "../system/helpmanager.h"
@@ -23,8 +23,8 @@ class uihelpwindow :
     public chilli::ui::Element,
     public uishortcutkeys
 {
-    using Scene = cocos2d::Scene;
-    using Layout = cocos2d::ui::Layout;
+    using Scene = ax::Scene;
+    using Layout = ax::ui::Layout;
     
 private:
     uihelpwindow();

@@ -26,10 +26,10 @@
 #if defined(_USE_VERSION_CHECK_)
     #include "network/HttpClient.h"
     #include "network/HttpRequest.h"
-    using namespace cocos2d::network;
+    using namespace ax::network;
 #endif
 
-USING_NS_CC;
+USING_NS_AX;
 
 using namespace chilli::lib;
 
@@ -128,7 +128,7 @@ std::string moonring::getWritablePath()
     path = chilli::extensions::getApplicationSupportPath();
     path += "com.chillihugger.midnight/";
 #else
-    path = cocos2d::FileUtils::getInstance()->getWritablePath();
+    path = ax::FileUtils::getInstance()->getWritablePath();
 #endif
 
 #if defined(_OS_DESKTOP_)

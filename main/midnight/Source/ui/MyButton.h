@@ -7,9 +7,9 @@
 //
 
 #pragma once
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
-class MyButton : public cocos2d::ui::Button
+class MyButton : public ax::ui::Button
 {
 public:
     

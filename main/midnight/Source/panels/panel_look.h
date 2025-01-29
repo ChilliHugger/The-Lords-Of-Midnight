@@ -66,17 +66,17 @@ class panel_look :
     chilli::ui::NotificationInterface,
     chilli::ui::DragElement
 {
-    using Touch = cocos2d::Touch;
-    using Event = cocos2d::Event;
-    using Sprite = cocos2d::Sprite;
-    using ImageView = cocos2d::ui::ImageView;
-    using Label = cocos2d::Label;
-    using LayerColor = cocos2d::LayerColor;
-    using Vec2 = cocos2d::Vec2;
+    using Touch = ax::Touch;
+    using Event = ax::Event;
+    using Sprite = ax::Sprite;
+    using ImageView = ax::ui::ImageView;
+    using Label = ax::Label;
+    using LayerColor = ax::LayerColor;
+    using Vec2 = ax::Vec2;
     using uidragevent = chilli::ui::DragEvent;
-    using Color3B = cocos2d::Color3B;
-    using DrawNode = cocos2d::DrawNode;
-    using EventListenerTouchOneByOne = cocos2d::EventListenerTouchOneByOne;
+    using Color3B = ax::Color3B;
+    using DrawNode = ax::DrawNode;
+    using EventListenerTouchOneByOne = ax::EventListenerTouchOneByOne;
 
 public:
     virtual ~panel_look() override;

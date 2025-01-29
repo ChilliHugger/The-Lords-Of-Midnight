@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 02/12/2017.
 //
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../extensions/CustomDirector.h"
 #include "../platform/Extensions.h"
 
@@ -17,7 +17,7 @@
 #include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
    
 LPCSTR text[] = {

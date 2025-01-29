@@ -7,9 +7,9 @@ FORWARD_REFERENCE(progressmonitor);
 
 class panel_splashscreen : public uipanel
 {
-    using DrawNode = cocos2d::DrawNode;
-    template<class T> using Vector = cocos2d::Vector<T>;
-    using LayerColor = cocos2d::LayerColor;
+    using DrawNode = ax::DrawNode;
+    template<class T> using Vector = ax::Vector<T>;
+    using LayerColor = ax::LayerColor;
 public:
     panel_splashscreen();
 

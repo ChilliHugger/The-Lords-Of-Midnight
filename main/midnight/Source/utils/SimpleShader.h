@@ -1,5 +1,5 @@
 #pragma once
-#include "cocos2d.h"
+#include "axmol.h"
 
 #include <vector>
 #include <string>
@@ -15,8 +15,8 @@ private:
     std::map<std::string, int> textureToSlot;
 
 public:
-    cocos2d::backend::Program* program;
-    cocos2d::backend::ProgramState *programState;
+    ax::backend::Program* program;
+    ax::backend::ProgramState *programState;
 
     SimpleShader(const std::string& vertSource, const std::string& fragSource);
     ~SimpleShader();
@@ -26,7 +26,7 @@ public:
 
     template <typename T>
     void setUniform(std::string uniform, T value);
-    void setUniform(std::string uniform, cocos2d::Texture2D* value);
+    void setUniform(std::string uniform, ax::Texture2D* value);
 };
 
 template<typename T>

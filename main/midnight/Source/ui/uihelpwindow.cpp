@@ -14,8 +14,8 @@
 #include "../system/moonring.h"
 #include <string>
 
-USING_NS_CC;
-USING_NS_CC_UI;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 uihelpwindow::uihelpwindow() :
       parent(nullptr)
@@ -28,7 +28,7 @@ uihelpwindow::uihelpwindow() :
 
 uihelpwindow::~uihelpwindow()
 {
-    CC_SAFE_RELEASE_NULL(parent);
+    AX_SAFE_RELEASE_NULL(parent);
 }
 
 uihelpwindow* uihelpwindow::create(uipanel* parent, helpid_t id)
@@ -39,7 +39,7 @@ uihelpwindow* uihelpwindow::create(uipanel* parent, helpid_t id)
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

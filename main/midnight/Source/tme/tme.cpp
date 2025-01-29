@@ -46,7 +46,7 @@ static            variant args[20];
 #if defined(_LOM_)
 std::string TME_ScenarioDirectory ( void )
 {
-    return cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
+    return ax::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
 }
 
 std::string TME_ScenarioName ( void )
@@ -66,7 +66,7 @@ std::string TME_ScenarioShortName ( void )
 #if defined(_DDR_)
 std::string TME_ScenarioDirectory ( void )
 {
-    return cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
+    return ax::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
 }
 
 std::string TME_ScenarioName ( void )

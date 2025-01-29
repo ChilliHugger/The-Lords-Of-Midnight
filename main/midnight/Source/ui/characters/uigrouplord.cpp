@@ -13,7 +13,7 @@
 #include "../../system/moonring.h"
 #include "../../frontend/layout_id.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 uigrouplord::uigrouplord() :
     i_group_left(nullptr),
@@ -226,7 +226,7 @@ void uigrouplord::setPage(page_t page)
 
 bool uigrouplord::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
-    return cocos2d::ui::Widget::hitTest(pt, camera, p)
+    return ax::ui::Widget::hitTest(pt, camera, p)
         && MouseOverHotspot(pt, MOUSE_OVER_HINT_DROP) == MOUSE_OVER_FACE ;
 }
 

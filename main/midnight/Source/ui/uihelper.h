@@ -26,15 +26,15 @@ constexpr auto FONT_SIZE_DEBUG         = 8;
 constexpr auto IMAGE_LOGO              = "misc/logo.png";
 
 
-using cocos2d::Color3B;
+using ax::Color3B;
 
 class uihelper
 {
-    using TTFConfig = cocos2d::TTFConfig;
-    using Node = cocos2d::Node;
-    using Button = cocos2d::ui::Button;
-    using Size = cocos2d::Size;
-    using Vec2 = cocos2d::Vec2;
+    using TTFConfig = ax::TTFConfig;
+    using Node = ax::Node;
+    using Button = ax::ui::Button;
+    using Size = ax::Size;
+    using Vec2 = ax::Vec2;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
 
 public:
@@ -112,7 +112,7 @@ public:
     static T getChildByTagRecursively(const int nodeTag, Node* parent)
         { return static_cast<T>(getChildByTagRecursively(nodeTag,parent)); }
 
-    static layoutid_t getIdFromSender(cocos2d::Ref* ref);
+    static layoutid_t getIdFromSender(Ref* ref);
 
 };
 

@@ -48,9 +48,8 @@
 #define TERRAIN_COLOUR      _clrBlack
 #endif
 
-using namespace tme;
-
-USING_NS_CC;
+USING_NS_TME;
+USING_NS_AX;
 
 uithinkpage::uithinkpage() :
     approach(false),
@@ -281,7 +280,7 @@ bool uithinkpage::init()
     auto padding = mr->resolution->getSafeArea();
     size.width -= padding.left+padding.right;
     size.height -= padding.top+padding.bottom;
-    safeArea = cocos2d::Layer::create();
+    safeArea = ax::Layer::create();
     safeArea->setContentSize(size);
     safeArea->setLocalZOrder(ZORDER_FAR+1);
     safeArea->setPosition(padding.left,padding.bottom);
@@ -335,7 +334,7 @@ void uithinkpage::displayCharacter ( const character& c )
     // display character name
     lblName->setString(c.longname);
 
-    imgCharacter->loadTexture(GetCharacterImage(c), cocos2d::ui::Widget::TextureResType::LOCAL);
+    imgCharacter->loadTexture(GetCharacterImage(c), ax::ui::Widget::TextureResType::LOCAL);
     imgCharacter->setTouchEnabled( Character_IsRecruited(c) );
     imgCharacter->setTag(ID_SELECT_CHAR+c.id);
     imgCharacter->addClickEventListener(clickCallback);
@@ -411,7 +410,7 @@ void uithinkpage::displayObject ( mxid objectid )
         return;
     }
     
-    imgObject->loadTexture( GetObjectBig(objectid), cocos2d::ui::Widget::TextureResType::LOCAL );
+    imgObject->loadTexture( GetObjectBig(objectid), ax::ui::Widget::TextureResType::LOCAL );
     imgObject->setVisible(true);
 #endif
     

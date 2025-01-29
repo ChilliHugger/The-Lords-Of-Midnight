@@ -14,9 +14,9 @@
 #include "../ui/uihelper.h"
 #include "../frontend/layout_id.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
-using namespace tme;
+USING_NS_AX;
+USING_NS_AX_UI;
+USING_NS_TME;
 
 bool panel_map_overview::init()
 {

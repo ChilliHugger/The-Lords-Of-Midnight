@@ -8,7 +8,7 @@
 #include "../ui/uielement.h"
 #include "../ui/uihelper.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 float safeAreaTopPadding = 0.0f;
 float safeAreaBottomPadding =  0.0f;
@@ -108,11 +108,11 @@ bool resolutionmanager::calcDisplayInfo ( void )
         current_resolution.aspect_scale = (f32)width / resolutions[resolution->reference].width ;
     }
         
-    CCLOG("Screen      (%f,%f)", current_resolution.width, current_resolution.height);
-    CCLOG("Scale        %f", current_resolution.screen_scale);
-    CCLOG("Target       %f", current_resolution.content_scale);
-    CCLOG("Aspect       %u", current_resolution.aspect);
-    CCLOG("Aspect Scale %f", current_resolution.aspect_scale);
+    AXLOG("Screen      (%f,%f)", current_resolution.width, current_resolution.height);
+    AXLOG("Scale        %f", current_resolution.screen_scale);
+    AXLOG("Target       %f", current_resolution.content_scale);
+    AXLOG("Aspect       %u", current_resolution.aspect);
+    AXLOG("Aspect Scale %f", current_resolution.aspect_scale);
 
     return true;
 }
@@ -232,7 +232,7 @@ bool resolutionmanager::init()
     }
 
     // turn on display FPS
-    director->setDisplayStats(false);
+    director->setStatsDisplay(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
@@ -259,9 +259,9 @@ size resolutionmanager::getDesktopSize()
     return size(width,height);
 }
 
-GLView* resolutionmanager::setWindowedMode(cocos2d::Size size)
+GLView* resolutionmanager::setWindowedMode(ax::Size size)
 {
-    return GLViewImpl::createWithRect(TME_ScenarioName(), cocos2d::Rect(0, 0, size.width, size.height));
+    return GLViewImpl::createWithRect(TME_ScenarioName(), ax::Rect(0, 0, size.width, size.height));
 }
 
 Size resolutionmanager::calcWindowSize(f32 scale, f32 aspect)
@@ -271,7 +271,7 @@ Size resolutionmanager::calcWindowSize(f32 scale, f32 aspect)
     f32 height = desktopSize.cy * scale;
     f32 width = (int)ROUNDFLOAT(height * aspect);
 
-    return cocos2d::Size(width,height);
+    return ax::Size(width,height);
 }
 
 GLView* resolutionmanager::setDisplayMode(CF_SCREEN mode)

@@ -14,6 +14,6 @@
 #elif defined(_OS_IOS_)
     #include "apple/Extensions-apple.h"
     #include "ios/Extensions-ios.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#elif AX_TARGET_PLATFORM == AX_PLATFORM_ANDROID
     #include "android/Extensions-android.h"
 #endif

@@ -7,13 +7,13 @@
 //
 
 #pragma once
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 namespace extensions {
 
-    class ScrollView : public cocos2d::ui::ScrollView
+    class ScrollView : public ax::ui::ScrollView
     {
-        using Vec2 = cocos2d::Vec2;
+        using Vec2 = ax::Vec2;
         
     public:
         static ScrollView * create();
@@ -23,7 +23,7 @@ namespace extensions {
     };
     
 
-    class ScrollingMenu : public cocos2d::Menu
+    class ScrollingMenu : public ax::Menu
     {
     public:
         static ScrollingMenu * create();

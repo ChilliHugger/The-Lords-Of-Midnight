@@ -11,8 +11,8 @@
 #include "../system/resolutionmanager.h"
 #include "uihelper.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 void uishortcutkeys::registerCallback( Node* node, chilli::ui::WidgetClickCallback callback )
 {

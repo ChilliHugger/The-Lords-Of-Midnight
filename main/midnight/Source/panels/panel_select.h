@@ -8,7 +8,7 @@
  */
 
 #pragma once
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../ui/characters/uilordselect.h"
 #include "../ui/uipanel.h"
 #include "../ui/uifilterbutton.h"
@@ -20,12 +20,12 @@ class panel_select :
     public uipanel,
     chilli::ui::uidragdropdelegate
 {
-    using PageView = cocos2d::ui::PageView;
-    using ScrollView = cocos2d::ui::ScrollView;
-    using Layout = cocos2d::ui::Layout;
+    using PageView = ax::ui::PageView;
+    using ScrollView = ax::ui::ScrollView;
+    using Layout = ax::ui::Layout;
     using uidragevent = chilli::ui::DragEvent;
     using uidragelement = chilli::ui::DragElement;
-    template<class T> using Vector = cocos2d::Vector<T>;
+    template<class T> using Vector = ax::Vector<T>;
 public:
     virtual bool init() override;
     

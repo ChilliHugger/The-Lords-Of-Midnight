@@ -6,7 +6,7 @@
 //
 //
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "tmemanager.h"
 #include <string>
 
@@ -266,6 +266,6 @@ std::string& GetRaceFace(const raceinfo& r)
 std::string& LOAD_IMAGE( std::string& filename )
 {
     if ( !filename.empty() )
-        cocos2d::Director::getInstance()->getTextureCache()->addImage(filename);
+        ax::Director::getInstance()->getTextureCache()->addImage(filename);
     return filename;
 }

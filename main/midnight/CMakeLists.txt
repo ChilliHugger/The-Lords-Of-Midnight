@@ -122,7 +122,7 @@ include(Source/utils/CMakeLists.txt)
 include(Source/platform/CMakeLists.txt)
 
 set(GAME_HEADER
-       Source/cocos.h
+       Source/axmol_sdk.h
        Source/AppDelegate.h
        ${HDR_EXTENSIONS}
        ${HDR_FRONTEND}

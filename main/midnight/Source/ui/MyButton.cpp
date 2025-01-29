@@ -21,7 +21,7 @@ MyButton* MyButton::create(const std::string &normalImage,
         btn->autorelease();
         return btn;
     }
-    CC_SAFE_DELETE(btn);
+    AX_SAFE_DELETE(btn);
     return nullptr;
 }
 

@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 17/10/2018.
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 #include "LandscapePeople.h"
 #include "LandscapeColour.h"
@@ -20,8 +20,8 @@
 
 #include "../tme/tme_interface.h"
 
-USING_NS_CC;
-using namespace tme;
+USING_NS_AX;
+USING_NS_TME;
 
 #define adjusty                 LRES(8)
 
@@ -37,7 +37,7 @@ LandscapePeople* LandscapePeople::create( LandscapeOptions* options )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 
@@ -185,7 +185,7 @@ void LandscapePeople::Initialise()
     
 }
 
-cocos2d::ui::Widget* LandscapePeople::add( std::string& person, int number)
+ax::ui::Widget* LandscapePeople::add( std::string& person, int number)
 {
     int column;
     Widget* imageAdded = nullptr;

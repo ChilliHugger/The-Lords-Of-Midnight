@@ -12,7 +12,7 @@
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 static LPCSTR compass_items[] = {
     DIRECTION_N,
@@ -41,7 +41,7 @@ uicompass* uicompass::create( uipanel* parent )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

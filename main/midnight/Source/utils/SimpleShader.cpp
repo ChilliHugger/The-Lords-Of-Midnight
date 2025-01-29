@@ -26,8 +26,8 @@ std::string SimpleShader::defaultVert = R"(
 SimpleShader::SimpleShader(const std::string& vertSource, const std::string& fragSource)
 {
     //create the shader
-    program = cocos2d::backend::DriverBase::getInstance()->newProgram(vertSource, fragSource);
-    programState = new cocos2d::backend::ProgramState(program);
+    program = ax::backend::DriverBase::getInstance()->newProgram(vertSource, fragSource);
+    programState = new ax::backend::ProgramState(program);
 
     currentTextureSlot = 1;
 
@@ -38,8 +38,8 @@ SimpleShader::SimpleShader(const std::string& vertSource, const std::string& fra
 SimpleShader::~SimpleShader()
 {
     //cleanup
-    CC_SAFE_RELEASE_NULL(programState);
-    CC_SAFE_RELEASE_NULL(program);
+    AX_SAFE_RELEASE_NULL(programState);
+    AX_SAFE_RELEASE_NULL(program);
 
     auto& vec = SimpleShaderManager::getInstance()->shaders;
     vec.erase(std::remove(vec.begin(), vec.end(), this), vec.end());
@@ -53,15 +53,15 @@ SimpleShader* SimpleShader::createWithFragmentShader(const std::string& fragShad
 SimpleShader* SimpleShader::createWithVertexAndFragmentShader(const std::string& vertShaderPath, const std::string& fragShaderPath)
 {
     //custom vertex shader
-    auto vertSource = cocos2d::FileUtils::getInstance()->getStringFromFile(vertShaderPath);
+    auto vertSource = ax::FileUtils::getInstance()->getStringFromFile(vertShaderPath);
 
     //custom fragment shader
-    auto fragSourceRaw = cocos2d::FileUtils::getInstance()->getStringFromFile(fragShaderPath);
+    auto fragSourceRaw = ax::FileUtils::getInstance()->getStringFromFile(fragShaderPath);
 
     return new SimpleShader(vertSource, fragSourceRaw);
 }
 
-void SimpleShader::setUniform(std::string uniform, cocos2d::Texture2D* value)
+void SimpleShader::setUniform(std::string uniform, ax::Texture2D* value)
 {
     //determine texture slot
     int slot = currentTextureSlot;

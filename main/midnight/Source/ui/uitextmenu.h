@@ -16,13 +16,13 @@
 using namespace chilli::types;
 
 class uitextmenu :
-    public cocos2d::ui::Scale9Sprite,
+    public ax::ui::Scale9Sprite,
     public uishortcutkeys,
     public chilli::ui::NotificationInterface
 {
 protected:
-    using Menu = cocos2d::Menu;
-    using MenuItem = cocos2d::MenuItem;
+    using Menu = ax::Menu;
+    using MenuItem = ax::MenuItem;
     
 private:
     uitextmenu() {};

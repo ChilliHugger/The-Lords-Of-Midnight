@@ -12,10 +12,10 @@
 
 
 class uioptionitem :
-    public cocos2d::ui::Scale9Sprite
+    public ax::ui::Scale9Sprite
 {
 protected:
-    using Label = cocos2d::Label;
+    using Label = ax::Label;
     
 public:
     static uioptionitem* create( f32 width, uitextmenuitem* item );
@@ -29,10 +29,10 @@ protected:
     Label* value;
 };
 
-class MenuItemNode : public cocos2d::MenuItemSprite
+class MenuItemNode : public ax::MenuItemSprite
 {
 protected:
-    using Node = cocos2d::Node;
+    using Node = ax::Node;
 
 public:
     static MenuItemNode* create( Node* node );

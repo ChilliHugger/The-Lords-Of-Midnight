@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../library/inc/mxtypes.h"
 #include "ringcontroller.h"
 
@@ -15,11 +15,11 @@ FORWARD_REFERENCE(SimpleShader);
 
 class shadermanager : public ringcontroller
 {
-    using Node = cocos2d::Node;
-    using Vec4 = cocos2d::Vec4;
-    using ProgramState = cocos2d::backend::ProgramState;
-    using Program = cocos2d::backend::Program;
-    using Color4F = cocos2d::Color4F;
+    using Node = ax::Node;
+    using Vec4 = ax::Vec4;
+    using ProgramState = ax::backend::ProgramState;
+    using Program = ax::backend::Program;
+    using Color4F = ax::Color4F;
 
 private:
     void CreateTerrainTimeShader();
