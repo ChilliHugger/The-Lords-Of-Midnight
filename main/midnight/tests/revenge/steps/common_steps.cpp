@@ -9,8 +9,8 @@
 //
 
 #include "common_steps.h"
-#include "../../../src/tme/scenarios/ddr/scenario_ddr_internal.h"
-#include "../../../src/tme/scenarios/ddr/ddr_processor_night.h"
+#include "../../../Source/tme/scenarios/ddr/scenario_ddr_internal.h"
+#include "../../../Source/tme/scenarios/ddr/ddr_processor_night.h"
 
 using namespace std;
 

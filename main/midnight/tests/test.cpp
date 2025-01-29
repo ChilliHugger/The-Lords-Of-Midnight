@@ -2,7 +2,7 @@
 #include "catch2/catch.hpp"
 
 #include "mocks/mocks.h"
-#include "../Source/cocos.h"
+#include "../Source/axmol_sdk.h"
 
 
 int tests_main(int argc, char *argv[])
@@ -17,7 +17,7 @@ int tests_main(int argc, char *argv[])
     auto path = "/Users/chris/Projects/GitHub/The-Lords-Of-Midnight/main/midnight/Builds/mac-tests-ddr/build/Debug/revenge.app/Contents/Resources";
 #endif
 
-    cocos2d::FileUtils::getInstance()->setDefaultResourceRootPath(path);
+    ax::FileUtils::getInstance()->setDefaultResourceRootPath(path);
     return Catch::Session().run( argc, argv );
 
 }

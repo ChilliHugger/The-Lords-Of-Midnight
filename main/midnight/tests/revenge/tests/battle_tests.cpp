@@ -7,7 +7,7 @@
 
 #include "../steps/battle_steps.h"
 #include "../steps/common_steps.h"
-#include "../../../src/tme/scenarios/ddr/ddr_processor_battle.h"
+#include "../../../Source/tme/scenarios/ddr/ddr_processor_battle.h"
 
 // GIVEN a hard game
 // AND a lord has followers

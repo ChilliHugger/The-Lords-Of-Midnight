@@ -379,6 +379,10 @@ SCENARIO("Characters will consider staying in a battle")
     }
 }
 
+void IsSameLocation( loc_t a, loc_t b) {
+    REQUIRE( a == b );
+}
+
 LPCSTR directions[] = { "NORTH", "NORTHEAST", "EAST", "SOUTHEAST", "SOUTH", "SOUTHWEST", "WEST", "NORTHWEST" };
     
 SCENARIO("Characters will look interesting locations containing a lord loyal to the moonprince")
@@ -435,7 +439,7 @@ SCENARIO("Characters will look interesting locations containing a lord loyal to 
                     THEN("the they should not make the enemy location their target")
                     {
                         REQUIRE( result == false );
-                        REQUIRE( c->targetLocation == mxgridref::INVALID );
+                        IsSameLocation( c->targetLocation, mxgridref::INVALID );
                     }
                 }
             }
@@ -451,7 +455,7 @@ SCENARIO("Characters will look interesting locations containing a lord loyal to 
                     THEN("the they should not make the enemy location their target")
                     {
                         REQUIRE( result == false );
-                        REQUIRE( c->targetLocation == mxgridref::INVALID );
+                        IsSameLocation( c->targetLocation, mxgridref::INVALID );
                     }
                 }
             }
@@ -466,7 +470,7 @@ SCENARIO("Characters will look interesting locations containing a lord loyal to 
                     THEN("the they should not make the enemy location their target")
                     {
                         REQUIRE( result == false );
-                        REQUIRE( c->targetLocation == mxgridref::INVALID );
+                        IsSameLocation( c->targetLocation, mxgridref::INVALID );
                     }
                 }
             }
@@ -609,7 +613,7 @@ SCENARIO("Characters will not look interesting locations", "[new]")
                 THEN("the they should npt make the enemy location their target")
                 {
                     REQUIRE( result == false );
-                    REQUIRE( c->targetLocation == mxgridref::INVALID );
+                    IsSameLocation( c->targetLocation, mxgridref::INVALID );
                 }
             }
         }

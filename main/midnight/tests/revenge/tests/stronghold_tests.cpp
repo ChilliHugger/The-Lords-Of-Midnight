@@ -6,7 +6,7 @@
 //
 
 #include "../steps/common_steps.h"
-#include "../../../src/tme/scenarios/ddr/ddr_processor_text.h"
+#include "../../../Source/tme/scenarios/ddr/ddr_processor_text.h"
 
 
 // GIVEN a stronghold has no owner
@@ -28,8 +28,8 @@ class ProxyStronghold : public mxstronghold {
 public:
     void SetOwner( mxcharacter* owner ) { this->owner = owner; }
     void SetOccupier( mxcharacter* occupier ) { this->occupier = occupier; }
+    void SetTroopType( mxunit_t type ) { this->type = type; }
 };
-
     
 static std::string description;
 
@@ -158,6 +158,74 @@ SCENARIO("Describing a Stronghold", "[new]")
                 THEN("and should show occupier without their loyalty")
                 {
                     ShouldShowOccupiedByLuxor();
+                }
+            }
+        }
+    }
+}
+
+// GIVEN the stronghold has 75 warriors
+// AND lord can recruit
+
+SCENARIO("Game crashes when lord recruit army (bug #246)", "[new]")
+{
+    TMEStep::NewStory();
+    
+    auto stronghold = (ProxyStronghold*) GetStronghold("SH_FORTRESS_VARATRARG");
+    auto lord = GetDDRCharacter("CH_VARATRARG");
+    
+    GIVEN("Lords is at stronghold")
+    {
+        lord->Location(stronghold->Location());
+        
+        AND_GIVEN("a stronghold has 75 warriors")
+        {
+            stronghold->MinTroops(50);
+            stronghold->TotalTroops(75);
+            stronghold->SetTroopType(UT_WARRIORS);
+        
+            AND_GIVEN("the lord is able to recruit more men")
+            {
+                lord->Flags().Set(cf_allowedwarriors);
+                lord->Flags().Reset(cf_allowedriders);
+                lord->warriors.Total(500);
+                lord->riders.Total(0);
+
+                WHEN("lord recruits the soldiers")
+                {
+                    lord->Cmd_RecruitMen(stronghold, 100);
+                    
+                    THEN("the lord should have recruited soldiers")
+                    {
+                        REQUIRE(lord->getArmySize() == 525);
+                        REQUIRE(stronghold->TotalTroops() == 50);
+                    }
+                }
+            }
+        }
+        
+        AND_GIVEN("a stronghold has 450 warriors")
+        {
+            stronghold->MaxTroops(500);
+            stronghold->TotalTroops(450);
+            stronghold->SetTroopType(UT_WARRIORS);
+        
+            AND_GIVEN("the lord is able to post more men")
+            {
+                lord->Flags().Set(cf_allowedwarriors);
+                lord->Flags().Reset(cf_allowedriders);
+                lord->warriors.Total(500);
+                lord->riders.Total(0);
+
+                WHEN("lord posts the soldiers on guard")
+                {
+                    lord->Cmd_PostMen(stronghold, 100);
+                    
+                    THEN("the lord should not have placed soldiers on guard")
+                    {
+                        REQUIRE(lord->getArmySize() == 500);
+                        REQUIRE(stronghold->TotalTroops() == 450);
+                    }
                 }
             }
         }

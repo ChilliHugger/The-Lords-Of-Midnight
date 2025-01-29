@@ -21,9 +21,6 @@ using namespace tme::scenarios ;
 
 namespace tme {
     
-//namespace lom {
-
-    
     lom_stronghold::lom_stronghold()
     {
         mxentity::idType = IDT_STRONGHOLD ;
@@ -38,32 +35,20 @@ namespace tme {
 
     }
 
-    /*
-     * Function name    : lom_tronghold::Remove
-     * 
-     * Return type        : int
-     * 
-     * Arguments        : mxrace_t race
-     *                  : mxunit_t type
-     *                  : int amount
-     * 
-     * Description        : 
-     * 
-     */
+    u32 lom_stronghold::Add ( mxrace_t race, mxunit_t type, u32 amount )
+    {
+        if ( OccupyingRace() != race || Type() != type )
+            return 0;
+
+        return mxstronghold::Add(race, type, amount);
+    }
 
     u32 lom_stronghold::Remove ( mxrace_t race, mxunit_t type, u32 amount )
     {
         if ( OccupyingRace() != race || Type() != type )
             return 0;
 
-    // TODO this is a LOM scenario override
-    //    if ( (Total()-amount) < Min() )
-    //        amount = Total()-Min();
-    //
-        totaltroops-= amount;
-        return amount;
+        return mxstronghold::Remove(race, type, amount);
     }
-
-//} // namespace lom_x
-    
+ 
 } // namespace tme
