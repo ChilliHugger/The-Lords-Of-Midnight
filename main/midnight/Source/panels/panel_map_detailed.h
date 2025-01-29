@@ -8,7 +8,7 @@
  */
 
 #pragma once
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../extensions/ScrollView.h"
 #include "../ui/uipanel.h"
 #include "../ui/uifilterbutton.h"
@@ -26,12 +26,12 @@ constexpr f32 MAP_SCALE_CLICK_DELTA = 0.1f;
 class panel_map_detailed : public uipanel
 {
     using ScrollView = extensions::ScrollView;
-    using TMXTiledMap = cocos2d::TMXTiledMap;
-    using Node = cocos2d::Node;
-    using DrawNode = cocos2d::DrawNode;
-    using Vec2 = cocos2d::Vec2;
-    using Label = cocos2d::Label;
-    using Widget = cocos2d::ui::Widget;
+    using TMXTiledMap = ax::TMXTiledMap;
+    using Node = ax::Node;
+    using DrawNode = ax::DrawNode;
+    using Vec2 = ax::Vec2;
+    using Label = ax::Label;
+    using Widget = ax::ui::Widget;
     
 public:
     virtual bool init() override;

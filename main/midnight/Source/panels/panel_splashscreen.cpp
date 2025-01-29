@@ -17,7 +17,7 @@
 #include <thread>
 #include <future>
 
-USING_NS_CC;
+USING_NS_AX;
 
 constexpr s32 MAX_SPLASHSCREEN_TIME = 3000;
 constexpr f32 TRANSITION_TIME = 2.0f;
@@ -37,8 +37,6 @@ panel_splashscreen::panel_splashscreen() :
 panel_splashscreen::~panel_splashscreen()
 {
     SAFEDELETE(progress)
-    //CC_SAFE_RELEASE(loadingProgress);
-    //CC_SAFE_RELEASE(loadingBars);
 }
 
 bool panel_splashscreen::init()

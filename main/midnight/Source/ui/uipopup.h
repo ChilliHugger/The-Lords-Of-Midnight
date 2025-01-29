@@ -8,7 +8,7 @@
 #ifndef uipopup_h
 #define uipopup_h
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../library/inc/mxtypes.h"
 #include "uielement.h"
 #include "uishortcutkeys.h"
@@ -22,8 +22,8 @@ class uipopup :
     public uishortcutkeys
 {
 protected:
-    using Layout = cocos2d::ui::Layout;
-    using Scene = cocos2d::Scene;
+    using Layout = ax::ui::Layout;
+    using Scene = ax::Scene;
     
 private:
     uipopup();

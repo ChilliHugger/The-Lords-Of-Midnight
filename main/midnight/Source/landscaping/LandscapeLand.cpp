@@ -32,7 +32,7 @@ LandscapeLand* LandscapeLand::create( LandscapeOptions* options )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 
@@ -244,7 +244,7 @@ Sprite* LandscapeLand::GetFloorImage( floor_t floor )
     //if ( floor == floor_water )
     //    image->setScale(0.5);
     
-    //image->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
+    //image->setBlendFunc(ax::BlendFunc::ALPHA_NON_PREMULTIPLIED);
     
 //    if ( options->programState ) {
 //        auto tint1 = Color4F(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));

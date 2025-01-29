@@ -5,12 +5,12 @@
 //  Created by Chris Wild on 09/12/2017.
 //
 //
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "uielement.h"
 #include "uihelper.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 namespace chilli {
     namespace ui {
@@ -28,7 +28,7 @@ namespace chilli {
             }
             else
             {
-                CC_SAFE_DELETE(ret);
+                AX_SAFE_DELETE(ret);
             }
             return ret;
         }

@@ -17,9 +17,9 @@ FORWARD_REFERENCE(uisinglelord);
 
 class panel_think : public uipanel
 {
-    using PageView = cocos2d::ui::PageView;
-    using Color3B = cocos2d::Color3B;
-    template<class T> using Vector = cocos2d::Vector<T>;
+    using PageView = ax::ui::PageView;
+    using Color3B = ax::Color3B;
+    template<class T> using Vector = ax::Vector<T>;
 public:
     virtual bool init() override;
     

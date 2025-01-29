@@ -1,4 +1,4 @@
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 #include "panel_look.h"
 #include "panel_think.h"
@@ -35,9 +35,9 @@
 #include <string>
 #include <algorithm>
 
-USING_NS_CC;
-using namespace tme;
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_TME;
+USING_NS_AX_UI;
 
 enum tagid_t {
     TAG_NONE                = 0,
@@ -112,7 +112,7 @@ panel_look::~panel_look()
         SAFEDELETE(options);
     }
     
-    CC_SAFE_RELEASE_NULL(i_command_window);
+    AX_SAFE_RELEASE_NULL(i_command_window);
 }
 
 bool panel_look::init()

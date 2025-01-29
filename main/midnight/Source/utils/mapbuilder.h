@@ -9,11 +9,11 @@
 #ifndef mapbuilder_h
 #define mapbuilder_h
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../library/inc/mxtypes.h"
 #include "../tme/tme_interface.h"
 
-using namespace tme;
+USING_NS_TME;
 
 enum class mapflags {
     show_stronghold_names       = MXBIT(0),
@@ -47,9 +47,9 @@ enum CELLFLAGS {
 //    MAX_LAYERS
 //};
 
-class map_object : public cocos2d::Ref
+class map_object : public Ref
 {
-    template<class T> using Vector = cocos2d::Vector<T>;
+    template<class T> using Vector = ax::Vector<T>;
     
 public:
     virtual ~map_object() override;
@@ -79,11 +79,11 @@ public:
 };
 
 
-class mapbuilder : public cocos2d::Ref
+class mapbuilder : public Ref
 {
 public:
-    template<class T> using Vector = cocos2d::Vector<T>;
-    using Vec2 = cocos2d::Vec2;
+    template<class T> using Vector = ax::Vector<T>;
+    using Vec2 = ax::Vec2;
     
 public:
     mapbuilder();

@@ -7,15 +7,15 @@
 //
 
 #pragma once
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "settingsmanager.h"
 #include "../frontend/keyboard_id.h"
 #include "../frontend/layout_id.h"
 
 #define KEYCODE(x) \
-    cocos2d::EventKeyboard::KeyCode::KEY_##x
+    ax::EventKeyboard::KeyCode::KEY_##x
 
-typedef cocos2d::EventKeyboard::KeyCode keycode_t;
+typedef ax::EventKeyboard::KeyCode keycode_t;
 
 
 enum keyflags_t {
@@ -43,7 +43,7 @@ protected:
 };
 
 
-class keyinfo : public cocos2d::Ref
+class keyinfo : public Ref
 {
 public:
     keyinfo( LPCSTR name, keycode_t key, layoutid_t id )

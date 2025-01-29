@@ -3,9 +3,8 @@
 #include "ILandscape.h"
 #include "../system/moonring.h"
 
-USING_NS_CC;
-
-using namespace tme;
+USING_NS_AX;
+USING_NS_TME;
 
 LandscapeGenerator::LandscapeGenerator() :
     options(nullptr),

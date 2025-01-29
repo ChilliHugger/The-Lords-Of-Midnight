@@ -15,7 +15,7 @@
 #define BOOKMARK_IMAGE          "bookmark"
 #define BOOKMARK_OVERLAY_IMAGE  "bookmark_overlay"
 
-USING_NS_CC;
+USING_NS_AX;
 
 // TODO: These should should be read from the config file
 // like they used to be tag panel_menu::stories
@@ -39,7 +39,7 @@ uibook* uibook::createWithChapter( storyheader_t* story )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

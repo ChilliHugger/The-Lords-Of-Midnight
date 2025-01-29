@@ -9,9 +9,8 @@
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 
-USING_NS_CC;
-
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 uioptionitem* uioptionitem::create( f32 width, uitextmenuitem* item )
 {
@@ -21,7 +20,7 @@ uioptionitem* uioptionitem::create( f32 width, uitextmenuitem* item )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 
@@ -73,7 +72,7 @@ MenuItemNode* MenuItemNode::create( Node* option )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

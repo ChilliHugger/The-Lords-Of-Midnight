@@ -8,16 +8,16 @@
 
 #ifndef TiledMapper_h
 #define TiledMapper_h
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 #include "../library/inc/mxtypes.h"
 
 FORWARD_REFERENCE(mapbuilder);
 
-class TiledMapper : public cocos2d::Ref
+class TiledMapper : public Ref
 {
-    using TMXTiledMap = cocos2d::TMXTiledMap;
-    using TMXMapInfo = cocos2d::TMXMapInfo;
+    using TMXTiledMap = ax::TMXTiledMap;
+    using TMXMapInfo = ax::TMXMapInfo;
 
 public:
     TiledMapper();

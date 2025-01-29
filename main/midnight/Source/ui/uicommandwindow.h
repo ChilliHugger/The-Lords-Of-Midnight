@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../library/inc/mxtypes.h"
 #include "uielement.h"
 #include "../system/keyboardmanager.h"
@@ -26,10 +26,10 @@ class uicommandwindow :
     public chilli::ui::Element,
     public uishortcutkeys
 {
-    using Widget = cocos2d::ui::Widget;
-    using Layout = cocos2d::ui::Layout;
-    using Node = cocos2d::Node;
-    template<class T> using Vector = cocos2d::Vector<T>;
+    using Widget = ax::ui::Widget;
+    using Layout = ax::ui::Layout;
+    using Node = ax::Node;
+    template<class T> using Vector = ax::Vector<T>;
 private:
     uicommandwindow();
     ~uicommandwindow();

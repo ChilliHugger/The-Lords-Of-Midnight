@@ -8,7 +8,7 @@
 #ifndef uipanel_h
 #define uipanel_h
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 #include "../system/helpmanager.h"
 #include "../system/resolutionmanager.h"
@@ -27,7 +27,7 @@ FORWARD_REFERENCE( uieventargs );
 
 
 
-class ResumeEventListenerMouse : public cocos2d::EventListenerMouse
+class ResumeEventListenerMouse : public ax::EventListenerMouse
 {
 public:
     static ResumeEventListenerMouse* create()
@@ -39,7 +39,7 @@ public:
         }
         else
         {
-            CC_SAFE_DELETE(ret);
+            AX_SAFE_DELETE(ret);
         }
         return ret;
     }
@@ -51,17 +51,17 @@ public:
 
 
 class uipanel :
-    public cocos2d::Scene,
+    public ax::Scene,
     public uishortcutkeys
 {
 protected:
-    using Color3B = cocos2d::Color3B;
-    using DrawNode = cocos2d::DrawNode;
-    using Button = cocos2d::ui::Button;
-    using Layer = cocos2d::Layer;
-    using Node = cocos2d::Node;
-    using Vec2 = cocos2d::Vec2;
-    using Sprite = cocos2d::Sprite;
+    using Color3B = ax::Color3B;
+    using DrawNode = ax::DrawNode;
+    using Button = ax::ui::Button;
+    using Layer = ax::Layer;
+    using Node = ax::Node;
+    using Vec2 = ax::Vec2;
+    using Sprite = ax::Sprite;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
     using WidgetEventCallback = chilli::ui::WidgetEventCallback;
 public:

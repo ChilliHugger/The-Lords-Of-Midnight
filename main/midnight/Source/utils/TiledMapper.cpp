@@ -13,8 +13,8 @@
 #include "../extensions/TMXTiledMap.h"
 #include "../utils/mapbuilder.h"
 
-USING_NS_CC;
-//USING_NS_CC_UI;
+USING_NS_AX;
+//USING_NS_AX_UI;
 
 TiledMapper::TiledMapper() :
     tmxMapInfo(nullptr)
@@ -23,7 +23,7 @@ TiledMapper::TiledMapper() :
     
 TiledMapper::~TiledMapper()
 {
-    CC_SAFE_RELEASE_NULL(tmxMapInfo);
+    AX_SAFE_RELEASE_NULL(tmxMapInfo);
 }
 
 

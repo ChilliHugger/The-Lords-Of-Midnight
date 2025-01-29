@@ -14,7 +14,7 @@
 #include "LandscapeNode.h"
 #include "LandscapeGenerator.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 class LandscapeTerrain : public LandscapeNode
 {
@@ -50,7 +50,7 @@ public:
     }
     virtual ~ImageItem()
     {
-        CC_SAFE_RELEASE_NULL(landscapeItem);
+        AX_SAFE_RELEASE_NULL(landscapeItem);
     }
 
 

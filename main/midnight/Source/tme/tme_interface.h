@@ -50,6 +50,10 @@ using tme::maplocation;
 using tme::terraininfo;
 using tme::raceinfo;
 
+#if !defined(USING_NS_TME)
+#define USING_NS_TME using namespace tme
+#endif
+
 
 typedef struct loc_armyinfo_t {
   c_mxid    armies;

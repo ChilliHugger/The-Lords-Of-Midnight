@@ -14,13 +14,13 @@
 
 #if USE_AUDIO_ENGINE
 #include "audio/include/AudioEngine.h"
-using namespace cocos2d::experimental;
+using namespace ax::experimental;
 #elif USE_SIMPLE_AUDIO_ENGINE
 #include "audio/include/SimpleAudioEngine.h"
 using namespace CocosDenshion;
 #endif
 
-USING_NS_CC;
+USING_NS_AX;
 
 AppDelegate::AppDelegate()
 {
@@ -148,6 +148,6 @@ void AppDelegate::applicationWillEnterForeground() {
 #if defined(_OS_IOS_)
 void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
 {
-    cocos2d::Application::applicationScreenSizeChanged(newWidth, newHeight);
+    ax::Application::applicationScreenSizeChanged(newWidth, newHeight);
 }
 #endif

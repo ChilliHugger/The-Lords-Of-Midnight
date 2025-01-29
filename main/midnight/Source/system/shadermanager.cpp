@@ -9,7 +9,7 @@
 #include "../utils/SimpleShader.h"
 #include "../ui/uihelper.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 shadermanager::shadermanager() :
     terrainTimeShader(nullptr),
@@ -30,7 +30,7 @@ void shadermanager::Init()
 }
 
 template<typename T>
-void setUniform(cocos2d::backend::ProgramState* state, std::string uniform, T value)
+void setUniform(ax::backend::ProgramState* state, std::string uniform, T value)
 {
     auto uniformLocation = state->getUniformLocation(uniform);
     state->setUniform(uniformLocation, &value, sizeof(value));

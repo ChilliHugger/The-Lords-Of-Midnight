@@ -29,9 +29,9 @@
 const f32 ScrollToLordTimeInSecs = 1.0f;
 
 
-USING_NS_CC;
-USING_NS_CC_UI;
-using namespace tme;
+USING_NS_AX;
+USING_NS_AX_UI;
+USING_NS_TME;
 
 panel_map_detailed::panel_map_detailed() :
     scrollView(nullptr),
@@ -48,7 +48,7 @@ panel_map_detailed::panel_map_detailed() :
 
 panel_map_detailed::~panel_map_detailed()
 {
-    CC_SAFE_RELEASE_NULL(mapBuilder);
+    AX_SAFE_RELEASE_NULL(mapBuilder);
 }
 
 

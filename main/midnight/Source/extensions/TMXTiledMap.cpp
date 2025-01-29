@@ -8,7 +8,7 @@
 
 #include "TMXTiledMap.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 namespace extensions {
     
@@ -20,21 +20,21 @@ namespace extensions {
             ret->autorelease();
             return ret;
         }
-        CC_SAFE_DELETE(ret);
+        AX_SAFE_DELETE(ret);
         return nullptr;
     }
     
     
     bool TMXTiledMap::initWithMapInfo(TMXMapInfo* mapInfo)
     {
-        CCASSERT(mapInfo != nullptr, "TMXTiledMap: tmx file should not be empty");
+        AXASSERT(mapInfo != nullptr, "TMXTiledMap: tmx file should not be empty");
         
         setContentSize(Size::ZERO);
         
         if (mapInfo == nullptr)
             return false;
         
-        CCASSERT( !mapInfo->getTilesets().empty(), "TMXTiledMap: Map not found. Please check the filename.");
+        AXASSERT( !mapInfo->getTilesets().empty(), "TMXTiledMap: Map not found. Please check the filename.");
         
         buildWithMapInfo(mapInfo, true);
         

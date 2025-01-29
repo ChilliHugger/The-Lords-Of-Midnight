@@ -75,7 +75,7 @@ bool projectconfig::LoadXmlConfig ( LPCSTR scenario, progressmonitor* monitor )
                     auto d = new mouse_data_t ;
                     d->file = xml::ReadStr(t,"image");
                     auto a = xml::ReadPoint(t,"anchor", zero);
-                    d->anchor = cocos2d::Vec2(a.x, a.y);
+                    d->anchor = ax::Vec2(a.x, a.y);
                     mr->mouseData.push_back(d);
                 }
                 monitor->Update("Loading mouse icons", 1);

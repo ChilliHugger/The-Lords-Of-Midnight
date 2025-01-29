@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 09/12/2018.
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 #include "selectmodel.h"
 #include "../system/tmemanager.h"
@@ -13,7 +13,7 @@
 #include "../tme/tme_interface.h"
 
 using namespace chilli::lib;
-using namespace tme;
+USING_NS_TME;
 
 void selectmodel::setDefaults()
 {

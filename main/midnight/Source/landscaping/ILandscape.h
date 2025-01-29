@@ -17,7 +17,7 @@ FORWARD_REFERENCE(SimpleShader);
 
 class LandscapeOptions
 {
-    using ProgramState = cocos2d::backend::ProgramState;
+    using ProgramState = ax::backend::ProgramState;
 public:
     LandscapeOptions();
     virtual ~LandscapeOptions();

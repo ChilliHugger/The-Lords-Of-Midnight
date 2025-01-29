@@ -11,8 +11,8 @@
 #include "../ui/uieventargs.h"
 #include "../system/moonring.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 using chilli::ui::WidgetClickCallback;
 
@@ -307,11 +307,11 @@ void uihelper::PositionCenterAnchor (Node* node, Vec2 anchor, f32 paddingX, f32 
 
 Button* uihelper::CreateImageButton( const std::string& name )
 {
-cocos2d::ui::Button* button;
+ax::ui::Button* button;
     if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
-        button=cocos2d::ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
+        button=ax::ui::Button::create(name,"","", ax::ui::Widget::TextureResType::LOCAL);
     }else{
-        button=cocos2d::ui::Button::create(name,"","", cocos2d::ui::Widget::TextureResType::PLIST);
+        button=ax::ui::Button::create(name,"","", ax::ui::Widget::TextureResType::PLIST);
     }
     button->setLocalZOrder(ZORDER_UI);
     return uihelper::setEnabled(button,true);
@@ -342,7 +342,7 @@ Button* uihelper::CreateBoxButton( Size size )
     size.height = PHONE_SCALE(size.height);
     
     
-    auto button = cocos2d::ui::Button::create(BOX_BACKGROUND_FILENAME);
+    auto button = ax::ui::Button::create(BOX_BACKGROUND_FILENAME);
     button->setTitleFontName(FONT_FILENAME);
     button->setTitleFontSize(PHONE_SCALE(RES(FONT_SIZE_BIG)));
     button->setTitleColor(Color3B::BLUE);
@@ -356,7 +356,7 @@ Button* uihelper::CreateBoxButton( Size size )
     return button;
 }
 
-Button* uihelper::setEnabled( cocos2d::ui::Button* button, bool enabled )
+Button* uihelper::setEnabled( ax::ui::Button* button, bool enabled )
 {
     if ( button != nullptr ) {
         button->setEnabled(enabled);
@@ -371,7 +371,7 @@ Button* uihelper::setEnabled( cocos2d::ui::Button* button, bool enabled )
 * @param nodeTag: the tag of the node searched for.
 * @param parent: the initial parent node where the search should begin.
 */
-Node* uihelper::getChildByTagRecursively(const int nodeTag, cocos2d::Node* parent) {
+Node* uihelper::getChildByTagRecursively(const int nodeTag, ax::Node* parent) {
     auto node = parent->getChildByTag(nodeTag);
     if (node==nullptr) {
         for (auto child : parent->getChildren())
@@ -434,7 +434,7 @@ Node* uihelper::addDebugNode(Node* node)
     return background;
 }
 
-layoutid_t uihelper::getIdFromSender(cocos2d::Ref* ref)
+layoutid_t uihelper::getIdFromSender(Ref* ref)
 {
     // check for escape being pressed
     // and don't pass it on so that we can close

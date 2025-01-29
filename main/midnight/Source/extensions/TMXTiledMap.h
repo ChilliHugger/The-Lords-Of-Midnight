@@ -7,13 +7,13 @@
 //
 
 #pragma once
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 
 namespace extensions {
     
-    class TMXTiledMap : public cocos2d::TMXTiledMap
+    class TMXTiledMap : public ax::TMXTiledMap
     {
-        using TMXMapInfo = cocos2d::TMXMapInfo;
+        using TMXMapInfo = ax::TMXMapInfo;
     public:
         
         static TMXTiledMap * create(TMXMapInfo* mapinfo);

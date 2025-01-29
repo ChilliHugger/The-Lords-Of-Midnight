@@ -13,7 +13,7 @@
 #include "baseinc/tme_internal.h"
 
 USING_NS_AX;
-using namespace tme;
+USING_NS_TME;
 
 tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
 {

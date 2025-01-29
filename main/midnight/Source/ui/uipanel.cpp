@@ -15,7 +15,7 @@
 #include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 #if defined(_MOUSE_ENABLED_)
 Vec2 uipanel::cursorPosition;
@@ -55,8 +55,8 @@ bool uipanel::init()
     // create a safe layout panel for icons etc
     size.width -= padding.left+padding.right;
     size.height -= padding.top+padding.bottom;
-    safeArea = cocos2d::Layer::create();
-    //safeArea = cocos2d::LayerColor::create(Color4B(_clrRed), size.width, size.height);
+    safeArea = ax::Layer::create();
+    //safeArea = ax::LayerColor::create(Color4B(_clrRed), size.width, size.height);
     //safeArea->setOpacity(ALPHA(alpha_1qtr));
     safeArea->setContentSize(size);
     safeArea->setLocalZOrder(ZORDER_FAR+500);
@@ -197,7 +197,7 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok 
     
     popupWindow->onCancel = [&,notok] {
         RUN_ON_UI_THREAD([=, this]() {
-            CC_SAFE_RELEASE_NULL(popupWindow);
+            AX_SAFE_RELEASE_NULL(popupWindow);
             if (notok != nullptr) {
                 RUN_EVENT(notok(););
             }
@@ -205,7 +205,7 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok 
     };
     popupWindow->onOk = [&,ok] {
         RUN_ON_UI_THREAD([=, this]() {
-            CC_SAFE_RELEASE_NULL(popupWindow);
+            AX_SAFE_RELEASE_NULL(popupWindow);
             if (ok != nullptr) {
                 RUN_EVENT(ok(););
             }
@@ -324,7 +324,7 @@ void uipanel::popupHelpWindow ( helpid_t id, MXVoidCallback callback )
     
     help_window->Show( [&,callback] {
         RUN_ON_UI_THREAD([=, this]() {
-            CC_SAFE_RELEASE_NULL(help_window);
+            AX_SAFE_RELEASE_NULL(help_window);
             help_visible = HELP_NONE;
             if (callback != nullptr)
                 callback();
@@ -507,7 +507,7 @@ Node* uipanel::childFromPoint( Node* node, Vec2 pos )
 {
     for( auto n : node->getChildren()) {
         
-        auto widget = dynamic_cast<cocos2d::ui::Widget*>(n);
+        auto widget = dynamic_cast<ax::ui::Widget*>(n);
         
         if( widget != nullptr && widget->isEnabled() ) {
             auto b = n->getBoundingBox();

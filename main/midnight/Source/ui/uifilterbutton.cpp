@@ -6,14 +6,14 @@
 //  Copyright © 2018 Chilli Hugger Software. All rights reserved.
 //
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "uifilterbutton.h"
 #include "uihelper.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 
-USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 
 uifilterbutton::uifilterbutton() :
@@ -44,9 +44,9 @@ uifilterbutton* uifilterbutton::createWithImage(const std::string& image)
     auto button = uifilterbutton::create();
     
     if ( Director::getInstance()->getTextureCache()->getTextureForKey(image) != nullptr ) {
-        button->loadTextures(image,"","", cocos2d::ui::Widget::TextureResType::LOCAL);
+        button->loadTextures(image,"","", ax::ui::Widget::TextureResType::LOCAL);
     }else{
-        button->loadTextures(image,"","", cocos2d::ui::Widget::TextureResType::PLIST);
+        button->loadTextures(image,"","", ax::ui::Widget::TextureResType::PLIST);
     }
     button->setLocalZOrder(ZORDER_UI);    
     button->initChildren();

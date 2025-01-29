@@ -37,9 +37,9 @@ typedef enum floor_t {
 } floor_t ;
 
 
-class LandscapeItem : public cocos2d::Ref
+class LandscapeItem : public Ref
 {
-    using Vec3 = cocos2d::Vec3;
+    using Vec3 = ax::Vec3;
 
 public:
     tme::loc_t  loc;
@@ -52,7 +52,7 @@ public:
     f32         scale;
 };
 
-using LandscapeItems = cocos2d::Vector<LandscapeItem*>;
+using LandscapeItems = ax::Vector<LandscapeItem*>;
 
 FORWARD_REFERENCE(LandscapeOptions);
 FORWARD_REFERENCE(moonring);

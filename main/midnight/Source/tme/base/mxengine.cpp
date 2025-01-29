@@ -17,11 +17,11 @@
 #include "../baseinc/tme_internal.h"
 #include "../base/collections.h"
 #include "../utils/savegamemapping.h"
-#include "cocos2d.h"
+#include "axmol.h"
 #include <stdio.h>
 
 
-using namespace tme ;
+USING_NS_TME ;
 
 mxengine* tme::mx=NULL;
 
@@ -233,7 +233,7 @@ std::string filename = m_szDatabase + "/database";
 #if !defined(_OS_DESKTOP_)
 
     auto database = filename ;
-    filename = cocos2d::FileUtils::getInstance()->getWritablePath() + "/database" ;
+    filename = ax::FileUtils::getInstance()->getWritablePath() + "/database" ;
     
     MXTRACE( "Copying Database '%s' from '%s' to '%s'",
         m_szDatabase.c_str(),
@@ -407,7 +407,7 @@ MXTRACE("Loading MAP");
 
 #if !defined(_OS_DESKTOP_)
     database = filename;
-    filename = cocos2d::FileUtils::getInstance()->getWritablePath() + "/" + sv_map_file;
+    filename = ax::FileUtils::getInstance()->getWritablePath() + "/" + sv_map_file;
     MXTRACE( "Copying Map '%s' from '%s' to '%s'",
         sv_map_file,
         database.c_str(),

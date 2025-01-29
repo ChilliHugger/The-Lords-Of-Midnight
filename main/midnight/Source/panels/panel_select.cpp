@@ -18,9 +18,9 @@
 #include "../ui/characters/uisinglelord.h"
 #include "../ui/characters/uigrouplord.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
-using namespace tme;
+USING_NS_AX;
+USING_NS_AX_UI;
+USING_NS_TME;
 
 #if defined(_LOM_)
     #define BACKGROUND_COLOUR   _clrWhite

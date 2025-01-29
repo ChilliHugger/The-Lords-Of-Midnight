@@ -45,15 +45,15 @@ enum class lordwidget {
 
 
 class uilordselect :
-    public cocos2d::ui::Widget,
+    public ax::ui::Widget,
     public chilli::ui::DragMoveElement,
     public chilli::ui::DropTarget
 {
 protected:
-    using Widget = cocos2d::ui::Widget;
-    using Touch = cocos2d::Touch;
-    using Event = cocos2d::Event;
-    using Vec2 = cocos2d::Vec2;
+    using Widget = ax::ui::Widget;
+    using Touch = ax::Touch;
+    using Event = ax::Event;
+    using Vec2 = ax::Vec2;
     using uidragevent = chilli::ui::DragEvent;
     
     

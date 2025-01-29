@@ -15,7 +15,7 @@
 #include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 bool panel_dedication::init()
 {

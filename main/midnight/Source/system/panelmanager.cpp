@@ -5,7 +5,7 @@
 //  Created by Chris Wild on 13/06/2018.
 //
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../extensions/CustomDirector.h"
 
 #include "panelmanager.h"
@@ -30,16 +30,16 @@
 #include "moonring.h"
 #include "../ui/uipanel.h"
 
-USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 static const f32 defaultDuration = 1.0;
 
 
 panelmanager::~panelmanager()
 {
-    CC_SAFE_RELEASE(currentpanel);
-    CC_SAFE_RELEASE(outgoing_panel);
+    AX_SAFE_RELEASE(currentpanel);
+    AX_SAFE_RELEASE(outgoing_panel);
 }
 
 uipanel* panelmanager::currentPanel()
@@ -229,7 +229,7 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
         
     }
 
-    //CC_SAFE_RELEASE_NULL(outgoing_panel);
+    //AX_SAFE_RELEASE_NULL(outgoing_panel);
 }
 
 void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
@@ -302,7 +302,7 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
         }
     }
     
-    //CC_SAFE_RELEASE_NULL(outgoing_panel);
+    //AX_SAFE_RELEASE_NULL(outgoing_panel);
 
 }
 

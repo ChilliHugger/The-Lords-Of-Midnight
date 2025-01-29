@@ -14,8 +14,8 @@
 #include "../extensions/TMXTiledMap.h"
 #include "../tme/tme_interface.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 static int density_mapping[] = { 10, 6, 11, 7, 14, 2, 15, 3, 9, 5, 8, 4, 13, 1, 12, 0 };
 

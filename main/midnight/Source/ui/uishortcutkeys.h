@@ -9,7 +9,7 @@
 #ifndef uishortcutkeys_h
 #define uishortcutkeys_h
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "../library/inc/mxtypes.h"
 
 #include "../system/keyboardmanager.h"
@@ -19,9 +19,9 @@
 
 class uishortcutkeys
 {
-    using Node = cocos2d::Node;
+    using Node = ax::Node;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
-    template<class T> using Vector = cocos2d::Vector<T>;
+    template<class T> using Vector = ax::Vector<T>;
 public:
     bool dispatchShortcutKey( keycode_t keyCode );
     void displayShortcuts();

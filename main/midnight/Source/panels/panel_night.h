@@ -17,8 +17,8 @@ class panel_night :
     protected NightNotificationDelegate
 {
 protected:
-    using Label = cocos2d::Label;
-    using ScrollView = cocos2d::ui::ScrollView;
+    using Label = ax::Label;
+    using ScrollView = ax::ui::ScrollView;
 public:
     virtual bool init() override;
     

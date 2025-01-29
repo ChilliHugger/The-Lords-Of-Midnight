@@ -50,7 +50,7 @@ using namespace chilli::types;
 class LandscapePeople : public LandscapeNode
 {
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
-    using Widget = cocos2d::ui::Widget;
+    using Widget = ax::ui::Widget;
         
 public:
     static LandscapePeople* create( LandscapeOptions* options );

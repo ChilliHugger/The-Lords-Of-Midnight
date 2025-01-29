@@ -8,7 +8,7 @@
 #ifndef LandscapeColour_hpp
 #define LandscapeColour_hpp
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include <stdio.h>
 #include "../tme/tme_interface.h"
 
@@ -28,10 +28,10 @@ const int MAX_TIME = 32;
 
 class  LandscapeColour
 {
-    using Color4B = cocos2d::Color4B;
-    using Color3B = cocos2d::Color3B;
-    using Color4F = cocos2d::Color4F;
-    using Node = cocos2d::Node;
+    using Color4B = ax::Color4B;
+    using Color3B = ax::Color3B;
+    using Color4F = ax::Color4F;
+    using Node = ax::Node;
 public:
     LandscapeColour(LandscapeOptions* options);
     virtual ~LandscapeColour();

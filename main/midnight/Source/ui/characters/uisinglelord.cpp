@@ -12,7 +12,7 @@
 #include "../../system/moonring.h"
 #include "../../system/resolutionmanager.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 uisinglelord::uisinglelord() :
     buttonNode(nullptr),

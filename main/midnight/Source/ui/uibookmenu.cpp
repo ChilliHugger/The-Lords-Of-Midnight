@@ -14,7 +14,7 @@
 #include "../ui/uioptionitem.h"
 #include "MyButton.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 
 uibookmenu::uibookmenu() :
@@ -30,7 +30,7 @@ uibookmenu* uibookmenu::createWithStory( uipanel* parent, storyinfo_t* story )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 
@@ -69,8 +69,8 @@ bool uibookmenu::initWithStory( uipanel* parent, storyinfo_t* story )
     this->setOpacity(ALPHA(0.75));
     this->setAnchorPoint(uihelper::AnchorCenter);
     
-    auto scrollview = cocos2d::ui::ScrollView::create();
-    scrollview->setDirection(cocos2d::ui::ScrollView::Direction::HORIZONTAL);
+    auto scrollview = ax::ui::ScrollView::create();
+    scrollview->setDirection(ax::ui::ScrollView::Direction::HORIZONTAL);
     this->addChild(scrollview);
 
 

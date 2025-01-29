@@ -17,9 +17,9 @@
 
 #include "../frontend/layout_id.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
-using namespace tme;
+USING_NS_AX;
+USING_NS_AX_UI;
+USING_NS_TME;
 
 #define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
 #define WITH_GUARD(x) { DECLARE_GUARD; x }

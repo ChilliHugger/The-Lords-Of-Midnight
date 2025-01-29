@@ -13,8 +13,8 @@
 #include "../system/moonring.h"
 #include "../system/keyboardmanager.h"
 
-USING_NS_CC;
-using namespace cocos2d::ui;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 uipopup::uipopup() :
     parent(nullptr),
@@ -24,7 +24,7 @@ uipopup::uipopup() :
 
 uipopup::~uipopup()
 {
-    CC_SAFE_RELEASE_NULL(parent);
+    AX_SAFE_RELEASE_NULL(parent);
 }
 
 uipopup* uipopup::create( uipanel* parent, point pos, f32 width, LPCSTR text )
@@ -35,7 +35,7 @@ uipopup* uipopup::create( uipanel* parent, point pos, f32 width, LPCSTR text )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

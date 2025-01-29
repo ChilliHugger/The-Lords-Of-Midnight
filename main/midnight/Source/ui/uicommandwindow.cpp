@@ -23,8 +23,8 @@
 
 #include "characters/uisinglelord.h"
 
-USING_NS_CC;
-USING_NS_CC_UI;
+USING_NS_AX;
+USING_NS_AX_UI;
 
 uicommandwindow::uicommandwindow() :
       parent(nullptr)
@@ -44,7 +44,7 @@ uicommandwindow* uicommandwindow::create( uipanel* parent )
         node->autorelease();
         return node;
     }
-    CC_SAFE_DELETE(node);
+    AX_SAFE_DELETE(node);
     return nullptr;
 }
 

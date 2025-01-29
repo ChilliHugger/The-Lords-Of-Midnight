@@ -22,11 +22,11 @@ public:
 
 
 class uibookmenu :
-    public cocos2d::LayerColor,
+    public ax::LayerColor,
     public chilli::ui::NotificationInterface,
     public uishortcutkeys
 {
-    using Widget = cocos2d::ui::Widget;
+    using Widget = ax::ui::Widget;
 public:
     uibookmenu();
     

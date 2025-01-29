@@ -13,7 +13,7 @@
 
 #include "../ui/uielement.h"
 
-class uifilterbutton : public cocos2d::ui::Button {
+class uifilterbutton : public ax::ui::Button {
     
     using WidgetEventCallback = chilli::ui::WidgetEventCallback;
     

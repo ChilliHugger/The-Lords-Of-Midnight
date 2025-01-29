@@ -23,7 +23,7 @@ typedef struct uitextmenuitem
       //  uioptionitem*   element;
     } type ;
     
-    cocos2d::EventKeyboard::KeyCode     keyboard_shortcut;
+    ax::EventKeyboard::KeyCode     keyboard_shortcut;
     LPCSTR  keyboard_shortcut_description;
     
     // nasty hack

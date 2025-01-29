@@ -6,7 +6,7 @@
 //
 //
 
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "keyboardmanager.h"
 #include "../frontend/keyboard_id.h"
 

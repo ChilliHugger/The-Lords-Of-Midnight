@@ -25,7 +25,7 @@
 
 #include "../../Source/AppDelegate.h"
 #include "../../Source/system/moonring.h"
-#include "cocos2d.h"
+#include "axmol.h"
 
 USING_NS_AX;
 

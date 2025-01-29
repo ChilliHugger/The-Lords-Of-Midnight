@@ -13,7 +13,7 @@
 #include "../system/moonring.h"
 #include "../system/shadermanager.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 
 static Color4B TimeOfDayColours[MAX_TIME][MAX_SHADES];

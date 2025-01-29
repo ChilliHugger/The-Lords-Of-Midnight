@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 
 #include "Extensions-apple.h"
-#include "../../cocos.h"
+#include "../../axmol_sdk.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 namespace chilli
 {

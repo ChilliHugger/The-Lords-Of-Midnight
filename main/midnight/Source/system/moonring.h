@@ -13,7 +13,7 @@
 //
 
 #pragma once
-#include "../cocos.h"
+#include "../axmol_sdk.h"
 #include "storymanager.h"
 #include "../library/inc/mxtypes.h"
 #include "panelmanager.h"
@@ -52,7 +52,7 @@ struct mouse_data_t
 {
 public:
     std::string     file;
-    cocos2d::Vec2   anchor;
+    ax::Vec2   anchor;
 } ;
 
 
