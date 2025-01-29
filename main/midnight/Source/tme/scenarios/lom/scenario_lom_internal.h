@@ -50,6 +50,7 @@ namespace tme {
             lom_stronghold();
             virtual ~lom_stronghold();
             virtual u32 Remove ( mxrace_t race, mxunit_t type, u32 total );
+            virtual u32 Add ( mxrace_t race, mxunit_t type, u32 total );
         };
     //}
     

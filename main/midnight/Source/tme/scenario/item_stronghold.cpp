@@ -156,13 +156,11 @@ s32 mxstronghold::BattleSuccess ( const mxlocinfo& locinfo )
 
 u32 mxstronghold::Remove ( mxrace_t race, mxunit_t type, u32 amount )
 {
-#if defined(_LOM_)
-    if ( OccupyingRace() != race || Type() != type )
-        return 0;
-#endif
-    if ( (TotalTroops()-amount) < MinTroops() )
-        amount = TotalTroops()- MinTroops();
-    totaltroops-= amount;
+    auto result = (s32)(TotalTroops()-amount);
+    if ( result < (s32)MinTroops() )
+        amount = TotalTroops() - MinTroops();
+
+    totaltroops -= amount;
     return amount;
 }
 
@@ -182,10 +180,6 @@ u32 mxstronghold::Remove ( mxrace_t race, mxunit_t type, u32 amount )
 
 u32 mxstronghold::Add ( mxrace_t race, mxunit_t type, u32 amount )
 {
-#if defined(_LOM_)
-    if ( OccupyingRace() != race || Type() != type )
-        return 0;
-#endif
     if ( (TotalTroops()+amount) > MaxTroops() )
         amount = MaxTroops()- TotalTroops();
     totaltroops += amount;
@@ -249,7 +243,7 @@ void mxstronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
 
 void mxstronghold::CheckForZero ( void )
 {
-    if ( totaltroops <= 0  )
+    if ( (s32)totaltroops <= 0  )
         totaltroops = (u32)sv_stronghold_default_empty;
 }
 
