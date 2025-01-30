@@ -185,10 +185,18 @@ padding resolutionmanager::getSafeArea()
     result.top = result.bottom = 0;
     
     if(orientation == 1) {
+#if defined(BALANCE_SAFE_AREA_HORIZONTAL)
+        result.right = result.left;
+#else
         result.right = 8;
+#endif
     }
     if(orientation == 2) {
+#if defined(BALANCE_SAFE_AREA_HORIZONTAL)
+        result.left = result.right;
+#else
         result.left = 8;
+#endif
     }
     
     return result;

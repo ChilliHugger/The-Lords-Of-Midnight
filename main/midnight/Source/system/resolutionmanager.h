@@ -15,6 +15,8 @@
 
 #include "settingsmanager.h"
 
+#define BALANCE_SAFE_AREA_HORIZONTAL
+
 using namespace chilli::types;
 
 typedef struct {
