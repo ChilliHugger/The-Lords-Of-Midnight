@@ -105,7 +105,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     // text
     uihelper::AddTopLeft(scrollView,lblDescription, RES(TEXT_X),textY);
 
-    s32 yAdjust = mr->resolution->IsPhoneScaleEnabled() ? RES(56) : RES(16) ;
+    s32 yAdjust = mr->resolution->IsPhoneScaleEnabled() ? RES(32) : RES(16) ;
  
     // character
     y = RES(CHARACTER_Y) - imgCharacter->getContentSize().height - yAdjust;
