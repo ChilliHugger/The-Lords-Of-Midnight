@@ -388,6 +388,14 @@ using namespace chilli::types;
             OT_HAMMER,
             OT_RING,
         };
+        
+        enum mxkilledby_t {
+            KB_NONE,
+            KB_LORD,
+            KB_LORD_OBJECT,
+            KB_NASTY,
+            KB_ARMY,
+        };
 
 #endif
 
@@ -570,8 +578,8 @@ using namespace chilli::types;
             SS_KILLED_BY=103,
             SS_KILLED_IN_BATTLE=104,
             SS_KILLED_BY_OBJECT=105,
-            SS_SPARE_2=106,
-            SS_SPARE_3=107,
+            SS_KILLED_BY_BATTLE_OBJECT=106,
+            SS_KILLED_BY_LORD=107,
             SS_SPARE_4=108,
             SS_SPARE_5=109,
             SS_SEES_1=110,
@@ -859,7 +867,7 @@ namespace tme {
 
             cf_ai               = MXBIT(12),    // character is an AI character
             cf_killed_foe       = MXBIT(13),    // character killed his foe
-            cf_unused1          = MXBIT(14),    //
+            cf_unused1          = MXBIT(14),    // 
             cf_unused2          = MXBIT(15),    //
             cf_resting          = MXBIT(16),    // currently resting
             cf_inbattle         = MXBIT(17),    // currently in battle
@@ -968,13 +976,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#if defined(_DDR_)
-    #define SAVEGAMEVERSION     15
-#endif
-#if defined(_LOM_)
-    #define SAVEGAMEVERSION     15
-#endif
-
+#define SAVEGAMEVERSION         16
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

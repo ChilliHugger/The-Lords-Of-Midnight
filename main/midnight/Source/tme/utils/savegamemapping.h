@@ -9,6 +9,9 @@
 #define savegamemapping_h
 
 #include "../baseinc/tme_internal.h"
+#if defined(_DDR_)
+#include "../scenarios/ddr/scenario_ddr_internal.h"
+#endif
 
 namespace tme {
 namespace utils {
@@ -30,7 +33,7 @@ namespace utils {
 
     flags32 UpdateDDRCharacterFlags(flags32 flags);
     void FixMorkinFromBeingAIAfterRecruited();
-    
+    mxkilledby_t CalcKilledBy(const ddr_character* character);
     
     class UpdateDDRObjects
     {

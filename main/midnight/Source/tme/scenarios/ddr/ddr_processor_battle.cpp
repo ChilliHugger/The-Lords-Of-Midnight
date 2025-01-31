@@ -223,6 +223,11 @@ namespace tme {
     void ddr_battle::CharacterKilledByCharacter(ddr_character* defender, ddr_character* attacker )
     {
         defender->LostBattle(false);
+        if (attacker->HasBattleObject()) {
+            defender->Flags().Set(cf_battleobjectkill);
+            defender->killedbyobject = attacker->Carrying();
+        }
+        
         attacker->Flags().Set(cf_wonbattle|cf_killed_foe);
         attacker->fighting_against=defender;
     }
