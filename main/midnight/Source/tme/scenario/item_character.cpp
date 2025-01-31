@@ -263,29 +263,22 @@ namespace tme {
             if ( info->objStrongholds.Count() ) {
                 mxstronghold* stronghold = (mxstronghold*)info->objStrongholds[0] ;
 
-#if defined(_LOM_)
-                if ( stronghold->OccupyingRace() == Race() ) {
-#endif
-#if defined(_DDR_)
-                    
-                    if ( static_cast<ddr_stronghold*>(stronghold)->IsFriend(this) && stronghold->OccupyingRace() == Race() ) {
-#endif
+                if ( stronghold->CanCharacterRecruitOrPost(this) ) {
                     // can we recruit men ?
                     // this is not an exact check, a stronghold CAN have less than the minimum
                     // in, however you can no longer recruit after the min has been reached
                     if ( IsAllowedArmy() && stronghold->TotalTroops() > stronghold->MinTroops() ) {
-#if defined(_DDR_)
-                        if ( IsAllowedWarriors() )
-#endif
-                        if ( (stronghold->Type()==UT_WARRIORS) && (warriors.total + sv_character_recruit_amount <= sv_character_max_warriors )  )
-                            info->flags.Set(lif_recruitmen) ;// = TRUE ;
+                        if ( stronghold->Type() == UT_WARRIORS && IsAllowedWarriors() ) {
+                            if ( warriors.total + sv_character_recruit_amount <= sv_character_max_warriors) {
+                                info->flags.Set(lif_recruitmen) ;
+                            }
+                        }
                     
-#if defined(_DDR_)
-                        if ( IsAllowedRiders() )
-#endif
-                        if ( (stronghold->Type()==UT_RIDERS) && (riders.total + sv_character_recruit_amount <= sv_character_max_riders ) )
-                            info->flags.Set(lif_recruitmen); // = TRUE ;
-                    
+                        if ( stronghold->Type() == UT_RIDERS && IsAllowedRiders() ) {
+                            if ( riders.total + sv_character_recruit_amount <= sv_character_max_riders ) {
+                                info->flags.Set(lif_recruitmen);
+                            }
+                        }
                     }
 
                     // can we guard men ?

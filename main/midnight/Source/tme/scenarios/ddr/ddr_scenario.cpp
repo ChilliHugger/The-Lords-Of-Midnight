@@ -393,7 +393,7 @@ std::string buffer = mx->LastActionMsg();
             
         } else {
         
-            buffer += mx->text->DescribeObjectLocation(o);
+            buffer += static_cast<ddr_text*>(mx->text)->DescribeObjectLocation(o);
             buffer += mx->text->CookText(guidance,character);
         }
     }
