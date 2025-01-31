@@ -58,11 +58,17 @@ namespace tme {
         Add(Race(), Type(), respawn);
     }
     
-    mxrace_t ddr_stronghold::Loyalty ( void )
+    mxrace_t ddr_stronghold::Loyalty ( void ) const
     {
         if ( Occupier() == nullptr )
             return mxstronghold::Loyalty();
         return Occupier()->NormalisedLoyalty();
+    }
+    
+    bool ddr_stronghold::CanCharacterRecruitOrPost(const mxcharacter* character) const
+    {
+        RETURN_IF_NULL(character) false;
+        return IsFriend(character) && mxstronghold::CanCharacterRecruitOrPost(character);
     }
     
     MXRESULT ddr_stronghold::FillExportData ( info_t* data )

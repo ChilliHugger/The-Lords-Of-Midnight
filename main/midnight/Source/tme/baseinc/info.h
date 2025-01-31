@@ -786,9 +786,11 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual u32 Remove ( mxrace_t race, mxunit_t type, u32 total );
             virtual u32 Add ( mxrace_t race, mxunit_t type, u32 total );
             virtual void MakeChangeSides( mxrace_t race, mxcharacter* newoccupier );
-            virtual mxrace_t Loyalty ();
-            virtual bool IsFriend( const mxcharacter* character );
+            virtual mxrace_t Loyalty () const;
+            virtual bool IsFriend( const mxcharacter* character ) const;
         
+            virtual bool CanCharacterRecruitOrPost(const mxcharacter* character) const;
+
             void CheckForZero ( void );
 
             PROPERTY( u32, TotalTroops, totaltroops );
@@ -932,12 +934,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY ( IsRecruited, cf_recruited )
             FLAG_PROPERTY ( IsAllowedArmy, cf_army )
             FLAG_PROPERTY ( IsAIControlled, cf_ai )
-#if defined(_DDR_)
-            FLAG_PROPERTY ( IsAllowedWarriors, cf_allowedwarriors )
-            FLAG_PROPERTY ( IsAllowedRiders, cf_allowedriders )
-            FLAG_PROPERTY ( IsPreparingForBattle, cf_preparesbattle )
-            FLAG_PROPERTY ( IsApproaching, cf_approaching )
-#endif
+
             FLAG_PROPERTY ( IsAllowedHide, cf_hide )
             FLAG_PROPERTY ( IsAllowedHorse, cf_horse )
             FLAG_PROPERTY ( IsAllowedMoonring, cf_moonring )
@@ -952,6 +949,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY ( IsResting, cf_resting )
             FLAG_PROPERTY ( HasFollowers, cf_followers )
             FLAG_PROPERTY ( IsBattleOver, cf_battleover )
+            
+            virtual bool IsAllowedWarriors() const { return IsAllowedArmy(); }
+            virtual bool IsAllowedRiders() const { return IsAllowedArmy(); }
             
             bool HasArmy() const { return ((riders.total+warriors.total) > 0); }
             bool IsDead() const { return !flags.Is(cf_alive); }

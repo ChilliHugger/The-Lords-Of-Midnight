@@ -99,7 +99,9 @@ namespace tme {
         virtual void Serialize ( archive& ar ) override;
         virtual void MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier ) override;
         virtual void OnRespawn();
-        virtual mxrace_t Loyalty() override ;
+        virtual mxrace_t Loyalty() const override ;
+        virtual bool CanCharacterRecruitOrPost(const mxcharacter* character) const override;
+
         PROPERTY ( u32, Energy, energy )
     protected:
         u32 energy;
@@ -111,6 +113,14 @@ namespace tme {
         ddr_character();
         virtual ~ddr_character();
         
+        virtual bool IsAllowedWarriors() const { return flags.Is(cf_allowedwarriors); }
+        virtual bool IsAllowedRiders() const { return flags.Is(cf_allowedriders); }
+                
+        FLAG_PROPERTY ( IsPreparingForBattle, cf_preparesbattle )
+        FLAG_PROPERTY ( IsApproaching, cf_approaching )
+        FLAG_PROPERTY ( WasKilledByBattleObject, cf_battleobjectkill )
+        GET_PROPERTY ( bool, IsCarryingDesiredObject, IsCarryingObject() && carrying == desired_object )
+
         virtual bool CheckRecruitChar ( mxcharacter* character )  const ;
         virtual bool Recruited ( mxcharacter* recruiter );
         virtual void Serialize ( archive& ar );
@@ -146,8 +156,6 @@ namespace tme {
         virtual void CheckKilledFoe ( void );
         virtual void AICheckRecruitSoldiers ( void );
         
-        GET_PROPERTY ( bool, IsCarryingDesiredObject, IsCarryingObject() && carrying == desired_object )
-    
         void Target ( const mxitem* newtarget );
         void whatIsCharacterDoing ( void );
         bool retarget ();

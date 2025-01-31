@@ -186,16 +186,22 @@ u32 mxstronghold::Add ( mxrace_t race, mxunit_t type, u32 amount )
     return amount;
 }
 
-mxrace_t mxstronghold::Loyalty()
+mxrace_t mxstronghold::Loyalty() const
 {
     RETURN_IF_NULL(Owner()) Race();
     return Owner()->NormalisedLoyalty();
 }
 
-bool mxstronghold::IsFriend( const mxcharacter* character )
+bool mxstronghold::IsFriend( const mxcharacter* character ) const
 {
     RETURN_IF_NULL(character) false;
     return Loyalty() == character->NormalisedLoyalty();
+}
+
+bool mxstronghold::CanCharacterRecruitOrPost(const mxcharacter* character) const
+{
+    RETURN_IF_NULL(character) false;
+    return OccupyingRace() == character->Race();
 }
 
 /*
