@@ -181,20 +181,28 @@ namespace tme {
         battleArmies( attacker, defender );
         battleArmies( defender, attacker );
     }
-    
-    void ddr_battle::PutCharacterInBattle( ddr_character* character )
+
+    void updateFightingAgainst( ddr_character* character, ddr_character* against) {
+        // don't override any previous battle if the character
+        // has already killed foe
+        if ( !character->Flags().Is(cf_killed_foe))
+            character->fighting_against = against;
+    }
+
+
+    void ddr_battle::PutCharacterInBattle( ddr_character* character)
     {
         character->Flags().Set(cf_inbattle);
         character->battleloc = character->Location();
     }
     
+    
     void ddr_battle::CharacterVsCharacter( ddr_character* attacker, s32 attackers_hp, ddr_character* defender)
     {
         PutCharacterInBattle(attacker);
-        
-        if ( !attacker->Flags().Is(cf_killed_foe))
-            attacker->fighting_against = defender ;
-                
+        updateFightingAgainst(attacker, defender);
+        updateFightingAgainst(defender, attacker);
+
         s32 defenders_hp = CalcCharacterDefenderHP(defender);
         
         MXTRACE("    %-16s (%d) vs %-16s (%d)", attacker->Symbol().c_str(), (int)attackers_hp
@@ -223,9 +231,12 @@ namespace tme {
     void ddr_battle::CharacterKilledByCharacter(ddr_character* defender, ddr_character* attacker )
     {
         defender->LostBattle(false);
+        defender->fighting_against = attacker;
+        defender->killedby = KB_LORD;
+
         if (attacker->HasBattleObject()) {
-            defender->Flags().Set(cf_battleobjectkill);
             defender->killedbyobject = attacker->Carrying();
+            defender->killedby = KB_LORD_OBJECT;
         }
         
         attacker->Flags().Set(cf_wonbattle|cf_killed_foe);
@@ -313,9 +324,7 @@ namespace tme {
         defender->LostFight(0);
         if ( defender->IsDead() ) {
             MXTRACE("      Defender: %-16s is dead, killed by soldiers.", defender->Symbol().c_str() );
-            // FIX: 30/9/2014 - don't clear the fighting_against flag if the lord dying killed their foe
-            if ( !defender->Flags().Is(cf_killed_foe))
-                defender->fighting_against=NULL;
+            defender->killedby = KB_ARMY;
         }
     }
 

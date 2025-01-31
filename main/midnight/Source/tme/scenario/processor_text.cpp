@@ -18,6 +18,7 @@
 
 #if defined(_DDR_)
 #include "../scenarios/ddr/scenario_ddr_internal.h"
+#include "../scenarios/ddr/ddr_processor_text.h"
 #endif
 
 #include <ctype.h>
@@ -336,18 +337,6 @@ std::string buffer;
         buffer += number_token[number-1];
     return buffer ;
 }
-
-#if defined(_DDR_)
-/*
- *
- *
- */
-
-std::string mxtext::DescribeTime ( u32 time )
-{
-    return DescribeNumber((time+1)/2);
-}
-#endif
     
 std::string mxtext::DescribeEnergy ( u32 energy )
 {
@@ -426,27 +415,6 @@ std::string mxtext::DescribeCharacterRecruitMen ( const mxcharacter* character, 
 
     return CookText(buffer,character);
 }
-
-#if defined(_DDR_)
-std::string mxtext::DescribeObjectLocation(mxobject* object)
-{
-    mxcharacter* c = mx->scenario->WhoHasObject(object) ;
-    
-    // object not carried
-    if ( c == nullptr ) {
-        return Format ( SystemString(SS_SEEK_MSG2),
-                         DescribeObjectWithPower(object).c_str(),
-                         DescribeLocationWithPrep(object->Location(),nullptr).c_str()
-                         );
-    }else{
-        auto buffer = Format (
-                         SystemString(SS_SEEK_MSG3),
-                         DescribeObjectWithPower(object).c_str()
-                         );
-        return CookText(buffer,c);
-    }
-}
-#endif
     
 /*
  * Function name    : text::DescribeCharacterPostMen
@@ -587,19 +555,6 @@ std::string mxtext::DescribeObject ( const mxobject* object )
     return text;
 }
     
-#if defined(_DDR_)
-std::string mxtext::DescribeObjectWithPower ( const mxobject* object )
-{
-    RETURN_IF_NULL(object) "";
-    
-    std::string description = "{obj:text}, whose power is in {case:lower}{obj:power}";
-    const mxobject* temp = oinfo;
-    oinfo = object;
-    auto buffer = CookText(description, nullptr);
-    oinfo = temp ;
-    return buffer;
-}
-#endif
 
     /*
  * Function name    : text::DescribeCharacterDeath
@@ -626,18 +581,6 @@ std::string mxtext::DescribeCharacterDeath ( const mxcharacter* character )
         DescribeCharacterBattle(character).c_str()
         );
 }
-
-#if defined(_DDR_)
-std::string mxtext::DescribeCharacterDeath2 ( const mxcharacter* character )
-{
-    RETURN_IF_NULL(character) "";
-        
-    if ( character->killedbyobject != nullptr )
-        return CookedSystemString(SS_KILLED_BY_OBJECT,character);
-    return CookedSystemString(SS_KILLED_BY,character);
-}
-#endif
-
 
 /*
  * Function name    : text::DescribeCharacterBattle
@@ -830,28 +773,6 @@ std::string mxtext::DescribeCharacterLiege ( const mxcharacter* character )
         ? CookedSystemString(SS_LIEGE,character)
         : "";
 }
-
-#if defined(_DDR_)
-    
-std::string mxtext::DescribeCharacterInBattle ( const mxcharacter* character )
-{
-    RETURN_IF_NULL(character) "";
-    
-    return character->IsPreparingForBattle()
-        ? CookedSystemString(SS_BATTLE_PREPARES_BATTLE,character)
-        : "";
-}
-    
-std::string mxtext::DescribeCharacterLoyalty ( const mxcharacter* character )
-{
-    RETURN_IF_NULL(character) "";
-    
-    return character->loyalty
-        ? CookedSystemString(SS_LOYAL_TO,character)
-        : "";
-}
-    
-#endif
     
 std::string mxtext::DescribeCharacterGroup ( const mxcharacter* character )
 {
@@ -897,74 +818,7 @@ std::string mxtext::DescribeCharacterLocation( const mxcharacter* character )
     return "";
 }
 
-#if defined(_DDR_)
-//
-// Luxor sees [the object of type][ and ]an underground entrance.
-//
-// {char:name} sees
-// and
-// and underground entrance
-// .
-std::string mxtext::DescribeCharacterSees ( const mxcharacter* character )
-{
-std::string buffer;
-
-    RETURN_IF_NULL(character) "";
- 
-    auto scenario = static_cast<ddr_x*>(mx->scenario);
-    
-    mxobject* object = scenario->FindObjectAtLocation(character->Location());
-    
-#if defined(_TUNNELS_)
-    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
-#else
-    bool entrance = false;
-#endif
-
-    if ( object == nullptr && !entrance )
-        return "";
-    
-    buffer = character->Shortname() + " sees ";
-    if ( object ) {
-        buffer += "the " + DescribeObjectWithPower(object) ;
-    }
-
-#if defined(_TUNNELS_)
-    if ( entrance ) {
-        if ( object )
-            buffer += "and ";
-        buffer += "an underground entrance";
-    }
-#endif
-    
-    buffer += ". ";
-    
-    return buffer;
-}
-
-std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character )
-{
-    mxgridref oldLoc = this->loc;
-    
-    this->loc = loc ;
-    
-#if defined(_TUNNELS_)
-    if ( character && character->IsInTunnel() ) {
-        return "in the tunnel";
-    }
-#endif
-    
-    std::string msg = "{loc:terrain:prep} ";
-    auto buffer = CookText(msg) + DescribeLocation(loc);
-    
-    this->loc = oldLoc ;
-    
-    return buffer;
-}
-#endif
-    
-    
-    
+        
 /*
  * Function name    : text::DescribeLocation
  * 
@@ -1245,6 +1099,10 @@ std::string mxtext::DecodeToken ( LPSTR token, const mxcharacter* character )
 int         is=0;
 c_string    tokens;
 
+#if defined(_DDR_)
+auto ddr = static_cast<ddr_text*>(this);
+#endif
+
     LPSTR t = strtok(token,"{:}");
     while ( t ) {
         tokens.Add(t);
@@ -1278,14 +1136,16 @@ c_string    tokens;
         if ( tokens.at(is).empty() )
             return "";
 
-            IS_ARG("case") {
+            IS_ARG("case")
+            {
                 is++;
-                IS_ARG("first")     { m_case=CASE_FIRST; return ""; }
-                IS_ARG("upper")     { m_case=CASE_UPPER; return ""; }
-                IS_ARG("lower")     { m_case=CASE_LOWER; return ""; }
-                IS_ARG("none")      { m_case=CASE_NONE; return ""; }
+                IS_ARG("first")         { m_case=CASE_FIRST; return ""; }
+                IS_ARG("upper")         { m_case=CASE_UPPER; return ""; }
+                IS_ARG("lower")         { m_case=CASE_LOWER; return ""; }
+                IS_ARG("none")          { m_case=CASE_NONE; return ""; }
             }else
-            IS_ARG("plural") {
+            IS_ARG("plural")
+            {
                 is++;
                 if ( ABS(last_number)==1 ) {
                     return GET_ARG;
@@ -1294,12 +1154,14 @@ c_string    tokens;
                 return GET_ARG;
             }else
                 
-            IS_ARG("number") {
+            IS_ARG("number")
+            {
                 is++;
                 return DescribeNumber(atoi(GET_ARG.c_str()));
             }else
  // Character
-            IS_ARG("char") {
+            IS_ARG("char")
+            {
 __char:
                 is++;
                 RETURN_IF_NULL(character) "";
@@ -1307,7 +1169,7 @@ __char:
                 IS_ARG("name")          return character->Shortname();
                 IS_ARG("longname")      return character->Longname();
 #if defined(_DDR_)
-                IS_ARG("time")          return DescribeTime(character->Time());
+                IS_ARG("time")          return ddr->DescribeTime(character->Time());
 #else
                 IS_ARG("time")          return DescribeNumber((character->Time()+1)/2);
 #endif
@@ -1315,34 +1177,34 @@ __char:
                 IS_ARG("despondency")   return DescribeDespondent ( character->despondency );
                 IS_ARG("reckless")      return DescribeReckless ( character->reckless );
 
-                IS_ARG("fear")        {  
-                                    character->ForcedVariableRefresh();
-                                    return DescribeFear ( character->fear );
-                                    }
-                IS_ARG("courage")    {
-                                    character->ForcedVariableRefresh();
-                                    return DescribeCourage(character->courage);
-                                    }
-
-                IS_ARG("foe")        {
-                                    character = character->foe;
-                                    goto __char;
-                                    }
-                IS_ARG("liege")        {
-                                    character = character->liege;
-                                    goto __char;
-                                    }
-                IS_ARG("following")    {
-                                    character = character->following;
-                                    goto __char;
-                                    }
+                IS_ARG("fear")          {
+                                            character->ForcedVariableRefresh();
+                                            return DescribeFear ( character->fear );
+                                        }
+                IS_ARG("courage")       {
+                                            character->ForcedVariableRefresh();
+                                            return DescribeCourage(character->courage);
+                                        }
+                IS_ARG("foe")           {
+                                            character = character->foe;
+                                            goto __char;
+                                        }
+                IS_ARG("liege")         {
+                                            character = character->liege;
+                                            goto __char;
+                                        }
+                IS_ARG("following")     {
+                                            character = character->following;
+                                            goto __char;
+                                        }
 #if defined(_DDR_)
-                IS_ARG("loyalty")    {
-                                    rinfo = mx->RaceById(character->Loyalty());
-                                    goto __race;
-                                    }
+                IS_ARG("loyalty")       {
+                                            rinfo = mx->RaceById(character->Loyalty());
+                                            goto __race;
+                                        }
 #endif
-                IS_ARG("text")        {
+                IS_ARG("text")
+                {
                     is++;
                     IS_ARG("liege")     return DescribeCharacterLiege( character );
                     IS_ARG("foe")       return DescribeCharacterFoe( character );
@@ -1358,65 +1220,68 @@ __char:
                     IS_ARG("loc")       return DescribeCharacterLocation( character );
                     IS_ARG("group")     return DescribeCharacterGroup( character );
 #if defined(_DDR_)
-                    IS_ARG("death2")    return DescribeCharacterDeath2 ( character );
-                    IS_ARG("loyalty")   return DescribeCharacterLoyalty( character );
-                    IS_ARG("sees")      return DescribeCharacterSees( character );
-                    IS_ARG("inbattle")  return DescribeCharacterInBattle( character );
+                    IS_ARG("death2")    return ddr->DescribeCharacterDeath2 ( character );
+                    IS_ARG("loyalty")   return ddr->DescribeCharacterLoyalty( character );
+                    IS_ARG("sees")      return ddr->DescribeCharacterSees( character );
+                    IS_ARG("inbattle")  return ddr->DescribeCharacterInBattle( character );
 #endif
                 }
             
-                IS_ARG("lookat")    {
-                                    loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
-                                    goto __loc;
-                                    }
-                IS_ARG("battle")    {
+                IS_ARG("lookat")        {
+                                            loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
+                                            goto __loc;
+                                        }
+                IS_ARG("battle")
+                {
                     is++;
-                    IS_ARG("loc")    {
-                                    loc = character->battleloc;
-                                    goto __loc;
-                                    }
-                    IS_ARG("obj")    {
-                                    oinfo = character->killedbyobject; 
-                                    goto __obj;
-                                    }
+                    IS_ARG("loc")       {
+                                            loc = character->battleloc;
+                                            goto __loc;
+                                        }
+                    IS_ARG("obj")       {
+                                            oinfo = character->killedbyobject;
+                                            goto __obj;
+                                        }
 #if defined(_DDR_)
-                    IS_ARG("fighting")    {
-                                    character = (mxcharacter*)((ddr_character*)character)->fighting_against;
-                                    goto __char;
-                                    }
+                    IS_ARG("fighting")  {
+                                            character = (mxcharacter*)((ddr_character*)character)->fighting_against;
+                                            goto __char;
+                                        }
 #endif
                 }
                 
-                IS_ARG("loc")        {
-                                    loc = character->Location();
-                                    goto __loc;
-                                    }
-                IS_ARG("gender")    {
-                                    ginfo = mx->GenderById(character->gender);
-                                    goto __gender;
-                                    }
-                IS_ARG("dir")        {
-                                    dinfo = mx->DirectionById(character->Looking());
-                                    goto __dir;
-                                    }
-                IS_ARG("obj")        {
-                                    oinfo = character->carrying; //mx->ObjectById(character->object);
-                                    goto __obj;
-                                    }
-                IS_ARG("race")        {
-                                    rinfo = mx->RaceById(character->Race());
-                                    goto __race;
-                                    }
+                IS_ARG("loc")           {
+                                            loc = character->Location();
+                                            goto __loc;
+                                        }
+                IS_ARG("gender")        {
+                                            ginfo = mx->GenderById(character->gender);
+                                            goto __gender;
+                                        }
+                IS_ARG("dir")           {
+                                            dinfo = mx->DirectionById(character->Looking());
+                                            goto __dir;
+                                        }
+                IS_ARG("obj")           {
+                                            oinfo = character->carrying; //mx->ObjectById(character->object);
+                                            goto __obj;
+                                        }
+                IS_ARG("race")          {
+                                            rinfo = mx->RaceById(character->Race());
+                                            goto __race;
+                                        }
             }else
 // RACE
-            IS_ARG("race") {
+            IS_ARG("race")
+            {
 __race:
                 is++;
                 IS_ARG("name")          return rinfo->Name();
                 IS_ARG("soldiers")      return rinfo->SoldiersName();
             }else
 // AREA
-            IS_ARG("area") {
+            IS_ARG("area")
+            {
 __area:
                 is++;
                 IS_ARG("name")          return ainfo->Name();
@@ -1424,7 +1289,8 @@ __area:
                 IS_ARG("text")          return DescribeArea(ainfo->Id());
             }else
 // GENDER
-            IS_ARG("gender") {
+            IS_ARG("gender")
+            {
 __gender:
                 is++;
                 IS_ARG("name")          return ginfo->Name();
@@ -1433,32 +1299,34 @@ __gender:
                 IS_ARG("himher")        return ginfo->pronoun3;
             }else
 // direction
-            IS_ARG("dir") {
+            IS_ARG("dir")
+            {
 __dir:
                 is++;
                 IS_ARG("name")          return dinfo->Name();
             }else
 //OBJECT
-            IS_ARG("obj") {
+            IS_ARG("obj")
+            {
 __obj:
                 is++;
                 IS_ARG("name")          return oinfo->name;
-                        // if oinfo->description == NULL
-                        // SS_OBJECT_FULL_DESCRIPTION
-                IS_ARG("text")      {
-                                        std::string description = oinfo->description;
-                                        return CookText(description,character);
-                                    }
+                                        // if oinfo->description == NULL
+                                        // SS_OBJECT_FULL_DESCRIPTION
+                IS_ARG("text")          {
+                                            std::string description = oinfo->description;
+                                            return CookText(description,character);
+                                        }
 #if defined(_DDR_)
-                IS_ARG("fullname")  return DescribeObjectWithPower(oinfo);
-                IS_ARG("type")      {
-                                        otinfo = mx->ObjectTypeById( static_cast<const ddr_object*>(oinfo)->type );
-                                        return otinfo->Name();
-                                    }
-                IS_ARG("power")     {
-                                        opinfo = mx->ObjectPowerById( static_cast<const ddr_object*>(oinfo)->power );
-                                        return opinfo->Name();
-                                    }
+                IS_ARG("fullname")      return ddr->DescribeObjectWithPower(oinfo);
+                IS_ARG("type")          {
+                                            ddr->otinfo = mx->ObjectTypeById( static_cast<const ddr_object*>(oinfo)->type );
+                                            return ddr->otinfo->Name();
+                                        }
+                IS_ARG("power")         {
+                                            ddr->opinfo = mx->ObjectPowerById( static_cast<const ddr_object*>(oinfo)->power );
+                                            return ddr->opinfo->Name();
+                                        }
 #endif
             }else
 
@@ -1466,43 +1334,46 @@ __obj:
             IS_ARG("loc") {
 __loc:
                 is++;
-                IS_ARG("name")        return DescribeLocation(loc);
+                IS_ARG("name")          return DescribeLocation(loc);
 #if defined(_DDR_)
-                IS_ARG("text")        return DescribeLocationWithPrep(loc,character);
+                IS_ARG("text")          return ddr->DescribeLocationWithPrep(loc,character);
 #endif
-                IS_ARG("terrain")    {
-                                    tinfo = mx->TerrainById( mx->gamemap->GetAt(loc).terrain );
-                                    goto __terrain;
-                                    }
-                IS_ARG("obj")    {
-                                    oinfo = mx->ObjectById( mx->gamemap->GetAt(loc).object );
-                                    goto __obj;
-                                    }
-                IS_ARG("area")        {    
-                                    ainfo = mx->AreaById( mx->gamemap->GetAt(loc).area );
-                                    goto __area;
-                                    }
+                IS_ARG("terrain")       {
+                                            tinfo = mx->TerrainById( mx->gamemap->GetAt(loc).terrain );
+                                            goto __terrain;
+                                        }
+                IS_ARG("obj")           {
+                                            oinfo = mx->ObjectById( mx->gamemap->GetAt(loc).object );
+                                            goto __obj;
+                                        }
+                IS_ARG("area")          {
+                                            ainfo = mx->AreaById( mx->gamemap->GetAt(loc).area );
+                                            goto __area;
+                                        }
             }else
 // TERRAIN
-            IS_ARG("terrain") {
+            IS_ARG("terrain")
+            {
 __terrain:
                 is++;
-                IS_ARG("name")      return tinfo->Name();
-                IS_ARG("plural")    return DescribeTerrainPlural((mxterrain_t)tinfo->Id());
-                IS_ARG("prep")      return tinfo->preposition;
-                IS_ARG("text")      {
-                                        std::string description = tinfo->description;
-                                        return CookText(description,character);
-                                    }
-                IS_ARG("single")    return DescribeTerrainSingularPlural((mxterrain_t)tinfo->Id());
+                IS_ARG("name")          return tinfo->Name();
+                IS_ARG("plural")        return DescribeTerrainPlural((mxterrain_t)tinfo->Id());
+                IS_ARG("prep")          return tinfo->preposition;
+                IS_ARG("text")          {
+                                            std::string description = tinfo->description;
+                                            return CookText(description,character);
+                                        }
+                IS_ARG("single")        return DescribeTerrainSingularPlural((mxterrain_t)tinfo->Id());
             }else
 // SYSTEM STRING
-            IS_ARG("str") {
-                return CookedSystemString(StringExtensions::atoi(tokens.at(is+1)),character);
+            IS_ARG("str")
+            {
+                                        return CookedSystemString(StringExtensions::atoi(tokens.at(is+1)),character);
             }else
 // SPECIAL
-            IS_ARG("special") {
-                return SpecialStrings(tokens.at(is+1).c_str(),character);
+            IS_ARG("special")
+            {
+                                        return SpecialStrings(tokens.at(is+1).c_str(),character);
             }
         is++;
     }

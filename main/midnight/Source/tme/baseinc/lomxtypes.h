@@ -529,7 +529,7 @@ using namespace chilli::types;
             SS_TERRAIN_SINGLE,
             SS_AREA_PREFIXED,
             SS_DEFEAT1,
-            SS_DEFEAT2,
+            SS_DEFEAT2,                 // Luxor Dead, Game Over
             SS_DEFEAT3,                 // 60
             SS_VICTORY1,
             SS_VICTORY2,
@@ -587,7 +587,7 @@ using namespace chilli::types;
             SS_SEES_3=112,
             SS_LOCATION_PREP_1=113,
             SS_LOCATION_PREP_2=114,
-            SS_CHARACTER_DEAD=115,
+            SS_CHARACTER_DEAD=115,          // Morkin, Shareth dead - game over
             SS_CHARACTER_HERE=116,
             SS_SHARETH_DEAD=117,
             SS_OBJECT_USE_1=118,

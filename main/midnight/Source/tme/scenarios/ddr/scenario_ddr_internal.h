@@ -118,7 +118,7 @@ namespace tme {
                 
         FLAG_PROPERTY ( IsPreparingForBattle, cf_preparesbattle )
         FLAG_PROPERTY ( IsApproaching, cf_approaching )
-        FLAG_PROPERTY ( WasKilledByBattleObject, cf_battleobjectkill )
+        
         GET_PROPERTY ( bool, IsCarryingDesiredObject, IsCarryingObject() && carrying == desired_object )
 
         virtual bool CheckRecruitChar ( mxcharacter* character )  const ;
@@ -148,6 +148,7 @@ namespace tme {
         virtual bool HasBattleObject() const;
         virtual bool IsProtected() const;
         virtual bool ShouldDieInFight() const;
+        virtual bool KilledByBattleObject() const;
         
         virtual void Displace();
         virtual mxlocinfo* GetLocInfo();
@@ -205,6 +206,7 @@ namespace tme {
         mxstronghold*   home_stronghold;
         ddr_character*  fighting_against;
         u32             battlelost;
+        mxkilledby_t    killedby;
     };
     
     #define DDR_SCENARIO(x) static_cast<ddr_x*>(mx->scenario)->x
