@@ -8,6 +8,7 @@
 #include "../../steps/map_steps.h"
 #include "../../mocks/mocks_entity.h"
 
+mxthing_t currentThing = OB_NONE;
 
 void ThingKilled()
 {
@@ -23,7 +24,11 @@ void LordDead(const string& name)
     REQUIRE ( TME_LastActionMsg() == "");
 }
 
-mxthing_t currentThing = OB_NONE;
+void KilledByThing(const string& name, mxthing_t nasty)
+{
+    auto lord = GetMockCharacter(name);
+    REQUIRE ( lord->killedbyobject == GetMockThing(currentThing));
+}
 
 void ShouldFightAndWillLose(const string& lord)
 {
@@ -85,6 +90,7 @@ SCENARIO("Lord fights a thing")
             THEN("then lord dies")
             {
                 LordDead(lord);
+                KilledByThing(lord, currentThing);
             }
         }
     }

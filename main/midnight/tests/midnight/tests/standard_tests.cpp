@@ -18,9 +18,9 @@ SCENARIO( "Cocos Root Path set correctly")
 {
     GIVEN("A the default resource path has been setup")
     {
-        auto resourcePath = cocos2d::FileUtils::getInstance()->getDefaultResourceRootPath();
+        auto resourcePath = ax::FileUtils::getInstance()->getDefaultResourceRootPath();
         
-        cocos2d::FileUtils::getInstance()->setDefaultResourceRootPath("Resources");
+        ax::FileUtils::getInstance()->setDefaultResourceRootPath("Resources");
 
         WHEN("the scenario directory is requested")
         {
@@ -32,7 +32,7 @@ SCENARIO( "Cocos Root Path set correctly")
             }
         }
 
-        cocos2d::FileUtils::getInstance()->setDefaultResourceRootPath(resourcePath);
+        ax::FileUtils::getInstance()->setDefaultResourceRootPath(resourcePath);
 
     }
 }

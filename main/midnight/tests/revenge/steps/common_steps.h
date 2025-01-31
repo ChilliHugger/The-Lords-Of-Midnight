@@ -36,3 +36,5 @@ public:
     static constexpr LPCSTR ch_tarithel = "CH_TARITHEL";
 };
 
+#define NEW_TAG "[NEW]"
+#define IGNORE_TAG "[ignore]"
