@@ -99,6 +99,19 @@ namespace utils {
         }
     }
     
+    mxkilledby_t CalcKilledBy(const ddr_character* character) {
+        if (!character->IsDead())
+            return KB_NONE;
+            
+        if (character->killedbyobject)
+            return KB_NASTY;
+            
+        if (character->fighting_against)
+            return KB_LORD;
+            
+        return KB_ARMY;
+    }
+    
 #endif
 
 }
