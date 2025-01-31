@@ -57,7 +57,7 @@ void ShouldShowNoOwnerOrOccupier()
 }
 
 
-SCENARIO("Describing a Stronghold", "[new]")
+SCENARIO("Describing a Stronghold")
 {
     TMEStep::NewStory();
     
@@ -167,7 +167,7 @@ SCENARIO("Describing a Stronghold", "[new]")
 // GIVEN the stronghold has 75 warriors
 // AND lord can recruit
 
-SCENARIO("Game crashes when lord recruit army (bug #246)", "[new]")
+SCENARIO("Game crashes when lord recruit army (bug #246)")
 {
     TMEStep::NewStory();
     

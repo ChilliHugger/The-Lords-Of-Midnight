@@ -575,7 +575,7 @@ SCENARIO("Characters will look interesting locations containing a general lord")
     }
 }
 
-SCENARIO("Characters will not look interesting locations", "[new]")
+SCENARIO("Characters will not look interesting locations")
 {
     auto direction = GENERATE( DR_NORTH, DR_NORTHEAST, DR_EAST, DR_SOUTHEAST, DR_SOUTH, DR_SOUTHWEST, DR_WEST, DR_NORTHWEST );
 

@@ -491,7 +491,7 @@ SCENARIO("Lord prepares to do battle")
 //TME:       Defender: CH_TARITHEL      lost battle
 //TME:       Defender: SH_FORTRESS_VARATRARG lost 0 of (1050)
 
-TEST_CASE("Tarithel vs Varatrarg @ fortress of Varatrarg", "[ignore]")
+TEST_CASE("Tarithel vs Varatrarg @ fortress of Varatrarg", IGNORE_TAG)
 {
     TMEStep::NewStory();
 
@@ -507,7 +507,7 @@ TEST_CASE("Tarithel vs Varatrarg @ fortress of Varatrarg", "[ignore]")
     battle->Battle(tarithel);
 }
 
-TEST_CASE("Ushangrane vs Varatrarg @ fortress of Varatrarg", "[ignore]")
+TEST_CASE("Ushangrane vs Varatrarg @ fortress of Varatrarg", IGNORE_TAG)
 {
     TMEStep::NewStory();
 
@@ -552,7 +552,7 @@ TEST_CASE("Ushangrane vs Varatrarg @ fortress of Varatrarg", "[ignore]")
 //TME:       Defender: CH_TARITHEL      lost battle
 //TME:       Defender: SH_FORTRESS_THELAK lost 0 of (1100)
 
-TEST_CASE("Tarithel vs Thelak @ fortress of Thelak", "[ignore]")
+TEST_CASE("Tarithel vs Thelak @ fortress of Thelak", IGNORE_TAG)
 {
     TMEStep::NewStory();
 
@@ -566,4 +566,43 @@ TEST_CASE("Tarithel vs Thelak @ fortress of Thelak", "[ignore]")
     auto battle = static_cast<ddr_battle*>(tme::mx->battle);
     
     battle->Battle(tarithel);
+}
+
+TEST_CASE("Tarithel killed Thelak no object")
+{
+    TMEStep::NewStory();
+
+    auto tarithel = GetDDRCharacter("CH_TARITHEL");
+    auto enemy = GetDDRCharacter("CH_THELAK");
+
+    auto battle = static_cast<ddr_battle*>(tme::mx->battle);
+    
+    battle->CharacterKilledByCharacter(tarithel, enemy);
+    
+    REQUIRE(tarithel->killedbyobject == nullptr);
+    REQUIRE(tarithel->killedby == KB_LORD);
+    REQUIRE(enemy->fighting_against == tarithel);
+    REQUIRE(enemy->Flags().Is(cf_wonbattle|cf_killed_foe));
+    
+}
+
+TEST_CASE("Tarithel killed Thelak with object")
+{
+    TMEStep::NewStory();
+
+    auto tarithel = GetDDRCharacter("CH_TARITHEL");
+    
+    auto enemy = GetDDRCharacter("CH_THELAK");
+    auto object = GetObject("OB_HAMMER_IMGARORN");
+    TMEStep::LordCarryingObject(enemy->Symbol(), object->Symbol());
+
+    auto battle = static_cast<ddr_battle*>(tme::mx->battle);
+    
+    battle->CharacterKilledByCharacter(tarithel, enemy);
+    
+    REQUIRE(tarithel->killedbyobject == object);
+    REQUIRE(tarithel->killedby == KB_LORD_OBJECT);
+    REQUIRE(enemy->fighting_against == tarithel);
+    REQUIRE(enemy->Flags().Is(cf_wonbattle|cf_killed_foe));
+    
 }
