@@ -157,7 +157,24 @@ std::string buffer;
     return buffer;
 }
 
-
+std::string ddr_text::DescribeObjectLocation(mxobject* object)
+{
+    mxcharacter* c = mx->scenario->WhoHasObject(object) ;
+    
+    // object not carried
+    if ( c == nullptr ) {
+        return Format ( SystemString(SS_SEEK_MSG2),
+                         DescribeObjectWithPower(object).c_str(),
+                         DescribeLocationWithPrep(object->Location(),nullptr).c_str()
+                         );
+    }else{
+        auto buffer = Format (
+                         SystemString(SS_SEEK_MSG3),
+                         DescribeObjectWithPower(object).c_str()
+                         );
+        return CookText(buffer,c);
+    }
+}
 
 /*
  * Function name    : text::DescribeStronghold
@@ -328,18 +345,60 @@ std::string buffer;
     return buffer;
 }
 
+// USED: OnCharDeath "CharDeath"
+//
+std::string ddr_text::DescribeCharacterDeath ( const mxcharacter* character )
+{
+    RETURN_IF_NULL(character) "";
+    const ddr_character* ddr_c = static_cast<const ddr_character*>(character);
+    
+    if ( ddr_c->killedbyobject ) {
+        if ( ddr_c->KilledByBattleObject()) {
+            // SS_KILLED_BY_BATTLE_OBJECT
+            // {char:longname} is dead, slain by the {case:lower}{char:battle:obj:longname} at the hands of {char:battle:fighting:fullname}. {char:text:battle}
+            return CookedSystemString(SS_KILLED_BY_BATTLE_OBJECT,character);
+        } else {
+            // SS_KILLED_OBJECT
+            // {char:longname} is dead, slain by {case:lower}{char:battle:obj:name}.
+            // Wolves | Dragons | Ice Trolls | Skulkrin
+            return CookedSystemString(SS_KILLED_OBJECT,character);
+        }
+    }
+        
+    if (ddr_c->fighting_against && ddr_c->killedby == KB_LORD) {
+        // SS_KILLED_BY_LORD
+        // {char:longname} is dead, slain by {char:battle:fighting:fullname}. {char:text:battle}
+        return CookedSystemString(SS_KILLED_BY_LORD, character);
+    }
+        
+    // SS_KILLED_BATTLE
+    // {char:longname} is dead, slain by sword. {char:text:battle}
+    return CookedSystemString(SS_KILLED_BATTLE,character);
+}
+
+// USED:
+// SS_CHARACTER_DEAD
+// {char:longname} is dead, {char:text:death2}
+// SS_DEFEAT2
+// {char:longname} is dead, {char:text:death2} The evil Shareth has won victory!
+
 std::string ddr_text::DescribeCharacterDeath2 ( const mxcharacter* character )
 {
     const ddr_character* ddr_c = static_cast<const ddr_character*>(character);
     
-    if ( character->killedbyobject )
+    // SS_KILLED_BY_OBJECT
+    // slain by {case:lower}{char:battle:obj:name}.
+    if ( character->killedbyobject && !ddr_c->KilledByBattleObject() )
         return CookedSystemString(SS_KILLED_BY_OBJECT,character);
     
-    if ( ddr_c->fighting_against )
+    // SS_KILLED_BY
+    // killed in battle by {char:battle:fighting:longname}.
+    if ( ddr_c->fighting_against && ddr_c->killedby == KB_LORD )
         return CookedSystemString(SS_KILLED_BY,character);
     
+    // SS_KILLED_IN_BATTLE
+    // killed in battle.
     return CookedSystemString(SS_KILLED_IN_BATTLE,character);
-    
 }
 
 
@@ -386,6 +445,101 @@ std::string ddr_text::DescribeCharacterLocation( const mxcharacter* character )
     }
 }
 
+std::string ddr_text::DescribeCharacterInBattle ( const mxcharacter* character )
+{
+    RETURN_IF_NULL(character) "";
+    const ddr_character* ddr_c = static_cast<const ddr_character*>(character);
+    
+    return ddr_c->IsPreparingForBattle()
+        ? CookedSystemString(SS_BATTLE_PREPARES_BATTLE,character)
+        : "";
+}
+    
+std::string ddr_text::DescribeCharacterLoyalty ( const mxcharacter* character )
+{
+    RETURN_IF_NULL(character) "";
+    
+    return character->loyalty
+        ? CookedSystemString(SS_LOYAL_TO,character)
+        : "";
+}
+
+//
+// Luxor sees [the object of type][ and ]an underground entrance.
+//
+// {char:name} sees
+// and
+// and underground entrance
+// .
+std::string ddr_text::DescribeCharacterSees ( const mxcharacter* character )
+{
+std::string buffer;
+
+    RETURN_IF_NULL(character) "";
+ 
+    auto scenario = static_cast<ddr_x*>(mx->scenario);
+    
+    mxobject* object = scenario->FindObjectAtLocation(character->Location());
+    
+#if defined(_TUNNELS_)
+    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
+#else
+    bool entrance = false;
+#endif
+
+    if ( object == nullptr && !entrance )
+        return "";
+    
+    buffer = character->Shortname() + " sees ";
+    if ( object ) {
+        buffer += "the " + DescribeObjectWithPower(object) ;
+    }
+
+#if defined(_TUNNELS_)
+    if ( entrance ) {
+        if ( object )
+            buffer += "and ";
+        buffer += "an underground entrance";
+    }
+#endif
+    
+    buffer += ". ";
+    
+    return buffer;
+}
+
+std::string ddr_text::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character )
+{
+    mxgridref oldLoc = this->loc;
+    
+    this->loc = loc ;
+    
+#if defined(_TUNNELS_)
+    if ( character && character->IsInTunnel() ) {
+        return "in the tunnel";
+    }
+#endif
+    
+    std::string msg = "{loc:terrain:prep} ";
+    auto buffer = CookText(msg) + DescribeLocation(loc);
+    
+    this->loc = oldLoc ;
+    
+    return buffer;
+}
+
+std::string ddr_text::DescribeObjectWithPower ( const mxobject* object )
+{
+    RETURN_IF_NULL(object) "";
+    
+    std::string description = "{obj:text}, whose power is in {case:lower}{obj:power}";
+    const mxobject* temp = oinfo;
+    oinfo = object;
+    auto buffer = CookText(description, nullptr);
+    oinfo = temp ;
+    return buffer;
+}
+
 void ddr_text::Serialize ( archive& ar )
 {
     mxtext::Serialize(ar);
@@ -396,7 +550,12 @@ void ddr_text::Serialize ( archive& ar )
 
         
     systemstrings[SS_KILLED_BY_OBJECT] = "slain by {case:lower}{char:battle:obj:name}. ";
-    
+    systemstrings[SS_KILLED_BY_BATTLE_OBJECT] = "{char:longname} is dead, slain by {char:battle:fighting:longname} with the {case:lower}{char:battle:obj:text}. {char:text:battle}";
+    systemstrings[SS_KILLED_BATTLE] = "{char:longname} is dead, slain by sword. {char:text:battle}";
+    systemstrings[SS_KILLED_BY_LORD] = "{char:longname} is dead, slain by {char:battle:fighting:longname}. {char:text:battle}";
+
+
+
     victory_token = FillArrayFromSystemString( SS_TOKENS_VICTORY );
 
 }

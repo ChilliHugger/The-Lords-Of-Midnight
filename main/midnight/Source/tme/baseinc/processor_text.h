@@ -56,9 +56,6 @@ namespace tme {
             virtual std::string DescribeCourage ( u32 courage );
             virtual std::string DescribeDespondent ( u32 despondent );
             virtual std::string DescribeReckless ( u32 reckless );
-#if defined(_DDR_)
-            virtual std::string DescribeTime ( u32 time );
-#endif
             
             // character descriptions
             virtual std::string DescribeCharacterRecruitMen ( const mxcharacter* character, const mxstronghold* stronghold, u32 qty )  ;
@@ -71,9 +68,6 @@ namespace tme {
 
             virtual std::string DescribeCharacterObject ( const mxcharacter* character )  ;
             virtual std::string DescribeCharacterDeath ( const mxcharacter* character )  ;
-#if defined(_DDR_)
-            virtual std::string DescribeCharacterDeath2 ( const mxcharacter* character )  ;
-#endif
             virtual std::string DescribeCharacterBattle ( const mxcharacter* character ) ;
             virtual std::string DescribeCharacterArmy ( const mxcharacter* character ) ;
             virtual std::string DescribeCharacterTraits ( const mxcharacter* character ) ;
@@ -81,11 +75,6 @@ namespace tme {
             virtual std::string DescribeCharacterLiege ( const mxcharacter* character ) ;
             virtual std::string DescribeCharacterLocation( const mxcharacter* character ) ;
             virtual std::string DescribeCharacterGroup ( const mxcharacter* character ) ;
-#if defined(_DDR_)
-            virtual std::string DescribeCharacterLoyalty ( const mxcharacter* character ) ;
-            virtual std::string DescribeCharacterSees ( const mxcharacter* character ) ;
-            virtual std::string DescribeCharacterInBattle ( const mxcharacter* character );
-#endif
 
             // strongholds
 
@@ -93,19 +82,12 @@ namespace tme {
 
             // location
             virtual std::string DescribeLocation( mxgridref loc) ;
-#if defined(_DDR_)
-            virtual std::string DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character );
-#endif
             virtual std::string DescribeArea(u32 area) ;
             virtual std::string DescribeTerrainPlural(mxterrain_t terrain);
             virtual std::string DescribeTerrainSingularPlural(mxterrain_t terrain);
 
             // objects
             virtual std::string DescribeObject ( const mxobject* object );
-#if defined(_DDR_)
-            virtual std::string DescribeObjectLocation( mxobject* object);
-            virtual std::string DescribeObjectWithPower ( const mxobject* object );
-#endif
 
 
             // special strings
@@ -122,10 +104,6 @@ namespace tme {
             mxdirection*    dinfo;
             mxarea*         ainfo;
             mxterrain*      tinfo;
-#if defined(_DDR_)
-            mxobjectpower*  opinfo;
-            mxobjecttype*   otinfo;
-#endif
             const           mxobject*    oinfo;
 
             c_string        adverb_token;

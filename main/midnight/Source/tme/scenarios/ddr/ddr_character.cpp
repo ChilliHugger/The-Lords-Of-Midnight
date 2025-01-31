@@ -47,6 +47,7 @@ namespace tme {
             ar << desired_object;
             ar << fighting_against;
             ar << battlelost;
+            ar << killedby;
         }else{
             if ( tme::mx->SaveGameVersion()> 10 && tme::mx->isSavedGame() )
                 ar >> lastlocation;
@@ -57,17 +58,23 @@ namespace tme {
             ar >> desired_object;
             
             mxcharacter* temp=NULL;
-            
             if ( mx->isSavedGame() )
                 ar >> temp;
-            
             fighting_against = static_cast<ddr_character*>(temp);
        
             if ( mx->isSavedGame() )
                 ar >> battlelost ;
 
+            // Version 16
+            if ( tme::mx->SaveGameVersion()> 15 && tme::mx->isSavedGame() ) {
+                u32 temp;
+                ar >> temp; killedby = (mxkilledby_t)temp;
+            } else {
+                killedby = utils::CalcKilledBy(this);
+            }
+
             // https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/178
-            if ( tme::mx->SaveGameVersion() < 15 && tme::mx->isSavedGame() ) {
+            if ( tme::mx->SaveGameVersion() < 15 && mx->isSavedGame()) {
                 flags = utils::UpdateDDRCharacterFlags(flags);
             }
         }
@@ -180,6 +187,7 @@ namespace tme {
                     LostFight(hp);
                     if ( IsDead() ) {
                         killedbyobject = fightobject;
+                        killedby = KB_NASTY;
                         return fightobject;
                     }
                 }
@@ -210,7 +218,12 @@ namespace tme {
         auto object = static_cast<ddr_object*>(Carrying());
         return object != nullptr && object->power == OP_BATTLE ;
     }
-    
+
+    bool ddr_character::KilledByBattleObject() const
+    {
+        return killedby == KB_LORD_OBJECT;
+    }
+
     bool ddr_character::IsProtected() const
     {
         auto object = static_cast<ddr_object*>(Carrying());
