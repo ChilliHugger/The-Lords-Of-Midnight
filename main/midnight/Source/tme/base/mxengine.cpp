@@ -670,7 +670,7 @@ std::string  description;
         READ_ENUM(m_difficulty);
         u32 seed; ar >> seed;
         if(m_difficulty == DF_MEDIUM || m_difficulty == DF_HARD ) {
-            randomno::instance.seed(seed);
+            randomno::instance->seed(seed);
         }
     }else{
         m_difficulty = DF_NORMAL;
@@ -862,7 +862,7 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     
     // version 14
     WRITE_ENUM(m_difficulty);
-    ar << randomno::instance.seed();
+    ar << randomno::instance->seed();
 
     /* save the game map */
     gamemap->Serialize ( ar );

@@ -23,7 +23,7 @@ namespace chilli {
             // jumble them up
             for ( int ii=0; ii<max; ii++ ) {
                 int a=ii; //mxrandom(1,max)-1;
-                int b= randomno::instance.get(1,max)-1;
+                int b= randomno::instance->get(1,max)-1;
                 int temp;
                 temp = array[a];
                 array[a]=array[b];

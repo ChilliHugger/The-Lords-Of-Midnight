@@ -8,8 +8,8 @@
 
 #define ISARG(x)    c_stricmp( arg.c_str(), x ) == 0
 #define COMMAND(x)  static MXRESULT (x)( const std::string& arg, variant argv[], u32 argc)
-#define mxrandom    randomno::instance.get
-#define mxchance    randomno::instance.chance
+#define mxrandom    randomno::instance->get
+#define mxchance    randomno::instance->chance
 #define EOS(x)      x+c_strlen(x)
 
 

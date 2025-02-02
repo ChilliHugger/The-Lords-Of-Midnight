@@ -261,16 +261,17 @@ namespace chilli {
             void seed ( u32 seed );
             u32 seed();
             int get ( void );
-            int get ( int number );
             int get ( int lower, int upper );
-            f32 getfloat();
             //bool chance ( int chance );
             bool chance ( f32 chance );
             void randomize();
+            
+            virtual int get ( int number );
+            virtual f32 getfloat();
 
         public:
             u32 m_seed;
-            static randomno instance ;
+            static randomno* instance ;
         };
 
 

@@ -986,7 +986,8 @@ bool TME_Init ( u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate
         afterCreate();
     }
     
-    randomno::instance.randomize();
+    randomno::instance = new randomno();
+    randomno::instance->randomize();
     
     // Tell the engine where to find its data
     auto directory = TME_ScenarioDirectory();

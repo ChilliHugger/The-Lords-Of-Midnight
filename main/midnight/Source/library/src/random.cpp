@@ -27,8 +27,7 @@ namespace chilli {
 //void rand_seed (unsigned int init)   {if (init != 0) SEED = init;}
 
         
-        randomno randomno::instance ;
-        
+        randomno* randomno::instance = new randomno();
         
         randomno::randomno()
         {
