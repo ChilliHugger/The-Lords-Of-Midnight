@@ -128,7 +128,7 @@ void panel_splashscreen::update(float delta)
 {
     f32 y=0;
     f32 width = getContentSize().width;
-    int c=chilli::randomno::instance.get()&1;
+    int c=chilli::randomno::instance->get()&1;
 
     uipanel::update(delta);
 
@@ -139,7 +139,7 @@ void panel_splashscreen::update(float delta)
         loadingProgress->drawSolidRect(Vec2::ZERO, Vec2(loadingWidth*MIN(1.0f,currentProgress),loadingHeight), Color4F(_clrDarkBlue) );
     }
 
-    if(chilli::randomno::instance.chance(0.5)) {
+    if(chilli::randomno::instance->chance(0.5)) {
         return;
     }
     
@@ -151,7 +151,7 @@ void panel_splashscreen::update(float delta)
 
     while(y<getContentSize().height)
     {
-        f32 height = chilli::randomno::instance.get(RES(2), RES(20));
+        f32 height = chilli::randomno::instance->get(RES(2), RES(20));
 
         if(c==0) {
             loadingBars->drawSolidRect(Vec2(0,y), Vec2(0+width, y+height), Color4F(_clrDarkBlue) );

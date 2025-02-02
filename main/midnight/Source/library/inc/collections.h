@@ -79,7 +79,7 @@ constexpr u32 MINIMUM_COLLECTION_SIZE = COLLECTION_PAGE_SIZE;
                 // jumble them up
                 for ( int ii=0; ii<Count(); ii++ ) {
                     int a=ii; 
-                    int b= randomno::instance.get(1,Count())-1;
+                    int b= randomno::instance->get(1,Count())-1;
                     T temp;
                     temp = m_data[a];
                     m_data[a]=m_data[b];
