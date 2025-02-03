@@ -124,3 +124,30 @@ inline ddr_character* GetDDRCharacter(LPCSTR name)
     return static_cast<tme::ddr_character*>(GetCharacter(name));
 }
 #endif
+
+class MockRandom : public randomno
+{
+public:
+    MockRandom()
+    {
+        Reset();
+        data.push_back(0);
+    }
+
+    virtual int get ( int number )
+    {
+        if ( count > data.size() ) {
+            count = 0;
+        }
+        
+        return data[count++];
+    }
+
+    void Reset() {
+        count = 0;
+    }
+
+public:
+    int count;
+    vector<int> data;
+};

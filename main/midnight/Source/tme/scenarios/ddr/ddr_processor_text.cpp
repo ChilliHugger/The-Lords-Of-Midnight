@@ -553,8 +553,7 @@ void ddr_text::Serialize ( archive& ar )
     systemstrings[SS_KILLED_BY_BATTLE_OBJECT] = "{char:longname} is dead, slain by {char:battle:fighting:longname} with the {case:lower}{char:battle:obj:text}. {char:text:battle}";
     systemstrings[SS_KILLED_BATTLE] = "{char:longname} is dead, slain by sword. {char:text:battle}";
     systemstrings[SS_KILLED_BY_LORD] = "{char:longname} is dead, slain by {char:battle:fighting:longname}. {char:text:battle}";
-
-
+    systemstrings[SS_SEEK_MSG4] = ", \"{char:longname} is dead.\"";
 
     victory_token = FillArrayFromSystemString( SS_TOKENS_VICTORY );
 
