@@ -10,11 +10,12 @@
 
 string result;
 
-
 const string SlainByObject = "Tarithel the Fey is dead, slain by Shareth the Heartstealer with the %s.";
 const string SlainByNasty = "Tarithel the Fey is dead, slain by %s.";
 const string KilledInBattle = "Tarithel the Fey is dead, slain by sword. ";
 const string SlainByLord = "Tarithel the Fey is dead, slain by Shareth the Heartstealer. ";
+const string Guidance = R"(, "%s)";
+
 
 void TarithelSlainByObject(string& object)
 {
@@ -37,6 +38,36 @@ void TarithelKilledInBattle()
 {
     REQUIRE_THAT(result, Catch::Matchers::StartsWith(KilledInBattle));
 }
+
+void GuidanceIs(LPCSTR text) {
+    auto expected = StringExtensions::Format(Guidance.c_str(), text);
+    REQUIRE_THAT(result, Catch::Matchers::StartsWith(expected));
+}
+
+void SharethIsDead() {
+    GuidanceIs("Shareth the Heartstealer is dead.");
+}
+
+void SharethLocationGiven() {
+    GuidanceIs("Shareth the Heartstealer stands in the City of Imgaril.");
+}
+
+void DesiredObjectDescribed() {
+    GuidanceIs("The Spell of Thigrorn, whose power is in swiftness, can be found");
+}
+
+void GuidanceAboutImgormad() {
+    auto rnd = new MockRandom();
+    randomno::instance = rnd;
+    rnd->data[0] = 6; // CH_IMGORMAD
+}
+
+void GuidanceGiven(mxcharacter* character)
+{
+    tme::mx->scenario->GiveGuidance(character, 0);
+    result = TME_LastActionMsg();
+};
+ 
 
 SCENARIO("Describe Character Death by special object: SS_KILLED_BY_BATTLE_OBJECT")
 {
@@ -139,6 +170,123 @@ SCENARIO("Describe Character Death in battle by lord: SS_KILLED_BATTLE")
             
             THEN("She was killed in battle.") {
                 TarithelSlainByLord();
+            }
+        }
+    }
+}
+
+SCENARIO("Character finds guidance about a dead lord", NEW_TAG)
+{
+    TMEStep::NewStory();
+    
+    auto text = static_cast<ddr_text*>(tme::mx->text);
+    auto character = GetDDRCharacter(DDRStep::ch_tarithel);
+ 
+    GIVEN("The lord will find guidance about a dead lord")
+    {
+        GuidanceAboutImgormad();
+        TMEStep::LordIsDead("CH_IMGORMAD");
+
+        AND_GIVEN("The lord is carrying their desired object")
+        {
+            TMEStep::LordCarryingObject(DDRStep::ch_tarithel, character->desired_object->Symbol());
+            
+            AND_GIVEN("Shareth is dead")
+            {
+                TMEStep::LordIsDead(DDRStep::ch_shareth);
+                                
+                WHEN("Guidance is given")
+                {
+                    GuidanceGiven(character);
+                    
+                    THEN("Shareth will be described as dead")
+                    {
+                        SharethIsDead();
+                    }
+                }
+            }
+            
+            AND_GIVEN("Shareth is alive")
+            {
+                WHEN("Guidance is given")
+                {
+                    GuidanceGiven(character);
+                    
+                    THEN("Shareth's location given")
+                    {
+                        SharethLocationGiven();
+                    }
+                }
+            }
+
+        }
+
+        AND_GIVEN("The lord is not carrying their desired object")
+        {
+            WHEN("Guidance is given")
+            {
+                GuidanceGiven(character);
+         
+                THEN("Desired object should be described")
+                {
+                    DesiredObjectDescribed();
+                }
+            }
+        }
+
+        AND_GIVEN("The lord has no desired object")
+        {
+            character->desired_object = nullptr;
+
+            AND_GIVEN("Shareth is dead")
+            {
+                TMEStep::LordIsDead(DDRStep::ch_shareth);
+                                
+                WHEN("Guidance is given")
+                {
+                    GuidanceGiven(character);
+                    
+                    THEN("Shareth will be described as dead")
+                    {
+                        SharethIsDead();
+                    }
+                }
+            }
+            
+            AND_GIVEN("Shareth is alive")
+            {
+                WHEN("Guidance is given")
+                {
+                    GuidanceGiven(character);
+                    
+                    THEN("Shareth's location given")
+                    {
+                        SharethLocationGiven();
+                    }
+                }
+            }
+        }
+    }
+}
+
+SCENARIO("Character finds guidance about a live lord", NEW_TAG)
+{
+    TMEStep::NewStory();
+    
+    auto text = static_cast<ddr_text*>(tme::mx->text);
+    auto character = GetDDRCharacter(DDRStep::ch_tarithel);
+ 
+    GIVEN("The lord should find guidance about a live lord")
+    {
+        GuidanceAboutImgormad();
+                        
+        WHEN("Guidance is given")
+        {
+            GuidanceGiven(character);
+            
+            THEN("the lords location will be shown")
+            {
+                GuidanceIs("Imgormad the Giant stands at the Fortress of Imgormad.");
             }
         }
     }

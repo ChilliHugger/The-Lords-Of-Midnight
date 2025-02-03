@@ -372,30 +372,35 @@ std::string buffer = mx->LastActionMsg();
     RETURN_IF_NULL(c);
    
     if ( c->IsAlive() && !c->IsFriend(character) ) {
-    
-        std::string seek = mx->text->SystemString(SS_SEEK_MSG1);
-        buffer += mx->text->CookText(seek,c);
+        // SS_SEEK_MSG1
+        // , "{char:longname} stands {char:loc:terrain:prep} {char:loc:name}."
+        buffer += mx->text->CookedSystemString(SS_SEEK_MSG1, c);
     
     } else {
         
         auto ddr = static_cast<ddr_character*>(character);
         auto o = ddr->desired_object ;
  
-        std::string guidance = mx->text->SystemString(SS_GUIDANCE2);
- 
         if ( (character->Carrying() == o) || o==nullptr ) {
             c = shareth;
             
-            std::string seek = mx->text->SystemString(SS_SEEK_MSG1);
- 
-            buffer += mx->text->CookText(seek,c);
-            buffer += mx->text->CookText(guidance,character);
+            if ( c->IsAlive() ) {
+                // SS_SEEK_MSG1
+                // , "{char:longname} stands {char:loc:terrain:prep} {char:loc:name}."
+                buffer += mx->text->CookedSystemString(SS_SEEK_MSG1, c);
+            } else {
+                // SS_SEEK_MSG4
+                // , "{char:longname} is dead."
+                buffer += mx->text->CookedSystemString(SS_SEEK_MSG4, c);
+            }
             
         } else {
-        
             buffer += static_cast<ddr_text*>(mx->text)->DescribeObjectLocation(o);
-            buffer += mx->text->CookText(guidance,character);
         }
+        
+        // SS_GUIDANCE2
+        // {char:text:obj}. {char:text:group}
+        buffer += mx->text->CookedSystemString(SS_GUIDANCE2, character);
     }
     
     mx->SetLastActionMsg(buffer);
