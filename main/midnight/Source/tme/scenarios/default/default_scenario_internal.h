@@ -86,7 +86,7 @@ namespace tme {
             virtual mxterrain_t toGeneralisedTerrain( mxterrain_t t) const ;
             virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const ;
 
-            virtual MXRESULT GetLocInfo ( mxid id, mxlocinfo*&    info  );
+            virtual MXRESULT GetLocInfo ( mxid id, flags32_t flags, std::unique_ptr<mxlocinfo>& info);
 
             bool IsFeature(u32 flag) const { return (features&flag) == flag; }
             

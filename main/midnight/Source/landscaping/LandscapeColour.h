@@ -51,7 +51,6 @@ public:
     void SetLookColour(mxtime_t time);
 
     Color4B Adjust( Color4B source, Color4F tint );
-    Color3B GetPersonColour();
 
     void updateTerrainNode( Node* node );
     void updateCharacterNode( Node* node );

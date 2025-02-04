@@ -37,7 +37,6 @@ namespace tme {
         mxlocinfo::~mxlocinfo()
         {
             Clear();
-            SAFEDELETE ( infront );
         }
 
         void mxlocinfo::Clear()
@@ -55,7 +54,7 @@ namespace tme {
             foe.Clear();
             regiments.Clear();
 
-            infront = nullptr ;
+            infront.reset() ;
             owner = nullptr;
 
             nRecruited = 0;
@@ -104,7 +103,7 @@ namespace tme {
             loc_infront = location + looking ;
 
             // now check the location in front
-            infront = new mxlocinfo(loc_infront,owner,sel_flags);
+            infront.reset( new mxlocinfo(loc_infront,owner,sel_flags) );
             
             flags.Reset(lif_blocked);
             if ( owner && owner->IsInTunnel() ) {

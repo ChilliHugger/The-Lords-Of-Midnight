@@ -305,22 +305,22 @@ s32 TME_GetProperties( LPCSTR name, c_mxid& collection )
 
 s32 TME_GetAllRegiments ( c_mxid& collection )
 {
-    return TME_GetProperties ( "REGIMENTS", collection );
+    return TME_GetProperties ( "ALLREGIMENTS", collection );
 }
 
 s32 TME_GetAllStrongholds (c_mxid& collection )
 {
-    return TME_GetProperties ( "STRONGHOLDS", collection );
+    return TME_GetProperties ( "ALLSTRONGHOLDS", collection );
 }
 
 s32 TME_GetAllObjects( c_mxid& collection )
 {
-    return TME_GetProperties ( "OBJECTS", collection );
+    return TME_GetProperties ( "ALLOBJECTS", collection );
 }
 
 s32 TME_GetAllCharacters (c_mxid& collection )
 {
-    return TME_GetProperties ( "CHARACTERS", collection );
+    return TME_GetProperties ( "ALLCHARACTERS", collection );
 
 }
 
@@ -343,7 +343,7 @@ s32 TME_GetFollowers ( mxid id, c_mxid& collection )
 
 s32 TME_GetCharactersAtLocation ( loc_t loc, c_mxid& collection, bool showall )
 {
-    return TME_GetCharactersAtLocation ( MAKE_LOCID(loc.x,loc.y), collection, showall, FALSE );
+    return TME_GetCharactersAtLocation ( MAKE_LOCID(loc.x,loc.y), collection, showall, false );
 }
 
 s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel )
@@ -377,7 +377,7 @@ MXRESULT TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends)
 }
 
 
-bool TME_GetLocationInfo( loc_t loc )
+bool TME_GetLocationInfo( loc_t loc, bool tunnel )
 {
     location_lookingatid = IDT_NONE ;
     location_infrontid = IDT_NONE ;
@@ -403,7 +403,9 @@ bool TME_GetLocationInfo( loc_t loc )
     //
     // Get the info for this location
     //
-    if ( MXSUCCESS( mxi->GetEntityProperties ( MAKE_LOCID(loc.x,loc.y), "LOCATIONINFO", args, 10 ) ) ) {
+    std::string properties =  tunnel ? "TUNNELINFO" : "LOCATIONINFO";
+    
+    if ( MXSUCCESS( mxi->GetEntityProperties ( MAKE_LOCID(loc.x,loc.y), properties, args, 11 ) ) ) {
 
         location_flags.Set(args[1]);
         location_fightthing = args[2].vSInt32;
@@ -490,8 +492,16 @@ bool TME_GetCharacterLocationInfo ( const character& c )
         
     }
     
+    
     // all characters here
-    TME_GetCharacters( c.id, location_characters, location_recruited );
+#if defined(_TUNNELS_)
+    bool tunnel = Character_IsInTunnel(c);
+#else
+    bool tunnel = false;
+#endif
+
+    mxid locid = MAKE_LOCID( c.location.x, c.location.y );
+    TME_GetCharactersAtLocation ( locid, location_characters, true, tunnel );
     
     // characters that could be recruited
     args[0] = &recruitable_characters ;
@@ -508,10 +518,22 @@ bool TME_GetCharacterLocationInfo ( const character& c )
         TME_GetStronghold ( location_stronghold, location_strongholds[0] );
     }
     
-    // strongholds in front
-    args[0] = &location_infront_strongholds ;
-    args[1] = location_infrontid ;
-    mxi->GetProperties ( "STRONGHOLDS", args, 2 );
+    if (!tunnel) {
+        // strongholds here
+        args[0] = &location_strongholds ;
+        args[1] = c.id ;
+        mxi->GetProperties ( "STRONGHOLDS", args, 2 );
+    
+        CLEARINFOSTRUCT ( location_stronghold, IDT_STRONGHOLD );
+        if ( location_strongholds.Count() ) {
+            TME_GetStronghold ( location_stronghold, location_strongholds[0] );
+        }
+    
+        // strongholds in front
+        args[0] = &location_infront_strongholds ;
+        args[1] = location_infrontid ;
+        mxi->GetProperties ( "STRONGHOLDS", args, 2 );
+    }
     
     //
     maplocation loc;
@@ -521,7 +543,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     //
     // Get the characters info for infront location
     //
-    TME_GetArmies ( location_infrontid, &location_infront_armies );
+    TME_GetArmies ( location_infrontid, tunnel, &location_infront_armies );
     
     
     return TRUE;
@@ -923,10 +945,11 @@ bool Character_Army ( mxid id, army_t& out )
     return FALSE ;
 }
 
-void TME_GetArmies ( mxid loc, loc_armyinfo_t* armyinfo )
+void TME_GetArmies ( mxid loc, bool tunnel, loc_armyinfo_t* armyinfo )
 {
     args[0] = &armyinfo->armies ;
-    args[1] = loc; //MAKE_LOCID(loc.x,loc.y) ;
+    args[1] = loc; 
+    args[2] = tunnel;
     
     armyinfo->foe_warriors = 0;
     armyinfo->foe_riders = 0;
@@ -937,7 +960,7 @@ void TME_GetArmies ( mxid loc, loc_armyinfo_t* armyinfo )
     armyinfo->friends_armies = 0;
     armyinfo->foes_armies = 0;
     
-    if ( MXSUCCESS( mxi->GetProperties ( "ARMIES", args, 2 ) ) ) {
+    if ( MXSUCCESS( mxi->GetProperties ( "ARMIES", args, 3 ) ) ) {
         armyinfo->foe_warriors = args[1];
         armyinfo->foe_riders = args[2];
         armyinfo->friends_warriors = args[3] ;

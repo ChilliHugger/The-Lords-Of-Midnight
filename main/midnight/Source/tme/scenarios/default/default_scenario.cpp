@@ -1003,7 +1003,7 @@ namespace tme {
             return MX_FAILED ;
         }
 
-        COMMAND ( PropCharacters )
+        COMMAND ( PropAllCharacters )
         {
             CONVERT_COLLECTION(argv[0],collection);
 
@@ -1016,7 +1016,7 @@ namespace tme {
             
         }
 
-        COMMAND ( PropRegiments )
+        COMMAND ( PropAllRegiments )
         {
             CONVERT_COLLECTION(argv[0],collection);
             if ( mx->objRegiments.CreateIdtCollection(collection) )
@@ -1024,7 +1024,7 @@ namespace tme {
             return MX_FAILED ;
         }
 
-        COMMAND ( PropRouteNodes )
+        COMMAND ( PropAllRouteNodes )
         {
             CONVERT_COLLECTION(argv[0],collection);
             if ( mx->objRoutenodes.CreateIdtCollection(collection) )
@@ -1032,7 +1032,7 @@ namespace tme {
             return MX_FAILED ;
         }
 
-        COMMAND ( PropPlaces )
+        COMMAND ( PropAllPlaces )
         {
             CONVERT_COLLECTION(argv[0],collection);
             if ( mx->objPlaces.CreateIdtCollection(collection) )
@@ -1040,7 +1040,7 @@ namespace tme {
             return MX_FAILED ;
         }
 
-        COMMAND ( PropStrongholds )
+        COMMAND ( PropAllStrongholds )
         {
             CONVERT_COLLECTION(argv[0],collection);
             if ( mx->objStrongholds.CreateIdtCollection(collection) )
@@ -1048,47 +1048,40 @@ namespace tme {
             return MX_FAILED ;
         }
 
-        COMMAND ( PropObjects )
+        COMMAND ( PropAllObjects )
         {
             CONVERT_COLLECTION(argv[0],collection);
             if ( mx->objObjects.CreateIdtCollection(collection) )
                 return MX_OK ;
             return MX_FAILED ;
         }
-    
-        COMMAND ( PropCharacters2 )
-        {
-            CONVERT_COLLECTION(argv[0],collection);
-            
-            mxlocinfo* locinfo;
-            if ( mx->scenario->GetLocInfo ( argv[1], locinfo ) != MX_OK )
-                return MX_FAILED ;
-            
-            locinfo->objCharacters.CreateIdtCollection(collection);
-            argv[1] = locinfo->nRecruited ;
-            SAFEDELETE ( locinfo );
-            return MX_OK ;
-        }
 
         COMMAND ( PropRecruitable )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo;
-            if ( mx->scenario->GetLocInfo ( argv[1], locinfo ) != MX_OK )
+            std::unique_ptr<mxlocinfo> locinfo;
+            if ( mx->scenario->GetLocInfo ( argv[1], slf_none, locinfo ) != MX_OK )
                 return MX_FAILED;
             locinfo->objRecruit.CreateIdtCollection(collection);
-            SAFEDELETE ( locinfo );
             return MX_OK ;
         }
 
         COMMAND ( PropArmies )
         {
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo = nullptr;
-            mx->scenario->GetLocInfo ( argv[1], locinfo );
-            if(locinfo == nullptr) {
+            
+            if ( ID_TYPE(argv[1].vid) != IDT_LOCATION )
                 return MX_FAILED;
-            }
+
+            flags32_t flags = slf_none;
+#if defined(_TUNNELS_)
+                if ( argv[2].vyesno )
+                    flags |= slf_tunnel;
+#endif
+            
+            std::unique_ptr<mxlocinfo> locinfo;
+            if (mx->scenario->GetLocInfo ( argv[1], flags, locinfo ) != MX_OK )
+                return MX_FAILED;
 
             collection.Create( locinfo->nArmies );
             for ( u32 ii=0; ii<locinfo->nArmies; ii++ ) {
@@ -1106,22 +1099,18 @@ namespace tme {
             argv[7] = locinfo->friends.armies;
             argv[8] = locinfo->foe.armies;
 
-            SAFEDELETE ( locinfo );
             return MX_OK ;
         }
 
-        COMMAND ( PropStrongholds2 )
+        COMMAND ( PropStrongholdsById )
         {
-      
             CONVERT_COLLECTION(argv[0],collection);
-            mxlocinfo* locinfo = nullptr;
-            mx->scenario->GetLocInfo ( argv[1], locinfo );
-            if(locinfo == nullptr) {
+            
+            std::unique_ptr<mxlocinfo> locinfo;
+            if (mx->scenario->GetLocInfo ( argv[1], slf_none, locinfo ) != MX_OK )
                 return MX_FAILED;
-            }
             
             locinfo->objStrongholds.CreateIdtCollection(collection);
-            SAFEDELETE ( locinfo );
             return MX_OK ;
         }
 
@@ -1192,17 +1181,17 @@ namespace tme {
             { "CONTROLLED_CHARACTER",     0, PropCurrentCharacter },
 
             { "DEFAULTCHARACTERS",  1, PropDefaultCharacters,   {variant::vptr} },
-            { "CHARACTERS",         1, PropCharacters,          {variant::vptr} },
-            { "REGIMENTS",          1, PropRegiments,           {variant::vptr} },
-            { "ROUTENODES",         1, PropRouteNodes,          {variant::vptr} },
-            { "STRONGHOLDS",        1, PropStrongholds,         {variant::vptr} },
-            { "PLACES",             1, PropPlaces,              {variant::vptr} },
-            { "CHARACTERS",         2, PropCharacters2,         {variant::vptr, variant::vid} },
+            { "ALLCHARACTERS",      1, PropAllCharacters,       {variant::vptr} },
+            { "ALLREGIMENTS",       1, PropAllRegiments,        {variant::vptr} },
+            { "ALLROUTENODES",      1, PropAllRouteNodes,       {variant::vptr} },
+            { "ALLSTRONGHOLDS",     1, PropAllStrongholds,      {variant::vptr} },
+            { "ALLPLACES",          1, PropAllPlaces,           {variant::vptr} },
+            { "AllOBJECTS",         1, PropAllObjects,          {variant::vptr} },
+
             { "RECRUITABLE",        2, PropRecruitable,         {variant::vptr, variant::vid} },
             { "ARMIES",             2, PropArmies,              {variant::vptr, variant::vid} },
-            { "STRONGHOLDS",        2, PropStrongholds2,        {variant::vptr, variant::vid} },
-            { "ROUTENODES",         2, PropRouteNodes,          {variant::vptr, variant::vid} },
-
+            { "STRONGHOLDS",        2, PropStrongholdsById,     {variant::vptr, variant::vid} },
+            
             { "CharsForCommand",    3, PropCharsForCommand,     {variant::vptr, variant::vnumber, arguments::location} },
             { "ArmiesAtLocation",   2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
             { "CharsAtLoc",         3, PropCharsAtLoc,          {variant::vptr, arguments::location, variant::vnumber} },
@@ -1210,7 +1199,6 @@ namespace tme {
             { "MAPINFO",            0, PropMapInfo,             },
             { "MAPSIZE",            0, PropMapSize,             },
 
-            { "OBJECTS",            1, PropObjects,             {variant::vptr} },
             
         };
 
@@ -1645,26 +1633,27 @@ namespace tme {
                 }
             }
         }
-
-        MXRESULT mxscenario::GetLocInfo ( mxid id, mxlocinfo*& info )
+        
+        MXRESULT mxscenario::GetLocInfo ( mxid id, flags32_t flags, std::unique_ptr<mxlocinfo>& info)
         {
             if ( ID_TYPE(id) == IDT_LOCATION ) {
                 CONVERT_GRIDREF(id,loc);
-                info = new mxlocinfo(loc,NULL,0);
+                info.reset( new mxlocinfo(loc, nullptr, flags) );
                 return MX_OK;
             }else if ( ID_TYPE(id) == IDT_STRONGHOLD ) {
                 CONVERT_STRONGHOLD_ID(id,stronghold);
-                info = new mxlocinfo(stronghold->Location(),NULL,0);
+                info.reset( new mxlocinfo(stronghold->Location(), nullptr, slf_none) );
                 return MX_OK;
             }else if ( ID_TYPE(id) == IDT_ROUTENODE ) {
                 CONVERT_ROUTENODE_ID(id,routenode);
-                info = new mxlocinfo(routenode->Location(),NULL,0);
+                info.reset( new mxlocinfo(routenode->Location(), nullptr, slf_none) );
                 return MX_OK;
             }else if ( ID_TYPE(id) == IDT_CHARACTER ) {
                 CONVERT_CHARACTER_ID(id,character);
-                info = character->GetLocInfo();
+                info = character->GetLocInfo() ;
                 return MX_OK;
             }
+            
             return MX_FAILED;
         }
 

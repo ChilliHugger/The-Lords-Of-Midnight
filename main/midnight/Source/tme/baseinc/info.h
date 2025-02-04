@@ -904,7 +904,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             DEFAULT_IMPLEMENTATION(mxcharacter);
 
-            virtual mxlocinfo* GetLocInfo();
+            virtual std::unique_ptr<mxlocinfo> GetLocInfo();
             virtual s32 DistanceFromLoc ( mxgridref loc );
 
             flags32& Traits()    { return traits; } 
@@ -1013,7 +1013,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual void InitNightProcessing ( void );
             virtual bool HasBattleInfo() const ;
             virtual mxthing_t LocationThing() const ;
-            virtual void RefreshLocationBasedVariables ( const mxlocinfo* info ) ;
+            virtual void RefreshLocationBasedVariables ( s32 icefear ) ;
             virtual bool CanWalkForward ( void );
             virtual bool ShouldLoseHorse(s32 hint = 0) const;
             virtual bool ShouldDieInFight() const;
@@ -1153,7 +1153,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxgridref           loc_lookingat ; // where is the item of interest in the distance?
             mxgridref           loc_infront ;   // location directly infront
             
-            mxlocinfo*          infront;        // info block for the location in front
+            std::unique_ptr<mxlocinfo> infront; // info block for the location in front
             
             mxloc               mapsqr;         // a copy of the location we are on
             

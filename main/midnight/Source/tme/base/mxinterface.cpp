@@ -561,7 +561,7 @@ namespace tme {
             }
 
             if ( ISARG("CANFIGHT") ) {
-                std::unique_ptr<mxlocinfo> locinfo ( character->GetLocInfo() );
+                auto locinfo = character->GetLocInfo() ;
                 mxobject* obj = mx->ObjectById(locinfo->fightthing);
                 argv = (s32)character->CheckFightObject( obj );
                 return MX_OK ;
@@ -649,7 +649,7 @@ namespace tme {
                 if ( argc < 17 )
                     return MX_INVALID_ARGUMENT_COUNT;
                 
-                std::unique_ptr<mxlocinfo> locinfo ( character->GetLocInfo() );
+                auto locinfo = character->GetLocInfo() ;
                 
                 argv[0] = (s32)17;
                 argv[1] = (s32)locinfo->looking ;
@@ -689,14 +689,19 @@ namespace tme {
         if ( ID_TYPE(id) == IDT_LOCATION ) {
 
             // location info
-            if ( ISARG("LOCATIONINFO") ) {
+            if ( ISARG("LOCATIONINFO") || ISARG("TUNNELINFO") ) {
                 
                 if ( argc < 10 )
                     return MX_INVALID_ARGUMENT_COUNT;
                 
                 mxgridref loc( GET_LOCIDX(id), GET_LOCIDY(id) );
 
-                mxlocinfo* locinfo = new mxlocinfo( loc, NULL, slf_none )  ;
+                flags32_t f = slf_none;
+                if (ISARG("TUNNELINFO")) {
+                    f = slf_tunnel;
+                }
+
+                std::unique_ptr<mxlocinfo> locinfo(new mxlocinfo( loc, nullptr, f ));
         
                 argv[0] = (s32)10;
                 argv[1] = locinfo->flags ;
@@ -715,7 +720,6 @@ namespace tme {
                     argv[9] = MAKE_ID(IDT_OBJECT,locinfo->mapsqr.object) ;
                     argv[10] = MAKE_ID(IDT_OBJECT,OB_NONE) ;
                 }
-                SAFEDELETE( locinfo );
             
                 return MX_OK ;
             }

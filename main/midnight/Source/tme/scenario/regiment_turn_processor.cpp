@@ -139,9 +139,8 @@ namespace tme {
         flags32_t f = regiment->IsInTunnel() ? slf_tunnel : slf_none ;
         
         // TODO: This is an expensive check - make cheaper
-        auto info = new mxlocinfo ( targetlocation, nullptr, f );
+        std::unique_ptr<mxlocinfo> info(new mxlocinfo ( targetlocation, nullptr, f ));
         totaldoomdarkarmies = info->foe.armies ;
-        SAFEDELETE(info);
 
         // we can't move into the location if it is full
         // or our armies

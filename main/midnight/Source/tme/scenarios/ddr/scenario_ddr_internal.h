@@ -151,7 +151,7 @@ namespace tme {
         virtual bool KilledByBattleObject() const;
         
         virtual void Displace();
-        virtual mxlocinfo* GetLocInfo();
+        virtual std::unique_ptr<mxlocinfo> GetLocInfo();
         virtual MXRESULT EnterBattle ();
         
         virtual void CheckKilledFoe ( void );
