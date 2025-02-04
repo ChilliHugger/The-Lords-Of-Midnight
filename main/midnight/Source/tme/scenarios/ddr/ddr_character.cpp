@@ -106,9 +106,9 @@ namespace tme {
     }
     
     
-    mxlocinfo* ddr_character::GetLocInfo()
+    std::unique_ptr<mxlocinfo> ddr_character::GetLocInfo()
     {
-        mxlocinfo* info = mxcharacter::GetLocInfo();
+        auto info = mxcharacter::GetLocInfo();
     
         // can we rest
         info->flags.Set(lif_rest);
@@ -164,7 +164,7 @@ namespace tme {
     {
         SetLastCommand ( CMD_FIGHT, IDT_NONE );
         
-        std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+        auto info = GetLocInfo() ;
         
         auto fightobject = static_cast<ddr_object*>(mx->ObjectById(info->fightthing)) ;
         
@@ -1283,7 +1283,7 @@ void ddr_character::moveCharacterSomewhere ( void )
         
         looking = direction;
         
-        std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+        auto info = GetLocInfo() ;
         
         if ( !(info->flags&lif_moveforward) ) {
             if ( !IsDawn() || info->flags&lif_blocked ) {
@@ -1337,7 +1337,7 @@ void ddr_character::moveCharacterSomewhere ( void )
     // is there 1 enemy here?
     // are we at a stronghold?
     
-    std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+    auto info = GetLocInfo() ;
    
     bool atStronghold = info->objStrongholds.Count() > 0 ;
     
@@ -1601,7 +1601,7 @@ mxcharacter* ddr_character::Cmd_Approach ( mxcharacter* character )
     }
     
     // get location info
-    std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+    auto info = GetLocInfo() ;
 
     // are we allowed to approach ?
     if ( !info->flags.Is(lif_recruitchar) ) {

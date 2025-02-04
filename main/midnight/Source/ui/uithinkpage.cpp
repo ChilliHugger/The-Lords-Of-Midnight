@@ -588,6 +588,13 @@ void uithinkpage::checkPerson ( void )
     
     TME_GetCharacter(c,id) ;
         
+#if defined(_TUNNELS_)
+    if (c.id == TME_CurrentCharacter().id) {
+        TME_GetCharacterLocationInfo(c);
+        enterTunnel = location_flags.Is(lif_enter_tunnel);
+    }
+#endif
+        
 #if defined(_LOM_)
     aheadOrHere ( text, c.location, true );
 #endif

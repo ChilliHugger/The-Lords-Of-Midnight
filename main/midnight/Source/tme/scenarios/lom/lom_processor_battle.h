@@ -41,7 +41,8 @@ namespace tme {
         virtual bool ChanceOfSuccessfullKill(u32 success);
         
     protected:
-        mxlocinfo*          info;
+        std::unique_ptr<mxlocinfo> info;
+        
         mxgridref           location;
         c_army              foes;
         c_army              friends;

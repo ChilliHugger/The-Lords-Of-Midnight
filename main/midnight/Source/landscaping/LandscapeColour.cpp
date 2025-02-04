@@ -56,18 +56,26 @@ void LandscapeColour::updateCharacterNode( Node* node )
     
     shader->AttachShader(node, options->characterTimeShader);
 
-#if defined(_TUNNELS_)
-    auto colour = options->isInTunnel
-        ? Vec4((80.0f/255.0f),0,0,alpha_normal)
-        : Vec4(0,0,0,alpha_normal);
-#else
-    auto colour = Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal);
+#if defined(_LOM_)
+    auto normalcolour = Vec4(0,(5.0f/255.0f),(78.0f/255.0f),alpha_normal);
+    auto tunnelcolour = Vec4((64.0f/255.0f),(64.0f/255.0f),0,alpha_normal);
 #endif
 
+#if defined(_DDR_)
+    auto normalcolour = Vec4(0,0,0,alpha_normal);
+    auto tunnelcolour = Vec4((80.0f/255.0f),0,0,alpha_normal)
+#endif
+
+    auto colour = normalcolour ;
+    
+#if defined(_TUNNELS_)
+    if ( options->isInTunnel ) {
+        tunnelcolour;
+    }
+#endif
     
     shader->UpdateCharacterTimeShader(node, alpha_normal, fade, colour);
 }
-
 
 
 Color4B LandscapeColour::Adjust( Color4B source, Color4F tint )
@@ -211,15 +219,6 @@ Color4B LandscapeColour::CalcCurrentMovementTint ( TINT shade )
     b1 += b3*options->movementAmount;
     
     return Color4B(r1,g1,b1,255);
-}
-
-Color3B LandscapeColour::GetPersonColour()
-{
-#if defined(_TUNNELS_)
-    if (options->isInTunnel)
-        return Color3B(GetTint(timeofday, TINT::Tunnel));
-#endif
-    return Color3B(GetTint(timeofday, TINT::Person));
 }
 
 void LandscapeColour::OnXmlInit ( XmlNode* node )

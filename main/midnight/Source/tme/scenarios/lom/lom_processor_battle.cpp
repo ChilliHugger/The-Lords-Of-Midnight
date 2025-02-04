@@ -27,7 +27,7 @@ namespace tme {
 void lom_battle::ProcessLocation ( mxgridref loc )
 {
     location = loc ;
-    info = new mxlocinfo ( loc, nullptr, 0 );
+    info.reset(new mxlocinfo ( loc, nullptr, slf_none ));
 
     if ( info->foe.armies ) {
 
@@ -37,8 +37,8 @@ void lom_battle::ProcessLocation ( mxgridref loc )
 
         CheckVictors();
     }
-
-    SAFEDELETE( info );
+    
+    info.reset();
 }
 
 bool lom_battle::MakeFriendOrFoeList ( const mxcharacter* character )

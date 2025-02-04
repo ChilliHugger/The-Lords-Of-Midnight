@@ -84,22 +84,20 @@ void LandscapePeople::Initialise()
     
     mxid locid = MAKE_LOCID( loc.x, loc.y );
     
-    TME_GetLocationInfo(loc);
+#if defined(_TUNNELS_)
+    bool tunnel = options->isInTunnel;
+#else
+    bool tunnel = false;
+#endif
+
+    TME_GetLocationInfo(loc, tunnel);
     
     // we have not printed anyone yet
     characters = 0;
     CLEARARRAY ( columns );
     
-    
     // get the characters infront of us
-#if defined(_LOM_)
-    u32 recruited;
-    TME_GetCharacters ( locid, objects, recruited );
-#endif
-    
-#if defined(_TUNNELS_)
-    TME_GetCharactersAtLocation(locid, objects, TRUE, options->isInTunnel);
-#endif
+    TME_GetCharactersAtLocation(locid, objects, true, tunnel);
     
     // if there are characters in front of us then
     // print them on screen

@@ -107,7 +107,7 @@ bool TME_GetMapLocation( maplocation& out, tme::loc_t loc );
 
 bool TME_GetRegiment( regiment& out, mxid id );
 
-bool TME_GetLocationInfo( tme::loc_t loc );
+bool TME_GetLocationInfo( tme::loc_t loc, bool tunnel = false );
 bool TME_GetCharacterLocationInfo ( const character& c );
 std::string TME_GetUnitTypeName(mxunit_t type );
 
@@ -120,14 +120,14 @@ bool TME_SaveDiscoveryMap ( const std::string& filespec );
 bool TME_LoadDiscoveryMap ( const std::string& filespec );
 void TME_SelectChar ( mxid newid );
 size TME_MapSize ( void );
-void TME_GetArmies ( mxid loc, loc_armyinfo_t* army );
+void TME_GetArmies ( mxid loc, bool tunnel, loc_armyinfo_t* army );
 s32 TME_GetAllStrongholds (c_mxid& collection ) ;
 s32 TME_GetAllRegiments (c_mxid& collection );
 s32 TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited );
 s32 TME_GetAllCharacters (c_mxid& collection );
 s32 TME_GetAllObjects( c_mxid& collection );
 s32 TME_GetFollowers ( mxid id, c_mxid& collection );
-s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel  );
+s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel = false );
 s32 TME_GetCharactersAtLocation ( tme::loc_t loc, c_mxid& collection, bool showall  );
 MXRESULT TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends );
 MXRESULT TME_GetArmiesAtLocation( tme::loc_t loc, u32& enemies, u32& friends );
@@ -208,16 +208,12 @@ bool Character_PostMen ( const character& c );
 mxid Character_LocationObject (  const character& c );
 mxid Character_Fight ( const character& c );
 mxid Character_Seek ( const character& c );
-
 bool Character_Place ( const character& c, tme::loc_t location );
-
-
 bool Character_Follow ( const character& c, mxid id );
 bool Character_UnFollow ( const character& c, mxid id );
 bool Character_CanFollow( const character& c, mxid id );
 bool Character_Disband( const character& c );
 bool Character_SwapGroupLeader( const character& c, mxid id );
-
 bool Character_Army ( mxid id, tme::scenarios::exports::army_t& out );
 
 #if defined(_DDR_)

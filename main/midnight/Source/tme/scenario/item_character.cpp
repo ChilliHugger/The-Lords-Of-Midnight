@@ -142,9 +142,9 @@ namespace tme {
             return nullptr;
         }
 
-        void mxcharacter::RefreshLocationBasedVariables ( const mxlocinfo* info )
+        void mxcharacter::RefreshLocationBasedVariables ( s32 icefear )
         {
-            fear = info->adj_fear ;
+            fear = icefear ;
             s32 temp  = cowardess-(fear/7);
             temp = std::max<int>( temp, 0 ) / 8 ;
             courage = std::min<int>( temp, 7 ) ;
@@ -155,15 +155,12 @@ namespace tme {
             // NOTE: This breaks the rules of this function being const
             // but i am only modifying temporary variables, so this should be okay
             mxcharacter* newcharacter = mx->CharacterById(Id());
-            mxlocinfo* info = new mxlocinfo ( Location(), newcharacter, 0 );
-            newcharacter->RefreshLocationBasedVariables ( info );
-            SAFEDELETE ( info );
+            std::unique_ptr<mxlocinfo> info(new mxlocinfo( Location(), newcharacter, slf_none ));
+            newcharacter->RefreshLocationBasedVariables ( info->adj_fear );
         }
 
-        mxlocinfo* mxcharacter::GetLocInfo()
+        std::unique_ptr<mxlocinfo> mxcharacter::GetLocInfo()
         {
-        mxlocinfo* info;
-
             // create a new info class
             // for our current location and the direction
             // we are looking
@@ -174,7 +171,7 @@ namespace tme {
                     flags = slf_tunnel;
             #endif
             
-            info = new mxlocinfo ( Location(), Looking(), this, flags );
+            std::unique_ptr<mxlocinfo> info( new mxlocinfo ( Location(), Looking(), this, flags ) );
 
             if ( IsNight() ) {
                 info->flags.Reset(lif_enter_tunnel);
@@ -184,7 +181,7 @@ namespace tme {
                 return info;
 
             // set the characters courage and fear
-            RefreshLocationBasedVariables ( info );
+            RefreshLocationBasedVariables ( info->adj_fear );
 
             // if the character is hidden  then
             // nothing else is possible
@@ -516,8 +513,6 @@ namespace tme {
     
         MXRESULT mxcharacter::Cmd_MoveForward ( void )
         {
-            std::unique_ptr<mxlocinfo> info;
-
             SetLastCommand ( CMD_MOVE, IDT_NONE);
 
             // lords who are following cannot be moved on their own
@@ -534,7 +529,7 @@ namespace tme {
                 return MX_FAILED;
                         
             // find where we will be moving to
-            info.reset(GetLocInfo());
+            auto info = GetLocInfo();
             
             // something blocking our path!
             if ( !info->flags.Is(lif_moveforward) ) {
@@ -909,7 +904,7 @@ namespace tme {
             SetLastCommand ( CMD_RECRUITMEN, IDT_NONE );
 
             // get location info
-            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+            auto info = GetLocInfo() ;
         
             if ( info->objStrongholds.Count() )
                     def_stronghold = (mxstronghold*)info->objStrongholds[0] ;
@@ -954,7 +949,7 @@ namespace tme {
             SetLastCommand ( CMD_POSTMEN, IDT_NONE );
 
             // get location info
-            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+            auto info = GetLocInfo() ;
         
             if ( info->objStrongholds.Count() )
                     def_stronghold = (mxstronghold*)info->objStrongholds[0] ;
@@ -994,8 +989,8 @@ namespace tme {
             if ( character == nullptr ) {
 
                 // get location info
-                std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
-        
+                auto info = GetLocInfo() ;
+    
                 // are we allowed to approach ?
                 if ( !info->flags.Is(lif_recruitchar) ) {
                     return nullptr ;
@@ -1072,7 +1067,7 @@ namespace tme {
             if ( IsFollowing() )
                 return MX_FAILED ;
             
-            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+            auto info = GetLocInfo() ;
         
             bool battle = info->flags.Is(lif_enterbattle) ;
             mxcharacter* stubborn_follower = info->stubborn_follower_battle;
@@ -1116,7 +1111,7 @@ namespace tme {
 
             SetLastCommand ( CMD_FIGHT, IDT_NONE );
 
-            std::unique_ptr<mxlocinfo> info ( GetLocInfo() );
+            auto info = GetLocInfo() ;
             
             // are we allowed to fight
             if ( !info->flags.Is(lif_fight) )
