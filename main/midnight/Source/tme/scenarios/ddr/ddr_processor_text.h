@@ -33,9 +33,7 @@ namespace tme {
             virtual std::string DescribeCharacterLoyalty ( const mxcharacter* character );
             virtual std::string DescribeCharacterLocation( const mxcharacter* character );
             virtual std::string DescribeCharacterSees ( const mxcharacter* character );
-            
-            virtual std::string DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character );
-            
+                        
             virtual std::string DescribeObjectLocation( mxobject* object);
             virtual std::string DescribeObjectWithPower ( const mxobject* object );
 

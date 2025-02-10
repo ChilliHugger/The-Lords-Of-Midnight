@@ -1582,6 +1582,11 @@ namespace tme {
             }
         }
 
+        mxobject* mxscenario::FindObjectAtLocation ( mxgridref loc )
+        {
+            return mx->ObjectById( mx->gamemap->GetAt(loc).object );
+        }
+
         mxcharacter* mxscenario::WhoHasObject( mxobject* object ) const
         {
             FOR_EACH_CHARACTER(character) {

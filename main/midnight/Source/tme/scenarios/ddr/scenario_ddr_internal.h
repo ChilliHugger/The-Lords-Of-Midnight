@@ -39,7 +39,7 @@ namespace tme {
         virtual mxobject* PickupObject ( mxgridref loc ) override;
 
         virtual void PlaceObjectsOnMap ( void );
-        virtual mxobject* FindObjectAtLocation ( mxgridref loc );
+        virtual mxobject* FindObjectAtLocation ( mxgridref loc ) override;
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
         virtual mxcharacter* IsEnemyAtLocation( mxgridref loc, const ddr_character* character) const;
