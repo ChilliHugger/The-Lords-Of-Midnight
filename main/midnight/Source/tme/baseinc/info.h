@@ -301,12 +301,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool IsInteresting() const ;
         void Serialize ( chilli::lib::archive& ar ) ;
         
-        MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
-        MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
-        bool HasTunnelExit() const ;
-        bool HasTunnelEntrance() const ;
-        bool IsTunnelPassageway() const ;
-        
     public:
         u64 terrain             : 7 ; // 128 ( 16x8 )
         u64 variant             : 3 ; // 8 ( 8 )
@@ -361,7 +355,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         void SetTunnelVisible( mxgridref l, bool visible );
         bool IsTunnelVisible( mxgridref loc );
         bool IsTunnel( mxgridref loc );
-        bool IsTunnelPassageway( mxgridref l );
+        bool IsTunnelObject( mxgridref l );
 
 #if defined(_DDR_)
         bool HasObject( mxgridref l );
@@ -395,8 +389,10 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
     
     public:
+        u32                     m_version;
         size                    m_size;
         mxloc*                  m_data;
+        flags32                 m_flags;
         loc_t                   m_top_visible;
         loc_t                   m_bottom_visible;
         // ptr to the current discovery map
