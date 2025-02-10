@@ -25,11 +25,13 @@ namespace tme {
 
 static mxloc blank;
 
-mxmap::mxmap()
+mxmap::mxmap() :
+    m_size(0,0),
+    m_flags(0),
+    m_version(MAPVERSION),
+    m_data(nullptr),
+    m_discoverymap(nullptr)
 {
-    m_size = size(0,0);
-    m_data = NULL ;
-    m_discoverymap = NULL ;
 }
 
 mxmap::~mxmap()
@@ -38,11 +40,13 @@ mxmap::~mxmap()
 }
 
 
-mxmap::mxmap( u32 x, u32 y)
+mxmap::mxmap( u32 x, u32 y) :
+    m_size(x,y),
+    m_version(MAPVERSION),
+    m_flags(0),
+    m_data(nullptr),
+    m_discoverymap(nullptr)
 {
-    m_data = NULL ;
-    m_discoverymap = NULL ;
-
     Create ( size(x,y) );
 }
 
@@ -117,7 +121,6 @@ MXTRACE( "Loading Map '%s'", filename.c_str());
     archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
 
 u32 magicno;
-u32 versionno;
 std::string header;
 
     ar >> magicno;
@@ -135,13 +138,9 @@ MXTRACE( "ByteSwapping ON");
         }
     }
 
-    ar >> versionno;
-MXTRACE( "Version=%d", (int)versionno);
-    if ( versionno != MAPVERSION ) {
-        MXTRACE("Invalid MAP VersionNO");
-        return FALSE;
-    }
-    
+    ar >> m_version;
+MXTRACE( "Version=%d", (int)m_version);
+
     ar >> header;
 MXTRACE( "Header='%s'", header.c_str());
 
@@ -177,8 +176,14 @@ MXTRACE( "mxmap::Serialize");
     
     if ( ar.IsStoring() ) {
         ar << m_size ;
+        ar << m_flags ;
     }else{
         ar >> m_size ;
+        m_flags.Clear();
+        if ( m_version >= 3 ) {
+            ar >> m_flags;
+        }
+   
         Create ( m_size );
     }
 
@@ -190,6 +195,8 @@ MXTRACE( "MapSize:: Width = %d Height=%d)", (int)m_size.cx, (int)m_size.cy);
     
     if ( ar.IsLoading() )
         CalculateVisibleArea();
+    
+    m_version = MAPVERSION ;
     
 MXTRACE( "mxmap::Serialize::OK");
 }
@@ -284,19 +291,13 @@ bool mxmap::IsTunnel( mxgridref l )
 #endif
 }
     
-bool mxmap::IsTunnelPassageway( mxgridref l )
+bool mxmap::IsTunnelObject( mxgridref l )
 {
 #if !defined(_TUNNELS_)
     return false;
 #else
     mxloc& mapsqr = GetAt( l );
-    mxterrain_t t = mx->scenario->toScenarioTerrain((mxterrain_t)mapsqr.terrain);
-#if defined(_DDR_)
-    return mapsqr.HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
-#endif
-#if defined(_LOM_)
-    return mapsqr.HasTunnel() && (t ==TN_PLAINS || t==TN_MOUNTAIN || t==TN_FOREST || t==TN_DOWNS ) ;
-#endif
+    return mapsqr.IsTunnelObject();
 #endif
 }
 
@@ -864,7 +865,7 @@ void mxmap::PutThingsOnMap ( void )
 #if defined(_TUNNELS_)
                 // if it is a tunnel passageway
                 // then use the same types
-                if ( mapsqr.IsTunnelPassageway() )
+                if ( mapsqr.IsTunnelObject() )
                     t = TN_ICYWASTE ;
 #endif
    
@@ -990,17 +991,17 @@ bool mxloc::HasTunnelEntrance() const
 
 bool mxloc::IsTunnelObject() const
 {
+#if defined(_TUNNELS_)
     mxterrain_t t = mx->scenario->toScenarioTerrain((mxterrain_t)terrain);
-    #if defined(_LOM_)
+#if defined(_LOM_)
     return HasTunnel() && (t ==TN_PLAINS || t==TN_MOUNTAIN || t==TN_FOREST || t==TN_DOWNS || t==TN_FROZENWASTE) ;
-    #endif
+#endif
     
-    #if defined(_DDR_)
+#if defined(_DDR_)
     return HasTunnel() && (t ==TN_PLAINS2 || t==TN_MOUNTAIN2 || t==TN_FOREST2 || t==TN_HILLS ) ;
-    #endif
-    
+#endif
+#endif
     return false;
-
 }
     
 void mxloc::Serialize ( archive& ar ) 

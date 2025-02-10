@@ -682,13 +682,6 @@ std::string  description;
     }
 
     /* load the game map */
-    if ( SaveGameVersion() >=16) {
-        gamemap->m_version = MAPVERSION;
-    }else{
-        gamemap->m_version = 2;
-    }
-
-    /* save the game map */
     gamemap->Serialize ( ar );
 
     ar >> sv_characters ;   objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
