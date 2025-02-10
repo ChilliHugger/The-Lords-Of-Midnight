@@ -60,6 +60,7 @@ namespace tme {
             virtual mxobject* PickupObject ( mxgridref loc );
             virtual void DeadCharactersDropObjects( void );
             virtual bool DropObject ( mxgridref loc, mxobject* object );
+            virtual mxobject* FindObjectAtLocation ( mxgridref loc );
             
             virtual mxgridref FindLookingTowards( mxgridref loc, mxdir_t dir );
 

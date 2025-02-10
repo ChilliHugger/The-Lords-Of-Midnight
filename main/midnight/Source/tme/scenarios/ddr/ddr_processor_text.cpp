@@ -424,25 +424,12 @@ std::string ddr_text::DescribeCharacterLocation( const mxcharacter* character )
     mxloc& here = mx->gamemap->GetAt ( character->Location() );
     mxgridref loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
     mxloc& there = mx->gamemap->GetAt ( loc );
-
-#if defined(_TUNNELS_)
-    if ( character->IsInTunnel() ) {
-        return CookedSystemString(SS_TUNNEL,character);
-    }
-#endif
-        
+    
     if ( there.IsMisty() ) {
         return CookedSystemString(SS_MESSAGE_MIST,character);
-    } else {
-        if ( (here.area!=there.area) ||
-            (here.IsInDomain()!=there.IsInDomain()) ||
-            (here.terrain!=there.terrain) )
-        {
-            return CookedSystemString(SS_MESSAGE6,character);
-        }else{
-            return CookedSystemString(SS_MESSAGE5,character);
-        }
     }
+
+    return mxtext::DescribeCharacterLocation(character);
 }
 
 std::string ddr_text::DescribeCharacterInBattle ( const mxcharacter* character )
@@ -478,54 +465,45 @@ std::string buffer;
     RETURN_IF_NULL(character) "";
  
     auto scenario = static_cast<ddr_x*>(mx->scenario);
-    
-    mxobject* object = scenario->FindObjectAtLocation(character->Location());
+    auto object = scenario->FindObjectAtLocation(character->Location());
+    bool entrance = false;
     
 #if defined(_TUNNELS_)
-    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
-#else
-    bool entrance = false;
+    entrance = mx->gamemap->HasTunnelEntrance(character->Location());
 #endif
 
     if ( object == nullptr && !entrance )
         return "";
     
-    buffer = character->Shortname() + " sees ";
-    if ( object ) {
-        buffer += "the " + DescribeObjectWithPower(object) ;
+    auto msg = 0;
+    auto type = 0;
+    
+    if ( object && object->CanPickup() )
+        type = 1;
+    
+    if ( entrance )
+        type += 2;
+        
+    switch (type) {
+        case 1:
+            // SS_SEES_1;
+            // {char:name} sees {char:loc:obj}
+            msg = SS_SEES_1;
+            break;
+        case 2:
+            // SS_SEES_2;
+            // {char:name} sees an underground entrance.
+            msg = SS_SEES_2;
+            break;
+        case 3:
+            // SS_SEES_3;
+            // {char:name} sees {char:loc:obj} and an underground entrance.
+            msg = SS_SEES_3;
+            break;
     }
+    
+    return CookedSystemString(msg,character);
 
-#if defined(_TUNNELS_)
-    if ( entrance ) {
-        if ( object )
-            buffer += "and ";
-        buffer += "an underground entrance";
-    }
-#endif
-    
-    buffer += ". ";
-    
-    return buffer;
-}
-
-std::string ddr_text::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter* character )
-{
-    mxgridref oldLoc = this->loc;
-    
-    this->loc = loc ;
-    
-#if defined(_TUNNELS_)
-    if ( character && character->IsInTunnel() ) {
-        return "in the tunnel";
-    }
-#endif
-    
-    std::string msg = "{loc:terrain:prep} ";
-    auto buffer = CookText(msg) + DescribeLocation(loc);
-    
-    this->loc = oldLoc ;
-    
-    return buffer;
 }
 
 std::string ddr_text::DescribeObjectWithPower ( const mxobject* object )
@@ -554,6 +532,10 @@ void ddr_text::Serialize ( archive& ar )
     systemstrings[SS_KILLED_BATTLE] = "{char:longname} is dead, slain by sword. {char:text:battle}";
     systemstrings[SS_KILLED_BY_LORD] = "{char:longname} is dead, slain by {char:battle:fighting:longname}. {char:text:battle}";
     systemstrings[SS_SEEK_MSG4] = ", \"{char:longname} is dead.\"";
+
+    systemstrings[SS_SEES_1] = "{char:name} sees the {char:loc:obj:fullname}. ";
+    systemstrings[SS_SEES_2] = "{char:name} sees an underground entrance. ";
+    systemstrings[SS_SEES_3] = "{char:name} sees the {char:loc:obj:fullname} and an underground entrance. ";
 
     victory_token = FillArrayFromSystemString( SS_TOKENS_VICTORY );
 

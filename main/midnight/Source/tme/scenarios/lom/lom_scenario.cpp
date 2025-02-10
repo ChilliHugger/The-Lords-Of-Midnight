@@ -242,10 +242,21 @@ void lom_x::initialiseAfterCreate(u32 version)
     mxscenario::initialiseAfterCreate(version);
 }
 
-void lom_x::updateAfterLoad(u32 version)
+void lom_x::updateAfterLoad( u32 version )
 {
+    // fixup strings
+    std::string ssMessage1 = std::string("{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:sees}");
+    mx->text->ModifySystemString(SS_MESSAGE1, ssMessage1 );
+
+    std::string ssMessage3 = std::string("{char:loc:text} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group} {char:text:sees}");
+    mx->text->ModifySystemString(SS_MESSAGE3, ssMessage3 );
+    
+    std::string ssMessage4 = std::string("{char:loc:text} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group} {char:text:sees}");
+    mx->text->ModifySystemString(SS_MESSAGE4, ssMessage4 );
+    
     mxscenario::updateAfterLoad(version);
 }
+ 
 
     
 mxregiment* lom_x::FindEmptyRegiment()

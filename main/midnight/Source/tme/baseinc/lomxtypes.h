@@ -573,6 +573,7 @@ using namespace chilli::types;
             SS_TUNNEL=98,
             SS_GROUP_LEADER=99,
             SS_GROUP_FOLLOWER=100,
+            
             SS_LOYAL_TO=101,
             SS_BATTLE_PREPARES_BATTLE=102,
             SS_KILLED_BY=103,
@@ -596,6 +597,8 @@ using namespace chilli::types;
             SS_OBJECT_USE_4=121,
             SS_MESSAGE_MIST=122,
             SS_TOKENS_VICTORY=123,
+            
+            SS_MAX_STRINGS = 255
         };
 
         enum PLURAL {
