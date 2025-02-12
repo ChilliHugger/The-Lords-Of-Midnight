@@ -817,6 +817,11 @@ namespace tme {
             lif_unhide          = MXBIT(15),    // hidden and can unhide
         };
 
+        enum MAPFLAGS {
+            mf_tunnnelendpoints = MXBIT(1),     // map supports tunnel entrance/exit flags
+            mf_impassablelocations = MXBIT(2),  // map supports impassable locations
+        };
+
         enum LOCATIONFLAGS { // 28 bits
             lf_mist             = MXBIT(0),     // location has mist
             lf_tunnel           = MXBIT(1),     // location has tunnel

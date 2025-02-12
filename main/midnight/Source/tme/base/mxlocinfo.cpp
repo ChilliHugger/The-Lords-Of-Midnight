@@ -114,11 +114,11 @@ namespace tme {
                 }
             }else{
                 // can we pass through the terrain infront?
-                if ( mx->scenario->isTerrainImpassable( (mxterrain_t)infront->mapsqr.terrain, owner ) ) {
+                if (mx->scenario->isLocationImpassable(infront->location, owner)) {
                     flags.Reset(lif_moveforward);// = FALSE;
                     flags.Set(lif_blocked);
                 }
-                
+                                
                 if ( mapsqr.HasTunnelEntrance() )
                     flags.Set(lif_enter_tunnel);  ;
             }
