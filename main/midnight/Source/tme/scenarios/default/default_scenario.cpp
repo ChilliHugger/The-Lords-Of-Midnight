@@ -267,12 +267,30 @@ namespace tme {
         bool mxscenario::isLocationImpassable(mxgridref loc, mxitem* target) const
         {
             auto mapLoc = mx->gamemap->GetAt(loc);
+
+#if defined(_TUNNELS_)
+            if(mapLoc.IsImpassable()) {
+                if(target->IsType(IDT_CHARACTER)) {
+                    auto character = dynamic_cast<mxcharacter*>(target);
+                    if (character != nullptr) {
+                        if(!character->IsInTunnel()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+#else
+            if(mapLoc.IsImpassable()) {
+                return true;
+            }
+#endif
+            
             return isTerrainImpassable((mxterrain_t)mapLoc.terrain, target);
         }
 
         //
         // This adds in Mountains as a potential impassable terrain above and beyond
-        // and setup in the database. This is controlled by two game rules
+        // any setup in the database. This is controlled by two game rules
         // RF_AI_IMPASSABLE_MOUNTAINS and RF_IMPASSABLE_MOUNTAINS
         // DWARVES, GIANTS, and DRAGONS can all pass impassable mountains
         // and when RF_SOLE_MOUNTAINEER is enabled so can lords without armies.
