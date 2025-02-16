@@ -53,8 +53,10 @@ enum helpid_t {
     HELP_TN_MISTS,
 #endif
 
+#if defined(_DDR_)
 #if defined(_TUNNELS_)
     HELP_TN_TUNNEL,
+#endif
 #endif
     
     HELP_SELECTING_CHARACTER,
@@ -90,6 +92,12 @@ enum helpid_t {
     HELP_TUTORIAL,
     HELP_TUTORIAL_OFF,
     HELP_TUTORIAL_ON,
+    
+#if !defined(_DDR_)
+#if defined(_TUNNELS_)
+    HELP_TN_TUNNEL,
+#endif
+#endif
     
     HELP_MAX
 };
