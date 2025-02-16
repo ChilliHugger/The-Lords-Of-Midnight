@@ -31,6 +31,7 @@ void DDRStep::LordKilledByCharacter(LPCSTR name, LPCSTR killedby)
     auto lord = GetDDRCharacter(name);
     lord->Cmd_Dead();
     lord->fighting_against = GetDDRCharacter(killedby);
+    lord->killedby = KB_LORD;
 }
 
 void DDRStep::MorkinRescued()

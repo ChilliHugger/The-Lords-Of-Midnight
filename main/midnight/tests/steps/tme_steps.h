@@ -27,6 +27,9 @@ using namespace std;
 extern mxengine* mx;
 
 
+#define NEW_TAG "[NEW]"
+#define IGNORE_TAG "[ignore]"
+
 class TMEStep
 {
 public:
