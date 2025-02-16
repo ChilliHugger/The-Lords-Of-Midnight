@@ -13,6 +13,9 @@
 
 #include "storymanager.h"
 #include "../frontend/help_id.h"
+#include <unordered_map>
+
+constexpr int HELP_VERSION = 2;
 
 
 enum HELPFLAGS
@@ -24,12 +27,10 @@ enum HELPFLAGS
 
 typedef struct helpitem_t
 {
-    int     flags;
-    const char*   text;
-    
+    helpid_t        id;
+    int             flags;
+    const char*     text;
 } helpitem_t ;
-
-
 
 
 class helpmanager : public ringcontroller
@@ -38,19 +39,23 @@ public:
     helpmanager();
     virtual ~helpmanager();
     
-    BOOL isShown ( helpid_t id );
-    BOOL isImportant( helpid_t id);
-    BOOL isAlways( helpid_t id);
+    bool isShown ( helpid_t id );
+    bool isImportant( helpid_t id);
+    bool isAlways( helpid_t id);
     
-    BOOL Save ( storyid_t id );
-    BOOL Load ( storyid_t id );
+    bool Save ( storyid_t id );
+    bool Load ( storyid_t id );
     
     void Shown ( helpid_t id );
     
     std::string Get( helpid_t id );
-    
-public:
-    BOOL displayed[ HELP_MAX ];
+
+private:
+    const helpitem_t* GetItem(helpid_t id);
+
+private:
+    std::unordered_map<helpid_t, const helpitem_t*> lookup;
+    std::unordered_map<helpid_t, bool> displayed;
 };
 
 
