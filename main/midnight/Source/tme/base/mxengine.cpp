@@ -225,7 +225,7 @@ int ii;
 int id;
 
 std::string filename = m_szDatabase + "/"
-    + std::to_string(scenario->GetInfoBlock()->Id)
+    + std::to_string((int)scenario->GetInfoBlock()->Id)
     + "/database";
 
     MX_REGISTER_SELF;
@@ -407,7 +407,7 @@ MXTRACE( "Update Variables");
 MXTRACE("Loading MAP");
 
     filename = m_szDatabase + "/"
-        + std::to_string(scenario->GetInfoBlock()->Id)
+        + std::to_string((int)scenario->GetInfoBlock()->Id)
         + "/" + sv_map_file;
 
 #if !defined(_OS_DESKTOP_)
@@ -651,7 +651,7 @@ std::string  description;
     }
 
     ar >> scenarioid;
-    if ( scenarioid != scenario->GetInfoBlock()->Id )
+    if ( scenarioid != (int)scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
 
     ar >> savegameversion ;
@@ -761,7 +761,7 @@ MXRESULT mxengine::SaveGameDescription ( const std::string& filename, std::strin
     }
     
     ar >> scenarioid;
-    if ( scenarioid != scenario->GetInfoBlock()->Id )
+    if ( scenarioid != (int)scenario->GetInfoBlock()->Id )
         return MX_UNKNOWN_FILE;
     
     ar >> savegameversion ;
@@ -837,7 +837,7 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     m_savegame = TRUE ;
 
     ar << TME_MAGIC_NO ;
-    ar << scenario->GetInfoBlock()->Id;
+    ar << (int)scenario->GetInfoBlock()->Id;
     ar << SAVEGAMEVERSION ;
     ar << (char*)SAVEGAMEHEADER ;
 

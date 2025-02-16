@@ -42,14 +42,14 @@ namespace tme {
     //namespace scenarios {
 
     scenarioinfo_t    scenario_info = {
-        1,
+        ScenarioId::DEFAULT,
         100,
         "Default Scenario",
         "Chris Wild",
         "rorthron@thelordsofmidnight.com",
         "http://www.thelordsofmidnight.com",
         "Default scenario for the Midnight Engine",
-        "Copyright 1984 - 2017 Mike Singleton & Chris Wild"
+        "Copyright 1984 - 2025 Mike Singleton & Chris Wild"
     };
 
     mxscenario* def_scenario = nullptr ;
