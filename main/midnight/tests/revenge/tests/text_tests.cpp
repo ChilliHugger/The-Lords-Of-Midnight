@@ -67,7 +67,21 @@ void GuidanceGiven(mxcharacter* character)
     tme::mx->scenario->GiveGuidance(character, 0);
     result = TME_LastActionMsg();
 };
- 
+
+void WhenLordSees(mxcharacter* character)
+{
+    result = tme::mx->text->DescribeCharacterSees(character);
+};
+
+void ThenLordSees(LPCSTR text) {
+    REQUIRE_THAT(result, Catch::Matchers::StartsWith(text));
+}
+
+void ThenLordSeesNothing() {
+    REQUIRE_THAT(result, Catch::Matchers::Equals(""));
+}
+
+
 
 SCENARIO("Describe Character Death by special object: SS_KILLED_BY_BATTLE_OBJECT")
 {
@@ -175,7 +189,7 @@ SCENARIO("Describe Character Death in battle by lord: SS_KILLED_BATTLE")
     }
 }
 
-SCENARIO("Character finds guidance about a dead lord", NEW_TAG)
+SCENARIO("Character finds guidance about a dead lord")
 {
     TMEStep::NewStory();
     
@@ -269,7 +283,7 @@ SCENARIO("Character finds guidance about a dead lord", NEW_TAG)
     }
 }
 
-SCENARIO("Character finds guidance about a live lord", NEW_TAG)
+SCENARIO("Character finds guidance about a live lord")
 {
     TMEStep::NewStory();
     
@@ -287,6 +301,69 @@ SCENARIO("Character finds guidance about a live lord", NEW_TAG)
             THEN("the lords location will be shown")
             {
                 GuidanceIs("Imgormad the Giant stands at the Fortress of Imgormad.");
+            }
+        }
+    }
+}
+
+SCENARIO("Character Sees something at a location", NEW_TAG) {
+    TMEStep::NewStory();
+    
+    auto character = GetCharacter(TMEStep::ch_luxor);
+
+    GIVEN("Lord is at a location with a tunnel entrance") {
+        DDRStep::LordAtGateOfVarenorn(character->Symbol().c_str());
+        
+        AND_GIVEN("there is no object to pickup") {
+            // no objects on first pass after a new story
+            
+            WHEN("the lord 'sees'") {
+                WhenLordSees(character);
+            
+                THEN("they will see the tunnel entrance") {
+                    ThenLordSees("Luxor sees an underground entrance.");
+                }
+            }
+        }
+        
+        AND_GIVEN("there is an object to pickup") {
+            DDRStep::ObjectAtLocation("OB_CROWN_VARENAND", character->Location());
+            
+            WHEN("the lord 'sees'") {
+                WhenLordSees(character);
+                         
+                THEN("they will see the tunnel entrance and the object") {
+                    ThenLordSees("Luxor sees the Crown of Varenand, whose power is in persuasion and an underground entrance.");
+                }
+            }
+        }
+    }
+    
+    GIVEN("Lord is at a location without a tunnel entrance") {
+        auto location = mxgridref(7, 90); // Tower of thirand
+        TMEStep::LordAtLocation(character->Symbol().c_str(), location);
+        
+        AND_GIVEN("there is no object to pickup") {
+            // no objects on first pass after a new story
+            
+            WHEN("the lord 'sees'") {
+                WhenLordSees(character);
+            
+                THEN("they will see nothing") {
+                    ThenLordSeesNothing();
+                }
+            }
+        }
+        
+        AND_GIVEN("there is an object to pickup") {
+            DDRStep::ObjectAtLocation("OB_CROWN_VARENAND", location);
+            
+            WHEN("the lord 'sees'") {
+                WhenLordSees(character);
+                         
+                THEN("they will see the object") {
+                    ThenLordSees("Luxor sees the Crown of Varenand, whose power is in persuasion.");
+                }
             }
         }
     }
