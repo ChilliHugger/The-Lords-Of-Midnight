@@ -24,7 +24,7 @@ namespace tme {
     namespace scenarios {
 
     static scenarioinfo_t    citadel_scenario_info = {
-        18,
+        ScenarioId::CITADEL,
         100,
         "CITADEL Scenario",
         "Chris Wild",

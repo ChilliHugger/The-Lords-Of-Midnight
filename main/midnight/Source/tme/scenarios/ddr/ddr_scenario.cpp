@@ -33,14 +33,14 @@ namespace tme {
 //    namespace scenarios {
 
 static scenarioinfo_t    ddr_scenario_info = {
-    17,
+    ScenarioId::DDR,
     100,
     "DDR Scenario",
     "Chris Wild",
     "rorthron@doomdarksrevenge.com",
     "http://www.doomdarksrevenge.com",
     "Doomdark's Revenge for the Midnight Engine",
-    "Copyright 1985 - 2022 Mike Singleton & Chris Wild"
+    "Copyright 1985 - 2025 Mike Singleton & Chris Wild"
 };
 
 static ddr_x* ddr_scenario = NULL ;

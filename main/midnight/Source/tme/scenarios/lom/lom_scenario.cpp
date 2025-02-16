@@ -29,14 +29,14 @@ namespace tme {
 //    namespace scenarios {
 
     static scenarioinfo_t    lom_scenario_info = {
-        16,
+        ScenarioId::LOM,
         100,
         "LOM Scenario",
         "Chris Wild",
         "rorthron@thelordsofmidnight.com",
         "http://www.thelordsofmidnight.com",
         "The Lords of Midnight for the Midnight Engine",
-        "Copyright 1984 - 2017 Mike Singleton & Chris Wild"
+        "Copyright 1984 - 2025 Mike Singleton & Chris Wild"
     };
 
 static lom_x* lom_scenario = NULL ;
