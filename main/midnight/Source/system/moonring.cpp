@@ -114,6 +114,18 @@ moonring::~moonring()
     SAFEDELETE(resolution);
 }
 
+mxscenarioid moonring::getScenarioId() const
+{
+#if defined(_LOM_)
+    if ( settings->current_scenario == CF_SCENARIO::NOVEL ) {
+        return mxscenarioid::LOM_NOVEL;
+    }
+#endif
+    
+    return mxscenarioid::DEFAULT;
+}
+
+
 
 std::string moonring::getWritablePath()
 {
@@ -695,7 +707,7 @@ void moonring::initialise( progressmonitor* monitor )
 #endif
     
     // initialise TME
-    TME_Init(RF_DEFAULT, DF_NORMAL);
+    TME_Init(mxscenarioid::DEFAULT, RF_DEFAULT, DF_NORMAL);
     
     std::string configFilename = std::string( getWritablePath() ) + "/config.cfg";
     config->LoadXmlConfig( configFilename );

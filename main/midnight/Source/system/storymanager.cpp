@@ -112,13 +112,13 @@ void storymanager::SetLoadSave( tme::PFNSERIALIZE function )
 
 std::string storymanager::DiscoveryMapFilename()
 {
-    return mr->getWritablePath() + "/story/discovery.map";
+    return getFolder() + "/discovery.map";
 }
 
 bool storymanager::create ( storyid_t id, u64 flags, mxdifficulty_t difficulty )
 {
     TME_DeInit();
-    TME_Init(flags,difficulty);
+    TME_Init(mr->getScenarioId(), flags,difficulty);
     currentStory=id;
     last_save=SAVE_NONE;
     last_night.Clear();
@@ -131,10 +131,24 @@ bool storymanager::create ( storyid_t id, u64 flags, mxdifficulty_t difficulty )
     return save(id,savemode_dawn);
 }
 
+std::string storymanager::getFolder ()
+{
+    auto scenario = mr->getScenarioId();
+    switch (scenario) {
+        case mxscenarioid::DEFAULT:
+        case mxscenarioid::LOM:
+        case mxscenarioid::DDR:
+        case mxscenarioid::CITADEL:
+            return Format( "%s/story", mr->getWritablePath().c_str());
+            
+        default:
+            return Format( "%s/story-%d", mr->getWritablePath().c_str(), (int)scenario);
+    }
+}
+
 std::string storymanager::getFolder ( storyid_t id )
 {
-    return Format( "%s/story/%d", mr->getWritablePath().c_str(), (int)id);
-    
+    return getFolder() + "/" + std::to_string(id);
 }
 
 std::string storymanager::getPath( storyid_t id )

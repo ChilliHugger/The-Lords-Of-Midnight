@@ -67,6 +67,7 @@ public:
     virtual bool canUndo ( savemode_t mode );
     virtual bool undo ( savemode_t mode );
 
+    std::string getFolder ();
     std::string getFolder( storyid_t id );
     std::string getPath( storyid_t id );
     std::string getPath(storyid_t id, saveid_t save);

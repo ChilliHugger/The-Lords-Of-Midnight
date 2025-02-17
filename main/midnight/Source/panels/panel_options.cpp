@@ -168,6 +168,13 @@ static const char* values_approach[] = {
     OPTIONS_SCREEN_APPROACH_STAY
 };
 
+#if defined(_SCENARIO_SELECTOR_)
+static const char* values_scenario[] = {
+    OPTIONS_GAME_SCENARIO_LOM,
+    OPTIONS_GAME_SCENARIO_NOVEL
+};
+#endif
+
 /*
  DISPLAY
     MODE                FULL, Window1, Window2, Window3
@@ -226,6 +233,9 @@ static uitextmenuitem items_game[] = {
     { ID_OPTION_AUTO_SEEK,              {OPTIONS_SCREEN_AUTOSEEK},              KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
     { ID_OPTION_AUTO_APPROACH,          {OPTIONS_SCREEN_AUTOAPPROACH},          KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE },
 #endif
+#if defined(_SCENARIO_SELECTOR_)
+    { ID_OPTION_SCENARIO,               {OPTIONS_GAME_SCENARIO},                KEYCODE(9), KEYBOARD_KEY_9, TB_DOUBLE },
+#endif
 };
 
 static uitextmenuitem items_control[] = {
@@ -281,6 +291,10 @@ static option_t options[] = {
     {   ID_OPTION_RULE_8,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
 
     {   ID_OPTION_DIFFICULTY,       OPT_NUMBER, 4, values_difficulty,          nullptr, false },
+
+#if defined(_SCENARIO_SELECTOR_)
+    {   ID_OPTION_SCENARIO,         OPT_NUMBER, 2, values_scenario,            nullptr, false },
+#endif
 
     {   ID_HOME,                    OPT_NONE,   0, nullptr,                    nullptr, false },
 };
@@ -408,6 +422,10 @@ bool panel_options::init()
 #if defined(_MOUSE_ENABLED_)
     SET_OPTION(ID_OPTION_CURSOR_SIZE, cursor_size);
 #endif
+
+#if defined(_SCENARIO_SELECTOR_)
+    SET_OPTION(ID_OPTION_SCENARIO, current_scenario);
+#endif
     
     if ( !mr->settings->fullscreensupported )
     {
@@ -439,6 +457,10 @@ bool panel_options::init()
     SetMenu(ID_MENU_DISPLAY);
     
     initialScreenMode = mr->settings->screen_mode ;
+    
+#if defined(_SCENARIO_SELECTOR_)
+    initialScenario = mr->settings->current_scenario;
+#endif
   
     return true;
 }
@@ -459,6 +481,14 @@ void panel_options::OnMenuNotification(
                 return;
             }
 #endif
+#if defined(_SCENARIO_SELECTOR_)
+            if (initialScenario != mr->settings->current_scenario) {
+                mr->panels->setPanelMode(MODE_MAINMENU);
+                mr->settings->Save();
+                return;
+            }
+#endif
+
             Exit();
             mr->settings->Save();
             return;

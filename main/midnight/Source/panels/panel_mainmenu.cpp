@@ -142,7 +142,21 @@ bool panel_mainmenu::init()
     //
     
     TME_DeInit();
-    TME_Init(RF_DEFAULT,DF_NORMAL);
+    TME_Init(mr->getScenarioId(),RF_DEFAULT,DF_NORMAL);
+
+    
+    // Scenario Title
+#if defined(_LOM_) && defined(_SCENARIO_SELECTOR_)
+    if (mr->getScenarioId() == mxscenarioid::LOM_NOVEL) {
+        auto scenarioTitle = Label::createWithTTF( uihelper::font_config_big, NOVEL_SCENARIO_TITLE );
+        scenarioTitle->setWidth(RES(512));
+        scenarioTitle->getFontAtlas()->setAntiAliasTexParameters();
+        scenarioTitle->setTextColor(Color4B(_clrBlack));
+        scenarioTitle->setLocalZOrder(ZORDER_DEFAULT);
+        scenarioTitle->setAlignment(TextHAlignment::CENTER);
+        uihelper::AddBottomCenter(safeArea,scenarioTitle,RES(0),RES(16));
+    }
+#endif
 
     refreshStories();
     
