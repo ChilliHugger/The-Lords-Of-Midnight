@@ -40,6 +40,7 @@ namespace tme {
             LPCSTR SystemString ( u32 id );
             LPCSTR SystemStringById ( mxid id );
             mxid StringByName ( const std::string& name ) const;
+            void ModifySystemString( mxid id, LPCSTR value );
             void ModifySystemString( mxid id, std::string& value );
 
             std::string CookedSystemString ( u32 id, const mxcharacter* character=NULL );

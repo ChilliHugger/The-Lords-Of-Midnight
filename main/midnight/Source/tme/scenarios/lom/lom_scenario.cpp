@@ -29,7 +29,7 @@ namespace tme {
 //    namespace scenarios {
 
     static scenarioinfo_t    lom_scenario_info = {
-        ScenarioId::LOM,
+        mxscenarioid::LOM,
         100,
         "LOM Scenario",
         "Chris Wild",
@@ -113,10 +113,13 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
     mx->battle = new lom_battle;
     mx->gameover = new lom_gameover;
     mx->entityfactory = new mxentityfactory;
-    mx->scenario = (mxscenario*)lom_scenario;
     
-    // set initial feature flags
-    mx->scenario->features = SF_MOONRING|SF_ICEFEAR  ;
+    if ( mx->scenario == nullptr ) {
+        mx->scenario = lom_scenario;
+        
+        // set initial feature flags
+        mx->scenario->features = SF_MOONRING|SF_ICEFEAR  ;
+    }
     
     return MX_OK ;
 }
@@ -244,21 +247,13 @@ void lom_x::initialiseAfterCreate(u32 version)
 
 void lom_x::updateAfterLoad( u32 version )
 {
-    // fixup strings
-    std::string ssMessage1 = std::string("{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:sees}");
-    mx->text->ModifySystemString(SS_MESSAGE1, ssMessage1 );
-
-    std::string ssMessage3 = std::string("{char:loc:text} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group} {char:text:sees}");
-    mx->text->ModifySystemString(SS_MESSAGE3, ssMessage3 );
-    
-    std::string ssMessage4 = std::string("{char:loc:text} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group} {char:text:sees}");
-    mx->text->ModifySystemString(SS_MESSAGE4, ssMessage4 );
+    mx->text->ModifySystemString(SS_SEES_1, "");
+    mx->text->ModifySystemString(SS_SEES_2, "");
+    mx->text->ModifySystemString(SS_SEES_3, "");
     
     mxscenario::updateAfterLoad(version);
 }
  
-
-    
 mxregiment* lom_x::FindEmptyRegiment()
 {
     FOR_EACH_REGIMENT(regiment) {

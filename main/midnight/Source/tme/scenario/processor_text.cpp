@@ -147,28 +147,18 @@ int id;
         reckless_token = FillArrayFromSystemString( SS_RECKLESSTOKENS );
         traits_token = FillArrayFromSystemString( SS_TRAITS );
         plural_tokens = FillArrayFromSystemString( SS_PLURALTOKENS );
-
-#if defined(_LOM_)
-        if (mx->scenario->GetInfoBlock()->Id == ScenarioId::LOM_NOVEL) {
-            systemstrings[SS_SEES_1] = "{char:name} sees the {char:loc:obj:name}. ";
-            systemstrings[SS_SEES_2] = "{char:name} sees an underground entrance. ";
-            systemstrings[SS_SEES_3] = "{char:name} sees then {char:loc:obj:name} and an underground entrance. ";
-        } else {
-            systemstrings[SS_SEES_1] = "";
-            systemstrings[SS_SEES_2] = "";
-            systemstrings[SS_SEES_3] = "";
-        }
-#endif
-
-
     }
 }
 
 void mxtext::ModifySystemString( mxid id, std::string& value )
 {
-    systemstrings[GET_ID(id)-1] = value ;
+    ModifySystemString( id, value.c_str() ) ;
 }
 
+void mxtext::ModifySystemString( mxid id, LPCSTR value )
+{
+    systemstrings[GET_ID(id)-1] = value ;
+}
 
 mxid mxtext::StringByName ( const std::string& name ) const
 {

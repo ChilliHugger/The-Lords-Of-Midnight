@@ -20,6 +20,7 @@
 
 #if defined(_LOM_)
 #include "scenarios/lom/scenario_lom.h"
+#include "scenarios/lom_novel/scenario_lom_novel.h"
 #endif
 
 namespace tme {
@@ -77,7 +78,7 @@ std::string TME_ScenarioDirectory ( void );
 std::string TME_ScenarioName ( void );
 std::string TME_ScenarioShortName ( void );
 
-bool TME_Init ( u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate = nullptr  );
+bool TME_Init ( tme::mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate = nullptr  );
 bool TME_DeInit ( void );
 void TME_PurgeTextCache();
 std::string TME_GetCharacterText ( const character& c, const std::string& command ) ;
