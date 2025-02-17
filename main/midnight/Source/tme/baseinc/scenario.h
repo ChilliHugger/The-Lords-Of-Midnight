@@ -6,25 +6,25 @@ namespace tme {
     //namespace scenarios {
 
     //class mxengine;
-        enum class ScenarioId : int {
-            NONE        = 0,
-            DEFAULT     = 1,
-            LOM         = 16,
-            DDR         = 17,
-            CITADEL     = 18,
-            
-            LOM_NOVEL   = 26,
+        enum class mxscenarioid : int {
+            NONE            = 0,
+            DEFAULT         = 1,
+            LOM             = 16,
+            DDR             = 17,
+            CITADEL         = 18,
+                
+            LOM_NOVEL       = 26,
         };
 
         typedef struct scenarioinfo_t {
-            ScenarioId  Id;
-            u32         Version;
-            LPCSTR      Title;
-            LPCSTR      Author;
-            LPCSTR      AuthorEmail;
-            LPCSTR      AuthorUrl;
-            LPCSTR      Description;
-            LPCSTR      Copyright;
+            mxscenarioid    Id;
+            u32             Version;
+            LPCSTR          Title;
+            LPCSTR          Author;
+            LPCSTR          AuthorEmail;
+            LPCSTR          AuthorUrl;
+            LPCSTR          Description;
+            LPCSTR          Copyright;
         } scenarioinfo_t ;
 
         // default engine scenario

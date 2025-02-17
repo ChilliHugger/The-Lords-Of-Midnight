@@ -42,7 +42,7 @@ namespace tme {
     //namespace scenarios {
 
     scenarioinfo_t    scenario_info = {
-        ScenarioId::DEFAULT,
+        mxscenarioid::DEFAULT,
         100,
         "Default Scenario",
         "Chris Wild",

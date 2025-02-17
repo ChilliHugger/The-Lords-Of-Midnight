@@ -33,7 +33,7 @@ namespace tme {
 //    namespace scenarios {
 
 static scenarioinfo_t    ddr_scenario_info = {
-    ScenarioId::DDR,
+    mxscenarioid::DDR,
     100,
     "DDR Scenario",
     "Chris Wild",

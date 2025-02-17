@@ -986,7 +986,7 @@ void* TME_GetEntityUserData ( mxid id)
 }
 
 
-bool TME_Init ( u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate )
+bool TME_Init ( mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate )
 {
     // first we need an interface object
     mxi = new mxinterface ;
@@ -995,13 +995,28 @@ bool TME_Init ( u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate
     
     // A scenario must provide a create function
 #if defined(_LOM_)
-    if ( MXFAILED( tme::lom::Create( mxi ) ) ) {
-        return FALSE;
+    if ( scenarioId == mxscenarioid::DEFAULT || scenarioId == mxscenarioid::LOM ) {
+        if ( MXFAILED( tme::lom::Create( mxi ) ) ) {
+            return false;
+        }
+    }
+    else if ( scenarioId == mxscenarioid::LOM_NOVEL ) {
+        if ( MXFAILED( tme::lom_novel::Create( mxi ) ) ) {
+            return false;
+        }
+    }
+    else {
+        return false;
     }
 #endif
+
 #if defined(_DDR_)
-    if ( MXFAILED( tme::ddr::Create( mxi ) ) ) {
-        return FALSE;
+    if ( scenarioId == mxscenarioid::DEFAULT || scenarioId == mxscenarioid::LOM ) {
+        if ( MXFAILED( tme::ddr::Create( mxi ) ) ) {
+            return false;
+        }
+    } else {
+        return false;
     }
 #endif
     
