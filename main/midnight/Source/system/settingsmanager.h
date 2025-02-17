@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  13
+#define CONFIG_VERSION                  14
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -35,6 +35,11 @@
 
 #if defined(_LOM_)
     #define PRE_RENDERED_LORD_NAMES
+#endif
+
+
+#if defined(_LOM_)
+#define _SCENARIO_SELECTOR_
 #endif
 
 enum class CF_NAVIGATION : int
@@ -98,6 +103,12 @@ enum class CF_APPROACH
 {
     SWAP    = 0,
     STAY    = 1
+};
+
+enum class CF_SCENARIO
+{
+    DEFAULT = 0,
+    NOVEL   = 1
 };
 
 enum class TOGGLE : int
@@ -182,4 +193,7 @@ public:
     TOGGLE                  autoseek;
     TOGGLE                  autoapproach;
     CF_APPROACH             approach_mode;
+    
+    // version 14
+    CF_SCENARIO             current_scenario;
 };

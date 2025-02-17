@@ -55,6 +55,7 @@ public:
     ax::Vec2   anchor;
 } ;
 
+using mxscenarioid = tme::mxscenarioid;
 
 class moonring
 {
@@ -72,6 +73,9 @@ public:
     void initialise( progressmonitor* monitor );
     std::string getWritablePath();
     bool serialize( u32 version, chilli::lib::archive& ar );
+    
+    // Scenarios
+    mxscenarioid getScenarioId() const;
     
     // assets
 #if defined(_OS_DESKTOP_)

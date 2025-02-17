@@ -72,7 +72,8 @@ protected:
     ScrollView*             subMenuScrollView;
     uitextmenu*             mainMenu;
     ax::Map<int, uioptionitem*> optionControls;
-    CF_SCREEN      initialScreenMode;
+    CF_SCREEN               initialScreenMode;
+    CF_SCENARIO             initialScenario;
     TOGGLE                  rules[64];
 };
 

@@ -39,6 +39,7 @@ settingsmanager::settingsmanager() :
     , approach_mode(CF_APPROACH::SWAP)
     , firsttime(true)
     , fey_recruit_mode(CF_FEY_RECRUIT::ON)
+    , current_scenario(CF_SCENARIO::DEFAULT)
 {
     
 #if defined(_OS_DESKTOP_)
@@ -154,6 +155,9 @@ bool settingsmanager::Save ( void )
     ar << FROM_TOGGLE(autoseek);
     ar << FROM_TOGGLE(autoapproach);
     ar << FROM_ENUM(approach_mode);
+    
+    // version 14
+    ar << FROM_ENUM(current_scenario);
 
     ar.Close();
 
@@ -243,7 +247,11 @@ bool settingsmanager::Load ( void )
     if ( version >= 13 ) {
         ar >> TO_TOGGLE(autoseek);
         ar >> TO_TOGGLE(autoapproach);
-        ar >> TO_ENUM(approach_mode,CF_APPROACH);
+        ar >> TO_ENUM(approach_mode, CF_APPROACH);
+    }
+
+    if ( version >= 14 ) {
+        ar >> TO_ENUM(current_scenario, CF_SCENARIO);
     }
 
     ar.Close();

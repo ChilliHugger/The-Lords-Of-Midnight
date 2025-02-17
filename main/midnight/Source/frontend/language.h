@@ -141,7 +141,9 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_C64            = "ORIGINAL C64";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_8              = "UPGRADE SHARETH ARMY AI";
 
-
+    constexpr LPCSTR OPTIONS_GAME_SCENARIO              = "SCENARIO";
+    constexpr LPCSTR OPTIONS_GAME_SCENARIO_LOM          = "DEFAULT";
+    constexpr LPCSTR OPTIONS_GAME_SCENARIO_NOVEL        = "NOVEL";
     
     constexpr LPCSTR OPTIONS_SCREEN_DF_NORMAL           = "NORMAL";
     constexpr LPCSTR OPTIONS_SCREEN_DF_EASY             = "EASY";
@@ -152,6 +154,8 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_APPROACH_STAY       = "DO NOTHING";
     
 #if defined(_LOM_)
+    constexpr LPCSTR NOVEL_SCENARIO_TITLE               = "THE LORDS OF MIDNIGHT\nThe Novel";
+
     constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the epic world of";
     constexpr LPCSTR SPLASH_SCREEN_TITLE                = "THE LORDS OF MIDNIGHT";
     constexpr LPCSTR SPLASH_SCREEN_BY                   = "         by";
