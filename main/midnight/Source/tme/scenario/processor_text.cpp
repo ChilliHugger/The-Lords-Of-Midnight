@@ -157,7 +157,7 @@ void mxtext::ModifySystemString( mxid id, std::string& value )
 
 void mxtext::ModifySystemString( mxid id, LPCSTR value )
 {
-    systemstrings[GET_ID(id)-1] = value ;
+    systemstrings[GET_ID(id)] = value ;
 }
 
 mxid mxtext::StringByName ( const std::string& name ) const
@@ -1427,7 +1427,7 @@ __loc:
                                             goto __terrain;
                                         }
                 IS_ARG("obj")           {
-                                            oinfo = mx->scenario->FindObjectAtLocation(loc);    
+                                            oinfo = mx->scenario->FindObjectAtLocation(loc);
                                             goto __obj;
                                         }
                 IS_ARG("area")          {

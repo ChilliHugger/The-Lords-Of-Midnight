@@ -17,7 +17,7 @@ namespace tme {
         virtual MXRESULT Register ( mxengine* midnightx );
         virtual MXRESULT UnRegister ( mxengine* midnightx );
         
-        virtual void updateAfterLoad(u32 version);
+        virtual void initialiseAfterCreate(u32 version);
     };
 
     

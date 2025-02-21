@@ -241,16 +241,16 @@ void lom_x::initialiseAfterCreate(u32 version)
             mx->gamemap->GetAt(mxgridref(adj[0], adj[1])).terrain = adj[2];
         }
     }
+
+    mx->text->ModifySystemString(SS_SEES_1, "");
+    mx->text->ModifySystemString(SS_SEES_2, "");
+    mx->text->ModifySystemString(SS_SEES_3, "");
     
     mxscenario::initialiseAfterCreate(version);
 }
 
 void lom_x::updateAfterLoad( u32 version )
 {
-    mx->text->ModifySystemString(SS_SEES_1, "");
-    mx->text->ModifySystemString(SS_SEES_2, "");
-    mx->text->ModifySystemString(SS_SEES_3, "");
-    
     mxscenario::updateAfterLoad(version);
 }
  
