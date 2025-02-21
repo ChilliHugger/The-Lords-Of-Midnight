@@ -100,9 +100,9 @@ MXRESULT lom_novel_x::UnRegister ( mxengine* midnightx )
     return lom_x::UnRegister( midnightx ) ;
 }
 
-void lom_novel_x::updateAfterLoad( u32 version )
+void lom_novel_x::initialiseAfterCreate(u32 version)
 {
-    lom_x::updateAfterLoad(version);
+    lom_x::initialiseAfterCreate(version);
     
     // fixup strings
     mx->text->ModifySystemString(SS_MESSAGE1, "{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:sees}" );
@@ -110,7 +110,7 @@ void lom_novel_x::updateAfterLoad( u32 version )
     mx->text->ModifySystemString(SS_MESSAGE4, "{char:loc:text} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group} {char:text:sees}" );
     mx->text->ModifySystemString(SS_SEES_1, "{char:name} sees the {char:loc:obj:name}. ");
     mx->text->ModifySystemString(SS_SEES_2, "{char:name} sees an underground entrance. ");
-    mx->text->ModifySystemString(SS_SEES_3, "{char:name} sees then {char:loc:obj:name} and an underground entrance. ");
+    mx->text->ModifySystemString(SS_SEES_3, "{char:name} sees the {char:loc:obj:name} and an underground entrance. ");
     
 
 }
