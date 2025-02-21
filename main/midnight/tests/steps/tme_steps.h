@@ -33,7 +33,9 @@ extern mxengine* mx;
 class TMEStep
 {
 public:
+    static void NewStory(mxscenarioid scenario, RULEFLAGS rules, mxdifficulty_t difficult);
     static void NewStory(RULEFLAGS rules = RF_DEFAULT, mxdifficulty_t difficulty = DF_NORMAL);
+    
     
     static void GivenNormalGame() { NewStory(); }
     static void GivenHardGame() { NewStory(RF_DEFAULT, DF_HARD); }
