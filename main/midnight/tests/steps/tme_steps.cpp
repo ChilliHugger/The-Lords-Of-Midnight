@@ -11,13 +11,16 @@
 
 void TMEStep::NewStory(RULEFLAGS rules, mxdifficulty_t difficulty)
 {
+    TMEStep::NewStory(mxscenarioid::DEFAULT, rules, difficulty);
+}
+
+void TMEStep::NewStory(mxscenarioid scenario, RULEFLAGS rules, mxdifficulty_t difficulty)
+{
     TME_DeInit();
             
-    TME_Init(rules, difficulty, [] {
+    TME_Init(scenario, rules, difficulty, [] {
         tme::mx->entityfactory = new mockentityfactory();
     });
-
-    
 }
 
 void TMEStep::NightFalls()
