@@ -24,6 +24,7 @@ constexpr auto FONT_SIZE_MEDIUM        = 20;
 constexpr auto FONT_SIZE_SMALL         = 12;
 constexpr auto FONT_SIZE_DEBUG         = 8;
 constexpr auto IMAGE_LOGO              = "misc/logo.png";
+constexpr auto IMAGE_LOGO_NOVEL        = "misc/logo-26.png";
 
 
 using ax::Color3B;

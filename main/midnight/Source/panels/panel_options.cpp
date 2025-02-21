@@ -391,7 +391,8 @@ bool panel_options::init()
     
     setBackgroundToHeight("screens/misc/main_menu.png");
 
-    auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
+    auto imageLogo = (mr->getScenarioId() == mxscenarioid::LOM_NOVEL) ? IMAGE_LOGO_NOVEL : IMAGE_LOGO ;
+    auto logo = ImageView::create(imageLogo,Widget::TextureResType::LOCAL);
     logo->setLocalZOrder(ZORDER_FAR+1);
     uihelper::AddTopCenter(safeArea,logo,0,RES(32));
          

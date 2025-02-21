@@ -27,21 +27,6 @@
 USING_NS_AX;
 USING_NS_AX_UI;
 
-//#define BOOKMARK_IMAGE          "bookmark"
-//#define BOOKMARK_OVERLAY_IMAGE  "bookmark_overlay"
-//
-//static rgb_t bookmark_colours[] = {
-//    rgb_t(0xde, 0x00, 0x00),
-//    rgb_t(0xde, 0x7e, 0x00),
-//    rgb_t(0xcc, 0xcc, 0x00),
-//    rgb_t(0x69, 0xa9, 0x00),
-//    rgb_t(0x00, 0xb2, 0xa4),
-//    rgb_t(0x00, 0x7e, 0xcc),
-//    rgb_t(0x84, 0x00, 0xdb),
-//    rgb_t(0x96, 0x96, 0x96)
-//};
-
-
 static uitextmenuitem items[] = {
     { ID_NEW_STORY,         {MAINMENU_NEW_STORY},       KEYCODE(N), KEYBOARD_KEY_N },
     { ID_CONTINUE_STORY,    {MAINMENU_CONTINUE_STORY},  KEYCODE(C), KEYBOARD_KEY_C },
@@ -78,7 +63,8 @@ bool panel_mainmenu::init()
     //
     // Logo
     //
-    auto logo = ImageView::create(IMAGE_LOGO,Widget::TextureResType::LOCAL);
+    auto imageLogo = (mr->getScenarioId() == mxscenarioid::LOM_NOVEL) ? IMAGE_LOGO_NOVEL : IMAGE_LOGO ;
+    auto logo = ImageView::create(imageLogo, Widget::TextureResType::LOCAL);
     uihelper::AddTopCenter(safeArea,logo,0,RES(32));
     
     //
@@ -104,24 +90,6 @@ bool panel_mainmenu::init()
     });
 #endif
 
-    // Bookmark
-    
-//    if ( mr->stories->stories_used()== 1 ) {
-//        auto slot = mr->stories->first_used_story()-1;
-//
-//        auto bookmarkImage = Sprite::createWithSpriteFrameName(BOOKMARK_IMAGE);
-//        bookmarkImage->setColor(bookmark_colours[slot]);
-//        uihelper::AddTopRight(menu, bookmarkImage, RES(22), RES(8));
-//
-//        auto bookmarkOverlayImage = Sprite::createWithSpriteFrameName(BOOKMARK_OVERLAY_IMAGE);
-//        bookmarkOverlayImage->setColor(_clrBlack);
-//        uihelper::AddCenter(bookmarkImage, bookmarkOverlayImage);
-//
-//        bookmarkImage->setRotation(16);
-//        bookmarkImage->setLocalZOrder(ZORDER_FAR);
-//    }
-  
-
     //
     // Guide and Manual
     //    
@@ -134,9 +102,6 @@ bool panel_mainmenu::init()
     story->setScale(scale_normal+scale_half);
     uihelper::AddBottomLeft(safeArea,story, RES(10), RES(10) );
     
-    
-    
-    
     //
     // Other
     //
@@ -144,7 +109,6 @@ bool panel_mainmenu::init()
     TME_DeInit();
     TME_Init(mr->getScenarioId(),RF_DEFAULT,DF_NORMAL);
 
-    
     // Scenario Title
 #if defined(_LOM_) && defined(_SCENARIO_SELECTOR_)
     if (mr->getScenarioId() == mxscenarioid::LOM_NOVEL) {
@@ -281,11 +245,6 @@ void panel_mainmenu::OnMenuNotification(
         default:
             break;
     }
-    
-//    if ( id > ID_STORIES ) {
-//        
-//    }
-    
 }
 
 
