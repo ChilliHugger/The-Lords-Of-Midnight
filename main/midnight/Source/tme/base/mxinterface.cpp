@@ -234,14 +234,14 @@ namespace tme {
                     out->discovery_flags.Set( mx->discoverymap->GetAt(loc) );
                 }
 
-#if defined(_TUNNELS_)
-                if ( m.HasTunnelExit() )
-                    out->flags.Set(lf_tunnel_exit);
-                if ( m.HasTunnelEntrance() )
-                    out->flags.Set(lf_tunnel_entrance);
-                if ( m.IsTunnelObject() )
-                    out->flags.Set(lf_tunnel_object);
-#endif
+                if (mx->scenario->IsFeature(SF_TUNNELS)) {
+                    if ( m.HasTunnelExit() )
+                        out->flags.Set(lf_tunnel_exit);
+                    if ( m.HasTunnelEntrance() )
+                        out->flags.Set(lf_tunnel_entrance);
+                    if ( m.IsTunnelObject() )
+                        out->flags.Set(lf_tunnel_object);
+                }
                     
 #if defined(_DDR_)
                 if ( m.HasObject() ) {
@@ -483,7 +483,15 @@ namespace tme {
         argv[0]=(u32)mx->Difficulty();
         return MX_OK;
     }
-    
+
+    // COMMAND: @GETSCENARIOFEATURES
+    //
+    COMMAND( OnGetScenarioFeatures )
+    {
+        argv[0]=(u32)mx->scenario->features;
+        return MX_OK;
+    }
+
     static mxcommand_t mx_commands[] = {
         {"@SETSCENARIO",                1, OnSetScenario,           {variant::vptr} },
         {"@SETDATABASEDIRECTORY",       1, OnSetDatabaseDirectory,  {variant::vstring} },
@@ -498,6 +506,7 @@ namespace tme {
         {"@SETMAP",                     1, OnSetMap,                {variant::vptr} },
         {"@SETDIFFICULTY",              1, OnSetDifficulty,         {variant::vnumber} },
         {"@GETDIFFICULTY",              0, OnGetDifficulty},
+        {"@GETSCENARIOFEATURES",        0, OnGetScenarioFeatures},
     };
 
     //

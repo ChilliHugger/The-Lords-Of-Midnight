@@ -994,10 +994,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual mxobject* Cmd_PickupObject ( void );
             virtual void Cmd_Dead ( void );
             
-#if defined(_TUNNELS_)
             virtual MXRESULT Cmd_EnterTunnel ( void );
             virtual MXRESULT Cmd_ExitTunnel ( void );
-#endif
             
             virtual MXRESULT EnterBattle ( void );
 

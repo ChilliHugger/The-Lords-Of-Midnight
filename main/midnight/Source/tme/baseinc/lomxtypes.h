@@ -8,14 +8,6 @@ using namespace chilli::types;
 //#define _DDR_
 //#define _LOM_
 
-#if defined(_DDR_)
-#define _TUNNELS_
-#endif
-
-#if defined(_LOM_)
-// #define _TUNNELS_
-#endif
-
 
 /* these are the various enums
  * that define variable types used within 
@@ -854,6 +846,14 @@ namespace tme {
             lf_unused26         = MXBIT(25),    // ** currently not used **
             lf_unused27         = MXBIT(26),    // ** currently not used **
             lf_unused28         = MXBIT(27),    // ** currently not used **
+            
+            lf_tunnel_flags_mask = lf_tunnel
+                | lf_tunnel_small
+                | lf_tunnel_exit
+                | lf_tunnel_entrance
+                | lf_tunnel_looked_at
+                | lf_tunnel_visited
+                | lf_tunnel_object
         };
 
         enum CHARACTERFLAGS {

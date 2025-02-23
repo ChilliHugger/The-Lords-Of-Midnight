@@ -268,22 +268,22 @@ namespace tme {
         {
             auto mapLoc = mx->gamemap->GetAt(loc);
 
-#if defined(_TUNNELS_)
-            if(mapLoc.IsImpassable()) {
-                if(target->IsType(IDT_CHARACTER)) {
-                    auto character = dynamic_cast<mxcharacter*>(target);
-                    if (character != nullptr) {
-                        if(!character->IsInTunnel()) {
-                            return true;
+            if (IsFeature(SF_TUNNELS)) {
+                if(mapLoc.IsImpassable()) {
+                    if(target->IsType(IDT_CHARACTER)) {
+                        auto character = dynamic_cast<mxcharacter*>(target);
+                        if (character != nullptr) {
+                            if(!character->IsInTunnel()) {
+                                return true;
+                            }
                         }
                     }
                 }
+            } else {
+                if(mapLoc.IsImpassable()) {
+                    return true;
+                }
             }
-#else
-            if(mapLoc.IsImpassable()) {
-                return true;
-            }
-#endif
             
             return isTerrainImpassable((mxterrain_t)mapLoc.terrain, target);
         }
@@ -512,11 +512,30 @@ namespace tme {
         };
 
 
+        void mxscenario::MakeMapTunnelAreaVisible( mxgridref l )
+        {
+            mxloc& current = mx->gamemap->GetAt( l );
+            current.flags|=lf_tunnel_looked_at|lf_tunnel_visited;
+            
+            // check the surrounding locations for tunnels
+            // N E S W
+            // and mark them as seen
+            for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
+                if ( mx->gamemap->IsTunnel(l + (mxdir_t)ii))
+                    mx->gamemap->SetTunnelVisible(l + (mxdir_t)ii, true);
+            }
+        }
+
+
         void mxscenario::MakeMapAreaVisible ( mxgridref l, mxcharacter* character )
         {
         mxgridref dst;
         mxgridref newdst;
         mxterrain*    tinfo;
+
+            if (character->IsInTunnel()) {
+                MakeMapTunnelAreaVisible(l);
+            }
 
             mx->gamemap->SetLocationVisible(l, true);
             
@@ -779,7 +798,6 @@ namespace tme {
             return MX_OK;
         }
 
-#if defined(_TUNNELS_)
         COMMAND( OnCharEnterTunnel )
         {
             CONVERT_CHARACTER_ID( argv[0].vId, character );
@@ -793,7 +811,6 @@ namespace tme {
             argv[0]=(s32)0;
             return character->Cmd_ExitTunnel();
         }
-#endif
 
 #if defined(_DDR_)
         COMMAND( OnCharGive )
@@ -971,10 +988,8 @@ namespace tme {
             {"DROP",            1, OnCharDrop,              {arguments::character} },
             {"WAIT",            2, OnCharWait,              {arguments::character, variant::vnumber} }, //[mode]
             {"CONTROL",         1, OnCharControl,           {arguments::character} },
-#if defined(_TUNNELS_)
             {"ENTERTUNNEL",     1, OnCharEnterTunnel,       {arguments::character} },
             {"EXITTUNNEL",      1, OnCharExitTunnel,        {arguments::character} },
-#endif
             
 #if defined(_DDR_)
             {"GIVE",            1, OnCharGive,              {arguments::character} },
@@ -1091,11 +1106,7 @@ namespace tme {
             if ( ID_TYPE(argv[1].vid) != IDT_LOCATION )
                 return MX_FAILED;
 
-            flags32_t flags = slf_none;
-#if defined(_TUNNELS_)
-                if ( argv[2].vyesno )
-                    flags |= slf_tunnel;
-#endif
+            flags32_t flags = argv[2].vyesno ? slf_tunnel : slf_none;
             
             std::unique_ptr<mxlocinfo> locinfo;
             if (mx->scenario->GetLocInfo ( argv[1], flags, locinfo ) != MX_OK )

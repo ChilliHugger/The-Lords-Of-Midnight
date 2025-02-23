@@ -813,11 +813,9 @@ std::string mxtext::DescribeCharacterLocation( const mxcharacter* character )
 {
     RETURN_IF_NULL(character) "";
     
-#if defined(_TUNNELS_)
     if ( character->IsInTunnel() ) {
         return CookedSystemString(SS_TUNNEL, character);
     }
-#endif
     
     mxloc& here = mx->gamemap->GetAt ( character->Location() );
     mxgridref loc = mx->scenario->FindLookingTowards(character->Location(),character->Looking());
@@ -982,11 +980,7 @@ std::string mxtext::DescribeCharacterSees ( const mxcharacter* character )
     
     auto item = mx->gamemap->getLocationObject(character, character->Location());
     auto object = mx->ObjectById(item);
-    bool entrance = false;
-    
-#if defined(_TUNNELS_)
-    entrance = mx->gamemap->HasTunnelEntrance(character->Location());
-#endif
+    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
 
     if ( object == nullptr && !entrance )
         return "";
@@ -1029,11 +1023,9 @@ std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter*
     
     this->loc = loc ;
     
-#if defined(_TUNNELS_)
     if ( character && character->IsInTunnel() ) {
         return "in the tunnel";
     }
-#endif
     
     std::string msg = "{loc:terrain:prep} ";
     auto buffer = CookText(msg) + DescribeLocation(loc);

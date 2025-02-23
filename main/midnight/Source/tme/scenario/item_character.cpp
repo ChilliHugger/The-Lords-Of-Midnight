@@ -678,11 +678,9 @@ namespace tme {
             
             WalkFollowersForward();
             
-#if defined(_TUNNELS_)
             // if this location has an exit then we must exit
             if ( exit_tunnel )
                 Cmd_ExitTunnel();
-#endif
             
             return MX_OK ;
         }
@@ -701,7 +699,6 @@ namespace tme {
             }
         }
 
-#if defined(_TUNNELS_)
         MXRESULT mxcharacter::Cmd_EnterTunnel ( void )
         {
             if ( IsFollowing() )
@@ -781,7 +778,6 @@ namespace tme {
             
             return MX_OK ;
         }
-#endif
 
         void mxcharacter::WalkFollowersForward()
         {
