@@ -141,7 +141,6 @@ const helpitem_t help_messages[] = {
         ""
     }
     
-#if defined(_TUNNELS_)
     ,
     {
         HELP_TN_TUNNEL,
@@ -149,7 +148,6 @@ const helpitem_t help_messages[] = {
         "TUNNEL\n\n"
         "\tIn an underground tunnel, tall pillars crowned with fire mark the way forward. If there is no way ahead, you will see naught but darkness. Tunnels only lead north, south, east or west."
     }
-#endif
     
     ,
     {

@@ -31,9 +31,7 @@ enum CHOOSE_INDEX {
     CHOOSE_RECRUIT  = 6,
     CHOOSE_GUARD    = 7,
 
-#if defined(_TUNNELS_)
     CHOOSE_TUNNEL   = 8,
-#endif
 
     CHOOSE_MAP      = 13,
     CHOOSE_NIGHT    = 14,

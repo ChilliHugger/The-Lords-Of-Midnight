@@ -108,10 +108,11 @@ bool panel_map_detailed::init()
     createFilterButton(ID_FILTER_CURRENT_LOC,   (r*0)-adjy, "i_center", map_filters::centre_char);
     createFilterButton(ID_FILTER_CRITTERS,      (r*1)-adjy, "i_critters", map_filters::show_critters);
     createFilterButton(ID_FILTER_LORDS,         (r*2)-adjy, "i_filter_lords", map_filters::show_lords);
-#if defined(_TUNNELS_)
-    createFilterButton(ID_FILTER_TUNNELS,       (r*3)-adjy, "i_filter_tunnel", map_filters::show_tunnels);
-    addShortcutKey(ID_FILTER_TUNNELS,       KEYCODE(F4));    
-#endif
+
+    if (scenario_flags.Is(SF_TUNNELS)) {
+        createFilterButton(ID_FILTER_TUNNELS,   (r*3)-adjy, "i_filter_tunnel", map_filters::show_tunnels);
+        addShortcutKey(ID_FILTER_TUNNELS,       KEYCODE(F4));
+    }
     
     auto contentsize = getContentSize();
     
@@ -237,11 +238,11 @@ void panel_map_detailed::OnNotification( Ref* sender )
         case ID_FILTER_CRITTERS:
             updateFilterButton(sender,map_filters::show_critters);
             break;
-#if defined(_TUNNELS_)
+
         case ID_FILTER_TUNNELS:
             updateFilterButton(sender,map_filters::show_tunnels);
             break;
-#endif
+
         case ID_FILTER_LORDS:
             updateFilterButton(sender,map_filters::show_lords);
             break;
@@ -523,13 +524,13 @@ void panel_map_detailed::updateFilterButton(Ref* sender,map_filters flag)
 
 void panel_map_detailed::updateFilters()
 {
-#if defined(_TUNNELS_)
-    IF_NOT_NULL(tmxMap->getLayer("Tunnels"))
-        ->setVisible( model->filters.Is(map_filters::show_tunnels) );
+    if (scenario_flags.Is(SF_TUNNELS)) {
+        IF_NOT_NULL(tmxMap->getLayer("Tunnels"))
+            ->setVisible( model->filters.Is(map_filters::show_tunnels) );
 
-    IF_NOT_NULL(tmxMap->getLayer("Tunnel Critters"))
-        ->setVisible( model->filters.Is(map_filters::show_tunnels) && model->filters.Is(map_filters::show_critters) );
-#endif
+        IF_NOT_NULL(tmxMap->getLayer("Tunnel Critters"))
+            ->setVisible( model->filters.Is(map_filters::show_tunnels) && model->filters.Is(map_filters::show_critters) );
+    }
 
     IF_NOT_NULL(tmxMap->getLayer("Critters"))
         ->setVisible( model->filters.Is(map_filters::show_critters) );

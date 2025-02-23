@@ -117,9 +117,7 @@ public:
     bool rest();
 #endif
 
-#if defined(_TUNNELS_)
     bool enterTunnel();
-#endif
     
     //
     bool look();

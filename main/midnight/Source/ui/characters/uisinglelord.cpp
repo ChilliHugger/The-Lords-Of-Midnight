@@ -77,10 +77,8 @@ void uisinglelord::updateStatus(character& c)
 {
     status.Clear();
     
-#if defined(_TUNNELS_)
     if ( Character_IsInTunnel(c))
         status.Set(LORD_STATUS::status_tunnel);
-#endif
 
     if ( Character_IsDawn(c) )
         status.Set(LORD_STATUS::status_dawn);
@@ -105,11 +103,8 @@ void uisinglelord::updateStatus(character& c)
     if ( c.location == TME_CurrentCharacter().location )
         status.Set(LORD_STATUS::status_location);
     
-#if defined(_TUNNELS_)
     if ( Character_IsInTunnel(c) != Character_IsInTunnel(TME_CurrentCharacter()))
-        status.Reset(LORD_STATUS::status_location);
-#endif
-    
+        status.Reset(LORD_STATUS::status_location);    
 }
 
 void uisinglelord::refreshStatus()

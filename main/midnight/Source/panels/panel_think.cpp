@@ -170,9 +170,8 @@ void panel_think::enableButtons()
     showButton(ID_UNHIDE,       page->unhide);
     showButton(ID_FIGHT,        page->fight);
 #endif
-#if defined(_TUNNELS_)
+
     showButton(ID_ENTER_TUNNEL, page->enterTunnel);
-#endif
     showButton(ID_APPROACH,   page->approach);
     showButton(ID_RECRUITMEN, page->recruitMen);
     showButton(ID_POSTMEN,    page->postMen);
@@ -356,9 +355,7 @@ void panel_think::setupPages()
         return;
     }
     
-#if defined(_TUNNELS_)
     tunnel = Character_IsInTunnel(c);
-#endif
     
     TME_GetCharacterLocationInfo ( c );
   
@@ -509,13 +506,11 @@ void panel_think::OnNotification( Ref* sender )
         }
 #endif
 
-#if defined(_TUNNELS_)
         case ID_ENTER_TUNNEL:
         {
             mr->enterTunnel();
             break;
         }
-#endif
 
         case ID_APPROACH:
         {

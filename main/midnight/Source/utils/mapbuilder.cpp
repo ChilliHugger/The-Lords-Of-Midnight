@@ -184,10 +184,7 @@ mapbuilder* mapbuilder::updateTerrain()
     
     bool debug_map = isDebugMap();
 
-    u32 reset_discover_mask = (lf_seen|lf_visited|lf_looked_at);
-#if defined(_TUNNELS_)
-    reset_discover_mask |= lf_tunnel_looked_at|lf_tunnel_visited;
-#endif
+    u32 reset_discover_mask = (lf_seen|lf_visited|lf_looked_at|lf_tunnel_looked_at|lf_tunnel_visited);
     
     // grab terrain
     for  ( int y=0; y<mapsize.cy; y++ ) {
@@ -199,10 +196,8 @@ mapbuilder* mapbuilder::updateTerrain()
             dst->flags = m.flags;
             dst->terrain = m.terrain ;
             dst->density=0;
-#if defined(_TUNNELS_)
             dst->tunnel=0;
             dst->object_tunnel = GET_ID(m.object_tunnel);
-#endif
             dst->discovery_flags = m.discovery_flags ;
             dst->discovery_flags.Reset(~reset_discover_mask);
             dst->area = m.area ;
@@ -315,8 +310,6 @@ if ( src->flags.Is(lf_seen) || src->discovery_flags.Is(lf_seen) || debug_map ) \
 #undef COMPARE
             }
             
-            
-#if defined(_TUNNELS_)
             //
             // Check GFX type of tunnel
             //
@@ -354,7 +347,6 @@ if ( src->flags.Is(flags) || src->discovery_flags.Is(flags) || (src->flags.Is(lf
 
 #undef COMPARE
             }
-#endif
         }
         
     }
@@ -378,9 +370,7 @@ mapbuilder* mapbuilder::updateLayers()
     memset(tunnel_critters, 0, max_cells);
 
     bool debug_map = isDebugMap();
-#if defined(_TUNNELS_)
     bool show_tunnels = checkFlags(mapflags::show_tunnels);
-#endif
     bool show_critters = checkFlags(mapflags::show_critters);
     bool show_all_critters = checkFlags(mapflags::show_all_critters);
     
@@ -401,28 +391,19 @@ mapbuilder* mapbuilder::updateLayers()
         bool discovery_seen = m->discovery_flags.Is(lf_seen) ;
         bool discovery_visited = m->discovery_flags.Is(lf_visited);
         
-#if defined(_TUNNELS_)
         bool tunnelseen = m->flags.Is(lf_tunnel_looked_at) || debug_map;
         bool tunnelvisited = m->flags.Is(lf_tunnel_visited) || debug_map;
         
         bool discovery_tunnelseen =  m->discovery_flags.Is(lf_tunnel_looked_at);
         bool discovery_tunnelvisited = m->discovery_flags.Is(lf_tunnel_visited) ;
         bool tunnelobject = m->flags.Is(lf_tunnel_object);
-#else
-        bool tunnelseen = false;
-        bool tunnelvisited = false ;
-        bool discovery_tunnelseen = false;
-        bool discovery_tunnelvisited = false ;
-        bool tunnelobject = false;
-#endif
+
         bool visible = seen || visited || discovery_seen || discovery_visited;
               
         mxthing_t thing = (mxthing_t)m->object ;
         
-#if defined(_TUNNELS_)
         if ( m->object_tunnel != OB_NONE && show_tunnels  )
             thing = (mxthing_t)m->object_tunnel ;
-#endif
 
         if ( visible ) {
             
@@ -454,14 +435,12 @@ mapbuilder* mapbuilder::updateLayers()
                 show_thing = thing;
         }
 #endif
-#if defined(_TUNNELS_)
         bool show_critter = ( tunnelobject && (tunnelseen||tunnelvisited) )
             || (!tunnelobject && (seen && (visited || looked_at))) ;
             
         if ( (show_critter || show_all_critters ) && show_critters  )  {
                 show_thing = thing;
         }
-#endif
         
         if ( !debug_map && show_thing > OB_WILDHORSES )
             show_thing = OB_NONE;
@@ -471,19 +450,15 @@ mapbuilder* mapbuilder::updateLayers()
             TME_GetObject(o,MAKE_ID(IDT_OBJECT,show_thing));
             obj_data_t* d = (obj_data_t*)o.userdata ;
             if ( d ) {
-#if defined(_TUNNELS_)
                 if ( show_thing == (mxthing_t)m->object_tunnel ) {
                     tunnel_critters[ii] = d->mapcell ;
                 }else
-#endif
                 {
                     critters[ii] = d->mapcell ;
                 }
             }
         }
-        
-        
-#if defined(_TUNNELS_)
+                
         BOOL tunnel_visited = m->flags.Is(lf_tunnel_visited) || ( m->flags.Is(lf_tunnel) && debug_map ) || discovery_tunnelvisited ;
         BOOL tunnel_looked_at = m->flags.Is(lf_tunnel_looked_at) | discovery_tunnelseen  ;
         
@@ -518,7 +493,6 @@ mapbuilder* mapbuilder::updateLayers()
             }
             
         }
-#endif
         
         m++;
     }
@@ -602,14 +576,10 @@ mapbuilder* mapbuilder::updateCharacters()
         
         TME_GetLocation(m,c.location);
         
-#if defined(_TUNNELS_)
         bool seen = show_all_characters || m.flags&lf_seen ;
         CONTINUE_IF ( !seen && !Character_IsInTunnel(c));
+
         bool visited = (m.flags & (lf_looked_at|lf_visited|lf_tunnel_visited|lf_tunnel_looked_at));
-#else
-        bool visited = (m.flags & ( lf_looked_at|lf_visited));
-#endif
-        
         CONTINUE_IF ( !(show_all_characters || Character_IsRecruited(c) || visited) );
         
         auto object = new map_object();

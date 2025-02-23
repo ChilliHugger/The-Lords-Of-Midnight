@@ -40,11 +40,9 @@ typedef struct {
 #define MAX_DISPLAY_CHARACTERS          8
 #endif
 
-#if defined(_TUNNELS_)
 #define MAX_DISPLAY_CHARACTERS_TUNNEL           4
 #define MAX_DISPLAY_CHARACTERS_TUNNEL_NARROW    3
 #define DEFAULT_PRINT_THING_NARROW_TUNNEL       2
-#endif
 
 #define CHARACTER_COLUMN_WIDTH          128
 #define MAX_ALLOWED_CHARACTER_WIDTH     128

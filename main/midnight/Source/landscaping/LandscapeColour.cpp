@@ -68,11 +68,9 @@ void LandscapeColour::updateCharacterNode( Node* node )
 
     auto colour = normalcolour ;
     
-#if defined(_TUNNELS_)
     if ( options->isInTunnel ) {
         colour = tunnelcolour;
     }
-#endif
     
     shader->UpdateCharacterTimeShader(node, alpha_normal, fade, colour);
 }
@@ -95,10 +93,7 @@ void LandscapeColour::SetMovementColour(mxtime_t start,mxtime_t end)
     SET_TINT(startTint, start, TINT::TerrainOutline);
     SET_TINT(startTint, start, TINT::TerrainFill);
     SET_TINT(startTint, start, TINT::Person);
-#if defined(_TUNNELS_)
     SET_TINT(startTint, start, TINT::Tunnel);
-#endif
-    
     
     // TINT::Normal
     // get time of day for target colour
@@ -108,9 +103,7 @@ void LandscapeColour::SetMovementColour(mxtime_t start,mxtime_t end)
     SET_TINT(endTint, end, TINT::TerrainOutline);
     SET_TINT(endTint, end, TINT::TerrainFill);
     SET_TINT(endTint, end, TINT::Person);
-#if defined(_TUNNELS_)
     SET_TINT(endTint, end, TINT::Tunnel);
-#endif
 }
 
 void LandscapeColour::SetLookColour(mxtime_t time)
@@ -124,9 +117,7 @@ void LandscapeColour::SetLookColour(mxtime_t time)
     SET_TINT(startTint, time, TINT::TerrainOutline);
     SET_TINT(startTint, time, TINT::TerrainFill);
     SET_TINT(startTint, time, TINT::Person);
-#if defined(_TUNNELS_)
     SET_TINT(startTint, time, TINT::Tunnel);
-#endif
     
     endTint[0]=startTint[0];
     endTint[1]=startTint[1];
@@ -173,11 +164,9 @@ f32 LandscapeColour::CalcCurrentMovementFade ( TINT shade )
     int index = (int)shade;
     if ( !options->isMoving )
     {
-#if defined(_TUNNELS_)
-        if (options->isInTunnel)
-            return FROM_ALPHA(GetTint(timeofday, TINT::Tunnel).a);
-#endif
-        return FROM_ALPHA(startTint[index].a);
+        return options->isInTunnel
+            ? FROM_ALPHA(GetTint(timeofday, TINT::Tunnel).a)
+            : FROM_ALPHA(startTint[index].a);
     }
     
     f32 a1 = FROM_ALPHA(startTint[index].a);
@@ -245,9 +234,7 @@ void LandscapeColour::OnXmlInit ( XmlNode* node )
             if ( chilli::lib::c_stricmp(d->Value(),"time") == 0 ) {
                 int id = xml::ReadInt(d,"id");
                 SET_COLOUR(TINT::Person,"normal") ;
-#if defined(_TUNNELS_)
                 SET_COLOUR(TINT::Tunnel,"tunnel") ;
-#endif
             }
         }
     }

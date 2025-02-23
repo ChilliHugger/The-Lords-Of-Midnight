@@ -39,11 +39,7 @@ enum KEY_MAP {
     K_USE,
 #endif
 
-#if defined(_TUNNELS_)
     K_TUNNEL,
-#endif
-
-
     K_APPROACH,
     K_RECRUIT,
     K_POST,

@@ -106,9 +106,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     addShortcutKey(ID_USE,          K_USE);
     addShortcutKey(ID_REST,         K_REST);
 #endif
-#if defined(_TUNNELS_)
     addShortcutKey(ID_ENTER_TUNNEL, K_TUNNEL);
-#endif
 
     addShortcutKey(ID_APPROACH,   K_APPROACH);
     addShortcutKey(ID_RECRUITMEN, K_RECRUIT);
@@ -179,10 +177,10 @@ void uicommandwindow::initialiseCommands()
     addItem(rest,CHOOSE_REST);
 #endif
 
-#if defined(_TUNNELS_)
-    auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, callback);
-    addItem(tunnel, CHOOSE_TUNNEL);
-#endif
+    if (scenario_flags.Is(tme::SF_TUNNELS)) {
+        auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, callback);
+        addItem(tunnel, CHOOSE_TUNNEL);
+    }
     
     // MAP
     auto map = uihelper::CreateImageButton("i_map", ID_MAP, callback);
@@ -287,10 +285,10 @@ void uicommandwindow::updateElements()
     ENABLE_IF_LOC_FLAG(ID_REST, lif_rest);
 #endif
 
-#if defined(_TUNNELS_)
-    ENABLE_IF_LOC_FLAG(ID_ENTER_TUNNEL, lif_enter_tunnel);
-#endif
-
+    if (scenario_flags.Is(tme::SF_TUNNELS)) {
+        ENABLE_IF_LOC_FLAG(ID_ENTER_TUNNEL, lif_enter_tunnel);
+    }
+    
     // APPROACH
     ENABLE_IF_LOC_FLAG(ID_APPROACH, lif_recruitchar);
     setupApproachText();
