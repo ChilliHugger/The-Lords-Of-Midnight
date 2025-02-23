@@ -508,16 +508,14 @@ namespace tme {
         
         t = (mxterrain_t)mx->gamemap->GetAt ( location+looking ).terrain ;
         t = mx->scenario->toScenarioTerrain(t);
-        
-#if defined(_TUNNELS_)
+
         if ( IsInTunnel() ) {
             if(mx->isRuleEnabled(RF_FAST_TUNNELS)) {
                 fastTunnels = true;
             }
             t=TN_ICYWASTE;
         }
-#endif
-        
+    
         // start with intial terrain
         tinfo = mx->TerrainById( t );
         TimeCost = tinfo->MovementCost();
@@ -534,13 +532,11 @@ namespace tme {
             ? rinfo->InitialMovementValue()
             : rinfo->RidingMovementMultiplier();
 
-#if defined(_TUNNELS_)
         if (fastTunnels) {
             if(Race()==RA_DWARF || Race() == RA_GIANT) {
                 raceAdjustment = 2;
             }
         }
-#endif
         
         TimeCost += raceAdjustment;
         
@@ -576,7 +572,6 @@ namespace tme {
         if ( Traits().Is(ct_slow) )
             TimeCost += 1;
 
-#if defined(_TUNNELS_)
         if(fastTunnels) {
             if(Race()==RA_DWARF || Race() == RA_GIANT) {
                 TimeCost /= 3;
@@ -584,7 +579,6 @@ namespace tme {
                 TimeCost /= 2;
             }
         }
-#endif
 
         // mountains sap more energy for everyone except giants
         if ( t == TN_MOUNTAIN || t == TN_MOUNTAIN2 ) {
@@ -638,11 +632,9 @@ namespace tme {
                     
         WalkFollowersForward();
       
-#if defined(_TUNNELS_)
         // if this location has an exit then we must exit
         if ( exit_tunnel )
             Cmd_ExitTunnel();
-#endif
 
         return MX_OK ;
     }

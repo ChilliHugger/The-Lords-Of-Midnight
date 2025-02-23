@@ -101,7 +101,11 @@ MXRESULT ddr_x::Register ( mxengine* midnightx )
     mx->scenario = (mxscenario*)ddr_scenario;
     
     // set initial feature flags
-    mx->scenario->features = SF_APPROACH_DDR|SF_RECRUIT_DDR|SF_RECRUIT_TIME ;
+    mx->scenario->features = SF_TUNNELS
+            |SF_MIST
+            |SF_APPROACH_DDR
+            |SF_RECRUIT_DDR
+            |SF_RECRUIT_TIME ;
     
     return MX_OK ;
 }
@@ -219,27 +223,6 @@ mxentity* ddr_entityfactory::Create ( id_type_t type )
     return mxentityfactory::Create ( type );
 }
     
-void ddr_x::MakeMapAreaVisible ( mxgridref l, mxcharacter* character )
-{
-    if ( character->IsInTunnel() ) {
-
-        mxloc& current = mx->gamemap->GetAt( l );
-        current.flags|=lf_tunnel_looked_at|lf_tunnel_visited;
-        
-        // check the surrounding locations for tunnels
-        // N E S W
-        // and mark them as seen
-        for ( int ii=DR_NORTH; ii<=DR_NORTHWEST; ii+=2 ) {
-            if ( mx->gamemap->IsTunnel(l + (mxdir_t)ii))
-                mx->gamemap->SetTunnelVisible(l + (mxdir_t)ii, true);
-        }
-        
-        return;
-    }
-    
-    mxscenario::MakeMapAreaVisible(l, character);
-}
-
 mxcharacter* ddr_x::WhoHasObject( mxobject* object ) const
 {
     return static_cast<mxcharacter*>(object->carriedby) ;
@@ -323,9 +306,7 @@ mxcharacter* ddr_x::IsEnemyAtLocation( mxgridref loc, const ddr_character* chara
     {
         CONTINUE_IF(c->IsDead());
 
-#if defined(_TUNNELS_)
         CONTINUE_IF(c->IsInTunnel());
-#endif
 
         CONTINUE_IF(c->Location() != loc);
         

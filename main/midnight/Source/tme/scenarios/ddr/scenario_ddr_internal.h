@@ -32,8 +32,6 @@ namespace tme {
 
         virtual void GiveGuidance(mxcharacter *character, s32 hint) override;
         
-        virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character ) override;
-
         virtual mxcharacter* WhoHasObject( mxobject* object ) const override;
         virtual bool DropObject ( mxgridref loc, mxobject* obj ) override;
         virtual mxobject* PickupObject ( mxgridref loc ) override;

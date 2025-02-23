@@ -49,6 +49,8 @@ namespace tme {
             virtual u32 CalcFearAdjuster(mxlocinfo* info) const ;
             virtual u32 CalcStrongholdAdjuster(void) const;
             virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character );
+            virtual void MakeMapTunnelAreaVisible( mxgridref l );
+
             virtual void GetDefaultCharacters ( c_character* collection );
             virtual bool CanWeSelectCharacter ( const mxcharacter* character );
                         

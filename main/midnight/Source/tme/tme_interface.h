@@ -137,6 +137,7 @@ mxid TME_LinkData ( LPCSTR symbol, void* data );
 void* TME_GetEntityUserData ( mxid );
 mxid TME_GetId( LPCSTR symbol, id_type_t type );
 mxdifficulty_t TME_GetDifficulty();
+flags32 TME_GetScenarioFeatures();
 
 typedef struct MapInfo_t {
     tme::loc_t   top;
@@ -178,11 +179,9 @@ bool Character_Give ( const character& c, mxid to );
 bool Character_Take ( const character& c );
 #endif
 
-#if defined(_TUNNELS_)
 inline bool Character_IsInTunnel(const character& c)            { return c.flags.Is(cf_tunnel); }
 inline bool Character_InTunnel(const character& c)              { return c.flags.Is(cf_tunnel); }
 bool Character_EnterTunnel ( const character& c );
-#endif
 
 #if defined(_DDR_)
 inline bool Character_IsPreparingForBattle(const character& c)  { return c.flags.Is(cf_preparesbattle); }
@@ -222,12 +221,9 @@ inline bool Location_IsVisible(const maplocation& l)            { return l.flags
 inline bool Location_HasCharacters(const maplocation& l)        { return l.flags.Is(lf_character); }
 #endif
 
-#if defined(_TUNNELS_)
 inline bool Location_HasTunnel(const maplocation& l)            { return l.flags.Is(lf_tunnel); }
 inline bool Location_HasTunnelExit(const maplocation& l)        { return l.flags.Is(lf_tunnel_exit); }
 inline bool Location_HasTunnelEntrance(const maplocation& l)    { return l.flags.Is(lf_tunnel_entrance); }
-#endif
-
 
 // global_tme_vars
 
@@ -242,6 +238,7 @@ bool TME_DebugInstallMap( void* map );
 
 
 extern tme::mxinterface*    mxi ;
+extern flags32              scenario_flags;
 extern c_mxid               default_characters ;
 extern c_mxid               recruitable_characters;
 extern c_mxid               location_characters;

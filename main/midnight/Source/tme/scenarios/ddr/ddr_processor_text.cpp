@@ -466,11 +466,7 @@ std::string buffer;
  
     auto scenario = static_cast<ddr_x*>(mx->scenario);
     auto object = scenario->FindObjectAtLocation(character->Location());
-    bool entrance = false;
-    
-#if defined(_TUNNELS_)
-    entrance = mx->gamemap->HasTunnelEntrance(character->Location());
-#endif
+    bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
 
     if ( object == nullptr && !entrance )
         return "";

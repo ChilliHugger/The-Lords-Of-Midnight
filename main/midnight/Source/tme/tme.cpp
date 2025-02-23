@@ -7,6 +7,8 @@ using namespace chilli::collections;
 using namespace tme::scenarios::exports;
 
 mxinterface*    mxi ;
+flags32         scenario_flags;
+
 character       cur_Character ;
 
 c_mxid          default_characters ;
@@ -494,11 +496,7 @@ bool TME_GetCharacterLocationInfo ( const character& c )
     
     
     // all characters here
-#if defined(_TUNNELS_)
     bool tunnel = Character_IsInTunnel(c);
-#else
-    bool tunnel = false;
-#endif
 
     mxid locid = MAKE_LOCID( c.location.x, c.location.y );
     TME_GetCharactersAtLocation ( locid, location_characters, true, tunnel );
@@ -650,7 +648,6 @@ bool TME_SaveDiscoveryMap ( const std::string&  filespec )
     return TRUE;
 }
 
-#if defined(_TUNNELS_)
 bool Character_EnterTunnel ( const character& c )
 {
     args[0] = c.id ;
@@ -659,7 +656,6 @@ bool Character_EnterTunnel ( const character& c )
     TME_RefreshCurrentCharacter();
     return TRUE;
 }
-#endif // _TUNNELS_
 
 #if defined(_DDR_)
 void Character_Rest ( const character& c )
@@ -991,6 +987,8 @@ bool TME_Init ( mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, M
     // first we need an interface object
     mxi = new mxinterface ;
     
+    scenario_flags.Clear();
+    
     args[0] = mxi;
     
     // A scenario must provide a create function
@@ -1042,6 +1040,7 @@ bool TME_Init ( mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, M
         return false ;
     }
     
+    scenario_flags = TME_GetScenarioFeatures();
     
     // get the default characters
     args[0] = &default_characters ;
@@ -1072,6 +1071,7 @@ bool TME_DeInit ( void )
 
     location_infront_armies.armies.Clear();
     location_armies.armies.Clear();
+    scenario_flags.Clear();
 
     return TRUE ;
     
@@ -1095,4 +1095,10 @@ bool TME_DebugInstallMap( void* map )
     return FALSE;
 }
 
-
+flags32 TME_GetScenarioFeatures()
+{
+    if ( MXSUCCESS( mxi->Command("@GETSCENARIOFEATURES", args, 0) ) ) {
+        return flags32( args[0] );
+    }
+    return flags32();
+}
