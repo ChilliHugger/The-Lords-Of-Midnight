@@ -18,17 +18,13 @@ enum class select_filters : u32 {
     show_battle  = MXBIT(2),
     show_dead    = MXBIT(3),
     show_current = MXBIT(4),
-#if defined(_TUNNELS_)
     show_intunnel= MXBIT(5),
-#endif
     all          = show_dawn
                  | show_night
                  | show_battle
                  | show_dead
                  | show_current
-#if defined(_TUNNELS_)
                  | show_intunnel
-#endif
 };
 
 

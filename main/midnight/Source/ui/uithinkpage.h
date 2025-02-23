@@ -98,9 +98,7 @@ public:
     bool                disband;
     bool                postMen;
     bool                recruitMen;
-#if defined(_TUNNELS_)
     bool                enterTunnel;
-#endif
 };
 
 

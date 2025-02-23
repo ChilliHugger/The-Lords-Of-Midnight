@@ -12,7 +12,6 @@
 
 #include "ILandscape.h"
 
-#if defined(_TUNNELS_)
 class TunnelView : public ILandscape
 {
 private:
@@ -30,4 +29,3 @@ protected:
     
     Node* clipping;
 };
-#endif

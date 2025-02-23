@@ -84,11 +84,7 @@ void LandscapePeople::Initialise()
     
     mxid locid = MAKE_LOCID( loc.x, loc.y );
     
-#if defined(_TUNNELS_)
     bool tunnel = options->isInTunnel;
-#else
-    bool tunnel = false;
-#endif
 
     TME_GetLocationInfo(loc, tunnel);
     
@@ -105,10 +101,7 @@ void LandscapePeople::Initialise()
         character c;
         TME_GetCharacter ( c, objects[ii] );
         
-#if defined(_TUNNELS_)
-        if ( options->isLookingDownTunnel && !Character_IsInTunnel(c) )
-            continue;
-#endif
+        CONTINUE_IF( options->isLookingDownTunnel && !Character_IsInTunnel(c) );
 
 #if defined(_DDR_)
         if ( Character_IsDead(c) ||  Character_IsHidden(c) )
@@ -154,15 +147,12 @@ void LandscapePeople::Initialise()
     
     
     s32 objectid = GET_ID(location_object) ;
-#if defined(_TUNNELS_)
     if ( options->isInTunnel ) {
         objectid = options->isLookingDownTunnel
             ? GET_ID(location_object_tunnel)
             : OB_NONE;
     }
-        
-#endif
-    
+            
 #if defined(_LOM_)
     if ( location_armies.foe_riders )
     {
@@ -178,12 +168,9 @@ void LandscapePeople::Initialise()
     if ( objectid >= OB_WOLVES && objectid <= OB_WILDHORSES)    {
         person = GetObjectBig(MAKE_ID(IDT_OBJECT, objectid));
         
-#if defined(_TUNNELS_)
-        if ( options->isNarrowTunnel )
+        if ( options->isNarrowTunnel ) {
             add(person,DEFAULT_PRINT_THING_NARROW_TUNNEL);
-        else
-#endif
-        {
+        } else {
             if ( objectid == OB_DRAGONS ) {
                 add(person,DEFAULT_PRINT_DRAGONS);
             }else{
@@ -207,9 +194,7 @@ ax::ui::Widget* LandscapePeople::add( std::string& person, int number)
     static int xtable[] = { 3, 4, 2, 5, 6, 1, 7, 0 };
 #endif
 
-#if defined(_TUNNELS_)
     static int xtable_small_tunnels[] = { 4, 3, 5, 2, 1, 6, 0, 7 };
-#endif
 
     f32 width = getContentSize().width;
     f32 offsetX = (width - RES(1024))/2;
@@ -220,18 +205,12 @@ ax::ui::Widget* LandscapePeople::add( std::string& person, int number)
     int max_chars = MAX_DISPLAY_CHARACTERS ;
     int* order = xtable;
     
-#if defined(_TUNNELS_)
     if ( options->isLookingDownTunnel )
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL ;
     if ( options->isLookingDownTunnel && options->isNarrowTunnel ) {
         max_chars = MAX_DISPLAY_CHARACTERS_TUNNEL_NARROW ;
         order = xtable_small_tunnels;
     }
-        
-        
-#endif
-    
-    
     
     for (u32 ii = 0; ii < number; ii++)    {
         

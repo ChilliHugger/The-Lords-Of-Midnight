@@ -54,9 +54,7 @@ USING_NS_AX;
 uithinkpage::uithinkpage() :
     approach(false),
     disband(false),
-#if defined(_TUNNELS_)
     enterTunnel(false),
-#endif
     fight(false),
     leave(false),
     postMen(false),
@@ -238,16 +236,16 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     addShortcutKey(fight, ID_FIGHT,        K_FIGHT);
 #endif
 
-#if defined(_TUNNELS_)
-    // Enter Tunnel
-    auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
-    enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
-    enterTunnel->setVisible(this->enterTunnel);
-    enterTunnel->setEnabled(this->enterTunnel);
-    imgTerrain->addChild(enterTunnel);
-    addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
-#endif
-
+    if (scenario_flags.Is(SF_TUNNELS)) {
+        // Enter Tunnel
+        auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
+        enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
+        enterTunnel->setVisible(this->enterTunnel);
+        enterTunnel->setEnabled(this->enterTunnel);
+        imgTerrain->addChild(enterTunnel);
+        addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
+    }
+    
     uihelper::AddTopLeft(safeArea, scrollView);
     uihelper::FillParent(scrollView);
     
@@ -347,10 +345,8 @@ void uithinkpage::displayCharacterTerrain(  const character& c )
     imgTerrain->setVisible(false);
 #endif
 
-#if defined(_TUNNELS_)
     if ( Character_InTunnel(c) )
         return ;
-#endif
 
     maplocation        map;
     TME_GetLocation( map,  MAKE_LOCID(c.location.x, c.location.y) );
@@ -588,12 +584,10 @@ void uithinkpage::checkPerson ( void )
     
     TME_GetCharacter(c,id) ;
         
-#if defined(_TUNNELS_)
     if (c.id == TME_CurrentCharacter().id) {
         TME_GetCharacterLocationInfo(c);
         enterTunnel = location_flags.Is(lif_enter_tunnel);
     }
-#endif
         
 #if defined(_LOM_)
     aheadOrHere ( text, c.location, true );
@@ -663,15 +657,11 @@ void uithinkpage::checkPerson ( void )
 void uithinkpage::checkPlace ( void )
 {
     std::string text;
-    
-#if defined(_DDR_) || defined(_TUNNELS_)
-    
+        
     auto c = TME_CurrentCharacter();
     TME_GetCharacterLocationInfo(c);
     
-#if defined(_TUNNELS_)
     enterTunnel = location_flags.Is(lif_enter_tunnel);
-#endif
     
 #if defined(_DDR_)
     if ( ID_TYPE(id) ==  IDT_CHARACTER ) {
@@ -679,9 +669,6 @@ void uithinkpage::checkPlace ( void )
         return;
     }
 #endif
-
-#endif
-    
     
     if ( id == SpecialId::ArmiesHere || id == SpecialId::ArmiesAhead ) {
         checkArmy();

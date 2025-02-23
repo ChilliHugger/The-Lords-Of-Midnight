@@ -16,13 +16,11 @@ FORWARD_REFERENCE(LandscapeOptions);
 FORWARD_REFERENCE(moonring);
 
 enum class TINT {
-    Normal = 0,
-    TerrainOutline = 1,
-    TerrainFill = 2,
-#if defined(_TUNNELS_)
-    Tunnel = 3,
-#endif
-    Person = 4,
+    Normal          = 0,
+    TerrainOutline  = 1,
+    TerrainFill     = 2,
+    Tunnel          = 3,
+    Person          = 4,
 };
 
 const int MAX_SHADES = 5;

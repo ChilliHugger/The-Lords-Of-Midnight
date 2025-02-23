@@ -435,10 +435,8 @@ void panel_select::applyFilters ( uilordselect* e, character& c )
     if ( Character_IsDead(c) && !filters.Is(select_filters::show_dead))
         show=false;
     
-#if defined(_TUNNELS_)
     if ( Character_IsInTunnel(c) && !filters.Is(select_filters::show_intunnel))
         show=false;
-#endif
 
 #if defined(_DDR_)
     if ( Character_IsPreparingForBattle(c) && !filters.Is(select_filters::show_battle) )

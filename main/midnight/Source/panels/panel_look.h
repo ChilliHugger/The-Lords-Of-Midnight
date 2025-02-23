@@ -28,17 +28,15 @@ typedef enum GESTURE_MODE {
 
 enum LANDSCAPE_MOVEMENT
 {
-    LM_NONE=0,
-    LM_ROTATE_LEFT=1,
-    LM_ROTATE_RIGHT=2,
-    LM_MOVE_FORWARD=3,
-    LM_MOVE_BACKWARD=4,
-#if defined(_TUNNELS_)
-    LM_MOVE_FORWARD_LEAVE_TUNNEL=5,
-#endif
-    LM_DRAG_START=10,
-    LM_SHOW_COMPASS=11,
-    LM_HIDE_COMPASS=12,
+    LM_NONE             = 0,
+    LM_ROTATE_LEFT      = 1,
+    LM_ROTATE_RIGHT     = 2,
+    LM_MOVE_FORWARD     = 3,
+    LM_MOVE_BACKWARD    = 4,
+    LM_MOVE_FORWARD_LEAVE_TUNNEL = 5,
+    LM_DRAG_START       = 10,
+    LM_SHOW_COMPASS     = 11,
+    LM_HIDE_COMPASS     = 12,
 };
 
 typedef struct {
@@ -54,12 +52,10 @@ typedef struct {
     std::string     name;
     std::string     locationtext;
 
-#if defined(_TUNNELS_)
     bool            tunnel;
     bool            lookingdowntunnel;
     bool            lookingouttunnel;
     bool            narrowtunnel;
-#endif
 
 } locationinfo_t ;
 
@@ -137,10 +133,8 @@ protected:
     
     // Actions and Commands
     bool OnUndo ( savemode_t mode );
-#if defined(_TUNNELS_)
     bool OnEnterTunnel();
     bool OnExitTunnel();
-#endif
    
     void setupMovementIndicators();
     void updateMovementIndicators(LANDSCAPE_MOVEMENT movement);
