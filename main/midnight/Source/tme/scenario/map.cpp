@@ -758,7 +758,11 @@ mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
     mxloc& l = GetAt ( loc );
     
 #if defined(_LOM_)
-    return (mxthing_t)l.object;
+    if (c->IsInTunnel() == l.IsTunnelObject()) {
+        return (mxthing_t)l.object;
+    } else {
+        return OB_NONE ;    
+    }
 #endif
     
 #if defined(_DDR_)

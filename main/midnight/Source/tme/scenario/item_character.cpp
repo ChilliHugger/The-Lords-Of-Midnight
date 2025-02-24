@@ -164,12 +164,7 @@ namespace tme {
             // create a new info class
             // for our current location and the direction
             // we are looking
-            auto flags = slf_none;
-            
-            #if defined(_TUNNELS)
-                if (IsInTunnel())
-                    flags = slf_tunnel;
-            #endif
+            auto flags = IsInTunnel() ? slf_tunnel : slf_none;
             
             std::unique_ptr<mxlocinfo> info( new mxlocinfo ( Location(), Looking(), this, flags ) );
 
@@ -202,20 +197,16 @@ namespace tme {
             // 1. Only if we are allowed to an we have no armies
             // 2. TODO how about allowing hiding when armies
             // are below a certain number? - maybe warriors only
-            if ( !IsAllowedHide() || HasArmy() || IsFollowing() || HasFollowers() )
+            if ( !IsAllowedHide() || HasArmy() || IsFollowing() || HasFollowers() || IsInTunnel() )
                 info->flags.Reset(lif_hide); // = FALSE ;
 
             // can't hide or seek at night
             if( mx->Difficulty() > DF_EASY  && IsNight())
                 info->flags.Reset(lif_hide|lif_seek); // = false ;
 
-            // TODO Stop hiding when just entered into battle
-            //if ( IsInBattle() )
-            //    info->flags.Reset(lif_hide); ;
-
 #if !defined(_DDR_)
             // if in battle there is nothing more we can do
-            if ( info->foe.armies /*IsInBattle() */ )
+            if ( info->foe.armies )
                 return info; 
 #endif
             
@@ -289,12 +280,6 @@ namespace tme {
                 }
 
             }
-
-            // if the character is at night then
-            // nothing else is possible
-            //if ( IsNight() )
-            //    return info;
-            
             
             // use
             // 1. are we carrying our object
@@ -307,18 +292,12 @@ namespace tme {
             // 1. do we have an object
             // 2. is there another character here
             // 3. are we generous
-            
-            // rest
-            // info->flags.Set(lif_rest);
-            
-            mxthing_t thing = (mxthing_t)info->mapsqr.object;
-
-            if ( info->mapsqr.IsTunnelObject() && !IsInTunnel() )
-                thing=OB_NONE;
+                        
+            auto thing = mx->gamemap->getLocationObject(this, Location());
             
             // can we fight ?
             // can we fight the object currently in this location?
-            mxobject* obj = mx->ObjectById(thing);
+            auto obj = mx->ObjectById(thing);
             if ( CheckFightObject ( obj )  ) {
                 info->flags.Set(lif_fight); // = TRUE ;
                 info->fightthing = thing ;
@@ -1384,16 +1363,13 @@ namespace tme {
 
             mxloc& mapsqr = mx->gamemap->GetAt ( Location() );
             
-#if defined(_DDR_)
             newobject = mx->gamemap->getLocationObject(this, Location());
-#endif
-#if defined(_LOM_)
-            newobject = (mxthing_t)mapsqr.object ;
-            if ( location.x == 4 && location.y == 10 ) {
-                mikeseek=TRUE;
-                newobject=OB_GUIDANCE;
+            if ( !IsInTunnel() ) {
+                if ( location.x == 4 && location.y == 10 ) {
+                    mikeseek=TRUE;
+                    newobject=OB_GUIDANCE;
+                }
             }
-#endif
             
         top:
             oinfo = mx->ObjectById ( newobject );

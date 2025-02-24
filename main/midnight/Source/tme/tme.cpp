@@ -358,27 +358,6 @@ s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, boo
     return collection.Count();
 }
 
-
-
-MXRESULT TME_GetArmiesAtLocation( loc_t loc, u32& enemies, u32& friends)
-{
-    return TME_GetArmiesAtLocation( MAKE_LOCID(loc.x,loc.y), enemies, friends );
-}
-
-MXRESULT TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends)
-{
-    args[0] = loc ;
-    enemies = 0;
-    friends = 0;
-    if ( MXSUCCESS(mxi->GetProperties ( "ArmiesAtLocation", args, 1 )) ) {
-        enemies = args[1];
-        friends = args[2];
-        return MX_OK;
-    }
-    return MX_FAILED;
-}
-
-
 bool TME_GetLocationInfo( loc_t loc, bool tunnel )
 {
     location_lookingatid = IDT_NONE ;

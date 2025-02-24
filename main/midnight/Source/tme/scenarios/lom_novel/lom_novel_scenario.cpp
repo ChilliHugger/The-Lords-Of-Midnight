@@ -106,13 +106,14 @@ void lom_novel_x::initialiseAfterCreate(u32 version)
     
     // fixup strings
     mx->text->ModifySystemString(SS_MESSAGE1, "{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:sees}" );
+    mx->text->ModifySystemString(SS_MESSAGE2, "{char:loc:text} stands {char:longname}. {char:text:army}");
     mx->text->ModifySystemString(SS_MESSAGE3, "{char:loc:text} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group} {char:text:sees}" );
     mx->text->ModifySystemString(SS_MESSAGE4, "{char:loc:text} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group} {char:text:sees}" );
     mx->text->ModifySystemString(SS_SEES_1, "{char:name} sees the {char:loc:obj:name}. ");
     mx->text->ModifySystemString(SS_SEES_2, "{char:name} sees an underground entrance. ");
     mx->text->ModifySystemString(SS_SEES_3, "{char:name} sees the {char:loc:obj:name} and an underground entrance. ");
-    
-
+    mx->text->ModifySystemString(SS_LOCATION_PREP_1, "in the tunnel");
+    mx->text->ModifySystemString(SS_LOCATION_PREP_2, "{loc:terrain:prep} {loc:name}");
 }
 
 } // namespace tme
