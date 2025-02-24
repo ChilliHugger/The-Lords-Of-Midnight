@@ -351,6 +351,9 @@ void panel_map_detailed::addTouchListener()
             toolTip->setOpacity(ALPHA(alpha_zero));
 
             auto tip = StringExtensions::toUpper(TME_GetLocationText(grid));
+            if (mr->config->debug_map) {
+                tip += StringUtils::format(" - (%d,%d)", grid.x, grid.y);
+            }
             toolTip->setString(tip);
 
             if(!toolTip->isVisible()) {
