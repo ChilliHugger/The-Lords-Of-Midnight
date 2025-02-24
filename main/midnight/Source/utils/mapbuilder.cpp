@@ -197,6 +197,7 @@ mapbuilder* mapbuilder::updateTerrain()
             dst->terrain = m.terrain ;
             dst->density=0;
             dst->tunnel=0;
+            dst->object = GET_ID(m.object);
             dst->object_tunnel = GET_ID(m.object_tunnel);
             dst->discovery_flags = m.discovery_flags ;
             dst->discovery_flags.Reset(~reset_discover_mask);
@@ -401,7 +402,6 @@ mapbuilder* mapbuilder::updateLayers()
         bool visible = seen || visited || discovery_seen || discovery_visited;
               
         mxthing_t thing = (mxthing_t)m->object ;
-        
         if ( m->object_tunnel != OB_NONE && show_tunnels  )
             thing = (mxthing_t)m->object_tunnel ;
 
@@ -430,21 +430,15 @@ mapbuilder* mapbuilder::updateLayers()
         mxthing_t show_thing = OB_NONE;
         
         // critters
-#if defined(_LOM_)
-        if ( ((seen && (visited || looked_at)) || show_all_critters ) && show_critters )  {
-                show_thing = thing;
-        }
-#endif
         bool show_critter = ( tunnelobject && (tunnelseen||tunnelvisited) )
             || (!tunnelobject && (seen && (visited || looked_at))) ;
             
         if ( (show_critter || show_all_critters ) && show_critters  )  {
-                show_thing = thing;
+            show_thing = thing;
         }
         
         if ( !debug_map && show_thing > OB_WILDHORSES )
             show_thing = OB_NONE;
-        
         
         if ( show_thing ) {
             TME_GetObject(o,MAKE_ID(IDT_OBJECT,show_thing));
