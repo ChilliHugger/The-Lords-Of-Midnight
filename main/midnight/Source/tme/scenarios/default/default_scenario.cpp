@@ -535,6 +535,7 @@ namespace tme {
 
             if (character->IsInTunnel()) {
                 MakeMapTunnelAreaVisible(l);
+                return;
             }
 
             mx->gamemap->SetLocationVisible(l, true);
