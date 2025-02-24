@@ -130,8 +130,7 @@ s32 TME_GetAllObjects( c_mxid& collection );
 s32 TME_GetFollowers ( mxid id, c_mxid& collection );
 s32 TME_GetCharactersAtLocation ( mxid id, c_mxid& collection, bool showall, bool showtunnel = false );
 s32 TME_GetCharactersAtLocation ( tme::loc_t loc, c_mxid& collection, bool showall  );
-MXRESULT TME_GetArmiesAtLocation( mxid loc, u32& enemies, u32& friends );
-MXRESULT TME_GetArmiesAtLocation( tme::loc_t loc, u32& enemies, u32& friends );
+
 std::string TME_GetSymbol( mxid id );
 mxid TME_LinkData ( LPCSTR symbol, void* data );
 void* TME_GetEntityUserData ( mxid );

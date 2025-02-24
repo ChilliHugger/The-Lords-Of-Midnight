@@ -1023,12 +1023,16 @@ std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter*
     
     this->loc = loc ;
     
+    
     if ( character && character->IsInTunnel() ) {
-        return "in the tunnel";
+        // SS_LOCATION_PREP_1
+        // in the tunnel
+        return CookedSystemString(SS_LOCATION_PREP_1);
     }
     
-    std::string msg = "{loc:terrain:prep} ";
-    auto buffer = CookText(msg) + DescribeLocation(loc);
+    // SS_LOCATION_PREP_2
+    // {loc:terrain:prep} {loc:name}
+    auto buffer = CookedSystemString(SS_LOCATION_PREP_2);
     
     this->loc = oldLoc ;
     

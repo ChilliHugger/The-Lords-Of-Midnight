@@ -1103,10 +1103,10 @@ namespace tme {
         {
             CONVERT_COLLECTION(argv[0],collection);
             
-            if ( ID_TYPE(argv[1].vid) != IDT_LOCATION )
+            if ( ID_TYPE(argv[1].vId) != IDT_LOCATION )
                 return MX_FAILED;
 
-            flags32_t flags = argv[2].vyesno ? slf_tunnel : slf_none;
+            flags32_t flags = (bool)(int)argv[2] ? slf_tunnel : slf_none;
             
             std::unique_ptr<mxlocinfo> locinfo;
             if (mx->scenario->GetLocInfo ( argv[1], flags, locinfo ) != MX_OK )
@@ -1218,11 +1218,11 @@ namespace tme {
             { "AllOBJECTS",         1, PropAllObjects,          {variant::vptr} },
 
             { "RECRUITABLE",        2, PropRecruitable,         {variant::vptr, variant::vid} },
-            { "ARMIES",             2, PropArmies,              {variant::vptr, variant::vid} },
+            { "ARMIES",             3, PropArmies,              {variant::vptr, variant::vid, variant::vnumber} },
             { "STRONGHOLDS",        2, PropStrongholdsById,     {variant::vptr, variant::vid} },
             
             { "CharsForCommand",    3, PropCharsForCommand,     {variant::vptr, variant::vnumber, arguments::location} },
-            { "ArmiesAtLocation",   2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
+//            { "ArmiesAtLocation",   2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
             { "CharsAtLoc",         3, PropCharsAtLoc,          {variant::vptr, arguments::location, variant::vnumber} },
             
             { "MAPINFO",            0, PropMapInfo,             },

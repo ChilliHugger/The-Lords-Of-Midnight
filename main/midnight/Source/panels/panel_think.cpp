@@ -337,13 +337,13 @@ void panel_think::addPage( mxid pageId )
     
 }
 
+// TODO: Most of this logic should be in TME
 void panel_think::setupPages()
 {
     u32 ii;
     character   c;
     character   c1;
     c_mxid collection;
-    bool    tunnel = false;
     
     TME_GetCharacter(c, id);
     
@@ -355,7 +355,7 @@ void panel_think::setupPages()
         return;
     }
     
-    tunnel = Character_IsInTunnel(c);
+    auto tunnel = Character_IsInTunnel(c);
     
     TME_GetCharacterLocationInfo ( c );
   
