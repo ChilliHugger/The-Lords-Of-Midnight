@@ -319,8 +319,19 @@ namespace tme {
                 info->stubborn_follower_battle = FIND_FOLLOWER(f) {
                     return f->IsCoward();
                 });
-                
             }
+            
+            // Farflame cannot move in to small tunnels
+            // Armies cannot move in to small tunnels
+            if (IsInTunnel()) {
+                if (info->infront->mapsqr.HasTunnel() && info->infront->mapsqr.IsSmallTunnel()) {
+                    if(Symbol() == "CH_FARFLAME" || HasArmy()) {
+                        info->flags.Reset(lif_moveforward);
+                        info->flags.Set(lif_blocked);
+                    }
+                }
+            }
+            
 
             // if we are leading
             // then the whole group needs to be able to move

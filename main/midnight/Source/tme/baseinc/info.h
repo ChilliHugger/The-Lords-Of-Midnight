@@ -287,6 +287,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         MAP_FLAG_PROPERTY( IsTunnelVisible, lf_tunnel_looked_at)
         MAP_FLAG_PROPERTY( HasTunnel,       lf_tunnel)
+        MAP_FLAG_PROPERTY( IsSmallTunnel,   lf_tunnel_small)
         bool HasTunnelExit() const ;
         bool HasTunnelEntrance() const ;
         bool IsTunnelObject() const ;
@@ -1185,6 +1186,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             c_regiment          objRegiments;           // list of regiments here
             c_character         objRecruit;             // list of characters that <character> can recruit
 
+            
             mxcharacter*        stubborn_follower_move;     // which character is stopping us moving
             mxcharacter*        stubborn_follower_battle;   // which character is stopping us attacking
 
@@ -1192,7 +1194,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxobject*           object_to_take;
             mxcharacter*        someone_to_give_to;
 #endif
-            
+            MOVEMENT_FAILURE    movement_failure;
         };
         // mxlocinfo
 
