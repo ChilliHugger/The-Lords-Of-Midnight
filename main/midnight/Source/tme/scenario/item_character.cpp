@@ -325,7 +325,7 @@ namespace tme {
             // Armies cannot move in to small tunnels
             if (IsInTunnel()) {
                 if (info->infront->mapsqr.HasTunnel() && info->infront->mapsqr.IsSmallTunnel()) {
-                    if(Symbol() == "CH_FARFLAME" || HasArmy()) {
+                    if(Symbol() == "CH_FARFLAME" || HasArmy() || IsRiding()) {
                         info->flags.Reset(lif_moveforward);
                         info->flags.Set(lif_blocked);
                     }
@@ -1240,7 +1240,7 @@ namespace tme {
             
             return MX_OK ;
         }
-    
+
         bool mxcharacter::AddFollower ( mxcharacter* character )
         {
             if ( character->Following() != nullptr )
@@ -1350,6 +1350,18 @@ namespace tme {
 #else
             return FALSE ;
 #endif
+        }
+
+        MXRESULT mxcharacter::Cmd_Dismount ( void )
+        {
+            if ( !IsRiding() || IsInTunnel() )
+                return MX_FAILED ;
+                
+            Dismount();
+            
+            CommandTakesTime(true);
+            
+            return MX_OK ;
         }
 
         mxobject* mxcharacter::Cmd_Seek ( void )
