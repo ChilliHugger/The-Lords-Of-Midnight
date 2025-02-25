@@ -115,7 +115,7 @@
         <terrain id="TN_FROZENWASTE"    file="t_frozenwaste0"    mapcell="68" mapdensity="true"/>
         <terrain id="TN_DOWN"           file="t_downs0"          mapcell="72" mapdensity="true"/>
         <terrain id="TN_MOUNTAIN"       file="t_mountain0"       mapcell="76" mapdensity="true"/>
-    
+        <terrain id="TN_MOUNTAIN2"      file="t_mountain0a"      mapcell="76" mapdensity="true"/>    
     </terrain>
 
     <panel_menu>
