@@ -761,6 +761,13 @@ namespace tme {
             argv[0]=(s32)0;
             return MX_FAILED ;
         }
+        
+        COMMAND( OnCharDismount )
+        {
+            CONVERT_CHARACTER_ID( argv[0].vId, character );
+            argv[0]=(s32)0;
+            return character->Cmd_Dismount();
+        }
 
         COMMAND( OnCharPickup ) 
         {
@@ -991,6 +998,8 @@ namespace tme {
             {"CONTROL",         1, OnCharControl,           {arguments::character} },
             {"ENTERTUNNEL",     1, OnCharEnterTunnel,       {arguments::character} },
             {"EXITTUNNEL",      1, OnCharExitTunnel,        {arguments::character} },
+            {"DISMOUNT",        1, OnCharDismount,          {arguments::character} },
+
             
 #if defined(_DDR_)
             {"GIVE",            1, OnCharGive,              {arguments::character} },

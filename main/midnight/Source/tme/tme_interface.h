@@ -170,6 +170,7 @@ inline bool Character_IsAllowedIcecrown(const character& c)     { return c.flags
 inline bool Character_CanDestroyIcecrown(const character& c)    { return c.flags.Is(cf_destroyicecrown); }
 inline bool Character_IsInBattle(const character& c)            { return c.flags.Is(cf_inbattle); }
 inline bool Character_HasWonBattle(const character& c)          { return c.flags.Is(cf_wonbattle); }
+inline bool Character_HasArmy( const character& c )             { return (c.warriors + c.riders) > 0; }
 
 #if defined(_DDR_)
 inline bool Character_HasUsedObject(const character& c)         { return c.flags.Is(cf_usedobject); }
@@ -199,6 +200,7 @@ void Character_LookRight ( const character& c );
 bool Character_Approach ( const character& c );
 bool Character_Hide ( const character& c );
 bool Character_UnHide ( const character& c );
+bool Character_Dismount ( const character& c );
 bool Character_HasBattleInfo ( const character& c );
 bool Character_Move ( const character& c );
 bool Character_Attack ( const character& c );

@@ -37,6 +37,7 @@ namespace tme {
             SF_RECRUIT_TIME =   MXBIT(4),
             SF_TUNNELS      =   MXBIT(5),
             SF_MIST         =   MXBIT(6),
+            SF_DISMOUNT     =   MXBIT(7),
         };
 
   

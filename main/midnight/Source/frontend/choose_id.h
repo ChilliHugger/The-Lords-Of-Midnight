@@ -38,7 +38,9 @@ enum CHOOSE_INDEX {
     
     CHOOSE_UNDO_LAST= 10,
     CHOOSE_UNDO_DAWN= 11,
-    
+
+    CHOOSE_DISMOUNT = 12,
+
     CHOOSE_CHAR     = 15,
     CHOOSE_EXIT     = 19,
 };

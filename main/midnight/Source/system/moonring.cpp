@@ -423,6 +423,18 @@ bool moonring::unhide()
     return false;
 }
 
+bool moonring::dismount()
+{
+    character& c = TME_CurrentCharacter();
+    if ( Character_Dismount(c) ) {
+        stories->save();
+        showPage(MODE_THINK);
+        return true;
+    }
+    return false;
+}
+
+
 bool moonring::fight()
 {
     character& c = TME_CurrentCharacter();

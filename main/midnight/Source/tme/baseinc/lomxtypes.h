@@ -807,6 +807,7 @@ namespace tme {
             lif_use             = MXBIT(13),    // can we use
             lif_blocked         = MXBIT(14),    // way forward is blocked
             lif_unhide          = MXBIT(15),    // hidden and can unhide
+            lif_dismount        = MXBIT(16),    // can dismount from horse
         };
 
         enum MAPFLAGS {

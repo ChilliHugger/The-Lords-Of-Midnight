@@ -86,7 +86,7 @@ MXRESULT lom_novel_x::Register ( mxengine* midnightx )
     mx->scenario = lom_novel_scenario;
 
     // set initial feature flags
-    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_TUNNELS ;
+    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_TUNNELS|SF_DISMOUNT ;
     
     return MX_OK ;
 }
