@@ -908,7 +908,15 @@ bool Character_Take ( const character& c )
 }
 #endif
 
-
+bool Character_Dismount ( const character& c )
+{
+    args[0] = c.id;
+    if ( MXSUCCESS(mxi->Command("DISMOUNT",args,1)) ) {
+        TME_RefreshCurrentCharacter();
+        return true;
+    }
+    return false;
+}
 
 bool Character_Army ( mxid id, army_t& out )
 {

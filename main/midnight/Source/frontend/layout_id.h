@@ -87,11 +87,12 @@ enum layoutid_t
     ID_ENTER_TUNNEL,
     ID_SHOW_TUNNELS,
     ID_CLEANUP_SELECT,
+    ID_DISMOUNT,
     
     // no images
     
-    ID_NEW_STORY,
-    ID_CONTINUE_STORY,      // 60
+    ID_NEW_STORY,           // 65
+    ID_CONTINUE_STORY,
     ID_END_STORY,
     ID_CAMPAIGNS,
     ID_CREDITS,

@@ -115,6 +115,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     
     addShortcutKey(ID_UNDO_DAWN,  KEYCODE(F9));
     addShortcutKey(ID_UNDO,       KEYCODE(F10));
+    addShortcutKey(ID_DISMOUNT,   KEYCODE(F11));
     
     return true;
 }
@@ -216,6 +217,11 @@ void uicommandwindow::initialiseCommands()
     auto home = uihelper::CreateImageButton("i_home", ID_HOME, callback);
     addItem(home,CHOOSE_EXIT);
     
+    if (scenario_flags.Is(tme::SF_DISMOUNT)) {
+        auto dismount = uihelper::CreateImageButton("i_dismount", ID_DISMOUNT, callback);
+        addItem(dismount,CHOOSE_DISMOUNT);
+    }
+    
     // CHARACTERS
     
     // get the default faces
@@ -301,6 +307,11 @@ void uicommandwindow::updateElements()
     
     // BATTLE
     ENABLE_IF_LOC_FLAG(ID_ATTACK, lif_enterbattle);
+    
+    // DISMOUNT
+    if (scenario_flags.Is(tme::SF_DISMOUNT)) {
+        ENABLE_IF_LOC_FLAG(ID_DISMOUNT, lif_dismount);
+    }
     
     // UNDO
     enableItem(ID_UNDO_DAWN, mr->stories->canUndo(savemode_dawn));

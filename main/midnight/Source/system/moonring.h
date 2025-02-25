@@ -109,6 +109,7 @@ public:
     bool recruitMen();
     bool postMen();
     bool attack();
+    bool dismount();
     
 #if defined(_DDR_)
     bool use();

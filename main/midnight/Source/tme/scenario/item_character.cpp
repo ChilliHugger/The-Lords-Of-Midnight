@@ -339,6 +339,14 @@ namespace tme {
                 return !f->CanWalkForward();
             });
             
+            
+            // Dismount
+            if (mx->scenario->IsFeature(SF_DISMOUNT)) {
+                if (IsRiding() && !IsInTunnel()) {
+                    info->flags.Set(lif_dismount);
+                }
+            }
+            
             return info ;
 
         }

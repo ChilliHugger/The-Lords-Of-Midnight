@@ -1275,6 +1275,13 @@ void panel_look::OnNotification( Ref* sender )
             break;
         }
 #endif
+        case ID_DISMOUNT:
+        {
+            if ( mr->dismount()) {
+                return;
+            }
+            break;
+        }
             
         case ID_FIGHT:
         {
