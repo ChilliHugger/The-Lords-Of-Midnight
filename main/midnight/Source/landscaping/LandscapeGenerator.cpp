@@ -148,6 +148,11 @@ LandscapeItem* LandscapeGenerator::ProcessLocation(s32 x, s32 y)
     
 #if defined(_LOM_)
     item->graffiti = ( x == 4 && y == 10 );  // Lith in the domain of moon
+    
+    // Impassable mountains
+    if (map.flags&lf_impassable && map.terrain == TN_MOUNTAIN) {
+        item->terrain = TN_MOUNTAIN2;
+    }
 #endif
 
 	if( map.flags&lf_army && tinfo.flags&tif_army )
