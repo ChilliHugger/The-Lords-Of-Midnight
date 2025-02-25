@@ -978,6 +978,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual MXRESULT Cmd_Rest ( void );
             virtual MXRESULT Cmd_Hide ( void );
             virtual MXRESULT Cmd_UnHide ( void );
+            virtual MXRESULT Cmd_Dismount ( void );
             virtual MXRESULT Cmd_Lookat(mxgridref loc);
             virtual MXRESULT Cmd_DropObject ( void );
             virtual MXRESULT Cmd_Wait ( mxwait_t mode );
@@ -1194,7 +1195,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxobject*           object_to_take;
             mxcharacter*        someone_to_give_to;
 #endif
-            MOVEMENT_FAILURE    movement_failure;
         };
         // mxlocinfo
 
