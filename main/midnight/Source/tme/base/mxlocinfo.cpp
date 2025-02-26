@@ -81,7 +81,7 @@ namespace tme {
 #endif
         }
 
-        mxlocinfo::mxlocinfo( mxgridref loc, mxcharacter* iowner, flags32_t sflags )
+        mxlocinfo::mxlocinfo( mxgridref loc, const mxcharacter* iowner, flags32_t sflags )
                 : mxitem ( loc )
         {
             // and find out what/who is with us
@@ -91,7 +91,7 @@ namespace tme {
             WorkOutLocationDetails();
         }
 
-        mxlocinfo::mxlocinfo( mxgridref loc, mxdir_t dir, mxcharacter* iowner, flags32_t sflags )
+        mxlocinfo::mxlocinfo( mxgridref loc, mxdir_t dir, const mxcharacter* iowner, flags32_t sflags )
                 : mxitem ( loc )
         {
             Clear();
@@ -196,28 +196,25 @@ namespace tme {
 
         }
 
-        void mxlocinfo::FindApproachCharactersInfront ( const mxcharacter* c )
+        void mxlocinfo::FindApproachCharactersInfront ()
         {
-            infront->FindRecruitCharactersHere(c);
+            infront->FindRecruitCharactersHere();
             
 #if defined(_DDR_)
             if ( infront->objCharacters.Count()>1 )
                 return;
 #endif
-            for ( auto character : infront->objRecruit )
+            FOR_EACH(character, infront->objRecruit)
                 objRecruit.Add ( character );
         }
 
-        void mxlocinfo::FindRecruitCharactersHere ( const mxcharacter* c )
+        void mxlocinfo::FindRecruitCharactersHere ()
         {
-            RETURN_IF_NULL(c);
-
-            // tunnel check
-            bool isInTunnel = c->IsInTunnel() ;
+            RETURN_IF_NULL(owner);
 
             objRecruit.Clear();
             
-            for ( auto character : objCharacters ) {
+            FOR_EACH(character, objCharacters) {
 
                 CONTINUE_IF_NULL(character);
                 
@@ -227,18 +224,18 @@ namespace tme {
                               character->IsRecruited() );
                 
                 // not self
-                CONTINUE_IF ( character == c );
+                CONTINUE_IF ( character == owner );
                 
                 // character location
                 CONTINUE_IF ( character->Location() != location );
                 
                 // tunnel status must be the same
-                CONTINUE_IF ( character->IsInTunnel() != isInTunnel );
+                CONTINUE_IF ( character->IsInTunnel() != tunnel );
 
                 // TODO check global flag AlwaysAttemptRecruit
                 // and maybe set the character up for recruit anyway
 #if defined(_LOM_)
-                if ( c->CheckRecruitChar ( character ) )
+                if ( owner->CheckRecruitChar ( character ) )
                     objRecruit += character ;
 #else
                 objRecruit += character ;
@@ -255,7 +252,6 @@ namespace tme {
         {
         mxcharacter*    moonringcarrier=nullptr;
         mxobject*       moonring=nullptr;
-        bool            bInTunnel = (sel_flags & slf_tunnel);
 
             nRecruited=0;
 
@@ -284,7 +280,7 @@ namespace tme {
                 CONTINUE_IF ( c->Location() != location );
 
                 // check tunnel
-                CONTINUE_IF ( bInTunnel != c->IsInTunnel() );
+                CONTINUE_IF ( c->IsInTunnel() != tunnel );
 
                 // potential moonring carrier or someone is carrying the moonring
                 //if ( moonring!=NULL ) {
@@ -309,7 +305,7 @@ namespace tme {
                 CONTINUE_IF ( c->Location() != location );
                 
                 // check tunnel
-                CONTINUE_IF ( bInTunnel != c->IsInTunnel() ) ;
+                CONTINUE_IF ( c->IsInTunnel() != tunnel ) ;
 
                 //
                 objCharacters += c ;
@@ -335,8 +331,7 @@ namespace tme {
             FindCharactersHere();
 
             // no strongholds when under the ground
-            bool bInTunnel = (sel_flags & slf_tunnel) ;
-            if ( !bInTunnel )
+            if ( !tunnel )
             {
                 mx->CollectRegiments ( location, objRegiments );
                 mx->CollectStrongholds ( location, objStrongholds );
@@ -397,7 +392,7 @@ namespace tme {
             }
 
             // all the regiments here
-            for ( auto reg : objRegiments ) {
+            FOR_EACH(reg, objRegiments) {
 
                 if ( reg->Total() ) {
                 
@@ -424,7 +419,7 @@ namespace tme {
             }
 
             // lets get all the armies belonging to the character
-            for ( auto c : objCharacters ) {
+            FOR_EACH(c, objCharacters) {
 
                 bool isFriend = true;
 #if defined(_DDR_)

@@ -215,10 +215,10 @@ namespace tme {
             // TODO in LOM this can only be one
             if ( mx->scenario->IsFeature(SF_APPROACH_DDR) ) {
                 if(!mx->scenario->isLocationImpassable(info->loc_infront, info->owner)) {
-                    info->FindApproachCharactersInfront(info->owner);
+                    info->FindApproachCharactersInfront();
                 }
             } else {
-                info->FindRecruitCharactersHere (info->owner);
+                info->FindRecruitCharactersHere();
             }
 
             // can we recruit ?
@@ -553,7 +553,7 @@ namespace tme {
 #endif
             bool approach = false;
             if ( sv_auto_approach ) {
-                 info->infront->FindRecruitCharactersHere(this);
+                 info->infront->FindRecruitCharactersHere();
                  approach = info->infront->objRecruit.Count() == 1;
             }
             
@@ -1065,8 +1065,7 @@ namespace tme {
             auto info = GetLocInfo() ;
         
             bool battle = info->flags.Is(lif_enterbattle) ;
-            mxcharacter* stubborn_follower = info->stubborn_follower_battle;
-            if ( !battle || stubborn_follower )
+            if ( !battle || info->stubborn_follower_battle )
                 return MX_FAILED;
             
             SetLastCommand(CMD_ATTACK,IDT_NONE);
