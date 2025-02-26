@@ -243,11 +243,13 @@ bool uipanel::showHelpWindow ( helpid_t id, BOOL forceImportant, MXVoidCallback 
     helpmanager* help = mr->help;
     
     if ( !help->isAlways(id) ) {
-        
-        if ( isNot(mr->settings->tutorial) ) {
-            if ( callback != nullptr )
-                callback();
-            return true;
+
+        if ( !help->isNewFeature(id) ) {
+            if ( isNot(mr->settings->tutorial) ) {
+                if ( callback != nullptr )
+                    callback();
+                return true;
+            }
         }
         
         if ( help->isShown(id) )

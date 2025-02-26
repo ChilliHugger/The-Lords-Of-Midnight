@@ -23,6 +23,7 @@ enum HELPFLAGS
     hf_none         = 0,
     hf_important    = MXBIT(0),
     hf_always       = MXBIT(1),
+    hf_new_feature  = MXBIT(2),
 };
 
 typedef struct helpitem_t
@@ -42,6 +43,7 @@ public:
     bool isShown ( helpid_t id );
     bool isImportant( helpid_t id);
     bool isAlways( helpid_t id);
+    bool isNewFeature ( helpid_t id );
     
     bool Save ( storyid_t id );
     bool Load ( storyid_t id );

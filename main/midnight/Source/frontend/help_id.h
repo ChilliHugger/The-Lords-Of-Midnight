@@ -94,7 +94,7 @@ enum helpid_t {
 #if !defined(_DDR_)
     HELP_TN_TUNNEL,
 #endif
-    
+    HELP_SMALL_TUNNEL,
     HELP_MAX
 };
 

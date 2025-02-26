@@ -148,7 +148,14 @@ const helpitem_t help_messages[] = {
         "TUNNEL\n\n"
         "\tIn an underground tunnel, tall pillars crowned with fire mark the way forward. If there is no way ahead, you will see naught but darkness. Tunnels only lead north, south, east or west."
     }
-    
+    ,
+    {
+        HELP_SMALL_TUNNEL,
+        hf_new_feature|hf_important,
+        "TUNNEL\n\n"
+        "\tThe way ahead is narrow and treacherous. You might not able to enter with horses, dragons, or armies, nor with too many lords."
+    }
+
     ,
     {
         HELP_SELECTING_CHARACTER,
