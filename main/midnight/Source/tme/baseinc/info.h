@@ -20,6 +20,7 @@ constexpr int MAX_FRIENDARMIES_INLOCATION = 128;
 //constexpr int MAX_ARMIES_INLOCATION = (MAX_FOEARMIES_INLOCATION+MAX_FRIENDARMIES_INLOCATION);
 constexpr int MAX_STRONGHOLDS_INLOCATION = 1;
 constexpr int MAX_ROUTENODES_INLOCATION = 1;
+constexpr int MAX_CHARACTERS_IN_SMALL_TUNNEL = 4;
 
 class CListS;
 
@@ -1130,13 +1131,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxlocinfo();
             virtual ~mxlocinfo();
             
-            mxlocinfo( mxgridref loc, mxcharacter* owner, flags32_t flags );
-            mxlocinfo( mxgridref loc, mxdir_t looking, mxcharacter* owner, flags32_t flags );
+            mxlocinfo( mxgridref loc, const mxcharacter* owner, flags32_t flags );
+            mxlocinfo( mxgridref loc, mxdir_t looking, const mxcharacter* owner, flags32_t flags );
 
-            virtual void FindRecruitCharactersHere ( const mxcharacter* c );
-            virtual void FindApproachCharactersInfront ( const mxcharacter* c ) ;
-            virtual void FindCharactersHere ( void );
-            virtual void FindArmiesHere ( void );
+            virtual void FindRecruitCharactersHere();
+            virtual void FindApproachCharactersInfront() ;
+            virtual void FindCharactersHere();
+            virtual void FindArmiesHere();
             virtual void WorkOutLocationDetails();
             
         protected:    
@@ -1149,7 +1150,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             //loyalty_t
             //friendorfoe
 
-            mxcharacter*        owner ;         // the <character> from whom this info block was created for
+            const mxcharacter*  owner ;         // the <character> from whom this info block was created for
             flags32             sel_flags ;     // selection flags
 
             mxdir_t             looking ;       // for what direction? If DR_NONE then the next two vars are not valid
@@ -1189,12 +1190,12 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             c_character         objRecruit;             // list of characters that <character> can recruit
 
             
-            mxcharacter*        stubborn_follower_move;     // which character is stopping us moving
-            mxcharacter*        stubborn_follower_battle;   // which character is stopping us attacking
+            const mxcharacter*  stubborn_follower_move;     // which character is stopping us moving
+            const mxcharacter*  stubborn_follower_battle;   // which character is stopping us attacking
 
 #if defined(_DDR_)
-            mxobject*           object_to_take;
-            mxcharacter*        someone_to_give_to;
+            const mxobject*     object_to_take;
+            const mxcharacter*  someone_to_give_to;
 #endif
         };
         // mxlocinfo

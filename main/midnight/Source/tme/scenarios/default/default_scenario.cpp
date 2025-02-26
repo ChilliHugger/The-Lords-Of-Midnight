@@ -264,14 +264,14 @@ namespace tme {
             return t;
         }
 
-        bool mxscenario::isLocationImpassable(mxgridref loc, mxitem* target) const
+        bool mxscenario::isLocationImpassable(mxgridref loc, const mxitem* target) const
         {
             auto mapLoc = mx->gamemap->GetAt(loc);
 
             if (IsFeature(SF_TUNNELS)) {
                 if(mapLoc.IsImpassable()) {
                     if(target->IsType(IDT_CHARACTER)) {
-                        auto character = dynamic_cast<mxcharacter*>(target);
+                        auto character = dynamic_cast<const mxcharacter*>(target);
                         if (character != nullptr) {
                             if(!character->IsInTunnel()) {
                                 return true;
@@ -295,7 +295,7 @@ namespace tme {
         // DWARVES, GIANTS, and DRAGONS can all pass impassable mountains
         // and when RF_SOLE_MOUNTAINEER is enabled so can lords without armies.
         //
-        bool mxscenario::isTerrainImpassable(mxterrain_t terrain, mxitem* target) const
+        bool mxscenario::isTerrainImpassable(mxterrain_t terrain, const mxitem* target) const
         {
             if(target!=nullptr) {
                 bool isAI = true;
@@ -303,7 +303,7 @@ namespace tme {
                 bool army = true;
                 
                 if(target->IsType(IDT_CHARACTER)) {
-                    auto character = dynamic_cast<mxcharacter*>(target);
+                    auto character = dynamic_cast<const mxcharacter*>(target);
                     if (character != nullptr) {
                         if(character->IsInTunnel()) {
                             return false;
@@ -316,7 +316,7 @@ namespace tme {
                     }
                 }
                 else if(target->IsType(IDT_REGIMENT)) {
-                    auto regiment = dynamic_cast<mxregiment*>(target);
+                    auto regiment = dynamic_cast<const mxregiment*>(target);
                     if (regiment != nullptr) {
                         race = regiment->Race();
                     }

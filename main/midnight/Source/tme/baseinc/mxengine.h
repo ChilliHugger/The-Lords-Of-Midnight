@@ -184,6 +184,7 @@ namespace tme {
 #define FOR_EACH_OBJECT(o) for ( auto o : mx->objObjects )
 #define FOR_EACH_STRONGHOLD(s) for ( auto s : mx->objStrongholds )
 #define FOR_EACH_ROUTENODE(r) for ( auto r : mx->objRoutenodes )
+#define FOR_EACH(r,c) for ( auto r : c )
 
 
 }
