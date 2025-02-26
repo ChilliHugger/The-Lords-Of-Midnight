@@ -1155,6 +1155,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxdir_t             looking ;       // for what direction? If DR_NONE then the next two vars are not valid
             mxgridref           loc_lookingat ; // where is the item of interest in the distance?
             mxgridref           loc_infront ;   // location directly infront
+            bool                tunnel;         // if there is an owner then we are considering a tunnel
             
             std::unique_ptr<mxlocinfo> infront; // info block for the location in front
             

@@ -56,6 +56,7 @@ namespace tme {
 
             infront.reset() ;
             owner = nullptr;
+            tunnel = false;
 
             nRecruited = 0;
 
@@ -137,6 +138,14 @@ namespace tme {
             
             // make sure we don't take too many lords into battle
             u32 extra = owner!=nullptr ? owner->followers : 0 ;
+
+            // characters in small tunnels
+            if (tunnel && infront->mapsqr.IsSmallTunnel()) {
+                if ( infront->friends.characters+extra >= MAX_CHARACTERS_IN_SMALL_TUNNEL ) {
+                    flags.Reset(lif_moveforward); // = FALSE;
+                    flags.Set(lif_blocked); // = TRUE
+                }
+            }
             
             // but if there are too many people there, then we can't
             if ( infront->friends.armies+extra >= MAX_CHARACTERS_INLOCATION ) {
@@ -156,6 +165,8 @@ namespace tme {
 
         void mxlocinfo::WorkOutLocationDetails()
         {
+            tunnel = (sel_flags & slf_tunnel) ;
+
             mapsqr = mx->gamemap->GetAt ( location );
 
             friends.Clear();
