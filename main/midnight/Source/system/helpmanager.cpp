@@ -69,6 +69,11 @@ bool helpmanager::isAlways ( helpid_t id )
     return GetItem( id )->flags&hf_always;
 }
 
+bool helpmanager::isNewFeature ( helpid_t id )
+{
+    return GetItem( id )->flags&hf_new_feature;
+}
+
 void helpmanager::Shown( helpid_t id )
 {
     displayed[ id ] = true;
@@ -141,7 +146,6 @@ bool helpmanager::Load ( storyid_t id )
     ar.Close();
 
     SAFEDELETE ( pFile );
-    
     
     return true;
 }

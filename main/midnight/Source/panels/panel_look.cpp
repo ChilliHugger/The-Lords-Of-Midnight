@@ -347,12 +347,17 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
         return;
     }
     
-    if ( Character_IsInTunnel(TME_CurrentCharacter()) ) {
-        return;
-    }
     
     defaultexport::location_t loc;
     TME_GetMapLocation(loc, location_infrontid );
+
+    if ( Character_IsInTunnel(TME_CurrentCharacter()) ) {
+        if (loc.flags.Is(lf_tunnel_small)) {
+            if ( !showHelpWindow( HELP_SMALL_TUNNEL ) )
+                return;
+        }
+        return;
+    }
     
 #if defined(_DDR_)
     if ( loc.flags.Is(lf_mist) && !tme::variables::sv_display_no_mist) {
