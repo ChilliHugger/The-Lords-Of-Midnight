@@ -21,7 +21,10 @@
     constexpr LPCSTR CREDITS_TESTERS                    = "Scott Gibbens & Nicholas Muge";
 
     constexpr LPCSTR CREDITS_THANKS                     = R"(Alasdair Allan, Chris Booker, Timothy Bromige, Iain Brown, Basem Chbaklo, Richard Clements, Menno Everaarts, Martin Graaskov, Ross Harris, Bill Hoggett, Thanos Koukoulis, Harvey Lodder, Gary Mcdonald, Fergus Mcneill, Jordan Myers, Kai Panholzer, Guy Preston, Gemma Rigby, Julian Rigby, Tam Rigby, Francisco Assis Rosa, Jean-Yves Rouffiac, David Ivan Perez Salazar, Andrew Smart, Stuart Voice, Seamus Waldron, Chris Webster, Jason Webster, David West,
-and all the members of midnight/mu - www.midnightmu.com)";
+and all the members of midnight/mu - www.midnightmu.com
+
+Developed using Axmol SDK
+https://axmol.dev)";
  
 
     constexpr LPCSTR CREDITS_VERSION                    = "Version: " ;
@@ -154,7 +157,7 @@ and all the members of midnight/mu - www.midnightmu.com)";
     constexpr LPCSTR OPTIONS_SCREEN_APPROACH_STAY       = "DO NOTHING";
     
 #if defined(_LOM_)
-    constexpr LPCSTR NOVEL_SCENARIO_TITLE               = "THE LORDS OF MIDNIGHT\nThe Novel";
+    constexpr LPCSTR NOVEL_SCENARIO_TITLE               = "THE LORDS OF MIDNIGHT\nThe Novel (Preview)";
 
     constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the epic world of";
     constexpr LPCSTR SPLASH_SCREEN_TITLE                = "THE LORDS OF MIDNIGHT";
