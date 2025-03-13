@@ -36,6 +36,7 @@ class uihelper
     using Button = ax::ui::Button;
     using Size = ax::Size;
     using Vec2 = ax::Vec2;
+    using Ref = ax::Object;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
 
 public:

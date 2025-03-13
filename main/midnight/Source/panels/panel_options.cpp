@@ -584,7 +584,7 @@ void panel_options::SetMenu ( int id )
         SetSubMenu(items_help,NUMELE(items_help));
         
 #if !defined(_OS_IOS_) && !defined(_OS_OSX_)
-        mr->settings->novella_pdf=ON;
+        mr->settings->novella_pdf= TOGGLE::ON;
 #endif
         
         SetValues();

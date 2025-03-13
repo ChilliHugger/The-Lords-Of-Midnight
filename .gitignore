@@ -28,6 +28,7 @@ DerivedData/
 main/midnight/win32-build
 main/midnight/proj.win32/LOM_Debug.win32
 main/midnight/proj.win32/DDR_Debug.win32
+main/midnight/run.bat
 
 # Android
 main/midnight/proj.android/.idea

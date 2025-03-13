@@ -621,6 +621,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7C8E7F1DE80B497E8DD43245A865AEF8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7E4BDC1F541C4C7690B2AAB6FA63742D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1102,6 +1108,12 @@
         "Entry"
         {
         "MsmKey" = "8:_F2DF62A6CD50453BAD4700E3056EA3FF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F3D80A0091B141D28D21269C2194B6F5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -3272,6 +3284,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7C8E7F1DE80B497E8DD43245A865AEF8"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\17\\database"
+            "TargetName" = "8:database"
+            "Tag" = "8:"
+            "Folder" = "8:_8FBA120A7CBE48BAB9985AB2E37F1912"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7E4BDC1F541C4C7690B2AAB6FA63742D"
             {
             "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_skulkrin.png"
@@ -4892,6 +4924,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F3D80A0091B141D28D21269C2194B6F5"
+            {
+            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\17\\map"
+            "TargetName" = "8:map"
+            "Tag" = "8:"
+            "Folder" = "8:_8FBA120A7CBE48BAB9985AB2E37F1912"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F7F7DEF9F6A24EF6B3D94DDD0B1F7CEF"
             {
             "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\axslc\\colorNormal_fs"
@@ -5311,6 +5363,17 @@
                                                 {
                                                 }
                                             }
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_8FBA120A7CBE48BAB9985AB2E37F1912"
+                                    {
+                                    "Name" = "8:17"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_10BE2B1F4B7B4730860D3D4D127C2CA0"
+                                        "Folders"
+                                        {
                                         }
                                     }
                                     "{9EF0B969-E518-4E46-987F-47570745A589}:_B710661FC7C74828A5CD993B7D070233"
