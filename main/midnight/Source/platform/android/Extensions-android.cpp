@@ -1,5 +1,5 @@
 //
-//  Exensions-android.cpp
+//  Extensions-android.cpp
 //  midnight
 //
 //  Created by Chris Wild on 17/12/2020.
@@ -7,10 +7,10 @@
 #include "Extensions-android.h"
 #include "platform/android/jni/JniHelper.h"
 #include "../../library/chilli.h"
-#include "../../cocos.h"
+#include "../../axmol_sdk.h"
 #include <string>
 
-USING_NS_CC;
+USING_NS_AX;
 
 namespace chilli
 {

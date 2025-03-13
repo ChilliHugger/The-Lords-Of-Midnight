@@ -1,5 +1,20 @@
 The Midnight Engine
 
+Build (52)
+1. UPDATED: Moved to Axmol for better device support
+2. FIXED: IOS - Safe area display
+3. ADDED: LOM - Game Rule - Fey Recruitment
+4. ADDED: LOM - Preview of Novel Scenario
+5. FIXED: LOM - Terrain display on think screen
+6. FIXED: DDR - Crash when recruiting soldiers from depleted stronghold
+7. FIXED: DDR - Character slain by a lords object is not displayed correctly
+8. FIXED: DDR - Guidance potentially showing info on dead lords
+9. FIXED: DDR - Discovery map should not show locations not visited above tunnels
+10. FIXED: DDR - Critters shouldn't show for tunnels not visited
+
+Build (51)
+N/A
+
 Build (50)
 1. ADDED: Welcome popup for first time user
 2. FIXED: DDR - Dead lords showing on think pages

@@ -22,7 +22,7 @@ android {
         applicationId packageName
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionCode 2000051
+        versionCode 2000052
         versionName "2.0.9"
 
         externalNativeBuild {

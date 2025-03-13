@@ -252,7 +252,6 @@ elseif(APPLE)
         set(APP_UI_RES
             proj.ios_mac/mac/${APP_NAME}/Images.xcassets
             proj.ios_mac/mac/${APP_NAME}/Icon.icns
-            proj.ios_mac/mac/${APP_NAME}/Info.plist
             )
         list(APPEND GAME_SOURCE
              proj.ios_mac/mac/main.cpp
