@@ -2,6 +2,7 @@
 #define _INFO_H_INCLUDED_
 
 #include "../../library/inc/library.h"
+#include <memory>
 
 #define MAX_CHARACTERS_FOLLOWING        32
 

@@ -7,9 +7,8 @@
 
 #pragma comment(lib,"user32.lib")
 #include "Extensions-win32.h"
-#include "../../cocos.h"
 
-USING_NS_CC;
+USING_NS_AX;
 
 namespace chilli
 {
