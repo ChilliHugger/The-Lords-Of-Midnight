@@ -672,6 +672,7 @@ std::string imageFiles[] = {
 #if defined(_CITADEL_)
     "quest-0",
 #endif
+    "shields/shield-0",
     "terrain/terrain-0", "terrain/terrain-1",
     "terrain/tunnels-0"
 };
