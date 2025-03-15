@@ -32,6 +32,9 @@
 
 #include "../tme/TMEMapBuilder.h"
 
+#include "../utils/shieldbuilder.h"
+
+
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -475,7 +478,17 @@ void panel_look::setViewForCurrentCharacter()
         shieldImage = current_info->person ;
     
     lblDescription->setString(current_info->locationtext);
+    
+#if defined(_SHIELD_BUILDER_)
+    std::unique_ptr<shieldbuilder> builder(new shieldbuilder());
+    if (builder->build(c.id, imgShield)) {
+        imgShield->setVisible(true);
+    } else {
+        imgShield->setVisible(false);
+    }
+#else
     imgShield->loadTexture(shieldImage, Widget::TextureResType::LOCAL);
+#endif
 
     setupLeaderButton();
     

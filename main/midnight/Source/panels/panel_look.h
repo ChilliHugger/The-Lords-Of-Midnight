@@ -10,6 +10,7 @@
 #include "../tme/tme_interface.h"
 
 #define NONE_ACTIVTY_DURATION   30.0f
+#define _SHIELD_BUILDER_ 1
 
 FORWARD_REFERENCE(uicommandwindow);
 FORWARD_REFERENCE(uisinglelord);
@@ -76,7 +77,8 @@ class panel_look :
     using Color3B = ax::Color3B;
     using DrawNode = ax::DrawNode;
     using EventListenerTouchOneByOne = ax::EventListenerTouchOneByOne;
-
+    using Node = ax::Node;
+    using Widget = ax::ui::Widget;
 public:
     virtual ~panel_look() override;
     

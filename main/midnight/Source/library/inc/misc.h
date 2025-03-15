@@ -60,6 +60,7 @@ namespace chilli {
             std::string right(std::string& input, int amount);
             std::string replaceAll(const std::string& str, const std::string& from, const std::string& to);
             std::string toUpper(const std::string& value);
+            std::string toLower(const std::string& value);
             std::string Format ( LPCSTR format, ... );
             bool stringicompare(const std::string& str1, const std::string& str2);
             int GetToken ( const std::string& token, token_t array[], int max );

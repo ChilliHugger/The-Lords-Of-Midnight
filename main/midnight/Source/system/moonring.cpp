@@ -638,6 +638,7 @@ bool moonring::serialize( u32 version, archive& ar )
 std::string imageFiles[] = {
     "rest-0", "rest-1",
     "language-0",
+    "shields/shield-0",
     "terrain/terrain-0", "terrain/terrain-1",
     "terrain/tunnels-0"
 };
