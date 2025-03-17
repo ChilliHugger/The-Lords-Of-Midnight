@@ -29,6 +29,7 @@
 #import "axmol.h"
 #import "../../Source/AppDelegate.h"
 #import "RootViewController.h"
+#import <GameController/GameController.h>
 
 @implementation AppController
 

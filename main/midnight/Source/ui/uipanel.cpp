@@ -421,6 +421,8 @@ bool uipanel::OnKeyboardEvent( uikeyboardevent* event )
 
 void uipanel::addKeyboardListener()
 {
+    auto controllers = Controller::getAllController();
+ 
     auto eventListener = EventListenerKeyboard::create();
     
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)
@@ -440,6 +442,31 @@ void uipanel::addKeyboardListener()
     };
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,this);
+    
+    
+    auto eventListener2 = EventListenerController::create();
+    
+    eventListener2->onKeyDown = [](Controller* controller, int keyCode, Event* event) {
+        if (keyCode == Controller::Key::BUTTON_DPAD_LEFT) {
+            UIDEBUG("Move left");
+        } else if (keyCode == Controller::Key::BUTTON_DPAD_RIGHT) {
+            UIDEBUG("Move right");
+        } else if (keyCode == Controller::Key::BUTTON_A) {
+            UIDEBUG("Confirm/Select");
+        }
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener2,this);
+    
+    auto eventListener3 = EventListenerFocus::create();
+
+    eventListener3->onFocusChanged = [](ax::ui::Widget* lostFocus, ax::ui::Widget* gotFocus) {
+        auto a = 100;
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener3,this);
+
+    
 }
 
 #if defined(_MOUSE_ENABLED_)

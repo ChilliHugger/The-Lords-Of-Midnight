@@ -55,6 +55,9 @@ bool panel_mainmenu::init()
         return false;
     }
     
+    mr->settings->tutorial = TOGGLE::OFF;
+    Widget::enableDpadNavigation(true);
+        
     //
     // Background
     //
@@ -95,6 +98,7 @@ bool panel_mainmenu::init()
     //    
     guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback);
     guide->setScale(scale_normal+scale_half);
+    guide->setFocused(true);
     uihelper::AddBottomRight(safeArea,guide, RES(10), RES(10) );
     
 

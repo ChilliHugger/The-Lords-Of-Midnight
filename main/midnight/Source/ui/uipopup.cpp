@@ -107,6 +107,7 @@ bool uipopup::initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text
     auto yes = uihelper::CreateBoxButton(Size(button_width,button_height));
     yes->setTitleText(BUTTON_YES);
     yes->setTag(ID_YES);
+    yes->setFocused(true);
     layout->addChild(yes);
 
     uihelper::PositionParentBottomCenter(yes, -layout_padding/2, layout_padding);

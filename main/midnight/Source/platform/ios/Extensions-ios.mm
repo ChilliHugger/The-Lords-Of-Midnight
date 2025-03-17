@@ -13,6 +13,9 @@ namespace chilli
     {
         int getOrientation()
         {
+#if defined(AX_TARGET_OS_TVOS)
+            return 1;
+#else
             switch ([UIDevice.currentDevice orientation]) {
                 case UIDeviceOrientationLandscapeLeft:
                     return 1; // notch left
@@ -21,6 +24,7 @@ namespace chilli
                 default:
                     return 0;
             }
+#endif
         }
     }
 }

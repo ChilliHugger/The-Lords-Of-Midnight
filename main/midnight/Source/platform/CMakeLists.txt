@@ -21,7 +21,7 @@ elseif(APPLE)
           Source/platform/mac/Extensions-mac.mm
           Source/platform/apple/Extensions-apple.mm
           )
-    elseif(IOS)
+    elseif(IOS OR TVOS)
         set(HDR_PLATFORM
             Source/platform/Extensions.h
             Source/platform/ios/Extensions-ios.h

@@ -11,7 +11,7 @@
 #elif defined(_OS_OSX_)
     #include "apple/Extensions-apple.h"
     #include "mac/Extensions-mac.h"
-#elif defined(_OS_IOS_)
+#elif defined(_OS_IOS_) || defined(_OS_TVOS_)
     #include "apple/Extensions-apple.h"
     #include "ios/Extensions-ios.h"
 #elif AX_TARGET_PLATFORM == AX_PLATFORM_ANDROID

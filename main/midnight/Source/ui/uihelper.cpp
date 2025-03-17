@@ -323,6 +323,7 @@ Button* uihelper::CreateImageButton( const std::string& name, u32 id, const Widg
     button->setTag(id);
     button->addClickEventListener(callback);
     button->setScale(PHONE_SCALE(scale_normal));
+    button->setFocusEnabled(true);
     return button;
     
 }
@@ -350,6 +351,7 @@ Button* uihelper::CreateBoxButton( Size size )
     button->setScale9Enabled(true);
     button->setContentSize(size);
     button->setLocalZOrder(ZORDER_UI);
+    button->setFocusEnabled(true);
     uihelper::setEnabled(button,true);
     // Adjust for centreY without trailing character
     button->getTitleRenderer()->setLineHeight(PHONE_SCALE(RES(25)));

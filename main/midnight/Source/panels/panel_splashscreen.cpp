@@ -183,11 +183,11 @@ void panel_splashscreen::complete()
     
     this->scheduleOnce([&](float)
     {
-        if ( !mr->config->skip_dedication ) {
-            mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
-        } else {
+        //if ( !mr->config->skip_dedication ) {
+        //    mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
+        //} else {
             mr->panels->showMainMenu();
-        }
+        //}
     }, delay, "show_mainmenu" );
 }
 

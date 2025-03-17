@@ -72,6 +72,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     register_all_packages();
 
+#if defined(AX_TARGET_OS_TVOS)
+    Controller::startDiscoveryController();
+#endif
+
     // create a scene. it's an autorelease object
     auto scene = panel_splashscreen::create();
     if ( scene == nullptr )
