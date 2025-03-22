@@ -1025,6 +1025,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual bool ShouldHaveOneToOneWithNasty() const;
             virtual void Dismount();
             virtual void CheckPerformSeek(bool seek, bool tunnelexit);
+            virtual mxobject* FoundNothing() const ;
     
             virtual bool AddFollower ( mxcharacter* c );
             virtual bool RemoveFollower ( mxcharacter* c );

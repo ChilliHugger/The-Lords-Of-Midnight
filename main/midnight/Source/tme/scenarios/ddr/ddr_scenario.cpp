@@ -342,7 +342,7 @@ void ddr_x::NightStop(void)
 
 void ddr_x::GiveGuidance(tme::mxcharacter *character, s32 hint)
 {
-std::string buffer = mx->LastActionMsg();
+std::string buffer = mx->text->CookedSystemString(SS_GUIDANCE1, character);
 
     RETURN_IF_NULL(character);
 

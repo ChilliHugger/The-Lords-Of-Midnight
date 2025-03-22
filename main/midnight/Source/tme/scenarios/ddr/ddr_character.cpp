@@ -365,7 +365,7 @@ namespace tme {
     
     void ddr_character::DecreaseDespondency( s32 amount )
     {
-        despondency = BSub(despondency, amount, 0);
+        despondency = BSub(despondency, amount, MIN_DESPONDENCY);
     }
     
     static mxterrain_t GetRacePeferredTerrainOriginal( mxrace_t race, bool riding )

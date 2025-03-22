@@ -164,6 +164,7 @@ using namespace chilli::types;
             
         };
 
+#define MIN_DESPONDENCY                 0
 #define MAX_DESPONDENCY                 255
 #define MAX_ENERGY                      255
 #define DESPONDENCY_BOOST_KILLED_FOE    32
