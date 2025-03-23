@@ -32,6 +32,11 @@
 -keep public class com.chilli.extensions.** { *; }
 -dontwarn com.chilli.extensions.**
 
+# Proguard rules for AXMOL
+-keep public class dev.axmol.lib.**
+-keepclassmembers public class dev.axmol.lib.** { *; }
+-dontwarn dev.axmol.**
+
 # Proguard Android Webivew for release. uncomment if you are using a webview in cocos2d-x
 #-keep public class android.net.http.SslError
 #-keep public class android.webkit.WebViewClient

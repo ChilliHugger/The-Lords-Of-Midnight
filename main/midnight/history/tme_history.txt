@@ -1,5 +1,8 @@
 The Midnight Engine
 
+Build (53)
+1. FIXED: ANDROID: Start new game crash - stop proguard stripping axmol utils.
+
 Build (52)
 1. UPDATED: Moved to Axmol for better device support
 2. FIXED: IOS - Safe area display
