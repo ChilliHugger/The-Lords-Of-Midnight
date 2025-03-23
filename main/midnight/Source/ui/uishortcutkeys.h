@@ -19,6 +19,7 @@
 
 class uishortcutkeys
 {
+protected:
     using Node = ax::Node;
     using WidgetClickCallback = chilli::ui::WidgetClickCallback;
     template<class T> using Vector = ax::Vector<T>;

@@ -5,15 +5,16 @@
 //  Created by Chris Wild on 02/12/2017.
 //
 
-#include "../ui/uipopup.h"
-#include "../ui/uihelpwindow.h"
+#include "uipopup.h"
+#include "uihelpwindow.h"
 #include "uipanel.h"
+#include "uifocuscontroller.h"
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
 #include "../system/helpmanager.h"
 #include "../system/settingsmanager.h"
 #include "../system/panelmanager.h"
-#include "../ui/uihelper.h"
+#include "uihelper.h"
 
 USING_NS_AX;
 
@@ -74,8 +75,6 @@ bool uipanel::init()
         this->OnNotification(ref);
     };
     
-    addKeyboardListener();
-
 #if defined(_MOUSE_ENABLED_)
     imgCursor = Sprite::create();
     imgCursor->setScale(1.0f);
@@ -99,6 +98,15 @@ bool uipanel::init()
         OnShown();
     });
 
+    
+    if (moonring::mikesingleton()->settings->nav_mode == CF_NAVIGATION::DPAD) {
+        focusController = new uifocuscontroller();
+        focusController->retain();
+        focusController->add(this);
+        focusController->setCallback(clickCallback);
+    }
+ 
+    addKeyboardListener();
     
     return true;
 }
@@ -442,31 +450,6 @@ void uipanel::addKeyboardListener()
     };
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,this);
-    
-    
-    auto eventListener2 = EventListenerController::create();
-    
-    eventListener2->onKeyDown = [](Controller* controller, int keyCode, Event* event) {
-        if (keyCode == Controller::Key::BUTTON_DPAD_LEFT) {
-            UIDEBUG("Move left");
-        } else if (keyCode == Controller::Key::BUTTON_DPAD_RIGHT) {
-            UIDEBUG("Move right");
-        } else if (keyCode == Controller::Key::BUTTON_A) {
-            UIDEBUG("Confirm/Select");
-        }
-    };
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener2,this);
-    
-    auto eventListener3 = EventListenerFocus::create();
-
-    eventListener3->onFocusChanged = [](ax::ui::Widget* lostFocus, ax::ui::Widget* gotFocus) {
-        auto a = 100;
-    };
-
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener3,this);
-
-    
 }
 
 #if defined(_MOUSE_ENABLED_)

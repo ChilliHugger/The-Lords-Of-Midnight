@@ -14,6 +14,7 @@
 #include "uishortcutkeys.h"
 
 FORWARD_REFERENCE(uipanel);
+FORWARD_REFERENCE(uifocuscontroller);
 
 using namespace chilli::types;
 
@@ -43,15 +44,17 @@ protected:
     void addTouchListener();
     void addKeyboardListener();
 
+    void addFocusController();
+    void removeFocusController();
+
     void OnYes();
     void OnNo();
     
 protected:
     uipanel*    parent;
     Layout*     layout;
-    
+    uifocuscontroller*  focusController;
 };
-
 
 
 #endif /* uipopup_h */

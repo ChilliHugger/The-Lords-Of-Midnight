@@ -48,6 +48,7 @@ enum class CF_NAVIGATION : int
     PRESS   = 1,
     SWIPE   = 2,
     FULL    = 3,
+    DPAD    = 4,
 };
 
 enum class CF_COMPASS : int

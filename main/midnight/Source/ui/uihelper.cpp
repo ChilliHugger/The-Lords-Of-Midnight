@@ -342,7 +342,6 @@ Button* uihelper::CreateBoxButton( Size size )
     size.width = PHONE_SCALE(size.width);
     size.height = PHONE_SCALE(size.height);
     
-    
     auto button = ax::ui::Button::create(BOX_BACKGROUND_FILENAME);
     button->setTitleFontName(FONT_FILENAME);
     button->setTitleFontSize(PHONE_SCALE(RES(FONT_SIZE_BIG)));
@@ -351,10 +350,27 @@ Button* uihelper::CreateBoxButton( Size size )
     button->setScale9Enabled(true);
     button->setContentSize(size);
     button->setLocalZOrder(ZORDER_UI);
-    button->setFocusEnabled(true);
     uihelper::setEnabled(button,true);
+#if !defined(_OS_TVOS_)
     // Adjust for centreY without trailing character
     button->getTitleRenderer()->setLineHeight(PHONE_SCALE(RES(25)));
+#endif
+ 
+    button->onFocusChanged = [button](Widget* widgetLostFocus, Widget* widgetGetFocus) {
+        if (widgetGetFocus == button) {
+            button->setScale(1.2f);
+            button->setFocused(true);
+            button->setTitleColor(Color3B::RED);
+            button->setColor(_clrGreen);
+        }
+        if (widgetLostFocus == button) {
+            button->setScale(1.0f);
+            button->setFocused(false);
+            button->setTitleColor(Color3B::BLUE);
+            button->setColor(_clrWhite);
+        }
+    };
+ 
     return button;
 }
 
@@ -366,7 +382,6 @@ Button* uihelper::setEnabled( ax::ui::Button* button, bool enabled )
     }
     return button;
 }
-
 
 /**
 * Recursively searches for a child node

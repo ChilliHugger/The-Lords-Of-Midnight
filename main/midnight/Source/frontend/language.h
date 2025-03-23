@@ -69,6 +69,7 @@ https://axmol.dev)";
     constexpr LPCSTR OPTIONS_MOVEMENT_PUSH              = "PUSH";
     constexpr LPCSTR OPTIONS_MOVEMENT_SWIPE             = "SWIPE";
     constexpr LPCSTR OPTIONS_MOVEMENT_PRESS_SWIPE       = "PRESS LOOK/SWIPE MOVE";
+    constexpr LPCSTR OPTIONS_MOVEMENT_DPAD              = "DPAD CONTROLLER";
     
     constexpr LPCSTR OPTIONS_THINK_SWIPE                = "SWIPE LEFT/RIGHT";
     constexpr LPCSTR OPTIONS_THINK_PUSH                 = "PUSH";

@@ -16,7 +16,11 @@ settingsmanager::settingsmanager() :
       tutorial(TOGGLE::ON)
     , autofight(TOGGLE::OFF)
     , autounhide(TOGGLE::OFF)
+#if defined(_OS_TVOS_)
+    , nav_mode(CF_NAVIGATION::DPAD)
+#else
     , nav_mode(CF_NAVIGATION::BOTH)
+#endif
     , screentransitions(TOGGLE::ON)
     , flipscreen(TOGGLE::OFF)
     , compass_delay(CF_COMPASS::NORMAL)

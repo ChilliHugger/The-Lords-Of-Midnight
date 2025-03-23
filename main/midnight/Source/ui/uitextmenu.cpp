@@ -7,6 +7,7 @@
 //
 #include "uihelper.h"
 #include "uitextmenu.h"
+#include "uifocuscontroller.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 #include "uitextmenu.h"
@@ -14,6 +15,29 @@
 
 USING_NS_AX;
 USING_NS_AX_UI;
+
+MyMenuItemLabel* MyMenuItemLabel::create(Node* label)
+{
+    MyMenuItemLabel* item = new MyMenuItemLabel();
+    item->initWithLabel(label, (const ccMenuCallback&)nullptr);
+    item->autorelease();
+
+
+    item->onFocusChanged = [item](MyMenuItemLabel* lostFocus, MyMenuItemLabel* getFocus) {
+        if (getFocus == item) {
+            item->setScale(1.2f);
+            item->_label->setColor(_clrRed);
+            item->setColor(_clrGreen);
+        }
+        if (lostFocus == item) {
+            item->setScale(1.0f);
+            item->_label->setColor(_clrWhite);
+            item->setColor(_clrWhite);
+        }
+    };
+    
+    return item;
+}
 
 uitextmenu* uitextmenu::create( f32 width, uitextmenuitem* items, u32 count )
 {
@@ -69,9 +93,9 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     // menu
     mainmenu = Menu::create();
     
-    
     // add items
     f32 height=0;
+    
     for ( int ii=0; ii<items_count; ii++ ) {
         
         auto item = &items[ii];
@@ -82,7 +106,7 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
         label->setWidth(width);
         label->setAlignment(TextHAlignment::CENTER);
 
-        auto menuItem = MenuItemLabel::create(label);
+        auto menuItem = MyMenuItemLabel::create(label);
         menuItem->setTag(item->id);
         menuItem->setUserData(item);
         mainmenu->addChild(menuItem);
@@ -105,14 +129,43 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     mainmenu->setPosition(Vec2::ZERO);
     mainmenu->setAnchorPoint(uihelper::AnchorTopLeft);
     mainmenu->setIgnoreAnchorPointForPosition(true);
-    
+ 
+    focusController = new uifocuscontroller();
+    focusController->add(this);
+    focusController->setCallback(callback);
+ 
     refresh();
 
     return true;
 }
 
+//void uipopup::addFocusController()
+//{
+//    if (focusController == nullptr) {
+//        focusController = new uifocuscontroller();
+//        focusController->add(layout);
+//        
+//        std::vector<layoutid_t> controls = {ID_YES, ID_NO};
+//        
+//        focusController->setCallback(callback);
+//        focusController->setControls(controls);
+//        focusController->setFocus(ID_YES);
+//    }
+//}
+//
+//void uipopup::removeFocusController()
+//{
+//    if (focusController != nullptr) {
+//        focusController->remove();
+//        focusController = nullptr;
+//    }
+//}
+
+
 void uitextmenu::refresh()
 {
+    std::vector<layoutid_t> controls;
+    
     auto r1 = this->getBoundingBox();
     auto r2 = mainmenu->getBoundingBox();
     
@@ -123,6 +176,7 @@ void uitextmenu::refresh()
         if(item->isVisible())
         {
             height += item->getBoundingBox().size.height;
+            controls.push_back((layoutid_t)item->getTag());
             visibleItems++;
         }
     }
@@ -142,6 +196,8 @@ void uitextmenu::refresh()
             offset.y -= item->getBoundingBox().size.height+phoneYPadding;
         }
     }
+    
+    focusController->setControls(controls);
 }
 
 MenuItem* uitextmenu::getItem( u32 id )
@@ -174,7 +230,7 @@ void uitextmenu::showItem( u32 id, bool visible )
 
 void uitextmenu::notifyItem(Ref* sender)
 {
-    auto menuItem = dynamic_cast<MenuItemLabel*>(sender);
+    auto menuItem = dynamic_cast<MyMenuItemLabel*>(sender);
     if ( menuItem!= nullptr ) {
         menueventargs args;
         args.menuitem = static_cast<uitextmenuitem*>(menuItem->getUserData());

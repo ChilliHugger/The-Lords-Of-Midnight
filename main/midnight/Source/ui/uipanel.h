@@ -24,8 +24,7 @@ FORWARD_REFERENCE( uipopup );
 FORWARD_REFERENCE( uihelpwindow );
 FORWARD_REFERENCE( moonring );
 FORWARD_REFERENCE( uieventargs );
-
-
+FORWARD_REFERENCE(uifocuscontroller);
 
 class ResumeEventListenerMouse : public ax::EventListenerMouse
 {
@@ -101,7 +100,7 @@ public:
     
 protected:
     uipanel();
-    
+  
     Node* setBackgroundToHeight( LPCSTR background, bool checkWidth = true );
     Node* setBackgroundToWidth( LPCSTR background );
     Node* setBackground( Color3B color );
@@ -149,6 +148,8 @@ protected:
     WidgetEventCallback eventCallback;
     
     Layer*              safeArea;
+    uifocuscontroller*  focusController;
+    
     
 #if defined(_MOUSE_ENABLED_)
     Sprite*             imgCursor;

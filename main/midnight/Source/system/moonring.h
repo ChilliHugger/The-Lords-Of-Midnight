@@ -27,6 +27,11 @@ using chilli::collections::c_ptr;
 
 #if defined(_OS_DESKTOP_)
     #define _MOUSE_ENABLED_
+    #define _FOCUS_ENABLED_
+#endif
+
+#if defined(_OS_TVOS_)
+    #define _FOCUS_ENABLED_
 #endif
 
 

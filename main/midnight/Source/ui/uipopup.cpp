@@ -8,6 +8,7 @@
 #include "uihelper.h"
 #include "uipopup.h"
 #include "uipanel.h"
+#include "uifocuscontroller.h"
 #include "../frontend/language.h"
 #include "../system/resolutionmanager.h"
 #include "../system/moonring.h"
@@ -16,9 +17,10 @@
 USING_NS_AX;
 USING_NS_AX_UI;
 
-uipopup::uipopup() :
-    parent(nullptr),
-    layout(nullptr)
+uipopup::uipopup()
+    : parent(nullptr)
+    , layout(nullptr)
+    , focusController(nullptr)
 {
 }
 
@@ -45,7 +47,7 @@ bool uipopup::initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text
     if ( !Element::init() )
         return false;
     
-    chilli::ui::WidgetClickCallback callback = [&] (Ref* ref ) {
+    WidgetClickCallback callback = [&] (Ref* ref ) {
         auto button = static_cast<Widget*>(ref);
         if ( button == nullptr )
             return;
@@ -107,11 +109,14 @@ bool uipopup::initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text
     auto yes = uihelper::CreateBoxButton(Size(button_width,button_height));
     yes->setTitleText(BUTTON_YES);
     yes->setTag(ID_YES);
-    yes->setFocused(true);
     layout->addChild(yes);
 
-    uihelper::PositionParentBottomCenter(yes, -layout_padding/2, layout_padding);
-    yes->setAnchorPoint( uihelper::AnchorBottomRight );
+    uihelper::PositionParentBottomCenter(yes,
+        -((button_width + layout_padding) /2),
+        layout_padding+(button_height/2)
+        );
+        
+    yes->setAnchorPoint( uihelper::AnchorCenter );
     yes->addClickEventListener(callback);
 
     // add cancel
@@ -119,8 +124,13 @@ bool uipopup::initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text
     no->setTitleText(BUTTON_NO);
     no->setTag(ID_NO);
     layout->addChild(no);
-    uihelper::PositionParentBottomCenter(no, layout_padding/2, layout_padding);
-    no->setAnchorPoint( uihelper::AnchorBottomLeft );
+    
+    uihelper::PositionParentBottomCenter(no,
+        ((button_width + layout_padding) /2),
+        layout_padding+(button_height/2)
+        );
+    
+    no->setAnchorPoint( uihelper::AnchorCenter );
     no->addClickEventListener(callback);
     
     // map keyboard shortcut keys to layout children
@@ -128,10 +138,32 @@ bool uipopup::initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text
     addShortcutKey(ID_YES, K_YES);
     addShortcutKey(ID_NO, K_NO);
     addShortcutKey(ID_NO, K_ESC);
-    
+        
     return true;
 }
 
+void uipopup::addFocusController()
+{
+    if (focusController == nullptr) {
+        focusController = new uifocuscontroller();
+        focusController->retain();
+        focusController->add(layout);
+        
+        std::vector<layoutid_t> controls = {ID_YES, ID_NO};
+        
+        focusController->setCallback(callback);
+        focusController->setControls(controls);
+        focusController->setFocus(ID_NO);
+    }
+}
+
+void uipopup::removeFocusController()
+{
+    if (focusController != nullptr) {
+        focusController->remove();
+        focusController = nullptr;
+    }
+}
 
 void uipopup::addTouchListener()
 {
@@ -159,6 +191,10 @@ void uipopup::Show()
     
     uishortcutkeys::addKeyboardListener(this);
     
+    if (moonring::mikesingleton()->settings->nav_mode == CF_NAVIGATION::DPAD) {
+        addFocusController();
+    }
+    
     // and show
     this->setLocalZOrder(ZORDER_POPUP);
     parent->addChild(this);
@@ -181,6 +217,8 @@ void uipopup::OnNo()
 
 void uipopup::Close()
 {
+    removeFocusController();
+    
     //
     parent->removeChild(this);
     
@@ -188,5 +226,3 @@ void uipopup::Close()
     parent->resumeEvents();
     
 }
-
-
