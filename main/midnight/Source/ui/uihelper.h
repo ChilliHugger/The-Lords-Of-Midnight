@@ -91,8 +91,8 @@ public:
 
     // create UI Elements
     static Button* CreateBoxButton( Size size );
-    static Button* CreateImageButton( const std::string& name );
-    static Button* CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback  );
+    static Button* CreateImageButton( const std::string& name);
+    static Button* CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback, f32 scale = 1.0f);
 
     // layers
     static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );

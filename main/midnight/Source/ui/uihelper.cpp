@@ -317,13 +317,30 @@ ax::ui::Button* button;
     return uihelper::setEnabled(button,true);
 }
 
-Button* uihelper::CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback )
+Button* uihelper::CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback, f32 scale )
 {
+    auto defaultScale = PHONE_SCALE(scale);
     auto button = uihelper::CreateImageButton(name);
     button->setTag(id);
     button->addClickEventListener(callback);
-    button->setScale(PHONE_SCALE(scale_normal));
-    button->setFocusEnabled(true);
+    button->setScale(defaultScale);
+    
+    
+    button->onFocusChanged = [button, defaultScale](Widget* widgetLostFocus, Widget* widgetGetFocus) {
+        
+        if (widgetGetFocus == button) {
+            button->setScale(defaultScale * 1.2f);
+            button->setFocused(true);
+            button->setColor(_clrGreen);
+        }
+        if (widgetLostFocus == button) {
+            button->setScale(defaultScale);
+            button->setFocused(false);
+            button->setColor(_clrWhite);
+        }
+    };
+    
+    
     return button;
     
 }

@@ -16,25 +16,37 @@
 USING_NS_AX;
 USING_NS_AX_UI;
 
-MyMenuItemLabel* MyMenuItemLabel::create(Node* label)
+MyMenuItemLabel* MyMenuItemLabel::create(std::string& text, f32 width)
 {
     MyMenuItemLabel* item = new MyMenuItemLabel();
-    item->initWithLabel(label, (const ccMenuCallback&)nullptr);
+    item->initWithCallback((const ccMenuCallback&)nullptr);
     item->autorelease();
 
+    auto label = Label::createWithTTF( uihelper::font_config_big, text );
+    label->getFontAtlas()->setAntiAliasTexParameters();
+    label->setTextColor(Color4B::WHITE);
 
-    item->onFocusChanged = [item](MyMenuItemLabel* lostFocus, MyMenuItemLabel* getFocus) {
+    auto size = label->getContentSize();
+    
+    auto background = LayerColor::create(Color4B(_clrYellow), width, (f32)size.height+RES(8));
+    background->setOpacity(ALPHA(alpha_zero));
+    uihelper::AddCenter(background, label);
+    item->addChild(background);
+
+    item->onFocusChanged = [item, label, background](MyMenuItemLabel* lostFocus, MyMenuItemLabel* getFocus) {
         if (getFocus == item) {
-            item->setScale(1.2f);
-            item->_label->setColor(_clrRed);
-            item->setColor(_clrGreen);
+            label->setScale(1.2f);
+            label->setColor(_clrBlue);
+            background->setOpacity(ALPHA(alpha_3qtr));
         }
         if (lostFocus == item) {
-            item->setScale(1.0f);
-            item->_label->setColor(_clrWhite);
-            item->setColor(_clrWhite);
+            label->setScale(1.0f);
+            label->setColor(_clrWhite);
+            background->setOpacity(ALPHA(alpha_zero));
         }
     };
+    
+    item->setContentSize(background->getContentSize());
     
     return item;
 }
@@ -72,7 +84,7 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
 
     auto rm = moonring::mikesingleton()->resolution;
     
-    phoneYPadding = RES(12);
+    phoneYPadding = 0; // RES(12);
     
     this->items = items;
     this->items_count = count;
@@ -99,14 +111,9 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     for ( int ii=0; ii<items_count; ii++ ) {
         
         auto item = &items[ii];
-        
-        auto label = Label::createWithTTF( uihelper::font_config_big, item->type.text );
-        label->getFontAtlas()->setAntiAliasTexParameters();
-        label->setTextColor(Color4B::WHITE);
-        label->setWidth(width);
-        label->setAlignment(TextHAlignment::CENTER);
 
-        auto menuItem = MyMenuItemLabel::create(label);
+        auto text = std::string(item->type.text);
+        auto menuItem = MyMenuItemLabel::create(text, width);
         menuItem->setTag(item->id);
         menuItem->setUserData(item);
         mainmenu->addChild(menuItem);
@@ -130,42 +137,13 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
     mainmenu->setAnchorPoint(uihelper::AnchorTopLeft);
     mainmenu->setIgnoreAnchorPointForPosition(true);
  
-    focusController = new uifocuscontroller();
-    focusController->add(this);
-    focusController->setCallback(callback);
- 
     refresh();
 
     return true;
 }
 
-//void uipopup::addFocusController()
-//{
-//    if (focusController == nullptr) {
-//        focusController = new uifocuscontroller();
-//        focusController->add(layout);
-//        
-//        std::vector<layoutid_t> controls = {ID_YES, ID_NO};
-//        
-//        focusController->setCallback(callback);
-//        focusController->setControls(controls);
-//        focusController->setFocus(ID_YES);
-//    }
-//}
-//
-//void uipopup::removeFocusController()
-//{
-//    if (focusController != nullptr) {
-//        focusController->remove();
-//        focusController = nullptr;
-//    }
-//}
-
-
 void uitextmenu::refresh()
 {
-    std::vector<layoutid_t> controls;
-    
     auto r1 = this->getBoundingBox();
     auto r2 = mainmenu->getBoundingBox();
     
@@ -176,7 +154,6 @@ void uitextmenu::refresh()
         if(item->isVisible())
         {
             height += item->getBoundingBox().size.height;
-            controls.push_back((layoutid_t)item->getTag());
             visibleItems++;
         }
     }
@@ -196,8 +173,6 @@ void uitextmenu::refresh()
             offset.y -= item->getBoundingBox().size.height+phoneYPadding;
         }
     }
-    
-    focusController->setControls(controls);
 }
 
 MenuItem* uitextmenu::getItem( u32 id )

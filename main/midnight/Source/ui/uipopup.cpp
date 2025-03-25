@@ -20,7 +20,6 @@ USING_NS_AX_UI;
 uipopup::uipopup()
     : parent(nullptr)
     , layout(nullptr)
-    , focusController(nullptr)
 {
 }
 
@@ -142,28 +141,22 @@ bool uipopup::initWithParent( uipanel* parent, point pos, f32 width, LPCSTR text
     return true;
 }
 
+#if defined(_FOCUS_ENABLED_)
 void uipopup::addFocusController()
 {
-    if (focusController == nullptr) {
-        focusController = new uifocuscontroller();
-        focusController->retain();
-        focusController->add(layout);
-        
-        std::vector<layoutid_t> controls = {ID_YES, ID_NO};
-        
-        focusController->setCallback(callback);
-        focusController->setControls(controls);
-        focusController->setFocus(ID_NO);
-    }
+    focusController.add(layout);
+    
+    std::vector<layoutid_t> controls = {ID_YES, ID_NO};
+    focusController.setCallback(callback);
+    focusController.setControls(controls);
+    focusController.setFocus(ID_NO);
 }
 
 void uipopup::removeFocusController()
 {
-    if (focusController != nullptr) {
-        focusController->remove();
-        focusController = nullptr;
-    }
+    focusController.remove();
 }
+#endif
 
 void uipopup::addTouchListener()
 {
@@ -191,9 +184,11 @@ void uipopup::Show()
     
     uishortcutkeys::addKeyboardListener(this);
     
+#if defined(_FOCUS_ENABLED_)
     if (moonring::mikesingleton()->settings->nav_mode == CF_NAVIGATION::DPAD) {
         addFocusController();
     }
+#endif
     
     // and show
     this->setLocalZOrder(ZORDER_POPUP);

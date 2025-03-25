@@ -12,7 +12,7 @@
 USING_NS_AX;
 USING_NS_AX_UI;
 
-uioptionitem* uioptionitem::create( f32 width, uitextmenuitem* item )
+uioptionitem* uioptionitem:: create( f32 width, uitextmenuitem* item )
 {
     uioptionitem* node = new (std::nothrow) uioptionitem();
     if (node && node->initWithItem(width,item))

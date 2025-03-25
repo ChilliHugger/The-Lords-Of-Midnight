@@ -15,8 +15,6 @@
 
 using namespace chilli::types;
 
-FORWARD_REFERENCE(uifocuscontroller);
-
 class uitextmenu :
     public ax::ui::Scale9Sprite,
     public uishortcutkeys,
@@ -35,11 +33,11 @@ public:
     static uitextmenu* create( f32 width, uitextmenuitem* items, u32 count );
     void enableItem( u32 id, bool enabled );
     void showItem( u32 id, bool enabled );
+    MenuItem* getItem( u32 id );
 
 protected:
 
     bool initWithItems( f32 width, uitextmenuitem* items, u32 count );
-    MenuItem* getItem( u32 id );
     void notifyItem(Ref* ref);
 
     void refresh();
@@ -51,13 +49,12 @@ protected:
     f32                 phoneYPadding;
     f32                 width;
     Menu*               mainmenu;
-    uifocuscontroller*  focusController;
 };
 
-class MyMenuItemLabel : public ax::MenuItemLabel
+class MyMenuItemLabel : public ax::MenuItem
 {
 public:
-    static MyMenuItemLabel* create(Node* label);
+    static MyMenuItemLabel* create(std::string& text, f32 width);
     
     std::function<void(MyMenuItemLabel*, MyMenuItemLabel*)> onFocusChanged;
 };

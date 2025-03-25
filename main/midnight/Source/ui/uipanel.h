@@ -15,6 +15,7 @@
 #include "../frontend/panel_id.h"
 #include "../ui/uielement.h"
 #include "../ui/uishortcutkeys.h"
+#include "../ui/uifocuscontroller.h"
 #include "../system/moonring.h"
 
 using namespace chilli::types;
@@ -24,7 +25,6 @@ FORWARD_REFERENCE( uipopup );
 FORWARD_REFERENCE( uihelpwindow );
 FORWARD_REFERENCE( moonring );
 FORWARD_REFERENCE( uieventargs );
-FORWARD_REFERENCE(uifocuscontroller);
 
 class ResumeEventListenerMouse : public ax::EventListenerMouse
 {
@@ -131,7 +131,12 @@ protected:
     Node* childFromPoint( Node* node, Vec2 pos );
     void ResumeMouseListener();
 #endif
-    
+
+#if defined(_FOCUS_ENABLED_)
+    virtual std::vector<layoutid_t> getFocusControls() const;
+    void addFocusController();
+#endif
+
 protected:
     uipopup*            popupWindow;
     moonring*           mr;
@@ -148,8 +153,10 @@ protected:
     WidgetEventCallback eventCallback;
     
     Layer*              safeArea;
-    uifocuscontroller*  focusController;
     
+#if defined(_FOCUS_ENABLED_)
+    uifocuscontroller  focusController;
+#endif
     
 #if defined(_MOUSE_ENABLED_)
     Sprite*             imgCursor;

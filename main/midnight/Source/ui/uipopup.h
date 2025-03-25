@@ -12,9 +12,10 @@
 #include "../library/inc/mxtypes.h"
 #include "uielement.h"
 #include "uishortcutkeys.h"
+#include "uifocuscontroller.h"
+#include "../system/moonring.h"
 
 FORWARD_REFERENCE(uipanel);
-FORWARD_REFERENCE(uifocuscontroller);
 
 using namespace chilli::types;
 
@@ -44,16 +45,22 @@ protected:
     void addTouchListener();
     void addKeyboardListener();
 
+#if defined(_FOCUS_ENABLED_)
     void addFocusController();
     void removeFocusController();
+#endif
 
     void OnYes();
     void OnNo();
     
 protected:
-    uipanel*    parent;
-    Layout*     layout;
-    uifocuscontroller*  focusController;
+    uipanel*            parent;
+    Layout*             layout;
+
+#if defined(_FOCUS_ENABLED_)
+    uifocuscontroller   focusController;
+#endif
+
 };
 
 

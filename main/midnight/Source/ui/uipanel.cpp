@@ -98,16 +98,7 @@ bool uipanel::init()
         OnShown();
     });
 
-    
-    if (moonring::mikesingleton()->settings->nav_mode == CF_NAVIGATION::DPAD) {
-        focusController = new uifocuscontroller();
-        focusController->retain();
-        focusController->add(this);
-        focusController->setCallback(clickCallback);
-    }
- 
-    addKeyboardListener();
-    
+
     return true;
 }
 
@@ -385,14 +376,20 @@ void uipanel::onEnter()
 
 void uipanel::OnShown( void )
 {
+#if defined(_FOCUS_ENABLED_)
+    addFocusController();
+#endif
+    addKeyboardListener();
 }
 
 void uipanel::OnDeActivate()
 {
+    auto a = 100;
 }
 
 void uipanel::OnActivate()
 {
+    auto a = 100;
 }
 
 void uipanel::setEnabled(bool enabled)
@@ -427,10 +424,26 @@ bool uipanel::OnKeyboardEvent( uikeyboardevent* event )
     return false;
 }
 
+#if defined(_FOCUS_ENABLED_)
+void uipanel::addFocusController()
+{
+    if (moonring::mikesingleton()->settings->nav_mode == CF_NAVIGATION::DPAD) {
+        focusController.add(this);
+        
+        focusController.setCallback(clickCallback);
+        auto controls = getFocusControls();
+        focusController.setControls(controls);
+    }
+}
+
+std::vector<layoutid_t> uipanel::getFocusControls() const
+{
+    return std::vector<layoutid_t>();
+}
+#endif //
+
 void uipanel::addKeyboardListener()
 {
-    auto controllers = Controller::getAllController();
- 
     auto eventListener = EventListenerKeyboard::create();
     
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event)

@@ -53,6 +53,20 @@ uifilterbutton* uifilterbutton::createWithImage(const std::string& image)
     
     uihelper::setEnabled(button,true);
 
+    button->onFocusChanged = [button](Widget* widgetLostFocus, Widget* widgetGetFocus) {
+        
+        if (widgetGetFocus == button) {
+            button->setScale(1.2f);
+            button->setFocused(true);
+            button->setColor(_clrGreen);
+        }
+        if (widgetLostFocus == button) {
+            button->setScale(scale_normal);
+            button->setFocused(false);
+            button->setColor(_clrWhite);
+        }
+    };
+
     return button;
 }
 
