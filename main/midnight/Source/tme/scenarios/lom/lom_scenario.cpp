@@ -113,13 +113,8 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
     mx->battle = new lom_battle;
     mx->gameover = new lom_gameover;
     mx->entityfactory = new mxentityfactory;
-    
-    if ( mx->scenario == nullptr ) {
-        mx->scenario = lom_scenario;
-        
-        // set initial feature flags
-        mx->scenario->features = SF_MOONRING|SF_ICEFEAR  ;
-    }
+    mx->scenario = lom_scenario ;
+    mx->scenario->features = SF_MOONRING|SF_ICEFEAR  ;
     
     return MX_OK ;
 }
