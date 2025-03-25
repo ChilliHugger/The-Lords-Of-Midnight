@@ -1375,16 +1375,16 @@ namespace tme {
         {
         mxthing_t    newobject;
         mxobject*    oinfo;
-
-            u32 timeCost = 0;
-            bool removeObject = true;
-            bool mikeseek = false;
+        u32 timeCost = 0;
+        u32 additionalTimeCost = 0;
+        bool removeObject = true;
+        bool mikeseek = false;
+        bool seekMsg = true;
 
             if ( mx->Difficulty() == DF_MEDIUM ) {
-                timeCost = sv_time_scale / 2; // half hr
-            }
-            else if ( mx->Difficulty() == DF_HARD ) {
-                timeCost = sv_time_scale ; // 1 hr
+                timeCost = sv_time_scale / 2;       // half hr
+            } else if ( mx->Difficulty() == DF_HARD ) {
+                timeCost = sv_time_scale ;          // 1 hr
             }
 
             SetLastCommand ( CMD_SEEK, IDT_NONE );
@@ -1401,25 +1401,16 @@ namespace tme {
                 }
             }
             
-        top:
+            // reduce by standard seek time
+            time = BSub(time, timeCost, 0);
+            
             oinfo = mx->ObjectById ( newobject );
-
             if ( oinfo == nullptr ) {
-                time = BSub(time, timeCost, 0);
-                mx->SetLastActionMsg(mx->text->CookedSystemString(SS_SEEK_NOTHING, this));
-                return oinfo;
+                return FoundNothing();
             }
 
             //
             mx->text->oinfo = oinfo ;
-            bool reset_msg=false;
-
-#if defined(_DDR_)
-            if ( newobject == OB_GUIDANCE )
-                mx->SetLastActionMsg(mx->text->CookedSystemString(SS_GUIDANCE1, this));
-            else
-#endif
-                mx->SetLastActionMsg(mx->text->CookedSystemString(SS_SEEK, this));
             
             switch ( newobject ) {
 
@@ -1433,88 +1424,71 @@ namespace tme {
                     break;
 
                 case OB_SHELTER:
-                    timeCost = timeCost * 2;
+                    additionalTimeCost = timeCost;
                     IncreaseEnergy( (s32)sv_object_energy_shelter );
                     break;
 
 #if defined(_DDR_)
                 case OB_CLAWS:
-                    timeCost = 0;
                     time = sv_time_night;
-                    reset_msg=true;
                     break;
                 case OB_FLAMES:
-                    timeCost = 0;
                     time = sv_time_dawn;
-                    reset_msg=true;
                     break;
                 case OB_THORNS:
-                    despondency=0;
-                    reset_msg=true;
+                    despondency=MIN_DESPONDENCY;
                     break;
                 case OB_BLOOD:
                     despondency=MAX_DESPONDENCY;
-                    reset_msg=true;
                     break;
                 case OB_LANGUOR:
                     energy=sv_object_energy_shadowsofdeath;
-                    reset_msg=true;
                     break;
                 case OB_SPRINGS:
                     energy=sv_object_energy_watersoflife;
-                    reset_msg=true;
                     break;
 #endif
                     
                 case OB_GUIDANCE:
-                    timeCost = timeCost * 2;
-                    mx->scenario->GiveGuidance(this, (mikeseek?1:0) );
+                    additionalTimeCost = timeCost;
                     break;
 
                 case OB_SHADOWSOFDEATH:
                     energy = (u32)sv_object_energy_shadowsofdeath;
                     warriors.energy = (u32)sv_object_energy_shadowsofdeath;
                     riders.energy = (u32)sv_object_energy_shadowsofdeath;
-                    reset_msg=true;
                     break;
 
                 case OB_WATERSOFLIFE:
                     energy = (u32)sv_object_energy_watersoflife;
                     warriors.energy = (u32)sv_object_energy_watersoflife;
                     riders.energy = (u32)sv_object_energy_watersoflife;
-                    reset_msg=true;
                     break;
 
                 case OB_HANDOFDARK:
-                    timeCost = 0;
                     time = sv_time_night;
-                    reset_msg=true;
                     break;
 
                 case OB_CUPOFDREAMS:
-                    timeCost = 0;
                     time = sv_time_dawn;
-                    reset_msg=true;
                     break;
 
                 case OB_ICECROWN:
-                    if ( IsAllowedIcecrown() ) {
-                        timeCost = timeCost * 4;
-                        Cmd_PickupObject();
-                    }else{
-                        newobject = OB_NONE ;
-                        goto top;
+                    if ( !IsAllowedIcecrown() ) {
+                        return FoundNothing();
                     }
+                
+                    additionalTimeCost = timeCost * 2;
+                    Cmd_PickupObject();
                     break;
 
                 case OB_MOONRING:
-                    if ( IsAllowedMoonring() ) {
-                        timeCost = timeCost * 4;
-                        Cmd_PickupObject();
-                    }else{
-                        newobject = OB_NONE ;
-                        goto top;
+                    if ( !IsAllowedMoonring() ) {
+                        return FoundNothing();
                     }
+
+                    additionalTimeCost = timeCost * 2;
+                    Cmd_PickupObject();
                     break;
 
                 default:
@@ -1524,6 +1498,7 @@ namespace tme {
 #if defined(_DDR_)
                         if ( !sv_cheat_nasties_noblock ) {
                             Cmd_Fight();
+                            seekMsg = IsDead();
                         } else {
                             removeObject = false;
                         }
@@ -1535,8 +1510,7 @@ namespace tme {
 
                         // we can only pickup a new object if can we drop our current object
                         if ( carrying && !carrying->CanDrop() ) {
-                            newobject = OB_NONE ;
-                            goto top;
+                            return FoundNothing();
                         }
 
                         Cmd_PickupObject();
@@ -1555,21 +1529,29 @@ namespace tme {
                 mapsqr.RemoveObject();
             }
 #endif
-#if defined(_DDR_)
-            if ( reset_msg ) {
-                mx->text->oinfo = oinfo ;
-                mx->SetLastActionMsg( mx->text->CookedSystemString( SS_SEEK, this) );
+            time = BSub(time, additionalTimeCost, 0);
+            
+            if ( newobject == OB_GUIDANCE ) {
+                mx->scenario->GiveGuidance(this, (mikeseek?1:0) );
+            } else {
+                if (seekMsg) {
+                    mx->text->oinfo = oinfo ;
+                    mx->SetLastActionMsg( mx->text->CookedSystemString( SS_SEEK, this) );
+                }
             }
             
             if ( removeObject )
                 mapsqr.RemoveObject();
-#endif
-
-            time = BSub(time, timeCost, 0);
 
             SetLastCommand ( CMD_SEEK, MAKE_ID(IDT_OBJECT,newobject) );
 
             return mx->ObjectById(newobject) ;
+        }
+
+        mxobject* mxcharacter::FoundNothing() const
+        {
+            mx->SetLastActionMsg(mx->text->CookedSystemString(SS_SEEK_NOTHING, this));
+            return nullptr;
         }
 
         MXRESULT mxcharacter::Cmd_DropObject ( void )

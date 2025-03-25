@@ -1916,10 +1916,6 @@ namespace tme {
                     mx->SetLastActionMsg(mx->text->CookText(guidance,c));
                     found=TRUE;
                 }
-                
-                
-                
-                
             }
         }
         if ( !found ) {
