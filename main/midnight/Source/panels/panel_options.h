@@ -66,6 +66,10 @@ protected:
     void changeDisplayMode();
 #endif
 
+#if defined(_FOCUS_ENABLED_)
+    virtual std::vector<layoutid_t> getFocusControls() const override;
+#endif
+
 protected:
     DrawNode*               menu2_background;
     Vector<MenuItemNode*>   fields;

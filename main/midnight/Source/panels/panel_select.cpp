@@ -1036,3 +1036,20 @@ void panel_select::removeEmptyEndPages()
         pageView->removePage(page);
     }
 }
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_select::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_LOOK,
+        ID_NIGHT,
+        ID_FILTER_DAWN,
+        ID_FILTER_NIGHT,
+        ID_FILTER_BATTLE,
+        ID_FILTER_DEAD,
+        ID_FILTER_CURRENT_LOC,
+        ID_CLEANUP_SELECT
+    };
+    return controls;
+}
+#endif

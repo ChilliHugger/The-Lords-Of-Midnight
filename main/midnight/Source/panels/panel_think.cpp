@@ -154,6 +154,9 @@ void panel_think::tintButton(layoutid_t buttonId,Color3B colour)
         button->setEnabled(false);
         button->setBright(true);
         button->setColor(colour);
+#if defined(_FOCUS_ENABLED_)
+        focusController.setFocus(buttonId);
+#endif
     }
 }
 
@@ -614,3 +617,28 @@ bool panel_think::OnKeyboardEvent( uikeyboardevent* event )
     return false;
 }
 
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_think::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_LOOK,
+        //ID_GROUP_LEAVE,
+        //ID_GROUP_DISBAND,
+        ID_THINK_ARMY,
+        ID_THINK_PERSON,
+        ID_THINK_PLACE,
+        ID_THINK_BATTLE,
+        
+        ID_ENTER_TUNNEL,
+        ID_APPROACH,
+        ID_RECRUITMEN,
+        ID_POSTMEN,
+#if defined(_LOM_)
+        ID_UNHIDE,
+        ID_FIGHT,
+#endif
+
+    };
+    return controls;
+}
+#endif

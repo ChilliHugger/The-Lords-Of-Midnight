@@ -1060,6 +1060,8 @@ void panel_look::fadeOut ( rgb_t colour, f32 initialAlpha,  const MXVoidCallback
 
 void panel_look::OnShown()
 {
+    uipanel::OnShown();
+    
     startInactivity();
     
     
@@ -1858,5 +1860,18 @@ bool panel_look::OnMouseMove( Vec2 position )
     setCursor(mode);
 
     return true;
+}
+#endif
+
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_look::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_SELECT_ALL,
+        ID_ACTIONS,
+        ID_HELP
+    };
+    return controls;
 }
 #endif

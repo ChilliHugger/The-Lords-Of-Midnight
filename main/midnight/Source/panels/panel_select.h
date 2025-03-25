@@ -80,6 +80,10 @@ protected:
     void draggedLordJoinsGroup();
     bool checkValidDropLocation();
     
+#if defined(_FOCUS_ENABLED_)
+    std::vector<layoutid_t> getFocusControls() const override;
+#endif
+    
 private:
     s32 SELECT_GRID_X ;
     s32 SELECT_GRID_Y ;

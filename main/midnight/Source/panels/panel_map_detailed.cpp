@@ -629,3 +629,23 @@ void panel_map_detailed::setupPlaceLabels()
     }
         
 }
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_map_detailed::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_LOOK,
+        // ID_GROUP_DISBAND,
+        // ID_SELECT_ALL,
+        ID_MAP_OVERVIEW,
+        ID_FILTER_CURRENT_LOC,
+        ID_FILTER_CRITTERS,
+        ID_FILTER_TUNNELS,
+        ID_FILTER_LORDS,
+        ID_UP,
+        ID_DOWN,
+        ID_RESET,
+    };
+    return controls;
+}
+#endif

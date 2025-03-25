@@ -34,6 +34,10 @@ protected:
     
     void setNightText( const std::string& text );
     
+#if defined(_FOCUS_ENABLED_)
+    virtual std::vector<layoutid_t> getFocusControls() const override;
+#endif
+
 private:
     Label*                          lblDescription;
     ScrollView*                     scrollView;

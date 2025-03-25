@@ -20,6 +20,7 @@
 #include "../ui/uitextmenu.h"
 #include "../ui/uihelper.h"
 #include "../ui/uioptionitem.h"
+#include "../ui/uifocuscontroller.h"
 
 #include "../ui/uibook.h"
 #include "../ui/uibookmenu.h"
@@ -31,11 +32,7 @@ static uitextmenuitem items[] = {
     { ID_NEW_STORY,         {MAINMENU_NEW_STORY},       KEYCODE(N), KEYBOARD_KEY_N },
     { ID_CONTINUE_STORY,    {MAINMENU_CONTINUE_STORY},  KEYCODE(C), KEYBOARD_KEY_C },
     { ID_END_STORY,         {MAINMENU_END_STORY},       KEYCODE(E), KEYBOARD_KEY_E },
-    //#ifdef _USE_DEBUG_MENU_
-    //    { ID_DEBUG_EMAIL, {"TO SDCARD"},              KEYCODE(Z), "Z"},
-    //#else
     { ID_CREDITS,           {MAINMENU_CREDITS},         KEYCODE(Z), KEYBOARD_KEY_Z},
-    //#endif
     { ID_OPTIONS,           {MAINMENU_OPTIONS},         KEYCODE(O), KEYBOARD_KEY_O},
 #if defined(_OS_DESKTOP_)
     { ID_EXIT,              {MAINMENU_EXIT},            KEYCODE(ESCAPE), KEYBOARD_KEY_ESC},
@@ -56,7 +53,6 @@ bool panel_mainmenu::init()
     }
     
     mr->settings->tutorial = TOGGLE::OFF;
-    Widget::enableDpadNavigation(true);
         
     //
     // Background
@@ -96,14 +92,11 @@ bool panel_mainmenu::init()
     //
     // Guide and Manual
     //    
-    guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback);
-    guide->setScale(scale_normal+scale_half);
-    guide->setFocused(true);
+    guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback, scale_normal+scale_half);
     uihelper::AddBottomRight(safeArea,guide, RES(10), RES(10) );
     
 
-    story = uihelper::CreateImageButton("i_story", ID_MANUAL, clickCallback);
-    story->setScale(scale_normal+scale_half);
+    story = uihelper::CreateImageButton("i_story", ID_MANUAL, clickCallback, scale_normal+scale_half);
     uihelper::AddBottomLeft(safeArea,story, RES(10), RES(10) );
     
     //
@@ -138,6 +131,24 @@ bool panel_mainmenu::init()
     
     return true;
 }
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_mainmenu::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_NEW_STORY,
+        ID_CONTINUE_STORY,
+        ID_END_STORY,
+        ID_CREDITS,
+        ID_OPTIONS,
+        ID_EXIT,
+        ID_UPDATE,
+        ID_MANUAL,
+        ID_GUIDE
+    };
+    return controls;
+}
+#endif
 
 ActionInterval* createBounceAction()
 {
@@ -192,28 +203,18 @@ void panel_mainmenu::hideWelcomeMessage(f32 y)
     
     mr->settings->firsttime = false;
     mr->settings->Save();
-
 }
 
-void panel_mainmenu::OnNotification( Ref* sender )
+void panel_mainmenu::OnNotification(layoutid_t id)
 {
-    switch ( ((Button*)sender)->getTag() ) {
+    switch ( id ) {
         case ID_MANUAL:
             OnShowManual();
             break;
         case ID_GUIDE:
             OnShowGuide();
             break;
-    }
-}
 
-void panel_mainmenu::OnMenuNotification(
-        _UNUSED_ const uinotificationinterface* sender,
-        menueventargs* args )
-{
-    
-    switch (args->menuitem->id)
-    {
 #if defined(_OS_DESKTOP_)
         case ID_EXIT:
             OnExitGame();
@@ -249,6 +250,18 @@ void panel_mainmenu::OnMenuNotification(
         default:
             break;
     }
+}
+
+void panel_mainmenu::OnNotification( Ref* sender )
+{
+    OnNotification((layoutid_t)((Button*)sender)->getTag());
+}
+
+void panel_mainmenu::OnMenuNotification(
+    _UNUSED_ const uinotificationinterface* sender,
+    menueventargs* args )
+{
+    OnNotification(args->menuitem->id);
 }
 
 

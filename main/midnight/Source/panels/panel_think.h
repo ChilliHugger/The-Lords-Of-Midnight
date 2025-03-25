@@ -44,6 +44,10 @@ protected:
 
     void createLookLordButton(mxid id);
 
+#if defined(_FOCUS_ENABLED_)
+    virtual std::vector<layoutid_t> getFocusControls() const override;
+#endif
+
 protected:
     s32                     currentPage;
     mxid                    id;

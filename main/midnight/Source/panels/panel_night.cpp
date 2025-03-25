@@ -100,6 +100,9 @@ void panel_night::update(float delta)
         unscheduleUpdate();
         auto button = safeArea->getChildByTag<Button*>(ID_DAWN);
         uihelper::setEnabled(button, true);
+#if defined(_FOCUS_ENABLED_)
+        focusController.setFocus(ID_DAWN);
+#endif
     }
 
 }
@@ -184,3 +187,13 @@ void panel_night::setNightText( const std::string& text )
     lblDescription->setAnchorPoint(uihelper::AnchorTopLeft);
     lblDescription->setPosition(RES(32), height-textY);
 }
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_night::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_DAWN
+    };
+    return controls;
+}
+#endif

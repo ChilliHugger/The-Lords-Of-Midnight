@@ -98,3 +98,13 @@ void panel_gameover::OnNotification( Ref* sender )
         mr->showPage(MODE_MAINMENU);
     }
 }
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_gameover::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_HOME
+    };
+    return controls;
+}
+#endif

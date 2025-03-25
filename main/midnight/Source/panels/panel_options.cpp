@@ -102,7 +102,8 @@ static const char* values_movement[] = {
     OPTIONS_MOVEMENT_SWIPE_PUSH,
     OPTIONS_MOVEMENT_PUSH,
     OPTIONS_MOVEMENT_SWIPE,
-    OPTIONS_MOVEMENT_PRESS_SWIPE
+    OPTIONS_MOVEMENT_PRESS_SWIPE,
+    OPTIONS_MOVEMENT_DPAD
 };
 
 //static const char* values_think[]               = {OPTIONS_THINK_SWIPE,OPTIONS_THINK_SWIPE,OPTIONS_THINK_ARROWS};
@@ -263,7 +264,7 @@ static option_t options[] = {
 
     {   ID_OPTION_MOVE_INDICATORS,  OPT_TOGGLE, 0, values_yesno,               nullptr, false },
     {   ID_OPTION_TUTORIAL,         OPT_TOGGLE, 0, values_onoff,               nullptr, false },
-    {   ID_OPTION_NAVIGATION,       OPT_NUMBER, 4, values_movement,            nullptr, false },
+    {   ID_OPTION_NAVIGATION,       OPT_NUMBER, 5, values_movement,            nullptr, false },
     {   ID_OPTION_TRANSITIONS,      OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     {   ID_OPTION_FLIPSCREEN,       OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     
@@ -834,12 +835,23 @@ bool panel_options::OnKeyboardEvent( uikeyboardevent* event )
 
 void panel_options::OnNotification( Ref* sender )
 {
-    auto menuItem = dynamic_cast<uioptionitem*>(sender);
-    if ( menuItem == nullptr )
+    auto item = dynamic_cast<Node*>(sender);
+    if (item == nullptr)
         return;
     
     menueventargs args;
-    args.menuitem = static_cast<uitextmenuitem*>(menuItem->getUserData());
+    args.menuitem = static_cast<uitextmenuitem*>(item->getUserData());
     OnMenuNotification( nullptr, &args );
 }
 
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_options::getFocusControls() const
+{
+    auto controls = std::vector<layoutid_t>();
+    for( auto item : items_main) {
+        controls.push_back(item.id);
+    }
+    return controls;
+}
+#endif

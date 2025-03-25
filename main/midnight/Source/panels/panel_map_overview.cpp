@@ -110,3 +110,14 @@ void panel_map_overview::OnNotification( Ref* sender )
             break;
     }
 }
+
+#if defined(_FOCUS_ENABLED_)
+std::vector<layoutid_t> panel_map_overview::getFocusControls() const
+{
+    std::vector<layoutid_t> controls = {
+        ID_LOOK,
+        ID_MAP_DISCOVERY
+    };
+    return controls;
+}
+#endif

@@ -153,6 +153,9 @@ protected:
 #if defined(_MOUSE_ENABLED_)
     bool OnMouseMove( Vec2 pos ) override;
 #endif
+#if defined(_FOCUS_ENABLED_)
+    virtual std::vector<layoutid_t> getFocusControls() const override;
+#endif
 
     void startCompassTimer(Vec2 pos);
     void cancelCompassTimer();

@@ -26,6 +26,8 @@ public:
 
     
 protected:
+    void OnNotification(layoutid_t id);
+
     void OnShowManual();
     void OnShowGuide();
     void OnHelpClose();
@@ -47,15 +49,16 @@ protected:
     void getVersion();
 #endif
     
+#if defined(_FOCUS_ENABLED_)
+    virtual std::vector<layoutid_t> getFocusControls() const override;
+#endif
+    
 private:
     uitextmenu* menu;
     std::string versionUrl;
     
     Button* guide;
     Button* story;
-    
-    
-    
 };
 
 #endif // __panel_mainmenu_h__
