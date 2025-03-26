@@ -1,5 +1,9 @@
 The Midnight Engine
 
+Build (54)
+1. FIXED: LOM - Crash when after Moonring wearer dies
+2. FIXED: DDR - Incorrect hours remaining shown after finding guidance
+
 Build (53)
 1. FIXED: ANDROID: Start new game crash - stop proguard stripping axmol utils.
 
