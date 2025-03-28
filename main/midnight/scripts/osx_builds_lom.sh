@@ -11,3 +11,7 @@ axmol build -configOnly -p osx -a x64 -xc '-DTME=LOM,-DTESTS=YES,-BBuilds/mac-te
 rm -r Builds/ios-lom
 mkdir Builds/ios-lom
 axmol build -configOnly -p ios -a arm64 -xc '-DTME=LOM,-BBuilds/ios-lom'
+
+rm -r Builds/ios-lom-simulator
+mkdir Builds/ios-lom-simulator
+axmol build -configOnly -p ios -a x64 -sdk simulator -xc '-DTME=LOM,-BBuilds/ios-lom-simulator'
