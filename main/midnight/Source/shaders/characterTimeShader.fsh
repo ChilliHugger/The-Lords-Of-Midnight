@@ -26,6 +26,7 @@ void main()
     vec4 b = vec4( 0.0, 0.0, 0.0, 0.0 ) ;
     
     vec3 fragRGB = c.rgb; // current color
+    n.a = c.a * p_alpha;
 
     if(c.a!=0.0)
     {
@@ -41,10 +42,8 @@ void main()
         n.g = b.g + (fragRGB.g*(c.a*p_fade)) ;
         n.b = b.b + (fragRGB.b*(c.a*p_fade)) ;
 
-        n.a = c.a * p_alpha;
-
-        fragRGB = n.rgb * n.a; // Premultiply alpha
+        fragRGB = n.rgb * n.a; // convert back to PMA
     }
-    
+
     FragColor = vec4(fragRGB.rgb, n.a);
 }
