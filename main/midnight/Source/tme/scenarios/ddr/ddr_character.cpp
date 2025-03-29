@@ -791,6 +791,10 @@ namespace tme {
             foe = recruiter->Foe() ;
         }
 
+        // a change of allegiance potentially changes if anyone is preparing for battle
+         auto scenario = static_cast<ddr_x*>(mx->scenario);
+         scenario->CleanupBattleContinuesForLocation(Location());
+
         return true ;
     }
         

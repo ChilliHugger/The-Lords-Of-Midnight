@@ -56,6 +56,8 @@ public:
     
     static void LordIsNotRecruited(const string& name);
     static void LordIsRecruited(const string& name);
+    static void LordIsRecruitedBy(const string& name, const string& recruiter);
+
     static void LordPerformsApproach(const string& name1, const string& name2 = "");
     static void LordsIsLookingAt(const string& name1, const string& name2);
     static void LordMovesForward(const string& name);

@@ -1,5 +1,9 @@
 The Midnight Engine
 
+Build (55)
+1. FIXED: LOM - Crash at startup after previously chaning scenaro to LOM_NOVEL
+2. FIXED: DDR - Friendly Lord 'prepares For battle' at friendly fortress after being recruited
+
 Build (54)
 1. FIXED: LOM - Crash when after Moonring wearer dies
 2. FIXED: Incorrect hours remaining shown after finding guidance

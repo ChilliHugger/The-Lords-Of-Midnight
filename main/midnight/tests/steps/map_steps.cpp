@@ -15,7 +15,9 @@ void MapStep::ClearObjectFromLocation(loc_t loc)
 
 void MapStep::SetObjectAtLocation(loc_t loc, mxthing_t thing)
 {
-    tme::mx->gamemap->GetAt(loc).object = thing;
+    mxloc& maploc = tme::mx->gamemap->GetAt(loc);
+    maploc.object = thing;
+    maploc.flags |= lf_creature;
 }
 
 mxthing_t MapStep::GetObjectAtLocation(loc_t loc)
