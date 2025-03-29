@@ -82,11 +82,13 @@ MXRESULT lom_novel_x::Register ( mxengine* midnightx )
     if (lom_x::Register(midnightx) != MX_OK) {
         return MX_FAILED;
     }
+    
+    if (lom_novel_scenario != nullptr) {
+        mx->scenario = lom_novel_scenario;
 
-    mx->scenario = lom_novel_scenario;
-
-    // set initial feature flags
-    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_TUNNELS|SF_DISMOUNT ;
+        // set initial feature flags
+        mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_TUNNELS|SF_DISMOUNT ;
+    }
     
     return MX_OK ;
 }
