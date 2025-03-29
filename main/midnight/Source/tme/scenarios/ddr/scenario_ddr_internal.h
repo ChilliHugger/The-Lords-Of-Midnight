@@ -42,7 +42,8 @@ namespace tme {
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
         virtual mxcharacter* IsEnemyAtLocation( mxgridref loc, const ddr_character* character) const;
         virtual bool IsLoyalToTheMoonprince(mxrace_t race) const ;
-
+        virtual void CleanupBattleContinuesForCharacter(ddr_character* character);
+        virtual void CleanupBattleContinuesForLocation(mxgridref loc);
     
     public:
         ddr_character*  morkin;

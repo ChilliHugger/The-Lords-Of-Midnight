@@ -351,7 +351,7 @@ std::string buffer = mx->text->CookedSystemString(SS_GUIDANCE1, character);
     auto c = mx->CharacterById(id);
 
     RETURN_IF_NULL(c);
-   
+       
     if ( c->IsAlive() && !c->IsFriend(character) ) {
         // SS_SEEK_MSG1
         // , "{char:longname} stands {char:loc:terrain:prep} {char:loc:name}."
@@ -399,6 +399,40 @@ mxterrain_t ddr_x::toScenarioTerrain(mxterrain_t t) const
         t=TN_WATCHTOWER;
     return t;
 }
+
+void ddr_x::CleanupBattleContinuesForCharacter(ddr_character* character)
+{
+    RETURN_IF_NULL(character);
+    
+    // cleanup 'prepares to do battle'
+    int enemies=0;
+    FOR_EACH_CHARACTER(c) {
+        CONTINUE_IF( c == character );
+        CONTINUE_IF( c->IsDead() );
+        CONTINUE_IF( c->Location() != character->Location() );
+        CONTINUE_IF( c->IsFriend(character) );
+        enemies++;
+    }
+    
+    auto stronghold = dynamic_cast<ddr_stronghold*>(StrongholdFromLocation(character->Location()));
+    if ( stronghold && !stronghold->IsFriend(character))
+        enemies++;
+        
+    if ( enemies != 0 )
+        character->Flags().Set(cf_preparesbattle);
+        else
+        character->Flags().Reset(cf_preparesbattle);
+}
+
+void ddr_x::CleanupBattleContinuesForLocation(mxgridref loc)
+{
+    FOR_EACH_CHARACTER(c) {
+        CONTINUE_IF( c->IsDead() );
+        CONTINUE_IF( c->Location() != loc );
+        CleanupBattleContinuesForCharacter(dynamic_cast<ddr_character*>(c));
+    }
+}
+
 
 }
 // namespace tme

@@ -110,10 +110,17 @@ void TMEStep::LordIsNotRecruited(const string& name)
 
 void TMEStep::LordIsRecruited(const string& name)
 {
+    // auto lord = GetCharacter(name);
+    // lord->Flags().Set(cf_recruited);
+    // lord->Flags().Reset(cf_ai);
+    // lord->liege = GetCharacter(ch_luxor);
+    LordIsRecruitedBy(name, ch_luxor);
+}
+
+void TMEStep::LordIsRecruitedBy(const string& name, const string& recruiter)
+{
     auto lord = GetCharacter(name);
-    lord->Flags().Set(cf_recruited);
-    lord->Flags().Reset(cf_ai);
-    lord->liege = GetCharacter(ch_luxor);
+    lord->Recruited(GetCharacter(recruiter));
 }
 
 void TMEStep::LordPerformsApproach(const string& name1, const string& name2)

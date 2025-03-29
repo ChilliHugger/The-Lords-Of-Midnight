@@ -368,6 +368,11 @@ SCENARIO("In normal mode when follower loses to another lord")
 // WHEN the lord moves
 // THEN they should no longer be preparing for battle
 
+// GIVEN an enemey lord is preparing for battle
+// WHEN the lord is recruited
+// THEN the lord is no longer preparing for battle
+
+
 SCENARIO("Lord prepares to do battle")
 {
     auto lord = TMEStep::ch_luxor;
@@ -460,6 +465,65 @@ SCENARIO("Lord prepares to do battle")
     }
 
 }
+
+void LordPreparesForBattle(const std::string& lord)
+{
+    REQUIRE( GetCharacter(lord)->Flags().Is(cf_preparesbattle) );
+}
+
+void LordNotPreparesForBattle(const std::string& lord)
+{
+    REQUIRE( !GetCharacter(lord)->Flags().Is(cf_preparesbattle) );
+}
+
+SCENARIO("Lords preparing to do battle after recruitment")
+{
+    // Malormun the Icelord is allied with the Moonprince.
+    // Imgudrorn the Icelord is allied with the Heartstealer.
+    // Imgudrorn was recruited by Tarithel so has changed allegiance to the Moonprince.
+    
+    TMEStep::NewStory();
+    
+    auto lord = "CH_MALORMUN";
+    auto enemy = "CH_IMGUDRORN";
+    auto stronghold = GetStronghold("SH_FORTRESS_MALORMUN")  ;
+    auto recruitingLord = DDRStep::ch_tarithel;
+        
+    GIVEN("a lord is loyal to the free")
+    {
+        TMEStep::LordIsRecruited(lord);
+
+        AND_GIVEN("at their stronghold")
+        {
+            TMEStep::LordAtLocation(lord, stronghold->Location());
+     
+            AND_GIVEN("the lord was in battle with the enemy")
+            {
+                TMEStep::LordsAtSameLocation(enemy, lord);
+                DDRStep::CharactersDawnBreaks(); // << Sets Prepares Battle Flags
+            
+                // check setup
+                LordPreparesForBattle(lord);
+                LordPreparesForBattle(enemy);
+           
+                WHEN("the enemy is recruited by the free")
+                {
+                    TMEStep::LordsAtSameLocation(recruitingLord, enemy);
+                    TMEStep::LordIsRecruitedBy(enemy, recruitingLord);
+                
+                    THEN("the lords should not be preparing for battle")
+                    {
+                        LordNotPreparesForBattle(lord);
+                        LordNotPreparesForBattle(enemy);
+                        LordNotPreparesForBattle(recruitingLord);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 
 // CH_TARITHEL vs CH_VARATRARG @ SH_FORTRESS_VARATRARG
 //TME: BATTLE: [  3] CH_TARITHEL
