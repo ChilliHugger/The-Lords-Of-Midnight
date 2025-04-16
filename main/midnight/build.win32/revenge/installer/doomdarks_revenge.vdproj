@@ -279,12 +279,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4557F20551394D0A88FFC39931962783"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4573D8B222DE4AA1AF0C328DB9AC1502"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -664,12 +658,6 @@
         "Entry"
         {
         "MsmKey" = "8:_90CED41D85AF4BF3AEECC70FF4E35305"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9189A5BACDD14F9696ED11C657AFB31A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -2144,26 +2132,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4557F20551394D0A88FFC39931962783"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\map"
-            "TargetName" = "8:map"
-            "Tag" = "8:"
-            "Folder" = "8:_CF975F4EDFC645BB817BC90488CFFB91"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4573D8B222DE4AA1AF0C328DB9AC1502"
             {
             "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\gfx_m\\people\\c_shareth.png"
@@ -3430,26 +3398,6 @@
             "TargetName" = "8:c_barbarian.png"
             "Tag" = "8:"
             "Folder" = "8:_0D7BF9BF0AA846F89ED68AD9D98F5A28"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9189A5BACDD14F9696ED11C657AFB31A"
-            {
-            "SourcePath" = "8:..\\vs_project\\bin\\revenge\\Release\\Content\\ddr\\database"
-            "TargetName" = "8:database"
-            "Tag" = "8:"
-            "Folder" = "8:_CF975F4EDFC645BB817BC90488CFFB91"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
