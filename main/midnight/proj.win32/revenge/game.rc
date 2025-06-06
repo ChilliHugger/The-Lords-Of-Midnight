@@ -50,8 +50,8 @@ GLFW_ICON           ICON                    "game.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,11,55
- PRODUCTVERSION 2,0,11,55
+ FILEVERSION 2,0,11,56
+ PRODUCTVERSION 2,0,11,56
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -68,12 +68,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Chilli Hugger Software Ltd\0"
             VALUE "FileDescription", "Doomdark's Revenge\0"
-            VALUE "FileVersion", "2, 0, 11, 55\0"
+            VALUE "FileVersion", "2, 0, 11, 56\0"
             VALUE "InternalName", "Revenge\0"
             VALUE "LegalCopyright", "Copyright © 1984 - 2025. All rights reserved.\0"
             VALUE "OriginalFilename", "game.exe\0"
             VALUE "ProductName", "Doomdark's Revenge\0"
-            VALUE "ProductVersion", "2, 0, 11, 55\0"
+            VALUE "ProductVersion", "2, 0, 11, 56\0"
         END
     END
     BLOCK "VarFileInfo"

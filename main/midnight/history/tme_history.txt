@@ -1,5 +1,8 @@
 The Midnight Engine
 
+Build (56)
+1. FIXED: LOM - Crash when seeking and finding an object that can be picked up
+
 Build (55)
 1. FIXED: LOM - Crash at startup after previously chaning scenaro to LOM_NOVEL
 2. FIXED: DDR - Friendly Lord 'prepares For battle' at friendly fortress after being recruited
@@ -7,7 +10,7 @@ Build (55)
 Build (54)
 1. FIXED: LOM - Crash when after Moonring wearer dies
 2. FIXED: Incorrect hours remaining shown after finding guidance
-3. FIXED: Problem with shaders on older devices
+3. FIXED: Problem with shaders on older devices - Black rectangles around characters
 
 Build (53)
 1. FIXED: ANDROID: Start new game crash - stop proguard stripping axmol utils.

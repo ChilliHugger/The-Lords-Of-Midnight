@@ -2,7 +2,8 @@ find . -type f -name '.DS*' -delete
 
 rm -r Builds/mac-lom
 mkdir Builds/mac-lom
-axmol build -configOnly -p osx -xc '-DTME=LOM,-BBuilds/mac-lom,-DCMAKE_OSX_ARCHITECTURES=$(ARCHS_STANDARD)'
+axmol build -configOnly -p osx -a x64 -xc '-DTME=LOM,-BBuilds/mac-lom'
+#axmol build -configOnly -p osx -xc '-DTME=LOM,-BBuilds/mac-lom,-DCMAKE_OSX_ARCHITECTURES=$(ARCHS_STANDARD)'
 
 rm -r Builds/mac-tests-lom
 mkdir Builds/mac-tests-lom
