@@ -1518,7 +1518,7 @@ namespace tme {
                         // we might have dropped an object
                         // and the pickup will have removed the object
                         
-                        oinfo=NULL;
+                        removeObject = false;
                     }
                     break;
 
