@@ -1516,9 +1516,7 @@ namespace tme {
                         Cmd_PickupObject();
                         
                         // we might have dropped an object
-                        // and the pickup will have removed the object
-                        
-                        oinfo=NULL;
+                        // and the pickup will have removed the object                        
                     }
                     break;
 
