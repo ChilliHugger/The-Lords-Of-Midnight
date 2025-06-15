@@ -176,8 +176,8 @@ public:
     
 };
 
-#define CONFIG(x)   (mr->settings->x)
-
+#define SETTINGS(x)   (mr->settings->x)
+#define CONFIG(x)   (mr->config->x)
 
 #define COMPLAIN    moonring::complain
 

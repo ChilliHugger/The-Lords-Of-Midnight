@@ -74,19 +74,20 @@ settingsmanager::~settingsmanager()
 
 bool settingsmanager::bumpAdvert()
 {
-    bool showAdvert = false;
+    bool show = false;
 
-    if ( mr->config->skip_adverts ) {
+    if ( CONFIG(skip_adverts) ) {
         return false;
     }
     
-    showAdvert = advert_screen_count%ADVERT_FREQUENCY==(ADVERT_FREQUENCY-1);
+    show = advert_screen_count%ADVERT_FREQUENCY==(ADVERT_FREQUENCY-1);
 
     advert_screen_count++;
 
     Save();
     
-    return showAdvert;
+    return show;
+}
 }
 
 bool settingsmanager::Save ( void )
