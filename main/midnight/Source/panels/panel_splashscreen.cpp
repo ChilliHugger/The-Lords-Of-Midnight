@@ -174,7 +174,7 @@ void panel_splashscreen::complete()
     // we want at least 3 seconds of splash screen
     f32 delay = MAX(0,(f32)(MAX_SPLASHSCREEN_TIME-Duration) / 1000.0f);
     
-    if ( is(CONFIG(screentransitions)) ) {
+    if ( is(SETTINGS(screentransitions)) ) {
         loadingProgress->runAction( FadeOut::create(1.0) );
     }else{
         loadingProgress->setVisible(false);
@@ -183,7 +183,8 @@ void panel_splashscreen::complete()
     
     this->scheduleOnce([&](float)
     {
-        if ( !mr->config->skip_dedication ) {
+        bool shouldShowDedication = SETTINGS(bumpDedication());
+        if (shouldShowDedication) {
             mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
         } else {
             mr->panels->showMainMenu();

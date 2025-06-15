@@ -55,7 +55,7 @@ void panelmanager::setPanelMode ( panelmode_t mode, bool history )
 void panelmanager::setPanelMode ( panelmode_t mode, transition_t transition, bool history )
 {
     if ( mode == MODE_MAINMENU && currentmode != MODE_ADVERT) {
-        if ( CONFIG(bumpAdvert()) )
+        if ( SETTINGS(bumpAdvert()) )
             mode = MODE_ADVERT;
     }
 
@@ -117,7 +117,7 @@ void panelmanager::returnToPrevious()
 
 void panelmanager::returnToPrevious( transition_t transition )
 {
-    if ( isNot(CONFIG(screentransitions)) )
+    if ( isNot(SETTINGS(screentransitions)) )
         transition=TRANSITION_NONE;
     
     CustomDirector *director = (CustomDirector *)Director::getInstance();
@@ -171,7 +171,7 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
 {
     //ui->hideKeyboardShortcuts(FALSE);
     
-    if ( isNot(CONFIG(screentransitions)) )
+    if ( isNot(SETTINGS(screentransitions)) )
         transition=TRANSITION_NONE;
     
     outgoing_panel = currentPanel();
@@ -235,7 +235,7 @@ void panelmanager::setCurrentPanel( uipanel* incomming, transition_t transition 
 void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition )
 {
     
-    if ( isNot(CONFIG(screentransitions)) )
+    if ( isNot(SETTINGS(screentransitions)) )
         transition=TRANSITION_NONE;
     
     outgoing_panel = currentPanel();
@@ -309,7 +309,7 @@ void panelmanager::pushCurrentPanel( uipanel* incomming, transition_t transition
 void panelmanager::showMainMenu()
 {
 #if defined(_DEBUG_GAME_PANEL_)
-    if(!mr->config->start_on_panel.IsEmpty())
+    if(!CONFIG(start_on_panel).IsEmpty())
     {
         storyid_t story = mr->getCurrentStory();
         if ( story != STORY_NONE ) {

@@ -17,15 +17,17 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  14
+#define CONFIG_VERSION                  15
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
     #define _SHOW_DEDICATION_
     #define ADVERT_FREQUENCY                16
+    #define DEDICATION_FREQUENCY            8
 #else
     #define _SHOW_SPLASH_
     #define ADVERT_FREQUENCY                16
+    #define DEDICATION_FREQUENCY            8
     #define _USE_DEBUG_MENU_
     #define _SHOW_GAME_VERSION_
     //#define _DEBUG_LANDSCAPE_
@@ -135,6 +137,7 @@ public:
     bool Save ( void );
     bool Load ( void );
     bool bumpAdvert();
+    bool bumpDedication();
 
 public:
     // not stored
@@ -196,4 +199,7 @@ public:
     
     // version 14
     CF_SCENARIO             current_scenario;
+    
+    // version 15
+    int                     dedication_screen_count;
 };
