@@ -183,7 +183,7 @@ void panel_splashscreen::complete()
     
     this->scheduleOnce([&](float)
     {
-        if ( !mr->config->skip_dedication ) {
+        if ( SETTINGS(bumpDedication()) ) {
             mr->panels->setPanelMode(MODE_DEDICATION, TRANSITION_FADEIN );
         } else {
             mr->panels->showMainMenu();

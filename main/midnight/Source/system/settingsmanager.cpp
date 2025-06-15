@@ -13,33 +13,34 @@
 using namespace chilli::lib ;
 
 settingsmanager::settingsmanager() :
-      tutorial(TOGGLE::ON)
+      approach_mode(CF_APPROACH::SWAP)
+    , autoapproach(TOGGLE::OFF)
     , autofight(TOGGLE::OFF)
     , autounhide(TOGGLE::OFF)
-    , nav_mode(CF_NAVIGATION::BOTH)
-    , screentransitions(TOGGLE::ON)
-    , flipscreen(TOGGLE::OFF)
-    , compass_delay(CF_COMPASS::NORMAL)
-    , think_paging_mode(CF_THINK_PAGING::SWIPE)
-    , night_confirm(TOGGLE::ON)
-    , night_display_fast(TOGGLE::OFF)
-    , night_battle_full(TOGGLE::ON)
-    , screen_mode(CF_SCREEN::FULL)
-    , keyboard_mode(CF_KEYBOARD::CLASSIC)
-    , fullscreensupported(true)
-    , cursor_size(CF_CURSOR::MEDIUM)
-    , game_difficulty(DF_NORMAL)
-    , movement_type(CF_MOVEMENT::ORIGINAL)
 #if defined(_LOM_)
     , autoseek(TOGGLE::OFF)
 #else
     , autoseek(TOGGLE::ON)
 #endif
-    , autoapproach(TOGGLE::OFF)
-    , approach_mode(CF_APPROACH::SWAP)
-    , firsttime(true)
-    , fey_recruit_mode(CF_FEY_RECRUIT::ON)
+    , compass_delay(CF_COMPASS::NORMAL)
     , current_scenario(CF_SCENARIO::DEFAULT)
+    , cursor_size(CF_CURSOR::MEDIUM)
+    , dedication_screen_count(0)
+    , screentransitions(TOGGLE::ON)
+    , fey_recruit_mode(CF_FEY_RECRUIT::ON)
+    , firsttime(true)
+    , flipscreen(TOGGLE::OFF)
+    , fullscreensupported(true)
+    , game_difficulty(DF_NORMAL)
+    , keyboard_mode(CF_KEYBOARD::CLASSIC)
+    , movement_type(CF_MOVEMENT::ORIGINAL)
+    , nav_mode(CF_NAVIGATION::BOTH)
+    , night_battle_full(TOGGLE::ON)
+    , night_confirm(TOGGLE::ON)
+    , night_display_fast(TOGGLE::OFF)
+    , screen_mode(CF_SCREEN::FULL)
+    , think_paging_mode(CF_THINK_PAGING::SWIPE)
+    , tutorial(TOGGLE::ON)
 {
     
 #if defined(_OS_DESKTOP_)
@@ -88,6 +89,22 @@ bool settingsmanager::bumpAdvert()
     
     return show;
 }
+
+bool settingsmanager::bumpDedication()
+{
+    bool show = false;
+
+    if ( CONFIG(skip_dedication) ) {
+        return false;
+    }
+    
+    show = dedication_screen_count%DEDICATION_FREQUENCY==0;
+
+    dedication_screen_count++;
+
+    Save();
+    
+    return show;
 }
 
 bool settingsmanager::Save ( void )
@@ -159,6 +176,9 @@ bool settingsmanager::Save ( void )
     
     // version 14
     ar << FROM_ENUM(current_scenario);
+    
+    // version 15
+    ar << dedication_screen_count;
 
     ar.Close();
 
@@ -253,6 +273,10 @@ bool settingsmanager::Load ( void )
 
     if ( version >= 14 ) {
         ar >> TO_ENUM(current_scenario, CF_SCENARIO);
+    }
+    
+    if ( version >= 15 ) {
+        ar >> dedication_screen_count;
     }
 
     ar.Close();
