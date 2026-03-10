@@ -27,19 +27,21 @@
 
 constexpr f32 TRANSITION_DURATION = 0.25f;
 
+// Water floor types. Only water locations get a floor quad; everything
+// else is floor_none and is left to the base landscape floor.
 typedef enum floor_t {
-      floor_normal = 0
-    , floor_snow
-    , floor_river
+      floor_none = 0
+    , floor_bay
     , floor_sea
+    , floor_river
+    , floor_marsh
     , floor_lake
-    , floor_debug
 } floor_t ;
-
 
 class LandscapeItem : public Ref
 {
     using Vec3 = ax::Vec3;
+    using Vec2 = ax::Vec2;
 
 public:
     tme::loc_t  loc;
@@ -50,6 +52,13 @@ public:
     bool        graffiti;
     Vec3        position;
     f32         scale;
+    
+    s32         id;
+    
+    Vec2            quadCorners[4];
+    bool            quadValid;
+
+    bool        current;
 };
 
 using LandscapeItems = ax::Vector<LandscapeItem*>;
@@ -83,7 +92,7 @@ public:
     void BuildPanorama();
     
     //void ProcessQuadrant(s32 x, s32 y, s32 dx, s32 dy, s32 qDim);
-    LandscapeItem* ProcessLocation(s32 x, s32 y);
+    LandscapeItem* ProcessLocation(s32 x, s32 y, s32 id);
     LandscapeItem* CalcCylindricalProjection(LandscapeItem* item);
     float RadiansFromFixedPointAngle(s32 fixed);
     f32 NormaliseXPosition(f32 x);
@@ -93,12 +102,10 @@ public:
     LandscapeItems*     items;
     LandscapeOptions*   options;
     s32                 location_infront_y;
-    tme::loc_t	        loc;
+    tme::loc_t          loc;
     f32                 looking;
     f32                 horizontalOffset;
     f32                 landscapeScreenWidth;
-
-    
 };
 
 

@@ -696,10 +696,9 @@ void moonring::initialise( progressmonitor* monitor )
     std::unique_lock<std::mutex> mlock(mutex);
     condition.wait(mlock, std::bind(&moonring::isDataLoaded, this));
     isDataLoaded=false;
-    
+
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
-    
     RUN_ON_UI_THREAD([=, this](){
         
         // load shader

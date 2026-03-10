@@ -20,7 +20,6 @@
 #include "../system/moonring.h"
 #include "../system/shadermanager.h"
 
-
 LandscapeTerrain* LandscapeTerrain::create( LandscapeOptions* options )
 {
     LandscapeTerrain* node = new (std::nothrow) LandscapeTerrain();
@@ -151,6 +150,13 @@ Sprite* LandscapeTerrain::AddGraphic(
 
 Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
 {
+    // Water terrain is drawn as flat-colour floor quads by LandscapeLand,
+    // not as billboard sprites.
+    if ( terrain == TN_BAY || terrain == TN_SEA || terrain == TN_RIVER ||
+         terrain == TN_MARSH || terrain == TN_LAKE3 ) {
+        return nullptr;
+    }
+
     // TODO: Cache this!
     terrain_data_t*    d = static_cast<terrain_data_t*>(TME_GetEntityUserData(MAKE_ID(INFO_TERRAININFO, terrain)));
     if ( d == nullptr || d->file.empty() ) {
@@ -164,7 +170,9 @@ Sprite* LandscapeTerrain::GetTerrainImage( mxterrain_t terrain )
     if ( terrain == TN_LAKE ) {
       //  image->setAnchorPoint(Vec2(0.5,1.0));
     }
-    
+
+    //image->setScale(0.25);
+
     return image;
 }
 
@@ -174,6 +182,11 @@ Sprite* LandscapeTerrain::GetImage( std::string& imagename )
         return nullptr;
  
     f32 imageScale = 1.0f;
+
+    // not every terrain has art in every atlas; createWithSpriteFrameName
+    // asserts on a missing frame, so skip those terrains instead.
+    if ( ax::SpriteFrameCache::getInstance()->getSpriteFrameByName( imagename ) == nullptr )
+        return nullptr;
 
     auto image = Sprite::createWithSpriteFrameName( imagename );
     if ( image != nullptr ) {
