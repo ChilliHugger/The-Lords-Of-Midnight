@@ -1,27 +1,33 @@
 /*
  * FILE:    citadel_scenario.cpp
- * 
+ *
  * PROJECT: citadel
- * 
- * CREATED: 
- * 
+ *
  * AUTHOR:  Chris Wild
- * 
+ *
  * Copyright 2017 Chilli Hugger. All rights reserved.
- * 
- * PURPOSE: 
- * 
- * 
+ *
+ * PURPOSE: The Lords of Midnight III : The Citadel
+ *
+ * The Citadel is a Lords-of-Midnight-family scenario, so it reuses the LOM
+ * battle resolution, stronghold model and the generic mission/victory game
+ * over scan. What it does not share is the moon ring and the ice fear -
+ * neither exists in the Citadel data - so those features stay off.
+ *
  */
 
 #include "../../baseinc/tme_internal.h"
+#include "../../utils/savegamemapping.h"
 #include "scenario_citadel.h"
 #include "scenario_citadel_internal.h"
+#include "../lom/scenario_lom_internal.h"
+#include "../lom/lom_processor_battle.h"
+#include "../lom/lom_gameover.h"
 #include <string>
 
-namespace tme {
+#if defined(_CITADEL_)
 
-    namespace scenarios {
+namespace tme {
 
     static scenarioinfo_t    citadel_scenario_info = {
         mxscenarioid::CITADEL,
@@ -34,47 +40,54 @@ namespace tme {
         "Copyright 1994 - 2017 Mike Singleton & Chris Wild"
     };
 
-static citadel_x* citadel_scenario = NULL ;
+static citadel_x* citadel_scenario = nullptr ;
 
-    
+
 MXRESULT MXAPI citadel::Create ( tme::mxinterface* engine )
 {
 variant args;
 
-    if ( engine == NULL )
+    if ( engine == nullptr )
         return MX_FAILED ;
 
     citadel_scenario = new citadel_x ;
 
-    if ( citadel_scenario == NULL )
+    if ( citadel_scenario == nullptr )
         return MX_FAILED ;
 
     args = citadel_scenario ;
     return engine->Command("@SETSCENARIO", &args, 1);
 
 }
-    
+
+citadel::citadel()
+{
+}
+
+citadel::~citadel()
+{
+}
 
 scenarioinfo_t* citadel::GetInfoBlock() const
     {
         return citadel_scenario->GetInfoBlock();
     }
-    
+
 MXRESULT citadel::Command ( const std::string& arg, variant argv[], u32 argc )
     {
         return citadel_scenario->Command(arg, argv, argc);
     }
-    
+
 MXRESULT citadel::GetProperties ( const std::string& arg, variant argv[], u32 argc )
     {
         return citadel_scenario->GetProperties(arg, argv, argc);
     }
-    
+
 MXRESULT citadel::Text ( const std::string& command, variant* argv, u32 args )
     {
         return citadel_scenario->Text(command, argv, args);
     }
-    
+
 
 //
 // citadel_X
@@ -82,7 +95,9 @@ MXRESULT citadel::Text ( const std::string& command, variant* argv, u32 args )
 //
 //
 
-citadel_x::citadel_x()
+citadel_x::citadel_x() :
+    darkCitadel(nullptr),
+    boroth(nullptr)
 {
 }
 
@@ -97,34 +112,52 @@ scenarioinfo_t* citadel_x::GetInfoBlock() const
 
 MXRESULT citadel_x::Register ( mxengine* midnightx )
 {
-    // mx = midnightx ;
     // add in the interfaces
     mx->text = new mxtext;
     mx->night = new mxnight;
-    mx->battle = new mxbattle;
-    mx->entityfactory = new mxentityfactory;
-    mx->scenario = (mxscenario*)citadel_scenario;
-    
-    // set initial feature flags
-    //mx->scenario->features = SF_MOONRING|SF_ICEFEAR  ;
-    
+    mx->battle = new lom_battle;
+    mx->gameover = new lom_gameover;
+    mx->entityfactory = new lom_entityfactory;
+
+    if ( citadel_scenario != nullptr ) {
+        mx->scenario = citadel_scenario ;
+        // No moon ring and no ice fear in the Citadel. Recruiting costs time
+        // across a 256x256 map, and riders may dismount.
+        mx->scenario->features = SF_RECRUIT_TIME|SF_DISMOUNT ;
+    }
+
     return MX_OK ;
 }
 
 MXRESULT citadel_x::UnRegister ( mxengine* midnightx )
 {
+    SAFEDELETE ( mx->gameover ) ;
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
     SAFEDELETE ( mx->battle ) ;
     SAFEDELETE ( mx->entityfactory );
-    
+
     // mx will delete the scenario, so just lose our
     // reference to it
-    citadel_scenario = NULL ;
+    citadel_scenario = nullptr ;
     return MX_OK ;
 }
 
-} // SCENARIOS
-    
+void citadel_x::initialise ( u32 version )
+{
+    darkCitadel = static_cast<mxstronghold*>(
+        mx->EntityByName( "ST_MARANOR", IDT_STRONGHOLD ));
+    boroth = mx->CharacterBySymbol("CH_BOROTH");
+
+    mxscenario::initialise(version);
 }
-// TME
+
+void citadel_x::initialiseAfterCreate ( u32 version )
+{
+    mxscenario::initialiseAfterCreate(version);
+}
+
+}
+// namespace tme
+
+#endif // _CITADEL_

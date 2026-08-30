@@ -116,7 +116,7 @@ moonring::~moonring()
 
 mxscenarioid moonring::getScenarioId() const
 {
-#if defined(_LOM_)
+#if defined(_LOM_) && !defined(_CITADEL_)
     if ( settings->current_scenario == CF_SCENARIO::NOVEL ) {
         return mxscenarioid::LOM_NOVEL;
     }
@@ -712,7 +712,9 @@ void moonring::initialise( progressmonitor* monitor )
 #if defined(_DDR_)
     project->LoadXmlConfig("ddr/ddr.tme", monitor );
 #endif
-#if defined(_LOM_)
+#if defined(_CITADEL_)
+    project->LoadXmlConfig("citadel/citadel.tme", monitor );
+#elif defined(_LOM_)
     project->LoadXmlConfig("lom/lom.tme", monitor );
 #endif
     

@@ -18,7 +18,9 @@
 #include "scenarios/ddr/scenario_ddr.h"
 #endif
 
-#if defined(_LOM_)
+#if defined(_CITADEL_)
+#include "scenarios/citadel/scenario_citadel.h"
+#elif defined(_LOM_)
 #include "scenarios/lom/scenario_lom.h"
 #include "scenarios/lom_novel/scenario_lom_novel.h"
 #endif

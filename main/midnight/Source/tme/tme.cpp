@@ -46,7 +46,25 @@ mxid            location_object_to_take;
 static            variant args[20];
 
 
-#if defined(_LOM_)
+#if defined(_CITADEL_)
+std::string TME_ScenarioDirectory ( void )
+{
+    return ax::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
+}
+
+std::string TME_ScenarioName ( void )
+{
+    std::string scenarioName("The Lords of Midnight III : The Citadel") ;
+    return scenarioName;
+}
+
+std::string TME_ScenarioShortName ( void )
+{
+    std::string shortName("citadel");
+    return shortName ;
+}
+
+#elif defined(_LOM_)
 std::string TME_ScenarioDirectory ( void )
 {
     return ax::FileUtils::getInstance()->getDefaultResourceRootPath() + TME_ScenarioShortName();
@@ -979,7 +997,16 @@ bool TME_Init ( mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, M
     args[0] = mxi;
     
     // A scenario must provide a create function
-#if defined(_LOM_)
+#if defined(_CITADEL_)
+    if ( scenarioId == mxscenarioid::DEFAULT || scenarioId == mxscenarioid::CITADEL ) {
+        if ( MXFAILED( tme::citadel::Create( mxi ) ) ) {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+#elif defined(_LOM_)
     if ( scenarioId == mxscenarioid::DEFAULT || scenarioId == mxscenarioid::LOM ) {
         if ( MXFAILED( tme::lom::Create( mxi ) ) ) {
             return false;

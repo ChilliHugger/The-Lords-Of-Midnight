@@ -447,9 +447,9 @@ void uipanel::addMouseListener()
 {
     mouseEventListener = ResumeEventListenerMouse::create();
     
-    mouseEventListener->onMouseMove = [this](Event* event)
+    // axmol 2.11 mouse callbacks are bool(EventMouse*), not void(Event*)
+    mouseEventListener->onMouseMove = [this](EventMouse* mouseEvent) -> bool
     {
-        auto mouseEvent = static_cast<EventMouse*>(event);
         cursorPosition = Vec2(mouseEvent->getLocation().x, mouseEvent->getLocation().y);
         
         if(imgCursor!=nullptr) {
@@ -457,6 +457,7 @@ void uipanel::addMouseListener()
         }
         
         OnMouseMove(cursorPosition);
+        return false;
     };
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseEventListener, this);

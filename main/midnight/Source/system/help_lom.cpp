@@ -7,7 +7,7 @@
 
 #include "helpmanager.h"
 
-#if defined(_LOM_)
+#if defined(_LOM_) && !defined(_CITADEL_)
 const helpitem_t help_messages[] = {
     
     { HELP_NONE, hf_none, nullptr }
