@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<main>
+
+    <scenario id="citadel" directory="./citadel" />
+
+    <cursors>
+        <cursor image="mouse_normal_up"     anchor="13,8" />
+        <cursor image="mouse_look_left_up"  anchor="32,32" />
+        <cursor image="mouse_look_right_up" anchor="32,32" />
+        <cursor image="mouse_move_up"       anchor="32,32" />
+    </cursors>
+
+
+    <compass>
+        <imagelist id="gfx">
+            <image file="misc/compass_N.png" />
+            <image file="misc/compass_NE.png" />
+            <image file="misc/compass_E.png" />
+            <image file="misc/compass_SE.png" />
+            <image file="misc/compass_S.png" />
+            <image file="misc/compass_SW.png" />
+            <image file="misc/compass_W.png" />
+            <image file="misc/compass_NW.png" />
+            <image file="misc/compass_back.png" />
+        </imagelist>
+    </compass>
+
+    <characters>
+        <character id="CH_MORKIN"    face="faces/f_morkin.png"    shield="shields/s_morkin.png"    shortcut="C" shortcut2="1" />
+        <character id="CH_ARALETH"   face="faces/f_rorthron.png"  shield="shields/s_dawn.png"      shortcut="V" shortcut2="2" />
+        <character id="CH_RORTHRON"  face="faces/f_rorthron.png"  shield="shields/s_rorthron.png"  shortcut="B" shortcut2="3" />
+        <character id="CH_CORLETH"   face="faces/f_corleth.png"   shield="shields/s_corleth.png"   shortcut="N" shortcut2="4" />
+        <character id="CH_ARIN"      face="faces/f_blood.png"     shield="shields/s_blood.png"     shortcut="1" shortcut2="5" />
+        <character id="CH_LUXOR"     face="faces/f_luxor.png"     shield="shields/s_luxor.png"     shortcut="2" shortcut2="6" />
+        <character id="CH_ANDERLANE" face="faces/f_thimrath.png"  shield="shields/s_thimrath.png"  shortcut="3" shortcut2="7" />
+        <character id="CH_BOROTH"    face="faces/f_dregrim.png"   shield="shields/s_dregrim.png" />
+    </characters>
+
+    <objects>
+        <object id="OB_WOLVES"          big="objects/bo_wolf.png"       mapcell="5" />
+        <object id="OB_DRAGONS"         big="objects/bo_dragon.png"     mapcell="6" />
+        <object id="OB_TROLLS"          big="objects/bo_troll.png"      mapcell="7" />
+        <object id="OB_WILDCATS"        big="objects/bo_skulkrin.png"   mapcell="8" />
+        <object id="OB_WILDHORSES"      big="objects/bo_horse.png"      mapcell="21" />
+        <object id="OB_SHELTER"         mapcell="22" />
+        <object id="OB_GUIDANCE"        mapcell="23" />
+        <object id="OB_STORMBLADE"      mapcell="40" />
+        <object id="OB_BLOODBRINGER"    mapcell="53" />
+        <object id="OB_WIDOWMAKER"      mapcell="54" />
+        <object id="OB_ARANATH"         mapcell="55" />
+        <object id="OB_PERSUADER"       mapcell="56" />
+        <object id="OB_SKULLCRUSHER"    mapcell="37" />
+        <object id="OB_SWIFTWING"       mapcell="38" />
+    </objects>
+
+    <races>
+        <race id="RA_DARKFEY"       body = "people/c_doomguard.png"     horse = "people/c_doomguardh.png" />
+        <race id="RA_FREE"          body = "people/c_free.png"          horse = "people/c_freeh.png" />
+        <race id="RA_HIGHFEY"       body = "people/c_fey.png"           horse = "people/c_feyh.png" />
+        <race id="RA_KITH"          body = "people/c_morkin.png"        horse = "people/c_morkinh.png" />
+        <race id="RA_ATHELING"      body = "people/c_targ.png"          horse = "people/c_targh.png" />
+        <race id="RA_ELDRIN"        body = "people/c_wise.png"          horse = "people/c_wiseh.png" />
+        <race id="RA_LONGDWARF"     body = "people/c_targ.png"          horse = "people/c_targh.png" />
+        <race id="RA_ARAKAI"        body = "people/c_targ.png"          horse = "people/c_targh.png" />
+        <race id="RA_DRAGONLORD"    body = "people/c_free.png"          horse = "people/c_freeh.png" />
+        <race id="RA_DAWNFEY"       body = "people/c_fey.png"           horse = "people/c_feyh.png" />
+        <race id="RA_USKARG"        body = "people/c_targ.png"          horse = "people/c_targh.png" />
+        <race id="RA_GELMING"       body = "people/c_free.png"          horse = "people/c_freeh.png" />
+        <race id="RA_DEEPINGDWARF"  body = "people/c_targ.png"          horse = "people/c_targh.png" />
+        <race id="RA_GIANT"         body = "people/c_midwinterh.png"    horse = "people/c_midwinterh.png" />
+        <race id="RA_GOLDENFEY"     body = "people/c_fey.png"           horse = "people/c_feyh.png" />
+        <race id="RA_CORSAIR"       body = "people/c_free.png"          horse = "people/c_freeh.png" />
+    </races>
+
+    <terrain>
+        <terrain id="ARMY"              file="t_army0" />
+        <terrain id="MIST"              file="" />
+
+        <terrain id="TN_PLAINS"         file=""                  mapcell="48" />
+        <terrain id="TN_LAND"           file=""                  mapcell="48" />
+        <terrain id="TN_PLAIN"          file=""                  mapcell="48" />
+        <terrain id="TN_PLAINS3"        file=""                  mapcell="48" />
+        <terrain id="TN_LAKELAND"       file=""                  mapcell="48" />
+        <terrain id="TN_ISLE"           file=""                  mapcell="48" />
+
+        <terrain id="TN_FOREST"         file="t_forest0"         mapcell="64" mapdensity="true"/>
+        <terrain id="TN_FOREST3"        file="t_forest0"         mapcell="64" mapdensity="true"/>
+        <terrain id="TN_TREES"          file="t_forest0"         mapcell="64" mapdensity="true"/>
+
+        <terrain id="TN_MOUNTAIN"       file="t_mountain0"       mapcell="76" mapdensity="true"/>
+        <terrain id="TN_MOUNTAIN3"      file="t_mountain0"       mapcell="76" mapdensity="true"/>
+        <terrain id="TN_ICY_MOUNTAIN"   file="t_mountain0a"      mapcell="76" mapdensity="true"/>
+
+        <terrain id="TN_DOWNS"          file="t_downs0"          mapcell="72" mapdensity="true"/>
+        <terrain id="TN_DOWNS3"         file="t_downs0"          mapcell="72" mapdensity="true"/>
+        <terrain id="TN_HILLS3"         file="t_downs0"          mapcell="72" mapdensity="true"/>
+        <terrain id="TN_FOOTHILLS"      file="t_downs0"          mapcell="72" mapdensity="true"/>
+        <terrain id="TN_VALLEY"         file="t_downs0"          mapcell="72" mapdensity="true"/>
+        <terrain id="TN_MARSH"          file="t_downs0"          mapcell="72" mapdensity="true"/>
+
+        <terrain id="TN_SEA"            file="t_lake0"           mapcell="19" />
+        <terrain id="TN_BAY"            file="t_lake0"           mapcell="19" />
+        <terrain id="TN_LAKE"           file="t_lake0"           mapcell="19" />
+        <terrain id="TN_LAKE3"          file="t_lake0"           mapcell="19" />
+        <terrain id="TN_RIVER"          file="t_lake0"           mapcell="19" />
+        <terrain id="TN_FOUNTAIN"       file="t_lake0"           mapcell="19" />
+
+        <terrain id="TN_CITADEL"        file="t_citadel0"        mapcell="1" />
+        <terrain id="TN_PALACE"         file="t_citadel0"        mapcell="1" />
+        <terrain id="TN_KEEP"           file="t_keep0"           mapcell="17" />
+        <terrain id="TN_VILLAGE"        file="t_village0"        mapcell="16" />
+        <terrain id="TN_WATCHTOWER"     file="t_tower0"          mapcell="3" />
+        <terrain id="TN_HENGE"          file="t_henge0"          mapcell="2" />
+        <terrain id="TN_RUIN"           file="t_ruin0"           mapcell="32" />
+        <terrain id="TN_LITH"           file="t_lith0"           mapcell="33" />
+        <terrain id="TN_STONES"         file="t_lith1"           mapcell="33" />
+        <terrain id="TN_HALL"           file="t_snowhall0"       mapcell="18" />
+        <terrain id="TN_PIT"            file="t_cavern0"         mapcell="34" />
+    </terrain>
+
+<panel_menu>
+        
+        <integer    id="MAX_STORIES"                value="8" />
+        <point      id="BOOKMARK_OVERLAY_OFFSET"    value="20,20" />
+        <float      id="BOOKMARK_SCALE"             value="0.75" />
+        <rgb        id="BOOKMARK_OVERLAY_COLOUR"    value="#ff000000" />
+        
+        <stories>
+            <rgb>#ff0000ff</rgb>
+            <rgb>#ff00ff00</rgb>
+            <rgb>#ffff0000</rgb>
+            <rgb>#ff808080</rgb>
+            <rgb>#ffff00ff</rgb>
+            <rgb>#ff00ffff</rgb>
+            <rgb>#ffffffff</rgb>
+            <rgb>#ff646464</rgb>
+            <rgb>#ff640064</rgb>
+        </stories>
+        
+    </panel_menu>
+    
+    
+    <panel_map>
+        <zoom_levels>0.24,0.40,0.50,0.75,1.0</zoom_levels>
+        <integer id="DEFAULT_ZOOM_LEVEL" value="4" />
+    </panel_map>
+
+    <panel_main>
+        <string id="REST_TOOLTIP"       value="rest : %s" />
+        <string id="RECRUIT_TOOLTIP"    value="recruit %s"  />
+        <string id="GUARD_TOOLTIP"      value="place %s on guard"  />
+        <string id="FIGHT_TOOLTIP"      value="fight %s"  />
+        <string id="APPROACH_TOOLTIP"   value="approach %s"  />
+        <string id="TEXT_UNHIDE"        value="unhide"  />
+        <string id="TEXT_HIDE"          value="hide"  />
+        <integer id="FIRST_FACE_ICON"   value="16"  />
+    </panel_main>
+
+    <panel_look>
+    
+        <compassoffsets>0,-2,2,-2,2,0,2,2,0,2,-2,2,-2,0,-2,-2,4,4,-2,0,2,0</compassoffsets>;
+        
+        <integer id="MOUSE_MOVE_BLEED"      value = "250" />
+        <integer id="MOUSE_LOOK_BLEED"      value = "250" />
+        <integer id="ARMY_IMAGE"            value = "33" />
+        <integer id="MIST_IMAGE"            value = "32" />
+
+        <integer id="MAX_LOOKHOTSPOTS"      value = "128" />
+        
+        <integer id="SHIELD_X"              value = "800" />
+        <integer id="SHIELD_Y"              value = "45" />
+        <float   id="SHIELD_SCALE"          value = "1.0" />
+        
+        <integer id="COMPASS_X"             value = "490" />
+        <integer id="COMPASS_Y"             value = "330" />
+        
+        <integer id="SELECT_MODE"           value = "2" />
+        <integer id="ACTIONS_MODE"          value = "2" />
+    </panel_look>
+        
+    <panel_loadsave>
+        <integer id="FILES_PER_COLUMN"      value = "19" />
+        <integer id="COLUMN_WIDTH"          value = "170" />
+        <integer id="COLUMN_DISPLAY_WIDTH"  value = "150" />
+        <integer id="COLUMN_HEIGHT"         value = "16" />
+    </panel_loadsave>
+
+    <panel_select>
+        <integer id="MAX_CHAR_PER_PAGE"     value = "28" />
+        <integer id="MAX_COLUMNS"           value = "7" />
+        <integer id="MAX_ROWS"              value = "4" />
+        <integer id="SELECT_GRID_X"         value = "100" />
+        <integer id="SELECT_GRID_Y"         value = "100" />
+        <integer id="START_X"               value = "64" />
+        <integer id="START_Y"               value = "64" />
+        <integer id="SELECT_GRID_LEADING"   value = "0" />
+    </panel_select>
+    
+    
+    <uilandscape>
+    
+        <day>
+            <time id="0"   shade="#404040" />
+            <time id="1"   shade="#453032" />
+            <time id="2"   shade="#655557" />
+            <time id="3"   shade="#736365" />
+            <time id="4"   shade="#807575" />
+            <time id="5"   shade="#808080" />
+            <time id="6"   shade="#808080" />
+            <time id="7"   shade="#808080" />
+            <time id="8"   shade="#808080" />
+            <time id="9"   shade="#808080" />
+            <time id="10"  shade="#808080" />
+            <time id="11"  shade="#808080" />
+            <time id="12"  shade="#7a7a7a" />
+            <time id="13"  shade="#747474" />
+            <time id="14"  shade="#6e6e6e" />
+            <time id="15"  shade="#626262" />
+            <time id="16"  shade="#565656" />
+        </day>
+    
+        <people>
+            <time id="0"   normal="#10808080" tunnel="#80404040" />
+            <time id="1"   normal="#408a6064" tunnel="#80404040" />
+            <time id="2"   normal="#80caaaae" tunnel="#80404040" />
+            <time id="3"   normal="#B073c6ca" tunnel="#80404040" />
+            <time id="4"   normal="#f0ffa0a0" tunnel="#80404040" />
+            <time id="5"   normal="#ffffffff" tunnel="#80404040" />
+            <time id="6"   normal="#ffffffff" tunnel="#80404040" />
+            <time id="7"   normal="#ffffffff" tunnel="#80404040" />
+            <time id="8"   normal="#ffffffff" tunnel="#80404040" />
+            <time id="9"   normal="#ffffffff" tunnel="#80404040" />
+            <time id="10"  normal="#ffffffff" tunnel="#80404040" />
+            <time id="11"  normal="#ffffffff" tunnel="#80404040" />
+            <time id="12"  normal="#f4f4f4f4" tunnel="#80404040" />
+            <time id="13"  normal="#e8e8e8e8" tunnel="#80404040" />
+            <time id="14"  normal="#dcdcdcdc" tunnel="#80404040" />
+            <time id="15"  normal="#d4d4d4d4" tunnel="#80404040" />
+            <time id="16"  normal="#acacacac" tunnel="#80404040" />
+        </people>
+        
+        <terrain>
+            <time id="0"   fill="#000000" outline="#a50000" />
+            <time id="1"   fill="#ffffff" outline="#a50000" />
+            <time id="2"   fill="#ffffff" outline="#a50000" />
+            <time id="3"   fill="#ffffff" outline="#a50000" />
+            <time id="4"   fill="#ffffff" outline="#a50000" />
+            <time id="5"   fill="#ffffff" outline="#a50000" />
+            <time id="6"   fill="#ffffff" outline="#a50000" />
+            <time id="7"   fill="#ffffff" outline="#a50000" />
+            <time id="8"   fill="#ffffff" outline="#a50000" />
+            <time id="9"   fill="#ffffff" outline="#a50000" />
+            <time id="10"  fill="#ffffff" outline="#a50000" />
+            <time id="11"  fill="#ffffff" outline="#a50000" />
+            <time id="12"  fill="#ffffff" outline="#a50000" />
+            <time id="13"  fill="#ffffff" outline="#a50000" />
+            <time id="14"  fill="#ffffff" outline="#a50000" />
+            <time id="15"  fill="#ffffff" outline="#a50000" />
+            <time id="16"  fill="#ffffff" outline="#a50000" />
+        </terrain>
+
+    </uilandscape>
+
+    
+
+</main>
+
+
+
+
+
+

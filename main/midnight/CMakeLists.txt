@@ -39,6 +39,13 @@ elseif(TME STREQUAL "DDR")
   if(WINDOWS)
     add_compile_definitions(ICON_DDR)
   endif()
+elseif(TME STREQUAL "CITADEL")
+  set(APP_BUILD _CITADEL_)
+  set(APP_NAME citadel)
+  set(CITADEL ON CACHE BOOL "Enable The Citadel")
+  if(WINDOWS)
+    add_compile_definitions(ICON_CITADEL)
+  endif()
 endif()
 
 cmake_minimum_required(VERSION 3.31.2)
@@ -178,6 +185,13 @@ else()
 endif()
 
 add_compile_options("-D${APP_BUILD}")
+
+# The Citadel is a Lords-of-Midnight-family scenario: it shares every _LOM_
+# code path (moon ring, ice fear, look/think panels, landscape) and only
+# diverges where a site is guarded with `&& !defined(_CITADEL_)`.
+if(CITADEL)
+  add_compile_options("-D_LOM_")
+endif()
 
 if(ANDROID)
     # the APP_NAME should match on AndroidManifest.xml

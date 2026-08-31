@@ -51,3 +51,7 @@ main/midnight/proj.android_midnight/app/.cxx
 main/midnight/proj.android_midnight/app/.idea
 main/midnight/proj.android_revenge/app/release
 main/midnight/proj.android_midnight/app/release
+main/midnight/mac-build-citadel
+main/midnight/Builds
+__pycache__/
+*.pyc

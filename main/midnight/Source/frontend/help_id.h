@@ -31,6 +31,48 @@ enum helpid_t {
     HELP_TN_UNUSED1,
 #endif
     
+#if defined(_CITADEL_)
+    // The Citadel reuses the shared terrain codes 16..31 and adds its own at
+    // 33..51. Terrain help is looked up as (1 + terrain code), so every code
+    // needs an id here, in order and without gaps.
+    HELP_TN_PLAINS2,
+    HELP_TN_MOUNTAIN2,
+    HELP_TN_FOREST2,
+    HELP_TN_HILLS,
+    HELP_TN_GATE,
+    HELP_TN_TEMPLE,
+    HELP_TN_PIT,
+    HELP_TN_PALACE,
+    HELP_TN_FORTRESS,
+    HELP_TN_HALL,
+    HELP_TN_HUT,
+    HELP_TN_WATCHTOWER,
+    HELP_TN_CITY,
+    HELP_TN_FOUNTAIN,
+    HELP_TN_STONES,
+    HELP_TN_ICYWASTES,
+    HELP_TN_UNUSED32,
+    HELP_TN_LAND,
+    HELP_TN_ISLE,
+    HELP_TN_LAKELAND,
+    HELP_TN_PLAIN,
+    HELP_TN_PLAINS3,
+    HELP_TN_FOREST3,
+    HELP_TN_UNUSED39,
+    HELP_TN_TREES,
+    HELP_TN_MOUNTAIN3,
+    HELP_TN_ICY_MOUNTAIN,
+    HELP_TN_DOWNS3,
+    HELP_TN_HILLS3,
+    HELP_TN_FOOTHILLS,
+    HELP_TN_VALLEY,
+    HELP_TN_BAY,
+    HELP_TN_SEA,
+    HELP_TN_RIVER,
+    HELP_TN_MARSH,
+    HELP_TN_LAKE3,
+#endif
+
 #if defined(_DDR_)
     // ddr
     HELP_TN_PLAINS2,

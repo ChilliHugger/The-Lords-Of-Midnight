@@ -157,6 +157,16 @@ https://axmol.dev)";
     constexpr LPCSTR OPTIONS_SCREEN_APPROACH_STAY       = "DO NOTHING";
     
 #if defined(_LOM_)
+#if defined(_CITADEL_)
+    constexpr LPCSTR NOVEL_SCENARIO_TITLE               = "THE CITADEL";
+
+    constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the Bloodmarch in";
+    constexpr LPCSTR SPLASH_SCREEN_TITLE                = "THE CITADEL";
+    constexpr LPCSTR SPLASH_SCREEN_BY                   = "         by";
+    constexpr LPCSTR SPLASH_SCREEN_MIKE                 = "Mike Singleton";
+
+    constexpr LPCSTR EXIT_MSG                           = "Do you want to exit\nThe Citadel?";
+#else
     constexpr LPCSTR NOVEL_SCENARIO_TITLE               = "THE LORDS OF MIDNIGHT\nThe Novel (Preview)";
 
     constexpr LPCSTR SPLASH_SCREEN_EXPLORE              = "Now explore the epic world of";
@@ -165,6 +175,7 @@ https://axmol.dev)";
     constexpr LPCSTR SPLASH_SCREEN_MIKE                 = "Mike Singleton";
         
     constexpr LPCSTR EXIT_MSG                           = "Do you want to exit\nThe Lords of Midnight?";
+#endif
     constexpr LPCSTR _UPDATE_PROMPT_                    = "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _NOVELLA_PROMPT_                   = "You are about to open a browser window to read the Lords of Midnight Novella\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _GUIDE_PROMPT_                     = "You are about to open a browser window to read the Lords of Midnight Playing Guide\n\nAre you sure that you wish to continue?";
@@ -177,7 +188,11 @@ https://axmol.dev)";
     #endif
 
     constexpr LPCSTR CREDITS_WEBSITE_ADDRESS            = "www.thelordsofmidnight.com\n\n\n\n\n\n\n\n\n\n";
+#if defined(_CITADEL_)
+    constexpr LPCSTR _WELCOME_PROMPT_                   = "The Citadel is the third Lords of Midnight, built from the 1995 design for a game that was never released.\n\nWould you like to read the playing guide now?";
+#else
     constexpr LPCSTR _WELCOME_PROMPT_                   = "If this is the first time playing The Lords of Midnight, then you should consider reading the NOVELLA and then the PLAYING GUIDE\n\nWould you like to read the novella now?";
+#endif
 #else
 
 #if defined(_DDR_)

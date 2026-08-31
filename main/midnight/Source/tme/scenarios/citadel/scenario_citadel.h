@@ -6,8 +6,6 @@
 
 namespace tme {
 
-    namespace scenarios {
-    
     class citadel  : public mxscenario_i
     {
     public:
@@ -15,17 +13,16 @@ namespace tme {
         virtual ~citadel();
 
         scenarioinfo_t* GetInfoBlock() const;
-        
+
         MXRESULT Command ( const std::string& arg, variant argv[], u32 argc );
         MXRESULT GetProperties ( const std::string& arg, variant argv[], u32 argc );
         MXRESULT Text ( const std::string& command, variant* argv=NULL, u32 args=0 );
-        
+
         static MXRESULT MXAPI Create ( tme::mxinterface* mx );
 
     };
 
-    }
-    
+
 }
 
 #endif //_CITADELSCENARIO_H_INCLUDED_

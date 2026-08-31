@@ -13,6 +13,7 @@
 
 #include "help_ddr.cpp"
 #include "help_lom.cpp"
+#include "help_citadel.cpp"
 
 static helpitem_t blank = { HELP_NONE, hf_none, nullptr };
 

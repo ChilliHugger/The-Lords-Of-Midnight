@@ -116,6 +116,11 @@
         <terrain id="TN_DOWN"           file="t_downs0"          mapcell="72" mapdensity="true"/>
         <terrain id="TN_MOUNTAIN"       file="t_mountain0"       mapcell="76" mapdensity="true"/>
         <terrain id="TN_MOUNTAIN2"      file="t_mountain0a"      mapcell="76" mapdensity="true"/>    
+        
+        <terrain id="TN_RIVER"           file="t_lake0"          mapcell="19" />
+        <terrain id="TN_LAKE3"           file="t_lake0"          mapcell="19" />
+        
+    
     </terrain>
 
     <panel_menu>

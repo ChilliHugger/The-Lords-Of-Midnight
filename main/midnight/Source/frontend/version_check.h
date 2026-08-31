@@ -27,7 +27,7 @@
 #endif // _DDR_
 
 
-#if defined(_LOM_)
+#if defined(_LOM_) && !defined(_CITADEL_)
 #ifdef _MSC_VER
 #if defined(_OS_DESKTOP_)
     #define _USE_VERSION_CHECK_
