@@ -120,7 +120,7 @@ bool panel_map_detailed::init()
     mapBuilder->screensize = size(ceil(getContentSize().width/RES(64)),
                                 ceil(getContentSize().height/RES(64)));
     
-    if ( mr->config->debug_map ) {
+    if ( CONFIG(debug_map) ) {
         mapBuilder->setFlags(mapflags::debug_map);
         mapBuilder->setFlags(mapflags::show_all_characters);
         mapBuilder->setFlags(mapflags::show_all_critters);
@@ -351,7 +351,7 @@ void panel_map_detailed::addTouchListener()
             toolTip->setOpacity(ALPHA(alpha_zero));
 
             auto tip = StringExtensions::toUpper(TME_GetLocationText(grid));
-            if (mr->config->debug_map) {
+            if (CONFIG(debug_map)) {
                 tip += StringUtils::format(" - (%d,%d)", grid.x, grid.y);
             }
             toolTip->setString(tip);

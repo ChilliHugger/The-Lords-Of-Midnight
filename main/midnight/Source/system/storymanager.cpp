@@ -224,7 +224,7 @@ bool storymanager::load ( storyid_t id )
 
 bool storymanager::canUndo ( savemode_t mode )
 {
-    if (undo_available == 0 && !mr->config->always_undo)  {
+    if (undo_available == 0 && !CONFIG(always_undo))  {
         return false;
     }
 
@@ -308,7 +308,7 @@ bool storymanager::undo ( savemode_t mode )
 
 bool storymanager::cleanup ( void )
 {
-    if ( mr->config->keep_full_save_history )
+    if ( CONFIG(keep_full_save_history) )
         return true;
     
     s32 undo_history = getUndoCount() ;
@@ -397,8 +397,8 @@ u32 storymanager::getUndoCount()
 static UNDOHISTORY undo_history_mapping[] = { UH_NORMAL, UH_EASY, UH_MEDIUM, UH_HARD };
    
     // config override
-    if(mr->config->undo_history != UH_NOTSET) {
-        return mr->config->undo_history;
+    if(CONFIG(undo_history) != UH_NOTSET) {
+        return CONFIG(undo_history);
     }
    
     auto difficulty = TME_GetDifficulty();
