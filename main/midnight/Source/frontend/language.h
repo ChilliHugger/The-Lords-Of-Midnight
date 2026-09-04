@@ -190,10 +190,10 @@ https://axmol.dev)";
     constexpr LPCSTR _UPDATE_PROMPT_                    = "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _NOVELLA_PROMPT_                   = "You are about to open a browser window to read the Citadel Novella\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _GUIDE_PROMPT_                     = "You are about to open a browser window to read the Citadel Playing Guide\n\nAre you sure that you wish to continue?";
-    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "http://www.thelordsofmidnight.com/docs/Citadel_guide.pdf";
-    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "http://www.thelordsofmidnight.com/docs/Citadel.pdf";
+    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "http://www.thelordsofmidnight.com/docs/citadel_guide.pdf";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "http://www.thelordsofmidnight.com/docs/the%20citadel.pdf";
     #if defined(_OS_IOS_) || defined(_OS_OSX_)
-    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "http://www.thelordsofmidnight.com/docs/Citadel.epub";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "http://www.thelordsofmidnight.com/docs/the%20citadel.epub";
     #else
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif

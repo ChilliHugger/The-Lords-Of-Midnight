@@ -42,7 +42,7 @@ elseif(TME STREQUAL "DDR")
 elseif(TME STREQUAL "CITADEL")
   set(APP_BUILD _CITADEL_)
   set(APP_NAME citadel)
-  set(DDR ON CACHE BOOL "Enable The Citadel")
+  set(CITADEL ON CACHE BOOL "Enable The Citadel")
   if(WINDOWS)
     add_compile_definitions(ICON_CITADEL)
   endif()
@@ -237,6 +237,12 @@ elseif(APPLE)
                        proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
                        proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
                        )
+            elseif(CITADEL)
+                   set(APP_UI_RES
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreen.storyboard
+                       proj.ios_mac/ios/targets/ios/${APP_NAME}/Images.xcassets
+                       )
             elseif(DDR)
                    set(APP_UI_RES
                        proj.ios_mac/ios/targets/ios/${APP_NAME}/LaunchScreenBackground.png
@@ -276,6 +282,14 @@ set(APP_SOURCES
     )
 if(NOT ANDROID)
     add_executable(${APP_NAME} ${APP_SOURCES})
+    if(IOS AND CITADEL)
+        # On iOS the app bundle is flat (no Contents/MacOS vs Contents/Resources split like
+        # macOS), so the linked executable and the "citadel" resource folder (its name is
+        # fixed by TME_ScenarioShortName() in Source/tme/tme.cpp) would both land at
+        # citadel.app/citadel and collide. Give the binary a distinct on-disk name; this is
+        # purely internal and doesn't affect the bundle id, display name, or icon.
+        set_target_properties(${APP_NAME} PROPERTIES OUTPUT_NAME "TheCitadelApp")
+    endif()
 else()
     message(STATUS "Source files: ${APP_NAME} '${APP_SOURCES}'")
     add_library(${APP_NAME} SHARED ${APP_SOURCES})
