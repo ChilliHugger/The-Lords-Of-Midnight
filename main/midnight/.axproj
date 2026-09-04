@@ -1,3 +1,5 @@
 package_name=com.chilli.midnight
 engine_version=2.3.1-ca52d6e
 project_type=cpp
+min_sdk=26
+target_sdk=35
