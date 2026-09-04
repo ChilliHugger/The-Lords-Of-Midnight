@@ -1,0 +1,64 @@
+1. brave
+2. far-sighted
+3. selfless
+4. bold
+5. kind
+6. warm-hearted
+7. gentle
+8. generous
+9. quick-witted
+10. talkative
+11. home-loving
+12. eager
+13. energetic
+14. tireless
+15. modest
+16. passionate
+17. reliable
+18. gallant
+19. charming
+20. loyal
+21. gregarious
+22. peaceable
+23. polite
+24. submissive
+25. patient
+26. level-headed
+27. persuasive
+28. knowledgeable
+29. naive
+30. hot-tempered
+31. a mighty warrior
+32. a superb leader
+33. cowardly
+34. reckless
+35. selfish
+36. cautious
+37. cruel
+38. cold_hearted
+39. vicious
+40. greedy
+41. slow-witted
+42. tight-lipped
+43. restless
+44. apathetic
+45. languid
+46. easily tired
+47. arrogant
+48. passionless
+49. headstrong
+50. malicious
+51. repulsive
+52. treacherous
+53. solitary
+54. bloodthirsty
+55. provocative
+56. domineering
+57. impatient
+58. mad
+59. unconvincing
+60. ignorant
+61. sceptical
+62. thick-skinned
+63. a feeble warrior
+64. a pitiful leader

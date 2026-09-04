@@ -1,0 +1,8124 @@
+[
+  {
+    "shield": 2,
+    "port": 0,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 0,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 1,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 1,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 2,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 2,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 3,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 3,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 4,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 4,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 5,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 5,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 6,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 6,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 7,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 7,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 8,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 8,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 9,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 9,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 10,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 10,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 11,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 11,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 12,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 12,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 13,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 13,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 14,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 14,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 15,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 15,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 16,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 16,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 17,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 17,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 18,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 18,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 19,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 19,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 20,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 20,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 21,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 21,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 22,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 22,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 23,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 23,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 24,
+    "obj_race_size": [
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 24,
+    "type": 4,
+    "char_flags": 0,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 0,
+    "dir": 0,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 100,
+    "y_size": 100,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 25,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      106,
+      0,
+      0
+    ],
+    "owner": 13,
+    "land": {
+      "ruler": 153,
+      "war_state": 0,
+      "realm": 13,
+      "owner": 153,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 25,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 12218
+    },
+    "y": {
+      "First": 0,
+      "Second": 47295
+    },
+    "z": 65467,
+    "dir": 47360,
+    "sprite": 4,
+    "cladding": 7,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 26,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      100,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 78,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 78,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 26,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 38336
+    },
+    "y": {
+      "First": 0,
+      "Second": 52032
+    },
+    "z": 65533,
+    "dir": 2582,
+    "sprite": 4,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 27,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      10016,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 79,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 79,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 27,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 37312
+    },
+    "y": {
+      "First": 0,
+      "Second": 9152
+    },
+    "z": 65533,
+    "dir": 12956,
+    "sprite": 4,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 28,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      55
+    ],
+    "owner": 15,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 15,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 28,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 1984
+    },
+    "y": {
+      "First": 0,
+      "Second": 62400
+    },
+    "z": 65533,
+    "dir": 10113,
+    "sprite": 16,
+    "cladding": 17,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 29,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      46
+    ],
+    "owner": 15,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 15,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 29,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 2880
+    },
+    "y": {
+      "First": 0,
+      "Second": 59456
+    },
+    "z": 65533,
+    "dir": 16212,
+    "sprite": 16,
+    "cladding": 17,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 30,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      43
+    ],
+    "owner": 15,
+    "land": {
+      "ruler": 0,
+      "war_state": 0,
+      "realm": 15,
+      "owner": 0,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 30,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 3776
+    },
+    "y": {
+      "First": 0,
+      "Second": 62784
+    },
+    "z": 65533,
+    "dir": 32225,
+    "sprite": 16,
+    "cladding": 17,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 31,
+    "obj_race_size": [
+      95,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 84,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 84,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 31,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 8640
+    },
+    "y": {
+      "First": 0,
+      "Second": 59200
+    },
+    "z": 65533,
+    "dir": 30524,
+    "sprite": 4,
+    "cladding": 4,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 32,
+    "obj_race_size": [
+      46,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 121,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 121,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 32,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 14016
+    },
+    "y": {
+      "First": 0,
+      "Second": 62528
+    },
+    "z": 65533,
+    "dir": 6967,
+    "sprite": 16,
+    "cladding": 4,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 33,
+    "obj_race_size": [
+      51,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 0,
+    "land": {
+      "ruler": 25,
+      "war_state": 0,
+      "realm": 0,
+      "owner": 25,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 33,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 5056
+    },
+    "y": {
+      "First": 0,
+      "Second": 52672
+    },
+    "z": 65533,
+    "dir": 20495,
+    "sprite": 16,
+    "cladding": 4,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 34,
+    "obj_race_size": [
+      0,
+      58,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 69,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 69,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 34,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 16064
+    },
+    "y": {
+      "First": 0,
+      "Second": 55360
+    },
+    "z": 65533,
+    "dir": 7962,
+    "sprite": 16,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 35,
+    "obj_race_size": [
+      0,
+      59,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 51,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 51,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 35,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 26944
+    },
+    "y": {
+      "First": 0,
+      "Second": 61760
+    },
+    "z": 65533,
+    "dir": 9760,
+    "sprite": 16,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 36,
+    "obj_race_size": [
+      0,
+      41,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 54,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 54,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 36,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 30784
+    },
+    "y": {
+      "First": 0,
+      "Second": 61760
+    },
+    "z": 65533,
+    "dir": 22088,
+    "sprite": 16,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 37,
+    "obj_race_size": [
+      0,
+      53,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 43,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 43,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 37,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 33216
+    },
+    "y": {
+      "First": 0,
+      "Second": 56000
+    },
+    "z": 65533,
+    "dir": 4586,
+    "sprite": 16,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 38,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      40,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 3,
+    "land": {
+      "ruler": 36,
+      "war_state": 0,
+      "realm": 3,
+      "owner": 36,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 38,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 38848
+    },
+    "y": {
+      "First": 0,
+      "Second": 61632
+    },
+    "z": 65533,
+    "dir": 30965,
+    "sprite": 16,
+    "cladding": 19,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 39,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      51,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 3,
+    "land": {
+      "ruler": 30,
+      "war_state": 0,
+      "realm": 3,
+      "owner": 30,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 39,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 37824
+    },
+    "y": {
+      "First": 0,
+      "Second": 57536
+    },
+    "z": 65533,
+    "dir": 32310,
+    "sprite": 16,
+    "cladding": 19,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 40,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      51,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 3,
+    "land": {
+      "ruler": 103,
+      "war_state": 0,
+      "realm": 3,
+      "owner": 103,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 40,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 32448
+    },
+    "y": {
+      "First": 0,
+      "Second": 47168
+    },
+    "z": 65533,
+    "dir": 5202,
+    "sprite": 16,
+    "cladding": 19,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 41,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      55,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 37,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 37,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 41,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 32960
+    },
+    "y": {
+      "First": 0,
+      "Second": 40896
+    },
+    "z": 65533,
+    "dir": 24582,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 42,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      49,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 15,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 15,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 42,
+    "type": 4,
+    "char_flags": 4,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 65533,
+    "dir": 29320,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 43,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      41,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 3,
+    "land": {
+      "ruler": 146,
+      "war_state": 0,
+      "realm": 3,
+      "owner": 146,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 43,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 27328
+    },
+    "y": {
+      "First": 0,
+      "Second": 41280
+    },
+    "z": 65533,
+    "dir": 29071,
+    "sprite": 16,
+    "cladding": 19,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 44,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      41,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 7,
+    "land": {
+      "ruler": 15,
+      "war_state": 0,
+      "realm": 7,
+      "owner": 15,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 44,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 28864
+    },
+    "y": {
+      "First": 0,
+      "Second": 38208
+    },
+    "z": 65533,
+    "dir": 21336,
+    "sprite": 16,
+    "cladding": 15,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 45,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      93,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 3,
+    "land": {
+      "ruler": 21,
+      "war_state": 0,
+      "realm": 3,
+      "owner": 21,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 45,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 18752
+    },
+    "y": {
+      "First": 0,
+      "Second": 36032
+    },
+    "z": 65533,
+    "dir": 14479,
+    "sprite": 4,
+    "cladding": 19,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 46,
+    "obj_race_size": [
+      0,
+      59,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 129,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 129,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 46,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 19776
+    },
+    "y": {
+      "First": 0,
+      "Second": 41664
+    },
+    "z": 65533,
+    "dir": 18670,
+    "sprite": 16,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 47,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      42,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 7,
+    "land": {
+      "ruler": 22,
+      "war_state": 0,
+      "realm": 7,
+      "owner": 22,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 47,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 23360
+    },
+    "y": {
+      "First": 0,
+      "Second": 34496
+    },
+    "z": 65533,
+    "dir": 1414,
+    "sprite": 16,
+    "cladding": 15,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 48,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      40,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 3,
+    "land": {
+      "ruler": 12,
+      "war_state": 0,
+      "realm": 3,
+      "owner": 12,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 48,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 15424
+    },
+    "y": {
+      "First": 0,
+      "Second": 32320
+    },
+    "z": 65533,
+    "dir": 31353,
+    "sprite": 16,
+    "cladding": 19,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 49,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 7,
+    "land": {
+      "ruler": 4,
+      "war_state": 0,
+      "realm": 7,
+      "owner": 4,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 49,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 23872
+    },
+    "y": {
+      "First": 0,
+      "Second": 30400
+    },
+    "z": 65533,
+    "dir": 17116,
+    "sprite": 16,
+    "cladding": 15,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 50,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      54,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 3,
+    "land": {
+      "ruler": 101,
+      "war_state": 0,
+      "realm": 3,
+      "owner": 101,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 50,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 19008
+    },
+    "y": {
+      "First": 0,
+      "Second": 29120
+    },
+    "z": 65533,
+    "dir": 18751,
+    "sprite": 16,
+    "cladding": 19,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 51,
+    "obj_race_size": [
+      0,
+      0,
+      54,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 2,
+    "land": {
+      "ruler": 150,
+      "war_state": 0,
+      "realm": 2,
+      "owner": 150,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 51,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 15296
+    },
+    "y": {
+      "First": 0,
+      "Second": 40000
+    },
+    "z": 65533,
+    "dir": 25562,
+    "sprite": 16,
+    "cladding": 14,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 52,
+    "obj_race_size": [
+      0,
+      0,
+      59,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 2,
+    "land": {
+      "ruler": 76,
+      "war_state": 0,
+      "realm": 2,
+      "owner": 76,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 52,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 2240
+    },
+    "y": {
+      "First": 0,
+      "Second": 46784
+    },
+    "z": 65533,
+    "dir": 23010,
+    "sprite": 16,
+    "cladding": 14,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 53,
+    "obj_race_size": [
+      0,
+      0,
+      104,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 2,
+    "land": {
+      "ruler": 58,
+      "war_state": 0,
+      "realm": 2,
+      "owner": 58,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 53,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 5568
+    },
+    "y": {
+      "First": 0,
+      "Second": 38464
+    },
+    "z": 65533,
+    "dir": 11367,
+    "sprite": 4,
+    "cladding": 14,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 54,
+    "obj_race_size": [
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 2,
+    "land": {
+      "ruler": 49,
+      "war_state": 0,
+      "realm": 2,
+      "owner": 49,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 54,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 7232
+    },
+    "y": {
+      "First": 0,
+      "Second": 33984
+    },
+    "z": 65533,
+    "dir": 17031,
+    "sprite": 16,
+    "cladding": 14,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 55,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 131,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 131,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 55,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 4800
+    },
+    "y": {
+      "First": 0,
+      "Second": 32576
+    },
+    "z": 65533,
+    "dir": 25089,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 56,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      47,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 118,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 118,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 56,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 2112
+    },
+    "y": {
+      "First": 0,
+      "Second": 28992
+    },
+    "z": 65533,
+    "dir": 31051,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 57,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      103,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 40,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 40,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 57,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 10560
+    },
+    "y": {
+      "First": 0,
+      "Second": 26304
+    },
+    "z": 65533,
+    "dir": 12754,
+    "sprite": 4,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 58,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      58,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 13,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 13,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 58,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 4928
+    },
+    "y": {
+      "First": 0,
+      "Second": 24896
+    },
+    "z": 65533,
+    "dir": 26966,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 59,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      46,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 109,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 109,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 59,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 4928
+    },
+    "y": {
+      "First": 0,
+      "Second": 22080
+    },
+    "z": 65533,
+    "dir": 25137,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 60,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      47,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 133,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 133,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 60,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 3392
+    },
+    "y": {
+      "First": 0,
+      "Second": 19136
+    },
+    "z": 65533,
+    "dir": 2749,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 61,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      48,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 134,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 134,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 61,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 12480
+    },
+    "y": {
+      "First": 0,
+      "Second": 20544
+    },
+    "z": 65533,
+    "dir": 13628,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 62,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      56,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 9,
+    "land": {
+      "ruler": 57,
+      "war_state": 0,
+      "realm": 9,
+      "owner": 57,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 62,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 8000
+    },
+    "y": {
+      "First": 0,
+      "Second": 16832
+    },
+    "z": 65533,
+    "dir": 19882,
+    "sprite": 16,
+    "cladding": 1,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 63,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      40,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 9,
+    "land": {
+      "ruler": 50,
+      "war_state": 0,
+      "realm": 9,
+      "owner": 50,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 63,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 3776
+    },
+    "y": {
+      "First": 0,
+      "Second": 9408
+    },
+    "z": 65533,
+    "dir": 9084,
+    "sprite": 16,
+    "cladding": 1,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 64,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      92,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 9,
+    "land": {
+      "ruler": 48,
+      "war_state": 0,
+      "realm": 9,
+      "owner": 48,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 64,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 9408
+    },
+    "y": {
+      "First": 0,
+      "Second": 2496
+    },
+    "z": 65533,
+    "dir": 28394,
+    "sprite": 4,
+    "cladding": 1,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 65,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      58,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 9,
+    "land": {
+      "ruler": 148,
+      "war_state": 0,
+      "realm": 9,
+      "owner": 148,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 65,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 1984
+    },
+    "y": {
+      "First": 0,
+      "Second": 4672
+    },
+    "z": 65533,
+    "dir": 16838,
+    "sprite": 16,
+    "cladding": 1,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 66,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 10,
+    "land": {
+      "ruler": 117,
+      "war_state": 0,
+      "realm": 10,
+      "owner": 117,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 66,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 14272
+    },
+    "y": {
+      "First": 0,
+      "Second": 9152
+    },
+    "z": 65533,
+    "dir": 24165,
+    "sprite": 16,
+    "cladding": 6,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 67,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      57,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 10,
+    "land": {
+      "ruler": 147,
+      "war_state": 0,
+      "realm": 10,
+      "owner": 147,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 67,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 20416
+    },
+    "y": {
+      "First": 0,
+      "Second": 3648
+    },
+    "z": 65533,
+    "dir": 16248,
+    "sprite": 16,
+    "cladding": 6,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 68,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      56,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 9,
+    "land": {
+      "ruler": 19,
+      "war_state": 0,
+      "realm": 9,
+      "owner": 19,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 68,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 23360
+    },
+    "y": {
+      "First": 0,
+      "Second": 2880
+    },
+    "z": 65533,
+    "dir": 11738,
+    "sprite": 16,
+    "cladding": 1,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 69,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 10,
+    "land": {
+      "ruler": 99,
+      "war_state": 0,
+      "realm": 10,
+      "owner": 99,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 69,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 23104
+    },
+    "y": {
+      "First": 0,
+      "Second": 13120
+    },
+    "z": 65533,
+    "dir": 28606,
+    "sprite": 16,
+    "cladding": 6,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 70,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      47,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 10,
+    "land": {
+      "ruler": 90,
+      "war_state": 0,
+      "realm": 10,
+      "owner": 90,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 70,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 10432
+    },
+    "y": {
+      "First": 0,
+      "Second": 13248
+    },
+    "z": 65533,
+    "dir": 24851,
+    "sprite": 16,
+    "cladding": 6,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 71,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 10,
+    "land": {
+      "ruler": 108,
+      "war_state": 0,
+      "realm": 10,
+      "owner": 108,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 71,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 18240
+    },
+    "y": {
+      "First": 0,
+      "Second": 20928
+    },
+    "z": 65533,
+    "dir": 10457,
+    "sprite": 16,
+    "cladding": 6,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 72,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      96,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 10,
+    "land": {
+      "ruler": 39,
+      "war_state": 0,
+      "realm": 10,
+      "owner": 39,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 72,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 22592
+    },
+    "y": {
+      "First": 0,
+      "Second": 24000
+    },
+    "z": 65533,
+    "dir": 15629,
+    "sprite": 4,
+    "cladding": 6,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 73,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      42,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 10,
+    "land": {
+      "ruler": 126,
+      "war_state": 0,
+      "realm": 10,
+      "owner": 126,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 73,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 25280
+    },
+    "y": {
+      "First": 0,
+      "Second": 17472
+    },
+    "z": 65533,
+    "dir": 25343,
+    "sprite": 16,
+    "cladding": 6,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 74,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 132,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 132,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 74,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 13376
+    },
+    "y": {
+      "First": 0,
+      "Second": 29632
+    },
+    "z": 65533,
+    "dir": 32085,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 75,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 6,
+    "land": {
+      "ruler": 127,
+      "war_state": 0,
+      "realm": 6,
+      "owner": 127,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 75,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 15552
+    },
+    "y": {
+      "First": 0,
+      "Second": 24768
+    },
+    "z": 65533,
+    "dir": 10444,
+    "sprite": 16,
+    "cladding": 10,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 76,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      59,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 62,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 62,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 76,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 30784
+    },
+    "y": {
+      "First": 0,
+      "Second": 12608
+    },
+    "z": 65533,
+    "dir": 25514,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 77,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 41,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 41,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 77,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 34368
+    },
+    "y": {
+      "First": 0,
+      "Second": 18880
+    },
+    "z": 65533,
+    "dir": 8193,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 78,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 89,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 89,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 78,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 30272
+    },
+    "y": {
+      "First": 0,
+      "Second": 17344
+    },
+    "z": 65533,
+    "dir": 27475,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 79,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      54,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 80,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 80,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 79,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 34240
+    },
+    "y": {
+      "First": 0,
+      "Second": 14400
+    },
+    "z": 65533,
+    "dir": 6473,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 80,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      59,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 71,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 71,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 80,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 43840
+    },
+    "y": {
+      "First": 0,
+      "Second": 16704
+    },
+    "z": 65533,
+    "dir": 23297,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 81,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      52,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 88,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 88,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 81,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 38464
+    },
+    "y": {
+      "First": 0,
+      "Second": 2240
+    },
+    "z": 65533,
+    "dir": 5000,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 82,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      48,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 32,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 32,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 82,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 33600
+    },
+    "y": {
+      "First": 0,
+      "Second": 5568
+    },
+    "z": 65533,
+    "dir": 18451,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 83,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 33,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 33,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 83,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 44736
+    },
+    "y": {
+      "First": 0,
+      "Second": 12992
+    },
+    "z": 65533,
+    "dir": 31549,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 84,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      46,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 111,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 111,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 84,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 47552
+    },
+    "y": {
+      "First": 0,
+      "Second": 10560
+    },
+    "z": 65533,
+    "dir": 9598,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 85,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 145,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 145,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 85,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 48832
+    },
+    "y": {
+      "First": 0,
+      "Second": 7360
+    },
+    "z": 65533,
+    "dir": 13626,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 86,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      48,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 142,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 142,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 86,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 52672
+    },
+    "y": {
+      "First": 0,
+      "Second": 7360
+    },
+    "z": 65533,
+    "dir": 11744,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 87,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 52,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 52,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 87,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 59584
+    },
+    "y": {
+      "First": 0,
+      "Second": 13632
+    },
+    "z": 65533,
+    "dir": 6270,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 88,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 70,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 70,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 88,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 57024
+    },
+    "y": {
+      "First": 0,
+      "Second": 13888
+    },
+    "z": 65533,
+    "dir": 19489,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 89,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      41,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 123,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 123,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 89,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 53440
+    },
+    "y": {
+      "First": 0,
+      "Second": 14656
+    },
+    "z": 65533,
+    "dir": 20159,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 90,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      105,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 42,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 42,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 90,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 53824
+    },
+    "y": {
+      "First": 0,
+      "Second": 11328
+    },
+    "z": 65533,
+    "dir": 18176,
+    "sprite": 4,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 91,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      52,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 144,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 144,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 91,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 50240
+    },
+    "y": {
+      "First": 0,
+      "Second": 10688
+    },
+    "z": 65533,
+    "dir": 32017,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 92,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      46,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 24,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 24,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 92,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 47680
+    },
+    "y": {
+      "First": 0,
+      "Second": 16704
+    },
+    "z": 65533,
+    "dir": 13711,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 93,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      56,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 61,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 61,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 93,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 48064
+    },
+    "y": {
+      "First": 0,
+      "Second": 13376
+    },
+    "z": 65533,
+    "dir": 14566,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 94,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      51,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 11,
+    "land": {
+      "ruler": 122,
+      "war_state": 0,
+      "realm": 11,
+      "owner": 122,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 94,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 51136
+    },
+    "y": {
+      "First": 0,
+      "Second": 17600
+    },
+    "z": 65533,
+    "dir": 12388,
+    "sprite": 16,
+    "cladding": 11,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 95,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      54,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 7,
+    "land": {
+      "ruler": 66,
+      "war_state": 0,
+      "realm": 7,
+      "owner": 66,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 95,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 33472
+    },
+    "y": {
+      "First": 0,
+      "Second": 34368
+    },
+    "z": 65533,
+    "dir": 26306,
+    "sprite": 16,
+    "cladding": 15,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 96,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 2,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 2,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 96,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 38336
+    },
+    "y": {
+      "First": 0,
+      "Second": 40768
+    },
+    "z": 65533,
+    "dir": 14905,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 97,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      94,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 7,
+    "land": {
+      "ruler": 100,
+      "war_state": 0,
+      "realm": 7,
+      "owner": 100,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 97,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 29888
+    },
+    "y": {
+      "First": 0,
+      "Second": 31424
+    },
+    "z": 65533,
+    "dir": 30729,
+    "sprite": 4,
+    "cladding": 15,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 98,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      56,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 7,
+    "land": {
+      "ruler": 91,
+      "war_state": 0,
+      "realm": 7,
+      "owner": 91,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 98,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 25280
+    },
+    "y": {
+      "First": 0,
+      "Second": 27072
+    },
+    "z": 65533,
+    "dir": 11233,
+    "sprite": 16,
+    "cladding": 15,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 99,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      56,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 136,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 136,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 99,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 42176
+    },
+    "y": {
+      "First": 0,
+      "Second": 33856
+    },
+    "z": 65533,
+    "dir": 19471,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 100,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 73,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 73,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 100,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 36032
+    },
+    "y": {
+      "First": 0,
+      "Second": 28608
+    },
+    "z": 65533,
+    "dir": 24748,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 101,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      57,
+      0,
+      0,
+      0
+    ],
+    "owner": 12,
+    "land": {
+      "ruler": 23,
+      "war_state": 0,
+      "realm": 12,
+      "owner": 23,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 101,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 32960
+    },
+    "y": {
+      "First": 0,
+      "Second": 25792
+    },
+    "z": 65533,
+    "dir": 4434,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 102,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      46,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 29,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 29,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 102,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 38336
+    },
+    "y": {
+      "First": 0,
+      "Second": 17600
+    },
+    "z": 65533,
+    "dir": 19799,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 103,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 20,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 20,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 103,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 37824
+    },
+    "y": {
+      "First": 0,
+      "Second": 25152
+    },
+    "z": 65533,
+    "dir": 14997,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 104,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      59,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 38,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 38,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 104,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 46016
+    },
+    "y": {
+      "First": 0,
+      "Second": 21440
+    },
+    "z": 65533,
+    "dir": 6157,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 105,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      54,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 116,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 116,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 105,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 41920
+    },
+    "y": {
+      "First": 0,
+      "Second": 31552
+    },
+    "z": 65533,
+    "dir": 17265,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 106,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 11,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 11,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 106,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 41536
+    },
+    "y": {
+      "First": 0,
+      "Second": 26176
+    },
+    "z": 65533,
+    "dir": 12475,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 107,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      58,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 125,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 125,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 107,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 48064
+    },
+    "y": {
+      "First": 0,
+      "Second": 27840
+    },
+    "z": 65533,
+    "dir": 15988,
+    "sprite": 16,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 108,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      91,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 8,
+    "land": {
+      "ruler": 87,
+      "war_state": 0,
+      "realm": 8,
+      "owner": 87,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 108,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 57664
+    },
+    "y": {
+      "First": 0,
+      "Second": 31680
+    },
+    "z": 65533,
+    "dir": 5511,
+    "sprite": 4,
+    "cladding": 16,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 109,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      42,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 85,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 85,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 109,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 52544
+    },
+    "y": {
+      "First": 0,
+      "Second": 45120
+    },
+    "z": 65533,
+    "dir": 11483,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 110,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 7,
+    "land": {
+      "ruler": 31,
+      "war_state": 0,
+      "realm": 7,
+      "owner": 31,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 110,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 43712
+    },
+    "y": {
+      "First": 0,
+      "Second": 39872
+    },
+    "z": 65533,
+    "dir": 4697,
+    "sprite": 16,
+    "cladding": 15,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 111,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 47,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 47,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 111,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 43840
+    },
+    "y": {
+      "First": 0,
+      "Second": 43072
+    },
+    "z": 65533,
+    "dir": 23087,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 112,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      51,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 9,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 9,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 112,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 48832
+    },
+    "y": {
+      "First": 0,
+      "Second": 49984
+    },
+    "z": 65533,
+    "dir": 8387,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 113,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 152,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 152,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 113,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 41024
+    },
+    "y": {
+      "First": 0,
+      "Second": 46528
+    },
+    "z": 65533,
+    "dir": 26204,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 114,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 75,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 75,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 114,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 45632
+    },
+    "y": {
+      "First": 0,
+      "Second": 53824
+    },
+    "z": 65533,
+    "dir": 20901,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 115,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 46,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 46,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 115,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 53184
+    },
+    "y": {
+      "First": 0,
+      "Second": 56384
+    },
+    "z": 65533,
+    "dir": 15585,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 116,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 28,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 28,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 116,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 44736
+    },
+    "y": {
+      "First": 0,
+      "Second": 62144
+    },
+    "z": 65533,
+    "dir": 24256,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 117,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      59,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 10,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 10,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 117,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 40512
+    },
+    "y": {
+      "First": 0,
+      "Second": 60352
+    },
+    "z": 65533,
+    "dir": 32380,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 118,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 4,
+    "land": {
+      "ruler": 15,
+      "war_state": 0,
+      "realm": 4,
+      "owner": 15,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 118,
+    "type": 4,
+    "char_flags": 4,
+    "flags": 0,
+    "x": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "y": {
+      "First": 65535,
+      "Second": 65535
+    },
+    "z": 65533,
+    "dir": 9267,
+    "sprite": 16,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 119,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 17,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 17,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 119,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 59072
+    },
+    "y": {
+      "First": 0,
+      "Second": 55232
+    },
+    "z": 65533,
+    "dir": 3496,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 120,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      44,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 44,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 44,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 120,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 56896
+    },
+    "y": {
+      "First": 0,
+      "Second": 53824
+    },
+    "z": 65533,
+    "dir": 27685,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 121,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      47,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 26,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 26,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 121,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 60608
+    },
+    "y": {
+      "First": 0,
+      "Second": 61376
+    },
+    "z": 65533,
+    "dir": 4500,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 122,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 8,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 8,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 122,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 61120
+    },
+    "y": {
+      "First": 0,
+      "Second": 54976
+    },
+    "z": 65533,
+    "dir": 5808,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 123,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      51,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 105,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 105,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 123,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 61760
+    },
+    "y": {
+      "First": 0,
+      "Second": 49344
+    },
+    "z": 65533,
+    "dir": 16474,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 124,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      42,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 86,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 86,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 124,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 61632
+    },
+    "y": {
+      "First": 0,
+      "Second": 46400
+    },
+    "z": 65533,
+    "dir": 12457,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 125,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 135,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 135,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 125,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 58816
+    },
+    "y": {
+      "First": 0,
+      "Second": 44736
+    },
+    "z": 65533,
+    "dir": 22626,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 126,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      109,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 6,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 6,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 126,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 60480
+    },
+    "y": {
+      "First": 0,
+      "Second": 38208
+    },
+    "z": 65533,
+    "dir": 11529,
+    "sprite": 4,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 127,
+    "obj_race_size": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 5,
+    "land": {
+      "ruler": 35,
+      "war_state": 0,
+      "realm": 5,
+      "owner": 35,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 127,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 56256
+    },
+    "y": {
+      "First": 0,
+      "Second": 42048
+    },
+    "z": 65533,
+    "dir": 28578,
+    "sprite": 16,
+    "cladding": 5,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 128,
+    "obj_race_size": [
+      0,
+      54,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 34,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 34,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 128,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 24128
+    },
+    "y": {
+      "First": 0,
+      "Second": 47168
+    },
+    "z": 65533,
+    "dir": 3181,
+    "sprite": 16,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 129,
+    "obj_race_size": [
+      0,
+      45,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 106,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 106,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 129,
+    "type": 4,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 29760
+    },
+    "y": {
+      "First": 0,
+      "Second": 48960
+    },
+    "z": 65533,
+    "dir": 22160,
+    "sprite": 16,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  },
+  {
+    "shield": 2,
+    "port": 130,
+    "obj_race_size": [
+      0,
+      97,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner": 1,
+    "land": {
+      "ruler": 60,
+      "war_state": 0,
+      "realm": 1,
+      "owner": 60,
+      "enemies": 0
+    },
+    "cit_link": 65535,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 130,
+    "type": 6,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 18112
+    },
+    "y": {
+      "First": 0,
+      "Second": 51008
+    },
+    "z": 65533,
+    "dir": 1422,
+    "sprite": 4,
+    "cladding": 9,
+    "print": 1,
+    "x_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "y_scale": {
+      "First": 49152,
+      "Second": 0
+    },
+    "x_size": 160,
+    "y_size": 160,
+    "z_size": 50,
+    "cam_off": 0
+  }
+]

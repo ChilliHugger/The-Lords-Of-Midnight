@@ -1,0 +1,48 @@
+1. Glimormir
+2. The Great Lake of Glimormir lies in the northwest of the Bloodmarch. On its western shore is the Eldmark, on the eastern shore the Lee and on the northwest shore are the Witherlands. In the midst of the lake lies the fair Isle of Immiel, home of the Golden Fey and seat of their King, Galahar the Calm. The realm of Glimormir is the one sanctuary in the Bloodmarch where the evil of the Dark Fey cannot penetrate, such is the power and purity of Galahar.
+3. The Long Mountains
+4. The Long Mountains begin in the far north of the Bloodmarch and sweep down to the southwest like a scimitar. In the north, they lie between the Lee to the west and the Last Northing to the east. Further south, they touch upon Dawnwood to the east, the Deeping to the south, Weirdwood to the west and the Eldmark to the north. The mighty River Imilvir cuts through the Long Mountains in the land of Scaradir before tumbling into Dawnwood. The Long Mountains are the realm of the Long Dwarves and there are seven lands within its borders, Erenim, Isilfrey, Thordroth, Farwain, Beomir, Scaradwin and Scaradir. In Beomir stands the Citadel of the King of the Long Mountains.
+5. Weirdwood
+6. Weirdwood lies in the west of the Bloodmarch, south of the Eldmark, east of the Long Mountains and the Deeping, north of the Gelm. Through its midst flows the mighty River Imilvir. Weirdwood is the realm of the High Fey and there are nine lands within its borders, Elinvar, Merikith, Arelmar, the Shimmering Forest, Aradel, the Forgotten Forest, the Forest of Forever, the Whispering Forest and the Golden Forest. In the Shimmering Forest, near the banks of the River Imilvir stands the Citadel of the High King of Weirdwood.
+7. The Great Ocean
+8. To the east of the Bloodmarch lies the Great Ocean. In the north, it beats upon the shores of the Last Northing and separates the Isle of Arungor from the mainland. Further south, it crashes upon the shores of the Fallows, the Delve and the Marish. There are six seas within the Great Ocean, the Sea of Galorwain in the far north, the Sea of Fire betwixt Arungor and the Last Northing, the Weeping Sea east of Arungor, the Grey Sea east of the Fallows, the Sea of Skulls off the coast of the Delve and, east of the Marish, the Shining Sea which reaches south beyond the Bloodmarch to Coromand.
+9. The Marish
+10. The Marish lies in the southeast of the Bloodmarch, west of the Delve, south of Dawnwood and the Fallows, east of the Deeping and the Gelm. Through the heart of the Marish flows the River Falthrang churning its way west from the mountains of the Deeping to the Bay of Ulmor and the Great Ocean. The Marish is the bleak and desolate realm of the Dark Fey and there are nine lands within its borders, Gliwain, Malgor, Dwardor, Barathor, the Plain of Death, Maranor, the Plain of Ravens and the Burning Plain. In Maranor, on an island in the Falthrang, stands the Dark Citadel of Boroth the Wolfheart, High King of the Dark Fey where hostages from all the realms of the Bloodmarch languish in the dungeons.
+11. The Deeping
+12. The Deeping lies in the south of the Bloodmarch, south of the Long Mountains, Weirdwood and Dawnwood, east of the Marish, west of the Gelm. Within its mighty ring of mountains lies Lake Tarefyr whose icy blue waters feed the swift-flowing River Caradwin. The Deeping is the realm of the Deeping Dwarves and there are seven lands within its borders, the Mountains of Thunder, the Mountains of Dawn, Ararak, Sharenor, Ildemar, Tharn, Zaragrorn and Tharn. In the Mountains of Thunder stands the Citadel of the King of the Deeping.
+13. The Last Northing
+14. The Last Northing lies in the northeast of the Bloodmarch, west of Arungor and the Great Ocean, east of the Long Mountains, north of Dawnwood. Through its midst flows the mighty river Arelon, curling westwards from the Long Mountains to the Bay of Tharran and the Sea of Fire. The Last Northing is the realm of the Arakai and there are eleven lands within its borders, Sharmark, the Sapphire Mountains, Melibor, Rilleon, Elmir, Ravenfrey, Erefar, Galorbard, the Crimson Mountains, Orcar and Caramane. In Rilleon, on the northern bank of the Arelon, stands the Citadel of the King of the Last Northing.
+15. The Land of Midnight
+16. The Land of Midnight lies to the northwest of the Bloodmarch, northwest of the Witherlands. Only a tiny portion of Midnight touches upon the Bloodmarch, but here, in Corelay, the mighty River Imilvir begins its southward journey to the Great Ocean. The Castle of Corelay, a short way north of the Imilvir, is bastion of Prince Morkin and the place where, if Luxor the Moonprince be rescued or perish, a mighty army of warriors from the four corners of Midnight will gather to march upon Boroth the Wolfheart and the Dark Fey.
+17. The Delve
+18. The Delve lies in the southeast of the Bloodmarch. To the west is the Marish, to the east the Sea of Skulls and the Great Ocean.\x09The Delve is a mountainous land and it is the realm of the Giants. Within its borders are twelve lands, Grorn, Finrod, the Iron Mountains, Gagrun, Tark, Othrym, Skirol, the Big Mountains, the Isle of Storms, Thordrin, Athruk and Tark. In Skirol stands the Citadel of the Great King of the Delve.
+19. The Gelm
+20. The Gelm lies in the southwest of the Bloodmarch, west of the Marish and the Deeping, south of Weirdwood. The Gelm is the principality of the Gelmings and within its borders are five broad lands, Finfyr, Geremiel, Samarand, Gilgrath and Emergelm. In Samarand stands the Citadel of the Prince of the Gelm.
+21. The Witherlands
+22. The Witherlands lie in the northwest of the Bloodmarch, east of the Lee, north of Glimormir and the Eldmark, southwest of Midnight. Through their midst flows the mighty River Imilvir before tumbling into the calm waters of Glimormir. The Witherlands are the realm of the Kith. Within the borders lie but three lands,\x09Eomir, Erifel and Sareon. In Eomir stands the Citadel of the Prince of the Witherlands.
+23. The Fallows
+24. The Fallows lies in the east of the Bloodmarch, north of the Marish, east of Dawnwood. Further east lies only the Great Ocean. The Fallows is the realm of the Uskarg and within its borders there are nine lands, the Isle of Alathor, Elinbrand, Arabar, Skordroth, Theodel, Cerrelm, Roreon, Athrudan and Erilmark. In Roreon stands the Citadel of the King of the Fallows.
+25. The Lee
+26. The Lee lies in the north of the Bloodmarch, east of the Witherlands and the Eldmark, west of the Long Mountains, on the eastern shore of Glimormir. At the heart of the Lee lies Lake Elinmor from whence the River Eodral flows south into Lake Glimormir. The Lee is the realm of the Athelings and within its borders there are eight lands, Rilnor, Thumar, Sharvik, Imildral, Varorn, Melthor, Cerevere and Ceremelth. In Varorn stands the Citadel of the King of the Athelings.
+27. Immiel
+28. Immiel, the fairest isle of all, lies in Glimormir in the northwest of the Bloodmarch. Here, all are kept safe from the ravages of the Dark Fey by Galahar the Calm, King of the Golden Fey and Lord of Immiel. His great Citadel stands atop the cliffs on the southern coast of the island.
+29. The River Imilvir
+30. The mighty river Imilvir winds its way through the length and breadth of the Bloodmarch, tumbling through mountains, forest and plains. The Imilvir is the Silver Road of the Blood March, where a ship may sail from the Witherlands to the Great Ocean.
+31. Castles
+32. {2}{3}{4}{5}
+33. Citadels
+34. {2}{4}{5}
+35. The Eldmark
+36. The Eldmark lies in the west of the Bloodmarch, north of Weirdwood, south of the Witherlands, west of the Long Mountains and the Lee. On its eastern borders, the mighty River Imilvir flows south from Glimormir towards Weirdwood. The Eldmark is the realm of the Eldrin and within its borders there are but four lands, Arelban, Arunvere, Meranor and Erilan. In Arunvere stands the Citadel of the Queen of the Eldmark.
+37. The Mists of Oblivion
+38. At the borders of the Bloodmarch, the good warrior will find the Mists of Oblivion and is well-advised to turn back before the mists thicken to impenetrable lest he vanish from the memory of his comrades forever, venturing instead to other less stricken lands.
+39. Dawnwood
+40. Dawnwood lies at the very heart of the Bloodmarch, south of the Last Northing, east of the Long Mountains, north of the Deeping and the Marish, west of the Fallows. Through its green forest flows the mighty River Imilvir before plunging into the Bay of Eregoth and the Great Ocean. Dawnwood is the realm of the Dawn Fey and within its borders there are seven lands, Maralan, Romiel, the Forest of Songs, Carafel, Emerthen, Elorthard and Corithel. In Elorthard, south of the Imilvir, stands the Citadel of the King of Dawnwood.
+41. Arungor
+42. The Isle of Arungor lies in the northwest of the Bloodmarch, off the coast of the Last Northing. To the north is the Sea of Galorwain, to the east the Weeping Sea and to the west the Sea of Fire. Arungor is the realm of the Dragonlords and within its borders there are nine lands, the Dragon Mountains, Angelf, Rildroth, Sarnoth, Erivik, Shrygal, Ashnar, Cormir and Aragor. In Ashnar stands the Citadel of the Dragon King of Arungor.
+43. 
+44. 
+45. 
+46. 
+47. 
+48. 

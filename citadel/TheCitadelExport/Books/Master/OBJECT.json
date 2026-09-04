@@ -1,0 +1,268 @@
+[
+  {
+    "shield": 0,
+    "port": 0,
+    "weapon_owner": 65535,
+    "weapon_type": 1,
+    "weapon_details": 0,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 0,
+    "type": 12,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 5508,
+      "Second": 38044
+    },
+    "y": {
+      "First": 4622,
+      "Second": 33561
+    },
+    "z": 8,
+    "dir": 0,
+    "sprite": 15,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "y_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "x_size": 6,
+    "y_size": 6,
+    "z_size": 16,
+    "cam_off": 3
+  },
+  {
+    "shield": 0,
+    "port": 1,
+    "weapon_owner": 65535,
+    "weapon_type": 1,
+    "weapon_details": 0,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 1,
+    "type": 12,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 1920
+    },
+    "y": {
+      "First": 19551,
+      "Second": 61776
+    },
+    "z": 8,
+    "dir": 0,
+    "sprite": 15,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "y_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "x_size": 6,
+    "y_size": 6,
+    "z_size": 16,
+    "cam_off": 3
+  },
+  {
+    "shield": 0,
+    "port": 2,
+    "weapon_owner": 65535,
+    "weapon_type": 2,
+    "weapon_details": 0,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 2,
+    "type": 12,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 18432
+    },
+    "y": {
+      "First": 0,
+      "Second": 14336
+    },
+    "z": 8,
+    "dir": 0,
+    "sprite": 15,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "y_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "x_size": 6,
+    "y_size": 6,
+    "z_size": 16,
+    "cam_off": 3
+  },
+  {
+    "shield": 0,
+    "port": 3,
+    "weapon_owner": 65535,
+    "weapon_type": 1,
+    "weapon_details": 0,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 3,
+    "type": 12,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 58739,
+      "Second": 8258
+    },
+    "y": {
+      "First": 4794,
+      "Second": 45038
+    },
+    "z": 8,
+    "dir": 0,
+    "sprite": 15,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "y_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "x_size": 6,
+    "y_size": 6,
+    "z_size": 16,
+    "cam_off": 3
+  },
+  {
+    "shield": 0,
+    "port": 4,
+    "weapon_owner": 65535,
+    "weapon_type": 2,
+    "weapon_details": 0,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 4,
+    "type": 12,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 6528
+    },
+    "y": {
+      "First": 0,
+      "Second": 24448
+    },
+    "z": 8,
+    "dir": 0,
+    "sprite": 15,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "y_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "x_size": 6,
+    "y_size": 6,
+    "z_size": 16,
+    "cam_off": 3
+  },
+  {
+    "shield": 0,
+    "port": 5,
+    "weapon_owner": 65535,
+    "weapon_type": 2,
+    "weapon_details": 0,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 5,
+    "type": 12,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 59712
+    },
+    "y": {
+      "First": 0,
+      "Second": 13104
+    },
+    "z": 8,
+    "dir": 0,
+    "sprite": 15,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "y_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "x_size": 6,
+    "y_size": 6,
+    "z_size": 16,
+    "cam_off": 3
+  },
+  {
+    "shield": 0,
+    "port": 6,
+    "weapon_owner": 65535,
+    "weapon_type": 1,
+    "weapon_details": 0,
+    "prev_link": 0,
+    "next_link": 0,
+    "num": 6,
+    "type": 12,
+    "char_flags": 2,
+    "flags": 7,
+    "x": {
+      "First": 0,
+      "Second": 61696
+    },
+    "y": {
+      "First": 0,
+      "Second": 62784
+    },
+    "z": 8,
+    "dir": 0,
+    "sprite": 15,
+    "cladding": 0,
+    "print": 1,
+    "x_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "y_scale": {
+      "First": 0,
+      "Second": 1
+    },
+    "x_size": 6,
+    "y_size": 6,
+    "z_size": 16,
+    "cam_off": 3
+  }
+]
