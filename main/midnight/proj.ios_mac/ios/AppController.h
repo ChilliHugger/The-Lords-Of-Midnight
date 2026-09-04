@@ -24,13 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import <UIKit/UIKit.h>
+#import "platform/ios/AxmolAppController.h"
 
-@class RootViewController;
-
-@interface AppController : NSObject <UIApplicationDelegate> {
+@interface AppController : AxmolAppController {
 }
-
-@property(nonatomic, readonly) RootViewController* viewController;
 
 @end

@@ -24,10 +24,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import <UIKit/UIKit.h>
+#import "platform/ios/AxmolViewController.h"
 
-@interface RootViewController : UIViewController {
+@interface RootViewController : AxmolViewController {
 }
-- (BOOL)prefersStatusBarHidden;
 
 @end
