@@ -1,6 +1,7 @@
 #include "../axmol_sdk.h"
 
-//#define _USE_FOREGROUND_PEOPLE_
+#define _USE_FOREGROUND_PEOPLE_
+// TODO: Move for this into own class
 
 #include "panel_look.h"
 #include "panel_think.h"
@@ -138,12 +139,12 @@ bool panel_look::init()
     options->mr = GetMoonring();
     options->generator = new LandscapeGenerator();
     options->colour = new LandscapeColour(options);
-    options->showWater = true;
+    options->showWater = false;
     options->showLand  = false;
     options->showTerrain = true ;
-    options->debugMode = 6;
-    options->landScaleX = 1.5f;
-    options->landScaleY = 1.5f; //2.8f;
+    options->debugMode = 0;
+    options->landScaleX = 1.6f;
+    options->landScaleY = 2.15f;
     options->debugLand=false;
     options->isMoving=false;
     options->isLooking=false;
@@ -495,7 +496,6 @@ void panel_look::setViewForCurrentCharacter()
     
     options->colour->SetLookColour(current_info->time);
     options->timeofday = current_info->time;
-    //options->characterId = current_info->id;
     options->here = current_info->location;
     options->here.x *= LANDSCAPE_DIR_STEPS;
     options->here.y *= LANDSCAPE_DIR_STEPS;
