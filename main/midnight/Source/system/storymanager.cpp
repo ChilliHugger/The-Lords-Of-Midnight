@@ -126,18 +126,16 @@ bool storymanager::create ( storyid_t id, u64 flags, mxdifficulty_t difficulty )
     last_morning.Clear();
     
 #if defined(_CITADEL_)
-#if defined(_LOM_MAP_)
+#if defined(_CITADEL_TEST_WATER_MAP_)
     auto builder = new TMEMapBuilder();
     auto map = builder->Build( "lom_map_water.tmx" );
     TME_DebugInstallMap(map);
-#endif
-    
-#if defined(_CITADEL_MAP_)
+#else
     auto builder = new TMEMapBuilderCitadel();
     auto map = builder->Build( "citadel_wip.tmx" );
     TME_DebugInstallMap(map);
 #endif
-#endif
+#endif // defined(_CITADEL_)
     
     ax::FileUtils::getInstance()->createDirectories(getFolder(id));
     
