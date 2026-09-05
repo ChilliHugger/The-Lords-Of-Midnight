@@ -1,13 +1,14 @@
 ### Deployment Process
 
 ## iOS
-1. Make sure there is no LOM/DDR folder in resources (after Android build)
+1. Make sure there is no LOM/DDR/CITADEL folder in resources (after Android build)
 2. Update Bundle Version in info.plist
 3. Generate Project
   - axmol build -configOnly -p ios -a arm64 -xc '-DTME=LOM,-BBuilds/ios-lom'
   - axmol build -configOnly -p ios -a arm64 -xc '-DTME=DDR,-BBuilds/ios-ddr'
+  - axmol build -configOnly -p ios -a arm64 -xc '-DTME=CITADEL,-BBuilds/ios-citadel'
 4. Update Archive Name
-  - Product | Scheme | Edit Scheme | Archive | Archive Name - "The Lords of Midnight" | "Doomdark's Revenge"
+  - Product | Scheme | Edit Scheme | Archive | Archive Name - "The Lords of Midnight" | "Doomdark's Revenge" | "The Citadel"
 5. Check 'Archive Build Configuration'
   - Project | Scheme | Edit Scheme | Archive | Build Configuration - RelWithDebInfo  
 6. Check Debug Info
@@ -18,9 +19,11 @@
 9. Copy and compress
   - midnight.app.dsym from main/midnight/builds/ios-lom/bin/midnight/RelWithDebInfo to main/midnight/dsym files/ios/2.0.x.(xx)
   - revenge.app.dsym from main/midnight/builds/ios-ddr/bin/revenge/RelWithDebInfo to main/revenge/dsym files/ios/2.0.x.(xx)
+  - citadel.app.dsym from main/midnight/builds/ios-ddr/bin/citadel/RelWithDebInfo to main/citadel/dsym files/ios/2.0.x.(xx)
 10. Add dsym file to archive -
   - 'main/midnight/builds/iOS-lom/bin/midnight/RelWithDebInfo/midnight.app.dSYM'
   - 'main/midnight/builds/iOS-ddr/bin/revenge/RelWithDebInfo/revenge.app.dSYM'
+  - 'main/midnight/builds/iOS-citadel/bin/citadel/RelWithDebInfo/citadel.app.dSYM'
 11. Validate
 12. Distribute
   - App Store Connect
@@ -35,13 +38,14 @@
 4. Add new build
 
 ## OS X
-1. Make sure there is no LOM/DDR folder in resources (after Android build)
+1. Make sure there is no LOM/DDR/CITADEL folder in resources (after Android build)
 2. Update Bundle Version in info.plist
 3. Generate Project
   - axmol build -configOnly -p osx -a x64 -xc '-DTME=LOM,-BBuilds/mac-lom'
   - axmol build -configOnly -p osx -a x64 -xc '-DTME=DDR,-BBuilds/mac-ddr'
+  - axmol build -configOnly -p osx -a x64 -xc '-DTME=CITADEL,-BBuilds/mac-citadel'
 4. Update Archive Name
-  - Product | Scheme | Edit Scheme | Archive | Archive Name - "The Lords of Midnight" | "Doomdark's Revenge"
+  - Product | Scheme | Edit Scheme | Archive | Archive Name - "The Lords of Midnight" | "Doomdark's Revenge" | "The Citadel"
 5. Check 'Archive Build Configuration'
   - Project | Scheme | Edit Scheme | Archive | Build Configuration - RelWithDebInfo  
 6. Check Build Version
@@ -59,6 +63,7 @@
 13. Add dsym file to archive
   - 'main/midnight/builds/mac-lom/bin/midnight/RelWithDebInfo/midnight.app.dSYM'
   - 'main/midnight/builds/mac-ddr/bin/revenge/RelWithDebInfo/revenge.app.dSYM'
+  - 'main/midnight/builds/mac-citadel/bin/citadel/RelWithDebInfo/citadel.app.dSYM'
 14. Validate
 15. Distribute App
   - App Store Connect
@@ -97,6 +102,7 @@
 9. Locate Bundle - press locate on popup when signing finishes
     - midnight-release.aab
     - revenge-release.aab
+    - citadel-release.aab
     - check size (should be about 24mb otherwise you've forgotten the resources!)
 10. Google Play Store - https://play.google.com/console/u/0/developers/5865908633896374109/
     - Internal Testing
@@ -118,6 +124,7 @@ Version 2.0 (xx)
 Scripts can be run from the main folder
 ./scripts/osx_builds_lom.sh
 ./scripts/osx_builds_ddr.sh
+./scripts/osx_builds_citadel.sh
 
 These will create an ios, osx, and OSX test builds
 
@@ -138,5 +145,12 @@ main/midnight/proj.ios_mac/mac/revenge/Info.plist
 main/midnight/proj.win32/revenge/game.rc
 main/midnight/ddr_v2.0_osx.cfg
 main/midnight/ddr_v2.0_win.cfg
+
+main/midnight/proj.android_citadel/app/build.gradle
+main/midnight/proj.ios_mac/ios/citadel/Info.plist
+main/midnight/proj.ios_mac/mac/citadel/Info.plist
+main/midnight/proj.win32/citadel/game.rc
+main/midnight/citadel_v2.0_osx.cfg
+main/midnight/citadel_v2.0_win.cfg
 
 main/midnight/tme_history.txt

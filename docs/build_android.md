@@ -16,4 +16,8 @@ Using Android Studio select the LOM variant
 
 ## For Doomdark's Revenge
 Open proj.android
-Using Android Studio select the LOM variant
+Using Android Studio select the DDR variant
+
+## For The Citadel
+Open proj.android
+Using Android Studio select the CITADEL variant

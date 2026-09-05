@@ -30,7 +30,7 @@ cd mac-tests-lom
 axmol build -configOnly -p osx -a x64 -xc '-DTME=LOM,-DTESTS=YES,-BBuilds/mac-tests-lom'
 ```
 
-Replace LOM with DDR for Doomdark's Revenge
+Replace LOM with DDR for Doomdark's Revenge or with CITADEL for The Citadel
 
 ## Create iOS XCode Project
 
@@ -41,4 +41,4 @@ cd ios-lom
 axmol build -configOnly -p ios -a arm64 -xc '-DTME=LOM,-BBuilds/ios-lom'
 ```
 
-Replace LOM with DDR for Doomdark's Revenge
+Replace LOM with DDR for Doomdark's Revenge or with CITADEL for The Citadel

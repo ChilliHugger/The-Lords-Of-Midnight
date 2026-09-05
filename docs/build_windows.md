@@ -109,7 +109,6 @@ Instructions very similar to building Lords of Midnight, instead of 'midnight' y
 - Change target to 'Release':
 - From Solution Explorer expand 'CMakePredefinedTargets', expand 'ALL_BUILD', right click on 'CMakeLists.txt' and select 'Properties'.
 - From 'Properties' dialog, select 'Custom Build Tool\General', edit 'Command Line'.
-- From 'Properties' dialog, select 'Custom Build Tool\General', edit 'Command Line'.
 - Add '-DTME=DDR' to 'Command Line'.
 - From Solution Explorer expand 'CMakePredefinedTargets', right click on 'ALL_BUILD' and select 'Build'. Wait for build to complete.
 - From Solution Explorer, right click on 'revenge' and select 'Set as Startup Project'.
@@ -127,6 +126,44 @@ A pre-defined project is built already present to support building installer fro
 - Open solution 'doomdarks_revenge.sln' from 'main\midnight\build.win32\revenge\installer'.
 - Change target to 'Release', from 'Solution Explorer' right-click on 'lords_of_midnight' and click on 'Build'.
 - Your installer can now be found under 'main\midnight\build.win32\revenge\installer\Release\'
+
+## For The Citadel
+
+### Create Windows VS Project
+
+- From within 'The-Lords-Of-Midnight':
+
+```
+cd main\midnight\build.win32\citadel
+mkdir vs_project && cd vs_project
+cmake ..\..\.. -G"Visual Studio 17 2022" -A Win32 -DTME:string=CITADEL
+```
+
+### Build Code from Windows VS
+
+Instructions very similar to building Lords of Midnight, instead of 'midnight' you will see a 'citadel' solution. Refer to images in instructions on building Lords of Midnight for details.
+
+- Open Visual Studio solution 'midnight.sln' from within 'main\midnight\build.win32\citadel\vs_project'
+- Change target to 'Release':
+- From Solution Explorer expand 'CMakePredefinedTargets', expand 'ALL_BUILD', right click on 'CMakeLists.txt' and select 'Properties'.
+- From 'Properties' dialog, select 'Custom Build Tool\General', edit 'Command Line'.
+- Add '-DTME=DDR' to 'Command Line'.
+- From Solution Explorer expand 'CMakePredefinedTargets', right click on 'ALL_BUILD' and select 'Build'. Wait for build to complete.
+- From Solution Explorer, right click on 'citadel' and select 'Set as Startup Project'.
+- Expand 'citadel', right click on 'CMakeLists.txt', go through same process as before to add '-DTME=CITADEL' to 'Command Line'.
+- From Solution Explorer, right click on 'citadel' and select 'Build'.
+- You should now have an executable under 'vs_project\bin\citadel\Release'
+- Setup working directory for debug by selecting 'Debug', then selecting 'citadel Debug Properties', then 'Debugging'. Click on 'Working Directory', select browse and choose 'bin\citadel\Debug\Content' 
+- If needing to debug code, change target to 'Debug', click on 'Local Windows Debugger'.
+
+## Create Windows Installer
+
+A pre-defined project is built already present to support building installer from executable created by the Windows Visual Studio project:
+
+- Open Visual studio.
+- Open solution 'citadel.sln' from 'main\midnight\build.win32\citadel\installer'.
+- Change target to 'Release', from 'Solution Explorer' right-click on 'lords_of_midnight' and click on 'Build'.
+- Your installer can now be found under 'main\midnight\build.win32\citadel\installer\Release\'
 
 ## Version Upgrade
 
