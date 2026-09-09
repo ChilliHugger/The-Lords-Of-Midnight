@@ -1,6 +1,5 @@
 #include "../axmol_sdk.h"
 
-#define _USE_FOREGROUND_PEOPLE_
 // TODO: Move for this into own class
 
 #include "panel_look.h"
