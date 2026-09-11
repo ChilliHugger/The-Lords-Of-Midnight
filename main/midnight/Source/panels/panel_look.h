@@ -1,5 +1,7 @@
 #pragma once
 
+#define _USE_FOREGROUND_PEOPLE_
+
 #include "../ui/uipanel.h"
 #include "../system/storymanager.h"
 
