@@ -94,6 +94,66 @@ scenarioinfo_t* citadel_x::GetInfoBlock() const
     return &citadel_scenario_info ;
 }
 
+//
+// THE HOSTAGES
+//
+// Boroth the Wolfheart holds one lord of each realm of the Bloodmarch in the dungeons of
+// the Dark Citadel of Maranor, and while a realm's hostage is held there, its King will
+// not march. Free the hostage and his people can be persuaded to your cause - which is,
+// as the help puts it, the surest way to raise an army large enough to march on Maranor.
+//
+// This is the 1995 game's own roster. Every lord here stands at Maranor (145,220) in
+// citadel/data/citadel_character.txt, and The Citadel design document names each of them
+// in turn as the hostage of his or her realm. The Golden Fey alone have no hostage -
+// their magic upon Immiel is such that Boroth dares not assail them - and the Dark Fey
+// are the enemy, so twelve realms, twelve hostages.
+//
+// Luxor is held in those same dungeons and is deliberately NOT one of these. Freeing him
+// is a story of the House of Moon rather than a realm won over, and he is the lord the
+// engine hands the player first.
+//
+// Named by symbol rather than flagged in the database because the database shipped with
+// The Citadel is still Lords of Midnight's. A name that is not in the database is passed
+// over, so this roster costs nothing today and wakes on its own the day the Citadel
+// characters land.
+//
+static LPCSTR citadel_hostages[] = {
+    "CH_MOGRIK",        // Kith          - Mogrik the Witless, Prince of the Witherlands
+    "CH_ZENETHOR",      // Atheling      - Zenethor the Strong, King of the Lee
+    "CH_AREMELA",       // Eldrin        - Princess Aremela, the Queen's daughter
+    "CH_OLTHRUDA",      // Long Dwarf    - Olthruda the Bountiful, the King's wife
+    "CH_KIRANDA",       // Arakai        - Kiranda the Wild, the King's daughter
+    "CH_SAGRANA",       // Dragonlord    - Sagrana Goldenwing, the King's sister
+    "CH_EMEDREL",       // High Fey      - Emedrel of the Fire, the High King's daughter
+    "CH_ALOROTH",       // Dawn Fey      - Aloroth the Fey, the King's brother
+    "CH_DJALINA",       // Uskarg        - Djalina Snowheart, the King's daughter
+    "CH_WYTHRAN",       // Gelming       - Wythran the Weaver, the King's only son
+    "CH_THALGRIMA",     // Deeping Dwarf - Thalgrima the Betrothed, the King's bride to be
+    "CH_MELINISSA",     // Giant         - Melinissa the Sweet, the King's stepdaughter
+};
+
+//
+// Run once, when a story begins - never on load. Being held is a character flag, and
+// character flags are saved, so a hostage freed on day forty is still free when that
+// story is picked up again.
+//
+void citadel_x::initialiseAfterCreate ( u32 version )
+{
+    for ( auto symbol : citadel_hostages ) {
+        auto hostage = mx->CharacterBySymbol(symbol);
+        if ( hostage != nullptr )
+            hostage->Flags().Set(cf_prisoner);
+    }
+
+    // said of a lord still in the dungeons, in place of "has not yet been persuaded to
+    // join you", which would be a poor way to describe a prisoner
+    mx->text->ModifySystemString(SS_PRISONER,
+        "{case:first}{char:name} is held hostage here in the dungeons of the Dark Citadel, "
+        "and while {gender:heshe} is held the {race:name} will not march.");
+
+    mxscenario::initialiseAfterCreate(version);
+}
+
 MXRESULT citadel_x::Register ( mxengine* midnightx )
 {
     // mx = midnightx ;
@@ -106,7 +166,7 @@ MXRESULT citadel_x::Register ( mxengine* midnightx )
     mx->scenario = (mxscenario*)citadel_scenario;
     
     // set initial feature flags
-    mx->scenario->features = SF_MOONRING|SF_ICEFEAR  ;
+    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_HOSTAGES ;
     
     return MX_OK ;
 }

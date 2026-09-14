@@ -167,6 +167,7 @@ inline bool Character_IsRiding(const character& c)              { return c.flags
 inline bool Character_IsAlive(const character& c)               { return c.flags.Is(cf_alive); }
 inline bool Character_IsDead(const character& c)                { return !c.flags.Is(cf_alive); }
 inline bool Character_IsRecruited(const character& c)           { return c.flags.Is(cf_recruited); }
+inline bool Character_IsPrisoner(const character& c)            { return c.flags.Is(cf_prisoner); }
 inline bool Character_IsAllowedArmy(const character& c)         { return c.flags.Is(cf_army); }
 inline bool Character_IsAllowedHide(const character& c)         { return c.flags.Is(cf_hide); }
 inline bool Character_IsAllowedHorse(const character& c)        { return c.flags.Is(cf_horse); }

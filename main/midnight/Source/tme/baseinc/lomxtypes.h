@@ -593,6 +593,7 @@ using namespace chilli::types;
             SS_OBJECT_USE_4=121,
             SS_MESSAGE_MIST=122,
             SS_TOKENS_VICTORY=123,
+            SS_PRISONER=124,                // a lord held hostage, said in place of SS_MESSAGE7
             
             SS_MAX_STRINGS = 255
         };
@@ -905,6 +906,7 @@ namespace tme {
             cf_preparesbattle   = MXBIT(22),    // prepares to do battle
             cf_approaching      = MXBIT(23),    // we are approaching a lord (DDR)
             cf_battleover       = MXBIT(24),    // character will not fight again this round
+            cf_prisoner         = MXBIT(25),    // held hostage, and freed by being recruited
         };
 
         enum CHARACTERTRAITS {

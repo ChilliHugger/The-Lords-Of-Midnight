@@ -52,7 +52,6 @@ bool uipanelmock::init()
 void uipanelmock::setObject(mxid object)
 {
     currentObject = object;
-    return true;
 }
 
 

@@ -14,6 +14,16 @@
     
 #endif
 
+#if defined(_CITADEL_)
+    #include "../../Source/tme/scenarios/citadel/scenario_citadel_internal.h"
+
+    // The Citadel registers the engine's own factory and character, so the mocks sit
+    // straight on top of them
+    #define BASE_CHARACTER mxcharacter
+    #define BASE_FACTORY mxentityfactory
+
+#endif
+
 #if defined(_DDR_)
     #include "../../Source/tme/scenarios/ddr/scenario_ddr_internal.h"
     

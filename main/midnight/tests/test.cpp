@@ -14,6 +14,10 @@ int tests_main(int argc, char *argv[])
     // a hardcoded path, since the build output location varies by checkout/build config
     auto path = chilli::extensions::getBundleResourcePath();
 
+#if defined(_CITADEL_)
+    auto path = "/Users/chris/Projects/GitHub/The-Lords-Of-Midnight/main/midnight/Builds/mac-tests-citadel/build/Debug/citadel.app/Contents/Resources";
+#endif
+
     ax::FileUtils::getInstance()->setDefaultResourceRootPath(path);
     return Catch::Session().run( argc, argv );
 

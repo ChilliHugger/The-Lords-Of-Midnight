@@ -610,6 +610,14 @@ void uithinkpage::checkPerson ( void )
         if ( c.id == TME_GetId("CH_MIDWINTER", IDT_CHARACTER))
             msg = SS_MESSAGE8;
 #endif
+
+#if defined(_CITADEL_)
+        // a lord in Boroth's dungeons is not simply one who has yet to be persuaded, and
+        // nothing else on this screen would tell you which of the lords standing in Maranor
+        // is the one whose realm you came here to win
+        if ( Character_IsPrisoner(c) )
+            msg = SS_PRISONER;
+#endif
         bool isInBattle = Character_IsInBattle(c) ;
         
 #if defined(_DDR_)
@@ -619,7 +627,9 @@ void uithinkpage::checkPerson ( void )
         
         // not recruited but we could recruit
         // then add an approach button
-        if ( msg == SS_MESSAGE7 && flags.Is(lif_recruitchar) ) {
+        // SS_PRISONER is SS_MESSAGE7 said of a hostage, and approaching him is how he is
+        // freed, so it must keep the button
+        if ( (msg == SS_MESSAGE7 || msg == SS_PRISONER) && flags.Is(lif_recruitchar) ) {
             if ( !isInBattle )
                 approach = true;
         }
