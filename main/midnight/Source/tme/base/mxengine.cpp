@@ -239,23 +239,23 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
 
     if ( result != MX_OK ) {
 
-    std::string filename = m_szDatabase + "/" + scenarioIdStr + "/database";
+        std::string filename = m_szDatabase + "/" + scenarioIdStr + "/database";
 
     // We need to move the default database into an accessible folder
 #if !defined(_OS_DESKTOP_)
 
-    auto database = filename ;
-    filename = ax::FileUtils::getInstance()->getWritablePath() + "/database" ;
+        auto database = filename ;
+        filename = ax::FileUtils::getInstance()->getWritablePath() + "/database" ;
 
-    MXTRACE( "Copying Database '%s' from '%s' to '%s'",
-        m_szDatabase.c_str(),
-        database.c_str(),
-        filename.c_str());
+        MXTRACE( "Copying Database '%s' from '%s' to '%s'",
+            m_szDatabase.c_str(),
+            database.c_str(),
+            filename.c_str());
 
-    chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
+        chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
-    result = LoadDatabaseBinary(filename);
+        result = LoadDatabaseBinary(filename);
     }
 
     if ( result != MX_OK )

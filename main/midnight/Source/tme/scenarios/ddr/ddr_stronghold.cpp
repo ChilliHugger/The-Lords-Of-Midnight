@@ -53,6 +53,13 @@ namespace tme {
         }
     }
 
+    void ddr_stronghold::LoadTsv ( const TsvRow& row )
+    {
+        mxstronghold::LoadTsv(row);
+
+        energy = row.GetU32(TsvField::Stronghold::Energy);
+    }
+
     void ddr_stronghold::OnRespawn ( void )
     {
         Add(Race(), Type(), respawn);

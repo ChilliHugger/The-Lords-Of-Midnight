@@ -153,6 +153,18 @@ mxorders_t TsvRow::GetOrders ( const std::string& column ) const
     return ParseOrders(GetString(column));
 }
 
+#if defined(_DDR_)
+mxobjtype_t TsvRow::GetObjectType ( const std::string& column ) const
+{
+    return ResolveObjectType(*m_symbols, GetString(column));
+}
+
+mxobjpower_t TsvRow::GetObjectPower ( const std::string& column ) const
+{
+    return ResolveObjectPower(*m_symbols, GetString(column));
+}
+#endif
+
 bool TsvTable::ValidateHeader ( const std::vector<std::string>& requiredColumns ) const
 {
     bool ok = true;

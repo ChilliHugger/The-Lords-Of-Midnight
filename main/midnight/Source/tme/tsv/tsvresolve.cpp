@@ -82,5 +82,17 @@ mxthing_t ResolveThing ( const TsvSymbolTable& symbols, const std::string& name 
     return (mxthing_t)GET_ID(ResolveTypedId(symbols, name, IDT_OBJECT));
 }
 
+#if defined(_DDR_)
+mxobjtype_t ResolveObjectType ( const TsvSymbolTable& symbols, const std::string& name )
+{
+    return (mxobjtype_t)GET_ID(ResolveTypedId(symbols, name, IDT_OBJECT_TYPE));
+}
+
+mxobjpower_t ResolveObjectPower ( const TsvSymbolTable& symbols, const std::string& name )
+{
+    return (mxobjpower_t)GET_ID(ResolveTypedId(symbols, name, IDT_OBJECT_POWER));
+}
+#endif
+
 }
 // namespace tme

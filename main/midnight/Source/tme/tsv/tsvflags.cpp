@@ -154,6 +154,12 @@ static const NamedValue OrdersValues[] = {
     { "Route",          OD_ROUTE },
     { "DelayedWander",  OD_DELAYED_WANDER },
     { "Hold",           OD_HOLD },
+#if defined(_DDR_)
+    { "FollowLiege",    OD_FOLLOW_LIEGE },
+    { "FollowFoe",      OD_FOLLOW_FOE },
+    { "FindObject",     OD_FIND_OBJECT },
+    { "Home",           OD_HOME },
+#endif
 };
 
 u32 ParseEntityFlags ( const std::string& text )       { return ParseFlagWord(text, EntityFlagBits, NUMELE(EntityFlagBits)); }

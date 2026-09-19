@@ -47,6 +47,9 @@ namespace TsvField {
         constexpr const char* Foe         = "Foe";
         constexpr const char* Liege       = "Liege";
         constexpr const char* Traits      = "Traits";
+        // DDR only
+        constexpr const char* Home           = "Home";
+        constexpr const char* DesiredObject  = "Desired Object";
     }
 
     namespace Object {
@@ -54,6 +57,9 @@ namespace TsvField {
         constexpr const char* Description    = "Description";
         constexpr const char* UseDescription = "Use Description";
         constexpr const char* CarriedBy      = "Carried By";
+        // DDR only
+        constexpr const char* Type           = "Type";
+        constexpr const char* Power          = "Power";
     }
 
     namespace Regiment {
@@ -82,6 +88,7 @@ namespace TsvField {
         constexpr const char* Occupier           = "Occupier";
         constexpr const char* Owner              = "Owner";
         constexpr const char* Terrain            = "Terrain";
+        constexpr const char* Energy             = "Energy"; // DDR only
     }
 
     namespace RouteNode {

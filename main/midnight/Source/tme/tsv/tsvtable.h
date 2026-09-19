@@ -64,6 +64,10 @@ namespace tme {
         mxthing_t       GetThing ( const std::string& column ) const;
         mxorders_t      GetOrders ( const std::string& column ) const;
 
+#if defined(_DDR_)
+        mxobjtype_t     GetObjectType ( const std::string& column ) const;
+        mxobjpower_t    GetObjectPower ( const std::string& column ) const;
+#endif
 
         // for fields typed as a raw mxid rather than a pointer (e.g. mxvictory::mission)
         mxid GetTypedId ( const std::string& column, id_type_t expectedType ) const;

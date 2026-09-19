@@ -94,6 +94,9 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
     TsvTable areaInfo, commandInfo, directionInfo, genderInfo, raceInfo, terrainInfo, unitInfo;
     TsvTable routeNodes, waypoints, strongholds, regiments, objects, missions, victories, characters;
     TsvTable stringsTable, variablesTable;
+#if defined(_DDR_)
+    TsvTable objectTypeInfo, objectPowerInfo;
+#endif
 
     struct { TsvTable* table; const char* file; std::vector<std::string> columns; } files[] = {
         { &areaInfo,        "areainfo.tsv",      InfoColumns({ TsvField::Area::Prefix }) },
@@ -105,14 +108,30 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
         { &unitInfo,        "unitinfo.tsv",      InfoColumns({ TsvField::Unit::Success, TsvField::Unit::RestModifier }) },
         { &routeNodes,      "routenodes.tsv",    ItemColumns({ TsvField::RouteNode::RouteNodes }) },
         { &waypoints,       "waypoints.tsv",     ItemColumns({}) },
+#if defined(_DDR_)
+        { &strongholds,     "strongholds.tsv",   ItemColumns({ TsvField::Stronghold::OccupyingRace, TsvField::Stronghold::Race, TsvField::Stronghold::Type, TsvField::Stronghold::Total, TsvField::Stronghold::Min, TsvField::Stronghold::Max, TsvField::Stronghold::StrategicalSuccess, TsvField::Stronghold::OwnerSuccess, TsvField::Stronghold::EnemySuccess, TsvField::Stronghold::Influence, TsvField::Stronghold::Respawn, TsvField::Stronghold::Occupier, TsvField::Stronghold::Owner, TsvField::Stronghold::Terrain, TsvField::Stronghold::Energy }) },
+#else
         { &strongholds,     "strongholds.tsv",   ItemColumns({ TsvField::Stronghold::OccupyingRace, TsvField::Stronghold::Race, TsvField::Stronghold::Type, TsvField::Stronghold::Total, TsvField::Stronghold::Min, TsvField::Stronghold::Max, TsvField::Stronghold::StrategicalSuccess, TsvField::Stronghold::OwnerSuccess, TsvField::Stronghold::EnemySuccess, TsvField::Stronghold::Influence, TsvField::Stronghold::Respawn, TsvField::Stronghold::Occupier, TsvField::Stronghold::Owner, TsvField::Stronghold::Terrain }) },
+#endif
         { &regiments,       "regiments.tsv",     ItemColumns({ TsvField::Regiment::Race, TsvField::Regiment::Type, TsvField::Regiment::Total, TsvField::Regiment::Target, TsvField::Regiment::Orders, TsvField::Regiment::Success, TsvField::Regiment::Loyalty, TsvField::Regiment::Delay }) },
+#if defined(_DDR_)
+        { &objects,         "objects.tsv",       ItemColumns({ TsvField::Object::Kills, TsvField::Name, TsvField::Object::Description, TsvField::Object::UseDescription, TsvField::Object::CarriedBy, TsvField::Object::Type, TsvField::Object::Power }) },
+#else
         { &objects,         "objects.tsv",       ItemColumns({ TsvField::Object::Kills, TsvField::Name, TsvField::Object::Description, TsvField::Object::UseDescription, TsvField::Object::CarriedBy }) },
+#endif
         { &missions,        "missions.tsv",      EntityColumns({ TsvField::Mission::Priority, TsvField::Mission::Objective, TsvField::Mission::Condition, TsvField::Mission::References, TsvField::Mission::Points, TsvField::Mission::Scorer, TsvField::Mission::Action, TsvField::Mission::ActionId }) },
         { &victories,       "victories.tsv",     EntityColumns({ TsvField::Victory::Priority, TsvField::Victory::Mission, TsvField::Victory::String }) },
+#if defined(_DDR_)
+        { &characters,      "characters.tsv",    ItemColumns({ TsvField::Character::LongName, TsvField::Character::ShortName, TsvField::Character::Recruit, TsvField::Character::Group, TsvField::Character::Looking, TsvField::Character::Time, TsvField::Character::Race, TsvField::Character::Gender, TsvField::Character::Loyalty, TsvField::Character::Energy, TsvField::Character::Reckless, TsvField::Character::Strength, TsvField::Character::Cowardly, TsvField::Character::Courage, TsvField::Character::Despondency, TsvField::Character::Fear, TsvField::Character::Orders, TsvField::Character::Carrying, TsvField::Character::Warriors, TsvField::Character::Riders, TsvField::Character::Following, TsvField::Character::Foe, TsvField::Character::Liege, TsvField::Character::Traits, TsvField::Character::Home, TsvField::Character::DesiredObject }) },
+#else
         { &characters,      "characters.tsv",    ItemColumns({ TsvField::Character::LongName, TsvField::Character::ShortName, TsvField::Character::Recruit, TsvField::Character::Group, TsvField::Character::Looking, TsvField::Character::Time, TsvField::Character::Race, TsvField::Character::Gender, TsvField::Character::Loyalty, TsvField::Character::Energy, TsvField::Character::Reckless, TsvField::Character::Strength, TsvField::Character::Cowardly, TsvField::Character::Courage, TsvField::Character::Despondency, TsvField::Character::Fear, TsvField::Character::Orders, TsvField::Character::Carrying, TsvField::Character::Warriors, TsvField::Character::Riders, TsvField::Character::Following, TsvField::Character::Foe, TsvField::Character::Liege, TsvField::Character::Traits }) },
+#endif
         { &stringsTable,    "strings.tsv",       { TsvField::Version, TsvField::Id, TsvField::Symbol, TsvField::DatabaseString::Text } },
         { &variablesTable,  "variables.tsv",     { TsvField::Version, TsvField::Symbol, TsvField::DatabaseVariable::Value } },
+#if defined(_DDR_)
+        { &objectTypeInfo,  "objecttypeinfo.tsv",  InfoColumns({}) },
+        { &objectPowerInfo, "objectpowerinfo.tsv", InfoColumns({}) },
+#endif
     };
 
     for ( auto& entry : files ) {
@@ -152,6 +171,10 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
     harvest(missions, IDT_MISSION);
     harvest(victories, IDT_VICTORY);
     harvest(characters, IDT_CHARACTER);
+#if defined(_DDR_)
+    harvest(objectTypeInfo, IDT_OBJECT_TYPE);
+    harvest(objectPowerInfo, IDT_OBJECT_POWER);
+#endif
 
     // strings resolve to a 1-based mxid - see mxtext::StringByName
     for ( auto& row : stringsTable )
@@ -175,6 +198,10 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
     mx->objTerrainInfos.Create(scenario, IDT_TERRAININFO, terrainInfo.Count());
     mx->objAreaInfos.Create(scenario, IDT_AREAINFO, areaInfo.Count());
     mx->objCommandInfos.Create(scenario, IDT_COMMANDINFO, commandInfo.Count());
+#if defined(_DDR_)
+    mx->objObjectTypesInfos.Create(scenario, IDT_OBJECT_TYPE, objectTypeInfo.Count());
+    mx->objObjectPowersInfos.Create(scenario, IDT_OBJECT_POWER, objectPowerInfo.Count());
+#endif
 
     // pass 3: populate every field. Items are 1-based, infos are 0-based -
     // matches the ACCESS_ITEM/ACCESS_INFO indexing in mxengine.cpp
@@ -194,6 +221,10 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
     PopulateInfos<mxterrain*>(mx->objTerrainInfos, terrainInfo);
     PopulateInfos<mxarea*>(mx->objAreaInfos, areaInfo);
     PopulateInfos<mxcommand*>(mx->objCommandInfos, commandInfo);
+#if defined(_DDR_)
+    PopulateInfos<mxobjecttype*>(mx->objObjectTypesInfos, objectTypeInfo);
+    PopulateInfos<mxobjectpower*>(mx->objObjectPowersInfos, objectPowerInfo);
+#endif
 
     mx->text->LoadTsv(stringsTable);
     mx->LoadVariablesTsv(variablesTable);
