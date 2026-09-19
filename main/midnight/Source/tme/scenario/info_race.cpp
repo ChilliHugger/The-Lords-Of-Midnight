@@ -78,6 +78,24 @@ namespace tme {
             }
         }
 
+        void mxrace::LoadTsv ( const TsvRow& row )
+        {
+            mxinfo::LoadTsv(row);
+
+            soldiersname = row.GetString(TsvField::Race::DefaultSoldiersName);
+            success = row.GetU32(TsvField::Race::Success);
+            initialmovement = row.GetU32(TsvField::Race::InitialMovement);
+            diagonalmodifier = row.GetS32(TsvField::Race::DiagonalMovement);
+            ridingmultiplier = row.GetS32(TsvField::Race::RidingMultiplier);
+            movementmax = row.GetU32(TsvField::Race::MovementMax);
+            baserestamount = row.GetU32(TsvField::Race::RestAmount);
+            strongholdstartups = row.GetU32(TsvField::Race::StrongholdStartups);
+            misttimeaffect = row.GetS32(TsvField::Race::MistTimeAdjustment);
+            mistdespondecyaffect = row.GetS32(TsvField::Race::MistDespondencyAdjustment);
+            baseenergycost = row.GetS32(TsvField::Race::EnergyAmount);
+            baseenergycosthorse = row.GetS32(TsvField::Race::EnergyAmountRiding);
+        }
+
         std::string& mxrace::SoldiersName()
         {
             if ( !soldiersname.empty() )

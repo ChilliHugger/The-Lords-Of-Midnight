@@ -96,6 +96,28 @@ void mxstronghold::Serialize ( archive& ar )
     }
 }
 
+void mxstronghold::LoadTsv ( const TsvRow& row )
+{
+    mxitem::LoadTsv(row);
+
+    occupyingrace = row.GetRace(TsvField::Stronghold::OccupyingRace);
+    race = row.GetRace(TsvField::Stronghold::Race);
+    type = row.GetUnitType(TsvField::Stronghold::Type);
+    totaltroops = row.GetU32(TsvField::Stronghold::Total);
+    mintroops = row.GetU32(TsvField::Stronghold::Min);
+    maxtroops = row.GetU32(TsvField::Stronghold::Max);
+    strategical_success = row.GetU32(TsvField::Stronghold::StrategicalSuccess);
+    owner_success = row.GetU32(TsvField::Stronghold::OwnerSuccess);
+    enemy_success = row.GetU32(TsvField::Stronghold::EnemySuccess);
+    influence = row.GetU32(TsvField::Stronghold::Influence);
+    respawn = row.GetU32(TsvField::Stronghold::Respawn);
+    occupier = row.GetCharacter(TsvField::Stronghold::Occupier);
+    owner = row.GetCharacter(TsvField::Stronghold::Owner);
+    terrain = row.GetTerrain(TsvField::Stronghold::Terrain);
+    killed = 0;
+    lost = 0;
+}
+
 /*
 s32 mxstronghold::BattleSuccess ( const CLocInfo& locinfo )
 {

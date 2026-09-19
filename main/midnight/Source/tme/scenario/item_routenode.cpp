@@ -42,6 +42,15 @@ namespace tme {
             }
         }
 
+        void mxroutenode::LoadTsv ( const TsvRow& row )
+        {
+            mxitem::LoadTsv(row);
+
+            auto list = row.GetSymbolList(TsvField::RouteNode::RouteNodes, ',');
+            paths[0] = list.size() > 0 ? ResolveRouteNode(row.Symbols(), list[0]) : nullptr;
+            paths[1] = list.size() > 1 ? ResolveRouteNode(row.Symbols(), list[1]) : nullptr;
+        }
+
         archive& operator<<(archive& ar, mxroutenode* node)
         {
             return ar << ((u32)mxentity::SafeId(node));

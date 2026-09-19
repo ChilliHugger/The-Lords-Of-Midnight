@@ -50,6 +50,15 @@ namespace tme {
             }
         }
 
+        void mxitem::LoadTsv ( const TsvRow& row )
+        {
+            mxentity::LoadTsv(row);
+
+            u32 x=0, y=0;
+            if ( row.GetGridRef(TsvField::Location, x, y) )
+                location = mxgridref(x,y);
+        }
+
         MXRESULT mxitem::FillExportData ( info_t* data )
         {
         mxitem_t* out = (mxitem_t*)data;

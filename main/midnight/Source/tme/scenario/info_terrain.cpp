@@ -60,6 +60,19 @@ namespace tme {
         }
 
 
+        void mxterrain::LoadTsv ( const TsvRow& row )
+        {
+            mxinfo::LoadTsv(row);
+            Flags().Set(ParseTerrainInfoFlags(row.GetString(TsvField::Flags)));
+
+            preposition = row.GetString(TsvField::Terrain::Preposition);
+            description = row.GetString(TsvField::Terrain::Description);
+            success = row.GetU32(TsvField::Terrain::Success);
+            visibility = row.GetU32(TsvField::Terrain::Visibility);
+            obstruction = row.GetU32(TsvField::Terrain::Obstruction);
+            movementcost = row.GetS32(TsvField::Terrain::MovementCost);
+        }
+
         MXRESULT mxterrain::FillExportData ( info_t* data )
         {
         defaultexport::terraininfo_t* out = (defaultexport::terraininfo_t*)data;

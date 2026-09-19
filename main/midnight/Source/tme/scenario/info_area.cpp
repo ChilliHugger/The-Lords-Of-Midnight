@@ -38,6 +38,12 @@ namespace tme {
         }
     }
 
+    void mxarea::LoadTsv ( const TsvRow& row )
+    {
+        mxinfo::LoadTsv(row);
+        prefix = row.GetString(TsvField::Area::Prefix);
+    }
+
     MXRESULT mxarea::FillExportData ( info_t* data )
     {
         defaultexport::areainfo_t* out = (defaultexport::areainfo_t*)data;

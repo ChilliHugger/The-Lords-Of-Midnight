@@ -50,6 +50,18 @@ namespace tme {
             }
         }
     
+        void mxobject::LoadTsv ( const TsvRow& row )
+        {
+            mxitem::LoadTsv(row);
+            Flags().Set(ParseObjectFlags(row.GetString(TsvField::Flags)));
+
+            name = row.GetString(TsvField::Name);
+            description = row.GetString(TsvField::Object::Description);
+            kills = row.GetThing(TsvField::Object::Kills);
+            usedescription = row.GetStringIndex(TsvField::Object::UseDescription);
+            carriedby = row.GetItem(TsvField::Object::CarriedBy);
+        }
+
         bool mxobject::CanDestroy ( mxobject* obj ) const
         {
             return (u32)kills == (u32)obj->Id() ;

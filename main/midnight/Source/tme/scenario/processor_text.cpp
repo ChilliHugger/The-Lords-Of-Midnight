@@ -106,6 +106,31 @@ c_string values;
  * 
  */
 
+void mxtext::AllocateSystemStrings ( u32 count )
+{
+    std::string empty = "";
+    systemstrings.Clear();
+
+    m_cSystemStrings = std::max<u32>(count, SS_MAX_STRINGS);
+
+    systemcodes.resize(m_cSystemStrings, empty);
+    systemstrings.resize(m_cSystemStrings, empty);
+}
+
+void mxtext::RebuildTokenArrays ()
+{
+    adverb_token = FillArrayFromSystemString( SS_ADVERBS );
+    number_token = FillArrayFromSystemString( SS_NUMBERS );
+    fear_token = FillArrayFromSystemString( SS_FEARTOKENS );
+    courage_token = FillArrayFromSystemString( SS_COURAGETOKENS );
+    energy_token = FillArrayFromSystemString( SS_ENERGYTOKENS );
+    zero_token = FillArrayFromSystemString( SS_ZEROTOKENS );
+    despondent_token = FillArrayFromSystemString( SS_DESPONDENTTOKENS );
+    reckless_token = FillArrayFromSystemString( SS_RECKLESSTOKENS );
+    traits_token = FillArrayFromSystemString( SS_TRAITS );
+    plural_tokens = FillArrayFromSystemString( SS_PLURALTOKENS );
+}
+
 void mxtext::Serialize ( archive& ar )
 {
 u32 ii;
@@ -119,35 +144,36 @@ int id;
             ar << systemstrings[ii];
         }
     }else{
-        
-        std::string empty = "";
-        systemstrings.Clear();
-        
-        auto databaseStrings = 0;
+
+        int databaseStrings = 0;
         ar >> databaseStrings;
-        
-        m_cSystemStrings = std::max<int>(databaseStrings, SS_MAX_STRINGS);
-    
-        systemcodes.resize(m_cSystemStrings, empty);
-        systemstrings.resize(m_cSystemStrings, empty);
-        
-        for ( ii=0; ii<databaseStrings; ii++ ) {
+
+        AllocateSystemStrings((u32)databaseStrings);
+
+        for ( ii=0; ii<(u32)databaseStrings; ii++ ) {
             ar >> id;
             ar >> systemcodes[id];
             ar >> systemstrings[id];
         }
 
-        adverb_token = FillArrayFromSystemString( SS_ADVERBS );
-        number_token = FillArrayFromSystemString( SS_NUMBERS );
-        fear_token = FillArrayFromSystemString( SS_FEARTOKENS );
-        courage_token = FillArrayFromSystemString( SS_COURAGETOKENS );
-        energy_token = FillArrayFromSystemString( SS_ENERGYTOKENS );
-        zero_token = FillArrayFromSystemString( SS_ZEROTOKENS );
-        despondent_token = FillArrayFromSystemString( SS_DESPONDENTTOKENS );
-        reckless_token = FillArrayFromSystemString( SS_RECKLESSTOKENS );
-        traits_token = FillArrayFromSystemString( SS_TRAITS );
-        plural_tokens = FillArrayFromSystemString( SS_PLURALTOKENS );
+        RebuildTokenArrays();
     }
+}
+
+void mxtext::LoadTsv ( const TsvTable& table )
+{
+    AllocateSystemStrings(table.Count());
+
+    for ( u32 ii=0; ii<table.Count(); ii++ ) {
+        const TsvRow& row = table.Row(ii);
+        u32 id = row.GetU32(TsvField::Id);
+        if ( id >= m_cSystemStrings )
+            continue;
+        systemcodes[id] = row.GetString(TsvField::Symbol);
+        systemstrings[id] = row.GetString(TsvField::DatabaseString::Text);
+    }
+
+    RebuildTokenArrays();
 }
 
 void mxtext::ModifySystemString( mxid id, std::string& value )
@@ -1215,8 +1241,16 @@ auto ddr = static_cast<ddr_text*>(this);
      if ( c_stricmp(x,GET_ARG.c_str()) == 0 )
 
     while (TRUE) {
-        if ( tokens.at(is).empty() )
+        // an unrecognized token falls through every IS_ARG check below and
+        // lands back here with 'is' advanced past the end of tokens - treat
+        // that the same as a blank token (silently drop it) instead of
+        // letting tokens.at(is) throw
+        if ( is >= (int)tokens.Count() || tokens.at(is).empty() )
             return "";
+
+            IS_ARG("lf")            return "\n";
+            IS_ARG("cr")            return "\r";
+            IS_ARG("crlf")          return "\r\n";
 
             IS_ARG("case")
             {

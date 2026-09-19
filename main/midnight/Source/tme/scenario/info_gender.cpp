@@ -44,6 +44,14 @@ namespace tme {
             }
         }
 
+        void mxgender::LoadTsv ( const TsvRow& row )
+        {
+            mxinfo::LoadTsv(row);
+            pronoun1 = row.GetString(TsvField::Gender::PersonalPronoun);
+            pronoun2 = row.GetString(TsvField::Gender::PossessivePronoun);
+            pronoun3 = row.GetString(TsvField::Gender::SingularPronoun);
+        }
+
         MXRESULT mxgender::FillExportData ( info_t* data )
         {
             defaultexport::genderinfo_t* out = (defaultexport::genderinfo_t*)data;

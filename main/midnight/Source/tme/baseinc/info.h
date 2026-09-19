@@ -27,6 +27,10 @@ class CListS;
 
 #include "variables.h"
 #include "../base/collections.h"
+#include "../tsv/tsvtable.h"
+#include "../tsv/tsvfields.h"
+#include "../tsv/tsvsymboltable.h"
+#include "../tsv/tsvresolve.h"
 
 
 
@@ -39,6 +43,7 @@ class CListS;
         x(void); \
         virtual ~x(void); \
         virtual void Serialize ( chilli::lib::archive& ar ); \
+        virtual void LoadTsv ( const TsvRow& row ); \
         virtual MXRESULT FillExportData ( info_t* data )
 
 

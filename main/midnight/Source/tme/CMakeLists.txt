@@ -1,5 +1,6 @@
 FILE(GLOB HDR_TME Source/tme/baseinc/*.h)
 FILE(GLOB SRC_TME Source/tme/base/*.cpp)
+FILE(GLOB SRC_TME_TSV Source/tme/tsv/*.cpp)
 FILE(GLOB SRC_UTILS Source/tme/utils/*.cpp)
 FILE(GLOB_RECURSE SRC_TME_SCENARIO Source/tme/scenario/*.cpp)
 
@@ -15,6 +16,7 @@ list(APPEND HDR_TME
 list(APPEND SRC_TME
   ${SRC_TME_SCENARIOS}
   ${SRC_TME_SCENARIO}
+  ${SRC_TME_TSV}
   ${SRC_UTILS}
   Source/tme/tme.cpp
   Source/tme/TMEMapBuilder.cpp

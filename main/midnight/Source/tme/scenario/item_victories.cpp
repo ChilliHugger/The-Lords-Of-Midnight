@@ -43,6 +43,16 @@ namespace tme {
             }
         }
 
+        void mxvictory::LoadTsv ( const TsvRow& row )
+        {
+            mxentity::LoadTsv(row);
+            Flags().Set(ParseVictoryFlags(row.GetString(TsvField::Flags)));
+
+            priority = row.GetS32(TsvField::Victory::Priority);
+            mission = row.GetTypedId(TsvField::Victory::Mission, IDT_MISSION);
+            string = row.GetStringIndex(TsvField::Victory::String);
+        }
+
         MXRESULT mxvictory::FillExportData ( info_t* data )
         {
             return MX_FAILED;
@@ -108,6 +118,28 @@ namespace tme {
                 READ_ENUM(action);
                 ar >> actionid;
             }
+        }
+
+        void mxmission::LoadTsv ( const TsvRow& row )
+        {
+            mxentity::LoadTsv(row);
+            Flags().Set(ParseMissionFlags(row.GetString(TsvField::Flags)));
+
+            priority = row.GetS32(TsvField::Mission::Priority);
+            objective = ParseMissionObjective(row.GetString(TsvField::Mission::Objective));
+            condition = ParseMissionCondition(row.GetString(TsvField::Mission::Condition));
+
+            // reference[]/scorer/actionid are genuinely polymorphic - which
+            // entity type each slot names depends on 'condition'/'action' -
+            // so they resolve untyped, same as mxregiment::targetid
+            auto refs = row.GetSymbolList(TsvField::Mission::References, '|');
+            for ( u32 ii=0; ii<NUMELE(reference); ii++ )
+                reference[ii] = ii < refs.size() ? row.Symbols().Resolve(refs[ii]) : IDT_NONE;
+
+            points = row.GetS32(TsvField::Mission::Points);
+            scorer = row.GetId(TsvField::Mission::Scorer);
+            action = ParseMissionAction(row.GetString(TsvField::Mission::Action));
+            actionid = row.GetId(TsvField::Mission::ActionId);
         }
 
         MXRESULT mxmission::FillExportData ( info_t* data )
