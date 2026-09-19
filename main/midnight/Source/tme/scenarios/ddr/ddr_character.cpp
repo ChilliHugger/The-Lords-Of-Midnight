@@ -42,12 +42,20 @@ namespace tme {
         mxcharacter::Serialize(ar);
 
         if ( ar.IsStoring() ) {
-            ar << lastlocation ;
+            // mirrors the read branch's conditions exactly - previously
+            // unconditional, which only worked because storing only ever
+            // happened for an actual save game (isSavedGame()==true);
+            // caching a freshly-built database (isDatabase()) stores too
+            if ( tme::mx->SaveGameVersion() > 10 && tme::mx->isSavedGame() )
+                ar << lastlocation ;
             ar << home_stronghold;
             ar << desired_object;
-            ar << fighting_against;
-            ar << battlelost;
-            ar << killedby;
+            if ( mx->isSavedGame() ) {
+                ar << fighting_against;
+                ar << battlelost;
+            }
+            if ( tme::mx->SaveGameVersion() > 15 && tme::mx->isSavedGame() )
+                ar << (u32)killedby;
         }else{
             if ( tme::mx->SaveGameVersion()> 10 && tme::mx->isSavedGame() )
                 ar >> lastlocation;
@@ -80,7 +88,19 @@ namespace tme {
         }
 
     }
-    
+
+    void ddr_character::LoadTsv ( const TsvRow& row )
+    {
+        mxcharacter::LoadTsv(row);
+
+        // matches Serialize's non-savegame defaults - fighting_against/
+        // battlelost are only ever meaningful mid-battle in a saved game
+        lastlocation = Location();
+        home_stronghold = row.GetStronghold(TsvField::Character::Home);
+        desired_object = row.GetObject(TsvField::Character::DesiredObject);
+        killedby = utils::CalcKilledBy(this);
+    }
+
     MXRESULT ddr_character::FillExportData ( info_t* data )
     {
         using export_t = tme::scenarios::ddr::exports::character_t;

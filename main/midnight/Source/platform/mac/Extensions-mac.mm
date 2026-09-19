@@ -29,5 +29,11 @@ namespace chilli
             strRet.append("/");
             return strRet;
         }
+
+        std::string getBundleResourcePath()
+        {
+            NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+            return [resourcePath UTF8String];
+        }
     }
 }

@@ -43,6 +43,13 @@ namespace tme {
         }
     }
 
+    void mxcommand::LoadTsv ( const TsvRow& row )
+    {
+        mxinfo::LoadTsv(row);
+        successtime = row.GetS32(TsvField::Command::SuccessTime);
+        failuretime = row.GetS32(TsvField::Command::FailureTime);
+    }
+
     MXRESULT mxcommand::FillExportData ( info_t* data )
     {
     defaultexport::commandinfo_t* out = (defaultexport::commandinfo_t*)data;

@@ -42,6 +42,12 @@ namespace tme {
             }
         }
 
+        void mxinfo::LoadTsv ( const TsvRow& row )
+        {
+            mxentity::LoadTsv(row);
+            name = row.GetString(TsvField::Name);
+        }
+
         MXRESULT mxinfo::FillExportData ( info_t* data )
         {
         mxinfo_t* out = (mxinfo_t*)data;

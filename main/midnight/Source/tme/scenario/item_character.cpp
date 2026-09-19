@@ -123,6 +123,43 @@ namespace tme {
 
         }
 
+        void mxcharacter::LoadTsv ( const TsvRow& row )
+        {
+            mxitem::LoadTsv(row);
+            Flags().Set(ParseCharacterFlags(row.GetString(TsvField::Flags)));
+
+            longname = row.GetString(TsvField::Character::LongName);
+            shortname = row.GetString(TsvField::Character::ShortName);
+            RecruitingKey = row.GetU32(TsvField::Character::Recruit);
+            RecruitedBy = row.GetU32(TsvField::Character::Group);
+            looking = row.GetDirection(TsvField::Character::Looking);
+            time = row.GetU32(TsvField::Character::Time);
+            race = row.GetRace(TsvField::Character::Race);
+            gender = row.GetGender(TsvField::Character::Gender);
+            loyalty = row.GetRace(TsvField::Character::Loyalty);
+            energy = row.GetU32(TsvField::Character::Energy);
+            reckless = row.GetU32(TsvField::Character::Reckless);
+            strength = row.GetU32(TsvField::Character::Strength);
+            cowardess = row.GetU32(TsvField::Character::Cowardly);
+            courage = row.GetU32(TsvField::Character::Courage);
+            despondency = row.GetU32(TsvField::Character::Despondency);
+            fear = row.GetU32(TsvField::Character::Fear);
+            orders = row.GetOrders(TsvField::Character::Orders);
+            carrying = row.GetObject(TsvField::Character::Carrying);
+            warriors.total = row.GetU32(TsvField::Character::Warriors);
+            riders.total = row.GetU32(TsvField::Character::Riders);
+            following = row.GetCharacter(TsvField::Character::Following);
+            foe = row.GetCharacter(TsvField::Character::Foe);
+            liege = row.GetCharacter(TsvField::Character::Liege);
+            traits.Set(ParseCharacterTraits(row.GetString(TsvField::Character::Traits)));
+
+            battleloc = mxgridref(-1,-1);
+            battleslew = 0;
+            killedbyobject = nullptr;
+            wait = WM_NONE;
+            followers = 0;
+        }
+
         void mxcharacter::ForEachFollower(const std::function<void(mxcharacter*)> &callback)
         {
             if (!HasFollowers()) return;

@@ -49,6 +49,7 @@ namespace tme {
             std::string DescribeNumber ( int number, ZERO_MODE zeromode=ZERO_NO );
 
             virtual void Serialize ( chilli::lib::archive& ar );
+            void LoadTsv ( const TsvTable& table );
 
             virtual std::string DecodeToken ( LPSTR token, const mxcharacter* character=NULL );
             virtual std::string HowMuchOfText( u32 number, const c_string& tokens ) ;
@@ -98,6 +99,9 @@ namespace tme {
 
         protected:
             c_string FillArrayFromSystemString(u32 id);
+
+            void AllocateSystemStrings ( u32 count );
+            void RebuildTokenArrays ();
 
         public:
             mxgridref       loc;

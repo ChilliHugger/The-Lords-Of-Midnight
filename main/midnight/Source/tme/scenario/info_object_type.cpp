@@ -39,6 +39,11 @@ namespace tme {
         }
     }
     
+    void mxobjecttype::LoadTsv ( const TsvRow& row )
+    {
+        mxinfo::LoadTsv(row);
+    }
+
     MXRESULT mxobjecttype::FillExportData ( info_t* data )
     {
         return MX_NOT_IMPLEMENTED;

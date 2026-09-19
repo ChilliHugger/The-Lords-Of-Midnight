@@ -221,204 +221,70 @@ MXRESULT mxengine::SetDatabaseDirectory ( const std::string& directory )
  */
 MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
 {
-int ii;
-int id;
-
-std::string filename = m_szDatabase + "/"
-    + std::to_string((int)scenario->GetInfoBlock()->Id)
-    + "/database";
-
     MX_REGISTER_SELF;
 
     variables::Init(1);
+    m_savegame = FALSE ;
+
+    std::string scenarioIdStr = std::to_string((int)scenario->GetInfoBlock()->Id);
+    std::string tsvDirectory = m_szDatabase + "/" + scenarioIdStr + "/tsv";
+
+    MXRESULT result = MX_FAILED ;
+
+    // prefer the bundled .tsv source files when present (ticket #329) -
+    // falls through to the pre-generated binary below when they aren't
+    if ( chilli::os::filemanager::ExistsDir(tsvDirectory) ) {
+        result = LoadDatabaseFromTsv(tsvDirectory);
+    }
+
+    if ( result != MX_OK ) {
+
+        std::string filename = m_szDatabase + "/" + scenarioIdStr + "/database";
 
     // We need to move the default database into an accessible folder
 #if !defined(_OS_DESKTOP_)
 
-    auto database = filename ;
-    filename = ax::FileUtils::getInstance()->getWritablePath() + "/database" ;
-    
-    MXTRACE( "Copying Database '%s' from '%s' to '%s'",
-        m_szDatabase.c_str(),
-        database.c_str(),
-        filename.c_str());
-        
-    chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
+        auto database = filename ;
+        filename = ax::FileUtils::getInstance()->getWritablePath() + "/database" ;
+
+        MXTRACE( "Copying Database '%s' from '%s' to '%s'",
+            m_szDatabase.c_str(),
+            database.c_str(),
+            filename.c_str());
+
+        chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
-MXTRACE( "Loading Database '%s'", m_szDatabase.c_str());
-
-   chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeRead );
-    if ( !pFile->IsOpen() ) {
-        if ( pFile ) delete pFile;
-        MXTRACE( "Cannot Load data file %s", filename.c_str() );
-        return MX_FAILED;
+        result = LoadDatabaseBinary(filename);
     }
 
-    archive ar (pFile, archive::load | archive::bNoFlushOnDelete);
-
-    // serialize is not for save game
-    m_savegame = FALSE ;
-
-u32        magicno;
-u32        scenarioid;
-//u32        versionno;
-std::string    header;
-
-    // magic no
-    ar >> magicno ;
-MXTRACE( "MagicNo=%x", (int)magicno);
-
-    // check for valid header and possible byte swap version
-    if ( magicno == chilli::lib::u32Swap(TME_MAGIC_NO) ) {
-        // turn on byte swapping
-        ar.m_nMode |= archive::bByteSwap ;
-MXTRACE( "ByteSwapping ON");
-
-    }else{
-        if ( magicno != TME_MAGIC_NO ) {
-            MXTRACE("Invalid DATABASE MagicNo");
-            return MX_UNKNOWN_FILE;
-        }
-    }
-        
-    ar >> scenarioid;
-
-MXTRACE( "ScenarioId=%d", (int)scenarioid);
-
-    ar >> savegameversion ;
-MXTRACE( "Version=%d", (int)savegameversion);
-    if ( savegameversion < DATABASEVERSION ) {
-        MXTRACE("Invalid DATABASE Version");
-        return MX_INCORRECT_VERSION ;
-    }
-
-    ar >> header ;
-MXTRACE( "Header='%s'", header.c_str());
-    
-    if (c_stricmp( header.c_str(), DATABASEHEADER ) != 0 ) {
-        MXTRACE("Invalid DATABASE Header");
-        return MX_UNKNOWN_FILE;
-    }
-
-    ar >> sv_characters ;   objCharacters.Create(scenario,IDT_CHARACTER,sv_characters);
-    ar >> sv_regiments ;    objRegiments.Create(scenario,IDT_REGIMENT,sv_regiments);
-    ar >> sv_routenodes ;   objRoutenodes.Create(scenario,IDT_ROUTENODE,sv_routenodes);
-    ar >> sv_strongholds ;  objStrongholds.Create(scenario,IDT_STRONGHOLD,sv_strongholds);
-    ar >> sv_places ;       objPlaces.Create(scenario,IDT_PLACE,sv_places);
-    ar >> sv_objects ;      objObjects.Create(scenario,IDT_OBJECT,sv_objects);
-    ar >> sv_missions ;     objMissions.Create(scenario,IDT_MISSION,sv_missions);
-    ar >> sv_victories ;    objVictories.Create(scenario,IDT_VICTORY,sv_victories);
-    ar >> sv_directions ;   objDirectionInfos.Create(scenario,IDT_DIRECTIONINFO,sv_directions);
-    ar >> sv_units ;        objUnitInfos.Create(scenario,IDT_UNITINFO,sv_units);
-    ar >> sv_races ;        objRaceInfos.Create(scenario,IDT_RACEINFO,sv_races);
-    ar >> sv_genders ;      objGenderInfos.Create(scenario,IDT_GENDERINFO,sv_genders);
-    ar >> sv_terrains ;     objTerrainInfos.Create(scenario,IDT_TERRAININFO,sv_terrains);
-    ar >> sv_areas ;        objAreaInfos.Create(scenario,IDT_AREAINFO,sv_areas);
-    ar >> sv_commands ;     objCommandInfos.Create(scenario,IDT_COMMANDINFO,sv_commands);
-    ar >> sv_variables ;    variables = new cvarreg_t[sv_variables];
-
-MXTRACE( "Characters =%d", (int)sv_characters);
-MXTRACE( "Regiments  =%d", (int)sv_regiments);
-MXTRACE( "RouteNodes =%d", (int)sv_routenodes);
-MXTRACE( "Strongholds=%d", (int)sv_strongholds);
-MXTRACE( "Places     =%d", (int)sv_places);
-MXTRACE( "Objects    =%d", (int)sv_objects);
-MXTRACE( "Missions   =%d", (int)sv_missions);
-MXTRACE( "Victories  =%d", (int)sv_victories);
-MXTRACE( "Directions =%d", (int)sv_directions);
-MXTRACE( "Units      =%d", (int)sv_units);
-MXTRACE( "Races      =%d", (int)sv_races);
-MXTRACE( "Genders    =%d", (int)sv_genders);
-MXTRACE( "Terrains   =%d", (int)sv_terrains);
-MXTRACE( "Areas      =%d", (int)sv_areas);
-MXTRACE( "Commands   =%d", (int)sv_commands);
-MXTRACE( "Vaiables   =%d", (int)sv_variables);
-    
-MXTRACE( "Loading Entities");
-
-    objCharacters.Serialize(ar);
-    objRegiments.Serialize(ar);
-    objRoutenodes.Serialize(ar);
-    objStrongholds.Serialize(ar);
-    objPlaces.Serialize(ar);
-    objObjects.Serialize(ar);
-    objMissions.Serialize(ar);
-    objVictories.Serialize(ar);
-    objDirectionInfos.Serialize(ar);
-    objUnitInfos.Serialize(ar);
-    objRaceInfos.Serialize(ar);
-    objGenderInfos.Serialize(ar);
-    objTerrainInfos.Serialize(ar);
-    objAreaInfos.Serialize(ar);
-    objCommandInfos.Serialize(ar);
-
-MXTRACE( "Loading Text");
-
-    
-// load strings
-    text->Serialize(ar);
-
-MXTRACE( "Loading Variables");
-    
-// load variables
-    for ( ii=0; ii<sv_variables; ii++ ) {
-        variables[ii].memory=nullptr;
-        variables[ii].name=nullptr;
-        variables[ii].currentValue=nullptr;
-        variables[ii].type=CVar::VNONE;
-
-        ar >> (char**)&variables[ii].name;
-        ar >> (char**)&variables[ii].currentValue;
-        ar >> id;
-        variables[ii].type = (CVar::type)id ;
-    }
-
-#if defined(_DDR_)
-    if ( savegameversion > 10) {
-        
-        MXTRACE( "Loading Object Types");
-        ar >> sv_object_types ;        objObjectTypesInfos.Create(scenario,IDT_OBJECT_TYPE,sv_object_types);
-        MXTRACE( "Object Types   =%d", (int)sv_object_types);
-        objObjectTypesInfos.Serialize(ar);
-
-        MXTRACE( "Loading Object Powers");
-        ar >> sv_object_powers ;        objObjectPowersInfos.Create(scenario,IDT_OBJECT_POWER,sv_object_powers);
-        MXTRACE( "Object Powers   =%d", (int)sv_object_powers);
-        objObjectPowersInfos.Serialize(ar);
-    }
-#endif
-    
-    // 
-
-    // read scenario info
-
-    ar.Close();
-    
-    SAFEDELETE ( pFile );
+    if ( result != MX_OK )
+        return result;
 
 MXTRACE( "Update Variables");
     variables::Update();
 
-    // 
-    //m_config->SetSection ( "general" );
-    //m_bEnergyCheat = m_config->ReadBool ( "EnergyCheat", TRUE );
-
 MXTRACE("Loading MAP");
 
-    filename = m_szDatabase + "/"
-        + std::to_string((int)scenario->GetInfoBlock()->Id)
-        + "/" + sv_map_file;
+// NOTE: the map is always loaded from the pre-generated binary map file,
+// regardless of whether the entity database above came from TSV or from
+// the binary database - there is no TMX runtime-loading path yet. See
+// ticket #329; TMX map loading is tracked as a separate follow-up.
+std::string filename = m_szDatabase + "/"
+    + scenarioIdStr
+    + "/" + sv_map_file;
 
 #if !defined(_OS_DESKTOP_)
-    database = filename;
+{
+    auto database = filename;
     filename = ax::FileUtils::getInstance()->getWritablePath() + "/" + sv_map_file;
     MXTRACE( "Copying Map '%s' from '%s' to '%s'",
         sv_map_file,
         database.c_str(),
         filename.c_str());
-        
+
     chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
+}
 #endif
 
 
@@ -428,10 +294,10 @@ MXTRACE("Loading MAP");
         SAFEDELETE ( gamemap );
         return MX_FAILED;
     }
-    
+
     gamemap->ClearVisible();
-    
-    
+
+
 MXTRACE( "Init Variables");
     variables::Init(2);
 
@@ -442,9 +308,9 @@ MXTRACE( "Init Variables");
 
     scenario->initialise(SaveGameVersion());
     scenario->initialiseAfterCreate(SaveGameVersion());
-    
+
     CurrentChar( (mxcharacter*)mx->EntityByIdt(sv_character_default[0])) ;
-   
+
     return MX_OK ;
 }
 

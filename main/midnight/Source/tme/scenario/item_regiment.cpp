@@ -66,6 +66,26 @@ namespace tme {
             }
         }
 
+        void mxregiment::LoadTsv ( const TsvRow& row )
+        {
+            mxitem::LoadTsv(row);
+
+            race = row.GetRace(TsvField::Regiment::Race);
+            type = row.GetUnitType(TsvField::Regiment::Type);
+            total = row.GetU32(TsvField::Regiment::Total);
+            // Target's meaning (character/location/etc.) depends on Orders,
+            // so it is stored untyped, same as mxmission's reference[]
+            targetid = row.GetId(TsvField::Regiment::Target);
+            orders = row.GetOrders(TsvField::Regiment::Orders);
+            success = row.GetU32(TsvField::Regiment::Success);
+            loyalty = row.GetCharacter(TsvField::Regiment::Loyalty);
+            delay = row.GetU32(TsvField::Regiment::Delay);
+
+            killed = 0;
+            lost = 0;
+            lastlocation = Location();
+        }
+
         s32 mxregiment::BattleSuccess ( const mxlocinfo& locinfo )
         {
             return success + mx->scenario->BaseDoomdarkSuccess(Race(),Type(),locinfo);

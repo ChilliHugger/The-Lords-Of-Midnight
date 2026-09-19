@@ -38,6 +38,11 @@ namespace tme {
         }
     }
 
+    void mxdirection::LoadTsv ( const TsvRow& row )
+    {
+        mxinfo::LoadTsv(row);
+    }
+
     MXRESULT mxdirection::FillExportData ( info_t* data )
     {
         defaultexport::directioninfo_t* out = (defaultexport::directioninfo_t*)data;

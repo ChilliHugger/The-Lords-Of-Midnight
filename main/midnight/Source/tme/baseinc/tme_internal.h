@@ -13,6 +13,8 @@
 
 
 #include "info.h"
+#include "../tsv/tsvflags.h"
+#include "../tsv/tsvdatabaseloader.h"
 #include "mxengine.h"
 #include "mxinterface.h"
 #include "midnight.h"

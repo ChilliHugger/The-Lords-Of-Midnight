@@ -41,6 +41,13 @@ namespace tme {
             }
         }
 
+        void mxunitinfo::LoadTsv ( const TsvRow& row )
+        {
+            mxinfo::LoadTsv(row);
+            success = row.GetU32(TsvField::Unit::Success);
+            baserestmodifier = row.GetU32(TsvField::Unit::RestModifier);
+        }
+
         MXRESULT mxunitinfo::FillExportData ( info_t* data )
         {
         defaultexport::unitinfo_t* out = (defaultexport::unitinfo_t*)data;

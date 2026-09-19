@@ -61,6 +61,12 @@ namespace tme {
         }
     }
 
+    void mxentity::LoadTsv ( const TsvRow& row )
+    {
+        symbol = row.GetString(TsvField::Symbol);
+        flags.Set(ParseEntityFlags(row.GetString(TsvField::Flags)));
+    }
+
     archive& operator<<(archive& ar, mxentity* item)
     {
         return ar << ((u32)mxentity::SafeIdt(item));

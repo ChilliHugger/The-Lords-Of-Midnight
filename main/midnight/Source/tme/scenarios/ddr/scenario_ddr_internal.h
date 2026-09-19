@@ -72,6 +72,7 @@ namespace tme {
         
         virtual MXRESULT FillExportData ( info_t* data );
         virtual void Serialize ( archive& ar );
+        virtual void LoadTsv ( const TsvRow& row ) override;
 
         FLAG_PROPERTY( CanHelpRecruitment,  of_recruitment )
         FLAG_PROPERTY( IsRandomStart,       of_randomstart )
@@ -96,6 +97,7 @@ namespace tme {
         virtual ~ddr_stronghold();
         virtual MXRESULT FillExportData ( info_t* data ) override;
         virtual void Serialize ( archive& ar ) override;
+        virtual void LoadTsv ( const TsvRow& row ) override;
         virtual void MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier ) override;
         virtual void OnRespawn();
         virtual mxrace_t Loyalty() const override ;
@@ -123,6 +125,7 @@ namespace tme {
         virtual bool CheckRecruitChar ( mxcharacter* character )  const ;
         virtual bool Recruited ( mxcharacter* recruiter );
         virtual void Serialize ( archive& ar );
+        virtual void LoadTsv ( const TsvRow& row ) override;
         virtual MXRESULT FillExportData ( info_t* data );
 
         virtual void DecreaseEnergy ( s32 amount );

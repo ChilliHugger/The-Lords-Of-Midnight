@@ -86,7 +86,7 @@ namespace tme {
     void ddr_object::Serialize ( archive& ar )
     {
         mxobject::Serialize ( ar );
-        
+
         if ( ar.IsStoring() ) {
             WRITE_ENUM(type);
             WRITE_ENUM(power);
@@ -98,7 +98,15 @@ namespace tme {
             }
         }
     }
-    
+
+    void ddr_object::LoadTsv ( const TsvRow& row )
+    {
+        mxobject::LoadTsv(row);
+
+        type = row.GetObjectType(TsvField::Object::Type);
+        power = row.GetObjectPower(TsvField::Object::Power);
+    }
+
 }
 
 #endif // _DDR_

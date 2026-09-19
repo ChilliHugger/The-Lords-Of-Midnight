@@ -35,6 +35,11 @@ namespace tme {
             //}
         }
 
+        void mxplace::LoadTsv ( const TsvRow& row )
+        {
+            mxitem::LoadTsv(row);
+        }
+
         archive& operator<<(archive& ar, mxplace* node)
         {
             return ar << ((u32)mxentity::SafeId(node));
