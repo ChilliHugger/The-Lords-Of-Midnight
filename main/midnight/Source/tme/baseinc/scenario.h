@@ -38,6 +38,7 @@ namespace tme {
             SF_TUNNELS      =   MXBIT(5),
             SF_MIST         =   MXBIT(6),
             SF_DISMOUNT     =   MXBIT(7),
+            SF_HOSTAGES     =   MXBIT(8),
         };
 
   

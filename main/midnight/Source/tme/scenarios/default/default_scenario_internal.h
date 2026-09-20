@@ -54,6 +54,8 @@ namespace tme {
             virtual void GetDefaultCharacters ( c_character* collection );
             virtual bool CanWeSelectCharacter ( const mxcharacter* character );
                         
+            virtual mxcharacter* HostageOfRace ( mxrace_t race ) const;
+
             virtual mxcharacter* CurrentMoonringWearer( void );
             virtual mxcharacter* MoonringWearer( void ) ;
             virtual void CheckMoonringWearerDead ( void );

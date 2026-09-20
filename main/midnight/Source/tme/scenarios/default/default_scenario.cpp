@@ -1434,6 +1434,30 @@ namespace tme {
             return mx->ProcessCommand ( mx_text, NUMELE(mx_text), arg, argv, argc );
         }
 
+        //
+        // Who of this race is still held hostage, if anyone.
+        //
+        // There is no hostage list to keep in step with the characters: being held IS the
+        // cf_prisoner flag, so a hostage who has been freed - the flag is cleared when he is
+        // recruited - stops answering here by himself, and a saved game carries the answer
+        // without the save format having to know the rule exists.
+        //
+        // A hostage who has died in Boroth's dungeons still answers. That is deliberate: his
+        // realm has lost its hold over Boroth, not been released from it, and there is no
+        // longer anyone to free.
+        //
+        mxcharacter* mxscenario::HostageOfRace ( mxrace_t race ) const
+        {
+            if ( !IsFeature(SF_HOSTAGES) )
+                return nullptr ;
+
+            FOR_EACH_CHARACTER(character) {
+                if ( character->IsPrisoner() && character->Race() == race )
+                    return character ;
+            }
+            return nullptr ;
+        }
+
         mxcharacter* mxscenario::CurrentMoonringWearer ( void )
         {
             if ( IsFeature(SF_MOONRING) ) {

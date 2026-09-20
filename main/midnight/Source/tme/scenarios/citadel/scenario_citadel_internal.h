@@ -16,6 +16,8 @@ namespace tme {
         virtual scenarioinfo_t* GetInfoBlock() const;
         virtual MXRESULT Register ( mxengine* midnightx );
         virtual MXRESULT UnRegister ( mxengine* midnightx );    
+
+        virtual void initialiseAfterCreate ( u32 version );
     };
 }
 #endif

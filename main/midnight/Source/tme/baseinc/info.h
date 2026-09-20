@@ -943,6 +943,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY ( IsRiding, cf_riding )
             FLAG_PROPERTY ( IsAlive, cf_alive )
             FLAG_PROPERTY ( IsRecruited, cf_recruited )
+            FLAG_PROPERTY ( IsPrisoner, cf_prisoner )
             FLAG_PROPERTY ( IsAllowedArmy, cf_army )
             FLAG_PROPERTY ( IsAIControlled, cf_ai )
 
