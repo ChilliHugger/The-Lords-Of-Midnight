@@ -61,18 +61,16 @@ mxengine::mxengine()
 {
     MX_REGISTER_SELF;
 
-    text = NULL;
-    night = NULL;
-    battle = NULL;
-    scenario = NULL;
-    gamemap = NULL ;
-    discoverymap = NULL ;
-    variables = NULL ;
-//    m_config=NULL;
-    pfnNightCallback=NULL;
-    m_CurrentCharacter=NULL;
-    defaultscenario    = FALSE ;
-
+    text = nullptr;
+    night = nullptr;
+    battle = nullptr;
+    scenario = nullptr;
+    gamemap = nullptr ;
+    discoverymap = nullptr ;
+    variables = nullptr ;
+    pfnNightCallback = nullptr;
+    m_CurrentCharacter = nullptr;
+    defaultscenario = false ;
     m_errorcode=0;
 }
 
@@ -176,10 +174,6 @@ MXRESULT mxengine::UnloadScenario ()
     
     SAFEDELETE(scenario);
 
-//    if ( m_hScenarioLib )
-//        OS_UnloadLibrary ( m_hScenarioLib );
-//    m_hScenarioLib = NULL ;
-
     return MX_OK ;
 }
 
@@ -226,73 +220,105 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
     variables::Init(1);
     m_savegame = FALSE ;
 
-    std::string scenarioIdStr = std::to_string((int)scenario->GetInfoBlock()->Id);
-    std::string tsvDirectory = m_szDatabase + "/" + scenarioIdStr + "/tsv";
+    auto writablePath = ax::FileUtils::getInstance()->getWritablePath();
+    auto scenarioIdStr = std::to_string((int)scenario->GetInfoBlock()->Id);
+    auto tsvDirectory = m_szDatabase + "/" + scenarioIdStr + "/tsv";
+    auto tmxFilename  = m_szDatabase + "/" + scenarioIdStr + "/tmx/map.tmx";
+
+    // the fully-resolved database+map, written once at the end of the slow
+    // path below (TSV/TMX parsed, TMX character positions applied) so a
+    // later run can skip straight past TSV/TMX parsing entirely
+    auto databaseCacheFile = writablePath + "/database_cache_" + scenarioIdStr;
+    auto mapCacheFile      = writablePath + "/map_cached_" + scenarioIdStr;
+
+    // the cache only lives for this app run - a leftover from a previous
+    // launch could be stale (e.g. .tsv/.tmx edits during development), so
+    // wipe it once per process before ever trusting one
+    static bool cacheChecked = false;
+    if ( !cacheChecked ) {
+        cacheChecked = true;
+        chilli::os::filemanager::Remove(databaseCacheFile);
+        chilli::os::filemanager::Remove(mapCacheFile);
+    }
 
     MXRESULT result = MX_FAILED ;
+    gamemap = nullptr;
 
-    // prefer the bundled .tsv source files when present (ticket #329) -
-    // falls through to the pre-generated binary below when they aren't
-    if ( chilli::os::filemanager::ExistsDir(tsvDirectory) ) {
-        result = LoadDatabaseFromTsv(tsvDirectory);
+    if ( chilli::os::filemanager::Exists(databaseCacheFile) && chilli::os::filemanager::Exists(mapCacheFile) ) {
+        MXTRACE( "Loading cached Database '%s'", databaseCacheFile.c_str());
+        result = LoadDatabaseBinary(databaseCacheFile);
+        if ( result == MX_OK ) {
+            MXTRACE( "Loading cached Map '%s'", mapCacheFile.c_str());
+            gamemap = new mxmap();
+            if ( !gamemap->Load(mapCacheFile) ) {
+                SAFEDELETE ( gamemap );
+                result = MX_FAILED;
+            }
+        }
+        if ( result != MX_OK )
+            MXTRACE( "Cached Database/Map invalid, rebuilding" );
     }
+
+    bool builtFromSource = false;
 
     if ( result != MX_OK ) {
 
-        std::string filename = m_szDatabase + "/" + scenarioIdStr + "/database";
+        // prefer the bundled .tsv source files when present (ticket #329) -
+        // falls through to the pre-generated binary below when they aren't
+        if ( chilli::os::filemanager::ExistsDir(tsvDirectory) ) {
+            result = LoadDatabaseFromTsv(tsvDirectory);
+        }
 
-    // We need to move the default database into an accessible folder
+        if ( result != MX_OK ) {
+
+            std::string filename = m_szDatabase + "/" + scenarioIdStr + "/database";
+
+        // We need to move the default database into an accessible folder
 #if !defined(_OS_DESKTOP_)
 
-        auto database = filename ;
-        filename = ax::FileUtils::getInstance()->getWritablePath() + "/database" ;
+            auto database = filename ;
+            filename = writablePath + "/database_" + scenarioIdStr;
 
-        MXTRACE( "Copying Database '%s' from '%s' to '%s'",
-            m_szDatabase.c_str(),
-            database.c_str(),
-            filename.c_str());
+            MXTRACE( "Copying Database '%s' from '%s' to '%s'",
+                m_szDatabase.c_str(),
+                database.c_str(),
+                filename.c_str());
 
-        chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
+            chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
-        result = LoadDatabaseBinary(filename);
-    }
+            result = LoadDatabaseBinary(filename);
+        }
 
-    if ( result != MX_OK )
-        return result;
+        if ( result != MX_OK )
+            return result;
+
+MXTRACE("Loading MAP");
+
+        // prefer a bundled .tmx map file when present (ticket #329) - falls
+        // through to the pre-generated binary map file below when it isn't
+        bool loadedFromTmx = LoadMapTmx(tmxFilename) == MX_OK;
+
+        if ( !loadedFromTmx ) {
+            auto mapFilename = m_szDatabase + "/" + scenarioIdStr + "/map";
+            if ( LoadMapBinary(mapFilename) != MX_OK )
+                return MX_FAILED;
+        }
+
+        if ( loadedFromTmx )
+            ApplyMapEntitiesFromTmx(tmxFilename);
+
+        builtFromSource = true;
+    }
 
 MXTRACE( "Update Variables");
     variables::Update();
 
-MXTRACE("Loading MAP");
-
-// NOTE: the map is always loaded from the pre-generated binary map file,
-// regardless of whether the entity database above came from TSV or from
-// the binary database - there is no TMX runtime-loading path yet. See
-// ticket #329; TMX map loading is tracked as a separate follow-up.
-std::string filename = m_szDatabase + "/"
-    + scenarioIdStr
-    + "/" + sv_map_file;
-
-#if !defined(_OS_DESKTOP_)
-{
-    auto database = filename;
-    filename = ax::FileUtils::getInstance()->getWritablePath() + "/" + sv_map_file;
-    MXTRACE( "Copying Map '%s' from '%s' to '%s'",
-        sv_map_file,
-        database.c_str(),
-        filename.c_str());
-
-    chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
-}
-#endif
-
-
-    gamemap = new mxmap() ;
-
-    if ( !gamemap->Load ( filename.c_str() ) ) {
-        SAFEDELETE ( gamemap );
-        return MX_FAILED;
+    if ( builtFromSource ) {
+        // cache the fully-resolved database+map regardless of which route
+        // built them, so the next run can load both straight from cache
+        SaveDatabaseCache(databaseCacheFile);
+        gamemap->Save(mapCacheFile);
     }
 
     gamemap->ClearVisible();
@@ -352,7 +378,7 @@ MXRESULT mxengine::UnloadDatabase ( void )
     objMissions.Destroy();
     objVictories.Destroy();
     
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL)
     objObjectPowersInfos.Destroy();
     objObjectTypesInfos.Destroy();
 #endif
@@ -424,7 +450,7 @@ ACCESS_INFO(mxterrain,TerrainById,objTerrainInfos);
 ACCESS_INFO(mxarea,AreaById,objAreaInfos);
 ACCESS_INFO(mxcommand,CommandById,objCommandInfos);
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL)
 ACCESS_INFO(mxobjectpower,ObjectPowerById,objObjectPowersInfos);
 ACCESS_INFO(mxobjecttype,ObjectTypeById,objObjectTypesInfos);
 #endif

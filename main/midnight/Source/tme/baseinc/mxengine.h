@@ -12,8 +12,6 @@
 #define mxchance    randomno::instance->chance
 #define EOS(x)      x+c_strlen(x)
 
-
-
 namespace tme {
 
     FORWARD_REFERENCE(mxentityfactory);
@@ -53,6 +51,9 @@ namespace tme {
         MXRESULT LoadDatabaseFromTsv ( const std::string& tsvDirectory );
         MXRESULT SaveDatabaseCache ( const std::string& filename );
         void LoadVariablesTsv ( const TsvTable& table );
+        MXRESULT LoadMapBinary ( const std::string& filename );
+        MXRESULT LoadMapTmx ( const std::string& tmxFilename );
+        MXRESULT ApplyMapEntitiesFromTmx ( const std::string& tmxFilename );
         //virtual MXRESULT LoadDefaultScenario ( void ) ;
         virtual MXRESULT LoadScenario ( mxscenario* scenario ) ;
         virtual MXRESULT UnloadScenario () ;
@@ -154,7 +155,7 @@ namespace tme {
         c_terrain               objTerrainInfos;
         c_area                  objAreaInfos;
         c_command               objCommandInfos;
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL)
         c_objectpower           objObjectPowersInfos;
         c_objecttype            objObjectTypesInfos;
 #endif

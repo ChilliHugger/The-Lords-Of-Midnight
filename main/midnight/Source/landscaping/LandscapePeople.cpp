@@ -225,6 +225,8 @@ ax::ui::Widget* LandscapePeople::add( std::string& person, int number)
         column = order[characters] ;
         
         auto image = Sprite::create(person);
+        CONTINUE_IF_NULL(image);
+        
         auto widget = Widget::create();
         widget->addChild(image);
         

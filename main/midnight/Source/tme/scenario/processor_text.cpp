@@ -1251,6 +1251,7 @@ auto ddr = static_cast<ddr_text*>(this);
             IS_ARG("lf")            return "\n";
             IS_ARG("cr")            return "\r";
             IS_ARG("crlf")          return "\r\n";
+            IS_ARG("sp")          return " ";
 
             IS_ARG("case")
             {
@@ -1484,6 +1485,12 @@ __terrain:
             {
                                         return CookedSystemString(StringExtensions::atoi(tokens.at(is+1)),character);
             }else
+            IS_ARG("s")
+            {
+                                        auto id = GET_ID(StringByName(tokens.at(is+1))) - 1;
+                                        return CookedSystemString(id,character);
+            }else
+
 // SPECIAL
             IS_ARG("special")
             {

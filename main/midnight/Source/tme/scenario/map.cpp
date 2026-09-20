@@ -168,6 +168,45 @@ MXTRACE( "Header='%s'", header.c_str());
 }
 
 /*
+ * Function name    : map::Save
+ *
+ * Return type        : bool
+ *
+ * Arguments        : const std::string& filename
+ *
+ * Description        : Save the map to an external file, in the same
+ *                       format read by Load()
+ *
+ */
+
+bool mxmap::Save ( const std::string& filename )
+{
+MXTRACE( "Saving Map '%s'", filename.c_str());
+
+    chilli::os::file* pFile = new chilli::os::file ( filename.c_str(), chilli::os::file::modeReadWrite|chilli::os::file::modeCreate );
+    if ( pFile == NULL || !pFile->IsOpen() ) {
+        if ( pFile ) delete pFile;
+        return FALSE;
+    }
+
+    archive ar (pFile, archive::store | archive::bNoFlushOnDelete);
+
+    m_version = MAPVERSION ;
+
+    ar << (u32)TME_MAGIC_NO ;
+    ar << m_version ;
+    ar << (char*)MAPHEADER ;
+
+    Serialize(ar);
+
+    ar.Close();
+
+    SAFEDELETE ( pFile );
+
+    return TRUE ;
+}
+
+/*
  * Function name    : map::Serialize
  * 
  * Return type        : void
