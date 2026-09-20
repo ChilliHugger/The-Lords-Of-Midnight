@@ -1,0 +1,155 @@
+Version	Id	Symbol	Flags	Location	Long Name	Short Name	Recruit	Group	Looking	Time	Race	Gender	Loyalty	Energy	Reckless	Strength	Cowardly	Courage	Despondency	Fear	Orders	Carrying	Warriors	Riders	Following	Foe	Liege	Traits	Home	Desired Object	Quest	Purpose	Reaction	Qualities
+1	0	CH_MORKIN	RECRUITED+KNOWLEDGE+FRIENDLY+INTEREST+MAJOR+CONTROL+LOCATION+WATCH+ALIVE	"8,12"	Prince Morkin	Morkin					RA_FREE	GD_MALE	RA_FREE	1440																	Rest	BeAHostage	ReturnHome	BOLD+TIRELESS+RELIABLE+GALLANT
+1	1	CH_CORLETH	RECRUITED+KNOWLEDGE+FRIENDLY+INTEREST+CONTROL+LOCATION+WATCH+ALIVE	"145,220"	Corleth of Corelay	Corleth					RA_FREE	GD_MALE	RA_FREE	1440																	Rescue	RandomlyWander	ReturnHome	SELFLESS+TALKATIVE+RELIABLE
+1	2	CH_ANDERLANE	ALIVE	"149,97"	Anderlane of the Arakai	Anderlane					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+BOLD+EAGER+PASSIONATE+LOYAL+HOTTEMPERED+MIGHTYWARRIOR+HEADSTRONG
+1	3	CH_RORTHRON	RECRUITED+KNOWLEDGE+FRIENDLY+INTEREST+CONTROL+LOCATION+WATCH+ALIVE	"71,57"	Rorthron the Wise	Rorthron					RA_FREE	GD_MALE	RA_FREE	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+FARSIGHTED+QUICKWITTED+LOYAL+PEACEABLE+PATIENT+PERSUASIVE+KNOWLEDGEABLE
+1	4	CH_ITAR	ALIVE	"93,137"	Itar the Green	Itar					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	FARSIGHTED+SELFLESS+GENTLE
+1	5	CH_ARIN	RECRUITED+KNOWLEDGE+FRIENDLY+INTEREST+CONTROL+LOCATION+WATCH+ALIVE	"145,220"	Arin Lord Blood	Arin					RA_FREE	GD_MALE	RA_FREE	1440																	Rescue	RandomlyWander	ReturnHome	EAGER+ENERGETIC+CHARMING+HOTTEMPERED
+1	6	CH_GALAGRIM	KNOWLEDGE+ALIVE	"236,107"	Galagrim of the Flame	Galagrim					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	PERSUASIVE+SUPERBLEADER+HEADSTRONG+THICKSKINNED
+1	7	CH_LUXOR	RECRUITED+KNOWLEDGE+FRIENDLY+PRISONER+INTEREST+CONTROL+LOCATION+WATCH+ALIVE	"145,220"	Luxor the Moonprince	Luxor					RA_FREE	GD_MALE	RA_FREE	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+BOLD+KIND+SUPERBLEADER
+1	8	CH_KARGRIM	ALIVE	"239,41"	Kargrim the Cautious	Kargrim					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+MODEST+CAUTIOUS
+1	9	CH_MORATHRON	ALIVE	"191,61"	Morathron the Sorceror	Morathron					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	FARSIGHTED+COLDHEARTED+TREACHEROUS+IMPATIENT
+1	10	CH_GUTHRANE	ALIVE	"157,20"	Guthrane Oakfist	Guthrane					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	HOTTEMPERED+HEADSTRONG+IMPATIENT
+1	11	CH_DJALINA	PRISONER+ALIVE	"145,220"	Djalina Snowheart	Djalina					RA_USKARG	GD_FEMALE	RA_USKARG	1440																	Rest	BeAHostage	ReturnHome	BOLD+ENERGETIC+GALLANT+RECKLESS
+1	12	CH_GRUMRUD	ALIVE	"59,130"	Grumrud Slowaxe	Grumrud					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BOLD+KIND+CHARMING
+1	13	CH_ASHOLETH	ALIVE	"18,159"	Asholeth the Fey	Asholeth					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+EAGER+PERSUASIVE
+1	14	CH_BOROTH	KNOWLEDGE+ALIVE	"145,220"	Boroth the Wolfheart	Boroth					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DarkFey	ReturnHome	SUPERBLEADER+CRUEL+VICIOUS+BLOODTHIRSTY
+1	15	CH_ILDRAR	ALIVE	"112,107"	Ildrar the Stubborn	Ildrar					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	CHARMING+RECKLESS+HEADSTRONG
+1	16	CH_MOGRIK	KNOWLEDGE+PRISONER+ALIVE	"145,220"	Mogrik the Witless	Mogrik					RA_KITH	GD_MALE	RA_KITH	1440																	Rest	BeAHostage	ReturnHome	WARMHEARTED+HOMELOVING+SLOWWITTED
+1	17	CH_TORGRIM	ALIVE	"231,40"	Torgrim Arrowhand	Torgrim					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+COLDHEARTED+RESTLESS
+1	18	CH_UTHRAN	ALIVE	"150,247"	Uthran the Meddler	Uthran					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+PERSUASIVE
+1	19	CH_MARIK	ALIVE	"91,245"	Marik Silktongue	Marik					RA_GELMING	GD_MALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	MODEST+PERSUASIVE+NAIVE
+1	20	CH_HARAGLAI	ALIVE	"147,158"	Haraglai Stormgut	Haraglai					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+HOTTEMPERED+RECKLESS
+1	21	CH_OGLIM	KNOWLEDGE+ALIVE	"73,115"	Oglim the Lonely	Oglim					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+MIGHTYWARRIOR+HEADSTRONG+SOLITARY
+1	22	CH_ALOROTH	PRISONER+ALIVE	"145,220"	Aloroth the Fey	Aloroth					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	BeAHostage	ReturnHome	GENEROUS+EAGER+IMPATIENT
+1	23	CH_YRGRETH	ALIVE	"129,155"	Yrgreth Deathbringer	Yrgreth					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+VICIOUS+GREEDY
+1	24	CH_STUBLOG	ALIVE	"186,191"	Stublog Ironskull	Stublog					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+NAIVE+RECKLESS
+1	25	CH_ORABRIN	ALIVE	"19,50"	Orabrin Lionsblood	Orabrin					RA_KITH	GD_MALE	RA_KITH	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+GALLANT+KNOWLEDGEABLE
+1	26	CH_SPARTHOR	ALIVE	"237,16"	Sparthor the Patient	Sparthor					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	LOYAL+POLITE+PATIENT
+1	27	CH_CADRON	ALIVE	"150,247"	Cadron the Bemused	Cadron					RA_KITH	GD_MALE	RA_KITH	1440																	Rest	DefendHomeland	ReturnHome	PEACEABLE+SLOWWITTED
+1	28	CH_BRUNAK	ALIVE	"174,13"	Brunak the Wanderer	Brunak					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	BOLD+EAGER+TIRELESS+RESTLESS
+1	29	CH_SKARAI	ALIVE	"149,187"	Skarai the Dreamer	Skarai					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	GENEROUS+PASSIONATE+PEACEABLE
+1	30	CH_RUGRAK	ALIVE	"147,31"	Rugrak Firmaxe	Rugrak					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	LOYAL+RECKLESS
+1	31	CH_MORGRETH	ALIVE	"171,100"	Morgreth the Unsure	Morgreth					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	LEVELHEADED+CAUTIOUS+TIGHTLIPPED
+1	32	CH_GRALETH	ALIVE	"131,234"	Graleth the Bitter	Graleth					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	CRUEL+COLDHEARTED+IGNORANT
+1	33	CH_MUGLUM	ALIVE	"174,205"	Muglum the Handsome	Muglum					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	FARSIGHTED+ARROGANT+HEADSTRONG
+1	34	CH_DOROK	ALIVE	"94,72"	Dorok the Dour	Dorok					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+PASSIONATE+ARROGANT
+1	35	CH_SCIRANE	ALIVE	"219,92"	Scirane the Swift	Scirane					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	ENERGETIC+GALLANT+HOTTEMPERED
+1	36	CH_SADLAK	ALIVE	"151,15"	Sadlak the Merry	Sadlak					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+HOMELOVING+CHARMING
+1	37	CH_CORLANE	KNOWLEDGE+ALIVE	"128,96"	Corlane the Bear	Corlane					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+GENEROUS+TIRELESS+GALLANT+LOYAL+MIGHTYWARRIOR+RECKLESS
+1	38	CH_MOGLAI	ALIVE	"180,172"	Moglai Firewolf	Moglai					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+ENERGETIC+ARROGANT
+1	39	CH_NORGRIM	KNOWLEDGE+ALIVE	"88,162"	Norgrim the Rock	Norgrim					RA_DEEPING_DWARF	GD_MALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+BOLD+HOTTEMPERED+MIGHTYWARRIOR
+1	40	CH_JARLETH	KNOWLEDGE+ALIVE	"41,153"	Jarleth the Shining	Jarleth					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+KNOWLEDGEABLE+SUPERBLEADER+CAUTIOUS
+1	41	CH_URSKRETH	ALIVE	"134,182"	Urskreth the Vile	Urskreth					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	ARROGANT+REPULSIVE+PROVOCATIVE
+1	42	CH_BORGALUG	KNOWLEDGE+ALIVE	"210,212"	Borgalug Bonecrusher	Borgalug					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	GREEDY+RESTLESS+IGNORANT
+1	43	CH_ARANOR	ALIVE	"130,37"	Aranor Boldsword	Aranor					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	BOLD+QUICKWITTED+RECKLESS
+1	44	CH_MOONGRIM	ALIVE	"221,46"	Moongrim Longneck	Moongrim					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	GALLANT+PROVOCATIVE+IMPATIENT
+1	45	CH_LEONIK	ALIVE	"150,247"	Leonik Leatherhand	Leonik					RA_DEEPING_DWARF	GD_MALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	ARROGANT+SCEPTICAL
+1	46	CH_STORBOLD	ALIVE	"207,36"	Storbold the Scribbler	Storbold					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+RELIABLE+LOYAL
+1	47	CH_ARBETHOR	ALIVE	"170,88"	Arbethor Greenhand	Arbethor					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	HOMELOVING+RELIABLE+LOYAL
+1	48	CH_AMARIN	KNOWLEDGE+ALIVE	"36,246"	Amarin Starchaser	Amarin					RA_GELMING	GD_MALE	RA_GELMING	1440																	Rest	BeAHostage	ReturnHome	TIRELESS+CHARMING+PERSUASIVE+MIGHTYWARRIOR
+1	49	CH_AVILA	ALIVE	"28,123"	Avila the Cold	Avila					RA_ELDRIN	GD_FEMALE	RA_ELDRIN	1440																	Rest	DefendHomeland	ReturnHome	HOMELOVING+NAIVE+COLDHEARTED
+1	50	CH_HOON	ALIVE	"15,219"	Hoon the Warrior	Hoon					RA_GELMING	GD_MALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+MODEST+LOYAL
+1	51	CH_EOTHOR	ALIVE	"105,15"	Eothor Sparehand	Eothor					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	BOLD+KIND+RECKLESS
+1	52	CH_SNORGLUM	ALIVE	"233,203"	Snorglum Bighammer	Snorglum					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+HOTTEMPERED+GREEDY
+1	53	CH_ORGROTHA	ALIVE	"145,220"	Orgrotha the Persuader	Orgrotha					RA_DARK_FEY	GD_FEMALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+PERSUASIVE+BLOODTHIRSTY
+1	54	CH_FORTHAR	ALIVE	"119,15"	Forthar the Hunter	Forthar					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	GENEROUS+EAGER+MODEST
+1	55	CH_JORUK	ALIVE	"150,247"	Joruk Redfist	Joruk					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	TIRELESS+NAIVE
+1	56	CH_VAR	ALIVE	"150,247"	Var the Swordsman	Var					RA_GELMING	GD_MALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	HOTTEMPERED+MIGHTYWARRIOR
+1	57	CH_WYTHRAN	PRISONER+ALIVE	"145,220"	Wythran the Weaver	Wythran					RA_GELMING	GD_MALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	RELIABLE+CAUTIOUS+TIGHTLIPPED
+1	58	CH_CARITHILA	KNOWLEDGE+ALIVE	"21,106"	Carithila Queen	Carithila					RA_ELDRIN	GD_FEMALE	RA_ELDRIN	1440																	Rest	DefendHomeland	ReturnHome	KIND+KNOWLEDGEABLE+CAUTIOUS
+1	59	CH_GARFIN	ALIVE	"150,247"	Garfin Quicklip	Garfin					RA_ELDRIN	GD_MALE	RA_ELDRIN	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+COWARDLY
+1	60	CH_ZENETHOR	KNOWLEDGE+PRISONER+ALIVE	"145,220"	Zenethor the Strong	Zenethor					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	BeAHostage	ReturnHome	BRAVE+PASSIONATE+MIGHTYWARRIOR+SUPERBLEADER
+1	61	CH_GOTHRUM	ALIVE	"187,204"	Gothrum the Glum	Gothrum					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+SLOWWITTED+SOLITARY
+1	62	CH_SKYRDRETH	ALIVE	"119,207"	Skyrdreth Iceheart	Skyrdreth					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	COLDHEARTED+REPULSIVE+BLOODTHIRSTY
+1	63	CH_LANKLIN	ALIVE	"150,247"	Lanklin the Boaster	Lanklin					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	ARROGANT+PASSIONLESS
+1	64	CH_HOLDAR	ALIVE	"150,247"	Holdar Longeye	Holdar					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	FARSIGHTED+PATIENT
+1	65	CH_ARAMILA	ALIVE	"150,247"	Aramila the Seer	Aramila					RA_ARAKAI	GD_FEMALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+KNOWLEDGEABLE
+1	66	CH_MELINOTH	ALIVE	"130,122"	Melinoth Larkstongue	Melinoth					RA_DAWN_FEY	GD_FEMALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	FARSIGHTED+HOMELOVING+TIRELESS
+1	67	CH_MANA	ALIVE	"150,247"	Mana the Huntress	Mana					RA_ELDRIN	GD_FEMALE	RA_ELDRIN	1440																	Rest	DefendHomeland	ReturnHome	WARMHEARTED+ENERGETIC
+1	68	CH_RORLBAR	ALIVE	"150,247"	Rorlbar the Poet	Rorlbar					RA_GELMING	GD_MALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	CHARMING+SCEPTICAL
+1	69	CH_GARAMOR	ALIVE	"63,40"	Garamor the Fat	Garamor					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+EASILYTIRED+IMPATIENT
+1	70	CH_BORLUM	ALIVE	"222,202"	Borlum the Happy	Borlum					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	KIND+EAGER+CAUTIOUS
+1	71	CH_AKRITH	ALIVE	"170,191"	Akrith Bloodhand	Akrith					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	RECKLESS+CRUEL+PASSIONLESS
+1	72	CH_GODROLD	ALIVE	"150,247"	Godrold Heavyhand	Godrold					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	KIND+GALLANT
+1	73	CH_DARATH	ALIVE	"140,144"	Darath the Lion	Darath					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	FARSIGHTED+BOLD+GENEROUS
+1	74	CH_PARIK	ALIVE	"150,247"	Parik the Miser	Parik					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	CRUEL+IGNORANT
+1	75	CH_MERITHEL	ALIVE	"178,46"	Merithel of the Lake	Merithel					RA_ARAKAI	GD_FEMALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	WARMHEARTED+EAGER+PASSIONATE+RECKLESS+GREEDY+HEADSTRONG+IMPATIENT
+1	76	CH_AREMELA	PRISONER+ALIVE	"145,220"	Aremela Princess	Aremela					RA_ELDRIN	GD_FEMALE	RA_ELDRIN	1440																	Rest	BeAHostage	ReturnHome	FARSIGHTED+PATIENT+TIGHTLIPPED
+1	77	CH_FARLIK	ALIVE	"150,247"	Farlik Whiteknife	Farlik					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+RELIABLE
+1	78	CH_ARAK	KNOWLEDGE+ALIVE	"150,53"	Arak the Avenger	Arak					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+QUICKWITTED+ENERGETIC+SUPERBLEADER+RESTLESS+IMPATIENT
+1	79	CH_TORANETH	ALIVE	"145,220"	Toraneth the Cruel	Toraneth					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	SELFISH+CRUEL+BLOODTHIRSTY
+1	80	CH_DARGRITH	ALIVE	"134,200"	Dargrith the Butcher	Dargrith					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	MALICIOUS+BLOODTHIRSTY+FEEBLEWARRIOR
+1	81	CH_OGRIN	ALIVE	"150,247"	Ogrin Woodenblade	Ogrin					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	NAIVE+SELFISH
+1	82	CH_ARAG	ALIVE	"150,247"	Arag Drythroat	Arag					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+UNCONVINCING
+1	83	CH_JUSTRIK	ALIVE	"150,247"	Justrik the Hawk	Justrik					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+CAUTIOUS
+1	84	CH_SHARILA	ALIVE	"33,25"	Sharila Suresword	Sharila					RA_KITH	GD_FEMALE	RA_KITH	1440																	Rest	DefendHomeland	ReturnHome	EAGER+LOYAL+HOTTEMPERED
+1	85	CH_RAINAR	ALIVE	"205,80"	Rainar the Besotted	Rainar					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	EAGER+ENERGETIC+PASSIONATE
+1	86	CH_JARANOR	ALIVE	"240,75"	Jaranor the Hasty	Jaranor					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+HOTTEMPERED+IMPATIENT
+1	87	CH_ASUNAI	KNOWLEDGE+ALIVE	"225,132"	Asunai Ironwing	Asunai					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+HOMELOVING+PASSIONATE+MIGHTYWARRIOR
+1	88	CH_URGORETH	ALIVE	"150,247"	Urgoreth the Despiser	Urgoreth					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	CAUTIOUS+GREEDY+BLOODTHIRSTY
+1	89	CH_MIRGRATH	ALIVE	"117,188"	Mirgrath the Black	Mirgrath					RA_DARK_FEY	GD_MALE	RA_DARK_FEY	1440																	Rest	DefendHomeland	ReturnHome	EASILYTIRED+REPULSIVE+SOLITARY
+1	90	CH_MOGRAK	ALIVE	"40,204"	Mograk Rustaxe	Mograk					RA_DEEPING_DWARF	GD_MALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BOLD+GALLANT+RESTLESS
+1	91	CH_TAROLETH	ALIVE	"98,150"	Taroleth the Jester	Taroleth					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+COWARDLY+MAD
+1	92	CH_ARFOLD	ALIVE	"150,247"	Arfold Longtooth	Arfold					RA_GELMING	GD_FEMALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	KNOWLEDGEABLE+SOLITARY
+1	93	CH_DORGRUN	ALIVE	"150,247"	Dorgrun Roughhand	Dorgrun					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	RECKLESS+IMPATIENT
+1	94	CH_MOLICOR	ALIVE	"150,247"	Molicor the Kind	Molicor					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	KIND+LEVELHEADED
+1	95	CH_IGRAL	ALIVE	"150,247"	Igral Mouseheart	Igral					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	GENEROUS+COWARDLY
+1	96	CH_ORIMUND	ALIVE	"150,247"	Orimund the Resplendent	Orimund					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	MODEST+ARROGANT
+1	97	CH_CRUN	ALIVE	"150,247"	Crun the Weasel	Crun					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	COWARDLY+TREACHEROUS
+1	98	CH_FARAMOTH	ALIVE	"150,247"	Faramoth the Solemn	Faramoth					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	SOLITARY+THICKSKINNED
+1	99	CH_ULGRIM	ALIVE	"89,205"	Ulgrim the Weary	Ulgrim					RA_DEEPING_DWARF	GD_MALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+CAUTIOUS+SLOWWITTED
+1	100	CH_MIRANAR	KNOWLEDGE+ALIVE	"116,133"	Miranar Fairhand	Miranar					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	MODEST+LOYAL+PATIENT
+1	101	CH_ULGRUD	ALIVE	"74,142"	Ulgrud the Treacherous	Ulgrud					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	SELFISH+COLDHEARTED+TREACHEROUS
+1	102	CH_ELGRENA	ALIVE	"150,247"	Elgrena the Gracious	Elgrena					RA_DAWN_FEY	GD_FEMALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+KIND
+1	103	CH_ALAGRIM	ALIVE	"127,72"	Alagrim Ironaxe	Alagrim					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+SELFLESS+APATHETIC
+1	104	CH_KARAHAR	ALIVE	"150,247"	Karahar the Wistful	Karahar					RA_GELMING	GD_MALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+PATIENT
+1	105	CH_ORAGRANE	ALIVE	"241,63"	Oragrane the Fearless	Oragrane					RA_DRAGONLORD	GD_MALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	MIGHTYWARRIOR+COLDHEARTED+IMPATIENT
+1	106	CH_MARATHOR	ALIVE	"115,65"	Marathor the Splendid	Marathor					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	KIND+WARMHEARTED+GENEROUS
+1	107	CH_BARAG	ALIVE	"150,247"	Barag the Fierce	Barag					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	HOTTEMPERED+VICIOUS
+1	108	CH_GOLGUD	ALIVE	"71,174"	Golgud the Reluctant	Golgud					RA_DEEPING_DWARF	GD_MALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	GENEROUS+PATIENT+COWARDLY
+1	109	CH_ILARETH	ALIVE	"18,170"	Ilareth the Chosen	Ilareth					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	SUBMISSIVE+KNOWLEDGEABLE+ARROGANT
+1	110	CH_TORBRITH	ALIVE	"150,247"	Torbrith Swiftfoot	Torbrith					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	ENERGETIC+RELIABLE
+1	111	CH_SLORUM	ALIVE	"186,215"	Slorum the Smug	Slorum					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+TALKATIVE+IGNORANT
+1	112	CH_SAMARA	ALIVE	"150,247"	Samara Wildheart	Samara					RA_DAWN_FEY	GD_FEMALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+PASSIONATE
+1	113	CH_HILGOR	ALIVE	"150,247"	Hilgor the Meek	Hilgor					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	LANGUID+UNCONVINCING
+1	114	CH_ZALNOR	ALIVE	"150,247"	Zalnor Sourspleen	Zalnor					RA_KITH	GD_MALE	RA_KITH	1440																	Rest	DefendHomeland	ReturnHome	APATHETIC+EASILYTIRED
+1	115	CH_MELGRAN	ALIVE	"150,247"	Melgran Dragonsword	Melgran					RA_ARAKAI	GD_MALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	BOLD+MODEST
+1	116	CH_KHALAK	ALIVE	"163,133"	Khalak the Blue	Khalak					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	GALLANT+TIGHTLIPPED+RESTLESS
+1	117	CH_BORAGRIM	ALIVE	"55,220"	Boragrim Sharpaxe	Boragrim					RA_DEEPING_DWARF	GD_MALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	GENEROUS+HOMELOVING+GALLANT
+1	118	CH_MELKRITH	ALIVE	"7,143"	Melkrith Nightshade	Melkrith					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	TREACHEROUS+PROVOCATIVE+DOMINEERING
+1	119	CH_OSCRUTH	ALIVE	"150,247"	Oscruth Loosehead	Oscruth					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	COWARDLY+MAD
+1	120	CH_VOLGOR	ALIVE	"150,247"	Volgor the Sure	Volgor					RA_LONG_DWARF	GD_MALE	RA_LONG_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+KIND
+1	121	CH_TALMAR	ALIVE	"55,12"	Talmar the Quiet	Talmar					RA_KITH	GD_MALE	RA_KITH	1440																	Rest	DefendHomeland	ReturnHome	QUICKWITTED+PEACEABLE+PATIENT
+1	122	CH_OLOG	ALIVE	"199,187"	Olog the Friendly	Olog					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	WARMHEARTED+GENTLE+EAGER
+1	123	CH_OLAGRUM	ALIVE	"208,199"	Olagrum the Steady	Olagrum					RA_GIANT	GD_MALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	PATIENT+LEVELHEADED+PASSIONLESS
+1	124	CH_HARUMBAR	ALIVE	"150,247"	Harumbar the Unhappy	Harumbar					RA_DAWN_FEY	GD_MALE	RA_DAWN_FEY	1440																	Rest	DefendHomeland	ReturnHome	POLITE+SOLITARY
+1	125	CH_THORGRAN	ALIVE	"187,147"	Thorgran Wildsword	Thorgran					RA_USKARG	GD_MALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	TIRELESS+PASSIONATE+GALLANT+MIGHTYWARRIOR
+1	126	CH_ALUTHRIM	ALIVE	"98,188"	Aluthrim the Bold	Aluthrim					RA_DEEPING_DWARF	GD_MALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	BOLD+KIND+HEADSTRONG
+1	127	CH_ALARGRITH	ALIVE	"61,159"	Alargrith Warhelm	Alargrith					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	LOYAL+COLDHEARTED+TIGHTLIPPED
+1	128	CH_GOROLAN	ALIVE	"150,247"	Gorolan the Benign	Gorolan					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	PATIENT+SCEPTICAL
+1	129	CH_ILVAR	ALIVE	"77,93"	Ilvar the Penitent	Ilvar					RA_ATHELING	GD_MALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	RELIABLE+PERSUASIVE+KNOWLEDGEABLE
+1	130	CH_ARALETH	RECRUITED+KNOWLEDGE+FRIENDLY+INTEREST+CONTROL+LOCATION+WATCH+ALIVE	"8,12"	Araleth the White	Araleth					RA_FREE	GD_MALE	RA_FREE	1440																	Rest	DefendHomeland	ReturnHome	PASSIONATE+GALLANT+CHARMING
+1	131	CH_ARITHEL	ALIVE	"18,129"	Arithel the Joybringer	Arithel					RA_HIGH_FEY	GD_FEMALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	CHARMING+LOYAL+POLITE
+1	132	CH_EMEDREL	PRISONER+ALIVE	"145,220"	Emedrel of the Fire	Emedrel					RA_HIGH_FEY	GD_FEMALE	RA_HIGH_FEY	1440																	Rest	BeAHostage	ReturnHome	PASSIONATE+PATIENT+KNOWLEDGEABLE+HEADSTRONG
+1	133	CH_ANDREMAR	ALIVE	"13,181"	Andremar the Starborn	Andremar					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	BRAVE+MODEST+LOYAL
+1	134	CH_GALDRETH	ALIVE	"48,176"	Galdreth the Fair	Galdreth					RA_HIGH_FEY	GD_MALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	FARSIGHTED+SELFLESS+LEVELHEADED
+1	135	CH_SAGRANA	PRISONER+ALIVE	"145,220"	Sagrana Goldenwing	Sagrana					RA_DRAGONLORD	GD_FEMALE	RA_DRAGONLORD	1440																	Rest	BeAHostage	ReturnHome	PASSIONATE+PERSUASIVE+KNOWLEDGEABLE
+1	136	CH_ELINA	ALIVE	"164,124"	Elina the Enchantress	Elina					RA_USKARG	GD_FEMALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	PASSIONATE+PERSUASIVE+KNOWLEDGEABLE
+1	137	CH_TARELLA	ALIVE	"150,247"	Tarella the Intrepid	Tarella					RA_DRAGONLORD	GD_FEMALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	TALKATIVE+HOTTEMPERED
+1	138	CH_ORAINA	ALIVE	"150,247"	Oraina the Placid	Oraina					RA_ARAKAI	GD_FEMALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	GENTLE+SUBMISSIVE
+1	139	CH_KARELDA	ALIVE	"150,247"	Karelda the Carefree	Karelda					RA_USKARG	GD_FEMALE	RA_USKARG	1440																	Rest	DefendHomeland	ReturnHome	KIND+GENTLE
+1	140	CH_IMIREL	ALIVE	"150,247"	Imirel Starblade	Imirel					RA_DEEPING_DWARF	GD_FEMALE	RA_DEEPING_DWARF	1440																	Rest	DefendHomeland	ReturnHome	GALLANT+CHARMING
+1	141	CH_YLANDA	ALIVE	"150,247"	Ylanda the Wishful	Ylanda					RA_HIGH_FEY	GD_FEMALE	RA_HIGH_FEY	1440																	Rest	DefendHomeland	ReturnHome	SELFISH+APATHETIC
+1	142	CH_MORGRISSA	ALIVE	"205,227"	Morgrissa Hammertongue	Morgrissa					RA_GIANT	GD_FEMALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	HOTTEMPERED+CRUEL+TREACHEROUS
+1	143	CH_TRANTANA	ALIVE	"150,247"	Trantana the Grand	Trantana					RA_ATHELING	GD_FEMALE	RA_ATHELING	1440																	Rest	DefendHomeland	ReturnHome	MODEST+SCEPTICAL
+1	144	CH_OGLISSA	ALIVE	"195,214"	Oglissa the Rose	Oglissa					RA_GIANT	GD_FEMALE	RA_GIANT	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+GREEDY+IMPATIENT
+1	145	CH_MELINISSA	PRISONER+ALIVE	"145,220"	Melinissa the Sweet	Melinissa					RA_GIANT	GD_FEMALE	RA_GIANT	1440																	Rest	BeAHostage	ReturnHome	GENEROUS+ENERGETIC+REPULSIVE
+1	146	CH_OLTHRUDA	PRISONER+ALIVE	"145,220"	Olthruda the Bountiful	Olthruda					RA_LONG_DWARF	GD_FEMALE	RA_LONG_DWARF	1440																	Rest	BeAHostage	ReturnHome	TALKATIVE+HOMELOVING+EAGER
+1	147	CH_THALGRIMA	PRISONER+ALIVE	"145,220"	Thalgrima the Betrothed	Thalgrima					RA_DEEPING_DWARF	GD_FEMALE	RA_DEEPING_DWARF	1440																	Rest	BeAHostage	ReturnHome	TALKATIVE+LOYAL+HOTTEMPERED
+1	148	CH_ELESSA	ALIVE	"7,238"	Elessa of the Mists	Elessa					RA_GELMING	GD_FEMALE	RA_GELMING	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+GENEROUS+PASSIONATE+CAUTIOUS
+1	149	CH_ULENE	ALIVE	"150,247"	Ulene Quietheart	Ulene					RA_DRAGONLORD	GD_FEMALE	RA_DRAGONLORD	1440																	Rest	DefendHomeland	ReturnHome	WARMHEARTED+GENTLE
+1	150	CH_SHERINAR	ALIVE	"59,100"	Sherinar of Shadows	Sherinar					RA_ELDRIN	GD_FEMALE	RA_ELDRIN	1440																	Rest	DefendHomeland	ReturnHome	PASSIONATE+POLITE+HEADSTRONG
+1	151	CH_MIRITHEL	ALIVE	"150,247"	Mirithel the Warm	Mirithel					RA_ARAKAI	GD_FEMALE	RA_ARAKAI	1440																	Rest	DefendHomeland	ReturnHome	WARMHEARTED+GENTLE
+1	152	CH_KIRANDA	PRISONER+ALIVE	"145,220"	Kiranda the Wild	Kiranda					RA_ARAKAI	GD_FEMALE	RA_ARAKAI	1440																	Rest	BeAHostage	ReturnHome	BOLD+EAGER+PASSIONATE+RECKLESS+RESTLESS+HEADSTRONG+IMPATIENT
+1	153	CH_GALAHAR	ALIVE	"47,71"	Galahar the Calm	Galahar					RA_GOLDEN_FEY	GD_MALE	RA_GOLDEN_FEY	1440																	Rest	DefendHomeland	ReturnHome	SELFLESS+KIND+LEVELHEADED

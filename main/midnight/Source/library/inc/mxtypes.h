@@ -373,7 +373,7 @@ namespace chilli {
 *
 ****************************************************************************/
 
-#define MXBIT(x)                (1<<x)
+#define MXBIT(x)                ((1ULL)<<x)
 //#ifndef MAKEWORD
 //#define MAKEWORD(a, b)      ((WORD)(((BYTE)(a)) | ((WORD)((BYTE)(b))) << 8))
 //#define MAKELONG(a, b)      ((LONG)(((WORD)(a)) | ((DWORD)((WORD)(b))) << 16))

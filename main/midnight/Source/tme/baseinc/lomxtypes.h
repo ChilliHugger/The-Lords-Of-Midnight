@@ -895,8 +895,12 @@ namespace tme {
 
             cf_ai               = MXBIT(12),    // character is an AI character
             cf_killed_foe       = MXBIT(13),    // character killed his foe
-            cf_unused1          = MXBIT(14),    // 
-            cf_unused2          = MXBIT(15),    //
+            
+            // citadel
+            cf_major            = MXBIT(14),    // is a major character
+            cf_location         = MXBIT(15),    // has a fixed location
+            // citadel
+            
             cf_resting          = MXBIT(16),    // currently resting
             cf_inbattle         = MXBIT(17),    // currently in battle
             cf_wonbattle        = MXBIT(18),    // just won a battle
@@ -906,10 +910,20 @@ namespace tme {
             cf_preparesbattle   = MXBIT(22),    // prepares to do battle
             cf_approaching      = MXBIT(23),    // we are approaching a lord (DDR)
             cf_battleover       = MXBIT(24),    // character will not fight again this round
+            
+            // citadel
             cf_prisoner         = MXBIT(25),    // held hostage, and freed by being recruited
+            cf_friendly         = MXBIT(26),    // is friendly
+            cf_interest         = MXBIT(27),    // is of interest
+            cf_knowledge        = MXBIT(28),    // has special knowledge
+            cf_control          = MXBIT(29),    // is under control
+            cf_watch            = MXBIT(30),    // is being watched
+            // citadel
+            
         };
 
         enum CHARACTERTRAITS {
+            // +ve
             ct_good             = MXBIT(0),
             ct_strong           = MXBIT(1),
             ct_forceful         = MXBIT(2),
@@ -918,7 +932,7 @@ namespace tme {
             ct_brave            = MXBIT(5),
             ct_swift            = MXBIT(6),
             ct_loyal            = MXBIT(7),
-            
+            // -ve
             ct_evil             = MXBIT(8),
             ct_weak             = MXBIT(9),
             ct_reticent         = MXBIT(10),
@@ -956,6 +970,77 @@ namespace tme {
             tif_interesting     = MXBIT(2),     // terrain is interesting
             tif_army            = MXBIT(3),     // army is visible at terrain
         };
+        
+        // citadel
+        enum CHARACTERQUALITIES : u64 {
+            // +ve
+            qf_brave               = MXBIT(0),
+            qf_farsighted          = MXBIT(1),
+            qf_selfless            = MXBIT(2),
+            qf_bold                = MXBIT(3),
+            qf_kind                = MXBIT(4),
+            qf_warmhearted         = MXBIT(5),
+            qf_gentle              = MXBIT(6),
+            qf_generous            = MXBIT(7),
+            qf_quickwitted         = MXBIT(8),
+            qf_talkative           = MXBIT(9),
+            qf_homeloving          = MXBIT(10),
+            qf_eager               = MXBIT(11),
+            qf_energetic           = MXBIT(12),
+            qf_tireless            = MXBIT(13),
+            qf_modest              = MXBIT(14),
+            qf_passionate          = MXBIT(15),
+            qf_reliable            = MXBIT(16),
+            qf_gallant             = MXBIT(17),
+            qf_charming            = MXBIT(18),
+            qf_loyal               = MXBIT(19),
+            qf_gregarious          = MXBIT(20),
+            qf_peaceable           = MXBIT(21),
+            qf_polite              = MXBIT(22),
+            qf_submissive          = MXBIT(23),
+            qf_patient             = MXBIT(24),
+            qf_levelheaded         = MXBIT(25),
+            qf_persuasive          = MXBIT(26),
+            qf_knowledgeable       = MXBIT(27),
+            qf_naive               = MXBIT(28),
+            qf_hottempered         = MXBIT(29),
+            qf_mightywarrior       = MXBIT(30),
+            qf_superbleader        = MXBIT(31),
+            // -ve
+            qf_cowardly            = MXBIT(32),
+            qf_reckless            = MXBIT(33),
+            qf_selfish             = MXBIT(34),
+            qf_cautious            = MXBIT(35),
+            qf_cruel               = MXBIT(36),
+            qf_coldhearted         = MXBIT(37),
+            qf_vicious             = MXBIT(38),
+            qf_greedy              = MXBIT(39),
+            qf_slowwitted          = MXBIT(40),
+            qf_tightlipped         = MXBIT(41),
+            qf_restless            = MXBIT(42),
+            qf_apathetic           = MXBIT(43),
+            qf_languid             = MXBIT(44),
+            qf_easilytired         = MXBIT(45),
+            qf_arrogant            = MXBIT(46),
+            qf_passionless         = MXBIT(47),
+            qf_headstrong          = MXBIT(48),
+            qf_malicious           = MXBIT(49),
+            qf_repulsive           = MXBIT(50),
+            qf_treacherous         = MXBIT(51),
+            qf_solitary            = MXBIT(52),
+            qf_bloodthirsty        = MXBIT(53),
+            qf_provocative         = MXBIT(54),
+            qf_domineering         = MXBIT(55),
+            qf_impatient           = MXBIT(56),
+            qf_mad                 = MXBIT(57),
+            qf_unconvincing        = MXBIT(58),
+            qf_ignorant            = MXBIT(59),
+            qf_sceptical           = MXBIT(60),
+            qf_thickskinned        = MXBIT(61),
+            qf_feeblewarrior       = MXBIT(62),
+            qf_pitifulleader       = MXBIT(63),
+        };
+        // citadel
     }
     // namespace flags
 
