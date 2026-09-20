@@ -1,0 +1,132 @@
+id	type	char_flags_txt	char_flags_txt_value	flags_txt	flags_txt_value	x	y	direction	shield	portrait	land	warrior_0	warrior_1	warrior_2	warrior_3	warrior_4	warrior_5	warrior_6	warrior_7	warrior_8	warrior_9	warrior_10	warrior_11	warrior_12	warrior_13	warrior_14	warrior_15	owner	land_ruler	land_war_state	land_realm	land_owner	land_enemies
+0	castle		0		0	256	0	NORTH	shield_3	head_1	Imilvir	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+1	castle		0		0	256	0	NORTH	shield_3	head_2	Eodral	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+2	castle		0		0	256	0	NORTH	shield_3	head_3	Arelon	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+3	castle		0		0	256	0	NORTH	shield_3	head_4	Aravik	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+4	castle		0		0	256	0	NORTH	shield_3	head_5	Caradwin	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+5	castle		0		0	256	0	NORTH	shield_3	head_6	Falthrang	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+6	castle		0		0	256	0	NORTH	shield_3	head_7	Elinmor	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+7	castle		0		0	256	0	NORTH	shield_3	head_8	Tarefyr	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+8	castle		0		0	256	0	NORTH	shield_3	head_9	Northern	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+9	castle		0		0	256	0	NORTH	shield_3	head_10	Eastern	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+10	castle		0		0	256	0	NORTH	shield_3	head_11	Southern	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+11	castle		0		0	256	0	NORTH	shield_3	head_12	Western	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+12	castle		0		0	256	0	NORTH	shield_3	head_13	Middle	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+13	castle		0		0	256	0	NORTH	shield_3	head_14	Ulmor	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+14	castle		0		0	256	0	NORTH	shield_3	head_15	Skulls	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+15	castle		0		0	256	0	NORTH	shield_3	head_16	Shining	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+16	castle		0		0	256	0	NORTH	shield_3	head_17	Silfar	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+17	castle		0		0	256	0	NORTH	shield_3	head_18	Grey	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+18	castle		0		0	256	0	NORTH	shield_3	head_19	Eregoth	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+19	castle		0		0	256	0	NORTH	shield_3	head_20	Weeping	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+20	castle		0		0	256	0	NORTH	shield_3	head_21	Fire	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+21	castle		0		0	256	0	NORTH	shield_3	head_22	Galorwain	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+22	castle		0		0	256	0	NORTH	shield_3	head_23	Tharran	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+23	castle		0		0	256	0	NORTH	shield_3	head_24	Mermaids	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+24	castle		0		0	256	0	NORTH	shield_3	head_25	Serpents	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	17	Kith	CH_MORKIN	LS_AT_PEACE	The Witherlands	CH_MORKIN	0
+25	citadel	+knowledge	2	+height+static+obstacle	7	47	71	SOUTH_WEST	shield_3	head_26	Immiel	0	0	0	0	0	0	0	0	0	0	0	0	0	106	0	0	Golden Fey	CH_GALAHAR	LS_AT_PEACE	Glimormir	CH_GALAHAR	0
+26	citadel	+knowledge	2	+height+static+obstacle	7	149	52	NORTH	shield_3	head_27	Rilleon	0	0	0	0	100	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_ARAK	LS_AT_PEACE	The Last Northing	CH_ARAK	0
+27	citadel	+knowledge	2	+height+static+obstacle	7	145	220	NORTH_EAST	shield_3	head_28	Maranor	0	0	0	0	0	0	0	0	0	0	0	0	10016	0	0	0	Dark Fey	CH_TORANETH	LS_AT_PEACE	The Marish	CH_TORANETH	0
+28	castle	+knowledge	2	+height+static+obstacle	7	7	12	NORTH_EAST	shield_3	head_29	Corelay	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	55	Free	CH_MORKIN	LS_AT_PEACE	Midnight	CH_MORKIN	0
+29	castle	+knowledge	2	+height+static+obstacle	7	11	23	NORTH_EAST	shield_3	head_30	Jade	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	46	Free	CH_MORKIN	LS_AT_PEACE	Midnight	CH_MORKIN	0
+30	castle	+knowledge	2	+height+static+obstacle	7	14	10	SOUTH_EAST	shield_3	head_31	Last	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	43	Free	CH_MORKIN	LS_AT_PEACE	Midnight	CH_MORKIN	0
+31	citadel	+knowledge	2	+height+static+obstacle	7	33	24	SOUTH_EAST	shield_3	head_32	Erifel	95	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Kith	CH_SHARILA	LS_AT_PEACE	The Witherlands	CH_SHARILA	0
+32	castle	+knowledge	2	+height+static+obstacle	7	54	11	NORTH	shield_3	head_33	Sareon	46	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Kith	CH_TALMAR	LS_AT_PEACE	The Witherlands	CH_TALMAR	0
+33	castle	+knowledge	2	+height+static+obstacle	7	19	50	EAST	shield_3	head_34	Eomir	51	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Kith	CH_ORABRIN	LS_AT_PEACE	The Witherlands	CH_ORABRIN	0
+34	castle	+knowledge	2	+height+static+obstacle	7	62	39	NORTH	shield_3	head_35	Rilnor	0	58	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_GARAMOR	LS_AT_PEACE	The Lee	CH_GARAMOR	0
+35	castle	+knowledge	2	+height+static+obstacle	7	105	14	NORTH_EAST	shield_3	head_36	Thumar	0	59	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_EOTHOR	LS_AT_PEACE	The Lee	CH_EOTHOR	0
+36	castle	+knowledge	2	+height+static+obstacle	7	120	14	EAST	shield_3	head_37	Sharvik	0	41	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_FORTHAR	LS_AT_PEACE	The Lee	CH_FORTHAR	0
+37	castle	+knowledge	2	+height+static+obstacle	7	129	37	NORTH	shield_3	head_38	Imildral	0	53	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_ARANOR	LS_AT_PEACE	The Lee	CH_ARANOR	0
+38	castle	+knowledge	2	+height+static+obstacle	7	151	15	SOUTH_EAST	shield_3	head_39	Erenim	0	0	0	40	0	0	0	0	0	0	0	0	0	0	0	0	Long Dwarf	CH_SADLAK	LS_AT_PEACE	The Long Mountains	CH_SADLAK	0
+39	castle	+knowledge	2	+height+static+obstacle	7	147	31	SOUTH_EAST	shield_3	head_40	Isilfrey	0	0	0	51	0	0	0	0	0	0	0	0	0	0	0	0	Long Dwarf	CH_RUGRAK	LS_AT_PEACE	The Long Mountains	CH_RUGRAK	0
+40	castle	+knowledge	2	+height+static+obstacle	7	126	71	NORTH	shield_3	head_41	Thordroth	0	0	0	51	0	0	0	0	0	0	0	0	0	0	0	0	Long Dwarf	CH_ALAGRIM	LS_AT_PEACE	The Long Mountains	CH_ALAGRIM	0
+41	castle	+knowledge	2	+height+static+obstacle	7	128	96	SOUTH_EAST	shield_3	head_42	Galorbard	0	0	0	0	55	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_CORLANE	LS_AT_PEACE	The Last Northing	CH_CORLANE	0
+42	castle	+dead	4		0	256	0	SOUTH_EAST	shield_3	head_43	Corlon	0	0	0	0	49	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_ILDRAR	LS_AT_PEACE	The Last Northing	CH_ILDRAR	0
+43	castle	+knowledge	2	+height+static+obstacle	7	106	94	SOUTH_EAST	shield_3	head_44	Farwain	0	0	0	41	0	0	0	0	0	0	0	0	0	0	0	0	Long Dwarf	CH_OLTHRUDA	LS_AT_PEACE	The Long Mountains	CH_OLTHRUDA	0
+44	castle	+knowledge	2	+height+static+obstacle	7	112	106	EAST	shield_3	head_45	Maralan	0	0	0	0	0	0	0	41	0	0	0	0	0	0	0	0	Dawn Fey	CH_ILDRAR	LS_AT_PEACE	Dawnwood	CH_ILDRAR	0
+45	citadel	+knowledge	2	+height+static+obstacle	7	73	115	NORTH_EAST	shield_3	head_46	Beomir	0	0	0	93	0	0	0	0	0	0	0	0	0	0	0	0	Long Dwarf	CH_OGLIM	LS_AT_PEACE	The Long Mountains	CH_OGLIM	0
+46	castle	+knowledge	2	+height+static+obstacle	7	77	93	EAST	shield_3	head_47	Ceremelth	0	59	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_ILVAR	LS_AT_PEACE	The Lee	CH_ILVAR	0
+47	castle	+knowledge	2	+height+static+obstacle	7	91	121	NORTH	shield_3	head_48	Carafel	0	0	0	0	0	0	0	42	0	0	0	0	0	0	0	0	Dawn Fey	CH_ALOROTH	LS_AT_PEACE	Dawnwood	CH_ALOROTH	0
+48	castle	+knowledge	2	+height+static+obstacle	7	60	129	SOUTH_EAST	shield_3	head_49	Saradwin	0	0	0	40	0	0	0	0	0	0	0	0	0	0	0	0	Long Dwarf	CH_GRUMRUD	LS_AT_PEACE	The Long Mountains	CH_GRUMRUD	0
+49	castle	+knowledge	2	+height+static+obstacle	7	93	137	EAST	shield_3	head_50	Emerthen	0	0	0	0	0	0	0	45	0	0	0	0	0	0	0	0	Dawn Fey	CH_ITAR	LS_AT_PEACE	Dawnwood	CH_ITAR	0
+50	castle	+knowledge	2	+height+static+obstacle	7	74	142	EAST	shield_3	head_51	Scaradir	0	0	0	54	0	0	0	0	0	0	0	0	0	0	0	0	Long Dwarf	CH_ULGRUD	LS_AT_PEACE	The Long Mountains	CH_ULGRUD	0
+51	castle	+knowledge	2	+height+static+obstacle	7	59	99	SOUTH_EAST	shield_3	head_52	Meranor	0	0	54	0	0	0	0	0	0	0	0	0	0	0	0	0	Eldrin	CH_SHERINAR	LS_AT_PEACE	Eldmark	CH_SHERINAR	0
+52	castle	+knowledge	2	+height+static+obstacle	7	8	73	EAST	shield_3	head_53	Arelban	0	0	59	0	0	0	0	0	0	0	0	0	0	0	0	0	Eldrin	CH_AREMELA	LS_AT_PEACE	Eldmark	CH_AREMELA	0
+53	citadel	+knowledge	2	+height+static+obstacle	7	21	105	NORTH_EAST	shield_3	head_54	Arunvere	0	0	104	0	0	0	0	0	0	0	0	0	0	0	0	0	Eldrin	CH_CARITHILA	LS_AT_PEACE	Eldmark	CH_CARITHILA	0
+54	castle	+knowledge	2	+height+static+obstacle	7	28	123	EAST	shield_3	head_55	Erilan	0	0	45	0	0	0	0	0	0	0	0	0	0	0	0	0	Eldrin	CH_AVILA	LS_AT_PEACE	Eldmark	CH_AVILA	0
+55	castle	+knowledge	2	+height+static+obstacle	7	18	128	SOUTH_EAST	shield_3	head_56	Elinvar	0	0	0	0	0	0	43	0	0	0	0	0	0	0	0	0	High Fey	CH_ARITHEL	LS_AT_PEACE	Wierdwood	CH_ARITHEL	0
+56	castle	+knowledge	2	+height+static+obstacle	7	8	142	SOUTH_EAST	shield_3	head_57	Arelmar	0	0	0	0	0	0	47	0	0	0	0	0	0	0	0	0	High Fey	CH_MELKRITH	LS_AT_PEACE	Wierdwood	CH_MELKRITH	0
+57	citadel	+knowledge	2	+height+static+obstacle	7	41	153	NORTH_EAST	shield_3	head_58	Shimmering	0	0	0	0	0	0	103	0	0	0	0	0	0	0	0	0	High Fey	CH_JARLETH	LS_AT_PEACE	Wierdwood	CH_JARLETH	0
+58	castle	+knowledge	2	+height+static+obstacle	7	19	158	SOUTH_EAST	shield_3	head_59	Forgotten	0	0	0	0	0	0	58	0	0	0	0	0	0	0	0	0	High Fey	CH_ASHOLETH	LS_AT_PEACE	Wierdwood	CH_ASHOLETH	0
+59	castle	+knowledge	2	+height+static+obstacle	7	19	169	SOUTH_EAST	shield_3	head_60	Whispering	0	0	0	0	0	0	46	0	0	0	0	0	0	0	0	0	High Fey	CH_ILARETH	LS_AT_PEACE	Wierdwood	CH_ILARETH	0
+60	castle	+knowledge	2	+height+static+obstacle	7	13	181	NORTH	shield_3	head_61	Forever	0	0	0	0	0	0	47	0	0	0	0	0	0	0	0	0	High Fey	CH_ANDREMAR	LS_AT_PEACE	Wierdwood	CH_ANDREMAR	0
+61	castle	+knowledge	2	+height+static+obstacle	7	48	175	NORTH_EAST	shield_3	head_62	Golden	0	0	0	0	0	0	48	0	0	0	0	0	0	0	0	0	High Fey	CH_GALDRETH	LS_AT_PEACE	Wierdwood	CH_GALDRETH	0
+62	castle	+knowledge	2	+height+static+obstacle	7	31	190	EAST	shield_3	head_63	Finfyr	0	0	0	0	0	0	0	0	0	56	0	0	0	0	0	0	Gelming	CH_WYTHRAN	LS_AT_PEACE	The Gelm	CH_WYTHRAN	0
+63	castle	+knowledge	2	+height+static+obstacle	7	14	219	NORTH_EAST	shield_3	head_64	Geremiel	0	0	0	0	0	0	0	0	0	40	0	0	0	0	0	0	Gelming	CH_HOON	LS_AT_PEACE	The Gelm	CH_HOON	0
+64	citadel	+knowledge	2	+height+static+obstacle	7	36	246	SOUTH_EAST	shield_3	head_65	Samarand	0	0	0	0	0	0	0	0	0	92	0	0	0	0	0	0	Gelming	CH_AMARIN	LS_AT_PEACE	The Gelm	CH_AMARIN	0
+65	castle	+knowledge	2	+height+static+obstacle	7	7	237	EAST	shield_3	head_66	Emergelm	0	0	0	0	0	0	0	0	0	58	0	0	0	0	0	0	Gelming	CH_ELESSA	LS_AT_PEACE	The Gelm	CH_ELESSA	0
+66	castle	+knowledge	2	+height+static+obstacle	7	55	220	EAST	shield_3	head_67	Ildemar	0	0	0	0	0	0	0	0	0	0	43	0	0	0	0	0	Deeping Dwarf	CH_BORAGRIM	LS_AT_PEACE	The Deeping	CH_BORAGRIM	0
+67	castle	+knowledge	2	+height+static+obstacle	7	79	241	NORTH_EAST	shield_3	head_68	Zaragorn	0	0	0	0	0	0	0	0	0	0	57	0	0	0	0	0	Deeping Dwarf	CH_THALGRIMA	LS_AT_PEACE	The Deeping	CH_THALGRIMA	0
+68	castle	+knowledge	2	+height+static+obstacle	7	91	244	NORTH_EAST	shield_3	head_69	Gilgrath	0	0	0	0	0	0	0	0	0	56	0	0	0	0	0	0	Gelming	CH_MARIK	LS_AT_PEACE	The Gelm	CH_MARIK	0
+69	castle	+knowledge	2	+height+static+obstacle	7	90	204	SOUTH_EAST	shield_3	head_70	Tharn	0	0	0	0	0	0	0	0	0	0	50	0	0	0	0	0	Deeping Dwarf	CH_ULGRIM	LS_AT_PEACE	The Deeping	CH_ULGRIM	0
+70	castle	+knowledge	2	+height+static+obstacle	7	40	204	SOUTH_EAST	shield_3	head_71	Sharenor	0	0	0	0	0	0	0	0	0	0	47	0	0	0	0	0	Deeping Dwarf	CH_MOGRAK	LS_AT_PEACE	The Deeping	CH_MOGRAK	0
+71	castle	+knowledge	2	+height+static+obstacle	7	71	174	NORTH_EAST	shield_3	head_72	Ararak	0	0	0	0	0	0	0	0	0	0	45	0	0	0	0	0	Deeping Dwarf	CH_GOLGUD	LS_AT_PEACE	The Deeping	CH_GOLGUD	0
+72	citadel	+knowledge	2	+height+static+obstacle	7	88	162	NORTH_EAST	shield_3	head_73	Thunder	0	0	0	0	0	0	0	0	0	0	96	0	0	0	0	0	Deeping Dwarf	CH_NORGRIM	LS_AT_PEACE	The Deeping	CH_NORGRIM	0
+73	castle	+knowledge	2	+height+static+obstacle	7	98	187	SOUTH_EAST	shield_3	head_74	Dawn	0	0	0	0	0	0	0	0	0	0	42	0	0	0	0	0	Deeping Dwarf	CH_ALUTHRIM	LS_AT_PEACE	The Deeping	CH_ALUTHRIM	0
+74	castle	+knowledge	2	+height+static+obstacle	7	52	140	SOUTH_EAST	shield_3	head_75	Merikith	0	0	0	0	0	0	43	0	0	0	0	0	0	0	0	0	High Fey	CH_EMEDREL	LS_AT_PEACE	Wierdwood	CH_EMEDREL	0
+75	castle	+knowledge	2	+height+static+obstacle	7	60	159	NORTH_EAST	shield_3	head_76	Aradel	0	0	0	0	0	0	43	0	0	0	0	0	0	0	0	0	High Fey	CH_ALARGRITH	LS_AT_PEACE	Wierdwood	CH_ALARGRITH	0
+76	castle	+knowledge	2	+height+static+obstacle	7	120	206	SOUTH_EAST	shield_3	head_77	Valgrorn	0	0	0	0	0	0	0	0	0	0	0	0	59	0	0	0	Dark Fey	CH_SKYRDRETH	LS_AT_PEACE	The Marish	CH_SKYRDRETH	0
+77	castle	+knowledge	2	+height+static+obstacle	7	134	182	NORTH_EAST	shield_3	head_78	Malgor	0	0	0	0	0	0	0	0	0	0	0	0	50	0	0	0	Dark Fey	CH_URSKRETH	LS_AT_PEACE	The Marish	CH_URSKRETH	0
+78	castle	+knowledge	2	+height+static+obstacle	7	118	188	SOUTH_EAST	shield_3	head_79	Dwardor	0	0	0	0	0	0	0	0	0	0	0	0	53	0	0	0	Dark Fey	CH_MIRGRATH	LS_AT_PEACE	The Marish	CH_MIRGRATH	0
+79	castle	+knowledge	2	+height+static+obstacle	7	133	199	NORTH	shield_3	head_80	Death	0	0	0	0	0	0	0	0	0	0	0	0	54	0	0	0	Dark Fey	CH_DARGRITH	LS_AT_PEACE	The Marish	CH_DARGRITH	0
+80	castle	+knowledge	2	+height+static+obstacle	7	171	190	EAST	shield_3	head_81	Barathor	0	0	0	0	0	0	0	0	0	0	0	0	59	0	0	0	Dark Fey	CH_AKRITH	LS_AT_PEACE	The Marish	CH_AKRITH	0
+81	castle	+knowledge	2	+height+static+obstacle	7	150	247	NORTH	shield_3	head_82	Burning	0	0	0	0	0	0	0	0	0	0	0	0	52	0	0	0	Dark Fey	CH_URGORETH	LS_AT_PEACE	The Marish	CH_URGORETH	0
+82	castle	+knowledge	2	+height+static+obstacle	7	131	234	EAST	shield_3	head_83	Ravens	0	0	0	0	0	0	0	0	0	0	0	0	48	0	0	0	Dark Fey	CH_GRALETH	LS_AT_PEACE	The Marish	CH_GRALETH	0
+83	castle	+knowledge	2	+height+static+obstacle	7	174	205	SOUTH_EAST	shield_3	head_84	Iron	0	0	0	0	0	0	0	0	0	0	0	45	0	0	0	0	Giant	CH_MUGLUM	LS_AT_PEACE	The Delve	CH_MUGLUM	0
+84	castle	+knowledge	2	+height+static+obstacle	7	185	214	NORTH_EAST	shield_3	head_85	Tark	0	0	0	0	0	0	0	0	0	0	0	46	0	0	0	0	Giant	CH_SLORUM	LS_AT_PEACE	The Delve	CH_SLORUM	0
+85	castle	+knowledge	2	+height+static+obstacle	7	190	227	NORTH_EAST	shield_3	head_86	Athruk	0	0	0	0	0	0	0	0	0	0	0	53	0	0	0	0	Giant	CH_MELINISSA	LS_AT_PEACE	The Delve	CH_MELINISSA	0
+86	castle	+knowledge	2	+height+static+obstacle	7	205	227	NORTH_EAST	shield_3	head_87	Thordrin	0	0	0	0	0	0	0	0	0	0	0	48	0	0	0	0	Giant	CH_MORGRISSA	LS_AT_PEACE	The Delve	CH_MORGRISSA	0
+87	castle	+knowledge	2	+height+static+obstacle	7	232	202	NORTH	shield_3	head_88	Storms	0	0	0	0	0	0	0	0	0	0	0	50	0	0	0	0	Giant	CH_SNORGLUM	LS_AT_PEACE	The Delve	CH_SNORGLUM	0
+88	castle	+knowledge	2	+height+static+obstacle	7	222	201	EAST	shield_3	head_89	Big	0	0	0	0	0	0	0	0	0	0	0	53	0	0	0	0	Giant	CH_BORLUM	LS_AT_PEACE	The Delve	CH_BORLUM	0
+89	castle	+knowledge	2	+height+static+obstacle	7	208	198	EAST	shield_3	head_90	Corth	0	0	0	0	0	0	0	0	0	0	0	41	0	0	0	0	Giant	CH_OLAGRUM	LS_AT_PEACE	The Delve	CH_OLAGRUM	0
+90	citadel	+knowledge	2	+height+static+obstacle	7	210	211	EAST	shield_3	head_91	Skirol	0	0	0	0	0	0	0	0	0	0	0	105	0	0	0	0	Giant	CH_BORGALUG	LS_AT_PEACE	The Delve	CH_BORGALUG	0
+91	castle	+knowledge	2	+height+static+obstacle	7	196	214	SOUTH_EAST	shield_3	head_92	Othrym	0	0	0	0	0	0	0	0	0	0	0	52	0	0	0	0	Giant	CH_OGLISSA	LS_AT_PEACE	The Delve	CH_OGLISSA	0
+92	castle	+knowledge	2	+height+static+obstacle	7	186	190	NORTH_EAST	shield_3	head_93	Grorn	0	0	0	0	0	0	0	0	0	0	0	46	0	0	0	0	Giant	CH_STUBLOG	LS_AT_PEACE	The Delve	CH_STUBLOG	0
+93	castle	+knowledge	2	+height+static+obstacle	7	187	203	NORTH_EAST	shield_3	head_94	Gogrun	0	0	0	0	0	0	0	0	0	0	0	56	0	0	0	0	Giant	CH_GOTHRUM	LS_AT_PEACE	The Delve	CH_GOTHRUM	0
+94	castle	+knowledge	2	+height+static+obstacle	7	199	187	NORTH_EAST	shield_3	head_95	Finrod	0	0	0	0	0	0	0	0	0	0	0	51	0	0	0	0	Giant	CH_OLOG	LS_AT_PEACE	The Delve	CH_OLOG	0
+95	castle	+knowledge	2	+height+static+obstacle	7	130	121	SOUTH_EAST	shield_3	head_96	Songs	0	0	0	0	0	0	0	54	0	0	0	0	0	0	0	0	Dawn Fey	CH_MELINOTH	LS_AT_PEACE	Dawnwood	CH_MELINOTH	0
+96	castle	+knowledge	2	+height+static+obstacle	7	149	96	NORTH_EAST	shield_3	head_97	Crimson	0	0	0	0	45	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_ANDERLANE	LS_AT_PEACE	The Last Northing	CH_ANDERLANE	0
+97	citadel	+knowledge	2	+height+static+obstacle	7	116	133	SOUTH_EAST	shield_3	head_98	Elorthord	0	0	0	0	0	0	0	94	0	0	0	0	0	0	0	0	Dawn Fey	CH_MIRANAR	LS_AT_PEACE	Dawnwood	CH_MIRANAR	0
+98	castle	+knowledge	2	+height+static+obstacle	7	98	150	NORTH_EAST	shield_3	head_99	Corithel	0	0	0	0	0	0	0	56	0	0	0	0	0	0	0	0	Dawn Fey	CH_TAROLETH	LS_AT_PEACE	Dawnwood	CH_TAROLETH	0
+99	castle	+knowledge	2	+height+static+obstacle	7	164	123	EAST	shield_3	head_100	Alathor	0	0	0	0	0	0	0	0	56	0	0	0	0	0	0	0	Uskarg	CH_ELINA	LS_AT_PEACE	The Fallows	CH_ELINA	0
+100	castle	+knowledge	2	+height+static+obstacle	7	140	144	SOUTH_EAST	shield_3	head_101	Elinbrand	0	0	0	0	0	0	0	0	50	0	0	0	0	0	0	0	Uskarg	CH_DARATH	LS_AT_PEACE	The Fallows	CH_DARATH	0
+101	castle	+knowledge	2	+height+static+obstacle	7	128	155	NORTH	shield_3	head_102	Gliwain	0	0	0	0	0	0	0	0	0	0	0	0	57	0	0	0	Dark Fey	CH_YRGRETH	LS_AT_PEACE	The Marish	CH_YRGRETH	0
+102	castle	+knowledge	2	+height+static+obstacle	7	149	187	EAST	shield_3	head_103	Athrudan	0	0	0	0	0	0	0	0	46	0	0	0	0	0	0	0	Uskarg	CH_SKARAI	LS_AT_PEACE	The Fallows	CH_SKARAI	0
+103	castle	+knowledge	2	+height+static+obstacle	7	147	157	NORTH_EAST	shield_3	head_104	Skordroth	0	0	0	0	0	0	0	0	53	0	0	0	0	0	0	0	Uskarg	CH_HARAGLAI	LS_AT_PEACE	The Fallows	CH_HARAGLAI	0
+104	castle	+knowledge	2	+height+static+obstacle	7	179	172	NORTH	shield_3	head_105	Erilmark	0	0	0	0	0	0	0	0	59	0	0	0	0	0	0	0	Uskarg	CH_MOGLAI	LS_AT_PEACE	The Fallows	CH_MOGLAI	0
+105	castle	+knowledge	2	+height+static+obstacle	7	163	132	EAST	shield_3	head_106	Arabar	0	0	0	0	0	0	0	0	54	0	0	0	0	0	0	0	Uskarg	CH_KHALAK	LS_AT_PEACE	The Fallows	CH_KHALAK	0
+106	castle	+knowledge	2	+height+static+obstacle	7	162	153	NORTH_EAST	shield_3	head_107	Theodel	0	0	0	0	0	0	0	0	45	0	0	0	0	0	0	0	Uskarg	CH_DJALINA	LS_AT_PEACE	The Fallows	CH_DJALINA	0
+107	castle	+knowledge	2	+height+static+obstacle	7	187	147	NORTH_EAST	shield_3	head_108	Cerrelm	0	0	0	0	0	0	0	0	58	0	0	0	0	0	0	0	Uskarg	CH_THORGRAN	LS_AT_PEACE	The Fallows	CH_THORGRAN	0
+108	citadel	+knowledge	2	+height+static+obstacle	7	225	132	NORTH	shield_3	head_109	Roreon	0	0	0	0	0	0	0	0	91	0	0	0	0	0	0	0	Uskarg	CH_ASUNAI	LS_AT_PEACE	The Fallows	CH_ASUNAI	0
+109	castle	+knowledge	2	+height+static+obstacle	7	205	79	NORTH_EAST	shield_3	head_110	Caramane	0	0	0	0	42	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_RAINAR	LS_AT_PEACE	The Last Northing	CH_RAINAR	0
+110	castle	+knowledge	2	+height+static+obstacle	7	170	100	NORTH	shield_3	head_111	Romiel	0	0	0	0	0	0	0	43	0	0	0	0	0	0	0	0	Dawn Fey	CH_MORGRETH	LS_AT_PEACE	Dawnwood	CH_MORGRETH	0
+111	castle	+knowledge	2	+height+static+obstacle	7	171	87	EAST	shield_3	head_112	Orcar	0	0	0	0	43	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_ARBETHOR	LS_AT_PEACE	The Last Northing	CH_ARBETHOR	0
+112	castle	+knowledge	2	+height+static+obstacle	7	190	60	NORTH_EAST	shield_3	head_113	Ravenfrey	0	0	0	0	51	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_MORATHRON	LS_AT_PEACE	The Last Northing	CH_MORATHRON	0
+113	castle	+knowledge	2	+height+static+obstacle	7	160	74	SOUTH_EAST	shield_3	head_114	Erefar	0	0	0	0	45	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_KIRANDA	LS_AT_PEACE	The Last Northing	CH_KIRANDA	0
+114	castle	+knowledge	2	+height+static+obstacle	7	178	45	EAST	shield_3	head_115	Elmir	0	0	0	0	53	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_MERITHEL	LS_AT_PEACE	The Last Northing	CH_MERITHEL	0
+115	castle	+knowledge	2	+height+static+obstacle	7	207	35	NORTH_EAST	shield_3	head_116	Melibor	0	0	0	0	43	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_STORBOLD	LS_AT_PEACE	The Last Northing	CH_STORBOLD	0
+116	castle	+knowledge	2	+height+static+obstacle	7	174	13	EAST	shield_3	head_117	Sharmark	0	0	0	0	53	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_BRUNAK	LS_AT_PEACE	The Last Northing	CH_BRUNAK	0
+117	castle	+knowledge	2	+height+static+obstacle	7	158	20	SOUTH_EAST	shield_3	head_118	Sapphire	0	0	0	0	59	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_GUTHRANE	LS_AT_PEACE	The Last Northing	CH_GUTHRANE	0
+118	castle	+dead	4		0	256	0	NORTH_EAST	shield_3	head_119	Elormane	0	0	0	0	53	0	0	0	0	0	0	0	0	0	0	0	Arakai	CH_ILDRAR	LS_AT_PEACE	The Last Northing	CH_ILDRAR	0
+119	castle	+knowledge	2	+height+static+obstacle	7	230	40	NORTH	shield_3	head_120	Dragon	0	0	0	0	0	43	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_TORGRIM	LS_AT_PEACE	Arungor	CH_TORGRIM	0
+120	castle	+knowledge	2	+height+static+obstacle	7	222	45	SOUTH_EAST	shield_3	head_121	Rildroth	0	0	0	0	0	44	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_MOONGRIM	LS_AT_PEACE	Arungor	CH_MOONGRIM	0
+121	castle	+knowledge	2	+height+static+obstacle	7	236	16	NORTH	shield_3	head_122	Angelf	0	0	0	0	0	47	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_SPARTHOR	LS_AT_PEACE	Arungor	CH_SPARTHOR	0
+122	castle	+knowledge	2	+height+static+obstacle	7	238	41	NORTH	shield_3	head_123	Erivik	0	0	0	0	0	45	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_KARGRIM	LS_AT_PEACE	Arungor	CH_KARGRIM	0
+123	castle	+knowledge	2	+height+static+obstacle	7	241	63	EAST	shield_3	head_124	Sarnoth	0	0	0	0	0	51	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_ORAGRANE	LS_AT_PEACE	Arungor	CH_ORAGRANE	0
+124	castle	+knowledge	2	+height+static+obstacle	7	240	74	NORTH_EAST	shield_3	head_125	Shrygal	0	0	0	0	0	42	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_JARANOR	LS_AT_PEACE	Arungor	CH_JARANOR	0
+125	castle	+knowledge	2	+height+static+obstacle	7	229	81	EAST	shield_3	head_126	Faragor	0	0	0	0	0	45	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_SAGRANA	LS_AT_PEACE	Arungor	CH_SAGRANA	0
+126	citadel	+knowledge	2	+height+static+obstacle	7	236	106	NORTH_EAST	shield_3	head_127	Ashnar	0	0	0	0	0	109	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_GALAGRIM	LS_AT_PEACE	Arungor	CH_GALAGRIM	0
+127	castle	+knowledge	2	+height+static+obstacle	7	219	91	SOUTH_EAST	shield_3	head_128	Cormir	0	0	0	0	0	43	0	0	0	0	0	0	0	0	0	0	Dragonlord	CH_SCIRANE	LS_AT_PEACE	Arungor	CH_SCIRANE	0
+128	castle	+knowledge	2	+height+static+obstacle	7	94	71	NORTH	shield_3	head_129	Cerevere	0	54	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_DOROK	LS_AT_PEACE	The Lee	CH_DOROK	0
+129	castle	+knowledge	2	+height+static+obstacle	7	116	64	EAST	shield_3	head_130	Melthor	0	45	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_MARATHOR	LS_AT_PEACE	The Lee	CH_MARATHOR	0
+130	citadel	+knowledge	2	+height+static+obstacle	7	70	56	NORTH	shield_3	head_131	Varorn	0	97	0	0	0	0	0	0	0	0	0	0	0	0	0	0	Atheling	CH_ZENETHOR	LS_AT_PEACE	The Lee	CH_ZENETHOR	0

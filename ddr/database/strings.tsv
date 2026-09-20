@@ -7,9 +7,9 @@ Version	Id	Symbol	Text
 11	5	SS_DEFAULT_TERRAIN	the {terrain:plural} of {area:text}
 11	6	SS_LOCATION_DOMAIN	{terrain:single} in the Domain of {area:text}
 11	7	SS_LOCATION_NOTDOMAIN	{terrain:text}
-11	8	SS_DAWN	.{lf}{crlf}{cr}  Dawn breaks. 
-11	9	SS_NIGHT	  It is {special:days} {plural:day:days} since the Moonprince rode forth into the Icemark.
-11	10	SS_THINGATLOCATION	{case:first}{char:loc:obj:name} are abroad. 
+11	8	SS_DAWN	.{lf}{crlf}{cr}  Dawn breaks.
+11	9	SS_NIGHT	  It is {special:days} {plural:day:days} since the Moonprince rode forth into the Icemark.{sp}
+11	10	SS_THINGATLOCATION	{case:first}{char:loc:obj:name} are abroad.
 11	11	SS_RECRUITMEN	{char:name} has recruited {number:%d} %s from {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
 11	12	SS_POSTMEN	{char:name} has placed {number:%d} %s on guard at {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
 11	13	SS_ITISNIGHT	It is night
@@ -21,105 +21,105 @@ Version	Id	Symbol	Text
 11	19	SS_CHARACTER_COURAGE	{char:name} is {char:courage}
 11	20	SS_CARRYNOTHING	{char:name} carries nothing
 11	21	SS_CARRYING	{char:name} carries the {char:obj:fullname}
-11	22	SS_KILLED_OBJECT	{char:longname} is dead, slain by {case:lower}{char:battle:obj:name}.  
+11	22	SS_KILLED_OBJECT	{char:longname} is dead, slain by {case:lower}{char:battle:obj:name}.{sp}
 11	23	SS_KILLED_BATTLE	{case:first}{char:gender:heshe} was killed in battle. %s
-11	24	SS_HIDDEN	{case:first}{char:name} is hidden. 
-11	25	SS_MUSTFIGHT	{case:first}{char:loc:obj:name} are abroad and {char:gender:heshe} must fight or hide. 
+11	24	SS_HIDDEN	{case:first}{char:name} is hidden.{sp}
+11	25	SS_MUSTFIGHT	{case:first}{char:loc:obj:name} are abroad and {char:gender:heshe} must fight or hide.{sp}
 11	26	SS_MESSAGE1	{char:text:time}. {char:text:sees}Here {char:loc:text}, {char:longname} has found nothing. {char:text:obj}. {char:text:group} {char:text:inbattle}
 11	27	SS_MESSAGE2	{char:loc:text} stands {char:longname}. {char:text:army}
-11	28	SS_MESSAGE3	{char:longname} is {char:text:traits} and {char:reckless}. {char:name} is {char:despondency} and {char:energy}. {char:text:liege} {char:text:foe} {char:text:group} 
-11	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}{char:text:loyalty}. {str:28}
-11	30	SS_MESSAGE5	  {char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}. 
-11	31	SS_MESSAGE6	  {char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}. 
+11	28	SS_MESSAGE3	{char:longname} is {char:text:traits} and {char:reckless}. {char:name} is {char:despondency} and {char:energy}. {char:text:liege} {char:text:foe} {char:text:group}
+11	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}{char:text:loyalty}. {s:SS_MESSAGE3}
+11	30	SS_MESSAGE5	  {char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
+11	31	SS_MESSAGE6	  {char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
 11	32	SS_SEEK	{char:text:time}. {char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text}. {char:text:obj}. {char:text:group}
 11	33	SS_FIGHT	{char:text:time}. {char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text} and slain them. {char:text:obj}. {char:text:group}
 11	34	SS_GUIDANCE1	{char:text:time}. {char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text}
 11	35	SS_GUIDANCE2	 {char:text:obj}. {char:text:group}
-11	36	SS_SEEK_NOTHING	{case:first}{char:gender:heshe} has found nothing. 
-11	37	SS_BATTLE1	In battle against %s, {char:name} 
-11	38	SS_BATTLE_NONE	In battle, {char:name} 
-11	39	SS_BATTLE_WARRIORS	{char:name} lost %s warriors. 
-11	40	SS_BATTLE_RIDERS	{char:name} lost %s riders. 
-11	41	SS_BATTLE_WARRIORS_RIDERS	{char:name} lost %s warriors and %s riders. 
-11	42	SS_BATTLE_CHARACTER_SLEW	{char:name} slew %s. 
-11	43	SS_BATTLE_WARRIORS_SLEW	{case:first}{char:gender:hisher} warriors slew %s of the foe. 
-11	44	SS_BATTLE_RIDERS_SLEW	{case:first}{char:gender:hisher} riders slew %s of the foe. 
-11	45	SS_BATTLE_VICTORY_FREE	won a victory. 
-11	46	SS_BATTLE_VICTORY_ENEMY	was defeated. 
-11	47	SS_BATTLE_VICTORY_NONE	won no victory. 
+11	36	SS_SEEK_NOTHING	{case:first}{char:gender:heshe} has found nothing.{sp}
+11	37	SS_BATTLE1	In battle against %s, {char:name}
+11	38	SS_BATTLE_NONE	In battle, {char:name}
+11	39	SS_BATTLE_WARRIORS	{char:name} lost %s warriors.{sp}
+11	40	SS_BATTLE_RIDERS	{char:name} lost %s riders.{sp}
+11	41	SS_BATTLE_WARRIORS_RIDERS	{char:name} lost %s warriors and %s riders.{sp}
+11	42	SS_BATTLE_CHARACTER_SLEW	{char:name} slew %s.
+11	43	SS_BATTLE_WARRIORS_SLEW	{case:first}{char:gender:hisher} warriors slew %s of the foe.{sp}
+11	44	SS_BATTLE_RIDERS_SLEW	{case:first}{char:gender:hisher} riders slew %s of the foe.{sp}
+11	45	SS_BATTLE_VICTORY_FREE	won a victory.{sp}
+11	46	SS_BATTLE_VICTORY_ENEMY	was defeated.{sp}
+11	47	SS_BATTLE_VICTORY_NONE	won no victory.{sp}
 11	48	SS_ARMY_CHARACTER_COMMANDS	{char:longname} commands
-11	49	SS_ARMY_CHARACTER_WARRIORS	They are %s. 
-11	50	SS_ARMY_CHARACTER_RIDERS	They are %s. 
-11	51	SS_ARMY_NONE	{str:48} no army. 
-11	52	SS_ARMY_WARRIORS	{str:48} %s {char:race:soldiers} warriors. {str:49}
-11	53	SS_ARMY_RIDERS	{str:48} %s {char:race:soldiers} riders. {str:50}
-11	54	SS_ARMY_WARRIORS_RIDERS	{str:48} %s warriors and %s riders. {str:49}{str:50}
+11	49	SS_ARMY_CHARACTER_WARRIORS	{case:first}{char:gender:hisher} warriors are %s.{sp}
+11	50	SS_ARMY_CHARACTER_RIDERS	{case:first}{char:gender:hisher} riders are %s.{sp}
+11	51	SS_ARMY_NONE	{char:longname} commands no army.{sp}
+11	52	SS_ARMY_WARRIORS	{char:longname} commands %s {char:race:soldiers} warriors. {s:SS_ARMY_CHARACTER_WARRIORS}
+11	53	SS_ARMY_RIDERS	{char:longname} commands %s {char:race:soldiers} riders. {s:SS_ARMY_CHARACTER_RIDERS}
+11	54	SS_ARMY_WARRIORS_RIDERS	{char:longname} commands %s warriors and %s riders. {s:SS_ARMY_CHARACTER_WARRIORS}{s:SS_ARMY_CHARACTER_RIDERS}
 11	55	SS_TERRAIN_PLURAL	{terrain:name}s
 11	56	SS_TERRAIN_SINGLE	a {terrain:name}
 11	57	SS_AREA_PREFIXED	{area:prefix} {area:name}
-11	58	SS_DEFEAT1	 The evil Shareth has won victory!
-11	59	SS_DEFEAT2	 {char:longname} is dead, {char:text:death2}{lf}{cr}{str:58}
+11	58	SS_DEFEAT1	 The evil Shareth has won victory!{sp}
+11	59	SS_DEFEAT2	 {char:longname} is dead, {char:text:death2}{lf}{cr}{s:SS_DEFEAT1}
 11	60	SS_DEFEAT3	** UNUSED **
-11	61	SS_VICTORY1	{lf}{crlf}{cr}Victory to the Free! 
-11	62	SS_VICTORY2	After {special:days} {plural:day:days} the warriors of Midnight return to the frozen gates. 
+11	61	SS_VICTORY1	{lf}{crlf}{cr}Victory to the Free!{sp}
+11	62	SS_VICTORY2	After {special:days} {plural:day:days} the warriors of Midnight return to the frozen gates.{sp}
 11	63	SS_VICTORY3	** UNUSED **
-11	64	SS_VICTORY4	{lf}{crlf}{cr}The Victory of the Moonprince is %s. 
-11	65	SS_VICTORY5	{lf}{crlf}{cr}The Watchwords of Midnight are revealed!{lf}{crlf}{cr}'The brave and the free fear no foe.{lf}{cr}Forth, mighty hosts of Midnight!{lf}{cr}Unto death or victory we go!'
+11	64	SS_VICTORY4	{lf}{crlf}{cr}The Victory of the Moonprince is %s.{sp}
+11	65	SS_VICTORY5	{lf}{crlf}{cr}The Watchwords of Midnight are revealed!{lf}{crlf}{cr}'The brave and the free fear no foe.{lf}{cr}Forth, mighty hosts of Midnight!{lf}{cr}Unto death or victory we go!'{sp}
 11	66	SS_VICTORY6	** UNUSED **
 11	67	SS_ZEROTOKENS	|no|none|zero
-11	68	SS_WARRIORS_RIDERS	{char:longname} has an army of %s warriors and %s riders. 
-11	69	SS_MESSAGE7	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}{char:text:loyalty}. {str:28}
+11	68	SS_WARRIORS_RIDERS	{char:longname} has an army of %s warriors and %s riders.{sp}
+11	69	SS_MESSAGE7	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}{char:text:loyalty}. {s:SS_MESSAGE3}
 11	70	SS_BATTLE2	.{lf}{crlf}{cr}  The bloody sword of battle brings death in the Domain of {loc:area:text}
 11	71	SS_BATTLE3	 and of {loc:area:text}
 11	72	SS_PLURALTOKENS	has|have|day|days
-11	73	SS_STRONGHOLD1	The %s is owned by {char:longname}. 
-11	74	SS_STRONGHOLD2	The %s is owned by {char:longname}{char:text:loyalty}. 
-11	75	SS_STRONGHOLD3	%s holds %s %s %s. They are %s. 
+11	73	SS_STRONGHOLD1	The %s is owned by {char:longname}.
+11	74	SS_STRONGHOLD2	The %s is owned by {char:longname}{char:text:loyalty}.{sp}
+11	75	SS_STRONGHOLD3	%s holds %s %s %s. They are %s.{sp}
 11	76	SS_FIGHT2	** UNUSED **
 11	77	SS_FIGHT3	** UNUSED **
 11	78	SS_FIGHT4	** UNUSED **
 11	79	SS_PREFIX_HERE	  Here
 11	80	SS_PREFIX_AHEAD	  Ahead
 11	81	SS_PREFIX_DIRECTION	  To the {char:dir:name}
-11	82	SS_SEEK_MSG1	, "{char:longname} stands {char:loc:terrain:prep} {char:loc:name}." 
-11	83	SS_SEEK_MSG2	, "The %s, can be found %s." 
-11	84	SS_SEEK_MSG3	, "The %s, can be found in the hands of {char:longname}." 
+11	82	SS_SEEK_MSG1	, "{char:longname} stands {char:loc:terrain:prep} {char:loc:name}."{sp}
+11	83	SS_SEEK_MSG2	, "The %s, can be found %s."{sp}
+11	84	SS_SEEK_MSG3	, "The %s, can be found in the hands of {char:longname}."{sp}
 11	85	SS_SEEK_MSG4	** UNUSED **
 11	86	SS_OBJECT_NAME	{obj:type} of {obj:name}
 11	87	SS_OBJECT_POWER	whose power is in {obj:power}
-11	88	SS_OBJECT_FULL_DESCRIPTION	the {str:86} {str:87}. 
+11	88	SS_OBJECT_FULL_DESCRIPTION	the {obj:type} of {obj:name} whose power is in {obj:power}.{sp}
 11	89	SS_VICTORY7	** UNUSED **
-11	90	SS_MESSAGE8	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:courage}. {char:text:obj}. 
+11	90	SS_MESSAGE8	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:courage}. {char:text:obj}.{sp}
 11	91	SS_CHARACTER_CANNOT_CONTINUE	%s and cannot continue
 11	92	SS_TOKENS_DESPONDENT	despondent|despondent
 11	93	SS_TOKENS_RECKLESS	reckless|reckless
-11	94	SS_CHAR_DESPONDENCY_TIRED	{char:name} is {char:despondency} and {char:energy}.
-11	95	SS_CHAR_LIEGE	{char:name}'s liege is {char:liege:longname}.
-11	96	SS_CHAR_FOE	{char:name}'s foe is {char:foe:longname}.
+11	94	SS_CHAR_DESPONDENCY_TIRED	{char:name} is {char:despondency} and {char:energy}.{sp}
+11	95	SS_CHAR_LIEGE	{char:name}'s liege is {char:liege:longname}.{sp}
+11	96	SS_CHAR_FOE	{char:name}'s foe is {char:foe:longname}.{sp}
 11	97	SS_TOKENS_TRAITS	good|strong|forceful|generous|stubborn|brave|swift|loyal|evil|weak|reticent|greedy|fawning|cowardly|slow|treacherous|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-
-11	98	SS_TUNNEL	{char:longname} stands in a tunnel looking {char:dir:name}. {char:text:time}.
-11	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.
-11	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.
+11	98	SS_TUNNEL	{char:longname} stands in a tunnel looking {char:dir:name}. {char:text:time}.{sp}
+11	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.{sp}
+11	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.{sp}
 11	101	SS_LOYAL_TO	 who is loyal to the {char:loyalty:name}
-11	102	SS_BATTLE_PREPARES_BATTLE	{char:longname} prepares to do battle. . . 
-11	103	SS_KILLED_BY	 killed in battle by {char:battle:fighting:longname}. 
-11	104	SS_KILLED_IN_BATTLE	 killed in battle. 
-11	105	SS_SPARE_1	
-11	106	SS_SPARE_2	
-11	107	SS_SPARE_3	
-11	108	SS_SPARE_4	
-11	109	SS_SPARE_5	
-11	110	SS_SEES_1	{char:shortname} sees the %s and an underground entrance. 
-11	111	SS_SEES_2	{char:shortname} sees the %s. 
-11	112	SS_SEES_3	{char:shortname} sees an underground entrance. 
+11	102	SS_BATTLE_PREPARES_BATTLE	{char:longname} prepares to do battle. . .{sp}
+11	103	SS_KILLED_BY	 killed in battle by {char:battle:fighting:longname}.{sp}
+11	104	SS_KILLED_IN_BATTLE	 killed in battle.{sp}
+11	105	SS_SPARE_1
+11	106	SS_SPARE_2
+11	107	SS_SPARE_3
+11	108	SS_SPARE_4
+11	109	SS_SPARE_5
+11	110	SS_SEES_1	{char:shortname} sees the %s and an underground entrance.{sp}
+11	111	SS_SEES_2	{char:shortname} sees the %s.{sp}
+11	112	SS_SEES_3	{char:shortname} sees an underground entrance.{sp}
 11	113	SS_LOCATION_PREP_1	in the tunnel
 11	114	SS_LOCATION_PREP_2	{loc:terrain:prep} {loc:name}
 11	115	SS_CHARACTER_DEAD	{lf}{cr}  {char:longname} is dead, {char:text:death2}
-11	116	SS_CHARACTER_HERE	{char:name} is here. 
-11	117	SS_SHARETH_DEAD	{char:name} is dead. 
-11	118	SS_OBJECT_USE_1	{char:longname} places the {obj:text} on {char:gender:hisher} head, the power contained within brings all lords loyal to the Moonprince to {char:gender:himher}.
-11	119	SS_OBJECT_USE_2	{char:longname} casts the {obj:text} and {char:gender:heshe} is magically transported to be with Morkin.
-11	120	SS_OBJECT_USE_3	{char:longname} throws the {obj:text}, all lords loyal to the Moonprince are refreshed and envigorated.
-11	121	SS_OBJECT_USE_4	{char:longname} uses the {obj:text} and {char:gender:heshe} now feels refreshed and envigorated.
-11	122	SS_MESSAGE_MIST	  {char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} into the mist. 
+11	116	SS_CHARACTER_HERE	{char:name} is here.{sp}
+11	117	SS_SHARETH_DEAD	{char:name} is dead.{sp}
+11	118	SS_OBJECT_USE_1	{char:longname} places the {obj:text} on {char:gender:hisher} head, the power contained within brings all lords loyal to the Moonprince to {char:gender:himher}.{sp}
+11	119	SS_OBJECT_USE_2	{char:longname} casts the {obj:text} and {char:gender:heshe} is magically transported to be with Morkin.{sp}
+11	120	SS_OBJECT_USE_3	{char:longname} throws the {obj:text}, all lords loyal to the Moonprince are refreshed and envigorated.{sp}
+11	121	SS_OBJECT_USE_4	{char:longname} uses the {obj:text} and {char:gender:heshe} now feels refreshed and envigorated.{sp}
+11	122	SS_MESSAGE_MIST	  {char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} into the mist.{sp}
 11	123	SS_TOKENS_VICTORY	none|worthy|noble|overwhelming
