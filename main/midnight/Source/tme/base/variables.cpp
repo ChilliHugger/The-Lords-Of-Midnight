@@ -55,9 +55,6 @@ namespace tme {
         sv_num_t    sv_success_riders_energy_other ;
         sv_bool_t   sv_always_attempt_recruit ;
 
-        sv_str_t    sv_map_file ;
-        sv_num_t    sv_map_width ;
-        sv_num_t    sv_map_height ;
         sv_bool_t   sv_auto_unhide ;
         sv_bool_t   sv_auto_seek ;
         sv_bool_t   sv_auto_approach ;
@@ -157,10 +154,6 @@ namespace tme {
             VARIABLE( sv_success_riders_energy_mountain,        "SUCCESS_RIDERS_ENERGY_MOUNTAIN",       CVar::NUMBER,   "32" ),
             VARIABLE( sv_success_riders_energy_other,           "SUCCESS_RIDERS_ENERGY_OTHER",          CVar::NUMBER,   "64" ),
             VARIABLE( sv_always_attempt_recruit,                "ALWAYS_ATTEMPT_RECRUIT",               CVar::YESNO,    "FALSE" ),
-
-            VARIABLE( sv_map_file,                              "MAP_FILE",                             CVar::STRING,   "map" ),
-            VARIABLE( sv_map_width,                             "MAP_WIDTH",                            CVar::NUMBER,   "66" ),
-            VARIABLE( sv_map_height,                            "MAP_HEIGHT",                           CVar::NUMBER,   "62" ),
 
             VARIABLE( sv_auto_unhide,                           "CHARACTER_AUTO_UNHIDE",                CVar::YESNO,    "NO" ),
             VARIABLE( sv_auto_seek,                             "CHARACTER_AUTO_SEEK",                  CVar::YESNO,    "NO" ),

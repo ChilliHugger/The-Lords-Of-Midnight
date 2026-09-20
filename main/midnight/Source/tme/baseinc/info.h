@@ -847,12 +847,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         public:
             DEFAULT_IMPLEMENTATION(mxroutenode);
 
-            GET_PROPERTY ( mxroutenode*, Left, paths[0] )
-            GET_PROPERTY ( mxroutenode*, Right, paths[1] )
+            PROPERTY ( mxroutenode*, Left, paths[0] )
+            PROPERTY ( mxroutenode*, Middle, paths[1] )
+            PROPERTY ( mxroutenode*, Right, paths[2] )
 
         protected:
-
-            mxroutenode*        paths[2];
+            // cheat for now, this needs to be a variable collections
+            mxroutenode*        paths[3];
         };
         typedef tme::collections::entities<mxroutenode*>     c_routenode;
         // routenode

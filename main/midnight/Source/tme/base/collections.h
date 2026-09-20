@@ -269,7 +269,7 @@ void entities<T>::operator += ( T o )
 template <typename T>
 bool entities<T>::Add ( T o )
 {
-    if ( m_bOwner ) return false;
+    // if ( m_bOwner ) return false;
 
     if ( m_used == m_max ) {
         m_elements.push_back(o);

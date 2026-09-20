@@ -1,0 +1,245 @@
+id	type	char_flags_txt	char_flags_txt_value	flags_txt	flags_txt_value	x	y	direction	shield	portrait	movetype	movemode	speed	int_speed	energy	energy_max	energy_med	rest	rest_count	timeout	combat_opponent	combat_str	combat_power	combat_limit	anim1	anim2	anim3	anim4
+0	beast		0	+height+obstacle	5	155	244	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	104	231	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	159	231	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	211	230	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	219	228	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	155	225	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	184	224	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	188	223	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	144	222	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	157	222	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	72	221	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	176	221	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	115	218	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	54	217	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	79	215	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	222	215	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	52	214	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	119	212	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	85	210	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	231	204	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	217	199	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	84	198	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	60	197	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	9	195	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	66	193	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	208	192	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	32	188	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	177	188	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	136	186	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	198	185	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	74	184	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	95	182	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	21	181	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	69	181	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	79	180	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	104	178	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	141	173	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	178	171	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	214	158	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	28	158	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	29	150	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	75	149	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	77	149	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	79	149	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	86	147	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	21	144	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	221	144	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	104	143	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	129	143	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	196	140	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	38	138	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	13	136	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	97	136	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	135	134	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	164	133	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	20	131	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	217	131	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	159	130	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	222	129	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	120	125	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	5	124	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	48	119	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	144	119	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	161	117	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	147	112	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	230	108	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	60	106	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	245	104	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	191	104	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	179	102	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	4	99	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	64	98	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	15	92	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	13	87	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	226	87	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	167	84	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	148	84	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	221	83	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	175	82	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	224	82	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	156	81	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	43	77	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	141	77	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	204	75	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	79	74	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	157	74	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	94	74	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	194	72	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	182	71	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	226	71	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	79	69	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	243	69	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	44	67	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	14	63	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	27	60	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	50	59	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	150	57	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	56	54	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	243	54	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	24	53	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	147	52	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	195	52	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	223	49	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	220	49	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	80	47	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	86	43	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	63	42	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	122	41	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	28	40	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	242	40	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	213	39	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	213	36	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	21	31	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	25	31	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	75	31	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	208	31	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	215	28	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	194	28	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	94	27	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	181	27	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	238	25	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	24	25	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	28	23	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	180	23	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	14	19	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	109	19	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	7	18	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	217	17	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	244	12	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	111	10	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	26	9	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	178	8	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast	+dead+hidden	4100	+height+obstacle	5	256	256	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	145	220	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	14	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	145	220	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	14	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	129	155	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	15	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	129	155	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	15	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	131	234	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	15	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	131	234	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	15	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	134	182	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	15	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	134	182	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	16	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	145	220	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	16	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	145	220	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	16	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	119	207	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	16	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	119	207	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	16	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	170	191	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	16	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	170	191	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	17	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	145	220	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	17	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	145	220	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	17	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	134	200	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	17	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	134	200	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	17	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	150	247	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	18	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	150	247	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	18	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	117	188	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	18	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+0	beast		0	+height+obstacle	5	117	188	NORTH	shield_1	head_27	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+2	beast		0	+height+obstacle	5	7	18	NORTH	shield_1	head_27	255	-1	0	1	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	145	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	146	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	146	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	146	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	146	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	146	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	146	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast	+dead+hidden	4100	+obstacle	4	146	220	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	234	18	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	222	45	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	231	40	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	228	41	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	230	35	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	236	44	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	243	44	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	236	50	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	230	57	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	230	52	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	230	62	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	238	64	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	234	70	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	235	76	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	239	76	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	232	81	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	233	96	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	222	92	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	235	101	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	238	106	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	232	110	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	232	114	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	218	103	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	211	19	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	240	35	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	223	22	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	238	13	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	231	36	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	237	53	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0
+3	beast		0	+obstacle	4	239	80	NORTH	shield_1	head_28	255	-1	0	3	1440	1440	960	720	0	0	0	1024	128	128	0	0	0	0

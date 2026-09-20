@@ -101,9 +101,6 @@ namespace tme {
         extern sv_num_t    sv_success_riders_energy_other ;
         extern sv_bool_t   sv_always_attempt_recruit ;
 
-        extern sv_str_t    sv_map_file ;
-        extern sv_num_t    sv_map_width ;
-        extern sv_num_t    sv_map_height ;
         extern sv_bool_t   sv_auto_unhide ;
         extern sv_bool_t   sv_auto_seek ;
         extern sv_bool_t   sv_auto_approach ;

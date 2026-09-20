@@ -22,25 +22,6 @@ USING_NS_TME ;
 
 MXRESULT mxengine::LoadDatabaseFromTsv ( const std::string& tsvDirectory )
 {
-    std::string cacheFile = ax::FileUtils::getInstance()->getWritablePath() + "/database";
-
-    // the cache only lives for this app run - a leftover from a previous
-    // launch could be stale (e.g. .tsv edits during development), so wipe
-    // it once per process before ever trusting one. Within this run, once
-    // (re)built, it's reused as-is for any later load.
-    static bool sCacheCheckedThisRun = false;
-    if ( !sCacheCheckedThisRun ) {
-        sCacheCheckedThisRun = true;
-        chilli::os::filemanager::Remove(cacheFile);
-    }
-
-    if ( chilli::os::filemanager::Exists(cacheFile) ) {
-        MXTRACE( "Loading cached Database '%s'", cacheFile.c_str());
-        if ( LoadDatabaseBinary(cacheFile) == MX_OK )
-            return MX_OK;
-        MXTRACE( "Cached Database invalid, rebuilding from TSV");
-    }
-
     MXTRACE( "Building Database from TSV '%s'", tsvDirectory.c_str());
 
     savegameversion = DATABASEVERSION;
@@ -64,12 +45,10 @@ MXRESULT mxengine::LoadDatabaseFromTsv ( const std::string& tsvDirectory )
     sv_terrains    = (s32)objTerrainInfos.Count();
     sv_areas       = (s32)objAreaInfos.Count();
     sv_commands    = (s32)objCommandInfos.Count();
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL)
     sv_object_types  = (s32)objObjectTypesInfos.Count();
     sv_object_powers = (s32)objObjectPowersInfos.Count();
 #endif
-
-    SaveDatabaseCache(cacheFile);
 
     return MX_OK;
 }
@@ -140,7 +119,7 @@ MXRESULT mxengine::SaveDatabaseCache ( const std::string& filename )
         ar << (int)variables[ii].type;
     }
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL)
     // matches LoadDatabaseBinary's read order exactly: count+data
     // interleaved per table here, unlike the main tables above
     ar << sv_object_types ;
