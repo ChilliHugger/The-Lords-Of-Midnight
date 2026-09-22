@@ -101,9 +101,14 @@ namespace {
     using EntityLookupFn = std::function<mxentity*(const std::string&, id_type_t)>;
 
     // resolves a TMX "object" type property's stored map-wide object id
-    // back to the entity it names, via the id -> name index
-    mxentity* ResolveObjectProperty ( const EntityLookupFn& entityByName, const ValueMap& dict, const char* propertyName, const std::unordered_map<int, std::string>& objectIdToName, id_type_t idType = IDT_NONE )
+    // back to the entity it names, via the id -> name index.
+    // outError distinguishes "property not present" (not an error - the
+    // property is optional) from "property present but couldn't be
+    // resolved to an entity" (an error).
+    mxentity* ResolveObjectProperty ( const EntityLookupFn& entityByName, const ValueMap& dict, const char* propertyName, const std::unordered_map<int, std::string>& objectIdToName, id_type_t idType, bool& outError )
     {
+        outError = false;
+
         auto itProperty = dict.find(propertyName);
         if ( itProperty == dict.end() )
             return nullptr;
@@ -111,10 +116,16 @@ namespace {
         int objectId = atoi( itProperty->second.asString().c_str() );
 
         auto itName = objectIdToName.find(objectId);
-        if ( itName == objectIdToName.end() )
+        if ( itName == objectIdToName.end() ) {
+            outError = true;
             return nullptr;
+        }
 
-        return entityByName(itName->second, idType);
+        auto entity = entityByName(itName->second, idType);
+        if ( entity == nullptr )
+            outError = true;
+
+        return entity;
     }
 
 }
@@ -209,11 +220,14 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
             auto regiment = static_cast<mxregiment*>(EntityByName(itName->second.asString(), IDT_REGIMENT));
             CONTINUE_IF_NULL(regiment);
 
-            auto target = ResolveObjectProperty(entityByName, dict, "TARGET", objectIdToName);
-            if ( target == nullptr ) {
+            bool targetError = false;
+            auto target = ResolveObjectProperty(entityByName, dict, "TARGET", objectIdToName, IDT_NONE, targetError);
+            if ( targetError ) {
                 MXTRACE( "TMX regiment '%s' TARGET not resolved", itName->second.asString().c_str());
                 continue;
             }
+            if ( target == nullptr )
+                continue;
 
             regiment->TargetId( mxentity::SafeIdt(target) );
         }
@@ -235,10 +249,11 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
             CONTINUE_IF_NULL(routenode);
 
 #if defined(_LOM_)
-            auto left  = ResolveObjectProperty(entityByName, dict, "LEFT",  objectIdToName, IDT_ROUTENODE);
-            auto right = ResolveObjectProperty(entityByName, dict, "RIGHT", objectIdToName, IDT_ROUTENODE);
+            bool leftError = false, rightError = false;
+            auto left  = ResolveObjectProperty(entityByName, dict, "LEFT",  objectIdToName, IDT_ROUTENODE, leftError);
+            auto right = ResolveObjectProperty(entityByName, dict, "RIGHT", objectIdToName, IDT_ROUTENODE, rightError);
 
-            if ( left == nullptr || right == nullptr ) {
+            if ( leftError || rightError ) {
                 MXTRACE( "TMX routenode '%s' LEFT/RIGHT not resolved", itName->second.asString().c_str());
                 continue;
             }
@@ -248,18 +263,22 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
 #endif
 
 #if defined(_CITADEL_)
-            auto left  = ResolveObjectProperty(entityByName, dict, "BRANCH_0",  objectIdToName, IDT_ROUTENODE);
-            auto middle = ResolveObjectProperty(entityByName, dict, "BRANCH_1", objectIdToName, IDT_ROUTENODE);
-            auto right = ResolveObjectProperty(entityByName, dict, "BRANCH_2", objectIdToName, IDT_ROUTENODE);
+            bool leftError = false, middleError = false, rightError = false;
+            auto left   = ResolveObjectProperty(entityByName, dict, "BRANCH_0", objectIdToName, IDT_ROUTENODE, leftError);
+            auto middle = ResolveObjectProperty(entityByName, dict, "BRANCH_1", objectIdToName, IDT_ROUTENODE, middleError);
+            auto right  = ResolveObjectProperty(entityByName, dict, "BRANCH_2", objectIdToName, IDT_ROUTENODE, rightError);
 
-            if ( left == nullptr || middle == nullptr || right) {
+            if ( leftError || middleError || rightError ) {
                 MXTRACE( "TMX routenode '%s' branches not resolved", itName->second.asString().c_str());
                 continue;
             }
 
-            routenode->Left ( static_cast<mxroutenode*>(left) );
-            routenode->Middle( static_cast<mxroutenode*>(middle) );
-            routenode->Right( static_cast<mxroutenode*>(right) );
+            if ( left != nullptr )
+                routenode->Left ( static_cast<mxroutenode*>(left) );
+            if ( middle != nullptr )
+                routenode->Middle( static_cast<mxroutenode*>(middle) );
+            if ( right != nullptr )
+                routenode->Right( static_cast<mxroutenode*>(right) );
 #endif
 
         }
