@@ -33,6 +33,7 @@ void progressmonitor::Update( const std::string& text,int amount)
 {
     current+=amount;
     NotifyProgress();
+    UIDEBUG( "Update '%s' %d", text.c_str(), current);
 }
 
 void progressmonitor::NotifyProgress()

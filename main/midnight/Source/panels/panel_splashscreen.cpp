@@ -21,7 +21,17 @@ USING_NS_AX;
 
 constexpr s32 MAX_SPLASHSCREEN_TIME = 3000;
 constexpr f32 TRANSITION_TIME = 2.0f;
-constexpr f32 MAX_PROGRESS = 40.0f;
+
+#if defined(_LOM_)
+constexpr f32 MAX_PROGRESS = 42.0f;
+#endif
+#if defined(_DDR_)
+constexpr f32 MAX_PROGRESS = 42.0f;
+#endif
+#if defined(_CITADEL_)
+constexpr f32 MAX_PROGRESS = 102.0f;
+#endif
+
 
 panel_splashscreen::panel_splashscreen() :
     progress(nullptr),

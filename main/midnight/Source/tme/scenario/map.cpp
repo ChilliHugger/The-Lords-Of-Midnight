@@ -74,8 +74,6 @@ bool mxmap::Create ( size dimensions )
 
     ResetVisibleRange();
     
-//    blank.terrain=TN_CITADEL;
-    
     return TRUE ;
 }
 

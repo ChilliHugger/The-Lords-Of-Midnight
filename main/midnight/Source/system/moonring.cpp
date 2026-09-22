@@ -721,9 +721,11 @@ void moonring::initialise( progressmonitor* monitor )
 
     // initialise TME
     TME_Init(mxscenarioid::DEFAULT, RF_DEFAULT, DF_NORMAL);
+    monitor->Update("Loaded Scenario Data", 1);
     
     std::string configFilename = std::string( getWritablePath() ) + "/config.cfg";
     config->LoadXmlConfig( configFilename );
+    monitor->Update("Loaded Config", 1);
     
 #ifdef _TME_CHEAT_MODE_
     UIDEBUG("Global:: _TME_CHEAT_MODE_");

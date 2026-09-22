@@ -17,6 +17,14 @@ static std::string TrimCR ( const std::string& value )
     return value;
 }
 
+static std::string TrimQuote ( const std::string& value )
+{
+    if ( !value.empty() && value.front() == '"' && value.back() == '"' )
+        return value.substr(1, value.size()-2);
+    return value;
+}
+
+
 TsvRow::TsvRow ( const TsvSymbolTable& symbols )
     : m_symbols(&symbols)
 {
@@ -210,7 +218,7 @@ bool TsvTable::Load ( const std::string& filename, const TsvSymbolTable& symbols
     chilli::collections::c_string headerCells;
     chilli::lib::StringExtensions::split(lines[0], '\t', headerCells);
     for ( auto& cell : headerCells )
-        m_header.push_back(TrimCR(cell));
+        m_header.push_back(TrimQuote(TrimCR(cell)));
 
     m_rows.clear();
     for ( u32 li=1; li<lines.size(); li++ ) {
@@ -222,7 +230,7 @@ bool TsvTable::Load ( const std::string& filename, const TsvSymbolTable& symbols
 
         TsvRow row(symbols);
         for ( u32 ci=0; ci<m_header.size() && ci<cells.size(); ci++ )
-            row.Set(m_header[ci], TrimCR(cells[ci]));
+            row.Set(m_header[ci], TrimQuote(TrimCR(cells[ci])));
 
         m_rows.push_back(row);
     }

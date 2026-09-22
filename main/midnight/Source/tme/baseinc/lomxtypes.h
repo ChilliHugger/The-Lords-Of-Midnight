@@ -80,7 +80,7 @@ using namespace chilli::types;
             RA_DRAGON,
             RA_TROLL,
 
-#if defined(_LOM_) || defined(_CITADEL_)
+#if defined(_LOM_)  || defined(_CITADEL_)
             RA_MIDWINTER,
 #endif
             
@@ -98,8 +98,23 @@ using namespace chilli::types;
 #if defined(_DDR_)
             RA_MIDWINTER,
 #endif
-    
-            
+
+#if defined(_CITADEL_)
+            RA_ARAKAI,
+            RA_ATHELING,
+            RA_DARK_FEY,
+            RA_DAWN_FEY,
+            RA_DEEPING_DWARF,
+            RA_DRAGONLORD,
+            RA_ELDRIN,
+            RA_GELMING,
+            RA_BLOODMARCH_GIANT,
+            RA_GOLDEN_FEY,
+            RA_HIGH_FEY,
+            RA_KITH,
+            RA_LONG_DWARF,
+            RA_USKARG
+#endif
         };
 
         enum mxunit_t {
@@ -163,6 +178,15 @@ using namespace chilli::types;
             OB_CROWN_IMIRIEL
 #endif
             
+#if defined(_CITADEL_)
+            OB_STORMBLADE=23,
+            OB_BLOODBRINGER,
+            OB_WIDOMAKER,
+            OB_ARANATH,
+            OB_PERSUADER,
+            OB_SKULLCRUSHER,
+            OB_SWIFTWING
+#endif
         };
 
 #define MIN_DESPONDENCY                 0

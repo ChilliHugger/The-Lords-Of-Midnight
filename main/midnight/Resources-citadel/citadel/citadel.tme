@@ -54,7 +54,13 @@
     <races>
 
         <race id="RA_FREE"          body = "people/c_free.png"          horse = "people/c_freeh.png" />
+        <race id="RA_MOONPRINCE"          body = "people/c_free.png"          horse = "people/c_freeh.png" />
         <race id="RA_MORKIN"        body = "people/c_morkin.png"        horse = "people/c_morkinh.png" />
+        <race id="RA_WISE"              body = "people/c_wise.png"          horse = "people/c_wiseh.png" />
+        <race id="RA_FEY"      body = "people/c_fey.png"           horse = "people/c_feyh.png" />
+        <race id="RA_GIANT"         body = "people/c_giant.png"         face="faces/p_giant.png" />
+        <race id="RA_TROLL"         body = "objects/bo_troll.png"         face="faces/p_giant.png" />
+
         <race id="RA_DAWN_FEY"      body = "people/c_fey.png"           horse = "people/c_feyh.png" />
         <race id="RA_GOLDEN_FEY"    body = "people/c_fey.png"           horse = "people/c_feyh.png" />
         <race id="RA_HIGH_FEY"      body = "people/c_fey.png"           horse = "people/c_feyh.png" />
@@ -67,8 +73,7 @@
         <race id="RA_LONG_DWARF"    body = "people/c_dwarf.png"        face="faces/p_dwarf.png" />
         <race id="RA_KITH"       body = "people/c_icelord.png"       horse = "people/c_icelordh.png"     face="faces/p_icelord.png" />
         <race id="RA_USKARG"     body = "people/c_doomguard.png"     horse = "people/c_doomguardh.png" />
-        <race id="RA_GIANT"         body = "people/c_giant.png"         face="faces/p_giant.png" />
-        <race id="RA_TROLL"         body = "objects/bo_troll.png"         face="faces/p_giant.png" />
+        <race id="RA_BLOODMARCH_GIANT"         body = "people/c_giant.png"         face="faces/p_giant.png" />
         
     </races>
 

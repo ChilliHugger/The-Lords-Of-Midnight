@@ -29,7 +29,7 @@ std::vector<std::string> TMEMapBuilder::GetLayerClasses( const std::string& tmxF
 
     for ( auto* layer = map->FirstChildElement("layer"); layer != nullptr; layer = layer->NextSiblingElement("layer") ) {
         const char* layerClass = layer->Attribute("class");
-        const char* layerName  = layer->Attribute("name");
+        const char* layerName  = nullptr; //layer->Attribute("name");
         classes.push_back( layerClass != nullptr ? layerClass : ( layerName != nullptr ? layerName : "" ) );
     }
 
@@ -93,6 +93,13 @@ void TMEMapBuilder::CheckFlags( tme::mxmap* map, const TMXLayerInfo* layer, int 
 
 tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
 {
+    // NOTE: Currently AXMOL TMX Loading is really bad
+    // constantly crashing. I think it is failing silently inside the call
+    // and thus the layers aren't always setup correctly.
+    // Need to investigate more - or move away from it.
+    // It might be the size of the Citadel map!!
+    // Sometimes the map just won't get the correct data, but then reload it and it's fine!
+    
     auto mapInfo = TMXMapInfo::create(tmxFile);
     if ( mapInfo == nullptr )
         return nullptr;
@@ -117,28 +124,58 @@ tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
     auto classes = GetLayerClasses(tmxFile);
     auto& layers = mapInfo->getLayers();
 
+    MXTRACE("TMX Map: width=%d, height=%d size=%d layers=%d",
+        map->m_size.cx,
+        map->m_size.cy,
+        totalSize,
+        layers.size()
+    );
+    
+    MXTRACE("areaGID = %d", areaGID);
+    MXTRACE("thingsGID = %d", thingsGID);
+    MXTRACE("flagsGID = %d", flagsGID);
+
     for ( size_t ii=0; ii<layers.size(); ii++ ) {
 
         const auto& layer = layers[ii];
-        const std::string layerClass = ii < classes.size() ? classes[ii] : layer->_name;
+        const std::string layerClass = ii < classes.size() ? classes[ii] : "";
+
+        MXTRACE("Checking layer %d:'%s' : type = '%s'", ii, layer->_name.c_str(), layerClass.c_str() );
 
         if ( layerClass.compare("Terrain") == 0 ) {
+            MXTRACE("Parsing layer '%s' : type = '%s'", layer->_name.c_str(), layerClass.c_str() );
             for ( int loc=0; loc<totalSize; loc++ ) {
-                map->m_data[loc].terrain =  layer->_tiles[loc];
+                if (layer->_tiles[loc] != 0 ) {
+                    auto t = layer->_tiles[loc];
+                    auto tn = (mxterrain_t)layer->_tiles[loc];
+                    map->m_data[loc].terrain =  (mxterrain_t)layer->_tiles[loc];
+                }
             }
         }
         else if ( layerClass.compare("Area") == 0 ) {
+            MXTRACE("Parsing layer '%s' : type = '%s'", layer->_name.c_str(), layerClass.c_str() );
             for ( int loc=0; loc<totalSize; loc++ )
-                map->m_data[loc].area =  layer->_tiles[loc] - areaGID + 1;
+                if (layer->_tiles[loc] != 0 ) {
+                    auto t = layer->_tiles[loc];
+                    auto ar = (t - areaGID + 1);
+                    map->m_data[loc].area = ar;
+                }
         }
         else if ( layerClass.compare("Things") == 0 ) {
+            MXTRACE("Parsing layer '%s' : type = '%s'", layer->_name.c_str(), layerClass.c_str() );
             for ( int loc=0; loc<totalSize; loc++ ) {
-                if ( layer->_tiles[loc] != 0 )
-                    map->m_data[loc].object =  layer->_tiles[loc] - thingsGID + 1;
+                if (layer->_tiles[loc] != 0 ) {
+                    auto t = layer->_tiles[loc];
+                    auto tg = (mxthing_t)(t - thingsGID + 1);
+                    map->m_data[loc].object = tg;
+                }
             }
         }
         else if ( layerClass.compare("Flags") == 0 ) {
+            MXTRACE("Parsing layer '%s' : type = '%s'", layer->_name.c_str(), layerClass.c_str() );
             CheckFlags( map, layer, flagsGID, totalSize );
+        } else {
+            MXTRACE("Unknown layer '%s' : type = '%s'", layer->_name.c_str(), layerClass.c_str() );
         }
     }
 

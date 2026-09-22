@@ -63,6 +63,7 @@ namespace {
 
         for ( const auto& group : mapInfo->getObjectGroups() ) {
             for ( const auto& value : group->getObjects() ) {
+                CONTINUE_IF (value.getType() != Value::Type::MAP );
 
                 const ValueMap& dict = value.asValueMap();
 
