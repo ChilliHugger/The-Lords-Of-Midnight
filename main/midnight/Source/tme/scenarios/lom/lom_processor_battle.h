@@ -20,8 +20,12 @@ namespace tme {
         virtual void ProcessAllArmies();
 
         virtual bool MakeFriendOrFoeList ( const mxcharacter* character=nullptr );
-        bool HasDefenders() const;
-        static bool TakesPart ( const mxarmy* army );
+
+        // is there a battle here at all, and who stands in it - a scenario where some of those
+        // present are not at war (The Citadel) narrows these
+        virtual bool HasDefenders() const;
+        virtual bool TakesPart ( const mxarmy* army ) const;
+        virtual bool TakesPart ( const mxcharacter* character ) const;
 
         virtual bool SelectOpponent(c_army& armies);
 

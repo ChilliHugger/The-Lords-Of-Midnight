@@ -15,6 +15,7 @@
  */
 
 #include "../../baseinc/tme_internal.h"
+#include "../../scenario/helpers/race_terrain_movement_modifier.h"
 #include "../../utils/savegamemapping.h"
 #if defined (_DDR_)
 #include "../../scenarios/ddr/scenario_ddr_internal.h"
@@ -288,6 +289,16 @@ namespace tme {
             return isTerrainImpassable((mxterrain_t)mapLoc.terrain, target);
         }
 
+        u32 mxscenario::TerrainMovementModifier( mxrace_t race, mxterrain_t terrain ) const
+        {
+            return TME::helpers::RaceTerrainMovementModifier::Get(race, terrain);
+        }
+
+        mxcharacter* mxscenario::BadGuy() const
+        {
+            return doomdark;
+        }
+
         //
         // This adds in Mountains as a potential impassable terrain above and beyond
         // any setup in the database. This is controlled by two game rules
@@ -320,18 +331,6 @@ namespace tme {
                     if (regiment != nullptr) {
                         race = regiment->Race();
                     }
-#if defined(_CITADEL_)
-                    // Nothing in the Citadel's terrain blocks the sea yet - lords may one day
-                    // take ship - but a regiment marches, it does not sail. Rivers are forded.
-                    switch ( toGeneralisedTerrain(terrain) ) {
-                        case TN_SEA:
-                        case TN_BAY:
-                        case TN_LAKE:
-                            return true;
-                        default:
-                            break;
-                    }
-#endif
                 }
             
                 if( race != RA_DWARF && race != RA_GIANT && race != RA_DRAGON && army ) {
@@ -1064,7 +1063,7 @@ namespace tme {
 
             collection.Clear();
             FOR_EACH_CHARACTER(c) {
-                if ( c!=mx->scenario->doomdark )
+                if ( c!=mx->scenario->BadGuy() )
                     collection.Add(mxentity::SafeIdt(c));
             }
             return MX_OK ;

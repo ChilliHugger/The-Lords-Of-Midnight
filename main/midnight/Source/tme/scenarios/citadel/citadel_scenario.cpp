@@ -17,7 +17,7 @@
 #include "../../baseinc/tme_internal.h"
 #include "scenario_citadel.h"
 #include "scenario_citadel_internal.h"
-#include "../lom/lom_processor_battle.h"
+#include "citadel_processor_battle.h"
 #include <string>
 
 #if defined(_CITADEL_)
@@ -82,7 +82,8 @@ MXRESULT citadel::Text ( const std::string& command, variant* argv, u32 args )
 //
 //
 
-citadel_x::citadel_x()
+citadel_x::citadel_x() :
+    boroth(nullptr)
 {
 }
 
@@ -134,13 +135,62 @@ static LPCSTR citadel_hostages[] = {
 };
 
 //
-// Run on every start and every load. Boroth the Wolfheart is the Citadel's Doomdark: a keep his
-// wandering host takes becomes his, held against the player until it is taken back.
+// Run on every start and every load. Boroth the Wolfheart is the Citadel's enemy, as Doomdark is
+// Lords of Midnight's: a keep his wandering host takes becomes his, held against the player
+// until it is taken back.
 //
 void citadel_x::initialise ( u32 version )
 {
     mxscenario::initialise(version);
-    doomdark = mx->CharacterBySymbol("CH_BOROTH");
+    boroth = mx->CharacterBySymbol("CH_BOROTH");
+}
+
+mxcharacter* citadel_x::BadGuy () const
+{
+    return boroth;
+}
+
+//
+// Nothing in the Citadel's terrain blocks the sea yet - lords may one day take ship - but a
+// regiment marches, it does not sail. Rivers are forded.
+//
+bool citadel_x::isTerrainImpassable ( mxterrain_t terrain, const mxitem* target ) const
+{
+    if ( target != nullptr && target->IsType(IDT_REGIMENT) ) {
+        switch ( toGeneralisedTerrain(terrain) ) {
+            case TN_SEA:
+            case TN_BAY:
+            case TN_LAKE:
+                return true;
+            default:
+                break;
+        }
+    }
+
+    return mxscenario::isTerrainImpassable(terrain, target);
+}
+
+//
+// The Citadel's map is drawn in its own terrain codes; the marching costs are Lords of
+// Midnight's, so generalise before asking for them.
+//
+u32 citadel_x::TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) const
+{
+    return mxscenario::TerrainMovementModifier(race, toGeneralisedTerrain(terrain));
+}
+
+mxentity* citadel_entityfactory::Create ( id_type_t type )
+{
+    switch ( type ) {
+        case IDT_CHARACTER:
+            return new citadel_character;
+        case IDT_STRONGHOLD:
+            return new citadel_stronghold;
+        default:
+            break;
+    }
+
+    return mxentityfactory::Create ( type );
 }
 
 //
@@ -171,9 +221,9 @@ MXRESULT citadel_x::Register ( mxengine* midnightx )
     // add in the interfaces
     mx->text = new mxtext;
     mx->night = new mxnight;
-    mx->battle = new lom_battle;
+    mx->battle = new citadel_battle;
     mx->gameover = new mxgameover;
-    mx->entityfactory = new mxentityfactory;
+    mx->entityfactory = new citadel_entityfactory;
     mx->scenario = (mxscenario*)citadel_scenario;
     
     // set initial feature flags

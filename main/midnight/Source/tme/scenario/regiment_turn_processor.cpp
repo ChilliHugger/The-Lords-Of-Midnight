@@ -159,12 +159,10 @@ namespace tme {
             movement += rinfo->DiagonalMovementModifier();
         
         // adjust for terrain
-        auto terrain = (mxterrain_t)mx->gamemap->GetAt ( regiment->Location() ).terrain;
-#if defined(_CITADEL_)
-        // the Citadel map is drawn in its own terrain codes; the costs are LOM's
-        terrain = mx->scenario->toGeneralisedTerrain(terrain);
-#endif
-        movement += TME::helpers::RaceTerrainMovementModifier::Get( regiment->Race(), terrain );
+        movement += mx->scenario->TerrainMovementModifier(
+            regiment->Race(),
+            (mxterrain_t)mx->gamemap->GetAt ( regiment->Location() ).terrain
+            );
         
         // are we on horseback?
         if ( regiment->Type()!=UT_RIDERS )

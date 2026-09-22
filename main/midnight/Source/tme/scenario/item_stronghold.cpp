@@ -228,20 +228,12 @@ bool mxstronghold::CanCharacterRecruitOrPost(const mxcharacter* character) const
 
 //
 // Is this stronghold held against the player - do its armies fight a lord who stands in it?
-//
-// In The Citadel only a keep Boroth's host has TAKEN is his to hold. The Dark Fey's own keeps
-// stay out of the war for now: Maranor holds the hostages the player frees by approaching them,
-// the opening party stands in it, and some fifty lords of the realms are still parked in Castle
-// Burning - a hostile Dark Fey keep would fight all of them on the first night. When the
-// Citadel's own war (war states, ransom, reactions) lands, this is the rule to widen.
+// Occupied by the enemy's race, which is all it takes while every keep of his is at war.
+// A scenario whose enemy also holds keeps that are not (The Citadel) narrows this.
 //
 bool mxstronghold::IsEnemy() const
 {
-#if defined(_CITADEL_)
-    return OccupyingRace() == RA_ENEMY && Occupier() != nullptr && Occupier() == DEF_SCENARIO(doomdark);
-#else
     return OccupyingRace() == RA_ENEMY;
-#endif
 }
 
 /*

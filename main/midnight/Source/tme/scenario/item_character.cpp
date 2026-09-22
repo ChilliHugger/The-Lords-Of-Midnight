@@ -1102,21 +1102,12 @@ namespace tme {
             
         //
         // Does the enemy seek this lord out at night, and does he fight when it finds him?
-        //
-        // In The Citadel only the player's lords are at war with Boroth's host yet. Hostages
-        // sit in his dungeons, his own Dark Fey do not fight him, and the lords of the realms
-        // wait on the Citadel's NPC side (purposes, reactions) - until that exists, an army
-        // that found one of them would only cut down a lord who cannot answer.
+        // Any lord who is alive, visible and not a bystander of Midwinter. A scenario where
+        // some lords are not yet at war (The Citadel) narrows this.
         //
         bool mxcharacter::TakesPartInBattle() const
         {
-            if ( IsDead() || IsHidden() || Race() == RA_MIDWINTER )
-                return false;
-#if defined(_CITADEL_)
-            return IsRecruited() && !IsPrisoner() && Race() != RA_ENEMY;
-#else
-            return true;
-#endif
+            return IsAlive() && !IsHidden() && Race() != RA_MIDWINTER;
         }
 
         MXRESULT mxcharacter::EnterBattle ( void )
