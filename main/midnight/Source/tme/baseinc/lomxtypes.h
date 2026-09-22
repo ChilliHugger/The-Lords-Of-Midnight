@@ -100,20 +100,22 @@ using namespace chilli::types;
 #endif
 
 #if defined(_CITADEL_)
-            RA_ARAKAI,
-            RA_ATHELING,
-            RA_DARK_FEY,
-            RA_DAWN_FEY,
-            RA_DEEPING_DWARF,
-            RA_DRAGONLORD,
-            RA_ELDRIN,
-            RA_GELMING,
-            RA_BLOODMARCH_GIANT,
-            RA_GOLDEN_FEY,
-            RA_HIGH_FEY,
             RA_KITH,
+            RA_ATHELING,
+            RA_ELDRIN,
             RA_LONG_DWARF,
-            RA_USKARG
+            RA_ARAKAI,
+            RA_DRAGONLORD,
+            RA_HIGH_FEY,
+            RA_DAWN_FEY,
+            RA_USKARG,
+            RA_GELMING,
+            RA_DEEPING_DWARF,
+            RA_BLOODMARCH_GIANT,
+            RA_DARK_FEY,
+            RA_GOLDEN_FEY,
+            RA_CORSAIRS
+            // RA_FREE
 #endif
         };
 

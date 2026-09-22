@@ -8,13 +8,30 @@
 #include "TMEMapBuilder.h"
 #include "baseinc/tme_internal.h"
 #include "../tinyxml2/tinyxml2.h"
+#include <cstring>
 
 USING_NS_AX;
 USING_NS_TME;
 
 // axmol's TMX parser doesn't expose the Tiled "class" attribute on <layer>
 // elements, so read it ourselves, in document order, to line up with
-// TMXMapInfo::getLayers() (which preserves document order).
+// TMXMapInfo::getLayers(). Its SAX parser fires "layer" events in document
+// order regardless of nesting, effectively flattening <group> elements, so
+// we must recurse into groups here too to keep indices aligned.
+static void CollectLayerClasses( tinyxml2::XMLElement* parent, std::vector<std::string>& classes )
+{
+    for ( auto* child = parent->FirstChildElement(); child != nullptr; child = child->NextSiblingElement() ) {
+        const char* elementName = child->Name();
+        if ( strcmp( elementName, "layer" ) == 0 ) {
+            const char* layerClass = child->Attribute("class");
+            classes.push_back( layerClass != nullptr ? layerClass : "" );
+        }
+        else if ( strcmp( elementName, "group" ) == 0 ) {
+            CollectLayerClasses( child, classes );
+        }
+    }
+}
+
 std::vector<std::string> TMEMapBuilder::GetLayerClasses( const std::string& tmxFile )
 {
     std::vector<std::string> classes;
@@ -27,11 +44,7 @@ std::vector<std::string> TMEMapBuilder::GetLayerClasses( const std::string& tmxF
     if ( map == nullptr )
         return classes;
 
-    for ( auto* layer = map->FirstChildElement("layer"); layer != nullptr; layer = layer->NextSiblingElement("layer") ) {
-        const char* layerClass = layer->Attribute("class");
-        const char* layerName  = nullptr; //layer->Attribute("name");
-        classes.push_back( layerClass != nullptr ? layerClass : ( layerName != nullptr ? layerName : "" ) );
-    }
+    CollectLayerClasses( map, classes );
 
     return classes;
 }
