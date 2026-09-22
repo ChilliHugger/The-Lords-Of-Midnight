@@ -121,15 +121,17 @@ namespace {
 
 MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
 {
-    auto mapInfo = TMXMapInfo::create(tmxFilename);
-    RETURN_IF_NULL(mapInfo);
+    std::unique_ptr<TMXMapInfo> mapInfo(new TMXMapInfo());
+    if ( !mapInfo->initWithTMXFile(tmxFilename) ) {
+        return MX_FAILED;
+    }
 
     Vec2 mapSize  = mapInfo->getMapSize();
     Vec2 tileSize = mapInfo->getTileSize();
     float mapHeightPixels = mapSize.height * tileSize.height;
     float scale = AX_CONTENT_SCALE_FACTOR();
 
-    auto objectIdToName = BuildObjectIdIndex(mapInfo);
+    auto objectIdToName = BuildObjectIdIndex(mapInfo.get());
 
     EntityLookupFn entityByName = [this] ( const std::string& name, id_type_t type ) {
         return EntityByName(name, type);
@@ -248,7 +250,7 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
 #if defined(_CITADEL_)
             auto left  = ResolveObjectProperty(entityByName, dict, "BRANCH_0",  objectIdToName, IDT_ROUTENODE);
             auto middle = ResolveObjectProperty(entityByName, dict, "BRANCH_1", objectIdToName, IDT_ROUTENODE);
-            auto right = ResolveObjectProperty(entityByName, dict, "BRANCH_1", objectIdToName, IDT_ROUTENODE);
+            auto right = ResolveObjectProperty(entityByName, dict, "BRANCH_2", objectIdToName, IDT_ROUTENODE);
 
             if ( left == nullptr || middle == nullptr || right) {
                 MXTRACE( "TMX routenode '%s' branches not resolved", itName->second.asString().c_str());
@@ -256,7 +258,7 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
             }
 
             routenode->Left ( static_cast<mxroutenode*>(left) );
-            routenode->Middle( static_cast<mxroutenode*>(right) );
+            routenode->Middle( static_cast<mxroutenode*>(middle) );
             routenode->Right( static_cast<mxroutenode*>(right) );
 #endif
 
