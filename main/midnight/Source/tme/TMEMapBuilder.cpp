@@ -93,16 +93,18 @@ void TMEMapBuilder::CheckFlags( tme::mxmap* map, const TMXLayerInfo* layer, int 
 
 tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
 {
-    // NOTE: Currently AXMOL TMX Loading is really bad
-    // constantly crashing. I think it is failing silently inside the call
-    // and thus the layers aren't always setup correctly.
-    // Need to investigate more - or move away from it.
-    // It might be the size of the Citadel map!!
-    // Sometimes the map just won't get the correct data, but then reload it and it's fine!
+    // Bypass TMXMapInfo::create() deliberately: create() autoreleases the
+    // returned object, which messes with this function being called on a background thread.
+    std::unique_ptr<TMXMapInfo> mapInfo(new TMXMapInfo());
     
-    auto mapInfo = TMXMapInfo::create(tmxFile);
-    if ( mapInfo == nullptr )
+    if ( !mapInfo->initWithTMXFile(tmxFile) ) {
         return nullptr;
+    }
+
+    if ( mapInfo->getLayers().empty() ) {
+        MXTRACE("TMX Map '%s' parsed with no layers - axmol TMX parser likely failed silently, aborting build", tmxFile.c_str());
+        return nullptr;
+    }
 
     int totalSize = mapInfo->getMapSize().width*mapInfo->getMapSize().height ;
     int areaGID = 0;
@@ -138,9 +140,21 @@ tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
     for ( size_t ii=0; ii<layers.size(); ii++ ) {
 
         const auto& layer = layers[ii];
+        if ( layer->_tiles == nullptr ) {
+            MXTRACE("Layer %d:'%s' has no tile data (_tiles is null) - skipping corrupted layer", ii, layer->_name.c_str());
+            continue;
+        }
+
         const std::string layerClass = ii < classes.size() ? classes[ii] : "";
 
         MXTRACE("Checking layer %d:'%s' : type = '%s'", ii, layer->_name.c_str(), layerClass.c_str() );
+
+        int layerTileCount = (int)(layer->_layerSize.width * layer->_layerSize.height);
+        if ( layerTileCount < totalSize ) {
+            MXTRACE("Layer %d:'%s' tile buffer (%d) is smaller than map size (%d) - skipping corrupted layer",
+                ii, layer->_name.c_str(), layerTileCount, totalSize);
+            continue;
+        }
 
         if ( layerClass.compare("Terrain") == 0 ) {
             MXTRACE("Parsing layer '%s' : type = '%s'", layer->_name.c_str(), layerClass.c_str() );
