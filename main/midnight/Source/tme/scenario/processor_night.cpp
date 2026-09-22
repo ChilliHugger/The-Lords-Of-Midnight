@@ -69,7 +69,7 @@ namespace tme {
         void mxnight::SetSpecialLocationsCharacter()
         {
             FOR_EACH_CHARACTER(character) {
-                if ( character->IsAlive() && !character->IsHidden() && character->race!=RA_MIDWINTER ) {
+                if ( character->TakesPartInBattle() ) {
                     mx->gamemap->SetLocationSpecial(character->Location(),1);
                 }
             }
@@ -77,8 +77,9 @@ namespace tme {
 
         void mxnight::SetSpecialLocationsStrongholds()
         {
+            // the enemy's own keeps draw no armies - they are already his
             FOR_EACH_STRONGHOLD(stronghold) {
-                if ( stronghold->OccupyingRace() != RA_DOOMGUARD )
+                if ( stronghold->OccupyingRace() != RA_ENEMY )
                     mx->gamemap->SetLocationSpecial(stronghold->Location(),1);
             }
         }

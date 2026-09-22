@@ -1100,6 +1100,25 @@ namespace tme {
             }
         }
             
+        //
+        // Does the enemy seek this lord out at night, and does he fight when it finds him?
+        //
+        // In The Citadel only the player's lords are at war with Boroth's host yet. Hostages
+        // sit in his dungeons, his own Dark Fey do not fight him, and the lords of the realms
+        // wait on the Citadel's NPC side (purposes, reactions) - until that exists, an army
+        // that found one of them would only cut down a lord who cannot answer.
+        //
+        bool mxcharacter::TakesPartInBattle() const
+        {
+            if ( IsDead() || IsHidden() || Race() == RA_MIDWINTER )
+                return false;
+#if defined(_CITADEL_)
+            return IsRecruited() && !IsPrisoner() && Race() != RA_ENEMY;
+#else
+            return true;
+#endif
+        }
+
         MXRESULT mxcharacter::EnterBattle ( void )
         {
             Flags().Set(cf_inbattle); // force the battle flag early!
@@ -1710,15 +1729,15 @@ namespace tme {
                 
                 c_regiment regiments;
                 if ( mx->CollectRegiments ( loc, regiments ) )
-                    memory.Memorise ( regiments.First(), RA_DOOMGUARD );
+                    memory.Memorise ( regiments.First(), RA_ENEMY );
 
 
                 if ( mapsqr.IsStronghold() ) {
                     c_stronghold strongholds;
                     if ( mx->CollectStrongholds ( loc, strongholds ) ) {
                         auto stronghold = strongholds.First();
-                        if ( stronghold->OccupyingRace() == RA_DOOMGUARD )
-                            memory.Memorise ( stronghold, RA_DOOMGUARD );
+                        if ( stronghold->IsEnemy() )
+                            memory.Memorise ( stronghold, RA_ENEMY );
                         else 
                             memory.Memorise ( stronghold, RA_FREE );
                     }

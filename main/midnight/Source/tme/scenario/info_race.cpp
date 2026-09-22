@@ -16,6 +16,9 @@
 
 #include "../baseinc/tme_internal.h"
 
+#include <cmath>
+#include <cstdlib>
+
 namespace tme {
 
 
@@ -86,7 +89,11 @@ namespace tme {
             success = row.GetU32(TsvField::Race::Success);
             initialmovement = row.GetU32(TsvField::Race::InitialMovement);
             diagonalmodifier = row.GetS32(TsvField::Race::DiagonalMovement);
-            ridingmultiplier = row.GetS32(TsvField::Race::RidingMultiplier);
+            // Held fixed-point x10000, as the binary database stores it (RidingMovementMultiplier
+            // divides it back out). The TSV carries the multiplier itself - FillExportData divides
+            // before export - so read "2" as 20000, not 2: unscaled, every unmounted lord and
+            // regiment moved for nothing, and a regiment of warriors wandered without end.
+            ridingmultiplier = (s32)std::lround(std::atof(row.GetString(TsvField::Race::RidingMultiplier, "0").c_str()) * 10000.0);
             movementmax = row.GetU32(TsvField::Race::MovementMax);
             baserestamount = row.GetU32(TsvField::Race::RestAmount);
             strongholdstartups = row.GetU32(TsvField::Race::StrongholdStartups);

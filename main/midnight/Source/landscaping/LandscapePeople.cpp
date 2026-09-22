@@ -153,15 +153,15 @@ void LandscapePeople::Initialise()
             : OB_NONE;
     }
             
-#if defined(_LOM_)
+#if defined(_LOM_) || defined(_CITADEL_)
     if ( location_armies.foe_riders )
     {
         // LoM shows characters when there is an army in the location in front
         // however DDR only shows the army terrain image for wandering lords
-        person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_DOOMGUARD),TRUE);
+        person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_ENEMY),TRUE);
         add(person, DEFAULT_PRINT_RIDERS);
     } else if ( location_armies.foe_warriors ) {
-        person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_DOOMGUARD),FALSE);
+        person = GetRaceImage(MAKE_ID(IDT_RACEINFO,RA_ENEMY),FALSE);
         add(person,DEFAULT_PRINT_WARRIORS);
     } else
 #endif

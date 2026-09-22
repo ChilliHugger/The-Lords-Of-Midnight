@@ -117,6 +117,15 @@ using namespace chilli::types;
 #endif
         };
 
+        // The race of the enemy, wherever the shared LOM code decides who is friend and who is
+        // foe. Doomdark's Doomguard in The Lords of Midnight; in The Citadel, Boroth the
+        // Wolfheart's Dark Fey play the same part.
+#if defined(_CITADEL_)
+        constexpr mxrace_t RA_ENEMY = RA_DARK_FEY;
+#else
+        constexpr mxrace_t RA_ENEMY = RA_DOOMGUARD;
+#endif
+
         enum mxunit_t {
             UT_NONE=0,
             UT_WARRIORS=1,

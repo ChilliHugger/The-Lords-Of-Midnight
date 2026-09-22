@@ -159,10 +159,12 @@ namespace tme {
             movement += rinfo->DiagonalMovementModifier();
         
         // adjust for terrain
-        movement += TME::helpers::RaceTerrainMovementModifier::Get(
-            regiment->Race(),
-            (mxterrain_t)mx->gamemap->GetAt ( regiment->Location() ).terrain
-            );
+        auto terrain = (mxterrain_t)mx->gamemap->GetAt ( regiment->Location() ).terrain;
+#if defined(_CITADEL_)
+        // the Citadel map is drawn in its own terrain codes; the costs are LOM's
+        terrain = mx->scenario->toGeneralisedTerrain(terrain);
+#endif
+        movement += TME::helpers::RaceTerrainMovementModifier::Get( regiment->Race(), terrain );
         
         // are we on horseback?
         if ( regiment->Type()!=UT_RIDERS )
@@ -200,12 +202,18 @@ namespace tme {
 
     void RegimentTurnProcessor::Wander ( void )
     {
-        while (true) {
-            auto dir = (mxdir_t)mxrandom(DR_NORTH, DR_NORTHWEST);
+        // a random way on - scanning round from a random start rather than drawing again and
+        // again, because a regiment boxed in by water and impassable mountains used to spin
+        // here forever and hang the night
+        auto start = mxrandom(DR_NORTH, DR_NORTHWEST);
+        for ( int turn = 0; turn < 8; turn++ ) {
+            auto dir = (mxdir_t)((start + turn) & 0x07);
             targetlocation = regiment->Location() + dir;
             if ( !mx->scenario->isLocationImpassable(targetlocation,regiment) )
-                break;
+                return;
         }
+        targetlocation = regiment->Location();
+        Complete();
     }
 
     void RegimentTurnProcessor::Follow ( void )

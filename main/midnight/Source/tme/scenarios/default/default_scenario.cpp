@@ -320,6 +320,18 @@ namespace tme {
                     if (regiment != nullptr) {
                         race = regiment->Race();
                     }
+#if defined(_CITADEL_)
+                    // Nothing in the Citadel's terrain blocks the sea yet - lords may one day
+                    // take ship - but a regiment marches, it does not sail. Rivers are forded.
+                    switch ( toGeneralisedTerrain(terrain) ) {
+                        case TN_SEA:
+                        case TN_BAY:
+                        case TN_LAKE:
+                            return true;
+                        default:
+                            break;
+                    }
+#endif
                 }
             
                 if( race != RA_DWARF && race != RA_GIANT && race != RA_DRAGON && army ) {
@@ -381,7 +393,7 @@ namespace tme {
         {
         u32 adj_stronghold = 0;
             FOR_EACH_STRONGHOLD(stronghold) {
-                if ( stronghold->OccupyingRace() == RA_DOOMGUARD ) {
+                if ( stronghold->IsEnemy() ) {
                     adj_stronghold += stronghold->Influence() ;
                 }
             }
@@ -1691,7 +1703,7 @@ namespace tme {
         void mxscenario::ClearFromMemory ( mxgridref loc )
         {
             FOR_EACH_CHARACTER(character) {
-                auto item = character->memory.IsMemorised(loc,RA_DOOMGUARD);
+                auto item = character->memory.IsMemorised(loc,RA_ENEMY);
                 if ( item ) {
                     character->memory.DeleteFragment ( item );
                 }
@@ -1815,7 +1827,7 @@ namespace tme {
             friends=0;
 
             FOR_EACH_CHARACTER(character) {
-                if ( character->memory.IsMemorised(loc,RA_DOOMGUARD) )
+                if ( character->memory.IsMemorised(loc,RA_ENEMY) )
                     enemies++;
                 if ( character->memory.IsMemorised(loc,RA_FREE) )
                     friends++;
@@ -1895,7 +1907,7 @@ namespace tme {
                     : mx->CharacterById(id);
 
                 // lets not find doomdark
-                if ( c->Race()==RA_DOOMGUARD )
+                if ( c->Race()==RA_ENEMY )
                     continue;
                 
                 c_character collection;

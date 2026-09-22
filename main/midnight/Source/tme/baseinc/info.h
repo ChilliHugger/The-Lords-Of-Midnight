@@ -799,6 +799,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual void MakeChangeSides( mxrace_t race, mxcharacter* newoccupier );
             virtual mxrace_t Loyalty () const;
             virtual bool IsFriend( const mxcharacter* character ) const;
+            bool IsEnemy() const;
         
             virtual bool CanCharacterRecruitOrPost(const mxcharacter* character) const;
 
@@ -968,6 +969,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             
             bool HasArmy() const { return ((riders.total+warriors.total) > 0); }
             bool IsDead() const { return !flags.Is(cf_alive); }
+            bool TakesPartInBattle() const;
             const std::string& Longname() const { return longname; }
             const std::string& Shortname() const { return shortname; }
 

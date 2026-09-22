@@ -122,7 +122,8 @@ namespace {
 MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
 {
     auto mapInfo = TMXMapInfo::create(tmxFilename);
-    RETURN_IF_NULL(mapInfo);
+    if ( mapInfo == nullptr )
+        return MX_FAILED;
 
     Vec2 mapSize  = mapInfo->getMapSize();
     Vec2 tileSize = mapInfo->getTileSize();

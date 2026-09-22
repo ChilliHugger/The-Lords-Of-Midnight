@@ -34,7 +34,7 @@ namespace utils {
     {
         auto old_mask = OLD_DDR_CHARACTERFLAGS::cf_all ; // 0x003fc000
                         
-        auto new_mask = cf_unused1 | cf_unused2 |
+        auto new_mask = cf_major | cf_location |   // bits 14/15, once cf_unused1/2
                         cf_resting | cf_inbattle | cf_wonbattle | cf_tunnel |
                         cf_usedobject | cf_followers | cf_preparesbattle | cf_approaching;
                         

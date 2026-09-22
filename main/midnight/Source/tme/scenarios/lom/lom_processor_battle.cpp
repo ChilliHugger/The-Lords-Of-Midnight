@@ -29,7 +29,7 @@ void lom_battle::ProcessLocation ( mxgridref loc )
     location = loc ;
     info.reset(new mxlocinfo ( loc, nullptr, slf_none ));
 
-    if ( info->foe.armies ) {
+    if ( info->foe.armies && HasDefenders() ) {
 
         ProcessAllCharacters();
 
@@ -41,14 +41,39 @@ void lom_battle::ProcessLocation ( mxgridref loc )
     info.reset();
 }
 
+//
+// Is anyone here to stand against the enemy? A garrison counts even when it has been emptied -
+// that is how an undefended keep falls - but a lord who takes no part in battle does not, and nor
+// do his men. Without this, a place holding only the enemy and bystanders (in The Citadel, the
+// Dark Fey keeps and the dungeons of Maranor) announced a battle every night.
+//
+bool lom_battle::HasDefenders() const
+{
+    for ( auto army : info->armies ) {
+        if ( army->race != RA_ENEMY && TakesPart(army) )
+            return true;
+    }
+    for ( auto character : info->objCharacters ) {
+        if ( character->TakesPartInBattle() )
+            return true;
+    }
+    return false;
+}
+
+bool lom_battle::TakesPart ( const mxarmy* army )
+{
+    return army->armytype != AT_CHARACTER
+        || static_cast<const mxcharacter*>(army->parent)->TakesPartInBattle();
+}
+
 bool lom_battle::MakeFriendOrFoeList ( const mxcharacter* character )
 {
     foes.clear();
     friends.clear();
 
     for ( auto army : info->armies ) {
-        if ( army->total ) {
-            if ( army->race == RA_DOOMGUARD )
+        if ( army->total && TakesPart(army) ) {
+            if ( army->race == RA_ENEMY )
                 foes.push_back(army);
             else
                 friends.push_back(army);
@@ -81,7 +106,7 @@ void lom_battle::ProcessAllCharacters( void )
 {
     for( auto character : info->objCharacters ) {
 
-        CONTINUE_IF ( character->Race() == RA_MIDWINTER );
+        CONTINUE_IF ( !character->TakesPartInBattle() );
 
         character->battleloc = info->Location() ;
 
@@ -173,7 +198,8 @@ void lom_battle::UpdateArmies()
                 break;
 
             case AT_CHARACTER:
-                UpdateCharacterArmy(army);
+                if ( TakesPart(army) )
+                    UpdateCharacterArmy(army);
                 break;
                 
             default:
@@ -190,11 +216,11 @@ void lom_battle::UpdateStrongholdArmy(mxarmy* army)
     stronghold->Killed(army->killed);
     stronghold->CheckForZero();
 
-    if ( army->race == RA_DOOMGUARD && status == BA_FRIEND ) {
+    if ( army->race == RA_ENEMY && status == BA_FRIEND ) {
        stronghold->MakeChangeSides( RA_FREE, DEF_SCENARIO(luxor) );
 
-    } else if ( army->race != RA_DOOMGUARD && status == BA_FOE ) {
-       stronghold->MakeChangeSides( RA_DOOMGUARD, DEF_SCENARIO(doomdark) );
+    } else if ( army->race != RA_ENEMY && status == BA_FOE ) {
+       stronghold->MakeChangeSides( RA_ENEMY, DEF_SCENARIO(doomdark) );
     }
 }
 
@@ -225,7 +251,7 @@ void lom_battle::UpdateCharacters()
 {
     for( auto character : info->objCharacters ) {
 
-        CONTINUE_IF ( character->Race() == RA_MIDWINTER );
+        CONTINUE_IF ( !character->TakesPartInBattle() );
 
         CharacterLosesEnergy( character );
 

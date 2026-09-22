@@ -17,6 +17,7 @@
 #include "../../baseinc/tme_internal.h"
 #include "scenario_citadel.h"
 #include "scenario_citadel_internal.h"
+#include "../lom/lom_processor_battle.h"
 #include <string>
 
 #if defined(_CITADEL_)
@@ -133,6 +134,16 @@ static LPCSTR citadel_hostages[] = {
 };
 
 //
+// Run on every start and every load. Boroth the Wolfheart is the Citadel's Doomdark: a keep his
+// wandering host takes becomes his, held against the player until it is taken back.
+//
+void citadel_x::initialise ( u32 version )
+{
+    mxscenario::initialise(version);
+    doomdark = mx->CharacterBySymbol("CH_BOROTH");
+}
+
+//
 // Run once, when a story begins - never on load. Being held is a character flag, and
 // character flags are saved, so a hostage freed on day forty is still free when that
 // story is picked up again.
@@ -160,7 +171,7 @@ MXRESULT citadel_x::Register ( mxengine* midnightx )
     // add in the interfaces
     mx->text = new mxtext;
     mx->night = new mxnight;
-    mx->battle = new mxbattle;
+    mx->battle = new lom_battle;
     mx->gameover = new mxgameover;
     mx->entityfactory = new mxentityfactory;
     mx->scenario = (mxscenario*)citadel_scenario;

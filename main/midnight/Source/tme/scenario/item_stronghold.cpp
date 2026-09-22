@@ -153,7 +153,7 @@ int temp;
 s32 mxstronghold::BattleSuccess ( const mxlocinfo& locinfo )
 {
     if ( this == nullptr ) return STRONGHOLD_SUCCESS_NONE ;
-    if ( OccupyingRace() == RA_DOOMGUARD )
+    if ( OccupyingRace() == RA_ENEMY )
         return enemy_success + mx->scenario->BaseDoomdarkSuccess( OccupyingRace(),Type(), locinfo );
     return mx->UnitById(Type())->Success()+mx->RaceById(OccupyingRace())->Success() ;
 }
@@ -226,6 +226,24 @@ bool mxstronghold::CanCharacterRecruitOrPost(const mxcharacter* character) const
     return OccupyingRace() == character->Race();
 }
 
+//
+// Is this stronghold held against the player - do its armies fight a lord who stands in it?
+//
+// In The Citadel only a keep Boroth's host has TAKEN is his to hold. The Dark Fey's own keeps
+// stay out of the war for now: Maranor holds the hostages the player frees by approaching them,
+// the opening party stands in it, and some fifty lords of the realms are still parked in Castle
+// Burning - a hostile Dark Fey keep would fight all of them on the first night. When the
+// Citadel's own war (war states, ransom, reactions) lands, this is the rule to widen.
+//
+bool mxstronghold::IsEnemy() const
+{
+#if defined(_CITADEL_)
+    return OccupyingRace() == RA_ENEMY && Occupier() != nullptr && Occupier() == DEF_SCENARIO(doomdark);
+#else
+    return OccupyingRace() == RA_ENEMY;
+#endif
+}
+
 /*
  * Function name    : MakeChangeSides
  * 
@@ -249,7 +267,7 @@ void mxstronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
     // the stronghold can go to whoever took it
     // if the stronghold used to belong to the alliance then armies of the
     // free retain it
-    if ( Owner() && Owner()->Race() != RA_DOOMGUARD && newrace != RA_DOOMGUARD ) {
+    if ( Owner() && Owner()->Race() != RA_ENEMY && newrace != RA_ENEMY ) {
         newrace = RA_FREE ;
         newoccupier = NULL ;
     }

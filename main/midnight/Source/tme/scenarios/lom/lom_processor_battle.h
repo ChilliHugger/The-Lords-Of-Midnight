@@ -20,6 +20,8 @@ namespace tme {
         virtual void ProcessAllArmies();
 
         virtual bool MakeFriendOrFoeList ( const mxcharacter* character=nullptr );
+        bool HasDefenders() const;
+        static bool TakesPart ( const mxarmy* army );
 
         virtual bool SelectOpponent(c_army& armies);
 
