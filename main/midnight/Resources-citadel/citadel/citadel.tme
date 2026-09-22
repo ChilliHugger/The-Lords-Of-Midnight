@@ -125,11 +125,11 @@
     <terrain id="TN_PLAIN"          file=""                  mapcell="48" />
     <terrain id="TN_PLAINS3"        file=""                  mapcell="48" />
     <terrain id="TN_FOREST3"        file="t_forest0"         mapcell="64" mapdensity="true"/>
-    <terrain id="TN_TREES3"         file="t_forest0"         mapcell="64" mapdensity="true"/>
+    <terrain id="TN_TREES3"         file="t_forest2"         mapcell="64" mapdensity="true"/>
     <terrain id="TN_MOUNTAIN3"      file="t_mountain0"       mapcell="76" mapdensity="true"/>
-    <terrain id="TN_ICY_MOUNTAIN"   file="t_mountain0"       mapcell="76" mapdensity="true"/>
+    <terrain id="TN_ICY_MOUNTAIN"   file="t_mountain2"       mapcell="76" mapdensity="true"/>
     <terrain id="TN_DOWNS3"         file="t_downs0"          mapcell="72" mapdensity="true"/>
-    <terrain id="TN_HILLS3"         file="t_downs0"          mapcell="72" mapdensity="true"/>
+    <terrain id="TN_HILLS3"         file="t_hills2"          mapcell="72" mapdensity="true"/>
     <terrain id="TN_FOOTHILLS"      file="t_downs0"          mapcell="72" mapdensity="true"/>
     <terrain id="TN_VALLEY"         file=""                  mapcell="48" />
     <terrain id="TN_BAY"            file=""                  mapcell="48" />
