@@ -29,7 +29,7 @@ void lom_battle::ProcessLocation ( mxgridref loc )
     location = loc ;
     info.reset(new mxlocinfo ( loc, nullptr, slf_none ));
 
-    if ( info->foe.armies ) {
+    if ( HasDefenders() ) {
 
         ProcessAllCharacters();
 
@@ -41,14 +41,32 @@ void lom_battle::ProcessLocation ( mxgridref loc )
     info.reset();
 }
 
+//
+// The enemy is here, so there is a battle, and everyone else present stands in it.
+//
+bool lom_battle::HasDefenders() const
+{
+    return info->foe.armies > 0;
+}
+
+bool lom_battle::TakesPart ( const mxarmy* army ) const
+{
+    return true;
+}
+
+bool lom_battle::TakesPart ( const mxcharacter* character ) const
+{
+    return character->Race() != RA_MIDWINTER;
+}
+
 bool lom_battle::MakeFriendOrFoeList ( const mxcharacter* character )
 {
     foes.clear();
     friends.clear();
 
     for ( auto army : info->armies ) {
-        if ( army->total ) {
-            if ( army->race == RA_DOOMGUARD )
+        if ( army->total && TakesPart(army) ) {
+            if ( army->race == RA_ENEMY )
                 foes.push_back(army);
             else
                 friends.push_back(army);
@@ -81,7 +99,7 @@ void lom_battle::ProcessAllCharacters( void )
 {
     for( auto character : info->objCharacters ) {
 
-        CONTINUE_IF ( character->Race() == RA_MIDWINTER );
+        CONTINUE_IF ( !TakesPart(character) );
 
         character->battleloc = info->Location() ;
 
@@ -173,7 +191,8 @@ void lom_battle::UpdateArmies()
                 break;
 
             case AT_CHARACTER:
-                UpdateCharacterArmy(army);
+                if ( TakesPart(army) )
+                    UpdateCharacterArmy(army);
                 break;
                 
             default:
@@ -190,11 +209,11 @@ void lom_battle::UpdateStrongholdArmy(mxarmy* army)
     stronghold->Killed(army->killed);
     stronghold->CheckForZero();
 
-    if ( army->race == RA_DOOMGUARD && status == BA_FRIEND ) {
+    if ( army->race == RA_ENEMY && status == BA_FRIEND ) {
        stronghold->MakeChangeSides( RA_FREE, DEF_SCENARIO(luxor) );
 
-    } else if ( army->race != RA_DOOMGUARD && status == BA_FOE ) {
-       stronghold->MakeChangeSides( RA_DOOMGUARD, DEF_SCENARIO(doomdark) );
+    } else if ( army->race != RA_ENEMY && status == BA_FOE ) {
+       stronghold->MakeChangeSides( RA_ENEMY, mx->scenario->BadGuy() );
     }
 }
 
@@ -225,7 +244,7 @@ void lom_battle::UpdateCharacters()
 {
     for( auto character : info->objCharacters ) {
 
-        CONTINUE_IF ( character->Race() == RA_MIDWINTER );
+        CONTINUE_IF ( !TakesPart(character) );
 
         CharacterLosesEnergy( character );
 

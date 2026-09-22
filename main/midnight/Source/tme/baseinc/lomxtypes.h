@@ -117,6 +117,12 @@ using namespace chilli::types;
 #endif
         };
 
+#if defined(_CITADEL_)
+        constexpr mxrace_t RA_ENEMY = RA_DARK_FEY;
+#else
+        constexpr mxrace_t RA_ENEMY = RA_DOOMGUARD;
+#endif
+
         enum mxunit_t {
             UT_NONE=0,
             UT_WARRIORS=1,

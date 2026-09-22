@@ -15,6 +15,7 @@
  */
 
 #include "../../baseinc/tme_internal.h"
+#include "../../scenario/helpers/race_terrain_movement_modifier.h"
 #include "../../utils/savegamemapping.h"
 #if defined (_DDR_)
 #include "../../scenarios/ddr/scenario_ddr_internal.h"
@@ -288,6 +289,16 @@ namespace tme {
             return isTerrainImpassable((mxterrain_t)mapLoc.terrain, target);
         }
 
+        u32 mxscenario::TerrainMovementModifier( mxrace_t race, mxterrain_t terrain ) const
+        {
+            return TME::helpers::RaceTerrainMovementModifier::Get(race, terrain);
+        }
+
+        mxcharacter* mxscenario::BadGuy() const
+        {
+            return doomdark;
+        }
+
         //
         // This adds in Mountains as a potential impassable terrain above and beyond
         // any setup in the database. This is controlled by two game rules
@@ -381,7 +392,7 @@ namespace tme {
         {
         u32 adj_stronghold = 0;
             FOR_EACH_STRONGHOLD(stronghold) {
-                if ( stronghold->OccupyingRace() == RA_DOOMGUARD ) {
+                if ( stronghold->IsEnemy() ) {
                     adj_stronghold += stronghold->Influence() ;
                 }
             }
@@ -1052,7 +1063,7 @@ namespace tme {
 
             collection.Clear();
             FOR_EACH_CHARACTER(c) {
-                if ( c!=mx->scenario->doomdark )
+                if ( c!=mx->scenario->BadGuy() )
                     collection.Add(mxentity::SafeIdt(c));
             }
             return MX_OK ;
@@ -1691,7 +1702,7 @@ namespace tme {
         void mxscenario::ClearFromMemory ( mxgridref loc )
         {
             FOR_EACH_CHARACTER(character) {
-                auto item = character->memory.IsMemorised(loc,RA_DOOMGUARD);
+                auto item = character->memory.IsMemorised(loc,RA_ENEMY);
                 if ( item ) {
                     character->memory.DeleteFragment ( item );
                 }
@@ -1815,7 +1826,7 @@ namespace tme {
             friends=0;
 
             FOR_EACH_CHARACTER(character) {
-                if ( character->memory.IsMemorised(loc,RA_DOOMGUARD) )
+                if ( character->memory.IsMemorised(loc,RA_ENEMY) )
                     enemies++;
                 if ( character->memory.IsMemorised(loc,RA_FREE) )
                     friends++;
@@ -1895,7 +1906,7 @@ namespace tme {
                     : mx->CharacterById(id);
 
                 // lets not find doomdark
-                if ( c->Race()==RA_DOOMGUARD )
+                if ( c->Race()==RA_ENEMY )
                     continue;
                 
                 c_character collection;

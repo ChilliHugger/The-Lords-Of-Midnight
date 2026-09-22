@@ -357,7 +357,7 @@ namespace tme {
 
                     bool success = mx->TerrainById(mapsqr.terrain)->Success();
 
-                    bool isFriend = stronghold->OccupyingRace() != RA_DOOMGUARD ;
+                    bool isFriend = !stronghold->IsEnemy() ;
 #if defined(_DDR_)
                     isFriend = stronghold->IsFriend(ch_friend);
 #endif

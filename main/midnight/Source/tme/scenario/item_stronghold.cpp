@@ -153,7 +153,7 @@ int temp;
 s32 mxstronghold::BattleSuccess ( const mxlocinfo& locinfo )
 {
     if ( this == nullptr ) return STRONGHOLD_SUCCESS_NONE ;
-    if ( OccupyingRace() == RA_DOOMGUARD )
+    if ( OccupyingRace() == RA_ENEMY )
         return enemy_success + mx->scenario->BaseDoomdarkSuccess( OccupyingRace(),Type(), locinfo );
     return mx->UnitById(Type())->Success()+mx->RaceById(OccupyingRace())->Success() ;
 }
@@ -226,6 +226,16 @@ bool mxstronghold::CanCharacterRecruitOrPost(const mxcharacter* character) const
     return OccupyingRace() == character->Race();
 }
 
+//
+// Is this stronghold held against the player - do its armies fight a lord who stands in it?
+// Occupied by the enemy's race, which is all it takes while every keep of his is at war.
+// A scenario whose enemy also holds keeps that are not (The Citadel) narrows this.
+//
+bool mxstronghold::IsEnemy() const
+{
+    return OccupyingRace() == RA_ENEMY;
+}
+
 /*
  * Function name    : MakeChangeSides
  * 
@@ -249,7 +259,7 @@ void mxstronghold::MakeChangeSides( mxrace_t newrace, mxcharacter* newoccupier )
     // the stronghold can go to whoever took it
     // if the stronghold used to belong to the alliance then armies of the
     // free retain it
-    if ( Owner() && Owner()->Race() != RA_DOOMGUARD && newrace != RA_DOOMGUARD ) {
+    if ( Owner() && Owner()->Race() != RA_ENEMY && newrace != RA_ENEMY ) {
         newrace = RA_FREE ;
         newoccupier = NULL ;
     }

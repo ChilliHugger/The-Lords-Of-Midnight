@@ -16,12 +16,12 @@ namespace TME {
             // SHOULD BE DONE THROUGH THE DATABASE
             switch(terrain) {
                 case TN_DOWNS:
-                    if ( race == RA_DOOMGUARD ) return 0;
+                    if ( race == RA_ENEMY ) return 0;
                     return 1;
                 case TN_MOUNTAIN:
                     return 4;
                 case TN_FOREST:
-                    if ( race == RA_DOOMGUARD ) return 4;
+                    if ( race == RA_ENEMY ) return 4;
                     if ( race != RA_FEY ) return 3;
                     break;
                 default:

@@ -1100,6 +1100,16 @@ namespace tme {
             }
         }
             
+        //
+        // Does the enemy seek this lord out at night, and does he fight when it finds him?
+        // Any lord who is alive, visible and not a bystander of Midwinter. A scenario where
+        // some lords are not yet at war (The Citadel) narrows this.
+        //
+        bool mxcharacter::TakesPartInBattle() const
+        {
+            return IsAlive() && !IsHidden() && Race() != RA_MIDWINTER;
+        }
+
         MXRESULT mxcharacter::EnterBattle ( void )
         {
             Flags().Set(cf_inbattle); // force the battle flag early!
@@ -1710,15 +1720,15 @@ namespace tme {
                 
                 c_regiment regiments;
                 if ( mx->CollectRegiments ( loc, regiments ) )
-                    memory.Memorise ( regiments.First(), RA_DOOMGUARD );
+                    memory.Memorise ( regiments.First(), RA_ENEMY );
 
 
                 if ( mapsqr.IsStronghold() ) {
                     c_stronghold strongholds;
                     if ( mx->CollectStrongholds ( loc, strongholds ) ) {
                         auto stronghold = strongholds.First();
-                        if ( stronghold->OccupyingRace() == RA_DOOMGUARD )
-                            memory.Memorise ( stronghold, RA_DOOMGUARD );
+                        if ( stronghold->IsEnemy() )
+                            memory.Memorise ( stronghold, RA_ENEMY );
                         else 
                             memory.Memorise ( stronghold, RA_FREE );
                     }

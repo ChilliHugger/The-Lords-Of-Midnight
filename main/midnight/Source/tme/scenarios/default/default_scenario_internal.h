@@ -91,11 +91,18 @@ namespace tme {
             virtual mxterrain_t toGeneralisedTerrain( mxterrain_t t) const ;
             virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const ;
 
+            // what this scenario's terrain costs a regiment on the march
+            virtual u32 TerrainMovementModifier( mxrace_t race, mxterrain_t terrain ) const;
+
+            // the enemy's leader - shared code that hands him a captured keep asks for him
+            // here rather than naming Doomdark
+            virtual mxcharacter* BadGuy() const;
+
             virtual MXRESULT GetLocInfo ( mxid id, flags32_t flags, std::unique_ptr<mxlocinfo>& info);
 
             bool IsFeature(u32 flag) const { return (features&flag) == flag; }
             
-            bool isTerrainImpassable(mxterrain_t terrain, const mxitem* target) const;
+            virtual bool isTerrainImpassable(mxterrain_t terrain, const mxitem* target) const;
             bool isLocationImpassable(mxgridref loc, const mxitem* target) const;
             
         public:
