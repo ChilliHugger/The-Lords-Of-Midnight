@@ -18,17 +18,17 @@ Version	Id	Symbol	Flags	Name	Default Soldiers Name	Success	Initial Movement	Diag
 7	16	RA_DWARF		Dwarves		0	5	2	5	0	9	100	2	6	3	3
 7	17	RA_TARITHEL		Fey		0	2	2	2	0	9	0	2	6	1	1
 7	18	RA_DOOMDARK		Doomdark	Doomguard	0	0	2	0	255	9	200	0	0	0	0
-7	19	RA_ARAKAI		Arakai		0	2	1	2	255	9	0	0	0	0	0
+7	23	RA_ARAKAI		Arakai		0	2	1	2	255	9	0	0	0	0	0
 7	20	RA_ATHELING		Atheling		0	2	1	2	255	9	0	0	0	0	0
-7	21	RA_DARK_FEY		Dark Fey		0	2	1	2	255	9	0	0	0	0	0
-7	22	RA_DAWN_FEY		Dawn Fey		0	2	1	2	255	9	0	0	0	0	0
-7	23	RA_DEEPING_DWARF		Deeping Dwarf		0	2	1	2	255	9	0	0	0	0	0
+7	31	RA_DARK_FEY		Dark Fey		0	2	1	2	255	9	0	0	0	0	0
+7	26	RA_DAWN_FEY		Dawn Fey		0	2	1	2	255	9	0	0	0	0	0
+7	29	RA_DEEPING_DWARF		Deeping Dwarf		0	2	1	2	255	9	0	0	0	0	0
 7	24	RA_DRAGONLORD		Dragonlord		0	2	1	2	255	9	0	0	0	0	0
-7	25	RA_ELDRIN		Eldrin		0	2	1	2	255	9	0	0	0	0	0
-7	26	RA_GELMING		Gelming		0	2	1	2	255	9	0	0	0	0	0
-7	27	RA_BLOODMARCH_GIANT		Giant		0	2	1	2	255	9	0	0	0	0	0
-7	28	RA_GOLDEN_FEY		Golden Fey		0	2	1	2	255	9	0	0	0	0	0
-7	29	RA_HIGH_FEY		High Fey		0	2	1	2	255	9	0	0	0	0	0
-7	30	RA_KITH		Kith		0	2	1	2	255	9	0	0	0	0	0
-7	31	RA_LONG_DWARF		Long Dwarf		0	2	1	2	255	9	0	0	0	0	0
-7	32	RA_USKARG		Uskarg		0	2	1	2	255	9	0	0	0	0	0
+7	21	RA_ELDRIN		Eldrin		0	2	1	2	255	9	0	0	0	0	0
+7	28	RA_GELMING		Gelming		0	2	1	2	255	9	0	0	0	0	0
+7	30	RA_BLOODMARCH_GIANT		Giant		0	2	1	2	255	9	0	0	0	0	0
+7	32	RA_GOLDEN_FEY		Golden Fey		0	2	1	2	255	9	0	0	0	0	0
+7	25	RA_HIGH_FEY		High Fey		0	2	1	2	255	9	0	0	0	0	0
+7	19	RA_KITH		Kith		0	2	1	2	255	9	0	0	0	0	0
+7	22	RA_LONG_DWARF		Long Dwarf		0	2	1	2	255	9	0	0	0	0	0
+7	27	RA_USKARG		Uskarg		0	2	1	2	255	9	0	0	0	0	0

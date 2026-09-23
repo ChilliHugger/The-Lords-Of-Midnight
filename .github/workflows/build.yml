@@ -1,0 +1,86 @@
+name: Build & Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  # Pinned to the engine tag recorded in main/midnight/.axproj (engine_version).
+  # Bump both together when the local axmol checkout is upgraded.
+  AXMOL_REF: v2.11.4
+  GH_XCODE_VER: '16.2'
+
+jobs:
+  build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tme: CITADEL
+            target: citadel
+            app: citadel
+          - tme: LOM
+            target: midnight
+            app: midnight
+          - tme: DDR
+            target: revenge
+            app: revenge
+    name: macOS build + tests (${{ matrix.app }})
+    runs-on: macos-15
+    env:
+      AX_ROOT: ${{ github.workspace }}/axmol
+      BUILD_DIR: Builds/ci-${{ matrix.app }}
+    steps:
+      - name: Checkout game
+        uses: actions/checkout@v4
+        with:
+          path: game
+
+      - name: Checkout axmol engine
+        uses: actions/checkout@v4
+        with:
+          repository: axmolengine/axmol
+          ref: ${{ env.AXMOL_REF }}
+          path: axmol
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.GH_XCODE_VER }}
+
+      - name: Cache axmol externals and fetched deps
+        uses: actions/cache@v4
+        with:
+          path: |
+            axmol/tools/external
+            game/main/midnight/${{ env.BUILD_DIR }}/_deps
+          key: axmol-${{ env.AXMOL_REF }}-osx-arm64-${{ matrix.app }}-${{ hashFiles('game/main/midnight/tests/CMakeLists.txt') }}
+          restore-keys: |
+            axmol-${{ env.AXMOL_REF }}-osx-arm64-${{ matrix.app }}-
+
+      - name: Generate ${{ matrix.app }} Xcode project
+        shell: pwsh
+        working-directory: game/main/midnight
+        run: |
+          & "$env:AX_ROOT/tools/cmdline/axmol" build -p osx -a arm64 -t ${{ matrix.target }} -c `
+            -xc '-DTME=${{ matrix.tme }},-DTESTS=YES,-B${{ env.BUILD_DIR }}'
+
+      - name: Build ${{ matrix.app }} (unsigned)
+        working-directory: game/main/midnight
+        run: |
+          # CI has no "Mac Development" certificate for the team ID the project is configured
+          # with for local dev signing, so override signing off on the command line - it wins
+          # over every project/target setting.
+          xcodebuild -project ${{ env.BUILD_DIR }}/${{ matrix.app }}.xcodeproj -target ${{ matrix.target }} \
+            -configuration RelWithDebInfo \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Run tests
+        working-directory: game/main/midnight
+        run: |
+          ./${{ env.BUILD_DIR }}/build/RelWithDebInfo/${{ matrix.app }}.app/Contents/MacOS/${{ matrix.app }} --reporter compact

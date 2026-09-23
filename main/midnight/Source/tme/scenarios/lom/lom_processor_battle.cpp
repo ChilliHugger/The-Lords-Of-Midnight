@@ -101,6 +101,7 @@ void lom_battle::ProcessAllCharacters( void )
 
         CONTINUE_IF ( !TakesPart(character) );
 
+        character->EnterBattle();
         character->battleloc = info->Location() ;
 
         MakeFriendOrFoeList ( character );

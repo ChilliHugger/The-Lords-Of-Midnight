@@ -75,10 +75,32 @@ SCENARIO("TSV database resolves routenode connections correctly")
         auto node = GetEntity<mxroutenode>("RN_KEEP_OF_LORGRIM");
         REQUIRE( node != nullptr );
 
-        THEN("its paths resolve to the routenodes named in routenodes.tsv")
+        THEN("its nodes resolve to the routenodes named in routenodes.tsv")
         {
-            REQUIRE( node->Left() == GetEntity<mxroutenode>("RN_KEEP_OF_LORGRIM") );
-            REQUIRE( node->Right() == GetEntity<mxroutenode>("RN_KEEP_OF_ITHRIL") );
+            REQUIRE( node->Nodes().size() == 2 );
+            REQUIRE( node->Nodes()[0] == GetEntity<mxroutenode>("RN_KEEP_OF_LORGRIM") );
+            REQUIRE( node->Nodes()[1] == GetEntity<mxroutenode>("RN_KEEP_OF_ITHRIL") );
+        }
+    }
+}
+
+SCENARIO("TMX Things layer decodes to the correct object at each location")
+{
+    TMEStep::NewStory();
+
+    GIVEN("Luxor's start location, the Tower of the Moon")
+    {
+        THEN("it holds guidance")
+        {
+            REQUIRE( (mxthing_t)tme::mx->gamemap->GetAt(mxgridref(13,41)).object == OB_GUIDANCE );
+        }
+    }
+
+    GIVEN("the location south of it")
+    {
+        THEN("a dragon is there")
+        {
+            REQUIRE( (mxthing_t)tme::mx->gamemap->GetAt(mxgridref(13,42)).object == OB_DRAGONS );
         }
     }
 }

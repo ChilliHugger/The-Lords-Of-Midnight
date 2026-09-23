@@ -145,7 +145,10 @@ SCENARIO("The Doomguard bring battle wherever they find a lord")
 
             THEN("battle is joined")
             {
-                REQUIRE( luxor->battleloc == luxor->Location() );
+                // Location() can move on afterwards (a lord who loses may flee to an adjacent
+                // square), so IsInBattle() - not Location() - is what marks that the night
+                // actually found him.
+                REQUIRE( luxor->IsInBattle() );
             }
         }
 
@@ -164,7 +167,7 @@ SCENARIO("The Doomguard bring battle wherever they find a lord")
 
                 THEN("battle is joined all the same")
                 {
-                    REQUIRE( lord->battleloc == lord->Location() );
+                    REQUIRE( lord->IsInBattle() );
                 }
             }
         }

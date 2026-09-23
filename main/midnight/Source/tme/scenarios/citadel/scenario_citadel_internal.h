@@ -13,12 +13,12 @@ namespace tme {
         citadel_x();
         virtual ~citadel_x();
         
-        virtual scenarioinfo_t* GetInfoBlock() const;
-        virtual MXRESULT Register ( mxengine* midnightx );
-        virtual MXRESULT UnRegister ( mxengine* midnightx );    
+        virtual scenarioinfo_t* GetInfoBlock() const override;
+        virtual MXRESULT Register ( mxengine* midnightx ) override;
+        virtual MXRESULT UnRegister ( mxengine* midnightx ) override;
 
-        virtual void initialise ( u32 version );
-        virtual void initialiseAfterCreate ( u32 version );
+        virtual void initialise ( u32 version ) override;
+        virtual void initialiseAfterCreate ( u32 version ) override;
 
         virtual mxcharacter* BadGuy() const override;
         virtual bool isTerrainImpassable ( mxterrain_t terrain, const mxitem* target ) const override;

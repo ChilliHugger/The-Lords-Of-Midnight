@@ -11,6 +11,7 @@
 #include "../TMEMapBuilder.h"
 #include "2d/TMXXMLParser.h"
 #include "axmol.h"
+#include <algorithm>
 #include <cstdlib>
 #include <functional>
 #include <unordered_map>
@@ -233,7 +234,9 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
         }
     }
 
-    // routenodes: LEFT/RIGHT are references to other routenode objects' ids
+    // routenodes: every "BRANCH_*" property is a reference to another routenode object's id -
+    // a map can give a routenode any number of these, so clear whatever it already has and
+    // add back only the branches this pass finds
     for ( const auto& group : mapInfo->getObjectGroups() ) {
 
         CONTINUE_IF( c_stricmp( std::string(group->getGroupName()).c_str(), "routenodes" ) != 0 );
@@ -248,39 +251,32 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
             auto routenode = static_cast<mxroutenode*>(EntityByName(itName->second.asString(), IDT_ROUTENODE));
             CONTINUE_IF_NULL(routenode);
 
-#if defined(_LOM_)
-            bool leftError = false, rightError = false;
-            auto left  = ResolveObjectProperty(entityByName, dict, "LEFT",  objectIdToName, IDT_ROUTENODE, leftError);
-            auto right = ResolveObjectProperty(entityByName, dict, "RIGHT", objectIdToName, IDT_ROUTENODE, rightError);
+            routenode->ClearNodes();
 
-            if ( leftError || rightError ) {
-                MXTRACE( "TMX routenode '%s' LEFT/RIGHT not resolved", itName->second.asString().c_str());
-                continue;
+            // dict is a hash map, so its iteration order doesn't match the BRANCH_x suffix
+            // order - collect the matching property names first and sort them, so the
+            // resulting node list is deterministic (BRANCH_0, BRANCH_1, BRANCH_2, ...)
+            std::vector<std::string> branchProperties;
+            for ( const auto& property : dict ) {
+                if ( property.first.rfind("BRANCH_", 0) == 0 )
+                    branchProperties.push_back(property.first);
             }
+            std::sort( branchProperties.begin(), branchProperties.end(), []( const std::string& a, const std::string& b ) {
+                return atoi(a.c_str()+7) < atoi(b.c_str()+7);
+            });
 
-            routenode->Left ( static_cast<mxroutenode*>(left) );
-            routenode->Right( static_cast<mxroutenode*>(right) );
-#endif
+            for ( const auto& propertyName : branchProperties ) {
+                bool branchError = false;
+                auto branch = ResolveObjectProperty(entityByName, dict, propertyName.c_str(), objectIdToName, IDT_ROUTENODE, branchError);
+                if ( branchError ) {
+                    MXTRACE( "TMX routenode '%s' %s not resolved", itName->second.asString().c_str(), propertyName.c_str());
+                    continue;
+                }
+                if ( branch == nullptr )
+                    continue;
 
-#if defined(_CITADEL_)
-            bool leftError = false, middleError = false, rightError = false;
-            auto left   = ResolveObjectProperty(entityByName, dict, "BRANCH_0", objectIdToName, IDT_ROUTENODE, leftError);
-            auto middle = ResolveObjectProperty(entityByName, dict, "BRANCH_1", objectIdToName, IDT_ROUTENODE, middleError);
-            auto right  = ResolveObjectProperty(entityByName, dict, "BRANCH_2", objectIdToName, IDT_ROUTENODE, rightError);
-
-            if ( leftError || middleError || rightError ) {
-                MXTRACE( "TMX routenode '%s' branches not resolved", itName->second.asString().c_str());
-                continue;
+                routenode->AddNode( static_cast<mxroutenode*>(branch) );
             }
-
-            if ( left != nullptr )
-                routenode->Left ( static_cast<mxroutenode*>(left) );
-            if ( middle != nullptr )
-                routenode->Middle( static_cast<mxroutenode*>(middle) );
-            if ( right != nullptr )
-                routenode->Right( static_cast<mxroutenode*>(right) );
-#endif
-
         }
     }
 

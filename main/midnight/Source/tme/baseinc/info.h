@@ -842,19 +842,22 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         typedef tme::collections::entities<mxstronghold*>    c_stronghold;
         // mxstronghold
 
+        typedef std::vector<mxroutenode*>     c_node;
+
         // mxroutenode
         class mxroutenode  : public mxitem
         {
         public:
             DEFAULT_IMPLEMENTATION(mxroutenode);
 
-            PROPERTY ( mxroutenode*, Left, paths[0] )
-            PROPERTY ( mxroutenode*, Middle, paths[1] )
-            PROPERTY ( mxroutenode*, Right, paths[2] )
+            GET_PROPERTY ( c_node, Nodes, nodes );
+
+            void ClearNodes() { nodes.clear(); }
+            void AddNode( mxroutenode* node ) { if ( node != nullptr ) nodes.push_back(node); }
+            mxroutenode* PickNode();
 
         protected:
-            // cheat for now, this needs to be a variable collections
-            mxroutenode*        paths[3];
+            c_node  nodes;
         };
         typedef tme::collections::entities<mxroutenode*>     c_routenode;
         // routenode
