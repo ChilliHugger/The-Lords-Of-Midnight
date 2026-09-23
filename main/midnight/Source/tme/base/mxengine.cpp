@@ -378,7 +378,7 @@ MXRESULT mxengine::UnloadDatabase ( void )
     objMissions.Destroy();
     objVictories.Destroy();
     
-#if defined(_DDR_) || defined(_CITADEL)
+#if defined(_DDR_) || defined(_CITADEL_)
     objObjectPowersInfos.Destroy();
     objObjectTypesInfos.Destroy();
 #endif
@@ -450,7 +450,7 @@ ACCESS_INFO(mxterrain,TerrainById,objTerrainInfos);
 ACCESS_INFO(mxarea,AreaById,objAreaInfos);
 ACCESS_INFO(mxcommand,CommandById,objCommandInfos);
 
-#if defined(_DDR_) || defined(_CITADEL)
+#if defined(_DDR_) || defined(_CITADEL_)
 ACCESS_INFO(mxobjectpower,ObjectPowerById,objObjectPowersInfos);
 ACCESS_INFO(mxobjecttype,ObjectTypeById,objObjectTypesInfos);
 #endif

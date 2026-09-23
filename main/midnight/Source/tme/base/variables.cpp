@@ -93,7 +93,7 @@ namespace tme {
         sv_int_t    sv_missions ;
         sv_int_t    sv_victories ;
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         sv_int_t    sv_object_powers ;
         sv_int_t    sv_object_types ;
 #endif
@@ -200,7 +200,7 @@ namespace tme {
             VARIABLE( sv_strongholdadjuster,                    "STRONGHOLD_ADJUSTER",                  CVar::INT,      "0" ),
             VARIABLE( sv_controlled_character,                  "CONTROLLED_CHARACTER",                 CVar::INT,      "0" ),
             VARIABLE( sv_energy_cannot_continue,                "ENERGY_CANNOT_CONTINUE",               CVar::INT,      "0" ),
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
             VARIABLE( sv_object_powers,                         "OBJECT_POWERS",                        CVar::INT,      "0" ),
             VARIABLE( sv_object_types,                          "OBJECT_TYPES",                         CVar::INT,      "0" ),
 #endif

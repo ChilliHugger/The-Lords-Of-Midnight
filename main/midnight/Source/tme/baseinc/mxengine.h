@@ -95,7 +95,7 @@ namespace tme {
         mxterrain*      TerrainById(u32 id) ;
         mxarea*         AreaById(u32 id) ;
         mxcommand*      CommandById(u32 id) ;
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         mxobjectpower*  ObjectPowerById(u32 id);
         mxobjecttype*   ObjectTypeById(u32 id);
 #endif
@@ -155,7 +155,7 @@ namespace tme {
         c_terrain               objTerrainInfos;
         c_area                  objAreaInfos;
         c_command               objCommandInfos;
-#if defined(_DDR_) || defined(_CITADEL)
+#if defined(_DDR_) || defined(_CITADEL_)
         c_objectpower           objObjectPowersInfos;
         c_objecttype            objObjectTypesInfos;
 #endif
