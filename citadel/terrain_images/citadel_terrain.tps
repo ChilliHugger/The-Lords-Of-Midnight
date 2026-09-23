@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.0.2</string>
+        <string>8.3.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -167,6 +167,8 @@
         <true/>
         <key>trimSpriteNames</key>
         <true/>
+        <key>enableCacheBusting</key>
+        <false/>
         <key>prependSmartFolderName</key>
         <false/>
         <key>autodetectAnimations</key>
@@ -316,6 +318,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">t_forest2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>210,103,420,207</rect>
+                <key>scale9Paddings</key>
+                <rect>210,103,420,207</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">t_frozenwaste0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -346,6 +363,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">t_hills2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>250,45,500,89</rect>
+                <key>scale9Paddings</key>
+                <rect>250,45,500,89</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">t_keep0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -373,22 +405,6 @@
                 <rect>247,28,494,56</rect>
                 <key>scale9Paddings</key>
                 <rect>247,28,494,56</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">t_land0.png</key>
-            <key type="filename">t_land1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>247,28,493,55</rect>
-                <key>scale9Paddings</key>
-                <rect>247,28,493,55</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -434,6 +450,21 @@
                 <rect>256,156,512,312</rect>
                 <key>scale9Paddings</key>
                 <rect>256,156,512,312</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">t_mountain2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>248,157,495,313</rect>
+                <key>scale9Paddings</key>
+                <rect>248,157,495,313</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -523,8 +554,9 @@
                     <filename>dot.png</filename>
                     <filename>sky.png</filename>
                     <filename>t_lith1.png</filename>
-                    <filename>t_land0.png</filename>
-                    <filename>t_land1.png</filename>
+                    <filename>t_forest2.png</filename>
+                    <filename>t_hills2.png</filename>
+                    <filename>t_mountain2.png</filename>
                 </array>
             </struct>
         </map>

@@ -148,6 +148,7 @@ SCENARIO("A wandering army brings battle only where someone stands against it")
             THEN("it passes him by")
             {
                 REQUIRE( lord->battleloc == nowhere );
+                REQUIRE( !lord->IsInBattle() );
             }
         }
 
@@ -161,7 +162,7 @@ SCENARIO("A wandering army brings battle only where someone stands against it")
 
                 THEN("battle is joined")
                 {
-                    REQUIRE( lord->battleloc == lord->Location() );
+                    REQUIRE( lord->IsInBattle() );
                 }
             }
         }

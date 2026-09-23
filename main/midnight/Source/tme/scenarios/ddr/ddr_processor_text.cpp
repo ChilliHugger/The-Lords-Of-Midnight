@@ -163,10 +163,11 @@ std::string ddr_text::DescribeObjectLocation(mxobject* object)
     
     // object not carried
     if ( c == nullptr ) {
-        return Format ( SystemString(SS_SEEK_MSG2),
+        auto buffer = Format ( SystemString(SS_SEEK_MSG2),
                          DescribeObjectWithPower(object).c_str(),
                          DescribeLocationWithPrep(object->Location(),nullptr).c_str()
                          );
+        return CookText(buffer,nullptr);
     }else{
         auto buffer = Format (
                          SystemString(SS_SEEK_MSG3),

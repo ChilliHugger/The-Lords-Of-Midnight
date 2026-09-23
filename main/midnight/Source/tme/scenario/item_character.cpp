@@ -1073,8 +1073,10 @@ namespace tme {
             // then we need the recruiting characters foe
             //
             mxcharacter* foe = Foe();
-            if ( foe->NormalisedLoyalty() == loyalty ) {
-                foe = recruiter->Foe() ;
+            if (foe != nullptr) {
+                if ( foe->NormalisedLoyalty() == loyalty ) {
+                    foe = recruiter->Foe() ;
+                }
             }
             
             CommandTakesTime(true);

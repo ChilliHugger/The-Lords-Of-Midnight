@@ -24,7 +24,7 @@ MXRESULT mxengine::LoadDatabaseFromTsv ( const std::string& tsvDirectory )
 {
     MXTRACE( "Building Database from TSV '%s'", tsvDirectory.c_str());
 
-    savegameversion = DATABASEVERSION;
+    savegameversion = SAVEGAMEVERSION;
 
     TsvDatabaseLoader loader;
     if ( !loader.Load(scenario, tsvDirectory) )
@@ -73,7 +73,7 @@ MXRESULT mxengine::SaveDatabaseCache ( const std::string& filename )
 
     ar << TME_MAGIC_NO ;
     ar << (int)scenario->GetInfoBlock()->Id;
-    ar << (u32)DATABASEVERSION ;
+    ar << (u32)savegameversion ;
     ar << (char*)DATABASEHEADER ;
 
     // counts first, matching LoadDatabaseBinary's read order exactly -

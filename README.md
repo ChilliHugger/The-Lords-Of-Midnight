@@ -1,5 +1,7 @@
 The Lords of Midnight
 
+[![Build & Test](https://github.com/ChilliHugger/The-Lords-Of-Midnight/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/ChilliHugger/The-Lords-Of-Midnight/actions/workflows/build.yml)
+
 All data regarding The Lords of Midnight
 Including Doomdark's Revenge and The Citadel
 

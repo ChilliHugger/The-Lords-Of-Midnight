@@ -4,31 +4,39 @@
 //
 //  The hostages Boroth the Wolfheart holds in the dungeons of the Dark Citadel.
 //
-//  The Citadel still ships Lords of Midnight's database, so none of the twelve lords named
-//  in citadel_scenario.cpp are in it to find yet. What these pin is the RULE, and the rule
-//  is tested on whoever the database does hold: mark one lord of a race as a prisoner and
-//  his kinsmen shut their doors until he is out.
-//
 #include "../../steps/tme_steps.h"
 
-static constexpr LPCSTR ch_corleth = "CH_CORLETH";
-static constexpr LPCSTR ch_dreams  = "CH_DREAMS";
-static constexpr LPCSTR ch_shadows = "CH_SHADOWS";
+static constexpr LPCSTR ch_morkin = "CH_MORKIN";
+static constexpr LPCSTR ch_lord1  = "CH_MORATHRON";
+static constexpr LPCSTR ch_lord2 = "CH_GUTHRANE";
+
+namespace {
+    // The shipped database already holds some lords hostage (Boroth's dungeons aren't empty
+    // by default). These tests set up their own hostage state, so start from a clean slate
+    // rather than depend on who the data happens to be holding.
+    void ClearAllHostages()
+    {
+        for ( auto character : tme::mx->objCharacters ) {
+            character->Flags().Reset(cf_prisoner);
+        }
+    }
+}
 
 SCENARIO("A realm whose hostage is still held will not join you")
 {
     TMEStep::NewStory();
+    ClearAllHostages();
 
-    auto corleth = GetCharacter(ch_corleth);
-    auto hostage = GetCharacter(ch_dreams);
-    auto kinsman = GetCharacter(ch_shadows);
+    auto recruiter = GetCharacter(ch_morkin);
+    auto hostage = GetCharacter(ch_lord1);
+    auto kinsman = GetCharacter(ch_lord2);
 
     // the rule is about a race, so these two must be of one, or the test proves nothing
     REQUIRE( hostage->Race() == kinsman->Race() );
 
     GIVEN("a lord who would otherwise join you")
     {
-        REQUIRE( corleth->CheckRecruitChar(kinsman) );
+        REQUIRE( recruiter->CheckRecruitChar(kinsman) );
 
         WHEN("one of his own race is held hostage in the Dark Citadel")
         {
@@ -36,12 +44,12 @@ SCENARIO("A realm whose hostage is still held will not join you")
 
             THEN("he will not join")
             {
-                REQUIRE( !corleth->CheckRecruitChar(kinsman) );
+                REQUIRE( !recruiter->CheckRecruitChar(kinsman) );
             }
 
             AND_THEN("but the hostage may still be approached, which is how he is freed")
             {
-                REQUIRE( corleth->CheckRecruitChar(hostage) );
+                REQUIRE( recruiter->CheckRecruitChar(hostage) );
             }
         }
     }
@@ -50,19 +58,20 @@ SCENARIO("A realm whose hostage is still held will not join you")
 SCENARIO("Freeing a hostage opens his realm")
 {
     TMEStep::NewStory();
+    ClearAllHostages();
 
-    auto corleth = GetCharacter(ch_corleth);
-    auto hostage = GetCharacter(ch_dreams);
-    auto kinsman = GetCharacter(ch_shadows);
+    auto recruiter = GetCharacter(ch_morkin);
+    auto hostage = GetCharacter(ch_lord1);
+    auto kinsman = GetCharacter(ch_lord2);
 
     GIVEN("that a realm's hostage is held")
     {
         hostage->Flags().Set(cf_prisoner);
-        REQUIRE( !corleth->CheckRecruitChar(kinsman) );
+        REQUIRE( !recruiter->CheckRecruitChar(kinsman) );
 
         WHEN("the hostage is recruited where he is held")
         {
-            hostage->Recruited(corleth);
+            hostage->Recruited(recruiter);
 
             THEN("he is a prisoner no longer")
             {
@@ -71,7 +80,7 @@ SCENARIO("Freeing a hostage opens his realm")
 
             AND_THEN("his people can be persuaded to join you")
             {
-                REQUIRE( corleth->CheckRecruitChar(kinsman) );
+                REQUIRE( recruiter->CheckRecruitChar(kinsman) );
             }
         }
     }
@@ -80,10 +89,11 @@ SCENARIO("Freeing a hostage opens his realm")
 SCENARIO("A hostage of one realm does not shut the door on another")
 {
     TMEStep::NewStory();
+    ClearAllHostages();
 
-    auto hostage = GetCharacter(ch_dreams);
-    auto luxor   = GetCharacter(TMEStep::ch_luxor);
-    auto freeman = GetCharacter("CH_XAJORKITH");
+    auto hostage = GetCharacter(ch_lord1);
+    auto recruiter = GetCharacter(TMEStep::ch_luxor);
+    auto freeman = GetCharacter("CH_MOGRIK");
 
     REQUIRE( freeman->Race() != hostage->Race() );
 
@@ -93,7 +103,7 @@ SCENARIO("A hostage of one realm does not shut the door on another")
 
         THEN("a lord of another realm is untouched by it")
         {
-            REQUIRE( luxor->CheckRecruitChar(freeman) );
+            REQUIRE( recruiter->CheckRecruitChar(freeman) );
         }
     }
 }

@@ -62,7 +62,9 @@ void TMEMapBuilder::CheckFlags( tme::mxmap* map, const TMXLayerInfo* layer, int 
 
         switch ( (TmxLocationFlag)(tile - flagsGID) ) {
             case tlf_domain:
+#if defined(_LOM_)
                 map->m_data[loc].flags |= lf_domain;
+#endif
                 break;
             case tlf_tunnel:
                 map->m_data[loc].flags |= lf_tunnel;
@@ -184,7 +186,7 @@ tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
             for ( int loc=0; loc<totalSize; loc++ )
                 if (layer->_tiles[loc] != 0 ) {
                     auto t = layer->_tiles[loc];
-                    auto ar = (t - areaGID + 1);
+                    auto ar = (t - areaGID);
                     map->m_data[loc].area = ar;
                 }
         }
