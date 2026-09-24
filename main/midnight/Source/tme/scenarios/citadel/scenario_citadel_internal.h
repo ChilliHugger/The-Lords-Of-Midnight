@@ -35,16 +35,46 @@ namespace tme {
         virtual mxentity* Create ( id_type_t type ) override;
     };
 
+    //
+    // An object that carries one of the seven weapons' powers. Doomdark's Revenge keeps the
+    // same two fields on ddr_object; the Citadel needs its own because it is a different
+    // scenario's object, not a DDR one.
+    //
+    class citadel_object : public mxobject
+    {
+    public:
+        citadel_object();
+
+        virtual void Serialize ( archive& ar ) override;
+        virtual void LoadTsv ( const TsvRow& row ) override;
+
+    public:
+        mxobjtype_t     type;
+        mxobjpower_t    power;
+    };
+
     class citadel_stronghold : public mxstronghold
     {
     public:
         virtual bool IsEnemy() const override;
+        virtual bool CanCharacterRecruitOrPost ( const mxcharacter* character ) const override;
     };
 
     class citadel_character : public mxcharacter
     {
     public:
         virtual bool TakesPartInBattle() const override;
+
+        // the seven weapons
+        virtual u32  FightStrength() const override;
+        virtual bool ShouldDieInFight() const override;
+        virtual void InitNightProcessing ( void ) override;
+        virtual bool CheckRecruitChar ( mxcharacter* pChar ) const override;
+        virtual bool IsAllowedWarriors() const override;
+        virtual bool IsAllowedRiders() const override;
+
+        // the power of the weapon this lord bears, OP_NONE if he bears none
+        mxobjpower_t WeaponPower() const;
     };
 
     #define CITADEL_SCENARIO(x) static_cast<citadel_x*>(mx->scenario)->x

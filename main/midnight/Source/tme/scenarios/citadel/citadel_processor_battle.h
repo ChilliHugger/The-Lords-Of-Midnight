@@ -16,6 +16,8 @@ namespace tme {
         virtual bool HasDefenders() const override;
         virtual bool TakesPart ( const mxarmy* army ) const override;
         virtual bool TakesPart ( const mxcharacter* character ) const override;
+
+        virtual void CharacterLosesEnergy ( mxcharacter* character ) override;
     };
 
 }

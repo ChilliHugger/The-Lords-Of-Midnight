@@ -47,7 +47,7 @@ namespace tme {
     mxunit_t    ResolveUnitType ( const TsvSymbolTable& symbols, const std::string& name );
     mxthing_t   ResolveThing ( const TsvSymbolTable& symbols, const std::string& name );
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
     mxobjtype_t  ResolveObjectType ( const TsvSymbolTable& symbols, const std::string& name );
     mxobjpower_t ResolveObjectPower ( const TsvSymbolTable& symbols, const std::string& name );
 #endif

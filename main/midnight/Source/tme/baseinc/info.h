@@ -1033,6 +1033,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual void RefreshLocationBasedVariables ( s32 icefear ) ;
             virtual bool CanWalkForward ( void );
             virtual bool ShouldLoseHorse(s32 hint = 0) const;
+            // How many blows this lord strikes in a battle. Lords of Midnight and
+            // Doomdark's Revenge answer `strength`; The Citadel lets a weapon change it.
+            virtual u32  FightStrength() const;
             virtual bool ShouldDieInFight() const;
             virtual bool ShouldHaveOneToOneWithNasty() const;
             virtual void Dismount();

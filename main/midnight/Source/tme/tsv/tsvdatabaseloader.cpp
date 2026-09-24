@@ -114,7 +114,7 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
         { &strongholds,     "strongholds.tsv",   ItemColumns({ TsvField::Stronghold::OccupyingRace, TsvField::Stronghold::Race, TsvField::Stronghold::Type, TsvField::Stronghold::Total, TsvField::Stronghold::Min, TsvField::Stronghold::Max, TsvField::Stronghold::StrategicalSuccess, TsvField::Stronghold::OwnerSuccess, TsvField::Stronghold::EnemySuccess, TsvField::Stronghold::Influence, TsvField::Stronghold::Respawn, TsvField::Stronghold::Occupier, TsvField::Stronghold::Owner, TsvField::Stronghold::Terrain }) },
 #endif
         { &regiments,       "regiments.tsv",     ItemColumns({ TsvField::Regiment::Race, TsvField::Regiment::Type, TsvField::Regiment::Total, TsvField::Regiment::Target, TsvField::Regiment::Orders, TsvField::Regiment::Success, TsvField::Regiment::Loyalty, TsvField::Regiment::Delay }) },
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         { &objects,         "objects.tsv",       ItemColumns({ TsvField::Object::Kills, TsvField::Name, TsvField::Object::Description, TsvField::Object::UseDescription, TsvField::Object::CarriedBy, TsvField::Object::Type, TsvField::Object::Power }) },
 #else
         { &objects,         "objects.tsv",       ItemColumns({ TsvField::Object::Kills, TsvField::Name, TsvField::Object::Description, TsvField::Object::UseDescription, TsvField::Object::CarriedBy }) },
@@ -128,7 +128,7 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
 #endif
         { &stringsTable,    "strings.tsv",       { TsvField::Version, TsvField::Id, TsvField::Symbol, TsvField::DatabaseString::Text } },
         { &variablesTable,  "variables.tsv",     { TsvField::Version, TsvField::Symbol, TsvField::DatabaseVariable::Value } },
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         { &objectTypeInfo,  "objecttypeinfo.tsv",  InfoColumns({}) },
         { &objectPowerInfo, "objectpowerinfo.tsv", InfoColumns({}) },
 #endif

@@ -48,5 +48,20 @@ bool citadel_battle::TakesPart ( const mxcharacter* character ) const
     return character->TakesPartInBattle();
 }
 
+//
+// Stormblade - "The warrior who wields Stormblade is tireless in battle whilst his foes wilt
+// with each blow." The wilting foes are the doubled strength in citadel_character::Fight
+// Strength; the tirelessness is here - a night of battle costs its bearer no energy at all.
+//
+void citadel_battle::CharacterLosesEnergy ( mxcharacter* character )
+{
+    auto lord = static_cast<citadel_character*>(character);
+
+    if ( lord != nullptr && lord->WeaponPower() == OP_BATTLE_TIRELESS )
+        return;
+
+    lom_battle::CharacterLosesEnergy(character);
+}
+
 } // namespace tme
 #endif // _CITADEL_

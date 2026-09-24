@@ -161,7 +161,7 @@ mxorders_t TsvRow::GetOrders ( const std::string& column ) const
     return ParseOrders(GetString(column));
 }
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
 mxobjtype_t TsvRow::GetObjectType ( const std::string& column ) const
 {
     return ResolveObjectType(*m_symbols, GetString(column));

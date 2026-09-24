@@ -64,7 +64,7 @@ namespace tme {
         mxthing_t       GetThing ( const std::string& column ) const;
         mxorders_t      GetOrders ( const std::string& column ) const;
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         mxobjtype_t     GetObjectType ( const std::string& column ) const;
         mxobjpower_t    GetObjectPower ( const std::string& column ) const;
 #endif

@@ -376,7 +376,7 @@ using namespace chilli::types;
             MG_LOSE                     =    2
         };
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         enum mxobjpower_t {
             OP_NONE                     =   0,
             OP_PERSUASION               =   1,
@@ -402,6 +402,17 @@ using namespace chilli::types;
             OP_FULL_TIREDNESS,
             OP_NO_TIREDNESS,
 
+            // The Citadel's seven weapons. Doomdark's Revenge asks only what an object
+            // does; The Citadel's design asks who is holding it - a dwarf with Widowmaker
+            // is invincible, a Giant with Skullcrusher fights double, Aranath is a boon to
+            // the Fey and a bane to everyone else. The bearer's race is the power, so each
+            // weapon needs its own. Persuader reuses OP_PERSUASION above.
+            OP_DWARF_INVINCIBLE,        // Widowmaker
+            OP_FEY_BLADE,               // Aranath
+            OP_GIANT_STRENGTH,          // Skullcrusher
+            OP_LONE_SWIFTNESS,          // Swiftwing
+            OP_BATTLE_TIRELESS,         // Stormblade
+            OP_ARAKAI_LOYALTY,          // Bloodbringer
         };
 
         enum mxobjtype_t {
@@ -1122,7 +1133,8 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         17
+// 18: The Citadel's objects carry a type and a power (citadel_object::Serialize)
+#define SAVEGAMEVERSION         18
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

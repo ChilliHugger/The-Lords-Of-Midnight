@@ -106,7 +106,7 @@ void lom_battle::ProcessAllCharacters( void )
 
         MakeFriendOrFoeList ( character );
         if ( !foes.empty() ) {
-            character->battleslew = Fight( character->strength, character->energy+128, foes );
+            character->battleslew = Fight( character->FightStrength(), character->energy+128, foes );
         }
     }
 }
