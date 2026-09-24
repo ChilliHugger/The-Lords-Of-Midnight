@@ -11,6 +11,7 @@
 namespace {
 
     const mxgridref k_here = mxgridref(1, 1);
+    const mxgridref k_south = mxgridref(1, 2);
 
 }
 
@@ -342,7 +343,7 @@ SCENARIO("Seeking cannot pick up a new object if the current one cannot be dropp
     }
 }
 
-SCENARIO("Seeking a nasty finds it without fighting it")
+SCENARIO("Seeking a nasty finds it without fighting it, and does not remove it")
 {
     TMEStep::NewStory();
 
@@ -360,6 +361,35 @@ SCENARIO("Seeking a nasty finds it without fighting it")
                 REQUIRE( result == GetObject("OB_WOLVES") );
                 REQUIRE_FALSE( lord->IsDead() );
                 REQUIRE_FALSE( lord->IsInBattle() );
+            }
+
+            THEN("the nasty is still there, still barring the way")
+            {
+                REQUIRE( MapStep::GetObjectAtLocation(k_here) == OB_WOLVES );
+            }
+        }
+    }
+}
+
+SCENARIO("Seeking a nasty cannot be used to sneak away from it unfought")
+{
+    TMEStep::NewStory();
+
+    GIVEN("a lord standing near a nasty, who has already sought it out")
+    {
+        auto lord = TMEStep::PlaceLordAt(TMEStep::ch_morkin, k_here, DR_SOUTH);
+        MapStep::ResetLocation(k_south);
+        MapStep::SetObjectAtLocation(k_here, OB_WOLVES);
+        lord->Cmd_Seek();
+
+        WHEN("they then try to move forward, away from the nasty")
+        {
+            auto result = lord->Cmd_MoveForward();
+
+            THEN("the nasty still blocks them from leaving")
+            {
+                REQUIRE( result == MX_FAILED );
+                REQUIRE( lord->Location() == k_here );
             }
         }
     }

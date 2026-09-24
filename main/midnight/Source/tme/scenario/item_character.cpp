@@ -1570,7 +1570,12 @@ namespace tme {
                         } else {
                             removeObject = false;
                         }
-#endif  
+#else
+                        // seeking does not fight a nasty on our behalf, so it
+                        // must stay put - otherwise a lord could seek to
+                        // clear it and then walk away without ever fighting
+                        removeObject = false;
+#endif
                     } else
 
                     // if we can pickup the new object
