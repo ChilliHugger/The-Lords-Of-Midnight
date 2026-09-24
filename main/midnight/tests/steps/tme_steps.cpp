@@ -10,6 +10,13 @@
 #include "../mocks/mocks_entity.h"
 
 
+// randomno::instance is a single process-wide singleton, never reset between
+// tests - without reseeding, any test exercising real (unmocked) mxrandom()
+// calls would silently depend on how many random draws every earlier-run
+// test happened to consume. Reseeding here makes every test start from the
+// same known sequence, regardless of run order.
+static const u32 TEST_RANDOM_SEED = 93186752;
+
 void TMEStep::NewStory(RULEFLAGS rules, mxdifficulty_t difficulty)
 {
     TMEStep::NewStory(mxscenarioid::DEFAULT, rules, difficulty);
@@ -18,10 +25,12 @@ void TMEStep::NewStory(RULEFLAGS rules, mxdifficulty_t difficulty)
 void TMEStep::NewStory(mxscenarioid scenario, RULEFLAGS rules, mxdifficulty_t difficulty)
 {
     TME_DeInit();
-            
+
     TME_Init(scenario, rules, difficulty, [] {
         tme::mx->entityfactory = new mockentityfactory();
     });
+
+    randomno::instance->seed(TEST_RANDOM_SEED);
 }
 
 void TMEStep::NightFalls()

@@ -164,3 +164,27 @@ public:
     int count;
     vector<int> data;
 };
+
+// Swaps in a MockRandom for the lifetime of the scope, so real formulas that
+// call mxrandom() can be exercised deterministically. Restores the original
+// generator on destruction, even if a REQUIRE fails mid-scope.
+class ScopedRandom
+{
+public:
+    explicit ScopedRandom(vector<int> values)
+    {
+        saved = randomno::instance;
+        mock.Reset();
+        mock.data = values;
+        randomno::instance = &mock;
+    }
+
+    ~ScopedRandom()
+    {
+        randomno::instance = saved;
+    }
+
+private:
+    MockRandom mock;
+    randomno* saved;
+};
