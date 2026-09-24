@@ -62,3 +62,8 @@ void MapStep::SetStronghold(loc_t loc)
 {
     tme::mx->gamemap->GetAt(loc).flags |= lf_stronghold;
 }
+
+void MapStep::SetSpecial(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_special;
+}

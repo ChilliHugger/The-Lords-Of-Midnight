@@ -72,7 +72,7 @@ public:
     static void LordHasFollowers(const string& lord, vector<string> names);
 
     // Regiments
-    static void RegimentAtLocation(loc_t location, u32 total = 10);
+    static mxregiment* RegimentAtLocation(loc_t location, u32 total = 10);
 
     // Strongholds - relocates a real stronghold matching the given type and
     // occupying race, and gives it the requested troop levels. Returns

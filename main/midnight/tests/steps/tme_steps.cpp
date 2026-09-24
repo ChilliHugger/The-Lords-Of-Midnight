@@ -209,14 +209,16 @@ void TMEStep::LordHasFollowers(const string& lord, vector<string> names)
     }
 }
 
-void TMEStep::RegimentAtLocation(loc_t location, u32 total)
+mxregiment* TMEStep::RegimentAtLocation(loc_t location, u32 total)
 {
     auto regiment = tme::mx->objRegiments.First();
     if (regiment == nullptr)
-        return;
+        return nullptr;
 
     regiment->Total(total);
     regiment->Location(location);
+
+    return regiment;
 }
 
 mxstronghold* TMEStep::StrongholdAtLocation(loc_t location, mxunit_t type, mxrace_t occupyingRace,
