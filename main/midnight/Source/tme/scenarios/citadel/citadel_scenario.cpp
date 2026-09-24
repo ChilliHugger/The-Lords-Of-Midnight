@@ -114,11 +114,6 @@ scenarioinfo_t* citadel_x::GetInfoBlock() const
 // is a story of the House of Moon rather than a realm won over, and he is the lord the
 // engine hands the player first.
 //
-// Named by symbol rather than flagged in the database because the database shipped with
-// The Citadel is still Lords of Midnight's. A name that is not in the database is passed
-// over, so this roster costs nothing today and wakes on its own the day the Citadel
-// characters land.
-//
 static LPCSTR citadel_hostages[] = {
     "CH_MOGRIK",        // Kith          - Mogrik the Witless, Prince of the Witherlands
     "CH_ZENETHOR",      // Atheling      - Zenethor the Strong, King of the Lee

@@ -21,12 +21,16 @@ static u32 ParseFlagWord ( const std::string& text, const NamedBit* table, size_
     chilli::lib::StringExtensions::split(text, '+', tokens);
 
     for ( auto& token : tokens ) {
+        bool matched = false;
         for ( size_t ii=0; ii<count; ii++ ) {
             if ( chilli::lib::c_stricmp(token.c_str(), table[ii].name) == 0 ) {
                 result |= table[ii].bit;
+                matched = true;
                 break;
             }
         }
+        if ( !matched )
+            MXTRACE("TsvFlags: unknown flag '%s' in '%s'", token.c_str(), text.c_str());
     }
 
     return result;
@@ -72,6 +76,15 @@ static const NamedBit CharacterFlagBits[] = {
     { "HASFOLLOWERS",        cf_followers },
     { "PREPARESBATTLE",      cf_preparesbattle },
     { "APPROACHING",         cf_approaching },
+    { "BATTLEOVER",          cf_battleover },
+    { "PRISONER",            cf_prisoner },
+    { "MAJOR",               cf_major },
+    { "LOCATION",            cf_location },
+    { "FRIENDLY",            cf_friendly },
+    { "INTEREST",            cf_interest },
+    { "KNOWLEDGE",           cf_knowledge },
+    { "CONTROL",             cf_control },
+    { "WATCH",               cf_watch },
 };
 
 static const NamedBit CharacterTraitBits[] = {
