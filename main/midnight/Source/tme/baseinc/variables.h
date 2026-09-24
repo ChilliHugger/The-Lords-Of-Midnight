@@ -150,7 +150,7 @@ namespace tme {
         extern sv_int_t    sv_controlled_character ;
         extern sv_int_t    sv_energy_cannot_continue;
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         extern sv_int_t    sv_object_powers ;
         extern sv_int_t    sv_object_types ;
 #endif

@@ -488,7 +488,7 @@ using namespace chilli::types;
             IDT_VICTORY                 =    24,
             IDT_MAPLOCATION             =   25,
             
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
             IDT_OBJECT_POWER            =   26,
             IDT_OBJECT_TYPE             =   27,
 #endif

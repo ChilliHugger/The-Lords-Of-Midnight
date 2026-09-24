@@ -45,7 +45,7 @@ MXRESULT mxengine::LoadDatabaseFromTsv ( const std::string& tsvDirectory )
     sv_terrains    = (s32)objTerrainInfos.Count();
     sv_areas       = (s32)objAreaInfos.Count();
     sv_commands    = (s32)objCommandInfos.Count();
-#if defined(_DDR_) || defined(_CITADEL)
+#if defined(_DDR_) || defined(_CITADEL_)
     sv_object_types  = (s32)objObjectTypesInfos.Count();
     sv_object_powers = (s32)objObjectPowersInfos.Count();
 #endif
@@ -119,7 +119,7 @@ MXRESULT mxengine::SaveDatabaseCache ( const std::string& filename )
         ar << (int)variables[ii].type;
     }
 
-#if defined(_DDR_) || defined(_CITADEL)
+#if defined(_DDR_) || defined(_CITADEL_)
     // matches LoadDatabaseBinary's read order exactly: count+data
     // interleaved per table here, unlike the main tables above
     ar << sv_object_types ;

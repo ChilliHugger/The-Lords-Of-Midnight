@@ -152,7 +152,7 @@ MXTRACE( "Loading Variables");
         variables[ii].type = (CVar::type)id ;
     }
 
-#if defined(_DDR_) || defined(_CITADEL)
+#if defined(_DDR_) || defined(_CITADEL_)
     if ( savegameversion > 10) {
 
         MXTRACE( "Loading Object Types");

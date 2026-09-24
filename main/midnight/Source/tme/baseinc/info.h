@@ -612,7 +612,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         typedef tme::collections::infos<mxunitinfo*>         c_unit;
         // unit
     
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         // object_power
         class mxobjectpower : public mxinfo
         {
