@@ -21,10 +21,10 @@ Version	Id	Symbol	Flags	Location	Kills	Name	Description	Use Description	Carried 
 7	20	OB_LANGUOR		"0,0"		Languor					
 7	21	OB_SPRINGS		"0,0"		Springs					
 7	22	OB_EYEOFTHEMOON	UNIQUE	"0,0"		Eye of the Moon	the {obj:name}		CH_MIDWINTER		
-7	23	OB_STORMBLADE	PICKUP+DROP+UNIQUE	"148,125"		Stormblade	the {obj:type} {obj:name}			OT_SWORD	
-7	24	OB_BLOODBRINGER	PICKUP+DROP+UNIQUE	"7,14"		Bloodbringer	the {obj:type} {obj:name}			OT_SWORD	
-7	25	OB_WIDOMAKER	PICKUP+DROP+UNIQUE	"72,200"		Widowmaker	the {obj:type} {obj:name}			OT_AXE	
-7	26	OB_ARANATH	PICKUP+DROP+UNIQUE	"32,80"		Arananth	the {obj:type} {obj:name}			OT_SWORD	
-7	27	OB_PERSUADER	PICKUP+DROP+UNIQUE	"25,160"		Persuader	the {obj:type} {obj:name}			OT_AXE	
-7	28	OB_SKULLCRUSHER	PICKUP+DROP+UNIQUE	"233,205"		Skullcrusher	the {obj:type} {obj:name}			OT_AXE	
-7	29	OB_SWIFTWING	PICKUP+DROP+UNIQUE	"241,210"		Swiftwing	the {obj:type} {obj:name}			OT_SWORD	
+7	23	OB_STORMBLADE	PICKUP+DROP+UNIQUE	"148,125"		Stormblade	the {obj:type} {obj:name}			OT_SWORD	OP_BATTLE_TIRELESS
+7	24	OB_BLOODBRINGER	PICKUP+DROP+UNIQUE	"7,14"		Bloodbringer	the {obj:type} {obj:name}			OT_SWORD	OP_ARAKAI_LOYALTY
+7	25	OB_WIDOMAKER	PICKUP+DROP+UNIQUE	"72,200"		Widowmaker	the {obj:type} {obj:name}			OT_AXE	OP_DWARF_INVINCIBLE
+7	26	OB_ARANATH	PICKUP+DROP+UNIQUE	"32,80"		Arananth	the {obj:type} {obj:name}			OT_SWORD	OP_FEY_BLADE
+7	27	OB_PERSUADER	PICKUP+DROP+UNIQUE	"25,160"		Persuader	the {obj:type} {obj:name}			OT_AXE	OP_PERSUASION
+7	28	OB_SKULLCRUSHER	PICKUP+DROP+UNIQUE	"233,205"		Skullcrusher	the {obj:type} {obj:name}			OT_AXE	OP_GIANT_STRENGTH
+7	29	OB_SWIFTWING	PICKUP+DROP+UNIQUE	"241,210"		Swiftwing	the {obj:type} {obj:name}			OT_SWORD	OP_LONE_SWIFTNESS

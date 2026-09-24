@@ -1033,6 +1033,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual void RefreshLocationBasedVariables ( s32 icefear ) ;
             virtual bool CanWalkForward ( void );
             virtual bool ShouldLoseHorse(s32 hint = 0) const;
+            virtual u32  FightStrength() const;
             virtual bool ShouldDieInFight() const;
             virtual bool ShouldHaveOneToOneWithNasty() const;
             virtual void Dismount();

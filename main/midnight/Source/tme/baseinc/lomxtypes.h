@@ -376,7 +376,7 @@ using namespace chilli::types;
             MG_LOSE                     =    2
         };
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
         enum mxobjpower_t {
             OP_NONE                     =   0,
             OP_PERSUASION               =   1,
@@ -401,7 +401,12 @@ using namespace chilli::types;
             OP_NO_DESPONDANCE,
             OP_FULL_TIREDNESS,
             OP_NO_TIREDNESS,
-
+            OP_DWARF_INVINCIBLE,        // Widowmaker
+            OP_FEY_BLADE,               // Aranath
+            OP_GIANT_STRENGTH,          // Skullcrusher
+            OP_LONE_SWIFTNESS,          // Swiftwing
+            OP_BATTLE_TIRELESS,         // Stormblade
+            OP_ARAKAI_LOYALTY,          // Bloodbringer
         };
 
         enum mxobjtype_t {
@@ -1122,7 +1127,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         17
+#define SAVEGAMEVERSION         18
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

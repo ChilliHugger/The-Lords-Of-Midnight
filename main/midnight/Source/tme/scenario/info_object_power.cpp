@@ -17,7 +17,7 @@
 
 #include "../baseinc/tme_internal.h"
 
-#if defined(_DDR_)
+#if defined(_DDR_) || defined(_CITADEL_)
 
 namespace tme {
     

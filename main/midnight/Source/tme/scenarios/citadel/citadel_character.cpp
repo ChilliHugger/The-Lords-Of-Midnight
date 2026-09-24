@@ -27,5 +27,77 @@ bool citadel_character::TakesPartInBattle() const
         && Race() != RA_ENEMY;
 }
 
+mxobjpower_t citadel_character::WeaponPower() const
+{
+    auto object = static_cast<citadel_object*>(Carrying());
+    return object != nullptr ? object->power : OP_NONE;
+}
+
+static bool IsDwarf ( mxrace_t race )
+{
+    return race == RA_LONG_DWARF || race == RA_DEEPING_DWARF;
+}
+
+static bool IsFey ( mxrace_t race )
+{
+    return race == RA_HIGH_FEY
+        || race == RA_DAWN_FEY
+        || race == RA_GOLDEN_FEY
+        || race == RA_DARK_FEY;
+}
+
+u32 citadel_character::FightStrength() const
+{
+    auto base = mxcharacter::FightStrength();
+
+    switch ( WeaponPower() ) {
+        case OP_GIANT_STRENGTH:
+            return Race() == RA_BLOODMARCH_GIANT ? base * 2 : base;
+        case OP_FEY_BLADE:
+            return IsFey(Race()) ? base * 2 : base / 2;
+        case OP_BATTLE_TIRELESS:
+            return base * 2;
+        default:
+            return base;
+    }
+}
+
+bool citadel_character::ShouldDieInFight() const
+{
+    if ( WeaponPower() == OP_DWARF_INVINCIBLE && IsDwarf(Race()) )
+        return false;
+
+    return mxcharacter::ShouldDieInFight();
+}
+
+void citadel_character::InitNightProcessing ( void )
+{
+    mxcharacter::InitNightProcessing();
+
+    if ( WeaponPower() == OP_LONE_SWIFTNESS && !IsFollowing() && !HasFollowers() )
+        energy = (u32)sv_energy_max;
+}
+
+bool citadel_character::CheckRecruitChar ( mxcharacter* pChar ) const
+{
+    if ( WeaponPower() == OP_ARAKAI_LOYALTY
+        && pChar != nullptr
+        && pChar->Race() == RA_ARAKAI
+        && mx->scenario->HostageOfRace(RA_ARAKAI) == nullptr )
+        return true;
+
+    return mxcharacter::CheckRecruitChar(pChar);
+}
+
+bool citadel_character::IsAllowedWarriors() const
+{
+    return WeaponPower() == OP_PERSUASION || mxcharacter::IsAllowedWarriors();
+}
+
+bool citadel_character::IsAllowedRiders() const
+{
+    return WeaponPower() == OP_PERSUASION || mxcharacter::IsAllowedRiders();
+}
+
 } // namespace tme
 #endif // _CITADEL_

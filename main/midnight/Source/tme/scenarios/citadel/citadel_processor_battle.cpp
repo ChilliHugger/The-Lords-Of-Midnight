@@ -48,5 +48,15 @@ bool citadel_battle::TakesPart ( const mxcharacter* character ) const
     return character->TakesPartInBattle();
 }
 
+void citadel_battle::CharacterLosesEnergy ( mxcharacter* character )
+{
+    auto lord = static_cast<citadel_character*>(character);
+
+    if ( lord != nullptr && lord->WeaponPower() == OP_BATTLE_TIRELESS )
+        return;
+
+    lom_battle::CharacterLosesEnergy(character);
+}
+
 } // namespace tme
 #endif // _CITADEL_

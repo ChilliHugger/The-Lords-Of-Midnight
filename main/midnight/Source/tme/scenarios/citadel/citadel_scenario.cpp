@@ -174,6 +174,34 @@ u32 citadel_x::TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) co
     return mxscenario::TerrainMovementModifier(race, toGeneralisedTerrain(terrain));
 }
 
+citadel_object::citadel_object()
+    : type(OT_NONE), power(OP_NONE)
+{
+}
+
+void citadel_object::Serialize ( archive& ar )
+{
+    mxobject::Serialize ( ar );
+
+    if ( ar.IsStoring() ) {
+        WRITE_ENUM(type);
+        WRITE_ENUM(power);
+    } else {
+        if ( tme::mx->SaveGameVersion() > 17 ) {
+            READ_ENUM(type);
+            READ_ENUM(power);
+        }
+    }
+}
+
+void citadel_object::LoadTsv ( const TsvRow& row )
+{
+    mxobject::LoadTsv(row);
+
+    type = row.GetObjectType(TsvField::Object::Type);
+    power = row.GetObjectPower(TsvField::Object::Power);
+}
+
 mxentity* citadel_entityfactory::Create ( id_type_t type )
 {
     switch ( type ) {
@@ -181,6 +209,13 @@ mxentity* citadel_entityfactory::Create ( id_type_t type )
             return new citadel_character;
         case IDT_STRONGHOLD:
             return new citadel_stronghold;
+        case IDT_OBJECT:
+            return new citadel_object;
+        // the base factory knows neither, and the two info tables are created by count
+        case IDT_OBJECT_POWER:
+            return new mxobjectpower;
+        case IDT_OBJECT_TYPE:
+            return new mxobjecttype;
         default:
             break;
     }

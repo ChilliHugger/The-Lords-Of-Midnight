@@ -27,5 +27,15 @@ bool citadel_stronghold::IsEnemy() const
         && Occupier() == CITADEL_SCENARIO(boroth);
 }
 
+bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* character ) const
+{
+    auto lord = static_cast<const citadel_character*>(character);
+
+    if ( lord != nullptr && lord->WeaponPower() == OP_PERSUASION && !IsEnemy() )
+        return true;
+
+    return mxstronghold::CanCharacterRecruitOrPost(character);
+}
+
 } // namespace tme
 #endif // _CITADEL_

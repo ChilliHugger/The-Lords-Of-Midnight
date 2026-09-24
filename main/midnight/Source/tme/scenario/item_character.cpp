@@ -450,6 +450,11 @@ namespace tme {
             return mxrandom() & 1;
         }
 
+        u32 mxcharacter::FightStrength() const
+        {
+            return strength;
+        }
+
         bool mxcharacter::ShouldDieInFight() const
         {
             auto temp = (energy/2) - 64 + reckless;
