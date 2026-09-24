@@ -114,10 +114,12 @@ scenarioinfo_t* citadel_x::GetInfoBlock() const
 // is a story of the House of Moon rather than a realm won over, and he is the lord the
 // engine hands the player first.
 //
-// Named by symbol rather than flagged in the database because the database shipped with
-// The Citadel is still Lords of Midnight's. A name that is not in the database is passed
-// over, so this roster costs nothing today and wakes on its own the day the Citadel
-// characters land.
+// This roster is now belt and braces. It was written when the shipped database was still
+// Lords of Midnight's, so no Citadel lord could be flagged in data; since the flag parser
+// learned the PRISONER token, characters.tsv sets cf_prisoner on these twelve by itself
+// (and on Luxor, whom this list deliberately omits). Setting a flag twice is harmless, and
+// keeping the list means a misspelt flag cannot quietly empty Boroth's dungeons. Delete it
+// once a run has confirmed the data path.
 //
 static LPCSTR citadel_hostages[] = {
     "CH_MOGRIK",        // Kith          - Mogrik the Witless, Prince of the Witherlands
