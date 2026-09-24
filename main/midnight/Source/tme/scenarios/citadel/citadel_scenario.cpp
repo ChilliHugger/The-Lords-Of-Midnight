@@ -179,15 +179,6 @@ u32 citadel_x::TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) co
     return mxscenario::TerrainMovementModifier(race, toGeneralisedTerrain(terrain));
 }
 
-//
-// citadel_object
-//
-// The power is static - it is read from objects.tsv and never changes in play - but objects are
-// restored from the savegame rather than re-read from the database (mxengine.cpp objObjects
-// .Serialize), so it has to be written out or a loaded story would find seven ordinary swords.
-// Saves written before the weapons had powers are version 17 and carry neither field; they load
-// with OP_NONE, exactly as Doomdark's Revenge treated its own saves from before version 10.
-//
 citadel_object::citadel_object()
     : type(OT_NONE), power(OP_NONE)
 {

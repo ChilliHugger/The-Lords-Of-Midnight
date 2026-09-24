@@ -27,11 +27,6 @@ bool citadel_stronghold::IsEnemy() const
         && Occupier() == CITADEL_SCENARIO(boroth);
 }
 
-//
-// Persuader - "He who wields Persuader is able to draw upon warriors from any stronghold not at
-// war with his realm." Lords of Midnight asks that the keep be your own people's; Persuader
-// asks only that it not be held against you.
-//
 bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* character ) const
 {
     auto lord = static_cast<const citadel_character*>(character);
