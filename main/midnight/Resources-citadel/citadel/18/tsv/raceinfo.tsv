@@ -32,3 +32,4 @@ Version	Id	Symbol	Flags	Name	Default Soldiers Name	Success	Initial Movement	Diag
 7	30	RA_BLOODMARCH_GIANT		Giant		0	2	1	2	255	9	0	0	0	0	0
 7	31	RA_DARK_FEY		Dark Fey		0	2	1	2	255	9	0	0	0	0	0
 7	32	RA_GOLDEN_FEY		Golden Fey		0	2	1	2	255	9	0	0	0	0	0
+7	33	RA_CORSAIRS		Corsair		0	2	1	2	255	9	0	0	0	0	0
