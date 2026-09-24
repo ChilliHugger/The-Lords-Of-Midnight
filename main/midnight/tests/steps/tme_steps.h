@@ -53,6 +53,9 @@ public:
     static void LordAtLocation(const string& name, const string& location);
     static void LordAtLocation(const string& name, loc_t location);
     static void LordsAtSameLocation(const string& name1, const string& name2);
+
+    // Unlike LordAtLocation, also resets the square (real map terrain there may be impassable) and sets looking/time/energy to a deterministic baseline.
+    static mxcharacter* PlaceLordAt(const string& name, loc_t here, mxdir_t looking);
     
     static void LordIsNotRecruited(const string& name);
     static void LordIsRecruited(const string& name);
@@ -67,6 +70,9 @@ public:
 
     // Grouping
     static void LordHasFollowers(const string& lord, vector<string> names);
+
+    // Regiments
+    static void RegimentAtLocation(loc_t location, u32 total = 10);
 
     
     // mocks

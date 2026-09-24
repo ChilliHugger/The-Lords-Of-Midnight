@@ -6,6 +6,7 @@
 //
 
 #include "tme_steps.h"
+#include "map_steps.h"
 #include "../mocks/mocks_entity.h"
 
 
@@ -100,6 +101,18 @@ void TMEStep::LordAtLocation(const string& name, loc_t location)
     lord->Location( location );
 }
 
+mxcharacter* TMEStep::PlaceLordAt(const string& name, loc_t here, mxdir_t looking)
+{
+    MapStep::ResetLocation(here);
+
+    auto lord = GetCharacter(name);
+    lord->Location(here);
+    lord->looking = looking;
+    lord->time = sv_time_dawn;
+    lord->energy = 100;
+    return lord;
+}
+
 void TMEStep::LordIsNotRecruited(const string& name)
 {
     auto lord = GetCharacter(name);
@@ -185,6 +198,16 @@ void TMEStep::LordHasFollowers(const string& lord, vector<string> names)
         
         lord->Cmd_Follow(leader);
     }
+}
+
+void TMEStep::RegimentAtLocation(loc_t location, u32 total)
+{
+    auto regiment = tme::mx->objRegiments.First();
+    if (regiment == nullptr)
+        return;
+
+    regiment->Total(total);
+    regiment->Location(location);
 }
 
 void TMEStep::LordShouldDieInFight(const string& lord)
