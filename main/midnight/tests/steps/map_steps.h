@@ -18,5 +18,8 @@ public:
     static void SetImpassable(loc_t loc);
     static void SetTerrain(loc_t loc, mxterrain_t terrain);
     static void ResetLocation(loc_t loc, mxterrain_t terrain = TN_PLAINS);
+    static void SetTunnel(loc_t loc);
+    static void SetTunnelEntrance(loc_t loc);
+    static void SetTunnelExit(loc_t loc);
 
 };

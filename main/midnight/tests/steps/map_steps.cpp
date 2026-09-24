@@ -42,3 +42,18 @@ void MapStep::ResetLocation(loc_t loc, mxterrain_t terrain)
     maploc.flags = 0;
     maploc.terrain = terrain;
 }
+
+void MapStep::SetTunnel(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_tunnel;
+}
+
+void MapStep::SetTunnelEntrance(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_tunnel_entrance;
+}
+
+void MapStep::SetTunnelExit(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_tunnel_exit;
+}
