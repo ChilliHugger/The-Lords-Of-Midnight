@@ -57,3 +57,8 @@ void MapStep::SetTunnelExit(loc_t loc)
 {
     tme::mx->gamemap->GetAt(loc).flags |= lf_tunnel_exit;
 }
+
+void MapStep::SetStronghold(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_stronghold;
+}

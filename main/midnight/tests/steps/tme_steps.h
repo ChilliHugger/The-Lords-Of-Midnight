@@ -74,6 +74,12 @@ public:
     // Regiments
     static void RegimentAtLocation(loc_t location, u32 total = 10);
 
+    // Strongholds - relocates a real stronghold matching the given type and
+    // occupying race, and gives it the requested troop levels. Returns
+    // nullptr if no such stronghold exists in the loaded scenario data.
+    static mxstronghold* StrongholdAtLocation(loc_t location, mxunit_t type, mxrace_t occupyingRace,
+                                               u32 totalTroops, u32 minTroops, u32 maxTroops);
+
     
     // mocks
     static void LordShouldDieInFight(const string& lord);

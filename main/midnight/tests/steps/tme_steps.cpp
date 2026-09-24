@@ -219,6 +219,34 @@ void TMEStep::RegimentAtLocation(loc_t location, u32 total)
     regiment->Location(location);
 }
 
+mxstronghold* TMEStep::StrongholdAtLocation(loc_t location, mxunit_t type, mxrace_t occupyingRace,
+                                             u32 totalTroops, u32 minTroops, u32 maxTroops)
+{
+    mxstronghold* found = nullptr;
+
+    for ( auto s : tme::mx->objStrongholds ) {
+        if ( s->Type() == type && s->OccupyingRace() == occupyingRace ) {
+            found = s;
+            break;
+        }
+    }
+
+    if ( found == nullptr )
+        return nullptr;
+
+    found->Location(location);
+    found->TotalTroops(totalTroops);
+    found->MinTroops(minTroops);
+    found->MaxTroops(maxTroops);
+
+    // mxengine::CollectStrongholds only looks here if the map square itself
+    // is flagged as a stronghold, regardless of where any stronghold entity
+    // says its own Location() is.
+    MapStep::SetStronghold(location);
+
+    return found;
+}
+
 void TMEStep::LordShouldDieInFight(const string& lord)
 {
     auto mock = GetMockCharacter(lord);

@@ -21,5 +21,6 @@ public:
     static void SetTunnel(loc_t loc);
     static void SetTunnelEntrance(loc_t loc);
     static void SetTunnelExit(loc_t loc);
+    static void SetStronghold(loc_t loc);
 
 };
