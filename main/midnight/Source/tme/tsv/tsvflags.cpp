@@ -29,9 +29,6 @@ static u32 ParseFlagWord ( const std::string& text, const NamedBit* table, size_
                 break;
             }
         }
-        // A token nobody recognises used to be dropped without a word, which is how The
-        // Citadel shipped eight live character flags - PRISONER among them - that never
-        // reached a single lord. Say so; a misspelt flag is otherwise invisible.
         if ( !matched )
             MXTRACE("TsvFlags: unknown flag '%s' in '%s'", token.c_str(), text.c_str());
     }
@@ -80,10 +77,6 @@ static const NamedBit CharacterFlagBits[] = {
     { "PREPARESBATTLE",      cf_preparesbattle },
     { "APPROACHING",         cf_approaching },
     { "BATTLEOVER",          cf_battleover },
-    // The Citadel's export writes all of these. Every one is a real flag the engine already
-    // declares; they were simply missing from this table, so they were parsed and thrown away.
-    // Only PRISONER is read at runtime today (mxscenario::HostageOfRace) - the rest are the
-    // 1995 database's own bookkeeping, carried so the data round-trips honestly.
     { "PRISONER",            cf_prisoner },
     { "MAJOR",               cf_major },
     { "LOCATION",            cf_location },
