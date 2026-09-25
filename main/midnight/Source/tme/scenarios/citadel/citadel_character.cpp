@@ -19,10 +19,14 @@ void citadel_character::Serialize ( archive& ar )
 {
     mxcharacter::Serialize(ar);
 
-    if ( ar.IsStoring() )
+    if ( ar.IsStoring() ) {
         ar << qualities ;
-    else
-        ar >> qualities ;
+    } else {
+        if ( tme::mx->SaveGameVersion() > 18 )
+            ar >> qualities ;
+        else
+            qualities = 0 ;
+    }
 }
 
 void citadel_character::LoadTsv ( const TsvRow& row )
