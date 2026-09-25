@@ -73,7 +73,7 @@ MXRESULT mxengine::SaveDatabaseCache ( const std::string& filename )
 
     ar << TME_MAGIC_NO ;
     ar << (int)scenario->GetInfoBlock()->Id;
-    ar << (u32)SAVEGAMEVERSION ;
+    ar << (u32)savegameversion ;
     ar << (char*)DATABASEHEADER ;
 
     // counts first, matching LoadDatabaseBinary's read order exactly -

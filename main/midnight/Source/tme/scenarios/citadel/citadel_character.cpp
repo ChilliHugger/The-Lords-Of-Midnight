@@ -19,14 +19,10 @@ void citadel_character::Serialize ( archive& ar )
 {
     mxcharacter::Serialize(ar);
 
-    if ( ar.IsStoring() ) {
+    if ( ar.IsStoring() )
         ar << qualities ;
-    } else {
-        if ( tme::mx->SaveGameVersion() > 18 )
-            ar >> qualities ;
-        else
-            qualities = 0 ;
-    }
+    else
+        ar >> qualities ;
 }
 
 void citadel_character::LoadTsv ( const TsvRow& row )
@@ -34,15 +30,6 @@ void citadel_character::LoadTsv ( const TsvRow& row )
     mxcharacter::LoadTsv(row);
 
     qualities = ParseCharacterQualities(row.GetString(TsvField::Character::Qualities));
-
-    // The two bits are asked for BY NAME through the same parser that read the row, so they
-    // cannot drift from the table in tsvflags.cpp the way a duplicated bit number would.
-    if ( HasQuality(ParseCharacterQualities("MIGHTYWARRIOR")) )
-        strength = 100;
-    else if ( HasQuality(ParseCharacterQualities("FEEBLEWARRIOR")) )
-        strength = 25;
-    else if ( qualities != 0 )
-        strength = 50;
 }
 
 //

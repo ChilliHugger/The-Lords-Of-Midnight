@@ -1010,6 +1010,7 @@ namespace tme {
         
         // citadel
         enum CHARACTERQUALITIES : u64 {
+            qf_none                = 0,
             // +ve
             qf_brave               = MXBIT(0),
             qf_farsighted          = MXBIT(1),
@@ -1127,7 +1128,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         19
+#define SAVEGAMEVERSION         18
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

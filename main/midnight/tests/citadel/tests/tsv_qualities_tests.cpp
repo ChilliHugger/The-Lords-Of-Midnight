@@ -1,5 +1,5 @@
 //
-//  qualities_tests.cpp
+//  tsv_qualities_tests.cpp
 //  citadel
 //
 #include "../../steps/tme_steps.h"
@@ -7,18 +7,13 @@
 
 namespace {
 
-    u64 Q ( const char* word )
-    {
-        return tme::ParseCharacterQualities(word);
-    }
-
     // a lord with neither warrior attribute — the ordinary case, whoever it happens to be
     mxcharacter* AnOrdinaryLord()
     {
         for ( auto character : tme::mx->objCharacters ) {
-            if ( character->Qualities() != 0
-                 && !character->HasQuality(Q("MIGHTYWARRIOR"))
-                 && !character->HasQuality(Q("FEEBLEWARRIOR")) )
+            if ( character->Qualities() != qf_none
+                 && !character->HasQuality(qf_mightywarrior)
+                 && !character->HasQuality(qf_feeblewarrior) )
                 return character;
         }
         return nullptr;
@@ -36,7 +31,7 @@ SCENARIO("The Qualities column is read")
             // 154/154 rows are populated in the file. A zero here means the column is not in
             // the loader's list, not that a lord is featureless.
             for ( auto character : tme::mx->objCharacters ) {
-                REQUIRE( character->Qualities() != 0 );
+                REQUIRE( character->Qualities() != qf_none );
             }
         }
 
@@ -45,11 +40,11 @@ SCENARIO("The Qualities column is read")
             auto morkin = GetCharacter("CH_MORKIN");
             REQUIRE( morkin != nullptr );
             // characters.tsv: BOLD+TIRELESS+RELIABLE+GALLANT
-            REQUIRE( morkin->HasQuality(Q("BOLD")) );
-            REQUIRE( morkin->HasQuality(Q("TIRELESS")) );
-            REQUIRE( morkin->HasQuality(Q("RELIABLE")) );
-            REQUIRE( morkin->HasQuality(Q("GALLANT")) );
-            REQUIRE_FALSE( morkin->HasQuality(Q("COWARDLY")) );
+            REQUIRE( morkin->HasQuality(qf_bold) );
+            REQUIRE( morkin->HasQuality(qf_tireless) );
+            REQUIRE( morkin->HasQuality(qf_reliable) );
+            REQUIRE( morkin->HasQuality(qf_gallant) );
+            REQUIRE_FALSE( morkin->HasQuality(qf_cowardly) );
         }
     }
 }
@@ -62,8 +57,8 @@ SCENARIO("Combat strength comes from the attributes, not from a flat number")
     {
         auto zenethor = GetCharacter("CH_ZENETHOR");
         REQUIRE( zenethor != nullptr );
-        REQUIRE( zenethor->HasQuality(Q("MIGHTYWARRIOR")) );
-        REQUIRE( zenethor->HasQuality(Q("SUPERBLEADER")) );
+        REQUIRE( zenethor->HasQuality(qf_mightywarrior) );
+        REQUIRE( zenethor->HasQuality(qf_superbleader) );
 
         THEN("he fights with the strength of a hundred")
         {
@@ -76,8 +71,8 @@ SCENARIO("Combat strength comes from the attributes, not from a flat number")
             // the data has moved, not the code.
             s32 both = 0;
             for ( auto character : tme::mx->objCharacters ) {
-                if ( character->HasQuality(Q("MIGHTYWARRIOR"))
-                     && character->HasQuality(Q("SUPERBLEADER")) )
+                if ( character->HasQuality(qf_mightywarrior)
+                     && character->HasQuality(qf_superbleader) )
                     both++;
             }
             REQUIRE( both == 1 );
@@ -99,7 +94,7 @@ SCENARIO("Combat strength comes from the attributes, not from a flat number")
     {
         mxcharacter* feeble = nullptr;
         for ( auto character : tme::mx->objCharacters ) {
-            if ( character->HasQuality(Q("FEEBLEWARRIOR")) )
+            if ( character->HasQuality(qf_feeblewarrior) )
                 feeble = character;
         }
         REQUIRE( feeble != nullptr );
@@ -111,58 +106,13 @@ SCENARIO("Combat strength comes from the attributes, not from a flat number")
     }
 }
 
-SCENARIO("Attribute affinity scores agreement against opposition")
+SCENARIO("Quality words parse to the qf_ bits")
 {
-    // No story needed — this is arithmetic over two bit sets.
-
-    GIVEN("two characters who agree on one attribute and differ on nothing")
+    GIVEN("words joined with '+', in any case")
     {
-        const u64 a = Q("BRAVE+GALLANT");
-        const u64 b = Q("BRAVE+SOLITARY");
-
-        THEN("they score one point")
+        THEN("each maps to its own bit")
         {
-            REQUIRE( tme::QualityAffinity(a, b) == 1 );
-        }
-    }
-
-    GIVEN("two characters holding opposite attributes")
-    {
-        const u64 brave    = Q("BRAVE");
-        const u64 cowardly = Q("COWARDLY");
-
-        THEN("the point is taken away, whichever way round they are asked")
-        {
-            REQUIRE( tme::QualityAffinity(brave, cowardly) == -1 );
-            REQUIRE( tme::QualityAffinity(cowardly, brave) == -1 );
-        }
-    }
-
-    GIVEN("attributes with nothing to do with one another")
-    {
-        THEN("they score nothing, as the design says they should")
-        {
-            REQUIRE( tme::QualityAffinity(Q("BRAVE"), Q("TALKATIVE")) == 0 );
-        }
-    }
-
-    GIVEN("an attribute with no opposite among the sixty two")
-    {
-        THEN("it can be shared but can never count against anyone")
-        {
-            REQUIRE( tme::QualityAffinity(Q("SUPERBLEADER"), Q("SUPERBLEADER")) == 1 );
-            REQUIRE( tme::QualityAffinity(Q("SUPERBLEADER"), Q("MAD")) == 0 );
-        }
-    }
-
-    GIVEN("agreement and opposition in the same pair of characters")
-    {
-        const u64 a = Q("BRAVE+LOYAL+PATIENT");
-        const u64 b = Q("BRAVE+TREACHEROUS+PATIENT");
-
-        THEN("they cancel — two shared, one opposed")
-        {
-            REQUIRE( tme::QualityAffinity(a, b) == 1 );
+            REQUIRE( tme::ParseCharacterQualities("bold+Gallant") == (qf_bold | qf_gallant) );
         }
     }
 
@@ -170,7 +120,7 @@ SCENARIO("Attribute affinity scores agreement against opposition")
     {
         THEN("it contributes nothing rather than colliding with a real attribute")
         {
-            REQUIRE( Q("NOTANATTRIBUTE") == 0 );
+            REQUIRE( tme::ParseCharacterQualities("NOTANATTRIBUTE") == qf_none );
         }
     }
 }

@@ -236,6 +236,15 @@ void citadel_x::initialiseAfterCreate ( u32 version )
             hostage->Flags().Set(cf_prisoner);
     }
 
+    FOR_EACH_CHARACTER(character) {
+        if ( character->HasQuality(qf_mightywarrior) )
+            character->strength = 100;
+        else if ( character->HasQuality(qf_feeblewarrior) )
+            character->strength = 25;
+        else if ( character->Qualities() != qf_none )
+            character->strength = 50;
+    }
+
     // said of a lord still in the dungeons, in place of "has not yet been persuaded to
     // join you", which would be a poor way to describe a prisoner
     mx->text->ModifySystemString(SS_PRISONER,
