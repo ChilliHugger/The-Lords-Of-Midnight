@@ -2,17 +2,6 @@
 //  qualities_tests.cpp
 //  citadel
 //
-//  The 1995 personality attributes — the `Qualities` column that shipped in the Citadel's
-//  characters.tsv and that nothing read until now. Two things are pinned here:
-//
-//    1. the column is actually WIRED (it was present in the file and absent from the loader's
-//       column list, which is a failure that looks exactly like "everyone is ordinary");
-//    2. the strength the design specifies falls out of it — 100 for a Mighty Warrior, 25 for a
-//       Feeble Warrior, 50 for everyone else.
-//
-//  The affinity arithmetic is tested against the rule as the strategy guide states it, because
-//  it is what the recruitment score will be built on and it is pure enough to pin exactly.
-//
 #include "../../steps/tme_steps.h"
 #include "../../../Source/tme/tsv/tsvflags.h"
 

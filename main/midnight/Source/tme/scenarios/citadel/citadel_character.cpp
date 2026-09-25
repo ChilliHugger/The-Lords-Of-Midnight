@@ -15,27 +15,6 @@
 #if defined(_CITADEL_)
 namespace tme {
 
-//
-// THE PERSONALITY ATTRIBUTES. `Qualities` is a Citadel-only column, so it is read here rather
-// than in mxcharacter::LoadTsv - the same place and for the same reason ddr_character reads
-// `Home` and `Desired Object`. LoM and DDR's characters.tsv have 31 columns and no Qualities.
-//
-// IT ALSO DECIDES COMBAT STRENGTH, which is why this is worth doing before the NPC layer that
-// wanted it. The strategy guide: "A character that has Mighty Warrior as a personality attribute
-// fights with the combat strength of 100 troops. However, if a character has Feeble Warrior ...
-// they fight with the strength of 25 troops. All other characters fight with the strength of 50
-// troops." Those three numbers sit exactly on the engine's own scale (STRENGTH_MAX is 100), so
-// no conversion is involved.
-//
-// It supersedes the uniform Strength = 20 in characters.tsv, which was a placeholder chosen when
-// the column was blank and the design was thought not to constrain it. The column is still the
-// FALLBACK: a row with no recognised quality keeps whatever the file says, so this can never
-// leave a lord swinging zero the way the blank column once did.
-//
-// Derived at LOAD and written into `strength` on purpose. `strength` is serialized and
-// `qualities` is not, so a savegame carries the answer rather than the inputs - and
-// FightStrength()'s weapon multipliers below then scale the right base with no further work.
-//
 void citadel_character::LoadTsv ( const TsvRow& row )
 {
     mxcharacter::LoadTsv(row);

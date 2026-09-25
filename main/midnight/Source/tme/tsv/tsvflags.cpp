@@ -106,28 +106,6 @@ static const NamedBit CharacterTraitBits[] = {
     { "TREACHEROUS", ct_treacherous },
 };
 
-// ─── CITADEL: the personality attributes ("Qualities") ──────────────────────────────
-//
-// Mike Singleton's design document plus Ronald Wartow's strategy guide describe a
-// system of "64 personality attributes within the game, 32 good, 32 bad", scored by
-// agreement and opposition. 62 of them appear across the Citadel's 154 characters.
-//
-// THIS IS NOT `Traits`, despite both being '+'-separated words on the same row.
-// `Traits` is Lords of Midnight's SIXTEEN (ct_good … ct_treacherous) and is a flags32;
-// none of the names below are in it. Reading Qualities into traits would silently drop
-// the 46 tokens that do not fit and quietly mean the wrong thing for the 16 that do.
-//
-// LAYOUT, and the reason for it. Bits 0-25 hold one half of each OPPOSED PAIR and bits
-// 32-57 hold the other, so a quality's opposite is its bit shifted by 32. That is what
-// makes QualityAffinity below two mask-and-count operations instead of a lookup table.
-// Bits 26-31 and 58-61 hold the ten attributes with no opposite among the 62 - they can
-// still be SHARED (+1) but can never oppose (the design says an attribute with nothing
-// in common scores nothing, which is exactly this).
-//
-// The ten unpaired ones are unpaired because the pairing is not yet known, not because
-// 1995 lacked one; two of the stated 64 do not appear in the Citadel's data at all. When
-// the remaining oppositions are settled, move a token from the unpaired region into a
-// free paired slot - nothing else changes.
 #define QB(n)   (((u64)1) << (n))
 
 static const u64 QUALITY_PAIRED_LOW  = 0x0000000003FFFFFFull;   // bits 0-25
@@ -136,7 +114,6 @@ static const u64 QUALITY_PAIRED_HIGH = QUALITY_PAIRED_LOW << 32; // bits 32-57
 struct NamedBit64 { const char* name; u64 bit; };
 
 static const NamedBit64 CharacterQualityBits[] = {
-    // ── opposed pairs: bit n against bit n+32 ───────────────────────────────────────
     { "BRAVE",          QB( 0) },  { "COWARDLY",      QB(32) },
     { "LOYAL",          QB( 1) },  { "TREACHEROUS",   QB(33) },
     { "SELFLESS",       QB( 2) },  { "SELFISH",       QB(34) },
@@ -162,9 +139,7 @@ static const NamedBit64 CharacterQualityBits[] = {
     { "TALKATIVE",      QB(22) },  { "TIGHTLIPPED",   QB(54) },
     { "HOMELOVING",     QB(23) },  { "RESTLESS",      QB(55) },
     { "EAGER",          QB(24) },  { "APATHETIC",     QB(56) },
-    // forceful/fawning in LoM's vocabulary; the one pair recovered by analogy
     { "DOMINEERING",    QB(25) },  { "SUBMISSIVE",    QB(57) },
-    // ── no opposite among the 62: shareable, never opposable ────────────────────────
     { "BOLD",           QB(26) },
     { "GALLANT",        QB(27) },
     { "HEADSTRONG",     QB(28) },

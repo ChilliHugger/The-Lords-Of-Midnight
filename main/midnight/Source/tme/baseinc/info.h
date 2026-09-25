@@ -1107,14 +1107,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             u32                 despondency;
             flags32             traits;
-            //
 
-            // citadel — the 1995 personality attributes (tsvflags.cpp).
-            //
-            // NOT serialized, deliberately: it is re-derived from the database row and
-            // everything that consumes it today (strength, at load) lands in a field that
-            // IS serialized. The first reader that needs it AFTER a savegame load — the
-            // recruitment score — has to add it to Serialize and bump SAVEGAMEVERSION.
+            // citadel
             u64                 qualities;
 
         };
