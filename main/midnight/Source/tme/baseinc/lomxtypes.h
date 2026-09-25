@@ -1127,7 +1127,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         18
+#define SAVEGAMEVERSION         19
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

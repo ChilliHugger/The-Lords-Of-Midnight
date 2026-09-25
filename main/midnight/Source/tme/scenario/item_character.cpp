@@ -72,6 +72,7 @@ namespace tme {
                 WRITE_ENUM(orders);
                 ar << despondency;
                 ar << traits ;
+                ar << qualities ;
                 
                 ar << following ;
                 ar << followers ;
@@ -106,6 +107,8 @@ namespace tme {
                 
                 ar >> despondency;
                 ar >> traits ;
+
+                ar >> qualities ;
             
                 if ( tme::mx->SaveGameVersion() > 2 )
                     ar >> following ;
