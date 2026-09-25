@@ -24,3 +24,46 @@ mxthing_t MapStep::GetObjectAtLocation(loc_t loc)
 {
     return (mxthing_t)tme::mx->gamemap->GetAt(loc).object;
 }
+
+void MapStep::SetImpassable(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_impassable;
+}
+
+void MapStep::SetTerrain(loc_t loc, mxterrain_t terrain)
+{
+    tme::mx->gamemap->GetAt(loc).terrain = terrain;
+}
+
+void MapStep::ResetLocation(loc_t loc, mxterrain_t terrain)
+{
+    mxloc& maploc = tme::mx->gamemap->GetAt(loc);
+    maploc.object = OB_NONE;
+    maploc.flags = 0;
+    maploc.terrain = terrain;
+}
+
+void MapStep::SetTunnel(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_tunnel;
+}
+
+void MapStep::SetTunnelEntrance(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_tunnel_entrance;
+}
+
+void MapStep::SetTunnelExit(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_tunnel_exit;
+}
+
+void MapStep::SetStronghold(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_stronghold;
+}
+
+void MapStep::SetSpecial(loc_t loc)
+{
+    tme::mx->gamemap->GetAt(loc).flags |= lf_special;
+}

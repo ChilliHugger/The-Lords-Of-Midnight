@@ -1035,14 +1035,13 @@ MXRESULT mxengine::LoadDiscoveryMap ( const std::string& filename )
 void mxengine::debug (LPCSTR format, ... )
 {
 char msg_buffer[1024];
-    
+
     va_list arglist ;
 
     va_start( arglist, format ) ;
     vsnprintf( msg_buffer, NUMELE(msg_buffer), format, arglist );
     va_end( arglist ) ;
-    
-    AXLOGD("TME: {}",msg_buffer);
+    printf("TME: %s\n", msg_buffer);
 
 }
 

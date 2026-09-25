@@ -71,6 +71,8 @@ MXRESULT mxengine::SaveDatabaseCache ( const std::string& filename )
 
     archive ar (pFile, archive::store | archive::bNoFlushOnDelete );
 
+    savegameversion = SAVEGAMEVERSION;
+
     ar << TME_MAGIC_NO ;
     ar << (int)scenario->GetInfoBlock()->Id;
     ar << (u32)savegameversion ;

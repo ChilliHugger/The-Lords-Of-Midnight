@@ -6,8 +6,16 @@
 //
 
 #include "tme_steps.h"
+#include "map_steps.h"
 #include "../mocks/mocks_entity.h"
 
+
+// randomno::instance is a single process-wide singleton, never reset between
+// tests - without reseeding, any test exercising real (unmocked) mxrandom()
+// calls would silently depend on how many random draws every earlier-run
+// test happened to consume. Reseeding here makes every test start from the
+// same known sequence, regardless of run order.
+static const u32 TEST_RANDOM_SEED = 93186752;
 
 void TMEStep::NewStory(RULEFLAGS rules, mxdifficulty_t difficulty)
 {
@@ -17,10 +25,12 @@ void TMEStep::NewStory(RULEFLAGS rules, mxdifficulty_t difficulty)
 void TMEStep::NewStory(mxscenarioid scenario, RULEFLAGS rules, mxdifficulty_t difficulty)
 {
     TME_DeInit();
-            
+
     TME_Init(scenario, rules, difficulty, [] {
         tme::mx->entityfactory = new mockentityfactory();
     });
+
+    randomno::instance->seed(TEST_RANDOM_SEED);
 }
 
 void TMEStep::NightFalls()
@@ -98,6 +108,18 @@ void TMEStep::LordAtLocation(const string& name, loc_t location)
 {
     auto lord = GetCharacter(name);
     lord->Location( location );
+}
+
+mxcharacter* TMEStep::PlaceLordAt(const string& name, loc_t here, mxdir_t looking)
+{
+    MapStep::ResetLocation(here);
+
+    auto lord = GetCharacter(name);
+    lord->Location(here);
+    lord->looking = looking;
+    lord->time = sv_time_dawn;
+    lord->energy = 100;
+    return lord;
 }
 
 void TMEStep::LordIsNotRecruited(const string& name)
@@ -185,6 +207,46 @@ void TMEStep::LordHasFollowers(const string& lord, vector<string> names)
         
         lord->Cmd_Follow(leader);
     }
+}
+
+mxregiment* TMEStep::RegimentAtLocation(loc_t location, u32 total)
+{
+    auto regiment = tme::mx->objRegiments.First();
+    if (regiment == nullptr)
+        return nullptr;
+
+    regiment->Total(total);
+    regiment->Location(location);
+
+    return regiment;
+}
+
+mxstronghold* TMEStep::StrongholdAtLocation(loc_t location, mxunit_t type, mxrace_t occupyingRace,
+                                             u32 totalTroops, u32 minTroops, u32 maxTroops)
+{
+    mxstronghold* found = nullptr;
+
+    for ( auto s : tme::mx->objStrongholds ) {
+        if ( s->Type() == type && s->OccupyingRace() == occupyingRace ) {
+            found = s;
+            break;
+        }
+    }
+
+    if ( found == nullptr )
+        return nullptr;
+
+    found->Location(location);
+    found->TotalTroops(totalTroops);
+    found->MinTroops(minTroops);
+    found->MaxTroops(maxTroops);
+
+    // mxengine::CollectStrongholds only looks here if the map square itself
+    // is flagged as a stronghold, regardless of where any stronghold entity
+    // says its own Location() is.
+    MapStep::SetStronghold(location);
+
+    return found;
 }
 
 void TMEStep::LordShouldDieInFight(const string& lord)

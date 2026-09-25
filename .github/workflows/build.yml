@@ -83,4 +83,56 @@ jobs:
       - name: Run tests
         working-directory: game/main/midnight
         run: |
-          ./${{ env.BUILD_DIR }}/build/RelWithDebInfo/${{ matrix.app }}.app/Contents/MacOS/${{ matrix.app }} --reporter compact
+          # Crash reports land here once macOS's ReportCrash finishes processing
+          # the crash, which can take a few seconds after the process dies -
+          # so note the time before running, and poll for a fresh report below
+          # rather than looking immediately after the binary exits.
+          date -u +%s > /tmp/test_start_time
+
+          set +e
+          ./${{ env.BUILD_DIR }}/build/RelWithDebInfo/${{ matrix.app }}.app/Contents/MacOS/${{ matrix.app }} --reporter compact 2>&1 | tee /tmp/test-output-${{ matrix.app }}.log
+          test_exit=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$test_exit" -ne 0 ]; then
+            echo "::warning::${{ matrix.app }} tests exited with status $test_exit - looking for a crash report"
+
+            start_time=$(cat /tmp/test_start_time)
+            found_report=0
+
+            for attempt in $(seq 1 10); do
+              for dir in "$HOME/Library/Logs/DiagnosticReports" "/Library/Logs/DiagnosticReports"; do
+                [ -d "$dir" ] || continue
+                while IFS= read -r -d '' report; do
+                  report_time=$(stat -f %m "$report")
+                  if [ "$report_time" -ge "$start_time" ]; then
+                    echo "::group::Crash report: $report"
+                    cat "$report"
+                    echo "::endgroup::"
+                    cp "$report" "/tmp/$(basename "$report")"
+                    found_report=1
+                  fi
+                done < <(find "$dir" -iname "${{ matrix.app }}*" -print0 2>/dev/null)
+              done
+              [ "$found_report" -eq 1 ] && break
+              sleep 2
+            done
+
+            if [ "$found_report" -eq 0 ]; then
+              echo "::warning::No crash report found for ${{ matrix.app }} - it may have failed on an assertion rather than crashed"
+            fi
+          fi
+
+          exit "$test_exit"
+
+      - name: Upload test logs and crash reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-diagnostics-${{ matrix.app }}
+          path: |
+            /tmp/test-output-${{ matrix.app }}.log
+            /tmp/*.crash
+            /tmp/*.ips
+          if-no-files-found: ignore
+          retention-days: 14

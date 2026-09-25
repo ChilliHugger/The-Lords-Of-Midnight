@@ -53,6 +53,9 @@ public:
     static void LordAtLocation(const string& name, const string& location);
     static void LordAtLocation(const string& name, loc_t location);
     static void LordsAtSameLocation(const string& name1, const string& name2);
+
+    // Unlike LordAtLocation, also resets the square (real map terrain there may be impassable) and sets looking/time/energy to a deterministic baseline.
+    static mxcharacter* PlaceLordAt(const string& name, loc_t here, mxdir_t looking);
     
     static void LordIsNotRecruited(const string& name);
     static void LordIsRecruited(const string& name);
@@ -67,6 +70,15 @@ public:
 
     // Grouping
     static void LordHasFollowers(const string& lord, vector<string> names);
+
+    // Regiments
+    static mxregiment* RegimentAtLocation(loc_t location, u32 total = 10);
+
+    // Strongholds - relocates a real stronghold matching the given type and
+    // occupying race, and gives it the requested troop levels. Returns
+    // nullptr if no such stronghold exists in the loaded scenario data.
+    static mxstronghold* StrongholdAtLocation(loc_t location, mxunit_t type, mxrace_t occupyingRace,
+                                               u32 totalTroops, u32 minTroops, u32 maxTroops);
 
     
     // mocks
@@ -157,4 +169,28 @@ public:
 public:
     int count;
     vector<int> data;
+};
+
+// Swaps in a MockRandom for the lifetime of the scope, so real formulas that
+// call mxrandom() can be exercised deterministically. Restores the original
+// generator on destruction, even if a REQUIRE fails mid-scope.
+class ScopedRandom
+{
+public:
+    explicit ScopedRandom(vector<int> values)
+    {
+        saved = randomno::instance;
+        mock.Reset();
+        mock.data = values;
+        randomno::instance = &mock;
+    }
+
+    ~ScopedRandom()
+    {
+        randomno::instance = saved;
+    }
+
+private:
+    MockRandom mock;
+    randomno* saved;
 };

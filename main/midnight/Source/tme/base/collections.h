@@ -16,6 +16,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdio>
 #include <string>
 
 namespace tme {
@@ -308,6 +309,16 @@ int id;
         for ( ii=0; ii<Count(); ii++ ) {
             ar >> id;
             id--;
+            if ( id < 0 || (u32)id >= Count() ) {
+                // A corrupt/mismatched archive (e.g. a cache written under a
+                // different entity count than we now expect) would otherwise
+                // index m_elements out of bounds here. There is no way to
+                // recover the correct stream position for the remaining
+                // entries once this happens, so stop rather than read
+                // further garbage or crash.
+                fprintf( stderr, "entities<T>::Serialize: corrupt archive - id %d out of range (count=%u)\n", id+1, Count() );
+                break;
+            }
             m_elements[id]->Serialize ( ar );
             m_elements[id]->Id(id+1);
         }
