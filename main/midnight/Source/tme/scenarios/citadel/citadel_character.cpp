@@ -15,6 +15,16 @@
 #if defined(_CITADEL_)
 namespace tme {
 
+void citadel_character::Serialize ( archive& ar )
+{
+    mxcharacter::Serialize(ar);
+
+    if ( ar.IsStoring() )
+        ar << qualities ;
+    else
+        ar >> qualities ;
+}
+
 void citadel_character::LoadTsv ( const TsvRow& row )
 {
     mxcharacter::LoadTsv(row);
