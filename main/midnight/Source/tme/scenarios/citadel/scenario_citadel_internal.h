@@ -58,6 +58,7 @@ namespace tme {
     class citadel_character : public mxcharacter
     {
     public:
+        virtual void LoadTsv ( const TsvRow& row ) override;
         virtual bool TakesPartInBattle() const override;
         virtual u32  FightStrength() const override;
         virtual bool ShouldDieInFight() const override;

@@ -106,6 +106,110 @@ static const NamedBit CharacterTraitBits[] = {
     { "TREACHEROUS", ct_treacherous },
 };
 
+// ─── CITADEL: the personality attributes ("Qualities") ──────────────────────────────
+//
+// Mike Singleton's design document plus Ronald Wartow's strategy guide describe a
+// system of "64 personality attributes within the game, 32 good, 32 bad", scored by
+// agreement and opposition. 62 of them appear across the Citadel's 154 characters.
+//
+// THIS IS NOT `Traits`, despite both being '+'-separated words on the same row.
+// `Traits` is Lords of Midnight's SIXTEEN (ct_good … ct_treacherous) and is a flags32;
+// none of the names below are in it. Reading Qualities into traits would silently drop
+// the 46 tokens that do not fit and quietly mean the wrong thing for the 16 that do.
+//
+// LAYOUT, and the reason for it. Bits 0-25 hold one half of each OPPOSED PAIR and bits
+// 32-57 hold the other, so a quality's opposite is its bit shifted by 32. That is what
+// makes QualityAffinity below two mask-and-count operations instead of a lookup table.
+// Bits 26-31 and 58-61 hold the ten attributes with no opposite among the 62 - they can
+// still be SHARED (+1) but can never oppose (the design says an attribute with nothing
+// in common scores nothing, which is exactly this).
+//
+// The ten unpaired ones are unpaired because the pairing is not yet known, not because
+// 1995 lacked one; two of the stated 64 do not appear in the Citadel's data at all. When
+// the remaining oppositions are settled, move a token from the unpaired region into a
+// free paired slot - nothing else changes.
+#define QB(n)   (((u64)1) << (n))
+
+static const u64 QUALITY_PAIRED_LOW  = 0x0000000003FFFFFFull;   // bits 0-25
+static const u64 QUALITY_PAIRED_HIGH = QUALITY_PAIRED_LOW << 32; // bits 32-57
+
+struct NamedBit64 { const char* name; u64 bit; };
+
+static const NamedBit64 CharacterQualityBits[] = {
+    // ── opposed pairs: bit n against bit n+32 ───────────────────────────────────────
+    { "BRAVE",          QB( 0) },  { "COWARDLY",      QB(32) },
+    { "LOYAL",          QB( 1) },  { "TREACHEROUS",   QB(33) },
+    { "SELFLESS",       QB( 2) },  { "SELFISH",       QB(34) },
+    { "QUICKWITTED",    QB( 3) },  { "SLOWWITTED",    QB(35) },
+    { "KIND",           QB( 4) },  { "CRUEL",         QB(36) },
+    { "GENEROUS",       QB( 5) },  { "GREEDY",        QB(37) },
+    { "PATIENT",        QB( 6) },  { "IMPATIENT",     QB(38) },
+    { "KNOWLEDGEABLE",  QB( 7) },  { "IGNORANT",      QB(39) },
+    { "PERSUASIVE",     QB( 8) },  { "UNCONVINCING",  QB(40) },
+    { "MIGHTYWARRIOR",  QB( 9) },  { "FEEBLEWARRIOR", QB(41) },
+    { "MODEST",         QB(10) },  { "ARROGANT",      QB(42) },
+    { "FARSIGHTED",     QB(11) },  { "NAIVE",         QB(43) },
+    { "ENERGETIC",      QB(12) },  { "LANGUID",       QB(44) },
+    { "CHARMING",       QB(13) },  { "REPULSIVE",     QB(45) },
+    { "WARMHEARTED",    QB(14) },  { "COLDHEARTED",   QB(46) },
+    { "TIRELESS",       QB(15) },  { "EASILYTIRED",   QB(47) },
+    { "GENTLE",         QB(16) },  { "VICIOUS",       QB(48) },
+    { "PEACEABLE",      QB(17) },  { "BLOODTHIRSTY",  QB(49) },
+    { "POLITE",         QB(18) },  { "PROVOCATIVE",   QB(50) },
+    { "PASSIONATE",     QB(19) },  { "PASSIONLESS",   QB(51) },
+    { "LEVELHEADED",    QB(20) },  { "HOTTEMPERED",   QB(52) },
+    { "CAUTIOUS",       QB(21) },  { "RECKLESS",      QB(53) },
+    { "TALKATIVE",      QB(22) },  { "TIGHTLIPPED",   QB(54) },
+    { "HOMELOVING",     QB(23) },  { "RESTLESS",      QB(55) },
+    { "EAGER",          QB(24) },  { "APATHETIC",     QB(56) },
+    // forceful/fawning in LoM's vocabulary; the one pair recovered by analogy
+    { "DOMINEERING",    QB(25) },  { "SUBMISSIVE",    QB(57) },
+    // ── no opposite among the 62: shareable, never opposable ────────────────────────
+    { "BOLD",           QB(26) },
+    { "GALLANT",        QB(27) },
+    { "HEADSTRONG",     QB(28) },
+    { "RELIABLE",       QB(29) },
+    { "SUPERBLEADER",   QB(30) },
+    { "SOLITARY",       QB(31) },
+    { "SCEPTICAL",      QB(58) },
+    { "THICKSKINNED",   QB(59) },
+    { "MAD",            QB(60) },
+    { "MALICIOUS",      QB(61) },
+};
+
+static u64 ParseFlagWord64 ( const std::string& text, const NamedBit64* table, size_t count )
+{
+    u64 result = 0;
+    if ( text.empty() )
+        return result;
+
+    chilli::collections::c_string tokens;
+    chilli::lib::StringExtensions::split(text, '+', tokens);
+
+    for ( auto& token : tokens ) {
+        bool matched = false;
+        for ( size_t ii=0; ii<count; ii++ ) {
+            if ( chilli::lib::c_stricmp(token.c_str(), table[ii].name) == 0 ) {
+                result |= table[ii].bit;
+                matched = true;
+                break;
+            }
+        }
+        // Traced, never silently dropped - #4 records what a silent drop cost last time.
+        if ( !matched )
+            MXTRACE("TsvFlags: unknown quality '%s' in '%s'", token.c_str(), text.c_str());
+    }
+
+    return result;
+}
+
+static s32 CountBits ( u64 v )
+{
+    s32 n = 0;
+    while ( v ) { v &= v - 1; n++; }
+    return n;
+}
+
 static const NamedBit ObjectFlagBits[] = {
     { "FIGHT",   of_fight },
     { "PICKUP",  of_pickup },
@@ -178,6 +282,15 @@ static const NamedValue OrdersValues[] = {
 u32 ParseEntityFlags ( const std::string& text )       { return ParseFlagWord(text, EntityFlagBits, NUMELE(EntityFlagBits)); }
 u32 ParseCharacterFlags ( const std::string& text )    { return ParseFlagWord(text, CharacterFlagBits, NUMELE(CharacterFlagBits)); }
 u32 ParseCharacterTraits ( const std::string& text )   { return ParseFlagWord(text, CharacterTraitBits, NUMELE(CharacterTraitBits)); }
+u64 ParseCharacterQualities ( const std::string& text ) { return ParseFlagWord64(text, CharacterQualityBits, NUMELE(CharacterQualityBits)); }
+
+s32 QualityAffinity ( u64 a, u64 b )
+{
+    // A quality's opposite is the same bit 32 places away, so one shift finds every
+    // opposition at once (see the layout note above).
+    const u64 opposed = ((b & QUALITY_PAIRED_LOW) << 32) | ((b & QUALITY_PAIRED_HIGH) >> 32);
+    return CountBits(a & b) - CountBits(a & opposed);
+}
 u32 ParseObjectFlags ( const std::string& text )       { return ParseFlagWord(text, ObjectFlagBits, NUMELE(ObjectFlagBits)); }
 u32 ParseMissionFlags ( const std::string& text )      { return ParseFlagWord(text, MissionFlagBits, NUMELE(MissionFlagBits)); }
 u32 ParseVictoryFlags ( const std::string& text )      { return ParseFlagWord(text, VictoryFlagBits, NUMELE(VictoryFlagBits)); }

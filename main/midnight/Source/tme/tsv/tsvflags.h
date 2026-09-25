@@ -25,6 +25,17 @@ namespace tme {
 
     u32 ParseCharacterFlags ( const std::string& text );
     u32 ParseCharacterTraits ( const std::string& text );
+
+    // CITADEL — the 1995 personality attributes (the "Qualities" column). 62 of them,
+    // so this is a u64 and not a flags32 like Traits. See tsvflags.cpp for the layout
+    // and why the two vocabularies are NOT interchangeable.
+    u64 ParseCharacterQualities ( const std::string& text );
+
+    /// How alike two characters are, by the 1995 recruitment rule: +1 for every quality
+    /// they SHARE, -1 for every pair that OPPOSE, 0 for everything else. The design's
+    /// thresholds (>=2 recruits, 0 refuses, <=-1 gives offence) are the caller's business
+    /// - this is only the arithmetic.
+    s32 QualityAffinity ( u64 a, u64 b );
     u32 ParseObjectFlags ( const std::string& text );
     u32 ParseMissionFlags ( const std::string& text );
     u32 ParseVictoryFlags ( const std::string& text );

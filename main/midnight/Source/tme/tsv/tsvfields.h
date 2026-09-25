@@ -50,6 +50,11 @@ namespace TsvField {
         // DDR only
         constexpr const char* Home           = "Home";
         constexpr const char* DesiredObject  = "Desired Object";
+        // CITADEL only. The 1995 personality attributes, as a '+' separated word
+        // ("BRAVE+BOLD+EAGER+MIGHTYWARRIOR"). NOT the same vocabulary as Traits:
+        // Traits is LoM's 16 (ct_good … ct_treacherous), Qualities is the Citadel's
+        // 62. See tsvflags.cpp CharacterQualityBits.
+        constexpr const char* Qualities      = "Qualities";
     }
 
     namespace Object {

@@ -923,7 +923,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual std::unique_ptr<mxlocinfo> GetLocInfo();
             virtual s32 DistanceFromLoc ( mxgridref loc );
 
-            flags32& Traits()    { return traits; } 
+            flags32& Traits()    { return traits; }
+            u64  Qualities() const     { return qualities; }
+            bool HasQuality(u64 q) const { return (qualities & q) != 0; }
 
             GET_PROPERTY ( mxobject*, Carrying, carrying )
             GET_PROPERTY ( bool, IsCarryingObject, carrying != nullptr )
@@ -1106,6 +1108,14 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             u32                 despondency;
             flags32             traits;
             //
+
+            // citadel — the 1995 personality attributes (tsvflags.cpp).
+            //
+            // NOT serialized, deliberately: it is re-derived from the database row and
+            // everything that consumes it today (strength, at load) lands in a field that
+            // IS serialized. The first reader that needs it AFTER a savegame load — the
+            // recruitment score — has to add it to Serialize and bump SAVEGAMEVERSION.
+            u64                 qualities;
 
         };
         typedef tme::collections::entities<mxcharacter*>     c_character;
