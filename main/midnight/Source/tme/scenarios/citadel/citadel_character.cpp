@@ -9,9 +9,28 @@
 
 #include "../../baseinc/tme_internal.h"
 #include "scenario_citadel_internal.h"
+#include "../../tsv/tsvflags.h"
+#include "../../tsv/tsvfields.h"
 
 #if defined(_CITADEL_)
 namespace tme {
+
+void citadel_character::Serialize ( archive& ar )
+{
+    mxcharacter::Serialize(ar);
+
+    if ( ar.IsStoring() )
+        ar << qualities ;
+    else
+        ar >> qualities ;
+}
+
+void citadel_character::LoadTsv ( const TsvRow& row )
+{
+    mxcharacter::LoadTsv(row);
+
+    qualities = ParseCharacterQualities(row.GetString(TsvField::Character::Qualities));
+}
 
 //
 // Only the player's lords are at war with Boroth's host yet. Hostages sit in his dungeons, his

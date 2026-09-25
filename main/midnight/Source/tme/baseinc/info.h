@@ -923,7 +923,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual std::unique_ptr<mxlocinfo> GetLocInfo();
             virtual s32 DistanceFromLoc ( mxgridref loc );
 
-            flags32& Traits()    { return traits; } 
+            flags32& Traits()    { return traits; }
+            u64  Qualities() const     { return qualities; }
+            bool HasQuality(u64 q) const { return (qualities & q) != 0; }
 
             GET_PROPERTY ( mxobject*, Carrying, carrying )
             GET_PROPERTY ( bool, IsCarryingObject, carrying != nullptr )
@@ -1105,7 +1107,9 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
             u32                 despondency;
             flags32             traits;
-            //
+
+            // citadel
+            u64                 qualities;
 
         };
         typedef tme::collections::entities<mxcharacter*>     c_character;

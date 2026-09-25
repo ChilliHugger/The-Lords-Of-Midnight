@@ -28,9 +28,10 @@
 
 namespace tme {
 
-        mxcharacter::mxcharacter() 
+        mxcharacter::mxcharacter()
         {
             mxentity::idType = IDT_CHARACTER ;
+            qualities = qf_none;    // citadel only
             //memory=NULL;
         }
 

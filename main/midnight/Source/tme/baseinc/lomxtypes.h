@@ -1010,6 +1010,7 @@ namespace tme {
         
         // citadel
         enum CHARACTERQUALITIES : u64 {
+            qf_none                = 0,
             // +ve
             qf_brave               = MXBIT(0),
             qf_farsighted          = MXBIT(1),

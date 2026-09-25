@@ -50,6 +50,8 @@ namespace TsvField {
         // DDR only
         constexpr const char* Home           = "Home";
         constexpr const char* DesiredObject  = "Desired Object";
+        // CITADEL only
+        constexpr const char* Qualities      = "Qualities";
     }
 
     namespace Object {

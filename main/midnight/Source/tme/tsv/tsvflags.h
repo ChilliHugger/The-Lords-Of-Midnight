@@ -25,6 +25,7 @@ namespace tme {
 
     u32 ParseCharacterFlags ( const std::string& text );
     u32 ParseCharacterTraits ( const std::string& text );
+    u64 ParseCharacterQualities ( const std::string& text );
     u32 ParseObjectFlags ( const std::string& text );
     u32 ParseMissionFlags ( const std::string& text );
     u32 ParseVictoryFlags ( const std::string& text );

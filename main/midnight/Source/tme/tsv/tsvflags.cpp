@@ -8,12 +8,12 @@
 
 namespace tme {
 
-struct NamedBit { const char* name; u32 bit; };
+struct NamedBit { const char* name; u64 bit; };
 struct NamedValue { const char* name; u32 value; };
 
-static u32 ParseFlagWord ( const std::string& text, const NamedBit* table, size_t count )
+static u64 ParseFlagWord ( const std::string& text, const NamedBit* table, size_t count )
 {
-    u32 result = 0;
+    u64 result = 0;
     if ( text.empty() )
         return result;
 
@@ -106,6 +106,73 @@ static const NamedBit CharacterTraitBits[] = {
     { "TREACHEROUS", ct_treacherous },
 };
 
+static const NamedBit CharacterQualityBits[] = {
+    { "BRAVE",          qf_brave },
+    { "FARSIGHTED",     qf_farsighted },
+    { "SELFLESS",       qf_selfless },
+    { "BOLD",           qf_bold },
+    { "KIND",           qf_kind },
+    { "WARMHEARTED",    qf_warmhearted },
+    { "GENTLE",         qf_gentle },
+    { "GENEROUS",       qf_generous },
+    { "QUICKWITTED",    qf_quickwitted },
+    { "TALKATIVE",      qf_talkative },
+    { "HOMELOVING",     qf_homeloving },
+    { "EAGER",          qf_eager },
+    { "ENERGETIC",      qf_energetic },
+    { "TIRELESS",       qf_tireless },
+    { "MODEST",         qf_modest },
+    { "PASSIONATE",     qf_passionate },
+    { "RELIABLE",       qf_reliable },
+    { "GALLANT",        qf_gallant },
+    { "CHARMING",       qf_charming },
+    { "LOYAL",          qf_loyal },
+    { "GREGARIOUS",     qf_gregarious },
+    { "PEACEABLE",      qf_peaceable },
+    { "POLITE",         qf_polite },
+    { "SUBMISSIVE",     qf_submissive },
+    { "PATIENT",        qf_patient },
+    { "LEVELHEADED",    qf_levelheaded },
+    { "PERSUASIVE",     qf_persuasive },
+    { "KNOWLEDGEABLE",  qf_knowledgeable },
+    { "NAIVE",          qf_naive },
+    { "HOTTEMPERED",    qf_hottempered },
+    { "MIGHTYWARRIOR",  qf_mightywarrior },
+    { "SUPERBLEADER",   qf_superbleader },
+    { "COWARDLY",       qf_cowardly },
+    { "RECKLESS",       qf_reckless },
+    { "SELFISH",        qf_selfish },
+    { "CAUTIOUS",       qf_cautious },
+    { "CRUEL",          qf_cruel },
+    { "COLDHEARTED",    qf_coldhearted },
+    { "VICIOUS",        qf_vicious },
+    { "GREEDY",         qf_greedy },
+    { "SLOWWITTED",     qf_slowwitted },
+    { "TIGHTLIPPED",    qf_tightlipped },
+    { "RESTLESS",       qf_restless },
+    { "APATHETIC",      qf_apathetic },
+    { "LANGUID",        qf_languid },
+    { "EASILYTIRED",    qf_easilytired },
+    { "ARROGANT",       qf_arrogant },
+    { "PASSIONLESS",    qf_passionless },
+    { "HEADSTRONG",     qf_headstrong },
+    { "MALICIOUS",      qf_malicious },
+    { "REPULSIVE",      qf_repulsive },
+    { "TREACHEROUS",    qf_treacherous },
+    { "SOLITARY",       qf_solitary },
+    { "BLOODTHIRSTY",   qf_bloodthirsty },
+    { "PROVOCATIVE",    qf_provocative },
+    { "DOMINEERING",    qf_domineering },
+    { "IMPATIENT",      qf_impatient },
+    { "MAD",            qf_mad },
+    { "UNCONVINCING",   qf_unconvincing },
+    { "IGNORANT",       qf_ignorant },
+    { "SCEPTICAL",      qf_sceptical },
+    { "THICKSKINNED",   qf_thickskinned },
+    { "FEEBLEWARRIOR",  qf_feeblewarrior },
+    { "PITIFULLEADER",  qf_pitifulleader },
+};
+
 static const NamedBit ObjectFlagBits[] = {
     { "FIGHT",   of_fight },
     { "PICKUP",  of_pickup },
@@ -178,6 +245,7 @@ static const NamedValue OrdersValues[] = {
 u32 ParseEntityFlags ( const std::string& text )       { return ParseFlagWord(text, EntityFlagBits, NUMELE(EntityFlagBits)); }
 u32 ParseCharacterFlags ( const std::string& text )    { return ParseFlagWord(text, CharacterFlagBits, NUMELE(CharacterFlagBits)); }
 u32 ParseCharacterTraits ( const std::string& text )   { return ParseFlagWord(text, CharacterTraitBits, NUMELE(CharacterTraitBits)); }
+u64 ParseCharacterQualities ( const std::string& text ) { return ParseFlagWord(text, CharacterQualityBits, NUMELE(CharacterQualityBits)); }
 u32 ParseObjectFlags ( const std::string& text )       { return ParseFlagWord(text, ObjectFlagBits, NUMELE(ObjectFlagBits)); }
 u32 ParseMissionFlags ( const std::string& text )      { return ParseFlagWord(text, MissionFlagBits, NUMELE(MissionFlagBits)); }
 u32 ParseVictoryFlags ( const std::string& text )      { return ParseFlagWord(text, VictoryFlagBits, NUMELE(VictoryFlagBits)); }
