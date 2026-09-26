@@ -24,6 +24,11 @@ static std::string TrimQuote ( const std::string& value )
     return value;
 }
 
+static std::string SanatiseString ( const std::string& value )
+{
+    return chilli::lib::StringExtensions::replaceAll(TrimQuote(TrimCR(value)), "\"\"", "\"");
+}
+
 
 TsvRow::TsvRow ( const TsvSymbolTable& symbols )
     : m_symbols(&symbols)
@@ -230,7 +235,7 @@ bool TsvTable::Load ( const std::string& filename, const TsvSymbolTable& symbols
 
         TsvRow row(symbols);
         for ( u32 ci=0; ci<m_header.size() && ci<cells.size(); ci++ )
-            row.Set(m_header[ci], TrimQuote(TrimCR(cells[ci])));
+            row.Set(m_header[ci], SanatiseString(cells[ci]));
 
         m_rows.push_back(row);
     }

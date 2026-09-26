@@ -567,6 +567,15 @@ static void NightCallback ( callback_t* ptr )
 
 }
 
+InitNotificationDelegate* initDelegate=NULL;
+
+static void InitCallback ( callback_t* ptr )
+{
+    if ( initDelegate )
+        initDelegate->OnInitNotification(ptr);
+
+}
+
 
 bool TME_Night ( NightNotificationDelegate* delegate )
 {
@@ -990,8 +999,10 @@ void* TME_GetEntityUserData ( mxid id)
 }
 
 
-bool TME_Init ( mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate )
+bool TME_Init ( mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate, InitNotificationDelegate* delegate )
 {
+    initDelegate = delegate;
+
     // first we need an interface object
     mxi = new mxinterface ;
     
@@ -1056,7 +1067,8 @@ bool TME_Init ( mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, M
     // initialise the engine
     args[0] = flags ;
     args[1] = (u32)difficulty ;
-    if ( MXFAILED ( mxi->Command("@INIT", args, 2) ) ) {
+    args[2] = (void*) &InitCallback ;
+    if ( MXFAILED ( mxi->Command("@INIT", args, 3) ) ) {
         return false ;
     }
     

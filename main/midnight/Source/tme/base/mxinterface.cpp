@@ -390,10 +390,11 @@ namespace tme {
     // COMMAND: @INIT
     //            Loads the scenario database
     //
-    COMMAND( OnInit ) 
+    COMMAND( OnInit )
     {
         auto rules = (RULEFLAGS) (u64)argv[0] ;
         auto difficulty = (mxdifficulty_t) (u64)argv[1];
+        mx->pfnInitCallback = (PFNINITCALLBACK)argv[2].vPtr ;
         return mx->LoadDatabase(rules,difficulty);
     }
 
@@ -495,7 +496,7 @@ namespace tme {
     static mxcommand_t mx_commands[] = {
         {"@SETSCENARIO",                1, OnSetScenario,           {variant::vptr} },
         {"@SETDATABASEDIRECTORY",       1, OnSetDatabaseDirectory,  {variant::vstring} },
-        {"@INIT",                       2, OnInit,                  {variant::vuint64,variant::vnumber} },
+        {"@INIT",                       3, OnInit,                  {variant::vuint64,variant::vnumber,variant::vptr} },
         {"@DEINIT",                     0, OnDeInit },
         {"@LOAD",                       2, OnLoadGame,              {variant::vstring,variant::vptr} },
         {"@SAVE",                       2, OnSaveGame,              {variant::vstring,variant::vptr} },

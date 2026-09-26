@@ -20,6 +20,13 @@ struct ProgressListener : Catch::TestEventListenerBase
         printf("RUNNING: %s\n", testInfo.name.c_str());
         fflush(stdout);
     }
+
+    void sectionStarting(Catch::SectionInfo const& sectionInfo) override
+    {
+        TestEventListenerBase::sectionStarting(sectionInfo);
+        printf("%s\n", sectionInfo.name.c_str());
+        fflush(stdout);
+    }
 };
 CATCH_REGISTER_LISTENER(ProgressListener)
 

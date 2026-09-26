@@ -144,52 +144,15 @@ void ddr_x::initialise( u32 version )
     
 void ddr_x::initialiseAfterCreate( u32 version )
 {
-    //sv_riders_max_energy=255;
-    //sv_warriors_max_energy=255;
-    sv_stronghold_default_max=1250;
-    sv_stronghold_default_min=50;
-    sv_character_max_riders=1250;
-    //sv_character_max_energy=255;
-    sv_character_max_warriors=1250;
-    //sv_object_energy_watersoflife=255;
-    sv_energy_cannot_continue=31;
-        
-MXTRACE("Place Objects On Map");
+    MXTRACE("Place Objects On Map");
     PlaceObjectsOnMap();
-    
+
     FOR_EACH_CHARACTER(character) {
         auto c = static_cast<ddr_character*>(character);
         c->lastlocation=c->Location();
     }
-    
-    FOR_EACH_STRONGHOLD(stronghold) {
-        stronghold->MaxTroops(sv_stronghold_default_max);
-        stronghold->MinTroops(sv_stronghold_default_min);
-    }
-    
-    // Obigorn the giant starts with Riders and not Warriors
-    // this needs a data fix too
-    // https://github.com/ChilliHugger/The-Lords-Of-Midnight/issues/135
-    auto obigrorn = static_cast<ddr_character*>(mx->CharacterBySymbol("CH_OBIGRORN"));
-    if(obigrorn!=nullptr){
-        obigrorn->Flags().Reset(cf_allowedriders);
-        obigrorn->Flags().Set(cf_allowedwarriors);
-        obigrorn->warriors.Total(obigrorn->riders.Total());
-        obigrorn->warriors.Energy(obigrorn->riders.Energy());
-        obigrorn->warriors.Lost(obigrorn->riders.Lost());
-        obigrorn->warriors.Killed(obigrorn->riders.Killed());
-        obigrorn->riders.Total(0);
-    }
-  
-    auto tinfo = mx->TerrainById(TN_ICYWASTE);
-    tinfo->movementcost=2;
-    
-    // remap
-    utils::UpdateDDRObjects::FixInvalidTypes();
-    utils::UpdateDDRObjects::FixRecruitmentFlags();
-        
-    mxscenario::initialiseAfterCreate(version);
 
+    mxscenario::initialiseAfterCreate(version);
 }
 
 void ddr_x::updateAfterLoad ( u32 version )

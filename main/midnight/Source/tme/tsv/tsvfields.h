@@ -41,8 +41,10 @@ namespace TsvField {
         constexpr const char* Fear        = "Fear";
         constexpr const char* Orders      = "Orders";
         constexpr const char* Carrying    = "Carrying";
-        constexpr const char* Warriors    = "Warriors";
-        constexpr const char* Riders      = "Riders";
+        constexpr const char* Warriors       = "Warriors";
+        constexpr const char* Riders         = "Riders";
+        constexpr const char* WarriorsEnergy = "Warriors Energy";
+        constexpr const char* RidersEnergy   = "Riders Energy";
         constexpr const char* Following   = "Following";
         constexpr const char* Foe         = "Foe";
         constexpr const char* Liege       = "Liege";

@@ -1,0 +1,1716 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="66" height="63" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#ffffff" nextlayerid="14" nextobjectid="6">
+ <tileset firstgid="1" name="terrain" tilewidth="64" tileheight="64" tilecount="136" columns="8">
+  <image source="../../all/maps/terrain_all.png" width="512" height="1088"/>
+ </tileset>
+ <tileset firstgid="137" name="flags" tilewidth="64" tileheight="64" tilecount="16" columns="8">
+  <image source="../../all/maps/flags_all.png" width="512" height="128"/>
+ </tileset>
+ <tileset firstgid="153" name="things" tilewidth="64" tileheight="64" tilecount="32" columns="8">
+  <image source="../../all/maps/things_all.png" width="512" height="256"/>
+ </tileset>
+ <tileset firstgid="185" name="areas" tilewidth="64" tileheight="64" tilecount="1024" columns="32">
+  <image source="../../all/maps/area_lom.png" width="2048" height="2048"/>
+ </tileset>
+ <tileset firstgid="1209" name="Items" tilewidth="64" tileheight="64" tilecount="8" columns="8" objectalignment="topleft">
+  <image source="../../all/maps/map_items.png" width="512" height="64"/>
+ </tileset>
+ <layer id="1" name="Terrain" class="Terrain" width="66" height="63">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <layer id="2" name="Domain" class="Flags" width="66" height="63">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE+1ZWa7DIAzs9XPrquoPspzgZWwP73WkqFED3gBvvF4/SFziN0vH+n8lDyRPjxxsNCd5Tujj5T0p44qdHCxyVkLT8bR11BCVzTOPWf8druU5BVUxTdoiahe2WJJZX7QNnvKdjN0u5dG+Z3lV+4XdOmZoa/QsuRuKl3UMIu7s9oOVjvad8Xyz4wQZNaDkrthDiLiNyH071tbLw2Iby5nqqA06fb4FUV8T6UFkY/76fhe7GOzWyZMpn++uo1A5/BQiORCTfhW1WdQXV8VuNH2PDB5ZmPZFFtE4+JdsoOHJLmjdGWuQyn5CB58sHWSfo6pGQYyZQsTvVsqBHt/RB0PRruCZ9WmW3MTSg0Kjev070VUfn2CLKiDi2m4tqu3rrZ20uRXzZD2K5N8JS36g7QHm2oS9f8IEbT1RNcGp9vb0JE7V8b+is37u4O+l36X/JZ4sb+SdQmTuyTVvld2t/XhWu3SATfdo/ZvJv9lsUImT/YSEtRbYzbF8ywDdF0HXjV6+p+yPFbue9W7sJKp6kAzr3tk3QdJB1ViT+mf4MPdXPpjYq3c99647LSQNmTtP589Te6v6fCLvD6bjs8cnoHIRdnTFhsq7hN185Bnx+M67sZP5m9UennzUQ6d7/krDkxNJfeU7Q8yJQNoimic+zbPaxeqPO3u+3j3ipfnDF28SPgtz+EAAAA==
+  </data>
+ </layer>
+ <layer id="3" name="Tunnels" class="Flags" width="66" height="63" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAA+BguV3fb4QAAA
+  </data>
+ </layer>
+ <layer id="4" name="Mist" class="Flags" width="66" height="63" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAA+BguV3fb4QAAA
+  </data>
+ </layer>
+ <layer id="5" name="Creature" class="Flags" width="66" height="63" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAA+BguV3fb4QAAA
+  </data>
+ </layer>
+ <layer id="6" name="Things" class="Things" width="66" height="63" opacity="0.91">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <layer id="7" name="Area" class="Area" width="66" height="63" visible="0" opacity="0.87">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE+3XaU8TURQG4Pn//wjBFRd2UEDAgrKorMoOX6XJPfH45qx3bktimORNO8uHvk/P3Gm77mnD7ZmRlz1CGx5/VV6/K6FNO4/X/nDCN+24ZWBZTJR4BrRNl/BrIj0p/PP/VPpqx3ln6VjEQLKYgGgG006y/aORPNCBb9TDM8DO6PCaGXjdMw41Bt79gQbcgSw0F+m7x/13JbzncP8tC55vMRPWvYA5FAzQAYP9vfXgTcmw63vozx0kr4hN67mIOlixHMgikpr7Rut25OxbFpMlrTwiFh8cm+MSsqD97IwcsXCXwxJu0dfBs9BMZpwcGzl5yEfIkbBPOYR9PifoIKXVPSJ5eA6axQkLWkg2WjIOUYvngsOsYxFxQIsTIZoBnZMM+HWtHSjcgdLHgXtIDuiBNpaB5TBVUmNAeVGiOcyyftxrBs5RrP7ebGgGtC85TAmp6Y/hFrPJYM+sg5eow5TSOWOQ7Zv9/ls4zJdoBhGH2u6tHKT1cZiz8nqqXHvqOMwlLCL9J8dsYeWMhc/DnOAQnYkWczBqBz4LZ53uELkvohaP4eBZ8N6nggV3mOv+vRfQpvW6gM/LjAmujZGZwO6eA1nMC6HuCyV9ng21s0HnatcDzwEtJIcFJeOykM73Ncg6aAaSRUsHK1b/3w+5N7pzI3Sg56XnsGxYLI7BwuuP0SzOS9Ahek9IDnhvLBpp3V/qTvMgWZxDNAdusaJY1BpoHp5Rpr8W7C85aGvDimMx7L2c6J6x0fpfOL0yDtZzEw24hTQPw8+/JHRaYsel89r1S47BhWGQife8yDgsVUTrTtHWgYuurYM0D1KyDpqN1remf0uDYS6DDt4agQbWrGT/F47S4Jq9lxxWOnseIr+pJIcWBjUWl0auOn0eeGfNIWLRx0DrH4nVW0vWITITq0Kon3SOR+q1Fux/XWnAHay+0jkerXtNot/5dQk6RTpfCccsB2smKK36r5Y+lKgDJtI5Ow9SPkFW4X3f/lYiDpZJKwc0QI9RGtQ4ZEz4VmtQaxHtfysk66B53JREHCIGo3Kg3mvw2sfjRkjEQbLYZMkYbLHUzIGVWgPuwDuvl2gOm50+D5vldQOyJaS1g+ahdbcc1iGZdVIzkEy+OCa1Bmhxl3TA/pKDZRHp783HVoP+lDuWFg6exeeSjAEFZ6KVQ6Z/xgEtPjvJzARatPj+R+lAkTrT++2SwUN2SiyDjXLtIGCxV2nR8r6wHHjIYUcIN6BjA5ZdI3ssByy37LXG4L6Hg2Wx3dkW/Pig8x32hEgOBxUGfefBstjufIuIgdRfcsBYDp5NK4dIf+9esPpHHLS5iMxJrQNaZB2oO72PGNTMhDcjEYevQvo4aLPQon/URDKIOnxLONTcD5ZJtnuti+fADbhD5pkZNdht3Dtj4jlgsr8dPIP9knH1b+FQszagA/d4LAPJwnJAi+zawA32O3kOHtOBx3OI/naoWRf+J4fsusDngPZrP/uvEThIFtZ/Kgr+b7Ac9oXwz/KYs/G0/d3+AIIo5534QAAA
+  </data>
+ </layer>
+ <objectgroup id="10" name="routenodes" visible="0">
+  <object id="1" name="RN_CITADEL_GLOOM" type="routenode" gid="1213" x="576" y="64" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="1"/>
+    <property name="BRANCH_1" type="object" value="1"/>
+   </properties>
+  </object>
+  <object id="2" name="RN_KEEP_OF_LORGRIM" type="routenode" gid="1213" x="3008" y="256" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="2"/>
+    <property name="BRANCH_1" type="object" value="17"/>
+   </properties>
+  </object>
+  <object id="3" name="RN_DESPAIR_KEEP_3" type="routenode" gid="1213" x="1856" y="320" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="3"/>
+    <property name="BRANCH_1" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="4" name="RN_CITADEL_VORGATH" type="routenode" gid="1213" x="1472" y="384" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="4"/>
+    <property name="BRANCH_1" type="object" value="105"/>
+   </properties>
+  </object>
+  <object id="5" name="RN_KEEP_OF_DEATH" type="routenode" gid="1213" x="2112" y="448" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="5"/>
+    <property name="BRANCH_1" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="6" name="RN_DESPAIR_KEEP_6" type="routenode" gid="1213" x="1536" y="512" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="6"/>
+    <property name="BRANCH_1" type="object" value="4"/>
+   </properties>
+  </object>
+  <object id="7" name="RN_CITADEL_USHGARAK" type="routenode" gid="1213" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="7"/>
+    <property name="BRANCH_1" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="8" name="RN_CITADEL_GRARG" type="routenode" gid="1213" x="2432" y="512" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="9"/>
+    <property name="BRANCH_1" type="object" value="11"/>
+   </properties>
+  </object>
+  <object id="9" name="RN_GRARG_KEEP_9" type="routenode" gid="1213" x="2624" y="576" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="2"/>
+    <property name="BRANCH_1" type="object" value="104"/>
+   </properties>
+  </object>
+  <object id="10" name="RN_KEEP_OF_FADRATH" type="routenode" gid="1213" x="3712" y="576" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="10"/>
+    <property name="BRANCH_1" type="object" value="10"/>
+   </properties>
+  </object>
+  <object id="11" name="RN_GRARG_KEEP_11" type="routenode" gid="1213" x="2560" y="640" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="11"/>
+    <property name="BRANCH_1" type="object" value="104"/>
+   </properties>
+  </object>
+  <object id="12" name="RN_KEEP_OF_LOTHORIL" type="routenode" gid="1213" x="768" y="704" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="12"/>
+    <property name="BRANCH_1" type="object" value="12"/>
+   </properties>
+  </object>
+  <object id="13" name="RN_LOST_KEEP_13" type="routenode" gid="1213" x="1408" y="768" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="14"/>
+    <property name="BRANCH_1" type="object" value="23"/>
+   </properties>
+  </object>
+  <object id="14" name="RN_UGRAK_KEEP_14" type="routenode" gid="1213" x="1664" y="768" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="27"/>
+    <property name="BRANCH_1" type="object" value="23"/>
+   </properties>
+  </object>
+  <object id="15" name="RN_CITADEL_KOR" type="routenode" gid="1213" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="23"/>
+    <property name="BRANCH_1" type="object" value="24"/>
+   </properties>
+  </object>
+  <object id="16" name="RN_KOR_KEEP_16" type="routenode" gid="1213" x="2368" y="832" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="23"/>
+    <property name="BRANCH_1" type="object" value="24"/>
+   </properties>
+  </object>
+  <object id="17" name="RN_KEEP_OF_ITHRIL" type="routenode" gid="1213" x="3328" y="832" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="20"/>
+    <property name="BRANCH_1" type="object" value="26"/>
+   </properties>
+  </object>
+  <object id="18" name="RN_KEEP_OF_DROON" type="routenode" gid="1213" x="4032" y="832" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="21"/>
+    <property name="BRANCH_1" type="object" value="21"/>
+   </properties>
+  </object>
+  <object id="19" name="RN_GLORIM_KEEP_19" type="routenode" gid="1213" x="1088" y="896" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="22"/>
+    <property name="BRANCH_1" type="object" value="22"/>
+   </properties>
+  </object>
+  <object id="20" name="RN_ITHRIL_KEEP_20" type="routenode" gid="1213" x="3584" y="896" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="18"/>
+    <property name="BRANCH_1" type="object" value="21"/>
+   </properties>
+  </object>
+  <object id="21" name="RN_CITADEL_ITHRORN" type="routenode" gid="1213" x="3712" y="1024" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="32"/>
+    <property name="BRANCH_1" type="object" value="111"/>
+   </properties>
+  </object>
+  <object id="22" name="RN_GLORIM_KEEP_22" type="routenode" gid="1213" x="960" y="1088" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="106"/>
+    <property name="BRANCH_1" type="object" value="30"/>
+   </properties>
+  </object>
+  <object id="23" name="RN_KOR_KEEP_23" type="routenode" gid="1213" x="1792" y="1088" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="28"/>
+    <property name="BRANCH_1" type="object" value="35"/>
+   </properties>
+  </object>
+  <object id="24" name="RN_KOR_KEEP_24" type="routenode" gid="1213" x="2240" y="1088" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="35"/>
+    <property name="BRANCH_1" type="object" value="42"/>
+   </properties>
+  </object>
+  <object id="25" name="RN_CITADEL_DREAMS" type="routenode" gid="1213" x="2752" y="1088" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="25"/>
+    <property name="BRANCH_1" type="object" value="25"/>
+   </properties>
+  </object>
+  <object id="26" name="RN_ITHRIL_KEEP_26" type="routenode" gid="1213" x="3392" y="1088" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="21"/>
+    <property name="BRANCH_1" type="object" value="21"/>
+   </properties>
+  </object>
+  <object id="27" name="RN_KOR_KEEP_27" type="routenode" gid="1213" x="1280" y="1152" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="33"/>
+    <property name="BRANCH_1" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="28" name="RN_KOR_KEEP_28" type="routenode" gid="1213" x="1472" y="1216" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="27"/>
+    <property name="BRANCH_1" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="29" name="RN_ITHRIL_KEEP_29" type="routenode" gid="1213" x="3520" y="1216" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="21"/>
+    <property name="BRANCH_1" type="object" value="32"/>
+   </properties>
+  </object>
+  <object id="30" name="RN_KORKITH_KEEP_30" type="routenode" gid="1213" x="960" y="1344" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="33"/>
+    <property name="BRANCH_1" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="31" name="RN_ITHRIL_KEEP_31" type="routenode" gid="1213" x="3200" y="1344" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="26"/>
+    <property name="BRANCH_1" type="object" value="29"/>
+   </properties>
+  </object>
+  <object id="32" name="RN_KEEP_OF_WHISPERS" type="routenode" gid="1213" x="3712" y="1344" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="38"/>
+    <property name="BRANCH_1" type="object" value="38"/>
+   </properties>
+  </object>
+  <object id="33" name="RN_CITADEL_KORKITH" type="routenode" gid="1213" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="43"/>
+    <property name="BRANCH_1" type="object" value="43"/>
+   </properties>
+  </object>
+  <object id="34" name="RN_KOR_KEEP_34" type="routenode" gid="1213" x="2752" y="1408" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="34"/>
+    <property name="BRANCH_1" type="object" value="36"/>
+   </properties>
+  </object>
+  <object id="35" name="RN_KEEP_OF_KOR" type="routenode" gid="1213" x="2048" y="1472" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="39"/>
+    <property name="BRANCH_1" type="object" value="37"/>
+   </properties>
+  </object>
+  <object id="36" name="RN_ITHRIL_KEEP_36" type="routenode" gid="1213" x="3008" y="1472" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="36"/>
+    <property name="BRANCH_1" type="object" value="31"/>
+   </properties>
+  </object>
+  <object id="37" name="RN_KOR_KEEP_37" type="routenode" gid="1213" x="2560" y="1536" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="34"/>
+    <property name="BRANCH_1" type="object" value="40"/>
+   </properties>
+  </object>
+  <object id="38" name="RN_HERATH_KEEP_38" type="routenode" gid="1213" x="3648" y="1600" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="48"/>
+    <property name="BRANCH_1" type="object" value="56"/>
+   </properties>
+  </object>
+  <object id="39" name="RN_KOR_KEEP_39" type="routenode" gid="1213" x="2112" y="1664" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="42"/>
+    <property name="BRANCH_1" type="object" value="42"/>
+   </properties>
+  </object>
+  <object id="40" name="RN_KEEP_HERATH" type="routenode" gid="1213" x="2944" y="1728" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="41"/>
+    <property name="BRANCH_1" type="object" value="47"/>
+   </properties>
+  </object>
+  <object id="41" name="RN_HERATH_KEEP_41" type="routenode" gid="1213" x="3520" y="1728" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="38"/>
+    <property name="BRANCH_1" type="object" value="48"/>
+   </properties>
+  </object>
+  <object id="42" name="RN_VALETHOR_KEEP_42" type="routenode" gid="1213" x="2240" y="1792" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="46"/>
+    <property name="BRANCH_1" type="object" value="46"/>
+   </properties>
+  </object>
+  <object id="43" name="RN_KEEP_OF_VALETHOR" type="routenode" gid="1213" x="1152" y="1856" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="45"/>
+    <property name="BRANCH_1" type="object" value="51"/>
+   </properties>
+  </object>
+  <object id="44" name="RN_MARAKITH_KEEP_44" type="routenode" gid="1213" x="2752" y="1856" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="47"/>
+    <property name="BRANCH_1" type="object" value="40"/>
+   </properties>
+  </object>
+  <object id="45" name="RN_CITADEL_GORGARTH" type="routenode" gid="1213" x="1600" y="1920" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="50"/>
+    <property name="BRANCH_1" type="object" value="51"/>
+   </properties>
+  </object>
+  <object id="46" name="RN_VALETHOR_KEEP_46" type="routenode" gid="1213" x="1984" y="1920" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="45"/>
+    <property name="BRANCH_1" type="object" value="51"/>
+   </properties>
+  </object>
+  <object id="47" name="RN_KEEP_OF_KUMAR" type="routenode" gid="1213" x="3328" y="1920" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="48"/>
+    <property name="BRANCH_1" type="object" value="49"/>
+   </properties>
+  </object>
+  <object id="48" name="RN_CITADEL_KUMAR" type="routenode" gid="1213" x="3712" y="1920" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="49"/>
+    <property name="BRANCH_1" type="object" value="56"/>
+   </properties>
+  </object>
+  <object id="49" name="RN_TARG_KEEP_49" type="routenode" gid="1213" x="3584" y="2048" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="56"/>
+    <property name="BRANCH_1" type="object" value="58"/>
+   </properties>
+  </object>
+  <object id="50" name="RN_VALETHOR_KEEP_50" type="routenode" gid="1213" x="1408" y="2112" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="53"/>
+    <property name="BRANCH_1" type="object" value="57"/>
+   </properties>
+  </object>
+  <object id="51" name="RN_VALETHOR_KEEP_51" type="routenode" gid="1213" x="1536" y="2112" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="57"/>
+    <property name="BRANCH_1" type="object" value="55"/>
+   </properties>
+  </object>
+  <object id="52" name="RN_CITADEL_MARAKITH" type="routenode" gid="1213" x="2816" y="2112" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="62"/>
+    <property name="BRANCH_1" type="object" value="63"/>
+   </properties>
+  </object>
+  <object id="53" name="RN_KEEP_OF_DODRAK" type="routenode" gid="1213" x="896" y="2176" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="107"/>
+    <property name="BRANCH_1" type="object" value="65"/>
+   </properties>
+  </object>
+  <object id="54" name="RN_KEEP_OF_MARAKITH" type="routenode" gid="1213" x="2240" y="2176" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="44"/>
+    <property name="BRANCH_1" type="object" value="52"/>
+   </properties>
+  </object>
+  <object id="55" name="RN_BLOOD_KEEP_55" type="routenode" gid="1213" x="1984" y="2240" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="54"/>
+    <property name="BRANCH_1" type="object" value="59"/>
+   </properties>
+  </object>
+  <object id="56" name="RN_KEEP_OF_UTARG" type="routenode" gid="1213" x="3840" y="2240" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="58"/>
+    <property name="BRANCH_1" type="object" value="64"/>
+   </properties>
+  </object>
+  <object id="57" name="RN_KEEP_OF_BLOOD" type="routenode" gid="1213" x="1408" y="2368" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="60"/>
+    <property name="BRANCH_1" type="object" value="61"/>
+   </properties>
+  </object>
+  <object id="58" name="RN_KEEP_OF_ANTHORIL" type="routenode" gid="1213" x="3520" y="2496" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="62"/>
+    <property name="BRANCH_1" type="object" value="64"/>
+   </properties>
+  </object>
+  <object id="59" name="RN_BLOOD_KEEP_59" type="routenode" gid="1213" x="1792" y="2560" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="66"/>
+    <property name="BRANCH_1" type="object" value="67"/>
+   </properties>
+  </object>
+  <object id="60" name="RN_BLOOD_KEEP_60" type="routenode" gid="1213" x="1472" y="2624" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="65"/>
+    <property name="BRANCH_1" type="object" value="66"/>
+   </properties>
+  </object>
+  <object id="61" name="RN_BLOOD_KEEP_61" type="routenode" gid="1213" x="1664" y="2624" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="66"/>
+    <property name="BRANCH_1" type="object" value="70"/>
+   </properties>
+  </object>
+  <object id="62" name="RN_DAWN_KEEP_62" type="routenode" gid="1213" x="3136" y="2624" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="74"/>
+    <property name="BRANCH_1" type="object" value="77"/>
+   </properties>
+  </object>
+  <object id="63" name="RN_DAWN_KEEP_63" type="routenode" gid="1213" x="2752" y="2688" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="67"/>
+    <property name="BRANCH_1" type="object" value="69"/>
+   </properties>
+  </object>
+  <object id="64" name="RN_KEEP_OF_DREGRIM" type="routenode" gid="1213" x="3584" y="2688" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="69"/>
+    <property name="BRANCH_1" type="object" value="77"/>
+   </properties>
+  </object>
+  <object id="65" name="RN_KEEP_OF_THEMOON" type="routenode" gid="1213" x="1152" y="2752" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="73"/>
+    <property name="BRANCH_1" type="object" value="75"/>
+   </properties>
+  </object>
+  <object id="66" name="RN_CITADEL_SHIMERIL" type="routenode" gid="1213" x="1856" y="2752" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="112"/>
+    <property name="BRANCH_1" type="object" value="67"/>
+   </properties>
+  </object>
+  <object id="67" name="RN_KEEP_OF_DAWN" type="routenode" gid="1213" x="2432" y="2816" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="71"/>
+    <property name="BRANCH_1" type="object" value="103"/>
+   </properties>
+  </object>
+  <object id="68" name="RN_CITADEL_DREGRIM" type="routenode" gid="1213" x="3840" y="2816" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="68"/>
+    <property name="BRANCH_1" type="object" value="68"/>
+   </properties>
+  </object>
+  <object id="69" name="RN_CITADEL_DAWN" type="routenode" gid="1213" x="2880" y="2944" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="71"/>
+    <property name="BRANCH_1" type="object" value="74"/>
+   </properties>
+  </object>
+  <object id="70" name="RN_KEEP_OF_MITHARG" type="routenode" gid="1213" x="1920" y="3008" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="71"/>
+    <property name="BRANCH_1" type="object" value="75"/>
+   </properties>
+  </object>
+  <object id="71" name="RN_DAWN_KEEP_71" type="routenode" gid="1213" x="2752" y="3008" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="79"/>
+    <property name="BRANCH_1" type="object" value="76"/>
+   </properties>
+  </object>
+  <object id="72" name="RN_KEEP_OF_TORKREN" type="routenode" gid="1213" x="512" y="3072" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="87"/>
+    <property name="BRANCH_1" type="object" value="86"/>
+   </properties>
+  </object>
+  <object id="73" name="RN_KEEP_OF_GARD" type="routenode" gid="1213" x="704" y="3072" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="82"/>
+    <property name="BRANCH_1" type="object" value="82"/>
+   </properties>
+  </object>
+  <object id="74" name="RN_TRORN_KEEP_74" type="routenode" gid="1213" x="3136" y="3136" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="76"/>
+    <property name="BRANCH_1" type="object" value="80"/>
+   </properties>
+  </object>
+  <object id="75" name="RN_KEEP_OF_BRITH" type="routenode" gid="1213" x="1408" y="3200" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="83"/>
+    <property name="BRANCH_1" type="object" value="89"/>
+   </properties>
+  </object>
+  <object id="76" name="RN_KEEP_OF_CORELAY" type="routenode" gid="1213" x="2944" y="3200" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="81"/>
+    <property name="BRANCH_1" type="object" value="84"/>
+   </properties>
+  </object>
+  <object id="77" name="RN_KEEP_OF_TRORN" type="routenode" gid="1213" x="3520" y="3264" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="85"/>
+    <property name="BRANCH_1" type="object" value="95"/>
+   </properties>
+  </object>
+  <object id="78" name="RN_KEEP_OF_MORNING" type="routenode" gid="1213" x="2560" y="3328" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="83"/>
+    <property name="BRANCH_1" type="object" value="90"/>
+   </properties>
+  </object>
+  <object id="79" name="RN_MORNING_KEEP_79" type="routenode" gid="1213" x="2752" y="3328" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="78"/>
+    <property name="BRANCH_1" type="object" value="84"/>
+   </properties>
+  </object>
+  <object id="80" name="RN_TRORN_KEEP_80" type="routenode" gid="1213" x="3264" y="3328" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="77"/>
+    <property name="BRANCH_1" type="object" value="95"/>
+   </properties>
+  </object>
+  <object id="81" name="RN_CORELAY_KEEP_81" type="routenode" gid="1213" x="3008" y="3392" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="84"/>
+    <property name="BRANCH_1" type="object" value="97"/>
+   </properties>
+  </object>
+  <object id="82" name="RN_GARD_KEEP_82" type="routenode" gid="1213" x="832" y="3520" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="87"/>
+    <property name="BRANCH_1" type="object" value="92"/>
+   </properties>
+  </object>
+  <object id="83" name="RN_KEEP_OF_ODRARK" type="routenode" gid="1213" x="1664" y="3520" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="103"/>
+    <property name="BRANCH_1" type="object" value="103"/>
+   </properties>
+  </object>
+  <object id="84" name="RN_CORELAY_KEEP_84" type="routenode" gid="1213" x="2880" y="3520" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="97"/>
+    <property name="BRANCH_1" type="object" value="97"/>
+   </properties>
+  </object>
+  <object id="85" name="RN_CORELAY_KEEP_85" type="routenode" gid="1213" x="3584" y="3520" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="94"/>
+    <property name="BRANCH_1" type="object" value="97"/>
+   </properties>
+  </object>
+  <object id="86" name="RN_KEEP_OF_SILENCE" type="routenode" gid="1213" x="512" y="3584" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="91"/>
+    <property name="BRANCH_1" type="object" value="91"/>
+   </properties>
+  </object>
+  <object id="87" name="RN_CITADEL_GARD" type="routenode" gid="1213" x="704" y="3584" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="86"/>
+    <property name="BRANCH_1" type="object" value="92"/>
+   </properties>
+  </object>
+  <object id="88" name="RN_KEEP_OF_ISHMALAY" type="routenode" gid="1213" x="1152" y="3648" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="89"/>
+    <property name="BRANCH_1" type="object" value="110"/>
+   </properties>
+  </object>
+  <object id="89" name="RN_BRITH_KEEP_89" type="routenode" gid="1213" x="1408" y="3648" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="110"/>
+    <property name="BRANCH_1" type="object" value="83"/>
+   </properties>
+  </object>
+  <object id="90" name="RN_CORELAY_KEEP_90" type="routenode" gid="1213" x="2432" y="3648" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="93"/>
+    <property name="BRANCH_1" type="object" value="93"/>
+   </properties>
+  </object>
+  <object id="91" name="RN_SILENCE_KEEP_91" type="routenode" gid="1213" x="576" y="3712" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="92"/>
+    <property name="BRANCH_1" type="object" value="102"/>
+   </properties>
+  </object>
+  <object id="92" name="RN_GARD_KEEP_92" type="routenode" gid="1213" x="832" y="3712" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="102"/>
+    <property name="BRANCH_1" type="object" value="88"/>
+   </properties>
+  </object>
+  <object id="93" name="RN_CORELAY_KEEP_93" type="routenode" gid="1213" x="2560" y="3776" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="96"/>
+    <property name="BRANCH_1" type="object" value="96"/>
+   </properties>
+  </object>
+  <object id="94" name="RN_CORELAY_KEEP_94" type="routenode" gid="1213" x="3648" y="3776" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="97"/>
+    <property name="BRANCH_1" type="object" value="97"/>
+   </properties>
+  </object>
+  <object id="95" name="RN_CORELAY_KEEP_95" type="routenode" gid="1213" x="4096" y="3776" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="94"/>
+    <property name="BRANCH_1" type="object" value="101"/>
+   </properties>
+  </object>
+  <object id="96" name="RN_CORELAY_KEEP_96" type="routenode" gid="1213" x="2752" y="3840" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="97"/>
+    <property name="BRANCH_1" type="object" value="97"/>
+   </properties>
+  </object>
+  <object id="97" name="RN_CITADEL_XAJORKITH" type="routenode" gid="1213" x="2944" y="3840" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="97"/>
+    <property name="BRANCH_1" type="object" value="97"/>
+   </properties>
+  </object>
+  <object id="98" name="RN_TORKREN_KEEP_98" type="routenode" gid="1213" x="320" y="3904" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="92"/>
+    <property name="BRANCH_1" type="object" value="102"/>
+   </properties>
+  </object>
+  <object id="99" name="RN_KEEP_OF_THIMRATH" type="routenode" gid="1213" x="2176" y="3904" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="93"/>
+    <property name="BRANCH_1" type="object" value="96"/>
+   </properties>
+  </object>
+  <object id="100" name="RN_KEEP_OF_RORATH" type="routenode" gid="1213" x="1536" y="3904" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="83"/>
+    <property name="BRANCH_1" type="object" value="103"/>
+   </properties>
+  </object>
+  <object id="101" name="RN_CORELAY_KEEP_101" type="routenode" gid="1213" x="3840" y="3904" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="97"/>
+    <property name="BRANCH_1" type="object" value="97"/>
+   </properties>
+  </object>
+  <object id="102" name="RN_BRITH_KEEP_102" type="routenode" gid="1213" x="960" y="3904" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="100"/>
+    <property name="BRANCH_1" type="object" value="100"/>
+   </properties>
+  </object>
+  <object id="103" name="RN_RUIN_OF_RORATH" type="routenode" gid="1213" x="1792" y="3712" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="99"/>
+    <property name="BRANCH_1" type="object" value="99"/>
+   </properties>
+  </object>
+  <object id="104" name="RN_CAVERN_OF_CRARG" type="routenode" gid="1213" x="2752" y="768" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="16"/>
+    <property name="BRANCH_1" type="object" value="16"/>
+   </properties>
+  </object>
+  <object id="105" name="RN_WEIRDHENGE" type="routenode" gid="1213" x="1216" y="256" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="13"/>
+    <property name="BRANCH_1" type="object" value="19"/>
+   </properties>
+  </object>
+  <object id="106" name="RN_OGRIM_LITH_106" type="routenode" gid="1213" x="512" y="1408" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="53"/>
+    <property name="BRANCH_1" type="object" value="107"/>
+   </properties>
+  </object>
+  <object id="107" name="RN_LITH_OF_ASHIMAR" type="routenode" gid="1213" x="448" y="2432" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="108"/>
+    <property name="BRANCH_1" type="object" value="73"/>
+   </properties>
+  </object>
+  <object id="108" name="RN_LAKE_ASHIMAR" type="routenode" gid="1213" x="192" y="2560" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="109"/>
+    <property name="BRANCH_1" type="object" value="109"/>
+   </properties>
+  </object>
+  <object id="109" name="RN_PLAINS_TORKREN_109" type="routenode" gid="1213" x="64" y="3072" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="72"/>
+    <property name="BRANCH_1" type="object" value="98"/>
+   </properties>
+  </object>
+  <object id="110" name="RN_RUIN_OF_ODRARK" type="routenode" gid="1213" x="1344" y="3904" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="100"/>
+    <property name="BRANCH_1" type="object" value="100"/>
+   </properties>
+  </object>
+  <object id="111" name="RN_RUIN_KUMAR_111" type="routenode" gid="1213" x="4032" y="1600" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="48"/>
+    <property name="BRANCH_1" type="object" value="56"/>
+   </properties>
+  </object>
+  <object id="112" name="RN_LITH_OF_SHIMERIL" type="routenode" gid="1213" x="1920" y="2880" width="64" height="64">
+   <properties>
+    <property name="BRANCH_0" type="object" value="69"/>
+    <property name="BRANCH_1" type="object" value="70"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="11" name="waypoints" visible="0">
+  <object id="113" name="PL_CITADEL_GLOOM" type="waypoint" gid="1211" x="576" y="64" width="64" height="64"/>
+  <object id="114" name="PL_KEEP_OF_LORGRIM" type="waypoint" gid="1211" x="3008" y="256" width="64" height="64"/>
+  <object id="115" name="PL_DESPAIR_KEEP_3" type="waypoint" gid="1211" x="1856" y="320" width="64" height="64"/>
+  <object id="116" name="PL_CITADEL_VORGATH" type="waypoint" gid="1211" x="1472" y="384" width="64" height="64"/>
+  <object id="117" name="PL_KEEP_OF_DEATH" type="waypoint" gid="1211" x="2112" y="448" width="64" height="64"/>
+  <object id="118" name="PL_DESPAIR_KEEP_6" type="waypoint" gid="1211" x="1536" y="512" width="64" height="64"/>
+  <object id="119" name="PL_CITADEL_USHGARAK" type="waypoint" gid="1211" x="1920" y="512" width="64" height="64"/>
+  <object id="120" name="PL_CITADEL_GRARG" type="waypoint" gid="1211" x="2432" y="512" width="64" height="64"/>
+  <object id="121" name="PL_GRARG_KEEP_9" type="waypoint" gid="1211" x="2624" y="576" width="64" height="64"/>
+  <object id="122" name="PL_KEEP_OF_FADRATH" type="waypoint" gid="1211" x="3712" y="576" width="64" height="64"/>
+  <object id="123" name="PL_GRARG_KEEP_11" type="waypoint" gid="1211" x="2560" y="640" width="64" height="64"/>
+  <object id="124" name="PL_KEEP_OF_LOTHORIL" type="waypoint" gid="1211" x="768" y="704" width="64" height="64"/>
+  <object id="125" name="PL_LOST_KEEP_13" type="waypoint" gid="1211" x="1408" y="768" width="64" height="64"/>
+  <object id="126" name="PL_UGRAK_KEEP_14" type="waypoint" gid="1211" x="1664" y="768" width="64" height="64"/>
+  <object id="127" name="PL_CITADEL_KOR" type="waypoint" gid="1211" x="1920" y="832" width="64" height="64"/>
+  <object id="128" name="PL_KOR_KEEP_16" type="waypoint" gid="1211" x="2368" y="832" width="64" height="64"/>
+  <object id="129" name="PL_KEEP_OF_ITHRIL" type="waypoint" gid="1211" x="3328" y="832" width="64" height="64"/>
+  <object id="130" name="PL_KEEP_OF_DROON" type="waypoint" gid="1211" x="4032" y="832" width="64" height="64"/>
+  <object id="131" name="PL_GLORIM_KEEP_19" type="waypoint" gid="1211" x="1088" y="896" width="64" height="64"/>
+  <object id="132" name="PL_ITHRIL_KEEP_20" type="waypoint" gid="1211" x="3584" y="896" width="64" height="64"/>
+  <object id="133" name="PL_CITADEL_ITHRORN" type="waypoint" gid="1211" x="3712" y="1024" width="64" height="64"/>
+  <object id="134" name="PL_GLORIM_KEEP_22" type="waypoint" gid="1211" x="960" y="1088" width="64" height="64"/>
+  <object id="135" name="PL_KOR_KEEP_23" type="waypoint" gid="1211" x="1792" y="1088" width="64" height="64"/>
+  <object id="136" name="PL_KOR_KEEP_24" type="waypoint" gid="1211" x="2240" y="1088" width="64" height="64"/>
+  <object id="137" name="PL_CITADEL_DREAMS" type="waypoint" gid="1211" x="2752" y="1088" width="64" height="64"/>
+  <object id="138" name="PL_ITHRIL_KEEP_26" type="waypoint" gid="1211" x="3392" y="1088" width="64" height="64"/>
+  <object id="139" name="PL_KOR_KEEP_27" type="waypoint" gid="1211" x="1280" y="1152" width="64" height="64"/>
+  <object id="140" name="PL_KOR_KEEP_28" type="waypoint" gid="1211" x="1472" y="1216" width="64" height="64"/>
+  <object id="141" name="PL_ITHRIL_KEEP_29" type="waypoint" gid="1211" x="3520" y="1216" width="64" height="64"/>
+  <object id="142" name="PL_KORKITH_KEEP_30" type="waypoint" gid="1211" x="960" y="1344" width="64" height="64"/>
+  <object id="143" name="PL_ITHRIL_KEEP_31" type="waypoint" gid="1211" x="3200" y="1344" width="64" height="64"/>
+  <object id="144" name="PL_KEEP_OF_WHISPERS" type="waypoint" gid="1211" x="3712" y="1344" width="64" height="64"/>
+  <object id="145" name="PL_CITADEL_KORKITH" type="waypoint" gid="1211" x="1216" y="1408" width="64" height="64"/>
+  <object id="146" name="PL_KOR_KEEP_34" type="waypoint" gid="1211" x="2752" y="1408" width="64" height="64"/>
+  <object id="147" name="PL_KEEP_OF_KOR" type="waypoint" gid="1211" x="2048" y="1472" width="64" height="64"/>
+  <object id="148" name="PL_ITHRIL_KEEP_36" type="waypoint" gid="1211" x="3008" y="1472" width="64" height="64"/>
+  <object id="149" name="PL_KOR_KEEP_37" type="waypoint" gid="1211" x="2560" y="1536" width="64" height="64"/>
+  <object id="150" name="PL_HERATH_KEEP_38" type="waypoint" gid="1211" x="3648" y="1600" width="64" height="64"/>
+  <object id="151" name="PL_KOR_KEEP_39" type="waypoint" gid="1211" x="2112" y="1664" width="64" height="64"/>
+  <object id="152" name="PL_KEEP_HERATH" type="waypoint" gid="1211" x="2944" y="1728" width="64" height="64"/>
+  <object id="153" name="PL_HERATH_KEEP_41" type="waypoint" gid="1211" x="3520" y="1728" width="64" height="64"/>
+  <object id="154" name="PL_VALETHOR_KEEP_42" type="waypoint" gid="1211" x="2240" y="1792" width="64" height="64"/>
+  <object id="155" name="PL_KEEP_OF_VALETHOR" type="waypoint" gid="1211" x="1152" y="1856" width="64" height="64"/>
+  <object id="156" name="PL_MARAKITH_KEEP_44" type="waypoint" gid="1211" x="2752" y="1856" width="64" height="64"/>
+  <object id="157" name="PL_CITADEL_GORGARTH" type="waypoint" gid="1211" x="1600" y="1920" width="64" height="64"/>
+  <object id="158" name="PL_VALETHOR_KEEP_46" type="waypoint" gid="1211" x="1984" y="1920" width="64" height="64"/>
+  <object id="159" name="PL_KEEP_OF_KUMAR" type="waypoint" gid="1211" x="3328" y="1920" width="64" height="64"/>
+  <object id="160" name="PL_CITADEL_KUMAR" type="waypoint" gid="1211" x="3712" y="1920" width="64" height="64"/>
+  <object id="161" name="PL_TARG_KEEP_49" type="waypoint" gid="1211" x="3584" y="2048" width="64" height="64"/>
+  <object id="162" name="PL_VALETHOR_KEEP_50" type="waypoint" gid="1211" x="1408" y="2112" width="64" height="64"/>
+  <object id="163" name="PL_VALETHOR_KEEP_51" type="waypoint" gid="1211" x="1536" y="2112" width="64" height="64"/>
+  <object id="164" name="PL_CITADEL_MARAKITH" type="waypoint" gid="1211" x="2816" y="2112" width="64" height="64"/>
+  <object id="165" name="PL_KEEP_OF_DODRAK" type="waypoint" gid="1211" x="896" y="2176" width="64" height="64"/>
+  <object id="166" name="PL_KEEP_OF_MARAKITH" type="waypoint" gid="1211" x="2240" y="2176" width="64" height="64"/>
+  <object id="167" name="PL_BLOOD_KEEP_55" type="waypoint" gid="1211" x="1984" y="2240" width="64" height="64"/>
+  <object id="168" name="PL_KEEP_OF_UTARG" type="waypoint" gid="1211" x="3840" y="2240" width="64" height="64"/>
+  <object id="169" name="PL_KEEP_OF_BLOOD" type="waypoint" gid="1211" x="1408" y="2368" width="64" height="64"/>
+  <object id="170" name="PL_KEEP_OF_ANTHORIL" type="waypoint" gid="1211" x="3520" y="2496" width="64" height="64"/>
+  <object id="171" name="PL_BLOOD_KEEP_59" type="waypoint" gid="1211" x="1792" y="2560" width="64" height="64"/>
+  <object id="172" name="PL_BLOOD_KEEP_60" type="waypoint" gid="1211" x="1472" y="2624" width="64" height="64"/>
+  <object id="173" name="PL_BLOOD_KEEP_61" type="waypoint" gid="1211" x="1664" y="2624" width="64" height="64"/>
+  <object id="174" name="PL_DAWN_KEEP_62" type="waypoint" gid="1211" x="3136" y="2624" width="64" height="64"/>
+  <object id="175" name="PL_DAWN_KEEP_63" type="waypoint" gid="1211" x="2752" y="2688" width="64" height="64"/>
+  <object id="176" name="PL_KEEP_OF_DREGRIM" type="waypoint" gid="1211" x="3584" y="2688" width="64" height="64"/>
+  <object id="177" name="PL_KEEP_OF_THEMOON" type="waypoint" gid="1211" x="1152" y="2752" width="64" height="64"/>
+  <object id="178" name="PL_CITADEL_SHIMERIL" type="waypoint" gid="1211" x="1856" y="2752" width="64" height="64"/>
+  <object id="179" name="PL_KEEP_OF_DAWN" type="waypoint" gid="1211" x="2432" y="2816" width="64" height="64"/>
+  <object id="180" name="PL_CITADEL_DREGRIM" type="waypoint" gid="1211" x="3840" y="2816" width="64" height="64"/>
+  <object id="181" name="PL_CITADEL_DAWN" type="waypoint" gid="1211" x="2880" y="2944" width="64" height="64"/>
+  <object id="182" name="PL_KEEP_OF_MITHARG" type="waypoint" gid="1211" x="1920" y="3008" width="64" height="64"/>
+  <object id="183" name="PL_DAWN_KEEP_71" type="waypoint" gid="1211" x="2752" y="3008" width="64" height="64"/>
+  <object id="184" name="PL_KEEP_OF_TORKREN" type="waypoint" gid="1211" x="512" y="3072" width="64" height="64"/>
+  <object id="185" name="PL_KEEP_OF_GARD" type="waypoint" gid="1211" x="704" y="3072" width="64" height="64"/>
+  <object id="186" name="PL_TRORN_KEEP_74" type="waypoint" gid="1211" x="3136" y="3136" width="64" height="64"/>
+  <object id="187" name="PL_KEEP_OF_BRITH" type="waypoint" gid="1211" x="1408" y="3200" width="64" height="64"/>
+  <object id="188" name="PL_KEEP_OF_CORELAY" type="waypoint" gid="1211" x="2944" y="3200" width="64" height="64"/>
+  <object id="189" name="PL_KEEP_OF_TRORN" type="waypoint" gid="1211" x="3520" y="3264" width="64" height="64"/>
+  <object id="190" name="PL_KEEP_OF_MORNING" type="waypoint" gid="1211" x="2560" y="3328" width="64" height="64"/>
+  <object id="191" name="PL_MORNING_KEEP_79" type="waypoint" gid="1211" x="2752" y="3328" width="64" height="64"/>
+  <object id="192" name="PL_TRORN_KEEP_80" type="waypoint" gid="1211" x="3264" y="3328" width="64" height="64"/>
+  <object id="193" name="PL_CORELAY_KEEP_81" type="waypoint" gid="1211" x="3008" y="3392" width="64" height="64"/>
+  <object id="194" name="PL_GARD_KEEP_82" type="waypoint" gid="1211" x="832" y="3520" width="64" height="64"/>
+  <object id="195" name="PL_KEEP_OF_ODRARK" type="waypoint" gid="1211" x="1664" y="3520" width="64" height="64"/>
+  <object id="196" name="PL_CORELAY_KEEP_84" type="waypoint" gid="1211" x="2880" y="3520" width="64" height="64"/>
+  <object id="197" name="PL_CORELAY_KEEP_85" type="waypoint" gid="1211" x="3584" y="3520" width="64" height="64"/>
+  <object id="198" name="PL_KEEP_OF_SILENCE" type="waypoint" gid="1211" x="512" y="3584" width="64" height="64"/>
+  <object id="199" name="PL_CITADEL_GARD" type="waypoint" gid="1211" x="704" y="3584" width="64" height="64"/>
+  <object id="200" name="PL_KEEP_OF_ISHMALAY" type="waypoint" gid="1211" x="1152" y="3648" width="64" height="64"/>
+  <object id="201" name="PL_BRITH_KEEP_89" type="waypoint" gid="1211" x="1408" y="3648" width="64" height="64"/>
+  <object id="202" name="PL_CORELAY_KEEP_90" type="waypoint" gid="1211" x="2432" y="3648" width="64" height="64"/>
+  <object id="203" name="PL_SILENCE_KEEP_91" type="waypoint" gid="1211" x="576" y="3712" width="64" height="64"/>
+  <object id="204" name="PL_GARD_KEEP_92" type="waypoint" gid="1211" x="832" y="3712" width="64" height="64"/>
+  <object id="205" name="PL_CORELAY_KEEP_93" type="waypoint" gid="1211" x="2560" y="3776" width="64" height="64"/>
+  <object id="206" name="PL_CORELAY_KEEP_94" type="waypoint" gid="1211" x="3648" y="3776" width="64" height="64"/>
+  <object id="207" name="PL_CORELAY_KEEP_95" type="waypoint" gid="1211" x="4096" y="3776" width="64" height="64"/>
+  <object id="208" name="PL_CORELAY_KEEP_96" type="waypoint" gid="1211" x="2752" y="3840" width="64" height="64"/>
+  <object id="209" name="PL_CITADEL_XAJORKITH" type="waypoint" gid="1211" x="2944" y="3840" width="64" height="64"/>
+  <object id="210" name="PL_TORKREN_KEEP_98" type="waypoint" gid="1211" x="320" y="3904" width="64" height="64"/>
+  <object id="211" name="PL_BRITH_KEEP_102" type="waypoint" gid="1211" x="960" y="3904" width="64" height="64"/>
+  <object id="212" name="PL_KEEP_OF_RORATH" type="waypoint" gid="1211" x="1536" y="3904" width="64" height="64"/>
+  <object id="213" name="PL_KEEP_OF_THIMRATH" type="waypoint" gid="1211" x="2176" y="3904" width="64" height="64"/>
+  <object id="214" name="PL_CORELAY_KEEP_101" type="waypoint" gid="1211" x="3840" y="3904" width="64" height="64"/>
+  <object id="215" name="PL_WEIRDHENGE" type="waypoint" gid="1211" x="1216" y="256" width="64" height="64"/>
+  <object id="216" name="PL_CAVERN_OF_CRARG" type="waypoint" gid="1211" x="2752" y="768" width="64" height="64"/>
+  <object id="217" name="PL_OGRIM_LITH_106" type="waypoint" gid="1211" x="512" y="1408" width="64" height="64"/>
+  <object id="218" name="PL_RUIN_KUMAR_111" type="waypoint" gid="1211" x="4032" y="1600" width="64" height="64"/>
+  <object id="219" name="PL_LITH_OF_ASHIMAR" type="waypoint" gid="1211" x="448" y="2432" width="64" height="64"/>
+  <object id="220" name="PL_LAKE_ASHIMAR" type="waypoint" gid="1211" x="192" y="2560" width="64" height="64"/>
+  <object id="221" name="PL_LITH_OF_SHIMERIL" type="waypoint" gid="1211" x="1920" y="2880" width="64" height="64"/>
+  <object id="222" name="PL_PLAINS_TORKREN_109" type="waypoint" gid="1211" x="64" y="3072" width="64" height="64"/>
+  <object id="223" name="PL_RUIN_OF_RORATH" type="waypoint" gid="1211" x="1792" y="3712" width="64" height="64"/>
+  <object id="224" name="PL_RUIN_OF_ODRARK" type="waypoint" gid="1211" x="1344" y="3904" width="64" height="64"/>
+  <object id="225" name="PL_TOWER_OF_THE_MOON" type="waypoint" gid="1211" x="832" y="2624" width="64" height="64"/>
+  <object id="226" name="PL_RUIN_OF_COROTH" type="waypoint" gid="1211" x="832" y="1536" width="64" height="64"/>
+  <object id="227" name="PL_MOONHENGE" type="waypoint" gid="1211" x="128" y="704" width="64" height="64"/>
+  <object id="228" name="PL_TOWER_OF_LORGRIM" type="waypoint" gid="1211" x="4032" y="64" width="64" height="64"/>
+  <object id="229" name="PL_TOWER_OF_DOOM" type="waypoint" gid="1211" x="1728" y="320" width="64" height="64"/>
+  <object id="230" name="PL_LAKE_MIRROW" type="waypoint" gid="1211" x="640" y="1152" width="64" height="64"/>
+  <object id="231" name="PL_VILLAGE_OF_THRALL" type="waypoint" gid="1211" x="2176" y="2496" width="64" height="64"/>
+  <object id="232" name="PL_VILLAGE_OF_KOR" type="waypoint" gid="1211" x="1536" y="1408" width="64" height="64"/>
+  <object id="233" name="PL_ICE_FEAR_CENTRE" type="waypoint" gid="1211" x="1728" y="320" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="12" name="strongholds" visible="0">
+  <object id="234" name="SH_CITADEL_GLOOM" type="stronghold" gid="1210" x="576" y="64" width="64" height="64"/>
+  <object id="235" name="SH_KEEP_OF_LORGRIM" type="stronghold" gid="1210" x="3008" y="256" width="64" height="64"/>
+  <object id="236" name="SH_DESPAIR_KEEP_3" type="stronghold" gid="1210" x="1856" y="320" width="64" height="64"/>
+  <object id="237" name="SH_CITADEL_VORGATH" type="stronghold" gid="1210" x="1472" y="384" width="64" height="64"/>
+  <object id="238" name="SH_KEEP_OF_DEATH" type="stronghold" gid="1210" x="2112" y="448" width="64" height="64"/>
+  <object id="239" name="SH_DESPAIR_KEEP_6" type="stronghold" gid="1210" x="1536" y="512" width="64" height="64"/>
+  <object id="240" name="SH_CITADEL_USHGARAK" type="stronghold" gid="1210" x="1920" y="512" width="64" height="64"/>
+  <object id="241" name="SH_CITADEL_GRARG" type="stronghold" gid="1210" x="2432" y="512" width="64" height="64"/>
+  <object id="242" name="SH_GRARG_KEEP_9" type="stronghold" gid="1210" x="2624" y="576" width="64" height="64"/>
+  <object id="243" name="SH_KEEP_OF_FADRATH" type="stronghold" gid="1210" x="3712" y="576" width="64" height="64"/>
+  <object id="244" name="SH_GRARG_KEEP_11" type="stronghold" gid="1210" x="2560" y="640" width="64" height="64"/>
+  <object id="245" name="SH_KEEP_OF_LOTHORIL" type="stronghold" gid="1210" x="768" y="704" width="64" height="64"/>
+  <object id="246" name="SH_LOST_KEEP_13" type="stronghold" gid="1210" x="1408" y="768" width="64" height="64"/>
+  <object id="247" name="SH_UGRAK_KEEP_14" type="stronghold" gid="1210" x="1664" y="768" width="64" height="64"/>
+  <object id="248" name="SH_CITADEL_KOR" type="stronghold" gid="1210" x="1920" y="832" width="64" height="64"/>
+  <object id="249" name="SH_KOR_KEEP_16" type="stronghold" gid="1210" x="2368" y="832" width="64" height="64"/>
+  <object id="250" name="SH_KEEP_OF_ITHRIL" type="stronghold" gid="1210" x="3328" y="832" width="64" height="64"/>
+  <object id="251" name="SH_KEEP_OF_DROON" type="stronghold" gid="1210" x="4032" y="832" width="64" height="64"/>
+  <object id="252" name="SH_GLORIM_KEEP_19" type="stronghold" gid="1210" x="1088" y="896" width="64" height="64"/>
+  <object id="253" name="SH_ITHRIL_KEEP_20" type="stronghold" gid="1210" x="3584" y="896" width="64" height="64"/>
+  <object id="254" name="SH_CITADEL_ITHRORN" type="stronghold" gid="1210" x="3712" y="1024" width="64" height="64"/>
+  <object id="255" name="SH_GLORIM_KEEP_22" type="stronghold" gid="1210" x="960" y="1088" width="64" height="64"/>
+  <object id="256" name="SH_KOR_KEEP_23" type="stronghold" gid="1210" x="1792" y="1088" width="64" height="64"/>
+  <object id="257" name="SH_KOR_KEEP_24" type="stronghold" gid="1210" x="2240" y="1088" width="64" height="64"/>
+  <object id="258" name="SH_CITADEL_DREAMS" type="stronghold" gid="1210" x="2752" y="1088" width="64" height="64"/>
+  <object id="259" name="SH_ITHRIL_KEEP_26" type="stronghold" gid="1210" x="3392" y="1088" width="64" height="64"/>
+  <object id="260" name="SH_KOR_KEEP_27" type="stronghold" gid="1210" x="1280" y="1152" width="64" height="64"/>
+  <object id="261" name="SH_KOR_KEEP_28" type="stronghold" gid="1210" x="1472" y="1216" width="64" height="64"/>
+  <object id="262" name="SH_ITHRIL_KEEP_29" type="stronghold" gid="1210" x="3520" y="1216" width="64" height="64"/>
+  <object id="263" name="SH_KORKITH_KEEP_30" type="stronghold" gid="1210" x="960" y="1344" width="64" height="64"/>
+  <object id="264" name="SH_ITHRIL_KEEP_31" type="stronghold" gid="1210" x="3200" y="1344" width="64" height="64"/>
+  <object id="265" name="SH_KEEP_OF_WHISPERS" type="stronghold" gid="1210" x="3712" y="1344" width="64" height="64"/>
+  <object id="266" name="SH_CITADEL_KORKITH" type="stronghold" gid="1210" x="1216" y="1408" width="64" height="64"/>
+  <object id="267" name="SH_KOR_KEEP_34" type="stronghold" gid="1210" x="2752" y="1408" width="64" height="64"/>
+  <object id="268" name="SH_KEEP_OF_KOR" type="stronghold" gid="1210" x="2048" y="1472" width="64" height="64"/>
+  <object id="269" name="SH_ITHRIL_KEEP_36" type="stronghold" gid="1210" x="3008" y="1472" width="64" height="64"/>
+  <object id="270" name="SH_KOR_KEEP_37" type="stronghold" gid="1210" x="2560" y="1536" width="64" height="64"/>
+  <object id="271" name="SH_HERATH_KEEP_38" type="stronghold" gid="1210" x="3648" y="1600" width="64" height="64"/>
+  <object id="272" name="SH_KOR_KEEP_39" type="stronghold" gid="1210" x="2112" y="1664" width="64" height="64"/>
+  <object id="273" name="SH_KEEP_HERATH" type="stronghold" gid="1210" x="2944" y="1728" width="64" height="64"/>
+  <object id="274" name="SH_HERATH_KEEP_41" type="stronghold" gid="1210" x="3520" y="1728" width="64" height="64"/>
+  <object id="275" name="SH_VALETHOR_KEEP_42" type="stronghold" gid="1210" x="2240" y="1792" width="64" height="64"/>
+  <object id="276" name="SH_KEEP_OF_VALETHOR" type="stronghold" gid="1210" x="1152" y="1856" width="64" height="64"/>
+  <object id="277" name="SH_MARAKITH_KEEP_44" type="stronghold" gid="1210" x="2752" y="1856" width="64" height="64"/>
+  <object id="278" name="SH_CITADEL_GORGARTH" type="stronghold" gid="1210" x="1600" y="1920" width="64" height="64"/>
+  <object id="279" name="SH_VALETHOR_KEEP_46" type="stronghold" gid="1210" x="1984" y="1920" width="64" height="64"/>
+  <object id="280" name="SH_KEEP_OF_KUMAR" type="stronghold" gid="1210" x="3328" y="1920" width="64" height="64"/>
+  <object id="281" name="SH_CITADEL_KUMAR" type="stronghold" gid="1210" x="3712" y="1920" width="64" height="64"/>
+  <object id="282" name="SH_TARG_KEEP_49" type="stronghold" gid="1210" x="3584" y="2048" width="64" height="64"/>
+  <object id="283" name="SH_VALETHOR_KEEP_50" type="stronghold" gid="1210" x="1408" y="2112" width="64" height="64"/>
+  <object id="284" name="SH_VALETHOR_KEEP_51" type="stronghold" gid="1210" x="1536" y="2112" width="64" height="64"/>
+  <object id="285" name="SH_CITADEL_MARAKITH" type="stronghold" gid="1210" x="2816" y="2112" width="64" height="64"/>
+  <object id="286" name="SH_KEEP_OF_DODRAK" type="stronghold" gid="1210" x="896" y="2176" width="64" height="64"/>
+  <object id="287" name="SH_KEEP_OF_MARAKITH" type="stronghold" gid="1210" x="2240" y="2176" width="64" height="64"/>
+  <object id="288" name="SH_BLOOD_KEEP_55" type="stronghold" gid="1210" x="1984" y="2240" width="64" height="64"/>
+  <object id="289" name="SH_KEEP_OF_UTARG" type="stronghold" gid="1210" x="3840" y="2240" width="64" height="64"/>
+  <object id="290" name="SH_KEEP_OF_BLOOD" type="stronghold" gid="1210" x="1408" y="2368" width="64" height="64"/>
+  <object id="291" name="SH_KEEP_OF_ANTHORIL" type="stronghold" gid="1210" x="3520" y="2496" width="64" height="64"/>
+  <object id="292" name="SH_BLOOD_KEEP_59" type="stronghold" gid="1210" x="1792" y="2560" width="64" height="64"/>
+  <object id="293" name="SH_BLOOD_KEEP_60" type="stronghold" gid="1210" x="1472" y="2624" width="64" height="64"/>
+  <object id="294" name="SH_BLOOD_KEEP_61" type="stronghold" gid="1210" x="1664" y="2624" width="64" height="64"/>
+  <object id="295" name="SH_DAWN_KEEP_62" type="stronghold" gid="1210" x="3136" y="2624" width="64" height="64"/>
+  <object id="296" name="SH_DAWN_KEEP_63" type="stronghold" gid="1210" x="2752" y="2688" width="64" height="64"/>
+  <object id="297" name="SH_KEEP_OF_DREGRIM" type="stronghold" gid="1210" x="3584" y="2688" width="64" height="64"/>
+  <object id="298" name="SH_KEEP_OF_THEMOON" type="stronghold" gid="1210" x="1152" y="2752" width="64" height="64"/>
+  <object id="299" name="SH_CITADEL_SHIMERIL" type="stronghold" gid="1210" x="1856" y="2752" width="64" height="64"/>
+  <object id="300" name="SH_KEEP_OF_DAWN" type="stronghold" gid="1210" x="2432" y="2816" width="64" height="64"/>
+  <object id="301" name="SH_CITADEL_DREGRIM" type="stronghold" gid="1210" x="3840" y="2816" width="64" height="64"/>
+  <object id="302" name="SH_CITADEL_DAWN" type="stronghold" gid="1210" x="2880" y="2944" width="64" height="64"/>
+  <object id="303" name="SH_KEEP_OF_MITHARG" type="stronghold" gid="1210" x="1920" y="3008" width="64" height="64"/>
+  <object id="304" name="SH_DAWN_KEEP_71" type="stronghold" gid="1210" x="2752" y="3008" width="64" height="64"/>
+  <object id="305" name="SH_KEEP_OF_TORKREN" type="stronghold" gid="1210" x="512" y="3072" width="64" height="64"/>
+  <object id="306" name="SH_KEEP_OF_GARD" type="stronghold" gid="1210" x="704" y="3072" width="64" height="64"/>
+  <object id="307" name="SH_TRORN_KEEP_74" type="stronghold" gid="1210" x="3136" y="3136" width="64" height="64"/>
+  <object id="308" name="SH_KEEP_OF_BRITH" type="stronghold" gid="1210" x="1408" y="3200" width="64" height="64"/>
+  <object id="309" name="SH_KEEP_OF_CORELAY" type="stronghold" gid="1210" x="2944" y="3200" width="64" height="64"/>
+  <object id="310" name="SH_KEEP_OF_TRORN" type="stronghold" gid="1210" x="3520" y="3264" width="64" height="64"/>
+  <object id="311" name="SH_KEEP_OF_MORNING" type="stronghold" gid="1210" x="2560" y="3328" width="64" height="64"/>
+  <object id="312" name="SH_MORNING_KEEP_79" type="stronghold" gid="1210" x="2752" y="3328" width="64" height="64"/>
+  <object id="313" name="SH_TRORN_KEEP_80" type="stronghold" gid="1210" x="3264" y="3328" width="64" height="64"/>
+  <object id="314" name="SH_CORELAY_KEEP_81" type="stronghold" gid="1210" x="3008" y="3392" width="64" height="64"/>
+  <object id="315" name="SH_GARD_KEEP_82" type="stronghold" gid="1210" x="832" y="3520" width="64" height="64"/>
+  <object id="316" name="SH_KEEP_OF_ODRARK" type="stronghold" gid="1210" x="1664" y="3520" width="64" height="64"/>
+  <object id="317" name="SH_CORELAY_KEEP_84" type="stronghold" gid="1210" x="2880" y="3520" width="64" height="64"/>
+  <object id="318" name="SH_CORELAY_KEEP_85" type="stronghold" gid="1210" x="3584" y="3520" width="64" height="64"/>
+  <object id="319" name="SH_KEEP_OF_SILENCE" type="stronghold" gid="1210" x="512" y="3584" width="64" height="64"/>
+  <object id="320" name="SH_CITADEL_GARD" type="stronghold" gid="1210" x="704" y="3584" width="64" height="64"/>
+  <object id="321" name="SH_KEEP_OF_ISHMALAY" type="stronghold" gid="1210" x="1152" y="3648" width="64" height="64"/>
+  <object id="322" name="SH_BRITH_KEEP_89" type="stronghold" gid="1210" x="1408" y="3648" width="64" height="64"/>
+  <object id="323" name="SH_CORELAY_KEEP_90" type="stronghold" gid="1210" x="2432" y="3648" width="64" height="64"/>
+  <object id="324" name="SH_SILENCE_KEEP_91" type="stronghold" gid="1210" x="576" y="3712" width="64" height="64"/>
+  <object id="325" name="SH_GARD_KEEP_92" type="stronghold" gid="1210" x="832" y="3712" width="64" height="64"/>
+  <object id="326" name="SH_CORELAY_KEEP_93" type="stronghold" gid="1210" x="2560" y="3776" width="64" height="64"/>
+  <object id="327" name="SH_CORELAY_KEEP_94" type="stronghold" gid="1210" x="3648" y="3776" width="64" height="64"/>
+  <object id="328" name="SH_CORELAY_KEEP_95" type="stronghold" gid="1210" x="4096" y="3776" width="64" height="64"/>
+  <object id="329" name="SH_CORELAY_KEEP_96" type="stronghold" gid="1210" x="2752" y="3840" width="64" height="64"/>
+  <object id="330" name="SH_CITADEL_XAJORKITH" type="stronghold" gid="1210" x="2944" y="3840" width="64" height="64"/>
+  <object id="331" name="SH_TORKREN_KEEP_98" type="stronghold" gid="1210" x="320" y="3904" width="64" height="64"/>
+  <object id="332" name="SH_KEEP_OF_THIMRATH" type="stronghold" gid="1210" x="2176" y="3904" width="64" height="64"/>
+  <object id="333" name="SH_KEEP_OF_RORATH" type="stronghold" gid="1210" x="1536" y="3904" width="64" height="64"/>
+  <object id="334" name="SH_CORELAY_KEEP_101" type="stronghold" gid="1210" x="3840" y="3904" width="64" height="64"/>
+  <object id="335" name="SH_BRITH_KEEP_102" type="stronghold" gid="1210" x="960" y="3904" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="13" name="regiments" visible="0">
+  <object id="336" name="RG_1" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="337" name="RG_2" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="338" name="RG_3" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="339" name="RG_4" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="340" name="RG_5" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="341" name="RG_6" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="342" name="RG_7" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="343" name="RG_8" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="344" name="RG_9" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="345" name="RG_10" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="498"/>
+   </properties>
+  </object>
+  <object id="346" name="RG_11" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="347" name="RG_12" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="500"/>
+   </properties>
+  </object>
+  <object id="348" name="RG_13" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="501"/>
+   </properties>
+  </object>
+  <object id="349" name="RG_14" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="502"/>
+   </properties>
+  </object>
+  <object id="350" name="RG_15" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="503"/>
+   </properties>
+  </object>
+  <object id="351" name="RG_16" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="504"/>
+   </properties>
+  </object>
+  <object id="352" name="RG_17" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="506"/>
+   </properties>
+  </object>
+  <object id="353" name="RG_18" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="507"/>
+   </properties>
+  </object>
+  <object id="354" name="RG_19" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="508"/>
+   </properties>
+  </object>
+  <object id="355" name="RG_20" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="509"/>
+   </properties>
+  </object>
+  <object id="356" name="RG_21" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="511"/>
+   </properties>
+  </object>
+  <object id="357" name="RG_22" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="512"/>
+   </properties>
+  </object>
+  <object id="358" name="RG_23" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="514"/>
+   </properties>
+  </object>
+  <object id="359" name="RG_24" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="517"/>
+   </properties>
+  </object>
+  <object id="360" name="RG_25" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="518"/>
+   </properties>
+  </object>
+  <object id="361" name="RG_26" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="519"/>
+   </properties>
+  </object>
+  <object id="362" name="RG_27" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="520"/>
+   </properties>
+  </object>
+  <object id="363" name="RG_28" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="521"/>
+   </properties>
+  </object>
+  <object id="364" name="RG_29" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="522"/>
+   </properties>
+  </object>
+  <object id="365" name="RG_30" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="523"/>
+   </properties>
+  </object>
+  <object id="366" name="RG_31" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="524"/>
+   </properties>
+  </object>
+  <object id="367" name="RG_32" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="525"/>
+   </properties>
+  </object>
+  <object id="368" name="RG_33" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="369" name="RG_34" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="370" name="RG_35" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="371" name="RG_36" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="372" name="RG_37" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="373" name="RG_38" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="374" name="RG_39" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="375" name="RG_40" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="376" name="RG_41" type="regiment" gid="1209" x="1472" y="384" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="4"/>
+   </properties>
+  </object>
+  <object id="377" name="RG_42" type="regiment" gid="1209" x="1472" y="384" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="4"/>
+   </properties>
+  </object>
+  <object id="378" name="RG_43" type="regiment" gid="1209" x="1472" y="384" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="4"/>
+   </properties>
+  </object>
+  <object id="379" name="RG_44" type="regiment" gid="1209" x="1472" y="384" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="4"/>
+   </properties>
+  </object>
+  <object id="380" name="RG_45" type="regiment" gid="1209" x="2432" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="8"/>
+   </properties>
+  </object>
+  <object id="381" name="RG_46" type="regiment" gid="1209" x="2432" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="8"/>
+   </properties>
+  </object>
+  <object id="382" name="RG_47" type="regiment" gid="1209" x="2432" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="8"/>
+   </properties>
+  </object>
+  <object id="383" name="RG_48" type="regiment" gid="1209" x="2432" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="8"/>
+   </properties>
+  </object>
+  <object id="384" name="RG_49" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="385" name="RG_50" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="386" name="RG_51" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="387" name="RG_52" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="388" name="RG_53" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="389" name="RG_54" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="390" name="RG_55" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="391" name="RG_56" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="392" name="RG_57" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="393" name="RG_58" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="394" name="RG_59" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="395" name="RG_60" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="396" name="RG_61" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="397" name="RG_62" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="398" name="RG_63" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="399" name="RG_64" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="400" name="RG_65" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="401" name="RG_66" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="402" name="RG_67" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="403" name="RG_68" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="404" name="RG_69" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="405" name="RG_70" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="406" name="RG_71" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="407" name="RG_72" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="408" name="RG_73" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="409" name="RG_74" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="410" name="RG_75" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="411" name="RG_76" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="412" name="RG_77" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="413" name="RG_78" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="414" name="RG_79" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="415" name="RG_80" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="416" name="RG_81" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="417" name="RG_82" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="418" name="RG_83" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="419" name="RG_84" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="420" name="RG_85" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="421" name="RG_86" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="422" name="RG_87" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="423" name="RG_88" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="424" name="RG_89" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="425" name="RG_90" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="426" name="RG_91" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="427" name="RG_92" type="regiment" gid="1209" x="1216" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="33"/>
+   </properties>
+  </object>
+  <object id="428" name="RG_93" type="regiment" gid="1209" x="1600" y="1920" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="45"/>
+   </properties>
+  </object>
+  <object id="429" name="RG_94" type="regiment" gid="1209" x="1600" y="1920" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="45"/>
+   </properties>
+  </object>
+  <object id="430" name="RG_95" type="regiment" gid="1209" x="1600" y="1920" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="45"/>
+   </properties>
+  </object>
+  <object id="431" name="RG_96" type="regiment" gid="1209" x="1600" y="1920" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="45"/>
+   </properties>
+  </object>
+  <object id="432" name="RG_97" type="regiment" gid="1209" x="512" y="1408" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="433" name="RG_98" type="regiment" gid="1209" x="1792" y="1088" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="434" name="RG_99" type="regiment" gid="1209" x="2624" y="576" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="435" name="RG_100" type="regiment" gid="1209" x="2560" y="1536" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="436" name="RG_101" type="regiment" gid="1209" x="1408" y="2112" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="437" name="RG_102" type="regiment" gid="1209" x="1536" y="2112" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="438" name="RG_103" type="regiment" gid="1209" x="1152" y="1856" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="439" name="RG_104" type="regiment" gid="1209" x="1216" y="256" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="440" name="RG_105" type="regiment" gid="1209" x="1984" y="1920" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="441" name="RG_106" type="regiment" gid="1209" x="1088" y="896" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="442" name="RG_107" type="regiment" gid="1209" x="2048" y="1472" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="443" name="RG_108" type="regiment" gid="1209" x="448" y="2432" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="444" name="RG_109" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="445" name="RG_110" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="446" name="RG_111" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="447" name="RG_112" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="448" name="RG_113" type="regiment" gid="1209" x="1920" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="449" name="RG_114" type="regiment" gid="1209" x="1472" y="384" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="450" name="RG_115" type="regiment" gid="1209" x="2432" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="451" name="RG_116" type="regiment" gid="1209" x="1536" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="452" name="RG_117" type="regiment" gid="1209" x="1856" y="320" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="453" name="RG_118" type="regiment" gid="1209" x="1664" y="768" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="15"/>
+   </properties>
+  </object>
+  <object id="454" name="RG_119" type="regiment" gid="1209" x="2368" y="832" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="8"/>
+   </properties>
+  </object>
+  <object id="455" name="RG_120" type="regiment" gid="1209" x="2624" y="576" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="8"/>
+   </properties>
+  </object>
+  <object id="456" name="RG_121" type="regiment" gid="1209" x="2560" y="640" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="8"/>
+   </properties>
+  </object>
+  <object id="457" name="RG_122" type="regiment" gid="1209" x="2112" y="448" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="458" name="RG_123" type="regiment" gid="1209" x="1408" y="768" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="4"/>
+   </properties>
+  </object>
+  <object id="459" name="RG_124" type="regiment" gid="1209" x="1920" y="640" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="460" name="RG_125" type="regiment" gid="1209" x="2176" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="461" name="RG_126" type="regiment" gid="1209" x="1984" y="448" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="462" name="RG_127" type="regiment" gid="1209" x="1792" y="448" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="463" name="RG_128" type="regiment" gid="1209" x="1728" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="7"/>
+   </properties>
+  </object>
+  <object id="464" name="RG_129" type="regiment" gid="1209" x="1088" y="384" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="465" name="RG_130" type="regiment" gid="1209" x="512" y="704" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="466" name="RG_131" type="regiment" gid="1209" x="640" y="960" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="467" name="RG_132" type="regiment" gid="1209" x="960" y="1088" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="468" name="RG_133" type="regiment" gid="1209" x="960" y="1344" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="469" name="RG_134" type="regiment" gid="1209" x="64" y="1152" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="470" name="RG_135" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="471" name="RG_136" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="472" name="RG_137" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="499"/>
+   </properties>
+  </object>
+  <object id="473" name="RG_138" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="527"/>
+   </properties>
+  </object>
+  <object id="474" name="RG_139" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="529"/>
+   </properties>
+  </object>
+  <object id="475" name="RG_140" type="regiment" gid="1209" x="1920" y="512" width="64" height="64">
+   <properties>
+    <property name="TARGET" type="object" value="528"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="14" name="objects" visible="0">
+  <object id="476" name="OB_WOLVES" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="477" name="OB_DRAGONS" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="478" name="OB_ICETROLLS" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="479" name="OB_SKULKRIN" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="480" name="OB_WILDHORSES" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="481" name="OB_SHELTER" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="482" name="OB_GUIDANCE" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="483" name="OB_SHADOWSOFDEATH" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="484" name="OB_WATERSOFLIFE" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="485" name="OB_HANDOFDARK" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="486" name="OB_CUPOFDREAMS" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="487" name="OB_WOLFSLAYER" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="488" name="OB_DRAGONSLAYER" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="489" name="OB_ICECROWN" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="490" name="OB_MOONRING" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="491" name="OB_CLAWS" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="492" name="OB_FLAMES" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="493" name="OB_THORNS" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="494" name="OB_BLOOD" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="495" name="OB_LANGUOR" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="496" name="OB_SPRINGS" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+  <object id="497" name="OB_EYEOFTHEMOON" type="object" gid="1214" x="0" y="0" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="15" name="characters" visible="0">
+  <object id="498" name="CH_LUXOR" type="character" gid="1212" x="832" y="2624" width="64" height="64"/>
+  <object id="499" name="CH_MORKIN" type="character" gid="1212" x="832" y="2624" width="64" height="64"/>
+  <object id="500" name="CH_CORLETH" type="character" gid="1212" x="832" y="2624" width="64" height="64"/>
+  <object id="501" name="CH_RORTHRON" type="character" gid="1212" x="832" y="2624" width="64" height="64"/>
+  <object id="502" name="CH_GARD" type="character" gid="1212" x="704" y="3584" width="64" height="64"/>
+  <object id="503" name="CH_MARAKITH" type="character" gid="1212" x="2816" y="2112" width="64" height="64"/>
+  <object id="504" name="CH_XAJORKITH" type="character" gid="1212" x="2944" y="3840" width="64" height="64"/>
+  <object id="505" name="CH_GLOOM" type="character" gid="1212" x="576" y="64" width="64" height="64"/>
+  <object id="506" name="CH_SHIMERIL" type="character" gid="1212" x="1856" y="2752" width="64" height="64"/>
+  <object id="507" name="CH_KUMAR" type="character" gid="1212" x="3712" y="1920" width="64" height="64"/>
+  <object id="508" name="CH_ITHRORN" type="character" gid="1212" x="3712" y="1024" width="64" height="64"/>
+  <object id="509" name="CH_DAWN" type="character" gid="1212" x="2880" y="2944" width="64" height="64"/>
+  <object id="510" name="CH_DREAMS" type="character" gid="1212" x="2752" y="1088" width="64" height="64"/>
+  <object id="511" name="CH_DREGRIM" type="character" gid="1212" x="3840" y="2816" width="64" height="64"/>
+  <object id="512" name="CH_THIMRATH" type="character" gid="1212" x="2176" y="3904" width="64" height="64"/>
+  <object id="513" name="CH_WHISPERS" type="character" gid="1212" x="3712" y="1344" width="64" height="64"/>
+  <object id="514" name="CH_SHADOWS" type="character" gid="1212" x="768" y="2432" width="64" height="64"/>
+  <object id="515" name="CH_LOTHORIL" type="character" gid="1212" x="768" y="704" width="64" height="64"/>
+  <object id="516" name="CH_KORINEL" type="character" gid="1212" x="1536" y="1408" width="64" height="64"/>
+  <object id="517" name="CH_THRALL" type="character" gid="1212" x="2176" y="2496" width="64" height="64"/>
+  <object id="518" name="CH_BRITH" type="character" gid="1212" x="1408" y="3200" width="64" height="64"/>
+  <object id="519" name="CH_RORATH" type="character" gid="1212" x="1536" y="3904" width="64" height="64"/>
+  <object id="520" name="CH_TRORN" type="character" gid="1212" x="3520" y="3264" width="64" height="64"/>
+  <object id="521" name="CH_MORNING" type="character" gid="1212" x="2560" y="3328" width="64" height="64"/>
+  <object id="522" name="CH_ATHORIL" type="character" gid="1212" x="3520" y="2496" width="64" height="64"/>
+  <object id="523" name="CH_BLOOD" type="character" gid="1212" x="1408" y="2368" width="64" height="64"/>
+  <object id="524" name="CH_HERATH" type="character" gid="1212" x="2944" y="1728" width="64" height="64"/>
+  <object id="525" name="CH_MITHARG" type="character" gid="1212" x="1920" y="3008" width="64" height="64"/>
+  <object id="526" name="CH_UTARG" type="character" gid="1212" x="3840" y="2240" width="64" height="64"/>
+  <object id="527" name="CH_FAWKRIN" type="character" gid="1212" x="128" y="704" width="64" height="64"/>
+  <object id="528" name="CH_LORGRIM" type="character" gid="1212" x="4032" y="64" width="64" height="64"/>
+  <object id="529" name="CH_FARFLAME" type="character" gid="1212" x="832" y="1536" width="64" height="64"/>
+  <object id="530" name="CH_MIDWINTER" type="character" gid="1212" x="2432" y="1152" width="64" height="64"/>
+  <object id="531" name="CH_DOOMDARK" type="character" gid="1212" x="0" y="0" width="64" height="64"/>
+ </objectgroup>
+</map>

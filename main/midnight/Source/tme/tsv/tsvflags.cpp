@@ -29,8 +29,8 @@ static u64 ParseFlagWord ( const std::string& text, const NamedBit* table, size_
                 break;
             }
         }
-        if ( !matched )
-            MXTRACE("TsvFlags: unknown flag '%s' in '%s'", token.c_str(), text.c_str());
+        //if ( !matched )
+        //    MXTRACE("TsvFlags: unknown flag '%s' in '%s'", token.c_str(), text.c_str());
     }
 
     return result;
@@ -174,14 +174,18 @@ static const NamedBit CharacterQualityBits[] = {
 };
 
 static const NamedBit ObjectFlagBits[] = {
-    { "FIGHT",   of_fight },
-    { "PICKUP",  of_pickup },
-    { "DROP",    of_drop },
-    { "WEAPON",  of_weapon },
-    { "SEE",     of_see },
-    { "REMOVE",  of_remove },
-    { "UNIQUE",  of_unique },
-    { "ENABLED", of_enabled },
+    { "FIGHT",       of_fight },
+    { "PICKUP",      of_pickup },
+    { "DROP",        of_drop },
+    { "WEAPON",      of_weapon },
+    { "SEE",         of_see },
+    { "REMOVE",      of_remove },
+    { "UNIQUE",      of_unique },
+    { "ENABLED",     of_enabled },
+#if defined(_DDR_)
+    { "RECRUITMENT", of_recruitment },
+    { "RANDOMSTART", of_randomstart },
+#endif
 };
 
 static const NamedBit MissionFlagBits[] = {

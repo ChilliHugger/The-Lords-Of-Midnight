@@ -227,23 +227,12 @@ void lom_x::initialise(u32 version)
 
 void lom_x::initialiseAfterCreate(u32 version)
 {
-    // FIX: Database has warriors and riders success the wrong way around
-    if(version<9999){
-        auto warriors = mx->UnitById(1);
-        auto riders = mx->UnitById(2);
-        swap(riders->success, warriors->success);
-    }
-    
     if(mx->isRuleEnabled(RF_ADD_MOUNTAIN_PASSES)) {
         for( auto adj : mountain_pass_adjustments ) {
             mx->gamemap->GetAt(mxgridref(adj[0], adj[1])).terrain = adj[2];
         }
     }
 
-    mx->text->ModifySystemString(SS_SEES_1, "");
-    mx->text->ModifySystemString(SS_SEES_2, "");
-    mx->text->ModifySystemString(SS_SEES_3, "");
-    
     mxscenario::initialiseAfterCreate(version);
 }
 

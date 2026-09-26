@@ -149,6 +149,8 @@ namespace tme {
             carrying = row.GetObject(TsvField::Character::Carrying);
             warriors.total = row.GetU32(TsvField::Character::Warriors);
             riders.total = row.GetU32(TsvField::Character::Riders);
+            warriors.energy = row.GetU32(TsvField::Character::WarriorsEnergy);
+            riders.energy = row.GetU32(TsvField::Character::RidersEnergy);
             following = row.GetCharacter(TsvField::Character::Following);
             foe = row.GetCharacter(TsvField::Character::Foe);
             liege = row.GetCharacter(TsvField::Character::Liege);

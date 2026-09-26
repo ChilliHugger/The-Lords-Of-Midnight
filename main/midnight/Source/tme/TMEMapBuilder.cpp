@@ -186,7 +186,13 @@ tme::mxmap* TMEMapBuilder::Build( const std::string& tmxFile )
             for ( int loc=0; loc<totalSize; loc++ )
                 if (layer->_tiles[loc] != 0 ) {
                     auto t = layer->_tiles[loc];
-                    auto ar = (t - areaGID);
+                    // The "areas" tileset image has no blank/none placeholder
+                    // tile: local tile 0 is already the first real area (e.g.
+                    // LOM's tile 0 = AR_LOTHORIL, CITADEL's tile 0 = AR_IMILVIR,
+                    // DDR's tile 0 = AR_IMGARORN, all id 1 in areainfo.tsv -
+                    // AR_NONE=0 is never painted). +1 converts the GID-relative
+                    // offset to that 1-based id.
+                    auto ar = (t - areaGID + 1);
                     map->m_data[loc].area = ar;
                 }
         }

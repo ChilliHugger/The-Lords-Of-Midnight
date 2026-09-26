@@ -30,6 +30,6 @@ Version	Id	Symbol	Flags	Name	Preposition	Description	Success	Visibility	Obstruct
 11	28	TN_CITY	INTERESTING+ARMY	City	in	{str:5}	0	14	14	2
 11	29	TN_FOUNTAIN	INTERESTING+ARMY	Fountain	at	{str:5}	0	6	8	2
 11	30	TN_STONE	PLURAL+INTERESTING+ARMY	Stone	at	{str:5}	0	12	6	2
-11	31	TN_ICYWASTE	PLURAL+BLOCK+INTERESTING	Icy Waste	in	the Icy Wastes	0	12	12	0
+11	31	TN_ICYWASTE	PLURAL+BLOCK+INTERESTING	Icy Waste	in	the Icy Wastes	0	12	12	2
 11	32	TN_MIST		Mist	in	the Icy Mists	0	0	16	0
 11	33	TN_ARMY2		Army			0	0	8	0
