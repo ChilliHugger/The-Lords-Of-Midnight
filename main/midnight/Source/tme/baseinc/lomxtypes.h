@@ -717,11 +717,12 @@ namespace tme {
             //msg     = 1,
             gameover= 2,
             //battle    = 4,
+            initprogress = 5,
         };
-        
+
         type_t    type;
     } callback_t ;
-    
+
     typedef struct battle_callback_t : callback_t {
         int             initiative;
         int             idChar;
@@ -737,11 +738,15 @@ namespace tme {
     } message_callback_t ;
 
     typedef struct gameover_callback_t : callback_t {
-        //char*           message;
         m_gameover_t    condition;
     } gameover_callback_t ;
-    
+
+    typedef struct init_callback_t : callback_t {
+        const char*     stage;
+    } init_callback_t ;
+
     typedef void (*PFNNIGHTCALLBACK)( callback_t* );
+    typedef void (*PFNINITCALLBACK)( callback_t* );
     typedef bool (*PFNSERIALIZE)( u32 version, chilli::lib::archive& ar );
     typedef MXRESULT (*PFNCOMMAND)( const std::string& arg, variant argv[], u32 argc);
     

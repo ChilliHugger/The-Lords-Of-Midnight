@@ -656,6 +656,15 @@ void moonring::reloadAssets()
 }
 #endif
 
+void moonring::OnInitNotification ( tme::callback_t* event )
+{
+    if ( event == nullptr || event->type != tme::callback_t::initprogress )
+        return;
+
+    if ( m_initMonitor )
+        m_initMonitor->Update(static_cast<tme::init_callback_t*>(event)->stage, 1);
+}
+
 void moonring::initialise( progressmonitor* monitor )
 {
 
@@ -720,7 +729,9 @@ void moonring::initialise( progressmonitor* monitor )
 #endif
 
     // initialise TME
-    TME_Init(mxscenarioid::DEFAULT, RF_DEFAULT, DF_NORMAL);
+    m_initMonitor = monitor;
+    TME_Init(mxscenarioid::DEFAULT, RF_DEFAULT, DF_NORMAL, nullptr, this);
+    m_initMonitor = nullptr;
     monitor->Update("Loaded Scenario Data", 1);
     
     std::string configFilename = std::string( getWritablePath() ) + "/config.cfg";

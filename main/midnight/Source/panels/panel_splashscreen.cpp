@@ -23,13 +23,13 @@ constexpr s32 MAX_SPLASHSCREEN_TIME = 3000;
 constexpr f32 TRANSITION_TIME = 2.0f;
 
 #if defined(_LOM_)
-constexpr f32 MAX_PROGRESS = 42.0f;
+constexpr f32 MAX_PROGRESS = 49.0f;
 #endif
 #if defined(_DDR_)
-constexpr f32 MAX_PROGRESS = 42.0f;
+constexpr f32 MAX_PROGRESS = 49.0f;
 #endif
 #if defined(_CITADEL_)
-constexpr f32 MAX_PROGRESS = 102.0f;
+constexpr f32 MAX_PROGRESS = 109.0f;
 #endif
 
 

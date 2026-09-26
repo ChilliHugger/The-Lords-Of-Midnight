@@ -64,6 +64,7 @@ namespace tme {
         virtual MXRESULT ProcessCommand ( mxcommand_t tblCommand[], u32 max, const std::string& arg, variant argv[], u32 argc )  ;
 
         virtual void NightCallback( callback_t* )  ;
+        virtual void InitCallback( callback_t* )  ;
 
         std::string LastActionMsg() ;
         void SetLastActionMsg(const std::string& text) ;
@@ -160,6 +161,7 @@ namespace tme {
         c_objecttype            objObjectTypesInfos;
 #endif
         PFNNIGHTCALLBACK        pfnNightCallback ;
+        PFNINITCALLBACK         pfnInitCallback ;
 
         bool                    m_savegame;
 

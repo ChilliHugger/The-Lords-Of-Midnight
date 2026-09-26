@@ -18,6 +18,7 @@
 #include "../library/inc/mxtypes.h"
 #include "panelmanager.h"
 #include "../frontend/version_check.h"
+#include "../tme/tme_interface.h"
 
 // models
 #include "../models/selectmodel.h"
@@ -57,20 +58,26 @@ public:
 
 using mxscenarioid = tme::mxscenarioid;
 
-class moonring
+class moonring :
+    protected InitNotificationDelegate
 {
 private:
     moonring();
 public:
     virtual ~moonring();
-    
+
     static moonring* mikesingleton();
     static void release();
-        
+
     static void complain(LPCSTR format, ...);
     static void log(LPCSTR format, ...);
 
     void initialise( progressmonitor* monitor );
+
+protected:
+    virtual void OnInitNotification ( tme::callback_t* event ) override;
+
+public:
     std::string getWritablePath();
     bool serialize( u32 version, chilli::lib::archive& ar );
     
@@ -144,6 +151,10 @@ protected:
     std::mutex              mutex;
     std::condition_variable condition;
     bool                    isDataLoaded;
+
+    // only valid for the duration of initialise() - lets OnInitNotification
+    // forward LoadDatabase's progress on to the splashscreen's monitor
+    progressmonitor*        m_initMonitor;
     
 #if defined(_USE_VERSION_CHECK_)
     bool                    versionCheckCompleted;

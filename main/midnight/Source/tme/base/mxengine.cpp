@@ -69,6 +69,7 @@ mxengine::mxengine()
     discoverymap = nullptr ;
     variables = nullptr ;
     pfnNightCallback = nullptr;
+    pfnInitCallback = nullptr;
     m_CurrentCharacter = nullptr;
     defaultscenario = false ;
     m_errorcode=0;
@@ -244,11 +245,20 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
     MXRESULT result = MX_FAILED ;
     gamemap = nullptr;
 
+    auto reportStage = [this] ( const char* stage ) {
+        init_callback_t event;
+        event.type = callback_t::initprogress;
+        event.stage = stage;
+        InitCallback(&event);
+    };
+
     if ( chilli::os::filemanager::Exists(databaseCacheFile) && chilli::os::filemanager::Exists(mapCacheFile) ) {
         MXTRACE( "Loading cached Database '%s'", databaseCacheFile.c_str());
+        reportStage("Loading cached Database");
         result = LoadDatabaseBinary(databaseCacheFile);
         if ( result == MX_OK ) {
             MXTRACE( "Loading cached Map '%s'", mapCacheFile.c_str());
+            reportStage("Loading cached Map");
             gamemap = new mxmap();
             if ( !gamemap->Load(mapCacheFile) ) {
                 SAFEDELETE ( gamemap );
@@ -266,6 +276,7 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
         // prefer the bundled .tsv source files when present (ticket #329) -
         // falls through to the pre-generated binary below when they aren't
         if ( chilli::os::filemanager::ExistsDir(tsvDirectory) ) {
+            reportStage("Loading Database");
             result = LoadDatabaseFromTsv(tsvDirectory);
         }
 
@@ -287,6 +298,7 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
             chilli::os::filemanager::Copy(database.c_str(), filename.c_str());
 #endif
 
+            reportStage("Loading Database");
             result = LoadDatabaseBinary(filename);
         }
 
@@ -294,6 +306,7 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
             return result;
 
 MXTRACE("Loading MAP");
+        reportStage("Loading Map");
 
         // prefer a bundled .tmx map file when present (ticket #329) - falls
         // through to the pre-generated binary map file below when it isn't
@@ -305,18 +318,22 @@ MXTRACE("Loading MAP");
                 return MX_FAILED;
         }
 
-        if ( loadedFromTmx )
+        if ( loadedFromTmx ) {
+            reportStage("Placing Map Entities");
             ApplyMapEntitiesFromTmx(tmxFilename);
+        }
 
         builtFromSource = true;
     }
 
 MXTRACE( "Update Variables");
+    reportStage("Updating Variables");
     variables::Update();
 
     if ( builtFromSource ) {
         // cache the fully-resolved database+map regardless of which route
         // built them, so the next run can load both straight from cache
+        reportStage("Saving Database Cache");
         SaveDatabaseCache(databaseCacheFile);
         gamemap->Save(mapCacheFile);
     }
@@ -325,6 +342,7 @@ MXTRACE( "Update Variables");
 
 
 MXTRACE( "Init Variables");
+    reportStage("Initialising Scenario");
     variables::Init(2);
 
     sv_days = 0;
@@ -493,9 +511,15 @@ mxcharacter* mxengine::CurrentChar ( void ) const
 
 
 void mxengine::NightCallback( callback_t* ptr)
-{  
-    if ( pfnNightCallback ) 
-        pfnNightCallback(ptr); 
+{
+    if ( pfnNightCallback )
+        pfnNightCallback(ptr);
+}
+
+void mxengine::InitCallback( callback_t* ptr)
+{
+    if ( pfnInitCallback )
+        pfnInitCallback(ptr);
 }
 
 
