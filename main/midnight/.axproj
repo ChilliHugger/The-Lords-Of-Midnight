@@ -1,5 +1,5 @@
 package_name=com.chilli.midnight
-engine_version=2.11.4-b14941e6f
+engine_version=2.11.5-6c0dce6db
 project_type=cpp
 min_sdk=26
-target_sdk=35
+target_sdk=36

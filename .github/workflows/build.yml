@@ -12,8 +12,8 @@ on:
 env:
   # Pinned to the engine tag recorded in main/midnight/.axproj (engine_version).
   # Bump both together when the local axmol checkout is upgraded.
-  AXMOL_REF: v2.11.4
-  GH_XCODE_VER: '16.2'
+  AXMOL_REF: v2.11.5
+  GH_XCODE_VER: '26.6'
 
 jobs:
   build-and-test:
@@ -31,7 +31,7 @@ jobs:
             target: revenge
             app: revenge
     name: macOS build + tests (${{ matrix.app }})
-    runs-on: macos-15
+    runs-on: macos-26
     env:
       AX_ROOT: ${{ github.workspace }}/axmol
       BUILD_DIR: Builds/ci-${{ matrix.app }}
