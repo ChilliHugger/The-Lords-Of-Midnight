@@ -1862,13 +1862,7 @@ namespace tme {
         MXTRACE( "Init Map" );
         SetMapArmies();
         SetCharsLooking();
-        
-#if defined(_DDR_)
-        FOR_EACH_CHARACTER(c) {
-            static_cast<ddr_character*>(c)->lastlocation=c->Location();
-        }
-#endif
-        
+                
         MXTRACE( "Place Strongholds On Map");
         // mark the strongholds onto the map
         FOR_EACH_STRONGHOLD(stronghold) {

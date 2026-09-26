@@ -522,18 +522,6 @@ void ddr_text::Serialize ( archive& ar )
         return;
         
     plural_tokens = FillArrayFromSystemString( SS_PLURALTOKENS );
-
-        
-    systemstrings[SS_KILLED_BY_OBJECT] = "slain by {case:lower}{char:battle:obj:name}. ";
-    systemstrings[SS_KILLED_BY_BATTLE_OBJECT] = "{char:longname} is dead, slain by {char:battle:fighting:longname} with the {case:lower}{char:battle:obj:text}. {char:text:battle}";
-    systemstrings[SS_KILLED_BATTLE] = "{char:longname} is dead, slain by sword. {char:text:battle}";
-    systemstrings[SS_KILLED_BY_LORD] = "{char:longname} is dead, slain by {char:battle:fighting:longname}. {char:text:battle}";
-    systemstrings[SS_SEEK_MSG4] = ", \"{char:longname} is dead.\"";
-
-    systemstrings[SS_SEES_1] = "{char:name} sees the {char:loc:obj:fullname}. ";
-    systemstrings[SS_SEES_2] = "{char:name} sees an underground entrance. ";
-    systemstrings[SS_SEES_3] = "{char:name} sees the {char:loc:obj:fullname} and an underground entrance. ";
-
     victory_token = FillArrayFromSystemString( SS_TOKENS_VICTORY );
 
 }

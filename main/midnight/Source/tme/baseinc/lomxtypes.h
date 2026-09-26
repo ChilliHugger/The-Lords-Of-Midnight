@@ -589,10 +589,10 @@ using namespace chilli::types;
             SS_SEEK_MSG2,
             SS_SEEK_MSG3,
             SS_SEEK_MSG4,
-        //    SS_SEEK_MSG5,
-        //    SS_SEEK_MSG6,
-        //    SS_SEEK_MSG7,
-            SS_VICTORY7=89,
+            SS_OBJECT_NAME,
+            SS_OBJECT_POWER,
+            SS_OBJECT_FULL_DESCRIPTION,
+            SS_VICTORY7,
             SS_MESSAGE8,
             SS_CHARACTER_CANNOT_CONTINUE,
             
@@ -611,6 +611,7 @@ using namespace chilli::types;
             SS_BATTLE_PREPARES_BATTLE=102,
             SS_KILLED_BY=103,
             SS_KILLED_IN_BATTLE=104,
+            
             SS_KILLED_BY_OBJECT=105,
             SS_KILLED_BY_BATTLE_OBJECT=106,
             SS_KILLED_BY_LORD=107,
