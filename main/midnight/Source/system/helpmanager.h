@@ -14,6 +14,7 @@
 #include "storymanager.h"
 #include "../frontend/help_id.h"
 #include <unordered_map>
+#include <vector>
 
 constexpr int HELP_VERSION = 2;
 
@@ -24,6 +25,7 @@ enum HELPFLAGS
     hf_important    = MXBIT(0),
     hf_always       = MXBIT(1),
     hf_new_feature  = MXBIT(2),
+    hf_ignore       = MXBIT(3),
 };
 
 typedef struct helpitem_t
@@ -44,18 +46,21 @@ public:
     bool isImportant( helpid_t id);
     bool isAlways( helpid_t id);
     bool isNewFeature ( helpid_t id );
+    bool isIgnored ( helpid_t id );
     
     bool Save ( storyid_t id );
     bool Load ( storyid_t id );
     
     void Shown ( helpid_t id );
-    
+
     std::string Get( helpid_t id );
+    std::vector<helpid_t> AllItems();
 
 private:
     const helpitem_t* GetItem(helpid_t id);
 
 private:
+    std::vector<helpid_t> order;
     std::unordered_map<helpid_t, const helpitem_t*> lookup;
     std::unordered_map<helpid_t, bool> displayed;
 };

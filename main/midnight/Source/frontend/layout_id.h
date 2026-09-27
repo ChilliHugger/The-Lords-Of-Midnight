@@ -61,7 +61,8 @@ enum layoutid_t
     ID_MANUAL,
     ID_GUIDE,
     ID_HELP,                // 40
-    
+    ID_HELP_MENU,
+
     ID_TUTORIAL_ONOFF,
     ID_MAP_OVERVIEW,
     ID_MAP_DISCOVERY,
@@ -179,6 +180,8 @@ enum layoutid_t
     ID_OPTION_RULE_6=ID_OPTION_RULES+5,
     ID_OPTION_RULE_7=ID_OPTION_RULES+6,
     ID_OPTION_RULE_8=ID_OPTION_RULES+8,
+
+    ID_HELP_ITEM=8000,
 };
 
 

@@ -184,7 +184,7 @@ static ax::Size DesktopLargerText2 = ax::Size(1600, 900);    // 1.7777
 
 #if defined(_OS_DESKTOP_)
 //#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::LARGE
-//#define DesktopDebugResolution iPad3
+//#define DesktopDebugResolution iPhone12
 #define _SWITCH_VIDEO_IMPLEMENTED_
 #endif
 

@@ -21,10 +21,14 @@ helpmanager::helpmanager()
 {
     displayed.clear();
     lookup.clear();
+    order.clear();
     for ( u32 ii=0; ii<NUMELE(help_messages); ii++ ) {
         auto item = &help_messages[ii];
         if (item->id != HELP_NONE) {
             lookup[item->id] = item;
+            if ( !(item->flags&hf_ignore) ) {
+                order.push_back(item->id);
+            }
         }
     }
 }
@@ -75,9 +79,19 @@ bool helpmanager::isNewFeature ( helpid_t id )
     return GetItem( id )->flags&hf_new_feature;
 }
 
+bool helpmanager::isIgnored ( helpid_t id )
+{
+    return GetItem( id )->flags&hf_ignore;
+}
+
 void helpmanager::Shown( helpid_t id )
 {
     displayed[ id ] = true;
+}
+
+std::vector<helpid_t> helpmanager::AllItems()
+{
+    return order;
 }
 
 bool helpmanager::Save ( storyid_t id )

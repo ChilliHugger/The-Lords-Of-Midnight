@@ -216,7 +216,12 @@ void uicommandwindow::initialiseCommands()
     
     auto home = uihelper::CreateImageButton("i_home", ID_HOME, callback);
     addItem(home,CHOOSE_EXIT);
-    
+
+    // HELP - sits in the corner of the popup, outside the command grid
+    auto help = uihelper::CreateImageButton("i_tutorial_onoff", ID_HELP_MENU, callback);
+    uihelper::AddTopRight(layout, help, RES(8), RES(8));
+    help->setAnchorPoint(uihelper::AnchorCenter);
+
     if (scenario_flags.Is(tme::SF_DISMOUNT)) {
         auto dismount = uihelper::CreateImageButton("i_dismount", ID_DISMOUNT, callback);
         addItem(dismount,CHOOSE_DISMOUNT);
