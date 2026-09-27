@@ -19,6 +19,7 @@ USING_NS_AX;
 
 #if defined(_MOUSE_ENABLED_)
 Vec2 uipanel::cursorPosition;
+bool uipanel::mouseButtonDown = false;
 #endif
 
 uipanel::uipanel() :
@@ -457,7 +458,25 @@ void uipanel::addKeyboardListener()
 void uipanel::addMouseListener()
 {
     mouseEventListener = ResumeEventListenerMouse::create();
-    
+
+    mouseEventListener->onMouseDown = [this](Event* event)
+    {
+        auto mouseEvent = static_cast<EventMouse*>(event);
+        if(mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
+            mouseButtonDown = true;
+        }
+        return false;
+    };
+
+    mouseEventListener->onMouseUp = [this](Event* event)
+    {
+        auto mouseEvent = static_cast<EventMouse*>(event);
+        if(mouseEvent->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
+            mouseButtonDown = false;
+        }
+        return false;
+    };
+
     mouseEventListener->onMouseMove = [this](Event* event)
     {
         auto mouseEvent = static_cast<EventMouse*>(event);

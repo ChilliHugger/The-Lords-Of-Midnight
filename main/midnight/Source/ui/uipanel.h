@@ -157,6 +157,7 @@ protected:
     
 public:
     static Vec2     cursorPosition;
+    static bool     mouseButtonDown;
     MOUSE_CURSOR    currentCursor;
     Vec2            cursorAnchor;
 #endif

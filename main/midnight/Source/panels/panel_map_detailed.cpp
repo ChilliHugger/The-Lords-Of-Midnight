@@ -42,7 +42,13 @@ panel_map_detailed::panel_map_detailed() :
     grouplord(nullptr),
     model(nullptr),
     groupLordBackground(nullptr),
-    groupLordButton(nullptr)
+    groupLordButton(nullptr),
+#if defined(_MOUSE_ENABLED_)
+    shiftZooming(false)
+#else
+    pinchActive(false),
+    pinchLastDistance(0.0f)
+#endif
 {
 }
 
@@ -134,7 +140,11 @@ bool panel_map_detailed::init()
     scrollView->setDirection(ScrollView::Direction::BOTH);
     scrollView->setInnerContainerPosition(Vec2(model->oldoffset.x,model->oldoffset.y));
     scrollView->setSwallowTouches(false);
-    
+
+#if !defined(_MOUSE_ENABLED_)
+    addPinchZoomListener();
+#endif
+
     descriptions = Node::create();
     descriptions->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(descriptions);
@@ -388,6 +398,84 @@ void panel_map_detailed::addTouchListener()
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, tmxMap);
     
 }
+
+#if defined(_MOUSE_ENABLED_)
+bool panel_map_detailed::OnMouseMove( Vec2 pos )
+{
+    bool shiftHeld = (mr->keyboard->getModifierKeys() & kf_shift) != 0;
+
+    if ( !shiftHeld || !mouseButtonDown ) {
+        shiftZooming = false;
+        return uipanel::OnMouseMove(pos);
+    }
+
+    if ( !shiftZooming ) {
+        // just started - record the baseline, don't jump the scale yet
+        shiftZooming = true;
+        shiftZoomLastPos = pos;
+        return true;
+    }
+
+    f32 delta = (pos.y - shiftZoomLastPos.y) / RES(MAP_SCALE_MOUSE_SENSITIVITY);
+    shiftZoomLastPos = pos;
+
+    if ( delta != 0.0f ) {
+        model->lastmapscale = model->mapscale;
+        model->mapscale = std::min(MAP_SCALE_MAX, std::max(MAP_SCALE_MIN, model->mapscale+delta));
+        updateScale();
+    }
+
+    return true;
+}
+#else
+void panel_map_detailed::addPinchZoomListener()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+
+    auto updatePinch = [this](const std::vector<Touch*>& touches) {
+
+        for ( auto touch : touches )
+            pinchTouches[touch->getID()] = touch->getLocation();
+
+        if ( pinchTouches.size() != 2 ) {
+            pinchActive = false;
+            return;
+        }
+
+        auto it = pinchTouches.begin();
+        auto p1 = it->second; ++it;
+        auto p2 = it->second;
+        f32 distance = p1.distance(p2);
+
+        if ( pinchActive && pinchLastDistance>0.0f ) {
+            f32 ratio = distance / pinchLastDistance;
+            model->lastmapscale = model->mapscale;
+            model->mapscale = std::min(MAP_SCALE_MAX, std::max(MAP_SCALE_MIN, model->mapscale*ratio));
+            updateScale();
+        }
+
+        pinchActive = true;
+        pinchLastDistance = distance;
+    };
+
+    listener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event) {
+        updatePinch(touches);
+    };
+
+    listener->onTouchesMoved = [=](const std::vector<Touch*>& touches, Event* event) {
+        updatePinch(touches);
+    };
+
+    listener->onTouchesEnded = [this](const std::vector<Touch*>& touches, Event* event) {
+        for ( auto touch : touches )
+            pinchTouches.erase(touch->getID());
+        pinchActive = false;
+    };
+    listener->onTouchesCancelled = listener->onTouchesEnded;
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+#endif
 
 void panel_map_detailed::updateScale()
 {
