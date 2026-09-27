@@ -14,6 +14,7 @@
 #define NONE_ACTIVTY_DURATION   30.0f
 
 FORWARD_REFERENCE(uicommandwindow);
+FORWARD_REFERENCE(uihelplistwindow);
 FORWARD_REFERENCE(uisinglelord);
 FORWARD_REFERENCE(uicompass);
 
@@ -189,7 +190,8 @@ protected:
  
     // Actions and Commands
     uicommandwindow*    i_command_window;
-  
+    uihelplistwindow*   i_help_list;
+
 #if defined(_USE_FOREGROUND_PEOPLE_)
     LandscapePeople*    people[5];
     LandscapePeople*    prev_people1;

@@ -94,6 +94,7 @@ public:
     bool isEnabled() { return enabled; }
     bool isHelpVisible() { return help_visible != HELP_NONE; }
     void showHelpPending();
+    void popupHelpWindow ( helpid_t id, MXVoidCallback callback );
 
     void pauseEvents();
     void resumeEvents();    
@@ -114,7 +115,6 @@ protected:
     void FillBackground();
 
     bool showHelpWindow ( helpid_t id, BOOL forceImportant = false, MXVoidCallback callback=nullptr  );
-    void popupHelpWindow ( helpid_t id, MXVoidCallback callback );
     virtual void helpPending();
     
     

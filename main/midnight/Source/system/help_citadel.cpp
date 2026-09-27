@@ -118,39 +118,39 @@ const helpitem_t help_messages[] = {
         "\tHigh and hard going. The dwarves and the giants know the mountain ways far better than other folk."
     }
     ,
-    { HELP_TN_PLAINS2, hf_none, nullptr }
+    { HELP_TN_PLAINS2, hf_ignore, nullptr }
     ,
-    { HELP_TN_MOUNTAIN2, hf_none, nullptr }
+    { HELP_TN_MOUNTAIN2, hf_ignore, nullptr }
     ,
-    { HELP_TN_FOREST2, hf_none, nullptr }
+    { HELP_TN_FOREST2, hf_ignore, nullptr }
     ,
-    { HELP_TN_HILLS, hf_none, nullptr }
+    { HELP_TN_HILLS, hf_ignore, nullptr }
     ,
-    { HELP_TN_GATE, hf_none, nullptr }
+    { HELP_TN_GATE, hf_ignore, nullptr }
     ,
-    { HELP_TN_TEMPLE, hf_none, nullptr }
+    { HELP_TN_TEMPLE, hf_ignore, nullptr }
     ,
-    { HELP_TN_PIT, hf_none, nullptr }
+    { HELP_TN_PIT, hf_ignore, nullptr }
     ,
-    { HELP_TN_PALACE, hf_none, nullptr }
+    { HELP_TN_PALACE, hf_ignore, nullptr }
     ,
-    { HELP_TN_FORTRESS, hf_none, nullptr }
+    { HELP_TN_FORTRESS, hf_ignore, nullptr }
     ,
-    { HELP_TN_HALL, hf_none, nullptr }
+    { HELP_TN_HALL, hf_ignore, nullptr }
     ,
-    { HELP_TN_HUT, hf_none, nullptr }
+    { HELP_TN_HUT, hf_ignore, nullptr }
     ,
-    { HELP_TN_WATCHTOWER, hf_none, nullptr }
+    { HELP_TN_WATCHTOWER, hf_ignore, nullptr }
     ,
-    { HELP_TN_CITY, hf_none, nullptr }
+    { HELP_TN_CITY, hf_ignore, nullptr }
     ,
-    { HELP_TN_FOUNTAIN, hf_none, nullptr }
+    { HELP_TN_FOUNTAIN, hf_ignore, nullptr }
     ,
-    { HELP_TN_STONES, hf_none, nullptr }
+    { HELP_TN_STONES, hf_ignore, nullptr }
     ,
-    { HELP_TN_ICYWASTES, hf_none, nullptr }
+    { HELP_TN_ICYWASTES, hf_ignore, nullptr }
     ,
-    { HELP_TN_UNUSED32, hf_none, nullptr }
+    { HELP_TN_UNUSED32, hf_ignore, nullptr }
     ,
     {
         HELP_TN_LAND,
@@ -194,7 +194,7 @@ const helpitem_t help_messages[] = {
         "\tDeep woodland. The High Fey, the Dawn Fey and the Golden Fey hold the forests of the Bloodmarch."
     }
     ,
-    { HELP_TN_UNUSED39, hf_none, nullptr }
+    { HELP_TN_UNUSED39, hf_ignore, nullptr }
     ,
     {
         HELP_TN_TREES,
@@ -280,9 +280,9 @@ const helpitem_t help_messages[] = {
         "\tDeep still water. Glimormir is the greatest of the lakes."
     }
     ,
-    { HELP_TN_TUNNEL, hf_none, nullptr }
+    { HELP_TN_TUNNEL, hf_ignore, nullptr }
     ,
-    { HELP_SMALL_TUNNEL, hf_none, nullptr }
+    { HELP_SMALL_TUNNEL, hf_ignore, nullptr }
     ,
     {
         HELP_SELECTING_CHARACTER,
@@ -457,14 +457,14 @@ const helpitem_t help_messages[] = {
     ,
     {
         HELP_TUTORIAL_OFF,
-        hf_important|hf_always,
+        hf_important|hf_always|hf_ignore,
         "TUTORIAL MODE - TURNED OFF\n\n"
         "\tYou will not receive any tutorial information while playing."
     }
     ,
     {
         HELP_TUTORIAL_ON,
-        hf_important|hf_always,
+        hf_important|hf_always|hf_ignore,
         "TUTORIAL MODE - TURNED ON\n\n"
         "\tAt key points you will be presented with helpful information."
     }

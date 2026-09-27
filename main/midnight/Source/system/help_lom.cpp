@@ -137,7 +137,7 @@ const helpitem_t help_messages[] = {
     ,
     {
         HELP_TN_UNUSED1,
-        hf_none,
+        hf_ignore,
         ""
     }
     
@@ -355,7 +355,7 @@ const helpitem_t help_messages[] = {
     ,
     {
         HELP_TUTORIAL_OFF,
-        hf_important|hf_always,
+        hf_important|hf_always|hf_ignore,
         "Tutorial mode - TURNED OFF.\n\n"
         "\tYou will not recieve any tutorial information while playing the game.\n\nYou can however read the online guide by pressing the icon in the bottom right corner of the main  menu."
         
@@ -364,7 +364,7 @@ const helpitem_t help_messages[] = {
     ,
     {
         HELP_TUTORIAL_ON,
-        hf_important|hf_always,
+        hf_important|hf_always|hf_ignore,
         "Tutorial mode - TURNED ON.\n\n"
         "\tAt key points during the game, you will be presented with helpful information. Sometimes this information is indicated by a flashing TUTORIAL icon in the top right of the screen. If you want to read this helpful information then press the icon.\n\nAlternatively you can read the online guide by pressing the icon in the bottom right corner of the main menu."
         

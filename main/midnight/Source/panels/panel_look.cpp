@@ -19,6 +19,7 @@
 
 #include "../ui/uihelper.h"
 #include "../ui/uicommandwindow.h"
+#include "../ui/uihelplistwindow.h"
 #include "../ui/uihelpwindow.h"
 #include "../ui/characters/uisinglelord.h"
 #include "../ui/uicompass.h"
@@ -83,6 +84,7 @@ panel_look::panel_look() :
     current_view(nullptr),
     current_info(nullptr),
     i_command_window(nullptr),
+    i_help_list(nullptr),
     lblDescription(nullptr),
     lblName(nullptr),
     imgShield(nullptr),
@@ -121,6 +123,7 @@ panel_look::~panel_look()
     }
     
     AX_SAFE_RELEASE_NULL(i_command_window);
+    AX_SAFE_RELEASE_NULL(i_help_list);
 }
 
 bool panel_look::init()
@@ -228,7 +231,11 @@ bool panel_look::init()
     // Command Window
     i_command_window = uicommandwindow::create(this);
     i_command_window->retain();
-    
+
+    // Help list
+    i_help_list = uihelplistwindow::create(this);
+    i_help_list->retain();
+
     auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, clickCallback);
     uihelper::AddBottomRight(safeArea, choose, RES(10), RES(10) );
     
@@ -1235,7 +1242,13 @@ void panel_look::OnNotification( Ref* sender )
         case ID_ACTIONS:
             i_command_window->show(nullptr);
             break;
-            
+
+        case ID_HELP_MENU:
+        {
+            i_help_list->show(nullptr);
+            break;
+        }
+
         case ID_HOME:
         {
             AreYouSure(CLOSE_STORY_MSG, [&] {
@@ -1864,6 +1877,7 @@ bool panel_look::OnMouseMove( Vec2 position )
     MOUSE_CURSOR mode = MOUSE_NORMAL ;
 
     if ( (i_command_window==NULL || !i_command_window->isVisible())
+         && (i_help_list==NULL || !i_help_list->isVisible())
          && (help_window==NULL || !help_window->isVisible())
          && !landscape_dragging ) {
 
