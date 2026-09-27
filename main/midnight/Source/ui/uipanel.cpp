@@ -38,6 +38,17 @@ uipanel::uipanel() :
 {
 }
 
+uipanel::~uipanel()
+{
+#if defined(_MOUSE_ENABLED_)
+    // registered with fixed priority (see addMouseListener), so it has no
+    // associated node and won't be cleaned up automatically by ~Node()
+    if(mouseEventListener!=nullptr) {
+        _eventDispatcher->removeEventListener(mouseEventListener);
+    }
+#endif
+}
+
 bool uipanel::init()
 {
     if ( !Scene::init() )
@@ -461,7 +472,12 @@ void uipanel::addMouseListener()
         return false;
     };
     
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseEventListener, this);
+    // Fixed priority (rather than scene graph priority) so this always sees mouse-move
+    // events first. Otherwise, axmol gadgets that enable their own mouse listener with
+    // swallowing (e.g. ui::ScrollView, which turns this on for wheel scrolling) are
+    // dispatched to first as they're deeper in the scene graph, and swallow the move
+    // event before the cursor position below ever gets updated.
+    _eventDispatcher->addEventListenerWithFixedPriority(mouseEventListener, -1);
 }
 
 void uipanel::ResumeMouseListener()
@@ -482,7 +498,16 @@ void uipanel::setCursor(MOUSE_CURSOR cursor)
     
     if(mr->mouseData.empty())
         return;
-    
+
+    // the game's own cursor art is only available once mr->mouseData has loaded
+    // (not until partway through the splash screen), so don't hide the OS cursor
+    // until we actually have something to replace it with
+    static bool osCursorHidden = false;
+    if(!osCursorHidden) {
+        osCursorHidden = true;
+        Director::getInstance()->getGLView()->setCursorVisible(false);
+    }
+
     /// small 0.5
     /// medium 0.75
     /// large 1.0
