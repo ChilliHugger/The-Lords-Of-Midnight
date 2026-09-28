@@ -407,16 +407,6 @@ namespace tme {
             if ( character == this )
                 return false ;
 
-            // Boroth holds one lord of each realm hostage in the dungeons of the Dark Citadel,
-            // and while a realm's hostage is held, its lords will not march. The hostage
-            // himself is always approachable - recruiting him where he is held is what frees
-            // him - and his people can be persuaded once he is out.
-            if ( mx->scenario->IsFeature(SF_HOSTAGES) ) {
-                auto hostage = mx->scenario->HostageOfRace( character->Race() );
-                if ( hostage != nullptr && hostage != character )
-                    return false ;
-            }
-
             if ( mx->scenario->IsFeature(SF_RECRUIT_DDR) ) {
                 // TODO: recruiting logic
                 return true ;
@@ -1065,7 +1055,8 @@ namespace tme {
             
         bool mxcharacter::Recruited ( mxcharacter* recruiter )
         {
-            // a hostage is freed by being recruited, and his realm is freed with him
+            // a hostage is freed by being recruited - which is what makes his realm's lords easier
+            // to persuade in the Citadel (citadel_character::CheckRecruitChar)
             flags.Reset ( cf_prisoner );
 
             // set loyalty?
