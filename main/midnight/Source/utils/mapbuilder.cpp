@@ -411,8 +411,9 @@ mapbuilder* mapbuilder::updateLayers()
             
             TME_GetTerrainInfo(t,MAKE_ID(IDT_TERRAININFO,m->terrain));
             terrain_data_t* d = (terrain_data_t*)t.userdata ;
-     
-            u32 cell = d->mapdensity ? d->mapcell + m->density : d->mapcell ;
+
+            u32 cell = d == nullptr ? CELL_BLANK
+                     : d->mapdensity ? d->mapcell + m->density : d->mapcell ;
             
             
             if ( seen ) {
