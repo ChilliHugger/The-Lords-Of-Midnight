@@ -41,8 +41,15 @@ panel_map_detailed::panel_map_detailed() :
     mapBuilder(nullptr),
     grouplord(nullptr),
     model(nullptr),
+    minMapScale(MAP_SCALE_MIN),
     groupLordBackground(nullptr),
-    groupLordButton(nullptr)
+    groupLordButton(nullptr),
+#if defined(_MOUSE_ENABLED_)
+    shiftZooming(false)
+#else
+    pinchActive(false),
+    pinchLastDistance(0.0f)
+#endif
 {
 }
 
@@ -117,9 +124,8 @@ bool panel_map_detailed::init()
     auto contentsize = getContentSize();
     
     mapBuilder =  new (std::nothrow) mapbuilder();
-    mapBuilder->screensize = size(ceil(getContentSize().width/RES(64)),
-                                ceil(getContentSize().height/RES(64)));
-    
+    mapBuilder->screenAspect = contentsize.width / contentsize.height;
+
     if ( CONFIG(debug_map) ) {
         mapBuilder->setFlags(mapflags::debug_map);
         mapBuilder->setFlags(mapflags::show_all_characters);
@@ -128,13 +134,27 @@ bool panel_map_detailed::init()
 
     std::unique_ptr<TiledMapper> mapper( new TiledMapper );
     tmxMap = mapper->createTMXMap(mapBuilder->build());
-    
+
+    // the map is built to match the screen's aspect ratio (see mapbuilder::build),
+    // so the scale at which it exactly fills the screen - and thus the least we
+    // should ever zoom out to - is simply the screen width divided by its width
+    auto mapContentSize = tmxMap->getContentSize();
+    if ( mapContentSize.width>0.0f ) {
+        f32 fitScale = contentsize.width / mapContentSize.width;
+        minMapScale = std::min(INITIAL_MAP_SCALE, MAX(MAP_SCALE_MIN, fitScale));
+    }
+    model->mapscale = MAX(minMapScale, model->mapscale);
+
     scrollView->addChild(tmxMap);
     scrollView->setInnerContainerSize( tmxMap->getContentSize() );
     scrollView->setDirection(ScrollView::Direction::BOTH);
     scrollView->setInnerContainerPosition(Vec2(model->oldoffset.x,model->oldoffset.y));
     scrollView->setSwallowTouches(false);
-    
+
+#if !defined(_MOUSE_ENABLED_)
+    addPinchZoomListener();
+#endif
+
     descriptions = Node::create();
     descriptions->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(descriptions);
@@ -258,11 +278,11 @@ void panel_map_detailed::OnNotification( Ref* sender )
             break;
             
         case ID_DOWN:
-            if ( model->mapscale > MAP_SCALE_MIN)
+            if ( model->mapscale > minMapScale)
             {
                 model->lastmapscale = model->mapscale;
                 model->mapscale -= MAP_SCALE_CLICK_DELTA;
-                model->mapscale = std::max(MAP_SCALE_MIN, model->mapscale);
+                model->mapscale = std::max(minMapScale, model->mapscale);
                 updateScale();
             }
             break;
@@ -389,13 +409,103 @@ void panel_map_detailed::addTouchListener()
     
 }
 
+#if defined(_MOUSE_ENABLED_)
+bool panel_map_detailed::OnMouseMove( Vec2 pos )
+{
+    bool shiftHeld = (mr->keyboard->getModifierKeys() & kf_shift) != 0;
+
+    if ( !shiftHeld || !mouseButtonDown ) {
+        shiftZooming = false;
+        return uipanel::OnMouseMove(pos);
+    }
+
+    if ( !shiftZooming ) {
+        // just started - record the baseline, don't jump the scale yet
+        shiftZooming = true;
+        shiftZoomLastPos = pos;
+        return true;
+    }
+
+    f32 delta = (pos.y - shiftZoomLastPos.y) / RES(MAP_SCALE_MOUSE_SENSITIVITY);
+    shiftZoomLastPos = pos;
+
+    if ( delta != 0.0f ) {
+        model->lastmapscale = model->mapscale;
+        model->mapscale = std::min(MAP_SCALE_MAX, std::max(minMapScale, model->mapscale+delta));
+        updateScale();
+    }
+
+    return true;
+}
+#else
+void panel_map_detailed::addPinchZoomListener()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+
+    auto updatePinch = [this](const std::vector<Touch*>& touches) {
+
+        for ( auto touch : touches )
+            pinchTouches[touch->getID()] = touch->getLocation();
+
+        if ( pinchTouches.size() != 2 ) {
+            pinchActive = false;
+            return;
+        }
+
+        auto it = pinchTouches.begin();
+        auto p1 = it->second; ++it;
+        auto p2 = it->second;
+        f32 distance = p1.distance(p2);
+
+        if ( pinchActive && pinchLastDistance>0.0f ) {
+            f32 ratio = distance / pinchLastDistance;
+            model->lastmapscale = model->mapscale;
+            model->mapscale = std::min(MAP_SCALE_MAX, std::max(minMapScale, model->mapscale*ratio));
+            updateScale();
+        }
+
+        pinchActive = true;
+        pinchLastDistance = distance;
+    };
+
+    listener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event) {
+        updatePinch(touches);
+    };
+
+    listener->onTouchesMoved = [=](const std::vector<Touch*>& touches, Event* event) {
+        updatePinch(touches);
+    };
+
+    listener->onTouchesEnded = [this](const std::vector<Touch*>& touches, Event* event) {
+        for ( auto touch : touches )
+            pinchTouches.erase(touch->getID());
+        pinchActive = false;
+    };
+    listener->onTouchesCancelled = listener->onTouchesEnded;
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+#endif
+
 void panel_map_detailed::updateScale()
 {
     tmxMap->setScale(model->mapscale);
     descriptions->setScale(model->mapscale);
     characters->setScale(model->mapscale);
-    scrollView->setInnerContainerSize( tmxMap->getContentSize() * model->mapscale );
-    
+
+    auto scaledSize = tmxMap->getContentSize() * model->mapscale;
+    scrollView->setInnerContainerSize( scaledSize );
+
+    // the scrollview's inner container never shrinks smaller than the viewport, so once
+    // zoomed out far enough that the map no longer fills it, centre the map (rather than
+    // leaving it pinned to the bottom-left, its scale anchor) so unmapped space shows evenly
+    auto viewSize = getContentSize();
+    auto offset = Vec2( MAX(0.0f, (viewSize.width-scaledSize.width)*0.5f),
+                         MAX(0.0f, (viewSize.height-scaledSize.height)*0.5f) );
+    tmxMap->setPosition(offset);
+    descriptions->setPosition(offset);
+    characters->setPosition(offset);
+
     if ( model->filters.Is(map_filters::centre_char))
         centreOnCurrentCharacter(false);
 
