@@ -37,5 +37,29 @@ bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* characte
     return mxstronghold::CanCharacterRecruitOrPost(character);
 }
 
+static const mxrace_t feuds[][2] = {
+    { RA_DRAGONLORD,    RA_BLOODMARCH_GIANT },
+    { RA_DEEPING_DWARF, RA_LONG_DWARF },
+    { RA_DAWN_FEY,      RA_GELMING },
+    { RA_ELDRIN,        RA_HIGH_FEY },
+    { RA_USKARG,        RA_KITH },
+    { RA_ARAKAI,        RA_ATHELING },
+};
+
+bool citadel_stronghold::CanCharacterPost ( const mxcharacter* character ) const
+{
+    for ( auto& feud : feuds ) {
+        if ( (feud[0] == character->Race() && feud[1] == OccupyingRace())
+             || (feud[1] == character->Race() && feud[0] == OccupyingRace()) )
+            return false;
+    }
+    return true;
+}
+
+u32 citadel_stronghold::DefenceMultiplier() const
+{
+    return Terrain() == TN_CITADEL ? 4 : 3;
+}
+
 } // namespace tme
 #endif // _CITADEL_

@@ -53,6 +53,19 @@ namespace tme {
     public:
         virtual bool IsEnemy() const override;
         virtual bool CanCharacterRecruitOrPost ( const mxcharacter* character ) const override;
+        virtual bool CanCharacterPost ( const mxcharacter* character ) const override;
+        virtual u32 DefenceMultiplier() const;
+    };
+
+    class citadel_area : public mxarea
+    {
+    public:
+        virtual void Serialize ( archive& ar ) override;
+        virtual void LoadTsv ( const TsvRow& row ) override;
+        virtual bool Borders ( const mxarea* area ) const;
+
+    public:
+        std::vector<u32>    neighbours;     // area ids
     };
 
     class citadel_character : public mxcharacter

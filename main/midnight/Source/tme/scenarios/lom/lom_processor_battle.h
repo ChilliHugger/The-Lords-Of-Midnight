@@ -27,6 +27,8 @@ namespace tme {
         virtual bool TakesPart ( const mxarmy* army ) const;
         virtual bool TakesPart ( const mxcharacter* character ) const;
 
+        virtual void PrepareArmies() {}
+
         virtual bool SelectOpponent(c_army& armies);
 
         virtual void CheckVictors ();

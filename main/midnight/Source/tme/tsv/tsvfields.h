@@ -123,6 +123,7 @@ namespace TsvField {
 
     namespace Area {
         constexpr const char* Prefix = "Prefix";
+        constexpr const char* Neighbours = "Neighbours";    // citadel only
     }
 
     namespace Gender {

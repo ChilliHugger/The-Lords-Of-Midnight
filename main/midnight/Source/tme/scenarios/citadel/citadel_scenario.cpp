@@ -211,6 +211,8 @@ mxentity* citadel_entityfactory::Create ( id_type_t type )
             return new citadel_stronghold;
         case IDT_OBJECT:
             return new citadel_object;
+        case IDT_AREAINFO:
+            return new citadel_area;
         // the base factory knows neither, and the two info tables are created by count
         case IDT_OBJECT_POWER:
             return new mxobjectpower;

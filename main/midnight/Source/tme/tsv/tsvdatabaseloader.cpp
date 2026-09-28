@@ -99,7 +99,11 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
 #endif
 
     struct { TsvTable* table; const char* file; std::vector<std::string> columns; } files[] = {
+#if defined(_CITADEL_)
+        { &areaInfo,        "areainfo.tsv",      InfoColumns({ TsvField::Area::Prefix, TsvField::Area::Neighbours }) },
+#else
         { &areaInfo,        "areainfo.tsv",      InfoColumns({ TsvField::Area::Prefix }) },
+#endif
         { &commandInfo,     "commandinfo.tsv",   InfoColumns({ TsvField::Command::SuccessTime, TsvField::Command::FailureTime }) },
         { &directionInfo,   "directioninfo.tsv", InfoColumns({}) },
         { &genderInfo,      "genderinfo.tsv",    InfoColumns({ TsvField::Gender::PersonalPronoun, TsvField::Gender::PossessivePronoun, TsvField::Gender::SingularPronoun }) },

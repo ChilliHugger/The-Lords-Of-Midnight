@@ -48,6 +48,27 @@ bool citadel_battle::TakesPart ( const mxcharacter* character ) const
     return character->TakesPartInBattle();
 }
 
+static u32 Walls ( const mxarmy* army )
+{
+    return static_cast<const citadel_stronghold*>(army->parent)->DefenceMultiplier();
+}
+
+void citadel_battle::PrepareArmies()
+{
+    for ( auto army : info->armies ) {
+        if ( army->armytype == AT_STRONGHOLD )
+            army->total *= Walls(army);
+    }
+}
+
+void citadel_battle::UpdateStrongholdArmy ( mxarmy* army )
+{
+    auto walls = Walls(army);
+    army->total = (army->total + walls - 1) / walls;
+
+    lom_battle::UpdateStrongholdArmy(army);
+}
+
 void citadel_battle::CharacterLosesEnergy ( mxcharacter* character )
 {
     auto lord = static_cast<citadel_character*>(character);

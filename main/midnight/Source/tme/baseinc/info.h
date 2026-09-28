@@ -802,6 +802,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual bool IsEnemy() const;
         
             virtual bool CanCharacterRecruitOrPost(const mxcharacter* character) const;
+            virtual bool CanCharacterPost(const mxcharacter* character) const;
 
             void CheckForZero ( void );
 
