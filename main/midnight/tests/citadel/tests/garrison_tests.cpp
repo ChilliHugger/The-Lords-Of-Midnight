@@ -179,9 +179,10 @@ SCENARIO("A keep's walls multiply its garrison in battle")
             garrison->total = 0;
             battle.UpdateStrongholdArmy(garrison);
 
-            THEN("the keep is empty")
+            THEN("all 500 are lost, and the keep keeps only what any emptied keep does")
             {
-                REQUIRE( keep->TotalTroops() == 0 );
+                REQUIRE( keep->Lost() == 500 );
+                REQUIRE( keep->TotalTroops() == (u32)tme::variables::sv_stronghold_default_empty );
             }
         }
     }
