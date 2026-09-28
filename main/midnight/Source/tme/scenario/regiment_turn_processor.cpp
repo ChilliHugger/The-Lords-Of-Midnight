@@ -121,8 +121,11 @@ namespace tme {
                 }
 
                 // where must we walkto to move in the direction we wish
-                // to go?
-                if ( !Retarget() ) {
+                // to go? A scenario that paths its armies answers first.
+                mxgridref step;
+                if ( mx->scenario->RegimentStep(regiment, targetlocation, step) ) {
+                    targetlocation = step;
+                } else if ( !Retarget() ) {
                     Complete();
                     return;
                 }

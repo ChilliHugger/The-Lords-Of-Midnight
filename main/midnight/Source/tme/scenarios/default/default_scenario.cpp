@@ -265,6 +265,11 @@ namespace tme {
             return t;
         }
 
+        bool mxscenario::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
+        {
+            return false;
+        }
+
         bool mxscenario::isLocationImpassable(mxgridref loc, const mxitem* target) const
         {
             auto mapLoc = mx->gamemap->GetAt(loc);
