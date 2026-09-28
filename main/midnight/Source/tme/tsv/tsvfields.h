@@ -145,6 +145,7 @@ namespace TsvField {
         constexpr const char* MistDespondencyAdjustment = "Mist Despondency Adjustment";
         constexpr const char* EnergyAmount              = "Energy Amount";
         constexpr const char* EnergyAmountRiding        = "Energy Amount Riding";
+        constexpr const char* Feuds                     = "Feuds";          // citadel only
     }
 
     namespace Terrain {

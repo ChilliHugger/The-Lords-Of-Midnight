@@ -287,6 +287,7 @@
     <terrain id="TN_RIVER"          file=""                  mapcell="48" />
     <terrain id="TN_MARSH"          file=""                  mapcell="48" />
     <terrain id="TN_LAKE3"          file="t_lake0"           mapcell="19" />
+    <terrain id="TN_CASTLE"         file="t_keep0"           mapcell="17" />
     
   </terrain>
 

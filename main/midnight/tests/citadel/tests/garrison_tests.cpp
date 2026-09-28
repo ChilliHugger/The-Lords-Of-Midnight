@@ -90,6 +90,16 @@ SCENARIO("Six peoples of the Blood March will not stand in each other's garrison
         REQUIRE( AKeepHeldBy(RA_GELMING)->CanCharacterPost(lord) );
         REQUIRE( AKeepHeldBy(RA_DRAGONLORD)->CanCharacterPost(lord) );
     }
+
+    THEN("the race table records each feud, both ways")
+    {
+        auto race = [](mxrace_t people) { return static_cast<citadel_race*>(tme::mx->RaceById(people)); };
+        for ( auto& feud : feuds ) {
+            REQUIRE( race(feud[0])->IsFeudingWith(feud[1]) );
+            REQUIRE( race(feud[1])->IsFeudingWith(feud[0]) );
+        }
+        REQUIRE_FALSE( race(RA_DRAGONLORD)->IsFeudingWith(RA_GELMING) );
+    }
 }
 
 SCENARIO("The Persuader draws men from a feuding people's keep, but will not leave any there")
@@ -190,7 +200,7 @@ SCENARIO("A keep's walls multiply its garrison in battle")
     GIVEN("a castle of the Delve with 500 men")
     {
         auto keep = static_cast<citadel_stronghold*>(GetStronghold("SH_CASTLE_IRON"));
-        REQUIRE( keep->Terrain() == TN_KEEP );
+        REQUIRE( keep->Terrain() == TN_CASTLE );
         keep->TotalTroops(500);
 
         walls battle;

@@ -68,6 +68,17 @@ namespace tme {
         std::vector<u32>    neighbours;     // area ids
     };
 
+    class citadel_race : public mxrace
+    {
+    public:
+        virtual void Serialize ( archive& ar ) override;
+        virtual void LoadTsv ( const TsvRow& row ) override;
+        virtual bool IsFeudingWith ( mxrace_t race ) const;
+
+    public:
+        std::vector<mxrace_t>   feuds;
+    };
+
     class citadel_character : public mxcharacter
     {
     public:
