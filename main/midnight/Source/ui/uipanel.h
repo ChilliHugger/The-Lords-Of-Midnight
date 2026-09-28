@@ -102,7 +102,8 @@ public:
     
 protected:
     uipanel();
-    
+    virtual ~uipanel();
+
     Node* setBackgroundToHeight( LPCSTR background, bool checkWidth = true );
     Node* setBackgroundToWidth( LPCSTR background );
     Node* setBackground( Color3B color );
@@ -156,6 +157,7 @@ protected:
     
 public:
     static Vec2     cursorPosition;
+    static bool     mouseButtonDown;
     MOUSE_CURSOR    currentCursor;
     Vec2            cursorAnchor;
 #endif

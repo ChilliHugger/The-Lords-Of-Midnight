@@ -44,7 +44,8 @@ mapbuilder::mapbuilder() :
     critters(nullptr),
     tunnel_critters(nullptr),
     mapdata(nullptr),
-    mapsize(0,0)
+    mapsize(0,0),
+    screenAspect(1.0f)
 {
     setFlags(mapflags::show_characters);
     setFlags(mapflags::show_critters);
@@ -96,34 +97,65 @@ void mapbuilder::drainCollection(Vector<map_object*> &objects)
 mapbuilder* mapbuilder::build ( void )
 {
     mapsize = TME_MapSize();
-    
+    size truesize = mapsize;
+
     if ( !TME_MapInfo(&info) )
         return nullptr;
-    
+
     if ( isDebugMap() ) {
         info.top = loc_t(0,0) ;
         info.bottom = loc_t(mapsize.cx,mapsize.cy);
         info.size = mapsize ;
     }else{
 
-        if ( info.size.cx < screensize.cx ) {
-            u32 diffx = screensize.cx - info.size.cx;
+        // discoverymap/gamemap Top()/Bottom() are both INCLUSIVE of the last seen/
+        // visible location, unlike every other loc/size pair in this file (where
+        // bottom is one-past-the-end) - convert once here so a character standing
+        // right at the edge of the discovered area isn't cropped out downstream
+        info.bottom.x += 1;
+        info.bottom.y += 1;
+        info.size.cx += 1;
+        info.size.cy += 1;
+
+        // pad the visible/discovered area out to match the screen's aspect ratio,
+        // centring it, so unmapped space is built into the map itself as CELL_BLANK
+        // terrain - and fills the screen exactly at the fitted scale - rather than
+        // needing to be faked up afterwards on screen
+        u32 targetWidth  = MAX(info.size.cx, (u32)ceil(info.size.cy*screenAspect));
+        u32 targetHeight = MAX(info.size.cy, (u32)ceil(info.size.cx/screenAspect));
+
+        if ( info.size.cx < targetWidth ) {
+            u32 diffx = targetWidth - info.size.cx;
             u32 halfx = diffx/2;
-            info.size.cx = screensize.cx;
+            info.size.cx = targetWidth;
             info.bottom.x += halfx;
             info.top.x -= (diffx-halfx);
-            
+
         }
-        if ( info.size.cy < screensize.cy ) {
-            u32 diffy = screensize.cy - info.size.cy;
+        if ( info.size.cy < targetHeight ) {
+            u32 diffy = targetHeight - info.size.cy;
             u32 halfy = diffy/2;
-            info.size.cy = screensize.cy;
+            info.size.cy = targetHeight;
             info.bottom.y += halfy;
             info.top.y -= (diffy-halfy);
         }
 
+        // slide the (possibly padded) window back within the real map's bounds -
+        // otherwise locations beyond the true edge come back as the world border,
+        // which would show up as a solid band rather than blending in as unmapped
+        if ( info.top.x < 0 ) { info.bottom.x -= info.top.x; info.top.x = 0; }
+        if ( info.bottom.x > (s32)truesize.cx ) { info.top.x -= (info.bottom.x-(s32)truesize.cx); info.bottom.x = truesize.cx; }
+        if ( info.top.x < 0 ) info.top.x = 0;
+
+        if ( info.top.y < 0 ) { info.bottom.y -= info.top.y; info.top.y = 0; }
+        if ( info.bottom.y > (s32)truesize.cy ) { info.top.y -= (info.bottom.y-(s32)truesize.cy); info.bottom.y = truesize.cy; }
+        if ( info.top.y < 0 ) info.top.y = 0;
+
+        info.size.cx = info.bottom.x - info.top.x;
+        info.size.cy = info.bottom.y - info.top.y;
+
     }
-    
+
     loc_start = info.top;
     
     mapsize.cx = (info.bottom.x - loc_start.x) ;
