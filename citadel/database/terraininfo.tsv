@@ -32,7 +32,7 @@ Version	Id	Symbol	Flags	Name	Preposition	Description	Success	Visibility	Obstruct
 7	30	TN_STONE	PLURAL+INTERESTING+ARMY	Stone	at	{str:5}	0	0	0	0
 7	31	TN_FROZENWASTE2	PLURAL+BLOCK+INTERESTING	Frozen Waste		the Frozen Wastes	0	0	0	0
 7	32	TN_UNUSED_32					0	0	0	0
-7	33	TN_LAND 		Land	on	{str:5}	0	0	0	0
+7	33	TN_LAND		Land	on	{str:5}	0	0	0	0
 7	34	TN_ISLE		Isle	on	{str:5}	0	0	0	0
 7	35	TN_LAKELAND		Lakeland	in	{str:5}	0	0	0	0
 7	36	TN_PLAIN	PLURAL	Plain	on	{str:5}	0	0	0	0
