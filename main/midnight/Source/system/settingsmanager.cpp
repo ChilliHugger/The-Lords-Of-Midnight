@@ -77,6 +77,10 @@ bool settingsmanager::bumpAdvert()
 {
     bool show = false;
 
+#if defined(_CITADEL_)
+    return show;
+#endif
+
     if ( CONFIG(skip_adverts) ) {
         return false;
     }
