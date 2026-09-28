@@ -482,8 +482,20 @@ void panel_map_detailed::updateScale()
     tmxMap->setScale(model->mapscale);
     descriptions->setScale(model->mapscale);
     characters->setScale(model->mapscale);
-    scrollView->setInnerContainerSize( tmxMap->getContentSize() * model->mapscale );
-    
+
+    auto scaledSize = tmxMap->getContentSize() * model->mapscale;
+    scrollView->setInnerContainerSize( scaledSize );
+
+    // the scrollview's inner container never shrinks smaller than the viewport, so once
+    // zoomed out far enough that the map no longer fills it, centre the map (rather than
+    // leaving it pinned to the bottom-left, its scale anchor) so unmapped space shows evenly
+    auto viewSize = getContentSize();
+    auto offset = Vec2( MAX(0.0f, (viewSize.width-scaledSize.width)*0.5f),
+                         MAX(0.0f, (viewSize.height-scaledSize.height)*0.5f) );
+    tmxMap->setPosition(offset);
+    descriptions->setPosition(offset);
+    characters->setPosition(offset);
+
     if ( model->filters.Is(map_filters::centre_char))
         centreOnCurrentCharacter(false);
 
