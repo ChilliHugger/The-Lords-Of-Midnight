@@ -41,6 +41,7 @@ panel_map_detailed::panel_map_detailed() :
     mapBuilder(nullptr),
     grouplord(nullptr),
     model(nullptr),
+    minMapScale(MAP_SCALE_MIN),
     groupLordBackground(nullptr),
     groupLordButton(nullptr),
 #if defined(_MOUSE_ENABLED_)
@@ -123,9 +124,8 @@ bool panel_map_detailed::init()
     auto contentsize = getContentSize();
     
     mapBuilder =  new (std::nothrow) mapbuilder();
-    mapBuilder->screensize = size(ceil(getContentSize().width/RES(64)),
-                                ceil(getContentSize().height/RES(64)));
-    
+    mapBuilder->screenAspect = contentsize.width / contentsize.height;
+
     if ( CONFIG(debug_map) ) {
         mapBuilder->setFlags(mapflags::debug_map);
         mapBuilder->setFlags(mapflags::show_all_characters);
@@ -134,7 +134,17 @@ bool panel_map_detailed::init()
 
     std::unique_ptr<TiledMapper> mapper( new TiledMapper );
     tmxMap = mapper->createTMXMap(mapBuilder->build());
-    
+
+    // the map is built to match the screen's aspect ratio (see mapbuilder::build),
+    // so the scale at which it exactly fills the screen - and thus the least we
+    // should ever zoom out to - is simply the screen width divided by its width
+    auto mapContentSize = tmxMap->getContentSize();
+    if ( mapContentSize.width>0.0f ) {
+        f32 fitScale = contentsize.width / mapContentSize.width;
+        minMapScale = std::min(INITIAL_MAP_SCALE, MAX(MAP_SCALE_MIN, fitScale));
+    }
+    model->mapscale = MAX(minMapScale, model->mapscale);
+
     scrollView->addChild(tmxMap);
     scrollView->setInnerContainerSize( tmxMap->getContentSize() );
     scrollView->setDirection(ScrollView::Direction::BOTH);
@@ -268,11 +278,11 @@ void panel_map_detailed::OnNotification( Ref* sender )
             break;
             
         case ID_DOWN:
-            if ( model->mapscale > MAP_SCALE_MIN)
+            if ( model->mapscale > minMapScale)
             {
                 model->lastmapscale = model->mapscale;
                 model->mapscale -= MAP_SCALE_CLICK_DELTA;
-                model->mapscale = std::max(MAP_SCALE_MIN, model->mapscale);
+                model->mapscale = std::max(minMapScale, model->mapscale);
                 updateScale();
             }
             break;
@@ -421,7 +431,7 @@ bool panel_map_detailed::OnMouseMove( Vec2 pos )
 
     if ( delta != 0.0f ) {
         model->lastmapscale = model->mapscale;
-        model->mapscale = std::min(MAP_SCALE_MAX, std::max(MAP_SCALE_MIN, model->mapscale+delta));
+        model->mapscale = std::min(MAP_SCALE_MAX, std::max(minMapScale, model->mapscale+delta));
         updateScale();
     }
 
@@ -450,7 +460,7 @@ void panel_map_detailed::addPinchZoomListener()
         if ( pinchActive && pinchLastDistance>0.0f ) {
             f32 ratio = distance / pinchLastDistance;
             model->lastmapscale = model->mapscale;
-            model->mapscale = std::min(MAP_SCALE_MAX, std::max(MAP_SCALE_MIN, model->mapscale*ratio));
+            model->mapscale = std::min(MAP_SCALE_MAX, std::max(minMapScale, model->mapscale*ratio));
             updateScale();
         }
 

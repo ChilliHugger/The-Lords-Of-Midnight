@@ -84,6 +84,7 @@ private:
     TMXTiledMap*    tmxMap;
     mapbuilder*     mapBuilder;
     mapmodel*       model;
+    f32             minMapScale;
     Node*           characters;
     Node*           descriptions;
     DrawNode*       groupLordBackground;
