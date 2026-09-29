@@ -4,6 +4,9 @@
 #include "../../baseinc/tme_internal.h"
 #include "../default/default_scenario_internal.h"
 
+#include <map>
+#include <vector>
+
 #if defined(_CITADEL_)
 
 namespace tme {
@@ -23,10 +26,20 @@ namespace tme {
         virtual mxcharacter* BadGuy() const override;
         virtual bool isTerrainImpassable ( mxterrain_t terrain, const mxitem* target ) const override;
         virtual u32 TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) const override;
+        virtual void NightStart ( void ) override;
+        virtual bool RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const override;
+
+        mxrace_t CampaignTarget () const;
+        bool IsFoughtOver ( mxstronghold* stronghold ) const;
+        const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
         mxcharacter*    boroth;
+
+    private:
+        // StepsFrom's answers for tonight, by the square they are counted from
+        mutable std::map<u32, std::vector<s32>> paths;
     };
 
     class citadel_entityfactory : public mxentityfactory

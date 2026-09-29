@@ -18,7 +18,10 @@
 #include "scenario_citadel.h"
 #include "scenario_citadel_internal.h"
 #include "citadel_processor_battle.h"
+#include <algorithm>
+#include <map>
 #include <string>
+#include <vector>
 
 #if defined(_CITADEL_)
 namespace tme {
@@ -172,6 +175,212 @@ bool citadel_x::isTerrainImpassable ( mxterrain_t terrain, const mxitem* target 
 u32 citadel_x::TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) const
 {
     return mxscenario::TerrainMovementModifier(race, toGeneralisedTerrain(terrain));
+}
+
+struct citadel_kingdom_t {
+    mxrace_t    people;
+    mxrace_t    borders[6];     // RA_NONE ends a shorter list
+};
+
+static const citadel_kingdom_t citadel_kingdoms[] = {
+    { RA_KITH,             { RA_FREE, RA_ATHELING, RA_GOLDEN_FEY, RA_ELDRIN } },
+    { RA_ATHELING,         { RA_KITH, RA_LONG_DWARF, RA_GOLDEN_FEY, RA_ELDRIN } },
+    { RA_ELDRIN,           { RA_KITH, RA_ATHELING, RA_LONG_DWARF, RA_HIGH_FEY } },
+    { RA_LONG_DWARF,       { RA_ATHELING, RA_ARAKAI, RA_DAWN_FEY, RA_DEEPING_DWARF, RA_HIGH_FEY, RA_ELDRIN } },
+    { RA_ARAKAI,           { RA_LONG_DWARF, RA_DAWN_FEY, RA_DRAGONLORD } },
+    { RA_DRAGONLORD,       { RA_ARAKAI } },
+    { RA_HIGH_FEY,         { RA_ELDRIN, RA_LONG_DWARF, RA_DEEPING_DWARF, RA_GELMING } },
+    { RA_DAWN_FEY,         { RA_LONG_DWARF, RA_ARAKAI, RA_USKARG, RA_DARK_FEY, RA_DEEPING_DWARF } },
+    { RA_USKARG,           { RA_DAWN_FEY, RA_BLOODMARCH_GIANT, RA_DARK_FEY } },
+    { RA_GELMING,          { RA_HIGH_FEY, RA_DEEPING_DWARF, RA_DARK_FEY } },
+    { RA_DEEPING_DWARF,    { RA_LONG_DWARF, RA_DAWN_FEY, RA_DARK_FEY, RA_GELMING, RA_HIGH_FEY } },
+    { RA_BLOODMARCH_GIANT, { RA_USKARG, RA_DARK_FEY } },
+    { RA_DARK_FEY,         { RA_GELMING, RA_DEEPING_DWARF, RA_DAWN_FEY, RA_USKARG, RA_BLOODMARCH_GIANT } },
+    { RA_GOLDEN_FEY,       { RA_KITH, RA_ATHELING, RA_ELDRIN } },
+    { RA_FREE,             { RA_KITH } },
+};
+
+static const citadel_kingdom_t* KingdomOf ( mxrace_t people )
+{
+    for ( const auto& kingdom : citadel_kingdoms ) {
+        if ( kingdom.people == people )
+            return &kingdom;
+    }
+    return nullptr;
+}
+
+static bool Borders ( mxrace_t a, mxrace_t b )
+{
+    for ( auto [from, to] : { std::pair{a, b}, std::pair{b, a} } ) {
+        auto kingdom = KingdomOf(from);
+        CONTINUE_IF_NULL(kingdom);
+        for ( auto border : kingdom->borders ) {
+            if ( border == to )
+                return true;
+        }
+    }
+    return false;
+}
+
+static u32 StepsToMidnight ( mxrace_t people )
+{
+    std::vector<mxrace_t> frontier { RA_FREE };
+    std::vector<mxrace_t> seen { RA_FREE };
+    for ( u32 steps = 0; !frontier.empty(); steps++ ) {
+        std::vector<mxrace_t> next;
+        for ( auto here : frontier ) {
+            if ( here == people )
+                return steps;
+            for ( const auto& kingdom : citadel_kingdoms ) {
+                CONTINUE_IF( std::find(seen.begin(), seen.end(), kingdom.people) != seen.end() );
+                if ( Borders(here, kingdom.people) ) {
+                    seen.push_back(kingdom.people);
+                    next.push_back(kingdom.people);
+                }
+            }
+        }
+        frontier = next;
+    }
+    return NUMELE(citadel_kingdoms);
+}
+
+const std::vector<s32>& citadel_x::StepsFrom ( mxgridref from, const mxregiment* walker ) const
+{
+    auto width = (size_t)mx->gamemap->Size().cx;
+    auto height = (size_t)mx->gamemap->Size().cy;
+    auto key = (u32)(from.y * width + from.x);
+
+    auto found = paths.find(key);
+    if ( found != paths.end() )
+        return found->second;
+
+    auto& steps = paths[key];
+    steps.assign(width * height, -1);
+    steps[key] = 0;
+    std::vector<mxgridref> queue { from };
+    for ( size_t next = 0; next < queue.size(); next++ ) {
+        auto here = queue[next];
+        for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
+            auto there = here + (mxdir_t)dir;
+            CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
+            auto& count = steps[there.y * width + there.x];
+            CONTINUE_IF( count >= 0 || isLocationImpassable(there, walker) );
+            count = steps[here.y * width + here.x] + 1;
+            queue.push_back(there);
+        }
+    }
+    return steps;
+}
+
+bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
+{
+    const auto& steps = StepsFrom(target, regiment);
+    auto width = (size_t)mx->gamemap->Size().cx;
+    auto here = regiment->Location();
+    auto best = steps[here.y * width + here.x];
+    if ( best < 0 )
+        return false;   // he cannot get there from here at all: leave it to the old steering
+
+    bool found = false;
+    for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
+        auto there = here + (mxdir_t)dir;
+        CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
+        auto count = steps[there.y * width + there.x];
+        if ( count >= 0 && count < best ) {
+            best = count;
+            step = there;
+            found = true;
+        }
+    }
+    return found;
+}
+
+bool citadel_x::IsFoughtOver ( mxstronghold* stronghold ) const
+{
+    if ( stronghold->Race() == RA_GOLDEN_FEY
+        || KingdomOf(stronghold->Race()) == nullptr
+        || !mx->gamemap->IsLocOnMap(stronghold->Location()) )
+        return false;
+
+    if ( boroth == nullptr || mx->objRegiments.Count() == 0 )
+        return true;
+
+    auto width = (size_t)mx->gamemap->Size().cx;
+    auto where = stronghold->Location();
+    return StepsFrom(boroth->Location(), mx->objRegiments[0])[where.y * width + where.x] >= 0;
+}
+
+mxrace_t citadel_x::CampaignTarget () const
+{
+    struct tally { u32 held = 0; u32 total = 0; };
+    std::map<mxrace_t, tally> kingdoms;
+    FOR_EACH_STRONGHOLD(stronghold) {
+        CONTINUE_IF( !IsFoughtOver(stronghold) );
+        auto& kingdom = kingdoms[stronghold->Race()];
+        kingdom.total++;
+        if ( stronghold->OccupyingRace() == RA_ENEMY )
+            kingdom.held++;
+    }
+
+    auto isHis = [&kingdoms]( mxrace_t people ) {
+        auto it = kingdoms.find(people);
+        return it != kingdoms.end() && it->second.held == it->second.total;
+    };
+
+    mxrace_t target = RA_NONE;
+    for ( const auto& [people, kingdom] : kingdoms ) {
+        CONTINUE_IF( kingdom.held == kingdom.total );
+
+        bool inReach = kingdom.held > 0;
+        for ( const auto& other : citadel_kingdoms ) {
+            if ( isHis(other.people) && Borders(other.people, people) )
+                inReach = true;
+        }
+        CONTINUE_IF( !inReach );
+
+        if ( target == RA_NONE ) {
+            target = people;
+            continue;
+        }
+        const auto& best = kingdoms.at(target);
+        auto mine = (u64)kingdom.held * best.total;
+        auto theirs = (u64)best.held * kingdom.total;
+        if ( mine > theirs || (mine == theirs && StepsToMidnight(people) < StepsToMidnight(target)) )
+            target = people;
+    }
+    return target;
+}
+
+void citadel_x::NightStart ( void )
+{
+    mxscenario::NightStart();
+
+    paths.clear();
+
+    auto target = CampaignTarget();
+
+    FOR_EACH_REGIMENT(regiment) {
+        CONTINUE_IF( regiment->Race() != RA_ENEMY || regiment->Total() == 0 );
+
+        mxstronghold* nearest = nullptr;
+        if ( target != RA_NONE ) {
+            FOR_EACH_STRONGHOLD(stronghold) {
+                CONTINUE_IF( stronghold->Race() != target
+                             || stronghold->OccupyingRace() == RA_ENEMY
+                             || !IsFoughtOver(stronghold) );
+                if ( nearest == nullptr
+                     || regiment->Location() - stronghold->Location() < regiment->Location() - nearest->Location() )
+                    nearest = stronghold;
+            }
+        }
+
+        if ( nearest != nullptr ) {
+            regiment->Orders(OD_GOTO);
+            regiment->TargetId(mxentity::SafeIdt(nearest));
+        } else {
+            regiment->Orders(OD_WANDER);
+        }
+    }
 }
 
 citadel_object::citadel_object()

@@ -104,6 +104,8 @@ namespace tme {
             
             virtual bool isTerrainImpassable(mxterrain_t terrain, const mxitem* target) const;
             bool isLocationImpassable(mxgridref loc, const mxitem* target) const;
+
+            virtual bool RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const;
             
         public:
             flags32_t           features;
