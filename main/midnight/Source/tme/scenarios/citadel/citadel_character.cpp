@@ -105,7 +105,7 @@ s32 citadel_character::RecruitScore ( const mxcharacter* other ) const
     return std::popcount(qualities & theirs) - std::popcount(qualities & std::rotl(theirs, 32));
 }
 
-static s32 RecruitThreshold ( mxrace_t race )
+s32 citadel_character::RecruitThreshold ( const mxrace_t race ) const
 {
     return mx->scenario->HostageOfRace(race) != nullptr ? 2 : 1;
 }

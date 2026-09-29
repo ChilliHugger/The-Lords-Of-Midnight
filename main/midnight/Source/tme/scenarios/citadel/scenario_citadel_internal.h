@@ -102,7 +102,8 @@ namespace tme {
         virtual bool ShouldDieInFight() const override;
         virtual void InitNightProcessing ( void ) override;
         virtual bool CheckRecruitChar ( mxcharacter* pChar ) const override;
-        s32  RecruitScore ( const mxcharacter* other ) const;
+        virtual s32  RecruitScore ( const mxcharacter* other ) const;
+        virtual s32  RecruitThreshold(const mxrace_t race) const;
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
         mxobjpower_t WeaponPower() const;
