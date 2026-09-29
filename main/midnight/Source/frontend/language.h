@@ -168,10 +168,10 @@ https://axmol.dev)";
     constexpr LPCSTR _UPDATE_PROMPT_                    = "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _NOVELLA_PROMPT_                   = "You are about to open a browser window to read the Lords of Midnight Novella\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _GUIDE_PROMPT_                     = "You are about to open a browser window to read the Lords of Midnight Playing Guide\n\nAre you sure that you wish to continue?";
-    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight_guide.pdf";
-    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.pdf";
+    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "https://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight_guide.pdf";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "https://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.pdf";
     #if defined(_OS_IOS_) || defined(_OS_OSX_)
-    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "http://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.epub";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "https://www.thelordsofmidnight.com/docs/Lords%20of%20Midnight.epub";
     #else
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
@@ -190,10 +190,10 @@ https://axmol.dev)";
     constexpr LPCSTR _UPDATE_PROMPT_                    = "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _NOVELLA_PROMPT_                   = "You are about to open a browser window to read the Citadel Novella\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _GUIDE_PROMPT_                     = "You are about to open a browser window to read the Citadel Playing Guide\n\nAre you sure that you wish to continue?";
-    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "http://www.thelordsofmidnight.com/docs/citadel_guide.pdf";
-    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "http://www.thelordsofmidnight.com/docs/the%20citadel.pdf";
+    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "https://www.thelordsofmidnight.com/docs/citadel_guide.pdf";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "https://www.thelordsofmidnight.com/docs/the%20citadel.pdf";
     #if defined(_OS_IOS_) || defined(_OS_OSX_)
-    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "http://www.thelordsofmidnight.com/docs/the%20citadel.epub";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "https://www.thelordsofmidnight.com/docs/the%20citadel.epub";
     #else
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
@@ -207,10 +207,10 @@ https://axmol.dev)";
     constexpr LPCSTR _UPDATE_PROMPT_                    = "You are about to open a browser window to download a new version\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _NOVELLA_PROMPT_                   = "You are about to open a browser window to read the Doomdark's Revenge Novella\n\nAre you sure that you wish to continue?";
     constexpr LPCSTR _GUIDE_PROMPT_                     = "You are about to open a browser window to read the Doomdark's Revenge Playing Guide\n\nAre you sure that you wish to continue?";
-    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.pdf";
-    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge_guide.pdf";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_PDF_             = "https://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.pdf";
+    constexpr LPCSTR _GUIDE_DOCUMENT_                   = "https://www.doomdarksrevenge.com/docs/Doomdark's_Revenge_guide.pdf";
     #if defined(_OS_IOS_) || defined(_OS_OSX_)
-    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "http://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.epub";
+    constexpr LPCSTR _NOVELLA_DOCUMENT_                 = "https://www.doomdarksrevenge.com/docs/Doomdark's_Revenge.epub";
     #else
     constexpr LPCSTR _NOVELLA_DOCUMENT_                 = _NOVELLA_DOCUMENT_PDF_;
     #endif
