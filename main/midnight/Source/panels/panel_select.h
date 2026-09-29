@@ -12,6 +12,7 @@
 #include "../ui/characters/uilordselect.h"
 #include "../ui/uipanel.h"
 #include "../ui/uifilterbutton.h"
+#include "../ui/uipager.h"
 #include "../frontend/layout_id.h"
 #include "../system/settingsmanager.h"
 #include "../models/selectmodel.h"
@@ -23,6 +24,7 @@ class panel_select :
     using PageView = ax::ui::PageView;
     using ScrollView = ax::ui::ScrollView;
     using Layout = ax::ui::Layout;
+    using Button = ax::ui::Button;
     using uidragevent = chilli::ui::DragEvent;
     using uidragelement = chilli::ui::DragElement;
     template<class T> using Vector = ax::Vector<T>;
@@ -98,6 +100,7 @@ private:
     Node*                   gradientB;
     Node*                   gradientR;
     PageView*               pageView;
+    uipager                 pager;
     ScrollView*             scrollView;
     Vector<uilordselect*>   lords;
     Vector<Layout*>         pages;

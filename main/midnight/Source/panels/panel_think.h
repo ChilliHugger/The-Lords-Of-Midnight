@@ -11,6 +11,7 @@
 
 #include "../ui/uipanel.h"
 #include "../ui/uithinkpage.h"
+#include "../ui/uipager.h"
 #include "../frontend/layout_id.h"
 
 FORWARD_REFERENCE(uisinglelord);
@@ -18,6 +19,7 @@ FORWARD_REFERENCE(uisinglelord);
 class panel_think : public uipanel
 {
     using PageView = ax::ui::PageView;
+    using Button = ax::ui::Button;
     using Color3B = ax::Color3B;
     template<class T> using Vector = ax::Vector<T>;
 public:
@@ -50,6 +52,7 @@ protected:
     mxid                    objectId;
     int                     current_tab;
     PageView*               pageView;
+    uipager                 pager;
     Vector<uithinkpage*>    pages;
     uisinglelord*           select;
 };
