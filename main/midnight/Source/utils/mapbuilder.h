@@ -134,7 +134,10 @@ private:
     loc_info_t*             mapdata;
 public:
     size                    mapsize;
+    size                    truesize;
+    size                    screenTiles;
     f32                     screenAspect;
+    u32                     borderPadding;
     loc_t                   loc_start;
     loc_t                   loc_first;
     u32                     max_cells;
