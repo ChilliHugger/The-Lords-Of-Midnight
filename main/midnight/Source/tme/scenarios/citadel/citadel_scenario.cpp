@@ -183,7 +183,22 @@ struct citadel_kingdom_t {
 };
 
 static const citadel_kingdom_t citadel_kingdoms[] = {
-    { RA_KITH,             { RA_FREE, RA_ATHELING, RA_GOLDEN_FEY, RA_ELDRIN } },                                            { RA_ATHELING,         { RA_KITH, RA_LONG_DWARF, RA_GOLDEN_FEY, RA_ELDRIN } },                                          { RA_ELDRIN,           { RA_KITH, RA_ATHELING, RA_LONG_DWARF, RA_HIGH_FEY } },                                          { RA_LONG_DWARF,       { RA_ATHELING, RA_ARAKAI, RA_DAWN_FEY, RA_DEEPING_DWARF, RA_HIGH_FEY, RA_ELDRIN } },             { RA_ARAKAI,           { RA_LONG_DWARF, RA_DAWN_FEY, RA_DRAGONLORD } },                                                 { RA_DRAGONLORD,       { RA_ARAKAI } },                                                                                 { RA_HIGH_FEY,         { RA_ELDRIN, RA_LONG_DWARF, RA_DEEPING_DWARF, RA_GELMING } },                                    { RA_DAWN_FEY,         { RA_LONG_DWARF, RA_ARAKAI, RA_USKARG, RA_DARK_FEY, RA_DEEPING_DWARF } },                        { RA_USKARG,           { RA_DAWN_FEY, RA_BLOODMARCH_GIANT, RA_DARK_FEY } },                                             { RA_GELMING,          { RA_HIGH_FEY, RA_DEEPING_DWARF, RA_DARK_FEY } },                                                { RA_DEEPING_DWARF,    { RA_LONG_DWARF, RA_DAWN_FEY, RA_DARK_FEY, RA_GELMING, RA_HIGH_FEY } },                          { RA_BLOODMARCH_GIANT, { RA_USKARG, RA_DARK_FEY } },                                                                    { RA_DARK_FEY,         { RA_GELMING, RA_DEEPING_DWARF, RA_DAWN_FEY, RA_USKARG, RA_BLOODMARCH_GIANT } },                 { RA_GOLDEN_FEY,       { RA_KITH, RA_ATHELING, RA_ELDRIN } },                                                           { RA_FREE,             { RA_KITH } },                                                                               };
+    { RA_KITH,             { RA_FREE, RA_ATHELING, RA_GOLDEN_FEY, RA_ELDRIN } },
+    { RA_ATHELING,         { RA_KITH, RA_LONG_DWARF, RA_GOLDEN_FEY, RA_ELDRIN } },
+    { RA_ELDRIN,           { RA_KITH, RA_ATHELING, RA_LONG_DWARF, RA_HIGH_FEY } },
+    { RA_LONG_DWARF,       { RA_ATHELING, RA_ARAKAI, RA_DAWN_FEY, RA_DEEPING_DWARF, RA_HIGH_FEY, RA_ELDRIN } },
+    { RA_ARAKAI,           { RA_LONG_DWARF, RA_DAWN_FEY, RA_DRAGONLORD } },
+    { RA_DRAGONLORD,       { RA_ARAKAI } },
+    { RA_HIGH_FEY,         { RA_ELDRIN, RA_LONG_DWARF, RA_DEEPING_DWARF, RA_GELMING } },
+    { RA_DAWN_FEY,         { RA_LONG_DWARF, RA_ARAKAI, RA_USKARG, RA_DARK_FEY, RA_DEEPING_DWARF } },
+    { RA_USKARG,           { RA_DAWN_FEY, RA_BLOODMARCH_GIANT, RA_DARK_FEY } },
+    { RA_GELMING,          { RA_HIGH_FEY, RA_DEEPING_DWARF, RA_DARK_FEY } },
+    { RA_DEEPING_DWARF,    { RA_LONG_DWARF, RA_DAWN_FEY, RA_DARK_FEY, RA_GELMING, RA_HIGH_FEY } },
+    { RA_BLOODMARCH_GIANT, { RA_USKARG, RA_DARK_FEY } },
+    { RA_DARK_FEY,         { RA_GELMING, RA_DEEPING_DWARF, RA_DAWN_FEY, RA_USKARG, RA_BLOODMARCH_GIANT } },
+    { RA_GOLDEN_FEY,       { RA_KITH, RA_ATHELING, RA_ELDRIN } },
+    { RA_FREE,             { RA_KITH } },
+};
 
 static const citadel_kingdom_t* KingdomOf ( mxrace_t people )
 {
