@@ -12,6 +12,8 @@
 #include "../../tsv/tsvflags.h"
 #include "../../tsv/tsvfields.h"
 
+#include <bit>
+
 #if defined(_CITADEL_)
 namespace tme {
 
@@ -97,15 +99,34 @@ void citadel_character::InitNightProcessing ( void )
         energy = (u32)sv_energy_max;
 }
 
+s32 citadel_character::RecruitScore ( const mxcharacter* other ) const
+{
+    auto theirs = other->Qualities();
+    return std::popcount(qualities & theirs) - std::popcount(qualities & std::rotl(theirs, 32));
+}
+
+s32 citadel_character::RecruitThreshold ( const mxrace_t race ) const
+{
+    return mx->scenario->HostageOfRace(race) != nullptr ? 2 : 1;
+}
+
 bool citadel_character::CheckRecruitChar ( mxcharacter* pChar ) const
 {
+    if ( pChar == nullptr || pChar == this )
+        return false;
+
+    if ( pChar->IsPrisoner() )
+        return true;
+
+    if ( pChar->Race() == RA_ENEMY )
+        return false;
+
     if ( WeaponPower() == OP_ARAKAI_LOYALTY
-        && pChar != nullptr
         && pChar->Race() == RA_ARAKAI
         && mx->scenario->HostageOfRace(RA_ARAKAI) == nullptr )
         return true;
 
-    return mxcharacter::CheckRecruitChar(pChar);
+    return RecruitScore(pChar) >= RecruitThreshold(pChar->Race());
 }
 
 bool citadel_character::IsAllowedWarriors() const
