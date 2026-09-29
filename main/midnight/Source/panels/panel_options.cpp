@@ -604,8 +604,7 @@ void panel_options::SetMenu ( int id )
         SetValues();
         return;
     } else if ( id == ID_MENU_HELP ) {
-        SetSubMenu(items_help,NUMELE(items_help));
-        
+        // work out what's visible before the menu is built
 #if !defined(_OS_IOS_) && !defined(_OS_OSX_)
         mr->settings->novella_pdf= TOGGLE::ON;
 #endif
@@ -613,7 +612,9 @@ void panel_options::SetMenu ( int id )
 #if defined(_USE_INTERNAL_WEBVIEW_)
         findOption(ID_OPTION_NOVELLA_VIEWER)->hidden = isNot(mr->settings->novella_pdf);
 #endif
-        
+
+        SetSubMenu(items_help,NUMELE(items_help));
+
         SetValues();
         return;
     }

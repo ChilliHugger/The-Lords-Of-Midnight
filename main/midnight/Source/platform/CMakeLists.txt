@@ -16,20 +16,24 @@ elseif(APPLE)
           Source/platform/Extensions.h
           Source/platform/mac/Extensions-mac.h
           Source/platform/apple/Extensions-apple.h
+          Source/platform/apple/PdfViewer-apple.h
           )
       set(SRC_PLATFORM
           Source/platform/mac/Extensions-mac.mm
           Source/platform/apple/Extensions-apple.mm
+          Source/platform/apple/PdfViewer-apple.mm
           )
     elseif(IOS)
         set(HDR_PLATFORM
             Source/platform/Extensions.h
             Source/platform/ios/Extensions-ios.h
             Source/platform/apple/Extensions-apple.h
+          Source/platform/apple/PdfViewer-apple.h
             )
         set(SRC_PLATFORM
             Source/platform/ios/Extensions-ios.mm
             Source/platform/apple/Extensions-apple.mm
+          Source/platform/apple/PdfViewer-apple.mm
             )
     endif()
 endif()
