@@ -125,6 +125,7 @@ bool panel_map_detailed::init()
     
     mapBuilder =  new (std::nothrow) mapbuilder();
     mapBuilder->screenAspect = contentsize.width / contentsize.height;
+    mapBuilder->screenTiles = size( (u32)ceil(contentsize.width/RES(64)), (u32)ceil(contentsize.height/RES(64)) );
 
     if ( CONFIG(debug_map) ) {
         mapBuilder->setFlags(mapflags::debug_map);
@@ -135,8 +136,9 @@ bool panel_map_detailed::init()
     std::unique_ptr<TiledMapper> mapper( new TiledMapper );
     tmxMap = mapper->createTMXMap(mapBuilder->build());
 
-    // the map is built to match the screen's aspect ratio (see mapbuilder::build),
-    // so the scale at which it exactly fills the screen - and thus the least we
+    // the map is built to match the screen's aspect ratio and to have enough
+    // tiles to cover the screen at scale 1.0 (see mapbuilder::build), so the
+    // scale at which it exactly fills the screen - and thus the least we
     // should ever zoom out to - is simply the screen width divided by its width
     auto mapContentSize = tmxMap->getContentSize();
     if ( mapContentSize.width>0.0f ) {

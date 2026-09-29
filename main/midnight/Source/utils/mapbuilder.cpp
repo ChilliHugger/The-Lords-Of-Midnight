@@ -45,7 +45,10 @@ mapbuilder::mapbuilder() :
     tunnel_critters(nullptr),
     mapdata(nullptr),
     mapsize(0,0),
-    screenAspect(1.0f)
+    truesize(0,0),
+    screenTiles(0,0),
+    screenAspect(1.0f),
+    borderPadding(2)
 {
     setFlags(mapflags::show_characters);
     setFlags(mapflags::show_critters);
@@ -97,7 +100,7 @@ void mapbuilder::drainCollection(Vector<map_object*> &objects)
 mapbuilder* mapbuilder::build ( void )
 {
     mapsize = TME_MapSize();
-    size truesize = mapsize;
+    truesize = mapsize;
 
     if ( !TME_MapInfo(&info) )
         return nullptr;
@@ -120,9 +123,19 @@ mapbuilder* mapbuilder::build ( void )
         // pad the visible/discovered area out to match the screen's aspect ratio,
         // centring it, so unmapped space is built into the map itself as CELL_BLANK
         // terrain - and fills the screen exactly at the fitted scale - rather than
-        // needing to be faked up afterwards on screen
-        u32 targetWidth  = MAX(info.size.cx, (u32)ceil(info.size.cy*screenAspect));
-        u32 targetHeight = MAX(info.size.cy, (u32)ceil(info.size.cx/screenAspect));
+        // needing to be faked up afterwards on screen. screenTiles is also folded
+        // in as a floor: early in a game the discovered area can be far smaller
+        // than the screen, and the map must still be built with enough tiles to
+        // cover it (rather than compensating by scaling the finished map up)
+        // if the discovered area already fits within a single screen, the whole
+        // map will be shown at once with no scrolling - so there's nothing for
+        // the scroll-margin border below to help with, and it can be skipped
+        bool needsScrollMargin = (info.size.cx > screenTiles.cx) || (info.size.cy > screenTiles.cy);
+
+        u32 minWidth  = MAX(info.size.cx, screenTiles.cx);
+        u32 minHeight = MAX(info.size.cy, screenTiles.cy);
+        u32 targetWidth  = MAX(minWidth, (u32)ceil(minHeight*screenAspect));
+        u32 targetHeight = MAX(minHeight, (u32)ceil(minWidth/screenAspect));
 
         if ( info.size.cx < targetWidth ) {
             u32 diffx = targetWidth - info.size.cx;
@@ -150,6 +163,19 @@ mapbuilder* mapbuilder::build ( void )
         if ( info.top.y < 0 ) { info.bottom.y -= info.top.y; info.top.y = 0; }
         if ( info.bottom.y > (s32)truesize.cy ) { info.top.y -= (info.bottom.y-(s32)truesize.cy); info.bottom.y = truesize.cy; }
         if ( info.top.y < 0 ) info.top.y = 0;
+
+        // add a fixed scroll margin around the fitted window so the player can
+        // scroll content that would otherwise sit under the map's fixed UI
+        // (zoom/filter buttons) clear of it. Added after the slide-to-bounds
+        // above so it isn't absorbed/truncated by it - this is deliberately
+        // allowed to extend past the true map edge, since updateTerrain()
+        // clamps those locations back onto the edge and repeats its terrain
+        if ( needsScrollMargin ) {
+            info.top.x    -= (s32)borderPadding;
+            info.top.y    -= (s32)borderPadding;
+            info.bottom.x += (s32)borderPadding;
+            info.bottom.y += (s32)borderPadding;
+        }
 
         info.size.cx = info.bottom.x - info.top.x;
         info.size.cy = info.bottom.y - info.top.y;
@@ -223,16 +249,32 @@ mapbuilder* mapbuilder::updateTerrain()
         for ( int x=0; x<mapsize.cx; x++ ) {
             
             loc_t loc(loc_start.x+x,loc_start.y+y);
-            
+
+            // locations beyond the true map edge (the scroll-margin border) are
+            // clamped back onto the edge, so they pick up its terrain/seen state -
+            // extending it outwards - rather than the default out-of-bounds cell
+            bool extended = false;
+            if ( !debug_map ) {
+                loc_t clamped( MIN(MAX(loc.x,0), (s32)truesize.cx-1), MIN(MAX(loc.y,0), (s32)truesize.cy-1) );
+                extended = (clamped.x != loc.x) || (clamped.y != loc.y);
+                loc = clamped;
+            }
+
             TME_GetLocation(m,loc);
             dst->flags = m.flags;
             dst->terrain = m.terrain ;
             dst->density=0;
             dst->tunnel=0;
-            dst->object = GET_ID(m.object);
-            dst->object_tunnel = GET_ID(m.object_tunnel);
+            // don't repeat the edge cell's critters/objects/tunnels across the
+            // whole extended border - only the terrain itself should stretch out
+            dst->object = extended ? OB_NONE : GET_ID(m.object);
+            dst->object_tunnel = extended ? OB_NONE : GET_ID(m.object_tunnel);
+            if ( extended )
+                dst->flags.Reset(lf_tunnel_flags_mask);
             dst->discovery_flags = m.discovery_flags ;
             dst->discovery_flags.Reset(~reset_discover_mask);
+            if ( extended )
+                dst->discovery_flags.Reset(lf_tunnel_flags_mask);
             dst->area = m.area ;
             dst++;
             
