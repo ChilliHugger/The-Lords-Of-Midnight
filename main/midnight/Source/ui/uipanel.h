@@ -112,7 +112,7 @@ protected:
     void FadeExit( f32 delay = 0);
     void Exit( f32 delay = 0);
     
-    void OpenPDF(LPCSTR pdf);
+    void OpenPDF(LPCSTR pdf, bool allowInternal = true);
     void FillBackground();
 
     bool showHelpWindow ( helpid_t id, BOOL forceImportant = false, MXVoidCallback callback=nullptr  );

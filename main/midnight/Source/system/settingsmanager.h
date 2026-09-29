@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  15
+#define CONFIG_VERSION                  16
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -206,4 +206,7 @@ public:
     
     // version 15
     int                     dedication_screen_count;
+
+    // version 16
+    TOGGLE                  novella_internal;
 };

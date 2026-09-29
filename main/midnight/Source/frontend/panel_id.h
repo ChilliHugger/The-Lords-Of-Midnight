@@ -42,6 +42,7 @@ enum panelmode_t {
     MODE_OPTIONS,
     MODE_ADVERT,
     MODE_DEDICATION,
+    MODE_WEBVIEW,
     
     MODE_MAINMENU,
 };

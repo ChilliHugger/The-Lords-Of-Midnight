@@ -90,6 +90,9 @@ https://axmol.dev)";
     
     constexpr LPCSTR OPTIONS_NOVELLA_EBOOK              = "EBOOK";
     constexpr LPCSTR OPTIONS_NOVELLA_PDF                = "PDF";
+    constexpr LPCSTR OPTIONS_VIEWER_EXTERNAL            = "EXTERNAL";
+    constexpr LPCSTR OPTIONS_VIEWER_INTERNAL            = "INTERNAL";
+    constexpr LPCSTR OPTIONS_WEBVIEW_EXIT               = "EXIT";
     
     constexpr LPCSTR OPTIONS_SCREEN_FULLSCREEN          = "FULLSCREEN";
     constexpr LPCSTR OPTIONS_SCREEN_SMALL               = "SMALL";
@@ -127,6 +130,7 @@ https://axmol.dev)";
     constexpr LPCSTR OPTIONS_SCREEN_TUTORIAL            = "TUTORIAL";
     constexpr LPCSTR OPTIONS_SCREEN_MOVEMENTINDICATORS  = "MOVEMENT INDICATORS";
     constexpr LPCSTR OPTIONS_SCREEN_NOVELLA             = "NOVELLA";
+    constexpr LPCSTR OPTIONS_SCREEN_NOVELLA_VIEWER      = "PDF VIEWER";
  
     constexpr LPCSTR OPTIONS_SCREEN_RULE_1              = "IMPASSABLE MOUNTAINS";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_2              = "AI IMPASSABLE MOUNTAINS";

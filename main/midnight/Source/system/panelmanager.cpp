@@ -12,6 +12,7 @@
 #include "../panels/panel_mainmenu.h"
 #include "../panels/panel_think.h"
 #include "../panels/panel_credits.h"
+#include "../panels/panel_webview.h"
 #include "../panels/panel_splashscreen.h"
 #include "../panels/panel_dedication.h"
 #include "../panels/panel_options.h"
@@ -81,6 +82,10 @@ uipanel* panelmanager::getPanel( panelmode_t mode )
         panel =  panel_options::create();
     else if ( mode == MODE_CREDITS )
         panel =  panel_credits::create();
+#if defined(_USE_INTERNAL_WEBVIEW_)
+    else if ( mode == MODE_WEBVIEW )
+        panel =  panel_webview::create();
+#endif
     else if ( mode == MODE_TITLE  )
         panel =  panel_splashscreen::create() ;
     else if ( mode == MODE_DEDICATION  )

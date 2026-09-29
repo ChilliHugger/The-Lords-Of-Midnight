@@ -14,6 +14,7 @@
 #include "../system/settingsmanager.h"
 #include "../system/panelmanager.h"
 #include "../ui/uihelper.h"
+#include "../panels/panel_webview.h"
 
 USING_NS_AX;
 
@@ -227,15 +228,25 @@ void uipanel::AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok 
     
 }
 
-void uipanel::OpenPDF(LPCSTR pdf)
+void uipanel::OpenPDF(LPCSTR pdf, bool allowInternal)
 {
 #if defined(_OS_ANDROID_GOOGLE_DOCS_)
     char buffer[MAX_PATH];
     snprintf(buffer, MAX_PATH, "%s%s", PDF_VIEWER, pdf);
-    Application::getInstance()->openURL(buffer);
+    LPCSTR url = buffer;
 #else
-    Application::getInstance()->openURL(pdf);
+    LPCSTR url = pdf;
 #endif
+
+#if defined(_USE_INTERNAL_WEBVIEW_)
+    if ( allowInternal && is(mr->settings->novella_internal) ) {
+        panel_webview::setUrl(url);
+        mr->panels->setPanelMode(MODE_WEBVIEW, TRANSITION_FADEIN, true);
+        return;
+    }
+#endif
+
+    Application::getInstance()->openURL(url);
 }
 
 void uipanel::FillBackground()

@@ -8,6 +8,7 @@
 #include "../extensions/CustomDirector.h"
 #include "../extensions/ScrollView.h" // scrolling menu
 #include "../axmol_sdk.h"
+#include "panel_webview.h"
 
 #include "panel_options.h"
 #include "panel_mainmenu.h"
@@ -134,6 +135,11 @@ static const char* values_novella[] = {
     OPTIONS_NOVELLA_PDF
 };
 
+static const char* values_viewer[] = {
+    OPTIONS_VIEWER_EXTERNAL,
+    OPTIONS_VIEWER_INTERNAL
+};
+
 static const char* values_screen[] = {
     OPTIONS_SCREEN_FULLSCREEN,
     OPTIONS_SCREEN_SMALL,
@@ -252,6 +258,9 @@ static uitextmenuitem items_help[] = {
 #if defined(_OS_IOS_) || defined(_OS_OSX_)
     { ID_OPTION_NOVELLA,                {OPTIONS_SCREEN_NOVELLA},               KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
 #endif
+#if defined(_USE_INTERNAL_WEBVIEW_)
+    { ID_OPTION_NOVELLA_VIEWER,         {OPTIONS_SCREEN_NOVELLA_VIEWER},        KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+#endif
 };
 
 static option_t options[] = {
@@ -268,6 +277,9 @@ static option_t options[] = {
     {   ID_OPTION_FLIPSCREEN,       OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     
     {   ID_OPTION_NOVELLA,          OPT_TOGGLE, 0, values_novella,             nullptr, false },
+#if defined(_USE_INTERNAL_WEBVIEW_)
+    {   ID_OPTION_NOVELLA_VIEWER,   OPT_TOGGLE, 0, values_viewer,              nullptr, false },
+#endif
     
     {   ID_OPTION_COMPASS_DELAY,    OPT_NUMBER, 4, values_compass_delay,       nullptr, false },
     {   ID_OPTION_NIGHT_DISPLAY,    OPT_TOGGLE, 0, values_slowfast,            nullptr, false },
@@ -410,6 +422,9 @@ bool panel_options::init()
     SET_OPTION(ID_OPTION_FLIPSCREEN,flipscreen);
     
     SET_OPTION(ID_OPTION_NOVELLA,novella_pdf);
+#if defined(_USE_INTERNAL_WEBVIEW_)
+    SET_OPTION(ID_OPTION_NOVELLA_VIEWER,novella_internal);
+#endif
     
     SET_OPTION(ID_OPTION_COMPASS_DELAY,compass_delay);
     SET_OPTION(ID_OPTION_NIGHT_DISPLAY,night_display_fast);
@@ -527,6 +542,14 @@ void panel_options::OnMenuNotification(
             *value=0;
     }
 
+#if defined(_USE_INTERNAL_WEBVIEW_)
+    // the viewer choice only applies to PDFs, so show/hide it as the novella format changes
+    if ( option->id == ID_OPTION_NOVELLA ) {
+        SetMenu(ID_MENU_HELP);
+        return;
+    }
+#endif
+
     SetValues();
 
     if(option->id>=ID_OPTION_RULES) {
@@ -585,6 +608,10 @@ void panel_options::SetMenu ( int id )
         
 #if !defined(_OS_IOS_) && !defined(_OS_OSX_)
         mr->settings->novella_pdf= TOGGLE::ON;
+#endif
+
+#if defined(_USE_INTERNAL_WEBVIEW_)
+        findOption(ID_OPTION_NOVELLA_VIEWER)->hidden = isNot(mr->settings->novella_pdf);
 #endif
         
         SetValues();

@@ -26,6 +26,7 @@ settingsmanager::settingsmanager() :
     , current_scenario(CF_SCENARIO::DEFAULT)
     , cursor_size(CF_CURSOR::MEDIUM)
     , dedication_screen_count(0)
+    , novella_internal(TOGGLE::OFF)
     , screentransitions(TOGGLE::ON)
     , fey_recruit_mode(CF_FEY_RECRUIT::ON)
     , firsttime(true)
@@ -184,6 +185,9 @@ bool settingsmanager::Save ( void )
     // version 15
     ar << dedication_screen_count;
 
+    // version 16
+    ar << FROM_TOGGLE(novella_internal);
+
     ar.Close();
 
     SAFEDELETE ( pFile );
@@ -281,6 +285,10 @@ bool settingsmanager::Load ( void )
     
     if ( version >= 15 ) {
         ar >> dedication_screen_count;
+    }
+
+    if ( version >= 16 ) {
+        ar >> TO_TOGGLE(novella_internal);
     }
 
     ar.Close();
