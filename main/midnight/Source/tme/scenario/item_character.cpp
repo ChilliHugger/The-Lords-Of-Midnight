@@ -310,7 +310,8 @@ namespace tme {
                     }
 
                     // can we guard men ?
-                    if ( stronghold->TotalTroops() + sv_character_guard_amount <= stronghold->MaxTroops() ) {
+                    if ( stronghold->CanCharacterPost(this)
+                         && stronghold->TotalTroops() + sv_character_guard_amount <= stronghold->MaxTroops() ) {
                         if ( (stronghold->Type()==UT_WARRIORS) && (warriors.total >= sv_character_guard_amount ) )
                             info->flags.Set(lif_guardmen); // = TRUE ;
                         if ( (stronghold->Type()==UT_RIDERS) && (riders.total >= sv_character_guard_amount ) )

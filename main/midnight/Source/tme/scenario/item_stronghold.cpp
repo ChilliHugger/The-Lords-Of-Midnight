@@ -226,6 +226,11 @@ bool mxstronghold::CanCharacterRecruitOrPost(const mxcharacter* character) const
     return OccupyingRace() == character->Race();
 }
 
+bool mxstronghold::CanCharacterPost(const mxcharacter* character) const
+{
+    return true;
+}
+
 //
 // Is this stronghold held against the player - do its armies fight a lord who stands in it?
 // Occupied by the enemy's race, which is all it takes while every keep of his is at war.
