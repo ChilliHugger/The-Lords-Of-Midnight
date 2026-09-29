@@ -26,15 +26,12 @@ void citadel_race::Serialize ( archive& ar )
     if ( ar.IsStoring() ) {
         ar << count;
         for ( auto race : feuds )
-            ar << (u32)race;
+            WRITE_ENUM(race);
     } else {
         ar >> count;
         feuds.resize(count);
-        for ( auto& race : feuds ) {
-            u32 id;
-            ar >> id;
-            race = (mxrace_t)id;
-        }
+        for ( auto& race : feuds )
+            READ_ENUM(race);
     }
 }
 
