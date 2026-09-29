@@ -277,7 +277,7 @@ using namespace chilli::types;
             TN_UNUSED_53        =    53,
             TN_UNUSED_54        =    54,
             TN_MIST             =    55,
-            TN_UNUSED_56        =    56,
+            TN_CASTLE           =    56,
 
             TN_NONE             =    127,
 

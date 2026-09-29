@@ -31,6 +31,8 @@ void lom_battle::ProcessLocation ( mxgridref loc )
 
     if ( HasDefenders() ) {
 
+        PrepareArmies();
+
         ProcessAllCharacters();
 
         ProcessAllArmies();

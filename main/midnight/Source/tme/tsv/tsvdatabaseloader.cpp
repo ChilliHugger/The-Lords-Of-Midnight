@@ -99,11 +99,19 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
 #endif
 
     struct { TsvTable* table; const char* file; std::vector<std::string> columns; } files[] = {
+#if defined(_CITADEL_)
+        { &areaInfo,        "areainfo.tsv",      InfoColumns({ TsvField::Area::Prefix, TsvField::Area::Neighbours }) },
+#else
         { &areaInfo,        "areainfo.tsv",      InfoColumns({ TsvField::Area::Prefix }) },
+#endif
         { &commandInfo,     "commandinfo.tsv",   InfoColumns({ TsvField::Command::SuccessTime, TsvField::Command::FailureTime }) },
         { &directionInfo,   "directioninfo.tsv", InfoColumns({}) },
         { &genderInfo,      "genderinfo.tsv",    InfoColumns({ TsvField::Gender::PersonalPronoun, TsvField::Gender::PossessivePronoun, TsvField::Gender::SingularPronoun }) },
+#if defined(_CITADEL_)
+        { &raceInfo,        "raceinfo.tsv",      InfoColumns({ TsvField::Race::DefaultSoldiersName, TsvField::Race::Success, TsvField::Race::InitialMovement, TsvField::Race::DiagonalMovement, TsvField::Race::RidingMultiplier, TsvField::Race::MovementMax, TsvField::Race::RestAmount, TsvField::Race::StrongholdStartups, TsvField::Race::MistTimeAdjustment, TsvField::Race::MistDespondencyAdjustment, TsvField::Race::EnergyAmount, TsvField::Race::EnergyAmountRiding, TsvField::Race::Feuds }) },
+#else
         { &raceInfo,        "raceinfo.tsv",      InfoColumns({ TsvField::Race::DefaultSoldiersName, TsvField::Race::Success, TsvField::Race::InitialMovement, TsvField::Race::DiagonalMovement, TsvField::Race::RidingMultiplier, TsvField::Race::MovementMax, TsvField::Race::RestAmount, TsvField::Race::StrongholdStartups, TsvField::Race::MistTimeAdjustment, TsvField::Race::MistDespondencyAdjustment, TsvField::Race::EnergyAmount, TsvField::Race::EnergyAmountRiding }) },
+#endif
         { &terrainInfo,     "terraininfo.tsv",   InfoColumns({ TsvField::Terrain::Preposition, TsvField::Terrain::Description, TsvField::Terrain::Success, TsvField::Terrain::Visibility, TsvField::Terrain::Obstruction, TsvField::Terrain::MovementCost }) },
         { &unitInfo,        "unitinfo.tsv",      InfoColumns({ TsvField::Unit::Success, TsvField::Unit::RestModifier }) },
         { &routeNodes,      "routenodes.tsv",    ItemColumns({ TsvField::RouteNode::RouteNodes }) },

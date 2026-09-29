@@ -28,6 +28,7 @@ void TMEStep::NewStory(mxscenarioid scenario, RULEFLAGS rules, mxdifficulty_t di
 
     TME_Init(scenario, rules, difficulty, [] {
         tme::mx->entityfactory = new mockentityfactory();
+        randomno::instance->seed(TEST_RANDOM_SEED);
     });
 
     randomno::instance->seed(TEST_RANDOM_SEED);

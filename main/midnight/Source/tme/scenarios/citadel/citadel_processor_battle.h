@@ -17,6 +17,9 @@ namespace tme {
         virtual bool TakesPart ( const mxarmy* army ) const override;
         virtual bool TakesPart ( const mxcharacter* character ) const override;
 
+        virtual void PrepareArmies() override;
+        virtual void UpdateStrongholdArmy ( mxarmy* army ) override;
+
         virtual void CharacterLosesEnergy ( mxcharacter* character ) override;
     };
 

@@ -37,5 +37,28 @@ bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* characte
     return mxstronghold::CanCharacterRecruitOrPost(character);
 }
 
+static bool Feuding ( mxrace_t race, mxrace_t other )
+{
+    return static_cast<citadel_race*>(mx->RaceById(race))->IsFeudingWith(other);
+}
+
+bool citadel_stronghold::CanCharacterPost ( const mxcharacter* character ) const
+{
+    return !Feuding(character->Race(), OccupyingRace())
+        && !Feuding(OccupyingRace(), character->Race());
+}
+
+u32 citadel_stronghold::DefenceMultiplier() const
+{
+    switch ( Terrain() ) {
+        case TN_CITADEL:
+            return 4;
+        case TN_CASTLE:
+            return 3;
+        default:
+            return 1;
+    }
+}
+
 } // namespace tme
 #endif // _CITADEL_

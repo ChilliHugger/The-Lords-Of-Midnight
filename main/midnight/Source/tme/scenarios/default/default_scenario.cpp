@@ -239,7 +239,10 @@ namespace tme {
                     
                 case TN_WATCHTOWER:
                     return TN_TOWER;
-                    
+
+                case TN_CASTLE:
+                    return TN_KEEP;
+
                 case TN_ICYWASTE:
                     return TN_FROZENWASTE;
                     
