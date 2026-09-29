@@ -143,3 +143,73 @@ SCENARIO("TSV database loads info tables and variables correctly")
         }
     }
 }
+
+SCENARIO("New game places strongholds, lords and armies at the correct map location")
+{
+    TMEStep::NewStory();
+
+    GIVEN("the Keep of Lorgrim and Luxor")
+    {
+        THEN("they match the TSV locations, from the TMX")
+        {
+            REQUIRE( GetStronghold("SH_KEEP_OF_LORGRIM")->Location() == mxgridref(47,4) );
+            REQUIRE( GetCharacter("CH_LUXOR")->Location() == mxgridref(13,41) );
+            REQUIRE( tme::mx->gamemap->GetAt(mxgridref(47,4)).HasArmy() );
+            REQUIRE( tme::mx->gamemap->GetAt(mxgridref(13,41)).HasCharacter() );
+        }
+    }
+
+    GIVEN("the Citadel of Shimeril and its lord")
+    {
+        auto shimeril = GetCharacter("CH_SHIMERIL");
+        auto citadel = GetStronghold("SH_CITADEL_SHIMERIL");
+        REQUIRE( shimeril != nullptr );
+        REQUIRE( citadel != nullptr );
+
+        THEN("they are located at 29,43")
+        {
+            REQUIRE( shimeril->Location() == mxgridref(29,43) );
+            REQUIRE( citadel->Location() == mxgridref(29,43) );
+        }
+
+        THEN("the map has the citadel terrain at 29,43")
+        {
+            REQUIRE( tme::mx->gamemap->GetAt(mxgridref(29,43)).terrain == TN_CITADEL );
+        }
+
+        THEN("the army and character flags are set at 29,43 and not at 28,43")
+        {
+            REQUIRE( tme::mx->gamemap->GetAt(mxgridref(29,43)).HasArmy() );
+            REQUIRE( tme::mx->gamemap->GetAt(mxgridref(29,43)).HasCharacter() );
+            REQUIRE_FALSE( tme::mx->gamemap->GetAt(mxgridref(28,43)).HasArmy() );
+            REQUIRE_FALSE( tme::mx->gamemap->GetAt(mxgridref(28,43)).HasCharacter() );
+        }
+    }
+}
+
+SCENARIO("New game places routenodes and waypoints at the correct map location")
+{
+    TMEStep::NewStory();
+
+    GIVEN("routenode RN_CITADEL_XAJORKITH")
+    {
+        auto node = GetEntity<mxroutenode>("RN_CITADEL_XAJORKITH");
+        REQUIRE( node != nullptr );
+
+        THEN("it is located at 46,60")
+        {
+            REQUIRE( node->Location() == mxgridref(46,60) );
+        }
+    }
+
+    GIVEN("waypoint PL_ICE_FEAR_CENTRE")
+    {
+        auto place = GetEntity<mxplace>("PL_ICE_FEAR_CENTRE");
+        REQUIRE( place != nullptr );
+
+        THEN("it is located at 27,5")
+        {
+            REQUIRE( place->Location() == mxgridref(27,5) );
+        }
+    }
+}

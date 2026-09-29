@@ -96,7 +96,10 @@ namespace {
         float xPixels = dict.at("x").asFloat() * scale - offset.x;
         float yPixels = mapHeightPixels - ( dict.at("y").asFloat() * scale ) - offset.y - ( dict.at("height").asFloat() * scale );
 
-        return mxgridref ( (u32)(xPixels / tileSize.width), (u32)(yPixels / tileSize.height) );
+        // objects sit exactly on tile boundaries, so round rather than truncate:
+        // the scale round trip above isn't exact for every content scale factor,
+        // and truncating a value like 28.9999 lands one tile short
+        return mxgridref ( (u32)std::lround(xPixels / tileSize.width), (u32)std::lround(yPixels / tileSize.height) );
     }
 
     using EntityLookupFn = std::function<mxentity*(const std::string&, id_type_t)>;
