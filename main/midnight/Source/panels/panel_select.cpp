@@ -114,9 +114,10 @@ bool panel_select::init()
 
     
     // set current page
-    
+
     pageView->setCurrentPageIndex(model->page);
-    
+    pager.update(pageView);
+
     return true;
 }
 
@@ -126,28 +127,15 @@ void panel_select::createPageView()
     pageView = PageView::create();
     pageView->setDirection(PageView::Direction::HORIZONTAL);
     pageView->setBounceEnabled(true);
-    pageView->setIndicatorEnabled(true);
+    pageView->setIndicatorEnabled(false); // uipager owns the dots instead
     pageView->setCurrentPageIndex(0);
-    
-    
-    f32 scale = phoneScale() ;
-    pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(0.5f));
-    pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(-2)));
-    pageView->setIndicatorIndexNodesColor(_clrBlack);
-    pageView->setIndicatorSelectedIndexColor(_clrBlue);
 
     uihelper::AddBottomLeft(safeArea, pageView);
     uihelper::FillParent(pageView);
-    
-    auto padding = getSafeArea();
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(4)) );
-    
-    pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
-        if ( e == PageView::EventType::TURNING ) {
-            UIDEBUG("Page turning");
-        }
-    });
-    
+
+    pager.create(pageView, clickCallback);
+    pager.wireEvents(pageView, []{});
+
     auto backgroundColour = BACKGROUND_COLOUR;
     
     gradientB = uihelper::createVerticalGradient( backgroundColour, BOTTOM_STRIP_HEIGHT, HALF(BOTTOM_STRIP_HEIGHT), getContentSize().width, 1 );
@@ -170,6 +158,7 @@ void panel_select::addNewPage(ssize_t page) {
     layout->setTag((s32)page+1);
     pages.pushBack(layout);
     pageView->addPage(layout);
+    pager.update(pageView);
 }
 
 void panel_select::setupPages()
@@ -523,6 +512,22 @@ void panel_select::OnNotification( Ref* sender )
             resetPositions();
             pageView->scrollToPage(0);
             break;
+
+        case ID_PREVIOUS_PAGE:
+        {
+            auto index = pageView->getCurrentPageIndex();
+            if ( index > 0 )
+                pageView->scrollToPage(index-1);
+            break;
+        }
+
+        case ID_NEXT_PAGE:
+        {
+            auto index = pageView->getCurrentPageIndex();
+            if ( index < (ssize_t)pageView->getItems().size()-1 )
+                pageView->scrollToPage(index+1);
+            break;
+        }
             
         case ID_GROUP_DISBAND:
         {
@@ -1035,4 +1040,6 @@ void panel_select::removeEmptyEndPages()
         pages.popBack();
         pageView->removePage(page);
     }
+
+    pager.update(pageView);
 }

@@ -175,9 +175,8 @@ void panel_think::enableButtons()
     showButton(ID_APPROACH,   page->approach);
     showButton(ID_RECRUITMEN, page->recruitMen);
     showButton(ID_POSTMEN,    page->postMen);
- 
-    
-    
+
+    pager.update(pageView);
 }
 
 void panel_think::setObject(mxid targetObjectId)
@@ -273,27 +272,15 @@ void panel_think::createPageView()
     pageView = PageView::create();
     pageView->setDirection(PageView::Direction::HORIZONTAL);
     pageView->setBounceEnabled(true);
-    pageView->setIndicatorEnabled(true);
     pageView->setCurrentPageIndex(0);
-    
-    f32 scale = phoneScale() ;
-    
-     pageView->setIndicatorIndexNodesColor(_clrBlack);
-    pageView->setIndicatorSelectedIndexColor(_clrBlue);
-    
+
     uihelper::AddBottomLeft(this, pageView);
     uihelper::FillParent(pageView);
-    
-    auto padding = getSafeArea();
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + RES(4)) );
-    
-    pageView->addEventListener( [&]( Ref* sender, PageView::EventType e){
-        if ( e == PageView::EventType::TURNING ) {
-            UIDEBUG("Page turning");
-            this->enableButtons();
-        }
-    });
 
+    pager.create(pageView, clickCallback);
+    pager.wireEvents(pageView, [&]{
+        this->enableButtons();
+    });
 }
 
 void panel_think::addPage( mxid pageId )
@@ -305,15 +292,11 @@ void panel_think::addPage( mxid pageId )
     pages.pushBack(page);
 
     auto padding = getSafeArea();
- 
     f32 scale = CONTENT_SCALE(0.5f);
     int xAdjust = CONTENT_SCALE(RES(-2));
     int bottomAdj = RES(4);
-    
+
     if( pages.size() < 32 ) {
-        //scale = 0.75f;
-        //xAdjust = RES(2);
-        //bottomAdj = RES(4);
     }
     else if( pages.size() < 64 ) {
         scale = 0.5f;
@@ -330,11 +313,10 @@ void panel_think::addPage( mxid pageId )
         xAdjust=RES(-8);
         bottomAdj = RES(2);
     }
-    
+
     pageView->setIndicatorIndexNodesScale(scale);
     pageView->setIndicatorSpaceBetweenIndexNodes(xAdjust);
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + bottomAdj) );
-    
+    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + bottomAdj - RES(8)) );
 }
 
 // TODO: Most of this logic should be in TME
@@ -541,7 +523,23 @@ void panel_think::OnNotification( Ref* sender )
             mr->showPage(MODE_THINK_BATTLE);
             break;
         }
-            
+
+        case ID_PREVIOUS_PAGE:
+        {
+            currentPage = (s32)pageView->getCurrentPageIndex();
+            if ( currentPage > 0 )
+                gotoPage(--currentPage);
+            break;
+        }
+
+        case ID_NEXT_PAGE:
+        {
+            currentPage = (s32)pageView->getCurrentPageIndex();
+            if ( currentPage < (s32)pages.size()-1 )
+                gotoPage(++currentPage);
+            break;
+        }
+
         default:
             break;
     }
