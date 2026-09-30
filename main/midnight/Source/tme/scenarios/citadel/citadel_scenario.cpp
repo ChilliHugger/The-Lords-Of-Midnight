@@ -18,8 +18,10 @@
 #include "scenario_citadel.h"
 #include "scenario_citadel_internal.h"
 #include "citadel_processor_battle.h"
+#include "citadel_processor_quest.h"
 #include <algorithm>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -141,6 +143,16 @@ void citadel_x::initialise ( u32 version )
 {
     mxscenario::initialise(version);
     boroth = mx->CharacterBySymbol("CH_BOROTH");
+
+    FOR_EACH_CHARACTER(character) {
+        if ( character->HasQuality(qf_brave) )
+            character->cowardess = 127;
+        else if ( character->HasQuality(qf_cowardly) )
+            character->cowardess = 30;
+        else
+            character->cowardess = 64;
+        character->RefreshLocationBasedVariables(0);
+    }
 }
 
 mxcharacter* citadel_x::BadGuy () const
@@ -209,7 +221,7 @@ static const citadel_kingdom_t* KingdomOf ( mxrace_t people )
     return nullptr;
 }
 
-static bool Borders ( mxrace_t a, mxrace_t b )
+static bool KingdomsBorder ( mxrace_t a, mxrace_t b )
 {
     for ( auto [from, to] : { std::pair{a, b}, std::pair{b, a} } ) {
         auto kingdom = KingdomOf(from);
@@ -220,6 +232,11 @@ static bool Borders ( mxrace_t a, mxrace_t b )
         }
     }
     return false;
+}
+
+bool citadel_x::Borders ( mxrace_t a, mxrace_t b ) const
+{
+    return KingdomsBorder(a, b);
 }
 
 static u32 StepsToMidnight ( mxrace_t people )
@@ -233,7 +250,7 @@ static u32 StepsToMidnight ( mxrace_t people )
                 return steps;
             for ( const auto& kingdom : citadel_kingdoms ) {
                 CONTINUE_IF( std::find(seen.begin(), seen.end(), kingdom.people) != seen.end() );
-                if ( Borders(here, kingdom.people) ) {
+                if ( KingdomsBorder(here, kingdom.people) ) {
                     seen.push_back(kingdom.people);
                     next.push_back(kingdom.people);
                 }
@@ -272,14 +289,16 @@ const std::vector<s32>& citadel_x::StepsFrom ( mxgridref from, const mxregiment*
     return steps;
 }
 
-bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
+bool citadel_x::MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const
 {
-    const auto& steps = StepsFrom(target, regiment);
+    if ( mx->objRegiments.Count() == 0 )
+        return false;
+
+    const auto& steps = StepsFrom(target, mx->objRegiments[0]);
     auto width = (size_t)mx->gamemap->Size().cx;
-    auto here = regiment->Location();
     auto best = steps[here.y * width + here.x];
     if ( best < 0 )
-        return false;   // he cannot get there from here at all: leave it to the old steering
+        return false;
 
     bool found = false;
     for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
@@ -293,6 +312,11 @@ bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxg
         }
     }
     return found;
+}
+
+bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
+{
+    return MarchStep(regiment->Location(), target, step);
 }
 
 bool citadel_x::IsFoughtOver ( mxstronghold* stronghold ) const
@@ -381,6 +405,36 @@ void citadel_x::NightStart ( void )
             regiment->Orders(OD_WANDER);
         }
     }
+}
+
+void citadel_x::LordsTurn ( void )
+{
+    std::unique_ptr<citadel_quest_processor> processor ( new citadel_quest_processor() );
+    for ( auto players : { true, false } ) {
+        FOR_EACH_CHARACTER(character) {
+            auto lord = CitadelLord(character);
+            CONTINUE_IF( lord->IsRecruited() != players );
+            processor->Process(lord);
+        }
+    }
+}
+
+COMMAND( OnCharQuest )
+{
+    CONVERT_CHARACTER_ID( argv[0].vId, character );
+    auto ok = CitadelLord(character)->SetQuest((mxquest_t)argv[1].vSInt32, argv[2].vId);
+    argv[0] = (s32)0;
+    return ok ? MX_OK : MX_FAILED;
+}
+
+static mxcommand_t citadel_commands[] = {
+    { "QUEST",  3,  OnCharQuest,    { arguments::character, variant::vnumber, variant::vid } },
+};
+
+MXRESULT citadel_x::Command ( const std::string& arg, variant argv[], u32 argc )
+{
+    auto result = mx->ProcessCommand(citadel_commands, NUMELE(citadel_commands), arg, argv, argc);
+    return result != MX_UNKNOWN ? result : mxscenario::Command(arg, argv, argc);
 }
 
 citadel_object::citadel_object()

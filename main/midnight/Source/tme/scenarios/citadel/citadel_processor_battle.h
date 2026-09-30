@@ -19,6 +19,7 @@ namespace tme {
 
         virtual void PrepareArmies() override;
         virtual void UpdateStrongholdArmy ( mxarmy* army ) override;
+        virtual mxcharacter* Liberator() const override;
 
         virtual void CharacterLosesEnergy ( mxcharacter* character ) override;
     };

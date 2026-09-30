@@ -246,6 +246,44 @@ static const NamedValue OrdersValues[] = {
 #endif
 };
 
+#if defined(_CITADEL_)
+static const NamedValue QuestValues[] = {
+    { "None",           QS_NONE },
+    { "Recruit",        QS_RECRUIT },
+    { "Join",           QS_JOIN },
+    { "Kill",           QS_KILL },
+    { "Rescue",         QS_RESCUE },
+    { "Follow",         QS_FOLLOW },
+    { "Goto",           QS_GOTO },
+    { "Guard",          QS_GUARD },
+    { "Seize",          QS_SEIZE },
+    { "Find",           QS_FIND },
+    { "Take",           QS_TAKE },
+    { "Destroy",        QS_DESTROY },
+    { "Rest",           QS_REST },
+};
+
+static const NamedValue PurposeValues[] = {
+    { "None",           PU_NONE },
+    { "DefendHomeland", PU_DEFEND_HOMELAND },
+    { "DarkFey",        PU_DARK_FEY },
+    { "RandomlyWander", PU_RANDOMLY_WANDER },
+    { "BeAHostage",     PU_BE_A_HOSTAGE },
+};
+
+static const NamedValue ReactionValues[] = {
+    { "ReturnHome",         RE_RETURN_HOME },
+    { "StandFirm",          RE_STAND_FIRM },
+    { "TakeBackStronghold", RE_TAKE_BACK_STRONGHOLD },
+    { "AttackEnemy",        RE_ATTACK_ENEMY },
+    { "HelpNeighbour",      RE_HELP_NEIGHBOUR },
+    { "Retreat",            RE_RETREAT },
+    { "GatherStrength",     RE_GATHER_STRENGTH },
+    { "CounterThreat",      RE_COUNTER_THREAT },
+    { "LendService",        RE_LEND_SERVICE },
+};
+#endif
+
 u32 ParseEntityFlags ( const std::string& text )       { return ParseFlagWord(text, EntityFlagBits, NUMELE(EntityFlagBits)); }
 u32 ParseCharacterFlags ( const std::string& text )    { return ParseFlagWord(text, CharacterFlagBits, NUMELE(CharacterFlagBits)); }
 u32 ParseCharacterTraits ( const std::string& text )   { return ParseFlagWord(text, CharacterTraitBits, NUMELE(CharacterTraitBits)); }
@@ -259,6 +297,12 @@ m_objective_t   ParseMissionObjective ( const std::string& text )  { return (m_o
 m_condition_t   ParseMissionCondition ( const std::string& text )  { return (m_condition_t)ParseNamedValue(text, MissionConditionValues, NUMELE(MissionConditionValues), MC_NONE); }
 m_action_t      ParseMissionAction ( const std::string& text )     { return (m_action_t)ParseNamedValue(text, MissionActionValues, NUMELE(MissionActionValues), MA_NONE); }
 mxorders_t      ParseOrders ( const std::string& text )            { return (mxorders_t)ParseNamedValue(text, OrdersValues, NUMELE(OrdersValues), OD_NONE); }
+
+#if defined(_CITADEL_)
+mxquest_t       ParseQuest ( const std::string& text )             { return (mxquest_t)ParseNamedValue(text, QuestValues, NUMELE(QuestValues), QS_NONE); }
+mxpurpose_t     ParsePurpose ( const std::string& text )           { return (mxpurpose_t)ParseNamedValue(text, PurposeValues, NUMELE(PurposeValues), PU_NONE); }
+mxreaction_t    ParseReaction ( const std::string& text )          { return (mxreaction_t)ParseNamedValue(text, ReactionValues, NUMELE(ReactionValues), RE_RETURN_HOME); }
+#endif
 
 }
 // namespace tme

@@ -46,6 +46,10 @@ namespace tme {
             }
 
 #if defined(_LOM_) || defined(_CITADEL_)
+#ifndef _TME_DEMO_MODE_
+            mx->scenario->LordsTurn();
+#endif
+
             SetSpecialLocationsCharacter();
             SetSpecialLocationsStrongholds();
 

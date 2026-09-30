@@ -376,6 +376,44 @@ using namespace chilli::types;
             MG_LOSE                     =    2
         };
 
+#if defined(_CITADEL_)
+        enum mxquest_t {
+            QS_NONE                     =    0,
+            QS_RECRUIT,
+            QS_JOIN,
+            QS_KILL,
+            QS_RESCUE,
+            QS_FOLLOW,
+            QS_GOTO,
+            QS_GUARD,
+            QS_SEIZE,
+            QS_FIND,
+            QS_TAKE,
+            QS_DESTROY,
+            QS_REST,
+        };
+
+        enum mxpurpose_t {
+            PU_NONE                     =    0,
+            PU_DEFEND_HOMELAND,
+            PU_DARK_FEY,
+            PU_RANDOMLY_WANDER,
+            PU_BE_A_HOSTAGE,
+        };
+
+        enum mxreaction_t {
+            RE_RETURN_HOME              =    0,
+            RE_STAND_FIRM,
+            RE_TAKE_BACK_STRONGHOLD,
+            RE_ATTACK_ENEMY,
+            RE_HELP_NEIGHBOUR,
+            RE_RETREAT,
+            RE_GATHER_STRENGTH,
+            RE_COUNTER_THREAT,
+            RE_LEND_SERVICE,
+        };
+#endif
+
 #if defined(_DDR_) || defined(_CITADEL_)
         enum mxobjpower_t {
             OP_NONE                     =   0,
@@ -1135,7 +1173,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         19
+#define SAVEGAMEVERSION         20
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

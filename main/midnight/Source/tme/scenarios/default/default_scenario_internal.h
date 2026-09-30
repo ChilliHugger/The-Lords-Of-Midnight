@@ -45,7 +45,9 @@ namespace tme {
 
             virtual void NightStart(void);
             virtual void NightStop(void);
-            
+
+            virtual void LordsTurn(void);
+
             virtual u32 CalcFearAdjuster(mxlocinfo* info) const ;
             virtual u32 CalcStrongholdAdjuster(void) const;
             virtual void MakeMapAreaVisible ( mxgridref l, mxcharacter* character );

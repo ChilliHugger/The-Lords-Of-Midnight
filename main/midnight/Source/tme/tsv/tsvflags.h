@@ -38,6 +38,12 @@ namespace tme {
     // shared by regiments and characters
     mxorders_t ParseOrders ( const std::string& text );
 
+#if defined(_CITADEL_)
+    mxquest_t    ParseQuest ( const std::string& text );
+    mxpurpose_t  ParsePurpose ( const std::string& text );
+    mxreaction_t ParseReaction ( const std::string& text );
+#endif
+
 }
 // namespace tme
 

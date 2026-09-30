@@ -24,10 +24,20 @@ void citadel_character::Serialize ( archive& ar )
     if ( ar.IsStoring() ) {
         ar << qualities ;
         ar << title ;
-    }else{
+        WRITE_ENUM(quest);
+        ar << questtarget ;
+        WRITE_ENUM(purpose);
+        WRITE_ENUM(reaction);
+    } else {
         ar >> qualities ;
         if ( tme::mx->SaveGameVersion() > 18 )
             ar >> title ;
+        if ( tme::mx->SaveGameVersion() > 19 ) {
+            READ_ENUM(quest);
+            ar >> questtarget ;
+            READ_ENUM(purpose);
+            READ_ENUM(reaction);
+        }
     }
 }
 
@@ -37,18 +47,15 @@ void citadel_character::LoadTsv ( const TsvRow& row )
 
     qualities = ParseCharacterQualities(row.GetString(TsvField::Character::Qualities));
     title = row.GetString(TsvField::Character::Title);
+    quest = ParseQuest(row.GetString(TsvField::Character::Quest));
+    purpose = ParsePurpose(row.GetString(TsvField::Character::Purpose));
+    reaction = ParseReaction(row.GetString(TsvField::Character::Reaction));
 }
 
-//
-// Only the player's lords are at war with Boroth's host yet. Hostages sit in his dungeons, his
-// own Dark Fey do not fight him, and the lords of the realms wait on the Citadel's NPC side
-// (purposes, reactions) - until that exists, an army that found one of them would only cut down
-// a lord who cannot answer.
-//
 bool citadel_character::TakesPartInBattle() const
 {
     return mxcharacter::TakesPartInBattle()
-        && IsRecruited()
+        && ( IsRecruited() || purpose == PU_DEFEND_HOMELAND )
         && !IsPrisoner()
         && Race() != RA_ENEMY;
 }
@@ -142,6 +149,61 @@ bool citadel_character::IsAllowedWarriors() const
 bool citadel_character::IsAllowedRiders() const
 {
     return WeaponPower() == OP_PERSUASION || mxcharacter::IsAllowedRiders();
+}
+
+bool citadel_character::Recruited ( mxcharacter* recruiter )
+{
+    flags.Reset(cf_ai);
+    return mxcharacter::Recruited(recruiter);
+}
+
+bool citadel_character::SetQuest ( mxquest_t newquest, mxid target )
+{
+    if ( !IsRecruited() || IsDead() || IsPrisoner() )
+        return false;
+
+    auto character = CharacterTarget(target);
+
+    switch ( newquest ) {
+        case QS_NONE:
+        case QS_REST:
+            target = IDT_NONE;
+            break;
+        case QS_RECRUIT:
+            if ( character == nullptr || character == this || character->IsDead() || character->IsRecruited() )
+                return false;
+            break;
+        case QS_JOIN:
+        case QS_FOLLOW:
+            if ( character == nullptr || character == this || character->IsDead() || !character->IsRecruited() )
+                return false;
+            break;
+        case QS_GOTO:
+        case QS_GUARD:
+            if ( ID_TYPE(target) != IDT_LOCATION
+                 || !mx->gamemap->IsLocOnMap(mxgridref(GET_LOCIDX(target), GET_LOCIDY(target))) )
+                return false;
+            break;
+        case QS_SEIZE:
+            if ( StrongholdTarget(target) == nullptr || !StrongholdTarget(target)->IsEnemy() )
+                return false;
+            break;
+        default:
+            return false;   // not built yet
+    }
+
+    quest = newquest;
+    questtarget = target;
+    return true;
+}
+
+mxgridref citadel_character::QuestLocation () const
+{
+    if ( ID_TYPE(questtarget) == IDT_LOCATION )
+        return mxgridref(GET_LOCIDX(questtarget), GET_LOCIDY(questtarget));
+
+    auto item = static_cast<mxitem*>(mx->EntityByIdt(questtarget));
+    return item != nullptr ? item->Location() : Location();
 }
 
 } // namespace tme

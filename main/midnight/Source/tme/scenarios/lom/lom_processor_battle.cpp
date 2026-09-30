@@ -213,13 +213,18 @@ void lom_battle::UpdateStrongholdArmy(mxarmy* army)
     stronghold->CheckForZero();
 
     if ( army->race == RA_ENEMY && status == BA_FRIEND ) {
-       stronghold->MakeChangeSides( RA_FREE, DEF_SCENARIO(luxor) );
+       stronghold->MakeChangeSides( RA_FREE, Liberator() );
 
     } else if ( army->race != RA_ENEMY && status == BA_FOE ) {
        stronghold->MakeChangeSides( RA_ENEMY, mx->scenario->BadGuy() );
     }
 }
 
+
+mxcharacter* lom_battle::Liberator() const
+{
+    return DEF_SCENARIO(luxor);
+}
 
 void lom_battle::UpdateRegimentArmy(mxarmy* army)
 {

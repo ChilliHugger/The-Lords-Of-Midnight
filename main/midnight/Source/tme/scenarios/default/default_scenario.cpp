@@ -218,6 +218,10 @@ namespace tme {
         {
         }
 
+        void mxscenario::LordsTurn(void)
+        {
+        }
+
         mxterrain_t mxscenario::toGeneralisedTerrain(mxterrain_t t) const
         {
             switch (t) {

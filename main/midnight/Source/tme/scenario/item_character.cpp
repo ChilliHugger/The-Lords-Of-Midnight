@@ -651,25 +651,31 @@ namespace tme {
             mx->gamemap->SetLocationArmy(Location(),0);
             mx->gamemap->SetLocationCharacter(Location(),0);
             
+            bool seen = !IsAIControlled();
+
             // set the current location to visited, just to make sure
-            mx->gamemap->SetLocationVisited(location, TRUE);
+            if ( seen )
+                mx->gamemap->SetLocationVisited(location, TRUE);
             
             // and move us there
             location = location + Looking();
 
             // set the new current location to visited
-            mx->gamemap->SetLocationVisited(location, TRUE);
+            if ( seen )
+                mx->gamemap->SetLocationVisited(location, TRUE);
 
             // add armies and characters back to the map
             // this is overkill!!!!
             mx->scenario->SetMapArmies();
 
-            EnterLocation ( location );
+            if ( seen )
+                EnterLocation ( location );
             
             // if this location has an exit then we must exit
             bool exit_tunnel = mx->gamemap->GetAt ( location ).HasTunnelExit() ;
             
-            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            if ( seen )
+                mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
             
             // calculate our movement values
             TimeCost = rinfo->InitialMovementValue();
