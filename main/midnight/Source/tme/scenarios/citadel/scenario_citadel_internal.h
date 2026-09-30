@@ -10,6 +10,8 @@
 #if defined(_CITADEL_)
 
 namespace tme {
+    class citadel_character;
+
     class citadel_x : public mxscenario
     {
     public:
@@ -23,15 +25,20 @@ namespace tme {
         virtual void initialise ( u32 version ) override;
         virtual void initialiseAfterCreate ( u32 version ) override;
 
+        virtual MXRESULT Command ( const std::string& arg, variant argv[], u32 argc ) override;
+
         virtual mxcharacter* BadGuy() const override;
         virtual bool isTerrainImpassable ( mxterrain_t terrain, const mxitem* target ) const override;
         virtual u32 TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) const override;
         virtual void NightStart ( void ) override;
+        virtual void LordsTurn ( void ) override;
         virtual bool RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const override;
 
         mxrace_t CampaignTarget () const;
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
+        bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
+        void React ( citadel_character* lord );
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
@@ -65,6 +72,7 @@ namespace tme {
     {
     public:
         virtual bool IsEnemy() const override;
+        virtual void MakeChangeSides ( mxrace_t newrace, mxcharacter* newoccupier ) override;
         virtual bool CanCharacterRecruitOrPost ( const mxcharacter* character ) const override;
         virtual bool CanCharacterPost ( const mxcharacter* character ) const override;
         virtual u32 DefenceMultiplier() const;
@@ -107,6 +115,17 @@ namespace tme {
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
         mxobjpower_t WeaponPower() const;
+
+        bool SetQuest ( mxquest_t quest, mxid target );
+        void Quest ( void );
+        mxgridref QuestLocation () const;
+        bool March ( mxgridref target, bool fight );
+
+    public:
+        mxquest_t       quest = QS_NONE;
+        mxid            questtarget = IDT_NONE;     // a character, a keep, or a location id
+        mxpurpose_t     purpose = PU_NONE;
+        mxreaction_t    reaction = RE_RETURN_HOME;
     };
 
     #define CITADEL_SCENARIO(x) static_cast<citadel_x*>(mx->scenario)->x

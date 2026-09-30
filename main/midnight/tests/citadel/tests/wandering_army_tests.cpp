@@ -104,10 +104,18 @@ SCENARIO("Who is at war with Boroth")
         REQUIRE( lord->TakesPartInBattle() );
     }
 
-    THEN("a lord who has not joined you is not")
+    THEN("a lord who has not joined you, and has no homeland to defend, is not")
     {
         lord->Flags().Reset(cf_recruited);
+        static_cast<citadel_character*>(lord)->purpose = PU_NONE;
         REQUIRE_FALSE( lord->TakesPartInBattle() );
+    }
+
+    THEN("a lord of the realms born to defend his homeland is, joined or not (#9)")
+    {
+        lord->Flags().Reset(cf_recruited);
+        static_cast<citadel_character*>(lord)->purpose = PU_DEFEND_HOMELAND;
+        REQUIRE( lord->TakesPartInBattle() );
     }
 
     THEN("a hostage in the dungeons is not")
@@ -126,6 +134,31 @@ SCENARIO("Who is at war with Boroth")
     }
 }
 
+SCENARIO("Your lord can attack a keep Boroth's host has taken")
+{
+    TMEStep::NewStory();
+
+    auto keep = GetStronghold("SH_CASTLE_MARALAN");
+    REQUIRE( keep != nullptr );
+    keep->MakeChangeSides(RA_DARK_FEY, GetCharacter("CH_BOROTH"));
+    REQUIRE( keep->IsEnemy() );
+
+    GIVEN("one of your lords beside it, facing it")
+    {
+        auto here = keep->Location();
+        auto lord = TMEStep::PlaceLordAt("CH_CORLETH", loc_t(here.x, here.y + 1), DR_NORTH);
+
+        THEN("he is no coward, and the attack goes in")
+        {
+            REQUIRE( lord->GetLocInfo()->flags.Is(lif_enterbattle) );
+            REQUIRE_FALSE( lord->IsCoward() );
+            REQUIRE( lord->Cmd_Attack() == MX_OK );
+            REQUIRE( lord->Location() == here );
+            REQUIRE( lord->IsInBattle() );
+        }
+    }
+}
+
 SCENARIO("A wandering army brings battle only where someone stands against it")
 {
     TMEStep::NewStory();
@@ -135,9 +168,10 @@ SCENARIO("A wandering army brings battle only where someone stands against it")
     REQUIRE( army != nullptr );
     REQUIRE( lord != nullptr );
 
-    GIVEN("an army where a lord who has not joined you stands")
+    GIVEN("an army where a lord who has not joined you, and has nothing to defend, stands")
     {
         lord->Flags().Reset(cf_recruited);
+        static_cast<citadel_character*>(lord)->purpose = PU_NONE;
         lord->Location( army->Location() );
         lord->battleloc = nowhere;
 
@@ -149,6 +183,21 @@ SCENARIO("A wandering army brings battle only where someone stands against it")
             {
                 REQUIRE( lord->battleloc == nowhere );
                 REQUIRE( !lord->IsInBattle() );
+            }
+        }
+
+        AND_GIVEN("that he was born to defend his homeland")
+        {
+            static_cast<citadel_character*>(lord)->purpose = PU_DEFEND_HOMELAND;
+
+            WHEN("the night passes over them")
+            {
+                tme::mx->battle->ProcessLocation( army->Location() );
+
+                THEN("he stands against it")
+                {
+                    REQUIRE( lord->IsInBattle() );
+                }
             }
         }
 

@@ -29,6 +29,8 @@ namespace tme {
 
         virtual void PrepareArmies() {}
 
+        virtual mxcharacter* Liberator() const;
+
         virtual bool SelectOpponent(c_army& armies);
 
         virtual void CheckVictors ();

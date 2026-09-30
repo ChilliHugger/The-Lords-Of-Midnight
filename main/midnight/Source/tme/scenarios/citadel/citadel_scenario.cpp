@@ -141,6 +141,16 @@ void citadel_x::initialise ( u32 version )
 {
     mxscenario::initialise(version);
     boroth = mx->CharacterBySymbol("CH_BOROTH");
+
+    FOR_EACH_CHARACTER(character) {
+        if ( character->HasQuality(qf_brave) )
+            character->cowardess = 127;
+        else if ( character->HasQuality(qf_cowardly) )
+            character->cowardess = 30;
+        else
+            character->cowardess = 64;
+        character->RefreshLocationBasedVariables(0);
+    }
 }
 
 mxcharacter* citadel_x::BadGuy () const
@@ -272,14 +282,16 @@ const std::vector<s32>& citadel_x::StepsFrom ( mxgridref from, const mxregiment*
     return steps;
 }
 
-bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
+bool citadel_x::MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const
 {
-    const auto& steps = StepsFrom(target, regiment);
+    if ( mx->objRegiments.Count() == 0 )
+        return false;
+
+    const auto& steps = StepsFrom(target, mx->objRegiments[0]);
     auto width = (size_t)mx->gamemap->Size().cx;
-    auto here = regiment->Location();
     auto best = steps[here.y * width + here.x];
     if ( best < 0 )
-        return false;   // he cannot get there from here at all: leave it to the old steering
+        return false;
 
     bool found = false;
     for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
@@ -293,6 +305,11 @@ bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxg
         }
     }
     return found;
+}
+
+bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
+{
+    return MarchStep(regiment->Location(), target, step);
 }
 
 bool citadel_x::IsFoughtOver ( mxstronghold* stronghold ) const
@@ -381,6 +398,89 @@ void citadel_x::NightStart ( void )
             regiment->Orders(OD_WANDER);
         }
     }
+}
+
+void citadel_x::React ( citadel_character* lord )
+{
+    if ( lord->purpose != PU_DEFEND_HOMELAND || lord->IsDead() || lord->IsPrisoner() || lord->Race() == RA_ENEMY )
+        return;
+
+    auto people = lord->Race();
+    auto here = lord->Location();
+    auto nearer = [&here]( mxstronghold* stronghold, mxstronghold* best ) {
+        return best == nullptr || here - stronghold->Location() < here - best->Location();
+    };
+    auto feuding = [people]( mxrace_t other ) {
+        return static_cast<citadel_race*>(mx->RaceById(people))->IsFeudingWith(other)
+            || static_cast<citadel_race*>(mx->RaceById(other))->IsFeudingWith(people);
+    };
+    auto strongEnough = [lord]( mxstronghold* stronghold ) {
+        return lord->warriors.Total() + lord->riders.Total() >= stronghold->TotalTroops();
+    };
+
+    mxstronghold* home = nullptr;   // the nearest keep his people still hold
+    mxstronghold* lost = nullptr;   // the nearest keep of his realm that Boroth has taken
+    mxstronghold* help = nullptr;   // the nearest keep Boroth has taken from a friendly neighbour
+    FOR_EACH_STRONGHOLD(stronghold) {
+        CONTINUE_IF( !mx->gamemap->IsLocOnMap(stronghold->Location()) );
+        if ( stronghold->Race() == people ) {
+            if ( stronghold->OccupyingRace() == people && nearer(stronghold, home) )
+                home = stronghold;
+            else if ( stronghold->IsEnemy() && nearer(stronghold, lost) )
+                lost = stronghold;
+        } else if ( stronghold->IsEnemy() && Borders(people, stronghold->Race())
+                    && !feuding(stronghold->Race()) && nearer(stronghold, help) ) {
+            help = stronghold;
+        }
+    }
+
+    bool marches = HostageOfRace(people) == nullptr && !lord->HasQuality(qf_cowardly);
+
+    auto order = [lord]( mxreaction_t reaction, mxquest_t quest, mxid target ) {
+        lord->reaction = reaction;
+        lord->quest = quest;
+        lord->questtarget = target;
+    };
+
+    if ( marches && lost != nullptr && strongEnough(lost) )
+        order(RE_TAKE_BACK_STRONGHOLD, QS_SEIZE, mxentity::SafeIdt(lost));
+    else if ( marches && help != nullptr && strongEnough(help) )
+        order(RE_HELP_NEIGHBOUR, QS_SEIZE, mxentity::SafeIdt(help));
+    else if ( home != nullptr && here != home->Location() )
+        order(RE_RETURN_HOME, QS_GOTO, mxentity::SafeIdt(home));
+    else
+        order(RE_STAND_FIRM, QS_GUARD, MAKE_LOCID(here.x, here.y));
+}
+
+void citadel_x::LordsTurn ( void )
+{
+    for ( auto players : { true, false } ) {
+        FOR_EACH_CHARACTER(character) {
+            auto lord = static_cast<citadel_character*>(character);
+            CONTINUE_IF( lord->IsRecruited() != players );
+            if ( !players )
+                React(lord);
+            lord->Quest();
+        }
+    }
+}
+
+COMMAND( OnCharQuest )
+{
+    CONVERT_CHARACTER_ID( argv[0].vId, character );
+    auto ok = static_cast<citadel_character*>(character)->SetQuest((mxquest_t)argv[1].vSInt32, argv[2].vId);
+    argv[0] = (s32)0;
+    return ok ? MX_OK : MX_FAILED;
+}
+
+static mxcommand_t citadel_commands[] = {
+    { "QUEST",  3,  OnCharQuest,    { arguments::character, variant::vnumber, variant::vid } },
+};
+
+MXRESULT citadel_x::Command ( const std::string& arg, variant argv[], u32 argc )
+{
+    auto result = mx->ProcessCommand(citadel_commands, NUMELE(citadel_commands), arg, argv, argc);
+    return result != MX_UNKNOWN ? result : mxscenario::Command(arg, argv, argc);
 }
 
 citadel_object::citadel_object()

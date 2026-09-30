@@ -69,6 +69,19 @@ void citadel_battle::UpdateStrongholdArmy ( mxarmy* army )
     lom_battle::UpdateStrongholdArmy(army);
 }
 
+mxcharacter* citadel_battle::Liberator() const
+{
+    mxcharacter* lord = nullptr;
+    for ( auto character : info->objCharacters ) {
+        CONTINUE_IF( !TakesPart(character) );
+        if ( character->IsRecruited() )
+            return lom_battle::Liberator();
+        if ( lord == nullptr )
+            lord = character;
+    }
+    return lord != nullptr ? lord : lom_battle::Liberator();
+}
+
 void citadel_battle::CharacterLosesEnergy ( mxcharacter* character )
 {
     auto lord = static_cast<citadel_character*>(character);

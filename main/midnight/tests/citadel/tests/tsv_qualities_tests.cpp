@@ -106,6 +106,33 @@ SCENARIO("Combat strength comes from the attributes, not from a flat number")
     }
 }
 
+SCENARIO("Courage comes from the attributes, and no lord starts a coward")
+{
+    TMEStep::NewStory();
+
+    THEN("not one of them is a coward the engine would stop from attacking")
+    {
+        // The Cowardly column - base courage, in Lords of Midnight - is blank for all 154. Read
+        // as 0 it made every lord a coward, and Attack was refused to all of them.
+        for ( auto character : tme::mx->objCharacters ) {
+            character->GetLocInfo();
+            REQUIRE_FALSE( character->IsCoward() );
+        }
+    }
+
+    THEN("a brave lord is as bold as Morkin, a cowardly one as timid as any in Lords of Midnight")
+    {
+        for ( auto character : tme::mx->objCharacters ) {
+            if ( character->HasQuality(qf_brave) )
+                REQUIRE( character->cowardess == 127 );
+            else if ( character->HasQuality(qf_cowardly) )
+                REQUIRE( character->cowardess == 30 );
+            else
+                REQUIRE( character->cowardess == 64 );
+        }
+    }
+}
+
 SCENARIO("Quality words parse to the qf_ bits")
 {
     GIVEN("words joined with '+', in any case")
