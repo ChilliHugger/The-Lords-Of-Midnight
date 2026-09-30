@@ -139,8 +139,9 @@ SCENARIO("Your lords take quests, and the lords of the realms take no orders fro
 
     THEN("a quest not built yet is refused rather than silently kept")
     {
+        auto before = rorthron->quest;
         REQUIRE_FALSE( rorthron->SetQuest(QS_KILL, Idt(ilvar)) );
-        REQUIRE( rorthron->quest == QS_NONE );
+        REQUIRE( rorthron->quest == before );
     }
 }
 
