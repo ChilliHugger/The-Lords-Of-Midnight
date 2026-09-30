@@ -214,3 +214,45 @@ SCENARIO("A keep's walls multiply its garrison in battle")
         }
     }
 }
+
+SCENARIO("A keep that changes hands is garrisoned as a 1995 castle was, by warriors named for their people")
+{
+    TMEStep::NewStory();
+
+    GIVEN("a castle of the Long Mountains")
+    {
+        auto keep = GetStronghold("SH_CASTLE_ERENIM");
+        REQUIRE( keep != nullptr );
+        REQUIRE( keep->OccupyingRace() == RA_LONG_DWARF );
+
+        THEN("its description names the Long Dwarves who hold it")
+        {
+            REQUIRE_THAT( tme::mx->text->DescribeStronghold(keep), Catch::Matchers::Contains("of the Long Dwarves") );
+        }
+
+        WHEN("Boroth's host takes it")
+        {
+            keep->MakeChangeSides(RA_DARK_FEY, GetCharacter("CH_BOROTH"));
+
+            THEN("the Dark Fey hold it with a castle's garrison, not what an emptied keep is left with")
+            {
+                REQUIRE( keep->OccupyingRace() == RA_DARK_FEY );
+                REQUIRE( keep->TotalTroops() == 47 );   // the median 1995 castle garrison
+                REQUIRE( keep->TotalTroops() != (u32)tme::variables::sv_stronghold_default_empty );
+                REQUIRE_THAT( tme::mx->text->DescribeStronghold(keep), Catch::Matchers::Contains("of the Dark Fey") );
+            }
+
+            AND_WHEN("your lords win it back")
+            {
+                keep->MakeChangeSides(RA_FREE, GetCharacter(TMEStep::ch_morkin));
+
+                THEN("the Free hold it with a Citadel castle's garrison, not Lords of Midnight's 200")
+                {
+                    REQUIRE( keep->OccupyingRace() == RA_FREE );
+                    REQUIRE( keep->TotalTroops() == 47 );
+                    REQUIRE_THAT( tme::mx->text->DescribeStronghold(keep), Catch::Matchers::Contains("of the Free") );
+                }
+            }
+        }
+    }
+}
