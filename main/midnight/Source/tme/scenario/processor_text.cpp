@@ -1285,6 +1285,7 @@ __char:
                 
                 IS_ARG("name")          return character->Shortname();
                 IS_ARG("longname")      return character->Longname();
+                IS_ARG("title")         return character->Title();
 #if defined(_DDR_)
                 IS_ARG("time")          return ddr->DescribeTime(character->Time());
 #else
@@ -1337,6 +1338,7 @@ __char:
                     IS_ARG("loc")       return DescribeCharacterLocation( character );
                     IS_ARG("group")     return DescribeCharacterGroup( character );
                     IS_ARG("sees")      return DescribeCharacterSees( character );
+                    IS_ARG("title")     return character->Title().empty() ? "" : CookedSystemString(SS_CHARACTER_TITLE, character);
 #if defined(_DDR_)
                     IS_ARG("death2")    return ddr->DescribeCharacterDeath2 ( character );
                     IS_ARG("loyalty")   return ddr->DescribeCharacterLoyalty( character );

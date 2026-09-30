@@ -978,6 +978,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual bool TakesPartInBattle() const;
             const std::string& Longname() const { return longname; }
             const std::string& Shortname() const { return shortname; }
+            virtual std::string Title() const { return ""; }
 
             void SetLastCommand ( command_t cmd, mxid id );
             void CommandTakesTime ( bool success );
