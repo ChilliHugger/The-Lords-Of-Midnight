@@ -21,10 +21,14 @@ void citadel_character::Serialize ( archive& ar )
 {
     mxcharacter::Serialize(ar);
 
-    if ( ar.IsStoring() )
+    if ( ar.IsStoring() ) {
         ar << qualities ;
-    else
+        ar << title ;
+    }else{
         ar >> qualities ;
+        if ( tme::mx->SaveGameVersion() > 18 )
+            ar >> title ;
+    }
 }
 
 void citadel_character::LoadTsv ( const TsvRow& row )
@@ -32,6 +36,7 @@ void citadel_character::LoadTsv ( const TsvRow& row )
     mxcharacter::LoadTsv(row);
 
     qualities = ParseCharacterQualities(row.GetString(TsvField::Character::Qualities));
+    title = row.GetString(TsvField::Character::Title);
 }
 
 //

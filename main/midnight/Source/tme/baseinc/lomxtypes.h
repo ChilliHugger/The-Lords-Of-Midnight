@@ -632,6 +632,7 @@ using namespace chilli::types;
             SS_MESSAGE_MIST=122,
             SS_TOKENS_VICTORY=123,
             SS_PRISONER=124,                // a lord held hostage, said in place of SS_MESSAGE7
+            SS_CHARACTER_TITLE=125,         // "{char:name} is {char:title}", for a lord with a title
             
             SS_MAX_STRINGS = 255
         };
@@ -1134,7 +1135,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         18
+#define SAVEGAMEVERSION         19
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 
