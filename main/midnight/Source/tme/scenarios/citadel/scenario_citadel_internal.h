@@ -106,7 +106,11 @@ namespace tme {
         virtual s32  RecruitThreshold(const mxrace_t race) const;
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
+        virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
+
+    protected:
+        std::string title;      // the design's "Titles"; empty for most lords
     };
 
     #define CITADEL_SCENARIO(x) static_cast<citadel_x*>(mx->scenario)->x
