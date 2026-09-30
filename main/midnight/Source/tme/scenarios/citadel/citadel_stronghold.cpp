@@ -52,7 +52,7 @@ bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* characte
 
 static bool Feuding ( mxrace_t race, mxrace_t other )
 {
-    return static_cast<citadel_race*>(mx->RaceById(race))->IsFeudingWith(other);
+    return CitadelRace(race)->IsFeudingWith(other);
 }
 
 bool citadel_stronghold::CanCharacterPost ( const mxcharacter* character ) const

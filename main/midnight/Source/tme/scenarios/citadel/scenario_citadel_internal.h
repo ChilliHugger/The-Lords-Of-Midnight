@@ -10,7 +10,7 @@
 #if defined(_CITADEL_)
 
 namespace tme {
-    class citadel_character;
+    FORWARD_REFERENCE(citadel_character);
 
     class citadel_x : public mxscenario
     {
@@ -36,9 +36,9 @@ namespace tme {
 
         mxrace_t CampaignTarget () const;
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
+        bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
         bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
-        void React ( citadel_character* lord );
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
@@ -114,13 +114,12 @@ namespace tme {
         virtual s32  RecruitThreshold(const mxrace_t race) const;
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
+        virtual bool Recruited ( mxcharacter* recruiter ) override;
         virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
 
         bool SetQuest ( mxquest_t quest, mxid target );
-        void Quest ( void );
         mxgridref QuestLocation () const;
-        bool March ( mxgridref target, bool fight );
 
     public:
         mxquest_t       quest = QS_NONE;
@@ -133,6 +132,28 @@ namespace tme {
     };
 
     #define CITADEL_SCENARIO(x) static_cast<citadel_x*>(mx->scenario)->x
+
+    inline citadel_race* CitadelRace ( mxrace_t race )
+    {
+        return static_cast<citadel_race*>(mx->RaceById(race));
+    }
+
+    inline citadel_character* CitadelLord ( mxcharacter* character )
+    {
+        return static_cast<citadel_character*>(character);
+    }
+
+    inline mxcharacter* CharacterTarget ( mxid target )
+    {
+        return ID_TYPE(target) == IDT_CHARACTER ? mx->CharacterById(GET_ID(target)) : nullptr;
+    }
+
+    inline citadel_stronghold* StrongholdTarget ( mxid target )
+    {
+        return ID_TYPE(target) == IDT_STRONGHOLD
+            ? static_cast<citadel_stronghold*>(mx->StrongholdById(GET_ID(target)))
+            : nullptr;
+    }
 }
 #endif
 

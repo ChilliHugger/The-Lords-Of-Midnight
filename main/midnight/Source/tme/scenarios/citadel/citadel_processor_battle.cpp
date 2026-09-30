@@ -84,7 +84,7 @@ mxcharacter* citadel_battle::Liberator() const
 
 void citadel_battle::CharacterLosesEnergy ( mxcharacter* character )
 {
-    auto lord = static_cast<citadel_character*>(character);
+    auto lord = CitadelLord(character);
 
     if ( lord != nullptr && lord->WeaponPower() == OP_BATTLE_TIRELESS )
         return;

@@ -651,7 +651,7 @@ namespace tme {
             mx->gamemap->SetLocationArmy(Location(),0);
             mx->gamemap->SetLocationCharacter(Location(),0);
             
-            bool seen = IsRecruited();
+            bool seen = !IsAIControlled();
 
             // set the current location to visited, just to make sure
             if ( seen )

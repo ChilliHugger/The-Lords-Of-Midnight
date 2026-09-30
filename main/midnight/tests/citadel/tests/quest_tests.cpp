@@ -3,6 +3,7 @@
 //  citadel
 //
 #include "../../steps/tme_steps.h"
+#include "../../../Source/tme/scenarios/citadel/citadel_processor_quest.h"
 
 #include <map>
 
@@ -14,9 +15,9 @@ static constexpr LPCSTR ch_boroth   = "CH_BOROTH";
 
 namespace {
 
-    citadel_x* Citadel()
+    void React ( citadel_character* lord )
     {
-        return static_cast<citadel_x*>(tme::mx->scenario);
+        citadel_quest_processor().React(lord);
     }
 
     citadel_character* Lord(LPCSTR symbol)
@@ -204,7 +205,7 @@ SCENARIO("A realm whose hostage is held will not march")
 
         WHEN("Haraglai considers the war")
         {
-            Citadel()->React(haraglai);
+            React(haraglai);
 
             THEN("he does not march on the keep Boroth took from the Fallows")
             {
@@ -219,7 +220,7 @@ SCENARIO("A realm whose hostage is held will not march")
 
         WHEN("Haraglai considers the war")
         {
-            Citadel()->React(haraglai);
+            React(haraglai);
 
             THEN("he goes to take it back")
             {
@@ -232,7 +233,7 @@ SCENARIO("A realm whose hostage is held will not march")
         WHEN("he is a coward")
         {
             haraglai->qualities = qf_cowardly;
-            Citadel()->React(haraglai);
+            React(haraglai);
 
             THEN("he does not")
             {
@@ -244,7 +245,7 @@ SCENARIO("A realm whose hostage is held will not march")
         {
             Army(haraglai, 10);
             arabar->TotalTroops(500);
-            Citadel()->React(haraglai);
+            React(haraglai);
 
             THEN("he does not")
             {
@@ -268,7 +269,7 @@ SCENARIO("A lord whose own realm is whole helps a neighbour - but not one his pe
 
         WHEN("an Uskarg lord considers the war")
         {
-            Citadel()->React(haraglai);
+            React(haraglai);
 
             THEN("he marches to help the Dawn Fey take it back")
             {
@@ -290,7 +291,7 @@ SCENARIO("A lord whose own realm is whole helps a neighbour - but not one his pe
 
         WHEN("a Long Dwarf considers the war")
         {
-            Citadel()->React(dwarf);
+            React(dwarf);
 
             THEN("he leaves the Deeping Dwarves to it: the two are at feud")
             {
@@ -354,6 +355,31 @@ SCENARIO("The lords of the realms march by night without showing you where they 
         {
             REQUIRE( moved > 0 );
             REQUIRE( VisibleSquares() == visible );
+        }
+    }
+}
+
+SCENARIO("The lords of the realms are the computer's, until one of them joins you")
+{
+    TMEStep::NewStory();
+
+    auto rorthron = Lord(ch_rorthron);
+    auto ilvar = Lord(ch_ilvar);
+
+    THEN("yours are yours, and the realms' are AI-controlled")
+    {
+        REQUIRE_FALSE( rorthron->IsAIControlled() );
+        REQUIRE( ilvar->IsAIControlled() );
+    }
+
+    WHEN("Ilvar is recruited")
+    {
+        ilvar->Recruited(rorthron);
+
+        THEN("he is yours")
+        {
+            REQUIRE( ilvar->IsRecruited() );
+            REQUIRE_FALSE( ilvar->IsAIControlled() );
         }
     }
 }

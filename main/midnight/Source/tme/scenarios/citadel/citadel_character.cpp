@@ -151,16 +151,10 @@ bool citadel_character::IsAllowedRiders() const
     return WeaponPower() == OP_PERSUASION || mxcharacter::IsAllowedRiders();
 }
 
-static mxcharacter* CharacterTarget ( mxid target )
+bool citadel_character::Recruited ( mxcharacter* recruiter )
 {
-    return ID_TYPE(target) == IDT_CHARACTER ? mx->CharacterById(GET_ID(target)) : nullptr;
-}
-
-static citadel_stronghold* StrongholdTarget ( mxid target )
-{
-    return ID_TYPE(target) == IDT_STRONGHOLD
-        ? static_cast<citadel_stronghold*>(mx->StrongholdById(GET_ID(target)))
-        : nullptr;
+    flags.Reset(cf_ai);
+    return mxcharacter::Recruited(recruiter);
 }
 
 bool citadel_character::SetQuest ( mxquest_t newquest, mxid target )
@@ -210,96 +204,6 @@ mxgridref citadel_character::QuestLocation () const
 
     auto item = static_cast<mxitem*>(mx->EntityByIdt(questtarget));
     return item != nullptr ? item->Location() : Location();
-}
-
-bool citadel_character::March ( mxgridref target, bool fight )
-{
-    const u32 tired = 2 * (u32)sv_energy_scale;
-
-    while ( Location() != target && CanWalkForward() && energy >= tired ) {
-        mxgridref step;
-        if ( !CITADEL_SCENARIO(MarchStep(Location(), target, step)) )
-            return false;
-
-        looking = Location().DirFromHere(step);
-        auto info = GetLocInfo();
-        if ( !info->flags.Is(lif_moveforward) ) {
-            if ( fight )
-                Cmd_Attack();
-            break;
-        }
-
-        Cmd_WalkForward(false, false);
-
-        if ( GetLocInfo()->foe.armies )
-            break;
-    }
-    return true;
-}
-
-void citadel_character::Quest ( void )
-{
-    if ( IsDead() || IsPrisoner() || IsFollowing() )
-        return;
-
-    auto character = CharacterTarget(questtarget);
-    auto stronghold = StrongholdTarget(questtarget);
-
-    switch ( quest ) {
-        case QS_RECRUIT:
-            if ( character == nullptr || character->IsDead() || character->IsRecruited() ) {
-                quest = QS_NONE;
-                return;
-            }
-            break;
-        case QS_JOIN:
-        case QS_FOLLOW:
-            if ( character == nullptr || character->IsDead() ) {
-                quest = QS_NONE;
-                return;
-            }
-            break;
-        case QS_SEIZE:
-            if ( stronghold == nullptr ) {
-                quest = QS_NONE;
-                return;
-            }
-            break;
-        case QS_GOTO:
-        case QS_GUARD:
-            break;
-        default:
-            return;     // resting, waiting, or a quest not built yet
-    }
-
-    if ( !March(QuestLocation(), quest == QS_SEIZE) ) {
-        quest = QS_NONE;
-        return;
-    }
-
-    if ( Location() != QuestLocation() )
-        return;         // still on the road
-
-    switch ( quest ) {
-        case QS_RECRUIT:
-            if ( CheckRecruitChar(character) && Cmd_Approach(character) != nullptr )
-                character->Cmd_Follow(this);
-            quest = QS_NONE;
-            break;
-        case QS_JOIN:
-            Cmd_Follow(character);
-            quest = QS_NONE;
-            break;
-        case QS_GOTO:
-            quest = QS_NONE;
-            break;
-        case QS_SEIZE:
-            if ( !stronghold->IsEnemy() )
-                quest = QS_NONE;
-            break;
-        default:
-            break;      // a shadow keeps shadowing, a guard keeps guarding
-    }
 }
 
 } // namespace tme
