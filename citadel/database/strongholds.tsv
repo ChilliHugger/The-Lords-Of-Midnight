@@ -1,4 +1,4 @@
-Version	Id	Symbol	Terrain	Flags	Location	Occupying Race	Race	Occupier	Owner	Type	Total	Min	Max	Strategical Success	Owner Success	Enemy Success	Influence	Respawn	land	land_war_state	Fallows
+Version	Id	Symbol	Terrain	Flags	Location	Occupying Race	Race	Occupier	Owner	Type	Total	Min	Max	Strategical Success	Owner Success	Enemy Success	Influence	Respawn	land	land_war_state	land_realm
 7	1	SH_CASTLE_IMILVIR	TN_CASTLE		"256,0"	RA_KITH	RA_KITH	CH_MORKIN	CH_MORKIN	UT_WARRIORS	17	100	1200						Imilvir	LS_AT_PEACE	The Witherlands
 7	2	SH_CASTLE_EODRAL	TN_CASTLE		"256,0"	RA_KITH	RA_KITH	CH_MORKIN	CH_MORKIN	UT_WARRIORS	17	100	1200						Eodral	LS_AT_PEACE	The Witherlands
 7	3	SH_CASTLE_ARELON	TN_CASTLE		"256,0"	RA_KITH	RA_KITH	CH_MORKIN	CH_MORKIN	UT_WARRIORS	17	100	1200						Arelon	LS_AT_PEACE	The Witherlands
