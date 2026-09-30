@@ -23,13 +23,16 @@ void citadel_character::Serialize ( archive& ar )
 
     if ( ar.IsStoring() ) {
         ar << qualities ;
+        ar << title ;
         WRITE_ENUM(quest);
         ar << questtarget ;
         WRITE_ENUM(purpose);
         WRITE_ENUM(reaction);
     } else {
         ar >> qualities ;
-        if ( tme::mx->SaveGameVersion() > 18 ) {
+        if ( tme::mx->SaveGameVersion() > 18 )
+            ar >> title ;
+        if ( tme::mx->SaveGameVersion() > 19 ) {
             READ_ENUM(quest);
             ar >> questtarget ;
             READ_ENUM(purpose);
@@ -43,6 +46,7 @@ void citadel_character::LoadTsv ( const TsvRow& row )
     mxcharacter::LoadTsv(row);
 
     qualities = ParseCharacterQualities(row.GetString(TsvField::Character::Qualities));
+    title = row.GetString(TsvField::Character::Title);
     quest = ParseQuest(row.GetString(TsvField::Character::Quest));
     purpose = ParsePurpose(row.GetString(TsvField::Character::Purpose));
     reaction = ParseReaction(row.GetString(TsvField::Character::Reaction));

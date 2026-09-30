@@ -25,7 +25,7 @@ Version	Id	Symbol	Text
 7	23	SS_KILLED_BATTLE	{case:first}{char:gender:heshe} was killed in battle. %s
 7	24	SS_HIDDEN	{case:first}{char:name} is hidden.{sp}
 7	25	SS_MUSTFIGHT	{case:first}{char:loc:obj:name} are abroad and {char:gender:heshe} must fight or hide.{sp}
-7	26	SS_MESSAGE1	{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}.{sp}
+7	26	SS_MESSAGE1	{char:text:title}{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}.{sp}
 7	27	SS_MESSAGE2	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:army}
 7	28	SS_MESSAGE3	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group}
 7	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group}
@@ -100,3 +100,4 @@ Version	Id	Symbol	Text
 7	98	SS_TUNNEL	{case:first}{char:gender:heshe} stands in a tunnel looking {char:dir:name}.{sp}
 7	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.{sp}
 7	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.{sp}
+7	125	SS_CHARACTER_TITLE	{char:name} is {char:title}.{sp}

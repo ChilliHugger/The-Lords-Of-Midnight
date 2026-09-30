@@ -53,6 +53,7 @@ namespace TsvField {
         constexpr const char* Home           = "Home";
         constexpr const char* DesiredObject  = "Desired Object";
         // CITADEL only
+        constexpr const char* Title          = "Title";
         constexpr const char* Qualities      = "Qualities";
         constexpr const char* Quest          = "Quest";
         constexpr const char* Purpose        = "Purpose";

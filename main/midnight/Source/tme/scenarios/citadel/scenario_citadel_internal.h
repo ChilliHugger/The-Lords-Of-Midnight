@@ -114,6 +114,7 @@ namespace tme {
         virtual s32  RecruitThreshold(const mxrace_t race) const;
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
+        virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
 
         bool SetQuest ( mxquest_t quest, mxid target );
@@ -126,6 +127,9 @@ namespace tme {
         mxid            questtarget = IDT_NONE;     // a character, a keep, or a location id
         mxpurpose_t     purpose = PU_NONE;
         mxreaction_t    reaction = RE_RETURN_HOME;
+
+    protected:
+        std::string title;      // the design's "Titles"; empty for most lords
     };
 
     #define CITADEL_SCENARIO(x) static_cast<citadel_x*>(mx->scenario)->x
