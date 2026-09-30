@@ -54,5 +54,5 @@ Version	Id	Symbol	Flags	Name	Preposition	Description	Success	Visibility	Obstruct
 7	52	TN_UNUSED_52				{str:5}	0	0	0	0
 7	53	TN_UNUSED_53				{str:5}	0	0	0	0
 7	54	TN_UNUSED_54				{str:5}	0	0	0	0
-7	55	TN_MIST		Mist	in	{str:5}	0	0	0	0
+7	55	TN_MIST	BLOCK	Mist	in	{str:5}	0	0	0	0
 7	56	TN_CASTLE	INTERESTING	Castle	at	{str:5}	16	10	10	0
