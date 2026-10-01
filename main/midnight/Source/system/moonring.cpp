@@ -578,6 +578,15 @@ bool moonring::dawn()
         return true;
     }
     
+#if defined(_CITADEL_)
+    c_mxid news;
+    if ( TME_QuestNews(news) > 0 ) {
+        questmodel.view = questview::news;
+        showPage(MODE_QUEST);
+        return true;
+    }
+#endif
+
     showPage(MODE_LOOK, TME_CurrentCharacter().id);
     
     return true;

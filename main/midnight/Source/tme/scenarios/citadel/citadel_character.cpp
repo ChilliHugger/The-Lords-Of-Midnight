@@ -28,6 +28,8 @@ void citadel_character::Serialize ( archive& ar )
         ar << questtarget ;
         WRITE_ENUM(purpose);
         WRITE_ENUM(reaction);
+        ar << idle ;
+        WRITE_ENUM(news);
     } else {
         ar >> qualities ;
         if ( tme::mx->SaveGameVersion() > 18 )
@@ -37,6 +39,10 @@ void citadel_character::Serialize ( archive& ar )
             ar >> questtarget ;
             READ_ENUM(purpose);
             READ_ENUM(reaction);
+        }
+        if ( tme::mx->SaveGameVersion() > 20 ) {
+            ar >> idle ;
+            READ_ENUM(news);
         }
     }
 }
@@ -105,6 +111,9 @@ bool citadel_character::ShouldDieInFight() const
 
 void citadel_character::InitNightProcessing ( void )
 {
+    bool waited = IsRecruited() && ( quest == QS_NONE || quest == QS_REST ) && time == (mxtime_t)sv_time_dawn;
+    idle = waited ? idle + 1 : 0;
+
     mxcharacter::InitNightProcessing();
 
     if ( WeaponPower() == OP_LONE_SWIFTNESS && !IsFollowing() && !HasFollowers() )
@@ -157,43 +166,60 @@ bool citadel_character::Recruited ( mxcharacter* recruiter )
     return mxcharacter::Recruited(recruiter);
 }
 
-bool citadel_character::SetQuest ( mxquest_t newquest, mxid target )
+bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
 {
     if ( !IsRecruited() || IsDead() || IsPrisoner() )
         return false;
 
     auto character = CharacterTarget(target);
+    auto other = [this, character]() {
+        return character != nullptr && character != this && character->IsAlive();
+    };
+
+    auto object = ObjectTarget(target);
+    auto artefact = object != nullptr && object->IsArtefact();
+    mxgridref where;
 
     switch ( newquest ) {
         case QS_NONE:
         case QS_REST:
-            target = IDT_NONE;
-            break;
+            return true;
         case QS_RECRUIT:
-            if ( character == nullptr || character == this || character->IsDead() || character->IsRecruited() )
-                return false;
-            break;
+        case QS_KILL:
+            return other() && !character->IsRecruited() && !character->IsPrisoner();
+        case QS_RESCUE:
+            return other() && character->IsPrisoner();
         case QS_JOIN:
         case QS_FOLLOW:
-            if ( character == nullptr || character == this || character->IsDead() || !character->IsRecruited() )
-                return false;
-            break;
+            return other() && character->IsRecruited();
         case QS_GOTO:
         case QS_GUARD:
-            if ( ID_TYPE(target) != IDT_LOCATION
-                 || !mx->gamemap->IsLocOnMap(mxgridref(GET_LOCIDX(target), GET_LOCIDY(target))) )
-                return false;
-            break;
+            return ID_TYPE(target) == IDT_LOCATION
+                && mx->gamemap->IsLocOnMap(mxgridref(GET_LOCIDX(target), GET_LOCIDY(target)));
         case QS_SEIZE:
-            if ( StrongholdTarget(target) == nullptr || !StrongholdTarget(target)->IsEnemy() )
-                return false;
-            break;
+            return StrongholdTarget(target) != nullptr && StrongholdTarget(target)->IsEnemy();
+        case QS_FIND:
+            return artefact && object->OnMap(where);
+        case QS_TAKE: {
+            auto holder = artefact ? mx->scenario->WhoHasObject(object) : nullptr;
+            return holder != nullptr && holder != this && holder->IsRecruited() && holder->IsAlive();
+        }
+        case QS_DESTROY:
+            return artefact && ( object->OnMap(where) || Carrying() == object );
         default:
-            return false;   // not built yet
+            return false;
     }
+}
+
+bool citadel_character::SetQuest ( mxquest_t newquest, mxid target )
+{
+    if ( !CanQuest(newquest, target) )
+        return false;
 
     quest = newquest;
-    questtarget = target;
+    questtarget = ( newquest == QS_NONE || newquest == QS_REST ) ? IDT_NONE : target;
+    idle = 0;
+    news = QN_NONE;
     return true;
 }
 
@@ -202,8 +228,51 @@ mxgridref citadel_character::QuestLocation () const
     if ( ID_TYPE(questtarget) == IDT_LOCATION )
         return mxgridref(GET_LOCIDX(questtarget), GET_LOCIDY(questtarget));
 
+    if ( auto object = ObjectTarget(questtarget) ) {
+        mxgridref where;
+        if ( object->OnMap(where) )
+            return where;
+        auto holder = mx->scenario->WhoHasObject(object);
+        return holder != nullptr ? holder->Location() : Location();
+    }
+
     auto item = static_cast<mxitem*>(mx->EntityByIdt(questtarget));
     return item != nullptr ? item->Location() : Location();
+}
+
+std::string citadel_character::QuestText () const
+{
+    u32 id;
+    switch ( quest ) {
+        case QS_RECRUIT:    id = SS_QUEST_RECRUIT; break;
+        case QS_JOIN:       id = SS_QUEST_JOIN; break;
+        case QS_KILL:       id = CharacterTarget(questtarget) != nullptr ? SS_QUEST_KILL_LORD : SS_QUEST_KILL_HOST; break;
+        case QS_RESCUE:     id = SS_QUEST_RESCUE; break;
+        case QS_FOLLOW:     id = SS_QUEST_FOLLOW; break;
+        case QS_GOTO:       id = SS_QUEST_GOTO; break;
+        case QS_GUARD:      id = SS_QUEST_GUARD; break;
+        case QS_SEIZE:      id = SS_QUEST_SEIZE; break;
+        case QS_FIND:       id = SS_QUEST_FIND; break;
+        case QS_TAKE:       id = SS_QUEST_TAKE; break;
+        case QS_DESTROY:    id = SS_QUEST_DESTROY; break;
+        default:            id = SS_QUEST_REST; break;
+    }
+    return mx->text->CookedSystemString(id, this);
+}
+
+std::string citadel_character::NewsText () const
+{
+    u32 id;
+    switch ( news ) {
+        case QN_DONE:       id = SS_QUEST_NEWS_DONE; break;
+        case QN_FAILED:     id = SS_QUEST_NEWS_FAILED; break;
+        case QN_REFUSED:    id = SS_QUEST_NEWS_REFUSED; break;
+        case QN_OFFENDED:   id = SS_QUEST_NEWS_OFFENDED; break;
+        case QN_BLOCKED:    id = SS_QUEST_NEWS_BLOCKED; break;
+        case QN_IMPATIENT:  id = SS_QUEST_NEWS_IMPATIENT; break;
+        default:            return "";
+    }
+    return mx->text->CookedSystemString(id, this);
 }
 
 } // namespace tme

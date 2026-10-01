@@ -1345,6 +1345,15 @@ void panel_look::OnNotification( Ref* sender )
             break;
         }
 
+#if defined(_CITADEL_)
+        case ID_QUEST:
+        {
+            mr->questmodel.view = questview::quests;
+            mr->showPage(MODE_QUEST);
+            return;
+        }
+#endif
+
             
 #if defined(_DDR_)
         case ID_GIVE:

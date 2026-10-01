@@ -10,6 +10,9 @@
 #include "../../baseinc/tme_internal.h"
 #include "citadel_processor_battle.h"
 
+#include <memory>
+#include <vector>
+
 #if defined(_CITADEL_)
 namespace tme {
 
@@ -80,6 +83,83 @@ mxcharacter* citadel_battle::Liberator() const
             lord = character;
     }
     return lord != nullptr ? lord : lom_battle::Liberator();
+}
+
+void citadel_battle::Duel ( mxcharacter* attacker, mxcharacter* defender )
+{
+    struct side_t {
+        mxcharacter*                        lord;
+        std::vector<std::unique_ptr<mxarmy>> armies;
+        c_army                              standing;
+    };
+
+    auto muster = []( mxcharacter* lord ) {
+        side_t side { lord, {}, {} };
+        auto info = lord->GetLocInfo();
+        auto enlist = [&]( u32 total, mxunit_t type, s32 success ) {
+            if ( total == 0 )
+                return;
+            auto army = new mxarmy();
+            army->armytype = AT_CHARACTER;
+            army->parent = lord;
+            army->race = lord->Race();
+            army->type = type;
+            army->total = total;
+            army->success = success;
+            army->killed = 0;
+            army->loyalto = lord->NormalisedLoyalty();
+            side.armies.emplace_back(army);
+            side.standing.push_back(army);
+        };
+        enlist(lord->warriors.Total(), UT_WARRIORS, lord->warriors.BattleSuccess(*info, lord));
+        enlist(lord->riders.Total(), UT_RIDERS, lord->riders.BattleSuccess(*info, lord));
+        return side;
+    };
+
+    auto strike = [this]( side_t& from, side_t& at ) {
+        from.lord->battleslew += Fight(from.lord->FightStrength(), from.lord->energy + 128, at.standing);
+        for ( auto& army : from.armies ) {
+            if ( army->total )
+                army->killed += Fight(army->total / 5, army->success, at.standing);
+        }
+    };
+
+    auto a = muster(attacker);
+    auto d = muster(defender);
+
+    for ( auto lord : { attacker, defender } ) {
+        lord->EnterBattle();
+        lord->battleloc = defender->Location();
+    }
+
+    strike(a, d);
+    strike(d, a);
+
+    for ( auto side : { &a, &d } ) {
+        for ( auto& army : side->armies )
+            UpdateCharacterArmy(army.get());
+        CharacterLosesEnergy(side->lord);
+    }
+
+    mxcharacter* loser = nullptr;
+    if ( !a.standing.empty() && d.standing.empty() )
+        loser = defender;
+    else if ( a.standing.empty() && !d.standing.empty() )
+        loser = attacker;
+    else if ( a.standing.empty() && d.standing.empty() ) {
+        auto might = attacker->FightStrength() + defender->FightStrength();
+        loser = might == 0 || mxrandom(0, (int)might - 1) < (int)attacker->FightStrength() ? defender : attacker;
+    }
+
+    if ( loser == nullptr ) {
+        CharacterContinuesBattle(attacker);
+        CharacterContinuesBattle(defender);
+    } else {
+        CharacterWinsBattle(loser == attacker ? defender : attacker);
+        CharacterLosesBattle(loser);
+    }
+
+    Announce(defender->Location());
 }
 
 void citadel_battle::CharacterLosesEnergy ( mxcharacter* character )

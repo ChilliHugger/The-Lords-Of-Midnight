@@ -11,6 +11,7 @@
 
 namespace tme {
     FORWARD_REFERENCE(citadel_character);
+    FORWARD_REFERENCE(citadel_object);
 
     class citadel_x : public mxscenario
     {
@@ -26,13 +27,19 @@ namespace tme {
         virtual void initialiseAfterCreate ( u32 version ) override;
 
         virtual MXRESULT Command ( const std::string& arg, variant argv[], u32 argc ) override;
+        virtual MXRESULT Text ( const std::string& arg, variant argv[], u32 argc ) override;
 
         virtual mxcharacter* BadGuy() const override;
         virtual bool isTerrainImpassable ( mxterrain_t terrain, const mxitem* target ) const override;
         virtual u32 TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) const override;
         virtual void NightStart ( void ) override;
+        virtual void NightStop ( void ) override;
         virtual void LordsTurn ( void ) override;
         virtual bool RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const override;
+        virtual mxobject* FindObjectAtLocation ( mxgridref loc ) override;
+        virtual mxobject* PickupObject ( mxgridref loc ) override;
+        virtual bool DropObject ( mxgridref loc, mxobject* object ) override;
+        citadel_object* ArtefactAt ( mxgridref loc ) const;
 
         mxrace_t CampaignTarget () const;
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
@@ -62,6 +69,10 @@ namespace tme {
 
         virtual void Serialize ( archive& ar ) override;
         virtual void LoadTsv ( const TsvRow& row ) override;
+
+        bool IsArtefact () const;
+        bool OnMap ( mxgridref& where ) const;
+        void Lift ();
 
     public:
         mxobjtype_t     type;
@@ -118,14 +129,19 @@ namespace tme {
         virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
 
+        bool CanQuest ( mxquest_t quest, mxid target ) const;
         bool SetQuest ( mxquest_t quest, mxid target );
         mxgridref QuestLocation () const;
+        std::string QuestText () const;     // what he is about, in a sentence
+        std::string NewsText () const;      // what he has to tell you at dawn
 
     public:
         mxquest_t       quest = QS_NONE;
-        mxid            questtarget = IDT_NONE;     // a character, a keep, or a location id
+        mxid            questtarget = IDT_NONE;     // a character, a keep, an object, a regiment or a location id
         mxpurpose_t     purpose = PU_NONE;
         mxreaction_t    reaction = RE_RETURN_HOME;
+        u32             idle = 0;                   // nights one of yours has stood waiting for orders
+        mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
 
     protected:
         std::string title;      // the design's "Titles"; empty for most lords
@@ -143,6 +159,11 @@ namespace tme {
         return static_cast<citadel_character*>(character);
     }
 
+    inline citadel_object* CitadelObject ( mxobject* object )
+    {
+        return static_cast<citadel_object*>(object);
+    }
+
     inline mxcharacter* CharacterTarget ( mxid target )
     {
         return ID_TYPE(target) == IDT_CHARACTER ? mx->CharacterById(GET_ID(target)) : nullptr;
@@ -153,6 +174,16 @@ namespace tme {
         return ID_TYPE(target) == IDT_STRONGHOLD
             ? static_cast<citadel_stronghold*>(mx->StrongholdById(GET_ID(target)))
             : nullptr;
+    }
+
+    inline citadel_object* ObjectTarget ( mxid target )
+    {
+        return ID_TYPE(target) == IDT_OBJECT ? CitadelObject(mx->ObjectById(GET_ID(target))) : nullptr;
+    }
+
+    inline mxregiment* RegimentTarget ( mxid target )
+    {
+        return ID_TYPE(target) == IDT_REGIMENT ? mx->RegimentById(GET_ID(target)) : nullptr;
     }
 }
 #endif

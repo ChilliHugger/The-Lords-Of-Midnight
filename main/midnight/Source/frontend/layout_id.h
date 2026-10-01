@@ -163,6 +163,8 @@ enum layoutid_t
     ID_PREVIOUS_PAGE,
     
     ID_RESET,
+
+    ID_QUEST,
     
     ID_SELECT_CHAR=1000,
     ID_LANDSCAPE=2000,
@@ -182,6 +184,9 @@ enum layoutid_t
     ID_OPTION_RULE_8=ID_OPTION_RULES+8,
 
     ID_HELP_ITEM=8000,
+
+    ID_QUEST_CHOICE=9000,
+    ID_QUEST_TARGET=9100,
 };
 
 

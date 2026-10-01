@@ -412,6 +412,16 @@ using namespace chilli::types;
             RE_COUNTER_THREAT,
             RE_LEND_SERVICE,
         };
+
+        enum mxquestnews_t {
+            QN_NONE                     =    0,
+            QN_DONE,                    // the quest is over, and he waits for orders
+            QN_FAILED,                  // what he went for is gone - dead, taken, or out of reach
+            QN_REFUSED,                 // the lord he went to recruit would not be persuaded
+            QN_OFFENDED,                // ...and was offended, and set upon him
+            QN_BLOCKED,                 // the enemy stands in his road
+            QN_IMPATIENT,               // left waiting too long, he has set out on a quest of his own
+        };
 #endif
 
 #if defined(_DDR_) || defined(_CITADEL_)
@@ -671,7 +681,60 @@ using namespace chilli::types;
             SS_TOKENS_VICTORY=123,
             SS_PRISONER=124,                // a lord held hostage, said in place of SS_MESSAGE7
             SS_CHARACTER_TITLE=125,         // "{char:name} is {char:title}", for a lord with a title
-            
+
+            SS_QUEST_RECRUIT=126,
+            SS_QUEST_JOIN,
+            SS_QUEST_KILL_LORD,
+            SS_QUEST_KILL_HOST,
+            SS_QUEST_RESCUE,
+            SS_QUEST_FOLLOW,
+            SS_QUEST_GOTO,
+            SS_QUEST_GUARD,
+            SS_QUEST_SEIZE,
+            SS_QUEST_FIND,
+            SS_QUEST_TAKE,
+            SS_QUEST_DESTROY,
+            SS_QUEST_REST,
+
+            SS_QUEST_NEWS_DONE,
+            SS_QUEST_NEWS_FAILED,
+            SS_QUEST_NEWS_REFUSED,
+            SS_QUEST_NEWS_OFFENDED,
+            SS_QUEST_NEWS_BLOCKED,
+            SS_QUEST_NEWS_IMPATIENT,
+            SS_QUEST_NEWS_REPORT,
+            SS_QUEST_NEWS_LINE,
+            SS_QUEST_NEWS_TITLE,
+            SS_QUEST_NEWS_HEADING,
+
+            SS_QUEST_PICK_GOTO,
+            SS_QUEST_PICK_GUARD,
+
+            SS_QUEST_ASK_RECRUIT,
+            SS_QUEST_ASK_JOIN,
+            SS_QUEST_ASK_KILL,
+            SS_QUEST_ASK_RESCUE,
+            SS_QUEST_ASK_FOLLOW,
+            SS_QUEST_ASK_SEIZE,
+            SS_QUEST_ASK_FIND,
+            SS_QUEST_ASK_TAKE,
+            SS_QUEST_ASK_DESTROY,
+
+            SS_QUEST_NAME_RECRUIT,
+            SS_QUEST_NAME_JOIN,
+            SS_QUEST_NAME_KILL,
+            SS_QUEST_NAME_RESCUE,
+            SS_QUEST_NAME_FOLLOW,
+            SS_QUEST_NAME_GOTO,
+            SS_QUEST_NAME_GUARD,
+            SS_QUEST_NAME_SEIZE,
+            SS_QUEST_NAME_FIND,
+            SS_QUEST_NAME_TAKE,
+            SS_QUEST_NAME_DESTROY,
+            SS_QUEST_NAME_REST,
+            SS_QUEST_STRONGHOLD,
+            SS_QUEST_BACK,
+
             SS_MAX_STRINGS = 255
         };
 
@@ -1173,7 +1236,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         20
+#define SAVEGAMEVERSION         21
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 
