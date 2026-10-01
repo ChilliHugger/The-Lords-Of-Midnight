@@ -85,11 +85,11 @@ namespace {
         return nullptr;
     }
 
-    mxobject* Artefact(LPCSTR symbol)
+    citadel_object* Artefact(LPCSTR symbol)
     {
         auto object = GetObject(symbol);
         REQUIRE( object != nullptr );
-        return object;
+        return CitadelObject(object);
     }
 
     // an on-map keep of a people, and a lord of the realms of that people
@@ -542,7 +542,7 @@ SCENARIO("An artefact can be found, borrowed from one of yours, and destroyed")
     auto corleth = Lord("CH_CORLETH");
     auto stormblade = Artefact("OB_STORMBLADE");
     mxgridref where;
-    REQUIRE( ObjectOnMap(stormblade, where) );
+    REQUIRE( stormblade->OnMap(where) );
 
     WHEN("Rorthron, where Stormblade lies, is sent to find it")
     {
@@ -553,7 +553,7 @@ SCENARIO("An artefact can be found, borrowed from one of yours, and destroyed")
         THEN("he carries it, and it lies there no longer")
         {
             REQUIRE( rorthron->Carrying() == stormblade );
-            REQUIRE_FALSE( ObjectOnMap(stormblade, where) );
+            REQUIRE_FALSE( stormblade->OnMap(where) );
             REQUIRE( rorthron->news == QN_DONE );
         }
     }
@@ -585,8 +585,53 @@ SCENARIO("An artefact can be found, borrowed from one of yours, and destroyed")
         {
             REQUIRE( rorthron->Carrying() == nullptr );
             REQUIRE( tme::mx->scenario->WhoHasObject(persuader) == nullptr );
-            REQUIRE_FALSE( ObjectOnMap(persuader, where) );
+            REQUIRE_FALSE( persuader->OnMap(where) );
         }
+    }
+}
+
+SCENARIO("A lord's quest and his news are told from strings.tsv, naming whom or what it is for")
+{
+    TMEStep::NewStory();
+
+    auto rorthron = Lord(ch_rorthron);
+    auto corleth = Lord("CH_CORLETH");
+    auto ilvar = Lord(ch_ilvar);
+    auto haraglai = Lord(ch_haraglai);
+    auto text = []( u32 id, mxcharacter* character ) { return tme::mx->text->CookedSystemString(id, character); };
+
+    THEN("the quest names its lord, keep or weapon, and the one he hunts by that lord's own pronoun")
+    {
+        REQUIRE( rorthron->SetQuest(QS_RECRUIT, Idt(ilvar)) );
+        REQUIRE( rorthron->QuestText() == "Rorthron is questing to recruit " + ilvar->Longname() + "." );
+
+        REQUIRE( rorthron->SetQuest(QS_KILL, Idt(haraglai)) );
+        REQUIRE( rorthron->QuestText() == "Rorthron is hunting " + haraglai->Longname() + " to slay "
+                                          + tme::mx->GenderById(haraglai->gender)->pronoun3 + "." );
+
+        auto bloodbringer = Artefact("OB_BLOODBRINGER");
+        corleth->carrying = bloodbringer;
+        REQUIRE( rorthron->SetQuest(QS_TAKE, Idt(bloodbringer)) );
+        REQUIRE( rorthron->QuestText() == "Rorthron is going to " + corleth->Longname() + " for " + bloodbringer->name + "." );
+
+        REQUIRE( rorthron->SetQuest(QS_REST, IDT_NONE) );
+        REQUIRE( rorthron->QuestText() == "Rorthron waits for your orders." );
+    }
+
+    THEN("the dawn news is one sentence on the quest page, and a paragraph of the night's report")
+    {
+        REQUIRE( rorthron->SetQuest(QS_RECRUIT, Idt(ilvar)) );
+        rorthron->news = QN_REFUSED;
+        auto news = ilvar->Longname() + " would not be persuaded by Rorthron";
+        REQUIRE( rorthron->NewsText() == news );
+        REQUIRE( text(SS_QUEST_NEWS_LINE, rorthron) == news + "." );
+        REQUIRE_THAT( text(SS_QUEST_NEWS_REPORT, rorthron), Catch::Matchers::StartsWith(".") && Catch::Matchers::EndsWith(" " + news) );
+    }
+
+    THEN("the quest page asks by the lord's name")
+    {
+        REQUIRE( text(SS_QUEST_ASK_RECRUIT, rorthron) == "Whom should Rorthron try to recruit?" );
+        REQUIRE( text(SS_QUEST_PICK_GUARD, rorthron) == "Touch the place Rorthron should guard" );
     }
 }
 

@@ -319,6 +319,16 @@ bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxg
     return MarchStep(regiment->Location(), target, step);
 }
 
+citadel_object* citadel_x::ArtefactAt ( mxgridref loc ) const
+{
+    FOR_EACH_OBJECT(object) {
+        mxgridref where;
+        if ( CitadelObject(object)->OnMap(where) && where == loc )
+            return CitadelObject(object);
+    }
+    return nullptr;
+}
+
 mxobject* citadel_x::FindObjectAtLocation ( mxgridref loc )
 {
     if ( auto artefact = ArtefactAt(loc) )
@@ -329,7 +339,7 @@ mxobject* citadel_x::FindObjectAtLocation ( mxgridref loc )
 mxobject* citadel_x::PickupObject ( mxgridref loc )
 {
     if ( auto artefact = ArtefactAt(loc) ) {
-        LiftObject(artefact);
+        artefact->Lift();
         return artefact;
     }
     return mxscenario::PickupObject(loc);
@@ -337,7 +347,7 @@ mxobject* citadel_x::PickupObject ( mxgridref loc )
 
 bool citadel_x::DropObject ( mxgridref loc, mxobject* object )
 {
-    if ( IsArtefact(object) ) {
+    if ( object != nullptr && CitadelObject(object)->IsArtefact() ) {
         object->Location(loc);
         return true;
     }
@@ -439,8 +449,7 @@ void citadel_x::NightStop ( void )
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
         CONTINUE_IF( !lord->IsRecruited() || lord->IsDead() || lord->news == QN_NONE );
-        std::string paragraph = ".{lf}{crlf}{cr} ";
-        mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookText(paragraph, lord) + lord->NewsText());
+        mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_QUEST_NEWS_REPORT, lord));
     }
 }
 
@@ -543,15 +552,8 @@ COMMAND( OnTextCharQuest )
     return ReturnText(argv, CitadelLord(character)->QuestText());
 }
 
-COMMAND( OnTextCharQuestNews )
-{
-    CONVERT_CHARACTER_ID( argv[0].vId, character );
-    return ReturnText(argv, CitadelLord(character)->NewsText());
-}
-
 static mxcommand_t citadel_text[] = {
     { "CharQuest",      1,  OnTextCharQuest,        { arguments::character } },
-    { "CharQuestNews",  1,  OnTextCharQuestNews,    { arguments::character } },
 };
 
 MXRESULT citadel_x::Text ( const std::string& arg, variant argv[], u32 argc )
@@ -586,6 +588,27 @@ void citadel_object::LoadTsv ( const TsvRow& row )
 
     type = row.GetObjectType(TsvField::Object::Type);
     power = row.GetObjectPower(TsvField::Object::Power);
+}
+
+bool citadel_object::IsArtefact () const
+{
+    return power != OP_NONE;
+}
+
+bool citadel_object::OnMap ( mxgridref& where ) const
+{
+    if ( !IsArtefact() || mx->scenario->WhoHasObject(const_cast<citadel_object*>(this)) != nullptr )
+        return false;
+    if ( !mx->gamemap->IsLocOnMap(Location()) )
+        return false;
+    where = Location();
+    return true;
+}
+
+void citadel_object::Lift ()
+{
+    if ( IsArtefact() )
+        Location(mxgridref(mx->gamemap->Size().cx, 0));
 }
 
 mxentity* citadel_entityfactory::Create ( id_type_t type )

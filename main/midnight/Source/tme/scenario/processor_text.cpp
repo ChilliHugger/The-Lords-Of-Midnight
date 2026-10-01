@@ -21,6 +21,10 @@
 #include "../scenarios/ddr/ddr_processor_text.h"
 #endif
 
+#if defined(_CITADEL_)
+#include "../scenarios/citadel/scenario_citadel_internal.h"
+#endif
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -1315,6 +1319,32 @@ __char:
                                             character = character->following;
                                             goto __char;
                                         }
+#if defined(_CITADEL_)
+                IS_ARG("quest")
+                {
+                    auto lord = static_cast<const citadel_character*>(character);
+                    is++;
+                    IS_ARG("news")      return lord->NewsText();
+                    IS_ARG("char")      {
+                                            character = CharacterTarget(lord->questtarget);
+                                            goto __char;
+                                        }
+                    IS_ARG("holder")    {
+                                            auto object = ObjectTarget(lord->questtarget);
+                                            character = object != nullptr ? mx->scenario->WhoHasObject(object) : nullptr;
+                                            goto __char;
+                                        }
+                    IS_ARG("obj")       {
+                                            oinfo = ObjectTarget(lord->questtarget);
+                                            RETURN_IF_NULL(oinfo) "";
+                                            goto __obj;
+                                        }
+                    IS_ARG("loc")       {
+                                            loc = lord->QuestLocation();
+                                            goto __loc;
+                                        }
+                }
+#endif
 #if defined(_DDR_)
                 IS_ARG("loyalty")       {
                                             rinfo = mx->RaceById(character->Loyalty());

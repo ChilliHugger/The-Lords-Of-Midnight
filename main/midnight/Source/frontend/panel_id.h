@@ -45,7 +45,7 @@ enum panelmode_t {
     
     MODE_MAINMENU,
 
-    MODE_QUEST,                 // the Citadel's quests - appended, so no saved mode moves
+    MODE_QUEST,
 };
 
 #endif /* panel_id_h */

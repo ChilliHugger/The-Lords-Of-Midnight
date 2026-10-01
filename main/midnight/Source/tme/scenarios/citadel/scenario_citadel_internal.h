@@ -11,6 +11,7 @@
 
 namespace tme {
     FORWARD_REFERENCE(citadel_character);
+    FORWARD_REFERENCE(citadel_object);
 
     class citadel_x : public mxscenario
     {
@@ -38,6 +39,7 @@ namespace tme {
         virtual mxobject* FindObjectAtLocation ( mxgridref loc ) override;
         virtual mxobject* PickupObject ( mxgridref loc ) override;
         virtual bool DropObject ( mxgridref loc, mxobject* object ) override;
+        citadel_object* ArtefactAt ( mxgridref loc ) const;
 
         mxrace_t CampaignTarget () const;
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
@@ -67,6 +69,10 @@ namespace tme {
 
         virtual void Serialize ( archive& ar ) override;
         virtual void LoadTsv ( const TsvRow& row ) override;
+
+        bool IsArtefact () const;
+        bool OnMap ( mxgridref& where ) const;
+        void Lift ();
 
     public:
         mxobjtype_t     type;
@@ -153,6 +159,11 @@ namespace tme {
         return static_cast<citadel_character*>(character);
     }
 
+    inline citadel_object* CitadelObject ( mxobject* object )
+    {
+        return static_cast<citadel_object*>(object);
+    }
+
     inline mxcharacter* CharacterTarget ( mxid target )
     {
         return ID_TYPE(target) == IDT_CHARACTER ? mx->CharacterById(GET_ID(target)) : nullptr;
@@ -165,23 +176,15 @@ namespace tme {
             : nullptr;
     }
 
-    inline mxobject* ObjectTarget ( mxid target )
+    inline citadel_object* ObjectTarget ( mxid target )
     {
-        return ID_TYPE(target) == IDT_OBJECT ? mx->ObjectById(GET_ID(target)) : nullptr;
+        return ID_TYPE(target) == IDT_OBJECT ? CitadelObject(mx->ObjectById(GET_ID(target))) : nullptr;
     }
 
     inline mxregiment* RegimentTarget ( mxid target )
     {
         return ID_TYPE(target) == IDT_REGIMENT ? mx->RegimentById(GET_ID(target)) : nullptr;
     }
-
-    bool IsArtefact ( const mxobject* object );
-
-    bool ObjectOnMap ( const mxobject* object, mxgridref& where );
-
-    mxobject* ArtefactAt ( mxgridref loc );
-
-    void LiftObject ( mxobject* object );
 }
 #endif
 

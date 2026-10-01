@@ -214,12 +214,15 @@ void citadel_quest_processor::Defend ( void )
 
 void citadel_quest_processor::GatherStrength ( mxstronghold* stronghold, u32 needed )
 {
-    auto spare = ( stronghold->TotalTroops() - stronghold->MinTroops() ) / 2;
-    auto type = stronghold->Type() == UT_RIDERS ? UT_RIDERS : UT_WARRIORS;
-    auto& unit = type == UT_RIDERS ? static_cast<mxunit&>(lord->riders) : static_cast<mxunit&>(lord->warriors);
-    auto room = (u32)( type == UT_RIDERS ? sv_character_max_riders : sv_character_max_warriors );
-    auto wanted = std::min({ needed, spare, room > unit.Total() ? room - unit.Total() : 0u });
-    unit.Total(unit.Total() + stronghold->Remove(lord->Race(), type, wanted));
+    auto wanted = std::min(needed, ( stronghold->TotalTroops() - stronghold->MinTroops() ) / 2);
+
+    if ( stronghold->Type() == UT_RIDERS ) {
+        auto room = (u32)sv_character_max_riders > lord->riders.Total() ? (u32)sv_character_max_riders - lord->riders.Total() : 0u;
+        lord->riders.Total(lord->riders.Total() + stronghold->Remove(lord->Race(), UT_RIDERS, std::min(wanted, room)));
+    } else if ( stronghold->Type() == UT_WARRIORS ) {
+        auto room = (u32)sv_character_max_warriors > lord->warriors.Total() ? (u32)sv_character_max_warriors - lord->warriors.Total() : 0u;
+        lord->warriors.Total(lord->warriors.Total() + stronghold->Remove(lord->Race(), UT_WARRIORS, std::min(wanted, room)));
+    }
 }
 
 void citadel_quest_processor::Wander ( void )
@@ -401,13 +404,13 @@ void citadel_quest_processor::Quest ( void )
             live = stronghold != nullptr;
             break;
         case QS_FIND:
-            live = object != nullptr && ObjectOnMap(object, lies);
+            live = object != nullptr && object->OnMap(lies);
             break;
         case QS_TAKE:
             live = holder != nullptr && holder != lord && holder->IsRecruited() && holder->IsAlive();
             break;
         case QS_DESTROY:
-            live = object != nullptr && ( ObjectOnMap(object, lies) || holder == lord );
+            live = object != nullptr && ( object->OnMap(lies) || holder == lord );
             break;
         case QS_GOTO:
         case QS_GUARD:
@@ -438,7 +441,7 @@ void citadel_quest_processor::Quest ( void )
 
     if ( lord->quest == QS_DESTROY && holder == lord ) {
         lord->carrying = nullptr;
-        LiftObject(object);
+        object->Lift();
         Done(QN_DONE);
         return;
     }
@@ -491,7 +494,7 @@ void citadel_quest_processor::Quest ( void )
             Done(QN_DONE);
             break;
         case QS_DESTROY:
-            LiftObject(object);
+            object->Lift();
             Done(QN_DONE);
             break;
         case QS_GUARD:
