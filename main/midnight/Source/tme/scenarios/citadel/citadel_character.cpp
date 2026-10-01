@@ -177,7 +177,7 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
     };
 
     auto object = ObjectTarget(target);
-    auto artefact = IsArtefact(object);
+    auto artefact = object != nullptr && object->IsArtefact();
     mxgridref where;
 
     switch ( newquest ) {
@@ -199,13 +199,13 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
         case QS_SEIZE:
             return StrongholdTarget(target) != nullptr && StrongholdTarget(target)->IsEnemy();
         case QS_FIND:
-            return artefact && ObjectOnMap(object, where);
+            return artefact && object->OnMap(where);
         case QS_TAKE: {
             auto holder = artefact ? mx->scenario->WhoHasObject(object) : nullptr;
             return holder != nullptr && holder != this && holder->IsRecruited() && holder->IsAlive();
         }
         case QS_DESTROY:
-            return artefact && ( ObjectOnMap(object, where) || Carrying() == object );
+            return artefact && ( object->OnMap(where) || Carrying() == object );
         default:
             return false;
     }
@@ -230,7 +230,7 @@ mxgridref citadel_character::QuestLocation () const
 
     if ( auto object = ObjectTarget(questtarget) ) {
         mxgridref where;
-        if ( ObjectOnMap(object, where) )
+        if ( object->OnMap(where) )
             return where;
         auto holder = mx->scenario->WhoHasObject(object);
         return holder != nullptr ? holder->Location() : Location();
@@ -242,83 +242,37 @@ mxgridref citadel_character::QuestLocation () const
 
 std::string citadel_character::QuestText () const
 {
-    auto character = CharacterTarget(questtarget);
-    auto object = ObjectTarget(questtarget);
-    std::string who = character != nullptr ? character->Longname() : "";
-    std::string holder;
-    if ( object != nullptr ) {
-        mx->text->oinfo = object;
-        auto carrier = mx->scenario->WhoHasObject(object);
-        holder = carrier != nullptr ? carrier->Longname() : "";
-    }
-    mx->text->loc = QuestLocation();
-
-    std::string text;
+    u32 id;
     switch ( quest ) {
-        case QS_RECRUIT:    text = "{char:name} is questing to recruit " + who; break;
-        case QS_JOIN:       text = "{char:name} is journeying to join " + who; break;
-        case QS_KILL:       text = character != nullptr ? "{char:name} is hunting " + who + " to slay {gender:himher}"
-                                                        : "{char:name} is marching against the host of the Wolfheart"; break;
-        case QS_RESCUE:     text = "{char:name} is questing to rescue " + who; break;
-        case QS_FOLLOW:     text = "{char:name} is shadowing " + who; break;
-        case QS_GOTO:       text = "{char:name} is journeying to {loc:name}"; break;
-        case QS_GUARD:      text = "{char:name} stands guard at {loc:name}"; break;
-        case QS_SEIZE:      text = "{char:name} is marching to seize {loc:name}"; break;
-        case QS_FIND:       text = "{char:name} is searching for {obj:name}"; break;
-        case QS_TAKE:       text = "{char:name} is going to " + holder + " for {obj:name}"; break;
-        case QS_DESTROY:    text = "{char:name} is seeking {obj:name}, to destroy it"; break;
-        default:            text = "{char:name} waits for your orders"; break;
+        case QS_RECRUIT:    id = SS_QUEST_RECRUIT; break;
+        case QS_JOIN:       id = SS_QUEST_JOIN; break;
+        case QS_KILL:       id = CharacterTarget(questtarget) != nullptr ? SS_QUEST_KILL_LORD : SS_QUEST_KILL_HOST; break;
+        case QS_RESCUE:     id = SS_QUEST_RESCUE; break;
+        case QS_FOLLOW:     id = SS_QUEST_FOLLOW; break;
+        case QS_GOTO:       id = SS_QUEST_GOTO; break;
+        case QS_GUARD:      id = SS_QUEST_GUARD; break;
+        case QS_SEIZE:      id = SS_QUEST_SEIZE; break;
+        case QS_FIND:       id = SS_QUEST_FIND; break;
+        case QS_TAKE:       id = SS_QUEST_TAKE; break;
+        case QS_DESTROY:    id = SS_QUEST_DESTROY; break;
+        default:            id = SS_QUEST_REST; break;
     }
-    return mx->text->CookText(text, this);
+    return mx->text->CookedSystemString(id, this);
 }
 
 std::string citadel_character::NewsText () const
 {
-    auto character = CharacterTarget(questtarget);
-    std::string who = character != nullptr ? character->Longname() : "";
-
-    std::string text;
+    u32 id;
     switch ( news ) {
-        case QN_DONE:       text = "{char:name} has done as you asked, and waits for your orders"; break;
-        case QN_FAILED:     text = "{char:name} has given up {gender:hisher} quest, for what {gender:heshe} sought is gone or out of reach"; break;
-        case QN_REFUSED:    text = who + " would not be persuaded by {char:name}"; break;
-        case QN_OFFENDED:   text = who + " took offence at the approach of {char:name}, and fell upon {gender:himher}"; break;
-        case QN_BLOCKED:    text = "{char:name} finds the enemy barring {gender:hisher} road"; break;
-        case QN_IMPATIENT:  text = "Weary of waiting for orders, {char:name} has set out on a quest of {gender:hisher} own"; break;
+        case QN_DONE:       id = SS_QUEST_NEWS_DONE; break;
+        case QN_FAILED:     id = SS_QUEST_NEWS_FAILED; break;
+        case QN_REFUSED:    id = SS_QUEST_NEWS_REFUSED; break;
+        case QN_OFFENDED:   id = SS_QUEST_NEWS_OFFENDED; break;
+        case QN_BLOCKED:    id = SS_QUEST_NEWS_BLOCKED; break;
+        case QN_IMPATIENT:  id = SS_QUEST_NEWS_IMPATIENT; break;
         default:            return "";
     }
-    return mx->text->CookText(text, this);
-}
-
-bool IsArtefact ( const mxobject* object )
-{
-    return object != nullptr && static_cast<const citadel_object*>(object)->power != OP_NONE;
-}
-
-bool ObjectOnMap ( const mxobject* object, mxgridref& where )
-{
-    if ( !IsArtefact(object) || mx->scenario->WhoHasObject(const_cast<mxobject*>(object)) != nullptr )
-        return false;
-    if ( !mx->gamemap->IsLocOnMap(object->Location()) )
-        return false;
-    where = object->Location();
-    return true;
-}
-
-mxobject* ArtefactAt ( mxgridref loc )
-{
-    FOR_EACH_OBJECT(object) {
-        mxgridref where;
-        if ( ObjectOnMap(object, where) && where == loc )
-            return object;
-    }
-    return nullptr;
-}
-
-void LiftObject ( mxobject* object )
-{
-    if ( IsArtefact(object) )
-        object->Location(mxgridref(mx->gamemap->Size().cx, 0));     // off the map, like the placeholder keeps
+    return mx->text->CookedSystemString(id, this);
 }
 
 } // namespace tme

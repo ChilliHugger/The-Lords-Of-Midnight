@@ -26,24 +26,24 @@ namespace {
     struct quest_choice_t {
         mxquest_t   quest;
         LPCSTR      icon;       // misc/<icon>.png - the 1995 game's own symbol
-        LPCSTR      label;
-        LPCSTR      prompt;     // the heading of its list of targets
+        u32         label;
+        u32         prompt;     // the heading of its list of targets
         bool        place;      // chosen on the map rather than from a list
     };
 
     const quest_choice_t quest_choices[] = {
-        { QS_RECRUIT,   "quest_recruit",    "Recruit",  "Whom should {name} try to recruit?",    false },
-        { QS_JOIN,      "quest_join",       "Join",     "Whom should {name} join?",              false },
-        { QS_KILL,      "quest_kill",       "Attack",   "Whom should {name} attack?",            false },
-        { QS_RESCUE,    "quest_rescue",     "Rescue",   "Whom should {name} rescue?",            false },
-        { QS_FOLLOW,    "quest_follow",     "Shadow",   "Whom should {name} shadow?",            false },
-        { QS_GOTO,      "quest_goto",       "Go to",    "",                                      true  },
-        { QS_GUARD,     "quest_guard",      "Guard",    "",                                      true  },
-        { QS_SEIZE,     "quest_seize",      "Seize",    "Which stronghold should {name} seize?", false },
-        { QS_FIND,      "quest_find",       "Find",     "What should {name} find?",              false },
-        { QS_TAKE,      "quest_take",       "Take",     "What should {name} take?",              false },
-        { QS_DESTROY,   "quest_destroy",    "Destroy",  "What should {name} destroy?",           false },
-        { QS_REST,      "quest_rest",       "Wait",     "",                                      false },
+        { QS_RECRUIT,   "quest_recruit",    SS_QUEST_NAME_RECRUIT,  SS_QUEST_ASK_RECRUIT,   false },
+        { QS_JOIN,      "quest_join",       SS_QUEST_NAME_JOIN,     SS_QUEST_ASK_JOIN,      false },
+        { QS_KILL,      "quest_kill",       SS_QUEST_NAME_KILL,     SS_QUEST_ASK_KILL,      false },
+        { QS_RESCUE,    "quest_rescue",     SS_QUEST_NAME_RESCUE,   SS_QUEST_ASK_RESCUE,    false },
+        { QS_FOLLOW,    "quest_follow",     SS_QUEST_NAME_FOLLOW,   SS_QUEST_ASK_FOLLOW,    false },
+        { QS_GOTO,      "quest_goto",       SS_QUEST_NAME_GOTO,     SS_QUEST_PICK_GOTO,     true  },
+        { QS_GUARD,     "quest_guard",      SS_QUEST_NAME_GUARD,    SS_QUEST_PICK_GUARD,    true  },
+        { QS_SEIZE,     "quest_seize",      SS_QUEST_NAME_SEIZE,    SS_QUEST_ASK_SEIZE,     false },
+        { QS_FIND,      "quest_find",       SS_QUEST_NAME_FIND,     SS_QUEST_ASK_FIND,      false },
+        { QS_TAKE,      "quest_take",       SS_QUEST_NAME_TAKE,     SS_QUEST_ASK_TAKE,      false },
+        { QS_DESTROY,   "quest_destroy",    SS_QUEST_NAME_DESTROY,  SS_QUEST_ASK_DESTROY,   false },
+        { QS_REST,      "quest_rest",       SS_QUEST_NAME_REST,     SS_QUEST_REST,          false },
     };
 
     const quest_choice_t* ChoiceFor ( mxquest_t quest )
@@ -53,15 +53,6 @@ namespace {
                 return &choice;
         }
         return nullptr;
-    }
-
-    std::string Named ( LPCSTR text, const character& c )
-    {
-        std::string out = text;
-        auto at = out.find("{name}");
-        if ( at != std::string::npos )
-            out.replace(at, 6, c.shortname);
-        return out;
     }
 
     ax::ui::Button* QuestIcon ( LPCSTR icon, u32 tag, const chilli::ui::WidgetClickCallback& callback )
@@ -106,7 +97,7 @@ bool panel_quest::init()
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10));
 
     back = uihelper::CreateBoxButton(Size(RES(200), RES(64)));
-    back->setTitleText("Back");
+    back->setTitleText(TME_GetSystemString(Lord(), SS_QUEST_BACK));
     back->setTag(ID_QUEST);
     back->addClickEventListener(clickCallback);
     uihelper::AddBottomRight(safeArea, back, RES(32), RES(24));
@@ -186,7 +177,7 @@ void panel_quest::showQuests()
 
     questinfo_t info {};
     Character_QuestInfo(c, info);
-    setHeading(c.longname, TME_GetCharacterText(c, "CharQuest") + ".");
+    setHeading(c.longname, TME_GetCharacterText(c, "CharQuest"));
     back->setVisible(false);
 
     auto area = resetContent(0, 0);
@@ -211,7 +202,7 @@ void panel_quest::showQuests()
         icon->setPosition(centre);
         area->addChild(icon);
 
-        auto label = Label::createWithTTF(uihelper::font_config_medium, choice.label);
+        auto label = Label::createWithTTF(uihelper::font_config_medium, TME_GetSystemString(c, choice.label));
         label->getFontAtlas()->setAntiAliasTexParameters();
         label->setTextColor(Color4B(current ? _clrBlue : _clrBlack));
         label->setOpacity(open ? ALPHA(1.0f) : ALPHA(0.25f));
@@ -233,7 +224,7 @@ void panel_quest::showTargets()
     mr->questmodel.view = questview::targets;
     choices.Clear();
     Character_QuestTargets(c, choice->quest, choices);
-    setHeading(c.longname, Named(choice->prompt, c));
+    setHeading(c.longname, TME_GetSystemString(c, choice->prompt));
     back->setVisible(true);
 
     if ( choices.Count() > 0 && ID_TYPE(choices[0]) == IDT_CHARACTER ) {
@@ -282,7 +273,8 @@ void panel_quest::showTargets()
             case IDT_STRONGHOLD: {
                 stronghold keep;
                 TME_GetStronghold(keep, id);
-                text = TME_GetLocationText(keep.location) + StringUtils::format(" - %d defenders", (int)keep.totaltroops);
+                text = StringUtils::format(TME_GetSystemString(c, SS_QUEST_STRONGHOLD).c_str(),
+                                           TME_GetLocationText(keep.location).c_str(), (int)keep.totaltroops);
                 break;
             }
             case IDT_OBJECT: {
@@ -308,7 +300,7 @@ void panel_quest::showNews()
         return;
     }
 
-    setHeading("This morning", "Some of your lords have news, and await your orders.");
+    setHeading(TME_GetSystemString(Lord(), SS_QUEST_NEWS_TITLE), TME_GetSystemString(Lord(), SS_QUEST_NEWS_HEADING));
     back->setVisible(false);
 
     const f32 rowHeight = RES(150);
@@ -317,7 +309,7 @@ void panel_quest::showNews()
         character lord;
         TME_GetCharacter(lord, choices[i]);
         auto row = static_cast<Button*>(addRow(list, i, rowHeight, lord.id,
-                                               TME_GetCharacterText(lord, "CharQuestNews") + ".",
+                                               TME_GetSystemString(lord, SS_QUEST_NEWS_LINE),
                                                (layoutid_t)(ID_QUEST_TARGET + i)));
         row->setTitleFontSize(PHONE_SCALE(RES(FONT_SIZE_MEDIUM)));
     }

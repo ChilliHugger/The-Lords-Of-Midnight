@@ -210,9 +210,8 @@ void panel_map_detailed::setupTooltip()
 
 #if defined(_CITADEL_)
     if ( mr->questmodel.picking ) {
-        auto hint = Label::createWithTTF( uihelper::font_config_medium,
-            "Touch the place " + TME_CurrentCharacter().shortname
-            + ( mr->questmodel.quest == QS_GUARD ? " should guard" : " should go to" ) );
+        auto stringId = mr->questmodel.quest == QS_GUARD ? SS_QUEST_PICK_GUARD : SS_QUEST_PICK_GOTO;
+        auto hint = Label::createWithTTF( uihelper::font_config_medium, TME_GetSystemString(TME_CurrentCharacter(), stringId) );
         hint->setTextColor(Color4B(_clrWhite));
         hint->enableOutline(Color4B(_clrBlack),RES(2));
         hint->getFontAtlas()->setAntiAliasTexParameters();

@@ -498,7 +498,7 @@ void uithinkpage::setupUIElements()
     if ( mode == MODE_THINK ) {
         if ( !text.empty() && text.back() != ' ' )
             text += " ";
-        text += TME_GetCharacterText(c, "CharQuest") + ".";
+        text += TME_GetCharacterText(c, "CharQuest");
     }
 #endif
     
@@ -649,7 +649,7 @@ void uithinkpage::checkPerson ( void )
 #if defined(_CITADEL_)
     if ( Character_IsRecruited(c) && Character_IsAlive(c) ) {
         text.append("\n\n");
-        text.append(TME_GetCharacterText(c, "CharQuest") + ".");
+        text.append(TME_GetCharacterText(c, "CharQuest"));
     }
 #endif
 
