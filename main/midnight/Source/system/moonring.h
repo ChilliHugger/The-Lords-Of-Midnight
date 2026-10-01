@@ -23,6 +23,7 @@
 // models
 #include "../models/selectmodel.h"
 #include "../models/mapmodel.h"
+#include "../models/questmodel.h"
 
 using chilli::collections::c_ptr;
 
@@ -180,6 +181,9 @@ public:
     
     selectmodel             selectmodel;
     mapmodel                mapmodel;
+#if defined(_CITADEL_)
+    questmodel              questmodel;
+#endif
     
 #if defined(_MOUSE_ENABLED_)
     std::vector<mouse_data_t*>    mouseData;
