@@ -163,6 +163,8 @@ enum layoutid_t
     ID_PREVIOUS_PAGE,
     
     ID_RESET,
+
+    ID_QUEST,               // the Citadel: set one of yours a quest
     
     ID_SELECT_CHAR=1000,
     ID_LANDSCAPE=2000,
@@ -188,6 +190,9 @@ enum layoutid_t
     ID_OPTION_RULE_14=ID_OPTION_RULES+14,
 
     ID_HELP_ITEM=8000,
+
+    ID_QUEST_CHOICE=9000,   // + mxquest_t
+    ID_QUEST_TARGET=9100,   // + index in the list of targets
 };
 
 

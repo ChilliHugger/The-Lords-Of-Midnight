@@ -12,6 +12,9 @@ namespace tme {
     //
     class citadel_battle : public lom_battle
     {
+    public:
+        virtual void Duel ( mxcharacter* attacker, mxcharacter* defender );
+
     protected:
         virtual bool HasDefenders() const override;
         virtual bool TakesPart ( const mxarmy* army ) const override;
@@ -23,6 +26,11 @@ namespace tme {
 
         virtual void CharacterLosesEnergy ( mxcharacter* character ) override;
     };
+
+    inline citadel_battle* CitadelBattle ()
+    {
+        return static_cast<citadel_battle*>(mx->battle);
+    }
 
 }
 #endif // _CITADEL_

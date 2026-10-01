@@ -22,6 +22,9 @@
 #include "../panels/panel_advert.h"
 #include "../panels/panel_gameover.h"
 #include "../panels/panel_night.h"
+#if defined(_CITADEL_)
+#include "../panels/panel_quest.h"
+#endif
 
 #include "../ui/uioptionitem.h"
 
@@ -101,6 +104,10 @@ uipanel* panelmanager::getPanel( panelmode_t mode )
         panel =  panel_map_detailed::create();
     else if ( mode == MODE_WIN || mode == MODE_LOSE    )
         panel =  panel_gameover::create();
+#if defined(_CITADEL_)
+    else if ( mode == MODE_QUEST )
+        panel =  panel_quest::create();
+#endif
     
     if ( panel != nullptr ) {
         panel->currentmode = mode;

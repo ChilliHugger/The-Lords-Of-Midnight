@@ -207,6 +207,21 @@ void panel_map_detailed::setupTooltip()
     toolTip->setVisible(false);
     toolTip->setLocalZOrder(ZORDER_DEFAULT);
     uihelper::AddTopCenter(safeArea, toolTip, RES(0), RES(32));
+
+#if defined(_CITADEL_)
+    if ( mr->questmodel.picking ) {
+        auto hint = Label::createWithTTF( uihelper::font_config_medium,
+            "Touch the place " + TME_CurrentCharacter().shortname
+            + ( mr->questmodel.quest == QS_GUARD ? " should guard" : " should go to" ) );
+        hint->setTextColor(Color4B(_clrWhite));
+        hint->enableOutline(Color4B(_clrBlack),RES(2));
+        hint->getFontAtlas()->setAntiAliasTexParameters();
+        hint->setAnchorPoint(uihelper::AnchorCenter);
+        hint->setLocalZOrder(ZORDER_DEFAULT);
+        uihelper::AddBottomCenter(safeArea, hint, RES(0), RES(48));
+    }
+#endif
+
     addTouchListener();
 }
 
@@ -245,6 +260,9 @@ void panel_map_detailed::OnNotification( Ref* sender )
             
         case ID_LOOK:
             mr->settings->Save();
+#if defined(_CITADEL_)
+            mr->questmodel.picking = false;
+#endif
             mr->look();
             break;
             
@@ -344,6 +362,14 @@ void panel_map_detailed::addTouchListener()
     // mouse events
     auto touchListener = EventListenerTouchOneByOne::create();
     
+    auto gridAt = [this]( Touch* touch ) {
+        auto loc = tmxMap->convertToNodeSpace(touch->getLocation());
+        loc.y = tmxMap->getContentSize().height - loc.y;
+        loc.x /= RES(64);
+        loc.y /= RES(64);
+        return mxgridref(loc.x+mapBuilder->loc_start.x, loc.y+mapBuilder->loc_start.y);
+    };
+
     // trigger when you push down
     touchListener->onTouchBegan = [=, this](Touch* touch, Event* event){
      
@@ -353,6 +379,11 @@ void panel_map_detailed::addTouchListener()
         loc.y /= RES(64);
         
         auto grid = mxgridref(loc.x+mapBuilder->loc_start.x, loc.y+mapBuilder->loc_start.y);
+
+#if defined(_CITADEL_)
+        if ( mr->questmodel.picking )
+            return true;
+#endif
   
         tme::scenarios::exports::location_t l;
         TME_GetLocation(l, grid);
@@ -396,6 +427,20 @@ void panel_map_detailed::addTouchListener()
     
     // trigger when you let up
     touchListener->onTouchEnded = [=, this](Touch* touch, Event* event){
+#if defined(_CITADEL_)
+        if ( mr->questmodel.picking ) {
+            if ( touch->getLocation().distance(touch->getStartLocation()) > RES(16) )
+                return;
+            auto grid = gridAt(touch);
+            if ( Character_SetQuest(TME_CurrentCharacter(), mr->questmodel.quest, MAKE_LOCID(grid.x, grid.y)) ) {
+                mr->questmodel.picking = false;
+                mr->questmodel.view = questview::quests;
+                TME_RefreshCurrentCharacter();
+                mr->showPage(MODE_QUEST);
+            }
+            return;
+        }
+#endif
         if(toolTip->isVisible()) {
             toolTip->stopAllActions();
             toolTip->runAction(Sequence::create(

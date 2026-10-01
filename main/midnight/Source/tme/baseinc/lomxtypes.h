@@ -412,6 +412,16 @@ using namespace chilli::types;
             RE_COUNTER_THREAT,
             RE_LEND_SERVICE,
         };
+
+        enum mxquestnews_t {
+            QN_NONE                     =    0,
+            QN_DONE,                    // the quest is over, and he waits for orders
+            QN_FAILED,                  // what he went for is gone - dead, taken, or out of reach
+            QN_REFUSED,                 // the lord he went to recruit would not be persuaded
+            QN_OFFENDED,                // ...and was offended, and set upon him
+            QN_BLOCKED,                 // the enemy stands in his road
+            QN_IMPATIENT,               // left waiting too long, he has set out on a quest of his own
+        };
 #endif
 
 #if defined(_DDR_) || defined(_CITADEL_)

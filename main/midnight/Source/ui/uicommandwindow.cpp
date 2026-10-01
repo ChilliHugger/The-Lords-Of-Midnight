@@ -154,6 +154,15 @@ void uicommandwindow::initialiseCommands()
     auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
     addItem(fight,CHOOSE_FIGHT);
 #endif
+
+#if defined(_CITADEL_)
+    auto quest = Button::create("misc/i_quest.png", "", "", Widget::TextureResType::LOCAL);
+    quest->setTag(ID_QUEST);
+    quest->addClickEventListener(callback);
+    quest->setScale(PHONE_SCALE(scale_normal));
+    quest->setLocalZOrder(ZORDER_UI);
+    addItem(quest,CHOOSE_QUEST);
+#endif
     
 #if defined(_DDR_)
     if ( tme::variables::sv_cheat_nasties_noblock ) {
