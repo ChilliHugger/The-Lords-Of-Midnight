@@ -692,6 +692,7 @@ using namespace chilli::types;
             RF_DDR_BETTER_ARMIES            = MXBIT(8),
             RF_LOM_FEY_RECRUIT_NOVEL        = MXBIT(9),
             RF_DDR_CIRCULAR_LIEGE_FIX       = MXBIT(10),
+            RF_DDR_LORD_DEATH_LOM           = MXBIT(11),
             RF_DEFAULT = RF_DDR_CIRCULAR_LIEGE_FIX,
             RF_NONE = 0,
             RF_DDR_MOVEMENT_MASK            = RF_DDR_MOVEMENT_SPECTRUM|RF_DDR_MOVEMENT_C64,

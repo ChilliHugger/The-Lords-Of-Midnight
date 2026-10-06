@@ -144,6 +144,7 @@ https://axmol.dev)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_C64            = "ORIGINAL C64";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_8              = "UPGRADE SHARETH ARMY AI";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_9              = "FIX CIRCULAR LIEGE";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_10             = "LOM LORD DEATH RULES";
 
     constexpr LPCSTR OPTIONS_GAME_SCENARIO              = "SCENARIO";
     constexpr LPCSTR OPTIONS_GAME_SCENARIO_LOM          = "DEFAULT";

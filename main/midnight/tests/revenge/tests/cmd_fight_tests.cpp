@@ -256,3 +256,92 @@ SCENARIO("Lord fights a nasty with no object but armies")
 
 
 
+
+
+SCENARIO("Lord fights with RF_DDR_LORD_DEATH_LOM disabled")
+{
+    GIVEN("LoM death rule is disabled")
+    {
+        TMEStep::NewStory(RF_DEFAULT);
+
+        auto lord = LordNeedstoFightNasty( TMEStep::ch_morkin, OB_DRAGONS );
+        auto character = GetDDRCharacter(lord.c_str());
+        character->reckless = 0;
+
+        AND_GIVEN("lord has an army")
+        {
+            character->warriors.Total(100);
+            character->riders.Total(100);
+
+            WHEN("the random rolls all say the lord should die")
+            {
+                ScopedRandom random({ 1 }); // odd, and reckless (0) is below it
+
+                THEN("lord should die")
+                {
+                    REQUIRE( character->ShouldDieInFight() );
+                }
+            }
+        }
+
+        AND_GIVEN("lord has no army")
+        {
+            character->warriors.Total(0);
+            character->riders.Total(0);
+
+            WHEN("the random rolls all say the lord should die")
+            {
+                ScopedRandom random({ 1 });
+
+                THEN("lord should die")
+                {
+                    REQUIRE( character->ShouldDieInFight() );
+                }
+            }
+        }
+    }
+}
+
+SCENARIO("Lord fights with RF_DDR_LORD_DEATH_LOM enabled")
+{
+    GIVEN("LoM death rule is enabled")
+    {
+        TMEStep::NewStory(RF_DDR_LORD_DEATH_LOM);
+
+        auto lord = LordNeedstoFightNasty( TMEStep::ch_morkin, OB_DRAGONS );
+        auto character = GetDDRCharacter(lord.c_str());
+        character->reckless = 0;
+
+        AND_GIVEN("lord has an army")
+        {
+            character->warriors.Total(100);
+            character->riders.Total(100);
+
+            WHEN("the random rolls all say the lord should die")
+            {
+                ScopedRandom random({ 1 });
+
+                THEN("lord should not die")
+                {
+                    REQUIRE( !character->ShouldDieInFight() );
+                }
+            }
+        }
+
+        AND_GIVEN("lord has no army")
+        {
+            character->warriors.Total(0);
+            character->riders.Total(0);
+
+            WHEN("the random rolls all say the lord should die")
+            {
+                ScopedRandom random({ 1 });
+
+                THEN("lord should die")
+                {
+                    REQUIRE( character->ShouldDieInFight() );
+                }
+            }
+        }
+    }
+}
