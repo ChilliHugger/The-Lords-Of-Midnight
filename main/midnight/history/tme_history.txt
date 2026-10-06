@@ -1,5 +1,17 @@
 The Midnight Engine
 
+Build (57)
+1. FIXED: DDR - Circular liege when a lord recruits their own liege
+2. ADDED: DDR - Game Option - 'Fix Circular Liege', on by default and enabled for existing games
+3. ADDED: Map pinch and zoom
+4. ADDED: Map extends beyond the edge UI elements
+5. ADDED: Help icon on the actions menu
+6. ADDED: DESKTOP - Arrows on the screen pager
+7. CHANGED: Dedication screen is no longer shown every time
+8. CHANGED: Upgraded to latest Axmol, targeting Android 36
+9. FIXED: HTTP urls updated to HTTPS
+10. CHANGED: IOS/OSX - Added new support for document sharing
+
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up
 

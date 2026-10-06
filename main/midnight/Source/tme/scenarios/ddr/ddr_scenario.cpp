@@ -163,6 +163,11 @@ void ddr_x::updateAfterLoad ( u32 version )
 
     utils::UpdateDDRObjects::FixRecruitmentFlags();
 
+    // existing games get the circular liege fix
+    if ( version < 21 ) {
+        mx->setRules(RF_DDR_CIRCULAR_LIEGE_FIX);
+    }
+
     mxscenario::updateAfterLoad(version);
 }
     

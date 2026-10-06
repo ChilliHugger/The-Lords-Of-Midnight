@@ -799,8 +799,17 @@ namespace tme {
         if ( recruiter == this ) {
             MXTRACE("Recruited: Error Setting Liege to self! %s", Longname().c_str());
         }
-        liege = recruiter; //->Liege() ;
-        
+        // Original game bug (#294): if we are already above the recruiter in
+        // the liege tree, then making the recruiter our liege would create a
+        // circular liege. We become the top of the tree again, with no liege.
+        // The recruiter keeps us as their liege.
+        if ( mx->isRuleEnabled(RF_DDR_CIRCULAR_LIEGE_FIX) && utils::IsCircularLiege(recruiter, this) ) {
+            MXTRACE("Recruited: Circular Liege avoided: %s", Longname().c_str());
+            liege = nullptr;
+        } else {
+            liege = recruiter; //->Liege() ;
+        }
+
         // 3. our loyalty race becomes recruiting character loyalty race
         loyalty = recruiter->NormalisedLoyalty() ;
         

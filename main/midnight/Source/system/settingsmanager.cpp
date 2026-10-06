@@ -65,7 +65,7 @@ settingsmanager::settingsmanager() :
 //    nav_mode=PRESS;
 //#endif
     game_rules.Clear();
-    game_rules.Set(RF_NONE);
+    game_rules.Set(RF_DEFAULT);
 }
 
 
@@ -281,6 +281,11 @@ bool settingsmanager::Load ( void )
     
     if ( version >= 15 ) {
         ar >> dedication_screen_count;
+    }
+
+    // existing settings get the circular liege fix
+    if ( version < 16 ) {
+        game_rules.Set(RF_DDR_CIRCULAR_LIEGE_FIX);
     }
 
     ar.Close();
