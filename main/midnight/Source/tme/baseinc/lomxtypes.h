@@ -734,6 +734,8 @@ using namespace chilli::types;
             SS_QUEST_NAME_REST,
             SS_QUEST_STRONGHOLD,
             SS_QUEST_BACK,
+            SS_QUEST_HELD,
+            SS_QUEST_STATUS,
 
             SS_MAX_STRINGS = 255
         };
@@ -1219,6 +1221,7 @@ namespace tme {
         bool operator != ( const mxgridref& loc ) const;
         void operator += ( mxdir_t dir )                        { AddDirection(dir); }
         mxdir_t DirFromHere ( const mxgridref& loc ) const;
+        bool IsNear ( const mxgridref& loc ) const;
   
         static s32 DirectionLookTable[];
         

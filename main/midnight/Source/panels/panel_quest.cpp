@@ -21,54 +21,28 @@ USING_NS_AX;
 USING_NS_AX_UI;
 USING_NS_TME;
 
-namespace {
+const panel_quest::quest_choice_t panel_quest::questChoices[] = {
+    { QS_RECRUIT,   "quest_recruit",    SS_QUEST_NAME_RECRUIT,  SS_QUEST_ASK_RECRUIT,   false },
+    { QS_JOIN,      "quest_join",       SS_QUEST_NAME_JOIN,     SS_QUEST_ASK_JOIN,      false },
+    { QS_KILL,      "quest_kill",       SS_QUEST_NAME_KILL,     SS_QUEST_ASK_KILL,      false },
+    { QS_RESCUE,    "quest_rescue",     SS_QUEST_NAME_RESCUE,   SS_QUEST_ASK_RESCUE,    false },
+    { QS_FOLLOW,    "quest_follow",     SS_QUEST_NAME_FOLLOW,   SS_QUEST_ASK_FOLLOW,    false },
+    { QS_GOTO,      "quest_goto",       SS_QUEST_NAME_GOTO,     SS_QUEST_PICK_GOTO,     true  },
+    { QS_GUARD,     "quest_guard",      SS_QUEST_NAME_GUARD,    SS_QUEST_PICK_GUARD,    true  },
+    { QS_SEIZE,     "quest_seize",      SS_QUEST_NAME_SEIZE,    SS_QUEST_ASK_SEIZE,     false },
+    { QS_FIND,      "quest_find",       SS_QUEST_NAME_FIND,     SS_QUEST_ASK_FIND,      false },
+    { QS_TAKE,      "quest_take",       SS_QUEST_NAME_TAKE,     SS_QUEST_ASK_TAKE,      false },
+    { QS_DESTROY,   "quest_destroy",    SS_QUEST_NAME_DESTROY,  SS_QUEST_ASK_DESTROY,   false },
+    { QS_REST,      "quest_rest",       SS_QUEST_NAME_REST,     SS_QUEST_REST,          false },
+};
 
-    struct quest_choice_t {
-        mxquest_t   quest;
-        LPCSTR      icon;       // misc/<icon>.png - the 1995 game's own symbol
-        u32         label;
-        u32         prompt;     // the heading of its list of targets
-        bool        place;      // chosen on the map rather than from a list
-    };
-
-    const quest_choice_t quest_choices[] = {
-        { QS_RECRUIT,   "quest_recruit",    SS_QUEST_NAME_RECRUIT,  SS_QUEST_ASK_RECRUIT,   false },
-        { QS_JOIN,      "quest_join",       SS_QUEST_NAME_JOIN,     SS_QUEST_ASK_JOIN,      false },
-        { QS_KILL,      "quest_kill",       SS_QUEST_NAME_KILL,     SS_QUEST_ASK_KILL,      false },
-        { QS_RESCUE,    "quest_rescue",     SS_QUEST_NAME_RESCUE,   SS_QUEST_ASK_RESCUE,    false },
-        { QS_FOLLOW,    "quest_follow",     SS_QUEST_NAME_FOLLOW,   SS_QUEST_ASK_FOLLOW,    false },
-        { QS_GOTO,      "quest_goto",       SS_QUEST_NAME_GOTO,     SS_QUEST_PICK_GOTO,     true  },
-        { QS_GUARD,     "quest_guard",      SS_QUEST_NAME_GUARD,    SS_QUEST_PICK_GUARD,    true  },
-        { QS_SEIZE,     "quest_seize",      SS_QUEST_NAME_SEIZE,    SS_QUEST_ASK_SEIZE,     false },
-        { QS_FIND,      "quest_find",       SS_QUEST_NAME_FIND,     SS_QUEST_ASK_FIND,      false },
-        { QS_TAKE,      "quest_take",       SS_QUEST_NAME_TAKE,     SS_QUEST_ASK_TAKE,      false },
-        { QS_DESTROY,   "quest_destroy",    SS_QUEST_NAME_DESTROY,  SS_QUEST_ASK_DESTROY,   false },
-        { QS_REST,      "quest_rest",       SS_QUEST_NAME_REST,     SS_QUEST_REST,          false },
-    };
-
-    const quest_choice_t* ChoiceFor ( mxquest_t quest )
-    {
-        for ( const auto& choice : quest_choices ) {
-            if ( choice.quest == quest )
-                return &choice;
-        }
-        return nullptr;
+const panel_quest::quest_choice_t* panel_quest::choiceFor( mxquest_t quest )
+{
+    for ( const auto& choice : questChoices ) {
+        if ( choice.quest == quest )
+            return &choice;
     }
-
-    ax::ui::Button* QuestIcon ( LPCSTR icon, u32 tag, const chilli::ui::WidgetClickCallback& callback )
-    {
-        auto button = ax::ui::Button::create(std::string("misc/") + icon + ".png", "", "", ax::ui::Widget::TextureResType::LOCAL);
-        button->setTag(tag);
-        button->addClickEventListener(callback);
-        button->setScale(PHONE_SCALE(scale_normal));
-        button->setLocalZOrder(ZORDER_UI);
-        return button;
-    }
-
-    character& Lord ()
-    {
-        return TME_CurrentCharacter();
-    }
+    return nullptr;
 }
 
 bool panel_quest::init()
@@ -97,7 +71,7 @@ bool panel_quest::init()
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10));
 
     back = uihelper::CreateBoxButton(Size(RES(200), RES(64)));
-    back->setTitleText(TME_GetSystemString(Lord(), SS_QUEST_BACK));
+    back->setTitleText(TME_GetSystemString(TME_CurrentCharacter(), SS_QUEST_BACK));
     back->setTag(ID_QUEST);
     back->addClickEventListener(clickCallback);
     uihelper::AddBottomRight(safeArea, back, RES(32), RES(24));
@@ -173,30 +147,30 @@ ax::ui::Widget* panel_quest::addRow( ScrollView* list, size_t index, f32 rowHeig
 void panel_quest::showQuests()
 {
     mr->questmodel.view = questview::quests;
-    auto& c = Lord();
+    auto& c = TME_CurrentCharacter();
 
     questinfo_t info {};
     Character_QuestInfo(c, info);
-    setHeading(c.longname, TME_GetCharacterText(c, "CharQuest"));
+    setHeading(c.longname, TME_GetSystemString(c, SS_QUEST_STATUS));
     back->setVisible(false);
 
     auto area = resetContent(0, 0);
     auto size = area->getContentSize();
     const int columns = 6;
-    const int rows = ( (int)NUMELE(quest_choices) + columns - 1 ) / columns;
+    const int rows = ( (int)NUMELE(questChoices) + columns - 1 ) / columns;
     auto cell = Size(size.width / columns, size.height / rows);
 
-    for ( size_t i = 0; i < NUMELE(quest_choices); i++ ) {
-        const auto& choice = quest_choices[i];
+    for ( size_t i = 0; i < NUMELE(questChoices); i++ ) {
+        const auto& choice = questChoices[i];
         c_mxid targets;
-        bool open = choice.place || choice.quest == QS_REST
-            || Character_QuestTargets(c, choice.quest, targets) > 0;
+        bool open = info.able && ( choice.place || choice.quest == QS_REST
+            || Character_QuestTargets(c, choice.quest, targets) > 0 );
         bool current = info.quest == choice.quest || ( choice.quest == QS_REST && info.quest == QS_NONE );
 
         auto centre = Vec2(cell.width * ( (i % columns) + 0.5f ),
                            size.height - cell.height * ( (i / columns) + 0.45f ));
 
-        auto icon = QuestIcon(choice.icon, ID_QUEST_CHOICE + choice.quest, clickCallback);
+        auto icon = uihelper::CreateImageButton(choice.icon, ID_QUEST_CHOICE + choice.quest, clickCallback);
         uihelper::setEnabled(icon, open);
         icon->setAnchorPoint(uihelper::AnchorCenter);
         icon->setPosition(centre);
@@ -214,8 +188,8 @@ void panel_quest::showQuests()
 
 void panel_quest::showTargets()
 {
-    auto& c = Lord();
-    auto choice = ChoiceFor(mr->questmodel.quest);
+    auto& c = TME_CurrentCharacter();
+    auto choice = choiceFor(mr->questmodel.quest);
     if ( choice == nullptr ) {
         showQuests();
         return;
@@ -300,7 +274,7 @@ void panel_quest::showNews()
         return;
     }
 
-    setHeading(TME_GetSystemString(Lord(), SS_QUEST_NEWS_TITLE), TME_GetSystemString(Lord(), SS_QUEST_NEWS_HEADING));
+    setHeading(TME_GetSystemString(TME_CurrentCharacter(), SS_QUEST_NEWS_TITLE), TME_GetSystemString(TME_CurrentCharacter(), SS_QUEST_NEWS_HEADING));
     back->setVisible(false);
 
     const f32 rowHeight = RES(150);
@@ -317,14 +291,14 @@ void panel_quest::showNews()
 
 void panel_quest::choose( mxquest_t quest )
 {
-    auto choice = ChoiceFor(quest);
+    auto choice = choiceFor(quest);
     if ( choice == nullptr )
         return;
 
     mr->questmodel.quest = quest;
 
     if ( quest == QS_REST ) {
-        Character_SetQuest(Lord(), QS_REST, IDT_NONE);
+        Character_SetQuest(TME_CurrentCharacter(), QS_REST, IDT_NONE);
         TME_RefreshCurrentCharacter();
         showQuests();
         return;
@@ -353,7 +327,7 @@ void panel_quest::target( size_t index )
         return;
     }
 
-    Character_SetQuest(Lord(), mr->questmodel.quest, choices[index]);
+    Character_SetQuest(TME_CurrentCharacter(), mr->questmodel.quest, choices[index]);
     TME_RefreshCurrentCharacter();
     showQuests();
 }

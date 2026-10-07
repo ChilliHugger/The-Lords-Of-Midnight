@@ -1325,6 +1325,7 @@ __char:
                     auto lord = static_cast<const citadel_character*>(character);
                     is++;
                     IS_ARG("news")      return lord->NewsText();
+                    IS_ARG("text")      return lord->QuestText();
                     IS_ARG("char")      {
                                             character = CharacterTarget(lord->questtarget);
                                             goto __char;

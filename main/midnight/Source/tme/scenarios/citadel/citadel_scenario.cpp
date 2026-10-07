@@ -314,6 +314,12 @@ bool citadel_x::MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) 
     return found;
 }
 
+bool citadel_x::Reachable ( mxgridref from, mxgridref to ) const
+{
+    mxgridref step;
+    return from == to || MarchStep(from, to, step);
+}
+
 bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
 {
     return MarchStep(regiment->Location(), target, step);
@@ -480,6 +486,7 @@ COMMAND( OnCharQuestInfo )
     argv[0] = (s32)lord->quest;
     argv[1] = lord->questtarget;
     argv[2] = (s32)lord->news;
+    argv[3] = (s32)lord->CanQuest();
     return MX_OK;
 }
 
@@ -488,24 +495,7 @@ COMMAND( OnCharQuestTargets )
     auto& targets = *static_cast<c_mxid*>(argv[0].vPtr);
     CONVERT_CHARACTER_ID( argv[1].vId, character );
     auto lord = CitadelLord(character);
-    auto quest = (mxquest_t)argv[2].vSInt32;
-
-    targets.Clear();
-    auto offer = [&]( mxentity* entity ) {
-        auto id = mxentity::SafeIdt(entity);
-        if ( lord->CanQuest(quest, id) )
-            targets.Add(id);
-    };
-    FOR_EACH_CHARACTER(other) {
-        offer(other);
-    }
-    FOR_EACH_STRONGHOLD(stronghold) {
-        if ( mx->gamemap->IsLocOnMap(stronghold->Location()) )
-            offer(stronghold);
-    }
-    FOR_EACH_OBJECT(object) {
-        offer(object);
-    }
+    lord->QuestTargets((mxquest_t)argv[2].vSInt32, targets);
     argv[0] = (s32)targets.Count();
     return MX_OK;
 }
@@ -534,32 +524,6 @@ MXRESULT citadel_x::Command ( const std::string& arg, variant argv[], u32 argc )
 {
     auto result = mx->ProcessCommand(citadel_commands, NUMELE(citadel_commands), arg, argv, argc);
     return result != MX_UNKNOWN ? result : mxscenario::Command(arg, argv, argc);
-}
-
-static std::string citadel_text_buffer;
-
-static MXRESULT ReturnText ( variant argv[], const std::string& text )
-{
-    citadel_text_buffer = text;
-    argv[0] = (s32)1;
-    argv[1].vString = (LPSTR)citadel_text_buffer.c_str();
-    return MX_OK;
-}
-
-COMMAND( OnTextCharQuest )
-{
-    CONVERT_CHARACTER_ID( argv[0].vId, character );
-    return ReturnText(argv, CitadelLord(character)->QuestText());
-}
-
-static mxcommand_t citadel_text[] = {
-    { "CharQuest",      1,  OnTextCharQuest,        { arguments::character } },
-};
-
-MXRESULT citadel_x::Text ( const std::string& arg, variant argv[], u32 argc )
-{
-    auto result = mx->ProcessCommand(citadel_text, NUMELE(citadel_text), arg, argv, argc);
-    return result != MX_UNKNOWN ? result : mxscenario::Text(arg, argv, argc);
 }
 
 citadel_object::citadel_object()

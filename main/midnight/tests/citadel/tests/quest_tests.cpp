@@ -630,6 +630,41 @@ SCENARIO("A lord's quest and his news are told from strings.tsv, naming whom or 
         REQUIRE( text(SS_QUEST_ASK_RECRUIT, rorthron) == "Whom should Rorthron try to recruit?" );
         REQUIRE( text(SS_QUEST_PICK_GUARD, rorthron) == "Touch the place Rorthron should guard" );
     }
+
+    THEN("thinking about a lord of yours ends with his quest, in the strings rather than the screen")
+    {
+        REQUIRE( rorthron->SetQuest(QS_REST, IDT_NONE) );
+        REQUIRE_THAT( text(SS_MESSAGE1, rorthron), Catch::Matchers::EndsWith(" Rorthron waits for your orders.") );
+        REQUIRE_THAT( text(SS_MESSAGE4, rorthron), Catch::Matchers::EndsWith("\n\nRorthron waits for your orders.") );
+        REQUIRE( text(SS_QUEST_STATUS, rorthron) == "Rorthron waits for your orders." );
+    }
+}
+
+SCENARIO("Luxor begins the game held captive, and can take no quest until he is free")
+{
+    TMEStep::NewStory();
+
+    auto luxor = Lord("CH_LUXOR");
+    auto here = luxor->Location();
+    REQUIRE( luxor->IsPrisoner() );
+
+    THEN("no quest is his to take, not even a walk, and his quest is told as his captivity")
+    {
+        REQUIRE_FALSE( luxor->CanQuest() );
+        REQUIRE_FALSE( luxor->SetQuest(QS_GOTO, MAKE_LOCID(here.x + 1, here.y)) );
+        REQUIRE( luxor->QuestText() == "Luxor is held captive, and can set out on no quest." );
+    }
+
+    WHEN("he is set free")
+    {
+        luxor->Flags().Reset(cf_prisoner);
+
+        THEN("he can be sent anywhere on the map")
+        {
+            REQUIRE( luxor->CanQuest() );
+            REQUIRE( luxor->SetQuest(QS_GOTO, MAKE_LOCID(here.x + 1, here.y)) );
+        }
+    }
 }
 
 SCENARIO("A guard sets upon one of Boroth's lords who comes close")

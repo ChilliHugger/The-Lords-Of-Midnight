@@ -784,6 +784,7 @@ bool Character_QuestInfo ( const character& c, questinfo_t& out )
     out.quest = (mxquest_t)args[0].vSInt32;
     out.target = args[1].vId;
     out.news = (mxquestnews_t)args[2].vSInt32;
+    out.able = args[3].vSInt32 != 0;
     return true;
 }
 

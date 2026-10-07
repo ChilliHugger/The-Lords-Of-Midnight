@@ -77,6 +77,11 @@ protected:
     void updateScale();
     
     void addTouchListener();
+    tme::mxgridref gridAt( const Vec2& location ) const;
+
+#if defined(_CITADEL_)
+    void pickQuestPlace( tme::mxgridref place );
+#endif
 
 private:
     

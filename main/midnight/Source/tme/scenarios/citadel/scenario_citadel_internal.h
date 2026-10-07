@@ -27,7 +27,6 @@ namespace tme {
         virtual void initialiseAfterCreate ( u32 version ) override;
 
         virtual MXRESULT Command ( const std::string& arg, variant argv[], u32 argc ) override;
-        virtual MXRESULT Text ( const std::string& arg, variant argv[], u32 argc ) override;
 
         virtual mxcharacter* BadGuy() const override;
         virtual bool isTerrainImpassable ( mxterrain_t terrain, const mxitem* target ) const override;
@@ -46,6 +45,7 @@ namespace tme {
         bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
         bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
+        bool Reachable ( mxgridref from, mxgridref to ) const;
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
@@ -129,7 +129,10 @@ namespace tme {
         virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
 
+        bool Marches () const;              // will leave his keeps to fight for them
+        bool CanQuest () const;             // free to take any quest at all
         bool CanQuest ( mxquest_t quest, mxid target ) const;
+        void QuestTargets ( mxquest_t quest, c_mxid& targets ) const;
         bool SetQuest ( mxquest_t quest, mxid target );
         mxgridref QuestLocation () const;
         std::string QuestText () const;     // what he is about, in a sentence

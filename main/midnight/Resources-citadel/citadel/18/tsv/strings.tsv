@@ -25,10 +25,10 @@ Version	Id	Symbol	Text
 7	23	SS_KILLED_BATTLE	{case:first}{char:gender:heshe} was killed in battle. %s
 7	24	SS_HIDDEN	{case:first}{char:name} is hidden.{sp}
 7	25	SS_MUSTFIGHT	{case:first}{char:loc:obj:name} are abroad and {char:gender:heshe} must fight or hide.{sp}
-7	26	SS_MESSAGE1	{char:text:title}{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}.{sp}
+7	26	SS_MESSAGE1	{char:text:title}{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}.{sp}{char:quest:text}
 7	27	SS_MESSAGE2	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:army}
-7	28	SS_MESSAGE3	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group}
-7	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group}
+7	28	SS_MESSAGE3	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group}{lf}{lf}{char:quest:text}
+7	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group}{lf}{lf}{char:quest:text}
 7	30	SS_MESSAGE5	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
 7	31	SS_MESSAGE6	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
 7	32	SS_SEEK	{case:first}{char:gender:heshe} has found {obj:text}.{sp}
@@ -149,3 +149,5 @@ Version	Id	Symbol	Text
 7	171	SS_QUEST_NAME_REST	Wait
 7	172	SS_QUEST_STRONGHOLD	%s - %d defenders
 7	173	SS_QUEST_BACK	Back
+7	174	SS_QUEST_HELD	{char:name} is held captive, and can set out on no quest.
+7	175	SS_QUEST_STATUS	{char:quest:text}

@@ -156,11 +156,7 @@ void uicommandwindow::initialiseCommands()
 #endif
 
 #if defined(_CITADEL_)
-    auto quest = Button::create("misc/i_quest.png", "", "", Widget::TextureResType::LOCAL);
-    quest->setTag(ID_QUEST);
-    quest->addClickEventListener(callback);
-    quest->setScale(PHONE_SCALE(scale_normal));
-    quest->setLocalZOrder(ZORDER_UI);
+    auto quest = uihelper::CreateImageButton("i_quest", ID_QUEST, callback);
     addItem(quest,CHOOSE_QUEST);
 #endif
     
@@ -292,6 +288,12 @@ void uicommandwindow::updateElements()
     // FIGHT
     ENABLE_IF_LOC_FLAG(ID_FIGHT, lif_fight);
     
+#if defined(_CITADEL_)
+    // QUEST
+    questinfo_t quest {};
+    enableItem(ID_QUEST, Character_QuestInfo(c, quest) && quest.able);
+#endif
+
 #if defined(_DDR_)
     ENABLE_IF_LOC_FLAG(ID_GIVE, lif_give);
     setupGiveText();

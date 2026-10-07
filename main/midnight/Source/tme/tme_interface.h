@@ -234,6 +234,7 @@ struct questinfo_t {
     mxquest_t      quest;
     mxid                target;
     mxquestnews_t  news;
+    bool           able;       // free to take a quest at all
 };
 bool Character_QuestInfo ( const character& c, questinfo_t& out );
 bool Character_SetQuest ( const character& c, mxquest_t quest, mxid target );

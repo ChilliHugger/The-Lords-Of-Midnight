@@ -85,55 +85,53 @@ mxcharacter* citadel_battle::Liberator() const
     return lord != nullptr ? lord : lom_battle::Liberator();
 }
 
+void citadel_battle::Enlist ( side_t& side, u32 total, mxunit_t type, s32 success )
+{
+    if ( total == 0 )
+        return;
+    auto army = new mxarmy();
+    army->armytype = AT_CHARACTER;
+    army->parent = side.lord;
+    army->race = side.lord->Race();
+    army->type = type;
+    army->total = total;
+    army->success = success;
+    army->killed = 0;
+    army->loyalto = side.lord->NormalisedLoyalty();
+    side.armies.emplace_back(army);
+    side.standing.push_back(army);
+}
+
+citadel_battle::side_t citadel_battle::Muster ( mxcharacter* lord )
+{
+    side_t side { lord, {}, {} };
+    auto info = lord->GetLocInfo();
+    Enlist(side, lord->warriors.Total(), UT_WARRIORS, lord->warriors.BattleSuccess(*info, lord));
+    Enlist(side, lord->riders.Total(), UT_RIDERS, lord->riders.BattleSuccess(*info, lord));
+    return side;
+}
+
+void citadel_battle::Strike ( side_t& from, side_t& at )
+{
+    from.lord->battleslew += Fight(from.lord->FightStrength(), from.lord->energy + 128, at.standing);
+    for ( auto& army : from.armies ) {
+        if ( army->total )
+            army->killed += Fight(army->total / 5, army->success, at.standing);
+    }
+}
+
 void citadel_battle::Duel ( mxcharacter* attacker, mxcharacter* defender )
 {
-    struct side_t {
-        mxcharacter*                        lord;
-        std::vector<std::unique_ptr<mxarmy>> armies;
-        c_army                              standing;
-    };
-
-    auto muster = []( mxcharacter* lord ) {
-        side_t side { lord, {}, {} };
-        auto info = lord->GetLocInfo();
-        auto enlist = [&]( u32 total, mxunit_t type, s32 success ) {
-            if ( total == 0 )
-                return;
-            auto army = new mxarmy();
-            army->armytype = AT_CHARACTER;
-            army->parent = lord;
-            army->race = lord->Race();
-            army->type = type;
-            army->total = total;
-            army->success = success;
-            army->killed = 0;
-            army->loyalto = lord->NormalisedLoyalty();
-            side.armies.emplace_back(army);
-            side.standing.push_back(army);
-        };
-        enlist(lord->warriors.Total(), UT_WARRIORS, lord->warriors.BattleSuccess(*info, lord));
-        enlist(lord->riders.Total(), UT_RIDERS, lord->riders.BattleSuccess(*info, lord));
-        return side;
-    };
-
-    auto strike = [this]( side_t& from, side_t& at ) {
-        from.lord->battleslew += Fight(from.lord->FightStrength(), from.lord->energy + 128, at.standing);
-        for ( auto& army : from.armies ) {
-            if ( army->total )
-                army->killed += Fight(army->total / 5, army->success, at.standing);
-        }
-    };
-
-    auto a = muster(attacker);
-    auto d = muster(defender);
+    auto a = Muster(attacker);
+    auto d = Muster(defender);
 
     for ( auto lord : { attacker, defender } ) {
         lord->EnterBattle();
         lord->battleloc = defender->Location();
     }
 
-    strike(a, d);
-    strike(d, a);
+    Strike(a, d);
+    Strike(d, a);
 
     for ( auto side : { &a, &d } ) {
         for ( auto& army : side->armies )
@@ -160,6 +158,40 @@ void citadel_battle::Duel ( mxcharacter* attacker, mxcharacter* defender )
     }
 
     Announce(defender->Location());
+}
+
+void citadel_battle::Attack ( mxcharacter* lord )
+{
+    if ( !lord->IsAIControlled() ) {
+        lord->Cmd_Attack();
+        return;
+    }
+
+    if ( lord->Cmd_WalkForward(false, false) == MX_OK )
+        lord->EnterBattle();
+}
+
+//
+// A lord on guard falls on Boroth's lords, and on any of his host he has the men to beat, on his
+// own square or the eight around it.
+//
+bool citadel_battle::Guard ( mxcharacter* lord )
+{
+    auto here = lord->Location();
+    FOR_EACH_CHARACTER(foe) {
+        CONTINUE_IF( foe->Race() != RA_ENEMY || foe->IsDead() || foe->IsPrisoner() || !here.IsNear(foe->Location()) );
+        Duel(lord, foe);
+        return true;
+    }
+
+    FOR_EACH_REGIMENT(regiment) {
+        CONTINUE_IF( regiment->Race() != RA_ENEMY || regiment->Total() == 0 || !mx->gamemap->IsLocOnMap(regiment->Location())
+                     || regiment->Location() == here || !here.IsNear(regiment->Location()) || lord->Men() < regiment->Total() );
+        lord->looking = here.DirFromHere(regiment->Location());
+        Attack(lord);
+        return true;
+    }
+    return false;
 }
 
 void citadel_battle::CharacterLosesEnergy ( mxcharacter* character )

@@ -235,6 +235,20 @@ void panel_map_detailed::OnNotification( Ref* sender )
     
     auto id = static_cast<layoutid_t>(button->getTag());
     
+#if defined(_CITADEL_)
+    // choosing a place for a quest: a lord's shield stands on a square like any other
+    if ( mr->questmodel.picking && id >= ID_SELECT_CHAR ) {
+        character lord;
+        TME_GetCharacter(lord, id-ID_SELECT_CHAR);
+        pickQuestPlace(lord.location);
+        return;
+    }
+    if ( mr->questmodel.picking && id == ID_SELECT_ALL ) {
+        pickQuestPlace(static_cast<map_object*>(button->getUserData())->location);
+        return;
+    }
+#endif
+
     if ( id >= ID_SELECT_CHAR ) {
         mxid characterId = id-ID_SELECT_CHAR;
         mr->selectCharacter(characterId);
@@ -361,23 +375,10 @@ void panel_map_detailed::addTouchListener()
     // mouse events
     auto touchListener = EventListenerTouchOneByOne::create();
     
-    auto gridAt = [this]( Touch* touch ) {
-        auto loc = tmxMap->convertToNodeSpace(touch->getLocation());
-        loc.y = tmxMap->getContentSize().height - loc.y;
-        loc.x /= RES(64);
-        loc.y /= RES(64);
-        return mxgridref(loc.x+mapBuilder->loc_start.x, loc.y+mapBuilder->loc_start.y);
-    };
-
     // trigger when you push down
     touchListener->onTouchBegan = [=, this](Touch* touch, Event* event){
      
-        auto loc = tmxMap->convertToNodeSpace(touch->getLocation());
-        loc.y = tmxMap->getContentSize().height - loc.y;
-        loc.x /= RES(64);
-        loc.y /= RES(64);
-        
-        auto grid = mxgridref(loc.x+mapBuilder->loc_start.x, loc.y+mapBuilder->loc_start.y);
+        auto grid = gridAt(touch->getLocation());
 
 #if defined(_CITADEL_)
         if ( mr->questmodel.picking )
@@ -428,15 +429,8 @@ void panel_map_detailed::addTouchListener()
     touchListener->onTouchEnded = [=, this](Touch* touch, Event* event){
 #if defined(_CITADEL_)
         if ( mr->questmodel.picking ) {
-            if ( touch->getLocation().distance(touch->getStartLocation()) > RES(16) )
-                return;
-            auto grid = gridAt(touch);
-            if ( Character_SetQuest(TME_CurrentCharacter(), mr->questmodel.quest, MAKE_LOCID(grid.x, grid.y)) ) {
-                mr->questmodel.picking = false;
-                mr->questmodel.view = questview::quests;
-                TME_RefreshCurrentCharacter();
-                mr->showPage(MODE_QUEST);
-            }
+            if ( touch->getLocation().distance(touch->getStartLocation()) <= RES(16) )
+                pickQuestPlace(gridAt(touch->getLocation()));
             return;
         }
 #endif
@@ -454,6 +448,28 @@ void panel_map_detailed::addTouchListener()
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, tmxMap);
     
 }
+
+mxgridref panel_map_detailed::gridAt( const Vec2& location ) const
+{
+    auto loc = tmxMap->convertToNodeSpace(location);
+    loc.y = tmxMap->getContentSize().height - loc.y;
+    loc.x /= RES(64);
+    loc.y /= RES(64);
+    return mxgridref(loc.x+mapBuilder->loc_start.x, loc.y+mapBuilder->loc_start.y);
+}
+
+#if defined(_CITADEL_)
+// the place chosen for the quest the quest page is waiting on
+void panel_map_detailed::pickQuestPlace( mxgridref place )
+{
+    if ( !Character_SetQuest(TME_CurrentCharacter(), mr->questmodel.quest, MAKE_LOCID(place.x, place.y)) )
+        return;
+    mr->questmodel.picking = false;
+    mr->questmodel.view = questview::quests;
+    TME_RefreshCurrentCharacter();
+    mr->showPage(MODE_QUEST);
+}
+#endif
 
 #if defined(_MOUSE_ENABLED_)
 bool panel_map_detailed::OnMouseMove( Vec2 pos )

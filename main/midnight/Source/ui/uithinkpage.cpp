@@ -493,14 +493,6 @@ void uithinkpage::setupUIElements()
     // TODO display entrance to tunnel
     
     text += TME_GetSystemString(c,SS_MESSAGE1);
-
-#if defined(_CITADEL_)
-    if ( mode == MODE_THINK ) {
-        if ( !text.empty() && text.back() != ' ' )
-            text += " ";
-        text += TME_GetCharacterText(c, "CharQuest");
-    }
-#endif
     
     lblDescription->setString(text);
     
@@ -646,13 +638,6 @@ void uithinkpage::checkPerson ( void )
     text.append(TME_GetSystemString(c, msg ));
     
     
-#if defined(_CITADEL_)
-    if ( Character_IsRecruited(c) && Character_IsAlive(c) ) {
-        text.append("\n\n");
-        text.append(TME_GetCharacterText(c, "CharQuest"));
-    }
-#endif
-
     if ( c.id == TME_CurrentCharacter().id ) {
         if ( Character_IsFollowing(c) ) {
             leave = true;

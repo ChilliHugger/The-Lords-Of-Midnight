@@ -930,6 +930,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             flags32& Traits()    { return traits; }
             u64  Qualities() const     { return qualities; }
             bool HasQuality(u64 q) const { return (qualities & q) != 0; }
+            u32  Men() const { return warriors.Total() + riders.Total(); }
 
             GET_PROPERTY ( mxobject*, Carrying, carrying )
             GET_PROPERTY ( bool, IsCarryingObject, carrying != nullptr )

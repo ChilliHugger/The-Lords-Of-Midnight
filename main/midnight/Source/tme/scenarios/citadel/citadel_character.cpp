@@ -111,7 +111,7 @@ bool citadel_character::ShouldDieInFight() const
 
 void citadel_character::InitNightProcessing ( void )
 {
-    bool waited = IsRecruited() && ( quest == QS_NONE || quest == QS_REST ) && time == (mxtime_t)sv_time_dawn;
+    bool waited = IsRecruited() && ( quest == QS_NONE || quest == QS_REST ) && IsDawn();
     idle = waited ? idle + 1 : 0;
 
     mxcharacter::InitNightProcessing();
@@ -166,15 +166,23 @@ bool citadel_character::Recruited ( mxcharacter* recruiter )
     return mxcharacter::Recruited(recruiter);
 }
 
+bool citadel_character::Marches () const
+{
+    return mx->scenario->HostageOfRace(Race()) == nullptr && !HasQuality(qf_cowardly);
+}
+
+bool citadel_character::CanQuest () const
+{
+    return IsRecruited() && !IsDead() && !IsPrisoner();
+}
+
 bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
 {
-    if ( !IsRecruited() || IsDead() || IsPrisoner() )
+    if ( !CanQuest() )
         return false;
 
     auto character = CharacterTarget(target);
-    auto other = [this, character]() {
-        return character != nullptr && character != this && character->IsAlive();
-    };
+    auto other = character != nullptr && character != this && character->IsAlive();
 
     auto object = ObjectTarget(target);
     auto artefact = object != nullptr && object->IsArtefact();
@@ -186,12 +194,12 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
             return true;
         case QS_RECRUIT:
         case QS_KILL:
-            return other() && !character->IsRecruited() && !character->IsPrisoner();
+            return other && !character->IsRecruited() && !character->IsPrisoner();
         case QS_RESCUE:
-            return other() && character->IsPrisoner();
+            return other && character->IsPrisoner();
         case QS_JOIN:
         case QS_FOLLOW:
-            return other() && character->IsRecruited();
+            return other && character->IsRecruited();
         case QS_GOTO:
         case QS_GUARD:
             return ID_TYPE(target) == IDT_LOCATION
@@ -208,6 +216,23 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
             return artefact && ( object->OnMap(where) || Carrying() == object );
         default:
             return false;
+    }
+}
+
+void citadel_character::QuestTargets ( mxquest_t newquest, c_mxid& targets ) const
+{
+    targets.Clear();
+    FOR_EACH_CHARACTER(character) {
+        if ( CanQuest(newquest, mxentity::SafeIdt(character)) )
+            targets.Add(mxentity::SafeIdt(character));
+    }
+    FOR_EACH_STRONGHOLD(stronghold) {
+        if ( mx->gamemap->IsLocOnMap(stronghold->Location()) && CanQuest(newquest, mxentity::SafeIdt(stronghold)) )
+            targets.Add(mxentity::SafeIdt(stronghold));
+    }
+    FOR_EACH_OBJECT(object) {
+        if ( CanQuest(newquest, mxentity::SafeIdt(object)) )
+            targets.Add(mxentity::SafeIdt(object));
     }
 }
 
@@ -242,6 +267,11 @@ mxgridref citadel_character::QuestLocation () const
 
 std::string citadel_character::QuestText () const
 {
+    if ( IsDead() )
+        return "";
+    if ( IsPrisoner() )
+        return mx->text->CookedSystemString(SS_QUEST_HELD, this);
+
     u32 id;
     switch ( quest ) {
         case QS_RECRUIT:    id = SS_QUEST_RECRUIT; break;
