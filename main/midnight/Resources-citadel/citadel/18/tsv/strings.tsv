@@ -100,6 +100,7 @@ Version	Id	Symbol	Text
 7	98	SS_TUNNEL	{case:first}{char:gender:heshe} stands in a tunnel looking {char:dir:name}.{sp}
 7	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.{sp}
 7	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.{sp}
+7	124	SS_PRISONER	{case:first}{char:name} is held hostage here in the dungeons of the Dark Citadel, and while {gender:heshe} is held the {race:name} will not march.
 7	125	SS_CHARACTER_TITLE	{char:name} is {char:title}.{sp}
 7	126	SS_QUEST_RECRUIT	{char:name} is questing to recruit {char:quest:char:longname}.
 7	127	SS_QUEST_JOIN	{char:name} is journeying to join {char:quest:char:longname}.

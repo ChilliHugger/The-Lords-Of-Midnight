@@ -622,12 +622,6 @@ void citadel_x::initialiseAfterCreate ( u32 version )
             character->strength = 50;
     }
 
-    // said of a lord still in the dungeons, in place of "has not yet been persuaded to
-    // join you", which would be a poor way to describe a prisoner
-    mx->text->ModifySystemString(SS_PRISONER,
-        "{case:first}{char:name} is held hostage here in the dungeons of the Dark Citadel, "
-        "and while {gender:heshe} is held the {race:name} will not march.");
-
     mxscenario::initialiseAfterCreate(version);
 }
 

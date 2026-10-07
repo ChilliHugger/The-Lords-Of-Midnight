@@ -655,6 +655,12 @@ SCENARIO("Luxor begins the game held captive, and can take no quest until he is 
         REQUIRE( luxor->QuestText() == "Luxor is held captive, and can set out on no quest." );
     }
 
+    THEN("he is told as a hostage, not as a lord yet to be persuaded")
+    {
+        REQUIRE_THAT( tme::mx->text->CookedSystemString(SS_PRISONER, luxor),
+            Catch::Matchers::StartsWith("Luxor is held hostage here in the dungeons of the Dark Citadel") );
+    }
+
     WHEN("he is set free")
     {
         luxor->Flags().Reset(cf_prisoner);
