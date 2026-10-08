@@ -1871,6 +1871,9 @@ namespace tme {
     
     void mxscenario::initialiseAfterCreate( u32 version )
     {
+        if ( mx->mapregenerator )
+            mx->mapregenerator->initialise();
+
         MXTRACE( "Init Map" );
         SetMapArmies();
         SetCharsLooking();

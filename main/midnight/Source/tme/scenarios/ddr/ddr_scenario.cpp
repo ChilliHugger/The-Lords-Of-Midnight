@@ -23,6 +23,7 @@
 #include "scenario_ddr_internal.h"
 #include "ddr_processor_text.h"
 #include "ddr_processor_night.h"
+#include "ddr_map_regenerator.h"
 #include "ddr_processor_battle.h"
 #include "ddr_gameover.h"
 
@@ -95,6 +96,7 @@ MXRESULT ddr_x::Register ( mxengine* midnightx )
     // add in the interfaces
     mx->text = new ddr_text;
     mx->night = new ddr_night;
+    mx->mapregenerator = new ddr_map_regenerator;
     mx->battle = new ddr_battle;
     mx->gameover = new ddr_gameover;
     mx->entityfactory = new ddr_entityfactory;
@@ -115,6 +117,7 @@ MXRESULT ddr_x::UnRegister ( mxengine* midnightx )
     SAFEDELETE ( mx->gameover );
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
+    SAFEDELETE ( mx->mapregenerator ) ;
     SAFEDELETE ( mx->battle ) ;
     SAFEDELETE ( mx->entityfactory );
     

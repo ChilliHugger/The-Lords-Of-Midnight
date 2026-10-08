@@ -63,6 +63,7 @@ mxengine::mxengine()
 
     text = nullptr;
     night = nullptr;
+    mapregenerator = nullptr;
     battle = nullptr;
     scenario = nullptr;
     gamemap = nullptr ;
@@ -125,6 +126,7 @@ char    file[MAX_PATH];
 
     SAFEDELETE(text);
     SAFEDELETE(night);
+    SAFEDELETE(mapregenerator);
     SAFEDELETE(battle);
     SAFEDELETE(scenario);
 

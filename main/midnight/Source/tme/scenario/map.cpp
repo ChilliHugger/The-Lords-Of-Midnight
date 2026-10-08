@@ -769,7 +769,6 @@ int mxmap::Pan_AdjustMapPos ( int pos, int type, int dx, int dy )
 
 void mxmap::CalculateVisibleArea()
 {
-mxgridref loc;
     
     m_top_visible.x=m_size.cx;
     m_top_visible.y=m_size.cy;
@@ -777,13 +776,9 @@ mxgridref loc;
     m_bottom_visible.x=0;
     m_bottom_visible.y=0;    
     
-    for ( int y=0; y<m_size.cy; y++ ) {
-        for ( int x=0; x<m_size.cx; x++ ) {
-            loc.x=x;
-            loc.y=y;
-            if ( IsLocationVisible(loc) ) {
-                CheckVisibleRange(loc);
-            }
+    for ( auto [loc, sqr] : Locations() ) {
+        if ( IsLocationVisible(loc) ) {
+            CheckVisibleRange(loc);
         }
     }
     
@@ -827,82 +822,7 @@ mxthing_t mxmap::getLocationObject( const mxcharacter* c, mxgridref loc )
     
     
 #if defined(_DDR_)
-    
 
-    mxthing_t location_objects[16][4] = {
-        { OB_DRAGONS,   OB_SKULKRIN,    OB_WOLVES,      OB_WILDHORSES },    //For    Plains
-        { OB_DRAGONS,   OB_DRAGONS,     OB_ICETROLLS,   OB_WOLVES },        //       Mountins
-        { OB_DRAGONS,   OB_SKULKRIN,    OB_WOLVES,      OB_WOLVES },        //       Forest
-        { OB_DRAGONS,   OB_ICETROLLS,   OB_WOLVES,      OB_WOLVES },        //       Hills
-        
-        { OB_DRAGONS,   OB_CLAWS,       OB_FLAMES,      OB_BLOOD },         //       Gate
-        { OB_FLAMES,    OB_THORNS,      OB_BLOOD,       OB_LANGUOR },       //       Temple
-        { OB_ICETROLLS, OB_WOLVES,      OB_THORNS,      OB_SPRINGS },       //       Pit
-        { OB_DRAGONS,   OB_WILDHORSES,  OB_CLAWS,       OB_BLOOD },         //       Palace
-        { OB_DRAGONS,   OB_WOLVES,      OB_SHELTER,     OB_SHELTER },       //       Fortress
-        { OB_ICETROLLS, OB_SHELTER,     OB_SHELTER,     OB_BLOOD },         //       Hall
-        { OB_SKULKRIN,  OB_WOLVES,      OB_SHELTER,     OB_SHELTER },       //       Hut
-        { OB_GUIDANCE,  OB_GUIDANCE,    OB_GUIDANCE,    OB_GUIDANCE },      //       Tower
-        { OB_DRAGONS,   OB_SHELTER,     OB_SHELTER,     OB_SPRINGS },       //       City
-        { OB_SKULKRIN,  OB_SPRINGS,     OB_SPRINGS,     OB_SPRINGS },       //       Fountain
-        { OB_DRAGONS,   OB_FLAMES,      OB_FLAMES,      OB_LANGUOR },       //       Stones
-        
-        { OB_DRAGONS,   OB_SKULKRIN,    OB_ICETROLLS,   OB_ICETROLLS }      //       Wastes
-    };
-    
-    int calculateNameSeed(int x, int y) {
-        x--;
-        y--;
-        int key = (444*((y*64)+x))%6151;
-        return key;
-    }
-    
-void mxmap::PutThingsOnMap ( void )
-{
-    mxgridref l;
-    u32 r=0;
-    int key=0;
-    
-    for ( int y=0; y<m_size.cy; y++ ) {
-        for ( int x=0; x<m_size.cx; x++ ) {
-            r =  mxrandom(3);
-            key = calculateNameSeed(x,y) & 3;
-            l.x=x;
-            l.y=y;
-            mxloc& mapsqr = GetAt( l );
-
-            // all building refresh their thing status
-            // every night
-            
-            // plains, mountains, forest, hills all reset randomly
-            
-            // TODO: should be governed by bit flag on TERRAIN
-            mxterrain_t t = (mxterrain_t)mapsqr.terrain ;
-            
-            // remap ddr/lom
-            t = mx->scenario->toScenarioTerrain(t);
-            
-            if ( (t >= TN_GATE || (u32)(t-TN_PLAINS2) == r) && t != TN_ICYWASTE ) {
-                mapsqr.flags |= lf_creature ;
-            
-                // if it is a tunnel passageway
-                // then use the same types
-                if ( mapsqr.IsTunnelObject() )
-                    t = TN_ICYWASTE ;
-   
-                mapsqr.object = location_objects[t-TN_PLAINS2][key];
-                
-            }else{
-                mapsqr.flags &= ~lf_creature ;
-                mapsqr.object = OB_NONE ;
-            }
-            
-        }
-    }
-
-}
-
-    
 void mxmap::MoveMists ( void )
 {
     u8 bottom_row[ 128 ];

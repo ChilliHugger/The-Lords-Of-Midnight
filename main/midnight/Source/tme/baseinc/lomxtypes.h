@@ -693,8 +693,14 @@ using namespace chilli::types;
             RF_LOM_FEY_RECRUIT_NOVEL        = MXBIT(9),
             RF_DDR_CIRCULAR_LIEGE_FIX       = MXBIT(10),
             RF_DDR_LORD_DEATH_LOM           = MXBIT(11),
-            RF_DEFAULT = RF_DDR_CIRCULAR_LIEGE_FIX,
-            RF_NONE = 0,
+            RF_LOM_REPLENISH_THINGS         = MXBIT(12),
+            RF_LOM_REPLENISH_RANDOM         = MXBIT(13),
+            RF_NONE                         = 0,
+#if defined(_DDR_)
+            RF_DEFAULT                      = RF_DDR_CIRCULAR_LIEGE_FIX,
+#else
+            RF_DEFAULT                      = RF_NONE,
+#endif
             RF_DDR_MOVEMENT_MASK            = RF_DDR_MOVEMENT_SPECTRUM|RF_DDR_MOVEMENT_C64,
             RF_LOM_FEY_RECRUIT_MASK         = RF_LOM_FEY_RECRUIT_OFF | RF_LOM_FEY_RECRUIT_NOVEL,
         };
@@ -1042,6 +1048,7 @@ namespace tme {
             of_remove           = MXBIT(5),     // object is removed from map when found
             of_unique           = MXBIT(6),     // object is unique
             of_enabled          = MXBIT(7),     // object is enabled
+            of_respawn          = MXBIT(10),    // object respawns on the map once removed
 #if defined(_DDR_)
             of_recruitment      = MXBIT(8),     // object can help with recruitment
             of_randomstart      = MXBIT(9),     // object starts randomly on map

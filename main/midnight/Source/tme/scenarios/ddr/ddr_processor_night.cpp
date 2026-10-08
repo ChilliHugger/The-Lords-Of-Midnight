@@ -52,7 +52,7 @@ namespace tme {
             static_cast<ddr_battle*>(mx->battle)->Process();
             
             // put critters on the map
-            mx->gamemap->PutThingsOnMap();
+            mx->mapregenerator->process();
 
             // move mist
             mx->gamemap->MoveMists();

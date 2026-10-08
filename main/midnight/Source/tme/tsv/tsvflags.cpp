@@ -182,6 +182,7 @@ static const NamedBit ObjectFlagBits[] = {
     { "REMOVE",      of_remove },
     { "UNIQUE",      of_unique },
     { "ENABLED",     of_enabled },
+    { "RESPAWN",     of_respawn },
 #if defined(_DDR_)
     { "RECRUITMENT", of_recruitment },
     { "RANDOMSTART", of_randomstart },

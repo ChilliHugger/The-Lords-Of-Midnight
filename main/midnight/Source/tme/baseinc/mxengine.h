@@ -136,6 +136,7 @@ namespace tme {
         mxdiscoverymap*         discoverymap;
         mxtext*                 text;
         mxnight*                night;
+        map_regenerator*        mapregenerator;
         mxbattle*               battle;
         mxgameover*             gameover;
         mxscenario*             scenario;

@@ -80,12 +80,9 @@ namespace {
     int VisibleSquares()
     {
         int visible = 0;
-        auto size = tme::mx->gamemap->Size();
-        for ( int y = 0; y < size.cy; y++ ) {
-            for ( int x = 0; x < size.cx; x++ ) {
-                if ( tme::mx->gamemap->IsLocationVisible(mxgridref(x, y)) )
-                    visible++;
-            }
+        for ( auto [loc, sqr] : tme::mx->gamemap->Locations() ) {
+            if ( tme::mx->gamemap->IsLocationVisible(loc) )
+                visible++;
         }
         return visible;
     }
