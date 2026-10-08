@@ -252,6 +252,10 @@ namespace tme {
     
     bool ddr_character::ShouldDieInFight() const
     {
+        // LoM style: a lord can't die while they still have an army
+        if ( mx->isRuleEnabled(RF_DDR_LORD_DEATH_LOM) && getArmySize() > 0 )
+            return false;
+
         u32 r = mxrandom(255);
         if ( (r&1) == 0 )
             return false;

@@ -45,11 +45,13 @@ static RULEFLAGS rule_mapping[] = {
     RF_AI_IMPASSABLE_MOUNTAINS,
     RF_ADD_MOUNTAIN_PASSES,
     RF_SOLE_MOUNTAINEER,
-    RF_NONE,                    
+    RF_NONE,                    // RF_LOM_FEY_RECRUIT_OFF - not a toggle
     RF_NONE,                    // RF_FAST_TUNNELS
     RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
     RF_NONE,                    // RF_DDR_MOVEMENT_C64,
     RF_NONE,                    // RF_DDR_BETTER_ARMIES
+    RF_NONE,                    // RF_DDR_CIRCULAR_LIEGE_FIX
+    RF_NONE,                    // RF_DDR_LORD_DEATH_LOM
 };
 
 #elif defined(_DDR_)
@@ -62,19 +64,21 @@ static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_6,                 {OPTIONS_SCREEN_RULE_6},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
     { ID_OPTION_RULE_7,                 {OPTIONS_SCREEN_RULE_7},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
     { ID_OPTION_RULE_8,                 {OPTIONS_SCREEN_RULE_8},                KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
-    { ID_OPTION_RULE_9,                 {OPTIONS_SCREEN_RULE_9},                KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE }
+    { ID_OPTION_RULE_9,                 {OPTIONS_SCREEN_RULE_9},                KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE },
+    { ID_OPTION_RULE_10,                {OPTIONS_SCREEN_RULE_10},               KEYCODE(9), KEYBOARD_KEY_9, TB_DOUBLE }
 };
 static RULEFLAGS rule_mapping[] = {
     RF_IMPASSABLE_MOUNTAINS,
     RF_AI_IMPASSABLE_MOUNTAINS,
     RF_NONE,                    // RF_ADD_MOUNTAIN_PASSES
     RF_SOLE_MOUNTAINEER,
-    RF_NONE,                    
+    RF_NONE,                    // RF_LOM_FEY_RECRUIT_OFF
     RF_FAST_TUNNELS,
-    RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
-    RF_NONE,                    // RF_DDR_MOVEMENT_C64,
+    RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM - not a toggle,
+    RF_NONE,                    // RF_DDR_MOVEMENT_C64 - not a toggle,
     RF_DDR_BETTER_ARMIES,
-    RF_DDR_CIRCULAR_LIEGE_FIX
+    RF_DDR_CIRCULAR_LIEGE_FIX,
+    RF_DDR_LORD_DEATH_LOM
 };
 #endif
 
@@ -292,6 +296,7 @@ static option_t options[] = {
     {   ID_OPTION_RULE_7,           OPT_NUMBER, 3, values_movement_type,       nullptr, false },
     {   ID_OPTION_RULE_8,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_9,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_10,          OPT_TOGGLE, 0, values_onoff,               nullptr, false },
 
     {   ID_OPTION_DIFFICULTY,       OPT_NUMBER, 4, values_difficulty,          nullptr, false },
 
