@@ -3,6 +3,7 @@
 
 #include "../../baseinc/tme_internal.h"
 #include "../default/default_scenario_internal.h"
+#include "lom_map_regenerator.h"
 
 #if defined(_LOM_)
 namespace tme {

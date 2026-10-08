@@ -324,21 +324,15 @@ namespace tme {
     
     void mxdiscoverymap::CalculateVisibleArea()
     {
-        mxgridref loc;
-        
         m_top_visible.x=m_size.cx;
         m_top_visible.y=m_size.cy;
         
         m_bottom_visible.x=0;
         m_bottom_visible.y=0;
         
-        for ( int y=0; y<m_size.cy; y++ ) {
-            for ( int x=0; x<m_size.cx; x++ ) {
-                loc.x=x;
-                loc.y=y;
-                if ( IsLocationVisible(loc) ) {
-                    CheckVisibleArea(loc);
-                }
+        for ( auto [loc, flags] : Locations() ) {
+            if ( IsLocationVisible(loc) ) {
+                CheckVisibleArea(loc);
             }
         }
         
@@ -347,19 +341,11 @@ namespace tme {
 
     void mxdiscoverymap::TransferFromMap( mxmap* map )
     {
-        mxgridref loc;
+        for ( auto [loc, flags] : Locations() ) {
+            mxloc l = map->GetAt(loc);
 
-        for ( int y=0; y<m_size.cy; y++ ) {
-            for ( int x=0; x<m_size.cx; x++ ) {
-                loc.x=x;
-                loc.y=y;
-                
-                mxloc l = map->GetAt(loc);
-                
-                
-                GetAt(loc).Set( l.flags & (lf_seen|lf_visited|lf_looked_at) );
-                GetAt(loc).Set( l.flags&(lf_tunnel_looked_at|lf_tunnel_visited) ) ;
-            }
+            flags.Set( l.flags & (lf_seen|lf_visited|lf_looked_at) );
+            flags.Set( l.flags&(lf_tunnel_looked_at|lf_tunnel_visited) ) ;
         }
         
         CalculateVisibleArea();

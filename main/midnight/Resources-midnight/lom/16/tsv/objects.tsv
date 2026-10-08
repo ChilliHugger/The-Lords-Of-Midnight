@@ -1,17 +1,17 @@
 Version	Id	Symbol	Flags	Location	Kills	Name	Description	Use Description	Carried By	Type	Power
-11	1	OB_WOLVES	FIGHT+SEE	0,0		Wolves	wolves				
-11	2	OB_DRAGONS	FIGHT+SEE	0,0		Dragons	dragons				
-11	3	OB_ICETROLLS	FIGHT+SEE	0,0		Ice Trolls	ice trolls				
-11	4	OB_SKULKRIN	FIGHT+SEE	0,0		Skulkrin	skulkrin				
-11	5	OB_WILDHORSES	SEE	0,0		Wild Horses	wild horses				
-11	6	OB_SHELTER	REMOVE	0,0		Shelter	shelter and is refreshed				
-11	7	OB_GUIDANCE	REMOVE	0,0		Guidance	guidance				
-11	8	OB_SHADOWSOFDEATH	REMOVE	0,0		Shadows of Death	the {obj:name} which drain {char:gender:himher} of vigour				
-11	9	OB_WATERSOFLIFE	REMOVE	0,0		Waters of Life	the {obj:name} which fill {char:gender:himher} with vigour				
-11	10	OB_HANDOFDARK	REMOVE	0,0		Hand of Dark	the {obj:name} which brings death to the day				
-11	11	OB_CUPOFDREAMS	REMOVE	0,0		Cup of Dreams	the {obj:name} which brings new welcome				
-11	12	OB_WOLFSLAYER	PICKUP+DROP+WEAPON+REMOVE	0,0	OB_WOLVES	Sword Wolfslayer	the {obj:name}	SS_FIGHT2			
-11	13	OB_DRAGONSLAYER	PICKUP+DROP+WEAPON+REMOVE	0,0	OB_DRAGONS	Sword Dragonslayer	the {obj:name}	SS_FIGHT2			
+11	1	OB_WOLVES	FIGHT+SEE+RESPAWN	0,0		Wolves	wolves				
+11	2	OB_DRAGONS	FIGHT+SEE+RESPAWN	0,0		Dragons	dragons				
+11	3	OB_ICETROLLS	FIGHT+SEE+RESPAWN	0,0		Ice Trolls	ice trolls				
+11	4	OB_SKULKRIN	FIGHT+SEE+RESPAWN	0,0		Skulkrin	skulkrin				
+11	5	OB_WILDHORSES	SEE+RESPAWN	0,0		Wild Horses	wild horses				
+11	6	OB_SHELTER	REMOVE+RESPAWN	0,0		Shelter	shelter and is refreshed				
+11	7	OB_GUIDANCE	REMOVE+RESPAWN	0,0		Guidance	guidance				
+11	8	OB_SHADOWSOFDEATH	REMOVE+RESPAWN	0,0		Shadows of Death	the {obj:name} which drain {char:gender:himher} of vigour				
+11	9	OB_WATERSOFLIFE	REMOVE+RESPAWN	0,0		Waters of Life	the {obj:name} which fill {char:gender:himher} with vigour				
+11	10	OB_HANDOFDARK	REMOVE+RESPAWN	0,0		Hand of Dark	the {obj:name} which brings death to the day				
+11	11	OB_CUPOFDREAMS	REMOVE+RESPAWN	0,0		Cup of Dreams	the {obj:name} which brings new welcome				
+11	12	OB_WOLFSLAYER	PICKUP+DROP+WEAPON+REMOVE+RESPAWN	0,0	OB_WOLVES	Sword Wolfslayer	the {obj:name}	SS_FIGHT2			
+11	13	OB_DRAGONSLAYER	PICKUP+DROP+WEAPON+REMOVE+RESPAWN	0,0	OB_DRAGONS	Sword Dragonslayer	the {obj:name}	SS_FIGHT2			
 11	14	OB_ICECROWN	PICKUP+WEAPON+UNIQUE	0,0	OB_ICETROLLS	Ice Crown	the {obj:name}	SS_FIGHT4	PL_TOWER_OF_DOOM		
 11	15	OB_MOONRING	PICKUP+WEAPON+UNIQUE	0,0	OB_SKULKRIN	Moon Ring	the {obj:name}	SS_FIGHT3	CH_LUXOR		
 11	16	OB_CLAWS		0,0		Claws					

@@ -38,20 +38,25 @@ static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_2,                 {OPTIONS_SCREEN_RULE_2},                KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
     { ID_OPTION_RULE_3,                 {OPTIONS_SCREEN_RULE_3},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
     { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
-    { ID_OPTION_RULE_5,                 {OPTIONS_SCREEN_RULE_5},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE }
+    { ID_OPTION_RULE_5,                 {OPTIONS_SCREEN_RULE_5},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
+    { ID_OPTION_RULE_13,                {OPTIONS_SCREEN_RULE_13},               KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
+    { ID_OPTION_RULE_14,                {OPTIONS_SCREEN_RULE_14},               KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE }
 };
 static RULEFLAGS rule_mapping[] = {
-    RF_IMPASSABLE_MOUNTAINS,
-    RF_AI_IMPASSABLE_MOUNTAINS,
-    RF_ADD_MOUNTAIN_PASSES,
-    RF_SOLE_MOUNTAINEER,
-    RF_NONE,                    // RF_LOM_FEY_RECRUIT_OFF - not a toggle
-    RF_NONE,                    // RF_FAST_TUNNELS
-    RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
-    RF_NONE,                    // RF_DDR_MOVEMENT_C64,
-    RF_NONE,                    // RF_DDR_BETTER_ARMIES
-    RF_NONE,                    // RF_DDR_CIRCULAR_LIEGE_FIX
-    RF_NONE,                    // RF_DDR_LORD_DEATH_LOM
+    /* ID_OPTION_RULE_1  */ RF_IMPASSABLE_MOUNTAINS,
+    /* ID_OPTION_RULE_2  */ RF_AI_IMPASSABLE_MOUNTAINS,
+    /* ID_OPTION_RULE_3  */ RF_ADD_MOUNTAIN_PASSES,
+    /* ID_OPTION_RULE_4  */ RF_SOLE_MOUNTAINEER,
+    /* ID_OPTION_RULE_5  */ RF_NONE,                    // RF_LOM_FEY_RECRUIT_OFF not a toggle
+    /* ID_OPTION_RULE_6  */ RF_NONE,                    // RF_FAST_TUNNELS
+    /* ID_OPTION_RULE_7  */ RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM,
+    /* ID_OPTION_RULE_8  */ RF_NONE,                    // RF_DDR_MOVEMENT_C64,
+    /* ID_OPTION_RULE_9  */ RF_NONE,                    // RF_DDR_BETTER_ARMIES
+    /* ID_OPTION_RULE_10 */ RF_NONE,                    // RF_LOM_FEY_RECRUIT_NOVEL - not a toggle
+    /* ID_OPTION_RULE_11 */ RF_NONE,                    // RF_DDR_CIRCULAR_LIEGE_FIX
+    /* ID_OPTION_RULE_12 */ RF_NONE,                    // RF_DDR_LORD_DEATH_LOM
+    /* ID_OPTION_RULE_13 */ RF_LOM_REPLENISH_THINGS,
+    /* ID_OPTION_RULE_14 */ RF_LOM_REPLENISH_RANDOM,
 };
 
 #elif defined(_DDR_)
@@ -63,22 +68,26 @@ static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_4,                 {OPTIONS_SCREEN_RULE_4},                KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
     { ID_OPTION_RULE_6,                 {OPTIONS_SCREEN_RULE_6},                KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
     { ID_OPTION_RULE_7,                 {OPTIONS_SCREEN_RULE_7},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
-    { ID_OPTION_RULE_8,                 {OPTIONS_SCREEN_RULE_8},                KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
-    { ID_OPTION_RULE_9,                 {OPTIONS_SCREEN_RULE_9},                KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE },
-    { ID_OPTION_RULE_10,                {OPTIONS_SCREEN_RULE_10},               KEYCODE(9), KEYBOARD_KEY_9, TB_DOUBLE }
+    { ID_OPTION_RULE_9,                 {OPTIONS_SCREEN_RULE_9},                KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
+    { ID_OPTION_RULE_11,                {OPTIONS_SCREEN_RULE_11},               KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE },
+    { ID_OPTION_RULE_12,                {OPTIONS_SCREEN_RULE_12},               KEYCODE(9), KEYBOARD_KEY_9, TB_DOUBLE }
 };
+
 static RULEFLAGS rule_mapping[] = {
-    RF_IMPASSABLE_MOUNTAINS,
-    RF_AI_IMPASSABLE_MOUNTAINS,
-    RF_NONE,                    // RF_ADD_MOUNTAIN_PASSES
-    RF_SOLE_MOUNTAINEER,
-    RF_NONE,                    // RF_LOM_FEY_RECRUIT_OFF
-    RF_FAST_TUNNELS,
-    RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM - not a toggle,
-    RF_NONE,                    // RF_DDR_MOVEMENT_C64 - not a toggle,
-    RF_DDR_BETTER_ARMIES,
-    RF_DDR_CIRCULAR_LIEGE_FIX,
-    RF_DDR_LORD_DEATH_LOM
+    /* ID_OPTION_RULE_1  */ RF_IMPASSABLE_MOUNTAINS,
+    /* ID_OPTION_RULE_2  */ RF_AI_IMPASSABLE_MOUNTAINS,
+    /* ID_OPTION_RULE_3  */ RF_NONE,                    // RF_ADD_MOUNTAIN_PASSES
+    /* ID_OPTION_RULE_4  */ RF_SOLE_MOUNTAINEER,
+    /* ID_OPTION_RULE_5  */ RF_NONE,                    // RF_LOM_FEY_RECRUIT_OFF
+    /* ID_OPTION_RULE_6  */ RF_FAST_TUNNELS,
+    /* ID_OPTION_RULE_7  */ RF_NONE,                    // RF_DDR_MOVEMENT_SPECTRUM - not a toggle,
+    /* ID_OPTION_RULE_8  */ RF_NONE,                    // RF_DDR_MOVEMENT_C64 - not a toggle,
+    /* ID_OPTION_RULE_9  */ RF_DDR_BETTER_ARMIES,
+    /* ID_OPTION_RULE_10 */ RF_NONE,                    // RF_LOM_FEY_RECRUIT_NOVEL
+    /* ID_OPTION_RULE_11 */ RF_DDR_CIRCULAR_LIEGE_FIX,
+    /* ID_OPTION_RULE_12 */ RF_DDR_LORD_DEATH_LOM,
+    /* ID_OPTION_RULE_13 */ RF_NONE,                    // RF_LOM_REPLENISH_THINGS,
+    /* ID_OPTION_RULE_14 */ RF_NONE,                    // RF_LOM_REPLENISH_RANDOM,
 };
 #endif
 
@@ -649,6 +658,9 @@ void panel_options::checkDisabledRules()
     #if defined(_LOM_) || defined(_CITADEL_)
     clearRule(ID_OPTION_RULE_3, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
     clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
+    #endif
+    #if defined(_LOM_)
+    clearRule(ID_OPTION_RULE_10, mr->settings->game_rules.Is(RF_LOM_REPLENISH_THINGS));
     #endif
     #if defined(_DDR_)
     clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));

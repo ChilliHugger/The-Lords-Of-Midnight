@@ -64,6 +64,9 @@ namespace tme {
             ResetSpecialLocations();
             
             MoveMidwinter();
+
+            if ( mx->mapregenerator )
+                mx->mapregenerator->process();
             
 #endif
 

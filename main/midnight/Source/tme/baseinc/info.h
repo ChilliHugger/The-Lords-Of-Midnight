@@ -31,6 +31,7 @@ class CListS;
 #include "../tsv/tsvfields.h"
 #include "../tsv/tsvsymboltable.h"
 #include "../tsv/tsvresolve.h"
+#include "location_range.h"
 
 
 
@@ -368,7 +369,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool HasObject( mxgridref l );
         void SetObject( mxgridref l, bool value );
         void MoveMists ( void );
-        void PutThingsOnMap ( void );
 #endif
         mxthing_t getLocationObject( const mxcharacter* c, mxgridref loc );
 
@@ -379,6 +379,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         mxloc& GetAt ( const mxgridref& loc );
         mxloc& operator[] ( mxgridref loc ) { return GetAt(loc); }
+        location_range<mxloc> Locations() { return location_range<mxloc>( m_data, m_size ); }
 
         GET_PROPERTY ( size, Size, m_size );
         GET_PROPERTY ( loc_t, Top, m_top_visible );
@@ -426,6 +427,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         
         bool IsLocationVisible( mxgridref l );
         flags32& GetAt ( const mxgridref& mxloc );
+        location_range<flags32> Locations() { return location_range<flags32>( m_data, m_size ); }
         bool IsLocOnMap ( mxgridref mxloc ) const;
         
         
@@ -769,6 +771,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY( IsWeapon,    of_weapon )
             FLAG_PROPERTY( MapRemove,   of_remove )
             FLAG_PROPERTY( IsUnique,    of_unique )
+            FLAG_PROPERTY( CanRespawn,  of_respawn )
             
             bool IsCarried() const ;
 
@@ -1255,6 +1258,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
 #include "processor_text.h"
 #include "processor_night.h"
+#include "map_regenerator.h"
 #include "processor_battle.h"
 
 

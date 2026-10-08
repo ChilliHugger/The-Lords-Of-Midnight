@@ -110,6 +110,7 @@ MXRESULT lom_x::Register ( mxengine* midnightx )
     // add in the interfaces
     mx->text = new mxtext;
     mx->night = new mxnight;
+    mx->mapregenerator = new lom_map_regenerator;
     mx->battle = new lom_battle;
     mx->gameover = new lom_gameover;
     mx->entityfactory = new mxentityfactory;
@@ -127,6 +128,7 @@ MXRESULT lom_x::UnRegister ( mxengine* midnightx )
     SAFEDELETE ( mx->gameover ) ;
     SAFEDELETE ( mx->text ) ;
     SAFEDELETE ( mx->night ) ;
+    SAFEDELETE ( mx->mapregenerator ) ;
     SAFEDELETE ( mx->battle ) ;
     SAFEDELETE ( mx->entityfactory );
     
