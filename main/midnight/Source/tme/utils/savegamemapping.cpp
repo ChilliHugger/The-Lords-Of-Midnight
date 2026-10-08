@@ -24,6 +24,20 @@ namespace utils {
         }
     }
 
+    bool IsCircularLiege(const mxcharacter* recruiter, const mxcharacter* recruit)
+    {
+        // bounded by the number of characters, so that an existing
+        // circular liege (ie from an old save) can never loop forever
+        const u32 maxDepth = mx->objCharacters.Count();
+        auto character = recruiter->Liege();
+        for ( u32 depth=0; character!=nullptr && depth<maxDepth; depth++ ) {
+            if ( character == recruit )
+                return true;
+            character = character->Liege();
+        }
+        return false;
+    }
+
 #if defined(_DDR_)
 
     //

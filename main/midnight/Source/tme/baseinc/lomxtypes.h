@@ -691,7 +691,8 @@ using namespace chilli::types;
             RF_DDR_MOVEMENT_C64             = MXBIT(7),
             RF_DDR_BETTER_ARMIES            = MXBIT(8),
             RF_LOM_FEY_RECRUIT_NOVEL        = MXBIT(9),
-            RF_DEFAULT = 0,
+            RF_DDR_CIRCULAR_LIEGE_FIX       = MXBIT(10),
+            RF_DEFAULT = RF_DDR_CIRCULAR_LIEGE_FIX,
             RF_NONE = 0,
             RF_DDR_MOVEMENT_MASK            = RF_DDR_MOVEMENT_SPECTRUM|RF_DDR_MOVEMENT_C64,
             RF_LOM_FEY_RECRUIT_MASK         = RF_LOM_FEY_RECRUIT_OFF | RF_LOM_FEY_RECRUIT_NOVEL,
@@ -1173,7 +1174,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         20
+#define SAVEGAMEVERSION         21
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

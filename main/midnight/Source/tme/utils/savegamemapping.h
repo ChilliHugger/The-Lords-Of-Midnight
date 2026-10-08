@@ -45,6 +45,10 @@ namespace utils {
     
     void UpdateStrongholdsOnMap();
 
+    // true if making 'recruiter' the liege of 'recruit' would create a
+    // circular liege, ie 'recruit' is already in the recruiter's liege chain
+    bool IsCircularLiege(const mxcharacter* recruiter, const mxcharacter* recruit);
+
 }
 }
 
