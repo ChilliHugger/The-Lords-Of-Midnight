@@ -44,6 +44,8 @@ enum panelmode_t {
     MODE_DEDICATION,
     
     MODE_MAINMENU,
+
+    MODE_QUEST,
 };
 
 #endif /* panel_id_h */

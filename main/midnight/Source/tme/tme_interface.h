@@ -229,6 +229,19 @@ bool Character_Disband( const character& c );
 bool Character_SwapGroupLeader( const character& c, mxid id );
 bool Character_Army ( mxid id, tme::scenarios::exports::army_t& out );
 
+#if defined(_CITADEL_)
+struct questinfo_t {
+    mxquest_t      quest;
+    mxid                target;
+    mxquestnews_t  news;
+    bool           able;       // free to take a quest at all
+};
+bool Character_QuestInfo ( const character& c, questinfo_t& out );
+bool Character_SetQuest ( const character& c, mxquest_t quest, mxid target );
+s32  Character_QuestTargets ( const character& c, mxquest_t quest, c_mxid& targets );
+s32  TME_QuestNews ( c_mxid& lords );     // yours with something to tell you this morning
+#endif
+
 #if defined(_DDR_)
 inline bool Location_IsVisible(const maplocation& l)            { return l.flags.Is(lf_seen); }
 inline bool Location_HasCharacters(const maplocation& l)        { return l.flags.Is(lf_character); }

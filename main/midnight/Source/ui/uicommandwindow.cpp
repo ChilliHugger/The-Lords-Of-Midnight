@@ -154,6 +154,11 @@ void uicommandwindow::initialiseCommands()
     auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
     addItem(fight,CHOOSE_FIGHT);
 #endif
+
+#if defined(_CITADEL_)
+    auto quest = uihelper::CreateImageButton("i_quest", ID_QUEST, callback);
+    addItem(quest,CHOOSE_QUEST);
+#endif
     
 #if defined(_DDR_)
     if ( tme::variables::sv_cheat_nasties_noblock ) {
@@ -283,6 +288,12 @@ void uicommandwindow::updateElements()
     // FIGHT
     ENABLE_IF_LOC_FLAG(ID_FIGHT, lif_fight);
     
+#if defined(_CITADEL_)
+    // QUEST
+    questinfo_t quest {};
+    enableItem(ID_QUEST, Character_QuestInfo(c, quest) && quest.able);
+#endif
+
 #if defined(_DDR_)
     ENABLE_IF_LOC_FLAG(ID_GIVE, lif_give);
     setupGiveText();

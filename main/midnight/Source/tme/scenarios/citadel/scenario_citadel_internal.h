@@ -11,6 +11,7 @@
 
 namespace tme {
     FORWARD_REFERENCE(citadel_character);
+    FORWARD_REFERENCE(citadel_object);
 
     class citadel_x : public mxscenario
     {
@@ -31,14 +32,20 @@ namespace tme {
         virtual bool isTerrainImpassable ( mxterrain_t terrain, const mxitem* target ) const override;
         virtual u32 TerrainMovementModifier ( mxrace_t race, mxterrain_t terrain ) const override;
         virtual void NightStart ( void ) override;
+        virtual void NightStop ( void ) override;
         virtual void LordsTurn ( void ) override;
         virtual bool RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const override;
+        virtual mxobject* FindObjectAtLocation ( mxgridref loc ) override;
+        virtual mxobject* PickupObject ( mxgridref loc ) override;
+        virtual bool DropObject ( mxgridref loc, mxobject* object ) override;
+        citadel_object* ArtefactAt ( mxgridref loc ) const;
 
         mxrace_t CampaignTarget () const;
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
         bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
         bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
+        bool Reachable ( mxgridref from, mxgridref to ) const;
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
@@ -62,6 +69,10 @@ namespace tme {
 
         virtual void Serialize ( archive& ar ) override;
         virtual void LoadTsv ( const TsvRow& row ) override;
+
+        bool IsArtefact () const;
+        bool OnMap ( mxgridref& where ) const;
+        void Lift ();
 
     public:
         mxobjtype_t     type;
@@ -118,14 +129,22 @@ namespace tme {
         virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
 
+        bool Marches () const;              // will leave his keeps to fight for them
+        bool CanQuest () const;             // free to take any quest at all
+        bool CanQuest ( mxquest_t quest, mxid target ) const;
+        void QuestTargets ( mxquest_t quest, c_mxid& targets ) const;
         bool SetQuest ( mxquest_t quest, mxid target );
         mxgridref QuestLocation () const;
+        std::string QuestText () const;     // what he is about, in a sentence
+        std::string NewsText () const;      // what he has to tell you at dawn
 
     public:
         mxquest_t       quest = QS_NONE;
-        mxid            questtarget = IDT_NONE;     // a character, a keep, or a location id
+        mxid            questtarget = IDT_NONE;     // a character, a keep, an object, a regiment or a location id
         mxpurpose_t     purpose = PU_NONE;
         mxreaction_t    reaction = RE_RETURN_HOME;
+        u32             idle = 0;                   // nights one of yours has stood waiting for orders
+        mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
 
     protected:
         std::string title;      // the design's "Titles"; empty for most lords
@@ -143,6 +162,11 @@ namespace tme {
         return static_cast<citadel_character*>(character);
     }
 
+    inline citadel_object* CitadelObject ( mxobject* object )
+    {
+        return static_cast<citadel_object*>(object);
+    }
+
     inline mxcharacter* CharacterTarget ( mxid target )
     {
         return ID_TYPE(target) == IDT_CHARACTER ? mx->CharacterById(GET_ID(target)) : nullptr;
@@ -153,6 +177,16 @@ namespace tme {
         return ID_TYPE(target) == IDT_STRONGHOLD
             ? static_cast<citadel_stronghold*>(mx->StrongholdById(GET_ID(target)))
             : nullptr;
+    }
+
+    inline citadel_object* ObjectTarget ( mxid target )
+    {
+        return ID_TYPE(target) == IDT_OBJECT ? CitadelObject(mx->ObjectById(GET_ID(target))) : nullptr;
+    }
+
+    inline mxregiment* RegimentTarget ( mxid target )
+    {
+        return ID_TYPE(target) == IDT_REGIMENT ? mx->RegimentById(GET_ID(target)) : nullptr;
     }
 }
 #endif

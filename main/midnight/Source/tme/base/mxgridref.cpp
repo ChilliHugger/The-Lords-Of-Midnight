@@ -151,6 +151,19 @@ namespace tme {
     }
 
     //
+    // METHOD:    IsNear
+    //            checks is another grid reference this square or one of the eight around it
+    //
+    // PARAMS:    loc            grid reference to compare against
+    //
+    // RETURNS:    true/false
+    //
+    bool mxgridref::IsNear ( const mxgridref& loc ) const
+    {
+        return ABS((s32)x - (s32)loc.x) <= 1 && ABS((s32)y - (s32)loc.y) <= 1;
+    }
+
+    //
     // METHOD:    operator ==
     //            checks is this grid reference the same as another
     // 

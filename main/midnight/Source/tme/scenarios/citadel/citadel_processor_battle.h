@@ -4,6 +4,9 @@
 #include "../lom/lom_processor_battle.h"
 #include "scenario_citadel_internal.h"
 
+#include <memory>
+#include <vector>
+
 #if defined(_CITADEL_)
 namespace tme {
 
@@ -12,7 +15,19 @@ namespace tme {
     //
     class citadel_battle : public lom_battle
     {
+    public:
+        virtual void Duel ( mxcharacter* attacker, mxcharacter* defender );
+        virtual void Attack ( mxcharacter* lord );
+        virtual bool Guard ( mxcharacter* lord );
+
     protected:
+        // one lord and his men, in a duel
+        struct side_t {
+            mxcharacter*                            lord;
+            std::vector<std::unique_ptr<mxarmy>>    armies;
+            c_army                                  standing;
+        };
+
         virtual bool HasDefenders() const override;
         virtual bool TakesPart ( const mxarmy* army ) const override;
         virtual bool TakesPart ( const mxcharacter* character ) const override;
@@ -22,7 +37,16 @@ namespace tme {
         virtual mxcharacter* Liberator() const override;
 
         virtual void CharacterLosesEnergy ( mxcharacter* character ) override;
+
+        virtual side_t Muster ( mxcharacter* lord );
+        virtual void Enlist ( side_t& side, u32 total, mxunit_t type, s32 success );
+        virtual void Strike ( side_t& from, side_t& at );
     };
+
+    inline citadel_battle* CitadelBattle ()
+    {
+        return static_cast<citadel_battle*>(mx->battle);
+    }
 
 }
 #endif // _CITADEL_

@@ -775,6 +775,44 @@ bool Character_Approach ( const character& c )
     return false;
 }
 
+#if defined(_CITADEL_)
+bool Character_QuestInfo ( const character& c, questinfo_t& out )
+{
+    args[0] = c.id ;
+    if ( !MXSUCCESS( mxi->Command("QUESTINFO",args,1) ) )
+        return false;
+    out.quest = (mxquest_t)args[0].vSInt32;
+    out.target = args[1].vId;
+    out.news = (mxquestnews_t)args[2].vSInt32;
+    out.able = args[3].vSInt32 != 0;
+    return true;
+}
+
+bool Character_SetQuest ( const character& c, mxquest_t quest, mxid target )
+{
+    args[0] = c.id ;
+    args[1] = (s32)quest ;
+    args[2] = target ;
+    return MXSUCCESS( mxi->Command("QUEST",args,3) );
+}
+
+s32 Character_QuestTargets ( const character& c, mxquest_t quest, c_mxid& targets )
+{
+    args[0] = &targets ;
+    args[1] = c.id ;
+    args[2] = (s32)quest ;
+    mxi->Command("QUESTTARGETS",args,3);
+    return targets.Count();
+}
+
+s32 TME_QuestNews ( c_mxid& lords )
+{
+    args[0] = &lords ;
+    mxi->Command("QUESTNEWS",args,1);
+    return lords.Count();
+}
+#endif
+
 bool Character_Follow ( const character& c, mxid id )
 {
     args[0] = c.id ;

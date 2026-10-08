@@ -17,6 +17,10 @@ enum CHOOSE_INDEX {
     CHOOSE_HIDE     = 2,
     CHOOSE_FIGHT    = 3,
 #endif
+
+#if defined(_CITADEL_)
+    CHOOSE_QUEST    = 4,
+#endif
     
 #if defined(_DDR_)
     CHOOSE_REST     = 1,

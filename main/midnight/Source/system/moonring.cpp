@@ -578,6 +578,15 @@ bool moonring::dawn()
         return true;
     }
     
+#if defined(_CITADEL_)
+    c_mxid news;
+    if ( TME_QuestNews(news) > 0 ) {
+        questmodel.view = questview::news;
+        showPage(MODE_QUEST);
+        return true;
+    }
+#endif
+
     showPage(MODE_LOOK, TME_CurrentCharacter().id);
     
     return true;
@@ -638,6 +647,9 @@ bool moonring::serialize( u32 version, archive& ar )
 std::string imageFiles[] = {
     "rest-0", "rest-1",
     "language-0",
+#if defined(_CITADEL_)
+    "quest-0",
+#endif
     "terrain/terrain-0", "terrain/terrain-1",
     "terrain/tunnels-0"
 };

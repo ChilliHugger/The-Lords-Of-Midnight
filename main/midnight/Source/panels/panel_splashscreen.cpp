@@ -29,7 +29,7 @@ constexpr f32 MAX_PROGRESS = 49.0f;
 constexpr f32 MAX_PROGRESS = 49.0f;
 #endif
 #if defined(_CITADEL_)
-constexpr f32 MAX_PROGRESS = 109.0f;
+constexpr f32 MAX_PROGRESS = 110.0f;
 #endif
 
 

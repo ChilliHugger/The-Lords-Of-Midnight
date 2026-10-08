@@ -314,9 +314,50 @@ bool citadel_x::MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) 
     return found;
 }
 
+bool citadel_x::Reachable ( mxgridref from, mxgridref to ) const
+{
+    mxgridref step;
+    return from == to || MarchStep(from, to, step);
+}
+
 bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
 {
     return MarchStep(regiment->Location(), target, step);
+}
+
+citadel_object* citadel_x::ArtefactAt ( mxgridref loc ) const
+{
+    FOR_EACH_OBJECT(object) {
+        mxgridref where;
+        if ( CitadelObject(object)->OnMap(where) && where == loc )
+            return CitadelObject(object);
+    }
+    return nullptr;
+}
+
+mxobject* citadel_x::FindObjectAtLocation ( mxgridref loc )
+{
+    if ( auto artefact = ArtefactAt(loc) )
+        return artefact;
+    return mxscenario::FindObjectAtLocation(loc);
+}
+
+mxobject* citadel_x::PickupObject ( mxgridref loc )
+{
+    if ( auto artefact = ArtefactAt(loc) ) {
+        artefact->Lift();
+        return artefact;
+    }
+    return mxscenario::PickupObject(loc);
+}
+
+bool citadel_x::DropObject ( mxgridref loc, mxobject* object )
+{
+    if ( object != nullptr && CitadelObject(object)->IsArtefact() ) {
+        object->Location(loc);
+        return true;
+    }
+    return mxscenario::DropObject(loc, object);
 }
 
 bool citadel_x::IsFoughtOver ( mxstronghold* stronghold ) const
@@ -407,6 +448,17 @@ void citadel_x::NightStart ( void )
     }
 }
 
+void citadel_x::NightStop ( void )
+{
+    mxscenario::NightStop();
+
+    FOR_EACH_CHARACTER(character) {
+        auto lord = CitadelLord(character);
+        CONTINUE_IF( !lord->IsRecruited() || lord->IsDead() || lord->news == QN_NONE );
+        mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_QUEST_NEWS_REPORT, lord));
+    }
+}
+
 void citadel_x::LordsTurn ( void )
 {
     std::unique_ptr<citadel_quest_processor> processor ( new citadel_quest_processor() );
@@ -427,8 +479,45 @@ COMMAND( OnCharQuest )
     return ok ? MX_OK : MX_FAILED;
 }
 
+COMMAND( OnCharQuestInfo )
+{
+    CONVERT_CHARACTER_ID( argv[0].vId, character );
+    auto lord = CitadelLord(character);
+    argv[0] = (s32)lord->quest;
+    argv[1] = lord->questtarget;
+    argv[2] = (s32)lord->news;
+    argv[3] = (s32)lord->CanQuest();
+    return MX_OK;
+}
+
+COMMAND( OnCharQuestTargets )
+{
+    auto& targets = *static_cast<c_mxid*>(argv[0].vPtr);
+    CONVERT_CHARACTER_ID( argv[1].vId, character );
+    auto lord = CitadelLord(character);
+    lord->QuestTargets((mxquest_t)argv[2].vSInt32, targets);
+    argv[0] = (s32)targets.Count();
+    return MX_OK;
+}
+
+COMMAND( OnQuestNews )
+{
+    auto& lords = *static_cast<c_mxid*>(argv[0].vPtr);
+    lords.Clear();
+    FOR_EACH_CHARACTER(character) {
+        auto lord = CitadelLord(character);
+        if ( lord->IsRecruited() && lord->IsAlive() && lord->news != QN_NONE )
+            lords.Add(mxentity::SafeIdt(lord));
+    }
+    argv[0] = (s32)lords.Count();
+    return MX_OK;
+}
+
 static mxcommand_t citadel_commands[] = {
-    { "QUEST",  3,  OnCharQuest,    { arguments::character, variant::vnumber, variant::vid } },
+    { "QUEST",          3,  OnCharQuest,        { arguments::character, variant::vnumber, variant::vid } },
+    { "QUESTINFO",      1,  OnCharQuestInfo,    { arguments::character } },
+    { "QUESTTARGETS",   3,  OnCharQuestTargets, { variant::vptr, arguments::character, variant::vnumber } },
+    { "QUESTNEWS",      1,  OnQuestNews,        { variant::vptr } },
 };
 
 MXRESULT citadel_x::Command ( const std::string& arg, variant argv[], u32 argc )
@@ -463,6 +552,27 @@ void citadel_object::LoadTsv ( const TsvRow& row )
 
     type = row.GetObjectType(TsvField::Object::Type);
     power = row.GetObjectPower(TsvField::Object::Power);
+}
+
+bool citadel_object::IsArtefact () const
+{
+    return power != OP_NONE;
+}
+
+bool citadel_object::OnMap ( mxgridref& where ) const
+{
+    if ( !IsArtefact() || mx->scenario->WhoHasObject(const_cast<citadel_object*>(this)) != nullptr )
+        return false;
+    if ( !mx->gamemap->IsLocOnMap(Location()) )
+        return false;
+    where = Location();
+    return true;
+}
+
+void citadel_object::Lift ()
+{
+    if ( IsArtefact() )
+        Location(mxgridref(mx->gamemap->Size().cx, 0));
 }
 
 mxentity* citadel_entityfactory::Create ( id_type_t type )
@@ -511,12 +621,6 @@ void citadel_x::initialiseAfterCreate ( u32 version )
         else if ( character->Qualities() != qf_none )
             character->strength = 50;
     }
-
-    // said of a lord still in the dungeons, in place of "has not yet been persuaded to
-    // join you", which would be a poor way to describe a prisoner
-    mx->text->ModifySystemString(SS_PRISONER,
-        "{case:first}{char:name} is held hostage here in the dungeons of the Dark Citadel, "
-        "and while {gender:heshe} is held the {race:name} will not march.");
 
     mxscenario::initialiseAfterCreate(version);
 }
