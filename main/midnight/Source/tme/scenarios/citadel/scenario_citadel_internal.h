@@ -12,6 +12,11 @@
 namespace tme {
     FORWARD_REFERENCE(citadel_character);
     FORWARD_REFERENCE(citadel_object);
+    FORWARD_REFERENCE(citadel_stronghold);
+
+    enum CITADELGAMEFLAGS {
+        gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
+    };
 
     class citadel_x : public mxscenario
     {
@@ -25,6 +30,7 @@ namespace tme {
 
         virtual void initialise ( u32 version ) override;
         virtual void initialiseAfterCreate ( u32 version ) override;
+        virtual void Serialize ( archive& ar ) override;
 
         virtual MXRESULT Command ( const std::string& arg, variant argv[], u32 argc ) override;
 
@@ -46,10 +52,13 @@ namespace tme {
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
         bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
         bool Reachable ( mxgridref from, mxgridref to ) const;
+        void RaiseWraith ();
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
-        mxcharacter*    boroth;
+        citadel_character*  boroth;
+        citadel_stronghold* maranor;
+        flags32             flags;
 
     private:
         // StepsFrom's answers for tonight, by the square they are counted from
@@ -87,6 +96,7 @@ namespace tme {
         virtual bool CanCharacterRecruitOrPost ( const mxcharacter* character ) const override;
         virtual bool CanCharacterPost ( const mxcharacter* character ) const override;
         virtual u32 DefenceMultiplier() const;
+        void Hold ( mxcharacter* lord );    // the keep is his own, and no battle took it
     };
 
     class citadel_area : public mxarea

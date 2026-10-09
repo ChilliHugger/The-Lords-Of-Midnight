@@ -40,6 +40,11 @@ void citadel_stronghold::MakeChangeSides ( mxrace_t newrace, mxcharacter* newocc
     }
 }
 
+void citadel_stronghold::Hold ( mxcharacter* lord )
+{
+    occupier = lord;
+}
+
 bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* character ) const
 {
     auto lord = static_cast<const citadel_character*>(character);

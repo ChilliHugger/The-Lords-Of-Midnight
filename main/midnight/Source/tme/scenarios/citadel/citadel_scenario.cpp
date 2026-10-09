@@ -19,6 +19,7 @@
 #include "scenario_citadel_internal.h"
 #include "citadel_processor_battle.h"
 #include "citadel_processor_quest.h"
+#include "../lom/lom_gameover.h"
 #include <algorithm>
 #include <map>
 #include <memory>
@@ -88,7 +89,8 @@ MXRESULT citadel::Text ( const std::string& command, variant* argv, u32 args )
 //
 
 citadel_x::citadel_x() :
-    boroth(nullptr)
+    boroth(nullptr),
+    maranor(nullptr)
 {
 }
 
@@ -142,7 +144,8 @@ static LPCSTR citadel_hostages[] = {
 void citadel_x::initialise ( u32 version )
 {
     mxscenario::initialise(version);
-    boroth = mx->CharacterBySymbol("CH_BOROTH");
+    boroth = CitadelLord(mx->CharacterBySymbol("CH_BOROTH"));
+    maranor = static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
 
     FOR_EACH_CHARACTER(character) {
         if ( character->HasQuality(qf_brave) )
@@ -452,11 +455,26 @@ void citadel_x::NightStop ( void )
 {
     mxscenario::NightStop();
 
+    RaiseWraith();
+
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
         CONTINUE_IF( !lord->IsRecruited() || lord->IsDead() || lord->news == QN_NONE );
         mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_QUEST_NEWS_REPORT, lord));
     }
+}
+
+void citadel_x::RaiseWraith ()
+{
+    if ( boroth == nullptr || maranor == nullptr || boroth->IsAlive() || flags.Is(gf_wraith) || maranor->HasFallen() )
+        return;
+
+    flags.Set(gf_wraith);
+    boroth->Flags().Set(cf_alive);
+    boroth->Location(maranor->Location());
+    maranor->Hold(boroth);
+
+    mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_WRAITH, boroth));
 }
 
 void citadel_x::LordsTurn ( void )
@@ -607,6 +625,8 @@ mxentity* citadel_entityfactory::Create ( id_type_t type )
 //
 void citadel_x::initialiseAfterCreate ( u32 version )
 {
+    flags.Clear();
+
     for ( auto symbol : citadel_hostages ) {
         auto hostage = mx->CharacterBySymbol(symbol);
         if ( hostage != nullptr )
@@ -625,6 +645,19 @@ void citadel_x::initialiseAfterCreate ( u32 version )
     mxscenario::initialiseAfterCreate(version);
 }
 
+void citadel_x::Serialize ( archive& ar )
+{
+    mxscenario::Serialize(ar);
+
+    if ( ar.IsStoring() ) {
+        ar << flags ;
+    } else {
+        flags.Clear();
+        if ( tme::mx->SaveGameVersion() > 21 )
+            ar >> flags ;
+    }
+}
+
 MXRESULT citadel_x::Register ( mxengine* midnightx )
 {
     // mx = midnightx ;
@@ -632,7 +665,7 @@ MXRESULT citadel_x::Register ( mxengine* midnightx )
     mx->text = new mxtext;
     mx->night = new mxnight;
     mx->battle = new citadel_battle;
-    mx->gameover = new mxgameover;
+    mx->gameover = new lom_gameover;
     mx->entityfactory = new citadel_entityfactory;
     mx->scenario = (mxscenario*)citadel_scenario;
     

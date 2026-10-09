@@ -420,7 +420,7 @@ const helpitem_t help_messages[] = {
         hf_none,
         "VICTORY AND DEFEAT\n\n"
         "\tYou win when Boroth the Wolfheart is dead AND the Dark Citadel of Maranor has fallen to the Free, so long as one of the House of Moon still lives."
-        "\n\n\tBoroth wins if Luxor, Morkin, Corleth and Anderlane are all dead."
+        "\n\n\tBoroth wins if Luxor, Morkin, Corleth and Anderlane are all dead, or if the Castle of Corelay falls to the Dark Fey."
     }
     ,
     {
