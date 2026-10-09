@@ -262,7 +262,7 @@
     <terrain id="TN_PALACE"         file="t_palace"     mapcell="32"/>
     <terrain id="TN_STONE"          file="t_stones"     mapcell="33"/>
     <terrain id="TN_PIT"            file="t_pit"        mapcell="34"/>
-    <terrain id="TN_MIST"           file="t_mist"       mapcell="35" />
+    <terrain id="TN_MIST"           file=""             mapcell="35" />
     <terrain id="TN_PLAIN"          file=""             mapcell="48" />
     <terrain id="TN_FOREST2"        file="t_forest2"    mapcell="64" mapdensity="true"/>
     <terrain id="TN_ICYWASTE"       file="t_icywaste"   mapcell="68" mapdensity="true"/>
@@ -275,18 +275,19 @@
     <terrain id="TN_PLAIN"          file=""                  mapcell="48" />
     <terrain id="TN_PLAINS3"        file=""                  mapcell="48" />
     <terrain id="TN_FOREST3"        file="t_forest0"         mapcell="64" mapdensity="true"/>
-    <terrain id="TN_TREES3"         file="t_forest2"         mapcell="64" mapdensity="true"/>
+    <terrain id="TN_TREES3"         file="t_forest2"         mapcell="132" mapdensity="true"/>
     <terrain id="TN_MOUNTAIN3"      file="t_mountain0"       mapcell="76" mapdensity="true"/>
-    <terrain id="TN_ICY_MOUNTAIN"   file="t_mountain2"       mapcell="76" mapdensity="true"/>
-    <terrain id="TN_DOWNS3"         file="t_downs0"          mapcell="72" mapdensity="true"/>
-    <terrain id="TN_HILLS3"         file="t_hills2"          mapcell="72" mapdensity="true"/>
-    <terrain id="TN_FOOTHILLS"      file="t_downs0"          mapcell="72" mapdensity="true"/>
+    <terrain id="TN_ICY_MOUNTAIN"   file="t_mountain2"       mapcell="140" mapdensity="true"/>
+    <terrain id="TN_DOWNS3"         file="t_downs0"          mapcell="136" mapdensity="true"/>
+    <terrain id="TN_HILLS3"         file="t_hills2"          mapcell="136" mapdensity="true"/>
+    <terrain id="TN_FOOTHILLS"      file="t_downs0"          mapcell="136" mapdensity="true"/>
     <terrain id="TN_VALLEY"         file=""                  mapcell="48" />
-    <terrain id="TN_BAY"            file=""                  mapcell="48" />
-    <terrain id="TN_SEA"            file=""                  mapcell="48" />
-    <terrain id="TN_RIVER"          file=""                  mapcell="48" />
+    <terrain id="TN_BAY"            file=""                  mapcell="192" mapdensity="true"/>
+    <terrain id="TN_SEA"            file=""                  mapcell="192" mapdensity="true"/>
+    <terrain id="TN_RIVER"          file=""                  mapcell="192" mapdensity="true"/>
     <terrain id="TN_MARSH"          file=""                  mapcell="48" />
-    <terrain id="TN_LAKE3"          file="t_lake0"           mapcell="19" />
+    <terrain id="TN_LAKE3"          file="t_lake0"           mapcell="192" mapdensity="true"/>
+    <terrain id="TN_DOCK"           file=""                  mapcell="48" />
     <terrain id="TN_CASTLE"         file="t_keep0"           mapcell="17" />
     
   </terrain>
