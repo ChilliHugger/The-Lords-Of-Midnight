@@ -46,10 +46,13 @@ namespace tme {
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
         bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
         bool Reachable ( mxgridref from, mxgridref to ) const;
+        void RaiseWraith ();
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
         mxcharacter*    boroth;
+        // the Dark Citadel of Maranor
+        mxstronghold*   maranor;
 
     private:
         // StepsFrom's answers for tonight, by the square they are counted from
@@ -87,6 +90,7 @@ namespace tme {
         virtual bool CanCharacterRecruitOrPost ( const mxcharacter* character ) const override;
         virtual bool CanCharacterPost ( const mxcharacter* character ) const override;
         virtual u32 DefenceMultiplier() const;
+        void Hold ( mxcharacter* lord );    // the keep is his own, and no battle took it
     };
 
     class citadel_area : public mxarea
@@ -145,6 +149,7 @@ namespace tme {
         mxreaction_t    reaction = RE_RETURN_HOME;
         u32             idle = 0;                   // nights one of yours has stood waiting for orders
         mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
+        bool            wraith = false;             // Boroth, risen again in the Dark Citadel
 
     protected:
         std::string title;      // the design's "Titles"; empty for most lords

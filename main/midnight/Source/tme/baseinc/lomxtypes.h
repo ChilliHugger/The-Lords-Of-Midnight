@@ -736,6 +736,7 @@ using namespace chilli::types;
             SS_QUEST_BACK,
             SS_QUEST_HELD,
             SS_QUEST_STATUS,
+            SS_WRAITH,
 
             SS_MAX_STRINGS = 255
         };
@@ -1248,7 +1249,7 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
-#define SAVEGAMEVERSION         21
+#define SAVEGAMEVERSION         22
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

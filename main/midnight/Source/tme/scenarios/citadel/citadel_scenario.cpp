@@ -19,6 +19,7 @@
 #include "scenario_citadel_internal.h"
 #include "citadel_processor_battle.h"
 #include "citadel_processor_quest.h"
+#include "../lom/lom_gameover.h"
 #include <algorithm>
 #include <map>
 #include <memory>
@@ -88,7 +89,8 @@ MXRESULT citadel::Text ( const std::string& command, variant* argv, u32 args )
 //
 
 citadel_x::citadel_x() :
-    boroth(nullptr)
+    boroth(nullptr),
+    maranor(nullptr)
 {
 }
 
@@ -143,6 +145,7 @@ void citadel_x::initialise ( u32 version )
 {
     mxscenario::initialise(version);
     boroth = mx->CharacterBySymbol("CH_BOROTH");
+    maranor = static_cast<mxstronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
 
     FOR_EACH_CHARACTER(character) {
         if ( character->HasQuality(qf_brave) )
@@ -452,11 +455,27 @@ void citadel_x::NightStop ( void )
 {
     mxscenario::NightStop();
 
+    RaiseWraith();
+
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
         CONTINUE_IF( !lord->IsRecruited() || lord->IsDead() || lord->news == QN_NONE );
         mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_QUEST_NEWS_REPORT, lord));
     }
+}
+
+void citadel_x::RaiseWraith ()
+{
+    auto lord = boroth != nullptr ? CitadelLord(boroth) : nullptr;
+    if ( lord == nullptr || maranor == nullptr || lord->IsAlive() || lord->wraith || maranor->HasFallen() )
+        return;
+
+    lord->wraith = true;
+    lord->Flags().Set(cf_alive);
+    lord->Location(maranor->Location());
+    static_cast<citadel_stronghold*>(maranor)->Hold(lord);
+
+    mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_WRAITH, lord));
 }
 
 void citadel_x::LordsTurn ( void )
@@ -632,7 +651,7 @@ MXRESULT citadel_x::Register ( mxengine* midnightx )
     mx->text = new mxtext;
     mx->night = new mxnight;
     mx->battle = new citadel_battle;
-    mx->gameover = new mxgameover;
+    mx->gameover = new lom_gameover;
     mx->entityfactory = new citadel_entityfactory;
     mx->scenario = (mxscenario*)citadel_scenario;
     
