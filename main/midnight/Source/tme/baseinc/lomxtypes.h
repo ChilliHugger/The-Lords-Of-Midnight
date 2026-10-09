@@ -260,7 +260,7 @@ using namespace chilli::types;
             TN_PLAIN            =    36,
             TN_PLAINS3          =    37,
             TN_FOREST3          =    38,
-            TN_UNUSED_39        =    39,
+            TN_CASTLE           =    39,
             TN_TREES            =    40,
             TN_MOUNTAIN3        =    41,
             TN_ICY_MOUNTAIN     =    42,
@@ -277,7 +277,7 @@ using namespace chilli::types;
             TN_UNUSED_53        =    53,
             TN_UNUSED_54        =    54,
             TN_MIST             =    55,
-            TN_CASTLE           =    56,
+            TN_DOCK             =    56,
 
             TN_NONE             =    127,
 
