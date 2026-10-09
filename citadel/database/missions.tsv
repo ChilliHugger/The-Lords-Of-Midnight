@@ -1,1 +1,6 @@
 Version	Id	Symbol	Flags	Priority	Objective	Condition	References	Points	Scorer	Action	Action Id
+7	1	MI_BOROTH_DEAD	ENABLED	1	Major	CharacterDead	CH_BOROTH	0		None	
+7	2	MI_MARANOR_FALLEN	ENABLED	1	Major	StrongholdFallen	SH_CITADEL_MARANOR	0		None	
+7	3	MI_BOROTH_MARANOR	ENABLED	2	None	MissionComplete	MI_BOROTH_DEAD|MI_MARANOR_FALLEN	0		None	
+7	4	MI_HOUSE_OF_MOON_DEAD	ENABLED	1	Major	CharacterDead	CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_ANDERLANE	0		None	
+7	5	MI_CORELAY_FALLEN	ENABLED	1	Major	StrongholdTaken	SH_CASTLE_CORELAY|RA_DARK_FEY	0		None	

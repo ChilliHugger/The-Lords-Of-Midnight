@@ -57,10 +57,10 @@ Version	Id	Symbol	Text
 7	55	SS_TERRAIN_PLURAL	{terrain:name}s
 7	56	SS_TERRAIN_SINGLE	a {terrain:name}
 7	57	SS_AREA_PREFIXED	{area:prefix} {area:name}
-7	58	SS_DEFEAT1	{lf}{crlf}{cr}Victory to Doomdark!{sp}
-7	59	SS_DEFEAT2	{lf}{crlf}{cr}Luxor and Morkin are dead!{lf}{crlf}{cr}Victory to Doomdark!{sp}
+7	58	SS_DEFEAT1	{lf}{crlf}{cr}Luxor, Morkin, Corleth and Anderlane are dead, and the House of Moon is no more.{lf}{crlf}{cr}Victory to Boroth!{sp}
+7	59	SS_DEFEAT2	{lf}{crlf}{cr}The Castle of Corelay has fallen to the Dark Fey.{lf}{crlf}{cr}Victory to Boroth!{sp}
 7	60	SS_DEFEAT3	{lf}{crlf}{cr}Xajorkith has fallen and Morkin is dead!{lf}{crlf}{cr}Victory to Doomdark!{sp}
-7	61	SS_VICTORY1	{lf}{crlf}{cr}Victory to the Free!{sp}
+7	61	SS_VICTORY1	{lf}{crlf}{cr}Boroth the Wolfheart is dead and the Dark Citadel of Maranor has fallen.{lf}{crlf}{cr}Victory to the Free!{sp}
 7	62	SS_VICTORY2	{lf}{crlf}{cr}Ushgarak has fallen.{lf}{crlf}{cr}Victory to the Free!{sp}
 7	63	SS_VICTORY3	{lf}{crlf}{cr}Lorgrim the Wise has destroyed the Ice Crown.{lf}{crlf}{cr}Victory to the Free!{sp}
 7	64	SS_VICTORY4	{lf}{crlf}{cr}Morkin cast the Ice Crown into Lake Mirrow and destroyed it.{lf}{crlf}{cr}Victory to the Free!{sp}
@@ -101,3 +101,4 @@ Version	Id	Symbol	Text
 7	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.{sp}
 7	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.{sp}
 7	125	SS_CHARACTER_TITLE	{char:name} is {char:title}.{sp}
+7	176	SS_WRAITH	.{lf}{crlf}{cr} {char:longname} rises again, a ghastly wraith, in the Dark Citadel of Maranor
