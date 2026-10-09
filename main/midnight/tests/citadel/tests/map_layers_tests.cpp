@@ -47,3 +47,20 @@ SCENARIO("The Mists of Oblivion ring the Bloodmarch, and no lord walks into them
         }
     }
 }
+
+SCENARIO("Lords placed in Tiled start on the tile they are drawn on")
+{
+    TMEStep::NewStory();
+
+    THEN("Morkin is in the Castle of Corelay")
+    {
+        REQUIRE( GetCharacter("CH_MORKIN")->Location() == mxgridref(7,12) );
+        REQUIRE( GetStronghold("SH_CASTLE_CORELAY")->Location() == mxgridref(7,12) );
+    }
+
+    THEN("Luxor is in the Citadel of Maranor")
+    {
+        REQUIRE( GetCharacter("CH_LUXOR")->Location() == mxgridref(145,220) );
+        REQUIRE( GetStronghold("SH_CITADEL_MARANOR")->Location() == mxgridref(145,220) );
+    }
+}
