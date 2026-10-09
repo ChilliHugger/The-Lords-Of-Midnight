@@ -30,7 +30,6 @@ void citadel_character::Serialize ( archive& ar )
         WRITE_ENUM(reaction);
         ar << idle ;
         WRITE_ENUM(news);
-        ar << (u8)wraith ;
     } else {
         ar >> qualities ;
         if ( tme::mx->SaveGameVersion() > 18 )
@@ -44,11 +43,6 @@ void citadel_character::Serialize ( archive& ar )
         if ( tme::mx->SaveGameVersion() > 20 ) {
             ar >> idle ;
             READ_ENUM(news);
-        }
-        if ( tme::mx->SaveGameVersion() > 21 ) {
-            u8 risen = 0;
-            ar >> risen ;
-            wraith = risen != 0;
         }
     }
 }

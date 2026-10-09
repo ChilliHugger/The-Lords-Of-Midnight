@@ -144,8 +144,8 @@ static LPCSTR citadel_hostages[] = {
 void citadel_x::initialise ( u32 version )
 {
     mxscenario::initialise(version);
-    boroth = mx->CharacterBySymbol("CH_BOROTH");
-    maranor = static_cast<mxstronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
+    boroth = CitadelLord(mx->CharacterBySymbol("CH_BOROTH"));
+    maranor = static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
 
     FOR_EACH_CHARACTER(character) {
         if ( character->HasQuality(qf_brave) )
@@ -466,16 +466,15 @@ void citadel_x::NightStop ( void )
 
 void citadel_x::RaiseWraith ()
 {
-    auto lord = boroth != nullptr ? CitadelLord(boroth) : nullptr;
-    if ( lord == nullptr || maranor == nullptr || lord->IsAlive() || lord->wraith || maranor->HasFallen() )
+    if ( boroth == nullptr || maranor == nullptr || boroth->IsAlive() || flags.Is(gf_wraith) || maranor->HasFallen() )
         return;
 
-    lord->wraith = true;
-    lord->Flags().Set(cf_alive);
-    lord->Location(maranor->Location());
-    static_cast<citadel_stronghold*>(maranor)->Hold(lord);
+    flags.Set(gf_wraith);
+    boroth->Flags().Set(cf_alive);
+    boroth->Location(maranor->Location());
+    maranor->Hold(boroth);
 
-    mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_WRAITH, lord));
+    mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_WRAITH, boroth));
 }
 
 void citadel_x::LordsTurn ( void )
@@ -626,6 +625,8 @@ mxentity* citadel_entityfactory::Create ( id_type_t type )
 //
 void citadel_x::initialiseAfterCreate ( u32 version )
 {
+    flags.Clear();
+
     for ( auto symbol : citadel_hostages ) {
         auto hostage = mx->CharacterBySymbol(symbol);
         if ( hostage != nullptr )
@@ -642,6 +643,19 @@ void citadel_x::initialiseAfterCreate ( u32 version )
     }
 
     mxscenario::initialiseAfterCreate(version);
+}
+
+void citadel_x::Serialize ( archive& ar )
+{
+    mxscenario::Serialize(ar);
+
+    if ( ar.IsStoring() ) {
+        ar << flags ;
+    } else {
+        flags.Clear();
+        if ( tme::mx->SaveGameVersion() > 21 )
+            ar >> flags ;
+    }
 }
 
 MXRESULT citadel_x::Register ( mxengine* midnightx )

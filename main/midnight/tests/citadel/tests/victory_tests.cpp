@@ -16,7 +16,7 @@ namespace {
 
     citadel_character* Boroth()
     {
-        return CitadelLord(Citadel()->boroth);
+        return Citadel()->boroth;
     }
 
     m_gameover_t GameOver()
@@ -53,7 +53,7 @@ SCENARIO("The Citadel is won when Boroth is dead and the Dark Citadel of Maranor
         THEN("he rises in it as a wraith, and holds it against the Free")
         {
             REQUIRE( Boroth()->IsAlive() );
-            REQUIRE( Boroth()->wraith );
+            REQUIRE( Citadel()->flags.Is(gf_wraith) );
             REQUIRE( Boroth()->Location() == Citadel()->maranor->Location() );
             REQUIRE( Citadel()->maranor->IsEnemy() );
             REQUIRE( GameOver() == MG_NONE );

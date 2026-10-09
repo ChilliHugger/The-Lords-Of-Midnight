@@ -12,6 +12,11 @@
 namespace tme {
     FORWARD_REFERENCE(citadel_character);
     FORWARD_REFERENCE(citadel_object);
+    FORWARD_REFERENCE(citadel_stronghold);
+
+    enum CITADELGAMEFLAGS {
+        gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
+    };
 
     class citadel_x : public mxscenario
     {
@@ -25,6 +30,7 @@ namespace tme {
 
         virtual void initialise ( u32 version ) override;
         virtual void initialiseAfterCreate ( u32 version ) override;
+        virtual void Serialize ( archive& ar ) override;
 
         virtual MXRESULT Command ( const std::string& arg, variant argv[], u32 argc ) override;
 
@@ -50,9 +56,9 @@ namespace tme {
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
-        mxcharacter*    boroth;
-        // the Dark Citadel of Maranor
-        mxstronghold*   maranor;
+        citadel_character*  boroth;
+        citadel_stronghold* maranor;
+        flags32             flags;
 
     private:
         // StepsFrom's answers for tonight, by the square they are counted from
@@ -149,7 +155,6 @@ namespace tme {
         mxreaction_t    reaction = RE_RETURN_HOME;
         u32             idle = 0;                   // nights one of yours has stood waiting for orders
         mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
-        bool            wraith = false;             // Boroth, risen again in the Dark Citadel
 
     protected:
         std::string title;      // the design's "Titles"; empty for most lords
