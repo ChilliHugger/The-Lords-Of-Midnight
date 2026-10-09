@@ -488,7 +488,7 @@ mxstronghold* citadel_x::HomeKeep ( mxrace_t people, mxgridref from ) const
     return home;
 }
 
-std::vector<citadel_character*> citadel_x::Held () const
+std::vector<citadel_character*> citadel_x::HostagesHeldAtMaranor () const
 {
     std::vector<citadel_character*> held;
     FOR_EACH_CHARACTER(character) {
@@ -657,7 +657,7 @@ void citadel_x::initialiseAfterCreate ( u32 version )
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
         if ( maranor != nullptr && lord->IsRecruited() && !lord->IsPrisoner() && lord->Location() == maranor->Location() )
-            lord->citadelflags.Set(ccf_dungeon);
+            lord->Flags().Set(cf_dungeon);
         if ( character->HasQuality(qf_mightywarrior) )
             character->strength = 100;
         else if ( character->HasQuality(qf_feeblewarrior) )

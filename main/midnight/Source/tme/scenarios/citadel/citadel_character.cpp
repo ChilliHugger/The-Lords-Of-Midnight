@@ -30,7 +30,6 @@ void citadel_character::Serialize ( archive& ar )
         WRITE_ENUM(reaction);
         ar << idle ;
         WRITE_ENUM(news);
-        ar << citadelflags ;
         ar << home ;
     } else {
         ar >> qualities ;
@@ -46,10 +45,8 @@ void citadel_character::Serialize ( archive& ar )
             ar >> idle ;
             READ_ENUM(news);
         }
-        if ( tme::mx->SaveGameVersion() > 22 ) {
-            ar >> citadelflags ;
+        if ( tme::mx->SaveGameVersion() > 22 )
             ar >> home ;
-        }
     }
 }
 
@@ -177,16 +174,14 @@ bool citadel_character::Recruited ( mxcharacter* recruiter )
 bool citadel_character::InDungeon () const
 {
     auto maranor = CITADEL_SCENARIO(maranor);
-    return citadelflags.Is(ccf_dungeon) && maranor != nullptr && Location() == maranor->Location();
+    return flags.Is(cf_dungeon) && maranor != nullptr && Location() == maranor->Location();
 }
 
 MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
 {
-    if ( !InDungeon() )
-        citadelflags.Reset(ccf_dungeon);
     auto result = mxcharacter::Cmd_WalkForward(seek, approach);
     if ( !InDungeon() )
-        citadelflags.Reset(ccf_dungeon);
+        flags.Reset(cf_dungeon);
     return result;
 }
 
@@ -195,7 +190,7 @@ citadel_character* citadel_character::SearchDungeon ( u32 chance )
     if ( !InDungeon() || mxrandom(255) >= (int)chance )
         return nullptr;
 
-    auto held = CITADEL_SCENARIO(Held());
+    auto held = CITADEL_SCENARIO(HostagesHeldAtMaranor());
     if ( held.empty() )
         return nullptr;
 

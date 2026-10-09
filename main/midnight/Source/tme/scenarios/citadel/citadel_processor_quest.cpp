@@ -368,7 +368,7 @@ void citadel_quest_processor::Quest ( void )
         auto hostage = lord->SearchDungeon((u32)sv_dungeon_search_night);
         if ( hostage != nullptr )
             mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_DUNGEON_FREED, hostage));
-        if ( ( character != nullptr && !character->IsPrisoner() ) || CITADEL_SCENARIO(Held()).empty() )
+        if ( ( character != nullptr && !character->IsPrisoner() ) || CITADEL_SCENARIO(HostagesHeldAtMaranor()).empty() )
             Done(QN_DONE);
         return;
     }

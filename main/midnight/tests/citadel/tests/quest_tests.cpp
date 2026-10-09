@@ -469,12 +469,12 @@ SCENARIO("Corleth searches the dungeons by night, and each hostage he finds is f
 
     WHEN("night falls")
     {
-        auto held = citadel->Held();
+        auto held = citadel->HostagesHeldAtMaranor();
         TMEStep::NightFalls();
 
         THEN("one hostage is free and yours, and stands in his home castle")
         {
-            REQUIRE( citadel->Held().size() == held.size() - 1 );
+            REQUIRE( citadel->HostagesHeldAtMaranor().size() == held.size() - 1 );
             for ( auto hostage : held ) {
                 if ( hostage->IsPrisoner() )
                     continue;

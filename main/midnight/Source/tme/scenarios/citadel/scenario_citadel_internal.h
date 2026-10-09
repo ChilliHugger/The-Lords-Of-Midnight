@@ -18,10 +18,6 @@ namespace tme {
         gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
     };
 
-    enum CITADELCHARACTERFLAGS {
-        ccf_dungeon         = MXBIT(0),     // Corleth and Arin, until they leave the Dark Citadel
-    };
-
     class citadel_x : public mxscenario
     {
     public:
@@ -58,7 +54,7 @@ namespace tme {
         bool Reachable ( mxgridref from, mxgridref to ) const;
         void RaiseWraith ();
         mxstronghold* HomeKeep ( mxrace_t people, mxgridref from ) const;   // the nearest keep his people hold
-        std::vector<citadel_character*> Held () const;                      // the hostages still in the dungeons
+        std::vector<citadel_character*> HostagesHeldAtMaranor () const;
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
@@ -165,7 +161,6 @@ namespace tme {
         mxreaction_t    reaction = RE_RETURN_HOME;
         u32             idle = 0;                   // nights one of yours has stood waiting for orders
         mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
-        flags32         citadelflags;
         mxstronghold*   home = nullptr;             // a hostage's home castle
 
     protected:

@@ -40,7 +40,7 @@ SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held aga
         REQUIRE_FALSE( corleth->TakesPartInBattle() );
         REQUIRE_FALSE( Lord("CH_MORKIN")->InDungeon() );
         REQUIRE( Citadel()->maranor->IsEnemy() );
-        REQUIRE( Citadel()->Held().size() == 13 );
+        REQUIRE( Citadel()->HostagesHeldAtMaranor().size() == 13 );
     }
 
     THEN("a hostage is found, not approached, and only they may set out to rescue him")
@@ -96,7 +96,7 @@ SCENARIO("Seek searches the dungeons until nightfall")
     GIVEN("a search that cannot miss")
     {
         tme::variables::sv_dungeon_search_day = 256;
-        auto held = Citadel()->Held();
+        auto held = Citadel()->HostagesHeldAtMaranor();
 
         WHEN("Corleth seeks")
         {
@@ -104,7 +104,7 @@ SCENARIO("Seek searches the dungeons until nightfall")
 
             THEN("one hostage is free, his day is over, and a dragon has borne the hostage home")
             {
-                REQUIRE( Citadel()->Held().size() == held.size() - 1 );
+                REQUIRE( Citadel()->HostagesHeldAtMaranor().size() == held.size() - 1 );
                 REQUIRE( corleth->Time() == (mxtime_t)tme::variables::sv_time_night );
                 for ( auto hostage : held ) {
                     if ( !hostage->IsPrisoner() )
@@ -125,7 +125,7 @@ SCENARIO("Seek searches the dungeons until nightfall")
 
             THEN("nobody is freed, and his day is over all the same")
             {
-                REQUIRE( Citadel()->Held().size() == 13 );
+                REQUIRE( Citadel()->HostagesHeldAtMaranor().size() == 13 );
                 REQUIRE( corleth->Time() == (mxtime_t)tme::variables::sv_time_night );
                 REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("finds no one") );
             }
