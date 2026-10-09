@@ -102,3 +102,6 @@ Version	Id	Symbol	Text
 7	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.{sp}
 7	125	SS_CHARACTER_TITLE	{char:name} is {char:title}.{sp}
 7	176	SS_WRAITH	.{lf}{crlf}{cr} {char:longname} rises again, a ghastly wraith, in the Dark Citadel of Maranor
+7	177	SS_DUNGEON_FREED	.{lf}{crlf}{cr} {char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home
+7	178	SS_DUNGEON_FOUND	{char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home.{sp}
+7	179	SS_DUNGEON_NOTHING	{case:first}{char:gender:heshe} searches the dungeons of Maranor until nightfall, and finds no one.{sp}

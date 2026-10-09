@@ -100,10 +100,9 @@ SCENARIO("A held hostage raises the bar for his realm from one point to two")
                 REQUIRE( recruiter->CheckRecruitChar(kinsman) );
             }
 
-            AND_THEN("and the hostage may be approached whatever his attributes, which is how he is freed")
+            AND_THEN("and the hostage may not be approached: he is found by searching the dungeons")
             {
-                hostage->qualities = qf_cowardly|qf_treacherous;
-                REQUIRE( recruiter->CheckRecruitChar(hostage) );
+                REQUIRE_FALSE( recruiter->CheckRecruitChar(hostage) );
             }
         }
     }

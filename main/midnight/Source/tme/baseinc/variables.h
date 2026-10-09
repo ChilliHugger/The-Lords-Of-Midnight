@@ -144,6 +144,8 @@ namespace tme {
         extern sv_int_t    sv_missions ;
         extern sv_int_t    sv_victories ;
         extern sv_int_t    sv_days ;
+        extern sv_int_t    sv_dungeon_search_night ;
+        extern sv_int_t    sv_dungeon_search_day ;
         extern sv_int_t    sv_attributes ;
         extern sv_int_t    sv_variables ;
         extern sv_int_t    sv_strongholdadjuster ;

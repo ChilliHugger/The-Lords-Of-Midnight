@@ -20,11 +20,12 @@ namespace {
         return nullptr;
     }
 
-    // one of the Dark Fey's own keeps, which is not at war until the host is in it
+    // one of the Dark Fey's own keeps, which is not at war until the host is in it - not the Dark Citadel, which always is
     mxstronghold* ADarkFeyKeep()
     {
+        auto maranor = static_cast<citadel_x*>(tme::mx->scenario)->maranor;
         for ( auto stronghold : tme::mx->objStrongholds ) {
-            if ( stronghold->OccupyingRace() == RA_DARK_FEY )
+            if ( stronghold->OccupyingRace() == RA_DARK_FEY && stronghold != maranor )
                 return stronghold;
         }
         return nullptr;
