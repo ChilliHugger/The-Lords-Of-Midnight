@@ -33,26 +33,26 @@ Version	Id	Symbol	Flags	Name	Preposition	Description	Success	Visibility	Obstruct
 7	31	TN_FROZENWASTE2	PLURAL+BLOCK+INTERESTING	Frozen Waste		the Frozen Wastes	0	0	0	0
 7	32	TN_UNUSED_32					0	0	0	0
 7	33	TN_LAND		Land	on	{str:5}	0	0	0	0
-7	34	TN_ISLE		Isle	on	{str:5}	0	0	0	0
+7	34	TN_ISLE	INTERESTING	Isle	on	{str:5}	0	0	0	0
 7	35	TN_LAKELAND		Lakeland	in	{str:5}	0	0	0	0
 7	36	TN_PLAIN	PLURAL	Plain	on	{str:5}	0	0	0	0
 7	37	TN_PLAINS3	PLURAL	Plain	on	{str:5}	0	0	0	0
-7	38	TN_FOREST3		Forest	in	{str:5}	0	0	0	0
-7	39	TN_UNUSED_39				{str:5}	0	0	0	0
-7	40	TN_TREES3	PLURAL	Tree	beside	{str:5}	0	0	0	0
-7	41	TN_MOUNTAIN3	PLURAL	Mountain	in	{str:5}	0	0	0	0
-7	42	TN_ICY_MOUNTAIN	PLURAL	Icy Mountain	in	{str:5}	0	0	0	0
-7	43	TN_DOWNS3	PLURAL	Down	on	{str:5}	0	0	0	0
-7	44	TN_HILLS3	PLURAL	Hill	in	{str:5}	0	0	0	0
-7	45	TN_FOOTHILLS	PLURAL	Foothill	in	{str:5}	0	0	0	0
-7	46	TN_VALLEY		Valley	in	{str:5}	0	0	0	0
-7	47	TN_BAY		Bay	at	{str:5}	0	0	0	0
-7	48	TN_SEA		Sea	at	{str:5}	0	0	0	0
-7	49	TN_RIVER		River	at	{str:5}	0	0	0	0
-7	50	TN_MARSH		Marsh	at	{str:5}	0	0	0	0
-7	51	TN_LAKE3		Lake	beside	{str:5}	0	0	0	0
+7	38	TN_FOREST3	INTERESTING	Forest	in	{str:5}	0	0	0	0
+7	39	TN_CASTLE	INTERESTING	Castle	at	{str:5}	16	10	10	0
+7	40	TN_TREES3	INTERESTING+PLURAL	Tree	beside	{str:5}	0	0	0	0
+7	41	TN_MOUNTAIN3	INTERESTING+PLURAL	Mountain	in	{str:5}	0	0	0	0
+7	42	TN_ICY_MOUNTAIN	INTERESTING+PLURAL	Icy Mountain	in	{str:5}	0	0	0	0
+7	43	TN_DOWNS3	INTERESTING+PLURAL	Down	on	{str:5}	0	0	0	0
+7	44	TN_HILLS3	INTERESTING+PLURAL	Hill	in	{str:5}	0	0	0	0
+7	45	TN_FOOTHILLS	INTERESTING+PLURAL	Foothill	in	{str:5}	0	0	0	0
+7	46	TN_VALLEY	INTERESTING	Valley	in	{str:5}	0	0	0	0
+7	47	TN_BAY	INTERESTING	Bay	at	{str:5}	0	0	0	0
+7	48	TN_SEA	INTERESTING	Sea	at	{str:5}	0	0	0	0
+7	49	TN_RIVER	INTERESTING	River	at	{str:5}	0	0	0	0
+7	50	TN_MARSH	INTERESTING	Marsh	at	{str:5}	0	0	0	0
+7	51	TN_LAKE3	INTERESTING	Lake	beside	{str:5}	0	0	0	0
 7	52	TN_UNUSED_52				{str:5}	0	0	0	0
 7	53	TN_UNUSED_53				{str:5}	0	0	0	0
 7	54	TN_UNUSED_54				{str:5}	0	0	0	0
 7	55	TN_MIST	BLOCK	Mist	in	{str:5}	0	0	0	0
-7	56	TN_CASTLE	INTERESTING	Castle	at	{str:5}	16	10	10	0
+7	56	TN_DOCK	INTERESTING	Dock	in	{str:5}	0	0	0	0
