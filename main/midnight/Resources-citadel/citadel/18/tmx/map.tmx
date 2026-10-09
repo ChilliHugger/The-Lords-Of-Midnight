@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="256" height="256" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#ffffff" nextlayerid="36" nextobjectid="1025">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="256" height="256" tilewidth="64" tileheight="64" infinite="0" backgroundcolor="#ffffff" nextlayerid="37" nextobjectid="1025">
  <editorsettings>
   <export target="../../../../../Desktop/map.tmx" format="tmx"/>
  </editorsettings>
@@ -181,6 +181,11 @@
  <layer id="23" name="Border" class="Terrain" width="256" height="256" locked="1">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE+3TMQ0AMAzAsLIqf2aDsL+xpUDIzsxKkiRJkqRUwF3+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfuvwPXf6HLv9Dl/+hy//Q5X/o8j90+R+6/A9d/ocu/0OX/6HL/9Dlf+jyP3T5H7r8D13+hy7/Q5f/ocv/0OV/6PI/dPkfun7/S5IkSZKkez3fvYe0AAAEAA==
+  </data>
+ </layer>
+ <layer id="36" name="Things" class="Things" width="256" height="256">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAC/+3bSw4CIRAFwLn/DZjTzta4kIFg8qCrdiYuFO2veF0AAAAAAAAAAAC/NUcAIKcCAADw2u0IAAAAgAX8vgwZ0vZ9coOzJztGAQAA84LZFd8vAORjAAD0nICcAQDAaC/VDn1fAAAAADDrXvw84MwcAAAAkMgdGjD/I+8i5sUEILcAwNx8YHYAcz4A5nwAAHL6Rb0jMMLeEIDk3tbrV+fNOCA3yD8AAADmLsz4AAAAAFCN/R8AoD8AAKpyrwwAAICT2ffDe/ZEAAAk9ZjNuQHIXQAdd+ex3IvPAQAA4DzuBLIbuwMxDnIJAKjJ6jsAAGBuAgAAAAB2414vAAAA8MmuAGA99y5BPAAAQBp7QABQuwG+2eEDyI2YJwAAfSoAYM4HAAAAAACAldx1AUDtcP4AAAAA/JedDoBcDgAAAMAcexlAXgMAQP8IiEUA1AXnCQBqIgAA6DsBANCP6nkxQwEAAJiBAIB+TW9qPOiNAQAAAAAAAKAov/0DAAAAAAAAAAAAAAAA1OJ/ZQCg1gIAAADADuzaAADQs3r9gDwDAKjVAMj3IA4AUF/wHQIAAAAYY/cAAOhxAAAAzEoAqAkAAAAAQG32hgAAAAAAWextAQB9CACoeQCoUwAAoKcEAAA9NT4f2D3+xCygXwDEO4hFAAAAAACows4cAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg2wPYxR3xAAAEAA==
   </data>
  </layer>
  <objectgroup id="34" name="routenodes" class="routenodes" visible="0">
