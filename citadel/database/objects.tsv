@@ -1,6 +1,6 @@
 Version	Id	Symbol	Flags	Location	Kills	Name	Description	Use Description	Carried By	Type	Power
 7	1	OB_WOLVES	FIGHT+SEE	"0,0"		Wolves	wolves				
-7	2	OB_DRAGONS	FIGHT+SEE	"0,0"		Dragons	dragons				
+7	2	OB_DRAGONS	SEE	"0,0"		Dragons	dragons				
 7	3	OB_ICETROLLS	FIGHT+SEE	"0,0"		Ice Trolls	ice trolls				
 7	4	OB_SKULKRIN	FIGHT+SEE	"0,0"		Skulkrin	skulkrin				
 7	5	OB_WILDHORSES	SEE	"0,0"		Wild Horses	wild horses				
