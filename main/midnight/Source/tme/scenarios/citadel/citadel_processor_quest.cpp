@@ -45,18 +45,6 @@ void citadel_quest_processor::React ( citadel_character* lord )
     }
 }
 
-mxstronghold* citadel_quest_processor::HomeKeep ( mxrace_t people, mxgridref from ) const
-{
-    mxstronghold* home = nullptr;
-    FOR_EACH_STRONGHOLD(stronghold) {
-        CONTINUE_IF( stronghold->Race() != people || stronghold->OccupyingRace() != people
-                     || !mx->gamemap->IsLocOnMap(stronghold->Location()) );
-        if ( home == nullptr || from - stronghold->Location() < from - home->Location() )
-            home = stronghold;
-    }
-    return home;
-}
-
 std::vector<mxregiment*> citadel_quest_processor::Host () const
 {
     std::vector<mxregiment*> host;
@@ -317,18 +305,6 @@ bool citadel_quest_processor::Guard ( void )
     return CitadelBattle()->Guard(lord);
 }
 
-void citadel_quest_processor::FreeHostages ( void )
-{
-    FOR_EACH_CHARACTER(character) {
-        CONTINUE_IF( !character->IsPrisoner() || character->IsDead() || character->Location() != lord->Location() );
-        lord->Cmd_Approach(character);
-        auto hostage = CitadelLord(character);
-        auto home = HomeKeep(hostage->Race(), hostage->Location());
-        if ( home != nullptr )
-            hostage->SetQuest(QS_GOTO, MAKE_LOCID(home->Location().x, home->Location().y));
-    }
-}
-
 void citadel_quest_processor::Done ( mxquestnews_t news )
 {
     lord->quest = QS_NONE;      // the target stays: the dawn news names it
@@ -362,7 +338,7 @@ void citadel_quest_processor::Quest ( void )
                                         : regiment != nullptr && regiment->Total() > 0;
             break;
         case QS_RESCUE:
-            live = character != nullptr && character->IsAlive() && character->IsPrisoner();
+            live = lord->InDungeon() && ( character == nullptr || ( character->IsAlive() && character->IsPrisoner() ) );
             break;
         case QS_SEIZE:
             live = stronghold != nullptr;
@@ -385,6 +361,15 @@ void citadel_quest_processor::Quest ( void )
 
     if ( !live ) {
         Done(QN_FAILED);
+        return;
+    }
+
+    if ( lord->quest == QS_RESCUE ) {
+        auto hostage = lord->SearchDungeon((u32)sv_dungeon_search_night);
+        if ( hostage != nullptr )
+            mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_DUNGEON_FREED, hostage));
+        if ( ( character != nullptr && !character->IsPrisoner() ) || CITADEL_SCENARIO(HostagesHeldAtMaranor()).empty() )
+            Done(QN_DONE);
         return;
     }
 
@@ -435,10 +420,6 @@ void citadel_quest_processor::Quest ( void )
             break;
         case QS_JOIN:
             lord->Cmd_Follow(character);
-            Done(QN_DONE);
-            break;
-        case QS_RESCUE:
-            FreeHostages();
             Done(QN_DONE);
             break;
         case QS_GOTO:

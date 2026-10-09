@@ -371,6 +371,7 @@ const helpitem_t help_messages[] = {
         "THE HOSTAGES\n\n"
         "\tBoroth keeps a prisoner from each realm of the Bloodmarch in the dungeons of the Dark Citadel, to ensure their reluctant compliance."
         "\n\n\tFree a realm's hostage and its lords may be persuaded to join you. This is the surest way to raise an army large enough to march on Maranor."
+        "\n\n\tOnly Corleth and Arin can search the dungeons, and only while they stay in the Citadel: once either leaves, he can never search again. Give them the RESCUE quest and they search by night; SEEK while you lead one of them and he searches until nightfall. A dragon of Arungor bears each hostage found home."
     }
     ,
     {
@@ -378,7 +379,7 @@ const helpitem_t help_messages[] = {
         hf_important,
         "THE BLOODMARCH\n\n"
         "\tBoroth the Wolfheart, High King of the Dark Fey, rules the Marish from the Dark Citadel of Maranor, and will not rest until the whole Bloodmarch is enslaved. He holds a hostage from every realm, and so the Kings of the Bloodmarch do not move against him."
-        "\n\n\tCorleth and Arin have only lately been set free from his dungeons, and Luxor the Moonprince is still held there. Morkin, Araleth and Rorthron are abroad in the north."
+        "\n\n\tCorleth and Arin, lately escaped from his dungeons, have crept back into them to find Luxor the Moonprince, who is still held there. Morkin, Araleth and Rorthron are abroad in the north."
         "\n\n\tBoroth will take citadels and castles as he marches toward Midnight. You must take them back to slow him."
     }
     ,

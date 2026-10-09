@@ -737,6 +737,9 @@ using namespace chilli::types;
             SS_QUEST_HELD,
             SS_QUEST_STATUS,
             SS_WRAITH,
+            SS_DUNGEON_FREED,
+            SS_DUNGEON_FOUND,
+            SS_DUNGEON_NOTHING,
 
             SS_MAX_STRINGS = 255
         };
@@ -1074,6 +1077,7 @@ namespace tme {
             cf_knowledge        = MXBIT(28),    // has special knowledge
             cf_control          = MXBIT(29),    // is under control
             cf_watch            = MXBIT(30),    // is being watched
+            cf_dungeon          = MXBIT(31),    // in the dungeons of Maranor
             // citadel
             
         };
@@ -1249,7 +1253,11 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
+#if defined(_CITADEL_)
+#define SAVEGAMEVERSION         23
+#else
 #define SAVEGAMEVERSION         22
+#endif
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

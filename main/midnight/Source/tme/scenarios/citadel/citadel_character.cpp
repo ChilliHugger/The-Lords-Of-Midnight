@@ -30,6 +30,7 @@ void citadel_character::Serialize ( archive& ar )
         WRITE_ENUM(reaction);
         ar << idle ;
         WRITE_ENUM(news);
+        ar << home ;
     } else {
         ar >> qualities ;
         if ( tme::mx->SaveGameVersion() > 18 )
@@ -44,6 +45,8 @@ void citadel_character::Serialize ( archive& ar )
             ar >> idle ;
             READ_ENUM(news);
         }
+        if ( tme::mx->SaveGameVersion() > 22 )
+            ar >> home ;
     }
 }
 
@@ -56,6 +59,7 @@ void citadel_character::LoadTsv ( const TsvRow& row )
     quest = ParseQuest(row.GetString(TsvField::Character::Quest));
     purpose = ParsePurpose(row.GetString(TsvField::Character::Purpose));
     reaction = ParseReaction(row.GetString(TsvField::Character::Reaction));
+    home = row.GetStronghold(TsvField::Character::Home);
 }
 
 bool citadel_character::TakesPartInBattle() const
@@ -63,6 +67,7 @@ bool citadel_character::TakesPartInBattle() const
     return mxcharacter::TakesPartInBattle()
         && ( IsRecruited() || purpose == PU_DEFEND_HOMELAND )
         && !IsPrisoner()
+        && !InDungeon()
         && Race() != RA_ENEMY;
 }
 
@@ -137,7 +142,7 @@ bool citadel_character::CheckRecruitChar ( mxcharacter* pChar ) const
         return false;
 
     if ( pChar->IsPrisoner() )
-        return true;
+        return CITADEL_SCENARIO(maranor) != nullptr && CITADEL_SCENARIO(maranor)->HasFallen();
 
     if ( pChar->Race() == RA_ENEMY )
         return false;
@@ -164,6 +169,59 @@ bool citadel_character::Recruited ( mxcharacter* recruiter )
 {
     flags.Reset(cf_ai);
     return mxcharacter::Recruited(recruiter);
+}
+
+bool citadel_character::InDungeon () const
+{
+    auto maranor = CITADEL_SCENARIO(maranor);
+    return flags.Is(cf_dungeon) && maranor != nullptr && Location() == maranor->Location();
+}
+
+MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
+{
+    auto result = mxcharacter::Cmd_WalkForward(seek, approach);
+    if ( !InDungeon() )
+        flags.Reset(cf_dungeon);
+    return result;
+}
+
+citadel_character* citadel_character::SearchDungeon ( u32 chance )
+{
+    if ( !InDungeon() || mxrandom(255) >= (int)chance )
+        return nullptr;
+
+    auto held = CITADEL_SCENARIO(HostagesHeldAtMaranor());
+    if ( held.empty() )
+        return nullptr;
+
+    auto hostage = held[mxrandom(0, (int)held.size() - 1)];
+    Cmd_Approach(hostage);
+    hostage->FlyHome();
+    return hostage;
+}
+
+void citadel_character::FlyHome ()
+{
+    auto keep = home;
+    if ( keep == nullptr || keep->IsEnemy() )
+        keep = CITADEL_SCENARIO(HomeKeep(Race(), home != nullptr ? home->Location() : Location()));
+    if ( keep != nullptr )
+        Location(keep->Location());
+}
+
+mxobject* citadel_character::Cmd_Seek ( void )
+{
+    if ( !InDungeon() )
+        return mxcharacter::Cmd_Seek();
+
+    SetLastCommand(CMD_SEEK, IDT_NONE);
+    CommandTakesTime(true);
+    auto hostage = SearchDungeon((u32)sv_dungeon_search_day);
+    time = (mxtime_t)sv_time_night;
+    mx->SetLastActionMsg(hostage != nullptr
+        ? mx->text->CookedSystemString(SS_DUNGEON_FOUND, hostage)
+        : mx->text->CookedSystemString(SS_DUNGEON_NOTHING, this));
+    return nullptr;
 }
 
 bool citadel_character::Marches () const
@@ -196,7 +254,7 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
         case QS_KILL:
             return other && !character->IsRecruited() && !character->IsPrisoner();
         case QS_RESCUE:
-            return other && character->IsPrisoner();
+            return InDungeon() && other && character->IsPrisoner();
         case QS_JOIN:
         case QS_FOLLOW:
             return other && character->IsRecruited();

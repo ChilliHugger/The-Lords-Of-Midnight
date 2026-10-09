@@ -14,16 +14,16 @@
 namespace tme {
 
 //
-// Only a keep Boroth's host has TAKEN is his to hold. The Dark Fey's own keeps stay out of the
-// war for now: Maranor holds the hostages the player frees by approaching them, the opening
-// party stands in it, and some fifty lords of the realms start in Castle Burning - a hostile
-// Dark Fey keep would fight all of them on the first night, before they can march home (#9).
+// A keep Boroth's host has TAKEN is his to hold, and so is the Dark Citadel, where only Corleth and
+// Arin may go (#25) - they and the hostages sit its battles out. The Dark Fey's other keeps stay out
+// of the war: some fifty lords of the realms start in Castle Burning, and a hostile keep would fight
+// all of them on the first night, before they can march home (#9).
 //
 bool citadel_stronghold::IsEnemy() const
 {
     return mxstronghold::IsEnemy()
-        && Occupier() != nullptr
-        && Occupier() == CITADEL_SCENARIO(boroth);
+        && ( this == CITADEL_SCENARIO(maranor)
+             || ( Occupier() != nullptr && Occupier() == CITADEL_SCENARIO(boroth) ) );
 }
 
 void citadel_stronghold::MakeChangeSides ( mxrace_t newrace, mxcharacter* newoccupier )
@@ -38,11 +38,6 @@ void citadel_stronghold::MakeChangeSides ( mxrace_t newrace, mxcharacter* newocc
         totaltroops = mx->RaceById(occupyingrace)->StrongholdStartups();
         occupier = newoccupier;
     }
-}
-
-void citadel_stronghold::Hold ( mxcharacter* lord )
-{
-    occupier = lord;
 }
 
 bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* character ) const
