@@ -47,6 +47,8 @@ namespace tme {
         bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
         bool Reachable ( mxgridref from, mxgridref to ) const;
         void RaiseWraith ();
+        mxstronghold* HomeKeep ( mxrace_t people, mxgridref from ) const;   // the nearest keep his people hold
+        std::vector<citadel_character*> Held () const;                      // the hostages still in the dungeons
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
@@ -90,7 +92,6 @@ namespace tme {
         virtual bool CanCharacterRecruitOrPost ( const mxcharacter* character ) const override;
         virtual bool CanCharacterPost ( const mxcharacter* character ) const override;
         virtual u32 DefenceMultiplier() const;
-        void Hold ( mxcharacter* lord );    // the keep is his own, and no battle took it
     };
 
     class citadel_area : public mxarea
@@ -130,6 +131,8 @@ namespace tme {
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
         virtual bool Recruited ( mxcharacter* recruiter ) override;
+        virtual MXRESULT Cmd_WalkForward ( bool seek, bool approach ) override;
+        virtual mxobject* Cmd_Seek ( void ) override;
         virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
 
@@ -141,6 +144,9 @@ namespace tme {
         mxgridref QuestLocation () const;
         std::string QuestText () const;     // what he is about, in a sentence
         std::string NewsText () const;      // what he has to tell you at dawn
+        bool InDungeon () const;            // searching the dungeons of Maranor
+        citadel_character* SearchDungeon ( u32 chance );   // the hostage he finds and frees, if any
+        void FlyHome ();
 
     public:
         mxquest_t       quest = QS_NONE;
@@ -150,6 +156,8 @@ namespace tme {
         u32             idle = 0;                   // nights one of yours has stood waiting for orders
         mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
         bool            wraith = false;             // Boroth, risen again in the Dark Citadel
+        bool            dungeon = false;            // Corleth and Arin, until they leave the Dark Citadel
+        mxstronghold*   home = nullptr;             // a hostage's home castle (the design's Hostages table)
 
     protected:
         std::string title;      // the design's "Titles"; empty for most lords

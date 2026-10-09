@@ -473,9 +473,30 @@ void citadel_x::RaiseWraith ()
     lord->wraith = true;
     lord->Flags().Set(cf_alive);
     lord->Location(maranor->Location());
-    static_cast<citadel_stronghold*>(maranor)->Hold(lord);
 
     mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_WRAITH, lord));
+}
+
+mxstronghold* citadel_x::HomeKeep ( mxrace_t people, mxgridref from ) const
+{
+    mxstronghold* home = nullptr;
+    FOR_EACH_STRONGHOLD(stronghold) {
+        CONTINUE_IF( stronghold->Race() != people || stronghold->OccupyingRace() != people
+                     || !mx->gamemap->IsLocOnMap(stronghold->Location()) );
+        if ( home == nullptr || from - stronghold->Location() < from - home->Location() )
+            home = stronghold;
+    }
+    return home;
+}
+
+std::vector<citadel_character*> citadel_x::Held () const
+{
+    std::vector<citadel_character*> held;
+    FOR_EACH_CHARACTER(character) {
+        if ( character->IsPrisoner() && character->IsAlive() && maranor != nullptr && character->Location() == maranor->Location() )
+            held.push_back(CitadelLord(character));
+    }
+    return held;
 }
 
 void citadel_x::LordsTurn ( void )
@@ -633,6 +654,9 @@ void citadel_x::initialiseAfterCreate ( u32 version )
     }
 
     FOR_EACH_CHARACTER(character) {
+        auto lord = CitadelLord(character);
+        lord->dungeon = maranor != nullptr && lord->IsRecruited() && !lord->IsPrisoner()
+                        && lord->Location() == maranor->Location();
         if ( character->HasQuality(qf_mightywarrior) )
             character->strength = 100;
         else if ( character->HasQuality(qf_feeblewarrior) )

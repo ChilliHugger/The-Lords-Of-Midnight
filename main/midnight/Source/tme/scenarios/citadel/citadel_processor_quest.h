@@ -30,13 +30,11 @@ namespace tme {
         virtual bool March ( mxgridref target, bool fight );
         virtual bool Guard ( void );
         virtual void GatherStrength ( mxstronghold* stronghold, u32 needed );
-        virtual void FreeHostages ( void );
         virtual void Done ( mxquestnews_t news );
         virtual void Order ( mxreaction_t reaction, mxquest_t quest, mxid target );
 
         bool Nearer ( mxstronghold* stronghold, mxstronghold* best ) const;
         bool FightsFor ( mxstronghold* stronghold ) const;
-        mxstronghold* HomeKeep ( mxrace_t people, mxgridref from ) const;
         std::vector<mxregiment*> Host () const;
         mxregiment* Menace ( const std::vector<mxregiment*>& host, mxgridref where, s32 range ) const;
         template<typename T> T FirstReachable ( std::vector<T>& candidates ) const;

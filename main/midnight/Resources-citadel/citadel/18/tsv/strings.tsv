@@ -153,3 +153,6 @@ Version	Id	Symbol	Text
 7	174	SS_QUEST_HELD	{char:name} is held captive, and can set out on no quest.
 7	175	SS_QUEST_STATUS	{char:quest:text}
 7	176	SS_WRAITH	.{lf}{crlf}{cr} {char:longname} rises again, a ghastly wraith, in the Dark Citadel of Maranor
+7	177	SS_DUNGEON_FREED	.{lf}{crlf}{cr} {char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home
+7	178	SS_DUNGEON_FOUND	{char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home.{sp}
+7	179	SS_DUNGEON_NOTHING	{case:first}{char:gender:heshe} searches the dungeons of Maranor until nightfall, and finds no one.{sp}
