@@ -15,6 +15,7 @@ Build (57)
 12. ADDED: LOM - Game Options - 'Replenish Things' and 'Random Replenish', things removed from the map respawn after a number of days dependent on difficulty
 13. FIXED: Leaving or disbanding a group now returns to the standard think screen
 14. FIXED: LOM - Seeking no longer removes wild horses from the map on default and easy difficulty
+15. ADDED: Lords rotate around the group circle when using the group left/right arrows
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up
