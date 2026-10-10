@@ -276,16 +276,53 @@
           });
           return files;
         }
+        // The saved files live in IndexedDB (the database Emscripten's IDBFS keeps for ROOT). If the
+        // game never started (so there is no FS to read them through), read them from there.
+        function collectFromStorage() {
+          return new Promise(function(resolve, reject) {
+            function read() {
+              var req = indexedDB.open(ROOT);
+              req.onerror = function() { reject(req.error); };
+              req.onsuccess = function() {
+                var db = req.result, files = {};
+                if (!db.objectStoreNames.contains('FILE_DATA')) { db.close(); resolve(files); return; }
+                var cur = db.transaction('FILE_DATA', 'readonly').objectStore('FILE_DATA').openCursor();
+                cur.onerror = function() { db.close(); reject(cur.error); };
+                cur.onsuccess = function(e) {
+                  var c = e.target.result;
+                  if (c) {
+                    var v = c.value;
+                    if (v && v.contents && !SKIP.test(c.key) && c.key.indexOf(ROOT + '/') === 0)
+                      files[c.key.substring(ROOT.length + 1)] = toB64(v.contents);
+                    c.continue();
+                  } else { db.close(); resolve(files); }
+                };
+              };
+            }
+            // don't create an empty database just to look
+            if (indexedDB.databases) {
+              indexedDB.databases().then(function(dbs) {
+                if (dbs.some(function(d) { return d.name === ROOT; })) read(); else resolve({});
+              }, read);
+            } else read();
+          });
+        }
+        // resolves to the number of files exported
         window.exportSaves = function() {
-          var bundle = { format: 'axmol-persist-v1', created: new Date().toISOString(), page: location.pathname,
-                         files: collect(ROOT, {}) };
-          var blob = new Blob([JSON.stringify(bundle)], { type: 'application/json' });
-          var a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = 'midnight-saves-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
-          document.body.appendChild(a); a.click(); a.remove();
-          return Object.keys(bundle.files).length;
+          var gameRunning = typeof FS !== 'undefined' && FS.analyzePath(ROOT).exists;
+          var gathered = gameRunning ? Promise.resolve(collect(ROOT, {})) : collectFromStorage();
+          return gathered.then(function(files) {
+            var count = Object.keys(files).length;
+            if (count === 0) return 0;
+            var bundle = { format: 'axmol-persist-v1', created: new Date().toISOString(), page: location.pathname, files: files };
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([JSON.stringify(bundle)], { type: 'application/json' }));
+            a.download = 'midnight-saves-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
+            document.body.appendChild(a); a.click(); a.remove();
+            return count;
+          });
         };
+        function exportMessage(n) { return n ? 'Exported ' + n + ' files.' : 'No saved games or settings found in this browser.'; }
         function mkdirs(path) {
           var parts = path.split('/'), cur = ROOT;
           for (var i = 0; i < parts.length - 1; i++) { cur += '/' + parts[i]; if (!FS.analyzePath(cur).exists) FS.mkdir(cur); }
@@ -301,7 +338,7 @@
           return names.length;
         };
         document.getElementById('savesExport').onclick = function() {
-          try { say('Exported ' + window.exportSaves() + ' files.'); } catch (e) { say('Export failed: ' + e.message, true); }
+          window.exportSaves().then(function(n) { say(exportMessage(n)); }, function(e) { say('Export failed: ' + e.message, true); });
         };
         document.getElementById('savesImport').onclick = function() { document.getElementById('savesFile').click(); };
         document.getElementById('savesFile').onchange = function(ev) {
@@ -433,7 +470,8 @@
           document.body.appendChild(a); a.click(); a.remove();
         };
         document.getElementById('crashSaves').onclick = function() {
-          try { say('Exported ' + window.exportSaves() + ' files.'); } catch (e) { say('Could not export: ' + e.message); }
+          window.exportSaves().then(function(n) { say(n ? 'Exported ' + n + ' files.' : 'No saved games or settings found in this browser.'); },
+                                    function(e) { say('Could not export: ' + e.message); });
         };
         document.getElementById('crashReload').onclick = function() { location.reload(); };
       })();

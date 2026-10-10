@@ -7,30 +7,40 @@
     Header always set Cross-Origin-Embedder-Policy "require-corp"
 </IfModule>
 
+# The page, loader, wasm and data must always be the same build, and this is a test bed that is
+# updated often, so make the browser check with the server on every load. "no-cache" does not
+# mean "don't store": unchanged files are kept and the check gets a tiny "not modified" reply.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|js|wasm|data|json)(\.br)?$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>
+
 <IfModule mod_mime.c>
     AddType application/wasm .wasm
     AddType application/octet-stream .data
 </IfModule>
 
-# Precompressed Brotli copies (<file>.br, made by the web workflow): serve them instead of the
-# plain file when the browser accepts Brotli. The plain file stays as the fallback.
+# Precompressed Brotli copy of the wasm (<file>.wasm.br, made by the web workflow): serve it
+# instead of the plain file when the browser accepts Brotli. The plain file stays as the fallback.
+#
+# Only the wasm is done this way. Hosts that compress text on the fly (LiteSpeed does) leave
+# application/wasm alone, but would compress a precompressed .js a second time and send it with
+# a single Content-Encoding header, which the browser can't read. no-gzip stops that if a host
+# ever does it to the wasm too.
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{HTTP:Accept-Encoding} br
     RewriteCond %{REQUEST_FILENAME}.br -f
-    RewriteRule ^(.+)\.(wasm|js)$ $1.$2.br [L]
+    RewriteRule ^(.+)\.wasm$ $1.wasm.br [L,E=no-gzip:1]
 </IfModule>
 <IfModule mod_headers.c>
     <FilesMatch "\.wasm\.br$">
         ForceType application/wasm
         Header set Content-Encoding br
     </FilesMatch>
-    <FilesMatch "\.js\.br$">
-        ForceType application/javascript
-        Header set Content-Encoding br
-    </FilesMatch>
     # the answer depends on what the browser accepts
-    <FilesMatch "\.(wasm|js)(\.br)?$">
+    <FilesMatch "\.wasm(\.br)?$">
         Header append Vary Accept-Encoding
     </FilesMatch>
 </IfModule>
