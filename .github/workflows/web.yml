@@ -135,12 +135,13 @@ jobs:
             > "$GITHUB_WORKSPACE/dist/version.json"
           cat "$GITHUB_WORKSPACE/dist/version.json"
 
-          # Brotli copies of the big code files; the .htaccess serves them to browsers that accept
-          # Brotli and falls back to the plain files otherwise. (.data is mostly PNGs, which are
-          # already compressed, so it isn't worth the extra storage.)
+          # Brotli copy of the wasm; the .htaccess serves it to browsers that accept Brotli and
+          # falls back to the plain file otherwise. Only the wasm: the host already compresses
+          # the .js on the fly (and would double-compress a precompressed one, breaking it), and
+          # .data is mostly PNGs, which are already compressed.
           sudo apt-get install -y --no-install-recommends brotli
           cd "$GITHUB_WORKSPACE/dist"
-          brotli --best --keep $app.wasm $app.js
+          brotli --best --keep $app.wasm
           ls -la
 
       - uses: actions/upload-artifact@v4
