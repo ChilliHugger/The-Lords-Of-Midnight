@@ -9,7 +9,7 @@
 #pragma once
 
 // Start every new game with a large group of recruited lords following the starting lord
-#define _DEBUG_NEW_GAME_GROUP_
+// #define _DEBUG_NEW_GAME_GROUP_
 #define DEBUG_NEW_GAME_GROUP_SIZE   12
 
 #if defined(_DEBUG_NEW_GAME_GROUP_)
