@@ -67,14 +67,16 @@ public:
     
 #if defined(_OS_DESKTOP_)
     bool IsDesktop() { return true; }
+#else
+    bool IsDesktop() { return false; }
+#endif
+
+#if defined(_OS_DESKTOP_WINDOW_)
     size getDesktopSize();
     bool changeDisplayMode(CF_SCREEN mode);
     ax::GLView* setDisplayMode(CF_SCREEN mode);
     ax::GLView* setWindowedMode(ax::Size size);
     ax::Size calcWindowSize(f32 scale, f32 aspect);
-    
-#else
-    bool IsDesktop() { return false; }
 #endif
 
     bool IsPhone() { return isPhone; }
@@ -182,7 +184,7 @@ static ax::Size DesktopModeSpace2 = ax::Size(3200, 1800);    // 1.7777
 static ax::Size DesktopLargerText1 = ax::Size(2048, 1152);    // 1.7777
 static ax::Size DesktopLargerText2 = ax::Size(1600, 900);    // 1.7777
 
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
 //#define DesktopDebugScreenMode CONFIG_SCREEN_MODE::LARGE
 //#define DesktopDebugResolution iPhone12
 #define _SWITCH_VIDEO_IMPLEMENTED_

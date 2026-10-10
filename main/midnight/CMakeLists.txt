@@ -186,6 +186,7 @@ endif()
 
 add_compile_options("-D${APP_BUILD}")
 
+
 if(ANDROID)
     # the APP_NAME should match on AndroidManifest.xml
     list(APPEND GAME_SOURCE
@@ -196,14 +197,34 @@ if(ANDROID)
 #         proj.linux/main.cpp
 #         )
 #    list(APPEND GAME_SOURCE ${common_content_files})
-#elseif(WASM)
-#    list(APPEND GAME_SOURCE
-#         proj.wasm/main.cpp
-#         )
-#    list(APPEND GAME_SOURCE ${common_content_files})
+elseif(WASM)
+    # a desktop browser: desktop UI/input, but no native window to manage
+    add_compile_options(-D_OS_WASM_ -D_OS_DESKTOP_)
+    # version reported by the version extension (the other platforms keep theirs in
+    # Info.plist / game.rc / build.gradle) - update with each release
+    include(proj.wasm/version.cmake)
+    add_compile_definitions(WASM_APP_VERSION="${WASM_APP_VERSION}" WASM_APP_BUILD_NO="${WASM_APP_BUILD_NO}")
+    # preload the shared + per-scenario resource folders (Axmol defaults to ./Content)
+    set(_APP_RES_FOLDER ${content_folder})
+    # full-window canvas shell
+    if(LOM)
+        set(APP_TITLE "The Lords of Midnight")
+    elseif(DDR)
+        set(APP_TITLE "Doomdark's Revenge")
+    elseif(CITADEL)
+        set(APP_TITLE "The Citadel")
+    endif()
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/proj.wasm/shell.html.in" "${CMAKE_BINARY_DIR}/shell.html" @ONLY)
+    set(AX_WASM_SHELL_FILE "${CMAKE_BINARY_DIR}/shell.html" CACHE STRING "" FORCE)
+    # reconfigure (regenerating the shell) when the template changes
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/proj.wasm/shell.html.in")
+    list(APPEND GAME_SOURCE
+         proj.wasm/main.cpp
+         )
+    list(APPEND GAME_SOURCE ${common_content_files})
 elseif(WINDOWS)
     if(NOT WINRT)
-        add_compile_options(-D_OS_DESKTOP_ -D_OS_WIN32_)
+        add_compile_options(-D_OS_DESKTOP_ -D_OS_DESKTOP_WINDOW_ -D_OS_WIN32_)
         list(APPEND GAME_HEADER
             proj.win32/main.h
             proj.win32/resource.h
@@ -261,7 +282,7 @@ elseif(APPLE)
              ${APP_UI_RES}
              )
     elseif(MACOSX)
-        add_compile_options(-D_OS_OSX_ -D_OS_DESKTOP_)
+        add_compile_options(-D_OS_OSX_ -D_OS_DESKTOP_ -D_OS_DESKTOP_WINDOW_)
         set(APP_UI_RES
             proj.ios_mac/mac/${APP_NAME}/Images.xcassets
             proj.ios_mac/mac/${APP_NAME}/Icon.icns
@@ -320,6 +341,17 @@ target_include_directories(${APP_NAME} PRIVATE ${GAME_INC_DIRS})
 
 # mark app resources, resource will be copy auto after mark
 ax_setup_app_config(${APP_NAME})
+if(WASM)
+    # relink (regenerating the .html) when the shell page changes
+    set_property(TARGET ${APP_NAME} APPEND PROPERTY LINK_DEPENDS "${AX_WASM_SHELL_FILE}")
+    # the page is also written as index.html so the folder URL serves the game; it
+    # loads the same midnight.js / .wasm / .data (the copy is identical to <app>.html)
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "$<TARGET_FILE_DIR:${APP_NAME}>/${APP_NAME}.html" "$<TARGET_FILE_DIR:${APP_NAME}>/index.html")
+    # Apache (cPanel) settings for hosting, uploaded alongside the game files
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/proj.wasm/htaccess" "$<TARGET_FILE_DIR:${APP_NAME}>/.htaccess")
+endif()
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     set_xcode_property(${APP_NAME} INSTALL_PATH "\$(LOCAL_APPS_DIR)")

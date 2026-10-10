@@ -677,7 +677,7 @@ std::string imageFiles[] = {
 };
 
 
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
 void moonring::reloadAssets()
 {
     auto cache = SpriteFrameCache::getInstance();
@@ -763,6 +763,7 @@ void moonring::initialise( progressmonitor* monitor )
 #endif
 
     // initialise TME
+    TME_SetCacheStamp( chilli::extensions::getVersion() + "." + chilli::extensions::getBuildNo() );
     m_initMonitor = monitor;
     TME_Init(mxscenarioid::DEFAULT, RF_DEFAULT, DF_NORMAL, nullptr, this);
     m_initMonitor = nullptr;
@@ -789,7 +790,7 @@ void moonring::initialise( progressmonitor* monitor )
         
 }
 
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
 void moonring::changeDisplayMode()
 {
     auto screenMode = settings->screen_mode ;

@@ -86,7 +86,7 @@ public:
     mxscenarioid getScenarioId() const;
     
     // assets
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
     void changeDisplayMode();
     void reloadAssets();
 #endif

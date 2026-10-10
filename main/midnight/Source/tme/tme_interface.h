@@ -89,6 +89,10 @@ std::string TME_ScenarioDirectory ( void );
 std::string TME_ScenarioName ( void );
 std::string TME_ScenarioShortName ( void );
 
+// identifies the running build (app version + build no) so a database/map cache
+// written by an earlier release is never reused; set before TME_Init
+void TME_SetCacheStamp ( const std::string& stamp );
+
 bool TME_Init ( tme::mxscenarioid scenarioId, u64 flags, mxdifficulty_t difficulty, MXVoidCallback afterCreate = nullptr, InitNotificationDelegate* delegate = nullptr  );
 bool TME_DeInit ( void );
 void TME_PurgeTextCache();

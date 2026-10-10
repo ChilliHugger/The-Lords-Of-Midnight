@@ -51,8 +51,8 @@ private:
     uitextmenu* menu;
     std::string versionUrl;
     
-    Button* guide;
-    Button* story;
+    Button* guide{};
+    Button* story{};
     
     
     

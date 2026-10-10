@@ -7,8 +7,23 @@
 #include "base/Director.h"
 #include "../ui/uielement.h"
 #include "../ui/uihelper.h"
+#if defined(_OS_WASM_)
+#include <emscripten/emscripten.h>
+#endif
 
 USING_NS_AX;
+
+#if defined(_OS_WASM_)
+// The canvas backing store is rendered at the device pixel ratio so it stays sharp,
+// but the layout is done in css pixels (as native desktop does in points), so that
+// pixel based sizes come out the same relative size as on the other platforms.
+static double webPixelRatio()
+{
+    return EM_ASM_DOUBLE({ return Math.min(window.devicePixelRatio || 1, 2); });
+}
+#else
+static double webPixelRatio() { return 1.0; }
+#endif
 
 float safeAreaTopPadding = 0.0f;
 float safeAreaBottomPadding =  0.0f;
@@ -56,7 +71,7 @@ resolutionmanager::~resolutionmanager ( void )
 
 bool resolutionmanager::calcDisplayInfo ( void )
 {
-    auto size = director->getGLView()->getFrameSize();
+    auto size = director->getGLView()->getFrameSize() / webPixelRatio();
     
     float height = size.width;
     float width = size.height;
@@ -223,7 +238,14 @@ bool resolutionmanager::init()
     if(!glview)
     {
         
-#if (_OS_DESKTOP_)
+#if defined(_OS_WASM_)
+        // fill the browser window; the canvas is scaled to the window by css so render
+        // at device pixel ratio (capped) to keep it sharp on high dpi displays
+        double dpr = webPixelRatio();
+        int width  = (int)(EM_ASM_INT({ return window.innerWidth; })  * dpr);
+        int height = (int)(EM_ASM_INT({ return window.innerHeight; }) * dpr);
+        glview = GLViewImpl::createWithRect(TME_ScenarioName(), ax::Rect(0, 0, width, height), 1.0f, true);
+#elif defined(_OS_DESKTOP_WINDOW_)
         
 #if defined(DesktopDebugResolution)
         glview = setWindowedMode(DesktopDebugResolution);
@@ -246,7 +268,7 @@ bool resolutionmanager::init()
     
     calcDisplayInfo();
 
-    auto windowSize = director->getGLView()->getFrameSize();
+    auto windowSize = director->getGLView()->getFrameSize() / webPixelRatio();
    
     glview->setDesignResolutionSize(windowSize.width, windowSize.height, ResolutionPolicy::EXACT_FIT);
     
@@ -258,7 +280,7 @@ bool resolutionmanager::init()
 }
 
 
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
 size resolutionmanager::getDesktopSize()
 {
     s32 width,height;

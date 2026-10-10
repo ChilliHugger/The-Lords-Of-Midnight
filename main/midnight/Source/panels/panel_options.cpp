@@ -227,7 +227,7 @@ static uitextmenuitem items_main[] = {
 };
 
 static uitextmenuitem items_display[] = {
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
     { ID_OPTION_SCREENMODE,             {OPTIONS_SCREEN_SCREENMODE},            KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE, },
 #endif
     { ID_OPTION_TRANSITIONS,            {OPTIONS_SCREEN_TRANSITIONS},           KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
@@ -455,7 +455,11 @@ bool panel_options::init()
     for( int ii=0; ii<NUMELE(rule_mapping); ii++) {
         if(rule_mapping[ii]!=RF_NONE) {
             rules[ii] = mr->settings->game_rules.Is(rule_mapping[ii]) ? TOGGLE::ON : TOGGLE::OFF;
-            findOption(ID_OPTION_RULES+ii)->var = &rules[ii];
+            // not every mapped rule has an entry in the options table
+            auto option = findOption(ID_OPTION_RULES+ii);
+            if(option != nullptr) {
+                option->var = &rules[ii];
+            }
         }else{
             rules[ii] = TOGGLE::OFF;
         }
@@ -492,7 +496,7 @@ void panel_options::OnMenuNotification(
     switch (tag){
         case ID_HOME:
         {
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
             if(initialScreenMode != mr->settings->screen_mode)
             {
                 changeDisplayMode();
@@ -753,7 +757,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         uitextmenuitem* item = &items[ii];
         
         auto option = findOption(item->id);
-        if(option->hidden)
+        if(option == nullptr || option->hidden)
         {
             continue;
         }
@@ -814,7 +818,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
     }
 }
 
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
 void panel_options::changeDisplayMode()
 {
     AreYouSure(CHANGE_DISPLAY_MSG,

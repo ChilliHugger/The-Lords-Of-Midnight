@@ -1,0 +1,18 @@
+# Apache config for the web build - upload as ".htaccess" next to midnight.html
+# (the build copies this to bin/<app>/.htaccess).
+
+# Needed for threads (SharedArrayBuffer); the page must also be served over HTTPS.
+<IfModule mod_headers.c>
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Embedder-Policy "require-corp"
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType application/wasm .wasm
+    AddType application/octet-stream .data
+</IfModule>
+
+# Compress the big files (wasm ~63MB -> ~16MB).
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/wasm application/octet-stream application/javascript text/html
+</IfModule>

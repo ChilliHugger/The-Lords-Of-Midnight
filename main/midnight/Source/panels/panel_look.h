@@ -181,10 +181,10 @@ protected:
     Label*              lblName;
     ImageView*          imgShield;
     LayerColor*         layHeader;
-    ImageView*          imgHeader;
-    uisinglelord*       following;
-    DrawNode*           gradientL;
-    DrawNode*           gradientR;
+    ImageView*          imgHeader{};
+    uisinglelord*       following{};
+    DrawNode*           gradientL{};
+    DrawNode*           gradientR{};
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
  
@@ -206,12 +206,12 @@ protected:
     // draggin
     //f32                 dragged;
     bool                landscape_dragging;
-    u64                 mouse_down_time;
-    bool                mouse_down;
+    u64                 mouse_down_time{};
+    bool                mouse_down{};
     Vec2                mouse_down_pos;
     Vec2                mouse_last_position;
 
-    f32                 startDragLookAmount;
+    f32                 startDragLookAmount{};
     
     EventListenerTouchOneByOne* touchListener;
 };

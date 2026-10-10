@@ -38,6 +38,6 @@ protected:
 
 private:
     Node* buttonNode;
-    Label* title;
-    LayerColor* titleBackground;
+    Label* title{};
+    LayerColor* titleBackground{};
 };

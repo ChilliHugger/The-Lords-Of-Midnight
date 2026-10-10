@@ -37,7 +37,7 @@ static uitextmenuitem items[] = {
     { ID_CREDITS,           {MAINMENU_CREDITS},         KEYCODE(Z), KEYBOARD_KEY_Z},
     //#endif
     { ID_OPTIONS,           {MAINMENU_OPTIONS},         KEYCODE(O), KEYBOARD_KEY_O},
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
     { ID_EXIT,              {MAINMENU_EXIT},            KEYCODE(ESCAPE), KEYBOARD_KEY_ESC},
 #endif
 #if defined(_USE_VERSION_CHECK_)
@@ -210,7 +210,7 @@ void panel_mainmenu::OnMenuNotification(
     
     switch (args->menuitem->id)
     {
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
         case ID_EXIT:
             OnExitGame();
             break;

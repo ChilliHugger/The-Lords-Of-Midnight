@@ -20,6 +20,13 @@
 #include "axmol.h"
 #include <stdio.h>
 
+static std::string s_cacheStamp;
+
+void TME_SetCacheStamp ( const std::string& stamp )
+{
+    s_cacheStamp = stamp;
+}
+
 
 USING_NS_TME ;
 
@@ -234,14 +241,27 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
     auto databaseCacheFile = writablePath + "/database_cache_" + scenarioIdStr;
     auto mapCacheFile      = writablePath + "/map_cached_" + scenarioIdStr;
 
-    // the cache only lives for this app run - a leftover from a previous
-    // launch could be stale (e.g. .tsv/.tmx edits during development), so
-    // wipe it once per process before ever trusting one
+    // Debug builds always start from the .tsv/.tmx source so edits are picked up.
+    // Release builds keep the cache between launches, but only while the build
+    // it was made by is still the running one - the stamp is the app version and
+    // build number from the version extension, so it changes with every release.
     static bool cacheChecked = false;
     if ( !cacheChecked ) {
         cacheChecked = true;
+#if defined(MX_DEBUG)
         chilli::os::filemanager::Remove(databaseCacheFile);
         chilli::os::filemanager::Remove(mapCacheFile);
+#else
+        auto stampFile = writablePath + "/cache_stamp_" + scenarioIdStr;
+        const auto& stamp = s_cacheStamp;
+        auto fileUtils = ax::FileUtils::getInstance();
+        // no stamp supplied means we can't tell builds apart, so never trust a cache
+        if ( stamp.empty() || !fileUtils->isFileExist(stampFile) || fileUtils->getStringFromFile(stampFile) != stamp ) {
+            chilli::os::filemanager::Remove(databaseCacheFile);
+            chilli::os::filemanager::Remove(mapCacheFile);
+            fileUtils->writeStringToFile(stamp, stampFile);
+        }
+#endif
     }
 
     MXRESULT result = MX_FAILED ;

@@ -27,5 +27,5 @@ protected:
     void createSteps();
     void createColumn( f32 x, LPCSTR images[], u32 count, bool graffiti = false );
     
-    Node* clipping;
+    Node* clipping{};
 };

@@ -16,7 +16,7 @@
 #include <string>
 #endif
 
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
 #define _UNIX_
 #endif
 

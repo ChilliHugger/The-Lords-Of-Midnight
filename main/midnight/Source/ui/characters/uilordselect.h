@@ -99,7 +99,7 @@ public:
     flags16         status;
     mxid            characterId;
     lordwidget      lordtype;
-    page_t          page;
+    page_t          page{};
     
 };
 
