@@ -62,7 +62,7 @@ protected:
     virtual bool OnKeyboardEvent( uikeyboardevent* event ) override;
     virtual void OnNotification( Ref* sender ) override;
     
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_WINDOW_)
     void changeDisplayMode();
 #endif
 

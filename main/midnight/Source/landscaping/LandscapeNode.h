@@ -29,8 +29,8 @@ protected:
 public:
     virtual ~LandscapeNode();
     
-    LandscapeOptions*   options;
-    moonring*           mr;
+    LandscapeOptions*   options{};
+    moonring*           mr{};
 };
 
 

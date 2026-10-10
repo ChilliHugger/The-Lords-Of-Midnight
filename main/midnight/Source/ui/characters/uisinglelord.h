@@ -55,7 +55,7 @@ protected:
     Node*       locationNode;
     Node*       selectedNode;
     DrawNode*   innerCircle;
-    LayerColor* bg;
+    LayerColor* bg{};
     bool        statusVisible;
 };
 

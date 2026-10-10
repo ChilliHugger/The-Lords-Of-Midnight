@@ -136,15 +136,15 @@ protected:
     
 protected:
     uipopup*            popupWindow;
-    moonring*           mr;
+    moonring*           mr{};
     
-    helpid_t            help_pending_id;
+    helpid_t            help_pending_id{};
     bool                help_pending;
     helpid_t            help_visible;
     uihelpwindow*       help_window;
     Button*             i_help;
     
-    bool                enabled;
+    bool                enabled{};
     
     WidgetClickCallback clickCallback;
     WidgetEventCallback eventCallback;

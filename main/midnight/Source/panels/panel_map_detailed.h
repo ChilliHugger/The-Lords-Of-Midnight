@@ -98,7 +98,7 @@ private:
     Widget*         groupLordButton;
     uigrouplord*    grouplord;
     ax::EventListener* groupDismissListener;
-    Label*          toolTip;
+    Label*          toolTip{};
     std::vector< std::pair<map_filters,uifilterbutton*> > filterButtons;
 
 #if defined(_MOUSE_ENABLED_)

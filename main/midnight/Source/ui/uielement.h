@@ -72,9 +72,9 @@ namespace chilli {
         Element();
         
     protected:
-        u32                         id;
+        u32                         id{};
         std::string                 name;
-        flags32                     flags;
+        flags32                     flags{};
 
     };
 
@@ -104,7 +104,7 @@ namespace chilli {
         Vec2    lastposition;
         Vec2    position;
         Type    type;
-        u64     starttime;
+        u64     starttime{};
         u64     time;   
     };
 
@@ -138,14 +138,14 @@ namespace chilli {
     public:
         uidragdropdelegate* drag_delegate;
         bool                dragging;
-        bool                drag_enabled;
+        bool                drag_enabled{};
         Vec2                drag_start;
         Vec2                drag_stop;
         Vec2                drag_current;
         Vec2                drag_amount;
-        u64                 drag_start_time;
-        u64                 drag_stop_time;
-        u32                 drag_touch_count;
+        u64                 drag_start_time{};
+        u64                 drag_stop_time{};
+        u32                 drag_touch_count{};
     };
 
     class DragMoveElement : public DragElement
@@ -184,7 +184,7 @@ namespace chilli {
         
     public:
         bool isDropFocus;
-        bool drop_enabled;
+        bool drop_enabled{};
     };
 
     }

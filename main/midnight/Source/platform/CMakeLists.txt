@@ -5,6 +5,12 @@ if(ANDROID)
       Source/platform/android/Extensions-android.h
     )
     set(SRC_PLATFORM Source/platform/android/Extensions-android.cpp)
+elseif(WASM)
+    set(HDR_PLATFORM
+      Source/platform/Extensions.h
+      Source/platform/wasm/Extensions-wasm.h
+    )
+    set(SRC_PLATFORM Source/platform/wasm/Extensions-wasm.cpp)
 elseif(WINDOWS)
       set(HDR_PLATFORM
         Source/platform/Extensions.h

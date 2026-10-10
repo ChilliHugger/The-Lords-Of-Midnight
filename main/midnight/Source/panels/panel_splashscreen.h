@@ -28,7 +28,7 @@ protected:
     f32                 loadingWidth;
     f32                 loadingHeight;
     DrawNode*           loadingProgress;
-    f32                 currentProgress;
+    f32                 currentProgress{};
     long                startTime;
     progressmonitor*    progress;
     DrawNode*           loadingBars;

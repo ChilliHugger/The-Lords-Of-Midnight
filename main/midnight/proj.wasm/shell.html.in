@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>@APP_TITLE@</title>
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      canvas.emscripten { cursor: none; /* the game draws its own cursor */ position: fixed; left: 0; top: 0; width: 100%; height: 100%; border: 0px none; background-color: black; display: block; }
+      #unsupported { position: fixed; inset: 0; background: #000; color: #ddd; font-family: sans-serif;
+                     text-align: center; padding: 12vh 24px 0; box-sizing: border-box; z-index: 100; line-height: 1.5; }
+      #unsupported h1 { font-size: 26px; margin-bottom: 24px; }
+      #unsupported a { color: #8cf; }
+      #status { position: fixed; left: 0; right: 0; top: 50%; text-align: center; color: #aaa; font-family: sans-serif; pointer-events: none; }
+      #progress { position: fixed; left: 25%; width: 50%; top: 55%; }
+    </style>
+  </head>
+  <body>
+    <div id="unsupported" style="display:none">
+      <h1>@APP_TITLE@</h1>
+      <p>Sorry, this web version isn't supported on phones and tablets yet.</p>
+      <p>Please open this page in a desktop browser (Chrome, Edge, Firefox or Safari on a computer).</p>
+      <p><a href="https://thelordsofmidnight.com">thelordsofmidnight.com</a></p>
+    </div>
+    <script type='text/javascript'>
+      // Stop before the game (tens of MB) is requested on a touch-only device.
+      // Add #force to the address to override, e.g. for testing.
+      (function() {
+        var ua = navigator.userAgent || '';
+        var mobileUA = (navigator.userAgentData && navigator.userAgentData.mobile) ||
+                       /Android|iPhone|iPad|iPod|Mobile|Tablet|Silk|Kindle/i.test(ua);
+        var iPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1; // reports as a Mac
+        var touchOnly = window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(any-hover: hover)').matches;
+        if ((mobileUA || iPadOS || touchOnly) && location.hash !== '#force') {
+          document.getElementById('unsupported').style.display = 'block';
+          window.stop(); // nothing after this point (including the game scripts) is fetched
+        }
+      })();
+    </script>
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+    <div id="status">Downloading...</div>
+    <progress value="0" max="100" id="progress" hidden=1></progress>
+
+    <script type='text/javascript'>
+      var statusElement = document.getElementById('status');
+      var progressElement = document.getElementById('progress');
+
+      var hierarchyElement = document.getElementById('hierarchy');
+      var nodeProperties = [];
+      for(var i = 0; i < 20; i++) {
+        nodeProperties[i] = document.getElementById('nodeProperty' + i);
+      }
+      var Module = {
+        preInit: [],
+        preRun: [],
+        postRun: [],
+        print: (function() {
+          // #region axmol-spec
+          var escapeDeep = 0;
+          var stashedEscape = null;
+          // #endregion axmol-spec
+          var element = document.getElementById('output');
+          if (element) element.value = ''; // clear browser cache
+          return function(text) {
+            if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+            // These replacements are necessary if you render to raw HTML
+            //text = text.replace(/&/g, "&amp;");
+            //text = text.replace(/</g, "&lt;");
+            //text = text.replace(/>/g, "&gt;");
+            //text = text.replace('\n', '<br>', 'g');
+
+            // #region axmol-spec
+            var curEscape = null;
+            var escapeList = text.match(/\x1b\[(\d{2})?m/g);
+            if(escapeList != null) {
+              for(var i = 0; i < escapeList.length; ++i) {
+                var escape = escapeList[i];
+                if (escape !== "\x1b[m") {
+                  curEscape = escape;
+                  ++escapeDeep;
+                } else {
+                  --escapeDeep;
+                }
+              }
+            }
+            if (escapeDeep > 0) { // still in escape
+              if (stashedEscape != null) { // check stashedEscape
+                if(text.startsWith("\x1b[m")) {
+                  text = text.substring(3);
+                }
+                if (!text.startsWith("\x1b[")) { // due to end color removed, it's must start color or not.
+                  text = stashedEscape + text;
+                }
+              }
+
+              if(curEscape) {
+                // store this text last escape
+                stashedEscape = curEscape;
+              }
+            } else {
+              stashedEscape = null;
+            }
+            /* trim end: (\n)?\x1b[m */
+            if(text.endsWith("\n\x1b[m")) {
+              text = text.substring(0, text.length - 4);
+            }
+            else if(text.endsWith("\x1b[m")) {
+              text = text.substring(0, text.length - 3);
+            }
+            // #endregion axmol-spec
+
+            console.log(text);
+            if (element) {
+              element.value += text.replace(/\x1b\[(\d{2})?m/g, '') + "\n"; // axmol-mod: strip ansi color
+              element.scrollTop = element.scrollHeight; // focus on bottom
+            }
+          };
+        })(),
+        printErr: function(text) {
+          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          console.error(text);
+        },
+        canvas: (function() {
+          var canvas = document.getElementById('canvas');
+
+          // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+          // application robust, you may want to override this behavior before shipping!
+          // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+          canvas.addEventListener("webglcontextlost", function(e) { Module.ccall('axmol_webglcontextlost'); alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+          canvas.addEventListener("webglcontextrestored", function(e) { Module.ccall('axmol_webglcontextrestored'); e.preventDefault(); }, false);
+
+          document.addEventListener("visibilitychange", () => { Module.ccall('axmol_hdoc_visibilitychange', document.hidden); });
+
+          return canvas;
+        })(),
+        setStatus: function(text) {
+          if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+          if (text === Module.setStatus.last.text) return;
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          var now = Date.now();
+          if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
+          Module.setStatus.last.time = now;
+          Module.setStatus.last.text = text;
+          if (m) {
+            text = m[1];
+            progressElement.value = parseInt(m[2])*100;
+            progressElement.max = parseInt(m[4])*100;
+            progressElement.hidden = false;
+          } else {
+            progressElement.value = null;
+            progressElement.max = null;
+            progressElement.hidden = true;
+          }
+          statusElement.innerHTML = text;
+          statusElement.hidden = !text;
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+      window.onerror = function() {
+        Module.setStatus('Exception thrown, see JavaScript console');
+        Module.setStatus = function(text) {
+          if (text) Module.printErr('[post-exception status] ' + text);
+        };
+      };
+    </script>
+    <script type='text/javascript'>
+      Module.preRun.push(function() {
+        addRunDependency('sync_writable_path')
+        FS.mkdir('/axmolPersistPath')
+        FS.mount(IDBFS, {}, '/axmolPersistPath')
+        FS.syncfs(true, function (err) {
+          if (err) {
+            throw err
+          }
+          removeRunDependency('sync_writable_path')
+        })
+        // #region axmol-spec, enable output as-is to console without split by \n
+        TTY.stream_ops.write = function(stream, buffer, offset, length, pos) {
+          var tty = stream.tty;
+          if (!tty || !tty.ops.put_char) {
+            throw new FS.ErrnoError(60);
+          }
+          try {
+            for (var i = 0; i < length; i++) {
+              var val = buffer[offset+i];
+              if (val === null) {
+                continue;
+              } else {
+                if (val != 0) tty.output.push(val); // val == 0 would cut text output off in the middle.
+              }
+            }
+          } catch (e) {
+            throw new FS.ErrnoError(29);
+          }
+          out(UTF8ArrayToString(tty.output, 0));
+          tty.output = [];
+          if (length) {
+            stream.node.timestamp = Date.now();
+          }
+          return i;
+        }
+        //  #endregion axmol-spec
+      })
+    </script>
+    <script type='text/javascript'>
+      // Persist /axmolPersistPath (settings, saved games, caches) to IndexedDB.
+      // The game just writes files; IDBFS keeps them in memory until synced.
+      (function() {
+        var syncing = false, again = false;
+        function persist() {
+          if (typeof FS === 'undefined' || !FS.analyzePath('/axmolPersistPath').exists) return;
+          if (syncing) { again = true; return; }
+          syncing = true;
+          FS.syncfs(false, function(err) {
+            if (err) console.error('syncfs failed', err);
+            syncing = false;
+            if (again) { again = false; persist(); }
+          });
+        }
+        setInterval(persist, 3000);
+        document.addEventListener('visibilitychange', function() { if (document.hidden) persist(); });
+        window.addEventListener('pagehide', persist);
+      })();
+    </script>
+    <style>
+      #savesPanel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 10;
+                    align-items: center; justify-content: center; font-family: sans-serif; }
+      #savesPanel .box { background: #fff; color: #222; padding: 20px 24px; border-radius: 8px; max-width: 420px; }
+      #savesPanel h3 { margin: 0 0 8px; }
+      #savesPanel p { margin: 6px 0 14px; font-size: 14px; line-height: 1.4; }
+      #savesPanel button { font-size: 15px; padding: 6px 12px; margin-right: 8px; cursor: pointer; }
+      #savesMsg { margin-top: 12px; font-size: 13px; color: #060; min-height: 1em; }
+    </style>
+    <div id="savesPanel">
+      <div class="box">
+        <h3>Saved games &amp; settings</h3>
+        <p>Export your saved games and settings to a file you can send for testing, or import a file to replace what is stored in this browser. Importing reloads the game.</p>
+        <button id="savesExport">Export</button>
+        <button id="savesImport">Import...</button>
+        <button id="savesClose">Close</button>
+        <input type="file" id="savesFile" accept=".json,application/json" hidden>
+        <div id="savesMsg"></div>
+      </div>
+    </div>
+    <script type='text/javascript'>
+      // Export / import everything the game stores in /axmolPersistPath.
+      // Open with Ctrl+Shift+S (or add #saves to the address).
+      (function() {
+        var ROOT = '/axmolPersistPath';
+        var SKIP = /(^|\/)(database_cache_|map_cached_|cache_stamp_)/; // rebuilt automatically
+        var panel = document.getElementById('savesPanel'), msg = document.getElementById('savesMsg');
+        function say(t, bad) { msg.textContent = t; msg.style.color = bad ? '#a00' : '#060'; }
+        function show(v) { panel.style.display = v ? 'flex' : 'none'; if (v) say(''); }
+        function toB64(bytes) {
+          var s = '', CH = 0x8000;
+          for (var i = 0; i < bytes.length; i += CH) s += String.fromCharCode.apply(null, bytes.subarray(i, i + CH));
+          return btoa(s);
+        }
+        function fromB64(b) {
+          var s = atob(b), out = new Uint8Array(s.length);
+          for (var i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+          return out;
+        }
+        function collect(dir, files) {
+          FS.readdir(dir).forEach(function(n) {
+            if (n === '.' || n === '..') return;
+            var p = dir + '/' + n, st = FS.stat(p);
+            if (FS.isDir(st.mode)) collect(p, files);
+            else if (!SKIP.test(p)) files[p.substring(ROOT.length + 1)] = toB64(FS.readFile(p));
+          });
+          return files;
+        }
+        window.exportSaves = function() {
+          var bundle = { format: 'axmol-persist-v1', created: new Date().toISOString(), page: location.pathname,
+                         files: collect(ROOT, {}) };
+          var blob = new Blob([JSON.stringify(bundle)], { type: 'application/json' });
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'midnight-saves-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
+          document.body.appendChild(a); a.click(); a.remove();
+          return Object.keys(bundle.files).length;
+        };
+        function mkdirs(path) {
+          var parts = path.split('/'), cur = ROOT;
+          for (var i = 0; i < parts.length - 1; i++) { cur += '/' + parts[i]; if (!FS.analyzePath(cur).exists) FS.mkdir(cur); }
+        }
+        window.importSaves = function(text) {
+          var bundle = JSON.parse(text);
+          if (!bundle || bundle.format !== 'axmol-persist-v1' || typeof bundle.files !== 'object') throw new Error('Not a saves file');
+          var names = Object.keys(bundle.files);
+          names.forEach(function(n) { // only plain relative paths under the save folder
+            if (n.charAt(0) === '/' || n.split('/').indexOf('..') >= 0 || SKIP.test(n)) throw new Error('Bad path in file: ' + n);
+          });
+          names.forEach(function(n) { mkdirs(n); FS.writeFile(ROOT + '/' + n, fromB64(bundle.files[n])); });
+          return names.length;
+        };
+        document.getElementById('savesExport').onclick = function() {
+          try { say('Exported ' + window.exportSaves() + ' files.'); } catch (e) { say('Export failed: ' + e.message, true); }
+        };
+        document.getElementById('savesImport').onclick = function() { document.getElementById('savesFile').click(); };
+        document.getElementById('savesFile').onchange = function(ev) {
+          var f = ev.target.files[0]; if (!f) return;
+          var r = new FileReader();
+          r.onload = function() {
+            try {
+              var n = window.importSaves(r.result);
+              say('Imported ' + n + ' files, saving...');
+              FS.syncfs(false, function(err) { if (err) say('Save failed: ' + err, true); else location.reload(); });
+            } catch (e) { say('Import failed: ' + e.message, true); }
+          };
+          r.readAsText(f);
+        };
+        document.getElementById('savesClose').onclick = function() { show(false); };
+        window.addEventListener('keydown', function(e) {
+          if (e.ctrlKey && e.shiftKey && (e.key === 'S' || e.key === 's')) { e.preventDefault(); show(panel.style.display !== 'flex'); }
+        }, true);
+        if (location.hash === '#saves') show(true);
+      })();
+    </script>
+    {{{ SCRIPT }}}
+  </body>
+</html>
