@@ -11,6 +11,10 @@ Build (57)
 8. CHANGED: Upgraded to latest Axmol, targeting Android 36
 9. FIXED: HTTP urls updated to HTTPS
 10. CHANGED: IOS/OSX - Added new support for document sharing
+11. ADDED: DDR - Game Option - 'Safe Lord Death Rules', a lord can't die while they still have an army
+12. ADDED: LOM - Game Options - 'Replenish Things' and 'Random Replenish', things removed from the map respawn after a number of days dependent on difficulty
+13. FIXED: Leaving or disbanding a group now returns to the standard think screen
+14. FIXED: LOM - Seeking no longer removes wild horses from the map on default and easy difficulty
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up
