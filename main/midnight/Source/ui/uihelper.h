@@ -118,6 +118,13 @@ public:
     enum class ButtonTextAlign { Bottom, Centre, Top };
     static ax::Label* addButtonText( Button* button, const std::string& text, ButtonTextAlign align = ButtonTextAlign::Bottom, f32 offset = 0, s32 outline = BUTTON_TEXT_OUTLINE );
 
+    // colour slots used by <colour:N>...</colour> in setColouredText, set up by the UI
+    static std::vector<Color3B> text_colours;
+
+    // sets the label text, with text inside <colour:N>...</colour> drawn in colour slot N and the rest in the base colour.
+    // e.g. "He <colour:0>thinks</colour> again....".  Only for labels without an outline/shadow effect.
+    static void setColouredText( ax::Label* label, const std::string& markup, const Color3B& base );
+
     // layers
     static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );
     static Node* createHorizontalGradient( Color3B& color, f32 width, f32 gradientWidth, f32 height, s32 dir );

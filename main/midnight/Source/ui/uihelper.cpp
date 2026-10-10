@@ -482,6 +482,57 @@ Label* uihelper::addButtonText( Button* button, const std::string& text, ButtonT
     return label;
 }
 
+// colour slots for <colour:N>, built from the system default colours (uihelper.h)
+std::vector<Color3B> uihelper::text_colours = {
+    _clrYellow, _clrRed, _clrGreen, _clrBlue, _clrCyan, _clrMagenta, _clrWhite, _clrBlack,
+    _clrDarkYellow, _clrDarkRed, _clrDarkGreen, _clrDarkBlue, _clrDarkCyan, _clrDarkMagenta, _clrDarkWhite, _clrGrey
+};
+
+void uihelper::setColouredText( Label* label, const std::string& markup, const Color3B& base )
+{
+    // strip the tags, recording the colour of each letter (by character index)
+    static const std::string open_tag = "<colour:";
+    static const std::string close_tag = "</colour>";
+
+    std::string text;
+    std::vector<Color3B> colours;
+    Color3B current = base;
+
+    for ( size_t i = 0; i < markup.size(); ) {
+        if ( markup.compare(i, open_tag.size(), open_tag) == 0 ) {
+            auto end = markup.find('>', i);
+            if ( end != std::string::npos ) {
+                auto slot = static_cast<size_t>(atoi(markup.c_str() + i + open_tag.size()));
+                current = slot < text_colours.size() ? text_colours[slot] : base;
+                i = end + 1;
+                continue;
+            }
+        }
+        if ( markup.compare(i, close_tag.size(), close_tag) == 0 ) {
+            current = base;
+            i += close_tag.size();
+            continue;
+        }
+        char ch = markup[i++];
+        text += ch;
+        // only count the first byte of each utf8 character
+        if ( (static_cast<unsigned char>(ch) & 0xC0) != 0x80 ) {
+            colours.push_back(current);
+        }
+    }
+
+    // the text colour is multiplied by the letter colour, so keep it white and tint each letter
+    label->setTextColor(Color4B::WHITE);
+    label->setString(text);
+
+    for ( size_t i = 0; i < colours.size(); i++ ) {
+        auto letter = label->getLetter(static_cast<int>(i));
+        if ( letter != nullptr ) {
+            letter->setColor(colours[i]);
+        }
+    }
+}
+
 Node* uihelper::createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir ) {
     // top gradient
     auto node = Node::create();
