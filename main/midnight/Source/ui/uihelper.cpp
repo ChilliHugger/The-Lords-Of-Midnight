@@ -20,6 +20,57 @@ Vec2 uihelper::AnchorTopLeft = Vec2(0,1);
 Vec2 uihelper::AnchorTopRight = Vec2(1,1);
 Vec2 uihelper::AnchorTopCenter = Vec2(0.5,1);
 
+void uihelper::SetCascadeOpacityRecursive( Node* node )
+{
+    node->setCascadeOpacityEnabled(true);
+    for ( auto child : node->getChildren() ) {
+        SetCascadeOpacityRecursive(child);
+    }
+    if ( auto protectedNode = dynamic_cast<ProtectedNode*>(node) ) {
+        for ( auto child : protectedNode->getProtectedChildren() ) {
+            SetCascadeOpacityRecursive(child);
+        }
+    }
+}
+
+void uihelper::FadeVisible( Node* node, bool show, bool animate )
+{
+    const int FADE_TAG = 0x46494C54;
+    const f32 FADE_TIME = 0.25f;
+
+    node->stopActionByTag(FADE_TAG);
+    SetCascadeOpacityRecursive(node);
+
+    if ( !animate ) {
+        node->setOpacity(255);
+        node->setVisible(show);
+        return;
+    }
+
+    if ( show ) {
+        // fade in anything not already fully visible
+        if ( !node->isVisible() ) {
+            node->setVisible(true);
+            node->setOpacity(0);
+        }
+        if ( node->getOpacity() < 255 ) {
+            auto fade = FadeIn::create(FADE_TIME);
+            fade->setTag(FADE_TAG);
+            node->runAction(fade);
+        }
+    } else if ( node->isVisible() ) {
+        auto fade = Sequence::createWithTwoActions(
+            FadeOut::create(FADE_TIME),
+            CallFunc::create( [node] {
+                node->setVisible(false);
+                node->setOpacity(255);
+            })
+        );
+        fade->setTag(FADE_TAG);
+        node->runAction(fade);
+    }
+}
+
 Vec2 uihelper::AnchorCenter = Vec2(0.5,0.5);
 Vec2 uihelper::AnchorLeftCenter = Vec2(0,0.5);
 Vec2 uihelper::AnchorRightCenter = Vec2(1,0.5);

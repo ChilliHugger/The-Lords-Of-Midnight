@@ -38,7 +38,7 @@ mxid getIdFromTag(uilordselect* lord)
 
 void showNewLordPosition( uilordselect* lord )
 {
-    lord->setCascadeOpacityEnabled(true);
+    uihelper::SetCascadeOpacityRecursive(lord);
     lord->setOpacity(alpha_zero);
     lord->runAction(FadeIn::create(1.00f));
 }
@@ -84,18 +84,18 @@ bool panel_select::init()
     auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, clickCallback);
     uihelper::AddBottomRight(safeArea, night, RES(0), RES(10) );
     
-    int adjy=RES(-16);
-    int r = RES(PHONE_SCALE(64));
+    FILTER_BUTTON_START_Y = RES(16);
+    FILTER_BUTTON_STEP_Y = RES(PHONE_SCALE(64));
 
-    createFilterButton(ID_FILTER_DAWN,          (r*0)-adjy, "lord_dawn",    select_filters::show_dawn);
-    createFilterButton(ID_FILTER_NIGHT,         (r*1)-adjy, "lord_night",   select_filters::show_night);
-    createFilterButton(ID_FILTER_BATTLE,        (r*2)-adjy, "lord_battle",  select_filters::show_battle);
-    createFilterButton(ID_FILTER_DEAD,          (r*3)-adjy, "f_dead!",      select_filters::show_dead);
-    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*4)-adjy, "i_center",     select_filters::show_current);
+    createFilterButton(ID_FILTER_DAWN,          "lord_dawn",    select_filters::show_dawn);
+    createFilterButton(ID_FILTER_NIGHT,         "lord_night",   select_filters::show_night);
+    createFilterButton(ID_FILTER_BATTLE,        "lord_battle",  select_filters::show_battle);
+    createFilterButton(ID_FILTER_DEAD,          "f_dead!",      select_filters::show_dead);
+    createFilterButton(ID_FILTER_CURRENT_LOC,   "i_center",     select_filters::show_current);
     
-    auto cleanup = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
-    //cleanup->setScale(scale_normal);
-    uihelper::AddTopRight(safeArea, cleanup, RES(PHONE_SCALE(12)*0.9), (r*5)-adjy );
+    cleanupButton = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
+    safeArea->addChild(cleanupButton);
+    updateFilterButtons(false);
 
     createPageView();
     
@@ -254,6 +254,7 @@ void panel_select::getCharacters()
     // now position all the lords that haven't already been added
     // to the scrollview
     if ( model->upgraded ) {
+        std::vector<uilordselect*> newLords;
         for ( auto lord : lords )
         {
             auto userdata = lord->userData();
@@ -279,15 +280,73 @@ void panel_select::getCharacters()
                 // and store
                 storeLordPosition(lord);
                 
-                // animate
-                showNewLordPosition(lord);
+                newLords.push_back(lord);
             }
+        }
+
+        // animate once every lord has its final position, otherwise the
+        // collision checks above would see lords at their animation start
+        for ( auto lord : newLords ) {
+            if ( !animateFromDisbandedGroup(lord) )
+                showNewLordPosition(lord);
         }
     }else{
         resetPositions();
     }
     
+    disbandOrigins.clear();
+    updateFilterButtons(false);
     removeEmptyEndPages();
+}
+
+// Lords from a disbanded group start where they were shown in the group
+// and move to their new position, growing to their full size.
+bool panel_select::animateFromDisbandedGroup( uilordselect* lord )
+{
+    auto it = disbandOrigins.find(lord->userData()->id);
+    if ( it == disbandOrigins.end() )
+        return false;
+
+    auto origin = it->second;
+    disbandOrigins.erase(it);
+
+    // can only animate on the page that is currently visible
+    if ( lord->getPage() != FROM_PAGE_INDEX(pageView->getCurrentPageIndex()) )
+        return false;
+
+    auto end = lord->getPosition();
+    auto endScale = lord->getScale();
+
+    lord->setPosition( lord->getParent()->convertToNodeSpace(origin.position) );
+    lord->setScale( origin.scale );
+    lord->setTouchEnabled(false);
+
+    const f32 duration = 0.4f;
+    lord->runAction( Sequence::createWithTwoActions(
+        Spawn::createWithTwoActions(
+            EaseSineInOut::create( MoveTo::create(duration, end) ),
+            EaseSineInOut::create( ScaleTo::create(duration, endScale) )
+        ),
+        CallFunc::create( [lord] { lord->setTouchEnabled(true); } )
+    ));
+
+    return true;
+}
+
+void panel_select::storeDisbandOrigins( uigrouplord* leader )
+{
+    disbandOrigins.clear();
+
+    auto centre = leader->getParent()->convertToWorldSpace( leader->getPosition() );
+
+    for ( auto follower : leader->followers ) {
+        disband_origin origin;
+        origin.position = follower->isVisible()
+            ? follower->getParent()->convertToWorldSpace( follower->getPosition() )
+            : centre;
+        origin.scale = leader->getScale() * follower->getScale();
+        disbandOrigins[follower->userData()->id] = origin;
+    }
 }
 
 void panel_select::addToPage( uilordselect* lord, page_t page, Vec2 pos)
@@ -405,40 +464,91 @@ void panel_select::updateFilters()
         TME_GetCharacter(c,id);
         CONTINUE_IF( c.following );
 
-        applyFilters( button, c );
+        applyFilters( button, c, true );
     }
     
+    updateFilterButtons();
 }
 
-void panel_select::applyFilters ( uilordselect* e, character& c )
+// A filter button is only shown if pressing it would change which lords are shown.
+// The buttons shown are stacked from the top, with the tidy up button below them.
+void panel_select::updateFilterButtons( bool animate )
 {
-    auto filters = model->filters;
+    character c;
+    s32 slot = 0;
     
-    BOOL show=true;
+    auto place = [&](Node* node, f32 paddingX) {
+        auto old = node->getPosition();
+        bool wasVisible = node->isVisible();
+        node->setVisible(true);
+        uihelper::PositionParentTopRight(node, paddingX, FILTER_BUTTON_START_Y + (FILTER_BUTTON_STEP_Y*slot) );
+        slot++;
+        
+        if ( animate && wasVisible && old != node->getPosition() ) {
+            auto end = node->getPosition();
+            node->setPosition(old);
+            node->stopAllActions();
+            node->runAction( EaseSineInOut::create( MoveTo::create(0.25f, end) ) );
+        }
+    };
+    
+    for ( auto& item : filterButtons ) {
+        auto toggled = model->filters;
+        toggled.Toggle(item.first);
+        
+        bool changes = false;
+        for ( auto lord : lords ) {
+            TME_GetCharacter(c, getIdFromTag(lord));
+            CONTINUE_IF( c.following );
+            
+            if ( isShownByFilters(lord, c, model->filters) != isShownByFilters(lord, c, toggled) ) {
+                changes = true;
+                break;
+            }
+        }
+        
+        if ( changes )
+            place(item.second, RES(PHONE_SCALE(16)));
+        else
+            item.second->setVisible(false);
+    }
+    
+    place(cleanupButton, RES(PHONE_SCALE(12)*0.9));
+}
+
+bool panel_select::isShownByFilters ( uilordselect* e, character& c, const eflags<select_filters,u32>& filters ) const
+{
     if ( Character_IsNight(c) && !filters.Is(select_filters::show_night) )
-        show=false;
+        return false;
     if ( Character_IsDawn(c) && !filters.Is(select_filters::show_dawn))
-        show=false;
+        return false;
     if ( Character_IsInBattle(c) && !filters.Is(select_filters::show_battle) )
-        show=false;
+        return false;
     if ( Character_IsDead(c) && !filters.Is(select_filters::show_dead))
-        show=false;
+        return false;
     
     if ( Character_IsInTunnel(c) && !filters.Is(select_filters::show_intunnel))
-        show=false;
+        return false;
 
 #if defined(_DDR_)
     if ( Character_IsPreparingForBattle(c) && !filters.Is(select_filters::show_battle) )
-        show=false;
+        return false;
 #endif
     
     if ( !filters.Is(select_filters::show_current) && e->status.Is(LORD_STATUS::status_location) )
-        show=false;
+        return false;
     
-    e->setVisible(show);
+    return true;
 }
 
-uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const std::string& image, select_filters flag )
+void panel_select::applyFilters ( uilordselect* e, character& c, bool animate )
+{
+    bool show = isShownByFilters(e, c, model->filters);
+    
+    uihelper::FadeVisible(e, show, animate);
+}
+
+uifilterbutton* panel_select::createFilterButton( layoutid_t id, const std::string& image, select_filters flag )
 {
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
@@ -446,7 +556,8 @@ uifilterbutton* panel_select::createFilterButton( layoutid_t id, s32 y, const st
     button->setScale(phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
-    uihelper::AddTopRight(safeArea, button, RES(PHONE_SCALE(16)), y );
+    safeArea->addChild(button);
+    filterButtons.push_back( {flag, button} );
     return button;
 }
 
@@ -509,7 +620,7 @@ void panel_select::OnNotification( Ref* sender )
         }
         
         case ID_CLEANUP_SELECT:
-            resetPositions();
+            resetPositions(true);
             pageView->scrollToPage(0);
             break;
 
@@ -535,6 +646,7 @@ void panel_select::OnNotification( Ref* sender )
             auto leader = dynamic_cast<uigrouplord*>(parent);
             
             storeAllLordsPositions();
+            storeDisbandOrigins(leader);
             
             auto selectId = static_cast<layoutid_t>(leader->getTag()-ID_SELECT_CHAR);
             mr->disbandGroup(selectId);
@@ -548,9 +660,17 @@ void panel_select::OnNotification( Ref* sender )
     }
 }
 
-void panel_select::resetPositions()
+void panel_select::resetPositions( bool animate )
 {
+    // remember where everyone was
+    struct previous_position {
+        page_t page;
+        Vec2   position;
+    };
+    std::map<uilordselect*,previous_position> previous;
+    
     for( auto node : lords ) {
+        previous[node] = { node->getPage(), node->getPosition() };
         node->removeFromParent();
     }
     
@@ -573,6 +693,28 @@ void panel_select::resetPositions()
 
         storeLordPosition(button);
         index++;
+    }
+    
+    if ( !animate )
+        return;
+    
+    // animate once every lord has its final position, otherwise the
+    // collision checks above would see lords at their animation start
+    for( auto lord : lords ) {
+        auto old = previous[lord];
+        
+        if ( old.page != lord->getPage() ) {
+            showNewLordPosition(lord);
+            continue;
+        }
+        
+        auto end = lord->getPosition();
+        lord->setPosition(old.position);
+        lord->setTouchEnabled(false);
+        lord->runAction( Sequence::createWithTwoActions(
+            EaseSineInOut::create( MoveTo::create(0.4f, end) ),
+            CallFunc::create( [lord] { lord->setTouchEnabled(true); } )
+        ));
     }
 }
 

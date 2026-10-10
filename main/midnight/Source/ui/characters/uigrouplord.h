@@ -33,6 +33,9 @@ public:
 protected:
     uigrouplord();
     void addFollower( int pos, mxid id );
+    void rotateFollowers( s32 direction );
+    void stopRotating();
+    void setLordsTouchEnabled( bool enabled );
     
     Vec2 calcCirclePos ( f32 pos );
     virtual void setPage(page_t page) override;
@@ -40,11 +43,10 @@ protected:
     virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     virtual void refreshStatus() override;
 
-//    void rotateEveryoneLeft();
-//    void rotateEveryoneRight();
-    
 private:
+    static const int ROTATE_ACTION_TAG = 0x47524F54;
     s32 follower_adjust;
+    bool rotating;
     Button* i_group_left;
     Button* i_group_right;
 

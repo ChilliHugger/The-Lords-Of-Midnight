@@ -15,6 +15,14 @@ Build (57)
 12. ADDED: LOM - Game Options - 'Replenish Things' and 'Random Replenish', things removed from the map respawn after a number of days dependent on difficulty
 13. FIXED: Leaving or disbanding a group now returns to the standard think screen
 14. FIXED: LOM - Seeking no longer removes wild horses from the map on default and easy difficulty
+15. ADDED: Lords rotate around the group circle when using the group left/right arrows
+16. ADDED: Lords animate from the group dialog to their place on the select screen when a group is disbanded
+17. ADDED: Lords animate to their new positions when using the tidy up button on the select screen
+18. ADDED: Lords fade in and out when the select screen filters are changed
+19. CHANGED: Select screen filter buttons are hidden when pressing them would not change which lords are shown
+20. ADDED: Detailed map - Filters fade the map layers and lords, and filter buttons with nothing to show or hide are hidden
+21. CHANGED: Detailed map - The background behind a many lords icon fades out at the edges
+22. CHANGED: Detailed map - Touching anywhere outside the many lords dialog dismisses it, fading it out
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up

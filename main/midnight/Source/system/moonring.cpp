@@ -10,6 +10,7 @@
 #include "../platform/Extensions.h"
 
 #include "moonring.h"
+#include "../tme/utils/debugsetup.h"
 #include "helpmanager.h"
 #include "settingsmanager.h"
 #include "storymanager.h"
@@ -178,6 +179,12 @@ storyid_t moonring::startNewStory()
     tme->ResolveTMEData();
     tme->resetTMEData();
     
+#if defined(_DEBUG_NEW_GAME_GROUP_)
+    // continueStory reloads the save, so the changes must be saved
+    tme::utils::DebugCreateLargeGroup(DEBUG_NEW_GAME_GROUP_SIZE);
+    stories->save();
+#endif
+
     help->Load( id );
     
     return id;
@@ -453,7 +460,11 @@ bool moonring::think()
     showPage(MODE_THINK_PLACE);
 #else
     character& c = TME_CurrentCharacter();
-    showPage(MODE_THINK, Character_LocationObject(c));
+    TME_GetCharacterLocationInfo(c);
+    
+    // something in our way that we must fight is shown in preference to the object here
+    mxid objectid = location_flags&lif_fight ? location_fightthing : Character_LocationObject(c);
+    showPage(MODE_THINK, objectid);
 #endif
     return true;
 }

@@ -49,6 +49,14 @@ public:
     static TTFConfig font_config_shortcut;
     static TTFConfig font_config_debug;
     
+    // Enables cascading opacity on a node and all of its descendants, so that
+    // fading the node fades everything inside it
+    static void SetCascadeOpacityRecursive( Node* node );
+
+    // Shows or hides a node, fading it in or out if animate is set. Any fade
+    // already in progress on the node is replaced.
+    static void FadeVisible( Node* node, bool show, bool animate );
+
     // Anchors
     static Vec2 AnchorTopLeft;
     static Vec2 AnchorTopRight;

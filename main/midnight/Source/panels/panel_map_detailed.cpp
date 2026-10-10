@@ -43,6 +43,7 @@ panel_map_detailed::panel_map_detailed() :
     model(nullptr),
     minMapScale(MAP_SCALE_MIN),
     groupLordBackground(nullptr),
+    groupDismissListener(nullptr),
     groupLordButton(nullptr),
 #if defined(_MOUSE_ENABLED_)
     shiftZooming(false)
@@ -55,6 +56,7 @@ panel_map_detailed::panel_map_detailed() :
 
 panel_map_detailed::~panel_map_detailed()
 {
+    removeGroupDismissListener();
     AX_SAFE_RELEASE_NULL(mapBuilder);
 }
 
@@ -109,15 +111,12 @@ bool panel_map_detailed::init()
     map_up->setLocalZOrder(ZORDER_UI+1);
     map_up->setAnchorPoint(uihelper::AnchorCenter);
   
-    int adjy=RES(-16); 
-    int r = RES(PHONE_SCALE(64));
-    
-    createFilterButton(ID_FILTER_CURRENT_LOC,   (r*0)-adjy, "i_center", map_filters::centre_char);
-    createFilterButton(ID_FILTER_CRITTERS,      (r*1)-adjy, "i_critters", map_filters::show_critters);
-    createFilterButton(ID_FILTER_LORDS,         (r*2)-adjy, "i_filter_lords", map_filters::show_lords);
+    createFilterButton(ID_FILTER_CURRENT_LOC,   "i_center", map_filters::centre_char);
+    createFilterButton(ID_FILTER_CRITTERS,      "i_critters", map_filters::show_critters);
+    createFilterButton(ID_FILTER_LORDS,         "i_filter_lords", map_filters::show_lords);
 
     if (scenario_flags.Is(SF_TUNNELS)) {
-        createFilterButton(ID_FILTER_TUNNELS,   (r*3)-adjy, "i_filter_tunnel", map_filters::show_tunnels);
+        createFilterButton(ID_FILTER_TUNNELS,   "i_filter_tunnel", map_filters::show_tunnels);
         addShortcutKey(ID_FILTER_TUNNELS,       KEYCODE(F4));
     }
     
@@ -573,16 +572,51 @@ void panel_map_detailed::updateScale()
 
 }
 
+void panel_map_detailed::removeGroupDismissListener()
+{
+    if ( groupDismissListener != nullptr ) {
+        _eventDispatcher->removeEventListener(groupDismissListener);
+        groupDismissListener = nullptr;
+    }
+}
+
 void panel_map_detailed::hideGroupLord()
 {
-    grouplord->removeFromParent();
+    removeGroupDismissListener();
+    
+    const f32 fadeTime = 0.15f;
+    
+    // fade the dialog out, and then remove it
+    auto fadeAndRemove = [&](Node* node) {
+        uihelper::SetCascadeOpacityRecursive(node);
+        node->runAction( Sequence::createWithTwoActions( FadeOut::create(fadeTime), RemoveSelf::create() ) );
+    };
+    
+    grouplord->setTouchEnabled(false);
+    for ( auto follower : grouplord->followers ) {
+        follower->setTouchEnabled(false);
+    }
+    fadeAndRemove(grouplord);
     grouplord = nullptr;
     
-    groupLordBackground->removeFromParent();
+    // the radial gradient ignores the node opacity, so fade its colours
+    _eventDispatcher->removeEventListenersForTarget(groupLordBackground);
+    auto gradient = static_cast<LayerRadialGradient*>(groupLordBackground);
+    auto startOpacity = gradient->getStartOpacity();
+    gradient->runAction( Sequence::createWithTwoActions(
+        ActionFloat::create(fadeTime, 1.0f, 0.0f, [gradient,startOpacity](float value) {
+            gradient->setStartOpacity( (u8)(startOpacity * value) );
+        }),
+        RemoveSelf::create()
+    ));
     groupLordBackground = nullptr;
     
-    groupLordButton->setLocalZOrder(ZORDER_DEFAULT);
+    // and the button fades back in
+    uihelper::SetCascadeOpacityRecursive(groupLordButton);
+    groupLordButton->setLocalZOrder(ZORDER_NEAR);
+    groupLordButton->setOpacity(0);
     groupLordButton->setVisible(true);
+    groupLordButton->runAction( FadeIn::create(fadeTime) );
     groupLordButton = nullptr;
 }
 
@@ -610,15 +644,61 @@ void panel_map_detailed::showGroupLord(Widget* button)
     grouplord->createFollowers(lords);
     grouplord->setLocalZOrder(ZORDER_POPUP);
     
-    groupLordBackground = DrawNode::create();
-    auto size = grouplord->getContentSize();
-    groupLordBackground->setContentSize( grouplord->getContentSize() );
-    groupLordBackground->drawSolidCircle(Vec2(size.width/2,size.height/2), size.width/2 , 0, 64, 1.25f, 1.25f, Color4F(1.0f,1.0f,1.0f,0.9f));
+    // a white disc that fades out towards the edge
+    auto size = grouplord->getContentSize() * 1.5f;
+    f32 radius = HALF(size.width);
+    groupLordBackground = LayerRadialGradient::create(
+        Color4B(255,255,255,ALPHA(0.9f)), Color4B(255,255,255,ALPHA(0.0f)),
+        radius, Vec2(radius,HALF(size.height)), 0.6f );
+    groupLordBackground->setContentSize( size );
     groupLordBackground->setAnchorPoint(uihelper::AnchorCenter);
+    // layers ignore their anchor point by default
+    groupLordBackground->setIgnoreAnchorPointForPosition(false);
     groupLordBackground->setPosition(Vec2(position.x,position.y));
     groupLordBackground->setVisible(true);
     groupLordBackground->setLocalZOrder(ZORDER_POPUP-1);
     characters->addChild(groupLordBackground);
+    
+    // swallow touches in the group area so that lords behind the dialog can't be selected
+    auto background = groupLordBackground;
+    auto swallow = EventListenerTouchOneByOne::create();
+    swallow->setSwallowTouches(true);
+    swallow->onTouchBegan = [background](Touch* touch, Event*) {
+        auto local = background->convertToNodeSpace(touch->getLocation());
+        auto size = background->getContentSize();
+        return local.distance(Vec2(HALF(size.width),HALF(size.height))) <= HALF(size.width);
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(swallow, groupLordBackground);
+    
+    // a touch anywhere outside the dialog dismisses it. The touch is swallowed, so that
+    // it doesn't also select a lord or drag the map, unless it is on one of the panel's buttons.
+    auto dismiss = EventListenerTouchOneByOne::create();
+    dismiss->setSwallowTouches(true);
+    dismiss->onTouchBegan = [this, background](Touch* touch, Event*) {
+        if ( grouplord == nullptr || !isRunning() )
+            return false;
+        
+        auto local = background->convertToNodeSpace(touch->getLocation());
+        auto size = background->getContentSize();
+        if ( local.distance(Vec2(HALF(size.width),HALF(size.height))) <= HALF(size.width) )
+            return false;
+        
+        // the listener can't be removed while it is running
+        scheduleOnce( [this](float) {
+            if ( grouplord != nullptr )
+                hideGroupLord();
+        }, 0, "dismiss_group_lord" );
+        
+        for ( auto child : safeArea->getChildren() ) {
+            auto widget = dynamic_cast<Widget*>(child);
+            if ( widget != nullptr && widget->isVisible() && widget->isEnabled()
+                 && widget->hitTest(touch->getLocation(), Camera::getDefaultCamera(), nullptr) )
+                return false;
+        }
+        return true;
+    };
+    _eventDispatcher->addEventListenerWithFixedPriority(dismiss, -1);
+    groupDismissListener = dismiss;
     
     groupLordButton->setLocalZOrder(ZORDER_POPUP+1);
     groupLordButton->setVisible(false);
@@ -672,7 +752,7 @@ void panel_map_detailed::centreOnCurrentCharacter(bool animate)
 }
 
 
-uifilterbutton* panel_map_detailed::createFilterButton( layoutid_t id, s32 y, const std::string& image, map_filters flag )
+uifilterbutton* panel_map_detailed::createFilterButton( layoutid_t id, const std::string& image, map_filters flag )
 {
     auto button = uifilterbutton::createWithImage(image);
     button->setTag(id);
@@ -680,7 +760,8 @@ uifilterbutton* panel_map_detailed::createFilterButton( layoutid_t id, s32 y, co
     button->setScale(phoneScale());
     button->setSelected(model->filters.Is(flag));
     button->addEventListener(eventCallback);
-    uihelper::AddTopRight(safeArea, button, RES(PHONE_SCALE(16)), y );
+    safeArea->addChild(button);
+    filterButtons.push_back( {flag, button} );
     return button;
 }
 
@@ -694,23 +775,87 @@ void panel_map_detailed::updateFilterButton(Ref* sender,map_filters flag)
         button->addEventListener(eventCallback);
     }
     
-    updateFilters();
+    updateFilters(true);
 }
 
-void panel_map_detailed::updateFilters()
+static bool layerHasTiles( FastTMXLayer* layer )
 {
-    if (scenario_flags.Is(SF_TUNNELS)) {
-        IF_NOT_NULL(tmxMap->getLayer("Tunnels"))
-            ->setVisible( model->filters.Is(map_filters::show_tunnels) );
+    if ( layer == nullptr )
+        return false;
+    
+    auto size = layer->getLayerSize();
+    for ( s32 y=0; y<(s32)size.height; y++ ) {
+        for ( s32 x=0; x<(s32)size.width; x++ ) {
+            if ( layer->getTileGIDAt(Vec2(x,y)) != 0 )
+                return true;
+        }
+    }
+    return false;
+}
 
-        IF_NOT_NULL(tmxMap->getLayer("Tunnel Critters"))
-            ->setVisible( model->filters.Is(map_filters::show_tunnels) && model->filters.Is(map_filters::show_critters) );
+void panel_map_detailed::updateFilters( bool animate )
+{
+    auto fade = [&](Node* node, bool show) {
+        if ( node != nullptr )
+            uihelper::FadeVisible(node, show, animate);
+    };
+    
+    if (scenario_flags.Is(SF_TUNNELS)) {
+        fade( tmxMap->getLayer("Tunnels"), model->filters.Is(map_filters::show_tunnels) );
+        fade( tmxMap->getLayer("Tunnel Critters"), model->filters.Is(map_filters::show_tunnels) && model->filters.Is(map_filters::show_critters) );
     }
 
-    IF_NOT_NULL(tmxMap->getLayer("Critters"))
-        ->setVisible( model->filters.Is(map_filters::show_critters) );
+    fade( tmxMap->getLayer("Critters"), model->filters.Is(map_filters::show_critters) );
+    fade( characters, model->filters.Is(map_filters::show_lords) );
     
-    characters->setVisible( model->filters.Is(map_filters::show_lords) );
+    updateFilterButtons(animate);
+}
+
+// A filter button is only shown if there is something on the map for it to show or hide.
+// The buttons shown are stacked from the top.
+void panel_map_detailed::updateFilterButtons( bool animate )
+{
+    const s32 startY = RES(16);
+    const s32 stepY = RES(PHONE_SCALE(64));
+    
+    s32 slot = 0;
+    for ( auto& item : filterButtons ) {
+        bool useful = true;
+        
+        switch ( item.first ) {
+            case map_filters::show_critters:
+                useful = layerHasTiles(tmxMap->getLayer("Critters"))
+                      || layerHasTiles(tmxMap->getLayer("Tunnel Critters"));
+                break;
+            case map_filters::show_lords:
+                useful = characters->getChildrenCount() > 0;
+                break;
+            case map_filters::show_tunnels:
+                useful = layerHasTiles(tmxMap->getLayer("Tunnels"));
+                break;
+            default:
+                break;
+        }
+        
+        auto button = item.second;
+        if ( !useful ) {
+            button->setVisible(false);
+            continue;
+        }
+        
+        auto old = button->getPosition();
+        bool wasVisible = button->isVisible();
+        button->setVisible(true);
+        uihelper::PositionParentTopRight(button, RES(PHONE_SCALE(16)), startY + (stepY*slot) );
+        slot++;
+        
+        if ( animate && wasVisible && old != button->getPosition() ) {
+            auto end = button->getPosition();
+            button->setPosition(old);
+            button->stopAllActions();
+            button->runAction( EaseSineInOut::create( MoveTo::create(0.25f, end) ) );
+        }
+    }
 }
 
 void panel_map_detailed::setupCharacterButtons()
@@ -737,6 +882,8 @@ void panel_map_detailed::setupCharacterButtons()
             node = uihelper::CreateImageButton("map_lords_many", ID_SELECT_ALL, clickCallback);
             node->setUserData(m);
             node->setScale(scale_normal);
+            // always above the single lords
+            node->setLocalZOrder(ZORDER_NEAR);
             for ( auto n : m->here ) {
                 n->processed = true;
             }
@@ -752,7 +899,8 @@ void panel_map_detailed::setupCharacterButtons()
             
         }
         
-        node->setLocalZOrder(ZORDER_DEFAULT);
+        if ( m->here.empty() )
+            node->setLocalZOrder(ZORDER_DEFAULT);
         node->setAnchorPoint(uihelper::AnchorCenter);
         node->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(32))) );
         node->addClickEventListener(clickCallback);

@@ -7,6 +7,7 @@
 //
 #include "../uihelper.h"
 #include "uigrouplord.h"
+#include "grouprotation.h"
 #include "../../tme/tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/resolutionmanager.h"
@@ -19,6 +20,7 @@ uigrouplord::uigrouplord() :
     i_group_left(nullptr),
     i_group_right(nullptr),
     follower_adjust(0),
+    rotating(false),
     possibleSwap(false)
 {
     lordtype = lordwidget::group;
@@ -49,10 +51,8 @@ bool uigrouplord::init()
         
         // Left button
         i_group_left = uihelper::CreateImageButton("i_group_left", ID_GROUP_LEFT, [&] (Ref* ref ) {
-            f32 min = ( MAX_VISIBLE_LORDS - followers.size()) ;
-            if ( follower_adjust > min ) {
-                follower_adjust-=1;
-                updateFollowers();
+            if ( !rotating && grouprotation::canRotateLeft(follower_adjust, (int)followers.size(), MAX_VISIBLE_LORDS) ) {
+                rotateFollowers(-1);
             }
         });
         
@@ -62,9 +62,8 @@ bool uigrouplord::init()
 
         // Right Button
         i_group_right = uihelper::CreateImageButton("i_group_right", ID_GROUP_RIGHT, [&] (Ref* ref ) {
-            if ( follower_adjust<0 ) {
-                follower_adjust+=1;
-                updateFollowers();
+            if ( !rotating && grouprotation::canRotateRight(follower_adjust) ) {
+                rotateFollowers(1);
             }
         });
         i_group_right->setPosition( calcCirclePos(RIGHT_BUTTON_POSITION) );
@@ -85,44 +84,6 @@ bool uigrouplord::init()
     
     return false;
 }
-
-//void uigrouplord::rotateEveryoneLeft() {
-//
-//
-//
-//    auto actionfloat = ActionFloat::create(0.25f, 0.0f, 1.0f, [=](float value) {
-//        s32 index=0;
-//        for ( auto lord : followers ) {
-//            f32 pos = index+follower_adjust+value;
-//            lord->setPosition( calcCirclePos( pos ) );
-//            index++;
-//        }
-//    });
-//
-//    runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
-//                                             CallFunc::create( [=] { follower_adjust+=1; updateFollowers(); } )
-//                                             ));
-//
-//
-//}
-//
-//void uigrouplord::rotateEveryoneRight() {
-//
-//    auto actionfloat = ActionFloat::create(0.25f, 1.0f, 0.0f, [=](float value) {
-//        s32 index=0;
-//        for ( auto lord : followers ) {
-//            f32 pos = index+follower_adjust+value;
-//            lord->setPosition( calcCirclePos( pos ) );
-//            index++;
-//        }
-//    });
-//
-//    runAction(Sequence::createWithTwoActions( EaseSineInOut::create(actionfloat),
-//                                             CallFunc::create( [=] { follower_adjust-=1; updateFollowers(); } )
-//                                             ));
-//
-//}
-
 
 uigrouplord* uigrouplord::createWithLord ( mxid characterid )
 {
@@ -157,6 +118,8 @@ void uigrouplord::createFollowers(const c_mxid& followers)
 
 void uigrouplord::updateFollowers()
 {
+    stopRotating();
+
     f32 min = ( MAX_VISIBLE_LORDS - followers.size()) ;
     IF_NOT_NULL( i_group_left )->setVisible(follower_adjust > min);
     IF_NOT_NULL( i_group_right )->setVisible(follower_adjust<0);
@@ -166,6 +129,7 @@ void uigrouplord::updateFollowers()
         s32 pos = index+follower_adjust;
         lord->setPosition( calcCirclePos( pos ) );
         lord->setVisible( pos>=0 && pos<MAX_VISIBLE_LORDS );
+        lord->setOpacity(255);
         
         TextHAlignment align =  ( pos < 3 || pos == MAX_VISIBLE_LORDS-1 ) ? TextHAlignment::LEFT : TextHAlignment::RIGHT;
         lord->setTitleAlignment(align);
@@ -174,8 +138,65 @@ void uigrouplord::updateFollowers()
     
 }
 
+void uigrouplord::stopRotating()
+{
+    if ( rotating ) {
+        stopActionByTag(ROTATE_ACTION_TAG);
+        rotating = false;
+    }
+    setLordsTouchEnabled(true);
+}
+
+// the leader and followers can't be clicked or dragged while they are moving
+void uigrouplord::setLordsTouchEnabled( bool enabled )
+{
+    setTouchEnabled(enabled);
+    for ( auto lord : followers ) {
+        lord->setTouchEnabled(enabled);
+    }
+}
+
+// direction -1 moves the lords left (positions decrease), 1 moves them right.
+// Lords travel around the circle to their new slot, then the final state is applied.
+void uigrouplord::rotateFollowers( s32 direction )
+{
+    if ( rotating || followers.empty() )
+        return;
+
+    rotating = true;
+    setLordsTouchEnabled(false);
+    
+    // the arrows are hidden while the lords are moving
+    IF_NOT_NULL( i_group_left )->setVisible(false);
+    IF_NOT_NULL( i_group_right )->setVisible(false);
+
+    s32 start = follower_adjust;
+    auto animate = ActionFloat::create(grouprotation::ROTATE_DURATION, 0.0f, (f32)direction, [this, start](float value) {
+        s32 index=0;
+        for ( auto lord : followers ) {
+            f32 pos = index + start + value;
+            lord->setPosition( calcCirclePos( pos ) );
+            lord->setVisible( grouprotation::isVisible(pos, MAX_VISIBLE_LORDS) );
+            lord->setOpacity( (u8)(255.0f * grouprotation::opacity(pos, MAX_VISIBLE_LORDS)) );
+            index++;
+        }
+    });
+
+    auto action = Sequence::createWithTwoActions(
+        EaseSineInOut::create(animate),
+        CallFunc::create( [this, start, direction] {
+            rotating = false;
+            follower_adjust = start + direction;
+            updateFollowers();
+        })
+    );
+    action->setTag(ROTATE_ACTION_TAG);
+    runAction(action);
+}
+
 void uigrouplord::clearFollowers()
 {
+    stopRotating();
     for ( auto lord : followers ) {
         lord->removeFromParent();
     }
@@ -193,6 +214,7 @@ void uigrouplord::addFollower( int pos, mxid id )
     lord->drag_delegate = drag_delegate;
     lord->setPage( getPage()*-1 );
     lord->setScale(GROUPED_LORD_SCALE);
+    uihelper::SetCascadeOpacityRecursive(lord);
     addChild(lord);
     followers.pushBack(lord);
     
