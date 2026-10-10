@@ -12,7 +12,30 @@
     AddType application/octet-stream .data
 </IfModule>
 
-# Compress the big files (wasm ~63MB -> ~16MB).
+# Precompressed Brotli copies (<file>.br, made by the web workflow): serve them instead of the
+# plain file when the browser accepts Brotli. The plain file stays as the fallback.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP:Accept-Encoding} br
+    RewriteCond %{REQUEST_FILENAME}.br -f
+    RewriteRule ^(.+)\.(wasm|js)$ $1.$2.br [L]
+</IfModule>
+<IfModule mod_headers.c>
+    <FilesMatch "\.wasm\.br$">
+        ForceType application/wasm
+        Header set Content-Encoding br
+    </FilesMatch>
+    <FilesMatch "\.js\.br$">
+        ForceType application/javascript
+        Header set Content-Encoding br
+    </FilesMatch>
+    # the answer depends on what the browser accepts
+    <FilesMatch "\.(wasm|js)(\.br)?$">
+        Header append Vary Accept-Encoding
+    </FilesMatch>
+</IfModule>
+
+# Compress the other files on the fly where the host supports it (the PNG-heavy .data barely shrinks).
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE application/wasm application/octet-stream application/javascript text/html
 </IfModule>

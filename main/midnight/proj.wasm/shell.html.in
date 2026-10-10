@@ -343,6 +343,101 @@
         fitCanvas();
       })();
     </script>
+    <style>
+      #crashPanel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.8); z-index: 20;
+                    align-items: center; justify-content: center; font-family: sans-serif; }
+      #crashPanel .box { background: #fff; color: #222; padding: 20px 24px; border-radius: 8px;
+                         width: min(640px, 92vw); max-height: 90vh; display: flex; flex-direction: column; }
+      #crashPanel h3 { margin: 0 0 6px; color: #a00; }
+      #crashPanel p { margin: 4px 0 10px; font-size: 14px; line-height: 1.4; }
+      #crashPanel textarea { flex: 1; min-height: 160px; font: 12px/1.35 monospace; white-space: pre; }
+      #crashPanel button { font-size: 15px; padding: 6px 12px; margin: 10px 8px 0 0; cursor: pointer; }
+      #crashMsg { font-size: 13px; color: #060; min-height: 1em; }
+    </style>
+    <div id="crashPanel">
+      <div class="box">
+        <h3>Sorry - the game has stopped</h3>
+        <p>Something went wrong in @APP_TITLE@ @WASM_APP_VERSION@ (build @WASM_APP_BUILD_NO@). Please copy this report and send it so it can be fixed.</p>
+        <textarea id="crashText" readonly></textarea>
+        <div>
+          <button id="crashCopy">Copy report</button>
+          <button id="crashSave">Download report</button>
+          <button id="crashSaves" title="Save your games and settings to a file">Export saves</button>
+          <button id="crashReload">Reload</button>
+        </div>
+        <div id="crashMsg"></div>
+      </div>
+    </div>
+    <script type='text/javascript'>
+      // Shows a report when the game crashes, so testers can send it instead of digging
+      // through the browser console.
+      (function() {
+        var shown = false, recent = [];
+        function remember(kind, args) {
+          recent.push(kind + ' ' + Array.prototype.slice.call(args).join(' '));
+          if (recent.length > 40) recent.shift();
+        }
+        // keep the last few log lines for the report
+        ['log', 'warn', 'error'].forEach(function(k) {
+          var orig = console[k];
+          console[k] = function() { remember(k, arguments); return orig.apply(console, arguments); };
+        });
+
+        function benign(msg) { return /^unwind$|ResizeObserver|^Script error\.?$/i.test(msg || ''); }
+
+        function show(message, stack) {
+          if (shown || benign(message)) return;
+          shown = true;
+          var report = [
+            '@APP_TITLE@ @WASM_APP_VERSION@ (build @WASM_APP_BUILD_NO@)',
+            'Time:    ' + new Date().toISOString(),
+            'Page:    ' + location.href,
+            'Browser: ' + navigator.userAgent,
+            'Screen:  ' + window.innerWidth + 'x' + window.innerHeight + ' (pixel ratio ' + (window.devicePixelRatio || 1) + ')',
+            '',
+            'Error:   ' + message,
+            '',
+            String(stack || '(no stack)'),
+            '',
+            '--- recent log ---',
+            recent.join('\n')
+          ].join('\n');
+          document.getElementById('crashText').value = report;
+          document.getElementById('crashPanel').style.display = 'flex';
+        }
+        window.showCrashReport = show;
+
+        window.addEventListener('error', function(e) {
+          var err = e.error;
+          show(err ? (err.message || String(err)) : e.message, err && err.stack);
+        });
+        window.addEventListener('unhandledrejection', function(e) {
+          var r = e.reason;
+          show(r && r.message ? r.message : String(r), r && r.stack);
+        });
+        if (typeof Module !== 'undefined') {
+          Module.onAbort = function(what) { show('abort(' + what + ')', new Error().stack); };
+        }
+
+        function say(t) { document.getElementById('crashMsg').textContent = t; }
+        document.getElementById('crashCopy').onclick = function() {
+          var ta = document.getElementById('crashText');
+          ta.select();
+          (navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject())
+            .then(function() { say('Copied.'); }, function() { document.execCommand('copy'); say('Copied.'); });
+        };
+        document.getElementById('crashSave').onclick = function() {
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(new Blob([document.getElementById('crashText').value], { type: 'text/plain' }));
+          a.download = 'midnight-crash-' + new Date().toISOString().replace(/[:.]/g, '-') + '.txt';
+          document.body.appendChild(a); a.click(); a.remove();
+        };
+        document.getElementById('crashSaves').onclick = function() {
+          try { say('Exported ' + window.exportSaves() + ' files.'); } catch (e) { say('Could not export: ' + e.message); }
+        };
+        document.getElementById('crashReload').onclick = function() { location.reload(); };
+      })();
+    </script>
     {{{ SCRIPT }}}
   </body>
 </html>

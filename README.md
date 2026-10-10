@@ -1,6 +1,8 @@
 The Lords of Midnight
 
 [![Build & Test](https://github.com/ChilliHugger/The-Lords-Of-Midnight/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/ChilliHugger/The-Lords-Of-Midnight/actions/workflows/build.yml)
+[![Web build](https://github.com/ChilliHugger/The-Lords-Of-Midnight/actions/workflows/web.yml/badge.svg?branch=main)](https://github.com/ChilliHugger/The-Lords-Of-Midnight/actions/workflows/web.yml)
+[![Web deployed](https://img.shields.io/endpoint?url=https%3A%2F%2Fthelordsofmidnight.com%2Fplaying%2Fversion.json&cacheSeconds=300)](https://thelordsofmidnight.com/playing/)
 
 All data regarding The Lords of Midnight
 Including Doomdark's Revenge and The Citadel
