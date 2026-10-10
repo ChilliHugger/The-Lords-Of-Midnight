@@ -86,6 +86,7 @@ TTFConfig uihelper::font_config_medium;
 TTFConfig uihelper::font_config_small;
 TTFConfig uihelper::font_config_shortcut;
 TTFConfig uihelper::font_config_debug;
+TTFConfig uihelper::font_config_button;
 
 
 
@@ -120,6 +121,12 @@ void uihelper::initialiseFonts()
     font_config_shortcut.outlineSize = 0;
     font_config_shortcut.distanceFieldEnabled = false;
     
+    font_config_button.fontFilePath = BUTTON_TEXT_FONT;
+    font_config_button.fontSize = RES(BUTTON_TEXT_SIZE);
+    font_config_button.glyphs = GlyphCollection::DYNAMIC;
+    font_config_button.outlineSize = 0;
+    font_config_button.distanceFieldEnabled = false;
+
     font_config_debug.fontFilePath = "fonts/arial.ttf";
     font_config_debug.fontSize = RES(16)*scale;
     font_config_debug.glyphs = GlyphCollection::DYNAMIC;
@@ -444,6 +451,35 @@ void uihelper::addGlow( Button* button, const std::string& image, const Color3B&
         outline->setPosition(renderer->getContentSize()/2);
         renderer->addChild(outline, -1);
     }
+}
+
+Label* uihelper::addButtonText( Button* button, const std::string& text, ButtonTextAlign align, f32 offset, s32 outline )
+{
+    auto renderer = button->getRendererNormal();
+    auto size = renderer->getContentSize();
+
+    auto label = Label::createWithTTF( uihelper::font_config_button, text );
+    label->getFontAtlas()->setAntiAliasTexParameters();
+    label->setTextColor(Color4B(_clrWhite));
+    label->enableOutline(Color4B(_clrBlack), RES(outline));
+    label->setAdditionalKerning(RES(BUTTON_TEXT_SIZE) * BUTTON_TEXT_TRACKING / 1000.0f);
+
+    switch ( align ) {
+        case ButtonTextAlign::Top:
+            label->setAnchorPoint(Vec2::ANCHOR_MIDDLE_TOP);
+            label->setPosition(Vec2(size.width/2, size.height + RES(offset)));
+            break;
+        case ButtonTextAlign::Centre:
+            label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            label->setPosition(Vec2(size.width/2, size.height/2 + RES(offset)));
+            break;
+        default:
+            label->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
+            label->setPosition(Vec2(size.width/2, RES(offset)));
+            break;
+    }
+    renderer->addChild(label);
+    return label;
 }
 
 Node* uihelper::createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir ) {
