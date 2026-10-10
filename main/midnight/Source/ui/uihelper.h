@@ -23,6 +23,7 @@ constexpr auto FONT_SIZE_BIG           = 30;
 constexpr auto FONT_SIZE_MEDIUM        = 20;
 constexpr auto FONT_SIZE_SMALL         = 12;
 constexpr auto FONT_SIZE_DEBUG         = 8;
+constexpr auto GLOW_RADIUS            = 24;
 constexpr auto IMAGE_LOGO              = "misc/logo.png";
 constexpr auto IMAGE_LOGO_NOVEL        = "misc/logo-26.png";
 
@@ -101,6 +102,10 @@ public:
     static Button* CreateBoxButton( Size size );
     static Button* CreateImageButton( const std::string& name );
     static Button* CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback  );
+
+    // glow behind a button so it doesn't clash with the image behind it.
+    // attached to the button so it scales with the press zoom
+    static void addGlow( Button* button, const std::string& image, const Color3B& color = Color3B::WHITE, s32 radius = GLOW_RADIUS );
 
     // layers
     static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );

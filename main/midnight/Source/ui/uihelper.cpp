@@ -10,6 +10,7 @@
 #include "../ui/uielement.h"
 #include "../ui/uieventargs.h"
 #include "../system/moonring.h"
+#include "uioutline.h"
 
 USING_NS_AX;
 USING_NS_AX_UI;
@@ -434,6 +435,16 @@ Node* uihelper::getChildByTagRecursively(const int nodeTag, ax::Node* parent) {
     return node;
 }
 
+
+void uihelper::addGlow( Button* button, const std::string& image, const Color3B& color, s32 radius )
+{
+    auto renderer = button->getRendererNormal();
+    auto outline = uioutline::create(image, Color4F(color), RES(radius));
+    if ( outline != nullptr ) {
+        outline->setPosition(renderer->getContentSize()/2);
+        renderer->addChild(outline, -1);
+    }
+}
 
 Node* uihelper::createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir ) {
     // top gradient

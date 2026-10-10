@@ -130,6 +130,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     approach->setVisible(this->approach);
     approach->setEnabled(this->approach);
     scrollView->addChild(approach);
+    if ( this->approach ) uihelper::addGlow(approach, "i_approach");
     
 #if defined(_LOM_) || defined(_CITADEL_)
     // Unhide
@@ -138,6 +139,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     unhide->setVisible(this->unhide);
     unhide->setEnabled(this->unhide);
     scrollView->addChild(unhide);
+    if ( this->unhide ) uihelper::addGlow(unhide, "i_unhide");
     addShortcutKey(unhide, ID_UNHIDE,       K_UNHIDE);
 #endif
         
@@ -147,6 +149,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     leave->setVisible(this->leave);
     leave->setEnabled(this->leave);
     scrollView->addChild(leave);
+    if ( this->leave ) uihelper::addGlow(leave, "i_leave_group");
     
     // Disband
     auto disband = uihelper::CreateImageButton("i_disband_group", ID_GROUP_DISBAND, clickCallback);
@@ -154,30 +157,13 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     disband->setVisible(this->disband);
     disband->setEnabled(this->disband);
     scrollView->addChild(disband);
-    
-    // bottom gradient on character
-   if ( this->unhide || this->approach || this->disband || this->leave ) {
-       pos = imgCharacter->getPosition();
-       pos.y -= imgCharacter->getContentSize().height;
-       auto color = _clrWhite ;
-       auto gradientB = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), PHONE_SCALE(RES(128)), 1);
-       gradientB->setPosition(pos);
-       scrollView->addChild(gradientB);
-    }
+    if ( this->disband ) uihelper::addGlow(disband, "i_disband_group");
     
     // terrain
     y = RES(TERRAIN_Y) - imgTerrain->getContentSize().height - yAdjust;
     x = RES(TERRAIN_X) - imgTerrain->getContentSize().width/2;
     uihelper::PositionParentTopRight(imgTerrain,x,y);
     
-    
-    // Post/Recruit
-    if ( this->recruitMen||this->postMen ) {
-        auto color = _clrWhite ;
-        auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), imgTerrain->getContentSize().width, 1);
-        imgTerrain->addChild(gradientC);
-        uihelper::PositionParentBottomLeft(gradientC,RES(0),RES(0));
-    }
     
     y = RES(TERRAIN_Y) ;
     x = RES(TERRAIN_X) ;
@@ -191,6 +177,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     recruitMen->setOpacity(this->recruitMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
     recruitMen->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     imgTerrain->addChild(recruitMen);
+    if ( this->recruitMen||this->postMen ) uihelper::addGlow(recruitMen, "i_recruit");
     uihelper::PositionParentBottomCenter(recruitMen,
                                          -(recruitMen->getContentSize().width/2)-PHONE_SCALE(RES(8))-xAdjust,
                                          -recruitMen->getContentSize().height/2);
@@ -201,6 +188,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     postMen->setEnabled(this->postMen);
     postMen->setOpacity(this->postMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
     imgTerrain->addChild(postMen);
+    if ( this->recruitMen||this->postMen ) uihelper::addGlow(postMen, "i_post");
     uihelper::PositionParentBottomCenter(postMen,
                                          +(postMen->getContentSize().width/2)+PHONE_SCALE(RES(8))+xAdjust,
                                          -(postMen->getContentSize().height/2)-RES(2));
@@ -226,12 +214,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     fight->setEnabled(this->fight);
     scrollView->addChild(fight);
     
-    if ( this->fight ) {
-        auto color = _clrWhite ;
-        auto gradientC = uihelper::createVerticalGradient(color, PHONE_SCALE(RES(64)), PHONE_SCALE(RES(56)), PHONE_SCALE(RES(128)), 1);
-        gradientC->setPosition(pos);
-        scrollView->addChild(gradientC);
-    }
+    if ( this->fight ) uihelper::addGlow(fight, "i_fight");
     
     addShortcutKey(fight, ID_FIGHT,        K_FIGHT);
 #endif
