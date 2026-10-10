@@ -8,6 +8,7 @@
  */
 
 #pragma once
+#include <map>
 #include "../axmol_sdk.h"
 #include "../ui/characters/uilordselect.h"
 #include "../ui/uipanel.h"
@@ -16,6 +17,8 @@
 #include "../frontend/layout_id.h"
 #include "../system/settingsmanager.h"
 #include "../models/selectmodel.h"
+
+class uigrouplord;
 
 class panel_select :
     public uipanel,
@@ -34,7 +37,7 @@ public:
     CREATE_FUNC(panel_select);
     
 protected:
-    uifilterbutton* createFilterButton( layoutid_t id, s32 y, const std::string& image, select_filters flag );
+    uifilterbutton* createFilterButton( layoutid_t id, const std::string& image, select_filters flag );
     void updateFilterButton(Ref* sender,select_filters flag);
     
     virtual void OnDragDropNotification( uidragelement* sender, uidragevent* event ) override ;
@@ -49,9 +52,11 @@ protected:
     void checkPageFlip() ;
 
     void updateFilters();
-    void applyFilters ( uilordselect* e, character& c );
+    void applyFilters ( uilordselect* e, character& c, bool animate = false );
+    bool isShownByFilters ( uilordselect* e, character& c, const eflags<select_filters,u32>& filters ) const;
+    void updateFilterButtons( bool animate = true );
     void checkCollision ( uilordselect* lord, s32 index );
-    void resetPositions();
+    void resetPositions( bool animate = false );
     
     uilordselect* getOverlappingLord ( page_t page, uilordselect* source );
     uilordselect* getDropTarget( uilordselect* lord, UIMOUSEOVER where, UIMOUSEOVER& result );
@@ -70,6 +75,9 @@ protected:
 
     void disableUI();
     void enableUI();
+
+    void storeDisbandOrigins( uigrouplord* leader );
+    bool animateFromDisbandedGroup( uilordselect* lord );
 
     void checkValidDropTarget();
     void placeDraggedLordOnCurrentPage();
@@ -115,6 +123,18 @@ private:
     page_t                  startDragPage;
     UIMOUSEOVER             lordDropResult;
     bool                    pageFlipAllowed;
+
+    // where lords were on screen (and their scale) when their group was disbanded
+    struct disband_origin {
+        Vec2 position;
+        f32  scale;
+    };
+    std::map<mxid,disband_origin> disbandOrigins;
+
+    std::vector< std::pair<select_filters,uifilterbutton*> > filterButtons;
+    Button*                 cleanupButton;
+    s32                     FILTER_BUTTON_START_Y;
+    s32                     FILTER_BUTTON_STEP_Y;
 };
 
 

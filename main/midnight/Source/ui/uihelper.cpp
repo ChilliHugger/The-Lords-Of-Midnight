@@ -20,6 +20,19 @@ Vec2 uihelper::AnchorTopLeft = Vec2(0,1);
 Vec2 uihelper::AnchorTopRight = Vec2(1,1);
 Vec2 uihelper::AnchorTopCenter = Vec2(0.5,1);
 
+void uihelper::SetCascadeOpacityRecursive( Node* node )
+{
+    node->setCascadeOpacityEnabled(true);
+    for ( auto child : node->getChildren() ) {
+        SetCascadeOpacityRecursive(child);
+    }
+    if ( auto protectedNode = dynamic_cast<ProtectedNode*>(node) ) {
+        for ( auto child : protectedNode->getProtectedChildren() ) {
+            SetCascadeOpacityRecursive(child);
+        }
+    }
+}
+
 Vec2 uihelper::AnchorCenter = Vec2(0.5,0.5);
 Vec2 uihelper::AnchorLeftCenter = Vec2(0,0.5);
 Vec2 uihelper::AnchorRightCenter = Vec2(1,0.5);

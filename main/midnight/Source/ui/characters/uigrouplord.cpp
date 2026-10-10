@@ -214,7 +214,7 @@ void uigrouplord::addFollower( int pos, mxid id )
     lord->drag_delegate = drag_delegate;
     lord->setPage( getPage()*-1 );
     lord->setScale(GROUPED_LORD_SCALE);
-    lord->setCascadeOpacityEnabled(true);
+    uihelper::SetCascadeOpacityRecursive(lord);
     addChild(lord);
     followers.pushBack(lord);
     
