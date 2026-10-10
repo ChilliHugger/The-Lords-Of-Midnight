@@ -685,7 +685,10 @@ void panel_options::clearRule(int id, bool condition)
         rules[index] = TOGGLE::OFF;
         auto option = findOption(id);
         auto field = optionControls.at(id);
-        field->setValue(option->text[(int)rules[index]]);
+        // the control only exists while its sub menu is on screen
+        if(option != nullptr && field != nullptr) {
+            field->setValue(option->text[(int)rules[index]]);
+        }
     }
     
     // change the appearance of the disabled items

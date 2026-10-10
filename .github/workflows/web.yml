@@ -99,7 +99,8 @@ jobs:
         shell: pwsh
         working-directory: game/main/midnight
         run: |
-          & "$env:AX_ROOT/tools/cmdline/axmol" build -p wasm -c `
+          # -O 3 = Release: no debug info, so the .wasm is a fraction of the RelWithDebInfo size
+          & "$env:AX_ROOT/tools/cmdline/axmol" build -p wasm -O 3 -c `
             -xc '-DTME=${{ matrix.tme }},-DWASM_APP_VERSION=${{ inputs.version }},-DWASM_APP_BUILD_NO=${{ inputs.build_no }},-B${{ env.BUILD_DIR }}'
 
       # axmol ships no prebuilt wasm zlib; build emscripten's port and put it where axmol looks.
@@ -115,13 +116,32 @@ jobs:
 
       - name: Collect files
         working-directory: game/main/midnight
+        env:
+          VERSION: ${{ inputs.version }}
+          BUILD_NO: ${{ inputs.build_no }}
         run: |
           mkdir -p "$GITHUB_WORKSPACE/dist"
           # only what the server needs: index.html, <app>.js/.wasm/.data and .htaccess
           cd ${{ env.BUILD_DIR }}/bin/${{ matrix.app }}
           app=${{ matrix.app }}
           cp -a index.html $app.js $app.wasm $app.data .htaccess "$GITHUB_WORKSPACE/dist/"
-          ls -la "$GITHUB_WORKSPACE/dist"
+
+          # Says which build is on the server; the README's "web" badge reads it from there.
+          # (shields.io "endpoint" format: schemaVersion/label/message/color, plus extra details.)
+          jq -n --arg version "$VERSION" --arg build "$BUILD_NO" --arg commit "${GITHUB_SHA::7}" \
+                --arg deployed "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{schemaVersion: 1, label: "web", message: "\($version) (\($build))", color: "blue",
+              version: $version, build: $build, commit: $commit, deployed: $deployed}' \
+            > "$GITHUB_WORKSPACE/dist/version.json"
+          cat "$GITHUB_WORKSPACE/dist/version.json"
+
+          # Brotli copies of the big code files; the .htaccess serves them to browsers that accept
+          # Brotli and falls back to the plain files otherwise. (.data is mostly PNGs, which are
+          # already compressed, so it isn't worth the extra storage.)
+          sudo apt-get install -y --no-install-recommends brotli
+          cd "$GITHUB_WORKSPACE/dist"
+          brotli --best --keep $app.wasm $app.js
+          ls -la
 
       - uses: actions/upload-artifact@v4
         with:

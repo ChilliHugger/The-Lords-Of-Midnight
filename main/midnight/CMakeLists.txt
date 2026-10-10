@@ -344,6 +344,9 @@ ax_setup_app_config(${APP_NAME})
 if(WASM)
     # relink (regenerating the .html) when the shell page changes
     set_property(TARGET ${APP_NAME} APPEND PROPERTY LINK_DEPENDS "${AX_WASM_SHELL_FILE}")
+    # keep function names in the .wasm (about +1MB): crash reports from testers then show
+    # readable stack traces instead of wasm-function[1906]
+    target_link_options(${APP_NAME} PRIVATE --profiling-funcs)
     # the page is also written as index.html so the folder URL serves the game; it
     # loads the same midnight.js / .wasm / .data (the copy is identical to <app>.html)
     add_custom_command(TARGET ${APP_NAME} POST_BUILD
