@@ -10,6 +10,7 @@
 #include "../ui/uielement.h"
 #include "../ui/uieventargs.h"
 #include "../system/moonring.h"
+#include "uioutline.h"
 
 USING_NS_AX;
 USING_NS_AX_UI;
@@ -85,6 +86,7 @@ TTFConfig uihelper::font_config_medium;
 TTFConfig uihelper::font_config_small;
 TTFConfig uihelper::font_config_shortcut;
 TTFConfig uihelper::font_config_debug;
+TTFConfig uihelper::font_config_button;
 
 
 
@@ -119,6 +121,12 @@ void uihelper::initialiseFonts()
     font_config_shortcut.outlineSize = 0;
     font_config_shortcut.distanceFieldEnabled = false;
     
+    font_config_button.fontFilePath = BUTTON_TEXT_FONT;
+    font_config_button.fontSize = RES(BUTTON_TEXT_SIZE);
+    font_config_button.glyphs = GlyphCollection::DYNAMIC;
+    font_config_button.outlineSize = 0;
+    font_config_button.distanceFieldEnabled = false;
+
     font_config_debug.fontFilePath = "fonts/arial.ttf";
     font_config_debug.fontSize = RES(16)*scale;
     font_config_debug.glyphs = GlyphCollection::DYNAMIC;
@@ -434,6 +442,96 @@ Node* uihelper::getChildByTagRecursively(const int nodeTag, ax::Node* parent) {
     return node;
 }
 
+
+void uihelper::addGlow( Button* button, const std::string& image, const Color3B& color, s32 radius )
+{
+    auto renderer = button->getRendererNormal();
+    auto outline = uioutline::create(image, Color4F(color), RES(radius));
+    if ( outline != nullptr ) {
+        outline->setPosition(renderer->getContentSize()/2);
+        renderer->addChild(outline, -1);
+    }
+}
+
+Label* uihelper::addButtonText( Button* button, const std::string& text, ButtonTextAlign align, f32 offset, s32 outline )
+{
+    auto renderer = button->getRendererNormal();
+    auto size = renderer->getContentSize();
+
+    auto label = Label::createWithTTF( uihelper::font_config_button, text );
+    label->getFontAtlas()->setAntiAliasTexParameters();
+    label->setTextColor(Color4B(_clrWhite));
+    label->enableOutline(Color4B(_clrBlack), RES(outline));
+    label->setAdditionalKerning(RES(BUTTON_TEXT_SIZE) * BUTTON_TEXT_TRACKING / 1000.0f);
+
+    switch ( align ) {
+        case ButtonTextAlign::Top:
+            label->setAnchorPoint(Vec2::ANCHOR_MIDDLE_TOP);
+            label->setPosition(Vec2(size.width/2, size.height + RES(offset)));
+            break;
+        case ButtonTextAlign::Centre:
+            label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            label->setPosition(Vec2(size.width/2, size.height/2 + RES(offset)));
+            break;
+        default:
+            label->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
+            label->setPosition(Vec2(size.width/2, RES(offset)));
+            break;
+    }
+    renderer->addChild(label);
+    return label;
+}
+
+// colour slots for <colour:N>, built from the system default colours (uihelper.h)
+std::vector<Color3B> uihelper::text_colours = {
+    _clrYellow, _clrRed, _clrGreen, _clrBlue, _clrCyan, _clrMagenta, _clrWhite, _clrBlack,
+    _clrDarkYellow, _clrDarkRed, _clrDarkGreen, _clrDarkBlue, _clrDarkCyan, _clrDarkMagenta, _clrDarkWhite, _clrGrey
+};
+
+void uihelper::setColouredText( Label* label, const std::string& markup, const Color3B& base )
+{
+    // strip the tags, recording the colour of each letter (by character index)
+    static const std::string open_tag = "<colour:";
+    static const std::string close_tag = "</colour>";
+
+    std::string text;
+    std::vector<Color3B> colours;
+    Color3B current = base;
+
+    for ( size_t i = 0; i < markup.size(); ) {
+        if ( markup.compare(i, open_tag.size(), open_tag) == 0 ) {
+            auto end = markup.find('>', i);
+            if ( end != std::string::npos ) {
+                auto slot = static_cast<size_t>(atoi(markup.c_str() + i + open_tag.size()));
+                current = slot < text_colours.size() ? text_colours[slot] : base;
+                i = end + 1;
+                continue;
+            }
+        }
+        if ( markup.compare(i, close_tag.size(), close_tag) == 0 ) {
+            current = base;
+            i += close_tag.size();
+            continue;
+        }
+        char ch = markup[i++];
+        text += ch;
+        // only count the first byte of each utf8 character
+        if ( (static_cast<unsigned char>(ch) & 0xC0) != 0x80 ) {
+            colours.push_back(current);
+        }
+    }
+
+    // the text colour is multiplied by the letter colour, so keep it white and tint each letter
+    label->setTextColor(Color4B::WHITE);
+    label->setString(text);
+
+    for ( size_t i = 0; i < colours.size(); i++ ) {
+        auto letter = label->getLetter(static_cast<int>(i));
+        if ( letter != nullptr ) {
+            letter->setColor(colours[i]);
+        }
+    }
+}
 
 Node* uihelper::createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir ) {
     // top gradient

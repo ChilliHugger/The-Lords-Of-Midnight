@@ -23,6 +23,11 @@ constexpr auto FONT_SIZE_BIG           = 30;
 constexpr auto FONT_SIZE_MEDIUM        = 20;
 constexpr auto FONT_SIZE_SMALL         = 12;
 constexpr auto FONT_SIZE_DEBUG         = 8;
+constexpr auto GLOW_RADIUS            = 24;
+constexpr auto BUTTON_TEXT_FONT        = "fonts/libra.ttf";
+constexpr auto BUTTON_TEXT_SIZE        = 28;       // 56pt in gfx_h, 112pt in the 256 high source art
+constexpr auto BUTTON_TEXT_TRACKING    = -75;      // Photoshop tracking, in 1/1000 of an em
+constexpr auto BUTTON_TEXT_OUTLINE     = 2;
 constexpr auto IMAGE_LOGO              = "misc/logo.png";
 constexpr auto IMAGE_LOGO_NOVEL        = "misc/logo-26.png";
 
@@ -48,6 +53,7 @@ public:
     static TTFConfig font_config_small;
     static TTFConfig font_config_shortcut;
     static TTFConfig font_config_debug;
+    static TTFConfig font_config_button;
     
     // Enables cascading opacity on a node and all of its descendants, so that
     // fading the node fades everything inside it
@@ -101,6 +107,23 @@ public:
     static Button* CreateBoxButton( Size size );
     static Button* CreateImageButton( const std::string& name );
     static Button* CreateImageButton( const std::string& name, u32 id, const WidgetClickCallback& callback  );
+
+    // glow behind a button so it doesn't clash with the image behind it.
+    // attached to the button so it scales with the press zoom
+    static void addGlow( Button* button, const std::string& image, const Color3B& color = Color3B::WHITE, s32 radius = GLOW_RADIUS );
+
+    // white text with a black outline, horizontally centred on a button like the localised icons.
+    // 'offset' moves it vertically from the alignment, positive is up (RES applied).
+    // attached to the button so it scales with the press zoom
+    enum class ButtonTextAlign { Bottom, Centre, Top };
+    static ax::Label* addButtonText( Button* button, const std::string& text, ButtonTextAlign align = ButtonTextAlign::Bottom, f32 offset = 0, s32 outline = BUTTON_TEXT_OUTLINE );
+
+    // colour slots used by <colour:N>...</colour> in setColouredText, set up by the UI
+    static std::vector<Color3B> text_colours;
+
+    // sets the label text, with text inside <colour:N>...</colour> drawn in colour slot N and the rest in the base colour.
+    // e.g. "He <colour:0>thinks</colour> again....".  Only for labels without an outline/shadow effect.
+    static void setColouredText( ax::Label* label, const std::string& markup, const Color3B& base );
 
     // layers
     static Node* createVerticalGradient( Color3B& color, f32 height, f32 gradientHeight, f32 width, s32 dir );
