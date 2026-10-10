@@ -244,6 +244,15 @@ bool resolutionmanager::init()
         double dpr = webPixelRatio();
         int width  = (int)(EM_ASM_INT({ return window.innerWidth; })  * dpr);
         int height = (int)(EM_ASM_INT({ return window.innerHeight; }) * dpr);
+
+        // the layout is fixed for the life of the window, so keep it within the range of
+        // shapes the game supports; the page letterboxes it if the window is resized
+        constexpr float widest = 16.0f / 9.0f;
+        constexpr float narrowest = 4.0f / 3.0f;
+        if ( (float)width / height > widest )
+            width = (int)(height * widest);
+        else if ( (float)width / height < narrowest )
+            height = (int)(width / narrowest);
         glview = GLViewImpl::createWithRect(TME_ScenarioName(), ax::Rect(0, 0, width, height), 1.0f, true);
 #elif defined(_OS_DESKTOP_WINDOW_)
         

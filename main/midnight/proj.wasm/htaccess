@@ -16,3 +16,8 @@
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE application/wasm application/octet-stream application/javascript text/html
 </IfModule>
+
+# The deploy action keeps a list of uploaded files in each folder; don't serve it.
+<Files ".ftp-deploy-sync-state.json">
+    Require all denied
+</Files>

@@ -1,0 +1,177 @@
+name: Web build & deploy
+
+# Builds the WebAssembly version of the games and (optionally) uploads them to the web server.
+# Manual only: Actions > Web build & deploy > Run workflow.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'App version, e.g. 2.0.12 (also the archive folder name on the server)'
+        required: true
+      build_no:
+        description: 'Build number, e.g. 57'
+        required: true
+      games:
+        description: 'Which games to build (only LOM for now - see the plan job to add more)'
+        type: choice
+        options: [LOM]
+        default: LOM
+      deploy:
+        description: 'Upload to the web server (otherwise just keep the build as a downloadable artifact)'
+        type: boolean
+        default: false
+
+env:
+  # Same engine tag as build.yml - bump both together.
+  AXMOL_REF: v2.11.5
+  EMSDK_VER: '4.0.3'
+
+jobs:
+  # Works out which games to build (the matrix context can't be used in a job-level "if").
+  # Each game has its own FTP account (its own sub domain) and its own GitHub Environment holding
+  # that account's secrets. remote_dir is relative to that account's home folder; the latest
+  # build goes at the top and every release is kept in <version>/.
+  #
+  # To add a game: add its entry below, add it to the "games" choices above, create its
+  # Environment and its FTP account.
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - id: plan
+        env:
+          GAMES: ${{ inputs.games }}
+        run: |
+          all='[{"tme":"LOM","app":"midnight","remote_dir":"","environment":"LoM Web Production"}]'
+          # {"tme":"DDR","app":"revenge","remote_dir":"","environment":"production-ddr"}
+          # {"tme":"CITADEL","app":"citadel","remote_dir":"","environment":"production-citadel"}
+          if [ "$GAMES" = "all" ]; then  # kept for when more games are added
+            matrix=$(jq -c '{include: .}' <<<"$all")
+          else
+            matrix=$(jq -c --arg g "$GAMES" '{include: map(select(.tme == $g))}' <<<"$all")
+          fi
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "$matrix"
+
+  build:
+    name: Web build (${{ matrix.app }})
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    env:
+      AX_ROOT: ${{ github.workspace }}/axmol
+      BUILD_DIR: Builds/ci-web-${{ matrix.app }}
+    steps:
+      - name: Checkout game
+        uses: actions/checkout@v4
+        with:
+          path: game
+
+      - name: Checkout axmol engine
+        uses: actions/checkout@v4
+        with:
+          repository: axmolengine/axmol
+          ref: ${{ env.AXMOL_REF }}
+          path: axmol
+
+      # emcc must already be on PATH, otherwise axmol's own build script tries to update its
+      # bundled emsdk (which then wants a newer Python).
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: ${{ env.EMSDK_VER }}
+          actions-cache-folder: emsdk-cache
+
+      - name: Cache axmol externals and fetched deps
+        uses: actions/cache@v4
+        with:
+          path: |
+            axmol/tools/external
+            game/main/midnight/${{ env.BUILD_DIR }}/_deps
+          key: axmol-${{ env.AXMOL_REF }}-wasm-${{ matrix.app }}-${{ env.EMSDK_VER }}
+          restore-keys: |
+            axmol-${{ env.AXMOL_REF }}-wasm-${{ matrix.app }}-
+
+      - name: Configure ${{ matrix.app }}
+        shell: pwsh
+        working-directory: game/main/midnight
+        run: |
+          & "$env:AX_ROOT/tools/cmdline/axmol" build -p wasm -c `
+            -xc '-DTME=${{ matrix.tme }},-DWASM_APP_VERSION=${{ inputs.version }},-DWASM_APP_BUILD_NO=${{ inputs.build_no }},-B${{ env.BUILD_DIR }}'
+
+      # axmol ships no prebuilt wasm zlib; build emscripten's port and put it where axmol looks.
+      - name: Provide wasm zlib
+        run: |
+          embuilder build zlib
+          mkdir -p "$AX_ROOT/3rdparty/zlib/_x/lib/wasm"
+          cp "$(em-config CACHE)/sysroot/lib/wasm32-emscripten/libz.a" "$AX_ROOT/3rdparty/zlib/_x/lib/wasm/"
+
+      - name: Build ${{ matrix.app }}
+        working-directory: game/main/midnight
+        run: cmake --build ${{ env.BUILD_DIR }} --parallel
+
+      - name: Collect files
+        working-directory: game/main/midnight
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          # only what the server needs: index.html, <app>.js/.wasm/.data and .htaccess
+          cd ${{ env.BUILD_DIR }}/bin/${{ matrix.app }}
+          app=${{ matrix.app }}
+          cp -a index.html $app.js $app.wasm $app.data .htaccess "$GITHUB_WORKSPACE/dist/"
+          ls -la "$GITHUB_WORKSPACE/dist"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-${{ matrix.app }}-${{ inputs.version }}
+          path: dist/
+          include-hidden-files: true   # .htaccess
+          retention-days: 14
+
+  deploy:
+    name: Deploy (${{ matrix.app }})
+    needs: [plan, build]
+    if: ${{ inputs.deploy }}
+    runs-on: ubuntu-latest
+    # One Environment per game (Settings > Environments), e.g. "LoM Web Production": add yourself as a
+    # required reviewer to approve each upload, and store that game's DEPLOY_* secrets there.
+    environment: ${{ matrix.environment }}
+    strategy:
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-${{ matrix.app }}-${{ inputs.version }}
+          path: dist
+
+      # Needs a cPanel FTP account whose home directory is the game's web folder, so it can only
+      # reach that folder. Secrets (in the game's Environment): DEPLOY_HOST (the server's name),
+      # DEPLOY_USER (the full FTP user name) and DEPLOY_PASSWORD.
+      #
+      # 1. the archive copy for this release
+      - name: Upload ${{ inputs.version }} archive copy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          protocol: ftps
+          local-dir: dist/
+          server-dir: ${{ matrix.remote_dir }}${{ inputs.version }}/
+          state-name: .ftp-deploy-sync-state.json
+
+      # 2. the latest copy at the top. It only tracks and replaces the files it uploaded, so the
+      #    version folders (and anything else in there) are never touched.
+      - name: Upload latest copy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          protocol: ftps
+          local-dir: dist/
+          server-dir: ${{ matrix.remote_dir == '' && './' || matrix.remote_dir }}
+          state-name: .ftp-deploy-sync-state.json
