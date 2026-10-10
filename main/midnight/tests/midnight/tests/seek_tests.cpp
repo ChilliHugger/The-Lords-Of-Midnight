@@ -82,6 +82,82 @@ SCENARIO("Seeking wild horses does nothing for a lord who is not allowed a horse
     }
 }
 
+SCENARIO("Seeking wild horses leaves them on the map on default and easy")
+{
+    auto difficulty = GENERATE( DF_NORMAL, DF_EASY );
+
+    TMEStep::NewStory(RF_DEFAULT, difficulty);
+
+    GIVEN("a lord on foot, standing near wild horses")
+    {
+        auto lord = TMEStep::PlaceLordAt(TMEStep::ch_morkin, k_here, DR_SOUTH);
+        lord->Flags().Reset(cf_riding);
+        MapStep::SetObjectAtLocation(k_here, OB_WILDHORSES);
+
+        WHEN("they seek")
+        {
+            lord->Cmd_Seek();
+
+            THEN("they are riding, and the horses remain on the map")
+            {
+                REQUIRE( lord->IsRiding() );
+                REQUIRE( MapStep::GetObjectAtLocation(k_here) == OB_WILDHORSES );
+            }
+        }
+    }
+}
+
+SCENARIO("Seeking wild horses leaves them on the map for a lord who cannot ride on default and easy")
+{
+    auto difficulty = GENERATE( DF_NORMAL, DF_EASY );
+
+    TMEStep::NewStory(RF_DEFAULT, difficulty);
+
+    GIVEN("a lord who is not allowed a horse, standing near wild horses")
+    {
+        auto lord = TMEStep::PlaceLordAt(TMEStep::ch_morkin, k_here, DR_SOUTH);
+        lord->Flags().Reset(cf_riding);
+        lord->Flags().Reset(cf_horse);
+        MapStep::SetObjectAtLocation(k_here, OB_WILDHORSES);
+
+        WHEN("they seek")
+        {
+            lord->Cmd_Seek();
+
+            THEN("they remain on foot, and the horses remain on the map")
+            {
+                REQUIRE_FALSE( lord->IsRiding() );
+                REQUIRE( MapStep::GetObjectAtLocation(k_here) == OB_WILDHORSES );
+            }
+        }
+    }
+}
+
+SCENARIO("Seeking wild horses removes them from the map on medium and hard")
+{
+    auto difficulty = GENERATE( DF_MEDIUM, DF_HARD );
+
+    TMEStep::NewStory(RF_DEFAULT, difficulty);
+
+    GIVEN("a lord on foot, standing near wild horses")
+    {
+        auto lord = TMEStep::PlaceLordAt(TMEStep::ch_morkin, k_here, DR_SOUTH);
+        lord->Flags().Reset(cf_riding);
+        MapStep::SetObjectAtLocation(k_here, OB_WILDHORSES);
+
+        WHEN("they seek")
+        {
+            lord->Cmd_Seek();
+
+            THEN("they are riding, and the horses are no longer on the map")
+            {
+                REQUIRE( lord->IsRiding() );
+                REQUIRE( MapStep::GetObjectAtLocation(k_here) == OB_NONE );
+            }
+        }
+    }
+}
+
 SCENARIO("Seeking shelter restores some energy")
 {
     TMEStep::NewStory();

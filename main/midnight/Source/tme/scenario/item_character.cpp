@@ -1489,6 +1489,11 @@ namespace tme {
                     }else{
                         // display think
                     }
+
+                    // horses only vanish from the map on medium and hard
+                    if ( mx->Difficulty() <= DF_EASY ) {
+                        removeObject = false;
+                    }
                     break;
 
                 case OB_SHELTER:
