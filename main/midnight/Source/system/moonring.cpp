@@ -10,6 +10,7 @@
 #include "../platform/Extensions.h"
 
 #include "moonring.h"
+#include "../tme/utils/debugsetup.h"
 #include "helpmanager.h"
 #include "settingsmanager.h"
 #include "storymanager.h"
@@ -178,6 +179,12 @@ storyid_t moonring::startNewStory()
     tme->ResolveTMEData();
     tme->resetTMEData();
     
+#if defined(_DEBUG_NEW_GAME_GROUP_)
+    // continueStory reloads the save, so the changes must be saved
+    tme::utils::DebugCreateLargeGroup(DEBUG_NEW_GAME_GROUP_SIZE);
+    stories->save();
+#endif
+
     help->Load( id );
     
     return id;
