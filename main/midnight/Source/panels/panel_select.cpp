@@ -545,40 +545,7 @@ void panel_select::applyFilters ( uilordselect* e, character& c, bool animate )
 {
     bool show = isShownByFilters(e, c, model->filters);
     
-    const int FILTER_FADE_TAG = 0x46494C54;
-    const f32 FILTER_FADE_TIME = 0.25f;
-    
-    e->stopActionByTag(FILTER_FADE_TAG);
-    uihelper::SetCascadeOpacityRecursive(e);
-    
-    if ( !animate ) {
-        e->setOpacity(255);
-        e->setVisible(show);
-        return;
-    }
-
-    if ( show ) {
-        // fade in anything not already fully visible
-        if ( !e->isVisible() ) {
-            e->setVisible(true);
-            e->setOpacity(0);
-        }
-        if ( e->getOpacity() < 255 ) {
-            auto fade = FadeIn::create(FILTER_FADE_TIME);
-            fade->setTag(FILTER_FADE_TAG);
-            e->runAction(fade);
-        }
-    } else if ( e->isVisible() ) {
-        auto fade = Sequence::createWithTwoActions(
-            FadeOut::create(FILTER_FADE_TIME),
-            CallFunc::create( [e] {
-                e->setVisible(false);
-                e->setOpacity(255);
-            })
-        );
-        fade->setTag(FILTER_FADE_TAG);
-        e->runAction(fade);
-    }
+    uihelper::FadeVisible(e, show, animate);
 }
 
 uifilterbutton* panel_select::createFilterButton( layoutid_t id, const std::string& image, select_filters flag )

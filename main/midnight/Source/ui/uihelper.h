@@ -53,6 +53,10 @@ public:
     // fading the node fades everything inside it
     static void SetCascadeOpacityRecursive( Node* node );
 
+    // Shows or hides a node, fading it in or out if animate is set. Any fade
+    // already in progress on the node is replaced.
+    static void FadeVisible( Node* node, bool show, bool animate );
+
     // Anchors
     static Vec2 AnchorTopLeft;
     static Vec2 AnchorTopRight;

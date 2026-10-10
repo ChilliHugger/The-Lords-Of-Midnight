@@ -60,11 +60,12 @@ protected:
     void centreOnCharacter( character& c, bool animate );
     void centreOnCurrentCharacter(bool animate);
 
-    uifilterbutton* createFilterButton( layoutid_t id, s32 y, const std::string& image, map_filters flag);
+    uifilterbutton* createFilterButton( layoutid_t id, const std::string& image, map_filters flag);
     
     void updateFilterButton(Ref* sender,map_filters flag);
 
-    void updateFilters();
+    void updateFilters( bool animate = false );
+    void updateFilterButtons( bool animate );
 
     void setupTooltip();
     void setupCharacterButtons();
@@ -72,6 +73,7 @@ protected:
     void setupStrongholds();
     
     void hideGroupLord();
+    void removeGroupDismissListener();
     void showGroupLord( Widget* button );
     
     void updateScale();
@@ -92,10 +94,12 @@ private:
     f32             minMapScale;
     Node*           characters;
     Node*           descriptions;
-    DrawNode*       groupLordBackground;
+    Node*           groupLordBackground;
     Widget*         groupLordButton;
     uigrouplord*    grouplord;
+    ax::EventListener* groupDismissListener;
     Label*          toolTip;
+    std::vector< std::pair<map_filters,uifilterbutton*> > filterButtons;
 
 #if defined(_MOUSE_ENABLED_)
     bool    shiftZooming;
