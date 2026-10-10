@@ -453,6 +453,17 @@ bool moonring::think()
     showPage(MODE_THINK_PLACE);
 #else
     character& c = TME_CurrentCharacter();
+    showPage(MODE_THINK, Character_LocationObject(c));
+#endif
+    return true;
+}
+
+bool moonring::thinkGroup()
+{
+#if defined(_DDR_)
+    showPage(MODE_THINK_PLACE);
+#else
+    character& c = TME_CurrentCharacter();
     showPage(MODE_THINK_PERSON, Character_LocationObject(c));
 #endif
     return true;

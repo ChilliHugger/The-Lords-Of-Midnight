@@ -449,7 +449,7 @@ void panel_think::OnNotification( Ref* sender )
         case ID_GROUP_LEAVE:
         {
             if ( mr->leaveGroup(TME_CurrentCharacter().id) ) {
-                mr->think();
+                mr->thinkGroup();
             }
             break;
         }
@@ -457,7 +457,7 @@ void panel_think::OnNotification( Ref* sender )
         case ID_GROUP_DISBAND:
         {
             if ( mr->disbandGroup(TME_CurrentCharacter().id) ) {
-                mr->think();
+                mr->thinkGroup();
             }
             break;
         }

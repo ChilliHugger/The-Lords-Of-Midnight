@@ -118,6 +118,7 @@ public:
     bool postMen();
     bool attack();
     bool dismount();
+    bool thinkGroup();
     
 #if defined(_DDR_)
     bool use();
