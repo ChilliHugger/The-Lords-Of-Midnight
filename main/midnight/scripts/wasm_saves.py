@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert the web build's saves export (midnight-saves-*.json) to and from real files.
+"""Convert the web build's saves export (<app>-saves-*.json, e.g. midnight-saves-*) to and from real files.
 
   wasm_saves.py unpack midnight-saves-2026-10-10T20-00-00-000Z.json [outdir]
       Writes each saved file under outdir (default: the export's name without .json).

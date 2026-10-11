@@ -13,9 +13,9 @@ on:
         description: 'Build number, e.g. 57'
         required: true
       games:
-        description: 'Which games to build (only LOM for now - see the plan job to add more)'
+        description: 'Which games to build (see the plan job to add more)'
         type: choice
-        options: [LOM]
+        options: [LOM, DDR, all]
         default: LOM
       deploy:
         description: 'Upload to the web server (otherwise just keep the build as a downloadable artifact)'
@@ -44,10 +44,10 @@ jobs:
         env:
           GAMES: ${{ inputs.games }}
         run: |
-          all='[{"tme":"LOM","app":"midnight","remote_dir":"","environment":"LoM Web Production"}]'
-          # {"tme":"DDR","app":"revenge","remote_dir":"","environment":"production-ddr"}
+          all='[{"tme":"LOM","app":"midnight","remote_dir":"","environment":"LoM Web Production"},
+                {"tme":"DDR","app":"revenge","remote_dir":"","environment":"DDR Web Deployment"}]'
           # {"tme":"CITADEL","app":"citadel","remote_dir":"","environment":"production-citadel"}
-          if [ "$GAMES" = "all" ]; then  # kept for when more games are added
+          if [ "$GAMES" = "all" ]; then
             matrix=$(jq -c '{include: .}' <<<"$all")
           else
             matrix=$(jq -c --arg g "$GAMES" '{include: map(select(.tme == $g))}' <<<"$all")
