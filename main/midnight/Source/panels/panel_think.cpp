@@ -430,6 +430,63 @@ void panel_think::gotoPage( u32 page )
     }
 }
 
+bool panel_think::isModeAvailable( panelmode_t mode )
+{
+    layoutid_t buttonId;
+    switch ( mode ) {
+        case MODE_THINK_PERSON: buttonId = ID_THINK_PERSON; break;
+        case MODE_THINK_PLACE:  buttonId = ID_THINK_PLACE;  break;
+        case MODE_THINK_ARMY:   buttonId = ID_THINK_ARMY;   break;
+        case MODE_THINK_BATTLE: buttonId = ID_THINK_BATTLE; break;
+        default: return false;
+    }
+    auto button = safeArea->getChildByTag<Button*>(buttonId);
+    if ( button == nullptr || !button->isVisible() )
+        return false;
+    // the tinted button of the current mode is disabled but still counts
+    return button->isEnabled() || mode == currentThinkMode();
+}
+
+panelmode_t panel_think::currentThinkMode() const
+{
+    return currentmode == MODE_THINK_APPROACH ? MODE_THINK_PERSON : currentmode;
+}
+
+// step through every page of the current mode, then on through
+// each of the other available modes, wrapping back to the start
+void panel_think::thinkAgain()
+{
+    currentPage = (s32)pageView->getCurrentPageIndex();
+    if ( currentPage < (s32)pages.size()-1 ) {
+        gotoPage(++currentPage);
+        return;
+    }
+
+    static const panelmode_t modes[] = {
+        MODE_THINK_PERSON, MODE_THINK_PLACE, MODE_THINK_ARMY, MODE_THINK_BATTLE
+    };
+    constexpr int count = 4;
+
+    int start = 0;
+    for ( int ii=0; ii<count; ii++ ) {
+        if ( modes[ii] == currentThinkMode() )
+            start = ii;
+    }
+
+    for ( int ii=1; ii<=count; ii++ ) {
+        auto mode = modes[(start+ii)%count];
+        if ( mode == currentThinkMode() )
+            break;
+        if ( isModeAvailable(mode) ) {
+            mr->showPage(mode);
+            return;
+        }
+    }
+
+    // nothing else to think about, go round again
+    gotoPage(0);
+}
+
 void panel_think::OnNotification( Ref* sender )
 {
     layoutid_t id = uihelper::getIdFromSender(sender);
@@ -552,6 +609,11 @@ bool panel_think::OnKeyboardEvent( uikeyboardevent* event )
 {
     if ( !event->isUp() ) {
         return false;
+    }
+
+    if ( event->getKey() == mr->keyboard->getKeycode(K_YES) ) {
+        thinkAgain();
+        return true;
     }
 
     currentPage = (s32)pageView->getCurrentPageIndex();

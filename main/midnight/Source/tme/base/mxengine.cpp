@@ -259,7 +259,9 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
         if ( stamp.empty() || !fileUtils->isFileExist(stampFile) || fileUtils->getStringFromFile(stampFile) != stamp ) {
             chilli::os::filemanager::Remove(databaseCacheFile);
             chilli::os::filemanager::Remove(mapCacheFile);
-            fileUtils->writeStringToFile(stamp, stampFile);
+            // an empty stamp can't be written (zero length file) and is never trusted anyway
+            if ( !stamp.empty() )
+                fileUtils->writeStringToFile(stamp, stampFile);
         }
 #endif
     }

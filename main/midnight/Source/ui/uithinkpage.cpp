@@ -83,7 +83,9 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     f32 padding = RES(64);
     f32 textY = RES(TEXT_Y+64);
-    f32 height = textY+textSize.height;
+    f32 againHeight = lblAgain->getContentSize().height;
+    f32 againY = textY+textSize.height;
+    f32 height = againY+againHeight;
 
     if ( height >= size.height ) {
         height+=padding;
@@ -104,6 +106,9 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 
     // text
     uihelper::AddTopLeft(scrollView,lblDescription, RES(TEXT_X),textY);
+
+    // think again prompt under the text
+    uihelper::AddTopLeft(scrollView,lblAgain, RES(TEXT_X),againY);
 
     s32 yAdjust = mr->resolution->IsPhoneScaleEnabled() ? RES(32) : RES(16) ;
  
@@ -286,6 +291,12 @@ bool uithinkpage::init()
     lblDescription->setLineSpacing(0);
     lblDescription->setMaxLineWidth(size.width-RES(TEXT_X*2));
     lblDescription->enableWrap(true);
+
+    // "He thinks again..." (LOM/Citadel) or "More?" (DDR)
+    lblAgain = Label::createWithTTF( uihelper::font_config_big, "" );
+    lblAgain->getFontAtlas()->setAntiAliasTexParameters();
+    lblAgain->setLocalZOrder(ZORDER_DEFAULT);
+    uihelper::setColouredText(lblAgain, TME_GetSystemString(TME_CurrentCharacter(),SS_THINK_AGAIN), _clrDarkRed);
     
 
     // Character Image

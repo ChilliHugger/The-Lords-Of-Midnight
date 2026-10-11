@@ -24,9 +24,21 @@ static std::string TrimQuote ( const std::string& value )
     return value;
 }
 
+// text tokens and quoting that are replaced when a cell is loaded
+static const std::pair<const char*, const char*> k_replacements[] = {
+    { "{sp}",   " "    },
+    { "{lf}",   "\n"   },
+    { "{cr}",   "\r"   },
+    { "{crlf}", "\r\n" },
+    { "\"\"",   "\""   },  // escaped quote
+};
+
 static std::string SanatiseString ( const std::string& value )
 {
-    return chilli::lib::StringExtensions::replaceAll(TrimQuote(TrimCR(value)), "\"\"", "\"");
+    std::string result = TrimQuote(TrimCR(value));
+    for ( const auto& r : k_replacements )
+        result = chilli::lib::StringExtensions::replaceAll(result, r.first, r.second);
+    return result;
 }
 
 

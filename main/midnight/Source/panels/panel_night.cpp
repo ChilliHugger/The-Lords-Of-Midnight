@@ -25,6 +25,12 @@ USING_NS_TME;
 #define WITH_GUARD(x) { DECLARE_GUARD; x }
     
 
+#if defined(_DDR_)
+#define NIGHT_TEXT_COLOUR   _clrDarkGreen
+#else
+#define NIGHT_TEXT_COLOUR   _clrDarkMagenta
+#endif
+
 constexpr s32 NIGHT_DISPLAY_SLOW_DELAY_SECONDS = 2;
 
 bool panel_night::init()
@@ -50,7 +56,6 @@ bool panel_night::init()
     // Description
     lblDescription = Label::createWithTTF( uihelper::font_config_big, "" );
     lblDescription->getFontAtlas()->setAntiAliasTexParameters();
-    lblDescription->setTextColor(Color4B(_clrYellow));
     lblDescription->setLocalZOrder(ZORDER_DEFAULT);
     lblDescription->setWidth(size.width-RES(64));
     lblDescription->setAlignment(TextHAlignment::LEFT);
@@ -156,7 +161,7 @@ void panel_night::OnNightNotification ( callback_t* event )
 
 void panel_night::setNightText( const std::string& text )
 {
-    lblDescription->setString(text);
+    uihelper::setColouredText(lblDescription, text, NIGHT_TEXT_COLOUR);
     
     auto size = this->getContentSize();
     auto textSize = lblDescription->getContentSize();

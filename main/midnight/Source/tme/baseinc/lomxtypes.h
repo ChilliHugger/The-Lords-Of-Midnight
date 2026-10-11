@@ -663,7 +663,7 @@ using namespace chilli::types;
             SS_KILLED_BY_OBJECT=105,
             SS_KILLED_BY_BATTLE_OBJECT=106,
             SS_KILLED_BY_LORD=107,
-            SS_SPARE_4=108,
+            SS_THINK_AGAIN=108,
             SS_SPARE_5=109,
             SS_SEES_1=110,
             SS_SEES_2=111,

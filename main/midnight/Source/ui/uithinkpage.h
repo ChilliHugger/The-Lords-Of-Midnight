@@ -80,6 +80,7 @@ protected:
     
     Label*              lblName;
     Label*              lblDescription;
+    Label*              lblAgain{};
 
     Sprite*             imgTerrain;
     ImageView*          imgCharacter;

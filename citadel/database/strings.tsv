@@ -7,8 +7,8 @@ Version	Id	Symbol	Text
 7	5	SS_DEFAULT_TERRAIN	the {terrain:plural} of {area:text}
 7	6	SS_LOCATION_DOMAIN	{terrain:single} in the Domain of {area:text}
 7	7	SS_LOCATION_NOTDOMAIN	{terrain:text}
-7	8	SS_DAWN	.{lf}{crlf}{cr}  Do you want Dawn?
-7	9	SS_NIGHT	  Night has fallen and the Foul are abroad! {case:first}{special:days} {plural:day:days} {plural:has:have} passed since the War of the Solstice began
+7	8	SS_DAWN	{lf}{lf}{sp}{sp}<colour:10>Do you want dawn?</colour>
+7	9	SS_NIGHT	{sp}{sp}Night has fallen and the Foul are abroad! {case:first}{special:days} {plural:day:days} {plural:has:have} passed since the War of the Solstice began.
 7	10	SS_THINGATLOCATION	{case:first}{char:loc:obj:name} are abroad.{sp}
 7	11	SS_RECRUITMEN	{char:name} has recruited {number:%d} %s from {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
 7	12	SS_POSTMEN	{char:name} has placed {number:%d} %s on guard at {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
@@ -25,12 +25,12 @@ Version	Id	Symbol	Text
 7	23	SS_KILLED_BATTLE	{case:first}{char:gender:heshe} was killed in battle. %s
 7	24	SS_HIDDEN	{case:first}{char:name} is hidden.{sp}
 7	25	SS_MUSTFIGHT	{case:first}{char:loc:obj:name} are abroad and {char:gender:heshe} must fight or hide.{sp}
-7	26	SS_MESSAGE1	{char:text:title}{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}.{sp}
+7	26	SS_MESSAGE1	{char:text:title}{char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}.{sp}{char:quest:text}
 7	27	SS_MESSAGE2	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:army}
-7	28	SS_MESSAGE3	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group}
-7	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group}
-7	30	SS_MESSAGE5	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
-7	31	SS_MESSAGE6	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
+7	28	SS_MESSAGE3	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group}{lf}{lf}{char:quest:text}
+7	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group}{lf}{lf}{char:quest:text}
+7	30	SS_MESSAGE5	{sp}{sp}{case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
+7	31	SS_MESSAGE6	{sp}{sp}{case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
 7	32	SS_SEEK	{case:first}{char:gender:heshe} has found {obj:text}.{sp}
 7	33	SS_FIGHT	{case:first}{char:gender:heshe} slew the {obj:name}.{sp}
 7	34	SS_GUIDANCE1	A voice calls, “Looking for {char:longname}, you must seek {char:loc:name}.”{sp}
@@ -69,7 +69,7 @@ Version	Id	Symbol	Text
 7	67	SS_ZEROTOKENS	|no|none|zero
 7	68	SS_WARRIORS_RIDERS	{char:longname} has an army of %s warriors and %s riders.{sp}
 7	69	SS_MESSAGE7	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}.{sp}
-7	70	SS_BATTLE2	.{lf}{crlf}{cr} The bloody sword of battle brings death in the Domain of {loc:area:text}
+7	70	SS_BATTLE2	{lf}{lf}{sp}{sp}The bloody sword of battle brings death in the Domain of {loc:area:text}
 7	71	SS_BATTLE3	 and of {loc:area:text}
 7	72	SS_PLURALTOKENS	has|have|day|days
 7	73	SS_STRONGHOLD1	The %s is occupied by armies loyal to %s.{sp}
@@ -100,7 +100,81 @@ Version	Id	Symbol	Text
 7	98	SS_TUNNEL	{case:first}{char:gender:heshe} stands in a tunnel looking {char:dir:name}.{sp}
 7	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.{sp}
 7	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.{sp}
+7	101	SS_LOYAL_TO	 who is loyal to the {char:loyalty:name}
+7	102	SS_BATTLE_PREPARES_BATTLE	{char:longname} prepares to do battle. . .{sp}
+7	103	SS_KILLED_BY	 killed in battle by {char:battle:fighting:longname}.{sp}
+7	104	SS_KILLED_IN_BATTLE	 killed in battle.{sp}
+7	105	SS_KILLED_BY_OBJECT
+7	106	SS_KILLED_BY_BATTLE_OBJECT
+7	107	SS_KILLED_BY_LORD
+7	108	SS_THINK_AGAIN	{lf}{sp}{sp}{case:first}{char:gender:heshe} <colour:10>thinks</colour> again....
+7	109	SS_SPARE_5
+7	110	SS_SEES_1	{char:name} sees the {char:loc:obj:name}.{sp}
+7	111	SS_SEES_2	{char:name} sees an underground entrance.{sp}
+7	112	SS_SEES_3	{char:name} sees the {char:loc:obj:name} and an underground entrance.{sp}
+7	113	SS_LOCATION_PREP_1	in the tunnel
+7	114	SS_LOCATION_PREP_2	{loc:terrain:prep} {loc:name}
+7	115	SS_CHARACTER_DEAD	"{lf}{cr}  {char:longname} is dead, {char:text:death2}"
+7	116	SS_CHARACTER_HERE	{char:name} is here.{sp}
+7	117	SS_SHARETH_DEAD
+7	118	SS_OBJECT_USE_1
+7	119	SS_OBJECT_USE_2
+7	120	SS_OBJECT_USE_3
+7	121	SS_OBJECT_USE_4
+7	122	SS_MESSAGE_MIST
+7	123	SS_TOKENS_VICTORY
+7	124	SS_PRISONER	{case:first}{char:name} is held hostage here in the dungeons of the Dark Citadel, and while {gender:heshe} is held the {race:name} will not march.
 7	125	SS_CHARACTER_TITLE	{char:name} is {char:title}.{sp}
+7	126	SS_QUEST_RECRUIT	{char:name} is questing to recruit {char:quest:char:longname}.
+7	127	SS_QUEST_JOIN	{char:name} is journeying to join {char:quest:char:longname}.
+7	128	SS_QUEST_KILL_LORD	{char:name} is hunting {char:quest:char:longname} to slay {char:quest:char:gender:himher}.
+7	129	SS_QUEST_KILL_HOST	{char:name} is marching against the host of the Wolfheart.
+7	130	SS_QUEST_RESCUE	{char:name} is questing to rescue {char:quest:char:longname}.
+7	131	SS_QUEST_FOLLOW	{char:name} is shadowing {char:quest:char:longname}.
+7	132	SS_QUEST_GOTO	{char:name} is journeying to {char:quest:loc:name}.
+7	133	SS_QUEST_GUARD	{char:name} stands guard at {char:quest:loc:name}.
+7	134	SS_QUEST_SEIZE	{char:name} is marching to seize {char:quest:loc:name}.
+7	135	SS_QUEST_FIND	{char:name} is searching for {char:quest:obj:name}.
+7	136	SS_QUEST_TAKE	{char:name} is going to {char:quest:holder:longname} for {char:quest:obj:name}.
+7	137	SS_QUEST_DESTROY	{char:name} is seeking {char:quest:obj:name}, to destroy it.
+7	138	SS_QUEST_REST	{char:name} waits for your orders.
+7	139	SS_QUEST_NEWS_DONE	{char:name} has done as you asked, and waits for your orders
+7	140	SS_QUEST_NEWS_FAILED	{char:name} has given up {char:gender:hisher} quest, for what {char:gender:heshe} sought is gone or out of reach
+7	141	SS_QUEST_NEWS_REFUSED	{char:quest:char:longname} would not be persuaded by {char:name}
+7	142	SS_QUEST_NEWS_OFFENDED	{char:quest:char:longname} took offence at the approach of {char:name}, and fell upon {char:gender:himher}
+7	143	SS_QUEST_NEWS_BLOCKED	{char:name} finds the enemy barring {char:gender:hisher} road
+7	144	SS_QUEST_NEWS_IMPATIENT	Weary of waiting for orders, {char:name} has set out on a quest of {char:gender:hisher} own
+7	145	SS_QUEST_NEWS_REPORT	.{lf}{crlf}{cr} {char:quest:news}
+7	146	SS_QUEST_NEWS_LINE	{char:quest:news}.
+7	147	SS_QUEST_NEWS_TITLE	This morning
+7	148	SS_QUEST_NEWS_HEADING	Some of your lords have news, and await your orders.
+7	149	SS_QUEST_PICK_GOTO	Touch the place {char:name} should go to
+7	150	SS_QUEST_PICK_GUARD	Touch the place {char:name} should guard
+7	151	SS_QUEST_ASK_RECRUIT	Whom should {char:name} try to recruit?
+7	152	SS_QUEST_ASK_JOIN	Whom should {char:name} join?
+7	153	SS_QUEST_ASK_KILL	Whom should {char:name} attack?
+7	154	SS_QUEST_ASK_RESCUE	Whom should {char:name} rescue?
+7	155	SS_QUEST_ASK_FOLLOW	Whom should {char:name} shadow?
+7	156	SS_QUEST_ASK_SEIZE	Which stronghold should {char:name} seize?
+7	157	SS_QUEST_ASK_FIND	What should {char:name} find?
+7	158	SS_QUEST_ASK_TAKE	What should {char:name} take?
+7	159	SS_QUEST_ASK_DESTROY	What should {char:name} destroy?
+7	160	SS_QUEST_NAME_RECRUIT	Recruit
+7	161	SS_QUEST_NAME_JOIN	Join
+7	162	SS_QUEST_NAME_KILL	Attack
+7	163	SS_QUEST_NAME_RESCUE	Rescue
+7	164	SS_QUEST_NAME_FOLLOW	Shadow
+7	165	SS_QUEST_NAME_GOTO	Go to
+7	166	SS_QUEST_NAME_GUARD	Guard
+7	167	SS_QUEST_NAME_SEIZE	Seize
+7	168	SS_QUEST_NAME_FIND	Find
+7	169	SS_QUEST_NAME_TAKE	Take
+7	170	SS_QUEST_NAME_DESTROY	Destroy
+7	171	SS_QUEST_NAME_REST	Wait
+7	172	SS_QUEST_STRONGHOLD	%s - %d defenders
+7	173	SS_QUEST_BACK	Back
+7	174	SS_QUEST_HELD	{char:name} is held captive, and can set out on no quest.
+7	175	SS_QUEST_STATUS	{char:quest:text}
 7	176	SS_WRAITH	.{lf}{crlf}{cr} {char:longname} rises again, a ghastly wraith, in the Dark Citadel of Maranor
 7	177	SS_DUNGEON_FREED	.{lf}{crlf}{cr} {char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home
 7	178	SS_DUNGEON_FOUND	{char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home.{sp}

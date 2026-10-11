@@ -14,7 +14,7 @@ const string SlainByObject = "Tarithel the Fey is dead, slain by Shareth the Hea
 const string SlainByNasty = "Tarithel the Fey is dead, slain by %s.";
 const string KilledInBattle = "Tarithel the Fey is dead, slain by sword. ";
 const string SlainByLord = "Tarithel the Fey is dead, slain by Shareth the Heartstealer. ";
-const string Guidance = R"(It is dawn. Here in the Forest of Fangrim, Tarithel the Fey has found guidance, "%s)";
+const string Guidance = R"(  It is dawn. Here in the Forest of Fangrim, Tarithel the Fey has found guidance, "%s)";
 
 void TarithelSlainByObject(string& object)
 {
