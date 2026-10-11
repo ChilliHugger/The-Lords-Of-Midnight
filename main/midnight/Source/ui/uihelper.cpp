@@ -420,6 +420,7 @@ Button* uihelper::setEnabled( ax::ui::Button* button, bool enabled )
     if ( button != nullptr ) {
         button->setEnabled(enabled);
         button->setOpacity( enabled ? ALPHA(1.0f) : ALPHA(0.25f) );
+        dimButtonText(button, enabled);
     }
     return button;
 }
@@ -453,6 +454,14 @@ void uihelper::addGlow( Button* button, const std::string& image, const Color3B&
     }
 }
 
+void uihelper::dimButtonText( Button* button, bool enabled )
+{
+    // the text is a child of the renderer, so it does not follow the button's opacity
+    auto text = button->getRendererNormal()->getChildByName(BUTTON_TEXT_NAME);
+    if ( text != nullptr )
+        text->setOpacity( enabled ? ALPHA(1.0f) : ALPHA(0.25f) );
+}
+
 Label* uihelper::addButtonText( Button* button, const std::string& text, ButtonTextAlign align, f32 offset, s32 outline )
 {
     auto renderer = button->getRendererNormal();
@@ -460,6 +469,7 @@ Label* uihelper::addButtonText( Button* button, const std::string& text, ButtonT
 
     auto label = Label::createWithTTF( uihelper::font_config_button, text );
     label->getFontAtlas()->setAntiAliasTexParameters();
+    label->setName(BUTTON_TEXT_NAME);
     label->setTextColor(Color4B(_clrWhite));
     label->enableOutline(Color4B(_clrBlack), RES(outline));
     label->setAdditionalKerning(RES(BUTTON_TEXT_SIZE) * BUTTON_TEXT_TRACKING / 1000.0f);

@@ -179,3 +179,5 @@ Version	Id	Symbol	Text
 7	177	SS_DUNGEON_FREED	.{lf}{crlf}{cr} {char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home
 7	178	SS_DUNGEON_FOUND	{char:longname} is found in the dungeons of Maranor and set free, and a dragon of Arungor bears {char:gender:himher} home.{sp}
 7	179	SS_DUNGEON_NOTHING	{case:first}{char:gender:heshe} searches the dungeons of Maranor until nightfall, and finds no one.{sp}
+7	180	SS_QUEST_ACTION	Quest
+7	181	SS_QUEST_CHOOSE	Choose a quest for {char:longname}.

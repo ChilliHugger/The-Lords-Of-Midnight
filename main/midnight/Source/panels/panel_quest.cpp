@@ -204,7 +204,7 @@ void panel_quest::showQuests()
 
     questinfo_t info {};
     Character_QuestInfo(c, info);
-    setHeading(c.longname, TME_GetSystemString(c, SS_QUEST_STATUS));
+    setHeading(TME_GetSystemString(c, SS_QUEST_CHOOSE), TME_GetSystemString(c, SS_QUEST_STATUS));
     back->setVisible(false);
 
     auto area = resetContent(0, 0);

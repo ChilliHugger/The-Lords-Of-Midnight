@@ -740,6 +740,8 @@ using namespace chilli::types;
             SS_DUNGEON_FREED,
             SS_DUNGEON_FOUND,
             SS_DUNGEON_NOTHING,
+            SS_QUEST_ACTION,
+            SS_QUEST_CHOOSE,
 
             SS_MAX_STRINGS = 255
         };
