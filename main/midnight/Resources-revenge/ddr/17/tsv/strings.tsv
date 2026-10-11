@@ -7,14 +7,14 @@ Version	Id	Symbol	Text
 11	5	SS_DEFAULT_TERRAIN	the {terrain:plural} of {area:text}
 11	6	SS_LOCATION_DOMAIN	{terrain:single} in the Domain of {area:text}
 11	7	SS_LOCATION_NOTDOMAIN	{terrain:text}
-11	8	SS_DAWN	.{lf}{crlf}{cr}  Dawn breaks.
-11	9	SS_NIGHT	  It is {special:days} {plural:day:days} since the Moonprince rode forth into the Icemark.{sp}
+11	8	SS_DAWN	{lf}{lf}{sp}{sp}Dawn breaks.
+11	9	SS_NIGHT	{sp}{sp}It is {special:days} {plural:day:days} since the Moonprince rode forth into the Icemark.
 11	10	SS_THINGATLOCATION	{case:first}{char:loc:obj:name} are abroad.
 11	11	SS_RECRUITMEN	{char:name} has recruited {number:%d} %s from {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
 11	12	SS_POSTMEN	{char:name} has placed {number:%d} %s on guard at {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
-11	13	SS_ITISNIGHT	It is night
-11	14	SS_ITISDAWN	It is dawn
-11	15	SS_LESSTHAN	Less than {char:time} {plural:hour:hours} of the day {plural:remains:remain}
+11	13	SS_ITISNIGHT	{sp}{sp}It is night
+11	14	SS_ITISDAWN	{sp}{sp}It is dawn
+11	15	SS_LESSTHAN	{sp}{sp}Less than {char:time} {plural:hour:hours} of the day {plural:remains:remain}
 11	16	SS_HOURSOFDAY	{case:first}{char:time} {plural:hour:hours} of the day {plural:remains:remain}
 11	17	SS_CHARACTER_ENERGY	{char:name} is {char:energy}
 11	18	SS_CHARACTER_FEAR	The ice fear is {char:fear}
@@ -29,8 +29,8 @@ Version	Id	Symbol	Text
 11	27	SS_MESSAGE2	{char:loc:text} stands {char:longname}. {char:text:army}
 11	28	SS_MESSAGE3	{char:longname} is {char:text:traits} and {char:reckless}. {char:name} is {char:despondency} and {char:energy}. {char:text:liege} {char:text:foe} {char:text:group}
 11	29	SS_MESSAGE4	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}{char:text:loyalty}. {s:SS_MESSAGE3}
-11	30	SS_MESSAGE5	{sp}{char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
-11	31	SS_MESSAGE6	{sp}{char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
+11	30	SS_MESSAGE5	{sp}{sp}{char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
+11	31	SS_MESSAGE6	{sp}{sp}{char:longname} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
 11	32	SS_SEEK	"{char:text:time}. {char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text}. {char:text:obj}. {char:text:group}"
 11	33	SS_FIGHT	"{char:text:time}. {char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text} and slain them. {char:text:obj}. {char:text:group}"
 11	34	SS_GUIDANCE1	"{char:text:time}. {char:text:sees}Here {char:loc:text}, {char:longname} has found {obj:text}"
@@ -107,7 +107,7 @@ Version	Id	Symbol	Text
 11	105	SS_KILLED_BY_OBJECT	slain by {case:lower}{char:battle:obj:name}.{sp}
 11	106	SS_KILLED_BY_BATTLE_OBJECT	"{char:longname} is dead, slain by {char:battle:fighting:longname} with the {case:lower}{char:battle:obj:text}. {char:text:battle}"
 11	107	SS_KILLED_BY_LORD	"{char:longname} is dead, slain by {char:battle:fighting:longname}. {char:text:battle}"
-11	108	SS_SPARE_4	** UNUSED **
+11	108	SS_THINK_AGAIN	{lf}{sp}{sp}More?
 11	109	SS_SPARE_5	** UNUSED **
 11	110	SS_SEES_1	{char:name} sees the {char:loc:obj:fullname}.{sp}
 11	111	SS_SEES_2	{char:name} sees an underground entrance.{sp}

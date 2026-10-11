@@ -35,6 +35,9 @@ protected:
     virtual void OnNotification( Ref* sender ) override;
     virtual void setObject(mxid targetObjectId) override;
 
+    void thinkAgain();
+    bool isModeAvailable(panelmode_t mode);
+    panelmode_t currentThinkMode() const;
     void createPageView();
     void setupPages();
     void addPage( mxid id );

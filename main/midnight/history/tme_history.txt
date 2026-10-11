@@ -23,6 +23,9 @@ Build (57)
 20. ADDED: Detailed map - Filters fade the map layers and lords, and filter buttons with nothing to show or hide are hidden
 21. CHANGED: Detailed map - The background behind a many lords icon fades out at the edges
 22. CHANGED: Detailed map - Touching anywhere outside the many lords dialog dismisses it, fading it out
+23. ADDED: LOM - The think pages show 'He thinks again....' with keyboard shortcut
+24. ADDED: DDR - The think pages show 'More?' with keyboard shortcut
+25. CHANGED: Corrected night colour text
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up

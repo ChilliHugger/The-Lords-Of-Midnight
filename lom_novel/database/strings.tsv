@@ -7,14 +7,14 @@ Version	Id	Symbol	Text
 11	5	SS_DEFAULT_TERRAIN	the {terrain:plural} of {area:text}
 11	6	SS_LOCATION_DOMAIN	{terrain:single} in the Domain of {area:text}
 11	7	SS_LOCATION_NOTDOMAIN	{terrain:text}
-11	8	SS_DAWN	.{lf}{crlf}{cr}  Do you want Dawn?
-11	9	SS_NIGHT	  Night has fallen and the Foul are abroad! {case:first}{special:days} {plural:day:days} {plural:has:have} passed since the War of the Solstice began
+11	8	SS_DAWN	{lf}{lf}{sp}{sp}<colour:10>Do you want dawn?</colour>
+11	9	SS_NIGHT	{sp}{sp}Night has fallen and the Foul are abroad! {case:first}{special:days} {plural:day:days} {plural:has:have} passed since the War of the Solstice began.
 11	10	SS_THINGATLOCATION	{case:first}{char:loc:obj:name} are abroad.{sp}
 11	11	SS_RECRUITMEN	{char:name} has recruited {number:%d} %s from {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
 11	12	SS_POSTMEN	{char:name} has placed {number:%d} %s on guard at {char:loc:name}. {case:first}{number:%d} %s now guard the {char:loc:terrain:name}. {char:text:army}
-11	13	SS_ITISNIGHT	It is night
-11	14	SS_ITISDAWN	It is dawn
-11	15	SS_LESSTHAN	Less than {char:time} {plural:hour:hours} of the day {plural:remains:remain}
+11	13	SS_ITISNIGHT	{sp}{sp}It is night
+11	14	SS_ITISDAWN	{sp}{sp}It is dawn
+11	15	SS_LESSTHAN	{sp}{sp}Less than {char:time} {plural:hour:hours} of the day {plural:remains:remain}
 11	16	SS_HOURSOFDAY	{case:first}{char:time} {plural:hour:hours} of the day {plural:remains:remain}
 11	17	SS_CHARACTER_ENERGY	{char:name} is {char:energy}
 11	18	SS_CHARACTER_FEAR	The ice fear is {char:fear}
@@ -29,8 +29,8 @@ Version	Id	Symbol	Text
 11	27	SS_MESSAGE2	{char:loc:text} stands {char:longname}. {char:text:army}
 11	28	SS_MESSAGE3	{char:loc:text} stands {char:longname}. {char:text:time} and {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:obj}. {char:text:group} {char:text:sees}
 11	29	SS_MESSAGE4	{char:loc:text} stands {char:longname}. {char:text:energy}. {char:text:fear}. {char:text:courage}. {char:text:group} {char:text:sees}
-11	30	SS_MESSAGE5	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
-11	31	SS_MESSAGE6	  {case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
+11	30	SS_MESSAGE5	{sp}{sp}{case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name}.{sp}
+11	31	SS_MESSAGE6	{sp}{sp}{case:first}{char:gender:heshe} stands {char:loc:terrain:prep} {char:loc:name} looking {char:dir:name} to {char:lookat:name}.{sp}
 11	32	SS_SEEK	{case:first}{char:gender:heshe} has found {obj:text}.{sp}
 11	33	SS_FIGHT	{case:first}{char:gender:heshe} slew the {obj:name}.{sp}
 11	34	SS_GUIDANCE1	"A voice calls, “Looking for {char:longname}, you must seek {char:loc:name}.”{sp}"
@@ -69,7 +69,7 @@ Version	Id	Symbol	Text
 11	67	SS_ZEROTOKENS	|no|none|zero
 11	68	SS_WARRIORS_RIDERS	{char:longname} has an army of %s warriors and %s riders.{sp}
 11	69	SS_MESSAGE7	{char:loc:terrain:prep} {char:loc:name} stands {char:longname}.{sp}
-11	70	SS_BATTLE2	.{lf}{crlf}{cr} The bloody sword of battle brings death in the Domain of {loc:area:text}
+11	70	SS_BATTLE2	{lf}{lf}{sp}{sp}The bloody sword of battle brings death in the Domain of {loc:area:text}
 11	71	SS_BATTLE3	 and of {loc:area:text}
 11	72	SS_PLURALTOKENS	has|have|day|days
 11	73	SS_STRONGHOLD1	The %s is occupied by armies loyal to %s.{sp}
@@ -104,11 +104,11 @@ Version	Id	Symbol	Text
 11	102	SS_BATTLE_PREPARES_BATTLE	{char:longname} prepares to do battle. . .{sp}
 11	103	SS_KILLED_BY	 killed in battle by {char:battle:fighting:longname}.{sp}
 11	104	SS_KILLED_IN_BATTLE	 killed in battle.{sp}
-11	105	SS_KILLED_BY_OBJECT	
-11	106	SS_KILLED_BY_BATTLE_OBJECT	
-11	107	SS_KILLED_BY_LORD	
-11	108	SS_SPARE_4	
-11	109	SS_SPARE_5	
+11	105	SS_KILLED_BY_OBJECT
+11	106	SS_KILLED_BY_BATTLE_OBJECT
+11	107	SS_KILLED_BY_LORD
+11	108	SS_THINK_AGAIN	{lf}{sp}{sp}{case:first}{char:gender:heshe} <colour:10>thinks</colour> again....
+11	109	SS_SPARE_5
 11	110	SS_SEES_1	{char:name} sees the {char:loc:obj:name}.{sp}
 11	111	SS_SEES_2	{char:name} sees an underground entrance.{sp}
 11	112	SS_SEES_3	{char:name} sees the {char:loc:obj:name} and an underground entrance.{sp}
@@ -116,11 +116,11 @@ Version	Id	Symbol	Text
 11	114	SS_LOCATION_PREP_2	{loc:terrain:prep} {loc:name}
 11	115	SS_CHARACTER_DEAD	"{lf}{cr}  {char:longname} is dead, {char:text:death2}"
 11	116	SS_CHARACTER_HERE	{char:name} is here.{sp}
-11	117	SS_SHARETH_DEAD	
-11	118	SS_OBJECT_USE_1	
-11	119	SS_OBJECT_USE_2	
-11	120	SS_OBJECT_USE_3	
-11	121	SS_OBJECT_USE_4	
-11	122	SS_MESSAGE_MIST	
-11	123	SS_TOKENS_VICTORY	
-11	124	SS_PRISONER	
+11	117	SS_SHARETH_DEAD
+11	118	SS_OBJECT_USE_1
+11	119	SS_OBJECT_USE_2
+11	120	SS_OBJECT_USE_3
+11	121	SS_OBJECT_USE_4
+11	122	SS_MESSAGE_MIST
+11	123	SS_TOKENS_VICTORY
+11	124	SS_PRISONER
