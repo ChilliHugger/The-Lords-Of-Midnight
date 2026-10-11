@@ -608,7 +608,7 @@ mapbuilder* mapbuilder::updateSpecialObjects()
         loc = normaliseLocation(loc);
         
         auto userdata = static_cast<obj_data_t*>(o.userdata) ;
-        u32 cell = IS_NOT_NULL(userdata, userdata->mapcell, CELL_FIRST_OBJECT + o.type);
+        u32 cell = ( userdata != nullptr && userdata->mapcell != 0 ) ? userdata->mapcell : CELL_FIRST_OBJECT + o.type;
         
         int index = INDEX(loc.x,loc.y);
         if ( index < max_cells ) {

@@ -9,6 +9,7 @@
 #include "../system/resolutionmanager.h"
 #include "../system/keyboardmanager.h"
 #include "../ui/uihelper.h"
+#include "../system/tmemanager.h"
 #include "../ui/characters/uisinglelord.h"
 
 #include <algorithm>
@@ -76,6 +77,9 @@ bool panel_quest::init()
     back->addClickEventListener(clickCallback);
     uihelper::AddBottomRight(safeArea, back, RES(32), RES(24));
 
+    // the list sits just above the buttons
+    contentBottom = std::max(look->getBoundingBox().getMaxY(), back->getBoundingBox().getMaxY()) + RES(8);
+
     uishortcutkeys::registerCallback(safeArea, clickCallback);
     addShortcutKey(ID_LOOK, K_LOOK);
     addShortcutKey(ID_LOOK, K_ESC);
@@ -98,22 +102,46 @@ ax::ui::ScrollView* panel_quest::resetContent( f32 rowHeight, size_t rows )
 {
     if ( content != nullptr )
         content->removeFromParent();
+    if ( fadeTop != nullptr )
+        fadeTop->removeFromParent();
+    if ( fadeBottom != nullptr )
+        fadeBottom->removeFromParent();
+    content = fadeTop = fadeBottom = nullptr;
 
     auto size = safeArea->getContentSize();
-    auto top = size.height - RES(96) - status->getContentSize().height - RES(32);
-    auto bottom = RES(150);
+    auto top = size.height - RES(96) - status->getContentSize().height - RES(8);
+    auto bottom = contentBottom;
     auto area = Size(size.width - RES(64), std::max<f32>(top - bottom, RES(100)));
     auto height = rowHeight * rows;
+    const auto fade = std::min<f32>(RES(48), area.height / 4);
+    const bool scrolls = height > area.height;
+    // extra space at the end so the last row can scroll clear of the fade
+    if ( scrolls )
+        height += fade;
 
     auto list = ScrollView::create();
     list->setDirection(ScrollView::Direction::VERTICAL);
     list->setContentSize(area);
     list->setInnerContainerSize(Size(area.width, std::max<f32>(area.height, height)));
-    list->setScrollBarEnabled(height > area.height);
-    list->setBounceEnabled(height > area.height);
+    list->setScrollBarEnabled(scrolls);
+    list->setBounceEnabled(scrolls);
     list->setPosition(Vec2(RES(32), bottom));
     safeArea->addChild(list);
     content = list;
+
+    // fade the list out at the top and bottom when it scrolls
+    if ( scrolls ) {
+        auto colour = _clrWhite;
+        fadeTop = uihelper::createVerticalGradient(colour, fade, fade, area.width, -1);
+        fadeTop->setAnchorPoint(Vec2::ZERO);
+        fadeTop->setPosition(Vec2(RES(32), bottom + area.height - fade));
+        safeArea->addChild(fadeTop, list->getLocalZOrder() + 1);
+
+        fadeBottom = uihelper::createVerticalGradient(colour, fade, fade, area.width, 1);
+        fadeBottom->setAnchorPoint(Vec2::ZERO);
+        fadeBottom->setPosition(Vec2(RES(32), bottom));
+        safeArea->addChild(fadeBottom, list->getLocalZOrder() + 1);
+    }
     return list;
 }
 
@@ -144,6 +172,31 @@ ax::ui::Widget* panel_quest::addRow( ScrollView* list, size_t index, f32 rowHeig
     return row;
 }
 
+Layout* panel_quest::createGrid( ScrollView* area, size_t count, std::vector<Vec2>& centres )
+{
+    // same grid as the command window, without its background
+    const int columns = 5;
+    const int rows = ( (int)count + columns - 1 ) / columns;
+    const f32 scale = mr->resolution->phoneScale();
+    const auto cell = Size(RES(128) * scale, RES(128) * scale);
+    const auto padding = Size(RES(32) * scale, RES(24) * scale);
+    const auto boxSize = Size(cell.width * columns + padding.width * 2, cell.height * rows + padding.height * 2);
+    auto size = area->getContentSize();
+
+    auto box = Layout::create();
+    box->setContentSize(boxSize);
+    box->setAnchorPoint(uihelper::AnchorCenter);
+    box->setPosition(Vec2(size.width / 2, size.height / 2));
+    area->addChild(box);
+
+    centres.clear();
+    for ( size_t i = 0; i < count; i++ ) {
+        centres.emplace_back(padding.width + cell.width * ( (i % columns) + 0.5f ),
+                             boxSize.height - padding.height - cell.height * ( (i / columns) + 0.5f ));
+    }
+    return box;
+}
+
 void panel_quest::showQuests()
 {
     mr->questmodel.view = questview::quests;
@@ -155,10 +208,8 @@ void panel_quest::showQuests()
     back->setVisible(false);
 
     auto area = resetContent(0, 0);
-    auto size = area->getContentSize();
-    const int columns = 6;
-    const int rows = ( (int)NUMELE(questChoices) + columns - 1 ) / columns;
-    auto cell = Size(size.width / columns, size.height / rows);
+    std::vector<Vec2> centres;
+    auto box = createGrid(area, NUMELE(questChoices), centres);
 
     for ( size_t i = 0; i < NUMELE(questChoices); i++ ) {
         const auto& choice = questChoices[i];
@@ -167,22 +218,18 @@ void panel_quest::showQuests()
             || Character_QuestTargets(c, choice.quest, targets) > 0 );
         bool current = info.quest == choice.quest || ( choice.quest == QS_REST && info.quest == QS_NONE );
 
-        auto centre = Vec2(cell.width * ( (i % columns) + 0.5f ),
-                           size.height - cell.height * ( (i / columns) + 0.45f ));
+        auto centre = centres[i];
 
         auto icon = uihelper::CreateImageButton(choice.icon, ID_QUEST_CHOICE + choice.quest, clickCallback);
         uihelper::setEnabled(icon, open);
         icon->setAnchorPoint(uihelper::AnchorCenter);
         icon->setPosition(centre);
-        area->addChild(icon);
+        box->addChild(icon);
 
-        auto label = Label::createWithTTF(uihelper::font_config_medium, TME_GetSystemString(c, choice.label));
-        label->getFontAtlas()->setAntiAliasTexParameters();
-        label->setTextColor(Color4B(current ? _clrBlue : _clrBlack));
-        label->setOpacity(open ? ALPHA(1.0f) : ALPHA(0.25f));
-        label->setAnchorPoint(uihelper::AnchorTopCenter);
-        label->setPosition(Vec2(centre.x, centre.y - icon->getBoundingBox().size.height / 2 - RES(8)));
-        area->addChild(label);
+        auto label = uihelper::addButtonText(icon, TME_GetSystemString(c, choice.label));
+        label->setScale(1.25f);
+        if ( current )
+            label->setTextColor(Color4B(_clrYellow));
     }
 }
 
@@ -201,6 +248,11 @@ void panel_quest::showTargets()
     setHeading(c.longname, TME_GetSystemString(c, choice->prompt));
     back->setVisible(true);
 
+    if ( choices.Count() > 0 && ID_TYPE(choices[0]) == IDT_OBJECT ) {
+        showObjects();
+        return;
+    }
+
     if ( choices.Count() > 0 && ID_TYPE(choices[0]) == IDT_CHARACTER ) {
         std::vector<std::pair<std::string, mxid>> named;
         for ( auto id : choices ) {
@@ -213,10 +265,12 @@ void panel_quest::showTargets()
         for ( const auto& entry : named )
             choices.Add(entry.second);
 
-        const f32 cell = RES(176);
-        auto columns = std::max<size_t>(1, (size_t)( ( safeArea->getContentSize().width - RES(64) ) / cell ));
+        const f32 scale = mr->resolution->phoneScale();
+        const f32 cellW = SELECT_ELEMENT_WIDTH * scale;
+        const f32 cellH = RES(80) * scale;
+        auto columns = std::max<size_t>(1, (size_t)( ( safeArea->getContentSize().width - RES(64) ) / cellW ));
         auto rows = ( choices.Count() + columns - 1 ) / columns;
-        auto gallery = resetContent(cell, rows);
+        auto gallery = resetContent(cellH, rows);
         auto inner = gallery->getInnerContainerSize();
         for ( size_t i = 0; i < choices.Count(); i++ ) {
             auto face = uisinglelord::createWithLord(choices[i]);
@@ -224,7 +278,7 @@ void panel_quest::showTargets()
             face->addClickEventListener(clickCallback);
             face->setStatusImageVisible(false);
             face->setAnchorPoint(uihelper::AnchorCenter);
-            face->setPosition(Vec2(cell * ( (i % columns) + 0.5f ), inner.height - cell * ( (i / columns) + 0.5f )));
+            face->setPosition(Vec2(cellW * ( (i % columns) + 0.5f ), inner.height - cellH * ( (i / columns) + 0.5f )));
             gallery->addChild(face);
         }
         return;
@@ -261,6 +315,39 @@ void panel_quest::showTargets()
                 break;
         }
         addRow(list, i, rowHeight, portrait, text, (layoutid_t)(ID_QUEST_TARGET + i));
+    }
+}
+
+void panel_quest::showObjects()
+{
+    std::vector<Vec2> centres;
+    auto box = createGrid(resetContent(0, 0), choices.Count(), centres);
+
+    for ( size_t i = 0; i < choices.Count(); i++ ) {
+        object thing;
+        TME_GetObject(thing, choices[i]);
+        auto data = static_cast<obj_data_t*>(thing.userdata);
+
+        if ( data == nullptr || data->i_quest.empty() )
+            UIDEBUG( "Quest: object '%s' has no quest icon in the .tme", TME_GetSymbol(choices[i]).c_str() );
+
+        auto icon = uihelper::CreateImageButton(data != nullptr && !data->i_quest.empty() ? data->i_quest : "quest_find",
+                                                (layoutid_t)(ID_QUEST_TARGET + i), clickCallback);
+        icon->setAnchorPoint(uihelper::AnchorCenter);
+        icon->setPosition(centres[i]);
+        box->addChild(icon);
+
+        // name label styled like the lord select titles
+        auto label = Label::createWithTTF(uihelper::font_config_small, TME_GetObjectText(choices[i]));
+        label->setTextColor(Color4B(_clrWhite));
+        label->enableOutline(Color4B(_clrBlack), RES(1));
+        label->getFontAtlas()->setAntiAliasTexParameters();
+        label->setAnchorPoint(uihelper::AnchorCenter);
+        label->setWidth(SELECT_ELEMENT_WIDTH - CONTENT_SCALE(4));
+        label->setHeight(RES(FONT_SIZE_SMALL) * 3);
+        label->setHorizontalAlignment(TextHAlignment::CENTER);
+        label->setVerticalAlignment(TextVAlignment::BOTTOM);
+        uihelper::AddBottomCenter(icon->getRendererNormal(), label);
     }
 }
 

@@ -8,6 +8,7 @@
 
 #include "../axmol_sdk.h"
 #include "tmemanager.h"
+#include "moonring.h"
 #include <string>
 
 tmemanager::tmemanager()
@@ -44,6 +45,8 @@ void tmemanager::ResolveTMEData ()
     for ( u32 ii=0; ii<objects.Count(); ii++ ) {
         auto d = static_cast<obj_data_t*>(objects[ii]);
         d->id  = TME_LinkData(d->symbol.c_str(),d);
+        if ( ID_TYPE(d->id) != IDT_OBJECT )
+            UIDEBUG( "Frontend: object '%s' in the .tme has no matching scenario object", d->symbol.c_str() );
     }
     
     for ( u32 ii=0; ii<terrain.Count(); ii++ ) {

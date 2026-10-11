@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.0.2</string>
+        <string>8.3.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -167,6 +167,8 @@
         <true/>
         <key>trimSpriteNames</key>
         <true/>
+        <key>enableCacheBusting</key>
+        <false/>
         <key>prependSmartFolderName</key>
         <false/>
         <key>autodetectAnimations</key>
@@ -220,6 +222,31 @@
                 <rect>56,38,112,76</rect>
                 <key>scale9Paddings</key>
                 <rect>56,38,112,76</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">citadel_quest/q_aranath.png</key>
+            <key type="filename">citadel_quest/q_bloodbringer.png</key>
+            <key type="filename">citadel_quest/q_dragons.png</key>
+            <key type="filename">citadel_quest/q_persuader.png</key>
+            <key type="filename">citadel_quest/q_skullcrusher.png</key>
+            <key type="filename">citadel_quest/q_stormblade.png</key>
+            <key type="filename">citadel_quest/q_swiftwing.png</key>
+            <key type="filename">citadel_quest/q_trolls.png</key>
+            <key type="filename">citadel_quest/q_widowmaker.png</key>
+            <key type="filename">citadel_quest/q_wildcats.png</key>
+            <key type="filename">citadel_quest/q_wolves.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>52,52,104,104</rect>
+                <key>scale9Paddings</key>
+                <rect>52,52,104,104</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -189,7 +189,7 @@ using namespace chilli::types;
 #if defined(_CITADEL_)
             OB_STORMBLADE=23,
             OB_BLOODBRINGER,
-            OB_WIDOMAKER,
+            OB_WIDOWMAKER,
             OB_ARANATH,
             OB_PERSUADER,
             OB_SKULLCRUSHER,

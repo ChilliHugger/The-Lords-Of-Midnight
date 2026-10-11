@@ -183,9 +183,9 @@
     </characters>
 
     <objects>
-        <object id="OB_WOLVES"          big="objects/bo_wolf.png"       mapcell="5" />
-        <object id="OB_DRAGONS"         big="objects/bo_dragon.png"     mapcell="6" />
-        <object id="OB_ICETROLLS"       big="objects/bo_troll.png"      mapcell="7" />
+        <object id="OB_WOLVES"          big="objects/bo_wolf.png"       quest="q_wolves"  mapcell="5" />
+        <object id="OB_DRAGONS"         big="objects/bo_dragon.png"     quest="q_dragons" mapcell="6" />
+        <object id="OB_ICETROLLS"       big="objects/bo_troll.png"      quest="q_trolls"  mapcell="7" />
         <object id="OB_SKULKRIN"        big="objects/bo_skulkrin.png"   mapcell="8" />
         <object id="OB_WILDHORSES"      big="objects/bo_horse.png"      mapcell="21" />
         <object id="OB_SHELTER"         mapcell="22" />
@@ -199,6 +199,13 @@
         <object id="OB_ICECROWN"        mapcell="54" />
         <object id="OB_MOONRING"        mapcell="55" />
         <object id="OB_EYEOFTHEMOON"    mapcell="56" />
+        <object id="OB_STORMBLADE"       quest="q_stormblade" />
+        <object id="OB_BLOODBRINGER"     quest="q_bloodbringer" />
+        <object id="OB_WIDOWMAKER"       quest="q_widowmaker" />
+        <object id="OB_ARANATH"          quest="q_aranath" />
+        <object id="OB_PERSUADER"        quest="q_persuader" />
+        <object id="OB_SKULLCRUSHER"     quest="q_skullcrusher" />
+        <object id="OB_SWIFTWING"        quest="q_swiftwing" />
     </objects>
 
     <races>

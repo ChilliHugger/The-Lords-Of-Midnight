@@ -1206,6 +1206,12 @@ char        l;
 //};
 
 
+#if defined(_DDR_)
+#define OBJECT_TYPE(o)  static_cast<const ddr_object*>(o)
+#elif defined(_CITADEL_)
+#define OBJECT_TYPE(o)  static_cast<const citadel_object*>(o)
+#endif
+
 std::string mxtext::DecodeToken ( LPSTR token, const mxcharacter* character )
 {
 int         is=0;
@@ -1469,13 +1475,15 @@ __obj:
                                         }
 #if defined(_DDR_)
                 IS_ARG("fullname")      return ddr->DescribeObjectWithPower(oinfo);
+#endif
+#if defined(_DDR_) || defined(_CITADEL_)
                 IS_ARG("type")          {
-                                            ddr->otinfo = mx->ObjectTypeById( static_cast<const ddr_object*>(oinfo)->type );
-                                            return ddr->otinfo->Name();
+                                            auto otinfo = mx->ObjectTypeById( OBJECT_TYPE(oinfo)->type );
+                                            return otinfo != nullptr ? otinfo->Name() : "";
                                         }
                 IS_ARG("power")         {
-                                            ddr->opinfo = mx->ObjectPowerById( static_cast<const ddr_object*>(oinfo)->power );
-                                            return ddr->opinfo->Name();
+                                            auto opinfo = mx->ObjectPowerById( OBJECT_TYPE(oinfo)->power );
+                                            return opinfo != nullptr ? opinfo->Name() : "";
                                         }
 #endif
             }else
