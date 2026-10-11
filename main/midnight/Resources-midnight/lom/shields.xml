@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lord shields. Positions are base-resolution units, origin top-left. -->
+<images>
+
+    <image id="lom_shield" size="256,256">
+        <gfx id="art" name="shield"/>
+    </image>
+
+    <image id="ch_athoril" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="black"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="StarTopMiddle" name="shield_star" pos="128.5,76.5" anchor="c" tint="green"/>
+    </image>
+    <image id="ch_blood" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="black"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="MoonCenter" name="shield_moon" pos="125,95" anchor="c" tint="red"/>
+    </image>
+    <image id="ch_brith" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="MoonCenter" name="shield_moon" pos="125,95" anchor="c" tint="yellow"/>
+    </image>
+    <image id="ch_corleth" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="BirdTop" name="shield_bird" pos="128.5,78" anchor="c" tint="yellow"/>
+    </image>
+    <image id="ch_dawn" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="yellow"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatMiddle" name="shield_cat" pos="126,112.5" anchor="c" tint="red"/>
+    </image>
+    <image id="ch_dreams" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatTop" name="shield_cat" pos="126,79" anchor="c" tint="yellow"/>
+        <gfx id="BirdBottom" name="shield_bird" pos="128.5,172" anchor="c" tint="cyan"/>
+    </image>
+    <image id="ch_dregrim" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="magenta"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatTop" name="shield_cat" pos="126,79" anchor="c" tint="yellow"/>
+        <gfx id="BirdBottom" name="shield_bird" pos="128.5,172" anchor="c" tint="cyan"/>
+    </image>
+    <image id="ch_farflame" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="Tear1" name="shield_tear" pos="81,73.5" anchor="c" tint="yellow"/>
+        <gfx id="Tear2" name="shield_tear" pos="177.5,102" anchor="c" tint="yellow"/>
+        <gfx id="Tear3" name="shield_tear" pos="114,165" anchor="c" tint="yellow"/>
+    </image>
+    <image id="ch_fawkrin" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="black"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="StarTopLeft" name="shield_star" pos="95,76.5" anchor="c" tint="yellow"/>
+        <gfx id="Tear4" name="shield_tear" pos="147.5,137.5" anchor="c" tint="magenta"/>
+    </image>
+    <image id="ch_gard" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="magenta"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatTop" name="shield_cat" pos="126,79" anchor="c" tint="white"/>
+        <gfx id="StarBottom" name="shield_star" pos="128.5,167.5" anchor="c" tint="yellow"/>
+    </image>
+    <image id="ch_gloom" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="black"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatMiddle" name="shield_cat" pos="126,112.5" anchor="c" tint="red"/>
+    </image>
+    <image id="ch_herath" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="green"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="MoonCenter" name="shield_moon" pos="125,95" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_ithrorn" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatMiddle" name="shield_cat" pos="126,112.5" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_korinel" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="white"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="BirdTop" name="shield_bird" pos="128.5,78" anchor="c" tint="red"/>
+    </image>
+    <image id="ch_kumar" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="green"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatMiddle" name="shield_cat" pos="126,112.5" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_lorgrim" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="yellow"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="EyeTopLeft" name="shield_eye" pos="112.5,67.5" anchor="c" tint="red"/>
+        <gfx id="Tear4" name="shield_tear" pos="147.5,137.5" anchor="c" tint="blue"/>
+    </image>
+    <image id="ch_lothoril" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="magenta"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="BirdTop" name="shield_bird" pos="128.5,78" anchor="c" tint="yellow"/>
+    </image>
+    <image id="ch_luxor" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="magenta"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="StarMiddleLeft" name="shield_star" pos="95,107.5" anchor="c" tint="yellow"/>
+        <gfx id="MoonRight" name="shield_moon" pos="155,95" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_marakith" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatTop" name="shield_cat" pos="126,79" anchor="c" tint="yellow"/>
+        <gfx id="StarBottom" name="shield_star" pos="128.5,167.5" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_mitharg" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="magenta"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="StarTopMiddle" name="shield_star" pos="128.5,76.5" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_morkin" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="MoonLeft" name="shield_moon" pos="92.5,95" anchor="c" tint="yellow"/>
+        <gfx id="Tear2" name="shield_tear" pos="177.5,102" anchor="c" tint="yellow"/>
+        <gfx id="Tear5" name="shield_tear" pos="146,167.5" anchor="c" tint="yellow"/>
+    </image>
+    <image id="ch_morning" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="red"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="StarTopMiddle" name="shield_star" pos="128.5,76.5" anchor="c" tint="yellow"/>
+    </image>
+    <image id="ch_rorath" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="cyan"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="MoonCenter" name="shield_moon" pos="125,95" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_rorthron" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="cyan"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="EyeTopLeft" name="shield_eye" pos="112.5,67.5" anchor="c" tint="blue"/>
+        <gfx id="BirdMiddle" name="shield_bird" pos="128.5,138.5" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_shadows" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="black"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="BirdTop" name="shield_bird" pos="128.5,78" anchor="c" tint="magenta"/>
+    </image>
+    <image id="ch_shimeril" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="cyan"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatMiddle" name="shield_cat" pos="126,112.5" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_thimrath" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="green"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="BirdTop" name="shield_bird" pos="128.5,78" anchor="c" tint="white"/>
+    </image>
+    <image id="ch_thrall" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="white"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="BirdTop" name="shield_bird" pos="128.5,78" anchor="c" tint="green"/>
+    </image>
+    <image id="ch_trorn" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="white"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="MoonCenter" name="shield_moon" pos="125,95" anchor="c" tint="magenta"/>
+    </image>
+    <image id="ch_utarg" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="black"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatTop" name="shield_cat" pos="126,79" anchor="c" tint="magenta"/>
+        <gfx id="EyeBottomRight" name="shield_eye" pos="145,157.5" anchor="c" tint="green"/>
+    </image>
+    <image id="ch_whispers" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="cyan"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="BirdTop" name="shield_bird" pos="128.5,78" anchor="c" tint="red"/>
+    </image>
+    <image id="ch_xajorkith" size="256,256">
+        <gfx id="shield" name="lom_shield" tint="magenta"/>
+        <gfx id="bevel" name="shield_bevel" alpha="0.3"/>
+        <gfx id="CatTop" name="shield_cat" pos="126,79" anchor="c" tint="yellow"/>
+        <gfx id="StarBottom" name="shield_star" pos="128.5,167.5" anchor="c" tint="cyan"/>
+    </image>
+</images>

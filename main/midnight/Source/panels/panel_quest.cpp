@@ -68,7 +68,7 @@ bool panel_quest::init()
     status->enableWrap(true);
     uihelper::AddTopLeft(safeArea, status, RES(32), RES(96));
 
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
+    auto look = uihelper::CreateImageButton("icon_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10));
 
     back = uihelper::CreateBoxButton(Size(RES(200), RES(64)));

@@ -60,7 +60,7 @@ bool panel_think::init()
     
     // Command Window
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
+    auto look = uihelper::CreateImageButton("icon_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     
     // TAB ICONS
@@ -69,19 +69,19 @@ bool panel_think::init()
     int c = RES(100) * scale;
     
     // Person
-    auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, clickCallback);
+    auto person = uihelper::CreateImageButton("icon_think_person", ID_THINK_PERSON, clickCallback);
     uihelper::AddBottomRight(safeArea, person, x+c*0, RES(10) );
     
     // Place
-    auto place = uihelper::CreateImageButton("think_place", ID_THINK_PLACE, clickCallback);
+    auto place = uihelper::CreateImageButton("icon_think_place", ID_THINK_PLACE, clickCallback);
     uihelper::AddBottomRight(safeArea, place, x+c*1, RES(10) );
     
     // Army
-    auto army = uihelper::CreateImageButton("think_army", ID_THINK_ARMY, clickCallback);
+    auto army = uihelper::CreateImageButton("icon_think_army", ID_THINK_ARMY, clickCallback);
     uihelper::AddBottomRight(safeArea, army, x+c*2, RES(10) );
     
     // Battle
-    auto battle = uihelper::CreateImageButton("think_battle", ID_THINK_BATTLE, clickCallback);
+    auto battle = uihelper::CreateImageButton("icon_think_battle", ID_THINK_BATTLE, clickCallback);
     uihelper::AddBottomRight(safeArea, battle, x+c*3, RES(10) );
     
     // Stronghold

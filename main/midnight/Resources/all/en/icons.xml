@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Icon text and layout for the "en" locale: a translation copies this file to its own locale folder (e.g. all/fr/icons.xml; a scenario can add or override icons in <scenario>/en/icons.xml) and changes the text, position, size or number of text items freely. Each icon is its art (gfx, the first one is the button sprite, named by its atlas image) plus its text. Image ids differ from atlas names: icon_think / i_think. -->
+<!-- Text placement measured from the original artwork (all/icon_images/language vs no language): white 28pt libra with a 2 outline, bottom-aligned (the lowest ink sits at the bottom of the cell), except icon_home (top). Positions are in the base (gfx_m) icon size. -->
+<images>
+
+    <image id="icon_debug_email">
+        <gfx id="art" name="debug_email" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="email" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_actions">
+        <gfx id="art" name="i_actions" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="choose" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_approach">
+        <gfx id="art" name="i_approach" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="approach" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_battle">
+        <gfx id="art" name="i_battle" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="attack" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_dawn">
+        <gfx id="art" name="i_dawn" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="dawn" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_dismount">
+        <gfx id="art" name="i_dismount" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="dismount" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_entertunnel">
+        <gfx id="art" name="i_entertunnel" pos="0,0" anchor="tl"/>
+        <txt id="text1" text="enter" pos="65,47" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+        <txt id="text2" text="tunnel" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_fight">
+        <gfx id="art" name="i_fight" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="fight" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_give">
+        <gfx id="art" name="i_give" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="give" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_hide">
+        <gfx id="art" name="i_hide" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="hide" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_home">
+        <gfx id="art" name="i_home" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="exit" pos="61,5" anchor="tc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_look">
+        <gfx id="art" name="i_look" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="look" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_map">
+        <gfx id="art" name="i_map" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="map" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_night">
+        <gfx id="art" name="i_night" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="night" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_post">
+        <gfx id="art" name="i_post" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="guard" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_recruit">
+        <gfx id="art" name="i_recruit" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="recruit" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_rest">
+        <gfx id="art" name="i_rest" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="rest" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_seek">
+        <gfx id="art" name="i_seek" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="seek" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_select1">
+        <gfx id="art" name="i_select1" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="select" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_select2">
+        <gfx id="art" name="i_select2" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="select" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_take">
+        <gfx id="art" name="i_take" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="take" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_think">
+        <gfx id="art" name="i_think" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="think" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_unhide">
+        <gfx id="art" name="i_unhide" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="unhide" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_use">
+        <gfx id="art" name="i_use" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="use" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_think_army">
+        <gfx id="art" name="think_army" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="army" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_think_battle">
+        <gfx id="art" name="think_battle" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="battle" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_think_person">
+        <gfx id="art" name="think_person" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="person" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_think_place">
+        <gfx id="art" name="think_place" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="place" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_think_stronghold">
+        <gfx id="art" name="think_stronghold" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="stronghold" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_undo">
+        <gfx id="art" name="undo" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="undo" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_undo_dawn">
+        <gfx id="art" name="undo_dawn" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="dawn" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_undo_night">
+        <gfx id="art" name="undo_night" pos="0,0" anchor="tl"/>
+        <txt id="buttontext" text="night" pos="49,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+</images>

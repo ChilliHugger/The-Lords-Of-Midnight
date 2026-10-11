@@ -239,11 +239,11 @@ bool panel_look::init()
     i_help_list = uihelplistwindow::create(this);
     i_help_list->retain();
 
-    auto choose = uihelper::CreateImageButton("i_actions", ID_ACTIONS, clickCallback);
+    auto choose = uihelper::CreateImageButton("icon_actions", ID_ACTIONS, clickCallback);
     uihelper::AddBottomRight(safeArea, choose, RES(10), RES(10) );
     
     // Character Selection
-    auto select = uihelper::CreateImageButton("i_select2", ID_SELECT_ALL, clickCallback);
+    auto select = uihelper::CreateImageButton("icon_select2", ID_SELECT_ALL, clickCallback);
     uihelper::AddBottomLeft(safeArea, select, RES(10), RES(10) );
 
     // Help

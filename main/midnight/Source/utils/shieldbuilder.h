@@ -16,56 +16,7 @@
 
 USING_NS_TME;
 
-enum class PartColour : int {
-    Black,
-    Blue,
-    Red,
-    Magenta,
-    Green,
-    Cyan,
-    Yellow,
-    White
-};
-
-enum class ShieldPart : int {
-    BirdTop,
-    BirdMiddle,
-    BirdBottom,
-    CatTop,
-    CatMiddle,
-    EyeTopLeft,
-    EyeBottomRight,
-    MoonCenter,
-    MoonRight,
-    MoonLeft,
-    StarTopMiddle,
-    StarTopLeft,
-    StarMiddleLeft,
-    StarBottom,
-    Tear1,
-    Tear2,
-    Tear3,
-    Tear4,
-    Tear5,
-};
-
-typedef struct {
-    LPCSTR name;
-    f32 x;
-    f32 y;
-} ShieldPart_t ;
-
-typedef struct  {
-    ShieldPart part;
-    PartColour colour;
-} Part_t ;
-
-typedef struct {
-    std::string name;
-    PartColour colour;
-    std::vector<Part_t> parts;
-} Shield_t ;
-
+// Builds a lord's shield from its description in shields.xml (registered in moonring's imageDefinitions)
 class shieldbuilder
 {
 public:
@@ -75,14 +26,6 @@ public:
     virtual ~shieldbuilder();
     
     bool build(mxid id, ImageView* parent);
-    
-private:
-    Shield_t* findShield(std::string& name);
-    ImageView* AddPart(ImageView* node, ShieldPart part, PartColour colour);
-
-public:
-
 };
-
 
 #endif /* shieldbuilder_h */

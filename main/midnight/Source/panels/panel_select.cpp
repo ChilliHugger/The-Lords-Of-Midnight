@@ -77,11 +77,11 @@ bool panel_select::init()
     
     
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
+    auto look = uihelper::CreateImageButton("icon_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(safeArea, look, RES(16), RES(10) );
     
     // Look Icon
-    auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, clickCallback);
+    auto night = uihelper::CreateImageButton("icon_night", ID_NIGHT, clickCallback);
     uihelper::AddBottomRight(safeArea, night, RES(0), RES(10) );
     
     FILTER_BUTTON_START_Y = RES(16);
