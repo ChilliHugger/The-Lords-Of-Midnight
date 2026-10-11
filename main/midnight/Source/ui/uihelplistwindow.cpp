@@ -185,6 +185,9 @@ bool uihelplistwindow::initWithParent( uipanel* parent )
 
     this->setLocalZOrder(ZORDER_POPUP);
 
+    // hidden until show() is called, so the panel can tell whether the list is open
+    setVisible(false);
+
     // map keyboard shortcut keys to layout children
     uishortcutkeys::registerCallback(layout,callback);
     addShortcutKey(ID_CLOSE, K_ESC);
