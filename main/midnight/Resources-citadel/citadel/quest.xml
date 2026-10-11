@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Citadel quest icons: the 1995 game's own symbols with the quest name over their bottom. Each cell is wider and taller than its art, which sits in the centre, so the name fits. The current quest is tinted in code, text and all. Positions are base (gfx_m) units. -->
+<images>
+
+    <image id="icon_quest_destroy" size="144,93">
+        <gfx id="art" name="quest_destroy" pos="72,46" anchor="c"/>
+        <txt id="buttontext" text="destroy" pos="73,93" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_find" size="144,88">
+        <gfx id="art" name="quest_find" pos="72,44" anchor="c"/>
+        <txt id="buttontext" text="find" pos="73,88" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_follow" size="144,66">
+        <gfx id="art" name="quest_follow" pos="72,33" anchor="c"/>
+        <txt id="buttontext" text="shadow" pos="73,66" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_goto" size="144,87">
+        <gfx id="art" name="quest_goto" pos="72,43" anchor="c"/>
+        <txt id="buttontext" text="goto" pos="73,87" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_guard" size="144,65">
+        <gfx id="art" name="quest_guard" pos="72,32" anchor="c"/>
+        <txt id="buttontext" text="guard" pos="73,65" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_join" size="144,68">
+        <gfx id="art" name="quest_join" pos="72,34" anchor="c"/>
+        <txt id="buttontext" text="join" pos="73,68" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_kill" size="144,64">
+        <gfx id="art" name="quest_kill" pos="72,32" anchor="c"/>
+        <txt id="buttontext" text="attack" pos="73,64" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_recruit" size="144,61">
+        <gfx id="art" name="quest_recruit" pos="72,30" anchor="c"/>
+        <txt id="buttontext" text="recruit" pos="73,61" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_rescue" size="144,86">
+        <gfx id="art" name="quest_rescue" pos="72,43" anchor="c"/>
+        <txt id="buttontext" text="rescue" pos="73,86" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_rest" size="144,77">
+        <gfx id="art" name="quest_rest" pos="72,38" anchor="c"/>
+        <txt id="buttontext" text="wait" pos="73,77" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_seize" size="144,84">
+        <gfx id="art" name="quest_seize" pos="72,42" anchor="c"/>
+        <txt id="buttontext" text="seize" pos="73,84" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest_take" size="144,79">
+        <gfx id="art" name="quest_take" pos="72,39" anchor="c"/>
+        <txt id="buttontext" text="take" pos="73,79" anchor="bc" font="button" size="35" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+    <image id="icon_quest" size="128,64">
+        <gfx id="art" name="i_quest" pos="64,4" anchor="tc"/>
+        <txt id="buttontext" text="quest" pos="65,64" anchor="bc" font="button" size="28" outline="2" tracking="-75" colour="#ffffff"/>
+    </image>
+</images>

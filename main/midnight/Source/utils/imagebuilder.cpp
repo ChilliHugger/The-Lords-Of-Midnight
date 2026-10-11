@@ -8,6 +8,7 @@
 #include "../system/moonring.h"
 #include "../ui/uihelper.h"
 #include <map>
+#include <functional>
 #include <algorithm>
 #include <vector>
 
@@ -338,7 +339,7 @@ bool imagebuilder::build(const std::string& id, Node* parent, const Options& opt
 
 Button* imagebuilder::createIconButton(const imagedef::Image& image, const Options& options)
 {
-    // the main art is an atlas image; the other elements, e.g. the text, are drawn on top of it
+    // an icon needs atlas art (its first gfx); the cell is the image's size, else the art's original size
     auto art = image.firstGfx();
     if (art == nullptr)
         return nullptr;
@@ -346,36 +347,14 @@ Button* imagebuilder::createIconButton(const imagedef::Image& image, const Optio
     if (frame == nullptr)
         return nullptr;
 
+    Size cell = image.width > 0 ? Size(RES(image.width), RES(image.height)) : Size(frame->getOriginalSize());
+
     Stack stack{ image.id };
-    auto placed = placeElements(library(), image, options, stack, art);
+    auto placed = placeElements(library(), image, options, stack);
 
-    // align the art and the other elements together within the art's original (untrimmed) size
-    auto cell = frame->getOriginalSize();
-    auto artBox = frameVisibleBox(frame);
-
-    Shift shift;
-    if (image.aligned) {
-        Box all = artBox;
-        for (auto& p : placed)
-            all = all.united(p.box);
-        shift = alignShift(image.align, cell.width, cell.height, all);
-    }
-
-    auto source = createSource(Size(cell.width, cell.height), image.id);
-
-    auto sprite = Sprite::createWithSpriteFrame(frame);
-    sprite->setName(art->id);
-    sprite->setColor(toColor(art->colour));
-    sprite->setOpacity(ALPHA(art->alpha));
-    uihelper::AddTopLeft(source, sprite, shift.x, shift.y);
-
-    for (auto& p : placed) {
-        uihelper::AddTopLeft(source, p.node, RES(p.element->x), RES(p.element->y));
-        p.node->setAnchorPoint(toAnchor(p.element->anchor));
-        p.node->setPosition(p.node->getPosition() + Vec2(shift.x, -shift.y) + p.offset);
-        p.node->release();
-    }
-
+    // everything is drawn into one texture, aligned together within the cell if the image asks
+    auto source = createSource(cell, image.id);
+    attachPlaced(source, placed, image, cell);
     renderSource(source);
 
     auto button = Button::create(source->getName(), "", "", Widget::TextureResType::PLIST);
@@ -384,32 +363,31 @@ Button* imagebuilder::createIconButton(const imagedef::Image& image, const Optio
     return button;
 }
 
-bool imagebuilder::setText(Node* parent, const std::string& elementId, const std::string& text)
+// changes a label of a flattened image and renders it again; a plain (unflattened) image just changes the label
+static bool changeLabel(Node* parent, const std::string& elementId, const std::function<void(Label*)>& change)
 {
-    // a flattened image keeps its source: change the label there and render again
     auto source = dynamic_cast<Node*>(parent->getUserObject());
-    if (source != nullptr) {
-        auto label = dynamic_cast<Label*>(source->getChildByName(elementId));
-        if (label == nullptr)
-            return false;
-        label->setString(text);
-        renderSource(source);
-
-        if (auto button = dynamic_cast<Button*>(parent)) {
-            button->loadTextureNormal(source->getName(), Widget::TextureResType::PLIST);
-            showFlattened(button->getRendererNormal());
-        } else if (auto view = dynamic_cast<ImageView*>(parent)) {
-            view->loadTexture(source->getName(), Widget::TextureResType::PLIST);
-            showFlattened(view->getVirtualRenderer());
-        }
-        return true;
-    }
-
-    auto label = dynamic_cast<Label*>(parent->getChildByName(elementId));
+    auto label = dynamic_cast<Label*>((source != nullptr ? source : parent)->getChildByName(elementId));
     if (label == nullptr)
         return false;
-    label->setString(text);
+    change(label);
+    if (source == nullptr)
+        return true;
+
+    renderSource(source);
+    if (auto button = dynamic_cast<Button*>(parent)) {
+        button->loadTextureNormal(source->getName(), Widget::TextureResType::PLIST);
+        showFlattened(button->getRendererNormal());
+    } else if (auto view = dynamic_cast<ImageView*>(parent)) {
+        view->loadTexture(source->getName(), Widget::TextureResType::PLIST);
+        showFlattened(view->getVirtualRenderer());
+    }
     return true;
+}
+
+bool imagebuilder::setText(Node* parent, const std::string& elementId, const std::string& text)
+{
+    return changeLabel(parent, elementId, [&](Label* label) { label->setString(text); });
 }
 
 bool imagebuilder::setEnabled(Node* parent, const std::string& elementId, bool enabled)
