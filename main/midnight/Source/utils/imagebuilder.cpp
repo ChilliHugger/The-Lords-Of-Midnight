@@ -337,15 +337,15 @@ bool imagebuilder::build(const std::string& id, Node* parent, const Options& opt
     return true;
 }
 
-Button* imagebuilder::createIconButton(const imagedef::Image& image, const Options& options)
+bool imagebuilder::setupButton(Button* button, const imagedef::Image& image, const Options& options)
 {
     // an icon needs atlas art (its first gfx); the cell is the image's size, else the art's original size
     auto art = image.firstGfx();
     if (art == nullptr)
-        return nullptr;
+        return false;
     auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(art->name);
     if (frame == nullptr)
-        return nullptr;
+        return false;
 
     Size cell = image.width > 0 ? Size(RES(image.width), RES(image.height)) : Size(frame->getOriginalSize());
 
@@ -357,20 +357,33 @@ Button* imagebuilder::createIconButton(const imagedef::Image& image, const Optio
     attachPlaced(source, placed, image, cell);
     renderSource(source);
 
-    auto button = Button::create(source->getName(), "", "", Widget::TextureResType::PLIST);
+    button->loadTextureNormal(source->getName(), Widget::TextureResType::PLIST);
     showFlattened(button->getRendererNormal());
     button->setUserObject(source);
-    return button;
+    return true;
 }
 
-// changes a label of a flattened image and renders it again; a plain (unflattened) image just changes the label
-static bool changeLabel(Node* parent, const std::string& elementId, const std::function<void(Label*)>& change)
+Button* imagebuilder::createIconButton(const imagedef::Image& image, const Options& options)
+{
+    auto button = Button::create();
+    return setupButton(button, image, options) ? button : nullptr;
+}
+
+// changes a node of a flattened image and renders it again; a plain (unflattened) image just changes the node
+static Node* findElement(Node* parent, const std::string& elementId)
 {
     auto source = dynamic_cast<Node*>(parent->getUserObject());
-    auto label = dynamic_cast<Label*>((source != nullptr ? source : parent)->getChildByName(elementId));
-    if (label == nullptr)
+    return (source != nullptr ? source : parent)->getChildByName(elementId);
+}
+
+static bool changeNode(Node* parent, const std::string& elementId, const std::function<void(Node*)>& change)
+{
+    auto node = findElement(parent, elementId);
+    if (node == nullptr)
         return false;
-    change(label);
+    change(node);
+
+    auto source = dynamic_cast<Node*>(parent->getUserObject());
     if (source == nullptr)
         return true;
 
@@ -387,14 +400,13 @@ static bool changeLabel(Node* parent, const std::string& elementId, const std::f
 
 bool imagebuilder::setText(Node* parent, const std::string& elementId, const std::string& text)
 {
-    return changeLabel(parent, elementId, [&](Label* label) { label->setString(text); });
+    return changeNode(parent, elementId, [&](Node* node) {
+        if (auto label = dynamic_cast<Label*>(node))
+            label->setString(text);
+    });
 }
 
 bool imagebuilder::setEnabled(Node* parent, const std::string& elementId, bool enabled)
 {
-    auto node = parent->getChildByName(elementId);
-    if (node == nullptr)
-        return false;
-    node->setVisible(enabled);
-    return true;
+    return changeNode(parent, elementId, [&](Node* node) { node->setVisible(enabled); });
 }

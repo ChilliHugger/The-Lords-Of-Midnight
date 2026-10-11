@@ -9,6 +9,7 @@
 #include "../axmol_sdk.h"
 #include "uifilterbutton.h"
 #include "uihelper.h"
+#include "../utils/imagebuilder.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
 
@@ -30,10 +31,10 @@ bool uifilterbutton::isSelected()
 void uifilterbutton::setSelected(bool selected)
 {
     this->selected = selected;
-    auto visible = getChildByName<Sprite*>("visible");
-    auto notvisible = getChildByName<Sprite*>("notvisible");
-    visible->setVisible(selected);
-    notvisible->setVisible(!selected);
+
+    // the eye is part of the button's image: show the open or the closed one
+    imagebuilder::setEnabled(this, "visible", selected);
+    imagebuilder::setEnabled(this, "notvisible", !selected);
     
     dispatchSelectChangedEvent(isSelected());
     
@@ -42,12 +43,12 @@ void uifilterbutton::setSelected(bool selected)
 uifilterbutton* uifilterbutton::createWithImage(const std::string& image)
 {    
     auto button = uifilterbutton::create();
-    
-    if ( Director::getInstance()->getTextureCache()->getTextureForKey(image) != nullptr ) {
-        button->loadTextures(image,"","", ax::ui::Widget::TextureResType::LOCAL);
-    }else{
-        button->loadTextures(image,"","", ax::ui::Widget::TextureResType::PLIST);
-    }
+
+    // image is the id of a filter in images (see filters.xml)
+    auto def = imagebuilder::find(image);
+    if ( def == nullptr || !imagebuilder::setupButton(button, *def) )
+        UIDEBUG("uifilterbutton: no filter image '%s'", image.c_str());
+
     button->setLocalZOrder(ZORDER_UI);    
     button->initChildren();
     
@@ -67,27 +68,6 @@ bool uifilterbutton::init()
 
 void uifilterbutton::initChildren()
 {
-    // main image
-    auto r = getBoundingBox();
-    
-    // eye visible
-    // "i_visible"
-    auto visible = Sprite::createWithSpriteFrameName("i_visible");
-    visible->setLocalZOrder(ZORDER_DEFAULT);
-    visible->setName("visible");
-    visible->setAnchorPoint(uihelper::AnchorCenter);
-    visible->setPosition(r.size.width-RES(10), r.size.height-RES(10) );
-    addChild(visible);
-    
-    // eye not visible
-    // "i_not_visible"
-    auto notvisible = Sprite::createWithSpriteFrameName("i_not_visible");
-    notvisible->setLocalZOrder(ZORDER_DEFAULT);
-    notvisible->setName("notvisible");
-    notvisible->setAnchorPoint(uihelper::AnchorCenter);
-    notvisible->setPosition(r.size.width-RES(10), r.size.height-RES(10) );
-    addChild(notvisible);
-    
     setSelected(false);
     setLocalZOrder(ZORDER_UI);
     

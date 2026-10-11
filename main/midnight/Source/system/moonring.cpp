@@ -682,6 +682,7 @@ std::string imageFiles[] = {
 // XML image definitions (icons, shields...): looked for in all/ and the scenario's folder, see imagebuilder
 std::vector<std::string> imageDefinitions = {
     "icons",
+    "filters",
 #if defined(_CITADEL_)
     "quest",
 #else

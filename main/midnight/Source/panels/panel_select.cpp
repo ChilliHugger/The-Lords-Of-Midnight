@@ -87,11 +87,11 @@ bool panel_select::init()
     FILTER_BUTTON_START_Y = RES(16);
     FILTER_BUTTON_STEP_Y = RES(PHONE_SCALE(64));
 
-    createFilterButton(ID_FILTER_DAWN,          "lord_dawn",    select_filters::show_dawn);
-    createFilterButton(ID_FILTER_NIGHT,         "lord_night",   select_filters::show_night);
-    createFilterButton(ID_FILTER_BATTLE,        "lord_battle",  select_filters::show_battle);
-    createFilterButton(ID_FILTER_DEAD,          "f_dead!",      select_filters::show_dead);
-    createFilterButton(ID_FILTER_CURRENT_LOC,   "i_center",     select_filters::show_current);
+    createFilterButton(ID_FILTER_DAWN,          "filter_dawn",    select_filters::show_dawn);
+    createFilterButton(ID_FILTER_NIGHT,         "filter_night",   select_filters::show_night);
+    createFilterButton(ID_FILTER_BATTLE,        "filter_battle",  select_filters::show_battle);
+    createFilterButton(ID_FILTER_DEAD,          "filter_dead",      select_filters::show_dead);
+    createFilterButton(ID_FILTER_CURRENT_LOC,   "filter_centre",     select_filters::show_current);
     
     cleanupButton = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
     safeArea->addChild(cleanupButton);
@@ -513,7 +513,17 @@ void panel_select::updateFilterButtons( bool animate )
             item.second->setVisible(false);
     }
     
-    place(cleanupButton, RES(PHONE_SCALE(12)*0.9));
+    // centre the tidy up button under the circles of the filter buttons: their art is 64 wide at the left
+    // of a wider cell (filters.xml), which also holds the badge hanging off the top right
+    auto paddingX = RES(PHONE_SCALE(12)*0.9);
+    if ( !filterButtons.empty() ) {
+        auto filter = filterButtons.front().second;
+        auto parentWidth = cleanupButton->getParent()->getBoundingBox().size.width;
+        auto artCentre = parentWidth - RES(PHONE_SCALE(16)) - ( filter->getContentSize().width - RES(32) ) * filter->getScaleX();
+        auto cleanupRight = artCentre + cleanupButton->getContentSize().width * cleanupButton->getScaleX() / 2;
+        paddingX = parentWidth - cleanupRight;
+    }
+    place(cleanupButton, paddingX);
 }
 
 bool panel_select::isShownByFilters ( uilordselect* e, character& c, const eflags<select_filters,u32>& filters ) const

@@ -230,3 +230,25 @@ TEST_CASE("A multi-word icon label can be several text items")
     CHECK(tunnel->find("text2")->text == "tunnel");
     CHECK(tunnel->find("text1")->y < tunnel->find("text2")->y);     // enter above tunnel
 }
+
+TEST_CASE("The shipped filter buttons have the icon and both eye badges")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/filters.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    for (auto id : { "filter_dawn", "filter_night", "filter_battle", "filter_dead",
+                     "filter_centre", "filter_critters", "filter_lords", "filter_tunnels" }) {
+        INFO(id);
+        auto filter = lib.find(id);
+        REQUIRE(filter != nullptr);
+        REQUIRE(filter->firstGfx() != nullptr);
+        REQUIRE(filter->find("visible") != nullptr);
+        REQUIRE(filter->find("notvisible") != nullptr);
+        CHECK(filter->find("visible")->name == "i_visible");
+        CHECK(filter->find("notvisible")->name == "i_not_visible");
+    }
+    CHECK(lib.find("filter_dawn")->firstGfx()->name == "lord_dawn");
+    CHECK(lib.find("filter_dead")->firstGfx()->name == "f_dead!");
+}

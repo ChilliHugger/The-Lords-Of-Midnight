@@ -51,7 +51,10 @@ public:
     // sets the text of a built txt element by id (re-rendering a flattened image); false if there is none
     static bool setText(ax::Node* parent, const std::string& elementId, const std::string& text);
 
-    // show/hide a built element by id
+    // as createIconButton, for a button you already have (e.g. a subclass); false if the icon has no atlas art
+    static bool setupButton(ax::ui::Button* button, const imagedef::Image& image, const Options& options = Options());
+
+    // show/hide a built element by id (re-rendering a flattened image)
     static bool setEnabled(ax::Node* parent, const std::string& elementId, bool enabled);
 };
 

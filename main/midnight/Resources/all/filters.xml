@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Filter buttons (select and map screens): the icon with an eye badge at the top right, shown open when the filter is on and closed when it is off (uifilterbutton toggles them). Positions are base (gfx_m) units. The art is 64x64; the cell is larger so the badge, which hangs off the top right of the art, is not clipped. -->
+<images>
+
+    <image id="filter_dawn" size="73,67">
+        <gfx id="art" pos="0,3" name="lord_dawn"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_night" size="73,67">
+        <gfx id="art" pos="0,3" name="lord_night"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_battle" size="73,67">
+        <gfx id="art" pos="0,3" name="lord_battle"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_dead" size="73,67">
+        <gfx id="art" pos="0,3" name="f_dead!"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_centre" size="73,67">
+        <gfx id="art" pos="0,3" name="i_center"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_critters" size="73,67">
+        <gfx id="art" pos="0,3" name="i_critters"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_lords" size="73,67">
+        <gfx id="art" pos="0,3" name="i_filter_lords"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_tunnels" size="73,67">
+        <gfx id="art" pos="0,3" name="i_filter_tunnel"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+</images>
