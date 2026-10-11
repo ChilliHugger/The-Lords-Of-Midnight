@@ -14,6 +14,9 @@ mkdir -p $AX_ROOT/3rdparty/zlib/_x/lib/wasm
 cp "$(dirname $(which emcc))/cache/sysroot/lib/wasm32-emscripten/libz.a" $AX_ROOT/3rdparty/zlib/_x/lib/wasm/
 
 mkdir -p Builds/wasm-$lower
-axmol build -p wasm -xc "$XC,-BBuilds/wasm-$lower"
+# configure only (-c), then build the whole dir: axmol would otherwise build the .axproj target
+# (midnight), which doesn't exist for DDR/CITADEL
+axmol build -p wasm -c -xc "$XC,-BBuilds/wasm-$lower"
+cmake --build Builds/wasm-$lower --parallel
 # Serve with COOP/COEP headers (pthreads need SharedArrayBuffer), e.g. emrun or a custom server:
 #   Builds/wasm-$lower/bin/<app>/<app>.html

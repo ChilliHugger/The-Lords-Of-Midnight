@@ -21,7 +21,7 @@
       <h1>@APP_TITLE@</h1>
       <p>Sorry, this web version isn't supported on phones and tablets yet.</p>
       <p>Please open this page in a desktop browser (Chrome, Edge, Firefox or Safari on a computer).</p>
-      <p><a href="https://thelordsofmidnight.com">thelordsofmidnight.com</a></p>
+      <p><a href="https://@APP_SITE@">@APP_SITE@</a></p>
     </div>
     <script type='text/javascript'>
       // Stop before the game (tens of MB) is requested on a touch-only device.
@@ -317,7 +317,7 @@
             var bundle = { format: 'axmol-persist-v1', created: new Date().toISOString(), page: location.pathname, files: files };
             var a = document.createElement('a');
             a.href = URL.createObjectURL(new Blob([JSON.stringify(bundle)], { type: 'application/json' }));
-            a.download = 'midnight-saves-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
+            a.download = '@APP_NAME@-saves-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
             document.body.appendChild(a); a.click(); a.remove();
             return count;
           });
@@ -426,7 +426,7 @@
           if (shown || benign(message)) return;
           shown = true;
           var report = [
-            '@APP_TITLE@ @WASM_APP_VERSION@ (build @WASM_APP_BUILD_NO@)',
+            '@APP_TITLE_JS@ @WASM_APP_VERSION@ (build @WASM_APP_BUILD_NO@)',
             'Time:    ' + new Date().toISOString(),
             'Page:    ' + location.href,
             'Browser: ' + navigator.userAgent,
@@ -466,7 +466,7 @@
         document.getElementById('crashSave').onclick = function() {
           var a = document.createElement('a');
           a.href = URL.createObjectURL(new Blob([document.getElementById('crashText').value], { type: 'text/plain' }));
-          a.download = 'midnight-crash-' + new Date().toISOString().replace(/[:.]/g, '-') + '.txt';
+          a.download = '@APP_NAME@-crash-' + new Date().toISOString().replace(/[:.]/g, '-') + '.txt';
           document.body.appendChild(a); a.click(); a.remove();
         };
         document.getElementById('crashSaves').onclick = function() {
