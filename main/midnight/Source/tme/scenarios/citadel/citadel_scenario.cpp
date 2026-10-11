@@ -614,6 +614,30 @@ void citadel_object::Lift ()
         Location(mxgridref(mx->gamemap->Size().cx, 0));
 }
 
+void citadel_routebranch::SetRoute ( mxdir_t dir, u32 w )
+{
+    direction = dir;
+    weight = w;
+}
+
+void citadel_routebranch::Serialize ( archive& ar )
+{
+    mxroutebranch::Serialize ( ar );
+
+    if ( ar.IsStoring() ) {
+        WRITE_ENUM(direction);
+        ar << weight;
+    } else if ( tme::mx->SaveGameVersion() > 23 ) {
+        READ_ENUM(direction);
+        ar >> weight;
+    }
+}
+
+mxroutebranch* citadel_entityfactory::CreateRouteBranch ()
+{
+    return new citadel_routebranch;
+}
+
 mxentity* citadel_entityfactory::Create ( id_type_t type )
 {
     switch ( type ) {

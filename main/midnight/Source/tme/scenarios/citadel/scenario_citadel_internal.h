@@ -71,6 +71,18 @@ namespace tme {
     {
     public:
         virtual mxentity* Create ( id_type_t type ) override;
+        virtual mxroutebranch* CreateRouteBranch () override;
+    };
+
+    class citadel_routebranch : public mxroutebranch
+    {
+    public:
+        virtual void SetRoute ( mxdir_t dir, u32 w ) override;
+        virtual void Serialize ( archive& ar ) override;
+
+    public:
+        mxdir_t     direction = DR_NONE;
+        u32         weight = 0;
     };
 
     class citadel_object : public mxobject

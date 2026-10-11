@@ -166,6 +166,11 @@ namespace tme {
         }
 
 
+        mxroutebranch* mxentityfactory::CreateRouteBranch ()
+        {
+            return new mxroutebranch;
+        }
+
         mxentity* mxentityfactory::Create ( id_type_t type )
         {
             switch ( type ) {

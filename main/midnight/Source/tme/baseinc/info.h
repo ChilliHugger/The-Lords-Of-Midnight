@@ -848,20 +848,41 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
         typedef std::vector<mxroutenode*>     c_node;
 
+        // mxroutebranch - a way on from one routenode to the next. Scenarios with more to say
+        // about a branch derive from it, and make theirs in their entity factory
+        class mxroutebranch
+        {
+        public:
+            virtual ~mxroutebranch() {}
+
+            // the direction and weight of the branch - only a scenario that has them keeps them
+            virtual void SetRoute ( mxdir_t direction, u32 weight ) {}
+            virtual void Serialize ( archive& ar );
+
+            mxroutenode* Node() const { return node; }
+            void Node ( mxroutenode* n ) { node = n; }
+
+        protected:
+            mxroutenode*    node = nullptr;
+        };
+        typedef std::vector<mxroutebranch*>   c_branch;
+        // mxroutebranch
+
         // mxroutenode
         class mxroutenode  : public mxitem
         {
         public:
             DEFAULT_IMPLEMENTATION(mxroutenode);
 
-            GET_PROPERTY ( c_node, Nodes, nodes );
+            c_node Nodes() const;
+            const c_branch& Branches() const { return branches; }
 
-            void ClearNodes() { nodes.clear(); }
-            void AddNode( mxroutenode* node ) { if ( node != nullptr ) nodes.push_back(node); }
+            void ClearNodes();                              // deletes the branches
+            mxroutebranch* AddNode( mxroutenode* node );    // the new branch, or null if there was no node
             mxroutenode* PickNode();
 
         protected:
-            c_node  nodes;
+            c_branch    branches;
         };
         typedef tme::collections::entities<mxroutenode*>     c_routenode;
         // routenode
@@ -1225,6 +1246,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         };
         // mxlocinfo
 
+        chilli::lib::archive& operator<<( chilli::lib::archive& ar, mxroutebranch* branch );
+        chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxroutebranch*& branch );
         chilli::lib::archive& operator<<( chilli::lib::archive& ar, mxroutenode* node );
         chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxroutenode*& node );
         chilli::lib::archive& operator<<( chilli::lib::archive& ar, mxcharacter* ptr );

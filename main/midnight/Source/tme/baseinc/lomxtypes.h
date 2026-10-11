@@ -1254,7 +1254,7 @@ namespace tme {
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_CITADEL_)
-#define SAVEGAMEVERSION         23
+#define SAVEGAMEVERSION         24
 #else
 #define SAVEGAMEVERSION         22
 #endif

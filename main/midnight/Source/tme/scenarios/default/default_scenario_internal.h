@@ -19,6 +19,7 @@ namespace tme {
     class mxentityfactory {
     public:
         virtual mxentity* Create ( id_type_t type );
+        virtual mxroutebranch* CreateRouteBranch ();
     };
 
 
