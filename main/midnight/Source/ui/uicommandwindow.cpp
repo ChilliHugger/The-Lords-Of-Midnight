@@ -158,6 +158,12 @@ void uicommandwindow::initialiseCommands()
 #if defined(_CITADEL_)
     auto quest = uihelper::CreateImageButton("i_quest", ID_QUEST, callback);
     addItem(quest,CHOOSE_QUEST);
+
+    // the quest icon has no baked in text, unlike the language icons
+    character questor;
+    TME_GetCharacter(questor, default_characters[0]);
+    auto questText = uihelper::addButtonText(quest, TME_GetSystemString(questor, SS_QUEST_ACTION));
+    questText->setScale(1.25f);  // roughly match the baked in text of the other icons
 #endif
     
 #if defined(_DDR_)
@@ -566,6 +572,8 @@ void uicommandwindow::enableItem( layoutid_t id, bool enable )
     if ( button != nullptr ) {
         button->setEnabled(enable);
         button->setOpacity( enable ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr) );
+        if ( auto b = dynamic_cast<Button*>(button) )
+            uihelper::dimButtonText(b, enable);
     }
 }
 

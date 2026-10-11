@@ -201,6 +201,12 @@ std::string TME_GetLocationText ( mxgridref loc )
     return TME_GetText( "Location", args, 1 );
 }
 
+std::string TME_GetObjectText ( mxid id )
+{
+    args[0] = id ;
+    return TME_GetText( "Object", args, 1 );
+}
+
 bool TME_GetLocation( maplocation& out, mxid id )
 {
     CLEARINFOSTRUCT ( out, IDT_LOCATION );

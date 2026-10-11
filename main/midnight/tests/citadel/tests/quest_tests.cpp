@@ -601,7 +601,7 @@ SCENARIO("A lord's quest and his news are told from strings.tsv, naming whom or 
     THEN("the quest names its lord, keep or weapon, and the one he hunts by that lord's own pronoun")
     {
         REQUIRE( rorthron->SetQuest(QS_RECRUIT, Idt(ilvar)) );
-        REQUIRE( rorthron->QuestText() == "Rorthron is questing to recruit " + ilvar->Longname() + "." );
+        REQUIRE( rorthron->QuestText() == "Rorthron is on a quest to recruit " + ilvar->Longname() + "." );
 
         REQUIRE( rorthron->SetQuest(QS_KILL, Idt(haraglai)) );
         REQUIRE( rorthron->QuestText() == "Rorthron is hunting " + haraglai->Longname() + " to slay "
@@ -623,13 +623,13 @@ SCENARIO("A lord's quest and his news are told from strings.tsv, naming whom or 
         auto news = ilvar->Longname() + " would not be persuaded by Rorthron";
         REQUIRE( rorthron->NewsText() == news );
         REQUIRE( text(SS_QUEST_NEWS_LINE, rorthron) == news + "." );
-        REQUIRE_THAT( text(SS_QUEST_NEWS_REPORT, rorthron), Catch::Matchers::StartsWith(".") && Catch::Matchers::EndsWith(" " + news) );
+        REQUIRE_THAT( text(SS_QUEST_NEWS_REPORT, rorthron), Catch::Matchers::StartsWith("\n") && Catch::Matchers::EndsWith(" " + news) );
     }
 
     THEN("the quest page asks by the lord's name")
     {
-        REQUIRE( text(SS_QUEST_ASK_RECRUIT, rorthron) == "Whom should Rorthron try to recruit?" );
-        REQUIRE( text(SS_QUEST_PICK_GUARD, rorthron) == "Touch the place Rorthron should guard" );
+        REQUIRE( text(SS_QUEST_ASK_RECRUIT, rorthron) == "Choose a person for Rorthron to recruit..." );
+        REQUIRE( text(SS_QUEST_PICK_GUARD, rorthron) == "Choose a place for Rorthron to guard..." );
     }
 
     THEN("thinking about a lord of yours ends with his quest, in the strings rather than the screen")

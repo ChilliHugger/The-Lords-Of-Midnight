@@ -28,6 +28,7 @@ constexpr auto BUTTON_TEXT_FONT        = "fonts/libra.ttf";
 constexpr auto BUTTON_TEXT_SIZE        = 28;       // 56pt in gfx_h, 112pt in the 256 high source art
 constexpr auto BUTTON_TEXT_TRACKING    = -75;      // Photoshop tracking, in 1/1000 of an em
 constexpr auto BUTTON_TEXT_OUTLINE     = 2;
+constexpr auto BUTTON_TEXT_NAME        = "buttontext";
 constexpr auto IMAGE_LOGO              = "misc/logo.png";
 constexpr auto IMAGE_LOGO_NOVEL        = "misc/logo-26.png";
 
@@ -116,6 +117,7 @@ public:
     // 'offset' moves it vertically from the alignment, positive is up (RES applied).
     // attached to the button so it scales with the press zoom
     enum class ButtonTextAlign { Bottom, Centre, Top };
+    static void dimButtonText( Button* button, bool enabled );
     static ax::Label* addButtonText( Button* button, const std::string& text, ButtonTextAlign align = ButtonTextAlign::Bottom, f32 offset = 0, s32 outline = BUTTON_TEXT_OUTLINE );
 
     // colour slots used by <colour:N>...</colour> in setColouredText, set up by the UI

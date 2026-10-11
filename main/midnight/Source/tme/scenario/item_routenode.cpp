@@ -23,32 +23,39 @@ namespace tme {
         mxroutenode::mxroutenode()
         {
             mxentity::idType = IDT_ROUTENODE ;
-            nodes.clear();
+            branches.clear();
         }
 
         mxroutenode::~mxroutenode()
         {
+            ClearNodes();
+        }
+
+        void mxroutenode::ClearNodes()
+        {
+            for ( auto branch : branches )
+                delete branch;
+            branches.clear();
         }
 
         void mxroutenode::Serialize ( archive& ar )
         {
-        mxroutenode* node = nullptr;
         u8 count = 2;
         
             mxitem::Serialize(ar);
             if ( ar.IsStoring() ) {
-                count = nodes.size();
-                ar << count;
-                for (int ii=0; ii<count; ii++)
-                    ar << nodes[ii] ;
+                ar << (u8)branches.size();
+                for ( auto branch : branches )
+                    ar << branch;
             }else{
                 if ( mx->SaveGameVersion() > 16 ) {
                     ar >> count;
                 }
                 ClearNodes();
                 for (int ii=0; ii<count; ii++) {
-                    ar >> node ;
-                    AddNode(node);
+                    auto branch = mx->entityfactory->CreateRouteBranch();
+                    ar >> branch;
+                    branches.push_back( branch );
                 }
             }
         }
@@ -67,6 +74,18 @@ namespace tme {
             }
         }
 
+        archive& operator<<(archive& ar, mxroutebranch* branch)
+        {
+            branch->Serialize(ar);
+            return ar;
+        }
+
+        archive& operator>>(archive& ar, mxroutebranch*& branch)
+        {
+            branch->Serialize(ar);
+            return ar;
+        }
+
         archive& operator<<(archive& ar, mxroutenode* node)
         {
             return ar << ((u32)mxentity::SafeId(node));
@@ -79,10 +98,37 @@ namespace tme {
             return ar ;
         }
         
+        c_node mxroutenode::Nodes() const
+        {
+            c_node nodes;
+            for ( auto& branch : branches )
+                nodes.push_back(branch->Node());
+            return nodes;
+        }
+
+        mxroutebranch* mxroutenode::AddNode( mxroutenode* node )
+        {
+            if ( node == nullptr )
+                return nullptr;
+
+            auto branch = mx->entityfactory->CreateRouteBranch();
+            branch->Node(node);
+            branches.push_back(branch);
+            return branch;
+        }
+
+        void mxroutebranch::Serialize ( archive& ar )
+        {
+            if ( ar.IsStoring() )
+                ar << node;
+            else
+                ar >> node;
+        }
+
         mxroutenode* mxroutenode::PickNode()
         {
-            auto index = mxrandom((u32)nodes.size()-1);
-            return nodes[index];
+            auto index = mxrandom((u32)branches.size()-1);
+            return branches[index]->Node();
         }
         
 

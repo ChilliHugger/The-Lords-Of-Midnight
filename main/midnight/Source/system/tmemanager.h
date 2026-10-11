@@ -55,6 +55,7 @@ public:
     
 public:
     std::string i_big;
+    std::string i_quest;    // quest panel icon
     int         mapcell;
 } ;
 

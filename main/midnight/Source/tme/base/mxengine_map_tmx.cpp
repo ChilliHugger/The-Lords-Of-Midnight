@@ -102,6 +102,21 @@ namespace {
         return mxgridref ( (u32)std::lround(xPixels / tileSize.width), (u32)std::lround(yPixels / tileSize.height) );
     }
 
+    // DR_NORTH ... DR_NORTHWEST, as directioninfo names them
+    mxdir_t ParseDirection ( const std::string& symbol )
+    {
+        static const char* symbols[] = {
+            "DR_NORTH", "DR_NORTHEAST", "DR_EAST", "DR_SOUTHEAST",
+            "DR_SOUTH", "DR_SOUTHWEST", "DR_WEST", "DR_NORTHWEST",
+        };
+
+        for ( u32 ii=0; ii<NUMELE(symbols); ii++ ) {
+            if ( c_stricmp( symbol.c_str(), symbols[ii] ) == 0 )
+                return (mxdir_t)ii;
+        }
+        return DR_NONE;
+    }
+
     using EntityLookupFn = std::function<mxentity*(const std::string&, id_type_t)>;
 
     // resolves a TMX "object" type property's stored map-wide object id
@@ -278,7 +293,21 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
                 if ( branch == nullptr )
                     continue;
 
-                routenode->AddNode( static_cast<mxroutenode*>(branch) );
+                auto routebranch = routenode->AddNode( static_cast<mxroutenode*>(branch) );
+                CONTINUE_IF_NULL(routebranch);
+
+                // Citadel branches also carry DIRECTION_x and WEIGHT_x, x being the BRANCH_x suffix
+                // - a no-op for a branch that doesn't keep them
+                std::string suffix = propertyName.substr(7);
+                auto itDirection = dict.find("DIRECTION_" + suffix);
+                auto itWeight    = dict.find("WEIGHT_" + suffix);
+                if ( itDirection != dict.end() ) {
+                    mxdir_t direction = ParseDirection( itDirection->second.asString() );
+                    if ( direction == DR_NONE )
+                        MXTRACE( "TMX routenode '%s' DIRECTION_%s is not a direction", itName->second.asString().c_str(), suffix.c_str());
+                    u32 weight = itWeight != dict.end() ? (u32)itWeight->second.asInt() : 0;
+                    routebranch->SetRoute( direction, weight );
+                }
             }
         }
     }

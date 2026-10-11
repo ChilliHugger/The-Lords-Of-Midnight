@@ -189,7 +189,7 @@ using namespace chilli::types;
 #if defined(_CITADEL_)
             OB_STORMBLADE=23,
             OB_BLOODBRINGER,
-            OB_WIDOMAKER,
+            OB_WIDOWMAKER,
             OB_ARANATH,
             OB_PERSUADER,
             OB_SKULLCRUSHER,
@@ -740,6 +740,8 @@ using namespace chilli::types;
             SS_DUNGEON_FREED,
             SS_DUNGEON_FOUND,
             SS_DUNGEON_NOTHING,
+            SS_QUEST_ACTION,
+            SS_QUEST_CHOOSE,
 
             SS_MAX_STRINGS = 255
         };
@@ -1254,7 +1256,7 @@ namespace tme {
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
 #if defined(_CITADEL_)
-#define SAVEGAMEVERSION         23
+#define SAVEGAMEVERSION         24
 #else
 #define SAVEGAMEVERSION         22
 #endif

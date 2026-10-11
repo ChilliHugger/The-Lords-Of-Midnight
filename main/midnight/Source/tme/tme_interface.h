@@ -103,6 +103,7 @@ std::string TME_GetSystemString ( const character& c, int msg ) ;
 std::string TME_LastActionMsg();
 std::string TME_GetNumber(int number);
 std::string TME_GetLocationText ( tme::mxgridref loc );
+std::string TME_GetObjectText ( mxid id );   // the object's description, cooked
 
 character&  TME_CurrentCharacter ( void );
 character&  TME_CurrentCharacter ( mxid characterid );
