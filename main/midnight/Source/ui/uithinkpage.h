@@ -60,7 +60,7 @@ protected:
     void displayObject ( mxid objectid );
     void displayArmy ();
     
-    void aheadOrHere( std::string& text, tme::loc_t location, bool aheaddir );
+    void aheadOrHere( std::string& text, tme::loc_t location );
     void checkPerson();
     void checkPlace();
     void checkBattle();

@@ -78,9 +78,9 @@ Version	Id	Symbol	Text
 11	76	SS_FIGHT2	{case:first}{char:gender:heshe} slew the {obj:name} with {char:obj:text}.{sp}
 11	77	SS_FIGHT3	The {obj:name} fled from the warmth of {char:obj:text}.{sp}
 11	78	SS_FIGHT4	{case:first}{char:gender:heshe} touches the {obj:name} with {char:obj:text} and they were slain by their own fear.{sp}
-11	79	SS_PREFIX_HERE	  Here
-11	80	SS_PREFIX_AHEAD	  Ahead
-11	81	SS_PREFIX_DIRECTION	  To the {char:dir:name}
+11	79	SS_PREFIX_HERE	{sp}{sp}Here{sp}
+11	80	SS_PREFIX_AHEAD	{sp}{sp}To the {char:dir:name},{sp}
+11	81	SS_PREFIX_DIRECTION	{sp}{sp}To the {char:dir:name}
 11	82	SS_SEEK_MSG1	"A voice calls, “Farflame the Dragonlord can destroy the Ice Crown.”{sp}"
 11	83	SS_SEEK_MSG2	"A voice calls, “Fawkrin the Skulkrin can destroy the Ice Crown.”{sp}"
 11	84	SS_SEEK_MSG3	"A voice calls, “Lorgrim the Wise can destroy the Ice Crown.”{sp}"

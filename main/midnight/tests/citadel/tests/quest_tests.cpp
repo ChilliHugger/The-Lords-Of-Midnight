@@ -909,3 +909,26 @@ SCENARIO("A wanderer wanders, and a hostage set free goes home to defend it")
         }
     }
 }
+
+
+SCENARIO("CITADEL: Prefix for what is here and what is ahead")
+{
+    TMEStep::NewStory();
+
+    GIVEN("a lord looking north")
+    {
+        auto character = TMEStep::PlaceLordAt(TMEStep::ch_rorthron, mxgridref(25, 5), DR_NORTH);
+
+        WHEN("the here and ahead prefixes are read")
+        {
+            auto here  = tme::mx->text->CookedSystemString(SS_PREFIX_HERE, character);
+            auto ahead = tme::mx->text->CookedSystemString(SS_PREFIX_AHEAD, character);
+
+            THEN("they are the original game's wording")
+            {
+                REQUIRE_THAT( here,  Catch::Matchers::Equals("  Here ") );
+                REQUIRE_THAT( ahead, Catch::Matchers::Equals("  Ahead ") );
+            }
+        }
+    }
+}

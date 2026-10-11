@@ -99,3 +99,22 @@ SCENARIO("NOVEL: Character Sees something at a location") {
 
 
 
+
+
+SCENARIO("LOM: Prefix for what is ahead names the direction and Here for here") {
+    TMEStep::NewStory(mxscenarioid::LOM, RF_DEFAULT, DF_NORMAL);
+
+    GIVEN("a lord looking north") {
+        auto character = TMEStep::PlaceLordAt(TMEStep::ch_luxor, mxgridref(25, 5), DR_NORTH);
+
+        WHEN("the here and ahead prefixes are read") {
+            auto here  = tme::mx->text->CookedSystemString(SS_PREFIX_HERE, character);
+            auto ahead = tme::mx->text->CookedSystemString(SS_PREFIX_AHEAD, character);
+
+            THEN("here is 'Here' and ahead is 'To the North,'") {
+                REQUIRE_THAT( here, Catch::Matchers::Equals("  Here ") );
+                REQUIRE_THAT( ahead, Catch::Matchers::Equals("  To the North, ") );
+            }
+        }
+    }
+}
