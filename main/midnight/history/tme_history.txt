@@ -26,6 +26,7 @@ Build (57)
 23. ADDED: LOM - The think pages show 'He thinks again....' with keyboard shortcut
 24. ADDED: DDR - The think pages show 'More?' with keyboard shortcut
 25. CHANGED: Corrected night colour text
+26. CHANGED: LOM - The think pages show 'To the [direction],' for what lies ahead, as the original
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up

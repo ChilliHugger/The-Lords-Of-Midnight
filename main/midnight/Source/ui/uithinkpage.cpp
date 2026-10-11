@@ -524,20 +524,13 @@ std::string uithinkpage::checkFightAvailable()
  *
  */
 
-void uithinkpage::aheadOrHere ( std::string& text, tme::loc_t location, bool aheaddir )
+void uithinkpage::aheadOrHere ( std::string& text, tme::loc_t location )
 {
     character& c = TME_CurrentCharacter();
     
-    if ( location.x == c.location.x && location.y == c.location.y) {
-        text += std::string(TME_GetSystemString(c, SS_PREFIX_HERE )) + " ";
-    }else{
-        if ( aheaddir )
-            text += std::string(TME_GetSystemString(c, SS_PREFIX_AHEAD )) + " ";
-        else {
-            text += std::string(TME_GetSystemString(c, SS_PREFIX_DIRECTION )) + " ";
-        }
-    }
-    
+    // the wording (or lack of it) is scenario data
+    text += TME_GetSystemString(c,
+        (location.x == c.location.x && location.y == c.location.y) ? SS_PREFIX_HERE : SS_PREFIX_AHEAD );
 }
 
 
@@ -584,7 +577,7 @@ void uithinkpage::checkPerson ( void )
     }
         
 #if defined(_LOM_) || defined(_CITADEL_)
-    aheadOrHere ( text, c.location, true );
+    aheadOrHere(text, c.location);
 #endif
     
     displayCharacterTerrain(c);
@@ -595,7 +588,7 @@ void uithinkpage::checkPerson ( void )
     }else{
         
 #if defined(_DDR_)
-        aheadOrHere ( text, c.location, true );
+        aheadOrHere(text, c.location);
 #endif
         
         msg = Character_IsRecruited(c) ? SS_MESSAGE4 : SS_MESSAGE7 ;
@@ -680,7 +673,7 @@ void uithinkpage::checkPlace ( void )
     }
     
     TME_GetStronghold( current_stronghold, id );
-    aheadOrHere ( text, current_stronghold.location, TRUE );
+    aheadOrHere(text, current_stronghold.location);
     displayTerrain ( current_stronghold.terrain );
     
     variant args[2];
@@ -780,12 +773,12 @@ void uithinkpage::checkArmy ( void )
         TME_GetCharacter(c,idt);
         
         if ( id == SpecialId::ArmiesHere) {
-            text += TME_GetSystemString(c, SS_PREFIX_HERE ) + " ";
+            text += TME_GetSystemString(c, SS_PREFIX_HERE );
             displayArmy();
             warriors = location_armies.regiment_warriors;
             riders = location_armies.regiment_riders;
         }else{
-            text += TME_GetSystemString(c, SS_PREFIX_AHEAD ) + " ";
+            text += TME_GetSystemString(c, SS_PREFIX_AHEAD );
             warriors = location_infront_armies.regiment_warriors;
             riders = location_infront_armies.regiment_riders;
             displayArmy();
@@ -805,7 +798,7 @@ void uithinkpage::checkArmy ( void )
         case IDT_CHARACTER:
             
             TME_GetCharacter(c,id) ;
-            aheadOrHere(text,c.location,true);
+            aheadOrHere(text, c.location);
             displayCharacter ( c );
             text += TME_GetSystemString(c, SS_MESSAGE2 ) ;
             displayCharacterTerrain(c);
@@ -819,7 +812,7 @@ void uithinkpage::checkArmy ( void )
         case IDT_STRONGHOLD:
         {
             TME_GetStronghold(current_stronghold,id) ;
-            aheadOrHere(text,current_stronghold.location,TRUE);
+            aheadOrHere(text, current_stronghold.location);
             displayTerrain ( current_stronghold.terrain );
             variant args[2];
             args[0] = current_stronghold.id ;

@@ -78,8 +78,8 @@ Version	Id	Symbol	Text
 11	76	SS_FIGHT2	** UNUSED **
 11	77	SS_FIGHT3	** UNUSED **
 11	78	SS_FIGHT4	** UNUSED **
-11	79	SS_PREFIX_HERE	{sp}{sp}Here
-11	80	SS_PREFIX_AHEAD	{sp}{sp}Ahead
+11	79	SS_PREFIX_HERE	{sp}{sp}Here{sp}
+11	80	SS_PREFIX_AHEAD	{sp}{sp}Ahead{sp}
 11	81	SS_PREFIX_DIRECTION	{sp}{sp}To the {char:dir:name}
 11	82	SS_SEEK_MSG1	", ""{char:longname} stands {char:loc:terrain:prep} {char:loc:name}.""{sp}"
 11	83	SS_SEEK_MSG2	", ""The %s, can be found %s.""{sp}"
