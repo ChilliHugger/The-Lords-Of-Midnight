@@ -141,7 +141,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../{v}/terrain/terrain-{n}.plist</filename>
+                <filename>../../main/midnight/Resources-citadel/citadel/{v}/terrain/terrain-{n}.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>

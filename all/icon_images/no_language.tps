@@ -141,7 +141,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../{v}/language-{n}.plist</filename>
+                <filename>../../main/midnight/Resources/all/{v}/language-{n}.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>
