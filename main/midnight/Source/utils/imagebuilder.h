@@ -54,6 +54,12 @@ public:
     // as createIconButton, for a button you already have (e.g. a subclass); false if the icon has no atlas art
     static bool setupButton(ax::ui::Button* button, const imagedef::Image& image, const Options& options = Options());
 
+    // renders the image (which needs a size) into a picture - a child sprite of the host node, which becomes the
+    // size of the image. Call it again, with a changed copy of the image, to update it: for things like a lord's face,
+    // name and status. 'resolution' multiplies the pixels rendered, for a picture drawn larger than its size
+    // (the host can be scaled up without the text going soft).
+    static bool setupPicture(ax::Node* host, const imagedef::Image& image, float resolution = 1.0f, const Options& options = Options());
+
     // show/hide a built element by id (re-rendering a flattened image)
     static bool setEnabled(ax::Node* parent, const std::string& elementId, bool enabled);
 };

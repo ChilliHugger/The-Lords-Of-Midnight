@@ -252,3 +252,54 @@ TEST_CASE("The shipped filter buttons have the icon and both eye badges")
     CHECK(lib.find("filter_dawn")->firstGfx()->name == "lord_dawn");
     CHECK(lib.find("filter_dead")->firstGfx()->name == "f_dead!");
 }
+
+TEST_CASE("The shipped lord images have circles, a face and status badges that start hidden, but no name")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/lord.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    auto select = lib.find("lord_select");
+    REQUIRE(select != nullptr);
+    CHECK(select->width == 128.0f);     // the size of the circles
+    REQUIRE(select->find("face") != nullptr);
+    CHECK(select->find("title") == nullptr);    // the name is a label on the lord, drawn sharp at any scale
+    for (auto part : { "selected", "location", "drop", "battle", "night", "dawn" }) {
+        INFO(part);
+        REQUIRE(select->find(part) != nullptr);
+        CHECK_FALSE(select->find(part)->enabled);
+    }
+    CHECK(select->find("selected")->name == "lord_select_circle");
+    CHECK(select->find("selected")->colour == Colour{0x00,0x00,0xcd});
+    CHECK(select->find("location")->name == "map_current_location");
+    CHECK(select->find("drop")->name == "lord_drop_circle");
+    CHECK(select->find("drop")->colour == Colour{0x00,0x00,0x00});
+    CHECK(select->find("drop")->alpha == 0.1f);
+
+    // the circles are behind the face, the badges over it
+    CHECK(select->elements.front().id == "selected");
+    CHECK(select->elements[3].id == "face");
+
+    auto grouped = lib.find("lord_grouped");
+    REQUIRE(grouped != nullptr);
+    CHECK(grouped->width == 64.0f);
+    CHECK(grouped->find("face") != nullptr);
+    CHECK(grouped->find("title") == nullptr);
+}
+
+TEST_CASE("Every lord has a shield image the size the lord face is scaled from")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("lom/shields.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    for (auto& name : { "ch_luxor", "ch_morkin", "ch_corleth", "ch_rorthron", "ch_xajorkith", "ch_athoril" }) {
+        INFO(name);
+        auto shield = lib.find(name);
+        REQUIRE(shield != nullptr);
+        CHECK(shield->width == 256.0f);     // 64 / 256 is the scale of a face
+        CHECK(lib.find(std::string("mini_") + name) == nullptr);
+    }
+}

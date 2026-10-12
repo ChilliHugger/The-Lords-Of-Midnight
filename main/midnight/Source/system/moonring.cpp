@@ -683,6 +683,7 @@ std::string imageFiles[] = {
 std::vector<std::string> imageDefinitions = {
     "icons",
     "filters",
+    "lord",
 #if defined(_CITADEL_)
     "quest",
 #else

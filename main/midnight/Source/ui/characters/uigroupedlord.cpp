@@ -27,10 +27,6 @@ bool uigroupedlord::init()
         
         setContentSize(Size(DISTANCE_INNER,DISTANCE_INNER));
         
-//        auto bg = ax::LayerColor::create(Color4B(0,0,0, 25));
-//        bg->setContentSize(this->getContentSize());
-//        this->addChild(bg);
-
         setTouchEnabled(true);
         enableDrag();
         enableDrop();
@@ -54,31 +50,9 @@ bool uigroupedlord::setLord(mxid characterid)
     character c;
     TME_GetCharacter(c, characterid );
     
-    
-    auto face = getFaceImage(c);
-    if ( face == nullptr )
-        face = Sprite::createWithSpriteFrameName("f_dead!");
-    uihelper::AddCenter(this, face, 0, SHIELD_OFFSET_Y);
-    
-//    titleBackground = ax::LayerColor::create(Color4B(_clrRed));
-//    titleBackground->setContentSize(Size(getContentSize().width,RES(16)));
-//    titleBackground->setPosition(-(face->getContentSize().width/2),0);
-//    face->addChild(titleBackground);
-    
-    // set name label
-    title = Label::createWithTTF( uihelper::font_config_small, c.shortname );
-    title->setTextColor(Color4B(_clrWhite));
-    title->enableOutline(Color4B(_clrBlack),RES(1));
-    //title->setHeight(RES(16));
-    title->getFontAtlas()->setAntiAliasTexParameters();
-    //title->setWidth(getContentSize().width);
-    title->setHorizontalAlignment(TextHAlignment::CENTER);
-    title->setVerticalAlignment(TextVAlignment::BOTTOM);
-    title->setAnchorPoint(uihelper::AnchorCenter);
-    title->setPosition( HALF(face->getContentSize().width),0);
-    face->addChild(title);
-    
-    buttonNode = face;
+    renderLordImage("lord_grouped", faceName(c), {}, SHIELD_OFFSET_Y);
+    setLordTitle(c.shortname, false);
+    buttonNode = lordImage;
     
     auto userdata = static_cast<char_data_t*>(getUserData());
     userdata->select_loc = point::ZERO;
@@ -91,27 +65,6 @@ bool uigroupedlord::setLord(mxid characterid)
 
 void uigroupedlord::setTitleAlignment(TextHAlignment align)
 {
-//    f32 x = (align == TextHAlignment::RIGHT) ? RES(-32) : RES(8);
-//    //titleBackground->setPosition(Vec2(x,0));
-//    title->setAnchorPoint(uihelper::AnchorBottomLeft);
-//    title->setPosition(Vec2(x,RES(-8)));
-//    title->setHorizontalAlignment(align);
-    
-}
-
-Sprite* uigroupedlord::getFaceImage(character& c)
-{
-    if ( Character_IsDead(c) )
-        return Sprite::createWithSpriteFrameName("f_dead!");
-    
-#if defined(_DDR_)
-    auto face = GetCharacterFace(c);
-    return Sprite::create( face );
-#else
-    auto userdata = static_cast<char_data_t*>(getUserData());
-    return Sprite::create( userdata->face );
-#endif
-    
 }
 
 void uigroupedlord::onPressStateChangedToNormal()

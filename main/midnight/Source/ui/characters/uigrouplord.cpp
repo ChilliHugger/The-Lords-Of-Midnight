@@ -37,17 +37,7 @@ bool uigrouplord::init()
         circle->setLocalZOrder(ZORDER_FAR);
         addChild(circle);
         
-//        auto box = DrawNode::create();
-//        box->drawRect(Vec2::ZERO, Vec2(getContentSize().width,getContentSize().height), Color4F(_clrBlack) );
-//        addChild(box);
-        //        Vec2 pos2 = Vec2(getContentSize().width/4,getContentSize().height/4);
-        //        bg->setPosition(pos2);
-
-        
         Vec2 pos = Vec2(getContentSize().width/2,getContentSize().height/2);
-        innerCircle->setPosition(pos);
-        selectedNode->setPosition(pos);
-        locationNode->setPosition(pos);
         
         // Left button
         i_group_left = uihelper::CreateImageButton("i_group_left", ID_GROUP_LEFT, [&] (Ref* ref ) {

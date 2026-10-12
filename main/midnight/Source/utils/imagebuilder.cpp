@@ -171,20 +171,28 @@ static Node* createElement(const Library& lib, const Element& e, const imagebuil
             node = container;
             visible = { 0, 0, container->getContentSize().width, container->getContentSize().height };
         } else {
-            auto sprite = Sprite::createWithSpriteFrameName(e.name);
+            // an atlas image, else an image file
+            auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(e.name);
+            auto sprite = frame != nullptr ? Sprite::createWithSpriteFrame(frame) : Sprite::create(e.name);
             if (sprite == nullptr)
                 return nullptr;
             sprite->setColor(toColor(e.colour));
             sprite->setFlippedX(e.flipX);
             sprite->setFlippedY(e.flipY);
             node = sprite;
-            visible = frameVisibleBox(sprite->getSpriteFrame());
+            auto size = sprite->getContentSize();
+            visible = frame != nullptr ? frameVisibleBox(frame) : Box{ 0, 0, size.width, size.height };
         }
     } else {
         TTFConfig config(e.font == "button" ? BUTTON_TEXT_FONT : FONT_FILENAME, RES(e.size));
+        // as the font configs in uihelper: plain bitmap glyphs, not the engine's default of distance fields (soft at small sizes)
+        config.glyphs = GlyphCollection::DYNAMIC;
+        config.outlineSize = 0;
+        config.distanceFieldEnabled = false;
         auto label = Label::createWithTTF(config, e.text);
         if (label == nullptr)
             return nullptr;
+        label->getFontAtlas()->setAntiAliasTexParameters();     // as the other labels: smooth, not nearest-neighbour
         label->setTextColor(Color4B(toColor(e.colour)));
         if (e.outline > 0)
             label->enableOutline(Color4B(_clrBlack), RES(e.outline));
@@ -276,10 +284,12 @@ static Node* createSource(const Size& size, const std::string& id)
 }
 
 // renders the source into its sprite frame (replacing the last one)
-static void renderSource(Node* source)
+static void renderSource(Node* source, f32 resolution = 1.0f)
 {
+    // resolution > 1 renders more pixels than the cell is big, for pictures that are drawn larger than their size
     auto size = source->getContentSize();
-    auto renderTexture = RenderTexture::create((int)ceilf(size.width), (int)ceilf(size.height), backend::PixelFormat::RGBA8);
+    auto renderTexture = RenderTexture::create((int)ceilf(size.width * resolution), (int)ceilf(size.height * resolution), backend::PixelFormat::RGBA8);
+    source->setScale(resolution);
 
     if (DEBUG_FILL_BACKGROUND)
         renderTexture->beginWithClear(1, 0, 1, 0.35f);
@@ -287,9 +297,11 @@ static void renderSource(Node* source)
         renderTexture->beginWithClear(0, 0, 0, 0);
     source->visit();
     renderTexture->end();
+    source->setScale(1);
 
     auto texture = renderTexture->getSprite()->getTexture();
-    auto frame = SpriteFrame::createWithTexture(texture, Rect(0, 0, size.width, size.height));
+    texture->setAntiAliasTexParameters();   // smooth when drawn larger or smaller than it was rendered
+    auto frame = SpriteFrame::createWithTexture(texture, Rect(0, 0, size.width * resolution, size.height * resolution));
     SpriteFrameCache::getInstance()->addSpriteFrame(frame, source->getName());
 }
 
@@ -360,6 +372,40 @@ bool imagebuilder::setupButton(Button* button, const imagedef::Image& image, con
     button->loadTextureNormal(source->getName(), Widget::TextureResType::PLIST);
     showFlattened(button->getRendererNormal());
     button->setUserObject(source);
+    return true;
+}
+
+bool imagebuilder::setupPicture(Node* host, const imagedef::Image& image, f32 resolution, const Options& options)
+{
+    // the image needs a size: it is the host's cell
+    if (image.width <= 0)
+        return false;
+
+    Size cell(RES(image.width), RES(image.height));
+    Stack stack{ image.id };
+    auto placed = placeElements(library(), image, options, stack);
+
+    auto source = createSource(cell, image.id);
+    attachPlaced(source, placed, image, cell);
+    renderSource(source, resolution);
+
+    // the picture is a child of the host, drawn smaller than its texture so it is cell sized, sharp when the
+    // host is scaled up. The host is plain, so scaling and fading it work as for any node.
+    auto picture = dynamic_cast<Sprite*>(host->getChildByName("picture"));
+    if (picture == nullptr) {
+        picture = Sprite::create();
+        picture->setName("picture");
+        picture->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+        picture->setPosition(Vec2::ZERO);
+        host->addChild(picture);
+        host->setIgnoreAnchorPointForPosition(false);
+        host->setCascadeOpacityEnabled(true);
+    }
+    host->setContentSize(cell);
+    picture->setSpriteFrame(source->getName());
+    picture->setScale(1.0f / resolution);
+    showFlattened(picture);
+    host->setUserObject(source);     // replaces (and so removes the frame of) the previous picture
     return true;
 }
 
