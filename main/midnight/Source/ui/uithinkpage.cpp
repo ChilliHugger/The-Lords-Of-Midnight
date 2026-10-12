@@ -296,6 +296,7 @@ bool uithinkpage::init()
     lblAgain = Label::createWithTTF( uihelper::font_config_big, "" );
     lblAgain->getFontAtlas()->setAntiAliasTexParameters();
     lblAgain->setLocalZOrder(ZORDER_DEFAULT);
+    lblAgain->setVisible(false);
     uihelper::setColouredText(lblAgain, TME_GetSystemString(TME_CurrentCharacter(),SS_THINK_AGAIN), _clrDarkRed);
     
 
@@ -447,8 +448,11 @@ void uithinkpage::setupUIElements()
     if ( Character_IsDead(c) ) {
         objectid = c.killedby;
         lblDescription->setString(TME_GetCharacterText(c,"CharDeath"));
+        lblAgain->setVisible(false);
         return;
     }
+
+    lblAgain->setVisible(true);
     
     switch ( mode ) {
             

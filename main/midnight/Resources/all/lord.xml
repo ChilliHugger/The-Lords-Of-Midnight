@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- A lord on the select, think, quest and map screens: the circles behind it (selected, at the current location, and a faint one while another lord is dragged over it),
-     the face (the lord's shield scaled to 64x64, or a 64x64 portrait) and a dawn/night/battle badge hanging off its
-     top left. Which of the circles and badges are shown, and the face, are set in code. The lord's name is not here:
-     it is a label on the lord, so it is drawn sharp at any scale. The circles are drawn rings and discs, matching the
-     old lord_select_circle and map_current_location sprites. Positions are base (gfx_m) units; the picture is
-     128x128 and the face is centred on it; the code moves the face down by the scenario's SHIELD_OFFSET_Y. -->
 <images>
 
     <image id="lord_select" size="128,128">

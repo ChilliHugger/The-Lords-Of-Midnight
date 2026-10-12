@@ -291,32 +291,27 @@ void panel_think::addPage( mxid pageId )
     page->setObject(pageId, objectId, currentmode);
     pages.pushBack(page);
 
-    auto padding = getSafeArea();
+    // the size and spacing of the dots on a phone depend on how many pages there are; their position is the pager's
     f32 scale = CONTENT_SCALE(0.5f);
     int xAdjust = CONTENT_SCALE(RES(-2));
-    int bottomAdj = RES(4);
 
     if( pages.size() < 32 ) {
     }
     else if( pages.size() < 64 ) {
         scale = 0.5f;
         xAdjust=RES(-4);
-        bottomAdj = RES(2);
     }
     else if( pages.size() < 100 ) {
         scale = 0.4f;
         xAdjust=RES(-6);
-        bottomAdj = RES(2);
     }
     else {
         scale = 0.4f;
         xAdjust=RES(-8);
-        bottomAdj = RES(2);
     }
 
     pageView->setIndicatorIndexNodesScale(scale);
     pageView->setIndicatorSpaceBetweenIndexNodes(xAdjust);
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + bottomAdj - RES(8)) );
 }
 
 // TODO: Most of this logic should be in TME

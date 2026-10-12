@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- The story book on the continue menu (its id is not 'book', which is the atlas image of the book itself): a book with a bookmark and a fade at the bottom for the title, which is a
-     label set in code. The bookmark is white here: the code tints it for the story's slot. Positions are base
-     (gfx_m) units in a 512x400 cell; the book art is centred in it and the bookmark hangs 22 in from its top left. -->
 <images>
 
     <image id="story_book" size="512,400">
