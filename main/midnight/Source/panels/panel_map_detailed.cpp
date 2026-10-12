@@ -82,7 +82,7 @@ bool panel_map_detailed::init()
     
     // Command Window
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
+    auto look = uihelper::CreateImageButton("icon_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
   
     auto map = uihelper::CreateImageButton("i_big_map", ID_MAP_OVERVIEW, clickCallback);
@@ -111,12 +111,12 @@ bool panel_map_detailed::init()
     map_up->setLocalZOrder(ZORDER_UI+1);
     map_up->setAnchorPoint(uihelper::AnchorCenter);
   
-    createFilterButton(ID_FILTER_CURRENT_LOC,   "i_center", map_filters::centre_char);
-    createFilterButton(ID_FILTER_CRITTERS,      "i_critters", map_filters::show_critters);
-    createFilterButton(ID_FILTER_LORDS,         "i_filter_lords", map_filters::show_lords);
+    createFilterButton(ID_FILTER_CURRENT_LOC,   "filter_centre", map_filters::centre_char);
+    createFilterButton(ID_FILTER_CRITTERS,      "filter_critters", map_filters::show_critters);
+    createFilterButton(ID_FILTER_LORDS,         "filter_lords", map_filters::show_lords);
 
     if (scenario_flags.Is(SF_TUNNELS)) {
-        createFilterButton(ID_FILTER_TUNNELS,   "i_filter_tunnel", map_filters::show_tunnels);
+        createFilterButton(ID_FILTER_TUNNELS,   "filter_tunnels", map_filters::show_tunnels);
         addShortcutKey(ID_FILTER_TUNNELS,       KEYCODE(F4));
     }
     

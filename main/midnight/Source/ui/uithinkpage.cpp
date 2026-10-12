@@ -130,7 +130,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     
     // Approach
-    auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, clickCallback);
+    auto approach = uihelper::CreateImageButton("icon_approach", ID_APPROACH, clickCallback);
     approach->setPosition(pos);
     approach->setVisible(this->approach);
     approach->setEnabled(this->approach);
@@ -139,7 +139,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
 #if defined(_LOM_) || defined(_CITADEL_)
     // Unhide
-    auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, clickCallback);
+    auto unhide = uihelper::CreateImageButton("icon_unhide", ID_UNHIDE, clickCallback);
     unhide->setPosition(pos);
     unhide->setVisible(this->unhide);
     unhide->setEnabled(this->unhide);
@@ -176,7 +176,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     s32 xAdjust = mr->resolution->IsPhoneScaleEnabled() ? RES(32) : 0 ;
     
     // RECRUIT SOLDIERS
-    auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, clickCallback);
+    auto recruitMen = uihelper::CreateImageButton("icon_recruit", ID_RECRUITMEN, clickCallback);
     recruitMen->setVisible(this->recruitMen||this->postMen);
     recruitMen->setEnabled(this->recruitMen);
     recruitMen->setOpacity(this->recruitMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
@@ -188,7 +188,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
                                          -recruitMen->getContentSize().height/2);
    
     // POST SOLDIERS
-    auto postMen = uihelper::CreateImageButton("i_post", ID_POSTMEN, clickCallback);
+    auto postMen = uihelper::CreateImageButton("icon_post", ID_POSTMEN, clickCallback);
     postMen->setVisible(this->recruitMen||this->postMen);
     postMen->setEnabled(this->postMen);
     postMen->setOpacity(this->postMen ? ALPHA(alpha_normal) : ALPHA(alpha_1qtr));
@@ -210,7 +210,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     
     uihelper::PositionParentTopLeft(imgObject,x,y);
 
-    auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, clickCallback);
+    auto fight = uihelper::CreateImageButton("icon_fight", ID_FIGHT, clickCallback);
     pos = imgObject->getPosition();
     pos.y -= imgObject->getContentSize().height;
     
@@ -226,7 +226,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 
     if (scenario_flags.Is(SF_TUNNELS)) {
         // Enter Tunnel
-        auto enterTunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, clickCallback);
+        auto enterTunnel = uihelper::CreateImageButton("icon_entertunnel", ID_ENTER_TUNNEL, clickCallback);
         enterTunnel->setAnchorPoint(uihelper::AnchorBottomRight);
         enterTunnel->setVisible(this->enterTunnel);
         enterTunnel->setEnabled(this->enterTunnel);
@@ -296,6 +296,7 @@ bool uithinkpage::init()
     lblAgain = Label::createWithTTF( uihelper::font_config_big, "" );
     lblAgain->getFontAtlas()->setAntiAliasTexParameters();
     lblAgain->setLocalZOrder(ZORDER_DEFAULT);
+    lblAgain->setVisible(false);
     uihelper::setColouredText(lblAgain, TME_GetSystemString(TME_CurrentCharacter(),SS_THINK_AGAIN), _clrDarkRed);
     
 
@@ -447,8 +448,11 @@ void uithinkpage::setupUIElements()
     if ( Character_IsDead(c) ) {
         objectid = c.killedby;
         lblDescription->setString(TME_GetCharacterText(c,"CharDeath"));
+        lblAgain->setVisible(false);
         return;
     }
+
+    lblAgain->setVisible(true);
     
     switch ( mode ) {
             

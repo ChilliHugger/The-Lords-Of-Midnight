@@ -16,10 +16,6 @@ USING_NS_AX;
 
 uisinglelord::uisinglelord() :
     buttonNode(nullptr),
-    selectedNode(nullptr),
-    locationNode(nullptr),
-    innerCircle(nullptr),
-    statusNode(nullptr),
     statusVisible(true)
 {
     lordtype = lordwidget::single;
@@ -34,30 +30,6 @@ bool uisinglelord::init()
         f32 height = SELECT_ELEMENT_HEIGHT*scale;
         
         setContentSize(Size(width,height));
-
-        selectedNode = Sprite::createWithSpriteFrameName("lord_select_circle");
-        selectedNode->setColor(_clrBlue);
-        selectedNode->setAnchorPoint(uihelper::AnchorCenter);
-        selectedNode->setPosition(Vec2(width/2,height/2));
-        selectedNode->setVisible(false);
-        selectedNode->setScale(scale);
-        addChild(selectedNode);
-        
-        locationNode = Sprite::createWithSpriteFrameName("map_current_location");
-        locationNode->setContentSize(getContentSize());
-        locationNode->setAnchorPoint(uihelper::AnchorCenter);
-        locationNode->setPosition(Vec2(width/2,height/2));
-        locationNode->setVisible(false);
-        addChild(locationNode);
-        
-        innerCircle = DrawNode::create();
-        innerCircle->setContentSize( getContentSize() );
-        innerCircle->drawSolidCircle(Vec2(width/2,height/2), DISTANCE_INNER/2 , 0, 64, 1.0f, 1.0f, Color4F(0,0,0,0.1f));
-        innerCircle->setAnchorPoint(uihelper::AnchorCenter);
-        innerCircle->setPosition(Vec2(width/2,height/2));
-        innerCircle->setVisible(true);
-        addChild(innerCircle);
-        
 
         setTouchEnabled(true);
         
@@ -111,52 +83,49 @@ void uisinglelord::refreshStatus()
 {
     f32 scale = PHONE_SCALE(1.0f) ;
     
-    innerCircle->setVisible( isDropFocus );
     setScale( (isDropFocus ? (scale_normal + scale_1qtr) : scale_normal) * scale );
 
-    locationNode->setVisible( status.Is(LORD_STATUS::status_location) && !isDragging() && statusVisible );
-    selectedNode->setVisible( status.Is(LORD_STATUS::status_selected) && !isDragging() && statusVisible );
-    if ( statusNode )
-        statusNode->setVisible(statusVisible);
+    renderLord();
 }
 
-Sprite* uisinglelord::getStatusImage()
+std::string uisinglelord::statusImageName() const
 {
     // TODO: status_tunnel
-    
+
     if ( status.Is(LORD_STATUS::status_inbattle))
-        return Sprite::createWithSpriteFrameName("lord_battle");
+        return "battle";
 
     if ( status.Is(LORD_STATUS::status_night))
-        return Sprite::createWithSpriteFrameName("lord_night");
+        return "night";
 
     if ( status.Is(LORD_STATUS::status_dawn))
-        return Sprite::createWithSpriteFrameName("lord_dawn");
-    
-    return nullptr;
+        return "dawn";
+
+    return "";
 }
 
-Sprite* uisinglelord::getFaceImage(character& c)
+// the face, name and status badge are one picture; the badge is hidden while dragging and when disabled
+void uisinglelord::renderLord()
 {
-    if ( status.Is(LORD_STATUS::status_dead))
-        return Sprite::createWithSpriteFrameName("f_dead!");
-    
-    // TODO:
-    // 1. start with get shield
-    // 2. if there is no shield the get a face
-    // 3. then get a race
-    
-    
-#if defined(_DDR_)
-    auto face = GetCharacterFace(c);
-    return Sprite::create( face );
-#else
-    auto userdata = static_cast<char_data_t*>(getUserData());
-    return Sprite::create( userdata->face );
-#endif
+    if ( faceArt.empty() )
+        return;
 
+    // the circles behind the lord and the badge are part of its picture; none show while dragging
+    std::vector<std::string> show;
+    if ( !isDragging() && statusVisible ) {
+        if ( status.Is(LORD_STATUS::status_selected) )
+            show.push_back("selected");
+        if ( status.Is(LORD_STATUS::status_location) )
+            show.push_back("location");
+        if ( !dimmed && !statusImageName().empty() )
+            show.push_back(statusImageName());
+    }
+    // a faint circle shows while another lord is being dragged over this one
+    if ( isDropFocus )
+        show.push_back("drop");
+    renderLordImage("lord_select", faceArt, show, SHIELD_OFFSET_Y);
+    buttonNode = lordImage;
 }
-
 
 bool uisinglelord::setLord( mxid characterid )
 {
@@ -167,44 +136,9 @@ bool uisinglelord::setLord( mxid characterid )
 
     updateStatus(c);
 
-    removeChildByName("face");
-    removeChildByName("title");
-    
-    auto face = getFaceImage(c);
-    if ( face == nullptr )
-        face = Sprite::createWithSpriteFrameName("f_dead!");
-    face->setName("face");
-    
-    
-    uihelper::AddCenter(this, face, 0, SHIELD_OFFSET_Y);
-    
-    f32 width = SELECT_ELEMENT_WIDTH;
-    
-    // set name label
-    auto title = Label::createWithTTF( uihelper::font_config_small, c.longname );
-    title->setName("title");
-    title->setTextColor(Color4B(_clrWhite));
-    title->enableOutline(Color4B(_clrBlack),RES(1));
-    title->setLineSpacing(CONTENT_SCALE(0));
-    title->setHeight(RES(FONT_SIZE_SMALL)*3); // three lines in case of very long names
-    title->getFontAtlas()->setAntiAliasTexParameters();
-    title->setAnchorPoint(uihelper::AnchorCenter);
-    title->setWidth(width-CONTENT_SCALE(4)); // padding of 4 characters for very long names
-
-    title->setHorizontalAlignment(TextHAlignment::CENTER);
-    title->setVerticalAlignment(TextVAlignment::BOTTOM);
-    uihelper::AddBottomCenter(face, title, RES(0), CONTENT_SCALE(0));
-    
-
-    // Add status image
-    statusNode = getStatusImage();
-    if ( statusNode!= nullptr ) {
-        statusNode->setScale(scale_half);
-        face->addChild(statusNode);
-        uihelper::PositionCenterAnchor(statusNode, uihelper::AnchorTopLeft);
-    }
-    
-    buttonNode = face;
+    faceArt = faceName(c);
+    renderLord();
+    setLordTitle(c.longname, true);
     
     refreshStatus();
     
@@ -219,31 +153,31 @@ void uisinglelord::setStatusImageVisible( bool visible )
 
 void uisinglelord::onPressStateChangedToNormal()
 {
+    dimmed = false;
+    renderLord();
     if ( buttonNode ) {
         buttonNode->setScale(scale_normal);
         buttonNode->setOpacity(ALPHA(1.0f));
-        if ( statusNode )
-            statusNode->setOpacity(ALPHA(1.0f));
     }
 }
 
 void uisinglelord::onPressStateChangedToPressed()
 {
+    dimmed = false;
+    renderLord();
     if ( buttonNode ) {
         buttonNode->setScale(scale_3qtr);
         buttonNode->setOpacity(ALPHA(1.0f));
-        if ( statusNode )
-            statusNode->setOpacity(ALPHA(1.0f));
     }
 }
 
 void uisinglelord::onPressStateChangedToDisabled()
 {
+    dimmed = true;
+    renderLord();
     if ( buttonNode ) {
         buttonNode->setScale(scale_normal);
         buttonNode->setOpacity(ALPHA(0.25f));
-        if ( statusNode )
-            statusNode->setOpacity(ALPHA(0.0f));
     }
 }
 

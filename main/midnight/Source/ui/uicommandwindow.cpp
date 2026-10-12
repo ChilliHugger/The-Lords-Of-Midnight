@@ -136,96 +136,90 @@ void uicommandwindow::initialiseCommands()
     uishortcutkeys::registerCallback(layout, callback);
         
     // THINK
-    auto think = uihelper::CreateImageButton("i_think", ID_THINK, callback);
+    auto think = uihelper::CreateImageButton("icon_think", ID_THINK, callback);
     addItem(think, CHOOSE_THINK);
   
 #if defined(_LOM_) || defined(_CITADEL_)
     // SEEK
-    auto seek = uihelper::CreateImageButton("i_seek", ID_SEEK, callback);
+    auto seek = uihelper::CreateImageButton("icon_seek", ID_SEEK, callback);
     addItem(seek,CHOOSE_SEEK);
 
-    auto hide = uihelper::CreateImageButton("i_hide", ID_HIDE, callback);
+    auto hide = uihelper::CreateImageButton("icon_hide", ID_HIDE, callback);
     addItem(hide,CHOOSE_HIDE);
 
-    auto unhide = uihelper::CreateImageButton("i_unhide", ID_UNHIDE, callback);
+    auto unhide = uihelper::CreateImageButton("icon_unhide", ID_UNHIDE, callback);
     addItem(unhide,CHOOSE_HIDE);
 
     // FIGHT
-    auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
+    auto fight = uihelper::CreateImageButton("icon_fight", ID_FIGHT, callback);
     addItem(fight,CHOOSE_FIGHT);
 #endif
 
 #if defined(_CITADEL_)
-    auto quest = uihelper::CreateImageButton("i_quest", ID_QUEST, callback);
+    auto quest = uihelper::CreateImageButton("icon_quest", ID_QUEST, callback);
     addItem(quest,CHOOSE_QUEST);
-
-    // the quest icon has no baked in text, unlike the language icons
-    character questor;
-    TME_GetCharacter(questor, default_characters[0]);
-    auto questText = uihelper::addButtonText(quest, TME_GetSystemString(questor, SS_QUEST_ACTION));
-    questText->setScale(1.25f);  // roughly match the baked in text of the other icons
 #endif
     
 #if defined(_DDR_)
     if ( tme::variables::sv_cheat_nasties_noblock ) {
         // FIGHT
-        auto fight = uihelper::CreateImageButton("i_fight", ID_FIGHT, callback);
+        auto fight = uihelper::CreateImageButton("icon_fight", ID_FIGHT, callback);
         addItem(fight,CHOOSE_FIGHT);
     }
 
-    auto give = uihelper::CreateImageButton("i_give", ID_GIVE, callback);
+    auto give = uihelper::CreateImageButton("icon_give", ID_GIVE, callback);
     addItem(give,CHOOSE_GIVE);
     addCommandText(give);
     
-    auto take = uihelper::CreateImageButton("i_take", ID_TAKE, callback);
+    auto take = uihelper::CreateImageButton("icon_take", ID_TAKE, callback);
     addItem(take,CHOOSE_TAKE);
     addCommandText(take);
     
-    auto use = uihelper::CreateImageButton("i_use", ID_USE, callback);
+    auto use = uihelper::CreateImageButton("icon_use", ID_USE, callback);
     addItem(use,CHOOSE_USE);
     addCommandText(use);
         
-    auto rest = uihelper::CreateImageButton("i_rest", ID_REST, callback);
+    auto rest = uihelper::CreateImageButton("icon_rest", ID_REST, callback);
     addItem(rest,CHOOSE_REST);
 #endif
 
     if (scenario_flags.Is(tme::SF_TUNNELS)) {
-        auto tunnel = uihelper::CreateImageButton("i_entertunnel", ID_ENTER_TUNNEL, callback);
+        auto tunnel = uihelper::CreateImageButton("icon_entertunnel", ID_ENTER_TUNNEL, callback);
         addItem(tunnel, CHOOSE_TUNNEL);
     }
     
     // MAP
-    auto map = uihelper::CreateImageButton("i_map", ID_MAP, callback);
+    auto map = uihelper::CreateImageButton("icon_map", ID_MAP, callback);
     addItem(map,CHOOSE_MAP);
     
     // NIGHT
-    auto night = uihelper::CreateImageButton("i_night", ID_NIGHT, callback);
+    auto night = uihelper::CreateImageButton("icon_night", ID_NIGHT, callback);
     addItem(night,CHOOSE_NIGHT);
     
     // APPROACH
-    auto approach = uihelper::CreateImageButton("i_approach", ID_APPROACH, callback);
+    auto approach = uihelper::CreateImageButton("icon_approach", ID_APPROACH, callback);
     addItem(approach,CHOOSE_APPROACH);
     addCommandText(approach);
         
     // RECRUIT SOLDIERS
-    auto recruitMen = uihelper::CreateImageButton("i_recruit", ID_RECRUITMEN, callback);
+    auto recruitMen = uihelper::CreateImageButton("icon_recruit", ID_RECRUITMEN, callback);
     addItem(recruitMen,CHOOSE_RECRUIT);
     
     // POST SOLDIERS
-    auto postMen = uihelper::CreateImageButton("i_post", ID_POSTMEN, callback);
+    auto postMen = uihelper::CreateImageButton("icon_post", ID_POSTMEN, callback);
     addItem(postMen,CHOOSE_GUARD);
     
     // ATTACK
-    auto attack = uihelper::CreateImageButton("i_battle", ID_ATTACK, callback);
+    auto attack = uihelper::CreateImageButton("icon_battle", ID_ATTACK, callback);
     addItem(attack,CHOOSE_BATTLE);
     
-    auto undoDawn = uihelper::CreateImageButton("undo_dawn", ID_UNDO_DAWN, callback);
+    auto undoDawn = uihelper::CreateImageButton("icon_undo_dawn", ID_UNDO_DAWN, callback);
     addItem(undoDawn,CHOOSE_UNDO_DAWN);
     
-    auto undoLast = uihelper::CreateImageButton("undo", ID_UNDO, callback);
+    auto undoLast = uihelper::CreateImageButton("icon_undo", ID_UNDO, callback);
     addItem(undoLast,CHOOSE_UNDO_LAST);
     
-    auto home = uihelper::CreateImageButton("i_home", ID_HOME, callback);
+    auto home = uihelper::CreateImageButton("icon_home", ID_HOME, callback);
     addItem(home,CHOOSE_EXIT);
 
     // HELP - sits in the corner of the popup, outside the command grid
@@ -234,7 +228,7 @@ void uicommandwindow::initialiseCommands()
     help->setAnchorPoint(uihelper::AnchorCenter);
 
     if (scenario_flags.Is(tme::SF_DISMOUNT)) {
-        auto dismount = uihelper::CreateImageButton("i_dismount", ID_DISMOUNT, callback);
+        auto dismount = uihelper::CreateImageButton("icon_dismount", ID_DISMOUNT, callback);
         addItem(dismount,CHOOSE_DISMOUNT);
     }
     

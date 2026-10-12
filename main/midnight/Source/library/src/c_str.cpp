@@ -95,7 +95,14 @@ namespace chilli {
             std::transform(str.begin(), str.end(), str.begin(), ::toupper);
             return str;
         }
-        
+
+        std::string toLower(const std::string& value)
+        {
+            std::string str = value;
+            std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+            return str;
+        }
+
         std::string Format ( LPCSTR format, ... )
         {
         const size_t BufferSize = 1024;

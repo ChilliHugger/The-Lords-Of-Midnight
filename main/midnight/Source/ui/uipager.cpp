@@ -34,6 +34,16 @@ void uipager::create( PageView* pageView, const WidgetClickCallback& callback )
     y = padding.bottom + RES(4) + desktopLift;
     centerX = pageView->getContentSize().width/2;
 
+    if ( !desktop ) {
+        pageView->setIndicatorEnabled(true);
+        pageView->setIndicatorIndexNodesScale(CONTENT_SCALE(DOT_SCALE));
+        pageView->setIndicatorSpaceBetweenIndexNodes(CONTENT_SCALE(RES(-2)));
+        pageView->setIndicatorIndexNodesColor(_clrBlack);
+        pageView->setIndicatorSelectedIndexColor(_clrBlue);
+        pageView->setIndicatorPosition( Vec2(centerX, y) );
+        return;
+    }
+
     pagerPrev = uihelper::CreateImageButton("arrow_left", ID_PREVIOUS_PAGE, callback);
     pagerPrev->setAnchorPoint(uihelper::AnchorCenter);
     pagerPrev->setScale(pagerPrev->getScale() * BUTTON_SCALE);
@@ -44,27 +54,16 @@ void uipager::create( PageView* pageView, const WidgetClickCallback& callback )
     pagerNext->setScale(pagerNext->getScale() * BUTTON_SCALE);
     parent->addChild(pagerNext);
 
-    if ( desktop ) {
-        pageView->setIndicatorEnabled(false);
+    pageView->setIndicatorEnabled(false);
 
-        dots = PageViewIndicator::create();
-        dots->setDirection(PageView::Direction::HORIZONTAL);
-        dots->setIndexNodesColor(_clrBlack);
-        dots->setSelectedIndexColor(_clrBlue);
-        dots->setIndexNodesScale(CONTENT_SCALE(DOT_SCALE));
-        dots->setSpaceBetweenIndexNodes(CONTENT_SCALE(RES(-2)));
-        dots->setPosition( Vec2(centerX, y - RES(8)) );
-        parent->addChild(dots);
-    } else {
-        pageView->setIndicatorEnabled(true);
-        pageView->setIndicatorIndexNodesColor(_clrBlack);
-        pageView->setIndicatorSelectedIndexColor(_clrBlue);
-        pageView->setIndicatorPosition( Vec2(centerX, y - RES(8)) );
-
-        f32 offsetX = RES(50);
-        pagerPrev->setPosition( Vec2(centerX-offsetX, y) );
-        pagerNext->setPosition( Vec2(centerX+offsetX, y) );
-    }
+    dots = PageViewIndicator::create();
+    dots->setDirection(PageView::Direction::HORIZONTAL);
+    dots->setIndexNodesColor(_clrBlack);
+    dots->setIndexNodesScale(CONTENT_SCALE(DOT_SCALE));
+    dots->setSelectedIndexColor(_clrBlue);
+    dots->setSpaceBetweenIndexNodes(CONTENT_SCALE(RES(-2)));
+    dots->setPosition( Vec2(centerX, y - RES(8)) );
+    parent->addChild(dots);
 
     updateDots(pageView);
 }
@@ -74,8 +73,8 @@ void uipager::update( PageView* pageView )
     auto index = pageView->getCurrentPageIndex();
     auto count = pageView->getItems().size();
 
-    pagerPrev->setVisible( index > 0 );
-    pagerNext->setVisible( index < (count-1) );
+    IF_NOT_NULL( pagerPrev )->setVisible( index > 0 );
+    IF_NOT_NULL( pagerNext )->setVisible( index < (count-1) );
 
     updateDots(pageView);
 }

@@ -4,6 +4,7 @@
 //
 //  Created by Chris Wild on 05/12/2017.
 //
+#include "../utils/imagebuilder.h"
 #include "uihelper.h"
 #include "uipanel.h"
 #include "../system/resolutionmanager.h"
@@ -366,11 +367,22 @@ void uihelper::PositionCenterAnchor (Node* node, Vec2 anchor, f32 paddingX, f32 
 
 Button* uihelper::CreateImageButton( const std::string& name )
 {
-ax::ui::Button* button;
-    if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
-        button=ax::ui::Button::create(name,"","", ax::ui::Widget::TextureResType::LOCAL);
-    }else{
-        button=ax::ui::Button::create(name,"","", ax::ui::Widget::TextureResType::PLIST);
+    // icons described in an image file such as all/<locale>/icons.xml (ids like "icon_think") name their art (atlas "i_think") and have their own text;
+    // any other name is an atlas image
+    ax::ui::Button* button = nullptr;
+    auto builder = moonring::mikesingleton()->imagebuilder;
+    auto icon = builder->find(name);
+    if ( icon != nullptr )
+        {
+        button = builder->createIconButton(*icon);
+    }
+
+    if ( button == nullptr ) {
+        if ( Director::getInstance()->getTextureCache()->getTextureForKey(name) != nullptr ) {
+            button=ax::ui::Button::create(name,"","", ax::ui::Widget::TextureResType::LOCAL);
+        }else{
+            button=ax::ui::Button::create(name,"","", ax::ui::Widget::TextureResType::PLIST);
+        }
     }
     button->setLocalZOrder(ZORDER_UI);
     return uihelper::setEnabled(button,true);
@@ -457,9 +469,11 @@ void uihelper::addGlow( Button* button, const std::string& image, const Color3B&
 void uihelper::dimButtonText( Button* button, bool enabled )
 {
     // the text is a child of the renderer, so it does not follow the button's opacity
-    auto text = button->getRendererNormal()->getChildByName(BUTTON_TEXT_NAME);
-    if ( text != nullptr )
-        text->setOpacity( enabled ? ALPHA(1.0f) : ALPHA(0.25f) );
+    // (an icon can have several text items)
+    for ( auto child : button->getRendererNormal()->getChildren() ) {
+        if ( dynamic_cast<ax::Label*>(child) != nullptr )
+            child->setOpacity( enabled ? ALPHA(1.0f) : ALPHA(0.25f) );
+    }
 }
 
 Label* uihelper::addButtonText( Button* button, const std::string& text, ButtonTextAlign align, f32 offset, s32 outline )

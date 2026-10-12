@@ -234,7 +234,6 @@ https://axmol.dev)";
     constexpr LPCSTR BUTTON_NO                          = "NO";
     constexpr LPCSTR BUTTON_OK                          = "OK";
 
-
     constexpr LPCSTR DIRECTION_N                        = "N";
     constexpr LPCSTR DIRECTION_NE                       = "NE";
     constexpr LPCSTR DIRECTION_E                        = "E";
@@ -243,6 +242,5 @@ https://axmol.dev)";
     constexpr LPCSTR DIRECTION_SW                       = "SW";
     constexpr LPCSTR DIRECTION_W                        = "W";
     constexpr LPCSTR DIRECTION_NW                       = "NW";
-  
 
 #endif /* language_h */

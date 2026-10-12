@@ -1,0 +1,404 @@
+//
+//  imagedef_tests.cpp
+//  midnight
+//
+#include "catch2/catch.hpp"
+#include "../../../Source/utils/imagedef.h"
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
+
+using namespace imagedef;
+
+static const char* xml = R"(
+<images>
+  <image id="shield" size="256,128">
+    <gfx id="art" name="shield_art"/>
+  </image>
+  <image id="a" size="256, 128">
+    <gfx id="body" name="shield" tint="blue" scale="2"/>
+    <gfx id="star" name="star" pos="12.5, 7" anchor="c" scale="2" tint="yellow" alpha="0.5" flipx="true" rotation="90"/>
+    <txt id="title" text="@name" pos="64,120" anchor="bc" font="button" size="10" outline="2" tracking="-75" colour="#102030" align="left" width="50"/>
+  </image>
+</images>)";
+
+TEST_CASE("Image library parses gfx elements")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(xml));
+    REQUIRE(lib.count() == 2);
+
+    auto a = lib.find("a");
+    REQUIRE(a != nullptr);
+    CHECK(a->id == "a");
+    CHECK(a->width == 256.0f);
+    CHECK(a->height == 128.0f);
+    REQUIRE(a->elements.size() == 2 + 1);
+
+    auto body = a->find("body");
+    REQUIRE(body != nullptr);
+    CHECK(body->name == "shield");      // an atlas image or another <image>: resolved when built
+    CHECK(body->anchor == Anchor::TopLeft);
+    CHECK(body->colour == Colour{0x00,0x00,0xcd});
+
+    auto star = a->find("star");
+    REQUIRE(star != nullptr);
+    CHECK(star->type == ElementType::Gfx);
+    CHECK(star->x == 12.5f);
+    CHECK(star->y == 7.0f);
+    CHECK(star->anchor == Anchor::Centre);
+    CHECK(star->scale == 2.0f);
+    CHECK(star->alpha == 0.5f);
+    CHECK(star->rotation == 90.0f);
+    CHECK(star->flipX);
+    CHECK(star->colour == Colour{0xcd,0xcd,0x00});
+}
+
+TEST_CASE("Text elements parse")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(xml));
+    auto title = lib.find("a")->find("title");
+    REQUIRE(title != nullptr);
+    CHECK(title->type == ElementType::Txt);
+    CHECK(title->text == "@name");
+    CHECK(title->font == "button");
+    CHECK(title->align == "left");
+    CHECK(title->colour == Colour{0x10,0x20,0x30});
+    CHECK(title->size == 10.0f);
+    CHECK(title->width == 50.0f);
+    CHECK(title->outline == 2.0f);
+    CHECK(title->tracking == -75.0f);
+    CHECK(title->anchor == Anchor::BottomCentre);
+    CHECK(title->enabled);
+}
+
+TEST_CASE("Elements keep their order and disabled elements are still described")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(
+        "<images><image id='a'><gfx id='x' name='n'/><gfx id='y' name='m' enabled='false'/><gfx id='z' name='o'/></image></images>"));
+    auto a = lib.find("a");
+    REQUIRE(a->elements.size() == 3);
+    CHECK(a->elements[0].id == "x");
+    CHECK(a->elements[1].id == "y");
+    CHECK_FALSE(a->elements[1].enabled);
+    CHECK(a->elements[2].id == "z");
+}
+
+TEST_CASE("Malformed image definitions are rejected")
+{
+    Library lib;
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gfx id='x'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gfx id='x' name='n' tint='nope'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gfx id='x' name='n' anchor='zz'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gfx id='x' name='n' pos='1'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><txt/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gfx name='n'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gfx id='x' name='n'/><txt id='x' text='t'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a' size='x'/></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image><gfx id='x' name='n'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><oops/></images>"));
+    CHECK_FALSE(lib.loadFromString("<images"));
+    CHECK_FALSE(lib.error().empty());
+}
+
+TEST_CASE("An icon's main art is its first enabled gfx")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(
+        "<images><image id='icon_think'>"
+        "<txt id='t' text='x'/>"
+        "<gfx id='off' name='a' enabled='false'/>"
+        "<gfx id='art' name='i_think_art'/>"
+        "<gfx id='extra' name='b'/>"
+        "</image><image id='empty'><txt id='t' text='x'/></image></images>"));
+    CHECK(lib.find("icon_think")->firstGfx()->name == "i_think_art");
+    CHECK(lib.find("empty")->firstGfx() == nullptr);
+}
+
+// the test app is sandboxed, so read the definitions from the copy in its bundle
+static std::string resource(const char* file)
+{
+#ifndef __APPLE__
+    return std::string("Resources/") + file;
+#else
+    char path[4096];
+    uint32_t size = sizeof(path);
+    if (_NSGetExecutablePath(path, &size) != 0)
+        return file;
+    std::string exe = path;     // <app>/Contents/MacOS/<name>
+    auto contents = exe.substr(0, exe.rfind("/MacOS/"));
+    return contents + "/Resources/" + file;
+#endif
+}
+
+TEST_CASE("The shipped shield definitions load and use the shared shield")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("lom/shields.xml"));
+    INFO(resource("lom/shields.xml") << ": " << lib.error());
+    REQUIRE(loaded);
+
+    auto luxor = lib.find("ch_luxor");
+    REQUIRE(luxor != nullptr);
+    CHECK(luxor->width == 256.0f);
+    CHECK(luxor->find("shield")->name == "lom_shield");     // the shared shield image
+    CHECK(luxor->find("shield")->colour == Colour{0xcd,0x00,0xcd});
+    CHECK(luxor->find("bevel")->name == "shield_bevel");
+    CHECK(luxor->elements.size() == 4);     // shield, bevel and two parts
+    REQUIRE(lib.find("lom_shield") != nullptr);
+    CHECK(lib.find("lom_shield")->find("art")->name == "shield");
+}
+
+TEST_CASE("The shipped icon definitions each name their art and have a label")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/en/icons.xml"));
+    INFO(resource("all/en/icons.xml") << ": " << lib.error());
+    REQUIRE(loaded);
+
+    auto think = lib.find("icon_think");
+    REQUIRE(think != nullptr);
+    REQUIRE(think->firstGfx() != nullptr);
+    CHECK(think->firstGfx()->name == "i_think");
+    auto text = think->find("buttontext");
+    REQUIRE(text != nullptr);
+    CHECK(text->type == ElementType::Txt);
+    CHECK(text->text == "think");
+}
+
+TEST_CASE("Content is aligned within a cell")
+{
+    // a 72x59 icon drawn at (20,3) in a 128x64 cell
+    Box art{20, 3, 92, 62};
+
+    auto bc = alignShift(Anchor::BottomCentre, 128, 64, art);
+    CHECK(bc.x == 8.0f);                // centred: left edge moves from 20 to (128-72)/2 = 28
+    CHECK(bc.y == 2.0f);                // bottom edge at 64
+
+    auto tl = alignShift(Anchor::TopLeft, 128, 64, art);
+    CHECK(tl.x == -20.0f);
+    CHECK(tl.y == -3.0f);
+
+    auto br = alignShift(Anchor::BottomRight, 128, 64, art);
+    CHECK(br.x == 36.0f);
+    CHECK(br.y == 2.0f);
+
+    auto c = alignShift(Anchor::Centre, 128, 64, art);
+    CHECK(c.x == 8.0f);
+    CHECK(c.y == Approx(-0.5f));
+
+    // already in place: no shift
+    auto none = alignShift(Anchor::BottomCentre, 128, 64, Box{28, 5, 100, 64});
+    CHECK(none.x == 0.0f);
+    CHECK(none.y == 0.0f);
+}
+
+TEST_CASE("Boxes unite")
+{
+    auto u = Box{10, 20, 30, 40}.united(Box{5, 25, 20, 60});
+    CHECK(u.x0 == 5.0f);
+    CHECK(u.y0 == 20.0f);
+    CHECK(u.x1 == 30.0f);
+    CHECK(u.y1 == 60.0f);
+    CHECK(u.width() == 25.0f);
+    CHECK(u.height() == 40.0f);
+}
+
+TEST_CASE("An image can align its content")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString("<images><image id='a' align='BC' size='128,64'><gfx id='x' name='n'/></image><image id='b'><gfx id='x' name='n'/></image></images>"));
+    CHECK(lib.find("a")->aligned);
+    CHECK(lib.find("a")->align == Anchor::BottomCentre);
+    CHECK_FALSE(lib.find("b")->aligned);
+    CHECK_FALSE(lib.loadFromString("<images><image id='a' align='zz'/></images>"));
+}
+
+TEST_CASE("A multi-word icon label can be several text items")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/en/icons.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+    auto tunnel = lib.find("icon_entertunnel");
+    REQUIRE(tunnel != nullptr);
+    REQUIRE(tunnel->find("text1") != nullptr);
+    REQUIRE(tunnel->find("text2") != nullptr);
+    CHECK(tunnel->find("text1")->text == "enter");
+    CHECK(tunnel->find("text2")->text == "tunnel");
+    CHECK(tunnel->find("text1")->y < tunnel->find("text2")->y);     // enter above tunnel
+}
+
+TEST_CASE("The shipped filter buttons have the icon and both eye badges")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/filters.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    for (auto id : { "filter_dawn", "filter_night", "filter_battle", "filter_dead",
+                     "filter_centre", "filter_critters", "filter_lords", "filter_tunnels" }) {
+        INFO(id);
+        auto filter = lib.find(id);
+        REQUIRE(filter != nullptr);
+        REQUIRE(filter->firstGfx() != nullptr);
+        REQUIRE(filter->find("visible") != nullptr);
+        REQUIRE(filter->find("notvisible") != nullptr);
+        CHECK(filter->find("visible")->name == "i_visible");
+        CHECK(filter->find("notvisible")->name == "i_not_visible");
+    }
+    CHECK(lib.find("filter_dawn")->firstGfx()->name == "lord_dawn");
+    CHECK(lib.find("filter_dead")->firstGfx()->name == "f_dead!");
+}
+
+TEST_CASE("The shipped lord images have circles, a face and status badges that start hidden, but no name")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/lord.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    auto select = lib.find("lord_select");
+    REQUIRE(select != nullptr);
+    CHECK(select->width == 128.0f);
+    REQUIRE(select->find("face") != nullptr);
+    CHECK(select->find("title") == nullptr);    // the name is a label on the lord, drawn sharp at any scale
+    for (auto part : { "selected", "location", "drop", "battle", "night", "dawn" }) {
+        INFO(part);
+        REQUIRE(select->find(part) != nullptr);
+        CHECK_FALSE(select->find(part)->enabled);
+    }
+    // the selected and location circles are drawn rings (they were atlas sprites), centred in the picture
+    CHECK(select->find("selected")->type == ElementType::Ring);
+    CHECK(select->find("selected")->radius == 46.0f);
+    CHECK(select->find("selected")->thickness == 2.0f);
+    CHECK(select->find("selected")->colour == Colour{0x00,0x00,0xff});
+    CHECK(select->find("location")->type == ElementType::Ring);
+    CHECK(select->find("location")->radius == 62.5f);
+    CHECK(select->find("location")->colour == Colour{0xbe,0x00,0x05});
+    CHECK(select->find("location")->x == 64.0f);
+    CHECK(select->find("location")->y == 64.0f);
+    CHECK(select->find("drop")->type == ElementType::Circle);     // drawn, no art needed
+    CHECK(select->find("drop")->radius == 37.5f);
+    CHECK(select->find("drop")->colour == Colour{0x00,0x00,0x00});
+    CHECK(select->find("drop")->alpha == 0.1f);
+
+    // the circles are behind the face, the badges over it
+    CHECK(select->elements.front().id == "selected");
+    CHECK(select->elements[3].id == "face");
+
+    auto grouped = lib.find("lord_grouped");
+    REQUIRE(grouped != nullptr);
+    CHECK(grouped->width == 64.0f);
+    CHECK(grouped->find("face") != nullptr);
+    CHECK(grouped->find("title") == nullptr);
+}
+
+TEST_CASE("Every lord has a shield image the size the lord face is scaled from")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("lom/shields.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    for (auto& name : { "ch_luxor", "ch_morkin", "ch_corleth", "ch_rorthron", "ch_xajorkith", "ch_athoril" }) {
+        INFO(name);
+        auto shield = lib.find(name);
+        REQUIRE(shield != nullptr);
+        CHECK(shield->width == 256.0f);     // 64 / 256 is the scale of a face
+        CHECK(lib.find(std::string("mini_") + name) == nullptr);
+    }
+}
+
+TEST_CASE("Circles and rings are drawn shapes")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(
+        "<images><image id='a' size='100,100'>"
+        "<circle id='disc' pos='50,50' anchor='c' radius='40' colour='#102030' alpha='0.5'/>"
+        "<ring id='line' pos='50,50' anchor='c' radius='30' thickness='4' colour='red' enabled='false'/>"
+        "<ring id='thin' radius='10' colour='red'/>"
+        "</image></images>"));
+    auto a = lib.find("a");
+    REQUIRE(a->elements.size() == 3);
+
+    auto disc = a->find("disc");
+    CHECK(disc->type == ElementType::Circle);
+    CHECK(disc->radius == 40.0f);
+    CHECK(disc->colour == Colour{0x10,0x20,0x30});
+    CHECK(disc->alpha == 0.5f);
+    CHECK(disc->anchor == Anchor::Centre);
+
+    auto line = a->find("line");
+    CHECK(line->type == ElementType::Ring);
+    CHECK(line->radius == 30.0f);
+    CHECK(line->thickness == 4.0f);
+    CHECK_FALSE(line->enabled);
+
+    CHECK(a->find("thin")->thickness == 1.0f);      // a ring is one unit thick unless it says
+    CHECK(a->firstGfx() == nullptr);                // shapes are not art
+}
+
+TEST_CASE("Shapes need a radius and a thickness")
+{
+    Library lib;
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><circle id='c' colour='red'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><circle id='c' radius='0'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><ring id='r'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><ring id='r' radius='5' thickness='0'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><circle id='c' radius='5' colour='nope'/></image></images>"));
+    CHECK(lib.loadFromString("<images><image id='a'><circle id='c' radius='5'/></image></images>"));
+}
+
+TEST_CASE("Gradients are drawn fades")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(
+        "<images><image id='a' size='100,100'>"
+        "<gradient id='g' pos='4,50' anchor='tl' width='92' height='40' top='black' topalpha='0' bottom='#102030' bottomalpha='0.5'/>"
+        "<gradient id='d' width='10' height='10'/>"
+        "</image></images>"));
+    auto g = lib.find("a")->find("g");
+    CHECK(g->type == ElementType::Gradient);
+    CHECK(g->width == 92.0f);
+    CHECK(g->height == 40.0f);
+    CHECK(g->colour == Colour{0x00,0x00,0x00});
+    CHECK(g->alpha == 0.0f);
+    CHECK(g->colour2 == Colour{0x10,0x20,0x30});
+    CHECK(g->alpha2 == 0.5f);
+
+    auto d = lib.find("a")->find("d");
+    CHECK(d->alpha == 1.0f);        // opaque black to opaque black unless it says
+    CHECK(d->alpha2 == 1.0f);
+
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gradient id='g' width='10'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gradient id='g' width='10' height='5' top='nope'/></image></images>"));
+}
+
+TEST_CASE("The shipped story book has an untinted bookmark, tinted for the slot in code")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/book.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    auto book = lib.find("story_book");
+    REQUIRE(book != nullptr);
+    CHECK(book->width == 512.0f);
+    CHECK(book->height == 400.0f);
+    REQUIRE(book->find("bookmark") != nullptr);
+    CHECK(book->find("bookmark")->colour == Colour{0xff,0xff,0xff});    // white: the code sets its colour
+    CHECK(book->find("overlay")->colour == Colour{0x00,0x00,0x00});
+    CHECK(book->find("shade")->type == ElementType::Gradient);
+
+    // the book, then the bookmark and its overlay, then the fade over them
+    CHECK(book->elements.front().id == "book");
+    CHECK(book->elements.back().id == "shade");
+    CHECK(lib.find("book_0") == nullptr);   // not one image per slot
+
+    // an image's id must differ from the atlas names it uses, or it would be resolved as the image itself
+    CHECK(lib.find("book") == nullptr);
+    CHECK(book->find("book")->name == "book");
+}

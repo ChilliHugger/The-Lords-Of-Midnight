@@ -5,14 +5,19 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
+#include <algorithm>
 #include "../uihelper.h"
 #include "uilordselect.h"
+#include "../../utils/imagebuilder.h"
 #include "../../tme/tme_interface.h"
 #include "../../system/tmemanager.h"
 #include "../../system/moonring.h"
 #include "../../system/resolutionmanager.h"
 
 USING_NS_AX;
+
+constexpr f32 LORD_FACE_SIZE = 64.0f;   // base units: the size of a lord's face in lord.xml
+constexpr f32 LORD_IMAGE_RESOLUTION = 2.0f;   // lords are drawn bigger than their size (phones, the map): render sharper
 
 using DragEventType = chilli::ui::DragEvent::Type;
 
@@ -31,6 +36,117 @@ void uilordselect::updateStatus(character& c)
 {
 }
 
+std::string uilordselect::faceName(character& c)
+{
+    if ( Character_IsDead(c) )
+        return "f_dead!";
+
+    auto userdata = static_cast<char_data_t*>(getUserData());
+
+    // a lord with a shield (an image of the same name, built from the shield parts) is shown as that shield,
+    // scaled to the size of a face
+    if ( userdata != nullptr && !userdata->symbol.empty() ) {
+        auto shield = StringExtensions::toLower(userdata->symbol);
+        if ( moonring::mikesingleton()->imagebuilder->find(shield) != nullptr && SpriteFrameCache::getInstance()->getSpriteFrameByName("shield") != nullptr )
+            return shield;
+    }
+
+#if defined(_DDR_)
+    return GetCharacterFace(c);
+#else
+    return userdata->face;
+#endif
+}
+
+void uilordselect::renderLordImage( const std::string& imageId, const std::string& face,
+                                    const std::vector<std::string>& show, f32 offsetY )
+{
+    std::string key = imageId + "|" + face;
+    for ( auto& part : show )
+        key += "|" + part;
+    if ( lordImage != nullptr && key == lordImageKey )
+        return;
+
+    auto builder = moonring::mikesingleton()->imagebuilder;
+    auto def = builder->find(imageId);
+    if ( def == nullptr )
+        return;
+
+    auto image = *def;
+
+    // an image with circles behind the face is centred on them, so the face is moved inside it; otherwise the
+    // picture itself is moved
+    const bool circles = image.find("selected") != nullptr;
+    const f32 faceShift = circles ? -offsetY / RES(1) : 0;      // base units, y is down in the image
+
+    for ( auto& e : image.elements ) {
+        if ( e.id == "face" ) {
+            e.name = face;
+            e.y += faceShift;
+            // a face that is an image (a shield) is scaled to the size of the face (64)
+            if ( auto art = builder->find(face) ) {
+                if ( art->width > 0 )
+                    e.scale = LORD_FACE_SIZE / art->width;
+            }
+        } else if ( e.id == "battle" || e.id == "night" || e.id == "dawn" ) {
+            e.y += faceShift;
+        }
+        if ( e.id == "selected" || e.id == "location" || e.id == "drop" || e.id == "battle" || e.id == "night" || e.id == "dawn" )
+            e.enabled = std::find(show.begin(), show.end(), e.id) != show.end();
+    }
+
+    if ( lordImage == nullptr ) {
+        lordImage = Node::create();
+        lordImage->setName("face");
+        addChild(lordImage);
+
+        // the middle of the picture sits in the middle of the widget (for a face alone, that is the face)
+        lordImage->setAnchorPoint(Vec2( 0.5f, 0.5f ));
+        auto size = getContentSize();
+        lordImage->setPosition(Vec2( size.width / 2, size.height / 2 + ( circles ? 0 : offsetY ) ));
+
+        if ( auto e = image.find("face") ) {
+            lordFaceX = RES(e->x);
+            lordFaceBottom = RES(image.height - ( e->y + LORD_FACE_SIZE ));
+        }
+    }
+
+    builder->setupPicture(lordImage, image, LORD_IMAGE_RESOLUTION);
+    lordImageKey = key;
+}
+
+// the name is a label on the picture, over the bottom of the face. A single lord's name can wrap to three lines,
+// bottom aligned; a grouped lord's short name is centred on the bottom edge of the face.
+void uilordselect::setLordTitle( const std::string& text, bool single )
+{
+    if ( lordImage == nullptr )
+        return;
+
+    if ( lordTitle != nullptr ) {
+        lordTitle->setString(text);
+        return;
+    }
+
+    lordTitle = Label::createWithTTF( uihelper::font_config_small, text );
+    lordTitle->setName("title");
+    lordTitle->setTextColor(Color4B(_clrWhite));
+    lordTitle->enableOutline(Color4B(_clrBlack),RES(1));
+    lordTitle->getFontAtlas()->setAntiAliasTexParameters();
+    lordTitle->setHorizontalAlignment(TextHAlignment::CENTER);
+    lordTitle->setVerticalAlignment(TextVAlignment::BOTTOM);
+
+    if ( single ) {
+        lordTitle->setLineSpacing(CONTENT_SCALE(0));
+        lordTitle->setHeight(RES(FONT_SIZE_SMALL)*3); // three lines in case of very long names
+        lordTitle->setWidth(SELECT_ELEMENT_WIDTH-CONTENT_SCALE(4)); // padding of 4 characters for very long names
+        lordTitle->setAnchorPoint(uihelper::AnchorBottomCenter);
+    } else {
+        lordTitle->setAnchorPoint(uihelper::AnchorCenter);
+    }
+    lordTitle->setPosition(Vec2( lordFaceX, lordFaceBottom ));
+    lordImage->addChild(lordTitle);
+}
+
 void uilordselect::refreshStatus()
 {
 }
@@ -43,10 +159,7 @@ Vec2 uilordselect::getCenter() const
 
 bool uilordselect::onTouchBegan(Touch *touch, Event* event )
 {
-    //auto userdata = static_cast<char_data_t*>(getUserData());
-    //UIDEBUG("onTouchBegan %s", userdata->symbol.c_str() );
-    
-    if ( Widget::onTouchBegan(touch, event) ) {
+   if ( Widget::onTouchBegan(touch, event) ) {
         mouse_down_pos = touch->getLocation();
         mouse_last_position = mouse_down_pos;
         
@@ -63,9 +176,6 @@ bool uilordselect::onTouchBegan(Touch *touch, Event* event )
 
 void uilordselect::onTouchMoved(Touch *touch, Event* event )
 {
-    //auto userdata = static_cast<char_data_t*>(getUserData());
-    //UIDEBUG("onTouchMoved %s", userdata->symbol.c_str() );
-    
     Widget::onTouchMoved(touch, event);
     
     if ( isDragEnabled() ) {
@@ -98,9 +208,6 @@ void uilordselect::onTouchMoved(Touch *touch, Event* event )
 
 void uilordselect::onTouchEnded(Touch *touch, Event* event )
 {
-    //auto userdata = userData();
-    //UIDEBUG("onTouchEnded %s", userdata->symbol.c_str() );
-    
     Widget::onTouchEnded(touch, event);
     
     if ( isDragging() ) {
@@ -111,16 +218,11 @@ void uilordselect::onTouchEnded(Touch *touch, Event* event )
         _highlight=false;
     }
 
-
-    
     mouse_last_position = touch->getLocation();
 }
 
 void uilordselect::onTouchCancelled(Touch *touch, Event* event)
 {
-    //auto userdata = userData();
-    //UIDEBUG("onTouchCancelled %s", userdata->symbol.c_str() );
-    
     Widget::onTouchCancelled(touch, event);
 }
 
@@ -162,8 +264,6 @@ f32 uilordselect::getDistanceFromCentre( Vec2 pos ) const
     f32 dy = ABS(center.y - pos.y);
     f32 distance = hypot(dx,dy);
 
-    //UIDEBUG("getDistanceFromCentre: center(%f,%f) mouse(%f,%f) distance=%f", center.x, center.y, pos.x, pos.y, distance);
-    
     return distance;
 }
 

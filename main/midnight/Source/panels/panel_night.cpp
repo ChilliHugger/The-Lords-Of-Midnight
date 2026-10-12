@@ -43,7 +43,7 @@ bool panel_night::init()
     setBackground(_clrBlack);
     
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_dawn", ID_DAWN, clickCallback);
+    auto look = uihelper::CreateImageButton("icon_dawn", ID_DAWN, clickCallback);
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     uihelper::setEnabled(look, false);
 

@@ -178,6 +178,9 @@ elseif(WINDOWS)
     ax_mark_multi_resources(common_content_files RES_TO "Content" FOLDERS ${content_folder})
 endif()
 
+# Finder droppings must not be bundled as resources
+list(FILTER common_content_files EXCLUDE REGEX "(^|/)\\.DS_Store$")
+
 if(TESTS)
   include(tests/CMakeLists.txt)
 else()

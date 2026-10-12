@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.0.2</string>
+        <string>8.3.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -141,7 +141,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../lom/{v}/rest-{n}.plist</filename>
+                <filename>../../main/midnight/Resources-midnight/lom/{v}/rest-{n}.plist</filename>
             </struct>
             <key>header</key>
             <key>source</key>
@@ -167,6 +167,8 @@
         <true/>
         <key>trimSpriteNames</key>
         <true/>
+        <key>enableCacheBusting</key>
+        <false/>
         <key>prependSmartFolderName</key>
         <false/>
         <key>autodetectAnimations</key>
@@ -211,20 +213,10 @@
             <key type="filename">map/i_critters.png</key>
             <key type="filename">map/i_filter_lords.png</key>
             <key type="filename">map/i_small_map.png</key>
-            <key type="filename">map/map_rider.png</key>
-            <key type="filename">map/map_scale_down.png</key>
-            <key type="filename">map/map_scale_track.png</key>
-            <key type="filename">map/map_scale_up.png</key>
-            <key type="filename">map/map_token_blue.png</key>
-            <key type="filename">map/map_token_red.png</key>
-            <key type="filename">map/map_warrior.png</key>
-            <key type="filename">misc/arrow_down.png</key>
             <key type="filename">misc/arrow_left.png</key>
             <key type="filename">misc/arrow_right.png</key>
             <key type="filename">misc/arrow_up.png</key>
             <key type="filename">misc/close.png</key>
-            <key type="filename">misc/i_minus.png</key>
-            <key type="filename">misc/i_plus.png</key>
             <key type="filename">select/f_dead!.png</key>
             <key type="filename">select/i_cleanup.png</key>
             <key type="filename">select/i_disband_group.png</key>
@@ -232,8 +224,6 @@
             <key type="filename">select/lord_battle.png</key>
             <key type="filename">select/lord_dawn.png</key>
             <key type="filename">select/lord_night.png</key>
-            <key type="filename">think/i_recruit_minus.png</key>
-            <key type="filename">think/i_recruit_plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -265,9 +255,7 @@
             </struct>
             <key type="filename">lom_menu/bookmark.png</key>
             <key type="filename">lom_menu/bookmark_overlay.png</key>
-            <key type="filename">map/map_current_location.png</key>
             <key type="filename">misc/background_tile.png</key>
-            <key type="filename">misc/lord_select_circle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -314,21 +302,6 @@
                 <rect>16,16,32,32</rect>
                 <key>scale9Paddings</key>
                 <rect>16,16,32,32</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">map/map_scale_knuckle.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,8,64,16</rect>
-                <key>scale9Paddings</key>
-                <rect>32,8,64,16</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

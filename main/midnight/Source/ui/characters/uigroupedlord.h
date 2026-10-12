@@ -31,13 +31,11 @@ public:
 protected:
     uigroupedlord();
 
-    Sprite* getFaceImage(character& c);
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
 
 private:
     Node* buttonNode;
-    Label* title{};
     LayerColor* titleBackground{};
 };

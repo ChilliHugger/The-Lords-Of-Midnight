@@ -2,14 +2,14 @@
  *  uipager.h
  *  midnight
  *
- *  Prev/next arrow buttons for a PageView.
+ *  Prev/next arrow buttons for a PageView, on desktop only.
  *
  *  On desktop, the dot indicator is capped to a small sliding window (at
  *  most MAX_VISIBLE_DOTS) so it can never grow wider than the arrows can
  *  flank, however many pages there are; the arrows are positioned to hug
- *  the window's calculated width. Phone/tablet keep the pageView's own
- *  built-in indicator - one dot per page - unchanged, with the arrows at
- *  a fixed offset either side of it.
+ *  the window's calculated width. Phone/tablet swipe, so they keep only
+ *  the pageView's own built-in indicator - one dot per page - with no
+ *  arrows.
  *
  */
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<images>
+
+    <image id="filter_dawn" size="73,67">
+        <gfx id="art" pos="0,3" name="lord_dawn"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_night" size="73,67">
+        <gfx id="art" pos="0,3" name="lord_night"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_battle" size="73,67">
+        <gfx id="art" pos="0,3" name="lord_battle"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_dead" size="73,67">
+        <gfx id="art" pos="0,3" name="f_dead!"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_centre" size="73,67">
+        <gfx id="art" pos="0,3" name="i_center"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_critters" size="73,67">
+        <gfx id="art" pos="0,3" name="i_critters"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_lords" size="73,67">
+        <gfx id="art" pos="0,3" name="i_filter_lords"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+    <image id="filter_tunnels" size="73,67">
+        <gfx id="art" pos="0,3" name="i_filter_tunnel"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
+</images>

@@ -95,6 +95,20 @@ protected:
     Vec2 mouse_down_pos;
     Vec2 mouse_last_position;
 
+    // The lord's picture - the circles behind it, the face and a status badge - is one flattened image described in
+    // lord.xml. The face is the lord's shield image (scaled down), a portrait file or the dead image. 'show' lists the
+    // optional parts to show: "selected", "location" and one of "battle", "night", "dawn". It is only rendered again
+    // when something changed. The name is a label on the picture, not part of it, so it is drawn sharp at any size.
+    std::string faceName( character& c );
+    void renderLordImage( const std::string& imageId, const std::string& face, const std::vector<std::string>& show, f32 offsetY );
+    void setLordTitle( const std::string& text, bool single );
+
+    ax::Node*       lordImage{};
+    std::string     lordImageKey;
+    ax::Label*      lordTitle{};
+    f32             lordFaceX{};     // the middle of the face in the picture
+    f32             lordFaceBottom{};  // and the bottom of it, measured up from the bottom of the picture
+
 public:
     flags16         status;
     mxid            characterId;

@@ -10,6 +10,7 @@
 #include "../platform/Extensions.h"
 
 #include "moonring.h"
+#include "../utils/imagebuilder.h"
 #include "../tme/utils/debugsetup.h"
 #include "helpmanager.h"
 #include "settingsmanager.h"
@@ -67,6 +68,8 @@ moonring::moonring() :
     resolution = new resolutionmanager();
     resolution->InjectMoonRing(this);
     
+    imagebuilder = new ::imagebuilder();
+
     shader = new shadermanager();
     shader->InjectMoonRing(this);
     
@@ -112,6 +115,7 @@ moonring::~moonring()
     SAFEDELETE(settings);
     SAFEDELETE(help);
     SAFEDELETE(shader);
+    SAFEDELETE(imagebuilder);
     SAFEDELETE(resolution);
 }
 
@@ -672,14 +676,29 @@ std::string imageFiles[] = {
 #if defined(_CITADEL_)
     "quest-0",
 #endif
+    "shields/shield-0",
     "terrain/terrain-0", "terrain/terrain-1",
     "terrain/tunnels-0"
 };
 
 
+// XML image definitions (icons, shields...): looked for in all/ and the scenario's folder, see imagebuilder
+std::vector<std::string> imageDefinitions = {
+    "icons",
+    "filters",
+    "lord",
+    "book",
+#if defined(_CITADEL_)
+    "quest",
+#else
+    "shields"
+#endif
+};
+
 #if defined(_OS_DESKTOP_WINDOW_)
 void moonring::reloadAssets()
 {
+    imagebuilder->reload();
     auto cache = SpriteFrameCache::getInstance();
     for (std::string file_name : imageFiles )
     {
@@ -708,6 +727,8 @@ void moonring::initialise( progressmonitor* monitor )
     
     // let's give up some time to the ui Immediatley
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+
+    imagebuilder->registerFiles(imageDefinitions, TME_ScenarioShortName());
 
     // load images
     for (std::string file_name : imageFiles ) {

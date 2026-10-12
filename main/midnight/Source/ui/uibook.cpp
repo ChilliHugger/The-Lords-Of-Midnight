@@ -10,10 +10,7 @@
 
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
-
-#define BOOK_IMAGE              "book"
-#define BOOKMARK_IMAGE          "bookmark"
-#define BOOKMARK_OVERLAY_IMAGE  "bookmark_overlay"
+#include "../utils/imagebuilder.h"
 
 USING_NS_AX;
 
@@ -50,20 +47,16 @@ bool uibook::initWithChapter( storyheader_t* story )
     
     this->setContentSize(Size(RES(512), RES(400)) );
     
-    auto bookImage = Sprite::createWithSpriteFrameName(BOOK_IMAGE);
-    uihelper::AddCenter(this, bookImage);
-    
-    auto bookmarkImage = Sprite::createWithSpriteFrameName(BOOKMARK_IMAGE);
-    bookmarkImage->setColor(bookmark_colours[story->slot]);
-    uihelper::AddTopLeft(bookImage, bookmarkImage, RES(22), RES(22));
-    
-    auto bookmarkOverlayImage = Sprite::createWithSpriteFrameName(BOOKMARK_OVERLAY_IMAGE);
-    bookmarkOverlayImage->setColor(_clrBlack);
-    uihelper::AddCenter(bookmarkImage, bookmarkOverlayImage);
-    
-    auto gradient = LayerGradient::create( Color4B(_clrBlack,0), Color4B(_clrBlack,100) );
-    gradient->setContentSize(Size(RES(504), RES(198)));
-    uihelper::AddBottomLeft(this, gradient, RES(4), RES(4));
+    // the book, its bookmark and the fade for the title are one picture (book.xml); the bookmark is tinted for the slot
+    auto builder = moonring::mikesingleton()->imagebuilder;
+    if ( auto def = builder->find("story_book") ) {
+        auto book = *def;
+        if ( auto e = book.find("bookmark") ) {
+            auto colour = bookmark_colours[story->slot % NUMELE(bookmark_colours)];
+            e->colour = { colour.r, colour.g, colour.b };
+        }
+        builder->setupPicture(this, book);
+    }
     
     auto textColor = Color4B(_clrWhite);
     auto line = chilli::lib::StringExtensions::replaceAll( story->description, "\n", "\n\r");

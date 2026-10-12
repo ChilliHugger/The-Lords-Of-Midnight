@@ -60,7 +60,7 @@ bool panel_think::init()
     
     // Command Window
     // Look Icon
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
+    auto look = uihelper::CreateImageButton("icon_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10) );
     
     // TAB ICONS
@@ -69,19 +69,19 @@ bool panel_think::init()
     int c = RES(100) * scale;
     
     // Person
-    auto person = uihelper::CreateImageButton("think_person", ID_THINK_PERSON, clickCallback);
+    auto person = uihelper::CreateImageButton("icon_think_person", ID_THINK_PERSON, clickCallback);
     uihelper::AddBottomRight(safeArea, person, x+c*0, RES(10) );
     
     // Place
-    auto place = uihelper::CreateImageButton("think_place", ID_THINK_PLACE, clickCallback);
+    auto place = uihelper::CreateImageButton("icon_think_place", ID_THINK_PLACE, clickCallback);
     uihelper::AddBottomRight(safeArea, place, x+c*1, RES(10) );
     
     // Army
-    auto army = uihelper::CreateImageButton("think_army", ID_THINK_ARMY, clickCallback);
+    auto army = uihelper::CreateImageButton("icon_think_army", ID_THINK_ARMY, clickCallback);
     uihelper::AddBottomRight(safeArea, army, x+c*2, RES(10) );
     
     // Battle
-    auto battle = uihelper::CreateImageButton("think_battle", ID_THINK_BATTLE, clickCallback);
+    auto battle = uihelper::CreateImageButton("icon_think_battle", ID_THINK_BATTLE, clickCallback);
     uihelper::AddBottomRight(safeArea, battle, x+c*3, RES(10) );
     
     // Stronghold
@@ -291,32 +291,27 @@ void panel_think::addPage( mxid pageId )
     page->setObject(pageId, objectId, currentmode);
     pages.pushBack(page);
 
-    auto padding = getSafeArea();
+    // the size and spacing of the dots on a phone depend on how many pages there are; their position is the pager's
     f32 scale = CONTENT_SCALE(0.5f);
     int xAdjust = CONTENT_SCALE(RES(-2));
-    int bottomAdj = RES(4);
 
     if( pages.size() < 32 ) {
     }
     else if( pages.size() < 64 ) {
         scale = 0.5f;
         xAdjust=RES(-4);
-        bottomAdj = RES(2);
     }
     else if( pages.size() < 100 ) {
         scale = 0.4f;
         xAdjust=RES(-6);
-        bottomAdj = RES(2);
     }
     else {
         scale = 0.4f;
         xAdjust=RES(-8);
-        bottomAdj = RES(2);
     }
 
     pageView->setIndicatorIndexNodesScale(scale);
     pageView->setIndicatorSpaceBetweenIndexNodes(xAdjust);
-    pageView->setIndicatorPosition( Vec2(pageView->getContentSize().width/2,padding.bottom + bottomAdj - RES(8)) );
 }
 
 // TODO: Most of this logic should be in TME

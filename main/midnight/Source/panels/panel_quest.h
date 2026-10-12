@@ -29,7 +29,6 @@ protected:
     struct quest_choice_t {
         mxquest_t   quest;
         LPCSTR      icon;       // its sprite - the 1995 game's own symbol
-        u32         label;
         u32         prompt;     // the heading of its list of targets
         bool        place;      // chosen on the map rather than from a list
     };

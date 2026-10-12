@@ -31,7 +31,7 @@ bool panel_gameover::init()
     setBackground(_clrBlack);
     
     // Look Icon
-    auto home = uihelper::CreateImageButton("i_home", ID_HOME, clickCallback);
+    auto home = uihelper::CreateImageButton("icon_home", ID_HOME, clickCallback);
     uihelper::AddBottomLeft(safeArea, home, RES(10), RES(10) );
     
     return true;

@@ -23,18 +23,18 @@ USING_NS_AX_UI;
 USING_NS_TME;
 
 const panel_quest::quest_choice_t panel_quest::questChoices[] = {
-    { QS_RECRUIT,   "quest_recruit",    SS_QUEST_NAME_RECRUIT,  SS_QUEST_ASK_RECRUIT,   false },
-    { QS_JOIN,      "quest_join",       SS_QUEST_NAME_JOIN,     SS_QUEST_ASK_JOIN,      false },
-    { QS_KILL,      "quest_kill",       SS_QUEST_NAME_KILL,     SS_QUEST_ASK_KILL,      false },
-    { QS_RESCUE,    "quest_rescue",     SS_QUEST_NAME_RESCUE,   SS_QUEST_ASK_RESCUE,    false },
-    { QS_FOLLOW,    "quest_follow",     SS_QUEST_NAME_FOLLOW,   SS_QUEST_ASK_FOLLOW,    false },
-    { QS_GOTO,      "quest_goto",       SS_QUEST_NAME_GOTO,     SS_QUEST_PICK_GOTO,     true  },
-    { QS_GUARD,     "quest_guard",      SS_QUEST_NAME_GUARD,    SS_QUEST_PICK_GUARD,    true  },
-    { QS_SEIZE,     "quest_seize",      SS_QUEST_NAME_SEIZE,    SS_QUEST_ASK_SEIZE,     false },
-    { QS_FIND,      "quest_find",       SS_QUEST_NAME_FIND,     SS_QUEST_ASK_FIND,      false },
-    { QS_TAKE,      "quest_take",       SS_QUEST_NAME_TAKE,     SS_QUEST_ASK_TAKE,      false },
-    { QS_DESTROY,   "quest_destroy",    SS_QUEST_NAME_DESTROY,  SS_QUEST_ASK_DESTROY,   false },
-    { QS_REST,      "quest_rest",       SS_QUEST_NAME_REST,     SS_QUEST_REST,          false },
+    { QS_RECRUIT,   "icon_quest_recruit",    SS_QUEST_ASK_RECRUIT,   false },
+    { QS_JOIN,      "icon_quest_join",       SS_QUEST_ASK_JOIN,      false },
+    { QS_KILL,      "icon_quest_kill",       SS_QUEST_ASK_KILL,      false },
+    { QS_RESCUE,    "icon_quest_rescue",     SS_QUEST_ASK_RESCUE,    false },
+    { QS_FOLLOW,    "icon_quest_follow",     SS_QUEST_ASK_FOLLOW,    false },
+    { QS_GOTO,      "icon_quest_goto",       SS_QUEST_PICK_GOTO,     true  },
+    { QS_GUARD,     "icon_quest_guard",      SS_QUEST_PICK_GUARD,    true  },
+    { QS_SEIZE,     "icon_quest_seize",      SS_QUEST_ASK_SEIZE,     false },
+    { QS_FIND,      "icon_quest_find",       SS_QUEST_ASK_FIND,      false },
+    { QS_TAKE,      "icon_quest_take",       SS_QUEST_ASK_TAKE,      false },
+    { QS_DESTROY,   "icon_quest_destroy",    SS_QUEST_ASK_DESTROY,   false },
+    { QS_REST,      "icon_quest_rest",       SS_QUEST_REST,          false },
 };
 
 const panel_quest::quest_choice_t* panel_quest::choiceFor( mxquest_t quest )
@@ -68,7 +68,7 @@ bool panel_quest::init()
     status->enableWrap(true);
     uihelper::AddTopLeft(safeArea, status, RES(32), RES(96));
 
-    auto look = uihelper::CreateImageButton("i_look", ID_LOOK, clickCallback);
+    auto look = uihelper::CreateImageButton("icon_look", ID_LOOK, clickCallback);
     uihelper::AddBottomLeft(safeArea, look, RES(10), RES(10));
 
     back = uihelper::CreateBoxButton(Size(RES(200), RES(64)));
@@ -226,10 +226,8 @@ void panel_quest::showQuests()
         icon->setPosition(centre);
         box->addChild(icon);
 
-        auto label = uihelper::addButtonText(icon, TME_GetSystemString(c, choice.label));
-        label->setScale(1.25f);
         if ( current )
-            label->setTextColor(Color4B(_clrYellow));
+            icon->setColor(_clrYellow);    // tinted like the current tab on the think screen (panel_think::tintButton)
     }
 }
 

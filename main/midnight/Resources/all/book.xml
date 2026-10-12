@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<images>
+
+    <image id="story_book" size="512,400">
+        <gfx id="book" name="book" pos="256,200" anchor="c"/>
+        <gfx id="bookmark" name="bookmark" pos="150,81.5" anchor="tl"/>
+        <gfx id="overlay" name="bookmark_overlay" pos="214,145.5" anchor="c" tint="black"/>
+        <gradient id="shade" pos="4,198" anchor="tl" width="504" height="198" top="black" topalpha="0" bottom="black" bottomalpha="0.39"/>
+    </image>
+
+</images>

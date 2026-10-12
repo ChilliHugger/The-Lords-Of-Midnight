@@ -21,7 +21,6 @@ class uisinglelord : public uilordselect
 {
 protected:
     using Sprite = ax::Sprite;
-    using DrawNode = ax::DrawNode;
     using LayerColor = ax::LayerColor;
     using uidragevent = chilli::ui::DragEvent;
     
@@ -40,8 +39,8 @@ protected:
     
      void updateStatus(character& c) override;
     
-    Sprite* getStatusImage();
-    Sprite* getFaceImage(character& c);
+    std::string statusImageName() const;
+    void renderLord();
 
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
@@ -51,11 +50,9 @@ protected:
     
 protected:
     Node*       buttonNode;
-    Node*       statusNode;
-    Node*       locationNode;
-    Node*       selectedNode;
-    DrawNode*   innerCircle;
     LayerColor* bg{};
     bool        statusVisible;
+    bool        dimmed{};
+    std::string faceArt;
 };
 
