@@ -28,6 +28,8 @@
 //            ink at 64. 'descent' overrides the estimated overhang (outline + 36% of the size, measured).
 //  circle, ring  drawn shapes: <circle id= radius= colour= alpha= pos= anchor=/> is a filled disc and <ring ... thickness=/>
 //            a line of that width inside the radius. They are sharp at any resolution and need no art.
+//  gradient  a vertical fade: <gradient id= width= height= pos= top= topalpha= bottom= bottomalpha=/> (colours default
+//            to black, alphas to 1). Drawn, so needs no art.
 //  Element ids are unique within an image. Positions are in base-resolution units
 //  (scaled by RES() when built), origin top-left.
 //
@@ -48,7 +50,7 @@ struct Colour {
 
 enum class Anchor { TopLeft, TopCentre, TopRight, LeftCentre, Centre, RightCentre, BottomLeft, BottomCentre, BottomRight };
 
-enum class ElementType { Gfx, Txt, Circle, Ring };
+enum class ElementType { Gfx, Txt, Circle, Ring, Gradient };
 
 struct Element {
     ElementType type{ElementType::Gfx};
@@ -62,7 +64,10 @@ struct Element {
     float scale{1.0f};
     float rotation{0};
     float size{0};          // txt
-    float width{0};         // txt: wrap width, 0 = none
+    float width{0};         // txt: wrap width, 0 = none; gradient: its width
+    float height{0};        // gradient: its height
+    Colour colour2;         // gradient: the colour at the bottom
+    float alpha2{1.0f};     // gradient: the alpha at the bottom
     float outline{0};       // txt: black outline size, 0 = none
     float tracking{0};      // txt: extra spacing in 1/1000 of an em
     float radius{0};        // circle, ring: the outer radius
@@ -94,6 +99,7 @@ struct Image {
     std::vector<Element> elements;
 
     const Element* find(const std::string& elementId) const;
+    Element* find(const std::string& elementId);      // for changing a copy of the image before building it
     const Element* firstGfx() const;     // the main art of an icon
 };
 

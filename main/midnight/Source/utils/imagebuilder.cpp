@@ -106,6 +106,16 @@ Node* imagebuilder::createElement(const Element& e, const Options& options, Stac
             auto size = sprite->getContentSize();
             visible = frame != nullptr ? frameVisibleBox(frame) : Box{ 0, 0, size.width, size.height };
         }
+    } else if (e.type == ElementType::Gradient) {
+        // colours premultiplied by their alpha, as the picture's pixels are
+        auto premultiplied = [](const Colour& c, f32 alpha) {
+            return Color4B((u8)(c.r * alpha), (u8)(c.g * alpha), (u8)(c.b * alpha), (u8)(alpha * 255));
+        };
+        auto gradient = LayerGradient::create(premultiplied(e.colour, e.alpha), premultiplied(e.colour2, e.alpha2));
+        gradient->setContentSize(Size(RES(e.width), RES(e.height)));
+        gradient->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
+        node = gradient;
+        visible = { 0, 0, RES(e.width), RES(e.height) };
     } else if (e.type == ElementType::Circle || e.type == ElementType::Ring) {
         // drawn into the picture at whatever resolution it is rendered at. The colour is premultiplied by the
         // alpha (as the picture's pixels are), so a faint shape is not squared into nothing.
@@ -150,7 +160,7 @@ Node* imagebuilder::createElement(const Element& e, const Options& options, Stac
     node->setName(e.id);
     node->setScale(e.scale);
     node->setRotation(e.rotation);
-    node->setOpacity((e.type == ElementType::Circle || e.type == ElementType::Ring) ? 255 : ALPHA(e.alpha));   // shapes have the alpha in their colour
+    node->setOpacity((e.type == ElementType::Circle || e.type == ElementType::Ring || e.type == ElementType::Gradient) ? 255 : ALPHA(e.alpha));   // shapes have the alpha in their colour
     node->setAnchorPoint(toAnchor(e.anchor));
     return node;
 }

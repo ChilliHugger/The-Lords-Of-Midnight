@@ -351,3 +351,54 @@ TEST_CASE("Shapes need a radius and a thickness")
     CHECK_FALSE(lib.loadFromString("<images><image id='a'><circle id='c' radius='5' colour='nope'/></image></images>"));
     CHECK(lib.loadFromString("<images><image id='a'><circle id='c' radius='5'/></image></images>"));
 }
+
+TEST_CASE("Gradients are drawn fades")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(
+        "<images><image id='a' size='100,100'>"
+        "<gradient id='g' pos='4,50' anchor='tl' width='92' height='40' top='black' topalpha='0' bottom='#102030' bottomalpha='0.5'/>"
+        "<gradient id='d' width='10' height='10'/>"
+        "</image></images>"));
+    auto g = lib.find("a")->find("g");
+    CHECK(g->type == ElementType::Gradient);
+    CHECK(g->width == 92.0f);
+    CHECK(g->height == 40.0f);
+    CHECK(g->colour == Colour{0x00,0x00,0x00});
+    CHECK(g->alpha == 0.0f);
+    CHECK(g->colour2 == Colour{0x10,0x20,0x30});
+    CHECK(g->alpha2 == 0.5f);
+
+    auto d = lib.find("a")->find("d");
+    CHECK(d->alpha == 1.0f);        // opaque black to opaque black unless it says
+    CHECK(d->alpha2 == 1.0f);
+
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gradient id='g' width='10'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><gradient id='g' width='10' height='5' top='nope'/></image></images>"));
+}
+
+TEST_CASE("The shipped story book has an untinted bookmark, tinted for the slot in code")
+{
+    Library lib;
+    bool loaded = lib.loadFromFile(resource("all/book.xml"));
+    INFO(lib.error());
+    REQUIRE(loaded);
+
+    auto book = lib.find("story_book");
+    REQUIRE(book != nullptr);
+    CHECK(book->width == 512.0f);
+    CHECK(book->height == 400.0f);
+    REQUIRE(book->find("bookmark") != nullptr);
+    CHECK(book->find("bookmark")->colour == Colour{0xff,0xff,0xff});    // white: the code sets its colour
+    CHECK(book->find("overlay")->colour == Colour{0x00,0x00,0x00});
+    CHECK(book->find("shade")->type == ElementType::Gradient);
+
+    // the book, then the bookmark and its overlay, then the fade over them
+    CHECK(book->elements.front().id == "book");
+    CHECK(book->elements.back().id == "shade");
+    CHECK(lib.find("book_0") == nullptr);   // not one image per slot
+
+    // an image's id must differ from the atlas names it uses, or it would be resolved as the image itself
+    CHECK(lib.find("book") == nullptr);
+    CHECK(book->find("book")->name == "book");
+}

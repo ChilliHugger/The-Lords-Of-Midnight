@@ -91,6 +91,10 @@ Shift alignShift(Anchor anchor, float width, float height, const Box& box) {
     return s;
 }
 
+Element* Image::find(const std::string& elementId) {
+    return const_cast<Element*>(static_cast<const Image*>(this)->find(elementId));
+}
+
 const Element* Image::firstGfx() const {
     for (auto& e : elements) {
         if (e.type == ElementType::Gfx && e.enabled) return &e;
@@ -132,6 +136,18 @@ static bool parseElement(const XMLElement* e, Element& out, std::string& err) {
     e->QueryBoolAttribute("flipy", &out.flipY);
     e->QueryBoolAttribute("enabled", &out.enabled);
 
+    if (out.type == ElementType::Gradient) {
+        e->QueryFloatAttribute("width", &out.width);
+        e->QueryFloatAttribute("height", &out.height);
+        if (out.width <= 0 || out.height <= 0) { err = "gradient '" + out.id + "' without a size"; return false; }
+        out.colour = Colour{0, 0, 0};
+        out.colour2 = Colour{0, 0, 0};
+        out.alpha = 1.0f;
+        e->QueryFloatAttribute("topalpha", &out.alpha);
+        e->QueryFloatAttribute("bottomalpha", &out.alpha2);
+        return readColour(e, "top", out.colour, err) && readColour(e, "bottom", out.colour2, err);
+    }
+
     if (out.type == ElementType::Circle || out.type == ElementType::Ring) {
         e->QueryFloatAttribute("radius", &out.radius);
         if (out.radius <= 0) { err = "shape '" + out.id + "' without radius"; return false; }
@@ -160,7 +176,7 @@ static bool parseElement(const XMLElement* e, Element& out, std::string& err) {
 static bool parseImage(const XMLElement* node, Image& image, std::string& err) {
     for (auto e = node->FirstChildElement(); e; e = e->NextSiblingElement()) {
         std::string kind = e->Name();
-        if (kind != "gfx" && kind != "txt" && kind != "circle" && kind != "ring") { err = "unknown element '" + kind + "'"; return false; }
+        if (kind != "gfx" && kind != "txt" && kind != "circle" && kind != "ring" && kind != "gradient") { err = "unknown element '" + kind + "'"; return false; }
 
         Element element;
         element.id = str(e, "id");
@@ -168,7 +184,7 @@ static bool parseImage(const XMLElement* node, Image& image, std::string& err) {
         if (image.find(element.id) != nullptr) { err = "duplicate element id '" + element.id + "' in '" + image.id + "'"; return false; }
 
         element.type = kind == "gfx" ? ElementType::Gfx : kind == "txt" ? ElementType::Txt :
-                       kind == "circle" ? ElementType::Circle : ElementType::Ring;
+                       kind == "circle" ? ElementType::Circle : kind == "ring" ? ElementType::Ring : ElementType::Gradient;
         if (!parseElement(e, element, err)) return false;
         image.elements.push_back(element);
     }
