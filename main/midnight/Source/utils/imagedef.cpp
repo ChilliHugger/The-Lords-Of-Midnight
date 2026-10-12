@@ -132,6 +132,14 @@ static bool parseElement(const XMLElement* e, Element& out, std::string& err) {
     e->QueryBoolAttribute("flipy", &out.flipY);
     e->QueryBoolAttribute("enabled", &out.enabled);
 
+    if (out.type == ElementType::Circle || out.type == ElementType::Ring) {
+        e->QueryFloatAttribute("radius", &out.radius);
+        if (out.radius <= 0) { err = "shape '" + out.id + "' without radius"; return false; }
+        e->QueryFloatAttribute("thickness", &out.thickness);
+        if (out.thickness <= 0) { err = "ring '" + out.id + "' without thickness"; return false; }
+        return readColour(e, "colour", out.colour, err);
+    }
+
     if (out.type == ElementType::Gfx) {
         out.name = str(e, "name");
         if (out.name.empty()) { err = "gfx '" + out.id + "' without name"; return false; }
@@ -152,14 +160,15 @@ static bool parseElement(const XMLElement* e, Element& out, std::string& err) {
 static bool parseImage(const XMLElement* node, Image& image, std::string& err) {
     for (auto e = node->FirstChildElement(); e; e = e->NextSiblingElement()) {
         std::string kind = e->Name();
-        if (kind != "gfx" && kind != "txt") { err = "unknown element '" + kind + "'"; return false; }
+        if (kind != "gfx" && kind != "txt" && kind != "circle" && kind != "ring") { err = "unknown element '" + kind + "'"; return false; }
 
         Element element;
         element.id = str(e, "id");
         if (element.id.empty()) { err = "element without id"; return false; }
         if (image.find(element.id) != nullptr) { err = "duplicate element id '" + element.id + "' in '" + image.id + "'"; return false; }
 
-        element.type = kind == "gfx" ? ElementType::Gfx : ElementType::Txt;
+        element.type = kind == "gfx" ? ElementType::Gfx : kind == "txt" ? ElementType::Txt :
+                       kind == "circle" ? ElementType::Circle : ElementType::Ring;
         if (!parseElement(e, element, err)) return false;
         image.elements.push_back(element);
     }

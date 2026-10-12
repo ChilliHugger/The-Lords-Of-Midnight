@@ -68,6 +68,8 @@ moonring::moonring() :
     resolution = new resolutionmanager();
     resolution->InjectMoonRing(this);
     
+    imagebuilder = new ::imagebuilder();
+
     shader = new shadermanager();
     shader->InjectMoonRing(this);
     
@@ -113,6 +115,7 @@ moonring::~moonring()
     SAFEDELETE(settings);
     SAFEDELETE(help);
     SAFEDELETE(shader);
+    SAFEDELETE(imagebuilder);
     SAFEDELETE(resolution);
 }
 
@@ -694,7 +697,7 @@ std::vector<std::string> imageDefinitions = {
 #if defined(_OS_DESKTOP_WINDOW_)
 void moonring::reloadAssets()
 {
-    imagebuilder::reload();
+    imagebuilder->reload();
     auto cache = SpriteFrameCache::getInstance();
     for (std::string file_name : imageFiles )
     {
@@ -724,7 +727,7 @@ void moonring::initialise( progressmonitor* monitor )
     // let's give up some time to the ui Immediatley
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
-    imagebuilder::registerFiles(imageDefinitions, TME_ScenarioShortName());
+    imagebuilder->registerFiles(imageDefinitions, TME_ScenarioShortName());
 
     // load images
     for (std::string file_name : imageFiles ) {

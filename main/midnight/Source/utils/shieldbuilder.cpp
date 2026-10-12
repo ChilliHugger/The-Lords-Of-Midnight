@@ -32,5 +32,5 @@ bool shieldbuilder::build(mxid id, ImageView* parent)
         return false;
     }
 
-    return imagebuilder::build(StringExtensions::toLower(data->symbol), parent);
+    return moonring::mikesingleton()->imagebuilder->build(StringExtensions::toLower(data->symbol), parent);
 }

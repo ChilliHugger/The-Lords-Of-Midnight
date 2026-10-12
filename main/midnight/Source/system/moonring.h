@@ -47,6 +47,7 @@ FORWARD_REFERENCE(projectconfig);
 FORWARD_REFERENCE(configmanager);
 FORWARD_REFERENCE(shadermanager);
 FORWARD_REFERENCE(resolutionmanager);
+FORWARD_REFERENCE(imagebuilder);
 
 typedef std::function<void(bool updateAvailable, std::string& url)> GetVersionCallback;
 
@@ -167,6 +168,7 @@ protected:
 public:
     
     resolutionmanager*      resolution;
+    ::imagebuilder*         imagebuilder;   // XML image descriptions (icons, shields, lords...) and their building
     shadermanager*          shader;
     panelmanager*           panels;
     settingsmanager*        settings;

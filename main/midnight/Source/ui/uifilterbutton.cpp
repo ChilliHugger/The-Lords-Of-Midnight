@@ -33,8 +33,8 @@ void uifilterbutton::setSelected(bool selected)
     this->selected = selected;
 
     // the eye is part of the button's image: show the open or the closed one
-    imagebuilder::setEnabled(this, "visible", selected);
-    imagebuilder::setEnabled(this, "notvisible", !selected);
+    moonring::mikesingleton()->imagebuilder->setEnabled(this, "visible", selected);
+    moonring::mikesingleton()->imagebuilder->setEnabled(this, "notvisible", !selected);
     
     dispatchSelectChangedEvent(isSelected());
     
@@ -45,8 +45,9 @@ uifilterbutton* uifilterbutton::createWithImage(const std::string& image)
     auto button = uifilterbutton::create();
 
     // image is the id of a filter in images (see filters.xml)
-    auto def = imagebuilder::find(image);
-    if ( def == nullptr || !imagebuilder::setupButton(button, *def) )
+    auto builder = moonring::mikesingleton()->imagebuilder;
+    auto def = builder->find(image);
+    if ( def == nullptr || !builder->setupButton(button, *def) )
         UIDEBUG("uifilterbutton: no filter image '%s'", image.c_str());
 
     button->setLocalZOrder(ZORDER_UI);    

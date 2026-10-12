@@ -2,7 +2,7 @@
 //  imagebuilder.h
 //  midnight
 //
-//  Builds engine nodes from an imagedef::Image description.
+//  Builds engine nodes from an imagedef::Image description. One instance, owned by moonring (imagebuilder).
 //
 
 #ifndef imagebuilder_h
@@ -10,6 +10,7 @@
 
 #include "../axmol_sdk.h"
 #include "imagedef.h"
+#include "../system/imagemanager.h"
 #include <functional>
 #include <set>
 #include <string>
@@ -25,43 +26,75 @@ public:
     };
 
 public:
-    // Image files are registered by name (see moonring's imageDefinitions, like the atlases) and merged into one
-    // library, so image ids are unique across all files. Each name is looked for, in this order, in
-    //   all/<name>.xml  all/en/<name>.xml  all/<locale>/<name>.xml
-    //   <scenario>/<name>.xml  <scenario>/en/<name>.xml  <scenario>/<locale>/<name>.xml
-    // and every file found is loaded, a later file adding to or replacing the ids of an earlier one. So a
-    // scenario can override the shared images, and a locale can replace the text and layout of the default ("en").
-    static void registerFiles(const std::vector<std::string>& names, const std::string& scenario);
-    static void setLocale(const std::string& locale);   // reloads the registered files
-    static void reload();
-    static imagedef::Library& library();
-    static const imagedef::Image* find(const std::string& id);
+    // The images come from the files registered with the image manager (see there).
+    void registerFiles(const std::vector<std::string>& names, const std::string& scenario) { manager.registerFiles(names, scenario); }
+    void setLocale(const std::string& locale) { manager.setLocale(locale); }
+    void reload() { manager.reload(); }
+    const imagedef::Image* find(const std::string& id) const { return manager.find(id); }
+
+    // debug: fill each flattened image's background so its bounds (and any clipping) can be seen
+    void setDebugBackground(bool show) { debugBackground = show; }
 
     // clears the parent and adds the image's elements; an image view with a size shows them rendered into one
     // texture (see createIconButton), otherwise they are added as named children; a gfx is another image in the same
     // file (built as a nested image), else an atlas sprite
-    static bool build(const std::string& id, ax::Node* parent, const Options& options = Options());
+    bool build(const std::string& id, ax::Node* parent, const Options& options = Options());
 
     // a button for an icon: the art (first gfx, an atlas image, with its tint and alpha) and the other elements
     // (e.g. the text) are rendered into one texture, so fading the button fades the picture, not each element.
     // Returns null if the icon has no atlas art. An image with align moves everything together within the
-    // art's original size.
-    static ax::ui::Button* createIconButton(const imagedef::Image& image, const Options& options = Options());
-
-    // sets the text of a built txt element by id (re-rendering a flattened image); false if there is none
-    static bool setText(ax::Node* parent, const std::string& elementId, const std::string& text);
+    // cell, which is the image's size (else the art's original size).
+    ax::ui::Button* createIconButton(const imagedef::Image& image, const Options& options = Options());
 
     // as createIconButton, for a button you already have (e.g. a subclass); false if the icon has no atlas art
-    static bool setupButton(ax::ui::Button* button, const imagedef::Image& image, const Options& options = Options());
+    bool setupButton(ax::ui::Button* button, const imagedef::Image& image, const Options& options = Options());
 
     // renders the image (which needs a size) into a picture - a child sprite of the host node, which becomes the
-    // size of the image. Call it again, with a changed copy of the image, to update it: for things like a lord's face,
-    // name and status. 'resolution' multiplies the pixels rendered, for a picture drawn larger than its size
-    // (the host can be scaled up without the text going soft).
-    static bool setupPicture(ax::Node* host, const imagedef::Image& image, float resolution = 1.0f, const Options& options = Options());
+    // size of the image. Call it again, with a changed copy of the image, to update it: for things like a lord's face
+    // and status. 'resolution' multiplies the pixels rendered, for a picture drawn larger than its size
+    // (the host can be scaled up without it going soft).
+    bool setupPicture(ax::Node* host, const imagedef::Image& image, float resolution = 1.0f, const Options& options = Options());
+
+    // sets the text of a built txt element by id (re-rendering a flattened image); false if there is none
+    bool setText(ax::Node* parent, const std::string& elementId, const std::string& text);
 
     // show/hide a built element by id (re-rendering a flattened image)
-    static bool setEnabled(ax::Node* parent, const std::string& elementId, bool enabled);
+    bool setEnabled(ax::Node* parent, const std::string& elementId, bool enabled);
+
+private:
+    using Stack = std::vector<std::string>;
+
+    // a built element that is not yet attached: its node and the box its visible content occupies
+    // in the parent's top-left origin space
+    struct Placed {
+        ax::Node* node;
+        const imagedef::Element* element;
+        imagedef::Box box;
+        ax::Vec2 offset;    // moves the node so its ink, not its box, sits at the position
+    };
+
+    ax::Vec2 toAnchor(imagedef::Anchor anchor) const;
+    ax::Color3B toColor(const imagedef::Colour& colour) const;
+    imagedef::Box frameVisibleBox(ax::SpriteFrame* frame) const;
+    imagedef::Box placedBox(ax::Node* node, const imagedef::Element& e, const imagedef::Box& visible) const;
+    ax::Vec2 inkOffset(const imagedef::Element& e) const;
+
+    ax::Node* createElement(const imagedef::Element& e, const Options& options, Stack& stack, imagedef::Box& visible);
+    std::vector<Placed> placeElements(const imagedef::Image& image, const Options& options, Stack& stack);
+    imagedef::Shift attachPlaced(ax::Node* parent, std::vector<Placed>& placed, const imagedef::Image& image, ax::Size cell);
+
+    // The composite is rendered once into a texture, so opacity applies to the picture as a whole: translucent text
+    // would otherwise show the art through it. The source nodes are kept (as the host's user object) so that
+    // setText can change a label and render again.
+    ax::Node* createSource(const ax::Size& size, const std::string& id);
+    void renderSource(ax::Node* source, float resolution = 1.0f);
+    void showFlattened(ax::Node* renderer) const;
+    bool changeNode(ax::Node* parent, const std::string& elementId, const std::function<void(ax::Node*)>& change);
+
+private:
+    imagemanager manager;
+    int flatCount{};
+    bool debugBackground{};
 };
 
 #endif /* imagebuilder_h */

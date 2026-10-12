@@ -370,10 +370,11 @@ Button* uihelper::CreateImageButton( const std::string& name )
     // icons described in an image file such as all/<locale>/icons.xml (ids like "icon_think") name their art (atlas "i_think") and have their own text;
     // any other name is an atlas image
     ax::ui::Button* button = nullptr;
-    auto icon = imagebuilder::find(name);
+    auto builder = moonring::mikesingleton()->imagebuilder;
+    auto icon = builder->find(name);
     if ( icon != nullptr )
         {
-        button = imagebuilder::createIconButton(*icon);
+        button = builder->createIconButton(*icon);
     }
 
     if ( button == nullptr ) {

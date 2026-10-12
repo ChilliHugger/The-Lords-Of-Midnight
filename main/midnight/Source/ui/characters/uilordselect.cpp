@@ -47,7 +47,7 @@ std::string uilordselect::faceName(character& c)
     // scaled to the size of a face
     if ( userdata != nullptr && !userdata->symbol.empty() ) {
         auto shield = StringExtensions::toLower(userdata->symbol);
-        if ( imagebuilder::find(shield) != nullptr && SpriteFrameCache::getInstance()->getSpriteFrameByName("shield") != nullptr )
+        if ( moonring::mikesingleton()->imagebuilder->find(shield) != nullptr && SpriteFrameCache::getInstance()->getSpriteFrameByName("shield") != nullptr )
             return shield;
     }
 
@@ -67,7 +67,8 @@ void uilordselect::renderLordImage( const std::string& imageId, const std::strin
     if ( lordImage != nullptr && key == lordImageKey )
         return;
 
-    auto def = imagebuilder::find(imageId);
+    auto builder = moonring::mikesingleton()->imagebuilder;
+    auto def = builder->find(imageId);
     if ( def == nullptr )
         return;
 
@@ -83,7 +84,7 @@ void uilordselect::renderLordImage( const std::string& imageId, const std::strin
             e.name = face;
             e.y += faceShift;
             // a face that is an image (a shield) is scaled to the size of the face (64)
-            if ( auto art = imagebuilder::find(face) ) {
+            if ( auto art = builder->find(face) ) {
                 if ( art->width > 0 )
                     e.scale = LORD_FACE_SIZE / art->width;
             }
@@ -110,7 +111,7 @@ void uilordselect::renderLordImage( const std::string& imageId, const std::strin
         }
     }
 
-    imagebuilder::setupPicture(lordImage, image, LORD_IMAGE_RESOLUTION);
+    builder->setupPicture(lordImage, image, LORD_IMAGE_RESOLUTION);
     lordImageKey = key;
 }
 

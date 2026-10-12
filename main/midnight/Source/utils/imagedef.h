@@ -26,6 +26,8 @@
 //            relative to that aligned content.
 //  txt       a bottom-anchored text is bottom-aligned by its ink, not its box, so pos y=64 puts the lowest
 //            ink at 64. 'descent' overrides the estimated overhang (outline + 36% of the size, measured).
+//  circle, ring  drawn shapes: <circle id= radius= colour= alpha= pos= anchor=/> is a filled disc and <ring ... thickness=/>
+//            a line of that width inside the radius. They are sharp at any resolution and need no art.
 //  Element ids are unique within an image. Positions are in base-resolution units
 //  (scaled by RES() when built), origin top-left.
 //
@@ -46,7 +48,7 @@ struct Colour {
 
 enum class Anchor { TopLeft, TopCentre, TopRight, LeftCentre, Centre, RightCentre, BottomLeft, BottomCentre, BottomRight };
 
-enum class ElementType { Gfx, Txt };
+enum class ElementType { Gfx, Txt, Circle, Ring };
 
 struct Element {
     ElementType type{ElementType::Gfx};
@@ -63,11 +65,13 @@ struct Element {
     float width{0};         // txt: wrap width, 0 = none
     float outline{0};       // txt: black outline size, 0 = none
     float tracking{0};      // txt: extra spacing in 1/1000 of an em
+    float radius{0};        // circle, ring: the outer radius
+    float thickness{1};     // ring: the width of the line, inwards from the radius
     float descent{-1};      // txt: how far the ink hangs below the label's box (outline, descenders); -1 = estimate
     float alpha{1.0f};
     bool flipX{false}, flipY{false};
     bool enabled{true};
-    Colour colour;          // gfx: tint, txt: text colour
+    Colour colour;          // gfx: tint, txt: text colour, circle/ring: its colour
 };
 
 // a rectangle, origin top-left, y down

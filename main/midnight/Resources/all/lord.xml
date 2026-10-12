@@ -2,14 +2,15 @@
 <!-- A lord on the select, think, quest and map screens: the circles behind it (selected, at the current location, and a faint one while another lord is dragged over it),
      the face (the lord's shield scaled to 64x64, or a 64x64 portrait) and a dawn/night/battle badge hanging off its
      top left. Which of the circles and badges are shown, and the face, are set in code. The lord's name is not here:
-     it is a label on the lord, so it is drawn sharp at any scale. Positions are base (gfx_m) units; the circles are
-     128x128 and the face is centred on them; the code moves the face down by the scenario's SHIELD_OFFSET_Y. -->
+     it is a label on the lord, so it is drawn sharp at any scale. The circles are drawn rings and discs, matching the
+     old lord_select_circle and map_current_location sprites. Positions are base (gfx_m) units; the picture is
+     128x128 and the face is centred on it; the code moves the face down by the scenario's SHIELD_OFFSET_Y. -->
 <images>
 
     <image id="lord_select" size="128,128">
-        <gfx id="selected" name="lord_select_circle" pos="0,0" tint="blue" enabled="false"/>
-        <gfx id="location" name="map_current_location" pos="0,0" enabled="false"/>
-        <gfx id="drop" name="lord_drop_circle" pos="64,64" anchor="c" tint="black" alpha="0.1" enabled="false"/>
+        <ring id="selected" pos="64,64" anchor="c" radius="46" thickness="2" colour="#0000ff" enabled="false"/>
+        <ring id="location" pos="64,64" anchor="c" radius="62.5" thickness="2" colour="#be0005" enabled="false"/>
+        <circle id="drop" pos="64,64" anchor="c" radius="37.5" colour="black" alpha="0.1" enabled="false"/>
         <gfx id="face" name="f_dead!" pos="64,32" anchor="tc"/>
         <gfx id="battle" name="lord_battle" pos="32,32" anchor="c" scale="0.5" enabled="false"/>
         <gfx id="night" name="lord_night" pos="32,32" anchor="c" scale="0.5" enabled="false"/>

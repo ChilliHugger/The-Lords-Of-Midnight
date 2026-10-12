@@ -17,67 +17,9 @@ USING_NS_AX_UI;
 
 using namespace imagedef;
 
-static std::string currentLocale = "en";
-static std::string currentScenario;
-static std::vector<std::string> registeredFiles;
-static imagedef::Library imageLibrary;
-
-void imagebuilder::registerFiles(const std::vector<std::string>& names, const std::string& scenario)
+Vec2 imagebuilder::toAnchor(Anchor anchor) const
 {
-    registeredFiles = names;
-    currentScenario = scenario;
-    reload();
-}
-
-void imagebuilder::setLocale(const std::string& locale)
-{
-    currentLocale = locale;
-    reload();
-}
-
-void imagebuilder::reload()
-{
-    imageLibrary = imagedef::Library();
-    auto fileutils = FileUtils::getInstance();
-
-    std::vector<std::string> folders;
-    for (auto& base : { std::string("all"), currentScenario }) {
-        if (base.empty())
-            continue;
-        folders.push_back(base);
-        folders.push_back(base + "/en");
-        if (currentLocale != "en")
-            folders.push_back(base + "/" + currentLocale);
-    }
-
-    for (auto& name : registeredFiles) {
-        auto found = false;
-        for (auto& folder : folders) {
-            auto path = folder + "/" + name + ".xml";
-            if (!fileutils->isFileExist(path))
-                continue;
-            found = true;
-            if (!imageLibrary.loadFromString(fileutils->getStringFromFile(path)))
-                AXLOG("imagebuilder: failed to load %s: %s", path.c_str(), imageLibrary.error().c_str());
-        }
-        if (!found)
-            AXLOG("imagebuilder: no image file '%s'", name.c_str());
-    }
-}
-
-imagedef::Library& imagebuilder::library()
-{
-    return imageLibrary;
-}
-
-const imagedef::Image* imagebuilder::find(const std::string& id)
-{
-    return imageLibrary.find(id);
-}
-
-static Vec2 toAnchor(Anchor a)
-{
-    switch (a) {
+    switch (anchor) {
         case Anchor::TopLeft:       return uihelper::AnchorTopLeft;
         case Anchor::TopCentre:     return uihelper::AnchorTopCenter;
         case Anchor::TopRight:      return uihelper::AnchorTopRight;
@@ -90,28 +32,10 @@ static Vec2 toAnchor(Anchor a)
     }
 }
 
-static Color3B toColor(const Colour& c) { return Color3B(c.r, c.g, c.b); }
-
-using Stack = std::vector<std::string>;
-
-// a built element that is not yet attached: its node and the box its visible content occupies
-// in the parent's top-left origin space
-struct Placed {
-    Node* node;
-    const Element* element;
-    Box box;
-    Vec2 offset;    // moves the node so its ink, not its box, sits at the position
-};
-
-static std::vector<Placed> placeElements(const Library& lib, const imagedef::Image& image,
-                                         const imagebuilder::Options& options, Stack& stack,
-                                         const Element* skip = nullptr);
-
-static Shift attachPlaced(Node* parent, std::vector<Placed>& placed, const imagedef::Image& image,
-                          Size cell, const Box* extra = nullptr);
+Color3B imagebuilder::toColor(const Colour& c) const { return Color3B(c.r, c.g, c.b); }
 
 // where the visible part of a sprite frame lies inside its (untrimmed) content, top-left origin
-static Box frameVisibleBox(SpriteFrame* frame)
+Box imagebuilder::frameVisibleBox(SpriteFrame* frame) const
 {
     auto original = frame->getOriginalSize();
     auto size = frame->getRect().size;
@@ -122,7 +46,7 @@ static Box frameVisibleBox(SpriteFrame* frame)
 }
 
 // text hangs below its box by its outline and descenders: a bottom-anchored text is lifted by that
-static Vec2 inkOffset(const Element& e)
+Vec2 imagebuilder::inkOffset(const Element& e) const
 {
     if (e.type != ElementType::Txt)
         return Vec2::ZERO;
@@ -135,7 +59,7 @@ static Vec2 inkOffset(const Element& e)
     return Vec2(0, descent);    // y is up
 }
 
-static Box placedBox(Node* node, const Element& e, const Box& visible)
+Box imagebuilder::placedBox(Node* node, const Element& e, const Box& visible) const
 {
     auto size = node->getContentSize();
     auto a = toAnchor(e.anchor);
@@ -145,14 +69,13 @@ static Box placedBox(Node* node, const Element& e, const Box& visible)
              left + visible.x1 * e.scale, top + visible.y1 * e.scale };
 }
 
-static Node* createElement(const Library& lib, const Element& e, const imagebuilder::Options& options,
-                           Stack& stack, Box& visible)
+Node* imagebuilder::createElement(const Element& e, const Options& options, Stack& stack, Box& visible)
 {
     Node* node = nullptr;
 
     if (e.type == ElementType::Gfx) {
         // image ids and atlas names are distinct: an <image> of that name, else an atlas image
-        auto nested = lib.find(e.name);
+        auto nested = manager.find(e.name);
         if (nested != nullptr) {
             if (std::find(stack.begin(), stack.end(), e.name) != stack.end()) {
                 AXLOG("imagebuilder: image '%s' contains itself", e.name.c_str());
@@ -165,7 +88,7 @@ static Node* createElement(const Library& lib, const Element& e, const imagebuil
             container->setCascadeOpacityEnabled(true);
             container->setColor(toColor(e.colour));
             stack.push_back(e.name);
-            auto nestedPlaced = placeElements(lib, *nested, options, stack);
+            auto nestedPlaced = placeElements(*nested, options, stack);
             attachPlaced(container, nestedPlaced, *nested, container->getContentSize());
             stack.pop_back();
             node = container;
@@ -183,6 +106,24 @@ static Node* createElement(const Library& lib, const Element& e, const imagebuil
             auto size = sprite->getContentSize();
             visible = frame != nullptr ? frameVisibleBox(frame) : Box{ 0, 0, size.width, size.height };
         }
+    } else if (e.type == ElementType::Circle || e.type == ElementType::Ring) {
+        // drawn into the picture at whatever resolution it is rendered at. The colour is premultiplied by the
+        // alpha (as the picture's pixels are), so a faint shape is not squared into nothing.
+        const f32 radius = RES(e.radius);
+        const unsigned int segments = 96;
+        Color4F colour(e.colour.r / 255.0f * e.alpha, e.colour.g / 255.0f * e.alpha, e.colour.b / 255.0f * e.alpha, e.alpha);
+        auto shape = DrawNode::create();
+        shape->setContentSize(Size(radius * 2, radius * 2));
+        shape->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
+        if (e.type == ElementType::Circle) {
+            shape->drawSolidCircle(Vec2(radius, radius), radius, 0, segments, colour);
+        } else {
+            // the line is centred on the circle drawn: keep its outer edge on the radius
+            auto thickness = RES(e.thickness);
+            shape->drawCircle(Vec2(radius, radius), radius - thickness / 2, 0, segments, false, colour, thickness);
+        }
+        node = shape;
+        visible = { 0, 0, radius * 2, radius * 2 };
     } else {
         TTFConfig config(e.font == "button" ? BUTTON_TEXT_FONT : FONT_FILENAME, RES(e.size));
         // as the font configs in uihelper: plain bitmap glyphs, not the engine's default of distance fields (soft at small sizes)
@@ -209,20 +150,19 @@ static Node* createElement(const Library& lib, const Element& e, const imagebuil
     node->setName(e.id);
     node->setScale(e.scale);
     node->setRotation(e.rotation);
-    node->setOpacity(ALPHA(e.alpha));
+    node->setOpacity((e.type == ElementType::Circle || e.type == ElementType::Ring) ? 255 : ALPHA(e.alpha));   // shapes have the alpha in their colour
     node->setAnchorPoint(toAnchor(e.anchor));
     return node;
 }
 
-static std::vector<Placed> placeElements(const Library& lib, const imagedef::Image& image,
-                                         const imagebuilder::Options& options, Stack& stack, const Element* skip)
+std::vector<imagebuilder::Placed> imagebuilder::placeElements(const imagedef::Image& image, const Options& options, Stack& stack)
 {
     std::vector<Placed> placed;
     for (auto& e : image.elements) {
-        if (&e == skip || !e.enabled || options.disabled.count(e.id) != 0)
+        if (!e.enabled || options.disabled.count(e.id) != 0)
             continue;
         Box visible;
-        auto node = createElement(lib, e, options, stack, visible);
+        auto node = createElement(e, options, stack, visible);
         if (node == nullptr)
             continue;
         node->retain();     // held until attached
@@ -232,12 +172,11 @@ static std::vector<Placed> placeElements(const Library& lib, const imagedef::Ima
 }
 
 // adds the nodes to the parent, moving them by the image's alignment (if any) within 'cell'
-static Shift attachPlaced(Node* parent, std::vector<Placed>& placed, const imagedef::Image& image,
-                          Size cell, const Box* extra)
+Shift imagebuilder::attachPlaced(Node* parent, std::vector<Placed>& placed, const imagedef::Image& image, Size cell)
 {
     Shift shift;
     if (image.aligned && cell.width > 0 && !placed.empty()) {
-        Box all = extra != nullptr ? *extra : placed[0].box;
+        Box all = placed[0].box;
         for (auto& p : placed)
             all = all.united(p.box);
         shift = alignShift(image.align, cell.width, cell.height, all);
@@ -251,14 +190,6 @@ static Shift attachPlaced(Node* parent, std::vector<Placed>& placed, const image
     return shift;
 }
 
-// The composite is rendered once into a texture, so opacity applies to the picture as a whole:
-// translucent text would otherwise show the art through it. The source nodes are kept (as the host's
-// user object) so that setText can change a label and render again.
-static int flatCount = 0;
-
-// debug: set to true to fill each flattened image's background so its bounds (and any clipping) can be seen
-constexpr bool DEBUG_FILL_BACKGROUND = false;
-
 // the source nodes also own their sprite frame: it is removed from the cache when the host (a button or an
 // image view, which holds the source as its user object) is destroyed or builds again
 class FlatSource : public Node
@@ -271,7 +202,7 @@ public:
     }
 };
 
-static Node* createSource(const Size& size, const std::string& id)
+Node* imagebuilder::createSource(const Size& size, const std::string& id)
 {
     auto source = new FlatSource();
     source->init();
@@ -284,14 +215,14 @@ static Node* createSource(const Size& size, const std::string& id)
 }
 
 // renders the source into its sprite frame (replacing the last one)
-static void renderSource(Node* source, f32 resolution = 1.0f)
+void imagebuilder::renderSource(Node* source, f32 resolution)
 {
     // resolution > 1 renders more pixels than the cell is big, for pictures that are drawn larger than their size
     auto size = source->getContentSize();
     auto renderTexture = RenderTexture::create((int)ceilf(size.width * resolution), (int)ceilf(size.height * resolution), backend::PixelFormat::RGBA8);
     source->setScale(resolution);
 
-    if (DEBUG_FILL_BACKGROUND)
+    if (debugBackground)
         renderTexture->beginWithClear(1, 0, 1, 0.35f);
     else
         renderTexture->beginWithClear(0, 0, 0, 0);
@@ -306,30 +237,24 @@ static void renderSource(Node* source, f32 resolution = 1.0f)
 }
 
 // the render texture's pixels are premultiplied
-static void showFlattened(Node* renderer)
+void imagebuilder::showFlattened(Node* renderer) const
 {
     if (auto sprite = dynamic_cast<Sprite*>(renderer))
         sprite->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
 }
 
-static void releaseSource(Node* host)
-{
-    host->setUserObject(nullptr);   // the old source removes its frame
-}
-
 bool imagebuilder::build(const std::string& id, Node* parent, const Options& options)
 {
-    auto& lib = library();
-    auto image = lib.find(id);
+    auto image = manager.find(id);
     if (image == nullptr)
         return false;
 
-    releaseSource(parent);
+    parent->setUserObject(nullptr);   // the old source removes its frame
     parent->removeAllChildren();
 
     Size size(RES(image->width), RES(image->height));
     Stack stack{ id };
-    auto placed = placeElements(lib, *image, options, stack);
+    auto placed = placeElements(*image, options, stack);
 
     // an image view with a size shows the flattened picture
     auto view = dynamic_cast<ImageView*>(parent);
@@ -362,7 +287,7 @@ bool imagebuilder::setupButton(Button* button, const imagedef::Image& image, con
     Size cell = image.width > 0 ? Size(RES(image.width), RES(image.height)) : Size(frame->getOriginalSize());
 
     Stack stack{ image.id };
-    auto placed = placeElements(library(), image, options, stack);
+    auto placed = placeElements(image, options, stack);
 
     // everything is drawn into one texture, aligned together within the cell if the image asks
     auto source = createSource(cell, image.id);
@@ -383,7 +308,7 @@ bool imagebuilder::setupPicture(Node* host, const imagedef::Image& image, f32 re
 
     Size cell(RES(image.width), RES(image.height));
     Stack stack{ image.id };
-    auto placed = placeElements(library(), image, options, stack);
+    auto placed = placeElements(image, options, stack);
 
     auto source = createSource(cell, image.id);
     attachPlaced(source, placed, image, cell);
@@ -416,20 +341,14 @@ Button* imagebuilder::createIconButton(const imagedef::Image& image, const Optio
 }
 
 // changes a node of a flattened image and renders it again; a plain (unflattened) image just changes the node
-static Node* findElement(Node* parent, const std::string& elementId)
+bool imagebuilder::changeNode(Node* parent, const std::string& elementId, const std::function<void(Node*)>& change)
 {
     auto source = dynamic_cast<Node*>(parent->getUserObject());
-    return (source != nullptr ? source : parent)->getChildByName(elementId);
-}
-
-static bool changeNode(Node* parent, const std::string& elementId, const std::function<void(Node*)>& change)
-{
-    auto node = findElement(parent, elementId);
+    auto node = (source != nullptr ? source : parent)->getChildByName(elementId);
     if (node == nullptr)
         return false;
     change(node);
 
-    auto source = dynamic_cast<Node*>(parent->getUserObject());
     if (source == nullptr)
         return true;
 

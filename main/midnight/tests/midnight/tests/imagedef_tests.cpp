@@ -262,7 +262,7 @@ TEST_CASE("The shipped lord images have circles, a face and status badges that s
 
     auto select = lib.find("lord_select");
     REQUIRE(select != nullptr);
-    CHECK(select->width == 128.0f);     // the size of the circles
+    CHECK(select->width == 128.0f);
     REQUIRE(select->find("face") != nullptr);
     CHECK(select->find("title") == nullptr);    // the name is a label on the lord, drawn sharp at any scale
     for (auto part : { "selected", "location", "drop", "battle", "night", "dawn" }) {
@@ -270,10 +270,18 @@ TEST_CASE("The shipped lord images have circles, a face and status badges that s
         REQUIRE(select->find(part) != nullptr);
         CHECK_FALSE(select->find(part)->enabled);
     }
-    CHECK(select->find("selected")->name == "lord_select_circle");
-    CHECK(select->find("selected")->colour == Colour{0x00,0x00,0xcd});
-    CHECK(select->find("location")->name == "map_current_location");
-    CHECK(select->find("drop")->name == "lord_drop_circle");
+    // the selected and location circles are drawn rings (they were atlas sprites), centred in the picture
+    CHECK(select->find("selected")->type == ElementType::Ring);
+    CHECK(select->find("selected")->radius == 46.0f);
+    CHECK(select->find("selected")->thickness == 2.0f);
+    CHECK(select->find("selected")->colour == Colour{0x00,0x00,0xff});
+    CHECK(select->find("location")->type == ElementType::Ring);
+    CHECK(select->find("location")->radius == 62.5f);
+    CHECK(select->find("location")->colour == Colour{0xbe,0x00,0x05});
+    CHECK(select->find("location")->x == 64.0f);
+    CHECK(select->find("location")->y == 64.0f);
+    CHECK(select->find("drop")->type == ElementType::Circle);     // drawn, no art needed
+    CHECK(select->find("drop")->radius == 37.5f);
     CHECK(select->find("drop")->colour == Colour{0x00,0x00,0x00});
     CHECK(select->find("drop")->alpha == 0.1f);
 
@@ -302,4 +310,44 @@ TEST_CASE("Every lord has a shield image the size the lord face is scaled from")
         CHECK(shield->width == 256.0f);     // 64 / 256 is the scale of a face
         CHECK(lib.find(std::string("mini_") + name) == nullptr);
     }
+}
+
+TEST_CASE("Circles and rings are drawn shapes")
+{
+    Library lib;
+    REQUIRE(lib.loadFromString(
+        "<images><image id='a' size='100,100'>"
+        "<circle id='disc' pos='50,50' anchor='c' radius='40' colour='#102030' alpha='0.5'/>"
+        "<ring id='line' pos='50,50' anchor='c' radius='30' thickness='4' colour='red' enabled='false'/>"
+        "<ring id='thin' radius='10' colour='red'/>"
+        "</image></images>"));
+    auto a = lib.find("a");
+    REQUIRE(a->elements.size() == 3);
+
+    auto disc = a->find("disc");
+    CHECK(disc->type == ElementType::Circle);
+    CHECK(disc->radius == 40.0f);
+    CHECK(disc->colour == Colour{0x10,0x20,0x30});
+    CHECK(disc->alpha == 0.5f);
+    CHECK(disc->anchor == Anchor::Centre);
+
+    auto line = a->find("line");
+    CHECK(line->type == ElementType::Ring);
+    CHECK(line->radius == 30.0f);
+    CHECK(line->thickness == 4.0f);
+    CHECK_FALSE(line->enabled);
+
+    CHECK(a->find("thin")->thickness == 1.0f);      // a ring is one unit thick unless it says
+    CHECK(a->firstGfx() == nullptr);                // shapes are not art
+}
+
+TEST_CASE("Shapes need a radius and a thickness")
+{
+    Library lib;
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><circle id='c' colour='red'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><circle id='c' radius='0'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><ring id='r'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><ring id='r' radius='5' thickness='0'/></image></images>"));
+    CHECK_FALSE(lib.loadFromString("<images><image id='a'><circle id='c' radius='5' colour='nope'/></image></images>"));
+    CHECK(lib.loadFromString("<images><image id='a'><circle id='c' radius='5'/></image></images>"));
 }
