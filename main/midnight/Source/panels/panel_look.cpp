@@ -28,6 +28,7 @@
 #include "../landscaping/LandscapeLand.h"
 #include "../landscaping/LandscapeTerrain.h"
 #include "../landscaping/LandscapeColour.h"
+#include "../landscaping/LandscapeSnow.h"
 
 #include "../landscaping/TunnelView.h"
 
@@ -277,7 +278,12 @@ bool panel_look::init()
     f32 landscapeWidth = size.height*1.3333;
     f32 centerLandscapeViewAdjustment = ((size.width - landscapeWidth)/2)*1.05;
     options->lookOffsetAdjustment = RES(LANDSCAPE_DIR_AMOUNT) - centerLandscapeViewAdjustment;
-    
+
+    // Snow sits above the landscape and people but below the UI
+    snow = LandscapeSnow::create(size);
+    snow->setLocalZOrder(ZORDER_FAR+2);
+    addChild(snow);
+
     return true;
 }
 
@@ -545,6 +551,7 @@ void panel_look::setViewForCurrentCharacter()
 #endif
 
     UpdateLandscape();
+    UpdateSnow();
     
     // Add shield if following
     
@@ -582,6 +589,12 @@ void panel_look::UpdatePeople()
     next_people1->setPositionX(width+width);
 }
 #endif
+
+void panel_look::UpdateSnow()
+{
+    // snow falls everywhere outdoors
+    snow->setSnowing(!current_info->tunnel);
+}
 
 void panel_look::UpdateLandscape()
 {
@@ -1778,6 +1791,7 @@ void panel_look::UpdatePanningLandscape()
     options->generator->horizontalOffset = options->lookAmount;
     options->generator->landscapeScreenWidth = getContentSize().width ;
     current_view->RefreshPositions();
+    snow->setLook(options->lookAmount);
 }
 
 #if defined(_USE_FOREGROUND_PEOPLE_)

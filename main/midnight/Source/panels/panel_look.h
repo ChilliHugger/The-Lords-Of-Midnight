@@ -18,6 +18,7 @@ FORWARD_REFERENCE(uicommandwindow);
 FORWARD_REFERENCE(uihelplistwindow);
 FORWARD_REFERENCE(uisinglelord);
 FORWARD_REFERENCE(uicompass);
+FORWARD_REFERENCE(LandscapeSnow);
 
 typedef enum SNAP_MODE {
     sm_back_right=1,
@@ -134,6 +135,7 @@ protected:
     void setupLeaderButton();
     
     void UpdateLandscape();
+    void UpdateSnow();
     void UpdatePanningLandscape();
     
     // Actions and Commands
@@ -187,6 +189,7 @@ protected:
     uisinglelord*       following{};
     DrawNode*           gradientL{};
     DrawNode*           gradientR{};
+    LandscapeSnow*      snow{};
     
     LANDSCAPE_MOVEMENT  currentMovementIndicator;
  
