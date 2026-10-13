@@ -60,6 +60,7 @@ https://axmol.dev)";
     constexpr LPCSTR KEYBOARD_KEY_Z                     = "Z";
     constexpr LPCSTR KEYBOARD_KEY_ESC                   = "ESC";
         
+    constexpr LPCSTR OPTIONS_LOADINGSCREEN_NONE         = "NONE";
     constexpr LPCSTR OPTIONS_ONOFF_OFF                  = "OFF";
     constexpr LPCSTR OPTIONS_ONOFF_ON                   = "ON";
     constexpr LPCSTR OPTIONS_YESNO_NO                   = "NO";
@@ -109,6 +110,7 @@ https://axmol.dev)";
     constexpr LPCSTR OPTIONS_SCREEN_MAINMENU            = "MAIN MENU";
     constexpr LPCSTR OPTIONS_SCREEN_SCREENMODE          = "SCREEN MODE";
     constexpr LPCSTR OPTIONS_SCREEN_TRANSITIONS         = "SCREEN TRANSITIONS";
+    constexpr LPCSTR OPTIONS_SCREEN_LOADINGSCREEN       = "LOADING SCREEN";
     constexpr LPCSTR OPTIONS_SCREEN_FLIPSCREEN          = "FLIP SCREEN";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOFIGHT           = "AUTO FIGHT";
     constexpr LPCSTR OPTIONS_SCREEN_AUTOUNHIDE          = "AUTO UNHIDE";

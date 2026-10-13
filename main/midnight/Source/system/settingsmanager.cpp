@@ -27,6 +27,7 @@ settingsmanager::settingsmanager() :
     , cursor_size(CF_CURSOR::MEDIUM)
     , dedication_screen_count(0)
     , screentransitions(TOGGLE::ON)
+    , loadingscreen(CF_LOADING_SCREEN::NONE)
     , fey_recruit_mode(CF_FEY_RECRUIT::ON)
     , firsttime(true)
     , flipscreen(TOGGLE::OFF)
@@ -184,6 +185,9 @@ bool settingsmanager::Save ( void )
     // version 15
     ar << dedication_screen_count;
 
+    // version 18
+    ar << FROM_ENUM(loadingscreen);
+
     ar.Close();
 
     SAFEDELETE ( pFile );
@@ -281,6 +285,10 @@ bool settingsmanager::Load ( void )
     
     if ( version >= 15 ) {
         ar >> dedication_screen_count;
+    }
+
+    if ( version >= 18 ) {
+        ar >> TO_ENUM(loadingscreen, CF_LOADING_SCREEN);
     }
 
     // existing settings get the circular liege fix

@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  16
+#define CONFIG_VERSION                  18
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -82,6 +82,15 @@ enum class CF_KEYBOARD : int
 {
     CLASSIC = 0,
     NEW     = 1,
+};
+
+// NONE is the default until the loading screen has been shown once, it behaves as ON and then
+// switches itself to OFF. ON is only ever changed by the player.
+enum class CF_LOADING_SCREEN : int
+{
+    NONE    = 0,
+    OFF     = 1,
+    ON      = 2,
 };
 
 enum class CF_CURSOR : int
@@ -206,4 +215,7 @@ public:
     
     // version 15
     int                     dedication_screen_count;
+
+    // version 18
+    CF_LOADING_SCREEN       loadingscreen;
 };
