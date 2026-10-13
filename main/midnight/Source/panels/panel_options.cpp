@@ -183,6 +183,12 @@ static const char* values_approach[] = {
     OPTIONS_SCREEN_APPROACH_STAY
 };
 
+static const char* values_loadingscreen[] = {
+    OPTIONS_LOADINGSCREEN_NONE,
+    OPTIONS_ONOFF_OFF,
+    OPTIONS_ONOFF_ON
+};
+
 #if defined(_SCENARIO_SELECTOR_)
 static const char* values_scenario[] = {
     OPTIONS_GAME_SCENARIO_LOM,
@@ -194,6 +200,7 @@ static const char* values_scenario[] = {
  DISPLAY
     MODE                FULL, Window1, Window2, Window3
     TRANSITIONS         OFF, ON
+    LOADING SCREEN      NONE, OFF, ON
  GAME
     AUTO FIGHT          ON, OFF
     AUTO HIDE           ON, OFF
@@ -235,6 +242,7 @@ static uitextmenuitem items_display[] = {
 #if defined(_MOUSE_ENABLED_)
     { ID_OPTION_CURSOR_SIZE,            {OPTIONS_SCREEN_CURSORSIZE},            KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
 #endif
+    { ID_OPTION_LOADING_SCREEN,         {OPTIONS_SCREEN_LOADINGSCREEN},         KEYCODE(5), KEYBOARD_KEY_5, TB_DOUBLE },
 };
     
 static uitextmenuitem items_game[] = {
@@ -281,6 +289,7 @@ static option_t options[] = {
     {   ID_OPTION_NAVIGATION,       OPT_NUMBER, 4, values_movement,            nullptr, false },
     {   ID_OPTION_TRANSITIONS,      OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     {   ID_OPTION_FLIPSCREEN,       OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_LOADING_SCREEN,   OPT_NUMBER, 3, values_loadingscreen,       nullptr, false },
     
     {   ID_OPTION_NOVELLA,          OPT_TOGGLE, 0, values_novella,             nullptr, false },
     
@@ -425,6 +434,7 @@ bool panel_options::init()
     SET_OPTION(ID_OPTION_NAVIGATION,nav_mode);
     SET_OPTION(ID_OPTION_TRANSITIONS,screentransitions);
     SET_OPTION(ID_OPTION_FLIPSCREEN,flipscreen);
+    SET_OPTION(ID_OPTION_LOADING_SCREEN,loadingscreen);
     
     SET_OPTION(ID_OPTION_NOVELLA,novella_pdf);
     
