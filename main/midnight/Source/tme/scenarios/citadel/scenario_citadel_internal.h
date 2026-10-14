@@ -18,6 +18,11 @@ namespace tme {
         gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
     };
 
+    struct citadel_leg {                    // one branch of a voyage, boarding and landing included
+        mxroutenode*    to = nullptr;
+        u32             time = 0;
+    };
+
     class citadel_x : public mxscenario
     {
     public:
@@ -50,7 +55,7 @@ namespace tme {
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
         bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxitem* walker ) const;     // march cost to 'from'
-        bool MarchStep ( const mxitem* walker, mxgridref here, mxgridref target, mxgridref& step ) const;
+        bool MarchStep ( const mxitem* walker, mxgridref here, mxgridref target, mxgridref& step, citadel_leg* leg = nullptr ) const;
         bool Reachable ( const mxitem* walker, mxgridref from, mxgridref to ) const;
         void RaiseWraith ();
         mxstronghold* HomeKeep ( mxrace_t people, mxgridref from ) const;   // the nearest keep his people hold
@@ -64,6 +69,17 @@ namespace tme {
 
     private:
         u32 StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t dir ) const;
+        void ChartWaters () const;
+        u32 VertexOf ( const mxitem* walker, mxgridref here ) const;
+
+        struct citadel_sail {
+            u32             vertex;
+            u32             time;
+            mxroutenode*    node;
+        };
+        mutable std::vector<u32> vertices;      // by route node id
+        mutable u32 seas = 0;                   // water route nodes
+        mutable std::map<u32, std::vector<citadel_sail>> sailsfrom, sailsinto;      // by vertex
 
         // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace
         mutable std::map<u64, std::vector<s32>> paths;
@@ -168,6 +184,7 @@ namespace tme {
         bool InDungeon () const;
         citadel_character* SearchDungeon ( u32 chance );   // the hostage he finds and frees, if any
         void FlyHome ();
+        bool Sail ( const citadel_leg& leg );   // false when the day ends before the leg does
 
     public:
         mxquest_t       quest = QS_NONE;
@@ -177,6 +194,9 @@ namespace tme {
         u32             idle = 0;                   // nights one of yours has stood waiting for orders
         mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
         mxstronghold*   home = nullptr;             // a hostage's home castle
+        mxroutenode*    aboard = nullptr;           // the water route node his ship lies at
+        mxroutenode*    bound = nullptr;            // where the leg he is sailing, or waiting to board for, ends
+        u32             voyage = 0;                 // time spent on that leg so far
 
     protected:
         std::string title;      // the design's "Titles"; empty for most lords

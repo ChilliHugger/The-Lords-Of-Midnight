@@ -147,6 +147,9 @@ void citadel_x::initialise ( u32 version )
     mxscenario::initialise(version);
     paths.clear();
     passable.clear();
+    vertices.clear();
+    sailsfrom.clear();
+    sailsinto.clear();
     boroth = CitadelLord(mx->CharacterBySymbol("CH_BOROTH"));
     maranor = static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
 
@@ -288,53 +291,106 @@ u32 citadel_x::StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t di
     return cost + TerrainMovementModifier(race, (mxterrain_t)mx->gamemap->GetAt(into).terrain);
 }
 
+// squares are vertices 0 to width*height-1, then one vertex per water route node; a lord sails only
+// along the branches that touch water, boarding and landing where a branch joins a land node to one
+void citadel_x::ChartWaters () const
+{
+    if ( !vertices.empty() )
+        return;
+
+    auto width = (u32)mx->gamemap->Size().cx;
+    auto squares = width * (u32)mx->gamemap->Size().cy;
+    vertices.assign(mx->objRoutenodes.Count() + 1, 0);
+    seas = 0;
+    FOR_EACH_ROUTENODE(node) {
+        vertices[node->Id()] = node->Flags().Is(rnf_water) ? squares + seas++ : node->Location().y * width + node->Location().x;
+    }
+    FOR_EACH_ROUTENODE(node) {
+        for ( auto branch : node->Branches() ) {
+            auto to = branch->Node();
+            CONTINUE_IF( !node->Flags().Is(rnf_water) && !to->Flags().Is(rnf_water) );
+            auto time = static_cast<citadel_routebranch*>(branch)->weight;
+            sailsfrom[vertices[node->Id()]].push_back({ vertices[to->Id()], time, to });
+            sailsinto[vertices[to->Id()]].push_back({ vertices[node->Id()], time, node });
+        }
+    }
+}
+
+u32 citadel_x::VertexOf ( const mxitem* walker, mxgridref here ) const
+{
+    if ( walker->IsType(IDT_CHARACTER) ) {
+        auto aboard = static_cast<const citadel_character*>(walker)->aboard;
+        if ( aboard != nullptr && aboard->Location() == here )
+            return vertices[aboard->Id()];
+    }
+    return (u32)(here.y * mx->gamemap->Size().cx + here.x);
+}
+
 const std::vector<s32>& citadel_x::StepsFrom ( mxgridref from, const mxitem* walker ) const
 {
     mxrace_t race;
     bool onfoot;
     PaceOf(walker, race, onfoot);
+    bool sails = walker->IsType(IDT_CHARACTER);
+    ChartWaters();
 
     auto width = (size_t)mx->gamemap->Size().cx;
-    auto height = (size_t)mx->gamemap->Size().cy;
+    auto squares = width * (size_t)mx->gamemap->Size().cy;
     auto start = (u32)(from.y * width + from.x);
-    auto key = start | (u64)race << 32 | (u64)onfoot << 40;
+    auto key = start | (u64)race << 32 | (u64)onfoot << 40 | (u64)sails << 41;
 
     auto found = paths.find(key);
     if ( found != paths.end() )
         return found->second;
 
     if ( passable.empty() )
-        passable.assign(width * height, -1);
+        passable.assign(squares, -1);
 
     auto& costs = paths[key];
-    costs.assign(width * height, -1);
+    costs.assign(squares + seas, -1);
     costs[start] = 0;
     using entry = std::pair<s32, u32>;
     std::priority_queue<entry, std::vector<entry>, std::greater<entry>> queue;
     queue.push({ 0, start });
+
+    auto reach = [&] ( u32 next, s32 total ) {
+        if ( costs[next] >= 0 && costs[next] <= total )
+            return;
+        if ( next < squares ) {
+            if ( passable[next] < 0 )
+                passable[next] = isLocationImpassable(mxgridref((s32)(next % width), (s32)(next / width)), mx->objRegiments[0]) ? 0 : 1;
+            if ( passable[next] == 0 )
+                return;
+        }
+        costs[next] = total;
+        queue.push({ total, next });
+    };
+
     while ( !queue.empty() ) {
         auto [cost, at] = queue.top();
         queue.pop();
         CONTINUE_IF( cost > costs[at] );
-        mxgridref here ( (s32)(at % width), (s32)(at / width) );
-        s32 into[] = { (s32)StepCost(race, onfoot, here, DR_NORTH), (s32)StepCost(race, onfoot, here, DR_NORTHEAST) };
-        for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
-            auto there = here + (mxdir_t)dir;
-            CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
-            auto next = (u32)(there.y * width + there.x);
-            auto total = cost + into[IS_DIAGONAL(dir) ? 1 : 0];
-            CONTINUE_IF( costs[next] >= 0 && costs[next] <= total );
-            if ( passable[next] < 0 )
-                passable[next] = isLocationImpassable(there, mx->objRegiments[0]) ? 0 : 1;
-            CONTINUE_IF( passable[next] == 0 );
-            costs[next] = total;
-            queue.push({ total, next });
+        if ( at < squares ) {
+            mxgridref here ( (s32)(at % width), (s32)(at / width) );
+            s32 into[] = { (s32)StepCost(race, onfoot, here, DR_NORTH), (s32)StepCost(race, onfoot, here, DR_NORTHEAST) };
+            for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
+                auto there = here + (mxdir_t)dir;
+                CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
+                reach((u32)(there.y * width + there.x), cost + into[IS_DIAGONAL(dir) ? 1 : 0]);
+            }
+        }
+        if ( sails ) {
+            auto in = sailsinto.find(at);
+            if ( in != sailsinto.end() ) {
+                for ( const auto& sail : in->second )
+                    reach(sail.vertex, cost + (s32)sail.time);
+            }
         }
     }
     return costs;
 }
 
-bool citadel_x::MarchStep ( const mxitem* walker, mxgridref here, mxgridref target, mxgridref& step ) const
+bool citadel_x::MarchStep ( const mxitem* walker, mxgridref here, mxgridref target, mxgridref& step, citadel_leg* leg ) const
 {
     if ( mx->objRegiments.Count() == 0 || here == target )
         return false;
@@ -345,19 +401,40 @@ bool citadel_x::MarchStep ( const mxitem* walker, mxgridref here, mxgridref targ
 
     const auto& costs = StepsFrom(target, walker);
     auto width = (size_t)mx->gamemap->Size().cx;
-    if ( costs[here.y * width + here.x] < 0 )
+    auto squares = width * (size_t)mx->gamemap->Size().cy;
+    auto at = VertexOf(walker, here);
+    if ( costs[at] < 0 )
         return false;
 
     s32 best = -1;
-    for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
-        auto there = here + (mxdir_t)dir;
-        CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
-        auto cost = costs[there.y * width + there.x];
-        CONTINUE_IF( cost < 0 );
-        cost += (s32)StepCost(race, onfoot, there, (mxdir_t)dir);
-        if ( best < 0 || cost < best ) {
-            best = cost;
-            step = there;
+    if ( at < squares ) {
+        for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
+            auto there = here + (mxdir_t)dir;
+            CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
+            auto cost = costs[there.y * width + there.x];
+            CONTINUE_IF( cost < 0 );
+            cost += (s32)StepCost(race, onfoot, there, (mxdir_t)dir);
+            if ( best < 0 || cost < best ) {
+                best = cost;
+                step = there;
+                if ( leg != nullptr )
+                    *leg = citadel_leg();
+            }
+        }
+    }
+
+    auto out = sailsfrom.find(at);
+    if ( walker->IsType(IDT_CHARACTER) && out != sailsfrom.end() ) {
+        for ( const auto& sail : out->second ) {
+            auto cost = costs[sail.vertex];
+            CONTINUE_IF( cost < 0 );
+            cost += (s32)sail.time;
+            if ( best < 0 || cost < best ) {
+                best = cost;
+                step = sail.node->Location();
+                if ( leg != nullptr )
+                    *leg = { sail.node, sail.time };
+            }
         }
     }
     return best >= 0;

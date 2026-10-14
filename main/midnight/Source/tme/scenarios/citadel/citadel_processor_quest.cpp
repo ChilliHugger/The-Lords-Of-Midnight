@@ -269,8 +269,15 @@ bool citadel_quest_processor::March ( mxgridref target, bool fight )
 
     while ( lord->Location() != target && lord->CanWalkForward() && lord->energy >= tired ) {
         mxgridref step;
-        if ( !CITADEL_SCENARIO(MarchStep(lord, lord->Location(), target, step)) )
+        citadel_leg leg;
+        if ( !CITADEL_SCENARIO(MarchStep(lord, lord->Location(), target, step, &leg)) )
             return false;
+
+        if ( leg.to != nullptr ) {
+            if ( !lord->Sail(leg) )
+                break;
+            continue;
+        }
 
         lord->looking = lord->Location().DirFromHere(step);
         auto info = lord->GetLocInfo();

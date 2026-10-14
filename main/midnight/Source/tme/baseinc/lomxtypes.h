@@ -1111,6 +1111,10 @@ namespace tme {
             rf_tunnel           = MXBIT(19),    // currently in a tunnel
         };
 
+        enum ROUTENODEFLAGS {
+            rnf_water           = MXBIT(0),     // on a water route, which only ships sail
+        };
+
         enum OBJECTFLAGS {
             of_fight            = MXBIT(0),     // object can be fought
             of_pickup           = MXBIT(1),     // object can be picked up

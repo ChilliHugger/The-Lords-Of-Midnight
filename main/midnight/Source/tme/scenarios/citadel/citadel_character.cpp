@@ -31,6 +31,9 @@ void citadel_character::Serialize ( archive& ar )
         ar << idle ;
         WRITE_ENUM(news);
         ar << home ;
+        ar << aboard ;
+        ar << bound ;
+        ar << voyage ;
     } else {
         ar >> qualities ;
         ar >> title ;
@@ -41,6 +44,9 @@ void citadel_character::Serialize ( archive& ar )
         ar >> idle ;
         READ_ENUM(news);
         ar >> home ;
+        ar >> aboard ;
+        ar >> bound ;
+        ar >> voyage ;
     }
 }
 
@@ -176,6 +182,10 @@ MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
     auto result = mxcharacter::Cmd_WalkForward(seek, approach);
     if ( !InDungeon() )
         flags.Reset(cf_dungeon);
+    if ( result == MX_OK ) {
+        aboard = bound = nullptr;   // a lord who walks has left any ship or landing
+        voyage = 0;
+    }
     return result;
 }
 
@@ -201,6 +211,33 @@ void citadel_character::FlyHome ()
         keep = CITADEL_SCENARIO(HomeKeep(Race(), home != nullptr ? home->Location() : Location()));
     if ( keep != nullptr )
         Location(keep->Location());
+}
+
+bool citadel_character::Sail ( const citadel_leg& leg )
+{
+    if ( bound != leg.to ) {
+        bound = leg.to;
+        voyage = 0;
+    }
+
+    auto left = leg.time > voyage ? leg.time - voyage : 0u;
+    if ( (u32)time < left ) {
+        voyage += (u32)time;
+        time = (mxtime_t)sv_time_night;
+        return false;
+    }
+
+    time = (mxtime_t)((u32)time - left);
+    Location(leg.to->Location());
+    aboard = leg.to->Flags().Is(rnf_water) ? leg.to : nullptr;
+    bound = nullptr;
+    voyage = 0;
+    FOR_EACH_FOLLOWER(f) {
+        f->Location(Location());
+        CitadelLord(f)->aboard = aboard;
+    });
+    mx->scenario->SetMapArmies();
+    return true;
 }
 
 mxobject* citadel_character::Cmd_Seek ( void )

@@ -201,13 +201,13 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
                     if (locationGroup.idType == IDT_ROUTENODE) {
                         sv_routenodes++;
                         auto routenode = static_cast<TemporaryRouteNode*>(entityfactory->Create(IDT_ROUTENODE));
-                        routenode->init(MAKE_ID(IDT_ROUTENODE, sv_routenodes), name);
+                        routenode->init(sv_routenodes, name);
                         objRoutenodes.Add(routenode);
                         entity = routenode;
                     } else if (locationGroup.idType == IDT_PLACE) {
                         sv_places++;
                         auto place = static_cast<TemporaryPlace*>(entityfactory->Create(IDT_PLACE));
-                        place->init(MAKE_ID(IDT_PLACE, sv_places), name);
+                        place->init(sv_places, name);
                         objPlaces.Add(place);
                         entity = place;
                     } else {
@@ -252,6 +252,14 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
         }
     }
 
+    // a routenode drawn with the blue icon, the items tileset's sixth tile, is on a water route
+    const int waterRouteTile = 5;
+    int itemsGID = 0;
+    for ( const auto& tileset : mapInfo->getTilesets() ) {
+        if ( tileset->_name.compare("items") == 0 )
+            itemsGID = tileset->_firstGid;
+    }
+
     // routenodes: every "BRANCH_*" property is a reference to another routenode object's id -
     // a map can give a routenode any number of these, so clear whatever it already has and
     // add back only the branches this pass finds
@@ -270,6 +278,11 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
             CONTINUE_IF_NULL(routenode);
 
             routenode->ClearNodes();
+
+            auto itGid = dict.find("gid");
+            routenode->Flags().Reset(rnf_water);
+            if ( itemsGID != 0 && itGid != dict.end() && (int)(itGid->second.asUnsignedInt() & 0x1fffffff) - itemsGID == waterRouteTile )
+                routenode->Flags().Set(rnf_water);
 
             // dict is a hash map, so its iteration order doesn't match the BRANCH_x suffix
             // order - collect the matching property names first and sort them, so the
