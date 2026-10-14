@@ -201,13 +201,13 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
                     if (locationGroup.idType == IDT_ROUTENODE) {
                         sv_routenodes++;
                         auto routenode = static_cast<TemporaryRouteNode*>(entityfactory->Create(IDT_ROUTENODE));
-                        routenode->init(MAKE_ID(IDT_ROUTENODE, sv_routenodes), name);
+                        routenode->init(sv_routenodes, name);
                         objRoutenodes.Add(routenode);
                         entity = routenode;
                     } else if (locationGroup.idType == IDT_PLACE) {
                         sv_places++;
                         auto place = static_cast<TemporaryPlace*>(entityfactory->Create(IDT_PLACE));
-                        place->init(MAKE_ID(IDT_PLACE, sv_places), name);
+                        place->init(sv_places, name);
                         objPlaces.Add(place);
                         entity = place;
                     } else {
