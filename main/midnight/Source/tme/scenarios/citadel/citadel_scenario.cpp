@@ -578,10 +578,8 @@ void citadel_object::Serialize ( archive& ar )
         WRITE_ENUM(type);
         WRITE_ENUM(power);
     } else {
-        if ( tme::mx->SaveGameVersion() > 17 ) {
-            READ_ENUM(type);
-            READ_ENUM(power);
-        }
+        READ_ENUM(type);
+        READ_ENUM(power);
     }
 }
 
@@ -627,7 +625,7 @@ void citadel_routebranch::Serialize ( archive& ar )
     if ( ar.IsStoring() ) {
         WRITE_ENUM(direction);
         ar << weight;
-    } else if ( tme::mx->SaveGameVersion() > 23 ) {
+    } else {
         READ_ENUM(direction);
         ar >> weight;
     }
@@ -700,9 +698,7 @@ void citadel_x::Serialize ( archive& ar )
     if ( ar.IsStoring() ) {
         ar << flags ;
     } else {
-        flags.Clear();
-        if ( tme::mx->SaveGameVersion() > 21 )
-            ar >> flags ;
+        ar >> flags ;
     }
 }
 

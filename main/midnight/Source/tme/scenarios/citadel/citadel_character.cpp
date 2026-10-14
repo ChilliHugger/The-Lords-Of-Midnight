@@ -33,20 +33,14 @@ void citadel_character::Serialize ( archive& ar )
         ar << home ;
     } else {
         ar >> qualities ;
-        if ( tme::mx->SaveGameVersion() > 18 )
-            ar >> title ;
-        if ( tme::mx->SaveGameVersion() > 19 ) {
-            READ_ENUM(quest);
-            ar >> questtarget ;
-            READ_ENUM(purpose);
-            READ_ENUM(reaction);
-        }
-        if ( tme::mx->SaveGameVersion() > 20 ) {
-            ar >> idle ;
-            READ_ENUM(news);
-        }
-        if ( tme::mx->SaveGameVersion() > 22 )
-            ar >> home ;
+        ar >> title ;
+        READ_ENUM(quest);
+        ar >> questtarget ;
+        READ_ENUM(purpose);
+        READ_ENUM(reaction);
+        ar >> idle ;
+        READ_ENUM(news);
+        ar >> home ;
     }
 }
 
