@@ -54,6 +54,7 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
     land->setAnchorPoint(Vec2::ZERO);
     land->setPosition(Vec2::ZERO);
     land->Build();
+    land->setName("land");
 
     auto sky = LandscapeSky::create(options);
     clipping->addChild(sky);
@@ -98,9 +99,16 @@ bool LandscapeView::initWithOptions( LandscapeOptions* options )
 
 void LandscapeView::RefreshPositions()
 {
+    if ( options->showLand || options->showWater || options->debugMode) {
+        auto land = static_cast<LandscapeTerrain*>(this->getChildByName("land"));
+        if (land != nullptr) {
+            land->RefreshPositions();
+        }
+    }
+
     if ( options->showTerrain ) {
         auto terrain = static_cast<LandscapeTerrain*>(this->getChildByName("terrain"));
-        if(terrain != nullptr) {
+        if (terrain != nullptr) {
             terrain->RefreshPositions();
         }
     }
