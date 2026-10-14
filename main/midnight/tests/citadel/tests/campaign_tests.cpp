@@ -131,7 +131,7 @@ SCENARIO("Only the keeps his host can reach are fought over")
     }
 }
 
-SCENARIO("A regiment walks the shortest way round, one square nearer every step")
+SCENARIO("A regiment walks the cheapest way round, every step costing what marching charges")
 {
     TMEStep::NewStory();
 
@@ -139,20 +139,23 @@ SCENARIO("A regiment walks the shortest way round, one square nearer every step"
     REQUIRE( regiment != nullptr );
     auto target = Keep("SH_CASTLE_MARALAN")->Location();
     auto width = (size_t)tme::mx->gamemap->Size().cx;
+    auto rinfo = tme::mx->RaceById(regiment->Race());
 
-    const auto& steps = Citadel()->StepsFrom(target, regiment);
+    const auto& costs = Citadel()->StepsFrom(target, regiment);
     auto here = regiment->Location();
-    auto distance = steps[here.y * width + here.x];
-    REQUIRE( distance > 0 );
+    REQUIRE( costs[here.y * width + here.x] > 0 );
 
-    for ( s32 left = distance; left > 0; left-- ) {
+    while ( regiment->Location() != target ) {
+        here = regiment->Location();
         mxgridref step;
         REQUIRE( Citadel()->RegimentStep(regiment, target, step) );
-        REQUIRE( steps[step.y * width + step.x] == left - 1 );
+        auto price = (s32)rinfo->InitialMovementValue()
+            + ( IS_DIAGONAL(here.DirFromHere(step)) ? rinfo->DiagonalMovementModifier() : 0 )
+            + (s32)Citadel()->TerrainMovementModifier(regiment->Race(), (mxterrain_t)tme::mx->gamemap->GetAt(step).terrain);
+        REQUIRE( costs[step.y * width + step.x] == costs[here.y * width + here.x] - price );
         REQUIRE( !tme::mx->scenario->isLocationImpassable(step, regiment) );
         regiment->Location(step);
     }
-    REQUIRE( regiment->Location() == target );
 
     AND_THEN("a target it cannot reach is left to the old steering")
     {
