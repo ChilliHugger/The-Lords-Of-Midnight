@@ -49,9 +49,9 @@ namespace tme {
         mxrace_t CampaignTarget () const;
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
         bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
-        const std::vector<s32>& StepsFrom ( mxgridref from, const mxregiment* walker ) const;
-        bool MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const;
-        bool Reachable ( mxgridref from, mxgridref to ) const;
+        const std::vector<s32>& StepsFrom ( mxgridref from, const mxitem* walker ) const;     // march cost to 'from'
+        bool MarchStep ( const mxitem* walker, mxgridref here, mxgridref target, mxgridref& step ) const;
+        bool Reachable ( const mxitem* walker, mxgridref from, mxgridref to ) const;
         void RaiseWraith ();
         mxstronghold* HomeKeep ( mxrace_t people, mxgridref from ) const;   // the nearest keep his people hold
         std::vector<citadel_character*> HostagesHeldAtMaranor () const;
@@ -63,8 +63,11 @@ namespace tme {
         flags32             flags;
 
     private:
-        // StepsFrom's answers for tonight, by the square they are counted from
-        mutable std::map<u32, std::vector<s32>> paths;
+        u32 StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t dir ) const;
+
+        // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace
+        mutable std::map<u64, std::vector<s32>> paths;
+        mutable std::vector<s8> passable;       // tonight's, by square: -1 not yet asked
     };
 
     class citadel_entityfactory : public mxentityfactory

@@ -201,7 +201,7 @@ void citadel_quest_processor::Wander ( void )
     auto here = lord->Location();
     for ( int tries = 0; tries < 8; tries++ ) {
         mxgridref there ( here.x + mxrandom(0, 2 * WANDERING) - WANDERING, here.y + mxrandom(0, 2 * WANDERING) - WANDERING );
-        CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) || there == here || !CITADEL_SCENARIO(Reachable(here, there)) );
+        CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) || there == here || !CITADEL_SCENARIO(Reachable(lord, here, there)) );
         lord->reaction = RE_RETURN_HOME;
         lord->quest = QS_GOTO;
         lord->questtarget = MAKE_LOCID(there.x, there.y);
@@ -220,7 +220,7 @@ T citadel_quest_processor::FirstReachable ( std::vector<T>& candidates ) const
         return here - a->Location() < here - b->Location();
     });
     for ( auto candidate : candidates ) {
-        if ( CITADEL_SCENARIO(Reachable(here, candidate->Location())) )
+        if ( CITADEL_SCENARIO(Reachable(lord, here, candidate->Location())) )
             return candidate;
     }
     return nullptr;
@@ -269,7 +269,7 @@ bool citadel_quest_processor::March ( mxgridref target, bool fight )
 
     while ( lord->Location() != target && lord->CanWalkForward() && lord->energy >= tired ) {
         mxgridref step;
-        if ( !CITADEL_SCENARIO(MarchStep(lord->Location(), target, step)) )
+        if ( !CITADEL_SCENARIO(MarchStep(lord, lord->Location(), target, step)) )
             return false;
 
         lord->looking = lord->Location().DirFromHere(step);
