@@ -63,6 +63,11 @@ namespace tme {
         flags32             flags;
 
     private:
+        struct pace_t {
+            mxrace_t    race;
+            bool        onfoot;
+        };
+        pace_t PaceOf ( const mxitem* walker ) const;
         u32 StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t dir ) const;
 
         // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace

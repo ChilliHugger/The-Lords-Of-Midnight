@@ -267,16 +267,13 @@ static u32 StepsToMidnight ( mxrace_t people )
     return NUMELE(citadel_kingdoms);
 }
 
-static void PaceOf ( const mxitem* walker, mxrace_t& race, bool& onfoot )
+citadel_x::pace_t citadel_x::PaceOf ( const mxitem* walker ) const
 {
     if ( walker->IsType(IDT_CHARACTER) ) {
         auto lord = static_cast<const mxcharacter*>(walker);
-        race = lord->Race();
-        onfoot = !lord->IsRiding();
-    } else {
-        race = static_cast<const mxregiment*>(walker)->Race();
-        onfoot = false;
+        return { lord->Race(), !lord->IsRiding() };
     }
+    return { static_cast<const mxregiment*>(walker)->Race(), false };
 }
 
 u32 citadel_x::StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t dir ) const
@@ -290,9 +287,7 @@ u32 citadel_x::StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t di
 
 const std::vector<s32>& citadel_x::StepsFrom ( mxgridref from, const mxitem* walker ) const
 {
-    mxrace_t race;
-    bool onfoot;
-    PaceOf(walker, race, onfoot);
+    auto [race, onfoot] = PaceOf(walker);
 
     auto width = (size_t)mx->gamemap->Size().cx;
     auto height = (size_t)mx->gamemap->Size().cy;
@@ -339,10 +334,7 @@ bool citadel_x::MarchStep ( const mxitem* walker, mxgridref here, mxgridref targ
     if ( mx->objRegiments.Count() == 0 || here == target )
         return false;
 
-    mxrace_t race;
-    bool onfoot;
-    PaceOf(walker, race, onfoot);
-
+    auto [race, onfoot] = PaceOf(walker);
     const auto& costs = StepsFrom(target, walker);
     auto width = (size_t)mx->gamemap->Size().cx;
     if ( costs[here.y * width + here.x] < 0 )
