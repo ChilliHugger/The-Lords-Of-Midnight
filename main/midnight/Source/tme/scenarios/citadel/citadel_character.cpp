@@ -183,7 +183,7 @@ MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
     if ( !InDungeon() )
         flags.Reset(cf_dungeon);
     if ( result == MX_OK ) {
-        aboard = bound = nullptr;   // a lord who walks has left any ship or landing
+        aboard = bound = nullptr;
         voyage = 0;
     }
     return result;

@@ -252,7 +252,6 @@ MXRESULT mxengine::ApplyMapEntitiesFromTmx ( const std::string& tmxFilename )
         }
     }
 
-    // a routenode drawn with the blue icon, the items tileset's sixth tile, is on a water route
     const int waterRouteTile = 5;
     int itemsGID = 0;
     for ( const auto& tileset : mapInfo->getTilesets() ) {

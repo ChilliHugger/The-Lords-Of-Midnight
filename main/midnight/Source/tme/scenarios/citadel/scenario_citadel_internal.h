@@ -18,7 +18,7 @@ namespace tme {
         gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
     };
 
-    struct citadel_leg {                    // one branch of a voyage, boarding and landing included
+    struct citadel_leg {
         mxroutenode*    to = nullptr;
         u32             time = 0;
     };
@@ -54,7 +54,7 @@ namespace tme {
         mxrace_t CampaignTarget () const;
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
         bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
-        const std::vector<s32>& StepsFrom ( mxgridref from, const mxitem* walker ) const;     // march cost to 'from'
+        const std::vector<s32>& StepsFrom ( mxgridref from, const mxitem* walker ) const;
         bool MarchStep ( const mxitem* walker, mxgridref here, mxgridref target, mxgridref& step, citadel_leg* leg = nullptr ) const;
         bool Reachable ( const mxitem* walker, mxgridref from, mxgridref to ) const;
         void RaiseWraith ();
@@ -77,9 +77,9 @@ namespace tme {
             u32             time;
             mxroutenode*    node;
         };
-        mutable std::vector<u32> vertices;      // by route node id
-        mutable u32 seas = 0;                   // water route nodes
-        mutable std::map<u32, std::vector<citadel_sail>> sailsfrom, sailsinto;      // by vertex
+        mutable std::vector<u32> vertices;
+        mutable u32 seas = 0;
+        mutable std::map<u32, std::vector<citadel_sail>> sailsfrom, sailsinto;
 
         // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace
         mutable std::map<u64, std::vector<s32>> paths;
@@ -184,7 +184,7 @@ namespace tme {
         bool InDungeon () const;
         citadel_character* SearchDungeon ( u32 chance );   // the hostage he finds and frees, if any
         void FlyHome ();
-        bool Sail ( const citadel_leg& leg );   // false when the day ends before the leg does
+        bool Sail ( const citadel_leg& leg );
 
     public:
         mxquest_t       quest = QS_NONE;

@@ -291,8 +291,6 @@ u32 citadel_x::StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t di
     return cost + TerrainMovementModifier(race, (mxterrain_t)mx->gamemap->GetAt(into).terrain);
 }
 
-// squares are vertices 0 to width*height-1, then one vertex per water route node; a lord sails only
-// along the branches that touch water, boarding and landing where a branch joins a land node to one
 void citadel_x::ChartWaters () const
 {
     if ( !vertices.empty() )
