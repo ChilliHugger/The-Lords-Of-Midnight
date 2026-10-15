@@ -83,7 +83,7 @@ namespace tme {
 
         // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace
         mutable std::map<u64, std::vector<s32>> paths;
-        mutable std::vector<s8> passable;       // tonight's, by square: -1 not yet asked
+        mutable std::vector<s8> passable;
     };
 
     class citadel_entityfactory : public mxentityfactory
