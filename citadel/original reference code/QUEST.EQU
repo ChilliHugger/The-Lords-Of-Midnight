@@ -1,0 +1,472 @@
+;-------------------------------------------------------------------------
+;			LORDS OF MIDNIGHT III
+;
+;			    THE CITADEL
+;-------------------------------------------------------------------------
+; (C) James Shaw, March 1st 1995.
+;-------------------------------------------------------------------------
+
+join_quest_no	=	11
+seize_quest_no	=	5
+;-------------------------------------------------------------------------
+; general equates
+_ZF	=	14
+
+MACRO ZtoC
+	lahf			;;move zero flag
+	bt	ax,_ZF		;;to carry flag!
+ENDM
+
+  	IF	0
+;-------------------------------------------------------------------------
+; land structure
+rs_set 0
+rs land_ruler,2		;current ruler
+rs land_war_state,1	;state of war
+rs land_realm,1		;which realm land is in
+rs land_owner,2		;original owner
+rs land_enemies,2	;enemy flags
+rs land_SIZEOF,0
+	ENDIF
+
+;-------------------------------------------------------------------------
+; realm structure
+rs_set 0
+rs realm_ruler,2	;current ruler
+rs realm_war_state,1	;state of war
+rs realm_state,1	;state of realm
+rs realm_owner,2	;original owner
+rs realm_enemies,2	;enemy flags
+rs realm_hostage,2	;character number of hostage
+rs realm_SIZEOF,0
+
+;-------------------------------------------------------------------------
+MACRO region_mul reg
+;;*10 at the moment
+	lea	reg,[reg+reg*4]
+	add	reg,reg
+ENDM
+
+;MACRO land_mul
+;ENDM
+
+;-------------------------------------------------------------------------
+
+MY_HOMELAND	=	0
+
+;purposes
+rs_set -1
+rs NO_PURPOSE,1
+rs DEFEND_HOMELAND,1
+rs DARK_FEY,1
+rs RANDOMLY_WANDER,1
+rs BE_A_HOSTAGE,1
+
+;reactions
+rs_set 0
+rs RETURN_HOME,1
+rs STAND_FIRM,1
+rs TAKE_BACK_STRONGHOLD,1
+rs ATTACK_ENEMY,1
+rs HELP_NEIGHBOUR,1
+rs RETREAT,1
+rs GATHER_STRENGTH,1
+rs COUNTER_THREAT,1
+rs LEND_SERVICE,1
+
+;states of war (for lands)
+rs_set 0
+rs LS_AT_PEACE,1
+rs LS_TROUBLED,1
+rs LS_THREATENED,1
+rs LS_MENACED,1
+rs LS_IN_DANGER,1
+rs LS_IN_PERIL,1
+rs LS_UNDER_ATTACK,1
+rs LS_SUBJUGATED,1
+
+;states of war (for realms)
+rs_set 0
+rs RW_AT_PEACE,1
+rs RW_THREATENED,1
+rs RW_UNDER_ATTACK,1
+rs RW_SUBJUGATED,1
+
+;state of realm
+rs_set 0
+rs RS_UNFETTERED,1
+rs RS_AT_RANSOM,1
+rs RS_BLOOD_FEUD,1
+rs RS_INTERREGNUM,1
+
+;who
+rs_set 0
+rs ENEMY,1
+rs SELF,1
+rs NEIGHBOUR,1
+rs LEADER,1
+rs QUEST_SUBJECT,1
+rs LIST,1
+
+;quests
+rs_set 0
+rs QRECRUIT,1
+rs QJOIN,1
+rs QKILL,1
+rs QRESCUE,1
+rs QFOLLOW,1
+rs QGOTO,1
+rs QGUARD,1
+rs QSEIZE,1
+rs QFIND,1
+rs QTAKE,1
+rs QDESTROY,1
+rs QREST,1
+rs QUNDER,1
+
+;quest parameter types (CHANGE THESE)
+rs_set 0
+rs LAST_PARAMETER,1
+rs OWN_STRONGHOLD,1
+rs GO_SAMELAND,1
+rs GO_HOMELAND,1
+rs GO_ADJACENT_LAND,1
+rs GO_NEARLAND,1
+
+;list evaluation conditions
+rs_set 0
+rs LC_NEIGHBOURS,1
+rs LC_NEARLANDS,1
+rs LC_HOME_REALM_LANDS,1
+rs LC_ALL_LANDS,1
+rs LC_ADJACENT_NEIGHBOURS,1
+rs LC_LANDS_IN_NEIGHBOUR_REALMS_TO_ME,1
+rs LC_QUEST_SUBJECT,1
+rs LC_KINGDOM_LANDS,1
+;rs LC_RETURN_HOME,1
+;rs LC_HELP_NEIGHBOUR,1
+
+;list subtraction routines
+rs_set 0
+rs SC_GTE_UNDER_ATTACK,1
+rs SC_COWARDLY,1
+rs SC_NOT_IN_NEARLAND,1
+rs SC_NOT_THREATENED,1
+rs SC_NOT_AT_PEACE,1
+rs SC_NOT_AVAILABLE,1
+rs SC_NOT_IN_HOMELAND,1
+rs SC_NOT_DEFENDING_HOMELAND,1
+rs SC_RETREATING,1
+rs SC_NOT_IN_DANGER,1
+;rs SC_STANDING_FIRM,1
+;rs SC_NOT_RETREATING,1
+;rs SC_NOT_UNDER_ATTACK,1
+;rs SC_ANOTHER,1
+
+
+rs_set 0
+rs CV_CIT_2_BLOKE,1
+rs CV_BLOKE_2_CIT,1
+
+;-------------------------------------------------------------------------
+; Reaction & Purpose definition macros
+;-------------------------------------------------------------------------
+MACRO DEFINE_PURPOSE purpose
+PROC purpose NEAR
+ENDM
+
+MACRO END_PURPOSE
+	ret
+ENDP
+ENDM
+
+MACRO DEFINE_REACTION reaction
+PROC reaction NEAR
+for_count	=	0
+ENDM
+
+MACRO END_REACTION
+	ret
+ENDP
+ENDM
+
+;-------------------------------------------------------------------------
+; Control Flow macros
+;-------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------
+; Carry flag is used throughout as a true/false flag
+; STC (set)   : TRUE
+; CLC (unset) : FALSE
+;-------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------
+; logical NOT (NOT TRUE) : invert truth
+MACRO NOTT
+	cmc
+ENDM
+
+;-------------------------------------------------------------------------
+; make this the next state
+MACRO GO_STATE state
+	mov	[WORD esi+obj_reaction],state
+	stc
+	ret
+ENDM
+
+;-------------------------------------------------------------------------
+; branch if false
+MACRO BIFF label
+	jnc	@@&label
+ENDM
+
+;-------------------------------------------------------------------------
+; branch anyway
+MACRO BRA label
+	jmp	@@&label
+ENDM
+
+;-------------------------------------------------------------------------
+; branch if true
+MACRO BIFT label
+	jc	@@&label
+ENDM
+
+;-------------------------------------------------------------------------
+; define a label
+MACRO LAB label
+@@&label:
+ENDM
+
+;-------------------------------------------------------------------------
+; FALSE condition
+MACRO FALSE
+	clc
+ENDM
+
+;-------------------------------------------------------------------------
+; TRUE condition
+MACRO TRUE
+	stc
+ENDM
+
+;-------------------------------------------------------------------------
+; is > than
+MACRO IS_GT value
+	cmp	eax,value		;;carry set if ax > value
+ENDM
+
+;-------------------------------------------------------------------------
+; is < than
+MACRO IS_LT value
+	cmp	eax,value
+	jne	@@cl
+     	cmc				;;reverse case if ==
+@@cl:
+	cmc
+ENDM
+
+MACRO ARE_QUESTING
+	cmp	[WORD obj_quest+esi],_qrest	;;are we waiting?
+	ZtoC
+	cmc
+ENDM
+
+MACRO SET_AVAILABLE
+	or	[WORD esi+obj_flags],available_bit	;;available to quest
+ENDM
+
+MACRO CLEAR_AVAILABLE
+	and	[WORD esi+obj_flags],NOT available_bit	;;unavailable to quest
+ENDM
+
+;FOR / NEXT / LIST_ENTRY not used (yet)
+;Limitations:
+;	1. Nesting of FOR loops is NOT ALLOWED
+;	2. No references to SELF allowed inside FOR loop
+;	3. They don't work anyway! (unless you only use 1 per fn)
+MACRO FOR
+
+	push	esi
+	movzx	ecx,[list_count]
+	mov	[list_posn],offset list_buffer
+	push	ecx
+for_label	CATSTR <@@for>,%for_count,<:>
+for_label
+ENDM
+
+MACRO LIST_ENTRY
+	mov	esi,[list_posn]
+	mov	esi,[esi]
+	mov	[last_result],esi
+ENDM
+
+MACRO NEXT
+for_label	CATSTR <@@for>,%for_count
+	add	[list_posn],4
+	pop	ecx
+	loop	for_label
+	pop	esi
+for_count	=	(for_count+1)
+ENDM
+
+
+;-------------------------------------------------------------------------
+; Conditions to be evaluated
+;-------------------------------------------------------------------------
+MACRO ANY_NEARLAND state
+	mov	eax,state
+	call	check_nearland_state
+ENDM
+
+MACRO AT_STRONGHOLD check
+	mov	eax,check
+	call	check_at_stronghold
+ENDM
+
+MACRO BATTLE_ODDS ratio1,ratio2
+	mov	eax,ratio1
+	mov	edx,ratio2
+	call	check_battle_odds
+ENDM
+
+MACRO CONV_LIST switch
+	mov	eax,switch
+	call	conv_list_rout
+ENDM
+
+MACRO DEAD who
+	mov	eax,who
+	call	is_dead
+ENDM
+
+MACRO FELLOW_LORD_RECRUITING
+	call	check_fellow_lord_quest
+ENDM
+
+MACRO GEN_LIST condition
+	mov	eax,condition
+	call	generate_list
+ENDM
+
+MACRO GET_ATTACKER
+	mov	edi,[attacker]
+ENDM
+
+MACRO GET_OWN_CIT_RULER
+	call	get_cit_ruler
+ENDM
+
+MACRO GO_STATE state
+	mov	[WORD esi+obj_reaction],state
+	TRUE		;;further processing required
+ENDM
+
+MACRO HOMELAND check
+	movzx	eax,[BYTE obj_start_land+esi]
+	mov	eax,[citadel_list+eax*4]
+	cmp	[BYTE eax+citadel_list+obj_land_war_state],check
+	ZtoC
+ENDM
+
+MACRO IN_ADJACENT_LAND who
+	mov	eax,who
+	call	adjacent_check
+ENDM
+
+MACRO IN_HOMELAND who
+	mov	eax,who
+	call	homeland_check
+ENDM
+
+MACRO IN_NEARLAND who
+	mov	eax,who
+	call	nearland_check
+ENDM
+
+MACRO IN_SAMELAND who
+	mov	eax,who
+	call	sameland_check
+ENDM
+
+MACRO IS_EMPTY_LIST
+	push	eax
+	test	[list_count],-1
+	ZtoC
+	pop	eax
+ENDM
+
+MACRO PICK_FROM_LIST
+	call	pick_list_entry
+ENDM
+
+MACRO PURPOSE who,what
+	mov	eax,who
+	mov	edx,what
+	call	check_purpose
+ENDM
+
+MACRO REACTION who,what
+	mov	eax,who
+	mov	edx,what
+	call	check_reaction
+ENDM
+
+MACRO SET_QUEST type,where
+	mov	eax,type
+	mov	edx,where
+	call	setup_quest_data
+	FALSE				;;no further processing
+ENDM
+
+MACRO SOMEONE_TO_RECRUIT
+	call	check_recruitables
+ENDM
+
+MACRO STATE what
+;;	IFE what-NEARLAND
+;;	ENDIF
+	mov	eax,what
+	cmp	eax,MY_HOMELAND
+@@p:
+	jne	@@p
+
+	movzx	eax,[BYTE obj_start_land+esi]
+	mov	eax,[citadel_list+eax*4]
+	movzx	eax,[BYTE citadel_list+obj_land_war_state+eax]
+ENDM
+
+MACRO SUB_LIST condition
+	mov	eax,condition
+	call	subject_list
+ENDM
+
+;-------------------------------------------------------------------------
+; Character property macros
+;-------------------------------------------------------------------------
+MACRO BRAVE
+	bt	[DWORD esi+obj_qualities1],q_brave_bit
+ENDM
+
+MACRO CAUTIOUS
+	bt	[DWORD esi+obj_qualities2],q_cautious_bit
+ENDM
+
+MACRO COWARDLY
+	bt	[DWORD esi+obj_qualities2],q_cowardly_bit
+ENDM
+
+MACRO FAR_SIGHTED
+	bt	[DWORD esi+obj_qualities1],q_far_sighted_bit
+ENDM
+
+MACRO RECKLESS
+	bt	[DWORD esi+obj_qualities2],q_reckless_bit
+ENDM
+
+MACRO SELFISH
+	bt	[DWORD esi+obj_qualities2],q_selfish_bit
+ENDM
+;-------------------------------------------------------------------------
+
+

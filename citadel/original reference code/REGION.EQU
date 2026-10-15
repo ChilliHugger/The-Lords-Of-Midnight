@@ -1,0 +1,202 @@
+;-------------------------------------------------------------------------
+;			LORDS OF MIDNIGHT III
+;
+;			    THE CITADEL
+;-------------------------------------------------------------------------
+; (C) James Shaw 1995.
+;-------------------------------------------------------------------------
+
+;----------------------------------------
+; Kingdom Equates
+;----------------------------------------
+
+kb			equ	0		;kingdom base
+
+Witherlands		equ	(kb+0)
+Lee			equ	(kb+1)
+Eldmark			equ	(kb+2)
+LongMountains		equ	(kb+3)
+LastNorthing		equ	(kb+4)
+Arungor			equ	(kb+5)
+Wierdwood		equ	(kb+6)
+Dawnwood		equ	(kb+7)
+Fallows			equ	(kb+8)
+Gelm			equ	(kb+9)
+Deeping			equ	(kb+10)
+Delve			equ	(kb+11)
+Marish			equ	(kb+12)
+Glimormir		equ	(kb+13)
+GreatOcean		equ	(kb+14)
+Midnight		equ	(kb+15)
+MistsOblivion		equ	(kb+16)
+
+;----------------------------------------
+; Realm Equates
+;----------------------------------------
+c			equ	0		;realm base
+
+Imilvir			equ	(c+0)
+Eodral			equ	(c+1)
+Arelon			equ	(c+2)
+Aravik			equ	(c+3)
+
+Caradwin		equ	(c+4)
+Falthrang		equ	(c+5)
+Elinmor			equ	(c+6)
+Tarefyr			equ	(c+7)
+
+Northern		equ	(c+8)
+Eastern			equ	(c+9)
+Southern		equ	(c+10)
+Western			equ	(c+11)
+
+Middle			equ	(c+12)
+Ulmor			equ	(c+13)
+Skulls			equ	(c+14)
+Shining			equ	(c+15)
+
+Silfar			equ	(c+16)
+Grey			equ	(c+17)
+Eregoth			equ	(c+18)
+Weeping			equ	(c+19)
+
+Fire			equ	(c+20)
+Galorwain		equ	(c+21)
+Tharran			equ	(c+22)
+Mermaids		equ	(c+23)
+
+Serpents		equ	(c+24)
+Immiel			equ	(c+25)
+Rilleon			equ	(c+26)
+Maranor			equ	(c+27)
+
+Corelay			equ	(c+28)
+Jade			equ	(c+29)
+Last			equ	(c+30)
+Erifel			equ	(c+31)
+
+Sareon			equ	(c+32)
+Eomir			equ	(c+33)
+Rilnor			equ	(c+34)
+Thumar			equ	(c+35)
+
+Sharvik			equ	(c+36)
+Imildral		equ	(c+37)
+Erenim			equ	(c+38)
+Isilfrey		equ	(c+39)
+
+Thordroth		equ	(c+40)
+Galorbard		equ	(c+41)
+Corlon			equ	(c+42)
+Farwain			equ	(c+43)
+
+Maralan			equ	(c+44)
+Beomir			equ	(c+45)
+Ceremelth		equ	(c+46)
+Carafel			equ	(c+47)
+
+Saradwin		equ	(c+48)
+Emerthen		equ	(c+49)
+Scaradir		equ	(c+50)
+Meranor			equ	(c+51)
+
+Arelban			equ	(c+52)
+Arunvere		equ	(c+53)
+Erilan			equ	(c+54)
+Elinvar			equ	(c+55)
+
+Arelmar			equ	(c+56)
+Shimmering		equ	(c+57)
+Forgotten		equ	(c+58)
+Whispering		equ	(c+59)
+
+Forever			equ	(c+60)
+Golden			equ	(c+61)
+Finfyr			equ	(c+62)
+Geremiel		equ	(c+63)
+
+Samarand		equ	(c+64)
+Emergelm		equ	(c+65)
+Ildemar			equ	(c+66)
+Zaragorn		equ	(c+67)
+
+Gilgrath		equ	(c+68)
+Tharn			equ	(c+69)
+Sharenor		equ	(c+70)
+Ararak			equ	(c+71)
+
+Thunder			equ	(c+72)
+Dawn			equ	(c+73)
+Merikith		equ	(c+74)
+Aradel			equ	(c+75)
+
+Valgrorn		equ	(c+76)
+Malgor			equ	(c+77)
+Dwardor			equ	(c+78)
+Death			equ	(c+79)
+
+Barathor		equ	(c+80)
+Burning			equ	(c+81)
+Ravens			equ	(c+82)
+Iron			equ	(c+83)
+
+Tark			equ	(c+84)
+Athruk			equ	(c+85)
+Thordrin		equ	(c+86)
+Storms			equ	(c+87)
+
+Big			equ	(c+88)
+Corth			equ	(c+89)
+Skirol			equ	(c+90)
+Othrym			equ	(c+91)
+
+Grorn			equ	(c+92)
+Gogrun			equ	(c+93)
+Finrod			equ	(c+94)
+Songs			equ	(c+95)
+
+Crimson			equ	(c+96)
+Elorthord		equ	(c+97)
+Corithel		equ	(c+98)
+Alathor			equ	(c+99)
+
+Elinbrand		equ	(c+100)
+Gliwain			equ	(c+101)
+Athrudan		equ	(c+102)
+Skordroth		equ	(c+103)
+
+Erilmark		equ	(c+104)
+Arabar			equ	(c+105)
+Theodel			equ	(c+106)
+Cerrelm			equ	(c+107)
+
+Roreon			equ	(c+108)
+Caramane		equ	(c+109)
+Romiel			equ	(c+110)
+Orcar			equ	(c+111)
+
+Ravenfrey		equ	(c+112)
+Erefar			equ	(c+113)
+Elmir			equ	(c+114)
+Melibor			equ	(c+115)
+
+Sharmark		equ	(c+116)
+Sapphire		equ	(c+117)
+Elormane		equ	(c+118)
+Dragon			equ	(c+119)
+
+Rildroth		equ	(c+120)
+Angelf			equ	(c+121)
+Erivik			equ	(c+122)
+Sarnoth			equ	(c+123)
+
+Shrygal			equ	(c+124)
+Faragor			equ	(c+125)
+Ashnar			equ	(c+126)
+Cormir			equ	(c+127)
+
+Cerevere		equ	(c+128)
+Melthor			equ	(c+129)
+Varorn			equ	(c+130)
+
+

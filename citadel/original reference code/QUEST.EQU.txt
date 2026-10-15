@@ -1,0 +1,81 @@
+;-------------------------------------------------------------------------
+;			LORDS OF MIDNIGHT III
+;
+;			    THE CITADEL
+;-------------------------------------------------------------------------
+; (C) James Shaw, March 1st 1995.
+;-------------------------------------------------------------------------
+
+; realm structure
+rs_set 0
+rs realm_ruler,2	;current ruler
+rs realm_war_state,1	;state of war
+rs realm_state,1	;state of realm
+rs realm_owner,2	;original owner
+rs realm_enemies,2	;enemy flags
+rs realm_hostage,2	;character number of hostage
+rs realm_SIZEOF,0
+
+MY_HOMELAND	=	0
+
+;purposes
+rs_set -1
+rs NO_PURPOSE,1
+rs DEFEND_HOMELAND,1
+rs DARK_FEY,1
+rs RANDOMLY_WANDER,1
+rs BE_A_HOSTAGE,1
+
+;reactions
+rs_set 0
+rs RETURN_HOME,1
+rs STAND_FIRM,1
+rs TAKE_BACK_STRONGHOLD,1
+rs ATTACK_ENEMY,1
+rs HELP_NEIGHBOUR,1
+rs RETREAT,1
+rs GATHER_STRENGTH,1
+rs COUNTER_THREAT,1
+rs LEND_SERVICE,1
+
+;states of war (for lands)
+rs_set 0
+rs LS_AT_PEACE,1
+rs LS_TROUBLED,1
+rs LS_THREATENED,1
+rs LS_MENACED,1
+rs LS_IN_DANGER,1
+rs LS_IN_PERIL,1
+rs LS_UNDER_ATTACK,1
+rs LS_SUBJUGATED,1
+
+;states of war (for realms)
+rs_set 0
+rs RW_AT_PEACE,1
+rs RW_THREATENED,1
+rs RW_UNDER_ATTACK,1
+rs RW_SUBJUGATED,1
+
+;state of realm
+rs_set 0
+rs RS_UNFETTERED,1
+rs RS_AT_RANSOM,1
+rs RS_BLOOD_FEUD,1
+rs RS_INTERREGNUM,1
+
+;quests
+rs_set 0
+rs QRECRUIT,1
+rs QJOIN,1
+rs QKILL,1
+rs QRESCUE,1
+rs QFOLLOW,1
+rs QGOTO,1
+rs QGUARD,1
+rs QSEIZE,1
+rs QFIND,1
+rs QTAKE,1
+rs QDESTROY,1
+rs QREST,1
+rs QUNDER,1
+

@@ -1,0 +1,175 @@
+;-------------------------------------------------------------------------
+;			LORDS OF MIDNIGHT III
+;
+;			    THE CITADEL
+;-------------------------------------------------------------------------
+; (C) James Shaw 1995.
+;-------------------------------------------------------------------------
+
+; This generates 1,2,4,8,16...
+MACRO rsd_set
+rscount		=	1
+ENDM
+
+MACRO rsd a
+a	=	rscount
+	IF (rscount-080000000h)
+rscount	=	(rscount*2)
+	ENDIF
+ENDM
+
+;
+; Values
+;
+rsd_set
+rsd q_brave
+rsd q_far_sighted
+rsd q_selfish
+rsd q_bold
+rsd q_kind
+rsd q_warm_hearted
+rsd q_gentle
+rsd q_generous
+
+rsd q_quick_witted
+rsd q_talkative
+rsd q_home_loving
+rsd q_eager
+rsd q_energetic
+rsd q_tireless
+rsd q_modest
+rsd q_passionate
+
+rsd q_reliable
+rsd q_galland
+rsd q_charming
+rsd q_loyal
+rsd q_gregarios
+rsd q_peaceable
+rsd q_polite
+rsd q_submissive
+
+rsd q_patient
+rsd q_level_headed
+rsd q_persuasive
+rsd q_knowledgeable
+rsd q_naive
+rsd q_hot_tempered
+rsd q_mighty_warrior
+rsd q_superb_leader
+
+rsd_set
+rsd q_cowardly
+rsd q_reckless
+rsd q_selfish
+rsd q_cautious
+rsd q_cruel
+rsd q_cold_hearted
+rsd q_vicious
+rsd q_greedy
+
+rsd q_slow_witted
+rsd q_tight_lipped
+rsd q_restless
+rsd q_apathetic
+rsd q_languid
+rsd q_easily_tired
+rsd q_arrogant
+rsd q_passionless
+
+rsd q_headstrong
+rsd q_malicious
+rsd q_repulsive
+rsd q_treacherous
+rsd q_solitary
+rsd q_bloodthirsty
+rsd q_provocative
+rsd q_domineering
+
+rsd q_impatient
+rsd q_mad
+rsd q_unconvincing
+rsd q_ignorant
+rsd q_sceptical
+rsd q_thick_skinned
+rsd q_feeble_warrior
+rsd q_pitiful_leader
+
+
+;
+; Bit Numbers
+;
+rs_set 0
+rs q_brave_bit,1
+rs q_far_sighted_bit,1
+rs q_selfish_bit,1
+rs q_bold_bit,1
+rs q_kind_bit,1
+rs q_warm_hearted_bit,1
+rs q_gentle_bit,1
+rs q_generous_bit,1
+
+rs q_quick_witted_bit,1
+rs q_talkative_bit,1
+rs q_home_loving_bit,1
+rs q_eager_bit,1
+rs q_energetic_bit,1
+rs q_tireless_bit,1
+rs q_modest_bit,1
+rs q_passionate_bit,1
+
+rs q_reliable_bit,1
+rs q_galland_bit,1
+rs q_charming_bit,1
+rs q_loyal_bit,1
+rs q_gregarios_bit,1
+rs q_peaceable_bit,1
+rs q_polite_bit,1
+rs q_submissive_bit,1
+
+rs q_patient_bit,1
+rs q_level_headed_bit,1
+rs q_persuasive_bit,1
+rs q_knowledgeable_bit,1
+rs q_naive_bit,1
+rs q_hot_tempered_bit,1
+rs q_mighty_warrior_bit,1
+rs q_superb_leader_bit,1
+
+rs_set 0
+rs q_cowardly_bit,1
+rs q_reckless_bit,1
+rs q_selfish_bit,1
+rs q_cautious_bit,1
+rs q_cruel_bit,1
+rs q_cold_hearted_bit,1
+rs q_vicious_bit,1
+rs q_greedy_bit,1
+
+rs q_slow_witted_bit,1
+rs q_tight_lipped_bit,1
+rs q_restless_bit,1
+rs q_apathetic_bit,1
+rs q_languid_bit,1
+rs q_easily_tired_bit,1
+rs q_arrogant_bit,1
+rs q_passionless_bit,1
+
+rs q_headstrong_bit,1
+rs q_malicious_bit,1
+rs q_repulsive_bit,1
+rs q_treacherous_bit,1
+rs q_solitary_bit,1
+rs q_bloodthirsty_bit,1
+rs q_provocative_bit,1
+rs q_domineering_bit,1
+
+rs q_impatient_bit,1
+rs q_mad_bit,1
+rs q_unconvincing_bit,1
+rs q_ignorant_bit,1
+rs q_sceptical_bit,1
+rs q_thick_skinned_bit,1
+rs q_feeble_warrior_bit,1
+rs q_pitiful_leader_bit,1
+
