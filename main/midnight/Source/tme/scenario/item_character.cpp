@@ -488,7 +488,7 @@ namespace tme {
                     location = loc ;
                     if ( IsRecruited() ) {
                         EnterLocation ( loc );
-                        mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+                        mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel(), this);
                     }
                     break;
                 }
@@ -674,7 +674,7 @@ namespace tme {
             bool exit_tunnel = mx->gamemap->GetAt ( location ).HasTunnelExit() ;
             
             if ( seen )
-                mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+                mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel(), this);
             
             // calculate our movement values
             TimeCost = rinfo->InitialMovementValue();
@@ -870,7 +870,7 @@ namespace tme {
             //looking=(mxdir_t) ((looking-1)&7); 
             looking = PREV_DIRECTION(looking);
             
-            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel(), this);
             
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
@@ -884,7 +884,7 @@ namespace tme {
             //looking=(mxdir_t)((looking+1)&7); 
             looking = NEXT_DIRECTION(looking);
             
-            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel(), this);
             
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
@@ -897,7 +897,7 @@ namespace tme {
         { 
             looking=(mxdir_t)((dir)&7); 
             
-            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel());
+            mx->scenario->LookInDirection (Location(), Looking(), IsInTunnel(), this);
             
 #if defined(_DDR_)
             mx->scenario->MakeMapAreaVisible(Location(), this);
@@ -1066,6 +1066,9 @@ namespace tme {
 
             // set loyalty?
             flags.Set ( cf_recruited );
+
+            // Luxor knows where his own lords are
+            mx->memory.ForgetLord(Id());
         
             // 1. set time of day to recruiting character
             SetRecruitmentTime(recruiter);
@@ -1696,6 +1699,11 @@ namespace tme {
 
             flags.Reset(cf_alive);
 
+            // only Luxor's lords take lives in battle, so a lord of the enemy that dies is not
+            // worth remembering
+            if ( !IsRecruited() )
+                mx->memory.ForgetLord(Id());
+
             mx->scenario->CheckMoonringWearerDead();
 #if defined(_DDR_)
             mx->scenario->ResetMapArmies();
@@ -1709,31 +1717,55 @@ namespace tme {
             return (loc1 !=  loc2);
         }
 
-        void mxcharacter::CanSeeLocation ( mxgridref loc )
+        // Is this a lord Luxor can only know about from seeing them?
+        // Not one of his own (recruited), and not one that is gone for good.
+        bool mxcharacter::IsRememberable() const
         {
+            return IsAlive() && !IsRecruited();
+        }
+
+        //
+        // A lord can see this location - tell Luxor's memory what is there.
+        // 'close' is when the lord is there, or looking directly at it, and can count the army and see who is there.
+        //
+        void mxcharacter::CanSeeLocation ( mxgridref loc, bool close )
+        {
+            // the dead see nothing, whatever their loyalty was
+            if ( IsDead() )
+                return;
+
             mxloc& mapsqr = mx->gamemap->GetAt( loc );
 
-            mx->scenario->ClearFromMemory(loc);
-
+            u32 army = 0;
             if ( mapsqr.HasArmy() ) {
-                
-                c_regiment regiments;
-                if ( mx->CollectRegiments ( loc, regiments ) )
-                    memory.Memorise ( regiments.First(), RA_ENEMY );
 
+                c_regiment regiments;
+                if ( mx->CollectRegiments ( loc, regiments ) ) {
+                    for ( auto regiment : regiments )
+                        army += regiment->Total();
+                }
 
                 if ( mapsqr.IsStronghold() ) {
                     c_stronghold strongholds;
                     if ( mx->CollectStrongholds ( loc, strongholds ) ) {
+                        // Luxor knows the garrisons of the keeps his own lords hold
                         auto stronghold = strongholds.First();
-                        if ( stronghold->IsEnemy() )
-                            memory.Memorise ( stronghold, RA_ENEMY );
-                        else 
-                            memory.Memorise ( stronghold, RA_FREE );
+                        auto occupier = stronghold->Occupier();
+                        if ( occupier == nullptr || !occupier->IsRecruited() )
+                            army += stronghold->TotalTroops();
                     }
                 }
             }
 
+            std::vector<u32> lords;
+            if ( close ) {
+                FOR_EACH_CHARACTER(c) {
+                    if ( c != this && c->IsRememberable() && c->Location() == loc && c->IsInTunnel() == IsInTunnel() )
+                        lords.push_back(c->Id());
+                }
+            }
+
+            mx->memory.SeeLocation ( loc, close, army, lords );
         }
 
 

@@ -138,6 +138,7 @@ void TME_SelectChar ( mxid newid );
 size TME_MapSize ( void );
 void TME_GetArmies ( mxid loc, bool tunnel, loc_armyinfo_t* army );
 s32 TME_GetAllStrongholds (c_mxid& collection ) ;
+void TME_GetMemories ( std::vector<tme::memory_item_t>& items );   // what Luxor's lords remember seeing
 s32 TME_GetAllRegiments (c_mxid& collection );
 s32 TME_GetCharacters ( mxid id, c_mxid& collection, u32& recruited );
 s32 TME_GetAllCharacters (c_mxid& collection );

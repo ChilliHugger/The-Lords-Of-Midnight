@@ -22,6 +22,8 @@
 #endif
 
 #include <string>
+#include <cmath>
+#include <algorithm>
 
 using namespace chilli;
 using namespace chilli::lib;
@@ -586,14 +588,16 @@ namespace tme {
         mxgridref newdst;
         mxterrain*    tinfo;
 
+            // the dead reveal nothing of the map
+            if (character->IsDead())
+                return;
+
             if (character->IsInTunnel()) {
                 MakeMapTunnelAreaVisible(l);
                 return;
             }
 
             mx->gamemap->SetLocationVisible(l, true);
-            
-            character->CanSeeLocation( l );
 
             for ( u32 i=0; i<NUMELE(modes); i++ ) {
                 
@@ -636,11 +640,6 @@ namespace tme {
                     if ( blocking<visibility ) {
                         lookingat.flags|=lf_seen;
                         mx->gamemap->CheckVisibleRange(dst);
-                        // k==0 when the location dst - is adjacent to loc
-                        // at that point you will be able to see the army
-                        if ( k==0 || tinfo->IsArmyVisible() )
-                            character->CanSeeLocation( dst );
-                        
                     }
                 }
             }
@@ -1136,6 +1135,23 @@ namespace tme {
             return MX_FAILED ;
         }
 
+        COMMAND ( PropMemories )
+        {
+            auto items = static_cast<std::vector<memory_item_t>*>(argv[0].vPtr);
+            items->clear();
+            for ( auto& f : mx->memory.Fragments() ) {
+                memory_item_t item;
+                item.type = f.type;
+                item.size = f.Size();
+                item.location = f.location;
+                item.id = f.lord;
+                item.age = f.Age();
+                item.max_age = (u32)sv_character_default_memory_age;
+                items->push_back(item);
+            }
+            return MX_OK ;
+        }
+
         COMMAND ( PropAllStrongholds )
         {
             CONVERT_COLLECTION(argv[0],collection);
@@ -1218,18 +1234,6 @@ namespace tme {
             return MX_OK ;
         }
 
-        COMMAND ( PropArmiesAtLocation )
-        {
-            CONVERT_GRIDREF(argv[0],loc);
-            u32 enemies=0;
-            u32 friends=0;
-            mx->scenario->FindArmiesAtLocation ( loc, enemies, friends, argv[1] );
-            argv[0]=(s32)2;
-            argv[1]=enemies;
-            argv[2]=friends;
-            return MX_OK ;
-        }
-
         COMMAND ( PropCharsAtLoc )
         {
             CONVERT_COLLECTION(argv[0],collection);
@@ -1281,11 +1285,11 @@ namespace tme {
             { "AllOBJECTS",         1, PropAllObjects,          {variant::vptr} },
 
             { "RECRUITABLE",        2, PropRecruitable,         {variant::vptr, variant::vid} },
+            { "MEMORIES",           1, PropMemories,            {variant::vptr} },
             { "ARMIES",             3, PropArmies,              {variant::vptr, variant::vid, variant::vnumber} },
             { "STRONGHOLDS",        2, PropStrongholdsById,     {variant::vptr, variant::vid} },
             
             { "CharsForCommand",    3, PropCharsForCommand,     {variant::vptr, variant::vnumber, arguments::location} },
-//            { "ArmiesAtLocation",   2, PropArmiesAtLocation,    {arguments::location, variant::vnumber} },
             { "CharsAtLoc",         3, PropCharsAtLoc,          {variant::vptr, arguments::location, variant::vnumber} },
             
             { "MAPINFO",            0, PropMapInfo,             },
@@ -1644,12 +1648,76 @@ namespace tme {
             }
         }
 
-        void mxscenario::LookInDirection(mxgridref loc, mxdir_t dir, bool isintunnel)
+        //
+        // What a lord sees when they look is what the look screen draws: the squares in the game's
+        // view (6 deep, fanning out to either side of the way they are looking, see mxmap::GetPanoramic).
+        // They are marked as seen on the map and Luxor's lords remember them. Armies are drawn on the terrain
+        // that shows them (and a stronghold is always seen) but only the lord's own square and the one
+        // directly ahead are seen up close, to count the army and see who is there.
+        //
+        // What is in the way matters: a square is only seen if the highest obstruction between the lord and it is
+        // less than its visibility (a citadel is seen over rolling downs, a forest is not seen through another
+        // forest). An army is as visible as the army terrain, 8. Unlike the squares around the lord, the
+        // obstruction of several squares is not added up, as the look screen draws what is behind a few hills.
+        //
+        void mxscenario::LookAtView ( mxgridref loc, mxdir_t dir, mxcharacter* looker )
         {
-        
-        panloc_t*    pview;
-        int            ii;
-        int            count;
+            const u32 army_visibility = 8;
+
+            bool remember = looker != nullptr && looker->IsRecruited() && looker->IsAlive();
+
+            if ( remember )
+                looker->CanSeeLocation( loc, true );
+
+            mxgridref ahead = loc + dir;
+
+            auto obstruction = [&](int dx, int dy) {
+                u32 blocking = 0;
+                int steps = std::max(std::abs(dx), std::abs(dy));
+                for ( int i=1; i<steps; i++ ) {
+                    int x = (int)loc.x + (int)lroundf( (float)dx*i/steps );
+                    int y = (int)loc.y + (int)lroundf( (float)dy*i/steps );
+                    mxgridref between( (u32)x, (u32)y );
+                    if ( mx->gamemap->IsLocOnMap(between) )
+                        blocking = std::max( blocking, mx->TerrainById( mx->gamemap->GetAt(between).terrain )->Obstruction() );
+                }
+                return blocking;
+            };
+
+            panloc_t* view;
+            u32 count = mx->gamemap->GetPanoramic( loc, dir, &view );
+
+            for ( u32 ii=0; ii<count; ii++ ) {
+                mxgridref there( view[ii].location );
+                if ( !mx->gamemap->IsLocOnMap(there) )
+                    continue;
+
+                mxloc& seen = mx->gamemap->GetAt(there);
+#if defined(_DDR_)
+                if ( seen.flags & lf_mist )
+                    continue;
+#endif
+                bool close = ( there.x == ahead.x && there.y == ahead.y );
+                u32 blocking = close ? 0 : obstruction( (int)there.x - (int)loc.x, (int)there.y - (int)loc.y );
+
+                mxterrain* terrain = mx->TerrainById(seen.terrain);
+                if ( close || blocking < terrain->Visibility() )
+                    mx->gamemap->SetLocationVisible(there, true);
+
+                if ( remember ) {
+                    bool army_terrain = terrain->IsArmyVisible();
+                    u32 visibility = army_terrain ? std::max(terrain->Visibility(), army_visibility) : terrain->Visibility();
+                    if ( close || ( (seen.IsStronghold() || army_terrain) && blocking < visibility ) )
+                        looker->CanSeeLocation( there, close );
+                }
+            }
+        }
+
+        void mxscenario::LookInDirection(mxgridref loc, mxdir_t dir, bool isintunnel, mxcharacter* looker)
+        {
+            // the dead see nothing
+            if ( looker != nullptr && looker->IsDead() )
+                return;
 
             loc_t looked_at = loc + dir ;
             
@@ -1664,62 +1732,23 @@ namespace tme {
             mx->gamemap->SetLocationVisible(loc, true);
             
             mx->gamemap->SetLocationLookedAt(looked_at, true);
-            
-            count = mx->gamemap->GetPanoramic ( loc, dir, &pview );
 
-            for ( ii=0; ii<count; ii++ ) {
-#if defined(_DDR_)
-                mxloc& mapsqr = mx->gamemap->GetAt(pview[ii].location);
-                if ( mapsqr.flags & lf_mist )
-                    continue;
-#endif
-                // if there is an army here then we need to draw the army
-                //info::terrain* tinfo = TerrainById(map.terrain);
-
-                if ( pview[ii].size < 4 ) {
-                    mx->gamemap->SetLocationVisible(pview[ii].location, true);
-                }
-            }
-            
-        
-
+            LookAtView( loc, dir, looker );
         }
 
 
         void mxscenario::SetCharsLooking( void )
         {
             // setup the initial stuff that characters looking will do
+            mx->memory.Update();
             FOR_EACH_CHARACTER(character) {
-                if ( character->IsRecruited() ) {
+                if ( character->IsRecruited() && character->IsAlive() ) {
                     character->Cmd_LookDir ( character->Looking() );
-                    character->memory.Update();
                     character->EnterLocation ( character->Location() );
                 }
             }
         }
 
-        bool mxscenario::InCharactersMemory ( mxitem* item ) 
-        {
-            FOR_EACH_CHARACTER(character) {
-                if ( character->memory.IsMemorised(item) )
-                    return true;
-            }
-            return false;
-        }
-
-        void mxscenario::ClearFromMemory ( mxgridref loc )
-        {
-            FOR_EACH_CHARACTER(character) {
-                auto item = character->memory.IsMemorised(loc,RA_ENEMY);
-                if ( item ) {
-                    character->memory.DeleteFragment ( item );
-                }
-                item = character->memory.IsMemorised(loc,RA_FREE);
-                if ( item ) {
-                    character->memory.DeleteFragment ( item );
-                }
-            }
-        }
         
         MXRESULT mxscenario::GetLocInfo ( mxid id, flags32_t flags, std::unique_ptr<mxlocinfo>& info)
         {
@@ -1825,23 +1854,6 @@ namespace tme {
             }
 
             return characters->Count();
-        }
-
-
-        u32 mxscenario::FindArmiesAtLocation ( mxgridref loc, u32& enemies, u32& friends, flags32_t flags )
-        {
-            enemies=0;
-            friends=0;
-
-            FOR_EACH_CHARACTER(character) {
-                if ( character->memory.IsMemorised(loc,RA_ENEMY) )
-                    enemies++;
-                if ( character->memory.IsMemorised(loc,RA_FREE) )
-                    friends++;
-                if ( character->Location() == loc && character->HasArmy() )
-                    friends++;
-            }
-            return friends+enemies ;
         }
 
     s32 mxscenario::BaseDoomdarkSuccess ( mxrace_t race, mxunit_t unit, const mxlocinfo& locinfo )

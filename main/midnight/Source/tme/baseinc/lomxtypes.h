@@ -1229,6 +1229,28 @@ namespace tme {
     // namespace flags
 
 
+    // How much of an army Luxor believes he saw. Armies seen at a distance are of unknown size.
+    enum mxmemory_size_t {
+        MS_UNKNOWN,
+        MS_SMALL,
+        MS_MEDIUM,
+        MS_LARGE
+    };
+
+    enum mxmemory_type_t {
+        MT_ARMY,        // an enemy army (regiments and/or an enemy stronghold garrison)
+        MT_LORD         // a lord not under Luxor's command
+    };
+
+    typedef struct memory_item_t {
+        mxmemory_type_t     type;
+        mxmemory_size_t     size;
+        loc_t               location;
+        u32                 id;         // the lord (MT_LORD)
+        u32                 age;        // days
+        u32                 max_age;    // days before it is forgotten
+    } memory_item_t;
+
     // mxgridref
     class mxgridref : public loc_t
     {
@@ -1289,6 +1311,8 @@ constexpr u32 SAVEGAMEVERSION = BaseSaveGameVersion+0;
 #else
 constexpr u32 SAVEGAMEVERSION = BaseSaveGameVersion;
 #endif
+
+#define SAVEGAMEVERSION_MEMORY  SAVEGAMEVERSION
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
 

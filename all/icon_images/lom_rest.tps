@@ -212,6 +212,11 @@
             <key type="filename">map/i_center.png</key>
             <key type="filename">map/i_critters.png</key>
             <key type="filename">map/i_filter_lords.png</key>
+            <key type="filename">map/i_filter_memory.png</key>
+            <key type="filename">map/i_memory_army_large.png</key>
+            <key type="filename">map/i_memory_army_medium.png</key>
+            <key type="filename">map/i_memory_army_small.png</key>
+            <key type="filename">map/i_memory_lord.png</key>
             <key type="filename">map/i_small_map.png</key>
             <key type="filename">misc/arrow_left.png</key>
             <key type="filename">misc/arrow_right.png</key>

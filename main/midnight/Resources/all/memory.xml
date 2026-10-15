@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Map markers for what Luxor's lords remember seeing, the size of a map cell (64x64). The map fades each one by the age of the memory.
+     An army of unknown size is the medium army with a ? over it. -->
+<images>
+
+    <image id="memory_army_unknown" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_army_medium"/>
+        <txt id="query" text="?" pos="32,27" anchor="c" font="button" size="36" outline="2" colour="#ffffff"/>
+    </image>
+    <image id="memory_army_small" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_army_small"/>
+    </image>
+    <image id="memory_army_medium" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_army_medium"/>
+    </image>
+    <image id="memory_army_large" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_army_large"/>
+    </image>
+    <image id="memory_lord" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_lord"/>
+    </image>
+    <!-- a lord with an army: the lord tinted by the size of the army -->
+    <image id="memory_lord_army_small" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_lord" tint="#f2d338"/>
+    </image>
+    <image id="memory_lord_army_medium" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_lord" tint="#f08a24"/>
+    </image>
+    <image id="memory_lord_army_large" size="64,64">
+        <gfx id="art" pos="0,0" name="i_memory_lord" tint="#d0211e"/>
+    </image>
+
+</images>

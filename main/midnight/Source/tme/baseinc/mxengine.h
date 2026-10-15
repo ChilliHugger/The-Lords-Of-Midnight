@@ -143,6 +143,8 @@ namespace tme {
         mxscenario*             scenario;
         mxentityfactory*        entityfactory;
         
+        mxmemory                memory;     // what Luxor's lords remember seeing
+
         c_character             objCharacters;
         c_regiment              objRegiments;
         c_routenode             objRoutenodes;
