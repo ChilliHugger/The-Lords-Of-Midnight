@@ -15,7 +15,6 @@
  */
 
 #include "../baseinc/tme_internal.h"
-#include "../scenario/helpers/race_terrain_movement_modifier.h"
 
 #include <memory>
 #include <string>
@@ -689,7 +688,7 @@ namespace tme {
                 TimeCost = (s32) ((f64)TimeCost * rinfo->RidingMovementMultiplier()) ;
 
             // adjust for terrain
-            TimeCost += TME::helpers::RaceTerrainMovementModifier::Get(
+            TimeCost += mx->scenario->TerrainMovementModifier(
                 Race(),
                 (mxterrain_t)mx->gamemap->GetAt ( location ).terrain
             );
