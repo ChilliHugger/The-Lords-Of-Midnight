@@ -23,6 +23,7 @@
 #include <algorithm>
 #include <map>
 #include <memory>
+#include <queue>
 #include <string>
 #include <vector>
 
@@ -144,6 +145,8 @@ static LPCSTR citadel_hostages[] = {
 void citadel_x::initialise ( u32 version )
 {
     mxscenario::initialise(version);
+    paths.clear();
+    passable.clear();
     boroth = CitadelLord(mx->CharacterBySymbol("CH_BOROTH"));
     maranor = static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
 
@@ -264,68 +267,103 @@ static u32 StepsToMidnight ( mxrace_t people )
     return NUMELE(citadel_kingdoms);
 }
 
-const std::vector<s32>& citadel_x::StepsFrom ( mxgridref from, const mxregiment* walker ) const
+citadel_x::pace_t citadel_x::PaceOf ( const mxitem* walker ) const
 {
+    if ( walker->IsType(IDT_CHARACTER) ) {
+        auto lord = static_cast<const mxcharacter*>(walker);
+        return { lord->Race(), !lord->IsRiding() };
+    }
+    return { static_cast<const mxregiment*>(walker)->Race(), false };
+}
+
+u32 citadel_x::StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t dir ) const
+{
+    auto rinfo = mx->RaceById(race);
+    u32 cost = rinfo->InitialMovementValue() + ( IS_DIAGONAL(dir) ? rinfo->DiagonalMovementModifier() : 0 );
+    if ( onfoot )
+        cost = (u32)((f64)cost * rinfo->RidingMovementMultiplier());
+    return cost + TerrainMovementModifier(race, (mxterrain_t)mx->gamemap->GetAt(into).terrain);
+}
+
+const std::vector<s32>& citadel_x::StepsFrom ( mxgridref from, const mxitem* walker ) const
+{
+    auto [race, onfoot] = PaceOf(walker);
+
     auto width = (size_t)mx->gamemap->Size().cx;
     auto height = (size_t)mx->gamemap->Size().cy;
-    auto key = (u32)(from.y * width + from.x);
+    auto start = (u32)(from.y * width + from.x);
+    auto key = start | (u64)race << 32 | (u64)onfoot << 40;
 
     auto found = paths.find(key);
     if ( found != paths.end() )
         return found->second;
 
-    auto& steps = paths[key];
-    steps.assign(width * height, -1);
-    steps[key] = 0;
-    std::vector<mxgridref> queue { from };
-    for ( size_t next = 0; next < queue.size(); next++ ) {
-        auto here = queue[next];
+    if ( passable.empty() )
+        passable.assign(width * height, -1);
+
+    auto& costs = paths[key];
+    costs.assign(width * height, -1);
+    costs[start] = 0;
+    using entry = std::pair<s32, u32>;
+    std::priority_queue<entry, std::vector<entry>, std::greater<entry>> queue;
+    queue.push({ 0, start });
+    while ( !queue.empty() ) {
+        auto [cost, at] = queue.top();
+        queue.pop();
+        CONTINUE_IF( cost > costs[at] );
+        mxgridref here ( (s32)(at % width), (s32)(at / width) );
+        s32 into[] = { (s32)StepCost(race, onfoot, here, DR_NORTH), (s32)StepCost(race, onfoot, here, DR_NORTHEAST) };
         for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
             auto there = here + (mxdir_t)dir;
             CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
-            auto& count = steps[there.y * width + there.x];
-            CONTINUE_IF( count >= 0 || isLocationImpassable(there, walker) );
-            count = steps[here.y * width + here.x] + 1;
-            queue.push_back(there);
+            auto next = (u32)(there.y * width + there.x);
+            auto total = cost + into[IS_DIAGONAL(dir) ? 1 : 0];
+            CONTINUE_IF( costs[next] >= 0 && costs[next] <= total );
+            if ( passable[next] < 0 )
+                passable[next] = isLocationImpassable(there, mx->objRegiments[0]) ? 0 : 1;
+            CONTINUE_IF( passable[next] == 0 );
+            costs[next] = total;
+            queue.push({ total, next });
         }
     }
-    return steps;
+    return costs;
 }
 
-bool citadel_x::MarchStep ( mxgridref here, mxgridref target, mxgridref& step ) const
+bool citadel_x::MarchStep ( const mxitem* walker, mxgridref here, mxgridref target, mxgridref& step ) const
 {
-    if ( mx->objRegiments.Count() == 0 )
+    if ( mx->objRegiments.Count() == 0 || here == target )
         return false;
 
-    const auto& steps = StepsFrom(target, mx->objRegiments[0]);
+    auto [race, onfoot] = PaceOf(walker);
+    const auto& costs = StepsFrom(target, walker);
     auto width = (size_t)mx->gamemap->Size().cx;
-    auto best = steps[here.y * width + here.x];
-    if ( best < 0 )
+    if ( costs[here.y * width + here.x] < 0 )
         return false;
 
-    bool found = false;
+    s32 best = -1;
     for ( int dir = DR_NORTH; dir <= DR_NORTHWEST; dir++ ) {
         auto there = here + (mxdir_t)dir;
         CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) );
-        auto count = steps[there.y * width + there.x];
-        if ( count >= 0 && count < best ) {
-            best = count;
+        auto cost = costs[there.y * width + there.x];
+        CONTINUE_IF( cost < 0 );
+        cost += (s32)StepCost(race, onfoot, there, (mxdir_t)dir);
+        if ( best < 0 || cost < best ) {
+            best = cost;
             step = there;
-            found = true;
         }
     }
-    return found;
+    return best >= 0;
 }
 
-bool citadel_x::Reachable ( mxgridref from, mxgridref to ) const
+bool citadel_x::Reachable ( const mxitem* walker, mxgridref from, mxgridref to ) const
 {
     mxgridref step;
-    return from == to || MarchStep(from, to, step);
+    return from == to || MarchStep(walker, from, to, step);
 }
 
 bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const
 {
-    return MarchStep(regiment->Location(), target, step);
+    return MarchStep(regiment, regiment->Location(), target, step);
 }
 
 citadel_object* citadel_x::ArtefactAt ( mxgridref loc ) const
@@ -424,6 +462,7 @@ void citadel_x::NightStart ( void )
     mxscenario::NightStart();
 
     paths.clear();
+    passable.clear();
 
     auto target = CampaignTarget();
 
