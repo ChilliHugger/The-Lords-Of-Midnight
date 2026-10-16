@@ -753,6 +753,7 @@ using namespace chilli::types;
             SS_DUNGEON_NOTHING,
             SS_QUEST_ACTION,
             SS_QUEST_CHOOSE,
+            SS_LUXOR_EXECUTED,
 
             SS_MAX_STRINGS = 255
         };

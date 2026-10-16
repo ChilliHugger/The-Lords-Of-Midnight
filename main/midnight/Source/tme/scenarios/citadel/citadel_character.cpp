@@ -240,7 +240,12 @@ void citadel_character::Available ( bool available )
 
 bool citadel_character::Marches () const
 {
-    return mx->scenario->HostageOfRace(Race()) == nullptr && !HasQuality(qf_cowardly);
+    return !( IsKing() && mx->scenario->HostageOfRace(Race()) != nullptr ) && !HasQuality(qf_cowardly);
+}
+
+bool citadel_character::IsKing () const
+{
+    return home != nullptr && home->Owner() == this && home->Terrain() == TN_CITADEL;
 }
 
 bool citadel_character::CanQuest () const
