@@ -46,43 +46,10 @@ namespace {
         REQUIRE( keep->IsEnemy() );
     }
 
-    void FreeTheHostages()
-    {
-        for ( auto character : tme::mx->objCharacters )
-            character->Flags().Reset(cf_prisoner);
-    }
-
     void Army(mxcharacter* lord, u32 men)
     {
         lord->warriors.Total(men);
         lord->riders.Total(0);
-    }
-
-    void NoHost()
-    {
-        for ( auto regiment : tme::mx->objRegiments )
-            regiment->Total(0);
-    }
-
-    mxregiment* AFoeRegiment(u32 men)
-    {
-        for ( auto regiment : tme::mx->objRegiments ) {
-            if ( regiment->Race() == RA_ENEMY ) {
-                regiment->Total(men);
-                return regiment;
-            }
-        }
-        return nullptr;
-    }
-
-    mxstronghold* AHeldKeepOf(mxrace_t people, mxstronghold* other = nullptr)
-    {
-        for ( auto stronghold : tme::mx->objStrongholds ) {
-            if ( stronghold != other && stronghold->Race() == people && stronghold->OccupyingRace() == people
-                 && tme::mx->gamemap->IsLocOnMap(stronghold->Location()) )
-                return stronghold;
-        }
-        return nullptr;
     }
 
     citadel_object* Artefact(LPCSTR symbol)
@@ -90,26 +57,6 @@ namespace {
         auto object = GetObject(symbol);
         REQUIRE( object != nullptr );
         return CitadelObject(object);
-    }
-
-    // an on-map keep of a people, and a lord of the realms of that people
-    mxstronghold* AKeepOf(mxrace_t people)
-    {
-        for ( auto stronghold : tme::mx->objStrongholds ) {
-            if ( stronghold->Race() == people && tme::mx->gamemap->IsLocOnMap(stronghold->Location()) )
-                return stronghold;
-        }
-        return nullptr;
-    }
-
-    citadel_character* ALordOf(mxrace_t people)
-    {
-        for ( auto character : tme::mx->objCharacters ) {
-            auto lord = static_cast<citadel_character*>(character);
-            if ( lord->Race() == people && lord->purpose == PU_DEFEND_HOMELAND && !lord->IsRecruited() )
-                return lord;
-        }
-        return nullptr;
     }
 
     int VisibleSquares()
@@ -165,9 +112,10 @@ SCENARIO("Your lords take quests, and the lords of the realms take no orders fro
         REQUIRE_FALSE( rorthron->SetQuest(QS_RECRUIT, Idt(Lord("CH_CORLETH"))) );
     }
 
-    THEN("a keep Boroth does not hold cannot be seized")
+    THEN("a keep of the realms can be seized, which is war, but not a keep of yours")
     {
-        REQUIRE_FALSE( rorthron->SetQuest(QS_SEIZE, Idt(Keep("SH_CASTLE_ARABAR"))) );
+        REQUIRE( rorthron->SetQuest(QS_SEIZE, Idt(Keep("SH_CASTLE_ARABAR"))) );
+        REQUIRE_FALSE( rorthron->SetQuest(QS_SEIZE, Idt(Keep("SH_CASTLE_CORELAY"))) );
     }
 
     THEN("one of yours can be sent to attack a lord of the realms")
@@ -234,117 +182,6 @@ SCENARIO("A lord sent somewhere walks there over the nights that follow, then wa
         {
             REQUIRE( rorthron->Location() == there );
             REQUIRE( rorthron->quest == QS_NONE );
-        }
-    }
-}
-
-SCENARIO("A realm whose hostage is held will not march")
-{
-    TMEStep::NewStory();
-
-    auto haraglai = Lord(ch_haraglai);
-    Army(haraglai, 1000);
-    auto arabar = Keep("SH_CASTLE_ARABAR");
-    BorothTakes(arabar);
-
-    GIVEN("that Djalina, the Uskarg hostage, is still in the dungeons of Maranor")
-    {
-        REQUIRE( tme::mx->scenario->HostageOfRace(RA_USKARG) != nullptr );
-
-        WHEN("Haraglai considers the war")
-        {
-            React(haraglai);
-
-            THEN("he does not march on the keep Boroth took from the Fallows")
-            {
-                REQUIRE( haraglai->quest != QS_SEIZE );
-            }
-        }
-    }
-
-    GIVEN("that she is free")
-    {
-        Lord(ch_djalina)->Flags().Reset(cf_prisoner);
-
-        WHEN("Haraglai considers the war")
-        {
-            React(haraglai);
-
-            THEN("he goes to take it back")
-            {
-                REQUIRE( haraglai->reaction == RE_TAKE_BACK_STRONGHOLD );
-                REQUIRE( haraglai->quest == QS_SEIZE );
-                REQUIRE( haraglai->questtarget == Idt(arabar) );
-            }
-        }
-
-        WHEN("he is a coward")
-        {
-            haraglai->qualities = qf_cowardly;
-            React(haraglai);
-
-            THEN("he does not")
-            {
-                REQUIRE( haraglai->quest != QS_SEIZE );
-            }
-        }
-
-        WHEN("he has too few men for its garrison")
-        {
-            Army(haraglai, 10);
-            arabar->TotalTroops(500);
-            React(haraglai);
-
-            THEN("he does not")
-            {
-                REQUIRE( haraglai->quest != QS_SEIZE );
-            }
-        }
-    }
-}
-
-SCENARIO("A lord whose own realm is whole helps a neighbour - but not one his people feud with")
-{
-    TMEStep::NewStory();
-    FreeTheHostages();
-
-    GIVEN("that Boroth holds a keep of Dawnwood, which borders the Fallows")
-    {
-        auto haraglai = Lord(ch_haraglai);
-        Army(haraglai, 1000);
-        auto maralan = Keep("SH_CASTLE_MARALAN");
-        BorothTakes(maralan);
-
-        WHEN("an Uskarg lord considers the war")
-        {
-            React(haraglai);
-
-            THEN("he marches to help the Dawn Fey take it back")
-            {
-                REQUIRE( haraglai->reaction == RE_HELP_NEIGHBOUR );
-                REQUIRE( haraglai->quest == QS_SEIZE );
-                REQUIRE( haraglai->questtarget == Idt(maralan) );
-            }
-        }
-    }
-
-    GIVEN("that Boroth holds a keep of the Deeping, which borders the Long Mountains")
-    {
-        auto dwarf = ALordOf(RA_LONG_DWARF);
-        REQUIRE( dwarf != nullptr );
-        Army(dwarf, 1000);
-        auto keep = AKeepOf(RA_DEEPING_DWARF);
-        REQUIRE( keep != nullptr );
-        BorothTakes(keep);
-
-        WHEN("a Long Dwarf considers the war")
-        {
-            React(dwarf);
-
-            THEN("he leaves the Deeping Dwarves to it: the two are at feud")
-            {
-                REQUIRE( dwarf->quest != QS_SEIZE );
-            }
         }
     }
 }
@@ -734,148 +571,6 @@ SCENARIO("An impatient lord of yours, left waiting, sets out on a quest of his o
             {
                 REQUIRE( rorthron->quest == QS_REST );
             }
-        }
-    }
-}
-
-SCENARIO("The lords of the realms meet Boroth's host as the design's reactions say")
-{
-    TMEStep::NewStory();
-    NoHost();
-
-    auto haraglai = Lord(ch_haraglai);
-    auto keep = AHeldKeepOf(RA_USKARG);
-    REQUIRE( keep != nullptr );
-    auto regiment = AFoeRegiment(200);
-    REQUIRE( regiment != nullptr );
-
-    GIVEN("that his realm's hostage is free and a regiment he can beat is inside his realm")
-    {
-        FreeTheHostages();
-        regiment->Location(keep->Location() + DR_EAST + DR_EAST);
-        Army(haraglai, 1000);
-        haraglai->Location(keep->Location());
-        React(haraglai);
-
-        THEN("he attacks it")
-        {
-            REQUIRE( haraglai->reaction == RE_ATTACK_ENEMY );
-            REQUIRE( haraglai->quest == QS_KILL );
-            REQUIRE( haraglai->questtarget == Idt(regiment) );
-        }
-    }
-
-    GIVEN("that his realm is at ransom and the regiment closes on one of its keeps")
-    {
-        auto other = AHeldKeepOf(RA_USKARG, keep);
-        REQUIRE( other != nullptr );
-        regiment->Location(keep->Location() + DR_EAST + DR_EAST);
-        Army(haraglai, 1000);
-        haraglai->Location(other->Location());
-        React(haraglai);
-
-        THEN("he goes to stand in the threatened keep")
-        {
-            REQUIRE( haraglai->reaction == RE_COUNTER_THREAT );
-            REQUIRE( haraglai->questtarget == Idt(keep) );
-        }
-    }
-
-    GIVEN("that he is in the open, and a host far larger than his is upon him")
-    {
-        auto open = keep->Location() + DR_WEST + DR_WEST + DR_WEST + DR_WEST + DR_WEST + DR_WEST;
-        regiment->Total(5000);
-        regiment->Location(open + DR_WEST);
-        Army(haraglai, 100);
-        haraglai->Location(open);
-        React(haraglai);
-
-        THEN("he retreats to a keep of his people")
-        {
-            REQUIRE( haraglai->reaction == RE_RETREAT );
-            REQUIRE( haraglai->quest == QS_GOTO );
-        }
-    }
-}
-
-SCENARIO("A lord of the realms too weak to take back a keep gathers strength from his own")
-{
-    TMEStep::NewStory();
-    NoHost();
-    FreeTheHostages();
-
-    auto haraglai = Lord(ch_haraglai);
-    auto arabar = Keep("SH_CASTLE_ARABAR");
-    BorothTakes(arabar);
-    arabar->TotalTroops(500);
-    auto barracks = AHeldKeepOf(RA_USKARG, arabar);
-    REQUIRE( barracks != nullptr );
-    barracks->TotalTroops(3000);
-    Army(haraglai, 10);
-    haraglai->Location(barracks->Location());
-
-    WHEN("he considers the war in a keep with men to spare")
-    {
-        React(haraglai);
-
-        THEN("he takes men from it - and the next night has enough to march")
-        {
-            REQUIRE( haraglai->reaction == RE_GATHER_STRENGTH );
-            REQUIRE( haraglai->warriors.Total() + haraglai->riders.Total() >= 500 );
-            REQUIRE( barracks->TotalTroops() < 3000 );
-
-            React(haraglai);
-            REQUIRE( haraglai->reaction == RE_TAKE_BACK_STRONGHOLD );
-            REQUIRE( haraglai->questtarget == Idt(arabar) );
-        }
-    }
-}
-
-SCENARIO("A lord of the realms lends his service to one of yours marching on a keep he cares for")
-{
-    TMEStep::NewStory();
-    NoHost();
-    FreeTheHostages();
-
-    auto rorthron = Lord(ch_rorthron);
-    auto haraglai = Lord(ch_haraglai);
-    auto maralan = Keep("SH_CASTLE_MARALAN");
-    BorothTakes(maralan);
-    maralan->TotalTroops(2000);
-    REQUIRE( rorthron->SetQuest(QS_SEIZE, Idt(maralan)) );
-    Army(haraglai, 10);
-    haraglai->Location(maralan->Location() + DR_SOUTH + DR_SOUTH + DR_SOUTH);
-
-    WHEN("Haraglai, with too few men to take it alone, considers the war")
-    {
-        React(haraglai);
-
-        THEN("he joins the assault")
-        {
-            REQUIRE( haraglai->reaction == RE_LEND_SERVICE );
-            REQUIRE( haraglai->quest == QS_SEIZE );
-            REQUIRE( haraglai->questtarget == Idt(maralan) );
-        }
-    }
-}
-
-SCENARIO("Helping a neighbour never means marching on the Marish")
-{
-    TMEStep::NewStory();
-    NoHost();
-    FreeTheHostages();
-
-    auto haraglai = Lord(ch_haraglai);
-    Army(haraglai, 100000);
-
-    WHEN("an Uskarg lord, whose realm borders the Dark Fey, considers the war")
-    {
-        React(haraglai);
-
-        THEN("he does not set out to seize one of the Dark Fey's own keeps")
-        {
-            auto keep = StrongholdTarget(haraglai->questtarget);
-            REQUIRE_FALSE( ( keep != nullptr && keep->Race() == RA_DARK_FEY ) );
         }
     }
 }

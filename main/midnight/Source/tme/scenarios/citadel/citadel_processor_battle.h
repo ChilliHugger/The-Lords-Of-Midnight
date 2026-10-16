@@ -17,11 +17,12 @@ namespace tme {
     {
     public:
         virtual void Duel ( mxcharacter* attacker, mxcharacter* defender );
+        virtual void Siege ( mxcharacter* attacker, citadel_stronghold* keep );     // a keep Boroth does not hold
         virtual void Attack ( mxcharacter* lord );
         virtual bool Guard ( mxcharacter* lord );
 
     protected:
-        // one lord and his men, in a duel
+        // one lord and his men, in a duel, or a keep's garrison and its lord if he is there
         struct side_t {
             mxcharacter*                            lord;
             std::vector<std::unique_ptr<mxarmy>>    armies;

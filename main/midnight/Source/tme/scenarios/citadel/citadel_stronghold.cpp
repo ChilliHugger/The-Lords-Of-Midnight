@@ -61,6 +61,26 @@ bool citadel_stronghold::CanCharacterPost ( const mxcharacter* character ) const
         && !Feuding(OccupyingRace(), character->Race());
 }
 
+mxrace_t citadel_stronghold::Allegiance () const
+{
+    return Occupier() != nullptr ? Occupier()->NormalisedLoyalty() : OccupyingRace();
+}
+
+bool citadel_stronghold::Subjugated () const
+{
+    if ( Owner() == nullptr || Occupier() == Owner() )
+        return false;
+    return CITADEL_SCENARIO(IsEnemyOf(Allegiance(), Owner()->NormalisedLoyalty()));
+}
+
+void citadel_stronghold::Conquer ( mxcharacter* lord )
+{
+    occupyingrace = lord->IsRecruited() ? RA_FREE : lord->Race();
+    occupier = lord;
+    totaltroops = 0;
+    CheckForZero();
+}
+
 u32 citadel_stronghold::DefenceMultiplier() const
 {
     switch ( Terrain() ) {
