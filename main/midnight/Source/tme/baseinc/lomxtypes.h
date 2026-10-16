@@ -413,6 +413,17 @@ using namespace chilli::types;
             RE_LEND_SERVICE,
         };
 
+        enum mxdanger_t {
+            LS_AT_PEACE                 =    0,
+            LS_TROUBLED,
+            LS_THREATENED,
+            LS_MENACED,
+            LS_IN_DANGER,
+            LS_IN_PERIL,
+            LS_UNDER_ATTACK,
+            LS_SUBJUGATED,
+        };
+
         enum mxquestnews_t {
             QN_NONE                     =    0,
             QN_DONE,                    // the quest is over, and he waits for orders

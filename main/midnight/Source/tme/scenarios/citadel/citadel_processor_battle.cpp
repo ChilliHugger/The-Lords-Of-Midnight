@@ -113,7 +113,8 @@ citadel_battle::side_t citadel_battle::Muster ( mxcharacter* lord )
 
 void citadel_battle::Strike ( side_t& from, side_t& at )
 {
-    from.lord->battleslew += Fight(from.lord->FightStrength(), from.lord->energy + 128, at.standing);
+    if ( from.lord != nullptr )
+        from.lord->battleslew += Fight(from.lord->FightStrength(), from.lord->energy + 128, at.standing);
     for ( auto& army : from.armies ) {
         if ( army->total )
             army->killed += Fight(army->total / 5, army->success, at.standing);
@@ -122,6 +123,8 @@ void citadel_battle::Strike ( side_t& from, side_t& at )
 
 void citadel_battle::Duel ( mxcharacter* attacker, mxcharacter* defender )
 {
+    CITADEL_SCENARIO(DeclareWar(defender->NormalisedLoyalty(), attacker->NormalisedLoyalty()));
+
     auto a = Muster(attacker);
     auto d = Muster(defender);
 
@@ -158,6 +161,79 @@ void citadel_battle::Duel ( mxcharacter* attacker, mxcharacter* defender )
     }
 
     Announce(defender->Location());
+}
+
+void citadel_battle::Siege ( mxcharacter* attacker, citadel_stronghold* keep )
+{
+    CITADEL_SCENARIO(DeclareWar(keep->Allegiance(), attacker->NormalisedLoyalty()));
+
+    auto ruler = keep->Occupier();
+    auto defends = ruler != nullptr && ruler != attacker && ruler->IsAlive() && !ruler->IsPrisoner()
+        && ruler->Location() == keep->Location();
+    auto a = Muster(attacker);
+    auto d = defends ? Muster(ruler) : side_t { nullptr, {}, {} };
+
+    auto walls = keep->DefenceMultiplier();
+    auto garrison = new mxarmy();
+    garrison->armytype = AT_STRONGHOLD;
+    garrison->parent = keep;
+    garrison->race = keep->OccupyingRace();
+    garrison->type = keep->Type();
+    garrison->total = keep->TotalTroops() * walls;
+    garrison->success = keep->BattleSuccess(*attacker->GetLocInfo());
+    garrison->killed = 0;
+    garrison->loyalto = keep->Allegiance();
+    d.armies.emplace_back(garrison);
+    d.standing.push_back(garrison);
+
+    attacker->EnterBattle();
+    attacker->battleloc = keep->Location();
+    if ( defends ) {
+        ruler->EnterBattle();
+        ruler->battleloc = keep->Location();
+    }
+
+    Strike(a, d);
+    Strike(d, a);
+
+    for ( auto side : { &a, &d } ) {
+        for ( auto& army : side->armies ) {
+            if ( army->armytype == AT_CHARACTER )
+                UpdateCharacterArmy(army.get());
+        }
+        if ( side->lord != nullptr )
+            CharacterLosesEnergy(side->lord);
+    }
+    auto left = ( garrison->total + walls - 1 ) / walls;
+    keep->Lost(keep->TotalTroops() - left);
+    keep->TotalTroops(left);
+    keep->Killed(garrison->killed);
+
+    auto stands = !a.standing.empty();
+    auto holds = !d.standing.empty();
+    if ( stands && holds ) {
+        CharacterContinuesBattle(attacker);
+        if ( defends )
+            CharacterContinuesBattle(ruler);
+    } else {
+        auto won = stands;
+        if ( !stands && !holds ) {
+            auto might = attacker->FightStrength() + ( defends ? ruler->FightStrength() : 0 );
+            won = !defends || might == 0 || mxrandom(0, (int)might - 1) < (int)attacker->FightStrength();
+        }
+        if ( won ) {
+            if ( defends )
+                CharacterLosesBattle(ruler);
+            CharacterWinsBattle(attacker);
+            keep->Conquer(attacker);
+        } else {
+            CharacterLosesBattle(attacker);
+            if ( defends )
+                CharacterWinsBattle(ruler);
+        }
+    }
+
+    Announce(keep->Location());
 }
 
 void citadel_battle::Attack ( mxcharacter* lord )

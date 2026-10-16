@@ -527,6 +527,43 @@ mxstronghold* citadel_x::HomeKeep ( mxrace_t people, mxgridref from ) const
     return home;
 }
 
+mxstronghold* citadel_x::KeepOf ( const mxcharacter* owner ) const
+{
+    FOR_EACH_STRONGHOLD(stronghold) {
+        if ( stronghold->Owner() == owner && mx->gamemap->IsLocOnMap(stronghold->Location()) )
+            return stronghold;
+    }
+    return nullptr;
+}
+
+mxrace_t citadel_x::Allegiance ( const mxitem* figure ) const
+{
+    if ( figure->IsType(IDT_CHARACTER) )
+        return static_cast<const mxcharacter*>(figure)->NormalisedLoyalty();
+    return static_cast<const mxregiment*>(figure)->Race();
+}
+
+bool citadel_x::AtWar ( mxrace_t side ) const
+{
+    return (u32)side < wars.size() && wars[side] != 0;
+}
+
+bool citadel_x::AtWar ( mxrace_t side, mxrace_t with ) const
+{
+    return (u32)side < wars.size() && ( wars[side] >> with & 1 );
+}
+
+bool citadel_x::IsEnemyOf ( mxrace_t who, mxrace_t of ) const
+{
+    return who != of && AtWar(of, who);
+}
+
+void citadel_x::DeclareWar ( mxrace_t on, mxrace_t by )
+{
+    if ( on != by && (u32)on < wars.size() )
+        wars[on] |= (u64)1 << by;
+}
+
 std::vector<citadel_character*> citadel_x::HostagesHeldAtMaranor () const
 {
     std::vector<citadel_character*> held;
@@ -715,10 +752,20 @@ void citadel_x::initialiseAfterCreate ( u32 version )
             hostage->Flags().Set(cf_prisoner);
     }
 
+    wars.assign(mx->objRaceInfos.Count(), 0);
+    for ( u32 race = RA_NONE + 1; race < wars.size(); race++ ) {
+        DeclareWar((mxrace_t)race, RA_ENEMY);
+        DeclareWar(RA_ENEMY, (mxrace_t)race);
+    }
+
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
         if ( maranor != nullptr && lord->IsRecruited() && !lord->IsPrisoner() && lord->Location() == maranor->Location() )
             lord->Flags().Set(cf_dungeon);
+        if ( lord->home == nullptr )
+            lord->home = KeepOf(lord);
+        if ( lord->home == nullptr )
+            lord->home = HomeKeep(lord->Race(), lord->Location());
         if ( character->HasQuality(qf_mightywarrior) )
             character->strength = 100;
         else if ( character->HasQuality(qf_feeblewarrior) )
@@ -736,8 +783,16 @@ void citadel_x::Serialize ( archive& ar )
 
     if ( ar.IsStoring() ) {
         ar << flags ;
+        ar << (u32)wars.size() ;
+        for ( auto war : wars )
+            ar << war ;
     } else {
         ar >> flags ;
+        u32 count;
+        ar >> count ;
+        wars.resize(count);
+        for ( auto& war : wars )
+            ar >> war ;
     }
 }
 

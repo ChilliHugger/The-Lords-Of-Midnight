@@ -18,6 +18,10 @@ namespace tme {
         gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
     };
 
+    enum CITADELCHARACTERFLAGS {
+        ccf_available       = MXBIT(0),
+    };
+
     class citadel_x : public mxscenario
     {
     public:
@@ -54,7 +58,14 @@ namespace tme {
         bool Reachable ( const mxitem* walker, mxgridref from, mxgridref to ) const;
         void RaiseWraith ();
         mxstronghold* HomeKeep ( mxrace_t people, mxgridref from ) const;   // the nearest keep his people hold
+        mxstronghold* KeepOf ( const mxcharacter* owner ) const;
         std::vector<citadel_character*> HostagesHeldAtMaranor () const;
+
+        mxrace_t Allegiance ( const mxitem* figure ) const;
+        bool AtWar ( mxrace_t side ) const;
+        bool AtWar ( mxrace_t side, mxrace_t with ) const;
+        bool IsEnemyOf ( mxrace_t who, mxrace_t of ) const;
+        void DeclareWar ( mxrace_t on, mxrace_t by );
 
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
@@ -73,6 +84,8 @@ namespace tme {
         // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace
         mutable std::map<u64, std::vector<s32>> paths;
         mutable std::vector<s8> passable;       // tonight's, by square: -1 not yet asked
+
+        std::vector<u64>    wars;
     };
 
     class citadel_entityfactory : public mxentityfactory
@@ -118,6 +131,10 @@ namespace tme {
         virtual bool CanCharacterRecruitOrPost ( const mxcharacter* character ) const override;
         virtual bool CanCharacterPost ( const mxcharacter* character ) const override;
         virtual u32 DefenceMultiplier() const;
+
+        mxrace_t Allegiance () const;
+        bool Subjugated () const;
+        void Conquer ( mxcharacter* lord );
     };
 
     class citadel_area : public mxarea
@@ -173,6 +190,9 @@ namespace tme {
         bool InDungeon () const;
         citadel_character* SearchDungeon ( u32 chance );   // the hostage he finds and frees, if any
         void FlyHome ();
+        u32 Might () const;
+        bool IsAvailable () const;
+        void Available ( bool available );
 
     public:
         mxquest_t       quest = QS_NONE;
@@ -181,7 +201,8 @@ namespace tme {
         mxreaction_t    reaction = RE_RETURN_HOME;
         u32             idle = 0;                   // nights one of yours has stood waiting for orders
         mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
-        mxstronghold*   home = nullptr;             // a hostage's home castle
+        mxstronghold*   home = nullptr;             // the keep he defends and goes home to
+        flags32         citadelflags;
 
     protected:
         std::string title;      // the design's "Titles"; empty for most lords

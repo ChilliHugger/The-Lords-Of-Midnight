@@ -31,6 +31,7 @@ void citadel_character::Serialize ( archive& ar )
         ar << idle ;
         WRITE_ENUM(news);
         ar << home ;
+        ar << citadelflags ;
     } else {
         ar >> qualities ;
         ar >> title ;
@@ -41,6 +42,7 @@ void citadel_character::Serialize ( archive& ar )
         ar >> idle ;
         READ_ENUM(news);
         ar >> home ;
+        ar >> citadelflags ;
     }
 }
 
@@ -218,6 +220,24 @@ mxobject* citadel_character::Cmd_Seek ( void )
     return nullptr;
 }
 
+u32 citadel_character::Might () const
+{
+    return (u32)( (u64)( FightStrength() + Men() ) * ( energy + 128 ) / ( (u32)sv_energy_max + 128 ) );
+}
+
+bool citadel_character::IsAvailable () const
+{
+    return citadelflags.Is(ccf_available);
+}
+
+void citadel_character::Available ( bool available )
+{
+    if ( available )
+        citadelflags.Set(ccf_available);
+    else
+        citadelflags.Reset(ccf_available);
+}
+
 bool citadel_character::Marches () const
 {
     return mx->scenario->HostageOfRace(Race()) == nullptr && !HasQuality(qf_cowardly);
@@ -256,8 +276,10 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
         case QS_GUARD:
             return ID_TYPE(target) == IDT_LOCATION
                 && mx->gamemap->IsLocOnMap(mxgridref(GET_LOCIDX(target), GET_LOCIDY(target)));
-        case QS_SEIZE:
-            return StrongholdTarget(target) != nullptr && StrongholdTarget(target)->IsEnemy();
+        case QS_SEIZE: {
+            auto keep = StrongholdTarget(target);
+            return keep != nullptr && ( keep->IsEnemy() || keep->Allegiance() != NormalisedLoyalty() );
+        }
         case QS_FIND:
             return artefact && object->OnMap(where);
         case QS_TAKE: {
