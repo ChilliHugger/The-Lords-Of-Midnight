@@ -148,7 +148,7 @@ void ddr_x::initialise( u32 version )
 void ddr_x::initialiseAfterCreate( u32 version )
 {
     MXTRACE("Place Objects On Map");
-    PlaceObjectsOnMap();
+    mx->objectprocessor->PlaceObjectsOnMap(luxor);
 
     FOR_EACH_CHARACTER(character) {
         auto c = static_cast<ddr_character*>(character);
@@ -167,7 +167,7 @@ void ddr_x::updateAfterLoad ( u32 version )
     utils::UpdateDDRObjects::FixRecruitmentFlags();
 
     // existing games get the circular liege fix
-    if ( version < 21 ) {
+    if ( version < 18 ) {
         mx->setRules(RF_DDR_CIRCULAR_LIEGE_FIX);
     }
 
@@ -183,10 +183,6 @@ mxentity* ddr_entityfactory::Create ( id_type_t type )
             return static_cast<mxentity*>(new ddr_character) ;
         case IDT_STRONGHOLD:
             return static_cast<mxentity*>(new ddr_stronghold);
-        case IDT_OBJECT_POWER:
-            return static_cast<mxentity*>(new mxobjectpower) ;
-        case IDT_OBJECT_TYPE:
-            return static_cast<mxentity*>(new mxobjecttype) ;
         default:
             break;
     }
@@ -194,70 +190,6 @@ mxentity* ddr_entityfactory::Create ( id_type_t type )
     return mxentityfactory::Create ( type );
 }
     
-mxcharacter* ddr_x::WhoHasObject( mxobject* object ) const
-{
-    return static_cast<mxcharacter*>(object->carriedby) ;
-}
-
-
-bool ddr_x::DropObject ( mxgridref loc, mxobject* obj )
-{
-    if ( obj->IsUnique() ) {
-        obj->Location( loc );
-        mx->gamemap->SetObject( loc, true );
-        return true;
-    }
-    return mxscenario::DropObject(loc, obj);
-}
-
-
-mxobject* ddr_x::PickupObject ( mxgridref loc )
-{
-    if ( mx->gamemap->GetAt ( loc ).HasObject() ) {
-        mxobject* object = FindObjectAtLocation(loc);
-        mx->gamemap->SetObject(loc, false);
-        object->Location(mxgridref(0, 0));
-        return object;
-    }
-    return nullptr;
-}
-    
-void ddr_x::PlaceObjectsOnMap ( void )
-{
-    mxgridref loc;
-    
-    
-    FOR_EACH_OBJECT(o) {
-        auto object = static_cast<ddr_object*>(o);
-        if ( object->IsUnique() && object->IsRandomStart() ) {
-            bool found=false;
-            while ( !found ) {
-                loc.x = mxrandom(0,mx->gamemap->Size().cx-1);
-                loc.y = mxrandom(0,mx->gamemap->Size().cy-1);
-                
-                if ( !mx->gamemap->HasObject(loc) && !mx->scenario->isLocationImpassable(loc,luxor)  )
-                    found=true;
-            }
-            object->Location(loc);
-            mx->gamemap->SetObject( loc, true );
-        }
-    }
-}
-
-mxobject* ddr_x::FindObjectAtLocation ( mxgridref loc )
-{
-    if ( !mx->gamemap->HasObject(loc) )
-        return nullptr;
-    
-    FOR_EACH_OBJECT(o) {
-        auto object = static_cast<ddr_object*>(o);
-        CONTINUE_IF ( object->IsCarried() );
-        if ( object->Location() == loc )
-            return object;
-    }
-    return nullptr;
-}
-
 mxstronghold* ddr_x::StrongholdFromLocation ( mxgridref loc )
 {
     mxloc& mapsqr = mx->gamemap->GetAt ( loc );

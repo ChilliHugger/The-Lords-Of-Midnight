@@ -670,17 +670,8 @@ namespace tme {
     
     MXRESULT ddr_character::Cmd_Give ( mxcharacter* character )
     {
-        // no character
-        if ( character == nullptr )
+        if ( !mx->objectprocessor->Give(this, character) )
             return MX_FAILED ;
-        
-        // character is already carrying something
-        if ( character->IsCarryingObject() )
-            return MX_FAILED ;
-        
-        character->carrying = Carrying();
-        
-        carrying = nullptr ;
         
         CommandTakesTime(true);
         

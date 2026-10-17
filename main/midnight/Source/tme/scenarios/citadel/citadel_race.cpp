@@ -22,16 +22,10 @@ void citadel_race::Serialize ( archive& ar )
 {
     mxrace::Serialize(ar);
 
-    u32 count = (u32)feuds.size();
     if ( ar.IsStoring() ) {
-        ar << count;
-        for ( auto race : feuds )
-            WRITE_ENUM(race);
+        ar << feuds;
     } else {
-        ar >> count;
-        feuds.resize(count);
-        for ( auto& race : feuds )
-            READ_ENUM(race);
+        ar >> feuds;
     }
 }
 
@@ -43,13 +37,14 @@ void citadel_race::LoadTsv ( const TsvRow& row )
     for ( auto& symbol : row.GetSymbolList(TsvField::Race::Feuds, ',') ) {
         auto id = ResolveTypedId(row.Symbols(), symbol, IDT_RACEINFO);
         if ( id != IDT_NONE )
-            feuds.push_back((mxrace_t)GET_ID(id));
+            feuds.push_back(id);
     }
 }
 
 bool citadel_race::IsFeudingWith ( mxrace_t race ) const
 {
-    return std::find(feuds.begin(), feuds.end(), race) != feuds.end();
+    auto criteria = MAKE_ID(IDT_RACEINFO, race);
+    return std::find(feuds.begin(), feuds.end(), criteria) != feuds.end();
 }
 
 } // namespace tme

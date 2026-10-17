@@ -48,7 +48,7 @@ SCENARIO("Characters may pickup objects at the beginning of their turn ")
                 
                 THEN("they should pickup the object")
                 {
-                    REQUIRE( GetCharacter(lord)->carrying->Symbol() == locationObject );
+                    REQUIRE( GetCharacter(lord)->Carrying()->Symbol() == locationObject );
                 }
             }
         }
@@ -63,7 +63,7 @@ SCENARIO("Characters may pickup objects at the beginning of their turn ")
                 
                 THEN("they should not pickup the object")
                 {
-                    REQUIRE( GetCharacter(lord)->carrying->Symbol() == carryingObject );
+                    REQUIRE( GetCharacter(lord)->Carrying()->Symbol() == carryingObject );
                 }
             }
         }
@@ -84,7 +84,7 @@ SCENARIO("Characters may pickup objects at the beginning of their turn ")
                 
                 THEN("they should pickup the object")
                 {
-                    REQUIRE( GetCharacter(lord)->carrying->Symbol() == desiredObject );
+                    REQUIRE( GetCharacter(lord)->Carrying()->Symbol() == desiredObject );
                 }
             }
         }
@@ -99,7 +99,7 @@ SCENARIO("Characters may pickup objects at the beginning of their turn ")
                 
                 THEN("they should pickup their desired object")
                 {
-                    REQUIRE( GetCharacter(lord)->carrying->Symbol() == desiredObject );
+                    REQUIRE( GetCharacter(lord)->Carrying()->Symbol() == desiredObject );
                     
                     AND_THEN("they should drop their carried object")
                     {

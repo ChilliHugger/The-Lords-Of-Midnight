@@ -41,12 +41,23 @@ namespace tme {
                 ar << description;
                 WRITE_ENUM( kills );
                 ar << usedescription ;
+#if defined(_ARTEFACTS_)
+                WRITE_ENUM(type);
+                WRITE_ENUM(power);
+#endif
             }else{
                 ar >> name;
                 ar >> carriedby;
                 ar >> description;
                 READ_ENUM( kills );
                 ar >> usedescription ;
+#if defined(_ARTEFACTS_)
+                if ( tme::mx->SaveGameVersion() > 10 )
+                {
+                    READ_ENUM(type);
+                    READ_ENUM(power);
+                }
+#endif
             }
         }
     
@@ -60,6 +71,11 @@ namespace tme {
             kills = row.GetThing(TsvField::Object::Kills);
             usedescription = row.GetStringIndex(TsvField::Object::UseDescription);
             carriedby = row.GetItem(TsvField::Object::CarriedBy);
+            
+#if defined(_ARTEFACTS_)
+            type = row.GetObjectType(TsvField::Object::Type);
+            power = row.GetObjectPower(TsvField::Object::Power);
+#endif
         }
 
         bool mxobject::CanDestroy ( mxobject* obj ) const
@@ -78,10 +94,11 @@ namespace tme {
             ar >> temp ; ptr = mx->ObjectById(temp);
             return ar ;
         }
-
-        bool mxobject::IsCarried() const
+        
+        void mxobject::Destroy()
         {
-            return carriedby != NULL ;
+            Flags().Reset(of_enabled);
+            Flags().Set(of_destroyed);
         }
     
         MXRESULT mxobject::FillExportData ( info_t* data )
@@ -93,6 +110,10 @@ namespace tme {
             out->description = std::string(description);
             out->usedescription = MAKE_ID(IDT_STRING,usedescription);
             out->carriedby = SafeIdt(carriedby);
+#if defined(_ARTEFACTS_)
+            out->type = type;
+            out->power = power;
+#endif
             return mxitem::FillExportData ( data );
         }
 

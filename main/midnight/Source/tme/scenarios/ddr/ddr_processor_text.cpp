@@ -159,7 +159,7 @@ std::string buffer;
 
 std::string ddr_text::DescribeObjectLocation(mxobject* object)
 {
-    mxcharacter* c = mx->scenario->WhoHasObject(object) ;
+    mxcharacter* c = mx->objectprocessor->WhoHasObject(object) ;
     
     // object not carried
     if ( c == nullptr ) {
@@ -466,7 +466,7 @@ std::string buffer;
     RETURN_IF_NULL(character) "";
  
     auto scenario = static_cast<ddr_x*>(mx->scenario);
-    auto object = scenario->FindObjectAtLocation(character->Location());
+    auto object = mx->objectprocessor->FindObjectAtLocation(character->Location());
     bool entrance = mx->gamemap->HasTunnelEntrance(character->Location());
 
     if ( object == nullptr && !entrance )

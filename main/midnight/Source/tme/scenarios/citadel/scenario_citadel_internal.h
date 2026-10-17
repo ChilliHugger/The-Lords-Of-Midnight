@@ -10,6 +10,9 @@
 #if defined(_CITADEL_)
 
 namespace tme {
+
+    #define CITADEL_SCENARIO(x) static_cast<citadel_x*>(mx->scenario)->x
+
     FORWARD_REFERENCE(citadel_character);
     FORWARD_REFERENCE(citadel_object);
     FORWARD_REFERENCE(citadel_stronghold);
@@ -17,10 +20,6 @@ namespace tme {
     enum CITADELGAMEFLAGS {
         gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
         gf_free_muster      = MXBIT(1),     // the Free have gathered at Corelay for Luxor
-    };
-
-    enum CITADELCHARACTERFLAGS {
-        ccf_available       = MXBIT(0),
     };
 
     class citadel_x : public mxscenario
@@ -46,13 +45,10 @@ namespace tme {
         virtual void NightStop ( void ) override;
         virtual void LordsTurn ( void ) override;
         virtual bool RegimentStep ( const mxregiment* regiment, mxgridref target, mxgridref& step ) const override;
-        virtual mxobject* FindObjectAtLocation ( mxgridref loc ) override;
-        virtual mxobject* PickupObject ( mxgridref loc ) override;
-        virtual bool DropObject ( mxgridref loc, mxobject* object ) override;
         citadel_object* ArtefactAt ( mxgridref loc ) const;
 
-        mxrace_t CampaignTarget () const;
-        mxstronghold* Front () const;       // his keep nearest the realm he is taking
+        mxrace_t RealmUnderAttack () const;
+        mxstronghold* FrontlineKeep () const;       // his keep nearest the realm he is taking
         bool BorothFallen () const;         // dead, with no wraith left to rise
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
         bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
@@ -129,13 +125,7 @@ namespace tme {
         virtual void Serialize ( archive& ar ) override;
         virtual void LoadTsv ( const TsvRow& row ) override;
 
-        bool IsArtefact () const;
-        bool OnMap ( mxgridref& where ) const;
-        void Lift ();
-
-    public:
-        mxobjtype_t     type;
-        mxobjpower_t    power;
+        bool IsOnMap () const;
     };
 
     class citadel_stronghold : public mxstronghold
@@ -161,7 +151,7 @@ namespace tme {
         virtual bool Borders ( const mxarea* area ) const;
 
     public:
-        std::vector<u32>    neighbours;     // area ids
+        c_mxid neighbours;
     };
 
     class citadel_race : public mxrace
@@ -172,12 +162,24 @@ namespace tme {
         virtual bool IsFeudingWith ( mxrace_t race ) const;
 
     public:
-        std::vector<mxrace_t>   feuds;
+        c_mxid feuds;
     };
 
     class citadel_character : public mxcharacter
     {
     public:
+        PROPERTY(mxquest_t, Quest, quest);
+        PROPERTY(mxquestnews_t, QuestNews, questnews);
+        PROPERTY(mxid, QuestTarget, questtarget);
+        PROPERTY(mxpurpose_t, Purpose, purpose);
+        PROPERTY(mxreaction_t, Reaction, reaction);
+        PROPERTY(mxstronghold*, Home, homestronghold);
+        FLAG_PROPERTY(IsAvailable, cf_available);
+        GET_PROPERTY(u32, Idle, idle);
+        GET_PROPERTY(bool, InDungeon, (flags.Is(cf_dungeon) && Location() == CITADEL_SCENARIO(maranor)->Location()));
+        GET_PROPERTY(bool, QuestIdle, (Quest() == QS_NONE || Quest() == QS_REST));
+        GET_PROPERTY(bool, AtHome, (Location() == Home()->Location() || ( IsFollowing() && Following()->IsAlive() )));
+
         virtual void Serialize ( archive& ar ) override;
         virtual void LoadTsv ( const TsvRow& row ) override;
         virtual bool TakesPartInBattle() const override;
@@ -186,7 +188,7 @@ namespace tme {
         virtual void InitNightProcessing ( void ) override;
         virtual bool CheckRecruitChar ( mxcharacter* pChar ) const override;
         virtual s32  RecruitScore ( const mxcharacter* other ) const;
-        virtual s32  RecruitThreshold(const mxrace_t race) const;
+        virtual s32  RecruitThreshold(const mxrace_t race) const ;
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
         virtual bool Recruited ( mxcharacter* recruiter ) override;
@@ -199,34 +201,39 @@ namespace tme {
         bool IsKing () const;
         u32 Rank () const;                  // who leads when two fellowships merge
         bool CanQuest () const;             // free to take any quest at all
+        bool IsAwaitingOrders () const;     // alive and free, with no quest in hand
         bool CanQuest ( mxquest_t quest, mxid target ) const;
-        void QuestTargets ( mxquest_t quest, c_mxid& targets ) const;
         bool SetQuest ( mxquest_t quest, mxid target );
-        mxgridref QuestLocation () const;
-        std::string QuestText () const;     // what he is about, in a sentence
-        std::string NewsText () const;      // what he has to tell you at dawn
-        bool InDungeon () const;
+        void QuestTargets ( mxquest_t quest, c_mxid& targets ) const;
+        
         citadel_character* SearchDungeon ( u32 chance );   // the hostage he finds and frees, if any
         void FlyHome ();
         u32 Might () const;
-        bool IsAvailable () const;
-        void Available ( bool available );
+        mxgridref QuestLocation () const;
+        std::string QuestText () const;                     // what he is about, in a sentence
+        std::string NewsText () const;                      // what he has to tell you at dawn
 
-    public:
+        static u32 StrengthOf ( const mxitem* figure );     // a lord's Might, or a regiment's men
+        bool IsHostileTo ( const mxitem* figure ) const;    // the figure's allegiance is at war with his own
+        bool CanFaceAtOdds ( const mxitem* opponent, u32 a, u32 b ) const;  // the design's odds a:b, in his favour
+        void AssignQuest ( mxquest_t quest, mxid target );  // unlike SetQuest, takes any order; leaves a leader he is not rejoining
+        void EndQuest ( mxquestnews_t news );               // clears the quest, keeping the target for the dawn news
+        void ReportQuestBlocked ();                         // the enemy is in the road
+        void AttemptToRecruit ( citadel_character* other ); // wins him over, is refused, or is fought for the insult
+        void MergeFellowship ( mxcharacter* leader );       // the higher rank leads
+        bool ObtainFrom ( citadel_object* object, mxcharacter* holder );   // persuades or fights the holder for it
+        bool StandGuard ();                                 // false if he is not the sort to hold a place
+        
+    private:
         mxquest_t       quest = QS_NONE;
-        mxid            questtarget = IDT_NONE;     // a character, a keep, an object, a regiment or a location id
+        mxid            questtarget = IDT_NONE;             // a character, a keep, an object, a regiment or a location id
         mxpurpose_t     purpose = PU_NONE;
         mxreaction_t    reaction = RE_RETURN_HOME;
-        u32             idle = 0;                   // nights one of yours has stood waiting for orders
-        mxquestnews_t   news = QN_NONE;             // what he has to tell you at dawn
-        mxstronghold*   home = nullptr;             // the keep he defends and goes home to
-        flags32         citadelflags;
-
-    protected:
-        std::string title;      // the design's "Titles"; empty for most lords
+        mxquestnews_t   questnews = QN_NONE;                // what he has to tell you at dawn
+        mxstronghold*   homestronghold = nullptr;           // the keep he defends and goes home to
+        u32             idle = 0;                           // nights one of yours has stood waiting for orders
+        std::string     title;                              // the design's "Titles"; empty for most lords
     };
-
-    #define CITADEL_SCENARIO(x) static_cast<citadel_x*>(mx->scenario)->x
 
     inline citadel_race* CitadelRace ( mxrace_t race )
     {

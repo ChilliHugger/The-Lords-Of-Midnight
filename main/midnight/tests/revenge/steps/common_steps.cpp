@@ -74,7 +74,7 @@ void DDRStep::ObjectAtLocation(const string& name, mxgridref loc)
 {
     auto object = GetObject(name);
     object->Location(loc);
-    object->carriedby = nullptr;
+    object->CarriedBy(nullptr);
     tme::mx->gamemap->SetObject( loc, true );
  }
 

@@ -9,6 +9,11 @@ using namespace chilli::types;
 //#define _LOM_
 //#define _CITADEL_
 
+// the scenarios that have artefacts: objects with a type and a power, tracked by their own location
+#if defined(_DDR_) || defined(_CITADEL_)
+#define _ARTEFACTS_
+#endif
+
 
 /* these are the various enums
  * that define variable types used within 
@@ -99,7 +104,6 @@ using namespace chilli::types;
             RA_MIDWINTER,
 #endif
 
-#if defined(_CITADEL_)
             RA_KITH,
             RA_ATHELING,
             RA_ELDRIN,
@@ -115,8 +119,6 @@ using namespace chilli::types;
             RA_DARK_FEY,
             RA_GOLDEN_FEY,
             RA_CORSAIRS
-            // RA_FREE
-#endif
         };
 
 #if defined(_CITADEL_)
@@ -1033,10 +1035,8 @@ namespace tme {
             lf_tunnel_looked_at = MXBIT(18),    // player has seen the tunnel
             lf_tunnel_visited   = MXBIT(19),    // player has visited the tunnel location
             lf_tunnel_object    = MXBIT(20),    // object/thing is in tunnel
-
-#if defined(_DDR_)
             lf_object           = MXBIT(21),    // object to take
-#endif
+
             lf_unused23         = MXBIT(22),    // ** currently not used **
             lf_unused24         = MXBIT(23),    // ** currently not used **
             lf_unused25         = MXBIT(24),    // ** currently not used **
@@ -1141,11 +1141,10 @@ namespace tme {
             of_remove           = MXBIT(5),     // object is removed from map when found
             of_unique           = MXBIT(6),     // object is unique
             of_enabled          = MXBIT(7),     // object is enabled
-            of_respawn          = MXBIT(10),    // object respawns on the map once removed
-#if defined(_DDR_)
             of_recruitment      = MXBIT(8),     // object can help with recruitment
             of_randomstart      = MXBIT(9),     // object starts randomly on map
-#endif
+            of_respawn          = MXBIT(10),    // object respawns on the map once removed
+            of_destroyed        = MXBIT(11),    // object has been destroyed
         };
 
         enum TERRAININFOFLAGS {

@@ -374,41 +374,6 @@ bool citadel_x::RegimentStep ( const mxregiment* regiment, mxgridref target, mxg
     return MarchStep(regiment, regiment->Location(), target, step);
 }
 
-citadel_object* citadel_x::ArtefactAt ( mxgridref loc ) const
-{
-    FOR_EACH_OBJECT(object) {
-        mxgridref where;
-        if ( CitadelObject(object)->OnMap(where) && where == loc )
-            return CitadelObject(object);
-    }
-    return nullptr;
-}
-
-mxobject* citadel_x::FindObjectAtLocation ( mxgridref loc )
-{
-    if ( auto artefact = ArtefactAt(loc) )
-        return artefact;
-    return mxscenario::FindObjectAtLocation(loc);
-}
-
-mxobject* citadel_x::PickupObject ( mxgridref loc )
-{
-    if ( auto artefact = ArtefactAt(loc) ) {
-        artefact->Lift();
-        return artefact;
-    }
-    return mxscenario::PickupObject(loc);
-}
-
-bool citadel_x::DropObject ( mxgridref loc, mxobject* object )
-{
-    if ( object != nullptr && CitadelObject(object)->IsArtefact() ) {
-        object->Location(loc);
-        return true;
-    }
-    return mxscenario::DropObject(loc, object);
-}
-
 bool citadel_x::IsFoughtOver ( mxstronghold* stronghold ) const
 {
     if ( stronghold->Race() == RA_GOLDEN_FEY
@@ -416,7 +381,7 @@ bool citadel_x::IsFoughtOver ( mxstronghold* stronghold ) const
         || !mx->gamemap->IsLocOnMap(stronghold->Location()) )
         return false;
 
-    if ( boroth == nullptr || mx->objRegiments.Count() == 0 )
+    if ( mx->objRegiments.Count() == 0 )
         return true;
 
     auto width = (size_t)mx->gamemap->Size().cx;
@@ -424,7 +389,7 @@ bool citadel_x::IsFoughtOver ( mxstronghold* stronghold ) const
     return StepsFrom(boroth->Location(), mx->objRegiments[0])[where.y * width + where.x] >= 0;
 }
 
-mxrace_t citadel_x::CampaignTarget () const
+mxrace_t citadel_x::RealmUnderAttack () const
 {
     struct tally { u32 held = 0; u32 total = 0; };
     std::map<mxrace_t, tally> kingdoms;
@@ -465,9 +430,9 @@ mxrace_t citadel_x::CampaignTarget () const
     return target;
 }
 
-mxstronghold* citadel_x::Front () const
+mxstronghold* citadel_x::FrontlineKeep () const
 {
-    auto target = CampaignTarget();
+    auto target = RealmUnderAttack();
     std::vector<mxstronghold*> holding;
     FOR_EACH_STRONGHOLD(stronghold) {
         if ( stronghold->Race() == target && stronghold->OccupyingRace() != RA_ENEMY && IsFoughtOver(stronghold) )
@@ -497,7 +462,7 @@ void citadel_x::NightStart ( void )
     paths.clear();
     passable.clear();
 
-    auto target = CampaignTarget();
+    auto target = RealmUnderAttack();
 
     FOR_EACH_REGIMENT(regiment) {
         CONTINUE_IF( regiment->Race() != RA_ENEMY || regiment->Total() == 0 );
@@ -538,27 +503,27 @@ void citadel_x::NightStop ( void )
 
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
-        CONTINUE_IF( !lord->IsRecruited() || lord->IsDead() || lord->news == QN_NONE );
+        CONTINUE_IF( !lord->IsRecruited() || lord->IsDead() || lord->QuestNews() == QN_NONE );
         mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_QUEST_NEWS_REPORT, lord));
     }
 }
 
 void citadel_x::RaiseWraith ()
 {
-    if ( boroth == nullptr || maranor == nullptr || boroth->IsAlive() || flags.Is(gf_wraith) || maranor->HasFallen() )
+    if ( boroth->IsAlive() || flags.Is(gf_wraith) || maranor->HasFallen() )
         return;
 
     flags.Set(gf_wraith);
     boroth->Flags().Set(cf_alive);
     boroth->Location(maranor->Location());
-    boroth->quest = QS_NONE;
+    boroth->Quest(QS_NONE);
 
     mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_WRAITH, boroth));
 }
 
 void citadel_x::ExecuteLuxor ()
 {
-    if ( boroth == nullptr || luxor == nullptr || boroth->IsAlive() || luxor->IsDead() || !luxor->IsPrisoner() )
+    if ( boroth->IsAlive() || luxor->IsDead() || !luxor->IsPrisoner() )
         return;
 
     luxor->Cmd_Dead();
@@ -567,7 +532,7 @@ void citadel_x::ExecuteLuxor ()
 
 bool citadel_x::BorothFallen () const
 {
-    return boroth != nullptr && boroth->IsDead() && ( flags.Is(gf_wraith) || maranor == nullptr || maranor->HasFallen() );
+    return boroth->IsDead() && ( flags.Is(gf_wraith) || maranor->HasFallen() );
 }
 
 void citadel_x::Scout ()
@@ -727,9 +692,9 @@ COMMAND( OnCharQuestInfo )
 {
     CONVERT_CHARACTER_ID( argv[0].vId, character );
     auto lord = CitadelLord(character);
-    argv[0] = (s32)lord->quest;
-    argv[1] = lord->questtarget;
-    argv[2] = (s32)lord->news;
+    argv[0] = (s32)lord->Quest();
+    argv[1] = lord->QuestTarget();
+    argv[2] = (s32)lord->QuestNews();
     argv[3] = (s32)lord->CanQuest();
     return MX_OK;
 }
@@ -750,7 +715,7 @@ COMMAND( OnQuestNews )
     lords.Clear();
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
-        if ( lord->IsRecruited() && lord->IsAlive() && lord->news != QN_NONE )
+        if ( lord->IsRecruited() && lord->IsAlive() && lord->QuestNews() != QN_NONE )
             lords.Add(mxentity::SafeIdt(lord));
     }
     argv[0] = (s32)lords.Count();
@@ -770,102 +735,6 @@ MXRESULT citadel_x::Command ( const std::string& arg, variant argv[], u32 argc )
     return result != MX_UNKNOWN ? result : mxscenario::Command(arg, argv, argc);
 }
 
-citadel_object::citadel_object()
-    : type(OT_NONE), power(OP_NONE)
-{
-}
-
-void citadel_object::Serialize ( archive& ar )
-{
-    mxobject::Serialize ( ar );
-
-    if ( ar.IsStoring() ) {
-        WRITE_ENUM(type);
-        WRITE_ENUM(power);
-    } else {
-        READ_ENUM(type);
-        READ_ENUM(power);
-    }
-}
-
-void citadel_object::LoadTsv ( const TsvRow& row )
-{
-    mxobject::LoadTsv(row);
-
-    type = row.GetObjectType(TsvField::Object::Type);
-    power = row.GetObjectPower(TsvField::Object::Power);
-}
-
-bool citadel_object::IsArtefact () const
-{
-    return power != OP_NONE;
-}
-
-bool citadel_object::OnMap ( mxgridref& where ) const
-{
-    if ( !IsArtefact() || mx->scenario->WhoHasObject(const_cast<citadel_object*>(this)) != nullptr )
-        return false;
-    if ( !mx->gamemap->IsLocOnMap(Location()) )
-        return false;
-    where = Location();
-    return true;
-}
-
-void citadel_object::Lift ()
-{
-    if ( IsArtefact() )
-        Location(mxgridref(mx->gamemap->Size().cx, 0));
-}
-
-void citadel_routebranch::SetRoute ( mxdir_t dir, u32 w )
-{
-    direction = dir;
-    weight = w;
-}
-
-void citadel_routebranch::Serialize ( archive& ar )
-{
-    mxroutebranch::Serialize ( ar );
-
-    if ( ar.IsStoring() ) {
-        WRITE_ENUM(direction);
-        ar << weight;
-    } else {
-        READ_ENUM(direction);
-        ar >> weight;
-    }
-}
-
-mxroutebranch* citadel_entityfactory::CreateRouteBranch ()
-{
-    return new citadel_routebranch;
-}
-
-mxentity* citadel_entityfactory::Create ( id_type_t type )
-{
-    switch ( type ) {
-        case IDT_CHARACTER:
-            return new citadel_character;
-        case IDT_STRONGHOLD:
-            return new citadel_stronghold;
-        case IDT_OBJECT:
-            return new citadel_object;
-        case IDT_AREAINFO:
-            return new citadel_area;
-        case IDT_RACEINFO:
-            return new citadel_race;
-        // the base factory knows neither, and the two info tables are created by count
-        case IDT_OBJECT_POWER:
-            return new mxobjectpower;
-        case IDT_OBJECT_TYPE:
-            return new mxobjecttype;
-        default:
-            break;
-    }
-
-    return mxentityfactory::Create ( type );
-}
-
 //
 // Run once, when a story begins - never on load. Being held is a character flag, and
 // character flags are saved, so a hostage freed on day forty is still free when that
@@ -875,6 +744,9 @@ void citadel_x::initialiseAfterCreate ( u32 version )
 {
     flags.Clear();
     packs.clear();
+
+    MXTRACE("Place Objects On Map");
+    mx->objectprocessor->PlaceObjectsOnMap(luxor);
 
     for ( auto symbol : citadel_hostages ) {
         auto hostage = mx->CharacterBySymbol(symbol);
@@ -892,10 +764,10 @@ void citadel_x::initialiseAfterCreate ( u32 version )
         auto lord = CitadelLord(character);
         if ( maranor != nullptr && lord->IsRecruited() && !lord->IsPrisoner() && lord->Location() == maranor->Location() )
             lord->Flags().Set(cf_dungeon);
-        if ( lord->home == nullptr )
-            lord->home = KeepOf(lord);
-        if ( lord->home == nullptr )
-            lord->home = HomeKeep(lord->Race(), lord->Location());
+        if ( lord->Home() == nullptr )
+            lord->Home(KeepOf(lord));
+        if ( lord->Home() == nullptr )
+            lord->Home(HomeKeep(lord->Race(), lord->Location()));
         if ( character->HasQuality(qf_mightywarrior) )
             character->strength = 100;
         else if ( character->HasQuality(qf_feeblewarrior) )
@@ -913,23 +785,12 @@ void citadel_x::Serialize ( archive& ar )
 
     if ( ar.IsStoring() ) {
         ar << flags ;
-        ar << (u32)wars.size() ;
-        for ( auto war : wars )
-            ar << war ;
-        ar << (u32)packs.size() ;
-        for ( auto& pack : packs )
-            ar << pack ;
+        ar << wars;
+        ar << packs;
     } else {
-        ar >> flags ;
-        u32 count;
-        ar >> count ;
-        wars.resize(count);
-        for ( auto& war : wars )
-            ar >> war ;
-        ar >> count ;
-        packs.resize(count);
-        for ( auto& pack : packs )
-            ar >> pack ;
+        ar >> flags;
+        ar >> wars;
+        ar >> packs;
     }
 }
 

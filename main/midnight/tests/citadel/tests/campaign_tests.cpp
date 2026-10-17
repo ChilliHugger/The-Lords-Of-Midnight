@@ -61,7 +61,7 @@ SCENARIO("Boroth opens his war on a kingdom bordering the Marish")
 
     THEN("of the Gelm, the Deeping and Dawnwood - each four kingdoms from Midnight - he takes the first in the table")
     {
-        REQUIRE( Citadel()->CampaignTarget() == RA_DAWN_FEY );
+        REQUIRE( Citadel()->RealmUnderAttack() == RA_DAWN_FEY );
     }
 
     AND_THEN("every one of his regiments marches on a keep of that kingdom")
@@ -88,7 +88,7 @@ SCENARIO("Boroth takes one kingdom at a time")
 
         THEN("he finishes the Fallows before starting anywhere nearer Midnight")
         {
-            REQUIRE( Citadel()->CampaignTarget() == RA_USKARG );
+            REQUIRE( Citadel()->RealmUnderAttack() == RA_USKARG );
         }
     }
 
@@ -98,7 +98,7 @@ SCENARIO("Boroth takes one kingdom at a time")
 
         THEN("he moves on to a kingdom that borders it, the nearest Midnight - the Long Mountains")
         {
-            REQUIRE( Citadel()->CampaignTarget() == RA_LONG_DWARF );
+            REQUIRE( Citadel()->RealmUnderAttack() == RA_LONG_DWARF );
         }
     }
 }
@@ -111,7 +111,7 @@ SCENARIO("A keep taken back behind Boroth turns him round")
     {
         Conquer(RA_DAWN_FEY);
         Keep("SH_CASTLE_ARABAR")->MakeChangeSides(RA_DARK_FEY, nullptr);
-        REQUIRE( Citadel()->CampaignTarget() == RA_USKARG );
+        REQUIRE( Citadel()->RealmUnderAttack() == RA_USKARG );
 
         WHEN("the Free take one of his Dawnwood keeps")
         {
@@ -119,7 +119,7 @@ SCENARIO("A keep taken back behind Boroth turns him round")
 
             THEN("he goes back to secure Dawnwood first - he is further through it")
             {
-                REQUIRE( Citadel()->CampaignTarget() == RA_DAWN_FEY );
+                REQUIRE( Citadel()->RealmUnderAttack() == RA_DAWN_FEY );
             }
         }
     }
@@ -195,13 +195,13 @@ SCENARIO("Boroth marches to the realm his host is taking, and leaves Toraneth in
 
         THEN("he stays in the Dark Citadel")
         {
-            REQUIRE( Boroth()->quest == QS_REST );
+            REQUIRE( Boroth()->Quest() == QS_REST );
         }
     }
 
     WHEN("his host has taken a keep of the realm it is at war with")
     {
-        auto target = Citadel()->CampaignTarget();
+        auto target = Citadel()->RealmUnderAttack();
         auto maralan = Keep("SH_CASTLE_MARALAN");
         REQUIRE( maralan->Race() == target );
         maralan->MakeChangeSides(RA_DARK_FEY, Boroth());
@@ -209,9 +209,9 @@ SCENARIO("Boroth marches to the realm his host is taking, and leaves Toraneth in
 
         THEN("he sets out for it, and Toraneth holds the Dark Citadel")
         {
-            REQUIRE( Citadel()->Front() == maralan );
-            REQUIRE( Boroth()->quest == QS_GOTO );
-            REQUIRE( Boroth()->questtarget == mxentity::SafeIdt(maralan) );
+            REQUIRE( Citadel()->FrontlineKeep() == maralan );
+            REQUIRE( Boroth()->Quest() == QS_GOTO );
+            REQUIRE( Boroth()->QuestTarget() == mxentity::SafeIdt(maralan) );
             REQUIRE( maranor->Occupier() == GetCharacter("CH_TORANETH") );
         }
     }
@@ -224,8 +224,8 @@ SCENARIO("Boroth marches to the realm his host is taking, and leaves Toraneth in
 
         THEN("he goes back to take it again")
         {
-            REQUIRE( Boroth()->quest == QS_SEIZE );
-            REQUIRE( Boroth()->questtarget == mxentity::SafeIdt(maranor) );
+            REQUIRE( Boroth()->Quest() == QS_SEIZE );
+            REQUIRE( Boroth()->QuestTarget() == mxentity::SafeIdt(maranor) );
         }
     }
 }

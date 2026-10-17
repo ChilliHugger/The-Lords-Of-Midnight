@@ -242,15 +242,7 @@ namespace tme {
                     if ( m.IsTunnelObject() )
                         out->flags.Set(lf_tunnel_object);
                 }
-                    
-#if defined(_DDR_)
-                if ( m.HasObject() ) {
-                    auto scenario = static_cast<ddr_x*>(mx->scenario);
-                    auto obj = static_cast<ddr_object*>(scenario->FindObjectAtLocation(loc));
-                    if ( obj && obj->IsSpecial() )
-                        out->flags.Set(lf_object);
-                }
-#endif
+
                 return MX_OK ;
                 }
                 break;

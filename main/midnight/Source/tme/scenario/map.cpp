@@ -338,7 +338,6 @@ void mxmap::SetTunnelVisible( mxgridref l, bool visible )
 }
 
     
-#if defined(_DDR_)
 bool mxmap::HasObject( mxgridref l )
 {
     mxloc& mapsqr = GetAt( l );
@@ -353,7 +352,6 @@ void mxmap::SetObject( mxgridref l, bool value )
     } else
         mapsqr.flags&=~lf_object;
 }
-#endif
     
 /*
  * Function name    : map::IsLocationBlock

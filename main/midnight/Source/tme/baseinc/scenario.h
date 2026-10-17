@@ -166,6 +166,10 @@ namespace tme {
                 std::string     description;
                 mxid            usedescription;
                 mxid            carriedby;
+#if defined(_ARTEFACTS_)
+                mxobjtype_t     type;
+                mxobjpower_t    power;
+#endif
             } object_t ;
             
             typedef struct raceinfo_t : public mxinfo_t {

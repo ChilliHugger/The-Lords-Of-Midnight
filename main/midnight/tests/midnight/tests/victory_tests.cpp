@@ -126,7 +126,7 @@ SCENARIO("The Ice Crown can only be destroyed when Morkin is carrying it")
             {
                 auto iceCrown = GetEntity<mxobject>(LOMStep::ob_icecrown);
                 auto towerOfDoom = GetEntity<mxplace>(LOMStep::pl_tower_of_doom);
-                tme::mx->scenario->DropObject(towerOfDoom->Location(), iceCrown);
+                tme::mx->objectprocessor->PlaceObject(iceCrown, towerOfDoom->Location());
             
                 WHEN("night falls")
                 {

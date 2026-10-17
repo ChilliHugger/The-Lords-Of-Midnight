@@ -75,19 +75,19 @@ void TMEStep::GameLost()
 void TMEStep::LordCarryingObject(const string& name, mxthing_t thing)
 {
     auto lord = GetCharacter(name);
-    lord->carrying = tme::mx->ObjectById(thing);
+    lord->CarryObject(tme::mx->ObjectById(thing));
 }
 
 void TMEStep::LordNotCarryingObject(const string& name)
 {
     auto lord = GetCharacter(name);
-    lord->carrying = nullptr;
+    lord->CarryObject(nullptr);
 }
 
 void TMEStep::LordCarryingObject(const string& name, const string& object)
 {
     auto lord = GetCharacter(name);
-    lord->carrying = GetObject(object);
+    lord->CarryObject(GetObject(object));
 }
 
 void TMEStep::LordAtLocation(const string& name, const string& location)

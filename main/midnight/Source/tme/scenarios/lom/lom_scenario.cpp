@@ -241,6 +241,9 @@ void lom_x::initialiseAfterCreate(u32 version)
 void lom_x::updateAfterLoad( u32 version )
 {
     mxscenario::updateAfterLoad(version);
+
+    if ( version <= 17 )
+        utils::UpdateObjectCarriers();
 }
  
 mxregiment* lom_x::FindEmptyRegiment()
@@ -365,7 +368,7 @@ void lom_x::NightStop(void)
             // work out how much influence the moon ring
             // will have on this location
             object* moonring = (object*)mx->EntityByName("OB_MOONRING");
-            character = WhoHasObject(moonring) ;
+            character = mx->objectprocessor->WhoHasObject(moonring) ;
             adj_fear += ( (character==NULL) || character->IsDead() ) ? 127 : character->DistanceFromLoc(locinfo->Location()) ;
 
             // work out how much affect doomdark

@@ -32,12 +32,6 @@ namespace tme {
 
         virtual void GiveGuidance(mxcharacter *character, s32 hint) override;
         
-        virtual mxcharacter* WhoHasObject( mxobject* object ) const override;
-        virtual bool DropObject ( mxgridref loc, mxobject* obj ) override;
-        virtual mxobject* PickupObject ( mxgridref loc ) override;
-
-        virtual void PlaceObjectsOnMap ( void );
-        virtual mxobject* FindObjectAtLocation ( mxgridref loc ) override;
         virtual mxstronghold* StrongholdFromLocation ( mxgridref loc );
         virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const override;
         virtual mxcharacter* IsEnemyAtLocation( mxgridref loc, const ddr_character* character) const;
@@ -73,19 +67,10 @@ namespace tme {
         virtual MXRESULT FillExportData ( info_t* data );
         virtual void Serialize ( archive& ar );
         virtual void LoadTsv ( const TsvRow& row ) override;
-
-        FLAG_PROPERTY( CanHelpRecruitment,  of_recruitment )
-        FLAG_PROPERTY( IsRandomStart,       of_randomstart )
     
-        bool IsSpecial() const;
-        
         virtual u32 FightHP() const;
         virtual u32 FightSuccess() const;
         virtual u32 KillRate( u32 hp ) const;
-        
-    public:
-        mxobjtype_t   type;
-        mxobjpower_t  power;
         
         friend tme::utils::UpdateDDRObjects;
     };

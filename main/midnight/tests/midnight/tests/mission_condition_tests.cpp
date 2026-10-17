@@ -359,7 +359,7 @@ SCENARIO("A same-location condition completes when a carried object is with its 
     {
         auto lord = GetCharacter(TMEStep::ch_morkin);
         TMEStep::LordCarryingObject(TMEStep::ch_morkin, OB_WOLFSLAYER);
-        REQUIRE( tme::mx->scenario->WhoHasObject(GetObject("OB_WOLFSLAYER")) == lord );
+        REQUIRE( tme::mx->objectprocessor->WhoHasObject(GetObject("OB_WOLFSLAYER")) == lord );
 
         TestableMission mission;
         mission.SetCondition(MC_SAME_LOCATION);

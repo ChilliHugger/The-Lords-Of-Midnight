@@ -1631,54 +1631,36 @@ namespace tme {
             return nullptr;
         }
 
+        void mxcharacter::CarryObject ( mxobject* object )
+        {
+            if ( carrying != nullptr && carrying->CarriedBy() == this )
+                carrying->CarriedBy(nullptr);
+
+            carrying = object;
+
+            if ( carrying != nullptr )
+                carrying->CarriedBy(this);
+        }
+
         MXRESULT mxcharacter::Cmd_DropObject ( void )
         {
             SetLastCommand ( CMD_DROPOBJECT, mxentity::SafeIdt(carrying) );
 
-            mx->scenario->DropObject ( Location(), carrying );
-#if defined(_DDR_)
-            carrying->carriedby=NULL;
-#endif
-            carrying=NULL;
-            
+            mx->objectprocessor->Drop(this);
+
             return MX_OK ;
         }
 
         mxobject* mxcharacter::Cmd_PickupObject ( void )
         {
-        mxobject* oldobject=carrying;
+            auto object = mx->objectprocessor->Pickup(this);
+            if ( object == nullptr )
+                return nullptr;
 
-            carrying = mx->scenario->PickupObject( Location() ) ;
-            if(carrying!=nullptr) {
-                MXTRACE("    %s picks up object %s", Longname().c_str(), carrying->name.c_str());
-            }
+            MXTRACE("    %s picks up object %s", Longname().c_str(), object->name.c_str());
+            SetLastCommand ( CMD_TAKEOBJECT, mxentity::SafeIdt(object) );
 
-#if defined(_DDR_)
-            if ( carrying==nullptr) {
-                carrying = oldobject;
-                return NULL;
-            }
-            
-            carrying->carriedby=this;
-            
-            if ( oldobject ) {
-                MXTRACE("    %s drops object %s", Longname().c_str(), oldobject->name.c_str());
-                mx->scenario->DropObject ( Location(), oldobject );
-                oldobject->carriedby=nullptr;
-            }
-#endif
-            
-#if defined(_LOM_) || defined(_CITADEL_)
-            if( oldobject ) {
-                MXTRACE("    %s drops object %s", Longname().c_str(), oldobject->name.c_str());
-                mx->scenario->DropObject ( Location(), oldobject );
-            }
-#endif
-            
-
-            SetLastCommand ( CMD_TAKEOBJECT, mxentity::SafeIdt(carrying) );
-
-            return carrying ;
+            return object;
         }
             
         void mxcharacter::InitNightProcessing ( void )

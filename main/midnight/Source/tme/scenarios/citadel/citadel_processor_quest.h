@@ -26,7 +26,7 @@ namespace tme {
         virtual void Impatience ( citadel_character* lord );
         virtual void Survey ( void );
 
-        mxdanger_t Danger ( u32 place ) const;
+        mxdanger_t LandDanger ( u32 place ) const;
         mxdanger_t RealmDanger ( mxrace_t realm ) const;
         u32 PlaceOf ( mxgridref loc ) const;
 
@@ -40,31 +40,23 @@ namespace tme {
 
         using handover_t = std::optional<mxreaction_t>;
 
-        virtual bool Thinks ( void ) const;
-        virtual void Defend ( void );
-        virtual handover_t Behave ( mxreaction_t reaction );
+        virtual void DefendHome ( void );
+        virtual handover_t RunReaction ( mxreaction_t reaction );
         virtual handover_t ReturnHome ( void );
         virtual handover_t StandFirm ( void );
         virtual handover_t TakeBackStronghold ( void );
         virtual handover_t AttackEnemy ( void );
         virtual handover_t HelpNeighbour ( void );
-        virtual handover_t Retreat ( void );
+        virtual handover_t FleeToSafeKeep ( void );
         virtual handover_t GatherStrength ( void );
         virtual handover_t CounterThreat ( void );
-        virtual handover_t LendService ( void );
+        virtual handover_t ServeLeader ( void );
         virtual void Wander ( void );
-        virtual void Campaign ( void );
-        virtual void PourOut ( void );
+        virtual void DefendMaranorOrGotoFrontline ( void );
+        virtual void AttackNearestRivalKeep ( void );
         virtual void Quest ( void );
-        virtual void Recruit ( citadel_character* character );
-        virtual void Merge ( mxcharacter* leader );
-        virtual bool Obtain ( citadel_object* object, mxcharacter* holder );
         virtual void Besiege ( citadel_stronghold* keep, mxgridref target );
-        virtual bool March ( mxgridref target, bool fight );
-        virtual bool Guard ( void );
-        virtual void Done ( mxquestnews_t news );
-        virtual void Blocked ( void );
-        virtual void Order ( mxquest_t quest, mxid target );
+        virtual bool MarchToTarget ( mxgridref target, bool fight );
 
         bool Invaded ( u32 at, u32 of ) const;
         u32 Home ( const citadel_character* who ) const;
@@ -76,15 +68,10 @@ namespace tme {
         std::vector<u32> AllPlaces ( void ) const;
         std::vector<citadel_character*> OwnersOf ( const std::vector<u32>& lands ) const;
         std::vector<citadel_character*> Neighbours ( void ) const;
-        std::vector<citadel_character*> Recruits ( void ) const;
+        std::vector<citadel_character*> RecruitableLordsNearby ( void ) const;
 
-        bool Idle ( void ) const;
-        bool AtStronghold ( void ) const;
-        bool IsEnemy ( const mxitem* figure ) const;
-        mxitem* EnemyIn ( const std::vector<u32>& lands ) const;
-        u32 Strength ( const mxitem* figure ) const;
-        bool Odds ( const mxitem* opponent, u32 a, u32 b ) const;
-        citadel_stronghold* SafeKeep ( std::vector<u32> lands ) const;
+        mxitem* RandomEnemyIn ( const std::vector<u32>& lands ) const;
+        citadel_stronghold* RandomReachableKeep ( std::vector<u32> lands ) const;
         template<typename T> T Pick ( const std::vector<T>& candidates ) const;
         template<typename T> T FirstReachable ( std::vector<T>& candidates ) const;
 

@@ -64,7 +64,6 @@ namespace tme {
             return MX_FAILED ;
         
         def_scenario = new mxscenario ;
-        
         if ( def_scenario == nullptr )
             return MX_FAILED ;
         
@@ -119,6 +118,7 @@ namespace tme {
             // add in the interfaces
             mx->text = new mxtext;
             mx->night = new mxnight;
+            mx->objectprocessor = new mxobjectprocessor;
             mx->battle = new mxbattle;
             mx->entityfactory = new mxentityfactory;
             mx->scenario = this;
@@ -129,6 +129,7 @@ namespace tme {
         {
             SAFEDELETE ( mx->text ) ;
             SAFEDELETE ( mx->night ) ;
+            SAFEDELETE ( mx->objectprocessor ) ;
             SAFEDELETE ( mx->battle ) ;
             SAFEDELETE ( mx->entityfactory );
             //mx->scenario = this;
@@ -194,6 +195,13 @@ namespace tme {
                     return (mxentity*)new mxvictory ;
                 case IDT_MISSION:
                     return (mxentity*)new mxmission ;
+                    
+#if defined(_ARTEFACTS_)
+                case IDT_OBJECT_POWER:
+                    return (mxentity*)new mxobjectpower ;
+                case IDT_OBJECT_TYPE:
+                    return (mxentity*)new mxobjecttype ;
+#endif
 
                 case IDT_DIRECTIONINFO:
                     return (mxentity*)new mxdirection ;
@@ -226,7 +234,25 @@ namespace tme {
         void mxscenario::LordsTurn(void)
         {
         }
-
+        
+        mxrace_t mxscenario::toGeneralisedRace(mxrace_t race) const
+        {
+            switch(race) {
+                case RA_HIGH_FEY:
+                case RA_DARK_FEY:
+                case RA_DAWN_FEY:
+                case RA_GOLDEN_FEY:
+                    return RA_FEY;
+                    
+                case RA_LONG_DWARF:
+                case RA_DEEPING_DWARF:
+                    return RA_DWARF;
+                    
+                default:
+                    return race;
+            }
+        }
+        
         mxterrain_t mxscenario::toGeneralisedTerrain(mxterrain_t t) const
         {
             switch (t) {
@@ -269,7 +295,6 @@ namespace tme {
                 default:
                     return t;
             }
-    
         }
 
         mxterrain_t mxscenario::toScenarioTerrain(mxterrain_t t) const
@@ -1489,7 +1514,7 @@ namespace tme {
         mxcharacter* mxscenario::CurrentMoonringWearer ( void )
         {
             if ( IsFeature(SF_MOONRING) ) {
-                return moonring != nullptr ? WhoHasObject(moonring) : NULL ;
+                return moonring != nullptr ? mx->objectprocessor->WhoHasObject(moonring) : NULL ;
             }
             return NULL ;
         }
@@ -1508,8 +1533,8 @@ namespace tme {
         void mxscenario::DeadCharactersDropObjects( void )
         {
             FOR_EACH_CHARACTER(character){
-                if ( character->IsDead() && character->carrying ) {
-                    if ( character->carrying->IsUnique() )
+                if ( character->IsDead() && character->Carrying() ) {
+                    if ( character->Carrying()->IsUnique() )
                         character->Cmd_DropObject() ;
                 }
             }
@@ -1673,39 +1698,6 @@ namespace tme {
             }
         }
 
-        mxobject* mxscenario::FindObjectAtLocation ( mxgridref loc )
-        {
-            return mx->ObjectById( mx->gamemap->GetAt(loc).object );
-        }
-
-        mxcharacter* mxscenario::WhoHasObject( mxobject* object ) const
-        {
-            FOR_EACH_CHARACTER(character) {
-                if ( character->carrying == object )
-                    return character ;
-            }
-            return nullptr ;
-        }
-
-
-        bool mxscenario::DropObject ( mxgridref loc, mxobject* obj )
-        {
-            mx->gamemap->GetAt ( loc ).object = obj ? obj->Id() : OB_NONE ;
-            return true ;
-        }
-
-
-        mxobject* mxscenario::PickupObject ( mxgridref loc )
-        {
-            mxthing_t oldobject ;
-
-            oldobject = (mxthing_t)mx->gamemap->GetAt ( loc ).object ;
-
-            mx->gamemap->GetAt ( loc ).RemoveObject();
-            
-            return mx->ObjectById(oldobject) ;
-        }
-
         bool mxscenario::InCharactersMemory ( mxitem* item ) 
         {
             FOR_EACH_CHARACTER(character) {
@@ -1714,7 +1706,6 @@ namespace tme {
             }
             return false;
         }
-
 
         void mxscenario::ClearFromMemory ( mxgridref loc )
         {
@@ -1944,6 +1935,8 @@ namespace tme {
     // namespace scenarios
 }
 // namespace tme
+
+
 
 
 

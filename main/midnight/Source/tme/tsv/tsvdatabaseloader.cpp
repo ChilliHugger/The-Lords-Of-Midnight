@@ -181,7 +181,7 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
     harvest(missions, IDT_MISSION);
     harvest(victories, IDT_VICTORY);
     harvest(characters, IDT_CHARACTER);
-#if defined(_DDR_) || defined(_CITADEL_)
+#if defined(_ARTEFACTS_)
     harvest(objectTypeInfo, IDT_OBJECT_TYPE);
     harvest(objectPowerInfo, IDT_OBJECT_POWER);
 #endif
@@ -208,7 +208,7 @@ bool TsvDatabaseLoader::Load ( mxscenario* scenario, const std::string& tsvDirec
     mx->objTerrainInfos.Create(scenario, IDT_TERRAININFO, terrainInfo.Count());
     mx->objAreaInfos.Create(scenario, IDT_AREAINFO, areaInfo.Count());
     mx->objCommandInfos.Create(scenario, IDT_COMMANDINFO, commandInfo.Count());
-#if defined(_DDR_) || defined(_CITADEL_)
+#if defined(_ARTEFACTS_)
     mx->objObjectTypesInfos.Create(scenario, IDT_OBJECT_TYPE, objectTypeInfo.Count());
     mx->objObjectPowersInfos.Create(scenario, IDT_OBJECT_POWER, objectPowerInfo.Count());
 #endif
