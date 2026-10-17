@@ -86,7 +86,7 @@ typedef struct loc_info_t {
     u8              climate;
     u8              density;
     u8              tunnel;
-    flags32         flags;
+    flags64         flags;
     flags32         discovery_flags;
 } loc_info_t ;
 

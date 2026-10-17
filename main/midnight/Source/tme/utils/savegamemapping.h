@@ -31,7 +31,7 @@ namespace utils {
                                 cf_usedobject | cf_followers | cf_preparesbattle | cf_approaching
     };
 
-    flags32 UpdateDDRCharacterFlags(flags32 flags);
+    flags64 UpdateDDRCharacterFlags(flags64 flags);
     void FixMorkinFromBeingAIAfterRecruited();
     mxkilledby_t CalcKilledBy(const ddr_character* character);
     

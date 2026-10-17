@@ -925,14 +925,14 @@ namespace tme {
     } info_t ;
 
     typedef struct mxinfo_t : public tme::info_t {
-        flags32             flags;
+        flags64             flags;
         std::string         name;
         void*               userdata;
     } mxinfo_t ;
 
     typedef struct mxitem_t : public tme::info_t {
         loc_t               location;
-        flags32             flags;
+        flags64             flags;
         void*               userdata;
     } mxitem_t ;
 
@@ -1045,7 +1045,7 @@ namespace tme {
                 | lf_tunnel_object
         };
 
-        enum CHARACTERFLAGS {
+        enum CHARACTERFLAGS : u64 {
             cf_hidden           = MXBIT(0),     // currently hiding
             cf_riding           = MXBIT(1),     // currently riding
             cf_alive            = MXBIT(2),     // alive
@@ -1092,6 +1092,7 @@ namespace tme {
             cf_control          = MXBIT(29),    // is under control
             cf_watch            = MXBIT(30),    // is being watched
             cf_dungeon          = MXBIT(31),    // in the dungeons of Maranor
+            cf_available        = MXBIT(32),    // 
             // citadel
             
         };
@@ -1267,10 +1268,19 @@ namespace tme {
 
 #define SAVEGAMEHEADER          "MidnightEngineSaveGame"
 
+constexpr u32 BaseSaveGameVersion = 18;
+
 #if defined(_CITADEL_)
-#define SAVEGAMEVERSION         17
+// CITADEL save game version should always be greater than the base
+// during development. If a change is made in the serialisers in the base
+// classes then check against the base number.
+// If it's a citadel only change then use the citadel number.
+// Periodically before public release, reset(remove) any CITADEL save game version checks
+// because they will be aligned with base.
+// After release, we will revert to a single version.
+constexpr u32 SAVEGAMEVERSION = BaseSaveGameVersion+0;
 #else
-#define SAVEGAMEVERSION         22
+constexpr u32 SAVEGAMEVERSION = BaseSaveGameVersion;
 #endif
 
 #define TME_MAGIC_NO            ID_4CC('T','M','E','!')
