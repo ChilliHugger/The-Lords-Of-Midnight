@@ -44,7 +44,7 @@ namespace utils {
     // Old DDR flags in this section were 2 bits shifted down than LOM
     //
 
-    flags32 UpdateDDRCharacterFlags(flags32 flags)
+    flags64 UpdateDDRCharacterFlags(flags64 flags)
     {
         auto old_mask = OLD_DDR_CHARACTERFLAGS::cf_all ; // 0x003fc000
                         

@@ -57,7 +57,12 @@ namespace tme {
             ar << flags ;
         }else{
             ar >> symbol;
-            ar >> flags ;
+            if (mx->SaveGameVersion() > 17) {
+                ar >> flags ;
+            } else {
+                u32 temp;
+                ar >> temp ; flags.Set(temp);
+            }
         }
     }
 

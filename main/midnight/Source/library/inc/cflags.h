@@ -62,6 +62,9 @@ public:
     MXINLINE operator T() const                         { return m_flags; }
     friend MXINLINE archive& operator<<( archive& ar, flags<T>& f )        { return f.Serialize(ar); }
     friend MXINLINE archive& operator>>( archive& ar, flags<T>& f )        { return f.Serialize(ar); }
+
+    void Set ( T f, bool value )                        { if(value) Set(f); else Reset(f); }
+
 private:
     T m_flags;
 };

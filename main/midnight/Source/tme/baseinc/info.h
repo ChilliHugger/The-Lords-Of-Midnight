@@ -147,7 +147,7 @@ namespace tme {
         void SetUserData(const void* data) { user_data = data; }
         const void* GetUserData() { return user_data; }
 
-        flags32& Flags() { return flags; }
+        flags64& Flags() { return flags; }
         bool IsFlags(u32 f) { return flags.Is(f); }
         bool IsType(id_type_t type) const { return idType == type; }
         FLAG_PROPERTY( IsDisabled,    et_disabled )
@@ -156,9 +156,8 @@ namespace tme {
         id_type_t               idType;
         u32                     id;
         std::string             symbol;
-        flags32                 flags;
+        flags64                 flags;
         const void*             user_data ;
-
     };
 
 
