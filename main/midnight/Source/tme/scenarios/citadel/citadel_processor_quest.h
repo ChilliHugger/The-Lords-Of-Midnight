@@ -53,6 +53,8 @@ namespace tme {
         virtual handover_t CounterThreat ( void );
         virtual handover_t LendService ( void );
         virtual void Wander ( void );
+        virtual void Campaign ( void );
+        virtual void PourOut ( void );
         virtual void Quest ( void );
         virtual void Recruit ( citadel_character* character );
         virtual void Besiege ( citadel_stronghold* keep, mxgridref target );

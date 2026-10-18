@@ -180,7 +180,7 @@ SCENARIO("A lord whose home is under attack holds it only if he is brave or thre
     }
 }
 
-SCENARIO("A reckless lord attacks the enemy next door, once his realm's hostage is free")
+SCENARIO("A reckless lord attacks the enemy next door, though his realm's hostage is held")
 {
     TMEStep::NewStory();
     auto haraglai = HaraglaiAtHome();
@@ -189,27 +189,50 @@ SCENARIO("A reckless lord attacks the enemy next door, once his realm's hostage 
 
     REQUIRE( DangerAt(Keep("SH_CASTLE_SKORDROTH")) == LS_IN_PERIL );
     REQUIRE( haraglai->HasQuality(qf_reckless) );
+    REQUIRE( tme::mx->scenario->HostageOfRace(RA_USKARG) != nullptr );
+
+    React(haraglai);
+
+    REQUIRE( haraglai->reaction == RE_ATTACK_ENEMY );
+    REQUIRE( haraglai->quest == QS_KILL );
+    REQUIRE( haraglai->questtarget == Idt(regiment) );
+}
+
+SCENARIO("While his realm's hostage is held, its king only defends his citadel")
+{
+    TMEStep::NewStory();
+    for ( auto regiment : tme::mx->objRegiments )
+        regiment->Total(0);
+    auto asunai = Lord("CH_ASUNAI");
+    auto roreon = Keep("SH_CITADEL_ROREON");
+    asunai->Location(roreon->Location());
+    Army(asunai, 1000);
+    auto regiment = AFoeRegimentAt(200, Keep("SH_CASTLE_CERRELM")->Location());
+
+    REQUIRE( asunai->IsKing() );
+    REQUIRE( asunai->HasQuality(qf_brave) );
+    REQUIRE( DangerAt(roreon) == LS_IN_PERIL );
 
     GIVEN("that Djalina, the Uskarg hostage, is held")
     {
-        React(haraglai);
+        React(asunai);
 
-        THEN("he only defends")
+        THEN("the King of the Fallows stays in his citadel")
         {
-            REQUIRE( haraglai->quest == QS_REST );
+            REQUIRE( asunai->quest == QS_REST );
         }
     }
 
     GIVEN("that she is free")
     {
         FreeTheHostages();
-        React(haraglai);
+        React(asunai);
 
         THEN("he goes to fight the regiment")
         {
-            REQUIRE( haraglai->reaction == RE_ATTACK_ENEMY );
-            REQUIRE( haraglai->quest == QS_KILL );
-            REQUIRE( haraglai->questtarget == Idt(regiment) );
+            REQUIRE( asunai->reaction == RE_ATTACK_ENEMY );
+            REQUIRE( asunai->quest == QS_KILL );
+            REQUIRE( asunai->questtarget == Idt(regiment) );
         }
     }
 }
@@ -390,11 +413,12 @@ SCENARIO("A lord left on his own walks home, and one in a fellowship stays with 
     }
 }
 
-SCENARIO("Once Boroth is dead the Dark Fey give up the war")
+SCENARIO("When Boroth falls for good, his lieutenants pour out of the Marish")
 {
     TMEStep::NewStory();
     auto yrgreth = Lord("CH_YRGRETH");
     yrgreth->Location(Keep("SH_CASTLE_SKORDROTH")->Location());
+    auto boroth = GetCharacter("CH_BOROTH");
 
     WHEN("Boroth lives")
     {
@@ -403,17 +427,34 @@ SCENARIO("Once Boroth is dead the Dark Fey give up the war")
         THEN("Yrgreth goes home to Gliwain")
         {
             REQUIRE( yrgreth->quest == QS_GOTO );
+            REQUIRE( yrgreth->questtarget == Idt(Keep("SH_CASTLE_GLIWAIN")) );
         }
     }
 
-    WHEN("Boroth is dead")
+    WHEN("Boroth is dead, but will rise again in the Dark Citadel")
     {
-        GetCharacter("CH_BOROTH")->Flags().Reset(cf_alive);
+        boroth->Flags().Reset(cf_alive);
         React(yrgreth);
 
-        THEN("Yrgreth does nothing")
+        THEN("Yrgreth still goes home")
         {
-            REQUIRE( yrgreth->quest == QS_REST );
+            REQUIRE( yrgreth->questtarget == Idt(Keep("SH_CASTLE_GLIWAIN")) );
+        }
+    }
+
+    WHEN("Boroth is dead, and has already risen once")
+    {
+        boroth->Flags().Reset(cf_alive);
+        Citadel()->flags.Set(gf_wraith);
+        React(yrgreth);
+
+        THEN("Yrgreth marches on the nearest keep that is not the Dark Fey's")
+        {
+            REQUIRE( yrgreth->reaction == RE_ATTACK_ENEMY );
+            REQUIRE( yrgreth->quest == QS_SEIZE );
+            auto keep = StrongholdTarget(yrgreth->questtarget);
+            REQUIRE( keep != nullptr );
+            REQUIRE( keep->Allegiance() != RA_DARK_FEY );
         }
     }
 }

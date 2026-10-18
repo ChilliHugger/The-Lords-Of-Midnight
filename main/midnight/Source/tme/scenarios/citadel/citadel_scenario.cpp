@@ -91,6 +91,7 @@ MXRESULT citadel::Text ( const std::string& command, variant* argv, u32 args )
 
 citadel_x::citadel_x() :
     boroth(nullptr),
+    luxor(nullptr),
     maranor(nullptr)
 {
 }
@@ -148,7 +149,8 @@ void citadel_x::initialise ( u32 version )
     paths.clear();
     passable.clear();
     boroth = CitadelLord(mx->CharacterBySymbol("CH_BOROTH"));
-    maranor = static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
+    luxor = CitadelLord(mx->CharacterBySymbol("CH_LUXOR"));
+    maranor =static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
 
     FOR_EACH_CHARACTER(character) {
         if ( character->HasQuality(qf_brave) )
@@ -457,6 +459,31 @@ mxrace_t citadel_x::CampaignTarget () const
     return target;
 }
 
+mxstronghold* citadel_x::Front () const
+{
+    auto target = CampaignTarget();
+    std::vector<mxstronghold*> holding;
+    FOR_EACH_STRONGHOLD(stronghold) {
+        if ( stronghold->Race() == target && stronghold->OccupyingRace() != RA_ENEMY && IsFoughtOver(stronghold) )
+            holding.push_back(stronghold);
+    }
+
+    mxstronghold* front = nullptr;
+    s32 best = 0;
+    FOR_EACH_STRONGHOLD(stronghold) {
+        CONTINUE_IF( stronghold->Race() == RA_ENEMY || stronghold->OccupyingRace() != RA_ENEMY
+                     || !mx->gamemap->IsLocOnMap(stronghold->Location()) );
+        for ( auto keep : holding ) {
+            auto distance = stronghold->Location() - keep->Location();
+            if ( front == nullptr || distance < best ) {
+                front = stronghold;
+                best = distance;
+            }
+        }
+    }
+    return front;
+}
+
 void citadel_x::NightStart ( void )
 {
     mxscenario::NightStart();
@@ -494,6 +521,12 @@ void citadel_x::NightStop ( void )
 {
     mxscenario::NightStop();
 
+    FOR_EACH_STRONGHOLD(stronghold) {
+        if ( mx->gamemap->IsLocOnMap(stronghold->Location()) )
+            static_cast<citadel_stronghold*>(stronghold)->Gather();
+    }
+    Scout();
+    ExecuteLuxor();
     RaiseWraith();
 
     FOR_EACH_CHARACTER(character) {
@@ -511,8 +544,56 @@ void citadel_x::RaiseWraith ()
     flags.Set(gf_wraith);
     boroth->Flags().Set(cf_alive);
     boroth->Location(maranor->Location());
+    boroth->quest = QS_NONE;
 
     mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_WRAITH, boroth));
+}
+
+void citadel_x::ExecuteLuxor ()
+{
+    if ( boroth == nullptr || luxor == nullptr || boroth->IsAlive() || luxor->IsDead() || !luxor->IsPrisoner() )
+        return;
+
+    luxor->Cmd_Dead();
+    mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_LUXOR_EXECUTED, luxor));
+}
+
+bool citadel_x::BorothFallen () const
+{
+    return boroth != nullptr && boroth->IsDead() && ( flags.Is(gf_wraith) || maranor == nullptr || maranor->HasFallen() );
+}
+
+void citadel_x::Scout ()
+{
+    mxgridref nowhere ( mx->gamemap->Size().cx, 0 );
+    packs.resize(mx->objRegiments.Count(), nowhere);
+
+    u32 index = 0;
+    FOR_EACH_REGIMENT(regiment) {
+        auto& pack = packs[index++];
+        if ( mx->gamemap->IsLocOnMap(pack) && mx->gamemap->GetAt(pack).object == OB_WOLVES )
+            mx->gamemap->GetAt(pack).object = OB_NONE;
+        pack = nowhere;
+
+        CONTINUE_IF( regiment->Race() != RA_ENEMY || regiment->Total() == 0 || regiment->Orders() != OD_GOTO
+                     || !mx->gamemap->IsLocOnMap(regiment->Location()) );
+        auto target = static_cast<mxitem*>(mx->EntityByIdt(regiment->TargetId()));
+        CONTINUE_IF_NULL(target);
+
+        auto ahead = regiment->Location();
+        for ( u32 step = 0; step < SCOUTING && ahead != target->Location(); step++ ) {
+            mxgridref next;
+            if ( !MarchStep(regiment, ahead, target->Location(), next) )
+                break;
+            ahead = next;
+        }
+
+        auto& square = mx->gamemap->GetAt(ahead);
+        CONTINUE_IF( ahead == regiment->Location() || square.object != OB_NONE || square.IsStronghold()
+                     || square.HasCharacter() || square.HasArmy() );
+        square.object = OB_WOLVES;
+        pack = ahead;
+    }
 }
 
 mxstronghold* citadel_x::HomeKeep ( mxrace_t people, mxgridref from ) const
@@ -745,6 +826,7 @@ mxentity* citadel_entityfactory::Create ( id_type_t type )
 void citadel_x::initialiseAfterCreate ( u32 version )
 {
     flags.Clear();
+    packs.clear();
 
     for ( auto symbol : citadel_hostages ) {
         auto hostage = mx->CharacterBySymbol(symbol);
@@ -786,6 +868,9 @@ void citadel_x::Serialize ( archive& ar )
         ar << (u32)wars.size() ;
         for ( auto war : wars )
             ar << war ;
+        ar << (u32)packs.size() ;
+        for ( auto& pack : packs )
+            ar << pack ;
     } else {
         ar >> flags ;
         u32 count;
@@ -793,6 +878,10 @@ void citadel_x::Serialize ( archive& ar )
         wars.resize(count);
         for ( auto& war : wars )
             ar >> war ;
+        ar >> count ;
+        packs.resize(count);
+        for ( auto& pack : packs )
+            ar >> pack ;
     }
 }
 

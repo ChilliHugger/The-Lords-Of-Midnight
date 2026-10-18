@@ -181,3 +181,4 @@ Version	Id	Symbol	Text
 7	179	SS_DUNGEON_NOTHING	{case:first}{char:gender:heshe} searches the dungeons of Maranor until nightfall, and finds no one.{sp}
 7	180	SS_QUEST_ACTION	Quest
 7	181	SS_QUEST_CHOOSE	Choose a quest for {char:longname}.
+7	182	SS_LUXOR_EXECUTED	.{lf}{crlf}{cr} With Boroth fallen, the Dark Fey put {char:longname} to death in the dungeons of Maranor
