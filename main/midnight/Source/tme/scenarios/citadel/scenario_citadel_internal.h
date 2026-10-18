@@ -51,6 +51,8 @@ namespace tme {
         citadel_object* ArtefactAt ( mxgridref loc ) const;
 
         mxrace_t CampaignTarget () const;
+        mxstronghold* Front () const;       // his keep nearest the realm he is taking
+        bool BorothFallen () const;         // dead, with no wraith left to rise
         bool IsFoughtOver ( mxstronghold* stronghold ) const;
         bool Borders ( mxrace_t a, mxrace_t b ) const;      // two kingdoms share a border
         const std::vector<s32>& StepsFrom ( mxgridref from, const mxitem* walker ) const;     // march cost to 'from'
@@ -70,6 +72,7 @@ namespace tme {
     public:
         // Boroth the Wolfheart, who holds the Citadel and whose host takes the keeps
         citadel_character*  boroth;
+        citadel_character*  luxor;
         citadel_stronghold* maranor;
         flags32             flags;
 
@@ -80,12 +83,17 @@ namespace tme {
         };
         pace_t PaceOf ( const mxitem* walker ) const;
         u32 StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t dir ) const;
+        void ExecuteLuxor ();
+        void Scout ();
+
+        static constexpr u32 SCOUTING = 3;
 
         // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace
         mutable std::map<u64, std::vector<s32>> paths;
         mutable std::vector<s8> passable;       // tonight's, by square: -1 not yet asked
 
         std::vector<u64>    wars;
+        std::vector<mxgridref> packs;
     };
 
     class citadel_entityfactory : public mxentityfactory
@@ -135,6 +143,7 @@ namespace tme {
         mxrace_t Allegiance () const;
         bool Subjugated () const;
         void Conquer ( mxcharacter* lord );
+        void Gather ();
     };
 
     class citadel_area : public mxarea
@@ -180,6 +189,7 @@ namespace tme {
         mxobjpower_t WeaponPower() const;
 
         bool Marches () const;              // will leave his keeps to fight for them
+        bool IsKing () const;
         bool CanQuest () const;             // free to take any quest at all
         bool CanQuest ( mxquest_t quest, mxid target ) const;
         void QuestTargets ( mxquest_t quest, c_mxid& targets ) const;

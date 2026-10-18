@@ -40,6 +40,11 @@ void citadel_quest_processor::React ( citadel_character* lord )
     if ( !Thinks() )
         return;
 
+    if ( CITADEL_SCENARIO(BorothFallen()) && lord->home != nullptr && lord->home->Race() == RA_ENEMY ) {
+        PourOut();
+        return;
+    }
+
     switch ( lord->purpose ) {
         case PU_DEFEND_HOMELAND:
         case PU_BE_A_HOSTAGE:       // out of the dungeons, a hostage goes home and defends it
@@ -48,17 +53,17 @@ void citadel_quest_processor::React ( citadel_character* lord )
         case PU_RANDOMLY_WANDER:
             Wander();
             break;
+        case PU_DARK_FEY:
+            Campaign();
+            break;
         default:
-            break;                  // Boroth's host makes his war; a lord with no purpose waits
+            break;                  // a lord with no purpose waits
     }
 }
 
 bool citadel_quest_processor::Thinks ( void ) const
 {
-    auto boroth = CITADEL_SCENARIO(boroth);
-    if ( lord->IsDead() || lord->IsPrisoner() || lord == boroth || !Idle() )
-        return false;
-    return boroth == nullptr || boroth->IsAlive() || lord->home == nullptr || lord->home->Race() != RA_ENEMY;
+    return !lord->IsDead() && !lord->IsPrisoner() && Idle();
 }
 
 u32 citadel_quest_processor::PlaceOf ( mxgridref loc ) const
@@ -563,6 +568,23 @@ void citadel_quest_processor::Wander ( void )
     }
 }
 
+void citadel_quest_processor::Campaign ( void )
+{
+    auto maranor = CITADEL_SCENARIO(maranor);
+    if ( maranor == nullptr )
+        return;
+
+    if ( maranor->HasFallen() ) {
+        Order(QS_SEIZE, mxentity::SafeIdt(maranor));
+        return;
+    }
+
+    auto front = CITADEL_SCENARIO(Front());
+    auto camp = front != nullptr && CITADEL_SCENARIO(Reachable(lord, lord->Location(), front->Location())) ? front : maranor;
+    if ( lord->Location() != camp->Location() )
+        Order(QS_GOTO, mxentity::SafeIdt(camp));
+}
+
 //
 // The nearest he can find a road to.
 //
@@ -578,6 +600,21 @@ T citadel_quest_processor::FirstReachable ( std::vector<T>& candidates ) const
             return candidate;
     }
     return nullptr;
+}
+
+void citadel_quest_processor::PourOut ( void )
+{
+    std::vector<mxstronghold*> keeps;
+    FOR_EACH_STRONGHOLD(stronghold) {
+        if ( mx->gamemap->IsLocOnMap(stronghold->Location())
+             && static_cast<citadel_stronghold*>(stronghold)->Allegiance() != lord->NormalisedLoyalty() )
+            keeps.push_back(stronghold);
+    }
+
+    lord->reaction = RE_ATTACK_ENEMY;
+    auto keep = FirstReachable(keeps);
+    if ( keep != nullptr )
+        Order(QS_SEIZE, mxentity::SafeIdt(keep));
 }
 
 void citadel_quest_processor::Impatience ( citadel_character* lord )

@@ -81,6 +81,13 @@ void citadel_stronghold::Conquer ( mxcharacter* lord )
     CheckForZero();
 }
 
+void citadel_stronghold::Gather ()
+{
+    auto side = Allegiance();
+    if ( side == RA_FREE || side == RA_ENEMY )
+        Add(OccupyingRace(), Type(), Respawn());
+}
+
 u32 citadel_stronghold::DefenceMultiplier() const
 {
     switch ( Terrain() ) {
