@@ -240,12 +240,19 @@ void citadel_character::Available ( bool available )
 
 bool citadel_character::Marches () const
 {
-    return !( IsKing() && mx->scenario->HostageOfRace(Race()) != nullptr ) && !HasQuality(qf_cowardly);
+    return !( IsKing() && CITADEL_SCENARIO(RealmStatus(Race())) == RS_AT_RANSOM ) && !HasQuality(qf_cowardly);
 }
 
 bool citadel_character::IsKing () const
 {
     return home != nullptr && home->Owner() == this && home->Terrain() == TN_CITADEL;
+}
+
+u32 citadel_character::Rank () const
+{
+    if ( IsKing() )
+        return 2;
+    return home != nullptr && home->Owner() == this ? 1 : 0;
 }
 
 bool citadel_character::CanQuest () const
@@ -289,10 +296,12 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
             return artefact && object->OnMap(where);
         case QS_TAKE: {
             auto holder = artefact ? mx->scenario->WhoHasObject(object) : nullptr;
-            return holder != nullptr && holder != this && holder->IsRecruited() && holder->IsAlive();
+            return holder != nullptr && holder != this && holder->IsAlive();
         }
-        case QS_DESTROY:
-            return artefact && ( object->OnMap(where) || Carrying() == object );
+        case QS_DESTROY: {
+            auto holder = artefact ? mx->scenario->WhoHasObject(object) : nullptr;
+            return artefact && ( object->OnMap(where) || holder == this || ( holder != nullptr && holder->IsAlive() ) );
+        }
         default:
             return false;
     }

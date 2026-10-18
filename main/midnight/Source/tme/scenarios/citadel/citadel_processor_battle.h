@@ -17,7 +17,8 @@ namespace tme {
     {
     public:
         virtual void Duel ( mxcharacter* attacker, mxcharacter* defender );
-        virtual void Siege ( mxcharacter* attacker, citadel_stronghold* keep );     // a keep Boroth does not hold
+        virtual bool Siege ( mxcharacter* attacker, citadel_stronghold* keep );     // a keep Boroth does not hold; one a night
+        virtual void Reset () override;
         virtual void Attack ( mxcharacter* lord );
         virtual bool Guard ( mxcharacter* lord );
 
@@ -42,6 +43,8 @@ namespace tme {
         virtual side_t Muster ( mxcharacter* lord );
         virtual void Enlist ( side_t& side, u32 total, mxunit_t type, s32 success );
         virtual void Strike ( side_t& from, side_t& at );
+
+        bool sieged = false;
     };
 
     inline citadel_battle* CitadelBattle ()

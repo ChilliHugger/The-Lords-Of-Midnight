@@ -16,6 +16,7 @@ namespace tme {
 
     enum CITADELGAMEFLAGS {
         gf_wraith           = MXBIT(0),     // Boroth has risen again in the Dark Citadel
+        gf_free_muster      = MXBIT(1),     // the Free have gathered at Corelay for Luxor
     };
 
     enum CITADELCHARACTERFLAGS {
@@ -62,6 +63,9 @@ namespace tme {
         mxstronghold* HomeKeep ( mxrace_t people, mxgridref from ) const;   // the nearest keep his people hold
         mxstronghold* KeepOf ( const mxcharacter* owner ) const;
         std::vector<citadel_character*> HostagesHeldAtMaranor () const;
+        citadel_character* KingOf ( mxrace_t realm ) const;
+        citadel_character* HostageOf ( mxrace_t realm ) const;
+        mxrealmstatus_t RealmStatus ( mxrace_t realm ) const;
 
         mxrace_t Allegiance ( const mxitem* figure ) const;
         bool AtWar ( mxrace_t side ) const;
@@ -84,9 +88,11 @@ namespace tme {
         pace_t PaceOf ( const mxitem* walker ) const;
         u32 StepCost ( mxrace_t race, bool onfoot, mxgridref into, mxdir_t dir ) const;
         void ExecuteLuxor ();
+        void MusterTheFree ();
         void Scout ();
 
         static constexpr u32 SCOUTING = 3;
+        static constexpr u32 FREE_MUSTER = 5000;    // warriors of the Free who gather at Corelay for Luxor
 
         // StepsFrom's answers for tonight, by the square they are counted from and the walker's pace
         mutable std::map<u64, std::vector<s32>> paths;
@@ -94,6 +100,7 @@ namespace tme {
 
         std::vector<u64>    wars;
         std::vector<mxgridref> packs;
+        std::map<mxrace_t, citadel_character*> hostages;
     };
 
     class citadel_entityfactory : public mxentityfactory
@@ -190,6 +197,7 @@ namespace tme {
 
         bool Marches () const;              // will leave his keeps to fight for them
         bool IsKing () const;
+        u32 Rank () const;                  // who leads when two fellowships merge
         bool CanQuest () const;             // free to take any quest at all
         bool CanQuest ( mxquest_t quest, mxid target ) const;
         void QuestTargets ( mxquest_t quest, c_mxid& targets ) const;

@@ -136,7 +136,7 @@ SCENARIO("Your lords take quests, and the lords of the realms take no orders fro
         REQUIRE_FALSE( rorthron->SetQuest(QS_FIND, Idt(Artefact("OB_MOONRING"))) );
     }
 
-    THEN("nothing can be taken from a lord who is not yours")
+    THEN("a weapon nobody carries cannot be taken: it is found")
     {
         REQUIRE_FALSE( rorthron->SetQuest(QS_TAKE, Idt(Artefact("OB_BLOODBRINGER"))) );
     }
@@ -624,6 +624,32 @@ SCENARIO("CITADEL: Prefix for what is here and what is ahead")
                 REQUIRE_THAT( here,  Catch::Matchers::Equals("  Here ") );
                 REQUIRE_THAT( ahead, Catch::Matchers::Equals("  Ahead ") );
             }
+        }
+    }
+}
+
+SCENARIO("An artefact a lord of the realms carries is handed over by one who can be persuaded")
+{
+    TMEStep::NewStory();
+
+    auto rorthron = Lord(ch_rorthron);
+    auto ilvar = Lord(ch_ilvar);
+    auto stormblade = Artefact("OB_STORMBLADE");
+    ilvar->carrying = stormblade;
+    rorthron->Location(ilvar->Location());
+
+    REQUIRE( rorthron->CheckRecruitChar(ilvar) );
+    REQUIRE( rorthron->SetQuest(QS_TAKE, Idt(stormblade)) );
+
+    WHEN("night falls")
+    {
+        TMEStep::NightFalls();
+
+        THEN("Rorthron has it, and Ilvar is unharmed")
+        {
+            REQUIRE( rorthron->Carrying() == stormblade );
+            REQUIRE( ilvar->IsAlive() );
+            REQUIRE( rorthron->quest == QS_NONE );
         }
     }
 }

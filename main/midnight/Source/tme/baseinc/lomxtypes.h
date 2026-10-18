@@ -424,6 +424,13 @@ using namespace chilli::types;
             LS_SUBJUGATED,
         };
 
+        enum mxrealmstatus_t {
+            RS_UNFETTERED               =    0,
+            RS_AT_RANSOM,
+            RS_BLOOD_FEUD,
+            RS_INTERREGNUM,
+        };
+
         enum mxquestnews_t {
             QN_NONE                     =    0,
             QN_DONE,                    // the quest is over, and he waits for orders
@@ -754,6 +761,7 @@ using namespace chilli::types;
             SS_QUEST_ACTION,
             SS_QUEST_CHOOSE,
             SS_LUXOR_EXECUTED,
+            SS_FREE_MUSTER,
 
             SS_MAX_STRINGS = 255
         };

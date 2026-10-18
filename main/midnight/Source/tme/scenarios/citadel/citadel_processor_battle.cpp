@@ -163,8 +163,12 @@ void citadel_battle::Duel ( mxcharacter* attacker, mxcharacter* defender )
     Announce(defender->Location());
 }
 
-void citadel_battle::Siege ( mxcharacter* attacker, citadel_stronghold* keep )
+bool citadel_battle::Siege ( mxcharacter* attacker, citadel_stronghold* keep )
 {
+    if ( sieged )
+        return false;
+    sieged = true;
+
     CITADEL_SCENARIO(DeclareWar(keep->Allegiance(), attacker->NormalisedLoyalty()));
 
     auto ruler = keep->Occupier();
@@ -234,6 +238,13 @@ void citadel_battle::Siege ( mxcharacter* attacker, citadel_stronghold* keep )
     }
 
     Announce(keep->Location());
+    return true;
+}
+
+void citadel_battle::Reset ()
+{
+    lom_battle::Reset();
+    sieged = false;
 }
 
 void citadel_battle::Attack ( mxcharacter* lord )
@@ -248,20 +259,22 @@ void citadel_battle::Attack ( mxcharacter* lord )
 }
 
 //
-// A lord on guard falls on Boroth's lords, and on any of his host he has the men to beat, on his
-// own square or the eight around it.
+// A lord on guard falls on any lord at war with his side, and on any of their armies he has the men to beat,
+// on his own square or the eight around it.
 //
 bool citadel_battle::Guard ( mxcharacter* lord )
 {
     auto here = lord->Location();
     FOR_EACH_CHARACTER(foe) {
-        CONTINUE_IF( foe->Race() != RA_ENEMY || foe->IsDead() || foe->IsPrisoner() || !here.IsNear(foe->Location()) );
+        CONTINUE_IF( foe == lord || foe->IsDead() || foe->IsPrisoner() || foe->IsInBattle() || !here.IsNear(foe->Location())
+                     || !CITADEL_SCENARIO(IsEnemyOf(foe->NormalisedLoyalty(), lord->NormalisedLoyalty())) );
         Duel(lord, foe);
         return true;
     }
 
     FOR_EACH_REGIMENT(regiment) {
-        CONTINUE_IF( regiment->Race() != RA_ENEMY || regiment->Total() == 0 || !mx->gamemap->IsLocOnMap(regiment->Location())
+        CONTINUE_IF( !CITADEL_SCENARIO(IsEnemyOf(regiment->Race(), lord->NormalisedLoyalty())) || regiment->Total() == 0
+                     || !mx->gamemap->IsLocOnMap(regiment->Location())
                      || regiment->Location() == here || !here.IsNear(regiment->Location()) || lord->Men() < regiment->Total() );
         lord->looking = here.DirFromHere(regiment->Location());
         Attack(lord);
