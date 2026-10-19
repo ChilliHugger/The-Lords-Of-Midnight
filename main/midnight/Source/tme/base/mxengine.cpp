@@ -70,6 +70,7 @@ mxengine::mxengine()
 
     text = nullptr;
     night = nullptr;
+    objectprocessor = nullptr;
     mapregenerator = nullptr;
     battle = nullptr;
     scenario = nullptr;

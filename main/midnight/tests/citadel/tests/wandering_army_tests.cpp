@@ -108,14 +108,14 @@ SCENARIO("Who is at war with Boroth")
     THEN("a lord who has not joined you, and has no homeland to defend, is not")
     {
         lord->Flags().Reset(cf_recruited);
-        static_cast<citadel_character*>(lord)->purpose = PU_NONE;
+        static_cast<citadel_character*>(lord)->Purpose(PU_NONE);
         REQUIRE_FALSE( lord->TakesPartInBattle() );
     }
 
     THEN("a lord of the realms born to defend his homeland is, joined or not (#9)")
     {
         lord->Flags().Reset(cf_recruited);
-        static_cast<citadel_character*>(lord)->purpose = PU_DEFEND_HOMELAND;
+        static_cast<citadel_character*>(lord)->Purpose(PU_DEFEND_HOMELAND);
         REQUIRE( lord->TakesPartInBattle() );
     }
 
@@ -172,7 +172,7 @@ SCENARIO("A wandering army brings battle only where someone stands against it")
     GIVEN("an army where a lord who has not joined you, and has nothing to defend, stands")
     {
         lord->Flags().Reset(cf_recruited);
-        static_cast<citadel_character*>(lord)->purpose = PU_NONE;
+        static_cast<citadel_character*>(lord)->Purpose(PU_NONE);
         lord->Location( army->Location() );
         lord->battleloc = nowhere;
 
@@ -189,7 +189,7 @@ SCENARIO("A wandering army brings battle only where someone stands against it")
 
         AND_GIVEN("that he was born to defend his homeland")
         {
-            static_cast<citadel_character*>(lord)->purpose = PU_DEFEND_HOMELAND;
+            static_cast<citadel_character*>(lord)->Purpose(PU_DEFEND_HOMELAND);
 
             WHEN("the night passes over them")
             {

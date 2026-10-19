@@ -24,6 +24,22 @@ namespace utils {
         }
     }
 
+    void UpdateObjectCarriers()
+    {
+        // carried by a place (the Ice Crown, in the Tower of Doom) is not in anyone's hands, so it stays
+        FOR_EACH_OBJECT(object) {
+            auto carrier = object->CarriedBy();
+            if ( carrier != nullptr && carrier->IdType() == IDT_CHARACTER
+                 && static_cast<mxcharacter*>(carrier)->Carrying() != object )
+                object->CarriedBy(nullptr);
+        }
+
+        FOR_EACH_CHARACTER(character) {
+            if ( character->Carrying() != nullptr )
+                character->Carrying()->CarriedBy(character);
+        }
+    }
+
     bool IsCircularLiege(const mxcharacter* recruiter, const mxcharacter* recruit)
     {
         // bounded by the number of characters, so that an existing

@@ -43,7 +43,7 @@ SCENARIO("The regions know their neighbours")
             REQUIRE_FALSE( area->Borders(area) );
             for ( auto id : area->neighbours ) {
                 CAPTURE( area->Symbol(), id );
-                REQUIRE( static_cast<citadel_area*>(tme::mx->AreaById(id))->Borders(area) );
+                REQUIRE( static_cast<citadel_area*>(tme::mx->AreaById(GET_ID(id)))->Borders(area) );
                 borders++;
             }
         }

@@ -579,7 +579,7 @@ std::string mxtext::DescribeCharacterObject ( const mxcharacter* character )
 {
     RETURN_IF_NULL(character) "";
 
-    if ( character->carrying == nullptr )
+    if ( character->Carrying() == nullptr )
         return CookedSystemString(SS_CARRYNOTHING,character);
     return CookedSystemString(SS_CARRYING,character);
 }
@@ -1333,16 +1333,16 @@ __char:
                     IS_ARG("news")      return lord->NewsText();
                     IS_ARG("text")      return lord->QuestText();
                     IS_ARG("char")      {
-                                            character = CharacterTarget(lord->questtarget);
+                                            character = CharacterTarget(lord->QuestTarget());
                                             goto __char;
                                         }
                     IS_ARG("holder")    {
-                                            auto object = ObjectTarget(lord->questtarget);
-                                            character = object != nullptr ? mx->scenario->WhoHasObject(object) : nullptr;
+                                            auto object = ObjectTarget(lord->QuestTarget());
+                                            character = object != nullptr ? mx->objectprocessor->WhoHasObject(object) : nullptr;
                                             goto __char;
                                         }
                     IS_ARG("obj")       {
-                                            oinfo = ObjectTarget(lord->questtarget);
+                                            oinfo = ObjectTarget(lord->QuestTarget());
                                             RETURN_IF_NULL(oinfo) "";
                                             goto __obj;
                                         }
@@ -1419,7 +1419,7 @@ __char:
                                             goto __dir;
                                         }
                 IS_ARG("obj")           {
-                                            oinfo = character->carrying; //mx->ObjectById(character->object);
+                                            oinfo = character->Carrying();
                                             goto __obj;
                                         }
                 IS_ARG("race")          {
@@ -1499,7 +1499,7 @@ __loc:
                                             goto __terrain;
                                         }
                 IS_ARG("obj")           {
-                                            oinfo = mx->scenario->FindObjectAtLocation(loc);
+                                            oinfo = mx->objectprocessor->FindObjectAtLocation(loc);
                                             goto __obj;
                                         }
                 IS_ARG("area")          {

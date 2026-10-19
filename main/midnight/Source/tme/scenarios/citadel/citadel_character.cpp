@@ -9,6 +9,7 @@
 
 #include "../../baseinc/tme_internal.h"
 #include "scenario_citadel_internal.h"
+#include "citadel_processor_battle.h"
 #include "../../tsv/tsvflags.h"
 #include "../../tsv/tsvfields.h"
 
@@ -29,9 +30,8 @@ void citadel_character::Serialize ( archive& ar )
         WRITE_ENUM(purpose);
         WRITE_ENUM(reaction);
         ar << idle ;
-        WRITE_ENUM(news);
-        ar << home ;
-        ar << citadelflags ;
+        WRITE_ENUM(questnews);
+        ar << homestronghold ;
     } else {
         ar >> qualities ;
         ar >> title ;
@@ -40,9 +40,8 @@ void citadel_character::Serialize ( archive& ar )
         READ_ENUM(purpose);
         READ_ENUM(reaction);
         ar >> idle ;
-        READ_ENUM(news);
-        ar >> home ;
-        ar >> citadelflags ;
+        READ_ENUM(questnews);
+        ar >> homestronghold ;
     }
 }
 
@@ -55,7 +54,7 @@ void citadel_character::LoadTsv ( const TsvRow& row )
     quest = ParseQuest(row.GetString(TsvField::Character::Quest));
     purpose = ParsePurpose(row.GetString(TsvField::Character::Purpose));
     reaction = ParseReaction(row.GetString(TsvField::Character::Reaction));
-    home = row.GetStronghold(TsvField::Character::Home);
+    homestronghold = row.GetStronghold(TsvField::Character::Home);
 }
 
 bool citadel_character::TakesPartInBattle() const
@@ -73,28 +72,16 @@ mxobjpower_t citadel_character::WeaponPower() const
     return object != nullptr ? object->power : OP_NONE;
 }
 
-static bool IsDwarf ( mxrace_t race )
-{
-    return race == RA_LONG_DWARF || race == RA_DEEPING_DWARF;
-}
-
-static bool IsFey ( mxrace_t race )
-{
-    return race == RA_HIGH_FEY
-        || race == RA_DAWN_FEY
-        || race == RA_GOLDEN_FEY
-        || race == RA_DARK_FEY;
-}
-
 u32 citadel_character::FightStrength() const
 {
     auto base = mxcharacter::FightStrength();
+    auto race = mx->scenario->toGeneralisedRace(Race());
 
     switch ( WeaponPower() ) {
         case OP_GIANT_STRENGTH:
-            return Race() == RA_BLOODMARCH_GIANT ? base * 2 : base;
+            return race == RA_BLOODMARCH_GIANT ? base * 2 : base;
         case OP_FEY_BLADE:
-            return IsFey(Race()) ? base * 2 : base / 2;
+            return race == RA_FEY ? base * 2 : base / 2;
         case OP_BATTLE_TIRELESS:
             return base * 2;
         default:
@@ -104,7 +91,8 @@ u32 citadel_character::FightStrength() const
 
 bool citadel_character::ShouldDieInFight() const
 {
-    if ( WeaponPower() == OP_DWARF_INVINCIBLE && IsDwarf(Race()) )
+    auto race = mx->scenario->toGeneralisedRace(Race());
+    if ( WeaponPower() == OP_DWARF_INVINCIBLE && race == RA_DWARF )
         return false;
 
     return mxcharacter::ShouldDieInFight();
@@ -138,7 +126,7 @@ bool citadel_character::CheckRecruitChar ( mxcharacter* pChar ) const
         return false;
 
     if ( pChar->IsPrisoner() )
-        return CITADEL_SCENARIO(maranor) != nullptr && CITADEL_SCENARIO(maranor)->HasFallen();
+        return CITADEL_SCENARIO(maranor)->HasFallen();
 
     if ( pChar->Race() == RA_ENEMY )
         return false;
@@ -167,12 +155,6 @@ bool citadel_character::Recruited ( mxcharacter* recruiter )
     return mxcharacter::Recruited(recruiter);
 }
 
-bool citadel_character::InDungeon () const
-{
-    auto maranor = CITADEL_SCENARIO(maranor);
-    return flags.Is(cf_dungeon) && maranor != nullptr && Location() == maranor->Location();
-}
-
 MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
 {
     auto result = mxcharacter::Cmd_WalkForward(seek, approach);
@@ -198,9 +180,9 @@ citadel_character* citadel_character::SearchDungeon ( u32 chance )
 
 void citadel_character::FlyHome ()
 {
-    auto keep = home;
+    auto keep = homestronghold;
     if ( keep == nullptr || keep->IsEnemy() )
-        keep = CITADEL_SCENARIO(HomeKeep(Race(), home != nullptr ? home->Location() : Location()));
+        keep = CITADEL_SCENARIO(HomeKeep(Race(), homestronghold != nullptr ? homestronghold->Location() : Location()));
     if ( keep != nullptr )
         Location(keep->Location());
 }
@@ -225,19 +207,6 @@ u32 citadel_character::Might () const
     return (u32)( (u64)( FightStrength() + Men() ) * ( energy + 128 ) / ( (u32)sv_energy_max + 128 ) );
 }
 
-bool citadel_character::IsAvailable () const
-{
-    return citadelflags.Is(ccf_available);
-}
-
-void citadel_character::Available ( bool available )
-{
-    if ( available )
-        citadelflags.Set(ccf_available);
-    else
-        citadelflags.Reset(ccf_available);
-}
-
 bool citadel_character::Marches () const
 {
     return !( IsKing() && CITADEL_SCENARIO(RealmStatus(Race())) == RS_AT_RANSOM ) && !HasQuality(qf_cowardly);
@@ -245,19 +214,24 @@ bool citadel_character::Marches () const
 
 bool citadel_character::IsKing () const
 {
-    return home != nullptr && home->Owner() == this && home->Terrain() == TN_CITADEL;
+    return Home() != nullptr && Home()->Owner() == this && Home()->Terrain() == TN_CITADEL;
 }
 
 u32 citadel_character::Rank () const
 {
     if ( IsKing() )
         return 2;
-    return home != nullptr && home->Owner() == this ? 1 : 0;
+    return Home() != nullptr && Home()->Owner() == this ? 1 : 0;
 }
 
 bool citadel_character::CanQuest () const
 {
     return IsRecruited() && !IsDead() && !IsPrisoner();
+}
+
+bool citadel_character::IsAwaitingOrders () const
+{
+    return !IsDead() && !IsPrisoner() && QuestIdle();
 }
 
 bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
@@ -270,7 +244,6 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
 
     auto object = ObjectTarget(target);
     auto artefact = object != nullptr && object->IsArtefact();
-    mxgridref where;
 
     switch ( newquest ) {
         case QS_NONE:
@@ -293,14 +266,14 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
             return keep != nullptr && ( keep->IsEnemy() || keep->Allegiance() != NormalisedLoyalty() );
         }
         case QS_FIND:
-            return artefact && object->OnMap(where);
+            return artefact && object->IsOnMap();
         case QS_TAKE: {
-            auto holder = artefact ? mx->scenario->WhoHasObject(object) : nullptr;
+            auto holder = artefact ? mx->objectprocessor->WhoHasObject(object) : nullptr;
             return holder != nullptr && holder != this && holder->IsAlive();
         }
         case QS_DESTROY: {
-            auto holder = artefact ? mx->scenario->WhoHasObject(object) : nullptr;
-            return artefact && ( object->OnMap(where) || holder == this || ( holder != nullptr && holder->IsAlive() ) );
+            auto holder = artefact ? mx->objectprocessor->WhoHasObject(object) : nullptr;
+            return artefact && ( object->IsOnMap() || holder == this || ( holder != nullptr && holder->IsAlive() ) );
         }
         default:
             return false;
@@ -332,7 +305,7 @@ bool citadel_character::SetQuest ( mxquest_t newquest, mxid target )
     quest = newquest;
     questtarget = ( newquest == QS_NONE || newquest == QS_REST ) ? IDT_NONE : target;
     idle = 0;
-    news = QN_NONE;
+    questnews = QN_NONE;
     return true;
 }
 
@@ -342,10 +315,9 @@ mxgridref citadel_character::QuestLocation () const
         return mxgridref(GET_LOCIDX(questtarget), GET_LOCIDY(questtarget));
 
     if ( auto object = ObjectTarget(questtarget) ) {
-        mxgridref where;
-        if ( object->OnMap(where) )
-            return where;
-        auto holder = mx->scenario->WhoHasObject(object);
+        if ( object->IsOnMap() )
+            return object->Location();
+        auto holder = mx->objectprocessor->WhoHasObject(object);
         return holder != nullptr ? holder->Location() : Location();
     }
 
@@ -353,6 +325,10 @@ mxgridref citadel_character::QuestLocation () const
     return item != nullptr ? item->Location() : Location();
 }
 
+
+//
+// TODO: These should be in the string processor
+//
 std::string citadel_character::QuestText () const
 {
     if ( IsDead() )
@@ -381,7 +357,7 @@ std::string citadel_character::QuestText () const
 std::string citadel_character::NewsText () const
 {
     u32 id;
-    switch ( news ) {
+    switch ( questnews ) {
         case QN_DONE:       id = SS_QUEST_NEWS_DONE; break;
         case QN_FAILED:     id = SS_QUEST_NEWS_FAILED; break;
         case QN_REFUSED:    id = SS_QUEST_NEWS_REFUSED; break;
@@ -391,6 +367,112 @@ std::string citadel_character::NewsText () const
         default:            return "";
     }
     return mx->text->CookedSystemString(id, this);
+}
+// END: TODO
+
+void citadel_character::AssignQuest ( mxquest_t quest, mxid target )
+{
+    auto leader = Following();
+    auto joined = CharacterTarget(target);
+    auto rejoins = quest == QS_JOIN && joined != nullptr && ( joined == leader || joined->Following() == leader );
+    if ( leader != nullptr && quest != QS_NONE && quest != QS_REST && !rejoins )
+        Cmd_UnFollow(leader);
+
+    Quest(quest);
+    QuestTarget(target);
+}
+
+void citadel_character::EndQuest ( mxquestnews_t news )
+{
+    Quest(QS_NONE);      // the target stays: the dawn news names it
+    if ( IsRecruited() )
+        QuestNews(news);
+}
+
+void citadel_character::ReportQuestBlocked ( void )
+{
+    if ( IsRecruited() )
+        QuestNews(QN_BLOCKED);
+    else
+        EndQuest(QN_BLOCKED);
+}
+
+u32 citadel_character::StrengthOf ( const mxitem* figure )
+{
+    if ( figure->IsType(IDT_CHARACTER) )
+        return static_cast<const citadel_character*>(figure)->Might();
+    return static_cast<const mxregiment*>(figure)->Total();
+}
+
+bool citadel_character::IsHostileTo ( const mxitem* figure ) const
+{
+    return CITADEL_SCENARIO(IsEnemyOf(CITADEL_SCENARIO(Allegiance(figure)), NormalisedLoyalty()));
+}
+
+//
+// The design's odds a:b: the opponent's strength a times over is no more than his own b times over.
+//
+bool citadel_character::CanFaceAtOdds ( const mxitem* opponent, u32 a, u32 b ) const
+{
+    return (u64)StrengthOf(opponent) * a <= (u64)StrengthOf(this) * b;
+}
+
+void citadel_character::AttemptToRecruit ( citadel_character* character )
+{
+    auto score = RecruitScore(character);
+    if ( score >= RecruitThreshold(character->Race()) ) {
+        if ( character->IsFollowing() )
+            character->Cmd_UnFollow(character->Following());
+        auto mutual = character->Quest() == QS_RECRUIT && CharacterTarget(character->QuestTarget()) == this;
+        if ( mutual && character->Rank() > Rank() && Cmd_Follow(character) == MX_OK ) {
+            character->Quest(QS_NONE);
+            EndQuest(QN_DONE);
+            return;
+        }
+        if ( character->Cmd_Follow(this) == MX_OK ) {
+            character->Quest(QS_JOIN);
+            character->QuestTarget(mxentity::SafeIdt(this));
+            EndQuest(QN_DONE);
+            return;
+        }
+    } else if ( score <= -1 ) {
+        CitadelBattle()->Duel(character, this);
+        EndQuest(QN_OFFENDED);
+        return;
+    }
+    EndQuest(QN_REFUSED);
+}
+
+void citadel_character::MergeFellowship ( mxcharacter* leader )
+{
+    if ( leader == this )
+        return;
+    if ( Rank() > CitadelLord(leader)->Rank() )
+        leader->Cmd_Follow(this);
+    else
+        Cmd_Follow(leader);
+}
+
+bool citadel_character::ObtainFrom ( citadel_object* object, mxcharacter* holder )
+{
+    if ( !IsFriend(holder) && RecruitScore(holder) < RecruitThreshold(holder->Race()) ) {
+        CitadelBattle()->Duel(this, holder);
+        if ( IsDead() || holder->IsAlive() )
+            return false;
+    }
+    if ( holder->Carrying() == object )
+        mx->objectprocessor->Exchange(this, holder);
+    else
+        Cmd_PickupObject();      // he dropped it as he fell
+    return Carrying() == object;
+}
+
+bool citadel_character::StandGuard ( void )
+{
+    if ( !IsRecruited() && !Marches() )
+        return false;
+
+    return CitadelBattle()->Guard(this);
 }
 
 } // namespace tme

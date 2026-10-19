@@ -24,7 +24,7 @@ void citadel_quest_processor::Process ( citadel_character* lord )
 {
     this->lord = lord;
     if ( lord->IsRecruited() ) {
-        lord->news = QN_NONE;
+        lord->QuestNews(QN_NONE);
         Impatience(lord);
     } else {
         React(lord);
@@ -37,33 +37,28 @@ void citadel_quest_processor::React ( citadel_character* lord )
     this->lord = lord;
     if ( !surveyed )
         Survey();
-    if ( !Thinks() )
+    if ( !lord->IsAwaitingOrders() )
         return;
 
-    if ( CITADEL_SCENARIO(BorothFallen()) && lord->home != nullptr && lord->home->Race() == RA_ENEMY ) {
-        PourOut();
+    if ( CITADEL_SCENARIO(BorothFallen()) && lord->Home() != nullptr && lord->Home()->Race() == RA_ENEMY ) {
+        AttackNearestRivalKeep();
         return;
     }
 
-    switch ( lord->purpose ) {
+    switch ( lord->Purpose() ) {
         case PU_DEFEND_HOMELAND:
         case PU_BE_A_HOSTAGE:       // out of the dungeons, a hostage goes home and defends it
-            Defend();
+            DefendHome();
             break;
         case PU_RANDOMLY_WANDER:
             Wander();
             break;
         case PU_DARK_FEY:
-            Campaign();
+            DefendMaranorOrGotoFrontline();
             break;
         default:
             break;                  // a lord with no purpose waits
     }
-}
-
-bool citadel_quest_processor::Thinks ( void ) const
-{
-    return !lord->IsDead() && !lord->IsPrisoner() && Idle();
 }
 
 u32 citadel_quest_processor::PlaceOf ( mxgridref loc ) const
@@ -89,7 +84,8 @@ void citadel_quest_processor::Survey ( void )
     for ( u32 land = 0; land < places.size(); land++ ) {
         CONTINUE_IF( places[land].keep == nullptr );
         auto area = static_cast<citadel_area*>(mx->AreaById(land));
-        for ( auto next : area->neighbours ) {
+        for ( auto neighbour : area->neighbours ) {
+            u32 next = GET_ID(neighbour);
             if ( next != land && next < places.size() && places[next].keep != nullptr )
                 places[land].around.push_back(next);
         }
@@ -147,7 +143,7 @@ bool citadel_quest_processor::Invaded ( u32 at, u32 of ) const
     });
 }
 
-mxdanger_t citadel_quest_processor::Danger ( u32 place ) const
+mxdanger_t citadel_quest_processor::LandDanger ( u32 place ) const
 {
     return place < places.size() ? places[place].danger : LS_AT_PEACE;
 }
@@ -160,12 +156,12 @@ mxdanger_t citadel_quest_processor::RealmDanger ( mxrace_t realm ) const
 
 u32 citadel_quest_processor::Home ( const citadel_character* who ) const
 {
-    return who->home != nullptr ? PlaceOf(who->home->Location()) : 0;
+    return who->Home() != nullptr ? PlaceOf(who->Home()->Location()) : 0;
 }
 
 mxdanger_t citadel_quest_processor::HomeDanger ( void ) const
 {
-    return Danger(Home(lord));
+    return LandDanger(Home(lord));
 }
 
 std::vector<u32> citadel_quest_processor::NearPlaces ( void ) const
@@ -231,79 +227,45 @@ std::vector<citadel_character*> citadel_quest_processor::OwnersOf ( const std::v
 std::vector<citadel_character*> citadel_quest_processor::Neighbours ( void ) const
 {
     auto lands = NearPlaces();
-    std::erase_if(lands, [this]( u32 land ) { return Danger(land) >= LS_UNDER_ATTACK; });
+    std::erase_if(lands, [this]( u32 land ) { return LandDanger(land) >= LS_UNDER_ATTACK; });
     auto lords = OwnersOf(lands);
     std::erase_if(lords, [this]( const citadel_character* other ) {
-        return other == lord || other->IsDead() || other->IsPrisoner() || other->IsRecruited() || IsEnemy(other)
-            || other->home == nullptr || PlaceOf(other->Location()) != Home(other)
-            || other->purpose != PU_DEFEND_HOMELAND || other->reaction == RE_RETREAT;
+        return other == lord || other->IsDead() || other->IsPrisoner() || other->IsRecruited() || lord->IsHostileTo(other)
+            || other->Home() == nullptr || PlaceOf(other->Location()) != Home(other)
+            || other->Purpose() != PU_DEFEND_HOMELAND || other->Reaction() == RE_RETREAT;
     });
     return lords;
 }
 
-std::vector<citadel_character*> citadel_quest_processor::Recruits ( void ) const
+std::vector<citadel_character*> citadel_quest_processor::RecruitableLordsNearby ( void ) const
 {
     auto around = NearPlaces();
     auto lords = OwnersOf(around);
     std::erase_if(lords, [this, &around]( const citadel_character* other ) {
-        return other == lord || other->IsDead() || other->IsPrisoner() || other->IsRecruited() || IsEnemy(other)
+        return other == lord || other->IsDead() || other->IsPrisoner() || other->IsRecruited() || lord->IsHostileTo(other)
             || other->HasQuality(qf_cowardly) || !other->IsAvailable()
             || std::find(around.begin(), around.end(), PlaceOf(other->Location())) == around.end();
     });
     return lords;
 }
 
-bool citadel_quest_processor::Idle ( void ) const
-{
-    return lord->quest == QS_NONE || lord->quest == QS_REST;
-}
-
-//
-// At home, or with the fellowship he has joined: only a lord left on his own walks home.
-//
-bool citadel_quest_processor::AtStronghold ( void ) const
-{
-    return lord->Location() == lord->home->Location()
-        || ( lord->IsFollowing() && lord->Following()->IsAlive() );
-}
-
-bool citadel_quest_processor::IsEnemy ( const mxitem* figure ) const
-{
-    return CITADEL_SCENARIO(IsEnemyOf(CITADEL_SCENARIO(Allegiance(figure)), lord->NormalisedLoyalty()));
-}
-
-mxitem* citadel_quest_processor::EnemyIn ( const std::vector<u32>& lands ) const
+mxitem* citadel_quest_processor::RandomEnemyIn ( const std::vector<u32>& lands ) const
 {
     std::vector<mxitem*> foes;
     for ( auto land : lands ) {
         CONTINUE_IF( land == 0 || land >= places.size() );
         for ( auto figure : places[land].figures ) {
-            if ( figure != lord && IsEnemy(figure) )
+            if ( figure != lord && lord->IsHostileTo(figure) )
                 foes.push_back(figure);
         }
     }
     return Pick(foes);
 }
 
-u32 citadel_quest_processor::Strength ( const mxitem* figure ) const
-{
-    if ( figure->IsType(IDT_CHARACTER) )
-        return static_cast<const citadel_character*>(figure)->Might();
-    return static_cast<const mxregiment*>(figure)->Total();
-}
-
-//
-// The design's odds a:b: the opponent's strength a times over is no more than his own b times over.
-//
-bool citadel_quest_processor::Odds ( const mxitem* opponent, u32 a, u32 b ) const
-{
-    return (u64)Strength(opponent) * a <= (u64)Strength(lord) * b;
-}
-
 //
 // One of these lands' keeps, at random, that he can find a road to.
 //
-citadel_stronghold* citadel_quest_processor::SafeKeep ( std::vector<u32> lands ) const
+citadel_stronghold* citadel_quest_processor::RandomReachableKeep ( std::vector<u32> lands ) const
 {
     // one march from where he stands answers for every keep: a road runs both ways
     const auto& steps = CITADEL_SCENARIO(StepsFrom(lord->Location(), lord));
@@ -315,31 +277,19 @@ citadel_stronghold* citadel_quest_processor::SafeKeep ( std::vector<u32> lands )
     return lands.empty() ? nullptr : places[lands[mxrandom(0, (int)lands.size() - 1)]].keep;
 }
 
-void citadel_quest_processor::Order ( mxquest_t quest, mxid target )
+void citadel_quest_processor::DefendHome ( void )
 {
-    auto leader = lord->Following();
-    auto joined = CharacterTarget(target);
-    auto rejoins = quest == QS_JOIN && joined != nullptr && ( joined == leader || joined->Following() == leader );
-    if ( leader != nullptr && quest != QS_NONE && quest != QS_REST && !rejoins )
-        lord->Cmd_UnFollow(leader);
-
-    lord->quest = quest;
-    lord->questtarget = target;
-}
-
-void citadel_quest_processor::Defend ( void )
-{
-    if ( lord->home == nullptr )
+    if ( lord->Home() == nullptr )
         return;
 
-    handover_t next = lord->reaction;
+    handover_t next = lord->Reaction();
     for ( u32 handovers = 0; next.has_value() && handovers <= HANDOVERS; handovers++ ) {
-        lord->reaction = *next;
-        next = Behave(lord->reaction);
+        lord->Reaction(*next);
+        next = RunReaction(lord->Reaction());
     }
 }
 
-citadel_quest_processor::handover_t citadel_quest_processor::Behave ( mxreaction_t reaction )
+citadel_quest_processor::handover_t citadel_quest_processor::RunReaction ( mxreaction_t reaction )
 {
     switch ( reaction ) {
         case RE_RETURN_HOME:            return ReturnHome();
@@ -347,10 +297,10 @@ citadel_quest_processor::handover_t citadel_quest_processor::Behave ( mxreaction
         case RE_TAKE_BACK_STRONGHOLD:   return TakeBackStronghold();
         case RE_ATTACK_ENEMY:           return AttackEnemy();
         case RE_HELP_NEIGHBOUR:         return HelpNeighbour();
-        case RE_RETREAT:                return Retreat();
+        case RE_RETREAT:                return FleeToSafeKeep();
         case RE_GATHER_STRENGTH:        return GatherStrength();
         case RE_COUNTER_THREAT:         return CounterThreat();
-        case RE_LEND_SERVICE:           return LendService();
+        case RE_LEND_SERVICE:           return ServeLeader();
         default:                        return {};
     }
 }
@@ -359,12 +309,12 @@ citadel_quest_processor::handover_t citadel_quest_processor::ReturnHome ( void )
 {
     if ( HomeDanger() == LS_SUBJUGATED )
         return RE_TAKE_BACK_STRONGHOLD;
-    if ( AtStronghold() )
+    if ( lord->AtHome() )
         return RE_STAND_FIRM;
 
-    lord->Available(false);
-    if ( Idle() )
-        Order(QS_GOTO, mxentity::SafeIdt(lord->home));
+    lord->Flags().Reset(cf_available);
+    if ( lord->QuestIdle() )
+        lord->AssignQuest(QS_GOTO, mxentity::SafeIdt(lord->Home()));
     return {};
 }
 
@@ -379,7 +329,7 @@ citadel_quest_processor::handover_t citadel_quest_processor::StandFirm ( void )
 
     // while his realm's hostage is held, he only defends
     if ( lord->Marches() ) {
-        if ( danger == LS_IN_PERIL && lord->HasQuality(qf_farsighted) && !cowardly && !Recruits().empty() )
+        if ( danger == LS_IN_PERIL && lord->HasQuality(qf_farsighted) && !cowardly && !RecruitableLordsNearby().empty() )
             return RE_GATHER_STRENGTH;
 
         if ( danger == LS_IN_PERIL && ( ( brave && !cautious ) || ( reckless && !cowardly ) ) )
@@ -387,24 +337,24 @@ citadel_quest_processor::handover_t citadel_quest_processor::StandFirm ( void )
 
         if ( danger == LS_IN_DANGER && !cowardly && !selfish ) {
             if ( auto subject = Pick(Neighbours()) ) {
-                Order(QS_JOIN, mxentity::SafeIdt(subject));
+                lord->AssignQuest(QS_JOIN, mxentity::SafeIdt(subject));
                 return RE_HELP_NEIGHBOUR;
             }
         }
 
         if ( danger == LS_TROUBLED && !cowardly && !selfish ) {
             auto around = NearPlaces();
-            if ( std::any_of(around.begin(), around.end(), [this]( u32 land ) { return Danger(land) == LS_THREATENED; }) )
+            if ( std::any_of(around.begin(), around.end(), [this]( u32 land ) { return LandDanger(land) == LS_THREATENED; }) )
                 return RE_COUNTER_THREAT;
         }
     }
 
-    auto attacker = danger == LS_UNDER_ATTACK ? EnemyIn({ Home(lord) }) : nullptr;
-    if ( attacker != nullptr && !brave && !Odds(attacker, 3, 1) )
+    auto attacker = danger == LS_UNDER_ATTACK ? RandomEnemyIn({ Home(lord) }) : nullptr;
+    if ( attacker != nullptr && !brave && !lord->CanFaceAtOdds(attacker, 3, 1) )
         return RE_RETREAT;
 
-    lord->Available(danger != LS_UNDER_ATTACK);
-    Order(QS_REST, IDT_NONE);
+    lord->Flags().Set(cf_available, danger != LS_UNDER_ATTACK);
+    lord->AssignQuest(QS_REST, IDT_NONE);
     return {};
 }
 
@@ -413,9 +363,9 @@ citadel_quest_processor::handover_t citadel_quest_processor::TakeBackStronghold 
     if ( HomeDanger() != LS_SUBJUGATED )
         return RE_STAND_FIRM;
 
-    lord->Available(false);
-    if ( Idle() )
-        Order(QS_SEIZE, mxentity::SafeIdt(lord->home));
+    lord->Flags().Reset(cf_available);
+    if ( lord->QuestIdle() )
+        lord->AssignQuest(QS_SEIZE, mxentity::SafeIdt(lord->Home()));
     return {};
 }
 
@@ -426,31 +376,31 @@ citadel_quest_processor::handover_t citadel_quest_processor::AttackEnemy ( void 
     auto around = NearPlaces();
     auto inHomeland = here == home;
     auto inNear = std::find(around.begin(), around.end(), here) != around.end();
-    auto subject = CharacterTarget(lord->questtarget);
-    auto host = RegimentTarget(lord->questtarget);
+    auto subject = CharacterTarget(lord->QuestTarget());
+    auto host = RegimentTarget(lord->QuestTarget());
 
     if ( !inHomeland && HomeDanger() == LS_UNDER_ATTACK )
         return RE_RETURN_HOME;
-    if ( EnemyIn({ home }) == nullptr && EnemyIn(around) == nullptr )
+    if ( RandomEnemyIn({ home }) == nullptr && RandomEnemyIn(around) == nullptr )
         return RE_RETURN_HOME;
     if ( !inHomeland && inNear )
         return RE_RETURN_HOME;
     if ( ( subject != nullptr && subject->IsDead() ) || ( host != nullptr && host->Total() == 0 ) )
         return RE_RETURN_HOME;
 
-    lord->Available(true);
-    if ( Idle() ) {
-        auto foe = EnemyIn({ here });
+    lord->Flags().Set(cf_available);
+    if ( lord->QuestIdle() ) {
+        auto foe = RandomEnemyIn({ here });
         if ( foe == nullptr )
-            foe = EnemyIn({ home });
+            foe = RandomEnemyIn({ home });
         if ( foe == nullptr )
-            foe = EnemyIn(AdjacentPlaces());
+            foe = RandomEnemyIn(AdjacentPlaces());
         if ( foe == nullptr )
-            foe = EnemyIn(around);
+            foe = RandomEnemyIn(around);
         if ( foe != nullptr )
-            Order(QS_KILL, mxentity::SafeIdt(foe));
+            lord->AssignQuest(QS_KILL, mxentity::SafeIdt(foe));
         else
-            Order(QS_REST, IDT_NONE);
+            lord->AssignQuest(QS_REST, IDT_NONE);
     }
     return {};
 }
@@ -458,30 +408,30 @@ citadel_quest_processor::handover_t citadel_quest_processor::AttackEnemy ( void 
 citadel_quest_processor::handover_t citadel_quest_processor::HelpNeighbour ( void )
 {
     auto danger = HomeDanger();
-    auto subject = static_cast<citadel_character*>(CharacterTarget(lord->questtarget));
+    auto subject = static_cast<citadel_character*>(CharacterTarget(lord->QuestTarget()));
 
     if ( danger == LS_UNDER_ATTACK || subject == nullptr || subject->IsDead()
-         || subject->purpose != PU_DEFEND_HOMELAND || subject->reaction == RE_RETREAT
-         || ( danger == LS_IN_PERIL && Danger(Home(subject)) == LS_IN_DANGER ) )
+         || subject->Purpose() != PU_DEFEND_HOMELAND || subject->Reaction() == RE_RETREAT
+         || ( danger == LS_IN_PERIL && LandDanger(Home(subject)) == LS_IN_DANGER ) )
         return RE_RETURN_HOME;
 
-    lord->Available(false);
-    if ( Idle() )
-        Order(QS_JOIN, mxentity::SafeIdt(subject));
+    lord->Flags().Reset(cf_available);
+    if ( lord->QuestIdle() )
+        lord->AssignQuest(QS_JOIN, mxentity::SafeIdt(subject));
     return {};
 }
 
-citadel_quest_processor::handover_t citadel_quest_processor::Retreat ( void )
+citadel_quest_processor::handover_t citadel_quest_processor::FleeToSafeKeep ( void )
 {
     if ( HomeDanger() != LS_UNDER_ATTACK )
         return RE_RETURN_HOME;
 
-    lord->Available(true);
-    if ( Idle() ) {
-        auto troubled = [this]( u32 land ) { return Danger(land) >= LS_UNDER_ATTACK; };
-        auto unquiet = [this]( u32 land ) { return Danger(land) != LS_AT_PEACE; };
+    lord->Flags().Set(cf_available);
+    if ( lord->QuestIdle() ) {
+        auto troubled = [this]( u32 land ) { return LandDanger(land) >= LS_UNDER_ATTACK; };
+        auto unquiet = [this]( u32 land ) { return LandDanger(land) != LS_AT_PEACE; };
         auto around = NearPlaces();
-        auto realm = RealmPlaces(lord->home->Race());
+        auto realm = RealmPlaces(lord->Home()->Race());
         auto neighbouring = NeighbouringRealmPlaces();
         auto all = AllPlaces();
         std::erase_if(around, troubled);
@@ -492,12 +442,12 @@ citadel_quest_processor::handover_t citadel_quest_processor::Retreat ( void )
         citadel_stronghold* refuge = nullptr;
         for ( auto lands : { around, realm, neighbouring, all } ) {
             if ( refuge == nullptr )
-                refuge = SafeKeep(lands);
+                refuge = RandomReachableKeep(lands);
         }
         if ( refuge != nullptr )
-            Order(QS_GOTO, mxentity::SafeIdt(refuge));
+            lord->AssignQuest(QS_GOTO, mxentity::SafeIdt(refuge));
         else
-            Order(QS_REST, IDT_NONE);
+            lord->AssignQuest(QS_REST, IDT_NONE);
     }
     return {};
 }
@@ -506,16 +456,16 @@ citadel_quest_processor::handover_t citadel_quest_processor::GatherStrength ( vo
 {
     if ( HomeDanger() == LS_UNDER_ATTACK )
         return RE_RETURN_HOME;
-    if ( EnemyIn({ PlaceOf(lord->Location()) }) != nullptr )
+    if ( RandomEnemyIn({ PlaceOf(lord->Location()) }) != nullptr )
         return RE_ATTACK_ENEMY;
 
-    lord->Available(false);
-    if ( Idle() ) {
-        auto recruit = Pick(Recruits());
+    lord->Flags().Reset(cf_available);
+    if ( lord->QuestIdle() ) {
+        auto recruit = Pick(RecruitableLordsNearby());
         if ( recruit != nullptr )
-            Order(QS_RECRUIT, mxentity::SafeIdt(recruit));
+            lord->AssignQuest(QS_RECRUIT, mxentity::SafeIdt(recruit));
         else
-            Order(QS_REST, IDT_NONE);
+            lord->AssignQuest(QS_REST, IDT_NONE);
     }
     return {};
 }
@@ -525,10 +475,10 @@ citadel_quest_processor::handover_t citadel_quest_processor::CounterThreat ( voi
     if ( HomeDanger() > LS_TROUBLED )
         return RE_RETURN_HOME;
 
-    lord->Available(false);
+    lord->Flags().Reset(cf_available);
     std::vector<citadel_stronghold*> threatened;
     for ( auto land : NearPlaces() ) {
-        if ( Danger(land) == LS_THREATENED )
+        if ( LandDanger(land) == LS_THREATENED )
             threatened.push_back(places[land].keep);
     }
     if ( threatened.empty() )
@@ -536,53 +486,52 @@ citadel_quest_processor::handover_t citadel_quest_processor::CounterThreat ( voi
 
     auto here = PlaceOf(lord->Location());
     if ( std::any_of(threatened.begin(), threatened.end(), [this, here]( citadel_stronghold* keep ) { return PlaceOf(keep->Location()) == here; }) )
-        Order(QS_REST, IDT_NONE);
-    else if ( Idle() )
-        Order(QS_GOTO, mxentity::SafeIdt(Pick(threatened)));
+        lord->AssignQuest(QS_REST, IDT_NONE);
+    else if ( lord->QuestIdle() )
+        lord->AssignQuest(QS_GOTO, mxentity::SafeIdt(Pick(threatened)));
     return {};
 }
 
-citadel_quest_processor::handover_t citadel_quest_processor::LendService ( void )
+citadel_quest_processor::handover_t citadel_quest_processor::ServeLeader ( void )
 {
+// TODO: Not sure this is correct, following is a UI concept
     auto leader = lord->Following();
     if ( HomeDanger() == LS_UNDER_ATTACK || leader == nullptr || leader->IsDead() )
         return RE_RETURN_HOME;
 
-    lord->Available(false);
+    lord->Flags().Reset(cf_available);
     return {};
 }
 
 void citadel_quest_processor::Wander ( void )
 {
-    if ( lord->quest == QS_GOTO && lord->Location() != lord->QuestLocation() )
+    if ( lord->Quest() == QS_GOTO && lord->Location() != lord->QuestLocation() )
         return;     // still on his way
 
     auto here = lord->Location();
     for ( int tries = 0; tries < 8; tries++ ) {
         mxgridref there ( here.x + mxrandom(0, 2 * WANDERING) - WANDERING, here.y + mxrandom(0, 2 * WANDERING) - WANDERING );
         CONTINUE_IF( !mx->gamemap->IsLocOnMap(there) || there == here || !CITADEL_SCENARIO(Reachable(lord, here, there)) );
-        lord->reaction = RE_RETURN_HOME;
-        lord->quest = QS_GOTO;
-        lord->questtarget = MAKE_LOCID(there.x, there.y);
+        lord->Reaction(RE_RETURN_HOME);
+        lord->Quest(QS_GOTO);
+        lord->QuestTarget(MAKE_LOCID(there.x, there.y));
         return;
     }
 }
 
-void citadel_quest_processor::Campaign ( void )
+void citadel_quest_processor::DefendMaranorOrGotoFrontline ( void )
 {
     auto maranor = CITADEL_SCENARIO(maranor);
-    if ( maranor == nullptr )
-        return;
 
     if ( maranor->HasFallen() ) {
-        Order(QS_SEIZE, mxentity::SafeIdt(maranor));
+        lord->AssignQuest(QS_SEIZE, mxentity::SafeIdt(maranor));
         return;
     }
 
-    auto front = CITADEL_SCENARIO(Front());
+    auto front = CITADEL_SCENARIO(FrontlineKeep());
     auto camp = front != nullptr && CITADEL_SCENARIO(Reachable(lord, lord->Location(), front->Location())) ? front : maranor;
     if ( lord->Location() != camp->Location() )
-        Order(QS_GOTO, mxentity::SafeIdt(camp));
+        lord->AssignQuest(QS_GOTO, mxentity::SafeIdt(camp));
 }
 
 //
@@ -602,7 +551,7 @@ T citadel_quest_processor::FirstReachable ( std::vector<T>& candidates ) const
     return nullptr;
 }
 
-void citadel_quest_processor::PourOut ( void )
+void citadel_quest_processor::AttackNearestRivalKeep ( void )
 {
     std::vector<mxstronghold*> keeps;
     FOR_EACH_STRONGHOLD(stronghold) {
@@ -611,16 +560,16 @@ void citadel_quest_processor::PourOut ( void )
             keeps.push_back(stronghold);
     }
 
-    lord->reaction = RE_ATTACK_ENEMY;
+    lord->Reaction(RE_ATTACK_ENEMY);
     auto keep = FirstReachable(keeps);
     if ( keep != nullptr )
-        Order(QS_SEIZE, mxentity::SafeIdt(keep));
+        lord->AssignQuest(QS_SEIZE, mxentity::SafeIdt(keep));
 }
 
 void citadel_quest_processor::Impatience ( citadel_character* lord )
 {
     this->lord = lord;
-    if ( lord->idle < IMPATIENCE || !lord->HasQuality(qf_impatient)
+    if ( lord->Idle() < IMPATIENCE || !lord->HasQuality(qf_impatient)
          || lord->IsDead() || lord->IsPrisoner() || lord->IsFollowing() )
         return;
 
@@ -650,10 +599,10 @@ void citadel_quest_processor::Impatience ( citadel_character* lord )
              : keep != nullptr    ? lord->SetQuest(QS_SEIZE, mxentity::SafeIdt(keep))
              : false;
     if ( set )
-        lord->news = QN_IMPATIENT;
+        lord->QuestNews(QN_IMPATIENT);
 }
 
-bool citadel_quest_processor::March ( mxgridref target, bool fight )
+bool citadel_quest_processor::MarchToTarget ( mxgridref target, bool fight )
 {
     const u32 tired = 2 * (u32)sv_energy_scale;
     blocked = false;
@@ -688,107 +637,34 @@ bool citadel_quest_processor::March ( mxgridref target, bool fight )
     return true;
 }
 
-bool citadel_quest_processor::Guard ( void )
-{
-    if ( !lord->IsRecruited() && !lord->Marches() )
-        return false;
-
-    return CitadelBattle()->Guard(lord);
-}
-
-void citadel_quest_processor::Done ( mxquestnews_t news )
-{
-    lord->quest = QS_NONE;      // the target stays: the dawn news names it
-    if ( lord->IsRecruited() )
-        lord->news = news;
-}
-
-void citadel_quest_processor::Blocked ( void )
-{
-    if ( lord->IsRecruited() )
-        lord->news = QN_BLOCKED;
-    else
-        Done(QN_BLOCKED);
-}
-
-void citadel_quest_processor::Recruit ( citadel_character* character )
-{
-    auto score = lord->RecruitScore(character);
-    if ( score >= lord->RecruitThreshold(character->Race()) ) {
-        if ( character->IsFollowing() )
-            character->Cmd_UnFollow(character->Following());
-        auto mutual = character->quest == QS_RECRUIT && CharacterTarget(character->questtarget) == lord;
-        if ( mutual && character->Rank() > lord->Rank() && lord->Cmd_Follow(character) == MX_OK ) {
-            character->quest = QS_NONE;
-            Done(QN_DONE);
-            return;
-        }
-        if ( character->Cmd_Follow(lord) == MX_OK ) {
-            character->quest = QS_JOIN;
-            character->questtarget = mxentity::SafeIdt(lord);
-            Done(QN_DONE);
-            return;
-        }
-    } else if ( score <= -1 ) {
-        CitadelBattle()->Duel(character, lord);
-        Done(QN_OFFENDED);
-        return;
-    }
-    Done(QN_REFUSED);
-}
-
-void citadel_quest_processor::Merge ( mxcharacter* leader )
-{
-    if ( leader == lord )
-        return;
-    if ( lord->Rank() > CitadelLord(leader)->Rank() )
-        leader->Cmd_Follow(lord);
-    else
-        lord->Cmd_Follow(leader);
-}
-
-bool citadel_quest_processor::Obtain ( citadel_object* object, mxcharacter* holder )
-{
-    if ( !lord->IsFriend(holder) && lord->RecruitScore(holder) < lord->RecruitThreshold(holder->Race()) ) {
-        CitadelBattle()->Duel(lord, holder);
-        if ( lord->IsDead() || holder->IsAlive() )
-            return false;
-    }
-    if ( holder->Carrying() == object )
-        std::swap(lord->carrying, holder->carrying);
-    else
-        lord->Cmd_PickupObject();      // he dropped it as he fell
-    return lord->Carrying() == object;
-}
-
 void citadel_quest_processor::Besiege ( citadel_stronghold* keep, mxgridref target )
 {
     if ( keep->Allegiance() != lord->NormalisedLoyalty() ) {
-        if ( !lord->Location().IsNear(target) && !March(target, false) ) {
-            Done(QN_FAILED);
+        if ( !lord->Location().IsNear(target) && !MarchToTarget(target, false) ) {
+            lord->EndQuest(QN_FAILED);
             return;
         }
         if ( !lord->Location().IsNear(target) ) {
             if ( blocked )
-                Blocked();
+                lord->ReportQuestBlocked();
             return;
         }
         if ( !CitadelBattle()->Siege(lord, keep) )
             return;     // another siege is fought tonight: he waits
         if ( lord->IsDead() ) {
-            Done(QN_FAILED);
+            lord->EndQuest(QN_FAILED);
             return;
         }
         if ( keep->Allegiance() != lord->NormalisedLoyalty() )
             return;     // the siege goes on
     }
 
-    if ( lord->Location() != target && !March(target, false) ) {
-        Done(QN_FAILED);
+    if ( lord->Location() != target && !MarchToTarget(target, false) ) {
+        lord->EndQuest(QN_FAILED);
         return;
     }
     if ( lord->Location() == target )
-        Done(QN_DONE);
+        lord->EndQuest(QN_DONE);
 }
 
 void citadel_quest_processor::Quest ( void )
@@ -798,20 +674,19 @@ void citadel_quest_processor::Quest ( void )
 
     blocked = false;
     if ( lord->IsFollowing() ) {
-        if ( lord->quest == QS_JOIN )
-            Done(QN_DONE);
+        if ( lord->Quest() == QS_JOIN )
+            lord->EndQuest(QN_DONE);
         return;     // a fellowship goes where its leader goes
     }
 
-    auto character = CharacterTarget(lord->questtarget);
-    auto stronghold = StrongholdTarget(lord->questtarget);
-    auto object = ObjectTarget(lord->questtarget);
-    auto regiment = RegimentTarget(lord->questtarget);
-    auto holder = object != nullptr ? mx->scenario->WhoHasObject(object) : nullptr;
-    mxgridref lies;
+    auto character = CharacterTarget(lord->QuestTarget());
+    auto stronghold = StrongholdTarget(lord->QuestTarget());
+    auto object = ObjectTarget(lord->QuestTarget());
+    auto regiment = RegimentTarget(lord->QuestTarget());
+    auto holder = object != nullptr ? mx->objectprocessor->WhoHasObject(object) : nullptr;
 
     bool live = true;
-    switch ( lord->quest ) {
+    switch ( lord->Quest() ) {
         case QS_RECRUIT:
             live = character != nullptr && character->IsAlive() && !character->IsRecruited();
             break;
@@ -830,13 +705,13 @@ void citadel_quest_processor::Quest ( void )
             live = stronghold != nullptr;
             break;
         case QS_FIND:
-            live = object != nullptr && object->OnMap(lies);
+            live = object != nullptr && object->IsOnMap();
             break;
         case QS_TAKE:
             live = holder != nullptr && holder != lord && holder->IsAlive();
             break;
         case QS_DESTROY:
-            live = object != nullptr && ( object->OnMap(lies) || holder == lord || ( holder != nullptr && holder->IsAlive() ) );
+            live = object != nullptr && ( object->IsOnMap() || holder == lord || ( holder != nullptr && holder->IsAlive() ) );
             break;
         case QS_GOTO:
         case QS_GUARD:
@@ -846,103 +721,101 @@ void citadel_quest_processor::Quest ( void )
     }
 
     if ( !live ) {
-        Done(QN_FAILED);
+        lord->EndQuest(QN_FAILED);
         return;
     }
 
-    if ( lord->quest == QS_RESCUE ) {
+    if ( lord->Quest() == QS_RESCUE ) {
         auto hostage = lord->SearchDungeon((u32)sv_dungeon_search_night);
         if ( hostage != nullptr )
             mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_DUNGEON_FREED, hostage));
         if ( ( character != nullptr && !character->IsPrisoner() ) || CITADEL_SCENARIO(HostagesHeldAtMaranor()).empty() )
-            Done(QN_DONE);
+            lord->EndQuest(QN_DONE);
         return;
     }
 
     auto target = lord->QuestLocation();
 
-    if ( lord->quest == QS_KILL && character != nullptr ) {
-        if ( !lord->Location().IsNear(target) && !March(target, false) ) {
-            Done(QN_FAILED);
+    if ( lord->Quest() == QS_KILL && character != nullptr ) {
+        if ( !lord->Location().IsNear(target) && !MarchToTarget(target, false) ) {
+            lord->EndQuest(QN_FAILED);
             return;
         }
         if ( lord->Location().IsNear(character->Location()) ) {
             CitadelBattle()->Duel(lord, character);
             if ( character->IsDead() )
-                Done(QN_DONE);
+                lord->EndQuest(QN_DONE);
         } else if ( blocked && !lord->IsRecruited() ) {
-            Blocked();
+            lord->ReportQuestBlocked();
         }
         return;
     }
 
-    if ( lord->quest == QS_SEIZE && !stronghold->IsEnemy() ) {
+    if ( lord->Quest() == QS_SEIZE && !stronghold->IsEnemy() ) {
         Besiege(stronghold, target);
         return;
     }
 
-    if ( lord->quest == QS_DESTROY && holder == lord ) {
-        lord->carrying = nullptr;
-        object->Lift();
-        Done(QN_DONE);
+    if ( lord->Quest() == QS_DESTROY && holder == lord ) {
+        mx->objectprocessor->Destroy(object);
+        lord->EndQuest(QN_DONE);
         return;
     }
 
-    if ( !March(target, lord->quest == QS_SEIZE || regiment != nullptr) ) {
-        Done(QN_FAILED);
+    if ( !MarchToTarget(target, lord->Quest() == QS_SEIZE || regiment != nullptr) ) {
+        lord->EndQuest(QN_FAILED);
         return;
     }
 
     if ( lord->Location() != target ) {
         if ( blocked )
-            Blocked();
+            lord->ReportQuestBlocked();
         return;         // still on the road
     }
 
-    switch ( lord->quest ) {
+    switch ( lord->Quest() ) {
         case QS_RECRUIT:
             if ( !lord->IsRecruited() ) {
-                Recruit(CitadelLord(character));
+                lord->AttemptToRecruit(CitadelLord(character));
             } else if ( lord->CheckRecruitChar(character) && lord->Cmd_Approach(character) != nullptr ) {
                 character->Cmd_Follow(lord);
-                Done(QN_DONE);
+                lord->EndQuest(QN_DONE);
             } else if ( lord->RecruitScore(character) <= -1 ) {
                 CitadelBattle()->Duel(character, lord);
-                Done(QN_OFFENDED);
+                lord->EndQuest(QN_OFFENDED);
             } else {
-                Done(QN_REFUSED);
+                lord->EndQuest(QN_REFUSED);
             }
             break;
         case QS_JOIN:
-            Merge(character->IsFollowing() ? character->Following() : character);
-            Done(QN_DONE);
+            lord->MergeFellowship(character->IsFollowing() ? character->Following() : character);
+            lord->EndQuest(QN_DONE);
             break;
         case QS_GOTO:
         case QS_KILL:   // a regiment: the battle is joined where it stands
-            Done(QN_DONE);
+            lord->EndQuest(QN_DONE);
             break;
         case QS_SEIZE:
             if ( !stronghold->IsEnemy() )
-                Done(QN_DONE);
+                lord->EndQuest(QN_DONE);
             break;
         case QS_FIND:
             lord->Cmd_PickupObject();
-            Done(lord->Carrying() == object ? QN_DONE : QN_FAILED);
+            lord->EndQuest(lord->Carrying() == object ? QN_DONE : QN_FAILED);
             break;
         case QS_TAKE:
-            if ( Obtain(object, holder) )
-                Done(QN_DONE);
+            if ( lord->ObtainFrom(object, holder) )
+                lord->EndQuest(QN_DONE);
             break;
+            
         case QS_DESTROY:
-            if ( holder == nullptr || Obtain(object, holder) ) {
-                if ( lord->carrying == object )
-                    lord->carrying = nullptr;
-                object->Lift();
-                Done(QN_DONE);
+            if ( holder == nullptr || lord->ObtainFrom(object, holder) ) {
+                mx->objectprocessor->Destroy(object);
+                lord->EndQuest(QN_DONE);
             }
             break;
         case QS_GUARD:
-            Guard();
+            lord->StandGuard();
             break;
         default:
             break;      // a shadow keeps shadowing

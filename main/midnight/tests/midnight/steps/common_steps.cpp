@@ -66,7 +66,7 @@ void LOMStep::LuxorIsDead()
 void LOMStep::IceCrownHasBeenDestroyed()
 {
     auto morkin = GetCharacter("CH_MORKIN");
-    morkin->carrying = tme::mx->ObjectById(OB_ICECROWN);
+    morkin->CarryObject(tme::mx->ObjectById(OB_ICECROWN));
     GetCharacter("CH_FARFLAME")->Location( morkin->Location() ) ;
 }
 

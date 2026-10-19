@@ -50,15 +50,10 @@ bool citadel_stronghold::CanCharacterRecruitOrPost ( const mxcharacter* characte
     return mxstronghold::CanCharacterRecruitOrPost(character);
 }
 
-static bool Feuding ( mxrace_t race, mxrace_t other )
-{
-    return CitadelRace(race)->IsFeudingWith(other);
-}
-
 bool citadel_stronghold::CanCharacterPost ( const mxcharacter* character ) const
 {
-    return !Feuding(character->Race(), OccupyingRace())
-        && !Feuding(OccupyingRace(), character->Race());
+    return !CitadelRace(character->Race())->IsFeudingWith(OccupyingRace())
+        && !CitadelRace(OccupyingRace())->IsFeudingWith(character->Race());
 }
 
 mxrace_t citadel_stronghold::Allegiance () const

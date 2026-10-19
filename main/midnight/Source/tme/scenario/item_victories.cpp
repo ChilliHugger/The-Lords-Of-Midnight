@@ -176,8 +176,8 @@ namespace tme {
                     i->Flags().Set(et_disabled);
                     mxobject* obj = mx->ObjectById(GET_ID(actionid));                
                     // lose the object
-                    mxcharacter* c = mx->scenario->WhoHasObject(obj);
-                    if ( c ) c->carrying = NULL ;
+                    mxcharacter* c = mx->objectprocessor->WhoHasObject(obj);
+                    if ( c ) c->CarryObject(nullptr);
                 }
             }
 
@@ -211,7 +211,7 @@ namespace tme {
                 case IDT_OBJECT:
                     {
                         mxobject* obj = mx->ObjectById(GET_ID(id));
-                        i = mx->scenario->WhoHasObject(obj);
+                        i = mx->objectprocessor->WhoHasObject(obj);
                         if ( i ) return i->Location();
                     }
                     break;

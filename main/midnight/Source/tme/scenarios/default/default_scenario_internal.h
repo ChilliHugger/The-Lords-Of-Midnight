@@ -22,10 +22,8 @@ namespace tme {
         virtual mxroutebranch* CreateRouteBranch ();
     };
 
-
-
         // ALIAS default_scenario
-        class mxscenario 
+        class mxscenario
         {
         public:
             mxscenario();
@@ -63,11 +61,7 @@ namespace tme {
             virtual mxcharacter* MoonringWearer( void ) ;
             virtual void CheckMoonringWearerDead ( void );
             
-            virtual mxcharacter* WhoHasObject( mxobject* object ) const ;
-            virtual mxobject* PickupObject ( mxgridref loc );
             virtual void DeadCharactersDropObjects( void );
-            virtual bool DropObject ( mxgridref loc, mxobject* object );
-            virtual mxobject* FindObjectAtLocation ( mxgridref loc );
             
             virtual mxgridref FindLookingTowards( mxgridref loc, mxdir_t dir );
 
@@ -93,6 +87,7 @@ namespace tme {
             
             virtual mxterrain_t toGeneralisedTerrain( mxterrain_t t) const ;
             virtual mxterrain_t toScenarioTerrain( mxterrain_t t) const ;
+            virtual mxrace_t toGeneralisedRace(mxrace_t race) const;
 
             // what this scenario's terrain costs a regiment on the march
             virtual u32 TerrainMovementModifier( mxrace_t race, mxterrain_t terrain ) const;

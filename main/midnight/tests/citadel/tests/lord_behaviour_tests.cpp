@@ -67,7 +67,7 @@ namespace {
     {
         citadel_quest_processor processor;
         processor.Survey();
-        return processor.Danger(processor.PlaceOf(keep->Location()));
+        return processor.LandDanger(processor.PlaceOf(keep->Location()));
     }
 
     mxgridref Beside(mxgridref where, mxcharacter* lord)
@@ -109,14 +109,14 @@ SCENARIO("Every lord of the realms has a home keep to defend")
 
     for ( auto character : tme::mx->objCharacters ) {
         auto lord = static_cast<citadel_character*>(character);
-        if ( !lord->IsRecruited() && ( lord->purpose == PU_DEFEND_HOMELAND || lord->purpose == PU_BE_A_HOSTAGE ) )
-            REQUIRE( lord->home != nullptr );
+        if ( !lord->IsRecruited() && ( lord->Purpose() == PU_DEFEND_HOMELAND || lord->Purpose() == PU_BE_A_HOSTAGE ) )
+            REQUIRE( lord->Home() != nullptr );
     }
 
     THEN("it is the keep he holds, or for a hostage the one the database names")
     {
-        REQUIRE( Lord("CH_HARAGLAI")->home == Keep("SH_CASTLE_SKORDROTH") );
-        REQUIRE( Lord("CH_DJALINA")->home == Keep("SH_CASTLE_THEODEL") );
+        REQUIRE( Lord("CH_HARAGLAI")->Home() == Keep("SH_CASTLE_SKORDROTH") );
+        REQUIRE( Lord("CH_DJALINA")->Home() == Keep("SH_CASTLE_THEODEL") );
     }
 }
 
@@ -128,8 +128,8 @@ SCENARIO("A lord at home in a realm at peace stands firm")
     React(haraglai);
 
     REQUIRE( DangerAt(Keep("SH_CASTLE_SKORDROTH")) == LS_AT_PEACE );
-    REQUIRE( haraglai->reaction == RE_STAND_FIRM );
-    REQUIRE( haraglai->quest == QS_REST );
+    REQUIRE( haraglai->Reaction() == RE_STAND_FIRM );
+    REQUIRE( haraglai->Quest() == QS_REST );
     REQUIRE( haraglai->IsAvailable() );
 }
 
@@ -149,9 +149,9 @@ SCENARIO("A lord whose home is under attack holds it only if he is brave or thre
 
         THEN("he retreats to another keep")
         {
-            REQUIRE( haraglai->reaction == RE_RETREAT );
-            REQUIRE( haraglai->quest == QS_GOTO );
-            REQUIRE( haraglai->questtarget != Idt(skordroth) );
+            REQUIRE( haraglai->Reaction() == RE_RETREAT );
+            REQUIRE( haraglai->Quest() == QS_GOTO );
+            REQUIRE( haraglai->QuestTarget() != Idt(skordroth) );
         }
     }
 
@@ -162,8 +162,8 @@ SCENARIO("A lord whose home is under attack holds it only if he is brave or thre
 
         THEN("he holds, and is no one's to call on")
         {
-            REQUIRE( haraglai->reaction == RE_STAND_FIRM );
-            REQUIRE( haraglai->quest == QS_REST );
+            REQUIRE( haraglai->Reaction() == RE_STAND_FIRM );
+            REQUIRE( haraglai->Quest() == QS_REST );
             REQUIRE_FALSE( haraglai->IsAvailable() );
         }
     }
@@ -176,8 +176,8 @@ SCENARIO("A lord whose home is under attack holds it only if he is brave or thre
 
         THEN("he holds")
         {
-            REQUIRE( haraglai->reaction == RE_STAND_FIRM );
-            REQUIRE( haraglai->quest == QS_REST );
+            REQUIRE( haraglai->Reaction() == RE_STAND_FIRM );
+            REQUIRE( haraglai->Quest() == QS_REST );
         }
     }
 }
@@ -195,9 +195,9 @@ SCENARIO("A reckless lord attacks the enemy next door, though his realm's hostag
 
     React(haraglai);
 
-    REQUIRE( haraglai->reaction == RE_ATTACK_ENEMY );
-    REQUIRE( haraglai->quest == QS_KILL );
-    REQUIRE( haraglai->questtarget == Idt(regiment) );
+    REQUIRE( haraglai->Reaction() == RE_ATTACK_ENEMY );
+    REQUIRE( haraglai->Quest() == QS_KILL );
+    REQUIRE( haraglai->QuestTarget() == Idt(regiment) );
 }
 
 SCENARIO("While his realm's hostage is held, its king only defends his citadel")
@@ -221,7 +221,7 @@ SCENARIO("While his realm's hostage is held, its king only defends his citadel")
 
         THEN("the King of the Fallows stays in his citadel")
         {
-            REQUIRE( asunai->quest == QS_REST );
+            REQUIRE( asunai->Quest() == QS_REST );
         }
     }
 
@@ -232,9 +232,9 @@ SCENARIO("While his realm's hostage is held, its king only defends his citadel")
 
         THEN("he goes to fight the regiment")
         {
-            REQUIRE( asunai->reaction == RE_ATTACK_ENEMY );
-            REQUIRE( asunai->quest == QS_KILL );
-            REQUIRE( asunai->questtarget == Idt(regiment) );
+            REQUIRE( asunai->Reaction() == RE_ATTACK_ENEMY );
+            REQUIRE( asunai->Quest() == QS_KILL );
+            REQUIRE( asunai->QuestTarget() == Idt(regiment) );
         }
     }
 }
@@ -249,9 +249,9 @@ SCENARIO("A lord whose keep Boroth has taken goes to take it back")
     React(haraglai);
 
     REQUIRE( skordroth->Subjugated() );
-    REQUIRE( haraglai->reaction == RE_TAKE_BACK_STRONGHOLD );
-    REQUIRE( haraglai->quest == QS_SEIZE );
-    REQUIRE( haraglai->questtarget == Idt(skordroth) );
+    REQUIRE( haraglai->Reaction() == RE_TAKE_BACK_STRONGHOLD );
+    REQUIRE( haraglai->Quest() == QS_SEIZE );
+    REQUIRE( haraglai->QuestTarget() == Idt(skordroth) );
 }
 
 SCENARIO("A lord whose realm is invaded elsewhere goes to help a neighbour who is at home")
@@ -267,9 +267,9 @@ SCENARIO("A lord whose realm is invaded elsewhere goes to help a neighbour who i
 
     React(haraglai);
 
-    REQUIRE( haraglai->reaction == RE_HELP_NEIGHBOUR );
-    REQUIRE( haraglai->quest == QS_JOIN );
-    auto subject = CharacterTarget(haraglai->questtarget);
+    REQUIRE( haraglai->Reaction() == RE_HELP_NEIGHBOUR );
+    REQUIRE( haraglai->Quest() == QS_JOIN );
+    auto subject = CharacterTarget(haraglai->QuestTarget());
     REQUIRE( subject != nullptr );
     REQUIRE( subject->Race() == RA_USKARG );
 }
@@ -327,7 +327,7 @@ SCENARIO("One of yours besieges a keep of the realms and takes it for the Free")
             TMEStep::NightFalls();
             TMEStep::NightFalls();
             REQUIRE( rorthron->Location() == ceremelth->Location() );
-            REQUIRE( rorthron->quest == QS_NONE );
+            REQUIRE( rorthron->Quest() == QS_NONE );
         }
     }
 }
@@ -341,14 +341,14 @@ SCENARIO("A far-sighted lord whose home is in peril wins a neighbour into his ow
     haraglai->qualities = qf_farsighted | qf_kind | qf_gentle;
     darath->qualities = qf_farsighted | qf_kind | qf_gentle;
     darath->Location(Keep("SH_CASTLE_ELINBRAND")->Location());
-    darath->Available(true);
+    darath->Flags().Set(cf_available);
     AFoeRegimentAt(200, Keep("SH_CASTLE_ATHRUDAN")->Location());
 
     React(haraglai);
 
-    REQUIRE( haraglai->reaction == RE_GATHER_STRENGTH );
-    REQUIRE( haraglai->quest == QS_RECRUIT );
-    REQUIRE( haraglai->questtarget == Idt(darath) );
+    REQUIRE( haraglai->Reaction() == RE_GATHER_STRENGTH );
+    REQUIRE( haraglai->Quest() == QS_RECRUIT );
+    REQUIRE( haraglai->QuestTarget() == Idt(darath) );
 
     WHEN("he reaches Darath")
     {
@@ -358,9 +358,9 @@ SCENARIO("A far-sighted lord whose home is in peril wins a neighbour into his ow
         THEN("Darath follows him, and is still not yours")
         {
             REQUIRE( darath->Following() == haraglai );
-            REQUIRE( darath->quest == QS_JOIN );
+            REQUIRE( darath->Quest() == QS_JOIN );
             REQUIRE_FALSE( darath->IsRecruited() );
-            REQUIRE( haraglai->quest == QS_NONE );
+            REQUIRE( haraglai->Quest() == QS_NONE );
         }
     }
 }
@@ -369,14 +369,14 @@ SCENARIO("A lord already on a quest is not turned from it")
 {
     TMEStep::NewStory();
     auto haraglai = HaraglaiAtHome();
-    haraglai->quest = QS_GOTO;
-    haraglai->questtarget = MAKE_LOCID(140, 140);
+    haraglai->Quest(QS_GOTO);
+    haraglai->QuestTarget(MAKE_LOCID(140, 140));
     AFoeRegimentAt(200, haraglai->Location());
 
     React(haraglai);
 
-    REQUIRE( haraglai->quest == QS_GOTO );
-    REQUIRE( haraglai->questtarget == MAKE_LOCID(140, 140) );
+    REQUIRE( haraglai->Quest() == QS_GOTO );
+    REQUIRE( haraglai->QuestTarget() == MAKE_LOCID(140, 140) );
 }
 
 SCENARIO("A lord left on his own walks home, and one in a fellowship stays with it")
@@ -392,9 +392,9 @@ SCENARIO("A lord left on his own walks home, and one in a fellowship stays with 
 
         THEN("he goes home")
         {
-            REQUIRE( haraglai->reaction == RE_RETURN_HOME );
-            REQUIRE( haraglai->quest == QS_GOTO );
-            REQUIRE( haraglai->questtarget == Idt(skordroth) );
+            REQUIRE( haraglai->Reaction() == RE_RETURN_HOME );
+            REQUIRE( haraglai->Quest() == QS_GOTO );
+            REQUIRE( haraglai->QuestTarget() == Idt(skordroth) );
         }
     }
 
@@ -410,7 +410,7 @@ SCENARIO("A lord left on his own walks home, and one in a fellowship stays with 
         THEN("Darath stays with him")
         {
             REQUIRE( darath->Following() == haraglai );
-            REQUIRE( darath->quest != QS_GOTO );
+            REQUIRE( darath->Quest() != QS_GOTO );
         }
     }
 }
@@ -428,8 +428,8 @@ SCENARIO("When Boroth falls for good, his lieutenants pour out of the Marish")
 
         THEN("Yrgreth goes home to Gliwain")
         {
-            REQUIRE( yrgreth->quest == QS_GOTO );
-            REQUIRE( yrgreth->questtarget == Idt(Keep("SH_CASTLE_GLIWAIN")) );
+            REQUIRE( yrgreth->Quest() == QS_GOTO );
+            REQUIRE( yrgreth->QuestTarget() == Idt(Keep("SH_CASTLE_GLIWAIN")) );
         }
     }
 
@@ -440,21 +440,22 @@ SCENARIO("When Boroth falls for good, his lieutenants pour out of the Marish")
 
         THEN("Yrgreth still goes home")
         {
-            REQUIRE( yrgreth->questtarget == Idt(Keep("SH_CASTLE_GLIWAIN")) );
+            REQUIRE( yrgreth->QuestTarget() == Idt(Keep("SH_CASTLE_GLIWAIN")) );
         }
     }
 
     WHEN("Boroth is dead, and has already risen once")
     {
+        GetCharacter("CH_BOROTH")->Flags().Reset(cf_alive);
         boroth->Flags().Reset(cf_alive);
         Citadel()->flags.Set(gf_wraith);
         React(yrgreth);
 
         THEN("Yrgreth marches on the nearest keep that is not the Dark Fey's")
         {
-            REQUIRE( yrgreth->reaction == RE_ATTACK_ENEMY );
-            REQUIRE( yrgreth->quest == QS_SEIZE );
-            auto keep = StrongholdTarget(yrgreth->questtarget);
+            REQUIRE( yrgreth->Reaction() == RE_ATTACK_ENEMY );
+            REQUIRE( yrgreth->Quest() == QS_SEIZE );
+            auto keep = StrongholdTarget(yrgreth->QuestTarget());
             REQUIRE( keep != nullptr );
             REQUIRE( keep->Allegiance() != RA_DARK_FEY );
         }
@@ -472,8 +473,8 @@ SCENARIO("When two fellowships merge, the higher-ranked lord leads")
 
     WHEN("Haraglai joins the King of the Fallows")
     {
-        haraglai->quest = QS_JOIN;
-        haraglai->questtarget = Idt(asunai);
+        haraglai->Quest(QS_JOIN);
+        haraglai->QuestTarget(Idt(asunai));
         citadel_quest_processor().Process(haraglai);
 
         THEN("Haraglai follows him")
@@ -484,8 +485,8 @@ SCENARIO("When two fellowships merge, the higher-ranked lord leads")
 
     WHEN("the King joins Haraglai")
     {
-        asunai->quest = QS_JOIN;
-        asunai->questtarget = Idt(haraglai);
+        asunai->Quest(QS_JOIN);
+        asunai->QuestTarget(Idt(haraglai));
         citadel_quest_processor().Process(asunai);
 
         THEN("it is still the King who leads")
@@ -498,17 +499,17 @@ SCENARIO("When two fellowships merge, the higher-ranked lord leads")
     WHEN("each sets out to win the other over")
     {
         haraglai->qualities = asunai->qualities = qf_kind | qf_gentle | qf_generous;
-        haraglai->quest = QS_RECRUIT;
-        haraglai->questtarget = Idt(asunai);
-        asunai->quest = QS_RECRUIT;
-        asunai->questtarget = Idt(haraglai);
+        haraglai->Quest(QS_RECRUIT);
+        haraglai->QuestTarget(Idt(asunai));
+        asunai->Quest(QS_RECRUIT);
+        asunai->QuestTarget(Idt(haraglai));
         citadel_quest_processor().Process(haraglai);
 
         THEN("the King leads, and both quests are over")
         {
             REQUIRE( haraglai->Following() == asunai );
-            REQUIRE( haraglai->quest == QS_NONE );
-            REQUIRE( asunai->quest == QS_NONE );
+            REQUIRE( haraglai->Quest() == QS_NONE );
+            REQUIRE( asunai->Quest() == QS_NONE );
         }
     }
 }
@@ -616,7 +617,7 @@ SCENARIO("A realm is at ransom while its hostage is held, unfettered when freed,
             Army(asunai, 1000);
             AFoeRegimentAt(200, Keep("SH_CASTLE_CERRELM")->Location());
             React(asunai);
-            REQUIRE( asunai->quest == QS_KILL );
+            REQUIRE( asunai->Quest() == QS_KILL );
         }
     }
 

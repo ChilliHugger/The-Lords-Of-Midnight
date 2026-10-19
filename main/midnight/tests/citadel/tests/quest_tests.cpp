@@ -76,15 +76,15 @@ SCENARIO("Every lord's purpose, reaction and quest come from the database")
 
     THEN("the lords of the realms were born to defend their homelands, and start by going home")
     {
-        REQUIRE( Lord(ch_haraglai)->purpose == PU_DEFEND_HOMELAND );
-        REQUIRE( Lord(ch_haraglai)->reaction == RE_RETURN_HOME );
-        REQUIRE( Lord(ch_haraglai)->quest == QS_REST );
+        REQUIRE( Lord(ch_haraglai)->Purpose() == PU_DEFEND_HOMELAND );
+        REQUIRE( Lord(ch_haraglai)->Reaction() == RE_RETURN_HOME );
+        REQUIRE( Lord(ch_haraglai)->Quest() == QS_REST );
     }
 
     THEN("a hostage's purpose is to be one, and Corleth is in the Dark Citadel to rescue")
     {
-        REQUIRE( Lord(ch_djalina)->purpose == PU_BE_A_HOSTAGE );
-        REQUIRE( Lord("CH_CORLETH")->quest == QS_RESCUE );
+        REQUIRE( Lord(ch_djalina)->Purpose() == PU_BE_A_HOSTAGE );
+        REQUIRE( Lord("CH_CORLETH")->Quest() == QS_RESCUE );
     }
 }
 
@@ -98,8 +98,8 @@ SCENARIO("Your lords take quests, and the lords of the realms take no orders fro
     THEN("one of yours can be sent to recruit a lord of the realms")
     {
         REQUIRE( rorthron->SetQuest(QS_RECRUIT, Idt(ilvar)) );
-        REQUIRE( rorthron->quest == QS_RECRUIT );
-        REQUIRE( rorthron->questtarget == Idt(ilvar) );
+        REQUIRE( rorthron->Quest() == QS_RECRUIT );
+        REQUIRE( rorthron->QuestTarget() == Idt(ilvar) );
     }
 
     THEN("a lord of the realms cannot be sent anywhere")
@@ -125,9 +125,9 @@ SCENARIO("Your lords take quests, and the lords of the realms take no orders fro
 
     THEN("but not to attack one of yours, and a refusal changes nothing")
     {
-        auto before = rorthron->quest;
+        auto before = rorthron->Quest();
         REQUIRE_FALSE( rorthron->SetQuest(QS_KILL, Idt(Lord("CH_CORLETH"))) );
-        REQUIRE( rorthron->quest == before );
+        REQUIRE( rorthron->Quest() == before );
     }
 
     THEN("Find, Take and Destroy are for the seven weapons, not the Moon Ring")
@@ -160,7 +160,7 @@ SCENARIO("Rorthron is sent to find Ilvar the Penitent and win him over")
         {
             REQUIRE( ilvar->IsRecruited() );
             REQUIRE( ilvar->Following() == rorthron );
-            REQUIRE( rorthron->quest == QS_NONE );
+            REQUIRE( rorthron->Quest() == QS_NONE );
         }
     }
 }
@@ -181,7 +181,7 @@ SCENARIO("A lord sent somewhere walks there over the nights that follow, then wa
         THEN("he is there, and waiting for his next quest")
         {
             REQUIRE( rorthron->Location() == there );
-            REQUIRE( rorthron->quest == QS_NONE );
+            REQUIRE( rorthron->Quest() == QS_NONE );
         }
     }
 }
@@ -301,7 +301,7 @@ SCENARIO("Corleth searches the dungeons by night, and each hostage he finds is f
     auto djalina = Lord(ch_djalina);
     REQUIRE( corleth->InDungeon() );
     REQUIRE( corleth->SetQuest(QS_RESCUE, Idt(djalina)) );
-    Lord("CH_ARIN")->quest = QS_NONE;
+    Lord("CH_ARIN")->Quest(QS_NONE);
     tme::variables::sv_dungeon_search_night = 256;      // tonight's search cannot miss
 
     WHEN("night falls")
@@ -316,7 +316,7 @@ SCENARIO("Corleth searches the dungeons by night, and each hostage he finds is f
                 if ( hostage->IsPrisoner() )
                     continue;
                 REQUIRE( hostage->IsRecruited() );
-                REQUIRE( hostage->Location() == hostage->home->Location() );
+                REQUIRE( hostage->Location() == hostage->Home()->Location() );
             }
         }
     }
@@ -344,7 +344,7 @@ SCENARIO("A lord offended by an approach sets upon the lord who made it")
             THEN("Haraglai is not won over: he is offended, and they have fought")
             {
                 REQUIRE_FALSE( haraglai->IsRecruited() );
-                REQUIRE( rorthron->news == QN_OFFENDED );
+                REQUIRE( rorthron->QuestNews() == QN_OFFENDED );
                 REQUIRE( ( rorthron->Flags().Is(cf_inbattle) || rorthron->Flags().Is(cf_wonbattle) || rorthron->IsDead() ) );
             }
         }
@@ -363,7 +363,7 @@ SCENARIO("A lord offended by an approach sets upon the lord who made it")
             THEN("Haraglai simply refuses")
             {
                 REQUIRE_FALSE( haraglai->IsRecruited() );
-                REQUIRE( rorthron->news == QN_REFUSED );
+                REQUIRE( rorthron->QuestNews() == QN_REFUSED );
             }
         }
     }
@@ -376,8 +376,8 @@ SCENARIO("An artefact can be found, borrowed from one of yours, and destroyed")
     auto rorthron = Lord(ch_rorthron);
     auto corleth = Lord("CH_CORLETH");
     auto stormblade = Artefact("OB_STORMBLADE");
-    mxgridref where;
-    REQUIRE( stormblade->OnMap(where) );
+    REQUIRE( stormblade->IsOnMap() );
+    mxgridref where = stormblade->Location();
 
     WHEN("Rorthron, where Stormblade lies, is sent to find it")
     {
@@ -388,16 +388,16 @@ SCENARIO("An artefact can be found, borrowed from one of yours, and destroyed")
         THEN("he carries it, and it lies there no longer")
         {
             REQUIRE( rorthron->Carrying() == stormblade );
-            REQUIRE_FALSE( stormblade->OnMap(where) );
-            REQUIRE( rorthron->news == QN_DONE );
+            REQUIRE_FALSE( stormblade->IsOnMap() );
+            REQUIRE( rorthron->QuestNews() == QN_DONE );
         }
     }
 
     WHEN("Corleth, beside him, carries Bloodbringer, and Rorthron is sent to take it")
     {
         auto bloodbringer = Artefact("OB_BLOODBRINGER");
-        rorthron->carrying = nullptr;
-        corleth->carrying = bloodbringer;
+        rorthron->CarryObject(nullptr);
+        corleth->CarryObject(bloodbringer);
         corleth->Location(rorthron->Location());
         REQUIRE( rorthron->SetQuest(QS_TAKE, Idt(bloodbringer)) );
         TMEStep::NightFalls();
@@ -412,15 +412,15 @@ SCENARIO("An artefact can be found, borrowed from one of yours, and destroyed")
     WHEN("Rorthron, carrying the Persuader, is sent to destroy it")
     {
         auto persuader = Artefact("OB_PERSUADER");
-        rorthron->carrying = persuader;
+        rorthron->CarryObject(persuader);
         REQUIRE( rorthron->SetQuest(QS_DESTROY, Idt(persuader)) );
         TMEStep::NightFalls();
 
         THEN("nobody has it and it lies nowhere")
         {
             REQUIRE( rorthron->Carrying() == nullptr );
-            REQUIRE( tme::mx->scenario->WhoHasObject(persuader) == nullptr );
-            REQUIRE_FALSE( persuader->OnMap(where) );
+            REQUIRE( tme::mx->objectprocessor->WhoHasObject(persuader) == nullptr );
+            REQUIRE_FALSE( persuader->IsOnMap() );
         }
     }
 }
@@ -445,7 +445,7 @@ SCENARIO("A lord's quest and his news are told from strings.tsv, naming whom or 
                                           + tme::mx->GenderById(haraglai->gender)->pronoun3 + "." );
 
         auto bloodbringer = Artefact("OB_BLOODBRINGER");
-        corleth->carrying = bloodbringer;
+        corleth->CarryObject(bloodbringer);
         REQUIRE( rorthron->SetQuest(QS_TAKE, Idt(bloodbringer)) );
         REQUIRE( rorthron->QuestText() == "Rorthron is going to " + corleth->Longname() + " for " + bloodbringer->name + "." );
 
@@ -456,7 +456,7 @@ SCENARIO("A lord's quest and his news are told from strings.tsv, naming whom or 
     THEN("the dawn news is one sentence on the quest page, and a paragraph of the night's report")
     {
         REQUIRE( rorthron->SetQuest(QS_RECRUIT, Idt(ilvar)) );
-        rorthron->news = QN_REFUSED;
+        rorthron->QuestNews(QN_REFUSED);
         auto news = ilvar->Longname() + " would not be persuaded by Rorthron";
         REQUIRE( rorthron->NewsText() == news );
         REQUIRE( text(SS_QUEST_NEWS_LINE, rorthron) == news + "." );
@@ -546,14 +546,14 @@ SCENARIO("An impatient lord of yours, left waiting, sets out on a quest of his o
 
         WHEN("he waits for orders night after night")
         {
-            for ( int night = 0; night < 5 && rorthron->news != QN_IMPATIENT; night++ )
+            for ( int night = 0; night < 5 && rorthron->QuestNews() != QN_IMPATIENT; night++ )
                 TMEStep::NightFalls();
 
             THEN("he chooses his own quest, and tells you so")
             {
-                REQUIRE( rorthron->news == QN_IMPATIENT );
-                REQUIRE( rorthron->quest != QS_REST );
-                REQUIRE( rorthron->quest != QS_NONE );
+                REQUIRE( rorthron->QuestNews() == QN_IMPATIENT );
+                REQUIRE( rorthron->Quest() != QS_REST );
+                REQUIRE( rorthron->Quest() != QS_NONE );
             }
         }
     }
@@ -569,7 +569,7 @@ SCENARIO("An impatient lord of yours, left waiting, sets out on a quest of his o
 
             THEN("he waits")
             {
-                REQUIRE( rorthron->quest == QS_REST );
+                REQUIRE( rorthron->Quest() == QS_REST );
             }
         }
     }
@@ -582,12 +582,12 @@ SCENARIO("A wanderer wanders, and a hostage set free goes home to defend it")
     WHEN("a lord of the realms is given to wandering")
     {
         auto haraglai = Lord(ch_haraglai);
-        haraglai->purpose = PU_RANDOMLY_WANDER;
+        haraglai->Purpose(PU_RANDOMLY_WANDER);
         React(haraglai);
 
         THEN("he sets off somewhere")
         {
-            REQUIRE( haraglai->quest == QS_GOTO );
+            REQUIRE( haraglai->Quest() == QS_GOTO );
             REQUIRE( haraglai->QuestLocation() != haraglai->Location() );
         }
     }
@@ -600,7 +600,7 @@ SCENARIO("A wanderer wanders, and a hostage set free goes home to defend it")
 
         THEN("she reacts to the war like any lord of her realm")
         {
-            REQUIRE( djalina->quest != QS_REST );
+            REQUIRE( djalina->Quest() != QS_REST );
         }
     }
 }
@@ -635,7 +635,7 @@ SCENARIO("An artefact a lord of the realms carries is handed over by one who can
     auto rorthron = Lord(ch_rorthron);
     auto ilvar = Lord(ch_ilvar);
     auto stormblade = Artefact("OB_STORMBLADE");
-    ilvar->carrying = stormblade;
+    ilvar->CarryObject(stormblade);
     rorthron->Location(ilvar->Location());
 
     REQUIRE( rorthron->CheckRecruitChar(ilvar) );
@@ -649,7 +649,7 @@ SCENARIO("An artefact a lord of the realms carries is handed over by one who can
         {
             REQUIRE( rorthron->Carrying() == stormblade );
             REQUIRE( ilvar->IsAlive() );
-            REQUIRE( rorthron->quest == QS_NONE );
+            REQUIRE( rorthron->Quest() == QS_NONE );
         }
     }
 }

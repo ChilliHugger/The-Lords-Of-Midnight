@@ -6,6 +6,7 @@
 #define _CARCHIVE_H_INCLUDED_
 
 #include <stdlib.h>
+#include <type_traits>
 
 //#if !defined(_UNIX_)
 //#define _BUFFERED_ARCHIVE_
@@ -141,6 +142,42 @@ namespace chilli {
     
         MXINLINE archive& operator<<(archive& ar, const point& p)   { ar.Write(&p, sizeof(point)); return ar; }
         MXINLINE archive& operator>>(archive& ar, point& p)         { ar.Read(&p, sizeof(point)); return ar; }
+
+        template <class T>
+        archive& operator<<( archive& ar, std::vector<T>& vector )    {
+            ar << (u32)vector.size();
+            for ( auto& id : vector )
+                ar << id;
+            return ar;
+        }
+        
+        template <class T>
+        archive& operator>>( archive& ar, std::vector<T>& vector )    {
+            u32 count;
+            ar >> count;
+            vector.resize(count);
+            for ( auto& id : vector )
+                ar >> id;
+            return ar;
+        }
+
+        // Enums are saved as a u32, so a wider one has to be handled deliberately rather than truncated
+        template <typename E, typename = std::enable_if_t<std::is_enum_v<E>>>
+        archive& operator<<( archive& ar, E value )
+        {
+            static_assert( sizeof(E) <= sizeof(u32), "an enum wider than 32 bits would be truncated" );
+            return ar << static_cast<u32>(value);
+        }
+
+        template <typename E, typename = std::enable_if_t<std::is_enum_v<E>>>
+        archive& operator>>( archive& ar, E& value )
+        {
+            static_assert( sizeof(E) <= sizeof(u32), "an enum wider than 32 bits would be truncated" );
+            u32 stored;
+            ar >> stored;
+            value = static_cast<E>(stored);
+            return ar;
+        }
     }
 }
 

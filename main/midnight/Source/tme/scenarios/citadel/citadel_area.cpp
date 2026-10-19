@@ -20,17 +20,11 @@ namespace tme {
 void citadel_area::Serialize ( archive& ar )
 {
     mxarea::Serialize(ar);
-
-    u32 count = (u32)neighbours.size();
+    
     if ( ar.IsStoring() ) {
-        ar << count;
-        for ( auto id : neighbours )
-            ar << id;
+        ar << neighbours;
     } else {
-        ar >> count;
-        neighbours.resize(count);
-        for ( auto& id : neighbours )
-            ar >> id;
+        ar >> neighbours;
     }
 }
 
@@ -42,14 +36,13 @@ void citadel_area::LoadTsv ( const TsvRow& row )
     for ( auto& symbol : row.GetSymbolList(TsvField::Area::Neighbours, ',') ) {
         auto id = ResolveTypedId(row.Symbols(), symbol, IDT_AREAINFO);
         if ( id != IDT_NONE )
-            neighbours.push_back(GET_ID(id));
+            neighbours.push_back(id);
     }
 }
 
 bool citadel_area::Borders ( const mxarea* area ) const
 {
-    return area != nullptr
-        && std::find(neighbours.begin(), neighbours.end(), area->Id()) != neighbours.end();
+    return std::find(neighbours.begin(), neighbours.end(), mxentity::SafeIdt(area)) != neighbours.end();
 }
 
 } // namespace tme

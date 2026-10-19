@@ -87,6 +87,7 @@ namespace tme {
         //class mxprocessor;
             class mxtext;
             class mxnight;
+            class mxobjectprocessor;
             class mxbattle;
             class mxgameover;
     //} ;
@@ -299,9 +300,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool HasTunnelEntrance() const ;
         bool IsTunnelObject() const ;
 
-#if defined(_DDR_)
         MAP_FLAG_PROPERTY( HasObject,       lf_object)
-#endif
         MAP_FLAG_PROPERTY( HasArmy,         lf_army)
         MAP_FLAG_PROPERTY( HasCharacter,    lf_character)
         
@@ -364,11 +363,13 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
         bool IsTunnel( mxgridref loc );
         bool IsTunnelObject( mxgridref l );
 
-#if defined(_DDR_)
         bool HasObject( mxgridref l );
         void SetObject( mxgridref l, bool value );
+
+#if defined(_DDR_)
         void MoveMists ( void );
 #endif
+
         mxthing_t getLocationObject( const mxcharacter* c, mxgridref loc );
 
         void ResetVisibleRange();
@@ -771,10 +772,21 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY( MapRemove,   of_remove )
             FLAG_PROPERTY( IsUnique,    of_unique )
             FLAG_PROPERTY( CanRespawn,  of_respawn )
-            
-            bool IsCarried() const ;
+            FLAG_PROPERTY( CanHelpRecruitment,  of_recruitment );
+            FLAG_PROPERTY( IsRandomStart,       of_randomstart );
+            FLAG_PROPERTY( IsDestroyed, of_destroyed );
+            GET_PROPERTY(bool, IsCarried, carriedby != nullptr );
+
+            PROPERTY(mxitem*, CarriedBy, carriedby);
+
+#if defined(_ARTEFACTS_)
+            bool IsArtefact() const { return type != OT_NONE && power != OP_NONE; }
+#else
+            bool IsArtefact() const { return false; }
+#endif
 
             bool CanDestroy ( mxobject* obj ) const ;
+            void Destroy();
             
             std::string& Name()          { return name ; }
 
@@ -783,6 +795,12 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             std::string         name;
             std::string         description;
             u32                 usedescription;
+#if defined(_ARTEFACTS_)
+            mxobjtype_t         type{OT_NONE};
+            mxobjpower_t        power{OP_NONE};
+#endif
+
+        protected:
             mxitem*             carriedby;
         };
         typedef tme::collections::entities<mxobject*>        c_object;
@@ -952,14 +970,15 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             bool HasQuality(u64 q) const { return (qualities & q) != 0; }
             u32  Men() const { return warriors.Total() + riders.Total(); }
 
-            GET_PROPERTY ( mxobject*, Carrying, carrying )
+            PROPERTY ( mxobject*, Carrying, carrying )
             GET_PROPERTY ( bool, IsCarryingObject, carrying != nullptr )
+            void CarryObject ( mxobject* object );
+
             
             GET_PROPERTY ( mxwait_t, WaitMode, wait )
             GET_PROPERTY ( mxtime_t, Time, IsResting()?sv_time_night:time )
             GET_PROPERTY ( mxdir_t, Looking, looking )
             GET_PROPERTY ( mxrace_t, Race, race )
-            //GET_PROPERTY ( charimages_t, Images, images )
             GET_PROPERTY ( bool, IsWaiting, WaitMode()!=WM_NONE )
             GET_PROPERTY ( bool, IsNight, Time()==(mxtime_t)sv_time_night||IsResting() )
             GET_PROPERTY ( bool, IsDawn, Time()==(mxtime_t)sv_time_dawn&&!IsResting() )
@@ -1274,8 +1293,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 
 
 
-#define READ_ENUM(x)    ar >> (u32&)x
-#define WRITE_ENUM(x)    ar << (u32)x
+#define READ_ENUM(x)    ar >> x
+#define WRITE_ENUM(x)    ar << x
 
 
 
@@ -1283,6 +1302,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
 #include "processor_night.h"
 #include "map_regenerator.h"
 #include "processor_battle.h"
+#include "processor_object.h"
 
 
 

@@ -108,7 +108,7 @@ SCENARIO("Seek searches the dungeons until nightfall")
                 REQUIRE( corleth->Time() == (mxtime_t)tme::variables::sv_time_night );
                 for ( auto hostage : held ) {
                     if ( !hostage->IsPrisoner() )
-                        REQUIRE( hostage->Location() == hostage->home->Location() );
+                        REQUIRE( hostage->Location() == hostage->Home()->Location() );
                 }
                 REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("found in the dungeons of Maranor") );
             }
@@ -138,8 +138,8 @@ SCENARIO("A hostage whose castle Boroth holds is flown to the nearest keep his p
     TMEStep::NewStory();
 
     auto djalina = Lord("CH_DJALINA");
-    REQUIRE( djalina->home != nullptr );
-    djalina->home->MakeChangeSides(RA_DARK_FEY, GetCharacter("CH_BOROTH"));
+    REQUIRE( djalina->Home() != nullptr );
+    djalina->Home()->MakeChangeSides(RA_DARK_FEY, GetCharacter("CH_BOROTH"));
 
     WHEN("she is flown home")
     {
@@ -147,10 +147,10 @@ SCENARIO("A hostage whose castle Boroth holds is flown to the nearest keep his p
 
         THEN("she lands in a keep of the Uskarg, not in Boroth's")
         {
-            auto keep = Citadel()->HomeKeep(djalina->Race(), djalina->home->Location());
+            auto keep = Citadel()->HomeKeep(djalina->Race(), djalina->Home()->Location());
             REQUIRE( keep != nullptr );
             REQUIRE( djalina->Location() == keep->Location() );
-            REQUIRE( djalina->Location() != djalina->home->Location() );
+            REQUIRE( djalina->Location() != djalina->Home()->Location() );
         }
     }
 }
