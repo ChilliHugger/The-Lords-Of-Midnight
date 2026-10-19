@@ -150,7 +150,14 @@ void citadel_x::initialise ( u32 version )
     passable.clear();
     boroth = CitadelLord(mx->CharacterBySymbol("CH_BOROTH"));
     luxor = CitadelLord(mx->CharacterBySymbol("CH_LUXOR"));
-    maranor =static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
+    maranor = static_cast<citadel_stronghold*>(mx->EntityByName("SH_CITADEL_MARANOR", IDT_STRONGHOLD));
+
+    hostages.clear();
+    for ( auto symbol : citadel_hostages ) {
+        auto hostage = CitadelLord(mx->CharacterBySymbol(symbol));
+        if ( hostage != nullptr )
+            hostages[hostage->Race()] = hostage;
+    }
 
     FOR_EACH_CHARACTER(character) {
         if ( character->HasQuality(qf_brave) )
@@ -231,13 +238,12 @@ static const citadel_kingdom_t* KingdomOf ( mxrace_t people )
 
 static bool KingdomsBorder ( mxrace_t a, mxrace_t b )
 {
-    for ( auto [from, to] : { std::pair{a, b}, std::pair{b, a} } ) {
-        auto kingdom = KingdomOf(from);
-        CONTINUE_IF_NULL(kingdom);
-        for ( auto border : kingdom->borders ) {
-            if ( border == to )
-                return true;
-        }
+    auto kingdom = KingdomOf(a);
+    if ( kingdom == nullptr )
+        return false;
+    for ( auto border : kingdom->borders ) {
+        if ( border == b )
+            return true;
     }
     return false;
 }
@@ -527,6 +533,7 @@ void citadel_x::NightStop ( void )
     }
     Scout();
     ExecuteLuxor();
+    MusterTheFree();
     RaiseWraith();
 
     FOR_EACH_CHARACTER(character) {
@@ -643,6 +650,47 @@ void citadel_x::DeclareWar ( mxrace_t on, mxrace_t by )
 {
     if ( on != by && (u32)on < wars.size() )
         wars[on] |= (u64)1 << by;
+}
+
+citadel_character* citadel_x::KingOf ( mxrace_t realm ) const
+{
+    FOR_EACH_STRONGHOLD(stronghold) {
+        if ( stronghold->Race() == realm && stronghold->Terrain() == TN_CITADEL && mx->gamemap->IsLocOnMap(stronghold->Location()) )
+            return CitadelLord(stronghold->Owner());
+    }
+    return nullptr;
+}
+
+citadel_character* citadel_x::HostageOf ( mxrace_t realm ) const
+{
+    auto found = hostages.find(realm);
+    return found != hostages.end() ? found->second : nullptr;
+}
+
+mxrealmstatus_t citadel_x::RealmStatus ( mxrace_t realm ) const
+{
+    auto king = KingOf(realm);
+    if ( king != nullptr && king->IsDead() )
+        return RS_INTERREGNUM;
+    auto hostage = HostageOf(realm);
+    if ( hostage == nullptr )
+        return RS_UNFETTERED;
+    if ( hostage->IsDead() )
+        return RS_BLOOD_FEUD;
+    return hostage->IsPrisoner() ? RS_AT_RANSOM : RS_UNFETTERED;
+}
+
+void citadel_x::MusterTheFree ()
+{
+    if ( flags.Is(gf_free_muster) || luxor == nullptr || ( luxor->IsAlive() && luxor->IsPrisoner() ) )
+        return;
+    flags.Set(gf_free_muster);
+
+    auto corelay = static_cast<citadel_stronghold*>(mx->EntityByName("SH_CASTLE_CORELAY", IDT_STRONGHOLD));
+    if ( corelay == nullptr || corelay->Allegiance() != RA_FREE )
+        return;
+    corelay->Add(RA_FREE, UT_WARRIORS, FREE_MUSTER);
+    mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_FREE_MUSTER, luxor));
 }
 
 std::vector<citadel_character*> citadel_x::HostagesHeldAtMaranor () const

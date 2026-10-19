@@ -57,6 +57,8 @@ namespace tme {
         virtual void PourOut ( void );
         virtual void Quest ( void );
         virtual void Recruit ( citadel_character* character );
+        virtual void Merge ( mxcharacter* leader );
+        virtual bool Obtain ( citadel_object* object, mxcharacter* holder );
         virtual void Besiege ( citadel_stronghold* keep, mxgridref target );
         virtual bool March ( mxgridref target, bool fight );
         virtual bool Guard ( void );

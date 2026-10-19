@@ -326,3 +326,48 @@ SCENARIO("Wolves run ahead of each of Boroth's armies on the march, and move on 
         }
     }
 }
+
+SCENARIO("Once Luxor is free or dead, five thousand warriors of the Free gather at Corelay, once")
+{
+    TMEStep::NewStory();
+    auto corelay = Keep("SH_CASTLE_CORELAY");
+    auto luxor = GetCharacter("CH_LUXOR");
+    auto before = corelay->TotalTroops();
+
+    WHEN("he is still held")
+    {
+        Citadel()->NightStop();
+        REQUIRE( corelay->TotalTroops() == before + corelay->Respawn() );
+    }
+
+    WHEN("he is freed")
+    {
+        luxor->Flags().Reset(cf_prisoner);
+        Citadel()->NightStop();
+
+        THEN("they gather, and only that once")
+        {
+            REQUIRE( corelay->TotalTroops() == before + 5000 + corelay->Respawn() );
+            REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("warriors of the Free gather at the Castle of Corelay") );
+            Citadel()->NightStop();
+            REQUIRE( corelay->TotalTroops() == before + 5000 + 2 * corelay->Respawn() );
+        }
+    }
+
+    WHEN("he dies in the dungeons")
+    {
+        luxor->Flags().Reset(cf_alive);
+        Citadel()->NightStop();
+        REQUIRE( corelay->TotalTroops() == before + 5000 + corelay->Respawn() );
+    }
+}
+
+SCENARIO("A kingdom borders the kingdoms its own row lists, as the table has it")
+{
+    TMEStep::NewStory();
+
+    REQUIRE( Citadel()->Borders(RA_GOLDEN_FEY, RA_ELDRIN) );
+    REQUIRE_FALSE( Citadel()->Borders(RA_ELDRIN, RA_GOLDEN_FEY) );
+    REQUIRE( Citadel()->Borders(RA_KITH, RA_GOLDEN_FEY) );
+    REQUIRE( Citadel()->Borders(RA_GOLDEN_FEY, RA_KITH) );
+}

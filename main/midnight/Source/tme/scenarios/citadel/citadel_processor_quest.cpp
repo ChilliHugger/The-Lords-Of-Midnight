@@ -717,6 +717,12 @@ void citadel_quest_processor::Recruit ( citadel_character* character )
     if ( score >= lord->RecruitThreshold(character->Race()) ) {
         if ( character->IsFollowing() )
             character->Cmd_UnFollow(character->Following());
+        auto mutual = character->quest == QS_RECRUIT && CharacterTarget(character->questtarget) == lord;
+        if ( mutual && character->Rank() > lord->Rank() && lord->Cmd_Follow(character) == MX_OK ) {
+            character->quest = QS_NONE;
+            Done(QN_DONE);
+            return;
+        }
         if ( character->Cmd_Follow(lord) == MX_OK ) {
             character->quest = QS_JOIN;
             character->questtarget = mxentity::SafeIdt(lord);
@@ -731,6 +737,30 @@ void citadel_quest_processor::Recruit ( citadel_character* character )
     Done(QN_REFUSED);
 }
 
+void citadel_quest_processor::Merge ( mxcharacter* leader )
+{
+    if ( leader == lord )
+        return;
+    if ( lord->Rank() > CitadelLord(leader)->Rank() )
+        leader->Cmd_Follow(lord);
+    else
+        lord->Cmd_Follow(leader);
+}
+
+bool citadel_quest_processor::Obtain ( citadel_object* object, mxcharacter* holder )
+{
+    if ( !lord->IsFriend(holder) && lord->RecruitScore(holder) < lord->RecruitThreshold(holder->Race()) ) {
+        CitadelBattle()->Duel(lord, holder);
+        if ( lord->IsDead() || holder->IsAlive() )
+            return false;
+    }
+    if ( holder->Carrying() == object )
+        std::swap(lord->carrying, holder->carrying);
+    else
+        lord->Cmd_PickupObject();      // he dropped it as he fell
+    return lord->Carrying() == object;
+}
+
 void citadel_quest_processor::Besiege ( citadel_stronghold* keep, mxgridref target )
 {
     if ( keep->Allegiance() != lord->NormalisedLoyalty() ) {
@@ -743,7 +773,8 @@ void citadel_quest_processor::Besiege ( citadel_stronghold* keep, mxgridref targ
                 Blocked();
             return;
         }
-        CitadelBattle()->Siege(lord, keep);
+        if ( !CitadelBattle()->Siege(lord, keep) )
+            return;     // another siege is fought tonight: he waits
         if ( lord->IsDead() ) {
             Done(QN_FAILED);
             return;
@@ -802,10 +833,10 @@ void citadel_quest_processor::Quest ( void )
             live = object != nullptr && object->OnMap(lies);
             break;
         case QS_TAKE:
-            live = holder != nullptr && holder != lord && holder->IsRecruited() && holder->IsAlive();
+            live = holder != nullptr && holder != lord && holder->IsAlive();
             break;
         case QS_DESTROY:
-            live = object != nullptr && ( object->OnMap(lies) || holder == lord );
+            live = object != nullptr && ( object->OnMap(lies) || holder == lord || ( holder != nullptr && holder->IsAlive() ) );
             break;
         case QS_GOTO:
         case QS_GUARD:
@@ -883,7 +914,7 @@ void citadel_quest_processor::Quest ( void )
             }
             break;
         case QS_JOIN:
-            lord->Cmd_Follow(character->IsFollowing() ? character->Following() : character);
+            Merge(character->IsFollowing() ? character->Following() : character);
             Done(QN_DONE);
             break;
         case QS_GOTO:
@@ -899,12 +930,16 @@ void citadel_quest_processor::Quest ( void )
             Done(lord->Carrying() == object ? QN_DONE : QN_FAILED);
             break;
         case QS_TAKE:
-            std::swap(lord->carrying, holder->carrying);
-            Done(QN_DONE);
+            if ( Obtain(object, holder) )
+                Done(QN_DONE);
             break;
         case QS_DESTROY:
-            object->Lift();
-            Done(QN_DONE);
+            if ( holder == nullptr || Obtain(object, holder) ) {
+                if ( lord->carrying == object )
+                    lord->carrying = nullptr;
+                object->Lift();
+                Done(QN_DONE);
+            }
             break;
         case QS_GUARD:
             Guard();

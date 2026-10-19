@@ -6,6 +6,8 @@
 #include "../../../Source/tme/scenarios/citadel/citadel_processor_quest.h"
 #include "../../../Source/tme/scenarios/citadel/citadel_processor_battle.h"
 
+#include <map>
+
 namespace {
 
     citadel_character* Lord(LPCSTR symbol)
@@ -456,5 +458,171 @@ SCENARIO("When Boroth falls for good, his lieutenants pour out of the Marish")
             REQUIRE( keep != nullptr );
             REQUIRE( keep->Allegiance() != RA_DARK_FEY );
         }
+    }
+}
+
+SCENARIO("When two fellowships merge, the higher-ranked lord leads")
+{
+    TMEStep::NewStory();
+    auto haraglai = HaraglaiAtHome();
+    auto asunai = Lord("CH_ASUNAI");
+    asunai->Location(haraglai->Location());
+
+    REQUIRE( asunai->Rank() > haraglai->Rank() );
+
+    WHEN("Haraglai joins the King of the Fallows")
+    {
+        haraglai->quest = QS_JOIN;
+        haraglai->questtarget = Idt(asunai);
+        citadel_quest_processor().Process(haraglai);
+
+        THEN("Haraglai follows him")
+        {
+            REQUIRE( haraglai->Following() == asunai );
+        }
+    }
+
+    WHEN("the King joins Haraglai")
+    {
+        asunai->quest = QS_JOIN;
+        asunai->questtarget = Idt(haraglai);
+        citadel_quest_processor().Process(asunai);
+
+        THEN("it is still the King who leads")
+        {
+            REQUIRE( haraglai->Following() == asunai );
+            REQUIRE_FALSE( asunai->IsFollowing() );
+        }
+    }
+
+    WHEN("each sets out to win the other over")
+    {
+        haraglai->qualities = asunai->qualities = qf_kind | qf_gentle | qf_generous;
+        haraglai->quest = QS_RECRUIT;
+        haraglai->questtarget = Idt(asunai);
+        asunai->quest = QS_RECRUIT;
+        asunai->questtarget = Idt(haraglai);
+        citadel_quest_processor().Process(haraglai);
+
+        THEN("the King leads, and both quests are over")
+        {
+            REQUIRE( haraglai->Following() == asunai );
+            REQUIRE( haraglai->quest == QS_NONE );
+            REQUIRE( asunai->quest == QS_NONE );
+        }
+    }
+}
+
+SCENARIO("A lord on guard falls on any lord at war with his side, and on no one else")
+{
+    TMEStep::NewStory();
+    auto rorthron = Lord("CH_RORTHRON");
+    auto ilvar = Lord("CH_ILVAR");
+    Army(rorthron, 1000);
+    auto here = rorthron->Location();
+    ilvar->Location(here + DR_NORTH);
+    REQUIRE( rorthron->SetQuest(QS_GUARD, MAKE_LOCID(here.x, here.y)) );
+
+    WHEN("the Lee are at peace with you")
+    {
+        TMEStep::NightFalls();
+
+        THEN("he lets Ilvar be")
+        {
+            REQUIRE_FALSE( rorthron->Flags().Is(cf_wonbattle) );
+            REQUIRE_FALSE( rorthron->Flags().Is(cf_inbattle) );
+        }
+    }
+
+    WHEN("you are at war with the Lee")
+    {
+        Citadel()->DeclareWar(RA_FREE, RA_ATHELING);
+        TMEStep::NightFalls();
+
+        THEN("they have fought")
+        {
+            REQUIRE( ( rorthron->Flags().Is(cf_wonbattle) || rorthron->Flags().Is(cf_inbattle) ) );
+        }
+    }
+}
+
+SCENARIO("Only one siege is fought in a night: the other besieger waits")
+{
+    TMEStep::NewStory();
+    for ( auto regiment : tme::mx->objRegiments )
+        regiment->Total(0);
+    auto ceremelth = Keep("SH_CASTLE_CEREMELTH");
+    auto cerevere = Keep("SH_CASTLE_CEREVERE");
+    for ( auto [symbol, keep] : { std::pair{ "CH_RORTHRON", ceremelth }, std::pair{ "CH_ARALETH", cerevere } } ) {
+        auto lord = Lord(symbol);
+        Army(lord, 3000);
+        lord->Location(Beside(keep->Location(), lord));
+        REQUIRE( lord->SetQuest(QS_SEIZE, Idt(keep)) );
+    }
+    std::map<mxstronghold*, u32> before { { ceremelth, ceremelth->TotalTroops() }, { cerevere, cerevere->TotalTroops() } };
+
+    WHEN("the first night passes")
+    {
+        TMEStep::NightFalls();
+
+        THEN("one keep is besieged and taken, and the other's garrison is untouched")
+        {
+            auto taken = ( ceremelth->Allegiance() == RA_FREE ) + ( cerevere->Allegiance() == RA_FREE );
+            REQUIRE( taken == 1 );
+            auto untouched = ceremelth->Allegiance() == RA_FREE ? cerevere : ceremelth;
+            REQUIRE( untouched->TotalTroops() == before[untouched] );
+        }
+
+        AND_WHEN("the next night passes")
+        {
+            TMEStep::NightFalls();
+
+            THEN("the other falls too")
+            {
+                REQUIRE( ceremelth->Allegiance() == RA_FREE );
+                REQUIRE( cerevere->Allegiance() == RA_FREE );
+            }
+        }
+    }
+}
+
+SCENARIO("A realm is at ransom while its hostage is held, unfettered when freed, at blood feud when killed, and in interregnum without its king")
+{
+    TMEStep::NewStory();
+    auto djalina = Lord("CH_DJALINA");
+    auto asunai = Lord("CH_ASUNAI");
+
+    REQUIRE( Citadel()->KingOf(RA_USKARG) == asunai );
+    REQUIRE( Citadel()->HostageOf(RA_USKARG) == djalina );
+    REQUIRE( Citadel()->RealmStatus(RA_USKARG) == RS_AT_RANSOM );
+    REQUIRE( Citadel()->RealmStatus(RA_GOLDEN_FEY) == RS_UNFETTERED );
+
+    WHEN("Djalina is freed")
+    {
+        djalina->Flags().Reset(cf_prisoner);
+        REQUIRE( Citadel()->RealmStatus(RA_USKARG) == RS_UNFETTERED );
+    }
+
+    WHEN("Djalina dies in the dungeons")
+    {
+        djalina->Flags().Reset(cf_alive);
+        REQUIRE( Citadel()->RealmStatus(RA_USKARG) == RS_BLOOD_FEUD );
+
+        THEN("the King of the Fallows no longer waits on her")
+        {
+            for ( auto regiment : tme::mx->objRegiments )
+                regiment->Total(0);
+            asunai->Location(Keep("SH_CITADEL_ROREON")->Location());
+            Army(asunai, 1000);
+            AFoeRegimentAt(200, Keep("SH_CASTLE_CERRELM")->Location());
+            React(asunai);
+            REQUIRE( asunai->quest == QS_KILL );
+        }
+    }
+
+    WHEN("the King of the Fallows is dead")
+    {
+        asunai->Flags().Reset(cf_alive);
+        REQUIRE( Citadel()->RealmStatus(RA_USKARG) == RS_INTERREGNUM );
     }
 }

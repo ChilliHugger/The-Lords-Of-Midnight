@@ -182,3 +182,4 @@ Version	Id	Symbol	Text
 7	180	SS_QUEST_ACTION	Quest
 7	181	SS_QUEST_CHOOSE	Choose a quest for {char:longname}.
 7	182	SS_LUXOR_EXECUTED	.{lf}{crlf}{cr} With Boroth fallen, the Dark Fey put {char:longname} to death in the dungeons of Maranor
+7	183	SS_FREE_MUSTER	.{lf}{crlf}{cr} Five thousand warriors of the Free gather at the Castle of Corelay
