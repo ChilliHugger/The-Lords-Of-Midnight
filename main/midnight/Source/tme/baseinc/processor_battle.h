@@ -13,7 +13,7 @@ namespace tme {
         virtual void Reset();
         virtual void Announce( mxgridref loc );
     protected:
-        u32         battles;
+        u32         battles{};
         bitarray    areas;
     };
         

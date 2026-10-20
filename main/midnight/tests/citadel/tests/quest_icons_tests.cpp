@@ -7,13 +7,25 @@
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
 #endif
+#ifdef _WIN32
+#define NOMINMAX
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 using namespace imagedef;
 
 // the test app is sandboxed, so read the definitions from the copy in its bundle
 static std::string resource(const char* file)
 {
-#ifndef __APPLE__
+#if defined(_WIN32)
+    // resources are copied to a Content folder beside the executable
+    char exe[MAX_PATH];
+    const DWORD len = GetModuleFileNameA(nullptr, exe, MAX_PATH);
+    std::string dir(exe, len);
+    dir = dir.substr(0, dir.find_last_of("\\/"));
+    return dir + "/Content/" + file;
+#elif !defined(__APPLE__)
     return std::string("Resources-citadel/") + file;
 #else
     char path[4096];

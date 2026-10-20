@@ -57,3 +57,6 @@ main/midnight/proj.android_citadel/app/.idea
 main/midnight/proj.android_citadel/app/release
 main/midnight/mac-build-citadel
 main/midnight/Builds
+
+# Android signing secrets (live in ~/.gradle, never in the repo)
+signing-*.properties

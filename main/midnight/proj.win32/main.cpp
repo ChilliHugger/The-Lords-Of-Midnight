@@ -33,6 +33,23 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+#if defined(_UNIT_TESTS_)
+    extern int tests_main(int argc, char *argv[]);
+    // this is a Unicode program, so the CRT leaves __argv null; build narrow arguments from __wargv
+    std::vector<std::string> args;
+    for (int i = 0; i < __argc; ++i)
+    {
+        const int len = WideCharToMultiByte(CP_UTF8, 0, __wargv[i], -1, nullptr, 0, nullptr, nullptr);
+        std::string arg(len > 0 ? len - 1 : 0, '\0');
+        WideCharToMultiByte(CP_UTF8, 0, __wargv[i], -1, arg.data(), len, nullptr, nullptr);
+        args.push_back(std::move(arg));
+    }
+    std::vector<char*> argv;
+    for (auto& a : args)
+        argv.push_back(a.data());
+    argv.push_back(nullptr);
+    return tests_main(__argc, argv.data());
+#else
     // create the application instance
 #ifdef USE_WIN32_CONSOLE
     AllocConsole();
@@ -47,5 +64,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();
+#endif
+    return ret;
 #endif
 }

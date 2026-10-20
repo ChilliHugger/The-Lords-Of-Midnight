@@ -79,15 +79,7 @@ cmake ..\..\.. -G"Visual Studio 17 2022" -A Win32 -DTME:string=LOM
 
 ## Create Windows Installer
 
-A pre-defined project is built already present to support building installer from executable created by the Windows Visual Studio project:
-
-- Open Visual studio.
-- Open solution 'lords_of_midnight.sln' from 'main\midnight\build.win32\midnight\installer'.
-- Change target to 'Release', from 'Solution Explorer' right-click on 'lords_of_midnight' and click on 'Build':
-
-![Create installer](images/installer_windows_build.png)
-
-- Your installer can now be found under 'main\midnight\build.win32\midnight\installer\Release\'
+See [Windows installers](#windows-installers) below.
 
 ## For Doomdark's Revenge
 
@@ -118,14 +110,6 @@ Instructions very similar to building Lords of Midnight, instead of 'midnight' y
 - Setup working directory for debug by selecting 'Debug', then selecting 'revenge Debug Properties', then 'Debugging'. Click on 'Working Directory', select browse and choose 'bin\revenge\Debug\Content' 
 - If needing to debug code, change target to 'Debug', click on 'Local Windows Debugger'.
 
-## Create Windows Installer
-
-A pre-defined project is built already present to support building installer from executable created by the Windows Visual Studio project:
-
-- Open Visual studio.
-- Open solution 'doomdarks_revenge.sln' from 'main\midnight\build.win32\revenge\installer'.
-- Change target to 'Release', from 'Solution Explorer' right-click on 'lords_of_midnight' and click on 'Build'.
-- Your installer can now be found under 'main\midnight\build.win32\revenge\installer\Release\'
 
 ## For The Citadel
 
@@ -156,42 +140,28 @@ Instructions very similar to building Lords of Midnight, instead of 'midnight' y
 - Setup working directory for debug by selecting 'Debug', then selecting 'citadel Debug Properties', then 'Debugging'. Click on 'Working Directory', select browse and choose 'bin\citadel\Debug\Content' 
 - If needing to debug code, change target to 'Debug', click on 'Local Windows Debugger'.
 
-## Create Windows Installer
-
-A pre-defined project is built already present to support building installer from executable created by the Windows Visual Studio project:
-
-- Open Visual studio.
-- Open solution 'citadel.sln' from 'main\midnight\build.win32\citadel\installer'.
-- Change target to 'Release', from 'Solution Explorer' right-click on 'lords_of_midnight' and click on 'Build'.
-- Your installer can now be found under 'main\midnight\build.win32\citadel\installer\Release\'
 
 ## Version Upgrade
 
-Game versions follow the format Major.Minor.Maintenance.Build (e.g. 2.0.4.43)
+Game versions follow the format Major.Minor.Maintenance.Build (e.g. 2.0.4.43). Edit `main\midnight\VERSION`
+and run `scripts/set_version.sh` (Git Bash); it updates `game.rc` and every other platform's version.
 
-### In Build Project
+## Windows installers
 
-To upgrade version do the following:
+Installers are built with [Inno Setup 6](https://jrsoftware.org/isinfo.php) from one script,
+`main\midnight\installer\game.iss`, for all three games (the old Visual Studio `.vdproj` projects are retired).
 
-- For build, edit game.rc (for Lords of Midnight file under The-Lords-Of-Midnight\main\midnight\proj.win32\midnight, for Doomdark's Revenge file under The-Lords-Of-Midnight\main\midnight\proj.win32\revenge). Change version 'FILEVERSION' under 'Version' section:
+- Build a Release version of the game first, then from `main\midnight`:
 
-![build_windows_version_build](images/build_windows_version_build.png)
+```
+scripts\build_installer.ps1 -App midnight   # or revenge / citadel
+```
 
-- Rebuild your project.
-
-### In Installer Project
-
-To upgrade version do the following:
-
-- In Solution Explorer, look at 'Deployment Project Properties', scroll down until you see the version property, change it to reflect 'Major.Minor.Maintenance' (e.g. 2.0.4):
-
-![build_windows_version_installer](images/build_windows_version_installer.png)
-
-- Once prompted to change 'ProductCode' click on 'Yes': 
-
-![build_windows_version_installer_confirm](images/build_windows_version_installer_confirm.png)
-
-- Rebuild your project.
+- The installer is written to `main\midnight\installer\Output`. Its version comes from `VERSION`.
+- It installs to `Program Files (x86)\Chilli Hugger Software Ltd\<game>` and, on first run, uninstalls an
+  MSI-installed older version (found through the old UpgradeCode) so users upgrade in place.
+- Never change the `AppId` values in `game.iss`; they are how later installers upgrade earlier ones.
+- CI does all of this: the "Windows build" workflow builds, tests and packages every game on each push to main.
 
 ## About icons
 

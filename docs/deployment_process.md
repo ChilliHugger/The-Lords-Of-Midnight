@@ -121,36 +121,36 @@ Version 2.0 (xx)
 
 
 ## Scripts
-Scripts can be run from the main folder
-./scripts/osx_builds_lom.sh
-./scripts/osx_builds_ddr.sh
-./scripts/osx_builds_citadel.sh
+Run from `main/midnight`.
 
-These will create an ios, osx, and OSX test builds
+Set the version once (edits `VERSION`, then every `game.rc`, `Info.plist`, `build.gradle` and the wasm `version.cmake`):
+
+    scripts/set_version.sh 2.0.12 57     # set and apply
+    scripts/set_version.sh               # re-apply VERSION
+    scripts/set_version.sh --check       # fail if any file disagrees (CI runs this)
+
+Build a release for a game (`lom`, `ddr`, `citadel`) and platform (`ios`, `mac`, `android`, `wasm`, `all`):
+
+    scripts/release.sh lom all           # archive + export to Builds/release/<app>/<version>.<build>
+    scripts/release.sh lom ios --upload  # send straight to App Store Connect
+
+This replaces the "Update Bundle Version", "Generate Project", archive/export, dSYM and Android bundle
+steps above. Xcode projects are regenerated in place each time (not wiped).
+Android signing: each game has its own keystore; put its settings in `~/.gradle/signing-lom.properties`
+(or `-ddr`, `-citadel`) as `RELEASE_STORE_FILE`, `RELEASE_STORE_PASSWORD`, `RELEASE_KEY_ALIAS`,
+`RELEASE_KEY_PASSWORD`, one `KEY=value` per line. `release.sh android` refuses to build without them.
+Still manual: release notes, TestFlight testers, store promotion, and updating the
+`config/*_v2.0_*.cfg` update manifests when a release is published.
+
+Web builds are deployed by the "Web build & deploy" GitHub workflow. Windows builds and installers are
+produced by the "Windows build" workflow (see build_windows.md).
+
+The older `osx_builds_*.sh` scripts only generate Xcode projects (and wipe them first).
 
 ## Debug DSYM files
 atos -o midnight.app.dSYM -l 0x1000b4000 0x0000000100100008
 
 ## Versioning
-main/midnight/proj.android_lom/app/build.gradle
-main/midnight/proj.ios_mac/ios/midnight/Info.plist
-main/midnight/proj.ios_mac/mac/midnight/Info.plist
-main/midnight/proj.win32/midnight/game.rc
-main/midnight/lom_v2.0_osx.cfg
-main/midnight/lom_v2.0_win.cfg
-
-main/midnight/proj.android_ddr/app/build.gradle
-main/midnight/proj.ios_mac/ios/revenge/Info.plist
-main/midnight/proj.ios_mac/mac/revenge/Info.plist
-main/midnight/proj.win32/revenge/game.rc
-main/midnight/ddr_v2.0_osx.cfg
-main/midnight/ddr_v2.0_win.cfg
-
-main/midnight/proj.android_citadel/app/build.gradle
-main/midnight/proj.ios_mac/ios/citadel/Info.plist
-main/midnight/proj.ios_mac/mac/citadel/Info.plist
-main/midnight/proj.win32/citadel/game.rc
-main/midnight/citadel_v2.0_osx.cfg
-main/midnight/citadel_v2.0_win.cfg
-
-main/midnight/tme_history.txt
+`main/midnight/VERSION` is the single source ("2.0.12 57" = version, build). Run `scripts/set_version.sh`
+to apply it everywhere; do not edit the individual files by hand. The `config/*.cfg` manifests are the
+exception - they hold the *published* version and change only when a release goes live.

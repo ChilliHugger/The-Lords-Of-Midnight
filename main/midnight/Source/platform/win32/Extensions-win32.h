@@ -16,5 +16,6 @@ namespace chilli
         void getDesktopSize(int& width, int& height);
         std::string getVersion();
         std::string getBuildNo();
+        std::string getBundleResourcePath();
     }
 }

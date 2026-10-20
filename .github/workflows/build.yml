@@ -37,12 +37,12 @@ jobs:
       BUILD_DIR: Builds/ci-${{ matrix.app }}
     steps:
       - name: Checkout game
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: game
 
       - name: Checkout axmol engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: axmolengine/axmol
           ref: ${{ env.AXMOL_REF }}
@@ -53,7 +53,7 @@ jobs:
           xcode-version: ${{ env.GH_XCODE_VER }}
 
       - name: Cache axmol externals and fetched deps
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             axmol/tools/external
@@ -127,7 +127,7 @@ jobs:
 
       - name: Upload test logs and crash reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-diagnostics-${{ matrix.app }}
           path: |
