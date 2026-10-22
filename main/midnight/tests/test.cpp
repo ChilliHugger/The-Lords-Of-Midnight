@@ -38,7 +38,8 @@ int tests_main(int argc, char *argv[])
     // crash (SIGSEGV etc.) discards whatever hasn't filled a buffer yet,
     // losing the trace of which test was running. Line-buffering trades a
     // little throughput for that output surviving a crash.
-    setvbuf(stdout, nullptr, _IOLBF, 0);
+    // (the size must be at least 2 on Windows, where 0 aborts the process)
+    setvbuf(stdout, nullptr, _IOLBF, 4096);
 
     mocks::init();
 

@@ -6,6 +6,7 @@
 //
 
 #pragma comment(lib,"user32.lib")
+#include <algorithm>
 #include "Extensions-win32.h"
 
 USING_NS_AX;
@@ -43,6 +44,17 @@ namespace chilli
             std::string version = Application::getInstance()->getVersion();
             size_t buildLocation = version.find_last_of('.');
             return version.substr(buildLocation+1);
+        }
+
+        std::string getBundleResourcePath()
+        {
+            // resources are copied to a Content folder beside the executable
+            char exe[MAX_PATH];
+            const DWORD len = GetModuleFileNameA(nullptr, exe, MAX_PATH);
+            std::string path(exe, len);
+            path = path.substr(0, path.find_last_of("\\/"));
+            std::replace(path.begin(), path.end(), '\\', '/');
+            return path + "/Content";
         }
     }
 }

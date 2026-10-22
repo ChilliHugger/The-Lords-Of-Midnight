@@ -327,6 +327,13 @@ else()
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
+if(TESTS AND WINDOWS)
+    # the test runner prints to stdout, which a GUI-subsystem exe doesn't have; keep the
+    # _tWinMain entry point (Unicode, hence wWinMain) but build it as a console program
+    set_property(TARGET ${APP_NAME} PROPERTY WIN32_EXECUTABLE FALSE)
+    target_link_options(${APP_NAME} PRIVATE "/ENTRY:wWinMainCRTStartup")
+endif()
+
 if (NOT _AX_USE_PREBUILT)
     if (TESTS)
       target_link_libraries(${APP_NAME}

@@ -36,7 +36,7 @@ jobs:
   # To add a game: add its entry below, add it to the "games" choices above, create its
   # Environment and its FTP account.
   plan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
     steps:
@@ -61,18 +61,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       AX_ROOT: ${{ github.workspace }}/axmol
       BUILD_DIR: Builds/ci-web-${{ matrix.app }}
     steps:
       - name: Checkout game
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: game
 
       - name: Checkout axmol engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: axmolengine/axmol
           ref: ${{ env.AXMOL_REF }}
@@ -80,13 +80,13 @@ jobs:
 
       # emcc must already be on PATH, otherwise axmol's own build script tries to update its
       # bundled emsdk (which then wants a newer Python).
-      - uses: mymindstorm/setup-emsdk@v14
+      - uses: mymindstorm/setup-emsdk@v16
         with:
           version: ${{ env.EMSDK_VER }}
           actions-cache-folder: emsdk-cache
 
       - name: Cache axmol externals and fetched deps
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             axmol/tools/external
@@ -144,7 +144,7 @@ jobs:
           brotli --best --keep $app.wasm
           ls -la
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: web-${{ matrix.app }}-${{ inputs.version }}
           path: dist/
@@ -155,7 +155,7 @@ jobs:
     name: Deploy (${{ matrix.app }})
     needs: [plan, build]
     if: ${{ inputs.deploy }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # One Environment per game (Settings > Environments), e.g. "LoM Web Production": add yourself as a
     # required reviewer to approve each upload, and store that game's DEPLOY_* secrets there.
     environment: ${{ matrix.environment }}
@@ -163,7 +163,7 @@ jobs:
       matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     steps:
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: web-${{ matrix.app }}-${{ inputs.version }}
           path: dist
@@ -174,7 +174,7 @@ jobs:
       #
       # 1. the archive copy for this release
       - name: Upload ${{ inputs.version }} archive copy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
@@ -187,7 +187,7 @@ jobs:
       # 2. the latest copy at the top. It only tracks and replaces the files it uploaded, so the
       #    version folders (and anything else in there) are never touched.
       - name: Upload latest copy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}

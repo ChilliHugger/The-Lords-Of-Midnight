@@ -54,11 +54,19 @@ T ConvertStringTo(const string& value)
 }
 
 #define INIT_MOCK_CLASS(x) \
+/* MSVC's __FUNCTION__ includes the class ("mockcharacter::Cmd_Dead"), clang's does not; */ \
+/* the tests use the bare function name, so drop any qualifier */ \
+string MockName( const string& name ) const { \
+    auto pos = name.rfind("::"); \
+    return pos == string::npos ? name : name.substr(pos + 2); \
+} \
+\
 void SetEvent( string name ) const { \
-    const_cast<x*>(this)->mockData.events.push_back(name); \
+    const_cast<x*>(this)->mockData.events.push_back(MockName(name)); \
 } \
 \
 string GetProperty( string name ) const { \
+    name = MockName(name); \
     return mockData.properties.find(name) == mockData.properties.end() ? "" : mockData.properties.at(name); \
 } \
 \

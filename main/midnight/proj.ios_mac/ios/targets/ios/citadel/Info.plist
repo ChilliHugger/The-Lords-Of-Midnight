@@ -17,13 +17,13 @@
     <key>CFBundleName</key>
     <string>The&#x2007;Citadel</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.0.11</string>
+    <string>2.0.12</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>56</string>
+    <string>57</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UIAppFonts</key>

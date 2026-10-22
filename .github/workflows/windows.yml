@@ -1,0 +1,135 @@
+name: Windows build
+
+# Builds the Windows (Win32/x86) version of each game, runs its unit tests, and keeps the
+# result and an Inno Setup installer as downloadable artifacts. Runs on pushes/PRs to main (so
+# Windows breakage is caught), and on demand.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  # Same engine tag as build.yml - bump both together.
+  AXMOL_REF: v2.11.5
+  # Matches the shipped installers (build.win32/dlls holds the 32-bit VC++ runtime).
+  ARCH: x86
+
+jobs:
+  version:
+    name: Version files agree
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - run: main/midnight/scripts/set_version.sh --check
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tme: LOM
+            app: midnight
+          - tme: DDR
+            app: revenge
+          - tme: CITADEL
+            app: citadel
+    name: Windows build + tests (${{ matrix.app }})
+    runs-on: windows-2022
+    env:
+      AX_ROOT: ${{ github.workspace }}\axmol
+    steps:
+      - name: Checkout game
+        uses: actions/checkout@v7
+        with:
+          path: game
+
+      - name: Checkout axmol engine
+        uses: actions/checkout@v7
+        with:
+          repository: axmolengine/axmol
+          ref: ${{ env.AXMOL_REF }}
+          path: axmol
+
+      - name: Cache axmol externals and fetched deps
+        uses: actions/cache@v6
+        with:
+          path: |
+            axmol/tools/external
+            game/main/midnight/Builds/ci-win-tests-${{ matrix.app }}/_deps
+          key: axmol-${{ env.AXMOL_REF }}-win-${{ env.ARCH }}-${{ matrix.app }}-${{ hashFiles('game/main/midnight/tests/CMakeLists.txt') }}
+          restore-keys: |
+            axmol-${{ env.AXMOL_REF }}-win-${{ env.ARCH }}-${{ matrix.app }}-
+
+      # Unit-test build: a different binary from the shipped one (-DTESTS=YES), so it gets its own
+      # build folder.
+      - name: Configure tests
+        shell: pwsh
+        working-directory: game/main/midnight
+        run: |
+          & "$env:AX_ROOT/tools/cmdline/axmol.ps1" build -p win32 -a $env:ARCH -c `
+            -xc '-DTME=${{ matrix.tme }},-DTESTS=YES,-BBuilds/ci-win-tests-${{ matrix.app }}'
+
+      - name: Build tests
+        working-directory: game/main/midnight
+        run: cmake --build Builds/ci-win-tests-${{ matrix.app }} --config RelWithDebInfo --target ${{ matrix.app }} --parallel
+
+      - name: Run tests
+        shell: pwsh
+        working-directory: game/main/midnight/Builds/ci-win-tests-${{ matrix.app }}
+        run: |
+          # the output folder depends on the generator, so find the exe rather than assume a path
+          $exe = Get-ChildItem -Recurse -Filter '${{ matrix.app }}.exe' | Where-Object { $_.FullName -match 'RelWithDebInfo' } | Select-Object -First 1
+          if (-not $exe) {
+            Write-Host '::error::${{ matrix.app }}.exe not found; build output:'
+            Get-ChildItem -Recurse -Filter *.exe | Select-Object -First 20 -ExpandProperty FullName
+            exit 1
+          }
+          Write-Host "Running $($exe.FullName)"
+          Set-Location $exe.DirectoryName
+          # Catch's exit code is the number of failed tests; its report also goes to a file
+          # so the log is complete whatever happens to stdout. Start-Process -Wait gives a
+          # real exit code even if the exe is a GUI-subsystem program.
+          $p = Start-Process -FilePath .\${{ matrix.app }}.exe -ArgumentList '--reporter','compact','--out','test-output.log' -Wait -PassThru -NoNewWindow
+          if (Test-Path test-output.log) { Get-Content test-output.log } else { Write-Host '::warning::no test-output.log - the exe never reached Catch' }
+          Write-Host ('exit code: {0} (0x{1:X})' -f $p.ExitCode, $p.ExitCode)
+          exit $p.ExitCode
+
+      # The shipped build.
+      - name: Configure release
+        shell: pwsh
+        working-directory: game/main/midnight
+        run: |
+          & "$env:AX_ROOT/tools/cmdline/axmol.ps1" build -p win32 -a $env:ARCH -c `
+            -xc '-DTME=${{ matrix.tme }},-BBuilds/ci-win-${{ matrix.app }}'
+
+      - name: Build release
+        working-directory: game/main/midnight
+        run: cmake --build Builds/ci-win-${{ matrix.app }} --config Release --target ${{ matrix.app }} --parallel
+
+      - name: Upload build
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-${{ matrix.app }}
+          path: game/main/midnight/Builds/ci-win-${{ matrix.app }}/bin/${{ matrix.app }}/Release
+          retention-days: 14
+
+      - name: Build installer
+        shell: pwsh
+        working-directory: game/main/midnight
+        run: |
+          if (-not (Get-Command iscc -ErrorAction SilentlyContinue) -and -not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup --no-progress -y
+          }
+          ./scripts/build_installer.ps1 -App ${{ matrix.app }} -BuildDir Builds/ci-win-${{ matrix.app }}/bin/${{ matrix.app }}/Release
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-installer-${{ matrix.app }}
+          path: game/main/midnight/installer/Output/*.exe
+          retention-days: 14
