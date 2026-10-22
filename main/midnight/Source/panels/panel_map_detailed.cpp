@@ -18,6 +18,7 @@
 #include "../frontend/layout_id.h"
 
 #include "../extensions/TMXTiledMap.h"
+#include "../utils/imagebuilder.h"
 #include "../utils/mapbuilder.h"
 #include "../utils/TiledMapper.h"
 
@@ -25,6 +26,7 @@
 #include "../ui/characters/uigrouplord.h"
 
 #include <cmath>
+#include <map>
 
 const f32 ScrollToLordTimeInSecs = 1.0f;
 
@@ -112,6 +114,7 @@ bool panel_map_detailed::init()
     map_up->setAnchorPoint(uihelper::AnchorCenter);
   
     createFilterButton(ID_FILTER_CURRENT_LOC,   "filter_centre", map_filters::centre_char);
+    createFilterButton(ID_FILTER_MEMORIES,      "filter_memories", map_filters::show_memories);
     createFilterButton(ID_FILTER_CRITTERS,      "filter_critters", map_filters::show_critters);
     createFilterButton(ID_FILTER_LORDS,         "filter_lords", map_filters::show_lords);
 
@@ -160,11 +163,17 @@ bool panel_map_detailed::init()
     descriptions->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(descriptions);
     
+    memories = Node::create();
+    memories->setContentSize(tmxMap->getContentSize());
+    scrollView->addChild(memories);
+
     characters = Node::create();
     characters->setContentSize(tmxMap->getContentSize());
     scrollView->addChild(characters);
       
     setupTooltip();
+
+    setupMemories();
 
     setupCharacterButtons();
     
@@ -179,6 +188,7 @@ bool panel_map_detailed::init()
     addShortcutKey(ID_FILTER_CURRENT_LOC,   KEYCODE(F1));
     addShortcutKey(ID_FILTER_CRITTERS,      KEYCODE(F2));
     addShortcutKey(ID_FILTER_LORDS,         KEYCODE(F3));
+    addShortcutKey(ID_FILTER_MEMORIES,      KEYCODE(F5));
 
     addShortcutKey(ID_LOOK,                 K_LOOK);
     addShortcutKey(ID_LOOK,                 K_ESC);
@@ -233,6 +243,11 @@ void panel_map_detailed::OnNotification( Ref* sender )
     model->oldoffset = point( (int)pos.x, (int)pos.y);
     
     auto id = static_cast<layoutid_t>(button->getTag());
+    
+    for ( auto& item : filterButtons ) {
+        if ( item.second == button && !button->isVisible() )
+            return;
+    }
     
 #if defined(_CITADEL_)
     // choosing a place for a quest: a lord's shield stands on a square like any other
@@ -291,6 +306,9 @@ void panel_map_detailed::OnNotification( Ref* sender )
             updateFilterButton(sender,map_filters::show_critters);
             break;
 
+        case ID_FILTER_MEMORIES:
+            updateFilterButton(sender,map_filters::show_memories);
+            break;
         case ID_FILTER_TUNNELS:
             updateFilterButton(sender,map_filters::show_tunnels);
             break;
@@ -553,6 +571,7 @@ void panel_map_detailed::updateScale()
     tmxMap->setScale(model->mapscale);
     descriptions->setScale(model->mapscale);
     characters->setScale(model->mapscale);
+    memories->setScale(model->mapscale);
 
     auto scaledSize = tmxMap->getContentSize() * model->mapscale;
     scrollView->setInnerContainerSize( scaledSize );
@@ -566,6 +585,7 @@ void panel_map_detailed::updateScale()
     tmxMap->setPosition(offset);
     descriptions->setPosition(offset);
     characters->setPosition(offset);
+    memories->setPosition(offset);
 
     if ( model->filters.Is(map_filters::centre_char))
         centreOnCurrentCharacter(false);
@@ -807,6 +827,7 @@ void panel_map_detailed::updateFilters( bool animate )
 
     fade( tmxMap->getLayer("Critters"), model->filters.Is(map_filters::show_critters) );
     fade( characters, model->filters.Is(map_filters::show_lords) );
+    fade( memories, model->filters.Is(map_filters::show_memories) );
     
     updateFilterButtons(animate);
 }
@@ -829,6 +850,9 @@ void panel_map_detailed::updateFilterButtons( bool animate )
                 break;
             case map_filters::show_lords:
                 useful = characters->getChildrenCount() > 0;
+                break;
+            case map_filters::show_memories:
+                useful = memories->getChildrenCount() > 0;
                 break;
             case map_filters::show_tunnels:
                 useful = layerHasTiles(tmxMap->getLayer("Tunnels"));
@@ -909,6 +933,101 @@ void panel_map_detailed::setupCharacterButtons()
         m->processed = true;
         characters->addChild(node);
         
+    }
+}
+
+bool panel_map_detailed::isOpenTerrain( mxterrain_t terrain ) const
+{
+    switch ( terrain ) {
+        case TN_PLAINS: case TN_PLAINS2: case TN_PLAINS3: case TN_PLAIN:
+        case TN_FOREST: case TN_FOREST2: case TN_FOREST3: case TN_TREES:
+        case TN_MOUNTAIN: case TN_MOUNTAIN2: case TN_MOUNTAIN3: case TN_ICY_MOUNTAIN:
+        case TN_DOWNS: case TN_DOWNS3: case TN_HILLS: case TN_HILLS3: case TN_FOOTHILLS:
+        case TN_FROZENWASTE: case TN_ICYWASTE:
+            return true;
+        default:
+            return false;
+    }
+}
+
+void panel_map_detailed::setupMemories()
+{
+    std::vector<tme::memory_item_t> items;
+    TME_GetMemories(items);
+
+    auto builder = moonring::mikesingleton()->imagebuilder;
+
+    // one marker per location: a lord and an army share a marker, the lord tinted by the army's size
+    struct place_t {
+        bool            lord = false;
+        bool            army = false;
+        bool            any = false;
+        tme::mxmemory_size_t size = tme::MS_UNKNOWN;
+        tme::memory_item_t freshest{};
+    };
+    std::map<std::pair<s32,s32>, place_t> places;
+
+    for ( auto& item : items ) {
+        auto& place = places[{item.location.x, item.location.y}];
+        if ( item.type == tme::MT_LORD ) {
+            place.lord = true;
+        } else {
+            place.army = true;
+            if ( item.size > place.size )
+                place.size = item.size;
+        }
+        if ( !place.any || item.age < place.freshest.age )
+            place.freshest = item;
+        place.any = true;
+    }
+
+    for ( auto& entry : places ) {
+        auto& place = entry.second;
+        auto& item = place.freshest;
+
+        const char* id = "memory_army_unknown";
+        //if ( place.lord && place.army ) {
+        //    switch ( place.size ) {
+        //        case tme::MS_SMALL: id = "memory_lord_army_small"; break;
+        //        case tme::MS_LARGE: id = "memory_lord_army_large"; break;
+        //        default:            id = "memory_lord_army_medium"; break;
+        //    }
+        //} else if ( place.lord ) {
+        //    id = "memory_lord";
+        //} else {
+            switch ( place.size ) {
+                case tme::MS_SMALL:  id = "memory_army_small"; break;
+                case tme::MS_MEDIUM: id = "memory_army_medium"; break;
+                case tme::MS_LARGE:  id = "memory_army_large"; break;
+                default: break;
+            }
+        //}
+
+        auto def = builder->find(id);
+        CONTINUE_IF( def == nullptr );
+
+        auto marker = Node::create();
+        CONTINUE_IF( !builder->setupPicture(marker, *def) );
+
+        auto pos = mapBuilder->convertToPosition(item.location);
+        marker->setCascadeOpacityEnabled(true);
+        marker->setAnchorPoint(uihelper::AnchorCenter);
+        // open country has room for the marker, full size in the middle of the square. A structure is drawn there,
+        // so the marker is smaller and tucked into its top right corner
+        maplocation location;
+        bool open = TME_GetLocation(location, item.location) && isOpenTerrain(location.terrain);
+        if ( open ) {
+            marker->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(32))) );
+        } else {
+            marker->setPosition( Vec2(pos.x+RES(48),tmxMap->getContentSize().height-pos.y-RES(16)) );
+            marker->setScale(scale_3qtr);
+        }
+
+        // markers are a quarter transparent so the map shows through; a new memory is at that, one about to be forgotten is a quarter of it
+        f32 age = item.max_age == 0 ? 0.0f : std::min(1.0f, (f32)item.age / (f32)item.max_age);
+        marker->setOpacity( (u8)ALPHA(0.75f * (1.0f - (age * 0.75f))) );
+
+        memories->addChild(marker);
     }
 }
 

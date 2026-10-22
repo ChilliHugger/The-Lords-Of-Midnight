@@ -160,7 +160,7 @@ namespace tme {
             VARIABLE( sv_auto_unhide,                           "CHARACTER_AUTO_UNHIDE",                CVar::YESNO,    "NO" ),
             VARIABLE( sv_auto_seek,                             "CHARACTER_AUTO_SEEK",                  CVar::YESNO,    "NO" ),
             VARIABLE( sv_auto_approach,                         "CHARACTER_AUTO_APPROACH",              CVar::YESNO,    "NO" ),
-            VARIABLE( sv_character_default_memory_age,          "CHARACTER_DEFAULT_MEMORY_AGE",         CVar::NUMBER,   "10" ),
+            VARIABLE( sv_character_default_memory_age,          "CHARACTER_DEFAULT_MEMORY_AGE",         CVar::NUMBER,   "6" ),
 
 
 //          VARIABLE( sv_use_cowardess,                         "USE_COWARDESS",                        CVar::YESNO,    "YES" } ,

@@ -19,11 +19,13 @@ enum class map_filters : u32 {
     overview_map    = MXBIT(2),
     show_lords      = MXBIT(4),
     show_tunnels    = MXBIT(3),
+    show_memories   = MXBIT(5),
     all             = show_critters
                         | centre_char
                         | show_lords
                         | overview_map
                         | show_tunnels
+                        | show_memories
 };
 
 constexpr float INITIAL_MAP_SCALE = 1.0f;

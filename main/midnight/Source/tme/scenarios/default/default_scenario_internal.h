@@ -68,13 +68,10 @@ namespace tme {
             virtual void ResetMapArmies ( void );
             virtual void SetMapArmies ( void );
             virtual void RemoveMapArmies ( void );
-            virtual u32 FindArmiesAtLocation ( mxgridref loc, u32& enemies, u32& friends, flags32_t flags );
             
-            virtual void LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel );
+            virtual void LookInDirection( mxgridref loc, mxdir_t dir, bool isintunnel, mxcharacter* looker );
+            virtual void LookAtView( mxgridref loc, mxdir_t dir, mxcharacter* looker );
             virtual void SetCharsLooking( void );
-
-            virtual bool InCharactersMemory ( mxitem* item ) ;
-            virtual void ClearFromMemory ( mxgridref loc );
 
             
             virtual bool GetCharactersAvailableForCommand ( u32 mode, mxgridref loc, c_character* collection );

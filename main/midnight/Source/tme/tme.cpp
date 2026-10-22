@@ -332,6 +332,12 @@ s32 TME_GetProperties( LPCSTR name, c_mxid& collection )
     return collection.Count();
 }
 
+void TME_GetMemories ( std::vector<tme::memory_item_t>& items )
+{
+    args[0] = &items ;
+    mxi->GetProperties ( "MEMORIES", args, 1 );
+}
+
 s32 TME_GetAllRegiments ( c_mxid& collection )
 {
     return TME_GetProperties ( "ALLREGIMENTS", collection );

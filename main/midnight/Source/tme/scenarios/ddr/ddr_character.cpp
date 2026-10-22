@@ -641,7 +641,7 @@ namespace tme {
         bool exit_tunnel = mx->gamemap->GetAt ( location ).HasTunnelExit() ;
 
         if ( !IsAIControlled() )
-            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel() );
+            mx->scenario->LookInDirection ( Location(), Looking(), IsInTunnel(), this );
         
         if ( !IsAIControlled() )
             mx->scenario->MakeMapAreaVisible(Location(), this);
@@ -782,6 +782,8 @@ namespace tme {
             // set loyalty?
             flags.Set ( cf_recruited );
             flags.Reset(cf_ai);
+            // Luxor knows where his own lords are
+            mx->memory.ForgetLord(Id());
         }else{
             flags.Reset(cf_recruited);
             flags.Set(cf_ai);

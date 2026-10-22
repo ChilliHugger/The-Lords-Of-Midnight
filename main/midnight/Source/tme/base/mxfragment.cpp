@@ -20,51 +20,44 @@
 
 namespace tme {
 
-    mxfragment::mxfragment()
-    {
-        m_data = NULL;
-        m_Next = NULL;
-        m_Prev = NULL ;
-        m_day=0;
-    }
-
-    mxfragment::~mxfragment()
-    {
-    }
-
-    mxfragment::mxfragment( mxitem* item )
-    {
-        m_data = item;
-        m_day = sv_days;
-        m_location=item->Location();
-        m_Next = NULL;
-        m_Prev = NULL ;
-    }
-
-
     void mxfragment::Serialize ( archive& ar )
     {
-
         if ( ar.IsStoring() ) {
-        
-            ar << m_data ;
-            ar << m_day ;
-            ar << m_location;
-            ar << m_race ;
-        
+
+            ar << (u32)type ;
+            ar << location ;
+            ar << day ;
+            ar << (u32)(counted ? 1 : 0) ;
+            ar << total ;
+            ar << lord ;
+
         }else{
 
-            ar >> m_data ;
-            ar >> m_day ;
-            ar >> m_location;
-            READ_ENUM ( m_race );
+            u32 temp;
+            ar >> temp ;        type = (mxmemory_type_t)temp ;
+            ar >> location ;
+            ar >> day ;
+            ar >> temp ;        counted = temp != 0 ;
+            ar >> total ;
+            ar >> lord ;
 
         }
     }
 
     u32 mxfragment::Age() const
     {
-        return sv_days-m_day;
+        return sv_days > day ? sv_days - day : 0;
+    }
+
+    mxmemory_size_t mxfragment::Size() const
+    {
+        if ( type != MT_ARMY || !counted )
+            return MS_UNKNOWN;
+        if ( total <= SMALL_MAX )
+            return MS_SMALL;
+        if ( total <= MEDIUM_MAX )
+            return MS_MEDIUM;
+        return MS_LARGE;
     }
 
 }

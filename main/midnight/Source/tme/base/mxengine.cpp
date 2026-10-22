@@ -372,6 +372,7 @@ MXTRACE( "Init Variables");
 
     sv_days = 0;
     sv_strongholdadjuster = 0;
+    memory.Clear();
     m_difficulty = difficulty ;
     setRules(rules);
 
@@ -652,9 +653,10 @@ std::string  description;
     objVictories.Serialize(ar);
     objObjects.Serialize(ar);
 
-    /* Load Character memories */
-    FOR_EACH_CHARACTER(character) {
-        character->memory.Serialize ( ar );
+    if ( SaveGameVersion() >= SAVEGAMEVERSION_MEMORY ) {
+        memory.Serialize ( ar );
+    }else{
+        memory.Clear();
     }
 
     /* Load scenario specific */
@@ -840,10 +842,7 @@ MXRESULT mxengine::SaveGame ( const std::string& filename, PFNSERIALIZE function
     objVictories.Serialize(ar);
     objObjects.Serialize(ar);
 
-    /* Save Character memories */
-    FOR_EACH_CHARACTER(c) {
-        c->memory.Serialize ( ar );
-    }
+    memory.Serialize ( ar );
 
     /* save scenario specific */
     scenario->Serialize ( ar );

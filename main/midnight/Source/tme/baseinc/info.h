@@ -64,7 +64,6 @@ namespace tme {
 
     class mxentity ;
     class mxgridref ;
-    class mxmemory ;
     class mxmap;
     class mxdiscoverymap;
 
@@ -169,45 +168,47 @@ namespace tme {
     class mxfragment
     {
     public:
-        mxfragment();
-        mxfragment( mxitem* item );
-        virtual ~mxfragment();
-        
+        static constexpr u32 SMALL_MAX = 1000;
+        static constexpr u32 MEDIUM_MAX = 5000;
+
         void Serialize ( chilli::lib::archive& ar );
         u32 Age() const;
-        
+        mxmemory_size_t Size() const;
+
     public:
-        mxfragment*             m_Prev;
-        mxfragment*             m_Next;
-        u32                     m_day;
-        mxentity*               m_data;
-        mxgridref               m_location;
-        mxrace_t                m_race;
-        
+        mxmemory_type_t         type{MT_ARMY};
+        mxgridref               location;
+        u32                     day{};
+        bool                    counted{};      // total is known (seen close up)
+        u32                     total{};        // warriors + riders
+        u32                     lord{};         // character id (MT_LORD)
     };
     // class mxfragment
-    
+
     // class mxmemory
+    // What Luxor's lords have seen of the enemy. Shared by every lord, so a later sighting
+    // (or an empty square) from any lord corrects an earlier one.
     class mxmemory
     {
     public:
-        mxmemory();
-        virtual ~mxmemory();
         void Serialize ( chilli::lib::archive& ar );
 
-        void Memorise ( mxitem* info, mxrace_t race );
-        void ForgetAll ( void );
-        void Update ( void );
-        mxfragment* IsMemorised ( mxitem* info ) const;
-        mxfragment* IsMemorised ( mxgridref loc, mxrace_t race ) const;
-        void ForgetFragment ( mxfragment* item );
-        void DeleteFragment ( mxfragment* item );
+        void Clear ( void );
+        void Update ( void );   // fade: forget fragments older than the default memory age
+
+        // A lord can see the location. 'army' is the total of the enemy there (0 = none) and
+        // 'lords' the remembered lords standing there, which are only taken into account when 'close'.
+        void SeeLocation ( mxgridref loc, bool close, u32 army, const std::vector<u32>& lords );
+        void ForgetLord ( u32 id );
+
+        const mxfragment* ArmyAt ( mxgridref loc ) const;
+        const mxfragment* LordFragment ( u32 id ) const;
+        const std::vector<mxfragment>& Fragments() const { return fragments; }
 
     private:
-        mxfragment*             m_first;
-
+        std::vector<mxfragment> fragments;
     };
-    
+
     //namespace units {
         // class mxunit
         class mxunit
@@ -1063,7 +1064,8 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             virtual MXRESULT EnterBattle ( void );
 
             virtual bool EnterLocation ( mxgridref loc );
-            virtual void CanSeeLocation ( mxgridref loc );
+            virtual void CanSeeLocation ( mxgridref loc, bool close );
+            virtual bool IsRememberable() const;
             virtual bool CanFollow( const mxcharacter* c ) const ;
             virtual bool CheckFightObject ( mxobject* object ) const;
             virtual bool CheckRecruitChar ( mxcharacter* pChar ) const ;
@@ -1132,7 +1134,6 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             mxobject*           killedbyobject;
             mxgender_t          gender;
             mxwait_t            wait;
-            mxmemory            memory;
 
             mxid                lastcommandid;
             command_t           lastcommand;

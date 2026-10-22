@@ -70,6 +70,9 @@ protected:
     void setupTooltip();
     void setupCharacterButtons();
     void setupPlaceLabels();
+    void setupMemories();
+    // open country has nothing drawn on the square, so a memory marker sits in its middle
+    bool isOpenTerrain( mxterrain_t terrain ) const;
     void setupStrongholds();
     
     void hideGroupLord();
@@ -93,6 +96,7 @@ private:
     mapmodel*       model;
     f32             minMapScale;
     Node*           characters;
+    Node*           memories{};
     Node*           descriptions;
     Node*           groupLordBackground;
     Widget*         groupLordButton;

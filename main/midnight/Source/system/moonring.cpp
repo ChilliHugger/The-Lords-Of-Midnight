@@ -687,6 +687,7 @@ std::vector<std::string> imageDefinitions = {
     "icons",
     "filters",
     "lord",
+    "memory",
     "book",
 #if defined(_CITADEL_)
     "quest",

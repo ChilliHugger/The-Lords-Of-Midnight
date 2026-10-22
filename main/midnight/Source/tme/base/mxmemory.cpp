@@ -16,241 +16,120 @@
 
 
 #include "../baseinc/tme_internal.h"
+#include <algorithm>
 
 
 namespace tme {
 
-    mxmemory::mxmemory()
+    void mxmemory::Clear ( void )
     {
-        m_first = NULL ;
+        fragments.clear();
     }
 
-    mxmemory::~mxmemory()
-    {
-        ForgetAll ();
-    }
-    
-    //
-    // METHOD:    IsMemorised
-    //            Is the race known about at the given location
-    // 
-    // PARAMS:    loc            location
-    //            race            race
-    // 
-    // REMARKS:    
-    //
-    // RETURNS:    mxfragment - fragment that records that race
-    //
-    mxfragment* mxmemory::IsMemorised ( mxgridref loc, mxrace_t race ) const
-    {
-    /*
-    mxfragment* memitem = m_first;
-
-            while ( memitem ) {
-                if ( memitem->m_location == loc ) {
-                    if ( memitem->m_race == race )
-                        return memitem;
-                }
-                memitem=memitem->m_Next;
-            }
-    */
-        return NULL ;
-    }
-
-
-    //
-    // METHOD:    Memorise
-    //            Store the memory fragment for the given item and race
-    // 
-    // PARAMS:    info            item to memorise
-    //            race            race of item
-    // 
-    // REMARKS:    
-    //
-    // RETURNS:    NONE
-    //
-    void mxmemory::Memorise ( mxitem* info, mxrace_t race )
-    {
-        /*
-        mxfragment* item = IsMemorised ( info );
-        if ( item ) {
-            ForgetFragment ( item );
-            item->m_day = sv_days;
-            item->m_location = info->Location();
-        }else{
-            item = new mxfragment ( info );
-        }
-        item->m_race = race;
-
-        // add head
-        if ( m_first ) {
-            item->m_Next = m_first ;
-            m_first->m_Prev = item ;
-        }
-        m_first = item ;
-        */
-    }
-    //
-    // METHOD:    IsMemorised
-    //            is the item currently in the memory
-    // 
-    // PARAMS:    info            item to memorise
-    // 
-    // REMARKS:    
-    //
-    // RETURNS:    mxfragment - memory fragment for the item
-    //
-    mxfragment* mxmemory::IsMemorised ( mxitem* item ) const
-    {
-    /*
-    mxfragment* memitem = m_first;
-        
-        while ( memitem ) {
-            if ( memitem->m_data == item )
-                return memitem;
-            memitem=memitem->m_Next;
-        }
-    */
-        return NULL ;
-    }
-    
-    //
-    // METHOD:    ForgetFragment
-    //            Forget the given memory fragment
-    // 
-    // PARAMS:    item            fragment to forget
-    // 
-    // REMARKS:    fragment is removed from the memory chain but not deleted
-    //            caller must think about deletion
-    //
-    // RETURNS:    NONE
-    //
-    void mxmemory::ForgetFragment ( mxfragment* item )
-    {
-    /*
-        // first
-        if ( m_first == item ) {
-            m_first = item->m_Next ;
-            //mxmemory = NULL ;
-            return;
-        }
-
-        // linked
-        if ( item->m_Prev ) 
-            item->m_Prev->m_Next = item->m_Next ;
-
-        if ( item->m_Next )
-            item->m_Next->m_Prev = item->m_Prev;
-    */
-    }
-
-    //
-    // METHOD:    DeleteFragment
-    //            Forget tge given memory fragment and delete it
-    // 
-    // PARAMS:    item            fragment to forget
-    // 
-    // REMARKS:    Fragment is removed from the memory chain and deleted
-    //
-    // RETURNS:    NONE
-    //
-    void mxmemory::DeleteFragment ( mxfragment* item )
-    {
-    /*
-        ForgetFragment(item);
-        SAFEDELETE(item);
-    */
-    }
-
-    //
-    // METHOD:    ForgetAll
-    //            Forget and delete all memory fragments
-    // 
-    // REMARKS:    
-    //
-    // RETURNS:    NONE
-    //
-    void mxmemory::ForgetAll ( void )
-    {
-    /*
-        mxfragment* memitem = m_first;
-        while ( memitem ) {
-            DeleteFragment(memitem);
-            memitem = m_first;
-        }
-     */
-     }
-    
-    //
-    // METHOD:    Update
-    //            All memory fragments older than the default age
-    //            are forgotten and deleted
-    // 
-    // REMARKS:    
-    //
-    // RETURNS:    NONE
-    //
     void mxmemory::Update ( void )
     {
-    /*
-    mxfragment*        item;
-    mxfragment*        next;
-        
-        item = m_first;
-        while ( item ) {
-            next = item->m_Next;
-            if ( item->Age() > sv_character_default_memory_age ) {
-                DeleteFragment(item);
-            }
-            item = next;
-        }
-    */
+        fragments.erase(
+            std::remove_if( fragments.begin(), fragments.end(),
+                [](const mxfragment& f) { return f.Age() > sv_character_default_memory_age; } ),
+            fragments.end() );
     }
 
+    // Anything remembered at the location that is no longer there is forgotten, but a distant
+    // sighting never loses a count taken earlier close up.
+    void mxmemory::SeeLocation ( mxgridref loc, bool close, u32 army, const std::vector<u32>& lords )
+    {
+        auto existing = std::find_if( fragments.begin(), fragments.end(),
+            [&](const mxfragment& f) { return f.type == MT_ARMY && f.location == loc; } );
+
+        if ( army == 0 ) {
+            if ( existing != fragments.end() )
+                fragments.erase(existing);
+        }else{
+            if ( existing == fragments.end() ) {
+                fragments.emplace_back();
+                existing = fragments.end() - 1;
+                existing->type = MT_ARMY;
+                existing->location = loc;
+            }
+            existing->day = sv_days;
+            if ( close ) {
+                existing->counted = true;
+                existing->total = army;
+            }
+        }
+
+        // lords can't be seen from a distance
+        if ( !close )
+            return;
+
+        fragments.erase(
+            std::remove_if( fragments.begin(), fragments.end(),
+                [&](const mxfragment& f) {
+                    return f.type == MT_LORD && f.location == loc
+                        && std::find(lords.begin(), lords.end(), f.lord) == lords.end();
+                } ),
+            fragments.end() );
+
+        for ( auto id : lords ) {
+            auto fragment = std::find_if( fragments.begin(), fragments.end(),
+                [&](const mxfragment& f) { return f.type == MT_LORD && f.lord == id; } );
+            if ( fragment == fragments.end() ) {
+                fragments.emplace_back();
+                fragment = fragments.end() - 1;
+                fragment->type = MT_LORD;
+                fragment->lord = id;
+            }
+            fragment->location = loc;
+            fragment->day = sv_days;
+        }
+    }
+
+    void mxmemory::ForgetLord ( u32 id )
+    {
+        fragments.erase(
+            std::remove_if( fragments.begin(), fragments.end(),
+                [&](const mxfragment& f) { return f.type == MT_LORD && f.lord == id; } ),
+            fragments.end() );
+    }
+
+    const mxfragment* mxmemory::ArmyAt ( mxgridref loc ) const
+    {
+        for ( auto& f : fragments ) {
+            if ( f.type == MT_ARMY && f.location == loc )
+                return &f;
+        }
+        return nullptr;
+    }
+
+    const mxfragment* mxmemory::LordFragment ( u32 id ) const
+    {
+        for ( auto& f : fragments ) {
+            if ( f.type == MT_LORD && f.lord == id )
+                return &f;
+        }
+        return nullptr;
+    }
 
     void mxmemory::Serialize ( archive& ar )
     {
-    /*
-    int            count;
-    mxfragment*    item;
-
         if ( ar.IsStoring() ) {
 
-            count=0;
-            item = m_first;
-            while ( item ) {
-                count++;
-                item = item->m_Next;
-            }        
-            ar << count;
-
-            while ( item ) {
-                item->Serialize(ar) ;
-                item = item->m_Next;
-            }        
+            ar << (u32)fragments.size() ;
+            for ( auto& f : fragments )
+                f.Serialize(ar);
 
         }else{
 
+            u32 count;
             ar >> count ;
 
-                while ( count ) {
-                    item = new mxfragment;
-                    item->Serialize(ar) ;
-
-                    // add head
-                    if ( m_first ) {
-                        item->m_Next = m_first ;
-                        m_first->m_Prev = item ;
-                    }
-                    m_first = item ;
-
-                    count--;
-                }
+            fragments.clear();
+            fragments.resize(count);
+            for ( auto& f : fragments )
+                f.Serialize(ar);
 
         }
-     */
     }
-
 
 }
 // namespace tme

@@ -41,4 +41,9 @@
         <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
         <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
     </image>
+    <image id="filter_memories" size="73,67">
+        <gfx id="art" pos="0,3" name="i_filter_memory"/>
+        <gfx id="visible" name="i_visible" pos="54,13" anchor="c"/>
+        <gfx id="notvisible" name="i_not_visible" pos="54,13" anchor="c"/>
+    </image>
 </images>
