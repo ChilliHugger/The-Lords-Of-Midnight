@@ -501,12 +501,11 @@ void panel_look::setViewForCurrentCharacter()
     lblDescription->setString(current_info->locationtext);
     
 #if defined(_SHIELD_BUILDER_)
+    // a lord with no shield described (all of DDR, and any lord missing from shields.xml) shows its shield or person image
     std::unique_ptr<shieldbuilder> builder(new shieldbuilder());
-    if (builder->build(c.id, imgShield)) {
-        imgShield->setVisible(true);
-    } else {
-        imgShield->setVisible(false);
-    }
+    if (!builder->build(c.id, imgShield))
+        imgShield->loadTexture(shieldImage, Widget::TextureResType::LOCAL);
+    imgShield->setVisible(true);
 #else
     imgShield->loadTexture(shieldImage, Widget::TextureResType::LOCAL);
 #endif
