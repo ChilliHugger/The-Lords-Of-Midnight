@@ -31,6 +31,8 @@ enum class select_filters : u32 {
 class selectmodel : public panelmodel
 {
 public:
+    selectmodel() { setDefaults(); }
+
     void serialize( u32 version, lib::archive& ar ) override;
     virtual void setDefaults() override;
     void updateCharacters();
@@ -38,7 +40,7 @@ public:
 public:
     c_mxid          characters;
     eflags<select_filters,u32>         filters;
-    tme::loc_t      loc;
-    s32             page;
-    bool            upgraded;
+    tme::loc_t      loc{};
+    s32             page{};
+    bool            upgraded{};
 };
