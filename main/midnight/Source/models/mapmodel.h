@@ -33,6 +33,8 @@ constexpr float INITIAL_MAP_SCALE = 1.0f;
 class mapmodel : public panelmodel
 {
 public:
+    mapmodel() { setDefaults(); }
+
     void serialize( u32 version, lib::archive& ar ) override;
     virtual void setDefaults() override;
     
@@ -40,11 +42,11 @@ public:
 
     // game specific
     eflags<map_filters,u32> filters;
-    point   oldoffset;
-    f32     mapscale;
-    f32     lastmapscale;
+    point   oldoffset{};
+    f32     mapscale{};
+    f32     lastmapscale{};
     
     // TODO: Current Map
     // 
-    panelmode_t currentMapPanel;
+    panelmode_t currentMapPanel{};
 };

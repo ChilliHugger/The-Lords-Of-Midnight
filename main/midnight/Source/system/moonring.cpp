@@ -208,6 +208,9 @@ storyid_t moonring::getCurrentStory()
 
 void moonring::continueStory( storyid_t id )
 {
+    selectmodel.setDefaults();
+    mapmodel.setDefaults();
+
     stories->load(id);
     help->Load( id );
     

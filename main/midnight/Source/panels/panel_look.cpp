@@ -1741,6 +1741,7 @@ void panel_look::OnStopDrag(uidragevent* event)
     // GESTURE Show map
     if( abs(dx) < 0.01 && dy < -MINIMUM_VERTICAL_DRAG_GESTURE) {
         mr->panels->showMap();
+        return;
     }
 
     if ( allowDragLook() ) {
