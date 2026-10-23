@@ -17,6 +17,7 @@
 USING_NS_AX;
 
 constexpr f32 LORD_FACE_SIZE = 64.0f;   // base units: the size of a lord's face in lord.xml
+constexpr f32 LORD_BADGE_SPACING = 32.0f;   // base units: the distance between the badges over a lord's face
 constexpr f32 LORD_IMAGE_RESOLUTION = 2.0f;   // lords are drawn bigger than their size (phones, the map): render sharper
 
 using DragEventType = chilli::ui::DragEvent::Type;
@@ -58,6 +59,12 @@ std::string uilordselect::faceName(character& c)
 #endif
 }
 
+// the badges are the parts that show a lord's state, in a row over the top of the face
+bool uilordselect::isBadge( const std::string& partId ) const
+{
+    return partId == LORD_PART_BATTLE || partId == LORD_PART_NIGHT || partId == LORD_PART_DAWN || partId == LORD_PART_TUNNEL;
+}
+
 void uilordselect::renderLordImage( const std::string& imageId, const std::string& face,
                                     const std::vector<std::string>& show, f32 offsetY )
 {
@@ -76,11 +83,11 @@ void uilordselect::renderLordImage( const std::string& imageId, const std::strin
 
     // an image with circles behind the face is centred on them, so the face is moved inside it; otherwise the
     // picture itself is moved
-    const bool circles = image.find("selected") != nullptr;
+    const bool circles = image.find(LORD_PART_SELECTED) != nullptr;
     const f32 faceShift = circles ? -offsetY / RES(1) : 0;      // base units, y is down in the image
 
     for ( auto& e : image.elements ) {
-        if ( e.id == "face" ) {
+        if ( e.id == LORD_PART_FACE ) {
             e.name = face;
             e.y += faceShift;
             // a face that is an image (a shield) is scaled to the size of the face (64)
@@ -88,16 +95,27 @@ void uilordselect::renderLordImage( const std::string& imageId, const std::strin
                 if ( art->width > 0 )
                     e.scale = LORD_FACE_SIZE / art->width;
             }
-        } else if ( e.id == "battle" || e.id == "night" || e.id == "dawn" ) {
+        } else if ( isBadge(e.id) ) {
             e.y += faceShift;
         }
-        if ( e.id == "selected" || e.id == "location" || e.id == "drop" || e.id == "battle" || e.id == "night" || e.id == "dawn" )
+        if ( e.id == LORD_PART_SELECTED || e.id == LORD_PART_LOCATION || e.id == LORD_PART_DROP || isBadge(e.id) )
             e.enabled = std::find(show.begin(), show.end(), e.id) != show.end();
+    }
+
+    // the badges sit in a row over the top edge of the face, centred on it
+    std::vector<imagedef::Element*> badges;
+    for ( auto& e : image.elements ) {
+        if ( isBadge(e.id) && e.enabled )
+            badges.push_back(&e);
+    }
+    if ( auto face = image.find(LORD_PART_FACE) ) {
+        for ( size_t i = 0; i < badges.size(); i++ )
+            badges[i]->x = face->x + ( (f32)i - (badges.size() - 1) / 2.0f ) * LORD_BADGE_SPACING;
     }
 
     if ( lordImage == nullptr ) {
         lordImage = Node::create();
-        lordImage->setName("face");
+        lordImage->setName(LORD_NAME_FACE);
         addChild(lordImage);
 
         // the middle of the picture sits in the middle of the widget (for a face alone, that is the face)
@@ -105,7 +123,7 @@ void uilordselect::renderLordImage( const std::string& imageId, const std::strin
         auto size = getContentSize();
         lordImage->setPosition(Vec2( size.width / 2, size.height / 2 + ( circles ? 0 : offsetY ) ));
 
-        if ( auto e = image.find("face") ) {
+        if ( auto e = image.find(LORD_PART_FACE) ) {
             lordFaceX = RES(e->x);
             lordFaceBottom = RES(image.height - ( e->y + LORD_FACE_SIZE ));
         }
@@ -128,7 +146,7 @@ void uilordselect::setLordTitle( const std::string& text, bool single )
     }
 
     lordTitle = Label::createWithTTF( uihelper::font_config_small, text );
-    lordTitle->setName("title");
+    lordTitle->setName(LORD_NAME_TITLE);
     lordTitle->setTextColor(Color4B(_clrWhite));
     lordTitle->enableOutline(Color4B(_clrBlack),RES(1));
     lordTitle->getFontAtlas()->setAntiAliasTexParameters();

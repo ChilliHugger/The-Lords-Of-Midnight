@@ -91,6 +91,8 @@ bool panel_select::init()
     createFilterButton(ID_FILTER_NIGHT,         "filter_night",   select_filters::show_night);
     createFilterButton(ID_FILTER_BATTLE,        "filter_battle",  select_filters::show_battle);
     createFilterButton(ID_FILTER_DEAD,          "filter_dead",      select_filters::show_dead);
+    if ( scenario_flags.Is(SF_TUNNELS) )
+        createFilterButton(ID_FILTER_TUNNELS,   "filter_tunnels",    select_filters::show_intunnel);
     createFilterButton(ID_FILTER_CURRENT_LOC,   "filter_centre",     select_filters::show_current);
     
     cleanupButton = uihelper::CreateImageButton("i_cleanup", ID_CLEANUP_SELECT, clickCallback);
@@ -106,6 +108,8 @@ bool panel_select::init()
     addShortcutKey(ID_FILTER_BATTLE,     KEYCODE(F3));
     addShortcutKey(ID_FILTER_DEAD,       KEYCODE(F4));
     addShortcutKey(ID_FILTER_CURRENT_LOC,KEYCODE(F5));
+    if ( scenario_flags.Is(SF_TUNNELS) )
+        addShortcutKey(ID_FILTER_TUNNELS,KEYCODE(F6));
     
     addShortcutKey(ID_LOOK,              K_LOOK);
     addShortcutKey(ID_NIGHT,             K_NIGHT);
@@ -615,6 +619,9 @@ void panel_select::OnNotification( Ref* sender )
             break;
         case ID_FILTER_DEAD:
             updateFilterButton(sender,select_filters::show_dead);
+            break;
+        case ID_FILTER_TUNNELS:
+            updateFilterButton(sender,select_filters::show_intunnel);
             break;
         case ID_FILTER_CURRENT_LOC:
             updateFilterButton(sender,select_filters::show_current);

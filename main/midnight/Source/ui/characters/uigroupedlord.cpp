@@ -50,7 +50,7 @@ bool uigroupedlord::setLord(mxid characterid)
     character c;
     TME_GetCharacter(c, characterid );
     
-    renderLordImage("lord_grouped", faceName(c), {}, SHIELD_OFFSET_Y);
+    renderLordImage(LORD_IMAGE_GROUPED, faceName(c), {}, SHIELD_OFFSET_Y);
     setLordTitle(c.shortname, false);
     buttonNode = lordImage;
     

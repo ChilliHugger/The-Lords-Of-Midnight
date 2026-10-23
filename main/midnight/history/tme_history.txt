@@ -30,6 +30,8 @@ Build (57)
 27. ADDED: Detailed map - Lords remember the enemy armies and lords they have seen.
 28. CHANGED: Detailed map - Tidied up the discovery map mechanics
 31. FIXED: Crash going to the map straight from a new game from a gesture on panel_look
+32. ADDED: DDR - Lords in a tunnel show a tunnel icon with their status icons
+33. ADDED: DDR - Select screen - Tunnel filter button, as on the map
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up
