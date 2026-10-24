@@ -249,8 +249,14 @@ void imagebuilder::renderSource(Node* source, f32 resolution)
 // the render texture's pixels are premultiplied
 void imagebuilder::showFlattened(Node* renderer) const
 {
-    if (auto sprite = dynamic_cast<Sprite*>(renderer))
+    if (auto sprite = dynamic_cast<Sprite*>(renderer)) {
         sprite->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
+#if defined(AX_USE_GL)
+        // an OpenGL render target is stored bottom-up. RenderTexture flips its own sprite to
+        // compensate, but we draw from the texture through a sprite frame, so do it here
+        sprite->setFlippedY(true);
+#endif
+    }
 }
 
 bool imagebuilder::build(const std::string& id, Node* parent, const Options& options)
