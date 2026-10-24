@@ -280,7 +280,7 @@ MXRESULT mxengine::LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty )
     if ( chilli::os::filemanager::Exists(databaseCacheFile) && chilli::os::filemanager::Exists(mapCacheFile) ) {
         MXTRACE( "Loading cached Database '%s'", databaseCacheFile.c_str());
         reportStage("Loading cached Database");
-        result = LoadDatabaseBinary(databaseCacheFile);
+        result = LoadDatabaseBinary(databaseCacheFile, true);
         if ( result == MX_OK ) {
             MXTRACE( "Loading cached Map '%s'", mapCacheFile.c_str());
             reportStage("Loading cached Map");
