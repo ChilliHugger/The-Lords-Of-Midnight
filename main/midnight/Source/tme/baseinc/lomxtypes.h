@@ -788,9 +788,10 @@ using namespace chilli::types;
             RF_DDR_LORD_DEATH_LOM           = MXBIT(11),
             RF_LOM_REPLENISH_THINGS         = MXBIT(12),
             RF_LOM_REPLENISH_RANDOM         = MXBIT(13),
+            RF_DDR_TUNNEL_SEARCH            = MXBIT(14),
             RF_NONE                         = 0,
 #if defined(_DDR_)
-            RF_DEFAULT                      = RF_DDR_CIRCULAR_LIEGE_FIX,
+            RF_DEFAULT                      = RF_DDR_CIRCULAR_LIEGE_FIX | RF_DDR_TUNNEL_SEARCH,
 #else
             RF_DEFAULT                      = RF_NONE,
 #endif

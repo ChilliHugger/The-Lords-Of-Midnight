@@ -32,6 +32,7 @@ Build (57)
 31. FIXED: Crash going to the map straight from a new game from a gesture on panel_look
 32. ADDED: DDR - Lords in a tunnel show a tunnel icon with their status icons
 33. ADDED: DDR - Select screen - Tunnel filter button, as on the map
+34. ADDED: DDR - Game Option - 'Hide Lords In Tunnels', armies following a lord in a tunnel only search the ground within 3 squares of them, on by default
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up

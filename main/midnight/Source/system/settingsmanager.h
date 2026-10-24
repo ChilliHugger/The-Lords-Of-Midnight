@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  16
+#define CONFIG_VERSION                  17
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_

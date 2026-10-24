@@ -149,6 +149,7 @@ https://axmol.dev)";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_12             = "SAFE LORD DEATH RULES";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_13             = "REPLENISH THINGS";
     constexpr LPCSTR OPTIONS_SCREEN_RULE_14             = "RANDOM REPLENISH";
+    constexpr LPCSTR OPTIONS_SCREEN_RULE_15             = "HIDE LORDS IN TUNNELS";
 
     constexpr LPCSTR OPTIONS_GAME_SCENARIO              = "SCENARIO";
     constexpr LPCSTR OPTIONS_GAME_SCENARIO_LOM          = "DEFAULT";

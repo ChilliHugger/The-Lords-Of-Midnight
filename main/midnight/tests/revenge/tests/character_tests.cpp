@@ -6,6 +6,7 @@
 //
 
 #include "../steps/common_steps.h"
+#include "../../steps/map_steps.h"
 
 // GIVEN a lord is at a location with an object
 // AND they are not carrying an object
@@ -639,6 +640,106 @@ SCENARIO("DDR: Prefix for what is here and what is ahead")
             {
                 REQUIRE_THAT( here,  Catch::Matchers::Equals("  Here ") );
                 REQUIRE_THAT( ahead, Catch::Matchers::Equals("  Ahead ") );
+            }
+        }
+    }
+}
+
+// GIVEN a lord is following another lord
+// AND the followed lord is in a tunnel
+// WHEN the follower picks their target
+// THEN they should aim for the ground near the tunnel, not the tunnel itself
+
+SCENARIO("Characters searching for a lord in a tunnel only have a rough idea where to look")
+{
+    TMEStep::NewStory();
+
+    auto follower = "CH_IMGARIL";
+    auto hidden = "CH_TARITHEL";
+    auto tunnel = mxgridref(30, 30);
+    const int radius = 3;
+
+    for (int y = tunnel.y - radius; y <= tunnel.y + radius; y++) {
+        for (int x = tunnel.x - radius; x <= tunnel.x + radius; x++) {
+            MapStep::ResetLocation(loc_t(x, y));
+        }
+    }
+
+    GIVEN("a lord is in a tunnel")
+    {
+        TMEStep::PlaceLordAt(hidden, tunnel, DR_NORTH);
+        GetCharacter(hidden)->Flags().Set(cf_tunnel);
+
+        WHEN("another lord targets them many times")
+        {
+            auto c = GetDDRCharacter(follower);
+            bool offTarget = false;
+            bool nearby = true;
+
+            for (int ii = 0; ii < 50; ii++) {
+                c->Target(GetCharacter(hidden));
+                offTarget |= (c->targetLocation != tunnel);
+                nearby &= abs(c->targetLocation.x - tunnel.x) <= radius
+                       && abs(c->targetLocation.y - tunnel.y) <= radius;
+            }
+
+            THEN("they stay within a few squares of the tunnel but not always on it")
+            {
+                REQUIRE( nearby );
+                REQUIRE( offTarget );
+            }
+        }
+    }
+
+    GIVEN("a lord is not in a tunnel")
+    {
+        TMEStep::PlaceLordAt(hidden, tunnel, DR_NORTH);
+        GetCharacter(hidden)->Flags().Reset(cf_tunnel);
+
+        WHEN("another lord targets them")
+        {
+            auto c = GetDDRCharacter(follower);
+            c->Target(GetCharacter(hidden));
+
+            THEN("they aim for their exact location")
+            {
+                REQUIRE( c->targetLocation == tunnel );
+            }
+        }
+    }
+}
+
+SCENARIO("The tunnel search rule is on by default and can be turned off")
+{
+    GIVEN("a new game with the default rules")
+    {
+        TMEStep::NewStory();
+
+        THEN("the tunnel search rule is enabled")
+        {
+            REQUIRE( tme::mx->isRuleEnabled(RF_DDR_TUNNEL_SEARCH) );
+        }
+    }
+
+    GIVEN("a new game with the tunnel search rule off and a lord in a tunnel")
+    {
+        TMEStep::NewStory(RF_NONE);
+
+        auto follower = "CH_IMGARIL";
+        auto hidden = "CH_TARITHEL";
+        auto tunnel = mxgridref(30, 30);
+
+        TMEStep::PlaceLordAt(hidden, tunnel, DR_NORTH);
+        GetCharacter(hidden)->Flags().Set(cf_tunnel);
+
+        WHEN("another lord targets them")
+        {
+            auto c = GetDDRCharacter(follower);
+            c->Target(GetCharacter(hidden));
+
+            THEN("they aim for their exact location")
+            {
+                REQUIRE( c->targetLocation == tunnel );
             }
         }
     }

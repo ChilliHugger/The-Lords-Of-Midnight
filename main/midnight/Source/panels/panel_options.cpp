@@ -57,6 +57,7 @@ static RULEFLAGS rule_mapping[] = {
     /* ID_OPTION_RULE_12 */ RF_NONE,                    // RF_DDR_LORD_DEATH_LOM
     /* ID_OPTION_RULE_13 */ RF_LOM_REPLENISH_THINGS,
     /* ID_OPTION_RULE_14 */ RF_LOM_REPLENISH_RANDOM,
+    /* ID_OPTION_RULE_15 */ RF_NONE,                    // RF_DDR_TUNNEL_SEARCH
 };
 
 #elif defined(_DDR_)
@@ -70,7 +71,8 @@ static uitextmenuitem items_rules[] = {
     { ID_OPTION_RULE_7,                 {OPTIONS_SCREEN_RULE_7},                KEYCODE(6), KEYBOARD_KEY_6, TB_DOUBLE },
     { ID_OPTION_RULE_9,                 {OPTIONS_SCREEN_RULE_9},                KEYCODE(7), KEYBOARD_KEY_7, TB_DOUBLE },
     { ID_OPTION_RULE_11,                {OPTIONS_SCREEN_RULE_11},               KEYCODE(8), KEYBOARD_KEY_8, TB_DOUBLE },
-    { ID_OPTION_RULE_12,                {OPTIONS_SCREEN_RULE_12},               KEYCODE(9), KEYBOARD_KEY_9, TB_DOUBLE }
+    { ID_OPTION_RULE_12,                {OPTIONS_SCREEN_RULE_12},               KEYCODE(9), KEYBOARD_KEY_9, TB_DOUBLE },
+    { ID_OPTION_RULE_15,                {OPTIONS_SCREEN_RULE_15},               KEYCODE(0), KEYBOARD_KEY_0, TB_DOUBLE }
 };
 
 static RULEFLAGS rule_mapping[] = {
@@ -88,6 +90,7 @@ static RULEFLAGS rule_mapping[] = {
     /* ID_OPTION_RULE_12 */ RF_DDR_LORD_DEATH_LOM,
     /* ID_OPTION_RULE_13 */ RF_NONE,                    // RF_LOM_REPLENISH_THINGS,
     /* ID_OPTION_RULE_14 */ RF_NONE,                    // RF_LOM_REPLENISH_RANDOM,
+    /* ID_OPTION_RULE_15 */ RF_DDR_TUNNEL_SEARCH,
 };
 #endif
 
@@ -306,6 +309,11 @@ static option_t options[] = {
     {   ID_OPTION_RULE_8,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_9,           OPT_TOGGLE, 0, values_onoff,               nullptr, false },
     {   ID_OPTION_RULE_10,          OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_11,          OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_12,          OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_13,          OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_14,          OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+    {   ID_OPTION_RULE_15,          OPT_TOGGLE, 0, values_onoff,               nullptr, false },
 
     {   ID_OPTION_DIFFICULTY,       OPT_NUMBER, 4, values_difficulty,          nullptr, false },
 
