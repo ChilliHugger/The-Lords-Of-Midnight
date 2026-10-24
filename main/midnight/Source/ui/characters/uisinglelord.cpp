@@ -90,21 +90,19 @@ void uisinglelord::refreshStatus()
 
 std::string uisinglelord::statusImageName() const
 {
-    // TODO: status_tunnel
-
     if ( status.Is(LORD_STATUS::status_inbattle))
-        return "battle";
+        return LORD_PART_BATTLE;
 
     if ( status.Is(LORD_STATUS::status_night))
-        return "night";
+        return LORD_PART_NIGHT;
 
     if ( status.Is(LORD_STATUS::status_dawn))
-        return "dawn";
+        return LORD_PART_DAWN;
 
     return "";
 }
 
-// the face, name and status badge are one picture; the badge is hidden while dragging and when disabled
+// the face, name and status badges are one picture; the badges are hidden while dragging and when disabled
 void uisinglelord::renderLord()
 {
     if ( faceArt.empty() )
@@ -114,16 +112,18 @@ void uisinglelord::renderLord()
     std::vector<std::string> show;
     if ( !isDragging() && statusVisible ) {
         if ( status.Is(LORD_STATUS::status_selected) )
-            show.push_back("selected");
+            show.push_back(LORD_PART_SELECTED);
         if ( status.Is(LORD_STATUS::status_location) )
-            show.push_back("location");
+            show.push_back(LORD_PART_LOCATION);
         if ( !dimmed && !statusImageName().empty() )
             show.push_back(statusImageName());
+        if ( !dimmed && status.Is(LORD_STATUS::status_tunnel) )
+            show.push_back(LORD_PART_TUNNEL);
     }
     // a faint circle shows while another lord is being dragged over this one
     if ( isDropFocus )
-        show.push_back("drop");
-    renderLordImage("lord_select", faceArt, show, SHIELD_OFFSET_Y);
+        show.push_back(LORD_PART_DROP);
+    renderLordImage(LORD_IMAGE_SELECT, faceArt, show, SHIELD_OFFSET_Y);
     buttonNode = lordImage;
 }
 

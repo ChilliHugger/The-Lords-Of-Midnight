@@ -44,6 +44,20 @@ enum class lordwidget {
 
 
 
+// the ids of the images and of their parts in lord.xml
+constexpr const char* LORD_IMAGE_SELECT     = "lord_select";
+constexpr const char* LORD_IMAGE_GROUPED    = "lord_grouped";
+constexpr const char* LORD_PART_FACE        = "face";
+constexpr const char* LORD_PART_SELECTED    = "selected";
+constexpr const char* LORD_PART_LOCATION    = "location";
+constexpr const char* LORD_PART_DROP        = "drop";
+constexpr const char* LORD_PART_BATTLE      = "battle";
+constexpr const char* LORD_PART_NIGHT       = "night";
+constexpr const char* LORD_PART_DAWN        = "dawn";
+constexpr const char* LORD_PART_TUNNEL      = "tunnel";
+constexpr const char* LORD_NAME_FACE        = "face";   // the node name of the lord's picture
+constexpr const char* LORD_NAME_TITLE       = "title";  // the node name of the lord's name label
+
 class uilordselect :
     public ax::ui::Widget,
     public chilli::ui::DragMoveElement,
@@ -100,6 +114,7 @@ protected:
     // optional parts to show: "selected", "location" and one of "battle", "night", "dawn". It is only rendered again
     // when something changed. The name is a label on the picture, not part of it, so it is drawn sharp at any size.
     std::string faceName( character& c );
+    bool isBadge( const std::string& partId ) const;
     void renderLordImage( const std::string& imageId, const std::string& face, const std::vector<std::string>& show, f32 offsetY );
     void setLordTitle( const std::string& text, bool single );
 

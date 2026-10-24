@@ -6,9 +6,10 @@
         <ring id="location" pos="64,64" anchor="c" radius="62.5" thickness="2" colour="#be0005" enabled="false"/>
         <circle id="drop" pos="64,64" anchor="c" radius="37.5" colour="black" alpha="0.1" enabled="false"/>
         <gfx id="face" name="f_dead!" pos="64,32" anchor="tc"/>
-        <gfx id="battle" name="lord_battle" pos="32,32" anchor="c" scale="0.5" enabled="false"/>
-        <gfx id="night" name="lord_night" pos="32,32" anchor="c" scale="0.5" enabled="false"/>
-        <gfx id="dawn" name="lord_dawn" pos="32,32" anchor="c" scale="0.5" enabled="false"/>
+        <gfx id="battle" name="lord_battle" pos="64,32" anchor="c" scale="0.5" enabled="false"/>
+        <gfx id="night" name="lord_night" pos="64,32" anchor="c" scale="0.5" enabled="false"/>
+        <gfx id="dawn" name="lord_dawn" pos="64,32" anchor="c" scale="0.5" enabled="false"/>
+        <gfx id="tunnel" name="i_filter_tunnel" pos="64,32" anchor="c" scale="0.5" enabled="false"/>
     </image>
 
     <image id="lord_grouped" size="64,64">

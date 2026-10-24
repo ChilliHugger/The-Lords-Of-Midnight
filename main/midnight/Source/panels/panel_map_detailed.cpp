@@ -923,8 +923,12 @@ void panel_map_detailed::setupCharacterButtons()
             
         }
         
-        if ( m->here.empty() )
-            node->setLocalZOrder(ZORDER_DEFAULT);
+        // a lord's face and badges are one picture, drawn in the order of the map: a lord lower down covers the
+        // badges hanging from the lord above. The current lord is above all of the other single lords.
+        if ( m->here.empty() ) {
+            const s32 row = (s32)(pos.y / RES(64));
+            node->setLocalZOrder( c.id == TME_CurrentCharacter().id ? ZORDER_NEAR-1 : ZORDER_DEFAULT + row );
+        }
         node->setAnchorPoint(uihelper::AnchorCenter);
         node->setPosition( Vec2(pos.x+RES(32),tmxMap->getContentSize().height-(pos.y+RES(32))) );
         node->addClickEventListener(clickCallback);
