@@ -1021,6 +1021,31 @@ void ddr_character::Target ( const mxitem* newtarget )
     }
     targetId = mxentity::SafeIdt(newtarget);
     targetLocation = newtarget->Location();
+
+    if ( mx->isRuleEnabled(RF_DDR_TUNNEL_SEARCH) && newtarget != this && newtarget->IsType(IDT_CHARACTER) ) {
+        auto character = static_cast<const mxcharacter*>(newtarget);
+        if ( character->IsInTunnel() ) {
+            targetLocation = TunnelSearchLocation(character->Location());
+        }
+    }
+}
+
+mxgridref ddr_character::TunnelSearchLocation ( mxgridref tunnelLocation ) const
+{
+    // a lord underground can't be seen, so the army only has a rough idea
+    // of where to look and will search the ground near the tunnel instead
+    const s32 TUNNEL_SEARCH_RADIUS = 3;
+
+    for (int attempt = 0; attempt < 8; attempt++) {
+        mxgridref loc( loc_t(
+            tunnelLocation.x + mxrandom(-TUNNEL_SEARCH_RADIUS, TUNNEL_SEARCH_RADIUS),
+            tunnelLocation.y + mxrandom(-TUNNEL_SEARCH_RADIUS, TUNNEL_SEARCH_RADIUS) ));
+
+        if ( mx->gamemap->IsLocOnMap(loc) && !mx->scenario->isLocationImpassable(loc, this) )
+            return loc;
+    }
+
+    return tunnelLocation;
 }
 
 mxorders_t ddr_character::pickNewOrders () const
