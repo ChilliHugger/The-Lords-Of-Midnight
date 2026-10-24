@@ -112,7 +112,9 @@ jobs:
 
       - name: Build ${{ matrix.app }}
         working-directory: game/main/midnight
-        run: cmake --build ${{ env.BUILD_DIR }} --parallel
+        # A fixed job count: a bare --parallel starts every emcc compile at once and the runner
+        # runs out of memory, which shows up as the job being cancelled mid-compile.
+        run: cmake --build ${{ env.BUILD_DIR }} --parallel 4
 
       - name: Collect files
         working-directory: game/main/midnight
