@@ -19,7 +19,7 @@ USING_NS_TME ;
  * Arguments        : const std::string& filename
  */
 
-MXRESULT mxengine::LoadDatabaseBinary ( const std::string& filename )
+MXRESULT mxengine::LoadDatabaseBinary ( const std::string& filename, bool exactVersion )
 {
 int ii;
 int id;
@@ -68,6 +68,10 @@ MXTRACE( "ScenarioId=%d", (int)scenarioid);
 MXTRACE( "Version=%d", (int)savegameversion);
     if ( savegameversion < DATABASEVERSION ) {
         MXTRACE("Invalid DATABASE Version");
+        return MX_INCORRECT_VERSION ;
+    }
+    if ( exactVersion && savegameversion != SAVEGAMEVERSION ) {
+        MXTRACE("DATABASE written by a different save version");
         return MX_INCORRECT_VERSION ;
     }
 

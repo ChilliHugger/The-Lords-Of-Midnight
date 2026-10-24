@@ -47,7 +47,7 @@ namespace tme {
         virtual MXRESULT SetDatabaseDirectory ( const std::string& directory ) ;
         virtual MXRESULT LoadDatabase ( RULEFLAGS rules, mxdifficulty_t difficulty ) ;
         virtual MXRESULT UnloadDatabase ( void ) ;
-        MXRESULT LoadDatabaseBinary ( const std::string& filename );
+        MXRESULT LoadDatabaseBinary ( const std::string& filename, bool exactVersion = false );
         MXRESULT LoadDatabaseFromTsv ( const std::string& tsvDirectory );
         MXRESULT SaveDatabaseCache ( const std::string& filename );
         void LoadVariablesTsv ( const TsvTable& table );
