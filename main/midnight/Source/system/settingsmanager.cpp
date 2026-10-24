@@ -288,6 +288,11 @@ bool settingsmanager::Load ( void )
         game_rules.Set(RF_DDR_CIRCULAR_LIEGE_FIX);
     }
 
+    // existing settings get the tunnel search rule
+    if ( version < 17 ) {
+        game_rules.Set(RF_DDR_TUNNEL_SEARCH);
+    }
+
     ar.Close();
 
     SAFEDELETE ( pFile );

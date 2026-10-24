@@ -145,6 +145,7 @@ namespace tme {
         virtual void AICheckRecruitSoldiers ( void );
         
         void Target ( const mxitem* newtarget );
+        mxgridref TunnelSearchLocation ( mxgridref tunnelLocation ) const;
         void whatIsCharacterDoing ( void );
         bool retarget ();
         void moveCharacterSomewhere ( void );
