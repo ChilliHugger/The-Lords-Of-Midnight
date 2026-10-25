@@ -177,6 +177,7 @@ protected:
     layoutid_t linkFor( Node* node, Direction direction ) const;
 
     void showFocus();
+    ax::Sprite* findPicture( Node* node ) const;
     void hideFocus();
     void updateFocus();
     void ensureVisible( Node* node );
@@ -195,7 +196,8 @@ protected:
 protected:
     uipanel*                    panel{};
     Node*                       focused{};
-    ax::DrawNode*               highlight{};
+    ax::Node*                   highlight{};
+    ax::SpriteFrame*            highlightFrame{};       // the picture the outline was made from
     ax::Size                    highlightSize;
     FocusStyle                  highlightStyle{ FocusStyle::outline };
     layoutid_t                  defaultId{ ID_NONE };

@@ -6,6 +6,7 @@
 #include "uifocus.h"
 #include "uipanel.h"
 #include "uihelper.h"
+#include "uioutline.h"
 #include "../system/moonring.h"
 #include "../system/settingsmanager.h"
 
@@ -28,7 +29,9 @@ namespace {
 
     constexpr f32 HIGHLIGHT_PADDING     = 6.0f;
     constexpr f32 HIGHLIGHT_RADIUS      = 10.0f;
-    constexpr f32 HIGHLIGHT_THICKNESS   = 5.0f;
+    constexpr f32 HIGHLIGHT_THICKNESS   = 3.0f;
+    constexpr s32 FOCUS_GLOW_RADIUS     = 14;
+    constexpr f32 FOCUS_GLOW_POWER    = 2.0f;
     constexpr s32 HIGHLIGHT_ZORDER      = 10000;
     constexpr f32 PRESS_DURATION        = 0.1f;
     constexpr f32 REFRESH_INTERVAL      = 0.1f;
@@ -477,11 +480,8 @@ void uifocuscontroller::refresh()
         return;
     }
 
-    // an item can change size, e.g. when its text changes
-    if ( highlight == nullptr || highlight->getParent() != focused
-        || highlightSize != focused->getContentSize() ) {
-        showFocus();
-    }
+    // an item can change its picture or size, e.g. when its text changes
+    showFocus();
 }
 
 bool uifocuscontroller::navigate( Direction direction )
@@ -680,6 +680,20 @@ void uifocuscontroller::hideFocus()
         highlight->removeFromParent();
 }
 
+// The picture an icon is showing, whose shape the outline follows
+Sprite* uifocuscontroller::findPicture( Node* node ) const
+{
+    if ( auto button = dynamic_cast<Button*>(node) )
+        return button->getRendererNormal();
+    if ( auto view = dynamic_cast<ImageView*>(node) )
+        return dynamic_cast<Sprite*>(view->getVirtualRenderer());
+
+    // a picture built by the imagebuilder is a "picture" child of the node, or of the node's
+    // "face" child for a lord
+    auto host = node->getChildByName("face");
+    return dynamic_cast<Sprite*>((host != nullptr ? host : node)->getChildByName("picture"));
+}
+
 void uifocuscontroller::showFocus()
 {
     if ( focused == nullptr || !isEnabled() ) {
@@ -687,34 +701,52 @@ void uifocuscontroller::showFocus()
         return;
     }
 
-    if ( highlight == nullptr ) {
-        highlight = DrawNode::create();
-        highlight->retain();
-    }
-
     auto item = FocusItem::of(focused);
-    highlightStyle = item != nullptr ? item->style : FocusStyle::outline;
+    auto style = item != nullptr ? item->style : FocusStyle::outline;
 
-    if ( highlightStyle == FocusStyle::tint ) {
+    if ( style == FocusStyle::tint ) {
         hideFocus();
         return;
     }
+
+    auto picture = style == FocusStyle::outline ? findPicture(focused) : nullptr;
+    auto frame = picture != nullptr ? picture->getSpriteFrame() : nullptr;
+
+    // already showing it, e.g. when refreshed
+    if ( highlight != nullptr && highlight->getParent() != nullptr
+        && highlightFrame == frame && highlightSize == focused->getContentSize()
+        && (frame != nullptr ? highlight->getParent() == picture : highlight->getParent() == focused) )
+        return;
+
+    hideFocus();
+    AX_SAFE_RELEASE_NULL(highlight);
+
+    highlightFrame = frame;
     highlightSize = focused->getContentSize();
 
-    highlight->clear();
-    highlight->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-    highlight->setIgnoreAnchorPointForPosition(true);
-    highlight->setPosition(Vec2::ZERO);
+    auto colour = Color4F(FOCUS_COLOUR);
 
+    if ( frame != nullptr ) {
+        // the glow is the icon's own shape, behind it, so it is seen around the edge only
+        auto glow = uioutline::createFromFrame(frame, colour, RES(FOCUS_GLOW_RADIUS), FOCUS_GLOW_POWER, 1.0f, picture->isFlippedY(), dynamic_cast<Node*>(picture->getParent()->getUserObject()) != nullptr
+            || dynamic_cast<Node*>(focused->getUserObject()) != nullptr);
+        if ( glow != nullptr ) {
+            glow->setPosition(picture->getContentSize() / 2);
+            picture->addChild(glow, -1);
+            highlight = glow;
+            highlight->retain();
+            return;
+        }
+    }
+
+    // nothing to follow the shape of: a rounded rectangle
+    auto draw = DrawNode::create();
     f32 padding = RES(HIGHLIGHT_PADDING);
     f32 radius = RES(HIGHLIGHT_RADIUS);
-    f32 thickness = RES(HIGHLIGHT_THICKNESS);
 
-    // rounded rectangle, built as a polygon
     std::vector<Vec2> outline;
-    auto size = highlightSize;
     Vec2 low(-padding, -padding);
-    Vec2 high(size.width + padding, size.height + padding);
+    Vec2 high(highlightSize.width + padding, highlightSize.height + padding);
     radius = std::min(radius, std::min((high.x - low.x), (high.y - low.y)) / 2);
 
     const int steps = 6;
@@ -731,23 +763,18 @@ void uifocuscontroller::showFocus()
         }
     }
 
-    auto colour = Color4F(FOCUS_COLOUR);
-
-    if ( highlightStyle == FocusStyle::background ) {
-        highlight->drawPolygon(outline.data(), (int)outline.size(), colour, 0, colour, true);
-        highlight->setLocalZOrder(-HIGHLIGHT_ZORDER);
+    if ( style == FocusStyle::background ) {
+        draw->drawPolygon(outline.data(), (int)outline.size(), colour, 0, colour, true);
+        draw->setLocalZOrder(-HIGHLIGHT_ZORDER);
     } else {
-        // a dark edge keeps the outline visible against light and coloured backgrounds
-        highlight->drawPolygon(outline.data(), (int)outline.size(), Color4F(0, 0, 0, 0), thickness + RES(3),
-                               Color4F(0, 0, 0, 0.6f), true);
-        highlight->drawPolygon(outline.data(), (int)outline.size(), Color4F(0, 0, 0, 0), thickness, colour, true);
-        highlight->setLocalZOrder(HIGHLIGHT_ZORDER);
+        draw->drawPolygon(outline.data(), (int)outline.size(), Color4F(0, 0, 0, 0), RES(HIGHLIGHT_THICKNESS), colour, true);
+        draw->setLocalZOrder(HIGHLIGHT_ZORDER);
     }
 
-    if ( highlight->getParent() != focused ) {
-        hideFocus();
-        focused->addChild(highlight);
-    }
+    draw->setIgnoreAnchorPointForPosition(true);
+    focused->addChild(draw);
+    highlight = draw;
+    highlight->retain();
 }
 
 //
