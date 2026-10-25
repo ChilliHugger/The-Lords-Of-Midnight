@@ -579,6 +579,11 @@ void panel_options::OnMenuNotification(
             focus.focus((layoutid_t)option->id);
         }
         focus.refresh();
+
+#if defined(_MOUSE_ENABLED_)
+        // hides the pointer, or brings it back
+        setCursor(MOUSE_NORMAL);
+#endif
     }
 
     if ( option->id == ID_OPTION_TUTORIAL ) {

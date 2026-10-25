@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "system/resolutionmanager.h"
 #include "system/moonring.h"
+#include "system/settingsmanager.h"
 #include "panels/panel_splashscreen.h"
 
 #include "tme/tme_interface.h"
@@ -77,6 +78,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     mr->startControllers();
 #endif
 
+#if defined(_OS_DESKTOP_)
+    BlockMouseForDpad();
+#endif
+
     // create a scene. it's an autorelease object
     auto scene = panel_splashscreen::create();
     if ( scene == nullptr )
@@ -87,6 +92,36 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     return true;
 }
+
+#if defined(_OS_DESKTOP_)
+// With the d-pad on the mouse is not used at all, so a stray click can't act on something
+// other than what has focus. These listeners come before every other, and last for the game.
+void AppDelegate::BlockMouseForDpad()
+{
+    auto mr = moonring::mikesingleton();
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+
+    auto touch = EventListenerTouchOneByOne::create();
+    touch->setSwallowTouches(true);
+    touch->onTouchBegan = [mr](Touch*, Event*) {
+        return mr->settings->isDpadNavigation();
+    };
+    dispatcher->addEventListenerWithFixedPriority(touch, -1000);
+
+    auto mouse = EventListenerMouse::create();
+    auto block = [mr](EventMouse* event) {
+        if ( !mr->settings->isDpadNavigation() )
+            return false;
+        event->stopPropagation();
+        return true;
+    };
+    mouse->onMouseDown = block;
+    mouse->onMouseUp = block;
+    mouse->onMouseMove = block;
+    mouse->onMouseScroll = block;
+    dispatcher->addEventListenerWithFixedPriority(mouse, -1000);
+}
+#endif
 
 void AppDelegate::InitialisePaths()
 {

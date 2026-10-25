@@ -519,6 +519,13 @@ f32 cursor_scales[] = { 0.5f, 0.75f, 1.0f };
 void uipanel::setCursor(MOUSE_CURSOR cursor)
 {
     currentCursor = cursor;
+
+    // the d-pad has no use for a pointer
+    if(mr->settings->isDpadNavigation()) {
+        imgCursor->setVisible(false);
+        Director::getInstance()->getGLView()->setCursorVisible(false);
+        return;
+    }
     
     if(cursor == MOUSE_NONE) {
         imgCursor->setVisible(false);
