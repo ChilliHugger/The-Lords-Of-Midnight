@@ -82,6 +82,20 @@ constexpr f32 FADE_OUT_SPEED = 1.0f;
 #define IMAGE_HEADER    "misc/header.png"
 #endif
 
+//
+// Moving around with the d-pad: the three arrows and the two bottom icons each cycle sideways,
+// and up and down go between the arrows, the shield and the icons.
+//
+static const chilli::ui::FocusLink focus_links[] = {
+    // id               left              right             up                down
+    { ID_ARROW_LEFT,    ID_ARROW_RIGHT,   ID_ARROW_UP,      ID_THINK,         ID_SELECT_ALL },
+    { ID_ARROW_UP,      ID_ARROW_LEFT,    ID_ARROW_RIGHT,   ID_THINK,         ID_SELECT_ALL },
+    { ID_ARROW_RIGHT,   ID_ARROW_UP,      ID_ARROW_LEFT,    ID_THINK,         ID_ACTIONS },
+    { ID_SELECT_ALL,    ID_ACTIONS,       ID_ACTIONS,       ID_ARROW_LEFT,    ID_THINK },
+    { ID_ACTIONS,       ID_SELECT_ALL,    ID_SELECT_ALL,    ID_ARROW_RIGHT,   ID_THINK },
+    { ID_THINK,         ID_NONE,          ID_NONE,          ID_ACTIONS,       ID_ARROW_RIGHT },
+};
+
 static f32 compass_delays[] = { 0.0f, 1.0f, 0.375f, 2.0f };
 
 panel_look::panel_look() :
@@ -275,6 +289,7 @@ bool panel_look::init()
     setupMovementIndicators();
 
     setDefaultFocus(ID_ARROW_UP);
+    focus.setLinks(focus_links, NUMELE(focus_links));
 
 
     auto size = getContentSize();
@@ -1663,7 +1678,7 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
 
 void panel_look::setupMovementButtons()
 {
-    f32 scale = 2.5f;
+    f32 scale = 1.0f;
 
     auto create = [&](LPCSTR image, layoutid_t id) {
         auto button = uihelper::CreateImageButton(image, id, clickCallback);
@@ -1674,7 +1689,7 @@ void panel_look::setupMovementButtons()
     // always on screen, as the d-pad has no touch to bring up the indicators
     uihelper::AddCenterLeft(safeArea, create("arrow_left", ID_ARROW_LEFT), RES(48), RES(0));
     uihelper::AddCenterRight(safeArea, create("arrow_right", ID_ARROW_RIGHT), RES(48), RES(0));
-    uihelper::AddTopCenter(safeArea, create("arrow_up", ID_ARROW_UP), RES(0), RES(256));
+    uihelper::AddTopCenter(safeArea, create("arrow_up", ID_ARROW_UP), RES(0), RES(190));
 }
 
 void panel_look::setupMovementIndicators()
