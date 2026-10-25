@@ -190,6 +190,7 @@ void uihelpwindow::Show( MXVoidCallback callback )
 
     // and show
     parent->addChild(this);
+    parent->getFocus().pushScope(this);
 }
 
 void uihelpwindow::OnClose()
@@ -211,7 +212,7 @@ void uihelpwindow::Close()
 
     //
     parent->removeChild(this);
-    
+    parent->getFocus().popScope(this);
 }
 
 

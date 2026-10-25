@@ -8,6 +8,7 @@
 #include "uihelper.h"
 #include "uibookmenu.h"
 #include "uipanel.h"
+#include "uifocus.h"
 #include "uibook.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
@@ -82,6 +83,7 @@ bool uibookmenu::initWithStory( uipanel* parent, storyinfo_t* story )
         auto menuItem = MyButton::create(BOX_BACKGROUND_FILENAME);
         menuItem->setContentSize(Size(RES(512), RES(400)) );
         menuItem->setScale9Enabled(true);
+        chilli::ui::FocusItem::mark(menuItem);
         uihelper::AddCenter(menuItem, book1);
         
         scrollview->addChild(menuItem);
@@ -133,7 +135,7 @@ void uibookmenu::Show()
     // and show
     setLocalZOrder(ZORDER_POPUP);
     uihelper::AddCenter(parent,this);
-    
+    parent->getFocus().pushScope(this);
 }
 
 void uibookmenu::Close()
@@ -142,6 +144,7 @@ void uibookmenu::Close()
     parent->resumeEvents();
 
     // remove child, this sets parent to null
-    parent->removeChild(this);
-    
+    auto owner = parent;
+    owner->removeChild(this);
+    owner->getFocus().popScope(this);
 }

@@ -73,6 +73,15 @@ settingsmanager::~settingsmanager()
 {
 }
 
+bool settingsmanager::isDpadNavigation() const
+{
+#if defined(_OS_TVOS_)
+    return true;
+#else
+    return is(dpad_navigation);
+#endif
+}
+
 bool settingsmanager::bumpAdvert()
 {
     bool show = false;
@@ -184,6 +193,10 @@ bool settingsmanager::Save ( void )
     // version 15
     ar << dedication_screen_count;
 
+    // versions 16 and 17 added game rules only
+    // version 18
+    ar << FROM_TOGGLE(dpad_navigation);
+
     ar.Close();
 
     SAFEDELETE ( pFile );
@@ -281,6 +294,10 @@ bool settingsmanager::Load ( void )
     
     if ( version >= 15 ) {
         ar >> dedication_screen_count;
+    }
+
+    if ( version >= 18 ) {
+        ar >> TO_TOGGLE(dpad_navigation);
     }
 
     // existing settings get the circular liege fix

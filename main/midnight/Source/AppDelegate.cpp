@@ -74,7 +74,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if defined(AX_TARGET_OS_TVOS)
     // the Siri Remote is only delivered as a game controller once discovery is running
-    Controller::startDiscoveryController();
+    mr->startControllers();
 #endif
 
     // create a scene. it's an autorelease object

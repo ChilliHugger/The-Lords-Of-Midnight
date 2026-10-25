@@ -17,6 +17,7 @@
 #include "../system/moonring.h"
 
 #include "../ui/uihelper.h"
+#include "../ui/uifocus.h"
 
 #include "../tme/tme_interface.h"
 
@@ -130,6 +131,7 @@ void LandscapePeople::Initialise()
             image->setTouchEnabled(true);
             image->addClickEventListener(callback);
             image->setTag(ID_THINK_PERSON);
+            chilli::ui::FocusItem::mark(image);
             image->setUserData(c.userdata);
             
             image->addTouchEventListener(

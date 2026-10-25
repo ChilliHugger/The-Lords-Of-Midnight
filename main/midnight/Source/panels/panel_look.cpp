@@ -18,6 +18,7 @@
 #include "../frontend/language.h"
 
 #include "../ui/uihelper.h"
+#include "../ui/uifocus.h"
 #include "../ui/uicommandwindow.h"
 #include "../ui/uihelplistwindow.h"
 #include "../ui/uihelpwindow.h"
@@ -193,6 +194,7 @@ bool panel_look::init()
     imgShield->setTouchEnabled(true);
     imgShield->addClickEventListener(clickCallback);
     imgShield->setTag(ID_THINK);
+    chilli::ui::FocusItem::mark(imgShield);
     
 #if defined(_DDR_)
     // Take account of notch
@@ -271,6 +273,8 @@ bool panel_look::init()
         
     // Direction movement indicators
     setupMovementIndicators();
+
+    setDefaultFocus(ID_ARROW_UP);
 
 
     auto size = getContentSize();
@@ -1246,6 +1250,22 @@ void panel_look::OnNotification( Ref* sender )
     }
     
     switch ( id ) {
+
+        case ID_ARROW_LEFT:
+        case ID_ARROW_RIGHT:
+        case ID_ARROW_UP:
+        {
+            if ( options->isMoving || options->isLooking )
+                return;
+
+            if ( id == ID_ARROW_LEFT )
+                startLookLeft();
+            else if ( id == ID_ARROW_RIGHT )
+                startLookRight();
+            else
+                moveForward();
+            return;
+        }
             
         case ID_HELP:
             showHelpPending();
@@ -1641,8 +1661,29 @@ bool panel_look::OnMouseEvent( Touch* touch, Event* event, bool pressed )
     return false;
 }
 
+void panel_look::setupMovementButtons()
+{
+    f32 scale = 2.5f;
+
+    auto create = [&](LPCSTR image, layoutid_t id) {
+        auto button = uihelper::CreateImageButton(image, id, clickCallback);
+        button->setScale(button->getScale() * scale);
+        return button;
+    };
+
+    // always on screen, as the d-pad has no touch to bring up the indicators
+    uihelper::AddCenterLeft(safeArea, create("arrow_left", ID_ARROW_LEFT), RES(48), RES(0));
+    uihelper::AddCenterRight(safeArea, create("arrow_right", ID_ARROW_RIGHT), RES(48), RES(0));
+    uihelper::AddTopCenter(safeArea, create("arrow_up", ID_ARROW_UP), RES(0), RES(256));
+}
+
 void panel_look::setupMovementIndicators()
 {
+    if ( mr->settings->isDpadNavigation() ) {
+        setupMovementButtons();
+        return;
+    }
+
     if ( isNot(mr->settings->showmovementindicators) )
         return;
     
@@ -1672,7 +1713,7 @@ void panel_look::updateMovementIndicators(LANDSCAPE_MOVEMENT movement)
     bool drawArrows = movement != LM_NONE ;
     currentMovementIndicator = movement;
  
-    if ( isNot(mr->settings->showmovementindicators) )
+    if ( movementIndicators[0] == nullptr )
         return;
 
     for ( int ii=0; ii<NUMELE(movementIndicators); ii++ ) {

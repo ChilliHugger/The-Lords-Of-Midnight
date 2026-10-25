@@ -161,6 +161,7 @@ void uipopup::Show()
     // and show
     this->setLocalZOrder(ZORDER_POPUP);
     parent->addChild(this);
+    parent->getFocus().pushScope(this);
 }
 
 void uipopup::OnYes()
@@ -182,6 +183,7 @@ void uipopup::Close()
 {
     //
     parent->removeChild(this);
+    parent->getFocus().popScope(this);
     
     // give the parent events back
     parent->resumeEvents();

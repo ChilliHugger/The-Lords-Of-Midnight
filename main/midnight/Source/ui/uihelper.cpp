@@ -6,6 +6,7 @@
 //
 #include "../utils/imagebuilder.h"
 #include "uihelper.h"
+#include "uifocus.h"
 #include "uipanel.h"
 #include "../system/resolutionmanager.h"
 #include "../ui/uielement.h"
@@ -385,6 +386,7 @@ Button* uihelper::CreateImageButton( const std::string& name )
         }
     }
     button->setLocalZOrder(ZORDER_UI);
+    chilli::ui::FocusItem::mark(button);
     return uihelper::setEnabled(button,true);
 }
 
@@ -421,6 +423,7 @@ Button* uihelper::CreateBoxButton( Size size )
     button->setScale9Enabled(true);
     button->setContentSize(size);
     button->setLocalZOrder(ZORDER_UI);
+    chilli::ui::FocusItem::mark(button);
     uihelper::setEnabled(button,true);
     // Adjust for centreY without trailing character
     button->getTitleRenderer()->setLineHeight(PHONE_SCALE(RES(25)));

@@ -15,6 +15,7 @@
 #include "../frontend/panel_id.h"
 #include "../ui/uielement.h"
 #include "../ui/uishortcutkeys.h"
+#include "../ui/uifocus.h"
 #include "../system/moonring.h"
 
 using namespace chilli::types;
@@ -74,6 +75,11 @@ public:
     virtual void OnActivate( void );
     virtual void OnDeActivate( void );
     virtual bool OnKeyboardEvent( uikeyboardevent* event );
+
+    // d-pad focus: a screen can decide where a move goes, or what to do when there is
+    // nowhere to go. Return nullptr / false to leave it to the focus controller.
+    virtual ax::Node* OnFocusMove( ax::Node* from, chilli::ui::FocusDirection direction ) { return nullptr; }
+    virtual bool OnFocusEdge( chilli::ui::FocusDirection direction ) { return false; }
   
 #if defined(_MOUSE_ENABLED_)
     virtual bool OnMouseMove( Vec2 pos );
@@ -98,6 +104,9 @@ public:
 
     void pauseEvents();
     void resumeEvents();    
+
+    uifocuscontroller& getFocus() { return focus; }
+    void setDefaultFocus( layoutid_t id ) { focus.setDefault(id); }
     void AreYouSure ( LPCSTR text, MXVoidCallback ok, MXVoidCallback notok = nullptr );
     
 protected:
@@ -150,6 +159,8 @@ protected:
     WidgetEventCallback eventCallback;
     
     Layer*              safeArea;
+
+    uifocuscontroller   focus{this};
     
 #if defined(_MOUSE_ENABLED_)
     Sprite*             imgCursor;

@@ -9,6 +9,7 @@
 #include "../axmol_sdk.h"
 #include "uifilterbutton.h"
 #include "uihelper.h"
+#include "uifocus.h"
 #include "../utils/imagebuilder.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
@@ -52,6 +53,7 @@ uifilterbutton* uifilterbutton::createWithImage(const std::string& image)
 
     button->setLocalZOrder(ZORDER_UI);    
     button->initChildren();
+    chilli::ui::FocusItem::mark(button);
     
     uihelper::setEnabled(button,true);
 
