@@ -14,6 +14,7 @@
 #include "../system/settingsmanager.h"
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
+#include "../ui/uichoicepopup.h"
 #include "../frontend/language.h"
 #include "../ui/characters/uisinglelord.h"
 #include "../ui/characters/uigrouplord.h"
@@ -592,9 +593,14 @@ void panel_select::OnNotification( Ref* sender )
     layoutid_t id = uihelper::getIdFromSender(sender);
      
     if ( id >= ID_SELECT_CHAR ) {
+        mxid characterId = id-ID_SELECT_CHAR;
+
+        // without a mouse, a lord who can group is asked what to do
+        if ( mr->settings->isDpadNavigation() && showLordChoices(characterId) )
+            return;
+
         gradientB->setVisible(false);
         gradientR->setVisible(false);
-        mxid characterId = id-ID_SELECT_CHAR;
         mr->selectCharacter(characterId);
         return;
     }
@@ -674,6 +680,107 @@ void panel_select::OnNotification( Ref* sender )
             
         default:
             break;
+    }
+}
+
+uilordselect* panel_select::findLord( mxid id )
+{
+    for ( auto lord : lords ) {
+        if ( getIdFromTag(lord) == id )
+            return lord;
+
+        if ( lord->lordtype == lordwidget::group ) {
+            for ( auto follower : dynamic_cast<uigrouplord*>(lord)->followers ) {
+                if ( getIdFromTag(follower) == id )
+                    return follower;
+            }
+        }
+    }
+    return nullptr;
+}
+
+// Only lords that can be grouped are given choices - others are simply selected. Who a lord can
+// join, and so whether they can at all, is decided by the game rules.
+bool panel_select::showLordChoices( mxid id )
+{
+    character c;
+    TME_GetCharacter(c, id);
+
+    std::vector<uichoice> choices;
+
+    if ( c.following ) {
+        choices.push_back({ GROUP_MENU_LEADER, [this,id] { makeLeader(id); } });
+        choices.push_back({ GROUP_MENU_LEAVE, [this,id] { leaveGroupFrom(id); } });
+    } else {
+        for ( auto lord : lords ) {
+            mxid leaderId = getIdFromTag(lord);
+            CONTINUE_IF( leaderId == id );
+
+            if ( Character_CanFollow(c, leaderId) ) {
+                character leader;
+                TME_GetCharacter(leader, leaderId);
+                choices.push_back({
+                    GROUP_MENU_JOIN + StringExtensions::toUpper(leader.longname),
+                    [this,id,leaderId] {
+                        if ( mr->joinGroup(id, leaderId) )
+                            refreshCharacters();
+                    }
+                });
+            }
+        }
+    }
+
+    if ( choices.empty() )
+        return false;
+
+    choices.insert(choices.begin(), { GROUP_MENU_SELECT, [this,id] {
+        gradientB->setVisible(false);
+        gradientR->setVisible(false);
+        mr->selectCharacter(id);
+    }});
+
+    auto popup = uichoicepopup::create(this, StringExtensions::toUpper(c.longname), choices);
+    if ( popup == nullptr )
+        return false;
+
+    popup->Show();
+    return true;
+}
+
+void panel_select::leaveGroupFrom( mxid id )
+{
+    auto lord = findLord(id);
+    if ( lord != nullptr && mr->leaveGroup(id) ) {
+        // placed in the next free space, as a lord who has not been placed yet
+        lord->setPage(InvalidPage);
+        lord->setPosition(Vec2::ZERO);
+        storeLordPosition(lord);
+        refreshCharacters();
+    }
+}
+
+void panel_select::makeLeader( mxid id )
+{
+    auto lord = findLord(id);
+    if ( lord == nullptr )
+        return;
+
+    character c;
+    TME_GetCharacter(c, id);
+    auto leader = findLord(c.following);
+    if ( leader == nullptr )
+        return;
+
+    if ( mr->swapGroupLeader(id) ) {
+        // the new leader takes the group's place on its page, and the old one joins it
+        auto page = leader->getPage();
+        lord->setPage(page);
+        lord->setPosition(leader->getPosition());
+        leader->setPage(TO_PARENT_PAGE(page));
+        leader->setPosition(Vec2::ZERO);
+        storeLordPosition(lord);
+        storeLordPosition(leader);
+        refreshCharacters();
     }
 }
 

@@ -64,6 +64,12 @@ protected:
     void showCharacterPositions();
     void refreshCharacters();
 
+    // d-pad grouping: what dragging does, offered as a list of choices
+    bool showLordChoices( mxid id );
+    uilordselect* findLord( mxid id );
+    void leaveGroupFrom( mxid id );
+    void makeLeader( mxid id );
+
     void storeLordPosition( uilordselect* lord );
 
     void createPageView();
