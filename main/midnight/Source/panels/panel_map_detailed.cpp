@@ -71,6 +71,8 @@ bool panel_map_detailed::init()
     }
     
     uishortcutkeys::registerCallback(safeArea, clickCallback);
+
+    focus.setOnScreenOnly(true);
     
     model = &mr->mapmodel;
     
@@ -113,6 +115,10 @@ bool panel_map_detailed::init()
     map_up->setLocalZOrder(ZORDER_UI+1);
     map_up->setAnchorPoint(uihelper::AnchorCenter);
   
+    if ( mr->settings->isDpadNavigation() ) {
+        setupScrollArrows();
+    }
+
     createFilterButton(ID_FILTER_CURRENT_LOC,   "filter_centre", map_filters::centre_char);
     createFilterButton(ID_FILTER_MEMORIES,      "filter_memories", map_filters::show_memories);
     createFilterButton(ID_FILTER_CRITTERS,      "filter_critters", map_filters::show_critters);
@@ -233,6 +239,53 @@ void panel_map_detailed::setupTooltip()
     addTouchListener();
 }
 
+// The d-pad cannot drag the map, so these arrows at the edges of the screen are how it is
+// scrolled. Moving focus past the last icon stops there rather than scrolling.
+void panel_map_detailed::setupScrollArrows()
+{
+    auto create = [&](LPCSTR image, layoutid_t id, f32 rotation) {
+        auto button = uihelper::CreateImageButton(image, id, clickCallback);
+        button->setRotation(rotation);
+        return button;
+    };
+
+    uihelper::AddCenterLeft(safeArea, create("arrow_left", ID_ARROW_LEFT, 0), RES(16), RES(0));
+    uihelper::AddCenterRight(safeArea, create("arrow_right", ID_ARROW_RIGHT, 0), RES(16), RES(0));
+    uihelper::AddTopCenter(safeArea, create("arrow_up", ID_ARROW_UP, 0), RES(0), RES(16));
+    // turned upside down about its anchor, so it hangs from the top centre to stay above the edge
+    auto down = create("arrow_up", ID_ARROW_DOWN, 180);
+    uihelper::AddBottomCenter(safeArea, down, RES(0), RES(16));
+    down->setAnchorPoint(uihelper::AnchorTopCenter);
+    down->setPositionY(RES(16) + (down->getContentSize().height * down->getScale()));
+}
+
+void panel_map_detailed::scrollMap( chilli::ui::FocusDirection direction )
+{
+    using FocusDirection = chilli::ui::FocusDirection;
+
+    auto view = scrollView->getContentSize();
+    auto inner = scrollView->getInnerContainerSize();
+    auto position = scrollView->getInnerContainerPosition();
+
+    // the contents move the opposite way to the view
+    const f32 step = 0.33f;
+    switch ( direction ) {
+        case FocusDirection::left:  position.x += view.width * step; break;
+        case FocusDirection::right: position.x -= view.width * step; break;
+        case FocusDirection::up:    position.y -= view.height * step; break;
+        case FocusDirection::down:  position.y += view.height * step; break;
+    }
+
+    position.x = std::max(std::min(position.x, 0.0f), std::min(view.width - inner.width, 0.0f));
+    position.y = std::max(std::min(position.y, 0.0f), std::min(view.height - inner.height, 0.0f));
+    scrollView->setInnerContainerPosition(position);
+}
+
+bool panel_map_detailed::OnFocusEdge( chilli::ui::FocusDirection direction )
+{
+    return mr->settings->isDpadNavigation();
+}
+
 void panel_map_detailed::OnNotification( Ref* sender )
 {
     auto button = dynamic_cast<Widget*>(sender);
@@ -285,6 +338,11 @@ void panel_map_detailed::OnNotification( Ref* sender )
             break;
         }
             
+        case ID_ARROW_LEFT:     scrollMap(chilli::ui::FocusDirection::left); break;
+        case ID_ARROW_RIGHT:    scrollMap(chilli::ui::FocusDirection::right); break;
+        case ID_ARROW_UP:       scrollMap(chilli::ui::FocusDirection::up); break;
+        case ID_ARROW_DOWN:     scrollMap(chilli::ui::FocusDirection::down); break;
+
         case ID_LOOK:
             mr->settings->Save();
 #if defined(_CITADEL_)
@@ -612,6 +670,8 @@ void panel_map_detailed::hideGroupLord()
         node->runAction( Sequence::createWithTwoActions( FadeOut::create(fadeTime), RemoveSelf::create() ) );
     };
     
+    focus.popScope(grouplord);
+
     grouplord->setTouchEnabled(false);
     for ( auto follower : grouplord->followers ) {
         follower->setTouchEnabled(false);
@@ -637,6 +697,13 @@ void panel_map_detailed::hideGroupLord()
     groupLordButton->setOpacity(0);
     groupLordButton->setVisible(true);
     groupLordButton->runAction( FadeIn::create(fadeTime) );
+
+    // focus goes back to the group once it can be seen again
+    RefPtr<Widget> returnTo(groupLordButton);
+    runAction( Sequence::createWithTwoActions(
+        DelayTime::create(fadeTime + 0.05f),
+        CallFunc::create([this,returnTo] { focus.focus(returnTo.get()); })
+    ));
     groupLordButton = nullptr;
 }
 
@@ -663,6 +730,11 @@ void panel_map_detailed::showGroupLord(Widget* button)
     
     grouplord->createFollowers(lords);
     grouplord->setLocalZOrder(ZORDER_POPUP);
+
+    // focus is held inside the group until it is dismissed, starting on its first lord
+    focus.pushScope(grouplord);
+    if ( !grouplord->followers.empty() )
+        focus.focus(grouplord->followers.front());
     
     // a white disc that fades out towards the edge
     auto size = grouplord->getContentSize() * 1.5f;

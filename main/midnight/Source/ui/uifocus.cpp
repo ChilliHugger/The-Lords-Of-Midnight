@@ -289,6 +289,9 @@ bool uifocuscontroller::isCandidate( Node* node ) const
     if ( screen.intersectsRect(worldRect(node)) )
         return true;
 
+    if ( onScreenOnly )
+        return false;
+
     for ( auto n = node->getParent(); n != nullptr; n = n->getParent() ) {
         if ( dynamic_cast<ScrollView*>(n) ) {
             return screen.intersectsRect(worldRect(n));
@@ -666,7 +669,25 @@ bool uifocuscontroller::scroll( Direction direction )
     if ( position == found->getInnerContainerPosition() )
         return false;
 
+    // panning can take the focused item off screen: carry the focus to what is now nearest to it
+    auto from = focused != nullptr ? worldRect(focused) : ax::Rect::ZERO;
+
     found->setInnerContainerPosition(position);
+
+    if ( focused != nullptr && !isCandidate(focused) ) {
+        Node* nearest = nullptr;
+        float best = 0;
+        for ( auto node : candidates() ) {
+            auto r = worldRect(node);
+            auto distance = Vec2(r.getMidX() - from.getMidX(), r.getMidY() - from.getMidY()).lengthSquared();
+            if ( nearest == nullptr || distance < best ) {
+                nearest = node;
+                best = distance;
+            }
+        }
+        if ( nearest != nullptr )
+            focus(nearest);
+    }
     return true;
 }
 

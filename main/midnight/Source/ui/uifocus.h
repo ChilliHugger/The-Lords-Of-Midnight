@@ -145,6 +145,10 @@ public:
 
     void setLinks( const FocusLink* links, size_t count );
 
+    // For a screen that is a map: only what is on screen can be reached. A press with nothing
+    // on screen that way pans the map instead, rather than jumping to something far off.
+    void setOnScreenOnly( bool value ) { onScreenOnly = value; }
+
     bool navigate( Direction direction );
     bool activate();
 
@@ -204,6 +208,7 @@ protected:
     layoutid_t                  lastId{ ID_NONE };      // focus when the panel was left, for when it returns
     const FocusLink*            links{};
     size_t                      linkCount{};
+    bool                        onScreenOnly{};
     std::vector<Node*>          scopes;
 
     ax::EventListenerKeyboard*  keyboardListener{};
