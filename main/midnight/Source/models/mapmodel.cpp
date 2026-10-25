@@ -35,6 +35,11 @@ void mapmodel::serialize( u32 version, lib::archive& ar )
             int temp;
             ar >> temp; currentMapPanel = (panelmode_t) temp;
         }
+
+        // saves made while the map was not yet remembered hold no map at all
+        if ( currentMapPanel != MODE_MAP_OVERVIEW && currentMapPanel != MODE_MAP_DETAILED ) {
+            currentMapPanel = MODE_MAP_OVERVIEW;
+        }
     }
 }
         
