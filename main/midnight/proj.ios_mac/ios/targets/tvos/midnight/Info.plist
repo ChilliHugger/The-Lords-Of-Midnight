@@ -15,13 +15,13 @@
     <key>CFBundleName</key>
     <string>The Lords of Midnight</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.0.9</string>
+    <string>2.0.12</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>52</string>
+    <string>57</string>
     <key>UIAppFonts</key>
     <array/>
     <key>UILaunchStoryboardName</key>
