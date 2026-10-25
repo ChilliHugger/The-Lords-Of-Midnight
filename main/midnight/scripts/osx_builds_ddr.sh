@@ -16,3 +16,11 @@ axmol build -configOnly -p ios -a arm64 -xc '-DTME=DDR,-BBuilds/ios-ddr'
 rm -r Builds/ios-ddr-simulator
 mkdir Builds/ios-ddr-simulator
 axmol build -configOnly -p ios -a x64 -sdk simulator -xc '-DTME=DDR,-BBuilds/ios-ddr-simulator'
+
+rm -r Builds/tvos-ddr-simulator
+mkdir Builds/tvos-ddr-simulator
+axmol build -configOnly -p tvos -a x64 -sdk simulator -xc '-DTME=DDR,-BBuilds/tvos-ddr-simulator'
+
+rm -r Builds/tvos-ddr
+mkdir Builds/tvos-ddr
+axmol build -configOnly -p tvos -a arm64 -xc '-DTME=DDR,-BBuilds/tvos-ddr'

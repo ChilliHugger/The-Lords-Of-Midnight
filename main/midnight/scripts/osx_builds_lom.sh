@@ -16,3 +16,11 @@ axmol build -configOnly -p ios -a arm64 -xc '-DTME=LOM,-BBuilds/ios-lom'
 rm -r Builds/ios-lom-simulator
 mkdir Builds/ios-lom-simulator
 axmol build -configOnly -p ios -a x64 -sdk simulator -xc '-DTME=LOM,-BBuilds/ios-lom-simulator'
+
+rm -r Builds/tvos-lom-simulator
+mkdir Builds/tvos-lom-simulator
+axmol build -configOnly -p tvos -a x64 -sdk simulator -xc '-DTME=LOM,-BBuilds/tvos-lom-simulator'
+
+rm -r Builds/tvos-lom
+mkdir Builds/tvos-lom
+axmol build -configOnly -p tvos -a arm64 -xc '-DTME=LOM,-BBuilds/tvos-lom'

@@ -1,0 +1,18 @@
+{
+  "images" : [
+    {
+      "size" : "400x240",
+      "idiom" : "tv",
+      "filename" : "icon-400-middle.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "400x240",
+      "idiom" : "tv",
+      "filename" : "icon-800-middle.png",
+      "scale" : "2x"
+    }
+  ],
+  "author" : "xcode",
+  "version" : 1
+}
