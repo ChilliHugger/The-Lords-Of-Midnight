@@ -5,6 +5,7 @@
 //  Created by Chris Wild on 29/10/2018.
 //
 //
+#include "../uifocus.h"
 #include <algorithm>
 #include "../uihelper.h"
 #include "uilordselect.h"
@@ -30,7 +31,11 @@ uilordselect::uilordselect()
 
 bool uilordselect::init()
 {
-    return Widget::init();
+    if ( !Widget::init() )
+        return false;
+
+    chilli::ui::FocusItem::mark(this);
+    return true;
 }
 
 void uilordselect::updateStatus(character& c)

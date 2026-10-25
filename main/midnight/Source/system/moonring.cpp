@@ -119,6 +119,15 @@ moonring::~moonring()
     SAFEDELETE(resolution);
 }
 
+void moonring::startControllers()
+{
+    if ( controllersStarted )
+        return;
+
+    controllersStarted = true;
+    Controller::startDiscoveryController();
+}
+
 mxscenarioid moonring::getScenarioId() const
 {
 #if defined(_LOM_)

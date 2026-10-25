@@ -512,6 +512,7 @@ void uicommandwindow::show( MXVoidCallback callback )
     // and show
     parent->addChild(this);
     setVisible(true);
+    parent->getFocus().pushScope(this);
     
     if ( is(mr->settings->screentransitions) ) {
         setCascadeOpacityEnabled(true);
@@ -544,6 +545,7 @@ void uicommandwindow::close()
     
     //
     parent->removeChild(this);
+    parent->getFocus().popScope(this);
 }
 
 void uicommandwindow::clearItems()

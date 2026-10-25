@@ -22,6 +22,7 @@
 #include "../ui/uitextmenuitem.h"
 #include "../ui/uitextmenu.h"
 #include "../ui/uioptionitem.h"
+#include "../ui/uifocus.h"
 
 #include "../frontend/language.h"
 
@@ -260,6 +261,9 @@ static uitextmenuitem items_control[] = {
     { ID_OPTION_COMPASS_DELAY,          {OPTIONS_SCREEN_COMPASSDELAY},          KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
     { ID_OPTION_NAVIGATION,             {OPTIONS_SCREEN_NAVIGATIONSTYLE},       KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
     { ID_OPTION_KEYBOARD_STYLE,         {OPTIONS_SCREEN_KEYBOARDSTYLE},         KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+#if defined(_DPAD_ENABLED_)
+    { ID_OPTION_DPAD,                   {OPTIONS_SCREEN_DPAD},                  KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+#endif
 };
 
 static uitextmenuitem items_help[] = {
@@ -295,6 +299,9 @@ static option_t options[] = {
     {   ID_OPTION_SCREENMODE,       OPT_NUMBER, 4, values_screen,              nullptr, false },
 
     {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER, 2, values_keyboard,            nullptr, false },
+#if defined(_DPAD_ENABLED_)
+    {   ID_OPTION_DPAD,             OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+#endif
 #if defined(_MOUSE_ENABLED_)
     {   ID_OPTION_CURSOR_SIZE,      OPT_NUMBER, 3, values_cursor,              nullptr, false },
 #endif
@@ -444,6 +451,9 @@ bool panel_options::init()
       
     SET_OPTION(ID_OPTION_SCREENMODE, screen_mode);
     SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode);
+#if defined(_DPAD_ENABLED_)
+    SET_OPTION(ID_OPTION_DPAD, dpad_navigation);
+#endif
     
 #if defined(_MOUSE_ENABLED_)
     SET_OPTION(ID_OPTION_CURSOR_SIZE, cursor_size);
@@ -484,6 +494,12 @@ bool panel_options::init()
         
     SET_OPTION(ID_OPTION_DIFFICULTY, game_difficulty);
     
+    // moving between the two menus returns to where focus last was in each
+    focus.onChanged = [this](Node*, Node* got) {
+        if ( got != nullptr && focus.isWithin(got, subMenuScrollView) )
+            lastSubMenuId = got->getTag();
+    };
+
     SetMenu(ID_MENU_DISPLAY);
     
     initialScreenMode = mr->settings->screen_mode ;
@@ -562,6 +578,20 @@ void panel_options::OnMenuNotification(
         checkDisabledRules();
     }
 
+    if ( option->id == ID_OPTION_DPAD ) {
+        // takes effect straight away: show the focus on the option that was just changed
+        if ( mr->settings->isDpadNavigation() ) {
+            mr->startControllers();
+            focus.focus((layoutid_t)option->id);
+        }
+        focus.refresh();
+
+#if defined(_MOUSE_ENABLED_)
+        // hides the pointer, or brings it back
+        setCursor(MOUSE_NORMAL);
+#endif
+    }
+
     if ( option->id == ID_OPTION_TUTORIAL ) {
         if ( is(mr->settings->tutorial) )
             showHelpWindow(HELP_TUTORIAL_ON);
@@ -579,6 +609,8 @@ void panel_options::OnMenuNotification(
 
 void panel_options::SetMenu ( int id )
 {
+    currentMenuId = id;
+
     if ( id == ID_MENU_GAME ) {
         SetSubMenu(items_game,NUMELE(items_game));
         SetValues();
@@ -599,6 +631,11 @@ void panel_options::SetMenu ( int id )
         // check if keyboard available
 #if !defined(_OS_DESKTOP_)
         hideOption(ID_OPTION_KEYBOARD_STYLE);
+#endif
+
+        // the d-pad is the only way to use an Apple TV, so it is not a choice there
+#if defined(_OS_TVOS_)
+        hideOption(ID_OPTION_DPAD);
 #endif
 
         SetSubMenu(items_control,NUMELE(items_control));
@@ -761,6 +798,7 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
     
     fields.clear();
     optionControls.clear();
+    lastSubMenuId = ID_NONE;
     
     f32 height=0;
     for ( int ii=0; ii<elements; ii++ ) {
@@ -786,6 +824,10 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         auto menuItem = MenuItemNode::create(button);
         menuItem->setTag(item->id);
         menuItem->setEnabled(!option->disabled);
+        auto focus = chilli::ui::FocusItem::mark(menuItem, chilli::ui::FocusStyle::tint);
+        focus->onFocus = [button](bool focused) {
+            button->setColor(focused ? chilli::ui::FOCUS_COLOUR : Color3B::WHITE);
+        };
   
         auto r = menuItem->getBoundingBox();
         height += r.size.height + gapY;
@@ -844,6 +886,29 @@ void panel_options::changeDisplayMode()
         });
 }
 #endif
+
+Node* panel_options::OnFocusMove( Node* from, chilli::ui::FocusDirection direction )
+{
+    using FocusDirection = chilli::ui::FocusDirection;
+
+    if ( direction == FocusDirection::right && focus.isWithin(from, mainMenu) ) {
+        auto last = uihelper::getChildByTagRecursively<Node*>(lastSubMenuId, subMenuScrollView);
+        if ( last != nullptr )
+            return last;
+
+        for ( auto field : fields ) {
+            if ( field->isEnabled() )
+                return field;
+        }
+        return nullptr;
+    }
+
+    if ( direction == FocusDirection::left && focus.isWithin(from, subMenuScrollView) ) {
+        return uihelper::getChildByTagRecursively<Node*>(currentMenuId, mainMenu);
+    }
+
+    return nullptr;
+}
 
 bool panel_options::OnKeyboardEvent( uikeyboardevent* event )
 {

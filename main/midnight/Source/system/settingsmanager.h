@@ -17,7 +17,7 @@
 
 #define FRONTEND_SAVE_GAME_VERSION      20
 #define CONFIG_FILENAME                 "settings.cfg"
-#define CONFIG_VERSION                  17
+#define CONFIG_VERSION                  18
 
 #ifndef MX_DEBUG
     #define _SHOW_SPLASH_
@@ -206,4 +206,10 @@ public:
     
     // version 15
     int                     dedication_screen_count;
+
+    // version 18
+    TOGGLE                  dpad_navigation = TOGGLE::OFF;
+
+    // tvOS has no touch or mouse, so the d-pad is the only way to use it
+    bool isDpadNavigation() const;
 };

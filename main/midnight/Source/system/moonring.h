@@ -146,6 +146,10 @@ public:
 #if defined(_USE_VERSION_CHECK_)
     void getVersion(const GetVersionCallback& callback);
 #endif
+
+    // Game controllers and the Siri Remote are only reported once discovery has started.
+    // Safe to call repeatedly.
+    void startControllers();
     
 protected:
     
@@ -154,6 +158,7 @@ protected:
     std::mutex              mutex;
     std::condition_variable condition;
     bool                    isDataLoaded;
+    bool                    controllersStarted{};
 
     // only valid for the duration of initialise() - lets OnInitNotification
     // forward LoadDatabase's progress on to the splashscreen's monitor

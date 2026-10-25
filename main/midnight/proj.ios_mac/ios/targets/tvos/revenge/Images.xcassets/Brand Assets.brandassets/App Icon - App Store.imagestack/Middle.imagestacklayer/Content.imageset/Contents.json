@@ -1,0 +1,11 @@
+{
+  "images" : [
+    {
+      "idiom" : "tv",
+      "size" : "1280x768",
+      "filename" : "icon-1280-middle.png"
+    }
+  ],
+  "author" : "xcode",
+  "version" : 1
+}

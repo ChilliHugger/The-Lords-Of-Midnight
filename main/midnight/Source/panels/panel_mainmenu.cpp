@@ -93,15 +93,18 @@ bool panel_mainmenu::init()
     //
     // Guide and Manual
     //    
+    // an Apple TV has no browser to read them in
+#if !defined(_OS_TVOS_)
     guide = uihelper::CreateImageButton("i_guide", ID_GUIDE, clickCallback);
     guide->setScale(scale_normal+scale_half);
     uihelper::AddBottomRight(safeArea,guide, RES(10), RES(10) );
-    
+
 
     story = uihelper::CreateImageButton("i_story", ID_MANUAL, clickCallback);
     story->setScale(scale_normal+scale_half);
     uihelper::AddBottomLeft(safeArea,story, RES(10), RES(10) );
-    
+#endif
+
     //
     // Other
     //
@@ -124,7 +127,14 @@ bool panel_mainmenu::init()
 
     refreshStories();
     
-    if(mr->settings->firsttime) {
+    // the welcome offers the novella, which an Apple TV cannot show
+#if defined(_OS_TVOS_)
+    constexpr bool showWelcome = false;
+#else
+    const bool showWelcome = mr->settings->firsttime;
+#endif
+
+    if(showWelcome) {
         scheduleOnce( [&](float) {
             OnShowWelcomeMessage();
         }, 1.0, "delayed_welcome_message" );

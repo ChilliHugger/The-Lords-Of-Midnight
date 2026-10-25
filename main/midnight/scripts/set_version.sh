@@ -34,7 +34,9 @@ apply() {
 for app in midnight revenge citadel; do
     apply proj.win32/$app/game.rc \
         "s/(FILEVERSION |PRODUCTVERSION )\d+,\d+,\d+,\d+/\${1}$rc/g; s/(\"(?:File|Product)Version\", \")[^\\\\\"]*/\${1}$rcs/g"
-    for plist in proj.ios_mac/mac/$app/Info.plist proj.ios_mac/ios/targets/ios/$app/Info.plist; do
+    # the Citadel has no Apple TV app yet
+    for plist in proj.ios_mac/mac/$app/Info.plist proj.ios_mac/ios/targets/ios/$app/Info.plist proj.ios_mac/ios/targets/tvos/$app/Info.plist; do
+        [ -f "$plist" ] || continue
         apply "$plist" \
             "s|(<key>CFBundleShortVersionString</key>\s*<string>)[^<]*|\${1}$ver|; s|(<key>CFBundleVersion</key>\s*<string>)[^<]*|\${1}$build|"
     done

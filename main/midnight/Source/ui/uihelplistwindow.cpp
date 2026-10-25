@@ -220,6 +220,7 @@ void uihelplistwindow::show( MXVoidCallback callback )
 
     parent->addChild(this);
     setVisible(true);
+    parent->getFocus().pushScope(this);
 }
 
 void uihelplistwindow::OnClose()
@@ -235,4 +236,5 @@ void uihelplistwindow::close()
 
     parent->resumeEvents();
     parent->removeChild(this);
+    parent->getFocus().popScope(this);
 }

@@ -142,6 +142,7 @@ protected:
     bool OnExitTunnel();
    
     void setupMovementIndicators();
+    void setupMovementButtons();
     void updateMovementIndicators(LANDSCAPE_MOVEMENT movement);
     
     // dragging

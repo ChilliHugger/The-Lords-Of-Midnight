@@ -10,6 +10,7 @@
 #include "uihelper.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
+#include "../system/settingsmanager.h"
 #include <algorithm>
 
 USING_NS_AX;
@@ -25,7 +26,8 @@ namespace {
 void uipager::create( PageView* pageView, const WidgetClickCallback& callback )
 {
     auto resolution = moonring::mikesingleton()->resolution;
-    auto desktop = resolution->IsDesktop();
+    // the d-pad cannot swipe, so it gets the arrows too
+    auto desktop = resolution->IsDesktop() || moonring::mikesingleton()->settings->isDpadNavigation();
 
     auto parent = pageView->getParent();
 
@@ -81,7 +83,7 @@ void uipager::update( PageView* pageView )
 
 void uipager::updateDots( PageView* pageView )
 {
-    if ( !moonring::mikesingleton()->resolution->IsDesktop() )
+    if ( dots == nullptr )
         return;
 
     s32 total = (s32)pageView->getItems().size();

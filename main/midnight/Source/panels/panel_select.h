@@ -9,6 +9,8 @@
 
 #pragma once
 #include <map>
+#include <vector>
+#include "../ui/characters/uiselectlayout.h"
 #include "../axmol_sdk.h"
 #include "../ui/characters/uilordselect.h"
 #include "../ui/uipanel.h"
@@ -59,10 +61,32 @@ protected:
     void resetPositions( bool animate = false );
     
     uilordselect* getOverlappingLord ( page_t page, uilordselect* source );
+
+    // where lords are, so that the ones that change can be moved there
+    struct lordposition {
+        page_t  page;
+        Vec2    position;
+    };
+    using lordpositions = std::map<uilordselect*,lordposition>;
+
+    lordpositions getLordPositions() const;
+    void animateLords( const lordpositions& previous );
+
+    // placing the lords: the layout works out where, this moves them there
+    chilli::ui::select::selectlayout getLayout() const;
+    void applyLayout( const std::vector<chilli::ui::select::lordspot>& spots );
+    std::vector<chilli::ui::select::lordspot> getSpots() const;
+    void makeRoomForGroups();
     uilordselect* getDropTarget( uilordselect* lord, UIMOUSEOVER where, UIMOUSEOVER& result );
     
     void showCharacterPositions();
-    void refreshCharacters();
+    void refreshCharacters( bool tidy = false );
+
+    // d-pad grouping: what dragging does, offered as a list of choices
+    bool showLordChoices( mxid id );
+    uilordselect* findLord( mxid id );
+    void leaveGroupFrom( mxid id );
+    void makeLeader( mxid id );
 
     void storeLordPosition( uilordselect* lord );
 
@@ -111,6 +135,7 @@ private:
     uipager                 pager;
     ScrollView*             scrollView;
     Vector<uilordselect*>   lords;
+    bool                    makeRoom{};     // after the groups changed, so that each one fits
     Vector<Layout*>         pages;
     
     // drag and drop

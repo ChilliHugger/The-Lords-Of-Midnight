@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Local release builds, replacing the manual steps in docs/deployment_process.md.
-#   scripts/release.sh <lom|ddr|citadel> <ios|mac|android|wasm|all> [--upload]
+#   scripts/release.sh <lom|ddr|citadel> <ios|tvos|mac|android|wasm|all> [--upload]
 # Applies VERSION first (scripts/set_version.sh), then for each platform:
-#   ios, mac  regenerate the Xcode project (same folder, not wiped), archive in RelWithDebInfo and
+#   ios, tvos, mac  regenerate the Xcode project (same folder, not wiped), archive in RelWithDebInfo and
 #             archive as "<game title>.xcarchive" and export a signed .ipa/.pkg, both in
 #             Builds/release/<app>/<version>/<platform>
 #             (--upload sends it to App Store Connect instead, symbols included)
@@ -13,8 +13,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-game=${1:?usage: release.sh <lom|ddr|citadel> <ios|mac|android|wasm|all> [--upload]}
-platform=${2:?usage: release.sh <lom|ddr|citadel> <ios|mac|android|wasm|all> [--upload]}
+game=${1:?usage: release.sh <lom|ddr|citadel> <ios|tvos|mac|android|wasm|all> [--upload]}
+platform=${2:?usage: release.sh <lom|ddr|citadel> <ios|tvos|mac|android|wasm|all> [--upload]}
 upload=0; [ "${3:-}" = "--upload" ] && upload=1
 
 case $game in
@@ -33,15 +33,18 @@ mkdir -p "$out"
 # Re-runs the cmake configure in the existing folder (no wipe): the resource and source lists are
 # globbed at configure time, so a project generated before files were added or removed is stale.
 apple() {
-    local plat=$1 dir=Builds/$1-$game args method
-    if [ "$plat" = ios ]; then args="-p ios -a arm64"; method=app-store-connect
-    else args="-p osx -a x64"; method=app-store-connect; fi
+    local plat=$1 dir=Builds/$1-$game args destination method=app-store-connect
+    case $plat in
+        ios)  args="-p ios -a arm64";  destination=iOS ;;
+        tvos) args="-p tvos -a arm64"; destination=tvOS ;;
+        *)    args="-p osx -a x64";    destination=macOS ;;
+    esac
     axmol build -configOnly $args -xc "-DTME=$tme,-B$dir"
 
     mkdir -p "$out/$plat"
     local archive="$out/$plat/$title.xcarchive" opts="$out/ExportOptions-$plat.plist"
     xcodebuild -project "$dir/$app.xcodeproj" -scheme "$app" -configuration RelWithDebInfo \
-        -destination "generic/platform=$([ $plat = ios ] && echo iOS || echo macOS)" \
+        -destination "generic/platform=$destination" \
         -archivePath "$archive" -allowProvisioningUpdates \
         DEBUG_INFORMATION_FORMAT=dwarf-with-dsym archive
     # the name Xcode Organizer shows; the generated scheme has no Archive Name, so it says "$app"
@@ -96,7 +99,7 @@ wasm() { scripts/wasm_builds.sh "$tme" "$version" "$build"; }
 
 for p in $([ "$platform" = all ] && echo "ios mac android" || echo "$platform"); do
     case $p in
-        ios|mac) apple "$p" ;;
+        ios|tvos|mac) apple "$p" ;;
         android) droid ;;
         wasm)    wasm ;;
         *) echo "unknown platform '$p'" >&2; exit 2 ;;

@@ -6,6 +6,7 @@
 //
 //
 #include "uihelper.h"
+#include "uifocus.h"
 #include "uitextmenu.h"
 #include "../system/moonring.h"
 #include "../system/resolutionmanager.h"
@@ -86,6 +87,11 @@ bool uitextmenu::initWithItems( f32 menuwidth, uitextmenuitem* items, u32 count 
         menuItem->setTag(item->id);
         menuItem->setUserData(item);
         mainmenu->addChild(menuItem);
+
+        auto focus = chilli::ui::FocusItem::mark(menuItem, chilli::ui::FocusStyle::background);
+        focus->onFocus = [label](bool focused) {
+            label->setTextColor(focused ? Color4B(chilli::ui::FOCUS_TEXT_COLOUR) : Color4B::WHITE);
+        };
       
         addShortcutKey(menuItem, item->id, item->keyboard_shortcut);
 

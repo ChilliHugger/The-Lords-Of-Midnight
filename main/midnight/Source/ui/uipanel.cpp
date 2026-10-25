@@ -88,6 +88,13 @@ bool uipanel::init()
     
     addKeyboardListener();
 
+    focus.onMove = [this](Node* from, chilli::ui::FocusDirection direction) {
+        return OnFocusMove(from, direction);
+    };
+    focus.onEdge = [this](chilli::ui::FocusDirection direction) {
+        return OnFocusEdge(direction);
+    };
+
 #if defined(_MOUSE_ENABLED_)
     imgCursor = Sprite::create();
     imgCursor->setScale(1.0f);
@@ -98,16 +105,19 @@ bool uipanel::init()
     setCursor(MOUSE_NONE);
 #endif
 
-#if defined(_MOUSE_ENABLED_)
     setOnExitTransitionDidStartCallback([&]() {
+        focus.detach();
+#if defined(_MOUSE_ENABLED_)
         setCursor(MOUSE_NONE);
-    });
 #endif
+    });
 
     setOnEnterTransitionDidFinishCallback([&]() {
 #if defined(_MOUSE_ENABLED_)
         setCursor(MOUSE_NORMAL);
 #endif
+        focus.attach();
+        focus.focusDefault();
         OnShown();
     });
 
@@ -509,6 +519,13 @@ f32 cursor_scales[] = { 0.5f, 0.75f, 1.0f };
 void uipanel::setCursor(MOUSE_CURSOR cursor)
 {
     currentCursor = cursor;
+
+    // the d-pad has no use for a pointer
+    if(mr->settings->isDpadNavigation()) {
+        imgCursor->setVisible(false);
+        Director::getInstance()->getGLView()->setCursorVisible(false);
+        return;
+    }
     
     if(cursor == MOUSE_NONE) {
         imgCursor->setVisible(false);

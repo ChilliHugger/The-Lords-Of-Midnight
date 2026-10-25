@@ -60,6 +60,7 @@ protected:
     void checkDisabledRules();
     void OnMenuNotification( const uinotificationinterface*, menueventargs* );
     virtual bool OnKeyboardEvent( uikeyboardevent* event ) override;
+    virtual Node* OnFocusMove( Node* from, chilli::ui::FocusDirection direction ) override;
     virtual void OnNotification( Ref* sender ) override;
     
 #if defined(_OS_DESKTOP_WINDOW_)
@@ -75,6 +76,8 @@ protected:
     CF_SCREEN               initialScreenMode;
     CF_SCENARIO             initialScenario;
     TOGGLE                  rules[64];
+    int                     currentMenuId{};
+    int                     lastSubMenuId{};
 };
 
 

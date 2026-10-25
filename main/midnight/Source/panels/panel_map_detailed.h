@@ -50,6 +50,7 @@ protected:
     panel_map_detailed();
 
     void OnNotification( Ref* sender ) override;
+    bool OnFocusEdge( chilli::ui::FocusDirection direction ) override;
 
 #if defined(_MOUSE_ENABLED_)
     bool OnMouseMove( Vec2 pos ) override;
@@ -80,6 +81,8 @@ protected:
     void showGroupLord( Widget* button );
     
     void updateScale();
+    void setupScrollArrows();
+    void scrollMap( chilli::ui::FocusDirection direction );
     
     void addTouchListener();
     tme::mxgridref gridAt( const Vec2& location ) const;

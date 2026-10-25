@@ -121,6 +121,7 @@ https://axmol.dev)";
     constexpr LPCSTR OPTIONS_SCREEN_COMPASSDELAY        = "COMPASS DELAY";
     constexpr LPCSTR OPTIONS_SCREEN_NAVIGATIONSTYLE     = "NAVIGATION STYLE";
     constexpr LPCSTR OPTIONS_SCREEN_KEYBOARDSTYLE       = "KEYBOARD STYLE";
+    constexpr LPCSTR OPTIONS_SCREEN_DPAD                = "D-PAD NAVIGATION";
     constexpr LPCSTR OPTIONS_SCREEN_CURSORSIZE          = "CURSOR SIZE";
     constexpr LPCSTR OPTIONS_SCREEN_DIFFICULTY          = "DIFFICULTY";
 
@@ -233,6 +234,11 @@ https://axmol.dev)";
     
     constexpr LPCSTR BUTTON_YES                         = "YES";
     constexpr LPCSTR BUTTON_NO                          = "NO";
+    constexpr LPCSTR BUTTON_CANCEL                      = "CANCEL";
+    constexpr LPCSTR GROUP_MENU_SELECT                  = "SELECT";
+    constexpr LPCSTR GROUP_MENU_JOIN                    = "JOIN ";
+    constexpr LPCSTR GROUP_MENU_LEAVE                   = "LEAVE GROUP";
+    constexpr LPCSTR GROUP_MENU_LEADER                  = "MAKE LEADER";
     constexpr LPCSTR BUTTON_OK                          = "OK";
 
     constexpr LPCSTR DIRECTION_N                        = "N";

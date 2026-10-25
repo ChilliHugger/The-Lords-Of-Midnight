@@ -254,10 +254,15 @@ elseif(APPLE)
              )
 
         if (TVOS)
+            if (CITADEL)
+                message(FATAL_ERROR "The Citadel has no tvOS artwork yet (proj.ios_mac/ios/targets/tvos/citadel)")
+            endif()
+            # the d-pad is not ready for release, so is only turned on for the Apple TV
+            add_compile_options(-D_OS_TVOS_ -D_DPAD_ENABLED_)
             set(APP_UI_RES
-                proj.ios_mac/ios/targets/tvos/LaunchScreenBackground.png
-                proj.ios_mac/ios/targets/tvos/LaunchScreen.storyboard
-                proj.ios_mac/ios/targets/tvos/Images.xcassets
+                proj.ios_mac/ios/targets/tvos/${APP_NAME}/LaunchScreenBackground.png
+                proj.ios_mac/ios/targets/tvos/${APP_NAME}/LaunchScreen.storyboard
+                proj.ios_mac/ios/targets/tvos/${APP_NAME}/Images.xcassets
                 )
         else()
             add_compile_options(-D_OS_IOS_)
@@ -383,9 +388,9 @@ if(APPLE)
               MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/${APP_NAME}/Info.plist"
               XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/midnight.entitlements"
         )
-#    elseif(TVOS)
-#       set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/targets/tvos/Info.plist")
-#       set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "Brand Assets")
+    elseif(TVOS)
+       set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/targets/tvos/${APP_NAME}/Info.plist")
+       set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "Brand Assets")
     elseif(IOS)
        set_target_properties(${APP_NAME} PROPERTIES
               MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/targets/ios/${APP_NAME}/Info.plist"

@@ -38,6 +38,10 @@ public:
     
     void InitialisePaths();
 
+#if defined(_OS_DESKTOP_) && defined(_DPAD_ENABLED_)
+    void BlockMouseForDpad();
+#endif
+
 #if defined(_OS_IOS_)
     virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
 #endif
