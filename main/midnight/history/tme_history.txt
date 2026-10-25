@@ -30,9 +30,20 @@ Build (57)
 27. ADDED: Detailed map - Lords remember the enemy armies and lords they have seen.
 28. CHANGED: Detailed map - Tidied up the discovery map mechanics
 31. FIXED: Crash going to the map straight from a new game from a gesture on panel_look
-32. ADDED: DDR - Lords in a tunnel show a tunnel icon with their status icons
-33. ADDED: DDR - Select screen - Tunnel filter button, as on the map
-34. ADDED: DDR - Game Option - 'Hide Lords In Tunnels', armies following a lord in a tunnel only search the ground within 3 squares of them, on by default
+32. CHANGED: Select screen - Tidy up places a group on a block of four squares so it never overlaps other lords
+33. CHANGED: Select screen - Lords move aside, animated and as little as possible, when a group needs room or is over the edge of the screen
+34. FIXED: Crash going to the map from the actions menu in a game saved before the map was remembered
+35. ADDED: DDR - Lords in a tunnel show a tunnel icon with their status icons
+36. ADDED: DDR - Select screen - Tunnel filter button, as on the map
+37. ADDED: DDR - Game Option - 'Hide Lords In Tunnels', armies following a lord in a tunnel only search the ground within 3 squares of them, on by default
+38. ADDED: TVOS - Apple TV build of LOM and DDR
+39. ADDED: TVOS - D-pad navigation: every screen can be used with the Siri Remote or a game controller
+40. ADDED: TVOS - Focus is shown as a glow around icons, a coloured box for options and buttons, and a coloured block behind menu items
+41. ADDED: TVOS - Look screen has left, right and forward arrow buttons
+42. ADDED: TVOS - Select screen - choosing a lord that can group offers Join, Make Leader and Leave Group, as dragging does
+43. ADDED: TVOS - Detailed map - arrows at the edges of the screen scroll the map
+44. ADDED: TVOS - Select screen disband tidies up the lords
+45. CHANGED: TVOS - Guide, novella and welcome message are not shown, as there is no browser
 
 Build (56)
 1. FIXED: LOM - Crash when seeking and finding an object that can be picked up

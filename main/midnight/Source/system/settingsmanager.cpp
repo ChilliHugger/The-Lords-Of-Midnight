@@ -75,7 +75,9 @@ settingsmanager::~settingsmanager()
 
 bool settingsmanager::isDpadNavigation() const
 {
-#if defined(_OS_TVOS_)
+#if !defined(_DPAD_ENABLED_)
+    return false;
+#elif defined(_OS_TVOS_)
     return true;
 #else
     return is(dpad_navigation);

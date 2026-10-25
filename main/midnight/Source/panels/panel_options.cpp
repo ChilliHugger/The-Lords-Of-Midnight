@@ -261,7 +261,9 @@ static uitextmenuitem items_control[] = {
     { ID_OPTION_COMPASS_DELAY,          {OPTIONS_SCREEN_COMPASSDELAY},          KEYCODE(1), KEYBOARD_KEY_1, TB_DOUBLE },
     { ID_OPTION_NAVIGATION,             {OPTIONS_SCREEN_NAVIGATIONSTYLE},       KEYCODE(2), KEYBOARD_KEY_2, TB_DOUBLE },
     { ID_OPTION_KEYBOARD_STYLE,         {OPTIONS_SCREEN_KEYBOARDSTYLE},         KEYCODE(3), KEYBOARD_KEY_3, TB_DOUBLE },
+#if defined(_DPAD_ENABLED_)
     { ID_OPTION_DPAD,                   {OPTIONS_SCREEN_DPAD},                  KEYCODE(4), KEYBOARD_KEY_4, TB_DOUBLE },
+#endif
 };
 
 static uitextmenuitem items_help[] = {
@@ -297,7 +299,9 @@ static option_t options[] = {
     {   ID_OPTION_SCREENMODE,       OPT_NUMBER, 4, values_screen,              nullptr, false },
 
     {   ID_OPTION_KEYBOARD_STYLE,   OPT_NUMBER, 2, values_keyboard,            nullptr, false },
+#if defined(_DPAD_ENABLED_)
     {   ID_OPTION_DPAD,             OPT_TOGGLE, 0, values_onoff,               nullptr, false },
+#endif
 #if defined(_MOUSE_ENABLED_)
     {   ID_OPTION_CURSOR_SIZE,      OPT_NUMBER, 3, values_cursor,              nullptr, false },
 #endif
@@ -447,7 +451,9 @@ bool panel_options::init()
       
     SET_OPTION(ID_OPTION_SCREENMODE, screen_mode);
     SET_OPTION(ID_OPTION_KEYBOARD_STYLE, keyboard_mode);
+#if defined(_DPAD_ENABLED_)
     SET_OPTION(ID_OPTION_DPAD, dpad_navigation);
+#endif
     
 #if defined(_MOUSE_ENABLED_)
     SET_OPTION(ID_OPTION_CURSOR_SIZE, cursor_size);

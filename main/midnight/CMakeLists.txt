@@ -257,7 +257,8 @@ elseif(APPLE)
             if (CITADEL)
                 message(FATAL_ERROR "The Citadel has no tvOS artwork yet (proj.ios_mac/ios/targets/tvos/citadel)")
             endif()
-            add_compile_options(-D_OS_TVOS_)
+            # the d-pad is not ready for release, so is only turned on for the Apple TV
+            add_compile_options(-D_OS_TVOS_ -D_DPAD_ENABLED_)
             set(APP_UI_RES
                 proj.ios_mac/ios/targets/tvos/${APP_NAME}/LaunchScreenBackground.png
                 proj.ios_mac/ios/targets/tvos/${APP_NAME}/LaunchScreen.storyboard

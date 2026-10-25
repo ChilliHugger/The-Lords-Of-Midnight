@@ -78,7 +78,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     mr->startControllers();
 #endif
 
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_) && defined(_DPAD_ENABLED_)
     BlockMouseForDpad();
 #endif
 
@@ -93,7 +93,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     return true;
 }
 
-#if defined(_OS_DESKTOP_)
+#if defined(_OS_DESKTOP_) && defined(_DPAD_ENABLED_)
 // With the d-pad on the mouse is not used at all, so a stray click can't act on something
 // other than what has focus. These listeners come before every other, and last for the game.
 void AppDelegate::BlockMouseForDpad()
