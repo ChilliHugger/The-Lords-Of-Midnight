@@ -813,7 +813,10 @@ void panel_options::SetSubMenu( uitextmenuitem items[], int elements )
         auto menuItem = MenuItemNode::create(button);
         menuItem->setTag(item->id);
         menuItem->setEnabled(!option->disabled);
-        chilli::ui::FocusItem::mark(menuItem, chilli::ui::FocusStyle::background);
+        auto focus = chilli::ui::FocusItem::mark(menuItem, chilli::ui::FocusStyle::tint);
+        focus->onFocus = [button](bool focused) {
+            button->setColor(focused ? chilli::ui::FOCUS_COLOUR : Color3B::WHITE);
+        };
   
         auto r = menuItem->getBoundingBox();
         height += r.size.height + gapY;

@@ -694,6 +694,11 @@ void uifocuscontroller::showFocus()
 
     auto item = FocusItem::of(focused);
     highlightStyle = item != nullptr ? item->style : FocusStyle::outline;
+
+    if ( highlightStyle == FocusStyle::tint ) {
+        hideFocus();
+        return;
+    }
     highlightSize = focused->getContentSize();
 
     highlight->clear();

@@ -51,7 +51,8 @@ namespace chilli {
     // Which way a node shows it has focus
     enum class FocusStyle {
         outline,        // coloured rectangle around the node, for icons and buttons
-        background,     // coloured block behind the node, for menu and option items
+        background,     // coloured block behind the node, for menu items
+        tint,           // nothing is drawn: the item colours its own box through onFocus
     };
 
     // Explicit moves for a panel's table. A link of ID_NONE leaves that direction to the
