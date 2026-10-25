@@ -15,6 +15,7 @@
 #include "../system/resolutionmanager.h"
 #include "../ui/uihelper.h"
 #include "../ui/uichoicepopup.h"
+#include "../ui/characters/uiselectlayout.h"
 #include "../frontend/language.h"
 #include "../ui/characters/uisinglelord.h"
 #include "../ui/characters/uigrouplord.h"
@@ -299,6 +300,9 @@ void panel_select::getCharacters()
         resetPositions();
     }
     
+    if ( makeRoom )
+        makeRoomForGroups();
+
     disbandOrigins.clear();
     updateFilterButtons(false);
     removeEmptyEndPages();
@@ -668,13 +672,17 @@ void panel_select::OnNotification( Ref* sender )
             auto parent = dynamic_cast<Widget*>(sender)->getParent();
             auto leader = dynamic_cast<uigrouplord*>(parent);
             
+            // without a mouse the lords are not left where they happen to land: everyone is tidied
+            bool tidy = mr->settings->isDpadNavigation();
+
             storeAllLordsPositions();
-            storeDisbandOrigins(leader);
+            if ( !tidy )
+                storeDisbandOrigins(leader);
             
             auto selectId = static_cast<layoutid_t>(leader->getTag()-ID_SELECT_CHAR);
             mr->disbandGroup(selectId);
             
-            refreshCharacters();
+            refreshCharacters(tidy);
             break;
         }
             
@@ -784,61 +792,110 @@ void panel_select::makeLeader( mxid id )
     }
 }
 
-void panel_select::resetPositions( bool animate )
+panel_select::lordpositions panel_select::getLordPositions() const
 {
-    // remember where everyone was
-    struct previous_position {
-        page_t page;
-        Vec2   position;
-    };
-    std::map<uilordselect*,previous_position> previous;
-    
-    for( auto node : lords ) {
-        previous[node] = { node->getPage(), node->getPosition() };
-        node->removeFromParent();
+    lordpositions positions;
+    for ( auto lord : lords ) {
+        positions[lord] = { lord->getPage(), lord->getPosition() };
     }
-    
-    s32 index = 0;
-    for( auto button : lords ) {
-        
-        addToPage(button, calcPage(index), calcGridLocation(index));
-        checkCollision(button,0);
-        
-        // adjust for big group circle
-        if ( button->lordtype == lordwidget::group ) {
-            auto pos = button->getPosition();
-            f32 adjustX = HALF(SELECT_ELEMENT_WIDTH);
-            if ( pos.x-adjustX <= 0 )
-                pos.x += adjustX;
-            
-            pos.y -= HALF(SELECT_ELEMENT_HEIGHT);
-            button->setPosition(pos);
-        }
+    return positions;
+}
 
-        storeLordPosition(button);
-        index++;
-    }
-    
-    if ( !animate )
-        return;
-    
-    // animate once every lord has its final position, otherwise the
-    // collision checks above would see lords at their animation start
-    for( auto lord : lords ) {
-        auto old = previous[lord];
-        
+// Moves each lord from where they were to where they are now. The lords have to be in their
+// final place first, otherwise the collision checks would see lords at their animation start.
+void panel_select::animateLords( const lordpositions& previous )
+{
+    for ( auto lord : lords ) {
+        auto found = previous.find(lord);
+        CONTINUE_IF( found == previous.end() );
+
+        auto old = found->second;
+        auto end = lord->getPosition();
+
         if ( old.page != lord->getPage() ) {
             showNewLordPosition(lord);
             continue;
         }
-        
-        auto end = lord->getPosition();
+
+        CONTINUE_IF( old.position == end );
+
         lord->setPosition(old.position);
         lord->setTouchEnabled(false);
         lord->runAction( Sequence::createWithTwoActions(
             EaseSineInOut::create( MoveTo::create(0.4f, end) ),
             CallFunc::create( [lord] { lord->setTouchEnabled(true); } )
         ));
+    }
+}
+
+chilli::ui::select::selectlayout panel_select::getLayout() const
+{
+    f32 scale = phoneScale();
+    auto size = getContentSize();
+
+    chilli::ui::select::gridinfo grid;
+    grid.cellWidth = SELECT_GRID_X;
+    grid.cellHeight = SELECT_GRID_Y;
+    grid.columns = MAX_COLUMNS;
+    grid.rows = MAX_ROWS;
+    grid.startX = START_X;
+    grid.startY = START_Y;
+    grid.pageWidth = size.width;
+    grid.pageHeight = size.height;
+    grid.rightStrip = RIGHT_STRIP_WIDTH * scale;
+    grid.bottomStrip = BOTTOM_STRIP_HEIGHT * scale;
+    grid.maxPages = MaxPages;
+    return chilli::ui::select::selectlayout(grid);
+}
+
+std::vector<chilli::ui::select::lordspot> panel_select::getSpots() const
+{
+    std::vector<chilli::ui::select::lordspot> spots;
+    for ( auto lord : lords ) {
+        auto position = lord->getPosition();
+        spots.push_back({ lord->lordtype == lordwidget::group, (int)lord->getPage(), { position.x, position.y } });
+    }
+    return spots;
+}
+
+// puts each lord where the layout says, on its page, and remembers it
+void panel_select::applyLayout( const std::vector<chilli::ui::select::lordspot>& spots )
+{
+    for ( size_t index = 0; index < spots.size(); index++ ) {
+        auto lord = lords.at(index);
+        auto& spot = spots[index];
+        Vec2 position(spot.position.x, spot.position.y);
+
+        if ( lord->getPage() != spot.page || lord->getParent() == nullptr ) {
+            lord->removeFromParent();
+            addToPage(lord, spot.page, position);
+        } else {
+            lord->setPosition(position);
+        }
+        storeLordPosition(lord);
+    }
+}
+
+void panel_select::resetPositions( bool animate )
+{
+    auto previous = getLordPositions();
+
+    auto spots = getSpots();
+    getLayout().tidy(spots);
+    applyLayout(spots);
+
+    if ( animate )
+        animateLords(previous);
+}
+
+void panel_select::makeRoomForGroups()
+{
+    auto previous = getLordPositions();
+
+    auto spots = getSpots();
+    if ( getLayout().makeRoom(spots) ) {
+        applyLayout(spots);
+        animateLords(previous);
     }
 }
 
@@ -1172,9 +1229,10 @@ bool panel_select::checkValidDropLocation()
     return valid;
 }
 
-void panel_select::refreshCharacters() {
+// 'tidy' also puts everyone in the grid once they are back, as the clean up button does
+void panel_select::refreshCharacters( bool tidy ) {
 
-    this->scheduleOnce( [&](float) {
+    this->scheduleOnce( [this,tidy](float) {
         for ( auto lord : lords ) {
             lord->removeFromParent();
             // store children
@@ -1182,7 +1240,14 @@ void panel_select::refreshCharacters() {
                 dynamic_cast<uigrouplord*>(lord)->clearFollowers();
             }
         }
+        makeRoom = true;
         getCharacters();
+        makeRoom = false;
+
+        if ( tidy ) {
+            resetPositions(true);
+            pageView->scrollToPage(0);
+        }
         
     }, 0, "delayed_refreshCharacters" );
     
