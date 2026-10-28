@@ -125,7 +125,10 @@ void moonring::startControllers()
         return;
 
     controllersStarted = true;
+#if !defined(_OS_WASM_)
+    // Axmol has no controller discovery for the web
     Controller::startDiscoveryController();
+#endif
 }
 
 mxscenarioid moonring::getScenarioId() const
