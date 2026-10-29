@@ -146,7 +146,7 @@ Node* imagebuilder::createElement(const Element& e, const Options& options, Stac
         label->getFontAtlas()->setAntiAliasTexParameters();     // as the other labels: smooth, not nearest-neighbour
         label->setTextColor(Color4B(toColor(e.colour)));
         if (e.outline > 0)
-            label->enableOutline(Color4B(_clrBlack), RES(e.outline));
+            label->enableOutline(Color4B(_clrBlack), uihelper::outlineSize(e.outline));
         if (e.tracking != 0)
             label->setAdditionalKerning(RES(e.size) * e.tracking / 1000.0f);
         if (e.width > 0)

@@ -338,7 +338,7 @@ void panel_quest::showObjects()
         // name label styled like the lord select titles
         auto label = Label::createWithTTF(uihelper::font_config_small, TME_GetObjectText(choices[i]));
         label->setTextColor(Color4B(_clrWhite));
-        label->enableOutline(Color4B(_clrBlack), RES(1));
+        label->enableOutline(Color4B(_clrBlack), uihelper::outlineSize(1));
         label->getFontAtlas()->setAntiAliasTexParameters();
         label->setAnchorPoint(uihelper::AnchorCenter);
         label->setWidth(SELECT_ELEMENT_WIDTH - CONTENT_SCALE(4));

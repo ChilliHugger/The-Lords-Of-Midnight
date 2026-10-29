@@ -215,7 +215,7 @@ void panel_map_detailed::setupTooltip()
     toolTip = Label::createWithTTF( uihelper::font_config_medium, "" );
     toolTip->setName("title");
     toolTip->setTextColor(Color4B(_clrWhite));
-    toolTip->enableOutline(Color4B(_clrBlack),RES(2));
+    toolTip->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(2));
     toolTip->setLineSpacing(RES(-2));
     toolTip->getFontAtlas()->setAntiAliasTexParameters();
     toolTip->setAnchorPoint(uihelper::AnchorCenter);
@@ -228,7 +228,7 @@ void panel_map_detailed::setupTooltip()
         auto stringId = mr->questmodel.quest == QS_GUARD ? SS_QUEST_PICK_GUARD : SS_QUEST_PICK_GOTO;
         auto hint = Label::createWithTTF( uihelper::font_config_medium, TME_GetSystemString(TME_CurrentCharacter(), stringId) );
         hint->setTextColor(Color4B(_clrWhite));
-        hint->enableOutline(Color4B(_clrBlack),RES(2));
+        hint->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(2));
         hint->getFontAtlas()->setAntiAliasTexParameters();
         hint->setAnchorPoint(uihelper::AnchorCenter);
         hint->setLocalZOrder(ZORDER_DEFAULT);
@@ -1128,7 +1128,7 @@ void panel_map_detailed::setupPlaceLabels()
         auto title = Label::createWithTTF( uihelper::font_config_small, name );
         title->setName("title");
         title->setTextColor(Color4B(_clrWhite));
-        title->enableOutline(Color4B(_clrBlack),RES(1));
+        title->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(1));
         title->setLineSpacing(RES(-2));
         title->setHeight(RES(32));
         title->getFontAtlas()->setAntiAliasTexParameters();

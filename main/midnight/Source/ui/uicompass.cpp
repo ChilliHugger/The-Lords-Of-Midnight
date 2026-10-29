@@ -73,7 +73,7 @@ bool uicompass::initWithParent( uipanel* parent )
         
         auto title = Label::createWithTTF( uihelper::font_config_big, compass_items[index] );
         title->setTextColor(Color4B(_clrWhite));
-        title->enableOutline(Color4B(_clrBlack),RES(4));
+        title->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(4));
         title->getFontAtlas()->setAntiAliasTexParameters();
         title->setHorizontalAlignment(TextHAlignment::CENTER);
         title->setVerticalAlignment(TextVAlignment::CENTER);

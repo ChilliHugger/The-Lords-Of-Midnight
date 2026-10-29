@@ -146,7 +146,7 @@ void uishortcutkeys::addShortcutLabel(Node* node, LPCSTR text)
     title->setName("shortcut_label");
     title->getFontAtlas()->setAntiAliasTexParameters();
     title->setTextColor(Color4B(_clrYellow));
-    title->enableOutline(Color4B(_clrBlack),RES(2));
+    title->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(2));
     //title->setAnchorPoint(uihelper::AnchorCenter);
     title->setLocalZOrder(ZORDER_POPUP);
     title->setVisible(false);

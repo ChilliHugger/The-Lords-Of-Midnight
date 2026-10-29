@@ -13,6 +13,8 @@
 #include "../ui/uieventargs.h"
 #include "../system/moonring.h"
 #include "uioutline.h"
+#include <algorithm>
+#include <cmath>
 
 USING_NS_AX;
 USING_NS_AX_UI;
@@ -492,7 +494,7 @@ Label* uihelper::addButtonText( Button* button, const std::string& text, ButtonT
     label->getFontAtlas()->setAntiAliasTexParameters();
     label->setName(BUTTON_TEXT_NAME);
     label->setTextColor(Color4B(_clrWhite));
-    label->enableOutline(Color4B(_clrBlack), RES(outline));
+    label->enableOutline(Color4B(_clrBlack), uihelper::outlineSize(outline));
     label->setAdditionalKerning(RES(BUTTON_TEXT_SIZE) * BUTTON_TEXT_TRACKING / 1000.0f);
 
     switch ( align ) {
@@ -518,6 +520,11 @@ std::vector<Color3B> uihelper::text_colours = {
     _clrYellow, _clrRed, _clrGreen, _clrBlue, _clrCyan, _clrMagenta, _clrWhite, _clrBlack,
     _clrDarkYellow, _clrDarkRed, _clrDarkGreen, _clrDarkBlue, _clrDarkCyan, _clrDarkMagenta, _clrDarkWhite, _clrGrey
 };
+
+s32 uihelper::outlineSize( f32 size )
+{
+    return std::max(1, (s32)std::ceil(RES(size)));
+}
 
 void uihelper::setColouredText( Label* label, const std::string& markup, const Color3B& base )
 {

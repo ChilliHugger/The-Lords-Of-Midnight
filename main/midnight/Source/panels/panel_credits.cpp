@@ -104,7 +104,7 @@ bool panel_credits::init()
         label2->setLocalZOrder(ZORDER_DEFAULT);
         label2->setScale(scale_normal);
         label2->setAlignment(TextHAlignment::CENTER);
-        label2->enableOutline(Color4B(backgroundColour),RES(2));
+        label2->enableOutline(Color4B(backgroundColour),uihelper::outlineSize(2));
         uihelper::AddTopCenter(textNode,label2,x,y);
         
         y += label2->getContentSize().height * label2->getScale();
