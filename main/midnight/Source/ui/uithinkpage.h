@@ -52,6 +52,7 @@ protected:
     virtual bool init() override;
     
     void setupUIElements();
+    void showThinkAgain();
     void setImageColour(Sprite* node);
     
     void displayCharacter ( const character& c );

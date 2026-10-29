@@ -77,6 +77,9 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     imgTerrain->removeAllChildren();
     
     setupUIElements();
+#if defined(_LOM_) || defined(_CITADEL_)
+    showThinkAgain();
+#endif
     
     auto size = safeArea->getContentSize();
     auto textSize = lblDescription->getContentSize();
@@ -407,6 +410,12 @@ void uithinkpage::displayObject ( mxid objectid )
     imgObject->setVisible(true);
 #endif
     
+}
+
+// every think page, whichever mode built it, invites the next one unless the lord is dead
+void uithinkpage::showThinkAgain()
+{
+    lblAgain->setVisible(!Character_IsDead(TME_CurrentCharacter()));
 }
 
 
