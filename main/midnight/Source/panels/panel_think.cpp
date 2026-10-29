@@ -576,6 +576,12 @@ void panel_think::OnNotification( Ref* sender )
             break;
         }
 
+        case ID_THINK_AGAIN:
+        {
+            thinkAgain();
+            return;
+        }
+
         case ID_PREVIOUS_PAGE:
         {
             currentPage = (s32)pageView->getCurrentPageIndex();

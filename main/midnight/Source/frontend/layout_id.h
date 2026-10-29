@@ -161,6 +161,7 @@ enum layoutid_t
     ID_GROUP_LEFT,
     ID_GROUP_RIGHT,
     
+    ID_THINK_AGAIN,
     ID_NEXT_PAGE,
     ID_PREVIOUS_PAGE,
     
