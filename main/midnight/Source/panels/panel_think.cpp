@@ -253,6 +253,7 @@ void panel_think::setObject(mxid targetObjectId)
         case MODE_THINK_APPROACH:
             current_tab=3;// find current page index
             pageView->setCurrentPageIndex(currentIndex);
+            enableButtons();
             tintButton(ID_THINK_PERSON, _clrYellow);
             return;
         case MODE_THINK_PLACE:
