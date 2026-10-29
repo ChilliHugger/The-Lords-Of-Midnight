@@ -77,9 +77,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     imgTerrain->removeAllChildren();
     
     setupUIElements();
-#if defined(_LOM_) || defined(_CITADEL_)
     showThinkAgain();
-#endif
     
     auto size = safeArea->getContentSize();
     auto textSize = lblDescription->getContentSize();
