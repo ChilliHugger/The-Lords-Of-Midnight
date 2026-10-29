@@ -96,6 +96,8 @@ bool panel_think::init()
     addShortcutKey(ID_THINK_PLACE   ,K_PLACE);
     addShortcutKey(ID_THINK_ARMY    ,K_ARMY);
     addShortcutKey(ID_THINK_BATTLE  ,K_BATTLE);
+    addShortcutKey(ID_PREVIOUS_PAGE ,KEYCODE(LEFT_ARROW));
+    addShortcutKey(ID_NEXT_PAGE     ,KEYCODE(RIGHT_ARROW));
              
     return true;
 }
@@ -482,6 +484,20 @@ void panel_think::thinkAgain()
     gotoPage(0);
 }
 
+void panel_think::previousPage()
+{
+    currentPage = (s32)pageView->getCurrentPageIndex();
+    if ( currentPage > 0 )
+        gotoPage(--currentPage);
+}
+
+void panel_think::nextPage()
+{
+    currentPage = (s32)pageView->getCurrentPageIndex();
+    if ( currentPage < (s32)pages.size()-1 )
+        gotoPage(++currentPage);
+}
+
 void panel_think::OnNotification( Ref* sender )
 {
     layoutid_t id = uihelper::getIdFromSender(sender);
@@ -583,20 +599,12 @@ void panel_think::OnNotification( Ref* sender )
         }
 
         case ID_PREVIOUS_PAGE:
-        {
-            currentPage = (s32)pageView->getCurrentPageIndex();
-            if ( currentPage > 0 )
-                gotoPage(--currentPage);
+            previousPage();
             break;
-        }
 
         case ID_NEXT_PAGE:
-        {
-            currentPage = (s32)pageView->getCurrentPageIndex();
-            if ( currentPage < (s32)pages.size()-1 )
-                gotoPage(++currentPage);
+            nextPage();
             break;
-        }
 
         default:
             break;
@@ -622,6 +630,14 @@ bool panel_think::OnKeyboardEvent( uikeyboardevent* event )
     auto page = pages.at(currentPage);
     
     switch(event->getKey()){
+
+        case KEYCODE(LEFT_ARROW):
+            previousPage();
+            return true;
+
+        case KEYCODE(RIGHT_ARROW):
+            nextPage();
+            return true;
  
         case KEYCODE(END):
         {
