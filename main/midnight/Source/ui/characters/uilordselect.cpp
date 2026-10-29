@@ -153,7 +153,7 @@ void uilordselect::setLordTitle( const std::string& text, bool single )
     lordTitle = Label::createWithTTF( uihelper::font_config_small, text );
     lordTitle->setName(LORD_NAME_TITLE);
     lordTitle->setTextColor(Color4B(_clrWhite));
-    lordTitle->enableOutline(Color4B(_clrBlack),RES(1));
+    lordTitle->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(1));
     lordTitle->getFontAtlas()->setAntiAliasTexParameters();
     lordTitle->setHorizontalAlignment(TextHAlignment::CENTER);
     lordTitle->setVerticalAlignment(TextVAlignment::BOTTOM);

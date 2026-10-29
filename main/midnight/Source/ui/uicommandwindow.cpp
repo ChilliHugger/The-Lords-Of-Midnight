@@ -450,7 +450,7 @@ void uicommandwindow::addCommandText(Node* node)
     textBottom->setTag(TAG_COMMAND_TEXT_BOTTOM);
     textBottom->getFontAtlas()->setAntiAliasTexParameters();
     textBottom->setTextColor(Color4B(_clrWhite));
-    textBottom->enableOutline(Color4B(_clrBlack),RES(1));
+    textBottom->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(1));
     textBottom->setAnchorPoint(uihelper::AnchorCenter);
     textBottom->setLineSpacing(CONTENT_SCALE(0));
     textBottom->setHeight(RES(FONT_SIZE_SMALL)*3); // two lines
@@ -465,7 +465,7 @@ void uicommandwindow::addCommandText(Node* node)
     textTop->setTag(TAG_COMMAND_TEXT_TOP);
     textTop->getFontAtlas()->setAntiAliasTexParameters();
     textTop->setTextColor(Color4B(_clrWhite));
-    textTop->enableOutline(Color4B(_clrBlack),RES(1));
+    textTop->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(1));
     textTop->setAnchorPoint(uihelper::AnchorCenter);
     textTop->setLineSpacing(CONTENT_SCALE(0));
     textTop->setHeight(RES(FONT_SIZE_SMALL)*3); // two lines

@@ -58,12 +58,12 @@ void panel_gameover::OnShown()
 #if defined(_LOM_) || defined(_CITADEL_)
     if ( currentmode == MODE_WIN ) {
         setBackgroundToWidth( "screens/misc/win.png" );
-        lblDescription->enableOutline(Color4B(_clrRed,ALPHA(0.75f)),RES(2));
+        lblDescription->enableOutline(Color4B(_clrRed,ALPHA(0.75f)),uihelper::outlineSize(2));
         lblDescription->setTextColor(Color4B(_clrWhite));
         
     } else {
         setBackgroundToWidth( "screens/misc/lose.png" );
-        lblDescription->enableOutline(Color4B(_clrWhite,ALPHA(0.75f)),RES(2));
+        lblDescription->enableOutline(Color4B(_clrWhite,ALPHA(0.75f)),uihelper::outlineSize(2));
         lblDescription->setTextColor(Color4B(_clrDarkRed));
     }
 #endif
@@ -71,13 +71,13 @@ void panel_gameover::OnShown()
 #if defined(_DDR_)
     if ( currentmode == MODE_WIN ) {
         Node* node = setBackgroundCentered( "screens/misc/win.png" );
-        lblDescription->enableOutline(Color4B(_clrRed,ALPHA(0.75f)),RES(2));
+        lblDescription->enableOutline(Color4B(_clrRed,ALPHA(0.75f)),uihelper::outlineSize(2));
         lblDescription->setTextColor(Color4B(_clrWhite));
         node->setScale(1.5f);
         
     } else {
         Node* node = setBackgroundCentered( "screens/misc/lose.png" );
-        lblDescription->enableOutline(Color4B(_clrWhite,ALPHA(0.75f)),RES(2));
+        lblDescription->enableOutline(Color4B(_clrWhite,ALPHA(0.75f)),uihelper::outlineSize(2));
         lblDescription->setTextColor(Color4B(_clrDarkRed));
         node->setScale(1.5f);
     }

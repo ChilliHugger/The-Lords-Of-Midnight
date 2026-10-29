@@ -116,7 +116,7 @@ void LandscapePeople::Initialise()
             auto title = Label::createWithTTF( uihelper::font_config_medium, c.longname );
             title->setName("title");
             title->setTextColor(Color4B(_clrWhite));
-            title->enableOutline(Color4B(_clrBlack),RES(2));
+            title->enableOutline(Color4B(_clrBlack),uihelper::outlineSize(2));
             title->setLineSpacing(RES(-2));
             title->getFontAtlas()->setAntiAliasTexParameters();
             title->setAnchorPoint(uihelper::AnchorCenter);

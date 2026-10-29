@@ -123,6 +123,9 @@ public:
     // colour slots used by <colour:N>...</colour> in setColouredText, set up by the UI
     static std::vector<Color3B> text_colours;
 
+    // outline sizes are whole pixels, so a scaled size is rounded up rather than truncated to nothing on small screens
+    static s32 outlineSize( f32 size );
+
     // sets the label text, with text inside <colour:N>...</colour> drawn in colour slot N and the rest in the base colour.
     // e.g. "He <colour:0>thinks</colour> again....".  Only for labels without an outline/shadow effect.
     static void setColouredText( ax::Label* label, const std::string& markup, const Color3B& base );

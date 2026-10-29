@@ -36,6 +36,8 @@ protected:
     virtual void setObject(mxid targetObjectId) override;
 
     void thinkAgain();
+    void previousPage();
+    void nextPage();
     bool isModeAvailable(panelmode_t mode);
     panelmode_t currentThinkMode() const;
     void createPageView();

@@ -77,6 +77,7 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
     imgTerrain->removeAllChildren();
     
     setupUIElements();
+    showThinkAgain();
     
     auto size = safeArea->getContentSize();
     auto textSize = lblDescription->getContentSize();
@@ -247,6 +248,13 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
 
     addShortcutKey(leave, ID_GROUP_LEAVE   ,K_LEAVE);
     addShortcutKey(disband, ID_GROUP_DISBAND ,K_DISBAND);
+
+    // the key sits just after the prompt, on its last line
+    addShortcutKey(lblAgain, ID_THINK_AGAIN, K_YES);
+    if ( auto shortcut = lblAgain->getChildByName<Label*>("shortcut_label") ) {
+        shortcut->setAnchorPoint(uihelper::AnchorBottomLeft);
+        shortcut->setPosition(Vec2( lblAgain->getContentSize().width + RES(8), 0 ));
+    }
     
 }
 
@@ -296,6 +304,7 @@ bool uithinkpage::init()
     lblAgain = Label::createWithTTF( uihelper::font_config_big, "" );
     lblAgain->getFontAtlas()->setAntiAliasTexParameters();
     lblAgain->setLocalZOrder(ZORDER_DEFAULT);
+    lblAgain->setTag(ID_THINK_AGAIN);
     lblAgain->setVisible(false);
     uihelper::setColouredText(lblAgain, TME_GetSystemString(TME_CurrentCharacter(),SS_THINK_AGAIN), _clrDarkRed);
     
@@ -407,6 +416,12 @@ void uithinkpage::displayObject ( mxid objectid )
     imgObject->setVisible(true);
 #endif
     
+}
+
+// every think page, whichever mode built it, invites the next one unless the lord is dead
+void uithinkpage::showThinkAgain()
+{
+    lblAgain->setVisible(!Character_IsDead(TME_CurrentCharacter()));
 }
 
 
