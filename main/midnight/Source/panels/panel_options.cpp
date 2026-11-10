@@ -709,7 +709,7 @@ void panel_options::checkDisabledRules()
     clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
     #endif
     #if defined(_LOM_)
-    clearRule(ID_OPTION_RULE_10, mr->settings->game_rules.Is(RF_LOM_REPLENISH_THINGS));
+    clearRule(ID_OPTION_RULE_14, mr->settings->game_rules.Is(RF_LOM_REPLENISH_THINGS));
     #endif
     #if defined(_DDR_)
     clearRule(ID_OPTION_RULE_4, mr->settings->game_rules.Is(RF_IMPASSABLE_MOUNTAINS));
