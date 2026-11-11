@@ -45,6 +45,7 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(9) // K_USE
 #endif
         , KEYCODE(8) // K_TUNNEL
+        , KEYCODE(9) // K_DUNGEON
         , KEYCODE(4) // K_APPROACH,
         , KEYCODE(5) // K_RECRUIT
         , KEYCODE(6) // K_POST
@@ -83,6 +84,7 @@ static keycode_t keyboard_map[][K_MAP_MAX] = {
         , KEYCODE(9) // K_USE
 #endif
         , KEYCODE(8) // K_TUNNEL
+        , KEYCODE(9) // K_DUNGEON
         , KEYCODE(P) // K_APPROACH,
         , KEYCODE(R) // K_RECRUIT
         , KEYCODE(G) // K_POST

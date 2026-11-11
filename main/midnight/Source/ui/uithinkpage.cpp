@@ -55,6 +55,7 @@ uithinkpage::uithinkpage() :
     approach(false),
     disband(false),
     enterTunnel(false),
+    enterDungeon(false),
     fight(false),
     leave(false),
     postMen(false),
@@ -233,6 +234,15 @@ void uithinkpage::setObject( mxid id, mxid objectId, panelmode_t mode )
         enterTunnel->setEnabled(this->enterTunnel);
         imgTerrain->addChild(enterTunnel);
         addShortcutKey(enterTunnel, ID_ENTER_TUNNEL, K_TUNNEL);
+    }
+
+    if (scenario_flags.Is(SF_DUNGEONS)) {
+        auto enterDungeon = uihelper::CreateImageButton("icon_entertunnel", ID_ENTER_DUNGEON, clickCallback);
+        enterDungeon->setAnchorPoint(uihelper::AnchorBottomRight);
+        enterDungeon->setVisible(this->enterDungeon);
+        enterDungeon->setEnabled(this->enterDungeon);
+        imgTerrain->addChild(enterDungeon);
+        addShortcutKey(enterDungeon, ID_ENTER_DUNGEON, K_DUNGEON);
     }
     
     uihelper::AddTopLeft(safeArea, scrollView);
@@ -593,6 +603,7 @@ void uithinkpage::checkPerson ( void )
     if (c.id == TME_CurrentCharacter().id) {
         TME_GetCharacterLocationInfo(c);
         enterTunnel = location_flags.Is(lif_enter_tunnel);
+        enterDungeon = location_flags.Is(lif_enter_dungeon);
     }
         
 #if defined(_LOM_) || defined(_CITADEL_)
@@ -678,6 +689,7 @@ void uithinkpage::checkPlace ( void )
     TME_GetCharacterLocationInfo(c);
     
     enterTunnel = location_flags.Is(lif_enter_tunnel);
+    enterDungeon = location_flags.Is(lif_enter_dungeon);
     
 #if defined(_DDR_)
     if ( ID_TYPE(id) ==  IDT_CHARACTER ) {

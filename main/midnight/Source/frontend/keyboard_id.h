@@ -40,6 +40,7 @@ enum KEY_MAP {
 #endif
 
     K_TUNNEL,
+    K_DUNGEON,
     K_APPROACH,
     K_RECRUIT,
     K_POST,

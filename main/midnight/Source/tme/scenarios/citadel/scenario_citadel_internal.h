@@ -22,6 +22,33 @@ namespace tme {
         gf_free_muster      = MXBIT(1),     // the Free have gathered at Corelay for Luxor
     };
 
+    class citadel_dungeon
+    {
+    public:
+        static constexpr s32 SIZE = 32;
+
+        void Generate ( u32 seed );
+        void Serialize ( archive& ar );
+        bool HasPassage ( mxgridref from, mxdir_t dir ) const;
+        bool IsWayOut ( mxgridref from, mxdir_t dir ) const;
+        mxgridref Entrance () const;
+        mxgridref Start () const;
+        mxgridref CellOf ( const mxcharacter* hostage ) const;
+        mxgridref Neighbour ( mxgridref from, mxdir_t dir ) const;
+        mxdir_t StepTowards ( mxgridref from, mxgridref to ) const;
+
+    private:
+        bool IsOnGrid ( mxgridref cell ) const;
+        u32 Index ( mxgridref cell ) const;
+        u8 ExitBit ( mxdir_t dir ) const;
+
+        static constexpr u32 PASSAGES = SIZE * SIZE / 3;
+
+        u32                     seed = 1;
+        u8                      exits[SIZE * SIZE] = {};
+        std::vector<mxgridref>  rooms;
+    };
+
     class citadel_x : public mxscenario
     {
     public:
@@ -74,6 +101,7 @@ namespace tme {
         citadel_character*  boroth;
         citadel_character*  luxor;
         citadel_stronghold* maranor;
+        citadel_dungeon     dungeon;
         flags32             flags;
 
     private:
@@ -176,7 +204,7 @@ namespace tme {
         PROPERTY(mxstronghold*, Home, homestronghold);
         FLAG_PROPERTY(IsAvailable, cf_available);
         GET_PROPERTY(u32, Idle, idle);
-        GET_PROPERTY(bool, InDungeon, (flags.Is(cf_dungeon) && Location() == CITADEL_SCENARIO(maranor)->Location()));
+        PROPERTY(mxgridref, DungeonLocation, dungeonloc);
         GET_PROPERTY(bool, QuestIdle, (Quest() == QS_NONE || Quest() == QS_REST));
         GET_PROPERTY(bool, AtHome, (Location() == Home()->Location() || ( IsFollowing() && Following()->IsAlive() )));
 
@@ -192,8 +220,13 @@ namespace tme {
         virtual bool IsAllowedWarriors() const override;
         virtual bool IsAllowedRiders() const override;
         virtual bool Recruited ( mxcharacter* recruiter ) override;
+        virtual std::unique_ptr<mxlocinfo> GetLocInfo() override;
+        virtual MXRESULT Cmd_MoveForward ( void ) override;
         virtual MXRESULT Cmd_WalkForward ( bool seek, bool approach ) override;
         virtual mxobject* Cmd_Seek ( void ) override;
+        MXRESULT Cmd_EnterDungeon ();
+        MXRESULT Cmd_ExitDungeon ();
+        virtual bool CanFollow ( const mxcharacter* c ) const override;
         virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;
 
@@ -206,7 +239,7 @@ namespace tme {
         bool SetQuest ( mxquest_t quest, mxid target );
         void QuestTargets ( mxquest_t quest, c_mxid& targets ) const;
         
-        citadel_character* SearchDungeon ( u32 chance );   // the hostage he finds and frees, if any
+        citadel_character* FreeHostageHere ();
         void FlyHome ();
         u32 Might () const;
         mxgridref QuestLocation () const;
@@ -233,6 +266,7 @@ namespace tme {
         mxstronghold*   homestronghold = nullptr;           // the keep he defends and goes home to
         u32             idle = 0;                           // nights one of yours has stood waiting for orders
         std::string     title;                              // the design's "Titles"; empty for most lords
+        mxgridref       dungeonloc;
     };
 
     inline citadel_race* CitadelRace ( mxrace_t race )

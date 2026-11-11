@@ -32,6 +32,7 @@ void citadel_character::Serialize ( archive& ar )
         ar << idle ;
         WRITE_ENUM(questnews);
         ar << homestronghold ;
+        ar << dungeonloc ;
     } else {
         ar >> qualities ;
         ar >> title ;
@@ -42,6 +43,7 @@ void citadel_character::Serialize ( archive& ar )
         ar >> idle ;
         READ_ENUM(questnews);
         ar >> homestronghold ;
+        ar >> dungeonloc ;
     }
 }
 
@@ -62,7 +64,7 @@ bool citadel_character::TakesPartInBattle() const
     return mxcharacter::TakesPartInBattle()
         && ( IsRecruited() || purpose == PU_DEFEND_HOMELAND )
         && !IsPrisoner()
-        && !InDungeon()
+        && !IsInDungeon()
         && Race() != RA_ENEMY;
 }
 
@@ -155,27 +157,133 @@ bool citadel_character::Recruited ( mxcharacter* recruiter )
     return mxcharacter::Recruited(recruiter);
 }
 
-MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
+std::unique_ptr<mxlocinfo> citadel_character::GetLocInfo ()
 {
-    auto result = mxcharacter::Cmd_WalkForward(seek, approach);
-    if ( !InDungeon() )
-        flags.Reset(cf_dungeon);
-    return result;
+    auto info = mxcharacter::GetLocInfo();
+    auto& dungeon = CITADEL_SCENARIO(dungeon);
+    auto maranor = CITADEL_SCENARIO(maranor);
+
+    if ( IsInDungeon() ) {
+        auto wayout = dungeon.IsWayOut(dungeonloc, Looking());
+        info->flags.Reset(lif_moveforward|lif_blocked|lif_enterbattle|lif_fight|lif_seek|lif_hide
+                          |lif_recruitchar|lif_recruitmen|lif_guardmen|lif_enter_tunnel);
+        info->flags.Set(wayout || dungeon.HasPassage(dungeonloc, Looking()) ? lif_moveforward : lif_blocked);
+        if ( wayout )
+            info->flags.Set(lif_exit_dungeon);
+    } else if ( maranor != nullptr && Location() == maranor->Location() && !IsDead() && !IsNight() && !IsFollowing() ) {
+        info->flags.Set(lif_enter_dungeon);
+    }
+    return info;
 }
 
-citadel_character* citadel_character::SearchDungeon ( u32 chance )
+MXRESULT citadel_character::Cmd_EnterDungeon ()
 {
-    if ( !InDungeon() || mxrandom(255) >= (int)chance )
-        return nullptr;
+    if ( !GetLocInfo()->flags.Is(lif_enter_dungeon) )
+        return MX_FAILED;
 
-    auto held = CITADEL_SCENARIO(HostagesHeldAtMaranor());
-    if ( held.empty() )
-        return nullptr;
+    flags.Set(cf_dungeon);
+    dungeonloc = CITADEL_SCENARIO(dungeon).Entrance();
+    looking = DR_NORTH;
 
-    auto hostage = held[mxrandom(0, (int)held.size() - 1)];
-    Cmd_Approach(hostage);
-    hostage->FlyHome();
-    return hostage;
+    FOR_EACH_FOLLOWER(f) {
+        f->Flags().Set(cf_dungeon);
+        f->looking = Looking();
+        CitadelLord(f)->DungeonLocation(dungeonloc);
+    });
+
+    CommandTakesTime(TRUE);
+    return MX_OK;
+}
+
+MXRESULT citadel_character::Cmd_ExitDungeon ()
+{
+    if ( !IsInDungeon() || IsFollowing() || !CITADEL_SCENARIO(dungeon).IsWayOut(dungeonloc, Looking()) )
+        return MX_FAILED;
+
+    flags.Reset(cf_dungeon);
+
+    FOR_EACH_FOLLOWER(f) {
+        f->Flags().Reset(cf_dungeon);
+        f->looking = Looking();
+    });
+
+    CommandTakesTime(TRUE);
+    return MX_OK;
+}
+
+MXRESULT citadel_character::Cmd_MoveForward ( void )
+{
+    if ( !IsInDungeon() )
+        return mxcharacter::Cmd_MoveForward();
+
+    SetLastCommand(CMD_MOVE, IDT_NONE);
+
+    if ( IsFollowing() || !CanWalkForward() )
+        return MX_FAILED;
+
+    auto stubborn = FIND_FOLLOWER(f) { return !f->CanWalkForward(); });
+    if ( stubborn != nullptr )
+        return MX_FAILED;
+
+    return Cmd_WalkForward(false, false);
+}
+
+mxobject* citadel_character::Cmd_Seek ( void )
+{
+    return IsInDungeon() ? nullptr : mxcharacter::Cmd_Seek();
+}
+
+MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
+{
+    if ( !IsInDungeon() )
+        return mxcharacter::Cmd_WalkForward(seek, approach);
+
+    auto& dungeon = CITADEL_SCENARIO(dungeon);
+    auto wayout = dungeon.IsWayOut(dungeonloc, Looking());
+    if ( !wayout && !dungeon.HasPassage(dungeonloc, Looking()) )
+        return MX_FAILED;
+
+    auto cost = (s32)mx->RaceById(Race())->InitialMovementValue();
+    time = (mxtime_t)BSub(time, cost, 0);
+    DecreaseEnergy(cost);
+    flags.Reset(cf_inbattle|cf_preparesbattle);
+
+    if ( wayout )
+        return Cmd_ExitDungeon();
+
+    dungeonloc = dungeon.Neighbour(dungeonloc, Looking());
+    CommandTakesTime(TRUE);
+
+    std::string found;
+    while ( auto hostage = FreeHostageHere() )
+        found += mx->text->CookedSystemString(SS_DUNGEON_FOUND, hostage);
+    if ( !found.empty() ) {
+        SetLastCommand(CMD_SEEK, IDT_NONE);
+        mx->SetLastActionMsg(found);
+    }
+
+    WalkFollowersForward();
+    return MX_OK;
+}
+
+bool citadel_character::CanFollow ( const mxcharacter* c ) const
+{
+    auto leader = static_cast<const citadel_character*>(c);
+    return mxcharacter::CanFollow(c)
+        && IsInDungeon() == leader->IsInDungeon()
+        && ( !IsInDungeon() || dungeonloc == leader->dungeonloc );
+}
+
+citadel_character* citadel_character::FreeHostageHere ()
+{
+    for ( auto hostage : CITADEL_SCENARIO(HostagesHeldAtMaranor()) ) {
+        if ( CITADEL_SCENARIO(dungeon).CellOf(hostage) == dungeonloc ) {
+            Cmd_Approach(hostage);
+            hostage->FlyHome();
+            return hostage;
+        }
+    }
+    return nullptr;
 }
 
 void citadel_character::FlyHome ()
@@ -185,21 +293,6 @@ void citadel_character::FlyHome ()
         keep = CITADEL_SCENARIO(HomeKeep(Race(), homestronghold != nullptr ? homestronghold->Location() : Location()));
     if ( keep != nullptr )
         Location(keep->Location());
-}
-
-mxobject* citadel_character::Cmd_Seek ( void )
-{
-    if ( !InDungeon() )
-        return mxcharacter::Cmd_Seek();
-
-    SetLastCommand(CMD_SEEK, IDT_NONE);
-    CommandTakesTime(true);
-    auto hostage = SearchDungeon((u32)sv_dungeon_search_day);
-    time = (mxtime_t)sv_time_night;
-    mx->SetLastActionMsg(hostage != nullptr
-        ? mx->text->CookedSystemString(SS_DUNGEON_FOUND, hostage)
-        : mx->text->CookedSystemString(SS_DUNGEON_NOTHING, this));
-    return nullptr;
 }
 
 u32 citadel_character::Might () const
@@ -253,7 +346,7 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
         case QS_KILL:
             return other && !character->IsRecruited() && !character->IsPrisoner();
         case QS_RESCUE:
-            return InDungeon() && other && character->IsPrisoner();
+            return IsInDungeon() && other && character->IsPrisoner();
         case QS_JOIN:
         case QS_FOLLOW:
             return other && character->IsRecruited();

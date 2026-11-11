@@ -129,6 +129,7 @@ public:
 #endif
 
     bool enterTunnel();
+    bool enterDungeon();
     
     //
     bool look();

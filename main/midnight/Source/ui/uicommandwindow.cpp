@@ -107,6 +107,7 @@ bool uicommandwindow::initWithParent( uipanel* parent )
     addShortcutKey(ID_REST,         K_REST);
 #endif
     addShortcutKey(ID_ENTER_TUNNEL, K_TUNNEL);
+    addShortcutKey(ID_ENTER_DUNGEON, K_DUNGEON);
 
     addShortcutKey(ID_APPROACH,   K_APPROACH);
     addShortcutKey(ID_RECRUITMEN, K_RECRUIT);
@@ -186,6 +187,11 @@ void uicommandwindow::initialiseCommands()
     if (scenario_flags.Is(tme::SF_TUNNELS)) {
         auto tunnel = uihelper::CreateImageButton("icon_entertunnel", ID_ENTER_TUNNEL, callback);
         addItem(tunnel, CHOOSE_TUNNEL);
+    }
+
+    if (scenario_flags.Is(tme::SF_DUNGEONS)) {
+        auto dungeon = uihelper::CreateImageButton("icon_entertunnel", ID_ENTER_DUNGEON, callback);
+        addItem(dungeon, CHOOSE_DUNGEON);
     }
     
     // MAP
@@ -309,6 +315,10 @@ void uicommandwindow::updateElements()
 
     if (scenario_flags.Is(tme::SF_TUNNELS)) {
         ENABLE_IF_LOC_FLAG(ID_ENTER_TUNNEL, lif_enter_tunnel);
+    }
+
+    if (scenario_flags.Is(tme::SF_DUNGEONS)) {
+        ENABLE_IF_LOC_FLAG(ID_ENTER_DUNGEON, lif_enter_dungeon);
     }
     
     // APPROACH

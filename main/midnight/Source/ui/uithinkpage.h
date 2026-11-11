@@ -101,6 +101,7 @@ public:
     bool                postMen;
     bool                recruitMen;
     bool                enterTunnel;
+    bool                enterDungeon;
 };
 
 

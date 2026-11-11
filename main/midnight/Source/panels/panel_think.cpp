@@ -174,6 +174,7 @@ void panel_think::enableButtons()
 #endif
 
     showButton(ID_ENTER_TUNNEL, page->enterTunnel);
+    showButton(ID_ENTER_DUNGEON, page->enterDungeon);
     showButton(ID_APPROACH,   page->approach);
     showButton(ID_RECRUITMEN, page->recruitMen);
     showButton(ID_POSTMEN,    page->postMen);
@@ -560,6 +561,12 @@ void panel_think::OnNotification( Ref* sender )
         case ID_ENTER_TUNNEL:
         {
             mr->enterTunnel();
+            break;
+        }
+
+        case ID_ENTER_DUNGEON:
+        {
+            mr->enterDungeon();
             break;
         }
 

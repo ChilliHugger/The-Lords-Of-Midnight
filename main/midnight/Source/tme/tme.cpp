@@ -678,6 +678,15 @@ bool Character_EnterTunnel ( const character& c )
     return TRUE;
 }
 
+bool Character_EnterDungeon ( const character& c )
+{
+    args[0] = c.id ;
+    if ( MXFAILED( mxi->Command("ENTERDUNGEON",args,1) ) )
+        return FALSE;
+    TME_RefreshCurrentCharacter();
+    return TRUE;
+}
+
 #if defined(_DDR_)
 void Character_Rest ( const character& c )
 {

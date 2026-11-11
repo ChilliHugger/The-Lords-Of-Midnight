@@ -292,26 +292,32 @@ SCENARIO("One lord sets upon another, and the side left without men loses")
     }
 }
 
-SCENARIO("Corleth searches the dungeons by night, and each hostage he finds is flown home")
+SCENARIO("Corleth walks the dungeons by night, and each hostage he reaches is flown home")
 {
     TMEStep::NewStory();
 
     auto citadel = static_cast<citadel_x*>(tme::mx->scenario);
     auto corleth = Lord("CH_CORLETH");
     auto djalina = Lord(ch_djalina);
-    REQUIRE( corleth->InDungeon() );
+    REQUIRE( corleth->IsInDungeon() );
     REQUIRE( corleth->SetQuest(QS_RESCUE, Idt(djalina)) );
     Lord("CH_ARIN")->Quest(QS_NONE);
-    tme::variables::sv_dungeon_search_night = 256;      // tonight's search cannot miss
+
+    auto cell = citadel->dungeon.CellOf(djalina);
+    for ( auto dir : { DR_NORTH, DR_EAST, DR_SOUTH, DR_WEST } ) {
+        if ( citadel->dungeon.HasPassage(cell, dir) )
+            corleth->DungeonLocation(citadel->dungeon.Neighbour(cell, dir));
+    }
 
     WHEN("night falls")
     {
         auto held = citadel->HostagesHeldAtMaranor();
         TMEStep::NightFalls();
 
-        THEN("one hostage is free and yours, and stands in his home castle")
+        THEN("she is free and yours, and stands in her home castle")
         {
-            REQUIRE( citadel->HostagesHeldAtMaranor().size() == held.size() - 1 );
+            REQUIRE_FALSE( djalina->IsPrisoner() );
+            REQUIRE( citadel->HostagesHeldAtMaranor().size() < held.size() );
             for ( auto hostage : held ) {
                 if ( hostage->IsPrisoner() )
                     continue;

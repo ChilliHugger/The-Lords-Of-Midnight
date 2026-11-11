@@ -197,6 +197,8 @@ enum layoutid_t
 
     ID_QUEST_CHOICE=9000,
     ID_QUEST_TARGET=9100,
+
+    ID_ENTER_DUNGEON=9200,
 };
 
 

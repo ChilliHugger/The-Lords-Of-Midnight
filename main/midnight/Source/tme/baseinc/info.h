@@ -1008,6 +1008,7 @@ inline chilli::lib::archive& operator>>( chilli::lib::archive& ar, mxunit& unit 
             FLAG_PROPERTY ( IsInBattle, cf_inbattle )
             FLAG_PROPERTY ( HasWonBattle, cf_wonbattle )
             FLAG_PROPERTY ( IsInTunnel, cf_tunnel )
+            FLAG_PROPERTY ( IsInDungeon, cf_dungeon )
 
             FLAG_PROPERTY ( HasUsedObject, cf_usedobject )
             FLAG_PROPERTY ( IsResting, cf_resting )

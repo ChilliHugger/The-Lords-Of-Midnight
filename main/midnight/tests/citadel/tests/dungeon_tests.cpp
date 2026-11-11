@@ -2,7 +2,7 @@
 //  dungeon_tests.cpp
 //  citadel
 //
-//  The Dark Citadel of Maranor: only Corleth and Arin search its dungeons, and only until they leave.
+//  The Dark Citadel of Maranor: Corleth and Arin begin in its dungeons, and a hostage is freed by walking to him.
 //
 #include "../../steps/tme_steps.h"
 
@@ -24,6 +24,24 @@ namespace {
     {
         return mxentity::SafeIdt(entity);
     }
+
+    mxdir_t DoorOf(mxgridref room)
+    {
+        for ( auto dir : { DR_NORTH, DR_EAST, DR_SOUTH, DR_WEST } ) {
+            if ( Citadel()->dungeon.HasPassage(room, dir) )
+                return dir;
+        }
+        return DR_NONE;
+    }
+
+    void StandOutside(citadel_character* lord, mxgridref room)
+    {
+        auto door = DoorOf(room);
+        REQUIRE( door != DR_NONE );
+        lord->DungeonLocation(Citadel()->dungeon.Neighbour(room, door));
+        lord->looking = (mxdir_t)((door + 4) % 8);
+        lord->time = (mxtime_t)tme::variables::sv_time_dawn;
+    }
 }
 
 SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held against everyone else")
@@ -35,10 +53,10 @@ SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held aga
 
     THEN("they search the dungeons and sit the Citadel's battles out")
     {
-        REQUIRE( corleth->InDungeon() );
-        REQUIRE( Lord("CH_ARIN")->InDungeon() );
+        REQUIRE( corleth->IsInDungeon() );
+        REQUIRE( Lord("CH_ARIN")->IsInDungeon() );
         REQUIRE_FALSE( corleth->TakesPartInBattle() );
-        REQUIRE_FALSE( Lord("CH_MORKIN")->InDungeon() );
+        REQUIRE_FALSE( Lord("CH_MORKIN")->IsInDungeon() );
         REQUIRE( Citadel()->maranor->IsEnemy() );
         REQUIRE( Citadel()->HostagesHeldAtMaranor().size() == 13 );
     }
@@ -50,29 +68,43 @@ SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held aga
         REQUIRE_FALSE( Lord("CH_MORKIN")->CanQuest(QS_RESCUE, Idt(luxor)) );
     }
 
-    WHEN("Corleth steps out of the Citadel")
+    WHEN("Corleth walks out of the way out")
     {
         corleth->time = (mxtime_t)tme::variables::sv_time_dawn;
-        corleth->looking = DR_NORTH;
+        corleth->DungeonLocation(Citadel()->dungeon.Entrance());
+        corleth->looking = DR_SOUTH;
+        REQUIRE( corleth->GetLocInfo()->flags.Is(lif_exit_dungeon) );
         REQUIRE( corleth->Cmd_WalkForward(false, false) == MX_OK );
 
-        THEN("he can never search again")
+        THEN("he is in the Citadel, but not in its dungeons")
         {
-            REQUIRE_FALSE( corleth->InDungeon() );
+            REQUIRE( corleth->Location() == Citadel()->maranor->Location() );
+            REQUIRE_FALSE( corleth->IsInDungeon() );
             REQUIRE_FALSE( corleth->CanQuest(QS_RESCUE, Idt(luxor)) );
+            REQUIRE( corleth->TakesPartInBattle() );
+            REQUIRE( corleth->GetLocInfo()->flags.Is(lif_enter_dungeon) );
         }
 
-        AND_WHEN("he walks back in")
+        AND_WHEN("he goes back down")
         {
-            corleth->looking = DR_SOUTH;
-            corleth->Cmd_WalkForward(false, false);
+            REQUIRE( corleth->Cmd_EnterDungeon() == MX_OK );
 
-            THEN("he is in the Citadel, but not in its dungeons")
+            THEN("he stands at the foot of the way out, looking in, and is in no tunnel")
             {
-                REQUIRE( corleth->Location() == Citadel()->maranor->Location() );
-                REQUIRE_FALSE( corleth->InDungeon() );
-                REQUIRE( corleth->TakesPartInBattle() );
+                REQUIRE( corleth->IsInDungeon() );
+                REQUIRE( corleth->DungeonLocation() == Citadel()->dungeon.Entrance() );
+                REQUIRE_FALSE( corleth->IsInTunnel() );
+                REQUIRE_THAT( tme::mx->text->DescribeCharacterLocation(corleth), Catch::Matchers::Contains("stands in the dungeons of Maranor") );
+                REQUIRE( corleth->Looking() == DR_NORTH );
             }
+        }
+    }
+
+    WHEN("Morkin, far from the Citadel, tries to go down")
+    {
+        THEN("he cannot")
+        {
+            REQUIRE( Lord("CH_MORKIN")->Cmd_EnterDungeon() == MX_FAILED );
         }
     }
 
@@ -87,47 +119,74 @@ SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held aga
     }
 }
 
-SCENARIO("Seek searches the dungeons until nightfall")
+SCENARIO("A hostage is freed by the lord who walks into his cell")
 {
     TMEStep::NewStory();
 
     auto corleth = Lord("CH_CORLETH");
+    auto djalina = Lord("CH_DJALINA");
+    auto cell = Citadel()->dungeon.CellOf(djalina);
 
-    GIVEN("a search that cannot miss")
+    GIVEN("Corleth outside her cell, looking in")
     {
-        tme::variables::sv_dungeon_search_day = 256;
-        auto held = Citadel()->HostagesHeldAtMaranor();
+        StandOutside(corleth, cell);
+        REQUIRE( corleth->GetLocInfo()->flags.Is(lif_moveforward) );
 
-        WHEN("Corleth seeks")
+        WHEN("he walks forward")
         {
-            corleth->Cmd_Seek();
+            auto time = corleth->Time();
+            REQUIRE( corleth->Cmd_WalkForward(false, false) == MX_OK );
 
-            THEN("one hostage is free, his day is over, and a dragon has borne the hostage home")
+            THEN("she is free, a dragon has borne her home, and the step took time")
             {
-                REQUIRE( Citadel()->HostagesHeldAtMaranor().size() == held.size() - 1 );
-                REQUIRE( corleth->Time() == (mxtime_t)tme::variables::sv_time_night );
-                for ( auto hostage : held ) {
-                    if ( !hostage->IsPrisoner() )
-                        REQUIRE( hostage->Location() == hostage->Home()->Location() );
-                }
+                REQUIRE( corleth->DungeonLocation() == cell );
+                REQUIRE_FALSE( djalina->IsPrisoner() );
+                REQUIRE( djalina->IsRecruited() );
+                REQUIRE( djalina->Location() == djalina->Home()->Location() );
+                REQUIRE( corleth->Time() < time );
                 REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("found in the dungeons of Maranor") );
+            }
+
+            AND_WHEN("he walks on into the wall of the cell")
+            {
+                THEN("the wall stops him")
+                {
+                    REQUIRE( corleth->GetLocInfo()->flags.Is(lif_blocked) );
+                    REQUIRE( corleth->Cmd_WalkForward(false, false) == MX_FAILED );
+                    REQUIRE( corleth->DungeonLocation() == cell );
+                }
             }
         }
     }
+}
 
-    GIVEN("a search that cannot succeed")
+SCENARIO("The dungeons are built from their seed")
+{
+    TMEStep::NewStory();
+
+    auto& dungeon = Citadel()->dungeon;
+    auto djalina = Lord("CH_DJALINA");
+
+    WHEN("the same seed is used twice")
     {
-        tme::variables::sv_dungeon_search_day = 0;
+        dungeon.Generate(1234);
+        auto start = dungeon.Start();
+        auto cell = dungeon.CellOf(djalina);
+        dungeon.Generate(4321);
+        dungeon.Generate(1234);
 
-        WHEN("Corleth seeks")
+        THEN("the same dungeon is built")
         {
-            corleth->Cmd_Seek();
+            REQUIRE( dungeon.Start() == start );
+            REQUIRE( dungeon.CellOf(djalina) == cell );
+        }
 
-            THEN("nobody is freed, and his day is over all the same")
-            {
-                REQUIRE( Citadel()->HostagesHeldAtMaranor().size() == 13 );
-                REQUIRE( corleth->Time() == (mxtime_t)tme::variables::sv_time_night );
-                REQUIRE_THAT( TME_LastActionMsg(), Catch::Matchers::Contains("finds no one") );
+        THEN("every cell can be walked to from the way out, and no hostage is held where Corleth begins")
+        {
+            REQUIRE( dungeon.StepTowards(dungeon.Entrance(), start) != DR_NONE );
+            for ( auto hostage : Citadel()->HostagesHeldAtMaranor() ) {
+                REQUIRE( dungeon.StepTowards(dungeon.Entrance(), dungeon.CellOf(hostage)) != DR_NONE );
+                REQUIRE( dungeon.CellOf(hostage) != start );
             }
         }
     }

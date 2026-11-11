@@ -93,7 +93,7 @@ void citadel_quest_processor::Survey ( void )
 
     FOR_EACH_CHARACTER(character) {
         auto who = CitadelLord(character);
-        CONTINUE_IF( who->IsDead() || who->IsPrisoner() || who->InDungeon() );
+        CONTINUE_IF( who->IsDead() || who->IsPrisoner() || who->IsInDungeon() );
         auto land = PlaceOf(who->Location());
         if ( land != 0 )
             places[land].figures.push_back(who);
@@ -637,6 +637,39 @@ bool citadel_quest_processor::MarchToTarget ( mxgridref target, bool fight )
     return true;
 }
 
+void citadel_quest_processor::SearchDungeon ( citadel_character* hostage )
+{
+    const u32 tired = 2 * (u32)sv_energy_scale;
+    auto& dungeon = CITADEL_SCENARIO(dungeon);
+    auto held = CITADEL_SCENARIO(HostagesHeldAtMaranor());
+    auto message = mx->LastActionMsg();
+
+    while ( lord->IsInDungeon() && lord->CanWalkForward() && lord->energy >= tired ) {
+        // ponytail: he knows the way, and heads for the first hostage on the list, not the nearest
+        auto sought = hostage != nullptr && hostage->IsPrisoner() ? hostage : nullptr;
+        for ( auto other : held ) {
+            if ( sought == nullptr && other->IsPrisoner() )
+                sought = other;
+        }
+        if ( sought == nullptr )
+            break;
+
+        auto dir = dungeon.StepTowards(lord->DungeonLocation(), dungeon.CellOf(sought));
+        if ( dir == DR_NONE )
+            break;
+
+        lord->looking = dir;
+        if ( lord->Cmd_WalkForward(false, false) != MX_OK )
+            break;
+    }
+
+    for ( auto freed : held ) {
+        if ( !freed->IsPrisoner() )
+            message += mx->text->CookedSystemString(SS_DUNGEON_FREED, freed);
+    }
+    mx->SetLastActionMsg(message);
+}
+
 void citadel_quest_processor::Besiege ( citadel_stronghold* keep, mxgridref target )
 {
     if ( keep->Allegiance() != lord->NormalisedLoyalty() ) {
@@ -699,7 +732,7 @@ void citadel_quest_processor::Quest ( void )
                                         : regiment != nullptr && regiment->Total() > 0;
             break;
         case QS_RESCUE:
-            live = lord->InDungeon() && ( character == nullptr || ( character->IsAlive() && character->IsPrisoner() ) );
+            live = lord->IsInDungeon() && ( character == nullptr || ( character->IsAlive() && character->IsPrisoner() ) );
             break;
         case QS_SEIZE:
             live = stronghold != nullptr;
@@ -726,9 +759,7 @@ void citadel_quest_processor::Quest ( void )
     }
 
     if ( lord->Quest() == QS_RESCUE ) {
-        auto hostage = lord->SearchDungeon((u32)sv_dungeon_search_night);
-        if ( hostage != nullptr )
-            mx->SetLastActionMsg(mx->LastActionMsg() + mx->text->CookedSystemString(SS_DUNGEON_FREED, hostage));
+        SearchDungeon(CitadelLord(character));
         if ( ( character != nullptr && !character->IsPrisoner() ) || CITADEL_SCENARIO(HostagesHeldAtMaranor()).empty() )
             lord->EndQuest(QN_DONE);
         return;
