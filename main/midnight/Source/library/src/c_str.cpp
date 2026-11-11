@@ -9,6 +9,7 @@ using namespace chilli::lib;
 #include <iostream>
 #include <vector>
 #include <cctype>
+#include <cstdarg>
 
 namespace chilli {
 

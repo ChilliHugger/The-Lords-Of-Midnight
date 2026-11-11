@@ -1,4 +1,4 @@
-#ifndef WIN32
+#if __has_include(<__bit_reference>)
 #include <__bit_reference>
 #endif
 

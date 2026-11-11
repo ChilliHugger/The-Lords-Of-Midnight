@@ -4,14 +4,8 @@
 //
 #include "catch2/catch.hpp"
 #include "../../../Source/utils/imagedef.h"
-#ifdef __APPLE__
-#include <mach-o/dyld.h>
-#endif
-#ifdef _WIN32
-#define NOMINMAX
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#endif
+#include "../../../Source/axmol_sdk.h"
+#include "../../../Source/platform/Extensions.h"
 
 using namespace imagedef;
 
@@ -125,24 +119,7 @@ TEST_CASE("An icon's main art is its first enabled gfx")
 // the test app is sandboxed, so read the definitions from the copy in its bundle
 static std::string resource(const char* file)
 {
-#if defined(_WIN32)
-    // resources are copied to a Content folder beside the executable
-    char exe[MAX_PATH];
-    const DWORD len = GetModuleFileNameA(nullptr, exe, MAX_PATH);
-    std::string dir(exe, len);
-    dir = dir.substr(0, dir.find_last_of("\\/"));
-    return dir + "/Content/" + file;
-#elif !defined(__APPLE__)
-    return std::string("Resources/") + file;
-#else
-    char path[4096];
-    uint32_t size = sizeof(path);
-    if (_NSGetExecutablePath(path, &size) != 0)
-        return file;
-    std::string exe = path;     // <app>/Contents/MacOS/<name>
-    auto contents = exe.substr(0, exe.rfind("/MacOS/"));
-    return contents + "/Resources/" + file;
-#endif
+    return chilli::extensions::getBundleResourcePath() + "/" + file;
 }
 
 TEST_CASE("The shipped shield definitions load and use the shared shield")

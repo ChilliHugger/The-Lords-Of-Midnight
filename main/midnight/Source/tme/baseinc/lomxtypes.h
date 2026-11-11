@@ -838,7 +838,7 @@ namespace tme {
 #define GET_LOCIDX(id)                  GetLocX(id)
 #define GET_LOCIDY(id)                  GetLocY(id)
 
-#define CLEARINFOSTRUCT(x,t)            CLEARSTRUCT(x); x.id = MAKE_ID(t,0); x.size = sizeof(x);
+#define CLEARINFOSTRUCT(x,t)            x = {}; x.id = MAKE_ID(t,0); x.size = sizeof(x);
 #define CLEARINFOSTRUCTPTR(ptr,t,s) \
         memset(ptr,0,sizeof(s)); \
         ptr->id = MAKE_ID(t,0); \

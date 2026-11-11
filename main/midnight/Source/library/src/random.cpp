@@ -2,6 +2,7 @@
 #include "../inc/mxtypes.h"
 
 #include <time.h>
+#include <climits>
 #include <stdlib.h>
 
 namespace chilli {
