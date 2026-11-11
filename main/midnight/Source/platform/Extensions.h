@@ -16,6 +16,8 @@
     #include "ios/Extensions-ios.h"
 #elif defined(_OS_WASM_)
     #include "wasm/Extensions-wasm.h"
+#elif defined(_OS_LINUX_)
+    #include "linux/Extensions-linux.h"
 #elif AX_TARGET_PLATFORM == AX_PLATFORM_ANDROID
     #include "android/Extensions-android.h"
 #endif
