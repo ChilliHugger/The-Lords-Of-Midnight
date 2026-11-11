@@ -16,4 +16,6 @@ Built against [axmol](https://github.com/axmolengine/axmol) 2.11.5. Check `main/
 
 - [For Windows](docs/build_windows.md)
 
+- [For Linux](docs/build_linux.md)
+
 - [For Android](docs/build_android.md)

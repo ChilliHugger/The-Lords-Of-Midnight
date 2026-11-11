@@ -188,10 +188,10 @@ public:
     
 
     
-    selectmodel             selectmodel;
-    mapmodel                mapmodel;
+    ::selectmodel           selectmodel;
+    ::mapmodel              mapmodel;
 #if defined(_CITADEL_)
-    questmodel              questmodel;
+    ::questmodel            questmodel;
 #endif
     
 #if defined(_MOUSE_ENABLED_)

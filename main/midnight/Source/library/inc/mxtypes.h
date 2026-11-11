@@ -16,10 +16,11 @@
 #include <string>
 #endif
 
-#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__) || defined(__linux__)
 #define _UNIX_
 #endif
 
+#include <cstring>
 #include <functional>
 
 typedef std::function<void(void)> MXVoidCallback;

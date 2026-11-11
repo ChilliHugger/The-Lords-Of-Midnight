@@ -195,11 +195,18 @@ if(ANDROID)
     list(APPEND GAME_SOURCE
          proj.android/app/jni/main.cpp
          )
-#elseif(LINUX)
-#    list(APPEND GAME_SOURCE
-#         proj.linux/main.cpp
-#         )
-#    list(APPEND GAME_SOURCE ${common_content_files})
+elseif(LINUX)
+    add_compile_options(-D_OS_DESKTOP_ -D_OS_DESKTOP_WINDOW_ -D_OS_LINUX_)
+    # version reported by the version extension, read from VERSION ("<version> <build>")
+    file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" LINUX_APP_VERSION LIMIT_COUNT 1)
+    separate_arguments(LINUX_APP_VERSION)
+    list(GET LINUX_APP_VERSION 1 LINUX_APP_BUILD_NO)
+    list(GET LINUX_APP_VERSION 0 LINUX_APP_VERSION)
+    add_compile_definitions(LINUX_APP_VERSION="${LINUX_APP_VERSION}" LINUX_APP_BUILD_NO="${LINUX_APP_BUILD_NO}")
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION")
+    list(APPEND GAME_SOURCE
+         proj.linux/main.cpp
+         )
 elseif(WASM)
     # a desktop browser: desktop UI/input, but no native window to manage
     add_compile_options(-D_OS_WASM_ -D_OS_DESKTOP_)
@@ -432,7 +439,7 @@ endif()
 
 if ((NOT APPLE) AND (NOT WINRT))
     ax_get_resource_path(APP_RES_DIR ${APP_NAME})
-    if(WINDOWS) # for windows, we need to copy the contents of directories, not link
+    if(WINDOWS OR LINUX) # two folders are merged into one, so copy their contents, not link
         ax_sync_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${content_folder})
     else()
         ax_sync_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${content_folder} SYM_LINK 1)

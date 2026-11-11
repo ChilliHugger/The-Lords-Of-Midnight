@@ -11,6 +11,12 @@ elseif(WASM)
       Source/platform/wasm/Extensions-wasm.h
     )
     set(SRC_PLATFORM Source/platform/wasm/Extensions-wasm.cpp)
+elseif(LINUX)
+    set(HDR_PLATFORM
+      Source/platform/Extensions.h
+      Source/platform/linux/Extensions-linux.h
+    )
+    set(SRC_PLATFORM Source/platform/linux/Extensions-linux.cpp)
 elseif(WINDOWS)
       set(HDR_PLATFORM
         Source/platform/Extensions.h
