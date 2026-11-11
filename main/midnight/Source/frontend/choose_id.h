@@ -36,6 +36,7 @@ enum CHOOSE_INDEX {
     CHOOSE_GUARD    = 7,
 
     CHOOSE_TUNNEL   = 8,
+    CHOOSE_DUNGEON  = 16,
 
     CHOOSE_MAP      = 13,
     CHOOSE_NIGHT    = 14,

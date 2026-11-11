@@ -39,6 +39,7 @@ namespace tme {
             SF_MIST         =   MXBIT(6),
             SF_DISMOUNT     =   MXBIT(7),
             SF_HOSTAGES     =   MXBIT(8),
+            SF_DUNGEONS     =   MXBIT(9),
         };
 
   

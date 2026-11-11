@@ -595,6 +595,15 @@ bool moonring::enterTunnel()
     return true;
 }
 
+bool moonring::enterDungeon()
+{
+    character& c = TME_CurrentCharacter();
+    Character_EnterDungeon(c);
+    stories->save();
+    look();
+    return true;
+}
+
 //
 bool moonring::dawn()
 {

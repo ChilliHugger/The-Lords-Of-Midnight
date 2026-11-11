@@ -53,10 +53,10 @@ SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held aga
 
     THEN("they search the dungeons and sit the Citadel's battles out")
     {
-        REQUIRE( corleth->InDungeon() );
-        REQUIRE( Lord("CH_ARIN")->InDungeon() );
+        REQUIRE( corleth->IsInDungeon() );
+        REQUIRE( Lord("CH_ARIN")->IsInDungeon() );
         REQUIRE_FALSE( corleth->TakesPartInBattle() );
-        REQUIRE_FALSE( Lord("CH_MORKIN")->InDungeon() );
+        REQUIRE_FALSE( Lord("CH_MORKIN")->IsInDungeon() );
         REQUIRE( Citadel()->maranor->IsEnemy() );
         REQUIRE( Citadel()->HostagesHeldAtMaranor().size() == 13 );
     }
@@ -73,26 +73,28 @@ SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held aga
         corleth->time = (mxtime_t)tme::variables::sv_time_dawn;
         corleth->DungeonLocation(Citadel()->dungeon.Entrance());
         corleth->looking = DR_SOUTH;
-        REQUIRE( corleth->GetLocInfo()->flags.Is(lif_exit_tunnel) );
+        REQUIRE( corleth->GetLocInfo()->flags.Is(lif_exit_dungeon) );
         REQUIRE( corleth->Cmd_WalkForward(false, false) == MX_OK );
 
         THEN("he is in the Citadel, but not in its dungeons")
         {
             REQUIRE( corleth->Location() == Citadel()->maranor->Location() );
-            REQUIRE_FALSE( corleth->InDungeon() );
+            REQUIRE_FALSE( corleth->IsInDungeon() );
             REQUIRE_FALSE( corleth->CanQuest(QS_RESCUE, Idt(luxor)) );
             REQUIRE( corleth->TakesPartInBattle() );
-            REQUIRE( corleth->GetLocInfo()->flags.Is(lif_enter_tunnel) );
+            REQUIRE( corleth->GetLocInfo()->flags.Is(lif_enter_dungeon) );
         }
 
         AND_WHEN("he goes back down")
         {
-            REQUIRE( corleth->Cmd_EnterTunnel() == MX_OK );
+            REQUIRE( corleth->Cmd_EnterDungeon() == MX_OK );
 
-            THEN("he stands at the foot of the way out, looking in")
+            THEN("he stands at the foot of the way out, looking in, and is in no tunnel")
             {
-                REQUIRE( corleth->InDungeon() );
+                REQUIRE( corleth->IsInDungeon() );
                 REQUIRE( corleth->DungeonLocation() == Citadel()->dungeon.Entrance() );
+                REQUIRE_FALSE( corleth->IsInTunnel() );
+                REQUIRE_THAT( tme::mx->text->DescribeCharacterLocation(corleth), Catch::Matchers::Contains("stands in the dungeons of Maranor") );
                 REQUIRE( corleth->Looking() == DR_NORTH );
             }
         }
@@ -102,7 +104,7 @@ SCENARIO("Only Corleth and Arin are in the dungeons, and the Citadel is held aga
     {
         THEN("he cannot")
         {
-            REQUIRE( Lord("CH_MORKIN")->Cmd_EnterTunnel() == MX_FAILED );
+            REQUIRE( Lord("CH_MORKIN")->Cmd_EnterDungeon() == MX_FAILED );
         }
     }
 

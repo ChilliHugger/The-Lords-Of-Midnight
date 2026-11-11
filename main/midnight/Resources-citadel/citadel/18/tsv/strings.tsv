@@ -97,7 +97,7 @@ Version	Id	Symbol	Text
 7	95	SS_CHAR_LIEGE	{char:name}'s liege is {char:liege:longname}.{sp}
 7	96	SS_CHAR_FOE	{char:name}'s foe is {char:foe:longname}.{sp}
 7	97	SS_TOKENS_TRAITS	good|strong|forceful|generous|stubborn|brave|swift|loyal|evil|weak|reticent|greedy|fawning|cowardly|slow|treacherous|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-
-7	98	SS_TUNNEL	{case:first}{char:gender:heshe} stands in the dungeons of Maranor looking {char:dir:name}.{sp}
+7	98	SS_TUNNEL	{case:first}{char:gender:heshe} stands in a tunnel looking {char:dir:name}.{sp}
 7	99	SS_GROUP_LEADER	{case:first}{char:gender:heshe} is leading a group.{sp}
 7	100	SS_GROUP_FOLLOWER	{case:first}{char:gender:heshe} is following {char:following:longname}.{sp}
 7	101	SS_LOYAL_TO	 who is loyal to the {char:loyalty:name}
@@ -112,7 +112,7 @@ Version	Id	Symbol	Text
 7	110	SS_SEES_1	{char:name} sees the {char:loc:obj:name}.{sp}
 7	111	SS_SEES_2	{char:name} sees an underground entrance.{sp}
 7	112	SS_SEES_3	{char:name} sees the {char:loc:obj:name} and an underground entrance.{sp}
-7	113	SS_LOCATION_PREP_1	in the dungeons of Maranor
+7	113	SS_LOCATION_PREP_1	in the tunnel
 7	114	SS_LOCATION_PREP_2	{loc:terrain:prep} {loc:name}
 7	115	SS_CHARACTER_DEAD	"{lf}{cr}  {char:longname} is dead, {char:text:death2}"
 7	116	SS_CHARACTER_HERE	{char:name} is here.{sp}
@@ -182,3 +182,5 @@ Version	Id	Symbol	Text
 7	180	SS_QUEST_CHOOSE	Choose a quest for {char:longname}.
 7	181	SS_LUXOR_EXECUTED	.{lf}{crlf}{cr} With Boroth fallen, the Dark Fey put {char:longname} to death in the dungeons of Maranor
 7	182	SS_FREE_MUSTER	.{lf}{crlf}{cr} Five thousand warriors of the Free gather at the Castle of Corelay
+7	183	SS_DUNGEON	{case:first}{char:gender:heshe} stands in the dungeons of Maranor looking {char:dir:name}.{sp}
+7	184	SS_DUNGEON_PREP	in the dungeons of Maranor

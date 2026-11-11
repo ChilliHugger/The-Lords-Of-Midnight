@@ -57,6 +57,8 @@ typedef struct {
     std::string     locationtext;
 
     bool            tunnel;
+    bool            dungeon;
+    bool            underground;
     bool            lookingdowntunnel;
     bool            lookingouttunnel;
     bool            narrowtunnel;
@@ -139,6 +141,7 @@ protected:
     // Actions and Commands
     bool OnUndo ( savemode_t mode );
     bool OnEnterTunnel();
+    bool OnEnterDungeon();
     bool OnExitTunnel();
    
     void setupMovementIndicators();

@@ -205,7 +205,6 @@ namespace tme {
         FLAG_PROPERTY(IsAvailable, cf_available);
         GET_PROPERTY(u32, Idle, idle);
         PROPERTY(mxgridref, DungeonLocation, dungeonloc);
-        GET_PROPERTY(bool, InDungeon, IsInTunnel());
         GET_PROPERTY(bool, QuestIdle, (Quest() == QS_NONE || Quest() == QS_REST));
         GET_PROPERTY(bool, AtHome, (Location() == Home()->Location() || ( IsFollowing() && Following()->IsAlive() )));
 
@@ -222,9 +221,11 @@ namespace tme {
         virtual bool IsAllowedRiders() const override;
         virtual bool Recruited ( mxcharacter* recruiter ) override;
         virtual std::unique_ptr<mxlocinfo> GetLocInfo() override;
+        virtual MXRESULT Cmd_MoveForward ( void ) override;
         virtual MXRESULT Cmd_WalkForward ( bool seek, bool approach ) override;
-        virtual MXRESULT Cmd_EnterTunnel ( void ) override;
-        virtual MXRESULT Cmd_ExitTunnel ( void ) override;
+        virtual mxobject* Cmd_Seek ( void ) override;
+        MXRESULT Cmd_EnterDungeon ();
+        MXRESULT Cmd_ExitDungeon ();
         virtual bool CanFollow ( const mxcharacter* c ) const override;
         virtual std::string Title() const override { return title; }
         mxobjpower_t WeaponPower() const;

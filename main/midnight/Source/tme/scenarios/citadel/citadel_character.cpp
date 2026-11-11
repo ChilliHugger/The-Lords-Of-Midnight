@@ -64,7 +64,7 @@ bool citadel_character::TakesPartInBattle() const
     return mxcharacter::TakesPartInBattle()
         && ( IsRecruited() || purpose == PU_DEFEND_HOMELAND )
         && !IsPrisoner()
-        && !InDungeon()
+        && !IsInDungeon()
         && Race() != RA_ENEMY;
 }
 
@@ -163,58 +163,79 @@ std::unique_ptr<mxlocinfo> citadel_character::GetLocInfo ()
     auto& dungeon = CITADEL_SCENARIO(dungeon);
     auto maranor = CITADEL_SCENARIO(maranor);
 
-    if ( InDungeon() ) {
+    if ( IsInDungeon() ) {
         auto wayout = dungeon.IsWayOut(dungeonloc, Looking());
-        info->flags.Reset(lif_moveforward|lif_blocked|lif_enterbattle|lif_recruitmen|lif_guardmen);
+        info->flags.Reset(lif_moveforward|lif_blocked|lif_enterbattle|lif_fight|lif_seek|lif_hide
+                          |lif_recruitchar|lif_recruitmen|lif_guardmen|lif_enter_tunnel);
         info->flags.Set(wayout || dungeon.HasPassage(dungeonloc, Looking()) ? lif_moveforward : lif_blocked);
         if ( wayout )
-            info->flags.Set(lif_exit_tunnel);
+            info->flags.Set(lif_exit_dungeon);
     } else if ( maranor != nullptr && Location() == maranor->Location() && !IsDead() && !IsNight() && !IsFollowing() ) {
-        info->flags.Set(lif_enter_tunnel);
+        info->flags.Set(lif_enter_dungeon);
     }
     return info;
 }
 
-MXRESULT citadel_character::Cmd_EnterTunnel ( void )
+MXRESULT citadel_character::Cmd_EnterDungeon ()
 {
-    if ( !GetLocInfo()->flags.Is(lif_enter_tunnel) )
+    if ( !GetLocInfo()->flags.Is(lif_enter_dungeon) )
         return MX_FAILED;
 
-    flags.Set(cf_tunnel);
+    flags.Set(cf_dungeon);
     dungeonloc = CITADEL_SCENARIO(dungeon).Entrance();
     looking = DR_NORTH;
 
     FOR_EACH_FOLLOWER(f) {
-        f->Flags().Set(cf_tunnel);
+        f->Flags().Set(cf_dungeon);
         f->looking = Looking();
         CitadelLord(f)->DungeonLocation(dungeonloc);
     });
 
-    mx->scenario->SetMapArmies();
     CommandTakesTime(TRUE);
     return MX_OK;
 }
 
-MXRESULT citadel_character::Cmd_ExitTunnel ( void )
+MXRESULT citadel_character::Cmd_ExitDungeon ()
 {
-    if ( !InDungeon() || IsFollowing() )
+    if ( !IsInDungeon() || IsFollowing() || !CITADEL_SCENARIO(dungeon).IsWayOut(dungeonloc, Looking()) )
         return MX_FAILED;
 
-    flags.Reset(cf_tunnel);
+    flags.Reset(cf_dungeon);
 
     FOR_EACH_FOLLOWER(f) {
-        f->Flags().Reset(cf_tunnel);
+        f->Flags().Reset(cf_dungeon);
         f->looking = Looking();
     });
 
-    mx->scenario->SetMapArmies();
     CommandTakesTime(TRUE);
     return MX_OK;
+}
+
+MXRESULT citadel_character::Cmd_MoveForward ( void )
+{
+    if ( !IsInDungeon() )
+        return mxcharacter::Cmd_MoveForward();
+
+    SetLastCommand(CMD_MOVE, IDT_NONE);
+
+    if ( IsFollowing() || !CanWalkForward() )
+        return MX_FAILED;
+
+    auto stubborn = FIND_FOLLOWER(f) { return !f->CanWalkForward(); });
+    if ( stubborn != nullptr )
+        return MX_FAILED;
+
+    return Cmd_WalkForward(false, false);
+}
+
+mxobject* citadel_character::Cmd_Seek ( void )
+{
+    return IsInDungeon() ? nullptr : mxcharacter::Cmd_Seek();
 }
 
 MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
 {
-    if ( !InDungeon() )
+    if ( !IsInDungeon() )
         return mxcharacter::Cmd_WalkForward(seek, approach);
 
     auto& dungeon = CITADEL_SCENARIO(dungeon);
@@ -228,7 +249,7 @@ MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
     flags.Reset(cf_inbattle|cf_preparesbattle);
 
     if ( wayout )
-        return Cmd_ExitTunnel();
+        return Cmd_ExitDungeon();
 
     dungeonloc = dungeon.Neighbour(dungeonloc, Looking());
     CommandTakesTime(TRUE);
@@ -247,8 +268,10 @@ MXRESULT citadel_character::Cmd_WalkForward ( bool seek, bool approach )
 
 bool citadel_character::CanFollow ( const mxcharacter* c ) const
 {
+    auto leader = static_cast<const citadel_character*>(c);
     return mxcharacter::CanFollow(c)
-        && ( !InDungeon() || dungeonloc == static_cast<const citadel_character*>(c)->dungeonloc );
+        && IsInDungeon() == leader->IsInDungeon()
+        && ( !IsInDungeon() || dungeonloc == leader->dungeonloc );
 }
 
 citadel_character* citadel_character::FreeHostageHere ()
@@ -323,7 +346,7 @@ bool citadel_character::CanQuest ( mxquest_t newquest, mxid target ) const
         case QS_KILL:
             return other && !character->IsRecruited() && !character->IsPrisoner();
         case QS_RESCUE:
-            return InDungeon() && other && character->IsPrisoner();
+            return IsInDungeon() && other && character->IsPrisoner();
         case QS_JOIN:
         case QS_FOLLOW:
             return other && character->IsRecruited();

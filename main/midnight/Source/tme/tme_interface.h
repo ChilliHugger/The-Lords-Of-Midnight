@@ -199,6 +199,8 @@ bool Character_Take ( const character& c );
 inline bool Character_IsInTunnel(const character& c)            { return c.flags.Is(cf_tunnel); }
 inline bool Character_InTunnel(const character& c)              { return c.flags.Is(cf_tunnel); }
 bool Character_EnterTunnel ( const character& c );
+inline bool Character_IsInDungeon(const character& c)           { return c.flags.Is(cf_dungeon); }
+bool Character_EnterDungeon ( const character& c );
 
 #if defined(_DDR_)
 inline bool Character_IsPreparingForBattle(const character& c)  { return c.flags.Is(cf_preparesbattle); }

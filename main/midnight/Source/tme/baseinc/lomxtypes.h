@@ -763,6 +763,8 @@ using namespace chilli::types;
             SS_QUEST_CHOOSE,
             SS_LUXOR_EXECUTED,
             SS_FREE_MUSTER,
+            SS_DUNGEON,
+            SS_DUNGEON_PREP,
 
             SS_MAX_STRINGS = 255
         };
@@ -1006,6 +1008,8 @@ namespace tme {
             lif_blocked         = MXBIT(14),    // way forward is blocked
             lif_unhide          = MXBIT(15),    // hidden and can unhide
             lif_dismount        = MXBIT(16),    // can dismount from horse
+            lif_enter_dungeon   = MXBIT(17),    // can we enter dungeon
+            lif_exit_dungeon    = MXBIT(18),    // can we exit dungeon
         };
 
         enum MAPFLAGS {
@@ -1099,6 +1103,7 @@ namespace tme {
             cf_knowledge        = MXBIT(28),    // has special knowledge
             cf_control          = MXBIT(29),    // is under control
             cf_watch            = MXBIT(30),    // is being watched
+            cf_dungeon          = MXBIT(31),    // currently in a dungeon
             cf_available        = MXBIT(32),    // 
             // citadel
             

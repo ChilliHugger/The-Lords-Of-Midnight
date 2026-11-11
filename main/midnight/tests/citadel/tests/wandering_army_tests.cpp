@@ -148,7 +148,7 @@ SCENARIO("Your lord can attack a keep Boroth's host has taken")
     {
         auto here = keep->Location();
         auto lord = TMEStep::PlaceLordAt("CH_CORLETH", loc_t(here.x, here.y + 1), DR_NORTH);
-        lord->Flags().Reset(cf_tunnel);
+        lord->Flags().Reset(cf_dungeon);
 
         THEN("he is no coward, and the attack goes in")
         {

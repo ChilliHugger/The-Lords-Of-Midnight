@@ -843,6 +843,10 @@ std::string mxtext::DescribeCharacterLocation( const mxcharacter* character )
 {
     RETURN_IF_NULL(character) "";
     
+    if ( character->IsInDungeon() ) {
+        return CookedSystemString(SS_DUNGEON, character);
+    }
+
     if ( character->IsInTunnel() ) {
         return CookedSystemString(SS_TUNNEL, character);
     }
@@ -1054,6 +1058,10 @@ std::string mxtext::DescribeLocationWithPrep ( mxgridref loc, const mxcharacter*
     this->loc = loc ;
     
     
+    if ( character && character->IsInDungeon() ) {
+        return CookedSystemString(SS_DUNGEON_PREP);
+    }
+
     if ( character && character->IsInTunnel() ) {
         // SS_LOCATION_PREP_1
         // in the tunnel

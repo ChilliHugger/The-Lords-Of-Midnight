@@ -722,7 +722,23 @@ COMMAND( OnQuestNews )
     return MX_OK;
 }
 
+COMMAND( OnCharEnterDungeon )
+{
+    CONVERT_CHARACTER_ID( argv[0].vId, character );
+    argv[0] = (s32)0;
+    return CitadelLord(character)->Cmd_EnterDungeon();
+}
+
+COMMAND( OnCharExitDungeon )
+{
+    CONVERT_CHARACTER_ID( argv[0].vId, character );
+    argv[0] = (s32)0;
+    return CitadelLord(character)->Cmd_ExitDungeon();
+}
+
 static mxcommand_t citadel_commands[] = {
+    { "ENTERDUNGEON",   1,  OnCharEnterDungeon, { arguments::character } },
+    { "EXITDUNGEON",    1,  OnCharExitDungeon,  { arguments::character } },
     { "QUEST",          3,  OnCharQuest,        { arguments::character, variant::vnumber, variant::vid } },
     { "QUESTINFO",      1,  OnCharQuestInfo,    { arguments::character } },
     { "QUESTTARGETS",   3,  OnCharQuestTargets, { variant::vptr, arguments::character, variant::vnumber } },
@@ -764,7 +780,7 @@ void citadel_x::initialiseAfterCreate ( u32 version )
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
         if ( maranor != nullptr && lord->IsRecruited() && !lord->IsPrisoner() && lord->Location() == maranor->Location() ) {
-            lord->Flags().Set(cf_tunnel);
+            lord->Flags().Set(cf_dungeon);
             lord->DungeonLocation(dungeon.Start());
         }
         if ( lord->Home() == nullptr )
@@ -811,7 +827,7 @@ MXRESULT citadel_x::Register ( mxengine* midnightx )
     mx->scenario = (mxscenario*)citadel_scenario;
     
     // set initial feature flags
-    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_HOSTAGES|SF_TUNNELS ;
+    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_HOSTAGES|SF_DUNGEONS ;
     
     return MX_OK ;
 }

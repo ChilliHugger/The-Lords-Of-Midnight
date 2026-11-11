@@ -299,7 +299,7 @@ SCENARIO("Corleth walks the dungeons by night, and each hostage he reaches is fl
     auto citadel = static_cast<citadel_x*>(tme::mx->scenario);
     auto corleth = Lord("CH_CORLETH");
     auto djalina = Lord(ch_djalina);
-    REQUIRE( corleth->InDungeon() );
+    REQUIRE( corleth->IsInDungeon() );
     REQUIRE( corleth->SetQuest(QS_RESCUE, Idt(djalina)) );
     Lord("CH_ARIN")->Quest(QS_NONE);
 

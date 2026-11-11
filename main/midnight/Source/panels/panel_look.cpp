@@ -389,6 +389,9 @@ void panel_look::OnMovementComplete( /*uiview* sender,*/ LANDSCAPE_MOVEMENT type
     defaultexport::location_t loc;
     TME_GetMapLocation(loc, location_infrontid );
 
+    if ( Character_IsInDungeon(TME_CurrentCharacter()) )
+        return;
+
     if ( Character_IsInTunnel(TME_CurrentCharacter()) ) {
         if (loc.flags.Is(lf_tunnel_small)) {
             if ( !showHelpWindow( HELP_SMALL_TUNNEL ) )
@@ -454,12 +457,12 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
         info->narrowtunnel = m.flags.Is(lf_tunnel_small) && info->tunnel;
     }
 
-#if defined(_CITADEL_)
-    if ( info->tunnel ) {
+    info->dungeon = Character_IsInDungeon(c);
+    if ( info->dungeon ) {
         info->lookingdowntunnel = location_flags.Is(lif_moveforward);
-        info->lookingouttunnel = location_flags.Is(lif_exit_tunnel);
+        info->lookingouttunnel = location_flags.Is(lif_exit_dungeon);
     }
-#endif
+    info->underground = info->tunnel || info->dungeon;
 
     info->name = StringExtensions::toUpper(c.longname) ;
     
@@ -545,7 +548,7 @@ void panel_look::setViewForCurrentCharacter()
     options->here.y *= LANDSCAPE_DIR_STEPS;
     options->isMoving = false;
     options->isLooking = false;
-    options->isInTunnel = current_info->tunnel;
+    options->isInTunnel = current_info->underground;
     options->isLookingDownTunnel = current_info->lookingdowntunnel;
     options->isLookingOutTunnel = current_info->lookingouttunnel;
     options->isNarrowTunnel = current_info->narrowtunnel;
@@ -621,7 +624,7 @@ void panel_look::UpdateLandscape()
     options->generator->horizontalOffset = options->lookAmount;
     options->generator->landscapeScreenWidth = getContentSize().width ;
 
-    if ( current_info->tunnel ) {
+    if ( current_info->underground ) {
         UIDEBUG("UpdateLandscape: Create Tunnel View");
         current_view = TunnelView::create(options);
     }else{
@@ -639,14 +642,14 @@ void panel_look::UpdateLandscape()
     // LoM's header is affectively part of the background
     // so update the colour to the same as the sky
 #if defined(_LOM_) || defined(_CITADEL_)
-    auto color = current_info->tunnel
+    auto color = current_info->underground
         ? _clrBlack
         : Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainOutline));
     layHeader->setColor(color);
 #endif
 
 #if defined(_DDR_)
-    if(!current_info->tunnel){
+    if(!current_info->underground){
         imgHeader->setColor(Color3B(options->colour->CalcCurrentMovementTint(TINT::TerrainFill)));
     }
 #endif
@@ -1436,6 +1439,13 @@ void panel_look::OnNotification( Ref* sender )
         }
 #endif
 
+        case ID_ENTER_DUNGEON:
+        {
+            if ( OnEnterDungeon() )
+                return;
+            break;
+        }
+
         case ID_ENTER_TUNNEL:
         {
             if ( OnEnterTunnel() )
@@ -1525,6 +1535,18 @@ bool panel_look::OnEnterTunnel()
     });
     
     
+    return true;
+}
+
+bool panel_look::OnEnterDungeon()
+{
+    hideMenus();
+    fadeOut(_clrBlack, 0.75f, [&](){
+        mr->enterDungeon();
+        getCurrentLocationInfo();
+        setViewForCurrentCharacter();
+        fadeIn(_clrBlack, 1.0f, [&](){});
+    });
     return true;
 }
 
@@ -1759,7 +1781,7 @@ bool panel_look::allowDragDownMove()
 
 bool panel_look::allowDragLook()
 {
-    if(current_info->tunnel) {
+    if(current_info->underground) {
         return false;
     }
 
