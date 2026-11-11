@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="assets/map_lords_many.png">
+<link rel="preload" href="assets/data.js" as="script">
+<link rel="preload" href="assets/tiles.png" as="image">
+<link rel="preload" href="assets/circle_selector.png" as="image">
+<title>Lords of Midnight Map</title>
+<meta name="description" content="Explore the Land of Midnight on the game&#x27;s own detailed map.">
+<style>
+/* Layout: the game's detailed map, full screen — scrolling tile map with fixed zoom controls top-left and filters top-right. */
+@font-face { font-family: "Midnight"; src: url("assets/Midnight.woff") format("woff"); font-display: block; }
+:root {
+  --ground: #808080;          /* _clrGrey, the panel background in the game */
+  --ink: #ffffff;              /* label text */
+  --outline: #000000;          /* label outline */
+  --halo: 255,255,255;         /* group popup glow */
+  --focus: #be0005;            /* location ring red, used for keyboard focus */
+  --field-bg: #ffffff;         /* search field */
+  --field-ink: #000000;
+  --field-muted: #5b5b66;
+  --field-sel-bg: #000000;     /* highlighted match, inverted */
+  --field-sel-ink: #ffffff;
+  --field-sel-muted: #c8c8d0;
+  --font-game: "Midnight", "Trebuchet MS", sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; margin: 0; }
+[hidden] { display: none !important; }
+body { background: var(--ground); color: var(--ink); overflow: hidden; font-family: var(--font-game);
+  -webkit-user-select: none; user-select: none; touch-action: none; }
+#stage { position: fixed; inset: 0; }
+#map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+#map.dragging { cursor: grabbing; }
+
+#tooltip { position: fixed; left: 50%; top: calc(32px + env(safe-area-inset-top, 0px)); transform: translate(-50%, -50%);
+  font-size: 20px; line-height: 18px; color: var(--ink); text-align: center; pointer-events: none; white-space: nowrap;
+  text-shadow: -2px -2px 0 var(--outline), 2px -2px 0 var(--outline), -2px 2px 0 var(--outline), 2px 2px 0 var(--outline),
+               0 -2px 0 var(--outline), 0 2px 0 var(--outline), -2px 0 0 var(--outline), 2px 0 0 var(--outline);
+  opacity: 0; transition: opacity 1s; max-width: calc(100vw - 280px); }
+#tooltip.on { opacity: 1; }
+
+button { appearance: none; border: 0; padding: 0; margin: 0; background: none; cursor: pointer; display: block; }
+button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 50%; }
+
+.zoom { position: fixed; left: calc(48px + env(safe-area-inset-left, 0px)); width: 64px; height: 64px;
+  transform: translate(-50%, -50%); display: grid; place-items: center; }
+.zoom .disc { position: absolute; inset: 0; width: 64px; height: 64px; pointer-events: none; }
+.zoom button { position: relative; width: 32px; height: 32px; }
+.zoom button img { width: 32px; height: 32px; display: block; }
+.zoom button:active img { transform: scale(.9); }
+
+#filters { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); top: calc(16px + env(safe-area-inset-top, 0px));
+  display: flex; flex-direction: column; }
+.filter { position: relative; width: 73px; height: 67px; margin-bottom: -3px; }
+.filter .art { position: absolute; left: 0; top: 3px; width: 64px; height: 64px; }
+.filter .eye { position: absolute; left: 54px; top: 13px; width: 36px; height: 26px; transform: translate(-50%, -50%); }
+.filter:focus-visible { border-radius: 8px; }
+
+#group { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; pointer-events: none; opacity: 0; transition: opacity .15s; }
+#group.on { opacity: 1; }
+#group .glow { position: absolute; width: 384px; height: 384px; left: -192px; top: -192px; border-radius: 50%;
+  background: radial-gradient(circle closest-side, rgba(var(--halo),.9) 60%, rgba(var(--halo),0) 100%); pointer-events: auto; }
+#group .disc { position: absolute; width: 256px; height: 256px; left: -128px; top: -128px; pointer-events: none; }
+#group .lord { position: absolute; width: 48px; height: 48px; margin: -24px 0 0 -24px; pointer-events: auto; border-radius: 50%; }
+#group .lord img { width: 48px; height: 48px; display: block; }
+#group .lord span { position: absolute; left: 50%; top: 48px; transform: translate(-50%, -50%); font-size: 10px; white-space: nowrap;
+  color: var(--ink); text-shadow: -1px -1px 0 var(--outline), 1px -1px 0 var(--outline), -1px 1px 0 var(--outline), 1px 1px 0 var(--outline); }
+#group .lord:active img { transform: scale(.75); }
+#group .disband { position: absolute; width: 32px; height: 32px; margin: -16px 0 0 -16px; pointer-events: auto; }
+#group .disband img { width: 32px; height: 32px; }
+
+/* search: a round "?" button in the bottom-right corner that grows leftwards into a white pill field
+   with a hard black edge; the button stays at the right end as the close control; matches open upwards */
+#search { --fab: 56px; position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  width: min(380px, calc(100vw - 32px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+  transition: width .25s cubic-bezier(.2,.8,.2,1); }
+#search.collapsed { width: var(--fab); }
+#search .bar { position: relative; height: var(--fab); }
+#search-input { position: absolute; inset: 0; width: 100%; height: var(--fab); box-sizing: border-box; margin: 0;
+  font: 16px/1.2 var(--font-game); letter-spacing: .02em; padding: 0 calc(var(--fab) + 4px) 0 20px;
+  border: 2px solid var(--field-ink); border-radius: calc(var(--fab) / 2); background: var(--field-bg); color: var(--field-ink);
+  -webkit-user-select: text; user-select: text; box-shadow: 0 3px 0 rgba(0,0,0,.3); outline: none;
+  transition: opacity .15s .1s, box-shadow .15s; -webkit-appearance: none; appearance: none; }
+#search-input::-webkit-search-cancel-button { display: none; }
+#search-input::placeholder { color: var(--field-muted); }
+#search-input:focus-visible { box-shadow: 0 0 0 2px var(--focus), 0 3px 0 rgba(0,0,0,.3); }
+#search.collapsed #search-input { opacity: 0; pointer-events: none; transition: opacity .1s; }
+#search-fab { position: absolute; right: 0; top: 0; width: var(--fab); height: var(--fab); border-radius: 50%;
+  display: grid; place-items: center; box-sizing: border-box; border: 2px solid var(--field-ink);
+  background: var(--field-bg); color: var(--field-ink); font: 30px/1 var(--font-game); box-shadow: 0 3px 0 rgba(0,0,0,.3);
+  transition: background-color .15s, color .15s, box-shadow .15s; }
+#search-fab .glyph { display: block; line-height: 1; }  /* nudged onto its ink centre by centreGlyph() */
+#search-fab:hover { background: var(--field-sel-bg); color: var(--field-sel-ink); }
+#search-fab:active { transform: scale(.94); }
+#search:not(.collapsed) #search-fab { box-shadow: none; font-size: 26px; }
+#results { position: absolute; left: 0; right: 0; bottom: 100%; margin: 0 0 6px; padding: 0; list-style: none;
+  background: var(--field-bg); border: 2px solid var(--field-ink); max-height: min(60vh, 340px); overflow-y: auto; }
+#results li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 12px;
+  color: var(--field-ink); font-size: 15px; line-height: 1.25; cursor: pointer; }
+#results li .name { min-width: 0; overflow-wrap: anywhere; }
+#results li .tag { flex: none; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--field-muted); }
+#results li[aria-selected="true"] { background: var(--field-sel-bg); color: var(--field-sel-ink); }
+#results li[aria-selected="true"] .tag { color: var(--field-sel-muted); }
+#results li.empty { color: var(--field-muted); cursor: default; }
+
+@media (prefers-reduced-motion: reduce) { #tooltip, #group, #search, #search-input, #search-fab { transition: none; } }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <canvas id="map" aria-label="Detailed map" role="img"></canvas>
+  <div id="group" aria-hidden="true"></div>
+</div>
+<div id="tooltip" role="status" aria-live="polite"></div>
+
+<div class="zoom" style="top: calc(48px + env(safe-area-inset-top, 0px))"><img class="disc" alt=""><button id="zoom-out" title="Zoom out (Down arrow)"><img alt="Zoom out"></button></div>
+<div class="zoom" style="top: calc(112px + env(safe-area-inset-top, 0px))"><img class="disc" alt=""><button id="zoom-reset" title="Reset zoom"><img alt="Reset zoom"></button></div>
+<div class="zoom" style="top: calc(176px + env(safe-area-inset-top, 0px))"><img class="disc" alt=""><button id="zoom-in" title="Zoom in (Up arrow)"><img alt="Zoom in"></button></div>
+
+<div id="filters"></div>
+
+<form id="search" class="collapsed" role="search" autocomplete="off">
+  <ul id="results" role="listbox" aria-label="Matches" hidden></ul>
+  <div class="bar">
+    <input id="search-input" type="search" placeholder="Find a lord, place or area" aria-label="Find a lord, place or area"
+           role="combobox" aria-controls="results" aria-expanded="false" aria-autocomplete="list" spellcheck="false" enterkeyhint="search" tabindex="-1">
+    <button type="button" id="search-fab" aria-controls="search-input" aria-expanded="false" aria-label="Search the map" title="Search the map (/)"><span class="glyph" aria-hidden="true">?</span></button>
+  </div>
+</form>
+
+<script src="assets/data.js"></script>
+<script>
+(() => {
+"use strict";
+// ---------------------------------------------------------------- data
+// window.MIDNIGHT_MAP comes from the data script build.py writes ahead of this one:
+// { data: the map and its tables, images: frame name -> URL (a file, or a data: URI in a single-file build) }
+const D = window.MIDNIGHT_MAP.data;
+const SRC = window.MIDNIGHT_MAP.images;
+const W = D.w, H = D.h, TILE = 64, SHEET_TILE = 128, SHEET_COLS = 16;
+
+// the game's constants (panel_map_detailed.h, mapmodel.h, mapbuilder.cpp)
+const MAP_SCALE_MAX = 2.0, MAP_SCALE_CLICK_DELTA = 0.1, INITIAL_MAP_SCALE = 1.0;
+const SCROLL_TO_LORD_SECS = 1.0;
+const CELL_BLANK = 3 * 16 + 1;
+const DENSITY_MAPPING = [10, 6, 11, 7, 14, 2, 15, 3, 9, 5, 8, 4, 13, 1, 12, 0];
+const REMAP_DENSITY = x => Math.floor(x / 4) * 16 + (x % 4);
+const OB_WILDHORSES = D.critterMax;
+const LF_DOMAIN = 1, LF_STRONGHOLD = 256;
+const PLACE_TERRAINS = new Set(D.placeTerrains);
+const LF_TUNNEL = 2, LF_TUNNEL_ENDS = 32 | 64;
+const CELL_FIRST_TUNNEL = 0 * 16 + 13, CELL_FIRST_TUNNEL_END = 0 * 16 + 9;
+const GROUP_RADIUS = 95, GROUP_STEPS = 10, DISBAND_BUTTON_POSITION = 8.5, MAX_VISIBLE_LORDS = 8;
+
+const img = {};
+const loads = Object.entries(SRC).map(([k, src]) => new Promise(res => {
+  const i = new Image(); i.onload = () => res(); i.onerror = () => res(); i.src = src; img[k] = i;
+}));
+
+// ---------------------------------------------------------------- mapbuilder (debug map: everything seen)
+const idx = (x, y) => y * W + x;
+const terrainLayer = new Uint16Array(W * H);
+const critterLayer = new Uint16Array(W * H);
+const tunnelLayer = new Uint16Array(W * H);
+
+for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+  const t = D.terrain[idx(x, y)];
+  // updateDensityMap: a neighbour of different terrain, or the map edge, counts
+  let d = 0;
+  d += (y > 0 ? D.terrain[idx(x, y - 1)] !== t : true) ? 1 : 0;
+  d += (y < H - 1 ? D.terrain[idx(x, y + 1)] !== t : true) ? 4 : 0;
+  d += (x > 0 ? D.terrain[idx(x - 1, y)] !== t : true) ? 8 : 0;
+  d += (x < W - 1 ? D.terrain[idx(x + 1, y)] !== t : true) ? 2 : 0;
+  const density = REMAP_DENSITY(DENSITY_MAPPING[d]);
+  // updateLayers
+  const info = D.terrainCells[t];
+  terrainLayer[idx(x, y)] = !info ? CELL_BLANK : info.density ? info.cell + density : info.cell;
+  const thing = D.things[idx(x, y)];
+  if (thing && thing <= OB_WILDHORSES && D.objectCells[thing]) critterLayer[idx(x, y)] = D.objectCells[thing];
+
+  // tunnels (DDR): density counts the neighbours that are tunnel too, with no edge default
+  const isTunnel = (x, y) => (D.flags[idx(x, y)] & LF_TUNNEL) !== 0;
+  if (isTunnel(x, y)) {
+    let td = 15;
+    if (y > 0 && isTunnel(x, y - 1)) td -= 1;
+    if (y < H - 1 && isTunnel(x, y + 1)) td -= 4;
+    if (x > 0 && isTunnel(x - 1, y)) td -= 8;
+    if (x < W - 1 && isTunnel(x + 1, y)) td -= 2;
+    const tunnel = DENSITY_MAPPING[td];
+    // a square with one tunnel neighbour can be an end: 0 left, 1 top, 2 right, 3 bottom
+    const end = tunnel === 1 ? 0 : tunnel === 4 ? 1 : tunnel === 3 ? 2 : tunnel === 12 ? 3 : -1;
+    if (D.flags[idx(x, y)] & LF_TUNNEL_ENDS) { if (end !== -1) tunnelLayer[idx(x, y)] = CELL_FIRST_TUNNEL_END + end; }
+    else tunnelLayer[idx(x, y)] = CELL_FIRST_TUNNEL + REMAP_DENSITY(tunnel);
+  }
+}
+const HAS_TUNNELS = tunnelLayer.some(v => v);
+// DDR places its creatures at random when a game starts, so its map file has none to show
+const HAS_CRITTERS = critterLayer.some(v => v);
+
+// ---------------------------------------------------------------- location text (processor_text.cpp)
+const TI = D.terrainInfo, AR = D.areas, S = D.strings;
+const isPlural = t => (TI[t]?.flags || "").split("+").includes("PLURAL");
+function cook(text, t, a) {
+  return text.replace(/\{([^}]+)\}/g, (m, tok) => {
+    const p = tok.split(":");
+    if (p[0] === "str") return cook(D.stringsById[p[1]] ?? "", t, a);
+    if (p[0] === "terrain") {
+      const ti = TI[t] || { name: "", desc: "" };
+      if (p[1] === "name") return ti.name;
+      if (p[1] === "plural") return isPlural(t) ? cook(S.SS_TERRAIN_PLURAL, t, a) : ti.name;
+      if (p[1] === "single") return cook(isPlural(t) ? S.SS_TERRAIN_PLURAL : S.SS_TERRAIN_SINGLE, t, a);
+      if (p[1] === "text") return cook(ti.desc, t, a);
+    }
+    if (p[0] === "area") {
+      const ar = AR[a] || { name: "", prefix: "" };
+      if (p[1] === "name") return ar.name;
+      if (p[1] === "prefix") return ar.prefix;
+      if (p[1] === "text") return ar.prefix ? cook(S.SS_AREA_PREFIXED, t, a) : ar.name;
+    }
+    return "";
+  });
+}
+function locationText(x, y) {
+  const i = idx(x, y), t = D.terrain[i], a = D.area[i];
+  return cook((D.flags[i] & LF_DOMAIN) ? S.SS_LOCATION_DOMAIN : S.SS_LOCATION_NOTDOMAIN, t, a);
+}
+
+// ---------------------------------------------------------------- lords, groups, places
+const lords = D.characters.filter(c => c.face && !(c.x === 0 && c.y === 0));
+const CURRENT = lords.find(c => c.symbol === D.current) || lords[0];
+const byLoc = new Map();
+for (const c of lords) { const k = c.x + "," + c.y; if (!byLoc.has(k)) byLoc.set(k, []); byLoc.get(k).push(c); }
+const markers = [...byLoc.values()].map(group => ({ x: group[0].x, y: group[0].y, lords: group, many: group.length > 1 }));
+// singles in map order (a lower lord covers the one above), the current lord over the others, groups over all
+markers.sort((a, b) => {
+  const za = a.many ? 1e6 : a.lords[0] === CURRENT ? 1e5 : a.y, zb = b.many ? 1e6 : b.lords[0] === CURRENT ? 1e5 : b.y;
+  return za - zb;
+});
+
+const places = [];
+for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+  const i = idx(x, y), f = D.flags[i], t = D.terrain[i];
+  if (((f & LF_STRONGHOLD) && !(f & LF_DOMAIN)) || PLACE_TERRAINS.has(t)) {
+    // the game drops the label where a lord stands (setupPlaceLabels: CONTINUE_IF(!m->here.empty()));
+    // here that is decided as the map draws, so the name comes back when the lords filter is off
+    places.push({ x, y, name: locationText(x, y), occupied: byLoc.has(x + "," + y) });
+  }
+}
+
+// ---------------------------------------------------------------- view model
+const canvas = document.getElementById("map"), ctx = canvas.getContext("2d");
+canvas.setAttribute("aria-label", "Detailed map of " + D.land);
+// the page opens on the bare map: every filter starts off
+const filters = { centre: false, critters: false, lords: false, tunnels: false };
+const layerAlpha = { critters: 0, lords: 0, tunnels: 0 };
+let vw = 0, vh = 0, dpr = 1;
+let scale = INITIAL_MAP_SCALE, minScale = 0.5;
+let ox = 0, oy = 0;          // screen position of the map's top-left
+let dirty = true;
+const mapW = W * TILE, mapH = H * TILE;
+
+function fitScale() { return Math.min(vw / mapW, vh / mapH); }
+function resize() {
+  dpr = Math.min(window.devicePixelRatio || 1, 3);
+  vw = canvas.clientWidth; vh = canvas.clientHeight;
+  canvas.width = Math.round(vw * dpr); canvas.height = Math.round(vh * dpr);
+  // the game stops at the scale that fills the screen; here that is the whole land, so all of it can be seen at once
+  minScale = Math.min(INITIAL_MAP_SCALE, Math.max(0.1, Math.min(0.5, fitScale())));
+  scale = Math.max(minScale, scale);
+  clampOffset(); dirty = true;
+}
+function clampOffset() {
+  const sw = mapW * scale, sh = mapH * scale;
+  ox = sw <= vw ? (vw - sw) / 2 : Math.min(0, Math.max(vw - sw, ox));
+  oy = sh <= vh ? (vh - sh) / 2 : Math.min(0, Math.max(vh - sh, oy));
+}
+const toMap = (sx, sy) => ({ x: (sx - ox) / scale, y: (sy - oy) / scale });
+
+// ---------------------------------------------------------------- drawing
+function drawTile(gid, x, y) {
+  if (!gid) return;
+  const s = gid - 1;
+  ctx.drawImage(img.tiles, (s % SHEET_COLS) * SHEET_TILE, Math.floor(s / SHEET_COLS) * SHEET_TILE, SHEET_TILE, SHEET_TILE,
+    x * TILE, y * TILE, TILE, TILE);
+}
+function outlined(text, x, y, size, outline) {
+  ctx.font = `${size}px Midnight, sans-serif`;
+  ctx.lineJoin = "round"; ctx.lineWidth = outline * 2; ctx.strokeStyle = "#000"; ctx.fillStyle = "#fff";
+  ctx.strokeText(text, x, y); ctx.fillText(text, x, y);
+}
+function wrap(text, size, width) {
+  ctx.font = `${size}px Midnight, sans-serif`;
+  const words = text.split(" "), lines = [];
+  let line = "";
+  for (const w of words) {
+    const test = line ? line + " " + w : w;
+    if (line && ctx.measureText(test).width > width) { lines.push(line); line = w; } else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+// labels are bottom aligned in their box, so wrapped lines grow upwards
+function label(text, cx, bottom, size, width, maxLines, outline) {
+  let lines = wrap(text, size, width);
+  if (lines.length > maxLines) lines = lines.slice(lines.length - maxLines);
+  ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+  const lh = size;
+  lines.forEach((l, i) => outlined(l, cx, bottom - (lines.length - 1 - i) * lh - size * 0.18, size, outline));
+}
+
+function draw() {
+  dirty = false;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, vw, vh);
+  ctx.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
+
+  // white under the tiles, so no grey hairlines show between them at fractional zoom
+  ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, mapW, mapH);
+
+  const a = toMap(0, 0), b = toMap(vw, vh);
+  const x0 = Math.max(0, Math.floor(a.x / TILE)), y0 = Math.max(0, Math.floor(a.y / TILE));
+  const x1 = Math.min(W - 1, Math.floor(b.x / TILE)), y1 = Math.min(H - 1, Math.floor(b.y / TILE));
+
+  // Terrain layer
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) drawTile(terrainLayer[idx(x, y)], x, y);
+  // Critters layer
+  if (layerAlpha.critters > 0) {
+    ctx.globalAlpha = layerAlpha.critters;
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) drawTile(critterLayer[idx(x, y)], x, y);
+    ctx.globalAlpha = 1;
+  }
+  // Tunnels layer
+  if (HAS_TUNNELS && layerAlpha.tunnels > 0) {
+    ctx.globalAlpha = layerAlpha.tunnels;
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) drawTile(tunnelLayer[idx(x, y)], x, y);
+    ctx.globalAlpha = 1;
+  }
+  // selected area: grey out every other square and outline the area's border
+  if (areaSel) {
+    ctx.fillStyle = "rgba(128,128,128,.6)";
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++)
+      if (!areaSel.mask[idx(x, y)]) ctx.fillRect(x * TILE, y * TILE, TILE, TILE);
+    ctx.strokeStyle = "#be0005"; ctx.lineWidth = Math.max(3, 2 / scale); ctx.lineCap = "round";
+    ctx.stroke(areaSel.border);
+  }
+  // place names (setupPlaceLabels): small font, 128 wide, bottom of the square
+  for (const p of places) {
+    if (p.x < x0 - 1 || p.x > x1 + 1 || p.y < y0 - 1 || p.y > y1 + 1) continue;
+    // a lord's square shows its name only while the lords are hidden (fading across as the layer fades)
+    const a = p.occupied ? 1 - layerAlpha.lords : 1;
+    if (a <= 0) continue;
+    ctx.globalAlpha = a;
+    // the game's label box is two lines tall but does not clip, so longer names grow upwards
+    label(p.name, p.x * TILE + 32, p.y * TILE + 64, 12, 128, 4, 1);
+    ctx.globalAlpha = 1;
+  }
+  // lords (setupCharacterButtons)
+  if (layerAlpha.lords > 0) {
+    ctx.globalAlpha = layerAlpha.lords;
+    for (const m of markers) {
+      if (m.x < x0 - 1 || m.x > x1 + 1 || m.y < y0 - 1 || m.y > y1 + 1) continue;
+      const cx = m.x * TILE + 32, cy = m.y * TILE + 32;
+      if (m === openGroup) continue;
+      if (m.many) {
+        ctx.drawImage(img.map_lords_many, cx - 32, cy - 32, 64, 64);
+      } else {
+        const c = m.lords[0];
+        ctx.drawImage(img[c.face], cx - 32, cy - 32, 64, 64);
+        label(c.name, cx, cy + 32, 12, 124, 3, 1);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  // a lord found by the search: a red ring that pulses on their square for a few seconds
+  if (flash) {
+    const t = performance.now() - flash.start;
+    if (t > FLASH_MS) flash = null;
+    else {
+      const k = (t % 800) / 800, cx = flash.x * TILE + 32, cy = flash.y * TILE + 32;
+      ctx.strokeStyle = "#be0005";
+      ctx.lineWidth = 4;
+      ctx.globalAlpha = 1 - k;
+      ctx.beginPath(); ctx.arc(cx, cy, 36 + k * 28, 0, Math.PI * 2); ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, 36, 0, Math.PI * 2); ctx.stroke();
+    }
+  }
+  positionGroup();
+}
+const FLASH_MS = 3200;
+let flash = null;
+
+function frame() { if (dirty) draw(); requestAnimationFrame(frame); }
+
+// ---------------------------------------------------------------- tooltip
+const tip = document.getElementById("tooltip");
+let tipTimer = 0;
+function showTip(text) { clearTimeout(tipTimer); tip.textContent = text.toUpperCase(); tip.classList.add("on"); }
+// while an area is selected its name stays in the hint; anything shown over it falls back to the area name
+function hideTip(delay = 0) {
+  clearTimeout(tipTimer);
+  tipTimer = setTimeout(() => areaSel ? showTip(areaSel.name) : tip.classList.remove("on"), delay);
+}
+function tipAt(sx, sy) {
+  if (areaSel) return;
+  const p = toMap(sx, sy), x = Math.floor(p.x / TILE), y = Math.floor(p.y / TILE);
+  if (x < 0 || y < 0 || x >= W || y >= H) { hideTip(); return; }
+  showTip(locationText(x, y));
+}
+
+// ---------------------------------------------------------------- scrolling & zoom
+let anim = null;
+function scrollTo(tx, ty, secs) {
+  const sx = ox, sy = oy, start = performance.now(), reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!secs || reduce) { ox = tx; oy = ty; clampOffset(); dirty = true; return; }
+  anim = t => {
+    const k = Math.min(1, (t - start) / (secs * 1000)), e = 1 - Math.pow(1 - k, 3);
+    ox = sx + (tx - sx) * e; oy = sy + (ty - sy) * e; clampOffset(); dirty = true;
+    if (k >= 1) anim = null;
+  };
+}
+function centreOn(c, animate) {
+  const tx = vw / 2 - (c.x * TILE + 32) * scale, ty = vh / 2 - (c.y * TILE + 32) * scale;
+  const keep = [ox, oy]; ox = tx; oy = ty; clampOffset(); const cx = ox, cy = oy; [ox, oy] = keep;
+  scrollTo(cx, cy, animate ? SCROLL_TO_LORD_SECS : 0);
+}
+function setScale(s, fx = vw / 2, fy = vh / 2) {
+  s = Math.min(MAP_SCALE_MAX, Math.max(minScale, s));
+  const p = toMap(fx, fy);
+  scale = s; ox = fx - p.x * s; oy = fy - p.y * s; clampOffset();
+  if (filters.centre) centreOn(CURRENT, false);
+  dirty = true;
+}
+
+let vel = { x: 0, y: 0 }, coasting = false;
+function tick(t) {
+  if (anim) anim(t);
+  if (flash) dirty = true;
+  if (coasting) {
+    ox += vel.x; oy += vel.y; vel.x *= 0.92; vel.y *= 0.92; clampOffset(); dirty = true;
+    if (Math.abs(vel.x) < 0.2 && Math.abs(vel.y) < 0.2) coasting = false;
+  }
+  requestAnimationFrame(tick);
+}
+
+const pointers = new Map();
+let drag = null, pinch = null;
+canvas.addEventListener("pointerdown", e => {
+  canvas.setPointerCapture(e.pointerId);
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  anim = null; coasting = false;
+  if (pointers.size === 1) {
+    drag = { sx: e.clientX, sy: e.clientY, lx: e.clientX, ly: e.clientY, t: performance.now(), moved: false, held: false };
+    if (e.pointerType !== "mouse") {
+      tipAt(e.clientX, e.clientY);
+      // touch has no shift key: press and hold does the same as shift-click
+      const d = drag;
+      d.timer = setTimeout(() => {
+        if (drag === d && !d.moved && pointers.size === 1) { d.held = true; selectArea(d.sx, d.sy); }
+      }, LONG_PRESS_MS);
+    }
+  } else if (pointers.size === 2) {
+    const [a, b] = [...pointers.values()];
+    pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) }; if (drag) clearTimeout(drag.timer); drag = null;
+  }
+});
+canvas.addEventListener("pointermove", e => {
+  if (!pointers.has(e.pointerId)) { if (e.pointerType === "mouse") tipAt(e.clientX, e.clientY); return; }
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pinch && pointers.size === 2) {
+    const [a, b] = [...pointers.values()], d = Math.hypot(a.x - b.x, a.y - b.y);
+    if (pinch.d > 0) setScale(scale * d / pinch.d, (a.x + b.x) / 2, (a.y + b.y) / 2);
+    pinch.d = d; return;
+  }
+  if (!drag) return;
+  const dx = e.clientX - drag.lx, dy = e.clientY - drag.ly;
+  if (!drag.moved && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 6) { drag.moved = true; canvas.classList.add("dragging"); }
+  if (drag.moved) {
+    ox += dx; oy += dy; clampOffset(); dirty = true;
+    vel = { x: dx, y: dy };
+  }
+  drag.lx = e.clientX; drag.ly = e.clientY;
+  if (e.pointerType === "mouse" && !drag.moved) tipAt(e.clientX, e.clientY);
+});
+function endPointer(e) {
+  pointers.delete(e.pointerId);
+  if (pointers.size < 2) pinch = null;
+  if (drag && pointers.size === 0) {
+    canvas.classList.remove("dragging");
+    clearTimeout(drag.timer);
+    if (drag.held) { /* the long press already selected the area */ }
+    else if (!drag.moved) click(e.clientX, e.clientY, e.shiftKey);
+    else if (Math.hypot(vel.x, vel.y) > 1) coasting = true;
+    drag = null;
+    if (e.pointerType !== "mouse") hideTip(150);
+  }
+}
+canvas.addEventListener("pointerup", endPointer);
+canvas.addEventListener("pointercancel", endPointer);
+canvas.addEventListener("pointerleave", e => { if (e.pointerType === "mouse" && !drag) hideTip(); });
+canvas.addEventListener("wheel", e => {
+  e.preventDefault();
+  const k = Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0015));
+  setScale(scale * k, e.clientX, e.clientY);
+}, { passive: false });
+
+function markerAt(sx, sy) {
+  if (!filters.lords) return null;
+  const p = toMap(sx, sy);
+  for (let i = markers.length - 1; i >= 0; i--) {
+    const m = markers[i];
+    if (Math.abs(p.x - (m.x * TILE + 32)) <= 32 && Math.abs(p.y - (m.y * TILE + 32)) <= 32) return m;
+  }
+  return null;
+}
+// ---------------------------------------------------------------- areas (shift-click / press and hold)
+const LONG_PRESS_MS = 500;
+let areaSel = null;
+function areaName(a) {
+  const ar = AR[a];
+  return ar ? (ar.prefix ? cook(S.SS_AREA_PREFIXED, 0, a) : ar.name) : "";
+}
+// a highlight is any set of squares: everything else is greyed out and the set's edge outlined
+function highlight(key, name, mask) {
+  const border = new Path2D();
+  let count = 0, minX = W, minY = H, maxX = -1, maxY = -1;
+  const inSet = (x, y) => x >= 0 && y >= 0 && x < W && y < H && mask[idx(x, y)] === 1;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    if (!inSet(x, y)) continue;
+    count++;
+    minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+    const l = x * TILE, t = y * TILE, r = l + TILE, b = t + TILE;
+    if (!inSet(x, y - 1)) { border.moveTo(l, t); border.lineTo(r, t); }
+    if (!inSet(x, y + 1)) { border.moveTo(l, b); border.lineTo(r, b); }
+    if (!inSet(x - 1, y)) { border.moveTo(l, t); border.lineTo(l, b); }
+    if (!inSet(x + 1, y)) { border.moveTo(r, t); border.lineTo(r, b); }
+  }
+  areaSel = { key, name, mask, border, count, box: { minX, minY, maxX, maxY } };
+  showTip(name);
+  dirty = true;
+}
+function areaMask(id) { return Uint8Array.from(D.area, a => a === id ? 1 : 0); }
+function selectArea(sx, sy) {
+  const p = toMap(sx, sy), x = Math.floor(p.x / TILE), y = Math.floor(p.y / TILE);
+  if (x < 0 || y < 0 || x >= W || y >= H) return;
+  const id = D.area[idx(x, y)];
+  // shift-clicking the selected area again clears it
+  if (!id || !AR[id] || (areaSel && areaSel.key === "area:" + id)) { clearArea(); return; }
+  highlight("area:" + id, areaName(id), areaMask(id));
+}
+function clearArea() {
+  if (!areaSel) return false;
+  areaSel = null; dirty = true; hideTip();
+  return true;
+}
+
+function click(sx, sy, shift) {
+  if (openGroup) { closeGroup(); return; }
+  if (shift) { selectArea(sx, sy); return; }
+  if (clearArea()) return;
+  const m = markerAt(sx, sy);
+  if (!m) return;
+  if (m.many) openGroupAt(m);
+  else { showTip(m.lords[0].name); hideTip(2500); }
+}
+
+// ---------------------------------------------------------------- group of lords (uigrouplord)
+const groupEl = document.getElementById("group");
+let openGroup = null;
+function circlePos(pos) {
+  const a = (360 / GROUP_STEPS) * pos * Math.PI / 180;
+  return { x: GROUP_RADIUS * Math.cos(a), y: GROUP_RADIUS * Math.sin(a) };
+}
+function openGroupAt(m) {
+  openGroup = m;
+  groupEl.innerHTML = "";
+  const glow = document.createElement("div"); glow.className = "glow"; groupEl.append(glow);
+  const disc = new Image(); disc.className = "disc"; disc.src = SRC.circle_selector; disc.alt = ""; groupEl.append(disc);
+  m.lords.slice(0, MAX_VISIBLE_LORDS).forEach((c, i) => {
+    const b = document.createElement("button"); b.className = "lord"; b.title = c.name;
+    const p = circlePos(i); b.style.left = p.x + "px"; b.style.top = p.y + "px";
+    const f = new Image(); f.src = SRC[c.face]; f.alt = c.name; b.append(f);
+    const s = document.createElement("span"); s.textContent = c.short; b.append(s);
+    b.addEventListener("click", () => { closeGroup(); showTip(c.name); hideTip(2500); });
+    groupEl.append(b);
+  });
+  const d = document.createElement("button"); d.className = "disband"; d.title = "Close";
+  const p = circlePos(DISBAND_BUTTON_POSITION); d.style.left = p.x + "px"; d.style.top = p.y + "px";
+  const di = new Image(); di.src = SRC.i_group_disband; di.alt = "Close"; d.append(di);
+  d.addEventListener("click", closeGroup);
+  groupEl.append(d);
+  groupEl.setAttribute("aria-hidden", "false");
+  dirty = true;
+  requestAnimationFrame(() => groupEl.classList.add("on"));
+}
+function closeGroup() {
+  if (!openGroup) return;
+  groupEl.classList.remove("on"); groupEl.setAttribute("aria-hidden", "true");
+  const was = openGroup; openGroup = null; dirty = true;
+  setTimeout(() => { if (!openGroup) groupEl.innerHTML = ""; }, 150);
+  return was;
+}
+function positionGroup() {
+  if (!openGroup) return;
+  const x = ox + (openGroup.x * TILE + 32) * scale, y = oy + (openGroup.y * TILE + 32) * scale;
+  groupEl.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+}
+groupEl.addEventListener("pointerdown", e => e.stopPropagation());
+
+// ---------------------------------------------------------------- search
+// everything the search can find: lords, areas, and each distinct location name the game would give a square
+const searchIndex = (() => {
+  const out = [];
+  for (const c of lords) out.push({ kind: "lord", label: c.name, alt: [c.short], lord: c });
+
+  const areaIds = new Map();                       // name -> ids (two areas can share a name)
+  for (const a of new Set(D.area)) {
+    if (!a || !AR[a]) continue;
+    const n = areaName(a);
+    if (!areaIds.has(n)) areaIds.set(n, []);
+    areaIds.get(n).push(a);
+  }
+  for (const [n, ids] of areaIds) out.push({ kind: "area", label: n, alt: [], ids });
+
+  const byText = new Map();
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const t = locationText(x, y);
+    if (!byText.has(t)) byText.set(t, []);
+    byText.get(t).push(idx(x, y));
+  }
+  for (const [t, squares] of byText) out.push({ kind: "place", label: t, alt: [], squares });
+  return out;
+})();
+
+const norm = s => s.toLowerCase().replace(/^(the|a|an) /, "").replace(/\s+/g, " ").trim();
+for (const e of searchIndex) e.keys = [e.label, ...e.alt].map(norm);
+const KIND_ORDER = { lord: 0, area: 1, place: 2 };
+
+function findMatches(query) {
+  const q = norm(query);
+  if (!q) return [];
+  const hits = [];
+  for (const e of searchIndex) {
+    let best = 9;
+    for (const k of e.keys) {
+      const s = k === q ? 0 : k.startsWith(q) ? 1 : (" " + k).includes(" " + q) ? 2 : k.includes(q) ? 3 : 9;
+      best = Math.min(best, s);
+    }
+    if (best < 9) hits.push({ e, best });
+  }
+  hits.sort((a, b) => a.best - b.best
+    || KIND_ORDER[a.e.kind] - KIND_ORDER[b.e.kind]
+    || (a.e.squares?.length || 0) - (b.e.squares?.length || 0)
+    || a.e.label.length - b.e.label.length);
+  return hits.slice(0, 12).map(h => h.e);
+}
+
+function describe(e) {
+  if (e.kind === "lord") {
+    const m = markers.find(m => m.lords.includes(e.lord));
+    return m && m.many ? `Lord · with ${m.lords.length - 1} other${m.lords.length > 2 ? "s" : ""}` : "Lord";
+  }
+  if (e.kind === "area") return "Area";
+  return e.squares.length === 1 ? "Location" : `Location · ${e.squares.length} squares`;
+}
+
+// bring a block of squares into view: zoom out until it fits, or in as far as the starting zoom
+function showSquares(box, single) {
+  if (filters.centre) toggle("centre");
+  const bw = (box.maxX - box.minX + 1) * TILE, bh = (box.maxY - box.minY + 1) * TILE;
+  const fit = Math.min((vw - 180) / bw, (vh - 220) / bh);
+  const s = single ? Math.max(scale, INITIAL_MAP_SCALE)
+                   : Math.max(minScale, Math.min(fit, Math.max(scale, INITIAL_MAP_SCALE)));
+  setScale(s);
+  const cx = (box.minX + box.maxX + 1) / 2 * TILE, cy = (box.minY + box.maxY + 1) / 2 * TILE;
+  const keep = [ox, oy]; ox = vw / 2 - cx * scale; oy = vh / 2 - cy * scale; clampOffset();
+  const tx = ox, ty = oy; [ox, oy] = keep;
+  scrollTo(tx, ty, SCROLL_TO_LORD_SECS);
+}
+
+function choose(e) {
+  closeGroup();
+  if (e.kind === "lord") {
+    clearArea();
+    if (!filters.lords) toggle("lords");
+    const c = e.lord, m = markers.find(m => m.lords.includes(c));
+    showSquares({ minX: c.x, maxX: c.x, minY: c.y, maxY: c.y }, true);
+    showTip(c.name); hideTip(FLASH_MS);
+    if (m && m.many) setTimeout(() => { if (!openGroup) openGroupAt(m); }, SCROLL_TO_LORD_SECS * 1000);
+    else flash = { x: c.x, y: c.y, start: performance.now() };
+    return;
+  }
+  const mask = e.kind === "area"
+    ? Uint8Array.from(D.area, a => e.ids.includes(a) ? 1 : 0)
+    : (() => { const m = new Uint8Array(W * H); for (const i of e.squares) m[i] = 1; return m; })();
+  highlight(e.kind + ":" + e.label, e.label, mask);
+  showSquares(areaSel.box, e.kind === "place" && e.squares.length === 1);
+}
+
+const searchForm = document.getElementById("search");
+const searchInput = document.getElementById("search-input");
+const resultsEl = document.getElementById("results");
+let results = [], active = 0;
+
+function renderResults() {
+  results = findMatches(searchInput.value);
+  active = 0;
+  resultsEl.innerHTML = "";
+  if (!searchInput.value.trim()) { resultsEl.hidden = true; searchInput.setAttribute("aria-expanded", "false"); return; }
+  if (!results.length) {
+    const li = document.createElement("li"); li.className = "empty";
+    li.textContent = `Nothing called “${searchInput.value.trim()}”`;
+    resultsEl.append(li);
+  }
+  results.forEach((e, i) => {
+    const li = document.createElement("li");
+    li.id = "result-" + i; li.setAttribute("role", "option");
+    const name = document.createElement("span"); name.className = "name"; name.textContent = e.label;
+    const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = describe(e);
+    li.append(name, tag);
+    li.addEventListener("pointerdown", ev => ev.preventDefault());   // keep focus in the field
+    li.addEventListener("click", () => pick(i));
+    li.addEventListener("pointermove", () => setActive(i));
+    resultsEl.append(li);
+  });
+  resultsEl.hidden = false; searchInput.setAttribute("aria-expanded", "true");
+  setActive(0);
+}
+function setActive(i) {
+  active = i;
+  [...resultsEl.querySelectorAll("li[role=option]")].forEach((li, j) => li.setAttribute("aria-selected", String(j === i)));
+  if (results[i]) searchInput.setAttribute("aria-activedescendant", "result-" + i);
+  else searchInput.removeAttribute("aria-activedescendant");
+}
+function closeResults() { resultsEl.hidden = true; searchInput.setAttribute("aria-expanded", "false"); }
+function pick(i) {
+  const e = results[i];
+  if (!e) return;
+  searchInput.value = e.label;
+  closeResults(); collapseSearch();
+  choose(e);
+}
+
+// the "?" button opens the field; once open it becomes the close control
+const fab = document.getElementById("search-fab");
+const fabGlyph = fab.querySelector(".glyph");
+function expandSearch() {
+  searchForm.classList.remove("collapsed");
+  fab.setAttribute("aria-expanded", "true"); fab.setAttribute("aria-label", "Close search"); fab.title = "Close search (Esc)";
+  fabGlyph.textContent = "×"; centreGlyph();
+  searchInput.tabIndex = 0;
+  searchInput.focus({ preventScroll: true }); searchInput.select();
+}
+function collapseSearch() {
+  closeResults();
+  searchForm.classList.add("collapsed");
+  fab.setAttribute("aria-expanded", "false"); fab.setAttribute("aria-label", "Search the map"); fab.title = "Search the map (/)";
+  fabGlyph.textContent = "?"; centreGlyph();
+  searchInput.tabIndex = -1;
+  if (searchForm.contains(document.activeElement)) searchInput.blur();
+}
+// Midnight's "?" draws well outside its advance width, so CSS alone centres the wrong box:
+// measure the glyph's ink and shift it so the ink, not the character cell, sits in the middle
+function centreGlyph() {
+  const cs = getComputedStyle(fab), size = parseFloat(cs.fontSize);
+  const m = glyphCtx(cs.font).measureText(fabGlyph.textContent);
+  const inkCentreX = (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+  const fa = m.fontBoundingBoxAscent ?? m.actualBoundingBoxAscent, fd = m.fontBoundingBoxDescent ?? m.actualBoundingBoxDescent;
+  const baseline = (size - (fa + fd)) / 2 + fa;                     // line-height: 1, so half-leading above
+  const inkCentreY = baseline - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+  fabGlyph.style.transform = `translate(${(m.width / 2 - inkCentreX).toFixed(2)}px, ${(size / 2 - inkCentreY).toFixed(2)}px)`;
+}
+let _gctx = null;
+function glyphCtx(font) { _gctx ||= document.createElement("canvas").getContext("2d"); _gctx.font = font; return _gctx; }
+const searchOpen = () => !searchForm.classList.contains("collapsed");
+fab.addEventListener("pointerdown", e => e.preventDefault());     // don't steal focus from the field
+fab.addEventListener("click", () => {
+  if (searchOpen()) { collapseSearch(); fab.focus({ preventScroll: true }); } else expandSearch();
+});
+
+searchInput.addEventListener("input", renderResults);
+searchInput.addEventListener("focus", () => { if (searchInput.value.trim()) renderResults(); });
+// leaving the field (clicking the map, tabbing away) folds it back into the button; the text is kept for next time
+searchInput.addEventListener("blur", () => setTimeout(() => {
+  if (!searchForm.contains(document.activeElement)) collapseSearch();
+}, 120));
+searchInput.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown" && results.length) { e.preventDefault(); setActive((active + 1) % results.length); }
+  else if (e.key === "ArrowUp" && results.length) { e.preventDefault(); setActive((active - 1 + results.length) % results.length); }
+  else if (e.key === "Escape") {
+    e.preventDefault();
+    if (!resultsEl.hidden) closeResults();
+    else { collapseSearch(); fab.focus({ preventScroll: true }); }
+  }
+});
+searchForm.addEventListener("submit", e => { e.preventDefault(); if (resultsEl.hidden) renderResults(); pick(active); });
+canvas.addEventListener("pointerdown", () => { if (document.activeElement === searchInput) searchInput.blur(); });
+
+// ---------------------------------------------------------------- controls
+function wireZoom() {
+  document.querySelectorAll(".zoom .disc").forEach(i => i.src = SRC.circle_selector);
+  const set = (id, key) => document.querySelector(`#${id} img`).src = SRC[key];
+  set("zoom-out", "map_scale_down_button"); set("zoom-reset", "i_group_disband"); set("zoom-in", "map_scale_up_button");
+  document.getElementById("zoom-out").onclick = () => setScale(scale - MAP_SCALE_CLICK_DELTA);
+  document.getElementById("zoom-in").onclick = () => setScale(scale + MAP_SCALE_CLICK_DELTA);
+  document.getElementById("zoom-reset").onclick = () => setScale(INITIAL_MAP_SCALE);
+}
+
+function fadeLayer(name, show) {
+  const from = layerAlpha[name], to = show ? 1 : 0, start = performance.now();
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const step = t => {
+    const k = reduce ? 1 : Math.min(1, (t - start) / 250);
+    layerAlpha[name] = from + (to - from) * k; dirty = true;
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+const FILTERS = [
+  { key: "centre", art: "i_center", label: "Centre on Luxor", hotkey: "F1" },
+  ...(HAS_CRITTERS ? [{ key: "critters", art: "i_critters", label: "Show creatures", hotkey: "F2" }] : []),
+  { key: "lords", art: "i_filter_lords", label: "Show lords", hotkey: "F3" },
+  // the game only offers the tunnels filter when the scenario has tunnels (SF_TUNNELS)
+  ...(HAS_TUNNELS ? [{ key: "tunnels", art: "i_filter_tunnel", label: "Show tunnels", hotkey: "F4" }] : []),
+];
+const filterButtons = {};
+function wireFilters() {
+  const host = document.getElementById("filters");
+  for (const f of FILTERS) {
+    const b = document.createElement("button"); b.className = "filter"; b.id = "filter-" + f.key;
+    b.title = `${f.label} (${f.hotkey})`; b.setAttribute("aria-label", f.label);
+    const art = new Image(); art.className = "art"; art.src = SRC[f.art]; art.alt = "";
+    const eye = new Image(); eye.className = "eye"; eye.alt = "";
+    b.append(art, eye); host.append(b);
+    b.onclick = () => toggle(f.key);
+    filterButtons[f.key] = { b, eye };
+    sync(f.key);
+  }
+}
+function sync(key) {
+  const { b, eye } = filterButtons[key];
+  eye.src = filters[key] ? SRC.i_visible : SRC.i_not_visible;
+  b.setAttribute("aria-pressed", String(filters[key]));
+}
+function toggle(key) {
+  filters[key] = !filters[key]; sync(key);
+  if (key === "centre" && filters.centre) centreOn(CURRENT, true);
+  if (key === "critters" || key === "lords" || key === "tunnels") fadeLayer(key, filters[key]);
+  if (key === "lords" && !filters.lords) closeGroup();
+}
+
+window.addEventListener("keydown", e => {
+  if (e.target === searchInput) return;
+  if (e.key === "/" || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "f")) { e.preventDefault(); expandSearch(); }
+  else if (e.key === "F1") { e.preventDefault(); toggle("centre"); }
+  else if (e.key === "F2" && HAS_CRITTERS) { e.preventDefault(); toggle("critters"); }
+  else if (e.key === "F3") { e.preventDefault(); toggle("lords"); }
+  else if (e.key === "F4" && HAS_TUNNELS) { e.preventDefault(); toggle("tunnels"); }
+  else if (e.key === "ArrowUp" || e.key === "+" || e.key === "=") { e.preventDefault(); setScale(scale + MAP_SCALE_CLICK_DELTA); }
+  else if (e.key === "ArrowDown" || e.key === "-") { e.preventDefault(); setScale(scale - MAP_SCALE_CLICK_DELTA); }
+  else if (e.key === "Escape") { if (!closeGroup()) clearArea(); }
+});
+
+// ---------------------------------------------------------------- start
+window.addEventListener("resize", () => { resize(); if (filters.centre) centreOn(CURRENT, false); });
+Promise.all([...loads, document.fonts.load("20px Midnight").catch(() => {})]).then(() => {
+  wireZoom(); wireFilters(); centreGlyph();
+  resize();
+  centreOn(CURRENT, false);
+  dirty = true;
+  requestAnimationFrame(frame); requestAnimationFrame(tick);
+});
+})();
+</script>
+</body>
+</html>
