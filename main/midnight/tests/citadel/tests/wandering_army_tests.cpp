@@ -144,10 +144,11 @@ SCENARIO("Your lord can attack a keep Boroth's host has taken")
     keep->MakeChangeSides(RA_DARK_FEY, GetCharacter("CH_BOROTH"));
     REQUIRE( keep->IsEnemy() );
 
-    GIVEN("one of your lords beside it, facing it")
+    GIVEN("one of your lords, out of the dungeons, beside it and facing it")
     {
         auto here = keep->Location();
         auto lord = TMEStep::PlaceLordAt("CH_CORLETH", loc_t(here.x, here.y + 1), DR_NORTH);
+        lord->Flags().Reset(cf_tunnel);
 
         THEN("he is no coward, and the attack goes in")
         {
