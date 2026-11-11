@@ -759,7 +759,6 @@ using namespace chilli::types;
             SS_WRAITH,
             SS_DUNGEON_FREED,
             SS_DUNGEON_FOUND,
-            SS_DUNGEON_NOTHING,
             SS_QUEST_ACTION,
             SS_QUEST_CHOOSE,
             SS_LUXOR_EXECUTED,
@@ -1100,7 +1099,6 @@ namespace tme {
             cf_knowledge        = MXBIT(28),    // has special knowledge
             cf_control          = MXBIT(29),    // is under control
             cf_watch            = MXBIT(30),    // is being watched
-            cf_dungeon          = MXBIT(31),    // in the dungeons of Maranor
             cf_available        = MXBIT(32),    // 
             // citadel
             

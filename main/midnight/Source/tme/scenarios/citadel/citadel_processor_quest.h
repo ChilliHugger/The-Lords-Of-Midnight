@@ -57,6 +57,7 @@ namespace tme {
         virtual void Quest ( void );
         virtual void Besiege ( citadel_stronghold* keep, mxgridref target );
         virtual bool MarchToTarget ( mxgridref target, bool fight );
+        virtual void SearchDungeon ( citadel_character* hostage );
 
         bool Invaded ( u32 at, u32 of ) const;
         u32 Home ( const citadel_character* who ) const;

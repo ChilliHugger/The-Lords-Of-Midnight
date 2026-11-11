@@ -99,8 +99,6 @@ namespace tme {
 #endif
         
         sv_int_t    sv_days ;
-        sv_int_t    sv_dungeon_search_night ;
-        sv_int_t    sv_dungeon_search_day ;
         sv_int_t    sv_attributes ;
         sv_int_t    sv_variables ;
         sv_int_t    sv_strongholdadjuster ;
@@ -199,8 +197,6 @@ namespace tme {
             VARIABLE( sv_attributes,                            "ATTRIBUTES",                           CVar::INT,      "0" ),
             VARIABLE( sv_variables,                             "VARIABLES",                            CVar::INT,      "0" ),
             VARIABLE( sv_days,                                  "DAYS",                                 CVar::INT,      "0" ),
-            VARIABLE( sv_dungeon_search_night,                  "DUNGEON_SEARCH_NIGHT",                 CVar::INT,      "0" ),
-            VARIABLE( sv_dungeon_search_day,                    "DUNGEON_SEARCH_DAY",                   CVar::INT,      "0" ),
             VARIABLE( sv_strongholdadjuster,                    "STRONGHOLD_ADJUSTER",                  CVar::INT,      "0" ),
             VARIABLE( sv_controlled_character,                  "CONTROLLED_CHARACTER",                 CVar::INT,      "0" ),
             VARIABLE( sv_energy_cannot_continue,                "ENERGY_CANNOT_CONTINUE",               CVar::INT,      "0" ),

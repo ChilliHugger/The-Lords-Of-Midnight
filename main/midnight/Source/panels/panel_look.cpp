@@ -454,6 +454,13 @@ void panel_look::getCharacterInfo ( character& c, locationinfo_t* info)
         info->narrowtunnel = m.flags.Is(lf_tunnel_small) && info->tunnel;
     }
 
+#if defined(_CITADEL_)
+    if ( info->tunnel ) {
+        info->lookingdowntunnel = location_flags.Is(lif_moveforward);
+        info->lookingouttunnel = location_flags.Is(lif_exit_tunnel);
+    }
+#endif
+
     info->name = StringExtensions::toUpper(c.longname) ;
     
     info->locationtext = TME_GetCharacterText ( c, "CharLocation" );
@@ -477,8 +484,8 @@ void panel_look::setObject ( mxid c )
 void panel_look::getCurrentLocationInfo()
 {
     character&    c = TME_CurrentCharacter();
-    getCharacterInfo(c, current_info);
     TME_GetCharacterLocationInfo ( c );
+    getCharacterInfo(c, current_info);
 
     OnSetupIcons();
     

@@ -744,6 +744,7 @@ void citadel_x::initialiseAfterCreate ( u32 version )
 {
     flags.Clear();
     packs.clear();
+    dungeon.Generate(mxrandom(1, 65000));
 
     MXTRACE("Place Objects On Map");
     mx->objectprocessor->PlaceObjectsOnMap(luxor);
@@ -762,8 +763,10 @@ void citadel_x::initialiseAfterCreate ( u32 version )
 
     FOR_EACH_CHARACTER(character) {
         auto lord = CitadelLord(character);
-        if ( maranor != nullptr && lord->IsRecruited() && !lord->IsPrisoner() && lord->Location() == maranor->Location() )
-            lord->Flags().Set(cf_dungeon);
+        if ( maranor != nullptr && lord->IsRecruited() && !lord->IsPrisoner() && lord->Location() == maranor->Location() ) {
+            lord->Flags().Set(cf_tunnel);
+            lord->DungeonLocation(dungeon.Start());
+        }
         if ( lord->Home() == nullptr )
             lord->Home(KeepOf(lord));
         if ( lord->Home() == nullptr )
@@ -787,10 +790,12 @@ void citadel_x::Serialize ( archive& ar )
         ar << flags ;
         ar << wars;
         ar << packs;
+        dungeon.Serialize(ar);
     } else {
         ar >> flags;
         ar >> wars;
         ar >> packs;
+        dungeon.Serialize(ar);
     }
 }
 
@@ -806,7 +811,7 @@ MXRESULT citadel_x::Register ( mxengine* midnightx )
     mx->scenario = (mxscenario*)citadel_scenario;
     
     // set initial feature flags
-    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_HOSTAGES ;
+    mx->scenario->features = SF_MOONRING|SF_ICEFEAR|SF_HOSTAGES|SF_TUNNELS ;
     
     return MX_OK ;
 }
