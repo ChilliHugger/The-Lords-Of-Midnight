@@ -1,0 +1,105 @@
+name: Linux build
+
+# Builds the Linux (x86_64) version of each game and runs its unit tests, following
+# docs/build_linux.md. Runs on pushes/PRs to main (so Linux breakage is caught), and on demand.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  # Same engine tag as build.yml - bump both together.
+  AXMOL_REF: v2.11.5
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tme: LOM
+            app: midnight
+          - tme: DDR
+            app: revenge
+          - tme: CITADEL
+            app: citadel
+    name: Linux build + tests (${{ matrix.app }})
+    runs-on: ubuntu-24.04
+    env:
+      AX_ROOT: ${{ github.workspace }}/axmol
+    steps:
+      - name: Checkout game
+        uses: actions/checkout@v7
+        with:
+          path: game
+
+      - name: Checkout axmol engine
+        uses: actions/checkout@v7
+        with:
+          repository: axmolengine/axmol
+          ref: ${{ env.AXMOL_REF }}
+          path: axmol
+
+      - name: Cache axmol externals and fetched deps
+        uses: actions/cache@v6
+        with:
+          path: |
+            axmol/tools/external
+            game/main/midnight/Builds/ci-linux-tests-${{ matrix.app }}/_deps
+            game/main/midnight/Builds/ci-linux-${{ matrix.app }}/_deps
+          key: axmol-${{ env.AXMOL_REF }}-linux-${{ matrix.app }}-${{ hashFiles('game/main/midnight/tests/CMakeLists.txt') }}
+          restore-keys: |
+            axmol-${{ env.AXMOL_REF }}-linux-${{ matrix.app }}-
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ninja-build nasm pkg-config xvfb
+
+      # setup.ps1 asks once whether to install axmol's Linux packages (X11, GTK, OpenGL, ALSA, VLC).
+      - name: Set up axmol
+        working-directory: axmol
+        run: echo y | pwsh ./setup.ps1
+
+      # Unit-test build: a different binary from the shipped one (-DTESTS=YES), so it gets its own
+      # build folder.
+      - name: Configure tests
+        working-directory: game/main/midnight
+        run: cmake -S . -B Builds/ci-linux-tests-${{ matrix.app }} -G Ninja -DTME=${{ matrix.tme }} -DTESTS=YES -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build tests
+        working-directory: game/main/midnight
+        run: cmake --build Builds/ci-linux-tests-${{ matrix.app }} --target ${{ matrix.app }}
+
+      # Catch's exit code is the number of failed tests. xvfb gives the engine a display.
+      - name: Run tests
+        working-directory: game/main/midnight/Builds/ci-linux-tests-${{ matrix.app }}/bin/${{ matrix.app }}
+        env:
+          LIBGL_ALWAYS_SOFTWARE: 1
+        run: xvfb-run -a ./${{ matrix.app }} --reporter compact
+
+      # The shipped build.
+      - name: Configure release
+        working-directory: game/main/midnight
+        run: cmake -S . -B Builds/ci-linux-${{ matrix.app }} -G Ninja -DTME=${{ matrix.tme }} -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build release
+        working-directory: game/main/midnight
+        run: cmake --build Builds/ci-linux-${{ matrix.app }} --target ${{ matrix.app }}
+
+      # A tarball, because upload-artifact drops the executable bit.
+      - name: Package build
+        working-directory: game/main/midnight/Builds/ci-linux-${{ matrix.app }}/bin
+        run: tar -czf "$GITHUB_WORKSPACE/linux-${{ matrix.app }}.tar.gz" ${{ matrix.app }}
+
+      - name: Upload build
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-${{ matrix.app }}
+          path: linux-${{ matrix.app }}.tar.gz
+          retention-days: 14
