@@ -97,10 +97,10 @@ void TMEMapBuilder::CheckFlags( tme::mxmap* map, const TMXLayerInfo* layer, int 
             case tlf_tunnelsmall:
                 map->m_data[loc].flags |= lf_tunnel_small | lf_tunnel;
                 break;
-            case tlf_path:
-            case tlf_unused1:
-            case tlf_unused2:
-            case tlf_unused3:
+            case tlf_ground_route:
+            case tlf_water_route:
+            case tlf_water:
+            case tlf_trees:
                 break;
         }
     }
